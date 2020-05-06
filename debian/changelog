@@ -1,0 +1,5 @@
+deepin-diskmanager (1.0) unstable; urgency=medium
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- unknown <uos@uos-PC>  Fri, 10 Mar 2020 16:48:52 +0800

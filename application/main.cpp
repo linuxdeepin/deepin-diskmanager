@@ -1,4 +1,4 @@
-#include <DApplication>
+#include "cusapplication.h"
 #include <DMainWindow>
 #include <DWidgetUtil>
 #include <DApplicationSettings>
@@ -9,7 +9,10 @@
 #include <QDebug>
 #include "widgets/mainwindow.h"
 #include <signal.h>
+
 DWIDGET_USE_NAMESPACE
+
+
 //void dealsig(int sig)
 //{
 //    qDebug() << "kdsfjjjjjj------";
@@ -18,8 +21,9 @@ int main(int argc, char *argv[])
 {
     // signal(SIGINT, SIG_IGN);
     // signal(SIGKILL, SIG_IGN);
-    DApplication::loadDXcbPlugin();
-    DApplication a(argc, argv);
+    CusApplication::loadDXcbPlugin();
+    CusApplication a(argc, argv);
+    a.setAttribute(Qt::AA_UseHighDpiPixmaps);
     a.loadTranslator();
     a.setApplicationName("deepin-diskmanager");
     a.setOrganizationName("deepin");
@@ -43,8 +47,7 @@ int main(int argc, char *argv[])
     } else {
         exit(0);
     }
-
-    w.setMinimumSize(500, 500);
+    QObject::connect(&a, &CusApplication::sighandleQuitAction, &w, &MainWindow::slotHandleQuitAction);
     w.show();
 
     Dtk::Widget::moveToCenter(&w);

@@ -3,6 +3,8 @@
 
 #include <DMainWindow>
 
+DWIDGET_USE_NAMESPACE
+
 class CenterWidget;
 class MainWindow : public Dtk::Widget::DMainWindow
 {
@@ -13,10 +15,13 @@ public:
 protected:
     void closeEvent(QCloseEvent *event) override;
 
+private:
+    void initUi();
+
 signals:
 
 public slots:
-
+    void slotHandleQuitAction();
 private:
     CenterWidget *m_central;
 

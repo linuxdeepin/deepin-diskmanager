@@ -8,6 +8,8 @@
 #include <QMap>
 #include "utils.h"
 #include "deviceinfo.h"
+#include "device.h"
+
 namespace DiskManager {
 
 class PartedCore : public QObject
@@ -23,7 +25,7 @@ public:
     DeviceInfo getDeviceinfo();
 
 private:
-    void init();
+    void probedeviceinfo(const QString &path = QString());
     bool useable_device(const PedDevice *lp_device);
     void set_device_from_disk(DeviceInfo &device, const QString &device_path);
     bool get_device(const QString &device_path, PedDevice *&lp_device, bool flush);
@@ -39,6 +41,7 @@ public slots:
 public:
     QVector<QString> m_devicepaths;
     QVector<DeviceInfo> devices;
+    QMap<QString, Device> devicemap;
 
 };
 

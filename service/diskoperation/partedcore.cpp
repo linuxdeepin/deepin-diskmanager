@@ -16,7 +16,7 @@ const std::time_t SETTLE_DEVICE_APPLY_MAX_WAIT_SECONDS = 10;
 PartedCore::PartedCore(QObject *parent) : QObject(parent)
 {
     find_supported_core();
-    init();
+    probedeviceinfo();
 }
 
 void PartedCore::find_supported_core()
@@ -25,7 +25,8 @@ void PartedCore::find_supported_core()
     hdparm_found = ! Utils::find_program_in_path("hdparm").isEmpty();
 }
 
-void PartedCore::init()
+
+void PartedCore::probedeviceinfo(const QString &path)
 {
     m_devicepaths.clear();
     ped_device_probe_all();
@@ -169,5 +170,6 @@ DeviceInfo PartedCore::getDeviceinfo()
     qDebug() << info.m_path << info.heads << info.cylinders << info.serial_number << info.max_prims;
     return  info;
 }
+
 
 }//end namespace

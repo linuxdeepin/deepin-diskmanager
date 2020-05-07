@@ -17,7 +17,8 @@ include (widgets/widgets.pri)
 include (utils/utils.pri)
 
 SOURCES += \
-        main.cpp
+        main.cpp \
+    cusapplication.cpp
 
 
 TRANSLATIONS += \
@@ -54,4 +55,7 @@ INSTALLS += target desktop icon_files
 
 RESOURCES += \
     resource.qrc
+
+HEADERS += \
+    cusapplication.h
 

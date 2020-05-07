@@ -73,4 +73,26 @@ enum SIZE_UNIT {
     UNIT_TIB    = 5
 } ;
 
+
+enum PartitionType {
+    TYPE_PRIMARY       = 0,  // Primary partition on a partitioned drive
+    TYPE_LOGICAL       = 1,  // Logical partition on a partitioned drive
+    TYPE_EXTENDED      = 2,  // Extended partition on a partitioned drive
+    TYPE_UNALLOCATED   = 3,  // Unallocated space on a partitioned drive
+    TYPE_UNPARTITIONED = 4   // Unpartitioned whole drive
+};
+
+enum PartitionStatus {
+    STAT_REAL   =   0,
+    STAT_NEW    =   1,
+    STAT_COPY   =   2,
+    STAT_FORMATTED  =   3
+};
+
+enum PartitionAlignment {
+    ALIGN_CYLINDER = 0,    //Align to nearest cylinder
+    ALIGN_MEBIBYTE = 1,    //Align to nearest mebibyte
+    ALIGN_STRICT   = 2     //Strict alignment - no rounding
+                     //  Indicator if start and end sectors must remain unchanged
+};
 #endif // COMMONDEF_H

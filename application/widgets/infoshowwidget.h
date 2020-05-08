@@ -12,6 +12,9 @@ public:
 protected:
     void paintEvent(QPaintEvent *event);
 
+private:
+    void initUi();
+
 
 };
 

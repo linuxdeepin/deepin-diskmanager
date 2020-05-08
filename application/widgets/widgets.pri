@@ -1,3 +1,5 @@
+
+include (customcontrol/customcontrol.pri)
 HEADERS += \
     $$PWD/mainwindow.h \
     $$PWD/centerwidget.h \

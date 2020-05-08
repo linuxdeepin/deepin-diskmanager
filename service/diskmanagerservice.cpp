@@ -33,11 +33,11 @@ DeviceInfo DiskManagerService::getDeviceinfo()
     return d->getDeviceinfo();
 }
 
-DeviceInfoMap DiskManagerService::getalldevice()
+void DiskManagerService::getalldevice()
 {
     Q_D(DiskManagerService);
     qDebug() << "DiskManagerService::getalldevice";
-    return d->getalldevice();
+    d->getalldevice();
 }
 
 stCustest DiskManagerService::interfacetest()

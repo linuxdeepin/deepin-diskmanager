@@ -1,11 +1,41 @@
 #include "centerwidget.h"
 #include "titlewidget.h"
 #include "mainsplitter.h"
+#include "customcontrol/bufferwin.h"
 #include "partedproxy/dmdbushandler.h"
 #include <QVBoxLayout>
+#include <DSpinner>
+#include <DWidgetUtil>
+#include <QThread>
 
 CenterWidget::CenterWidget(DWidget *parent) : Dtk::Widget::DWidget(parent)
 {
+    m_handler =  DMDbusHandler::instance(this);
+    initUi();
+    initConnection();
+    m_handler->getDeviceinfo();
+}
+
+CenterWidget::~CenterWidget()
+{
+    if (nullptr != m_bufferwin) {
+        m_bufferwin->deleteLater();
+    }
+}
+
+void CenterWidget::HandleQuit()
+{
+    m_handler->Quit();
+}
+
+TitleWidget *CenterWidget::titlewidget()
+{
+    return m_titlewidget;
+}
+
+void CenterWidget::initUi()
+{
+    m_bufferwin = new BufferWin;
     m_titlewidget = new TitleWidget;
     QVBoxLayout *mainlayout = new QVBoxLayout;
     mainlayout->setContentsMargins(0, 0, 0, 0);
@@ -13,20 +43,29 @@ CenterWidget::CenterWidget(DWidget *parent) : Dtk::Widget::DWidget(parent)
     m_mainspliter = new MainSplitter;
     mainlayout->addWidget(m_mainspliter);
     setLayout(mainlayout);
-//    m_handler = DMDbusHandler::instance(this);
-//    m_handler->Start();
-    //    m_handler->getDeviceinfo();
-    //    QTimer::singleShot(5000, this, [&] {
-    //        m_handler->getDeviceinfo();
-    //    });
 }
 
-void CenterWidget::HandleQuit()
+void CenterWidget::initConnection()
 {
-    // m_handler->Quit();
+    connect(m_handler, &DMDbusHandler::sigShowSpinerWindow, this, &CenterWidget::slotshowSpinerWindow);
+    connect(m_handler, &DMDbusHandler::sigUpdateDeviceInfo, this, &CenterWidget::slotUpdateDeviceInfo);
 }
 
-TitleWidget *CenterWidget::titlewidget()
+void CenterWidget::slotshowSpinerWindow(bool bshow)
 {
-    return m_titlewidget;
+    if (bshow) {
+        m_bufferwin->Start();
+    } else {
+        m_bufferwin->Stop();
+    }
+}
+
+void CenterWidget::slotUpdateDeviceInfo(const DeviceInfoMap &infomap)
+{
+    qDebug() << "===========";
+    slotshowSpinerWindow();
+    for (auto it = infomap.begin(); it != infomap.end(); it++) {
+        DeviceInfo info = *it;
+        qDebug() << info.m_path << info.heads << info.cylinders << info.serial_number << info.max_prims;
+    }
 }

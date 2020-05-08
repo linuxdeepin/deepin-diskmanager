@@ -12,7 +12,7 @@ class DiskManagerServicePrivate : public QObject
 public:
     explicit DiskManagerServicePrivate(DiskManagerService *parent = nullptr);
     DeviceInfo getDeviceinfo();
-    DeviceInfoMap getalldevice();
+    void getalldevice();
 signals:
 
 public slots:

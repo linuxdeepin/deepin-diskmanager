@@ -52,7 +52,7 @@ public Q_SLOTS: // METHODS
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QStringLiteral("getDeviceinfo"), argumentList);
     }
-    inline QDBusPendingReply<DeviceInfoMap>getalldevice()
+    inline QDBusPendingReply<>getalldevice()
     {
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QStringLiteral("getalldevice"), argumentList);
@@ -62,6 +62,7 @@ public Q_SLOTS: // METHODS
 Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void MessageReport(const QString &msg);
     Q_SCRIPTABLE void AccessDeviceInfoOver(const DeviceInfo &info);
+    Q_SCRIPTABLE void sigUpdateDeviceInfo(const DeviceInfoMap &infomap);
 };
 
 namespace com {

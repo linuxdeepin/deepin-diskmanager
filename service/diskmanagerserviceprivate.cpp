@@ -3,6 +3,7 @@
 #include <QCoreApplication>
 #include <DLog>
 #include <QDebug>
+#include <unistd.h>
 #include <QThread>
 
 DiskManagerServicePrivate::DiskManagerServicePrivate(DiskManagerService *parent) : QObject(parent)
@@ -23,7 +24,7 @@ DeviceInfo DiskManagerServicePrivate::getDeviceinfo()
     return info;
 }
 
-DeviceInfoMap DiskManagerServicePrivate::getalldevice()
+void DiskManagerServicePrivate::getalldevice()
 {
     DeviceInfoMap map;
     for (int i = 0; i < 2; ++i) {
@@ -34,5 +35,6 @@ DeviceInfoMap DiskManagerServicePrivate::getalldevice()
         info.cylinders = (i + 1) * 100;
         map.insert(QString("uos%1").arg(i), info);
     }
-    return map;
+    sleep(5);
+    Q_EMIT q_ptr->sigUpdateDeviceInfo(map);
 }

@@ -17,11 +17,12 @@ public:
 Q_SIGNALS:
     Q_SCRIPTABLE void MessageReport(const QString &msg);
     Q_SCRIPTABLE void AccessDeviceInfoOver(const DeviceInfo &info);
+    Q_SCRIPTABLE void sigUpdateDeviceInfo(const DeviceInfoMap &infomap);
 public Q_SLOTS:
     Q_SCRIPTABLE void Quit();
     Q_SCRIPTABLE void Start();
     Q_SCRIPTABLE DeviceInfo getDeviceinfo();
-    Q_SCRIPTABLE DeviceInfoMap getalldevice();
+    Q_SCRIPTABLE void getalldevice();
     Q_SCRIPTABLE stCustest interfacetest();
 
 

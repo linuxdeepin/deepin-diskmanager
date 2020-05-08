@@ -1,7 +1,7 @@
 #include "dmdbushandler.h"
-#include "dmdbusinterface.h"
 #include <QObject>
 #include <QDBusError>
+#include <QDBusPendingCallWatcher>
 
 DMDbusHandler *DMDbusHandler::m_statichandeler = nullptr;
 
@@ -15,6 +15,8 @@ DMDbusHandler *DMDbusHandler::instance(QObject *parent)
 DMDbusHandler::DMDbusHandler(QObject *parent) : QObject(parent)
 {
     qRegisterMetaType<DeviceInfo>("DeviceInfo");
+    qRegisterMetaType<DeviceInfoMap>("DeviceInfoMap");
+
     qDBusRegisterMetaType<DeviceInfo>();
     qDBusRegisterMetaType<DeviceInfoMap>();
     qDBusRegisterMetaType<stCustest>();
@@ -27,9 +29,14 @@ DMDbusHandler::DMDbusHandler(QObject *parent) : QObject(parent)
         qDebug() << "m_dbus isValid false error:" << m_dbus->lastError() << m_dbus->lastError().message();
     }
     qDebug() << "m_dbus isValid true";
+    initConnection();
+    m_dbus->Start();
+}
 
+void DMDbusHandler::initConnection()
+{
     connect(m_dbus, &DMDBusInterface::MessageReport, this, &DMDbusHandler::MessageReport);
-
+    connect(m_dbus, &DMDBusInterface::sigUpdateDeviceInfo, this, &DMDbusHandler::sigUpdateDeviceInfo);
 }
 
 void DMDbusHandler::Quit()
@@ -37,36 +44,11 @@ void DMDbusHandler::Quit()
     m_dbus->Quit();
 }
 
-void DMDbusHandler::Start()
-{
-    m_dbus->Start();
-}
-
 void DMDbusHandler::getDeviceinfo()
 {
+    emit sigShowSpinerWindow(true);
+    m_dbus->getalldevice();
     qDebug() << __FUNCTION__ << "-------";
-    QDBusPendingReply<DeviceInfoMap> reply = m_dbus->getalldevice();
-    reply.waitForFinished();
-    if (reply.isError()) {
-        qDebug() << reply.error().message();
-    } else {
-        DeviceInfoMap map = reply.value();
-        for (auto it = map.begin(); it != map.end(); it++) {
-            DeviceInfo info = *it;
-            qDebug() << info.m_path << info.heads << info.cylinders << info.serial_number << info.max_prims;
-        }
-    }
-
-
-//    qDebug() << __FUNCTION__ << "-------";
-//    QDBusPendingReply<DeviceInfo> reply = m_dbus->getDeviceinfo();
-//    reply.waitForFinished();
-//    if (reply.isError()) {
-//        qDebug() << reply.error().message();
-//    } else {
-//        DeviceInfo info = reply.value();
-//        qDebug() << info.m_path << info.heads << info.cylinders << info.serial_number << info.max_prims;
-//    }
 }
 
 void DMDbusHandler::MessageReport(const QString &msg)

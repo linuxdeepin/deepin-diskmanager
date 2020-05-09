@@ -66,7 +66,7 @@ void CenterWidget::slotshowSpinerWindow(bool bshow)
 void CenterWidget::slotUpdateDeviceInfo(const DeviceInfoMap &infomap)
 {
     qDebug() << "===========";
-    slotshowSpinerWindow();
+    slotshowSpinerWindow(false);
     for (auto it = infomap.begin(); it != infomap.end(); it++) {
         DeviceInfo info = *it;
         qDebug() << info.m_path << info.heads << info.cylinders << info.serial_number << info.max_prims;

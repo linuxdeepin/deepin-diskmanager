@@ -5,6 +5,7 @@
 MainSplitter::MainSplitter(DWidget *parent): DSplitter(parent)
 {
     initui();
+    initConnection();
 }
 
 void MainSplitter::initui()
@@ -16,5 +17,10 @@ void MainSplitter::initui()
     addWidget(m_devicelist);
     addWidget(m_infoshow);
 
+
+}
+
+void MainSplitter::initConnection()
+{
 
 }

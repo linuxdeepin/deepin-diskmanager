@@ -33,8 +33,10 @@ HEADERS += \
     utils.h \
     dmcommonstruct.h \
     deviceinfo.h \
-    commondef.h
+    commondef.h \
+    partitioninfo.h
 SOURCES += \
     utils.cpp \
     dmcommonstruct.cpp \
-    deviceinfo.cpp
+    deviceinfo.cpp \
+    partitioninfo.cpp

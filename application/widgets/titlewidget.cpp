@@ -60,3 +60,8 @@ DPushButton *TitleWidget::createBtn(const QString &btnName, bool bCheckable)
     // btn->setDisabled(true);
     return btn;
 }
+
+void TitleWidget::updateCurPath(const QString &path)
+{
+
+}

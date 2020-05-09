@@ -20,6 +20,9 @@ public:
     void initUi();
     DPushButton *createBtn(const QString &btnName, bool bCheckable = false);
 
+public slots:
+    void updateCurPath(const QString &path);
+
 private:
     DPushButton *m_btnparted;
     DPushButton *m_btnformat;

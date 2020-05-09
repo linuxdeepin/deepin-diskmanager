@@ -11,4 +11,16 @@ DeviceListWidget::DeviceListWidget(QWidget *parent): DWidget(parent)
     setMaximumWidth(360);
     setMinimumWidth(100);
 
+    initUi();
+    initConnection();
+}
+
+void DeviceListWidget::initUi()
+{
+
+}
+
+void DeviceListWidget::initConnection()
+{
+
 }

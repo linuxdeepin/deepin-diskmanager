@@ -16,6 +16,7 @@ public:
 
 public:
     void initui();
+    void initConnection();
 
 private:
     InfoShowWidget *m_infoshow;

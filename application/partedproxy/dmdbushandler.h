@@ -20,13 +20,14 @@ private:
 signals:
     void sigShowSpinerWindow(bool);
     void sigUpdateDeviceInfo(const DeviceInfoMap &infomap);
-public slots:
-
+private slots:
     void MessageReport(const QString &msg);
 
 private:
     DMDBusInterface        *m_dbus = nullptr;
-    static DMDbusHandler *m_statichandeler;
+    static DMDbusHandler    *m_statichandeler;
+    QString                 m_curdevice;
+    DeviceInfoMap           m_devicemap;
 };
 
 #endif // DMDBUSHANDLER_H

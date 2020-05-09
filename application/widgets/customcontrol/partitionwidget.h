@@ -14,24 +14,39 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "tippartdialog.h"
-#include <QDebug>
-TipPartDialog::TipPartDialog(QWidget *parent) : TipDialog(parent)
-{
-    this->titleLable->setText(tr("XXX system space is in operation"));
-    this->tipLabel->setText(tr("The disk is in use. Partition the space in the disk.\n Click OK to confirm the operation"));
-    this->mountLabel->hide();
-    this->nameLineEdit->hide();
-    this->typeCombox->hide();
-    QList<QAbstractButton *> list3 = getButtons();
-    for (int i = 0; i < list3.size(); i++) {
-        connect(list3.at(i), &QAbstractButton::clicked, this, [ = ] {
-            if (list3.at(i)->text() == "Ok")
-            {
-                partitionWidget = new PartitionWidget(this);
-                partitionWidget->show();
-            }
-        });
+#ifndef PARTITIONWIDGET_H
+#define PARTITIONWIDGET_H
 
-    }
-}
+#include <DDialog>
+#include <DLabel>
+#include <DLineEdit>
+#include <DComboBox>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <DFrame>
+#include <DPalette>
+#include <DApplicationHelper>
+#include <QAbstractButton>
+DWIDGET_USE_NAMESPACE
+
+class PartitionWidget : public DDialog
+{
+    Q_OBJECT
+public:
+    explicit PartitionWidget(QWidget *parent = nullptr);
+
+signals:
+
+    // QWidget interface
+protected:
+    virtual void paintEvent(QPaintEvent *event) override;
+public slots:
+private:
+    DFrame *mainFrame;
+    DFrame *topFrame;
+    DFrame *botFrame;
+
+
+};
+
+#endif // PARTITIONWIDGET_H

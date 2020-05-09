@@ -14,23 +14,34 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef TIPPARTDIALOG_H
-#define TIPPARTDIALOG_H
-
-#include <QWidget>
-#include "tipdialog.h"
 #include "partitionwidget.h"
-class TipPartDialog : public TipDialog
+
+PartitionWidget::PartitionWidget(QWidget *parent) : DDialog(parent)
 {
-    Q_OBJECT
-public:
-    explicit TipPartDialog(QWidget *parent = nullptr);
+    this->setFixedSize(800, 600);
+    mainFrame = new DFrame(this);
 
-signals:
+    mainFrame->setFrameRounded(false);
+    mainFrame->setFrameStyle(DFrame::NoFrame);
 
-public slots:
-private:
-    PartitionWidget *partitionWidget;
-};
+    QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
+    mainLayout->setSpacing(5);
+//    mainLayout->setContentsMargins(5, 5, 5, 5);
+    topFrame = new DFrame();
+    botFrame = new DFrame();
+    mainLayout->addWidget(topFrame, 2);
+    mainLayout->addWidget(botFrame, 8);
 
-#endif // TIPPARTDIALOG_H
+
+    this->addContent(mainFrame);
+}
+
+void PartitionWidget::paintEvent(QPaintEvent *event)
+{
+    QRectF rectangle1(50.0, 30.0, 15.0, 15.0);
+    QPainter painter;
+    painter.setPen(QPen(QColor(Qt::gray), 1));
+    painter.drawEllipse(rectangle1);
+    DDialog::paintEvent(event);
+    update();
+}

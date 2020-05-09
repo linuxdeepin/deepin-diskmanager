@@ -18,6 +18,7 @@
 
 TipDialog::TipDialog(QWidget *parent) : DDialog(parent)
 {
+    this->setModal(true);
     this->setIcon(QIcon::fromTheme("exception-logo"));
     mainFrame = new DFrame(this);
 

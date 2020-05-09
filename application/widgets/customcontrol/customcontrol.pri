@@ -8,7 +8,8 @@ HEADERS += \
     $$PWD/tippartdialog.h \
     $$PWD/dmtreeviewdelegate.h \
     $$PWD/dmtreeview.h \
-    $$PWD/dmtreemanagerwidget.h
+    $$PWD/dmtreemanagerwidget.h \
+    $$PWD/partitionwidget.h
 
 SOURCES += \
     $$PWD/bufferwin.cpp\
@@ -20,4 +21,5 @@ SOURCES += \
     $$PWD/tippartdialog.cpp \
     $$PWD/dmtreeviewdelegate.cpp \
     $$PWD/dmtreeview.cpp \
-    $$PWD/dmtreemanagerwidget.cpp
+    $$PWD/dmtreemanagerwidget.cpp \
+    $$PWD/partitionwidget.cpp

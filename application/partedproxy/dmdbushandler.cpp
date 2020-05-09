@@ -46,7 +46,7 @@ void DMDbusHandler::Quit()
 
 void DMDbusHandler::getDeviceinfo()
 {
-    emit sigShowSpinerWindow(true);
+    // emit sigShowSpinerWindow(true);
     m_dbus->getalldevice();
     qDebug() << __FUNCTION__ << "-------";
 }

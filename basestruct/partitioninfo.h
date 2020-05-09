@@ -3,6 +3,7 @@
 #include "commondef.h"
 #include <QString>
 
+class QDBusArgument;
 class PartitionInfo
 {
 public:
@@ -23,9 +24,12 @@ public:
     Sector sectors_unused;
     Sector sectors_unallocated;  //Difference between the size of the partition and the file system
     Sector significant_threshold;  //Threshold from intrinsic to significant unallocated sectors
-    bool inside_extended;
-    bool busy;
-    bool fs_readonly;  // Is the file
+//    bool inside_extended;
+//    bool busy;
+//    bool fs_readonly;
 };
+Q_DECLARE_METATYPE(PartitionInfo)
+QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info);
+const QDBusArgument &operator>>(const QDBusArgument &argument, PartitionInfo &info);
 
 #endif // PARTITIONINFO_H

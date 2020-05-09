@@ -1,8 +1,5 @@
 HEADERS += \
-    $$PWD/bufferwin.h
-
-SOURCES += \
-    $$PWD/bufferwin.cpp
+    $$PWD/bufferwin.h\
     $$PWD/tipdialog.h \
     $$PWD/tipresizedialog.h \
     $$PWD/tipformatedialog.h \
@@ -11,6 +8,7 @@ SOURCES += \
     $$PWD/tippartdialog.h
 
 SOURCES += \
+    $$PWD/bufferwin.cpp\
     $$PWD/tipdialog.cpp \
     $$PWD/tipresizedialog.cpp \
     $$PWD/tipformatedialog.cpp \

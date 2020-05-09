@@ -109,14 +109,15 @@ void InfoShowWidget::topFrameSettings()
     v2->addStretch();
     allnameLabel = new DLabel(pframetop);
     allmemoryLabel = new DLabel(pframetop);
-    QFont font("微软雅黑", 9, 70, false);
+    QFont font;
+    font.setBold(true);
     allnameLabel->setFont(font);
 
     QFont memoryFont;
     memoryFont.setPointSize(20);
     allmemoryLabel->setFont(memoryFont);
 
-    allnameLabel->setText("总容量");
+    allnameLabel->setText(tr("Total capacity"));
     allnameLabel->setAlignment(Qt::AlignRight);
     allmemoryLabel->setAlignment(Qt::AlignRight);
 

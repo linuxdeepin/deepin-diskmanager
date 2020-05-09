@@ -42,7 +42,7 @@ TipDialog::TipDialog(QWidget *parent) : DDialog(parent)
     mountLabel->hide();
     nameLineEdit = new DLineEdit(mainFrame);
     if (nameLineEdit->text().isEmpty()) {
-        nameLineEdit->lineEdit()->setPlaceholderText("名称");
+        nameLineEdit->lineEdit()->setPlaceholderText(tr("name"));
     }
 
     typeCombox = new DComboBox(mainFrame);

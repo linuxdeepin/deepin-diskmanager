@@ -40,8 +40,11 @@ void CenterWidget::initUi()
     QVBoxLayout *mainlayout = new QVBoxLayout;
     mainlayout->setContentsMargins(0, 0, 0, 0);
     mainlayout->setSpacing(0);
+
     m_mainspliter = new MainSplitter;
     mainlayout->addWidget(m_mainspliter);
+
+
     setLayout(mainlayout);
 }
 

@@ -15,3 +15,4 @@ SOURCES += \
     $$PWD/mainsplitter.cpp \
     $$PWD/devicelistwidget.cpp \
     $$PWD/infoshowwidget.cpp
+

@@ -3,6 +3,12 @@
 
 #include <DWidget>
 #include <DPushButton>
+
+#include "customcontrol/tipformatedialog.h"
+#include "customcontrol/tipresizedialog.h"
+#include "customcontrol/tipmountdialog.h"
+#include "customcontrol/tipumountdialog.h"
+#include "customcontrol/tippartdialog.h"
 DWIDGET_USE_NAMESPACE
 
 
@@ -20,6 +26,13 @@ private:
     DPushButton *m_btnmount;
     DPushButton *m_btnunmount;
     DPushButton *m_btnresize;
+    TipMountDialog *tipMountDialog;
+    TipFormateDialog *tipFormateDialog;
+    TipResizeDialog *tipResizeDialog;
+    TipUmountDialog *tipUmountDialog;
+    TipPartDialog *tipPartDialog;
 };
+
+
 
 #endif // TITLEWIDGET_H

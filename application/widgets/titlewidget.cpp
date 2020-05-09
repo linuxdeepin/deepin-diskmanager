@@ -20,6 +20,29 @@ void TitleWidget::initUi()
     layout->addWidget(m_btnmount);
     layout->addWidget(m_btnunmount);
     layout->addWidget(m_btnresize);
+
+    connect(m_btnparted, &DPushButton::clicked, this, [ = ] {
+        tipPartDialog = new TipPartDialog(this);
+        tipPartDialog->show();
+    });
+
+    connect(m_btnformat, &DPushButton::clicked, this, [ = ] {
+        tipFormateDialog = new TipFormateDialog(this);
+        tipFormateDialog->show();
+    });
+    connect(m_btnmount, &DPushButton::clicked, this, [ = ] {
+        tipMountDialog = new TipMountDialog(this);
+        tipMountDialog->show();
+    });
+    connect(m_btnunmount, &DPushButton::clicked, this, [ = ] {
+        tipUmountDialog = new TipUmountDialog(this);
+        tipUmountDialog->show();
+    });
+
+    connect(m_btnresize, &DPushButton::clicked, this, [ = ] {
+        tipResizeDialog = new TipResizeDialog(this);
+        tipResizeDialog->show();
+    });
 }
 
 DPushButton *TitleWidget::createBtn(const QString &btnName, bool bCheckable)

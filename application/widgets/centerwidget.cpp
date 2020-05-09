@@ -70,5 +70,8 @@ void CenterWidget::slotUpdateDeviceInfo(const DeviceInfoMap &infomap)
     for (auto it = infomap.begin(); it != infomap.end(); it++) {
         DeviceInfo info = *it;
         qDebug() << info.m_path << info.heads << info.cylinders << info.serial_number << info.max_prims;
+        for (auto it = info.partition.begin(); it != info.partition.end(); it++) {
+            qDebug() << it->heads << it->length << it->m_path;
+        }
     }
 }

@@ -13,6 +13,10 @@ public:
     static int executecmdwithartlist(const QString &strcmd, const QStringList  &strarg, QString &output, QString &error);
     static int executcmd(const QString &strcmd, QString &output, QString &error);
     static QString regexp_label(const QString &strtext, const QString &strpatter);
+    static const QString get_partition_type_string(PartitionType type);
+    static const QString FSTypeToString(FSType type);
+    static FSType StringToFSType(const QString &fsname);
+
 
 };
 

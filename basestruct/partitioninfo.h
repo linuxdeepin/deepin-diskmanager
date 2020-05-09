@@ -12,10 +12,10 @@ public:
 public:
     QString device_path ;
     int partition_number;
-    PartitionType type;// UNALLOCATED, PRIMARY, LOGICAL, etc...
-    PartitionStatus status; //STAT_REAL, STAT_NEW, etc..
-    PartitionAlignment alignment;   //ALIGN_CYLINDER, ALIGN_STRICT, etc
-    FSType fstype;
+    int type;// UNALLOCATED, PRIMARY, LOGICAL, etc...
+    int status; //STAT_REAL, STAT_NEW, etc..
+    int alignment;   //ALIGN_CYLINDER, ALIGN_STRICT, etc
+    int fstype;
     QString uuid ;
     QString name;
     Sector sector_start;

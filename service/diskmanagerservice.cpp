@@ -46,6 +46,5 @@ stCustest DiskManagerService::interfacetest()
     stcus.heads = 1000;
     stcus.length = 2000;
     stcus.m_path = "uos";
-    stcus.btest = true;
     return stcus;
 }

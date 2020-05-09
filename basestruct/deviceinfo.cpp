@@ -18,7 +18,8 @@ QDBusArgument &operator<<(QDBusArgument &argument, const DeviceInfo &info)
              << info.max_prims
              << info.highest_busy
              << info.readonly
-             << info.max_partition_name_length;
+             << info.max_partition_name_length
+             << info.partition;
     argument.endStructure();
 
     return argument;
@@ -40,7 +41,8 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, DeviceInfo &info)
              >> info.max_prims
              >> info.highest_busy
              >> info.readonly
-             >> info.max_partition_name_length;
+             >> info.max_partition_name_length
+             >> info.partition;
     argument.endStructure();
     return argument;
 }
@@ -50,8 +52,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const stCustest &stcus)
     argument.beginStructure();
     argument << stcus.length
              << stcus.heads
-             << stcus.m_path
-             << stcus.btest;
+             << stcus.m_path;
     argument.endStructure();
     return argument;
 }
@@ -61,8 +62,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, stCustest &stcus)
     argument.beginStructure();
     argument >> stcus.length
              >> stcus.heads
-             >> stcus.m_path
-             >> stcus.btest;
+             >> stcus.m_path;
 
     argument.endStructure();
     return argument;

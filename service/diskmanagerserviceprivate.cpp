@@ -33,6 +33,13 @@ void DiskManagerServicePrivate::getalldevice()
         info.heads = i + 1;
         info.max_prims = i + 1;
         info.cylinders = (i + 1) * 100;
+        for (int b = 0; b < 2; b++) {
+            stCustest sttest;
+            sttest.heads = i;
+            sttest.length = i + 1;
+            sttest.m_path = QString("sbkebcmj%1").arg(b);
+            info.partition.push_back(sttest);
+        }
         map.insert(QString("uos%1").arg(i), info);
     }
     sleep(5);

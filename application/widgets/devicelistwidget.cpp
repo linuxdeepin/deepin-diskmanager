@@ -17,7 +17,7 @@ DeviceListWidget::DeviceListWidget(QWidget *parent): DWidget(parent)
 
 void DeviceListWidget::initUi()
 {
-
+    m_treeview = new DmTreeview(this);
 }
 
 void DeviceListWidget::initConnection()

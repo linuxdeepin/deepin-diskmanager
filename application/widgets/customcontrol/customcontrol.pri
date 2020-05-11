@@ -9,7 +9,8 @@ HEADERS += \
     $$PWD/dmtreeviewdelegate.h \
     $$PWD/dmtreeview.h \
     $$PWD/dmtreemanagerwidget.h \
-    $$PWD/partitionwidget.h
+    $$PWD/partitionwidget.h \
+    $$PWD/piechartwidget.h
 
 SOURCES += \
     $$PWD/bufferwin.cpp\
@@ -22,4 +23,5 @@ SOURCES += \
     $$PWD/dmtreeviewdelegate.cpp \
     $$PWD/dmtreeview.cpp \
     $$PWD/dmtreemanagerwidget.cpp \
-    $$PWD/partitionwidget.cpp
+    $$PWD/partitionwidget.cpp \
+    $$PWD/piechartwidget.cpp

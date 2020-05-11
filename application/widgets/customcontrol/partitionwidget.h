@@ -27,6 +27,13 @@
 #include <DPalette>
 #include <DApplicationHelper>
 #include <QAbstractButton>
+#include <DIconButton>
+#include <DPushButton>
+#include <DScrollArea>
+#include <QSizePolicy>
+#include <DHorizontalLine>
+#include "piechartwidget.h"
+
 DWIDGET_USE_NAMESPACE
 
 class PartitionWidget : public DDialog
@@ -34,7 +41,12 @@ class PartitionWidget : public DDialog
     Q_OBJECT
 public:
     explicit PartitionWidget(QWidget *parent = nullptr);
-
+    void topFrameSetting();
+    void botFrameSetting();
+    void partInfoShowing();
+    void addWidget();
+    void remWidget();
+    void partedInfo();
 signals:
 
     // QWidget interface
@@ -45,6 +57,47 @@ private:
     DFrame *mainFrame;
     DFrame *topFrame;
     DFrame *botFrame;
+//    DFrame *parInfoFrame;
+    DLabel *deviceInfoLabel;
+    DLabel *deviceNameLabel;
+    DLabel *deviceName;
+    DLabel *deviceFormateLabel;
+    DLabel *deviceFormate;
+    DLabel *selectedPartLabel;
+    DLabel *selectedPartition;
+    DLabel *allMemoryLabel;
+    DLabel *allMemory;
+    DLabel *partInfoLabel;
+    DIconButton *addButton;
+    DIconButton *remButton;
+    DScrollArea *scrollArea;
+    QWidget *partWidget;
+    QVBoxLayout *infoLayout;
+    QVBoxLayout *scrollLayout;
+
+    DLabel *picLabel;
+    DLabel *titleLabel;
+    DLabel *tipLabel;
+
+    DPushButton *applyBtn;
+    DPushButton *cancleBtn;
+    DPushButton *reveBtn;
+
+    DScrollArea *scroll;
+    QWidget *scrollWidget;
+    PieChartWidget *pieWidget;
+
+    QWidget *infoWidget;
+    DLabel *partNameLabel;
+    DLineEdit *partNameEdit;
+    DLabel *partFormateLabel;
+    DComboBox *partFormateCombox;
+    DLabel *partSizeLabel;
+    DLineEdit *partSizeEdit;
+    DComboBox *partComCobox;
+
+    int layoutCount = 1;
+
 
 
 };

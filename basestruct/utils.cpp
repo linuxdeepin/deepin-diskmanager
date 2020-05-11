@@ -1,4 +1,5 @@
 #include "utils.h"
+#include <sys/statvfs.h>
 #include <QProcess>
 #include <QRegularExpression>
 #include <QDebug>
@@ -243,5 +244,93 @@ FSType Utils::StringToFSType(const QString &fsname)
         type = FS_ATARAID;
 
     return type;
+}
+
+int Utils::get_mounted_filesystem_usage(const QString &mountpoint, Byte_Value &fs_size, Byte_Value &fs_free)
+{
+    struct statvfs sfs ;
+    int ret ;
+    ret = statvfs(mountpoint.toStdString().c_str(), &sfs) ;
+    if (ret == 0) {
+        fs_size = static_cast<Byte_Value>(sfs .f_blocks) * sfs .f_frsize ;
+        fs_free = static_cast<Byte_Value>(sfs .f_bfree) * sfs .f_bsize ;
+    } else {
+        QString error_message("statvfs(\"%1\"):%2 ");// = "statvfs(\"" + mountpoint + "\"): " + Glib::strerror(errno) ;
+        error_message = error_message.arg(mountpoint).arg(errno);
+        qDebug() << error_message;
+    }
+
+    return ret ;
+}
+
+QString Utils::get_filesystem_software(FSType fstype)
+{
+    switch (fstype) {
+    case FS_BTRFS       : return "btrfs-progs / btrfs-tools" ;
+    case FS_EXT2        : return "e2fsprogs" ;
+    case FS_EXT3        : return "e2fsprogs" ;
+    case FS_EXT4        : return "e2fsprogs v1.41+" ;
+    case FS_F2FS        : return "f2fs-tools" ;
+    case FS_FAT16       : return "dosfstools, mtools" ;
+    case FS_FAT32       : return "dosfstools, mtools" ;
+    case FS_HFS         : return "hfsutils" ;
+    case FS_HFSPLUS     : return "hfsprogs" ;
+    case FS_JFS         : return "jfsutils" ;
+    case FS_LINUX_SWAP  : return "util-linux" ;
+    case FS_LVM2_PV     : return "lvm2" ;
+    case FS_LUKS        : return "cryptsetup, dmsetup";
+    case FS_MINIX       : return "util-linux";
+    case FS_NILFS2      : return "nilfs-utils / nilfs-tools";
+    case FS_NTFS        : return "ntfs-3g / ntfsprogs" ;
+    case FS_REISER4     : return "reiser4progs" ;
+    case FS_REISERFS    : return "reiserfsprogs / reiserfs-utils" ;
+    case FS_UDF         : return "udftools";
+    case FS_XFS         : return "xfsprogs, xfsdump" ;
+
+    default             : return "" ;
+    }
+    return "";
+}
+
+QString Utils::format_size(Sector sectors, Byte_Value sector_size)
+{
+    QString res;
+    if ((sectors * sector_size) < KIBIBYTE) {
+        res =  res .setNum(sector_to_unit(sectors, sector_size, UNIT_BYTE), 'g', 2) ;
+        res.append(" B");
+    } else if ((sectors * sector_size) < MEBIBYTE) {
+        res =  res .setNum(sector_to_unit(sectors, sector_size, UNIT_KIB), 'g', 2);
+        res.append(" KiB");
+    } else if ((sectors * sector_size) < GIBIBYTE) {
+        res =  res .setNum(sector_to_unit(sectors, sector_size, UNIT_MIB), 'g', 2);
+        res.append(" MiB");
+    } else if ((sectors * sector_size) < TEBIBYTE) {
+        res =  res .setNum(sector_to_unit(sectors, sector_size, UNIT_GIB), 'g', 2);
+        res.append(" GiB");
+    } else {
+        res =  res .setNum(sector_to_unit(sectors, sector_size, UNIT_TIB), 'g', 2);
+        res.append(" TiB");
+    }
+    return res;
+}
+
+double Utils::sector_to_unit(Sector sectors, Byte_Value sector_size, SIZE_UNIT size_unit)
+{
+    double res = 0.0;
+    switch (size_unit) {
+    case UNIT_BYTE  :
+        res = sectors * sector_size ;   break;
+    case UNIT_KIB   :
+        res =  sectors / (static_cast<double>(KIBIBYTE) / sector_size); break;
+    case UNIT_MIB   :
+        res =  sectors / (static_cast<double>(MEBIBYTE) / sector_size); break;
+    case UNIT_GIB   :
+        res =  sectors / (static_cast<double>(GIBIBYTE) / sector_size); break;
+    case UNIT_TIB   :
+        res =  sectors / (static_cast<double>(TEBIBYTE) / sector_size); break;
+    default:
+        res = sectors ;
+    }
+    return res;
 }
 

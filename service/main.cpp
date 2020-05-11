@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
         qCritical() << "registerService failed:" << systemBus.lastError();
         exit(0x0001);
     }
-    DiskManagerService service;
+    DiskManager::DiskManagerService service;
     qDebug() << "systemBus.registerService success" << Dtk::Core::DLogManager::getlogFilePath();
     if (!systemBus.registerObject(DiskManagerPath,
                                   &service,

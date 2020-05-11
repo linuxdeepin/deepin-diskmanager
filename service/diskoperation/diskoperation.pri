@@ -1,13 +1,23 @@
+include(filesystems/filesystems.pri)
+
 HEADERS += \
     $$PWD/partedcore.h \
     $$PWD/blockspecial.h \
     $$PWD/partition.h\
      $$PWD/device.h \
-    $$PWD/partitionvector.h
+    $$PWD/partitionvector.h \
+    $$PWD/fsinfo.h \
+    $$PWD/procpartitionsinfo.h \
+    $$PWD/supportedfilesystems.h \
+    $$PWD/mountinfo.h
 
 SOURCES += \
     $$PWD/partedcore.cpp \
     $$PWD/blockspecial.cpp \
     $$PWD/partition.cpp\
     $$PWD/device.cpp \
-    $$PWD/partitionvector.cpp
+    $$PWD/partitionvector.cpp \
+    $$PWD/fsinfo.cpp \
+    $$PWD/procpartitionsinfo.cpp \
+    $$PWD/supportedfilesystems.cpp \
+    $$PWD/mountinfo.cpp

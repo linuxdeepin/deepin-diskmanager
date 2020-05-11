@@ -1,6 +1,7 @@
 #ifndef COMMONDEF_H
 #define COMMONDEF_H
 #include <QObject>
+#include <QVector>
 
 typedef long long Sector;
 typedef long long Byte_Value;
@@ -95,4 +96,79 @@ enum PartitionAlignment {
     ALIGN_STRICT   = 2     //Strict alignment - no rounding
                      //  Indicator if start and end sectors must remain unchanged
 };
+
+enum CUSTOM_TEXT {
+    CTEXT_NONE,
+    CTEXT_ACTIVATE_FILESYSTEM,       // Activate text ('Mount', 'Swapon', VG 'Activate', ...)
+    CTEXT_DEACTIVATE_FILESYSTEM,     // Deactivate text ('Unmount', 'Swapoff', VG 'Deactivate', ...)
+    CTEXT_CHANGE_UUID_WARNING,       // Warning to print when changing UUIDs
+    CTEXT_RESIZE_DISALLOWED_WARNING  // File system resizing currently disallowed reason
+};
+
+// Minimum and maximum file system size limits
+struct FS_Limits {
+    Byte_Value min_size;  // 0 => no limit, +ve => limit defined.  (As implemented by)
+    Byte_Value max_size;  // -----------------"-----------------   (code using these.)
+
+    FS_Limits()                                 : min_size(0), max_size(0)    {}
+    FS_Limits(Byte_Value min, Byte_Value max) : min_size(min), max_size(max)  {}
+};
+
+enum ExecFlags {
+    EXEC_NONE            = 1 << 0,
+    EXEC_CHECK_STATUS    = 1 << 1,  // Set the status of the command in the operation
+    // details based on the exit status being zero or
+    // non-zero.  Must either use this flag when calling
+    // ::execute_command() or call ::set_status()
+    // afterwards.
+    EXEC_CANCEL_SAFE     = 1 << 2,
+    EXEC_PROGRESS_STDOUT = 1 << 3,  // Run progress tracking callback after reading new
+    // data on stdout from command.
+    EXEC_PROGRESS_STDERR = 1 << 4,  // Same but for stderr.
+    EXEC_PROGRESS_TIMED  = 1 << 5   // Run progress tracking callback periodically.
+};
+
+// Struct to store file system support information
+struct FS {
+    enum Support {
+        NONE      = 0,
+        GPARTED   = 1,
+        LIBPARTED = 2,
+        EXTERNAL  = 3
+    };
+
+    FSType fstype;
+    Support busy;               // How to determine if partition/file system is busy
+    Support read;               // Can and how to read sector usage while inactive
+    Support read_label;
+    Support write_label;
+    Support read_uuid;
+    Support write_uuid;
+    Support create;
+    Support create_with_label;  // Can and how to format file system with label
+    Support grow;
+    Support shrink;
+    Support move;               // start point and endpoint
+    Support check;              // Some check tool available?
+    Support copy;
+    Support remove;
+    Support online_read;        // Can and how to read sector usage while active
+    Support online_grow;
+    Support online_shrink;
+
+    FS(FSType fstype_ = FS_UNSUPPORTED) : fstype(fstype_)
+    {
+        busy = read = read_label = write_label = read_uuid = write_uuid = create = NONE;
+        create_with_label = grow = shrink = move = check = copy = remove = online_read = NONE;
+        online_grow = online_shrink = NONE;
+    }
+};
+
+struct MountEntry {
+    bool                       readonly;     // Is the file system mounted read-only?
+    QVector<QString> mountpoints;  // File system mounted on ...
+    MountEntry() : readonly(false)  {};
+};
+
+
 #endif // COMMONDEF_H

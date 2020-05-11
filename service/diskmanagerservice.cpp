@@ -4,6 +4,8 @@
 #include <QDebug>
 #include <unistd.h>
 
+namespace DiskManager {
+
 DiskManagerService::DiskManagerService(QObject *parent) :
     QObject(parent), d_ptr(new DiskManagerServicePrivate(this))
 {
@@ -47,4 +49,6 @@ stCustest DiskManagerService::interfacetest()
     stcus.length = 2000;
     stcus.m_path = "uos";
     return stcus;
+}
+
 }

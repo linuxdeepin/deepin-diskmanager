@@ -2,8 +2,9 @@
 #define DISKMANAGERSERVICEPRIVATE_H
 
 #include <QObject>
-#include <QtDBus/QtDBus>
 #include "diskoperation/partedcore.h"
+
+namespace DiskManager {
 
 class DiskManagerService;
 class DiskManagerServicePrivate : public QObject
@@ -25,5 +26,5 @@ public:
     DiskManagerService *q_ptr;
     Q_DECLARE_PUBLIC(DiskManagerService)
 };
-
+}
 #endif // DISKMANAGERSERVICEPRIVATE_H

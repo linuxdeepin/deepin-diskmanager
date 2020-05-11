@@ -5,6 +5,7 @@
 #include <QDBusContext>
 #include <QScopedPointer>
 
+namespace DiskManager {
 class DiskManagerServicePrivate;
 
 class DiskManagerService : public QObject, protected QDBusContext
@@ -31,4 +32,5 @@ private:
     Q_DECLARE_PRIVATE_D(qGetPtrHelper(d_ptr), DiskManagerService)
 };
 
+}
 #endif // DISKMANAGERSERVICE_H

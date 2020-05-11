@@ -5,14 +5,15 @@
 #include <QDebug>
 #include <unistd.h>
 #include <QThread>
+namespace DiskManager {
 
 DiskManagerServicePrivate::DiskManagerServicePrivate(DiskManagerService *parent) : QObject(parent)
     , q_ptr(parent), m_partedcore(new DiskManager::PartedCore(this))
 {
-    qRegisterMetaType<DeviceInfo>("DeviceInfo");
-    qDBusRegisterMetaType<DeviceInfo>();
-    qDBusRegisterMetaType<DeviceInfoMap>();
-    qDBusRegisterMetaType<stCustest>();
+//    qRegisterMetaType<DeviceInfo>("DeviceInfo");
+//    qDBusRegisterMetaType<DeviceInfo>();
+//    qDBusRegisterMetaType<DeviceInfoMap>();
+//    qDBusRegisterMetaType<stCustest>();
 }
 
 DeviceInfo DiskManagerServicePrivate::getDeviceinfo()
@@ -44,4 +45,6 @@ void DiskManagerServicePrivate::getalldevice()
     }
     sleep(5);
     Q_EMIT q_ptr->sigUpdateDeviceInfo(map);
+}
+
 }

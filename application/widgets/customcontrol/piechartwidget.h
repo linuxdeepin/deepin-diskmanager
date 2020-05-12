@@ -19,6 +19,7 @@
 
 #include <QWidget>
 #include <QPainter>
+#include <QtMath>
 class PieChartWidget : public QWidget
 {
     Q_OBJECT
@@ -33,6 +34,11 @@ public slots:
     // QWidget interface
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
+    void drawPie(QPainter *painter);
+private:
+    QList<QColor> color;
+    QList<qreal> dataValue;
+    QList<QString> strName;
 };
 
 #endif // PIECHARTWIDGET_H

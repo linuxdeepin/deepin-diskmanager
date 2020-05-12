@@ -2,7 +2,7 @@
 #define DEVICELISTWIDGET_H
 #include <DWidget>
 #include "customcontrol/dmtreeview.h"
-#include "customcontrol/dmtreemanagerwidget.h"
+#include "customcontrol/dmdiskinfobox.h"
 DWIDGET_USE_NAMESPACE
 
 class DeviceListWidget: public DWidget
@@ -14,7 +14,9 @@ public:
 private:
     void initUi();
     void initConnection();
+    void add();
     DmTreeview *m_treeview;
+
 signals:
     void sigPartitionSelectChanged();
 };

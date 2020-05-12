@@ -52,5 +52,8 @@
         <file>icons/deepin/builtin/select.svg</file>
         <file>icons/deepin/builtin/warning.svg</file>
         <file>icons/deepin-diskmanager.desktop</file>
+        <file>icons/deepin/builtin/light/icons/arrow.svg</file>
+        <file>icons/deepin/builtin/light/icons/drive-removable-media-48px.png</file>
+        <file>icons/deepin/builtin/light/icons/arrow_right.svg</file>
     </qresource>
 </RCC>

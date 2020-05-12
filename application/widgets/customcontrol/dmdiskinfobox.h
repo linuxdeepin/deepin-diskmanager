@@ -1,8 +1,8 @@
 /*
 * Copyright (C) 2019 ~ 2020 Deepin Technology Co., Ltd.
 *
-* Author:     zhangkai <zhangkai@uniontech.com>
-* Maintainer: zhangkai <zhangkai@uniontech.com>
+* Author:     linxun <linxun@uniontech.com>
+* Maintainer: linxun <linxun@uniontech.com>
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
@@ -14,37 +14,29 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef TIPDIALOG_H
-#define TIPDIALOG_H
+#ifndef DMDISKINFOBOX_H
+#define DMDISKINFOBOX_H
 
-#include <DDialog>
-#include <DLabel>
-#include <DLineEdit>
-#include <DComboBox>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <DFrame>
-#include <DPalette>
-#include <DApplicationHelper>
-#include <QAbstractButton>
-DWIDGET_USE_NAMESPACE
+#include <QObject>
 
-class TipDialog : public DDialog
+class DmDiskinfoBox
 {
-    Q_OBJECT
 public:
-    explicit TipDialog(QWidget *parent = nullptr);
-    DLabel *titleLable;
-    DLabel *tipLabel;
-    DLabel *mountLabel;
-    DLineEdit *nameLineEdit;
-    DComboBox *typeCombox;
-signals:
+    DmDiskinfoBox();
+    ~DmDiskinfoBox();
 
-public slots:
-private:
-    DFrame *mainFrame;
-
+public:
+    int addChild(DmDiskinfoBox *child);
+    int childCount();
+    void print();
+public:
+    int id;
+    int level;
+    QString disklabel;
+    QString disksize;
+    QString partitonlabel;
+    QString partitionsize;
+    QList<DmDiskinfoBox *> childs;
 };
 
-#endif // TIPDIALOG_H
+#endif // DMDISKINFOBOX_H

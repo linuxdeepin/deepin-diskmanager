@@ -1,70 +1,67 @@
+/*
+* Copyright (C) 2019 ~ 2020 Deepin Technology Co., Ltd.
+*
+* Author:     linxun <linxun@uniontech.com>
+* Maintainer: linxun <linxun@uniontech.com>
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* any later version.
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 #include "dmtreeview.h"
 #include <QDebug>
-#include "dmtreemanagerwidget.h"
 DmTreeview::DmTreeview(QWidget *parent) : DTreeView(parent)
 {
     initUI();
     initmodel();
     initdelegate();
-    QStandardItem *t_item;
-    DiskInfoData data;
-    data.disksize = "200G";
-    data.disklabel = "/dev/sda";
-    qDebug() << data.level;
-    t_item = this->addtopitem(data);
-    qDebug() << data.level;
-    t_item = this->addtopitem(data);
-//    this->additem(t_item, data);
-    qDebug() << data.level;
-//    this->addtopitem(data);
-    qDebug() << data.level;
-//    this->addtopitem(data);
-    qDebug() << data.disksize << data.disklabel;
-    qDebug() << data.disksize << data.disklabel;
+
 }
 void DmTreeview::initUI()
 {
     setFrameShape(QFrame::NoFrame);
     setEditTriggers(QAbstractItemView::NoEditTriggers);
     setVerticalScrollMode(ScrollPerItem);
-    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::  ScrollBarAlwaysOn);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setHeaderHidden(true);
     setIndentation(0);                   //去除树型节点之间的缩进
     setWindowFlags(Qt::FramelessWindowHint); //无边框
-    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    // setAttribute(Qt::WA_TranslucentBackground);//背景透明
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+
+
+    /* setAttribute(Qt::WA_TranslucentBackground)*/;//背景透明
+
     qDebug() << 2222222222222;
 }
-void DmTreeview::additem(QStandardItem *t_item, DiskInfoData &data)
+void DmTreeview::additem(QStandardItem *item, DiskInfoData &data)
 {
-    QVariant var = t_item->index().data(Qt::UserRole + 1);
-    DiskInfoData parent_data = var.value<DiskInfoData>();
-    data.level = parent_data.level + 1;
-    qDebug() << data.level;
-    QStandardItem *c_item = new QStandardItem(data.disklabel);
-    t_item->setData(QVariant::fromValue((data)), Qt::UserRole + 1);
-    t_item->appendRow(c_item);
-    qDebug() << data.disksize << data.disklabel;
+    QStandardItem *pItem = new QStandardItem(data.disklabel);
+    pItem->setData(QVariant::fromValue((data)), Qt::UserRole + 1);
+    item->appendRow(pItem);
     // expand(m_pDataModel->indexFromItem(item));
-//    setExpanded(m_model->indexFromItem(c_item), true);
+    setExpanded(m_model->indexFromItem(item), true);
+
 }
 QStandardItem *DmTreeview::addtopitem(DiskInfoData &data)
 {
-    data.level = 0;
-    qDebug() << data.level;
-    QStandardItem *t_item = new QStandardItem(data.disklabel);
-    t_item->setData(QVariant::fromValue(data), Qt::UserRole + 1);
-    m_model->appendRow(t_item);
-    qDebug() << data.disksize << data.disklabel << "top";
-    return  t_item;
+    QStandardItem *pItem = new QStandardItem;
+    pItem->setData(QVariant::fromValue(data), Qt::UserRole + 1);
+    m_model->appendRow(pItem);
+    return pItem;
 }
 void DmTreeview::initmodel()
 {
     m_model = new QStandardItemModel(this);
-    qDebug() << "111111111111";
+    m_pSortViewFilter = new QSortFilterProxyModel(this);
     this->setModel(m_model);
-    qDebug() << "33333333333333";
+//    sort();
 }
 void DmTreeview::initdelegate()
 {
@@ -74,4 +71,114 @@ void DmTreeview::initdelegate()
 
 }
 
+QStandardItem *DmTreeview::getcuritem()
+{
+    QModelIndex  index = currentIndex();
+    if (!index.isValid()) {
+        return  nullptr;
+    } else {
+        return m_model->itemFromIndex(index);
+    }
 
+
+
+}
+QStandardItem *DmTreeview::getModelByIndex(const QModelIndex &index)
+{
+    if (index.isValid()) {
+        return m_model->itemFromIndex(index);
+    }
+    return nullptr;
+}
+void DmTreeview::currentChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+    Q_UNUSED(previous);
+    emit sigselectitem(current);
+
+}
+void DmTreeview::mousePressEvent(QMouseEvent *event)
+{
+    DTreeView::mousePressEvent(event);
+    if (event->button() == Qt::LeftButton) {
+        setExpanded(currentIndex(), !isExpanded(currentIndex()));
+    }
+}
+void DmTreeview::addItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
+{
+    QStandardItem *t_item;
+    DiskInfoData data;
+    qDebug() << infobox->level;
+    data.disksize = infobox->disksize;
+    data.disklabel = infobox->disklabel;
+    data.partitionsize = infobox->partitionsize;
+    data.partitonlabel = infobox->partitonlabel;
+    qDebug() << data.disksize << data.disklabel;
+
+
+    qDebug() << infobox->disksize;
+    if (infobox->level <= 0) {
+        data.level = 0;
+        t_item = this->addtopitem(data);
+    } else {
+        if (pcurItem == nullptr) {
+            pcurItem = this->getcuritem();
+        }
+        if (pcurItem == nullptr) {
+            return;
+        }
+        QVariant var = pcurItem->index().data(Qt::UserRole + 1);
+        DiskInfoData parent_data = var.value<DiskInfoData>();
+        data.level = parent_data.level + 1;
+        qDebug() << data.level;
+
+        this->additem(pcurItem, data);
+
+    }
+
+    foreach (auto sub, infobox->childs) {
+        addSubItem(sub, t_item);
+    }
+}
+
+void DmTreeview::addTopItem(DmDiskinfoBox *infobox)
+{
+    infobox->level = 0;
+    addItem(infobox);
+}
+
+void DmTreeview::addSubItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
+{
+    if (infobox->level < 1) {
+        infobox->level = 0;
+    }
+    addItem(infobox, pcurItem);
+}
+
+void DmTreeview::showEvent(QShowEvent *event)
+{
+    setDefaultdmItem();
+    return DTreeView::showEvent(event);
+}
+QModelIndex DmTreeview::setDefaultdmItem()
+{
+
+    //QModelIndex index = m_pSortViewFilter->index(0, 0, getRootItemIndex());
+    this->setCurrentIndex(model()->index(0, 0).child(0, 0));
+    return model()->index(0, 0);
+}
+QStandardItem *DmTreeview::getRootItem()
+{
+    return  m_model->item(0);
+
+}
+QModelIndex DmTreeview::getRootItemIndex()
+{
+    return  m_pSortViewFilter->mapFromSource(getRootItem()->index());
+
+
+
+}
+void DmTreeview::sort()
+{
+    return m_pSortViewFilter->sort(0, Qt::DescendingOrder);
+}

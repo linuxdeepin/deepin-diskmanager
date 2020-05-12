@@ -16,8 +16,13 @@
 */
 #include "partitionwidget.h"
 #include <QDebug>
+QList<qreal> dataValue;
+QList<QString> strName;
 PartitionWidget::PartitionWidget(QWidget *parent) : DDialog(parent)
 {
+
+    dataValue << 150.00 << 70.00 << 36.00;
+    strName << "150GB" << "70GB" << "36GB";
     this->setModal(true);
     this->setFixedSize(800, 600);
     mainFrame = new DFrame(this);
@@ -45,6 +50,7 @@ PartitionWidget::PartitionWidget(QWidget *parent) : DDialog(parent)
 
 
     this->addContent(mainFrame);
+
 
 }
 
@@ -89,6 +95,25 @@ void PartitionWidget::botFrameSetting()
 
     //按钮
     applyBtn = new DPushButton(tr("Apply"), botFrame);
+    connect(applyBtn, &DPushButton::clicked, this, [ = ] {
+        if (dataValue.size() < 8)
+        {
+            listWidget = partWidget->findChildren<QWidget *>("infoWidget");
+            qDebug() << "listWidget.size()" << listWidget.size() << listWidget;
+            for (int i = 0; i < listWidget.size(); i++) {
+                DLineEdit *lineEdit =  listWidget.at(i)->findChild<DLineEdit *>("partSizeEdit");
+                qreal size = lineEdit->text().toInt();
+                qDebug() << "size" << size;
+                dataValue.append(size);
+                QString str = lineEdit->text() + partComCobox->currentText();
+                strName.append(str);
+                partSizeEdit->text() = "";
+            }
+
+            pieWidget->update();
+        }
+
+    });
     cancleBtn = new DPushButton(tr("Cancle"), botFrame);
     reveBtn = new DPushButton(tr("Revert"), botFrame);
     applyBtn->setMinimumWidth(120);
@@ -166,9 +191,11 @@ void PartitionWidget::partInfoShowing()
     scrollLayout  = new QVBoxLayout(scrollWidget);
 
     addWidget();
+    listWidget = partWidget->findChildren<QWidget *>("infoWidget");
     if (scrollLayout->count() == 1) {
         remButton->setEnabled(false);
     }
+
 
 }
 
@@ -176,6 +203,7 @@ void PartitionWidget::addWidget()
 {
     infoWidget = new DWidget(partWidget);
     infoWidget->setFixedSize(380, 140);
+//    listWidget.append(infoWidget);
 //    infoWidget->setStyleSheet("border:1px solid red");
     scrollLayout->addWidget(infoWidget);
     scrollWidget->setMinimumSize(380, scrollLayout->count() * 140);

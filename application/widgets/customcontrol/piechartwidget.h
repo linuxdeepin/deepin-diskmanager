@@ -25,7 +25,7 @@ class PieChartWidget : public QWidget
     Q_OBJECT
 public:
     explicit PieChartWidget(QWidget *parent = nullptr);
-
+    int getAlldata(QList<qreal> list);
 signals:
 
 public slots:
@@ -37,8 +37,9 @@ protected:
     void drawPie(QPainter *painter);
 private:
     QList<QColor> color;
-    QList<qreal> dataValue;
-    QList<QString> strName;
+//    QList<qreal> dataValue;
+//    QList<QString> strName;
+    int all = 0;
 };
 
 #endif // PIECHARTWIDGET_H

@@ -47,6 +47,7 @@ public:
     void addWidget();
     void remWidget();
     void partedInfo();
+
 signals:
 
     // QWidget interface
@@ -95,6 +96,8 @@ private:
     DLabel *partSizeLabel;
     DLineEdit *partSizeEdit;
     DComboBox *partComCobox;
+
+    QList<QWidget *> listWidget;
 
     int layoutCount = 1;
 

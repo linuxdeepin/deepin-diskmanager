@@ -46,10 +46,10 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         painter->setRenderHint(QPainter::Antialiasing, true);
 
         QVariant var = index.data(Qt::UserRole + 1);
-        qDebug() << var.data();
+        //  qDebug() << var.data();
         // MailAccountData *data = static_cast<MailAccountData *>(var.value<void *>());
         DiskInfoData data = var.value<DiskInfoData>();
-        qDebug() << data.disksize << data.disklabel;
+        // qDebug() << data.disksize << data.disklabel;
         QRect rect;
         rect.setX(option.rect.x());
         rect.setY(option.rect.y());
@@ -111,7 +111,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         QRect m_textRect1;
         QString text = data.disklabel;
         QString text1 = data.disksize;
-        qDebug() << data.level;
+        //qDebug() << data.level;
         if (data.level == 0) {
             m_lefticon1Rect.setRect(paintRect.left() + 8, paintRect.top() + 20, 8, 8);
 //            QImage image(":/icons/deepin/builtin/light/icons/next_normal.svg");

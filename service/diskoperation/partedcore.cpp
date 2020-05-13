@@ -19,14 +19,19 @@ SupportedFileSystems *PartedCore::supported_filesystems = nullptr;
 
 PartedCore::PartedCore(QObject *parent) : QObject(parent)
 {
+    qDebug() << __FUNCTION__ << "^^1";
     for (PedPartitionFlag flag = ped_partition_flag_next(static_cast<PedPartitionFlag>(NULL)) ;
             flag ; flag = ped_partition_flag_next(flag))
         flags .push_back(flag) ;
+    qDebug() << __FUNCTION__ << "^^2";
     find_supported_core();
+    qDebug() << __FUNCTION__ << "^^3";
     supported_filesystems = new SupportedFileSystems();
     //Determine file system support capabilities for the first time
     supported_filesystems->find_supported_filesystems();
+    qDebug() << __FUNCTION__ << "^^4";
     probedeviceinfo();
+    qDebug() << __FUNCTION__ << "^^5";
 }
 
 void PartedCore::find_supported_core()
@@ -115,13 +120,18 @@ void PartedCore::set_flags(Partition &partition, PedPartition *lp_partition)
 
 void PartedCore::probedeviceinfo(const QString &path)
 {
+    qDebug() << __FUNCTION__ << "**1";
     m_devicepaths.clear();
     BlockSpecial::clear_cache();
+    qDebug() << __FUNCTION__ << "**2";
     ProcPartitionsInfo::load_cache();
+    qDebug() << __FUNCTION__ << "**3";
     FsInfo::load_cache();
-    MountInfo::load_cache();
+    qDebug() << __FUNCTION__ << "**4";
+    //MountInfo::load_cache();
+    qDebug() << __FUNCTION__ << "**6";
     ped_device_probe_all();
-
+    qDebug() << __FUNCTION__ << "**7";
     PedDevice *lp_device = ped_device_get_next(NULL) ;
     while (lp_device) {
         /* TO TRANSLATORS: looks like   Confirming /dev/sda */
@@ -135,7 +145,7 @@ void PartedCore::probedeviceinfo(const QString &path)
     }
     qDebug() << __FUNCTION__ << "devicepaths size=" << m_devicepaths.size();
     std::sort(m_devicepaths .begin(), m_devicepaths .end()) ;
-
+    qDebug() << __FUNCTION__ << "**8";
     for (unsigned int t = 0 ; t < m_devicepaths .size() ; t++) {
         /*TO TRANSLATORS: looks like Searching /dev/sda partitions */
         Device temp_device;
@@ -143,7 +153,7 @@ void PartedCore::probedeviceinfo(const QString &path)
         //devices.push_back(temp_device);
         devicemap.insert(m_devicepaths.at(t), temp_device);
     }
-
+    qDebug() << __FUNCTION__ << "**9";
     for (auto it = devicemap.begin(); it != devicemap.end(); it++) {
         DeviceInfo devinfo = it.value().getDeviceInfo();
         for (int i = 0; i < it.value().partitions.size(); i++) {
@@ -162,6 +172,7 @@ void PartedCore::probedeviceinfo(const QString &path)
         }
         inforesult.insert(devinfo.m_path, devinfo);
     }
+    qDebug() << __FUNCTION__ << "**10";
 }
 
 bool PartedCore::useable_device(const PedDevice *lp_device)

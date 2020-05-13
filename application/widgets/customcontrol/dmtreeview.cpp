@@ -107,15 +107,15 @@ void DmTreeview::addItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
 {
     QStandardItem *t_item;
     DiskInfoData data;
-    qDebug() << infobox->level;
+    //qDebug() << infobox->level;
     data.disksize = infobox->disksize;
     data.disklabel = infobox->disklabel;
     data.partitionsize = infobox->partitionsize;
     data.partitonlabel = infobox->partitonlabel;
-    qDebug() << data.disksize << data.disklabel;
+    //  qDebug() << data.disksize << data.disklabel;
 
 
-    qDebug() << infobox->disksize;
+    //  qDebug() << infobox->disksize;
     if (infobox->level <= 0) {
         data.level = 0;
         t_item = this->addtopitem(data);
@@ -129,7 +129,7 @@ void DmTreeview::addItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
         QVariant var = pcurItem->index().data(Qt::UserRole + 1);
         DiskInfoData parent_data = var.value<DiskInfoData>();
         data.level = parent_data.level + 1;
-        qDebug() << data.level;
+        //qDebug() << data.level;
 
         this->additem(pcurItem, data);
 

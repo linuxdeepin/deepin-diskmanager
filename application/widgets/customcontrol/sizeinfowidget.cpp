@@ -50,7 +50,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
 //    paintpath.arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, radius * 2)),
 //                          QSize(radius * 2, radius * 2)),
 //                    180, 90);
-    qDebug() << "111111111111";
+
     paintpath.moveTo(paintRect.bottomRight() - QPoint(0, radius));
     paintpath.lineTo(paintRect.topRight() + QPoint(0, radius));
     paintpath.arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),

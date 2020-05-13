@@ -98,16 +98,15 @@ void PartitionWidget::botFrameSetting()
     connect(applyBtn, &DPushButton::clicked, this, [ = ] {
         if (dataValue.size() < 8)
         {
-            listWidget = partWidget->findChildren<QWidget *>("infoWidget");
+            listWidget = partWidget->findChildren<QWidget *>("test");
             qDebug() << "listWidget.size()" << listWidget.size() << listWidget;
             for (int i = 0; i < listWidget.size(); i++) {
-                DLineEdit *lineEdit =  listWidget.at(i)->findChild<DLineEdit *>("partSizeEdit");
-                qreal size = lineEdit->text().toInt();
+                qreal size = listWidget.at(i)->findChild<DLineEdit *>("sizeEdit")->text().toInt();
                 qDebug() << "size" << size;
                 dataValue.append(size);
-                QString str = lineEdit->text() + partComCobox->currentText();
+                QString str = listWidget.at(i)->findChild<DLineEdit *>("sizeEdit")->text() + partComCobox->currentText();
                 strName.append(str);
-                partSizeEdit->text() = "";
+                listWidget.at(i)->findChild<DLineEdit *>("sizeEdit")->setText("");
             }
 
             pieWidget->update();
@@ -191,7 +190,6 @@ void PartitionWidget::partInfoShowing()
     scrollLayout  = new QVBoxLayout(scrollWidget);
 
     addWidget();
-    listWidget = partWidget->findChildren<QWidget *>("infoWidget");
     if (scrollLayout->count() == 1) {
         remButton->setEnabled(false);
     }
@@ -201,7 +199,8 @@ void PartitionWidget::partInfoShowing()
 
 void PartitionWidget::addWidget()
 {
-    infoWidget = new DWidget(partWidget);
+    infoWidget = new QWidget(partWidget);
+    infoWidget->setObjectName("test");
     infoWidget->setFixedSize(380, 140);
 //    listWidget.append(infoWidget);
 //    infoWidget->setStyleSheet("border:1px solid red");
@@ -252,6 +251,7 @@ void PartitionWidget::partedInfo()
     QHBoxLayout *lineLayout3 = new QHBoxLayout();
     partSizeLabel = new DLabel(tr("Partition size:"), infoWidget);
     partSizeEdit = new DLineEdit(infoWidget);
+    partSizeEdit->setObjectName("sizeEdit");
     if (partSizeEdit->text().isEmpty()) {
         partSizeEdit->lineEdit()->setPlaceholderText("125");
     }

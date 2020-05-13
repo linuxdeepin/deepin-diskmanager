@@ -5,6 +5,8 @@
 #include <DFrame>
 #include <DPalette>
 #include <DApplicationHelper>
+#include "customcontrol/sizeinfowidget.h"
+#include <QPixmap>
 
 DWIDGET_USE_NAMESPACE
 class InfoShowWidget: public DWidget
@@ -13,7 +15,7 @@ class InfoShowWidget: public DWidget
 public:
     explicit InfoShowWidget(DWidget *parent = nullptr);
     void topFrameSettings();
-
+    void midFramSettings();
 
 
 protected:
@@ -24,12 +26,16 @@ private:
     void initUi();
     DFrame *pframe;
     DFrame *pframetop;
+    DFrame *pframemid;
     DLabel *picLabel;
     DLabel *nameLabel;
     DLabel *typeLabel;
     DLabel *allnameLabel;
     DLabel *allmemoryLabel;
-
+    DLabel *totaluseLabel;
+    DLabel *usedLabel;
+    DLabel *trueusedLabel;
+    SizeInfoWidget *m_infowidget;
 
 
 };

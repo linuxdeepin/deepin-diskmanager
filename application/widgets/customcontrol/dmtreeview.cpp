@@ -33,7 +33,7 @@ void DmTreeview::initUI()
     setHeaderHidden(true);
     setIndentation(0);                   //去除树型节点之间的缩进
     setWindowFlags(Qt::FramelessWindowHint); //无边框
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 
     /* setAttribute(Qt::WA_TranslucentBackground)*/;//背景透明

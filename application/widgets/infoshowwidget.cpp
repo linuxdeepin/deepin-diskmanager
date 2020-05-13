@@ -46,11 +46,11 @@ void InfoShowWidget::initUi()
     topFrameSettings();
 
 
-    DFrame *pframemid = new DFrame;
+    pframemid = new DFrame;
     pframemid->setFixedHeight(200);
     pframemid->setFrameShape(QFrame::NoFrame);
     framelayout->addWidget(pframemid);
-
+    midFramSettings();
 
     DFrame *pframebottom = new DFrame;
     // pframebottom->setFixedHeight(300);
@@ -130,6 +130,27 @@ void InfoShowWidget::topFrameSettings()
 }
 
 
+void InfoShowWidget::midFramSettings()
+{
+    QVBoxLayout *mainLayout = new QVBoxLayout(pframemid);
+    m_infowidget = new SizeInfoWidget(100, 200, 300);
+    mainLayout->addWidget(m_infowidget);
+//    totaluseLabel = new DLabel(pframemid);
+//    QFont  font;
+//    font.setPointSize(20);
+//    QPixmap pixmap;
+//    pixmap.load(":/icons/deepin/builtin/exception-logo.svg");
+//    totaluseLabel->setPixmap(pixmap);
+//    totaluseLabel->setGeometry(0, 100, 10, 10);
+//    totaluseLabel->setFixedSize(20, 20);
+//    mainLayout->addSpacing(40);
+//    mainLayout->addWidget(totaluseLabel, 0, Qt::AlignLeft);
+//    mainLayout->addStretch();
+
+
+
+
+}
 void InfoShowWidget::slotShowDiskInfo(QString diskname, QString diskformat, QString diskmemory)
 {
 //    nameLabel->setText(diskname);

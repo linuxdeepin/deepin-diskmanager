@@ -10,7 +10,8 @@ HEADERS += \
     $$PWD/dmtreeview.h \
     $$PWD/partitionwidget.h \
     $$PWD/piechartwidget.h \
-    $$PWD/dmdiskinfobox.h
+    $$PWD/dmdiskinfobox.h \
+    $$PWD/sizeinfowidget.h
 SOURCES += \
     $$PWD/bufferwin.cpp\
     $$PWD/tipdialog.cpp \
@@ -23,5 +24,6 @@ SOURCES += \
     $$PWD/dmtreeview.cpp \
     $$PWD/partitionwidget.cpp \
     $$PWD/piechartwidget.cpp \
-    $$PWD/dmdiskinfobox.cpp
+    $$PWD/dmdiskinfobox.cpp \
+    $$PWD/sizeinfowidget.cpp
 

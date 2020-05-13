@@ -22,18 +22,18 @@ extern QList<QString> strName;
 PieChartWidget::PieChartWidget(QWidget *parent) : QWidget(parent)
 {
     color << QColor(208, 234, 255)  << QColor(210, 236, 205) << QColor(235, 236, 205) << QColor(180, 160, 205) << QColor(190, 190, 205)
+          << QColor(154, 234, 124)  << QColor(135, 150, 150) << QColor(142, 190, 200) << QColor(196, 120, 190) << QColor(130, 120, 130)
           << QColor(154, 234, 124)  << QColor(135, 150, 150) << QColor(142, 190, 200) << QColor(196, 120, 190) << QColor(130, 120, 130);
-//    update();
 }
 
-int PieChartWidget::getAlldata(QList<qreal> list)
-{
-    int a = 0;
-    for (int i = 0; i < list.count(); i++) {
-        a = int(a + list.at(i));
-    }
-    return a;
-}
+//int PieChartWidget::getAlldata(QList<qreal> list)
+//{
+//    int a = 0;
+//    for (int i = 0; i < list.count(); i++) {
+//        a = int(a + list.at(i));
+//    }
+//    return a;
+//}
 
 void PieChartWidget::paintEvent(QPaintEvent *event)
 {
@@ -53,7 +53,6 @@ void PieChartWidget::paintEvent(QPaintEvent *event)
     drawPie(&painter);
     QWidget::paintEvent(event);
 
-//    update();
 }
 
 void PieChartWidget::drawPie(QPainter *painter)
@@ -62,11 +61,12 @@ void PieChartWidget::drawPie(QPainter *painter)
     qreal mid = 0;
     qreal rec = 0;
 
-    for (int i = 0; i < dataValue.count(); i++) {
+    for (int i = 0; i < dataValue.size(); i++) {
         qreal value = dataValue.at(i);
-        all = getAlldata(dataValue);
+//        all = getAlldata(dataValue);
 //        qDebug() << all;
-        qreal len = (value / all) * 360;
+        qreal len = (value / 256) * 360;
+        qDebug() << value;
 
         painter->setPen(Qt::NoPen);
         painter->setBrush(color.at(i));
@@ -77,7 +77,7 @@ void PieChartWidget::drawPie(QPainter *painter)
         sum = sum + len;
 
         painter->setPen(QColor(Qt::black));
-        painter->drawText(QPoint(170 + 75 * qCos((mid * 3.14) / 180) - strName.at(i).length(), 170 - 75 * qSin((mid * 3.14) / 180)), strName.at(i));
+        painter->drawText(QPoint(170 + 75 * qCos((mid * 3.14) / 180) - strName.at(i).length() - 10, 170 - 75 * qSin((mid * 3.14) / 180)), strName.at(i));
 
     }
     sum = 0;

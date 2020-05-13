@@ -151,7 +151,6 @@ void PartitionWidget::botFrameSetting()
             pieWidget->update();
 
         }
-
         currentRcount = 0;
 
         for (int i = layoutCount; i >= 1; i--)

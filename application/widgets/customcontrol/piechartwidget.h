@@ -25,7 +25,7 @@ class PieChartWidget : public QWidget
     Q_OBJECT
 public:
     explicit PieChartWidget(QWidget *parent = nullptr);
-    int getAlldata(QList<qreal> list);
+//    int getAlldata(QList<qreal> list);
 signals:
 
 public slots:

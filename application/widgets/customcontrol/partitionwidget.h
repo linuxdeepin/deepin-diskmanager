@@ -32,6 +32,7 @@
 #include <DScrollArea>
 #include <QSizePolicy>
 #include <DHorizontalLine>
+#include <DMessageManager>
 #include "piechartwidget.h"
 
 DWIDGET_USE_NAMESPACE
@@ -47,6 +48,8 @@ public:
     void addWidget();
     void remWidget();
     void partedInfo();
+
+
 
 signals:
 
@@ -100,6 +103,7 @@ private:
     QList<QWidget *> listWidget;
 
     int layoutCount = 1;
+    int currentRcount = 0;
 
 
 

@@ -24,6 +24,11 @@ public:
     Sector sectors_unused;
     Sector sectors_unallocated;  //Difference between the size of the partition and the file system
     Sector significant_threshold;  //Threshold from intrinsic to significant unallocated sectors
+    Sector free_space_before ;  //Free space preceding partition value
+    Byte_Value sector_size ;  //Sector size of the disk device needed for converting to/from sectors and bytes.
+    Byte_Value fs_block_size;  // Block size of of the file system, or -1 when unknown.
+    QString path;  //partition path
+    QString filesystem_label;
 //    bool inside_extended;
 //    bool busy;
 //    bool fs_readonly;

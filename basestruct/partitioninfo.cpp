@@ -22,7 +22,12 @@ QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info)
              << info.sectors_used
              << info.sectors_unused
              << info.sectors_unallocated
-             << info.significant_threshold;
+             << info.significant_threshold
+             << info.free_space_before
+             << info.sector_size
+             << info.fs_block_size
+             << info.path
+             << info.filesystem_label;
     argument.endStructure();
 
     return argument;
@@ -45,7 +50,12 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PartitionInfo &in
              >> info.sectors_used
              >> info.sectors_unused
              >> info.sectors_unallocated
-             >> info.significant_threshold;
+             >> info.significant_threshold
+             >> info.free_space_before
+             >> info.sector_size
+             >> info.fs_block_size
+             >> info.path
+             >> info.filesystem_label;
     argument.endStructure();
 
     return argument;

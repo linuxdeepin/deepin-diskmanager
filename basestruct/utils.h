@@ -20,6 +20,7 @@ public:
     static QString get_filesystem_software(FSType fstype);
     static QString format_size(Sector sectors, Byte_Value sector_size) ;
     static double sector_to_unit(Sector sectors, Byte_Value sector_size, SIZE_UNIT size_unit) ;
+    static int get_max_partition_name_length(QString &tabletype);
 };
 
 #endif // UTILS_H

@@ -48,10 +48,15 @@ QString Utils::regexp_label(const QString &strtext, const QString &strpatter)
 {
     QString strsource = strtext;
     QString result;
-    QStringList strlist = strsource.split(QRegularExpression(strpatter, QRegularExpression::MultilineOption | QRegularExpression::CaseInsensitiveOption));
-    qDebug() << strlist;
-    if (strlist.size() >= 2)
-        result = strlist.at(1);
+    QRegularExpression re(strpatter, QRegularExpression::MultilineOption | QRegularExpression::CaseInsensitiveOption);
+    QRegularExpressionMatch match = re.match(strsource);
+    if (match.isValid() && match.hasMatch()) {
+        for (int i = 0; i <= match.lastCapturedIndex(); i++) {
+            result = match.captured(i);
+            qDebug() << __FUNCTION__ << "-------****" << result;
+            break;
+        }
+    }
     return result;
 }
 
@@ -165,7 +170,7 @@ const QString Utils::FSTypeToString(FSType fstype)
 
 FSType Utils::StringToFSType(const QString &fsname)
 {
-    FSType type;
+    FSType type = FS_UNKNOWN;
     if (fsname == "extended")
         type = FS_EXTENDED;
     else if (fsname == "btrfs")
@@ -332,5 +337,16 @@ double Utils::sector_to_unit(Sector sectors, Byte_Value sector_size, SIZE_UNIT s
         res = sectors ;
     }
     return res;
+}
+
+int Utils::get_max_partition_name_length(QString &tabletype)
+{
+    if (tabletype == "amiga") return 0;          // Disabled
+    else if (tabletype == "dvh") return 0;       // Disabled
+    else if (tabletype == "gpt") return 36;
+    else if (tabletype == "mac") return 0;       // Disabled
+    else if (tabletype == "pc98") return 0;      // Disabled
+
+    return 0;
 }
 

@@ -19,6 +19,7 @@ DMDbusHandler::DMDbusHandler(QObject *parent) : QObject(parent)
 
     qDBusRegisterMetaType<DeviceInfo>();
     qDBusRegisterMetaType<DeviceInfoMap>();
+    qDBusRegisterMetaType<PartitionInfo>();
     qDBusRegisterMetaType<stCustest>();
     m_dbus = new DMDBusInterface("com.deepin.diskmanager",
                                  "/com/deepin/diskmanager",

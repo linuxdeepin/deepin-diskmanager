@@ -17,21 +17,33 @@ class PartedCore : public QObject
 public:
     explicit PartedCore(QObject *parent = nullptr);
 
+    DeviceInfo getDeviceinfo();
+    DeviceInfoMap getAllDeviceinfo();
+public:
+
     //static
     static void find_supported_core();
     static bool supported_filesystem(FSType fstype);
     const FS &get_fs(FSType fstype) const;
     static FileSystem *get_filesystem_object(FSType fstype);
-
-public:
-    DeviceInfo getDeviceinfo();
+    static bool filesystem_resize_disallowed(const Partition &partition) ;
+    static void insert_unallocated(const QString &device_path,
+                                   PartitionVector &partitions,
+                                   Sector start,
+                                   Sector end,
+                                   Byte_Value sector_size,
+                                   bool inside_extended);
+    void set_flags(Partition &partition, PedPartition *lp_partition) ;
 
 private:
     //general..
-    bool flush_device(PedDevice *lp_device);
-    void settle_device(std::time_t timeout);
-    bool useable_device(const PedDevice *lp_device);
-    bool get_device(const QString &device_path, PedDevice *&lp_device, bool flush);
+    static bool flush_device(PedDevice *lp_device);
+    static void settle_device(std::time_t timeout);
+    static bool commit_to_os(PedDisk *lp_disk, std::time_t timeout);
+    static bool useable_device(const PedDevice *lp_device);
+    static bool get_device(const QString &device_path, PedDevice *&lp_device, bool flush);
+    static bool get_disk(PedDevice *&lp_device, PedDisk *&lp_disk, bool strict = true);
+    static void destroy_device_and_disk(PedDevice *&lp_device, PedDisk *&lp_disk);
 
     //detectionstuff..
     void probedeviceinfo(const QString &path = QString());
@@ -45,6 +57,7 @@ private:
     void set_mountpoints(Partition &partition);
     void set_used_sectors(Partition &partition, PedDisk *lp_disk);
     void mounted_fs_set_used_sectors(Partition &partition);
+    void set_device_partitions(Device &device, PedDevice *lp_device, PedDisk *lp_disk) ;
 
     static FSType detect_filesystem(PedDevice *lp_device, PedPartition *lp_partition);
     static FSType detect_filesystem_internal(const QString &path, Byte_Value sector_size);
@@ -56,10 +69,12 @@ signals:
 public slots:
 
 
-public:
+private:
+    QVector<PedPartitionFlag> flags;
     QVector<QString> m_devicepaths;
     QVector<DeviceInfo> devices;
     QMap<QString, Device> devicemap;
+    DeviceInfoMap inforesult;
     static SupportedFileSystems *supported_filesystems;
 
 };

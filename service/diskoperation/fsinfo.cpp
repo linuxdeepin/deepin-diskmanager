@@ -2,6 +2,7 @@
 #include "utils.h"
 #include "procpartitionsinfo.h"
 #include <QStringList>
+#include <QDebug>
 
 namespace DiskManager {
 
@@ -155,17 +156,21 @@ bool FsInfo::run_blkid_load_cache(const QString &path)
     QString error;
     bool loaded_entries = false;
     if (blkid_found && ! Utils::executcmd(cmd, output, error)) {
+        qDebug() << output;
         QStringList strlist = output.split("\n");
-        for (unsigned int i = 0 ; i < strlist.size() ; i ++) {
+        for (int i = 0 ; i < strlist.size() ; i ++) {
             FS_Entry fs_entry = {BlockSpecial(), "", "", "", false, ""};
-            QString entry_path = Utils::regexp_label(strlist[i], "^(.*): ");
+            QString entry_path = Utils::regexp_label(strlist[i], "(?<=/).*?(?=: )");
             if (entry_path.length() > 0) {
+                entry_path = "/" + entry_path;
                 fs_entry.path = BlockSpecial(entry_path);
-                fs_entry.type = Utils::regexp_label(strlist[i], " TYPE=\"([^\"]*)\"");
+                fs_entry.type = Utils::regexp_label(strlist[i], "(?<=TYPE=\").*?(?=\")");
                 fs_entry.sec_type = Utils::regexp_label(strlist[i], " SEC_TYPE=\"([^\"]*)\"");
-                fs_entry.uuid = Utils::regexp_label(strlist[i], " UUID=\"([^\"]*)\"");
+                fs_entry.uuid = Utils::regexp_label(strlist[i], "(?<=UUID=\").*?(?=\")");
+                fs_entry.label = Utils::regexp_label(strlist[i], "(?<=LABEL=\").*?(?=\" )");;
                 fs_info_cache.push_back(fs_entry);
                 loaded_entries = true;
+                qDebug() << fs_entry.path.m_name << fs_entry.type << fs_entry.sec_type << fs_entry.uuid << fs_entry.label;
             }
         }
     }

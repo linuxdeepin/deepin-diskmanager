@@ -1,5 +1,6 @@
 #include "supportedfilesystems.h"
-
+#include "utils.h"
+#include <QDebug>
 
 namespace DiskManager {
 
@@ -71,6 +72,7 @@ void SupportedFileSystems::find_supported_filesystems()
 
 FileSystem *SupportedFileSystems::get_fs_object(FSType fstype) const
 {
+    qDebug() << Utils::FSTypeToString(fstype);
     FSObjectsMap::const_iterator iter = m_fs_objects.find(fstype);
     if (iter == m_fs_objects.end())
         return NULL;

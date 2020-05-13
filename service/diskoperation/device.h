@@ -10,6 +10,10 @@ class Device
 {
 public:
     Device();
+    void enable_partition_naming(int length);    // > 0 => enable partition naming support
+    bool partition_naming_supported() const;
+    int get_max_partition_name_length() const;
+    DeviceInfo getDeviceInfo();
 
 public:
     Sector length;
@@ -25,8 +29,10 @@ public:
     int max_prims ;
     int highest_busy ;
     bool readonly ;
-    int max_partition_name_length;
     PartitionVector partitions;
+private:
+    int max_partition_name_length;
+
 
 };
 

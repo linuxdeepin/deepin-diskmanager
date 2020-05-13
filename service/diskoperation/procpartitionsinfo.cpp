@@ -1,8 +1,11 @@
 #include "procpartitionsinfo.h"
+#include "blockspecial.h"
 #include "utils.h"
 #include <fstream>
 #include <QFile>
 #include <QTextStream>
+#include <QRegularExpression>
+#include <QDebug>
 
 namespace DiskManager {
 
@@ -36,21 +39,27 @@ void ProcPartitionsInfo::load_proc_partitions_info_cache()
 
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&file);
+        in.skipWhiteSpace();
         QString line = in.readLine();
         QString device;
-        while (!line.isNull()) {
-            // Pre-populate BlockSpecial cache with major, minor numbers of
-            // all names found from /proc/partitions.
+        while (!in.atEnd()) {
+            QStringList strlist = line.split(" ");
+            unsigned long maj = 0;
+            unsigned long min = 0;
+            if (sscanf(line.toStdString().c_str(), "%lu %lu", &maj, &min) != 2) {
+                line = in.readLine();
+                continue;
+            }
+            QString name;
+            foreach (QString str, strlist) {
+                if (!str.isEmpty() && str.indexOf(QRegularExpression("[a-z]+\\d?")) != -1) {
+                    name = str;
+                    break;
+                }
+            }
+            qDebug() << name;
 
-            QString name = Utils::regexp_label(line,
-                                               "^[[:blank:]]*[[:digit:]]+[[:blank:]]+[[:digit:]]+[[:blank:]]+[[:digit:]]+[[:blank:]]+([[:graph:]]+)$");
-            if (name == "")
-                continue;
-            unsigned long maj;
-            unsigned long min;
-            if (sscanf(line.toStdString().c_str(), "%lu %lu", &maj, &min) != 2)
-                continue;
-            //BlockSpecial::register_block_special("/dev/" + name, maj, min);
+            BlockSpecial::register_block_special("/dev/" + name, maj, min);
 
             // Recognise only whole disk device names, excluding partitions,
             // from /proc/partitions and save in this cache.

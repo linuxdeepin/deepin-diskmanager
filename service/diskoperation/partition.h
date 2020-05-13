@@ -1,6 +1,7 @@
 #ifndef PARTITION_H
 #define PARTITION_H
 #include "commondef.h"
+#include "partitioninfo.h"
 #include "partitionvector.h"
 
 namespace DiskManager {
@@ -17,6 +18,7 @@ public:
     //simple Set-functions.  only for convenience, since most members are public
     void Set(const QString &device_path, const QString &partition, int partition_number, PartitionType type, FSType fstype, Sector sector_start, Sector sector_end, Byte_Value sector_size, bool inside_extended, bool busy);
     void set_unpartitioned(const QString &device_path, const QString &partition_path, FSType fstype, Sector length, Byte_Value sector_size, bool busy);
+    void Set_Unallocated(const QString &device_path, Sector sector_start, Sector sector_end, Byte_Value sector_size, bool inside_extended);
     bool filesystem_label_known() const;
     void set_filesystem_label(const QString &filesystem_label);
     void add_mountpoint(const QString &mountpoint);
@@ -26,6 +28,9 @@ public:
     QString get_path() const ;
     Byte_Value get_byte_length() const ;
     Sector get_sector_length() const ;
+    QString get_filesystem_label()const;
+    PartitionInfo getPartitionInfo();
+
     QString device_path ;
     int partition_number;
     PartitionType type;// UNALLOCATED, PRIMARY, LOGICAL, etc...

@@ -8,6 +8,9 @@
 #include <DPalette>
 #include <DApplicationHelper>
 #include <QPixmap>
+#include <QStandardItemModel>
+#include <QStandardItem>
+#include <DTableView>
 
 DWIDGET_USE_NAMESPACE
 class InfoShowWidget: public DWidget
@@ -17,7 +20,7 @@ public:
     explicit InfoShowWidget(DWidget *parent = nullptr);
     void topFrameSettings();
     void midFramSettings();
-
+    void bottomFramSettings();
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -30,6 +33,7 @@ private:
     DFrame *pframe;
     DFrame *pframetop;
     DFrame *pframemid;
+    DFrame *pframebottom;
     DLabel *picLabel;
     DLabel *nameLabel;
     DLabel *typeLabel;
@@ -38,8 +42,11 @@ private:
     DLabel *totaluseLabel;
     DLabel *usedLabel;
     DLabel *trueusedLabel;
+    DTableView *tableview;
     SizeInfoWidget *m_infowidget;
-
+    double m_allsize;
+    double m_used;
+    double m_trueused;
 
 };
 

@@ -53,7 +53,7 @@ void InfoShowWidget::initUi()
     framelayout->addWidget(pframemid);
     midFramSettings();
 
-    DFrame *pframebottom = new DFrame;
+    pframebottom = new DFrame;
     // pframebottom->setFixedHeight(300);
     framelayout->addWidget(pframebottom);
     framelayout->addStretch();
@@ -157,6 +157,20 @@ void InfoShowWidget::midFramSettings()
 
 
 }
+
+void InfoShowWidget::bottomFramSettings()
+{
+    QVBoxLayout *mainlayout = new QVBoxLayout(pframebottom);
+    tableview = new DTableView();
+    QStandardItemModel *model = new QStandardItemModel();
+    QStandardItem *item = new QStandardItem(0);
+
+
+
+
+
+}
+
 void InfoShowWidget::slotShowDiskInfo(QString diskname, QString diskformat, QString diskmemory)
 {
 //    nameLabel->setText(diskname);
@@ -175,5 +189,8 @@ void InfoShowWidget::slotCurSelectChanged(const QString &devicepath, const QStri
 {
     qDebug() << __FUNCTION__ << "-0--0-";
     DeviceInfoMap infomap = DMDbusHandler::instance()->probDeviceInfo();
+    qDebug() << devicepath;
+    qDebug() << partitionpath;
 
+    //    m_allsize = infomap[partitionpath].length * infomap[partitionpath].sector_size / 1024.0 / 1024.0 / 1024.0;
 }

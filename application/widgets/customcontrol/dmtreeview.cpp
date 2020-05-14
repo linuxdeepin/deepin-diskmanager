@@ -38,11 +38,11 @@ void DmTreeview::initUI()
 
     /* setAttribute(Qt::WA_TranslucentBackground)*/;//背景透明
 
-    qDebug() << 2222222222222;
+//    qDebug() << 2222222222222;
 }
 void DmTreeview::additem(QStandardItem *item, DiskInfoData &data)
 {
-    QStandardItem *pItem = new QStandardItem(data.disklabel);
+    QStandardItem *pItem = new QStandardItem(data.diskpath);
     pItem->setData(QVariant::fromValue((data)), Qt::UserRole + 1);
     item->appendRow(pItem);
     // expand(m_pDataModel->indexFromItem(item));
@@ -94,9 +94,9 @@ void DmTreeview::currentChanged(const QModelIndex &current, const QModelIndex &p
 {
     Q_UNUSED(previous);
     DiskInfoData data = current.data(Qt::UserRole + 1).value<DiskInfoData>();
-    qDebug() << data.disksize << data.disklabel << data.partitionsize << data.partitonlabel;
+    qDebug() << data.diskpath << data.disksize << data.partitionsize << data.partitonpath << data.level << data.used << data.unused << data.start << data.end;
     emit sigselectitem(current);
-    emit sigCurSelectChanged(data.disklabel, data.partitonlabel, data.start, data.end);
+    emit sigCurSelectChanged(data.diskpath, data.partitonpath, data.start, data.end);
 
 }
 void DmTreeview::mousePressEvent(QMouseEvent *event)
@@ -112,9 +112,15 @@ void DmTreeview::addItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
     DiskInfoData data;
     //qDebug() << infobox->level;
     data.disksize = infobox->m_disksize;
-    data.disklabel = infobox->m_diskpath;
-    data.partitionsize = infobox->partitionsize;
-    data.partitonlabel = infobox->partitonlabel;
+    data.diskpath = infobox->m_diskpath;
+    data.partitionsize = infobox->m_partitionsize;
+    data.partitonpath = infobox->m_partitionpath;
+    data.used = infobox->m_used;
+    data.unused = infobox->m_unused;
+    data.start = infobox->m_start;
+    data.end = infobox->m_end;
+    data.sectors_unallocated = infobox->m_sectors_unallocated;
+//    qDebug() << data.used << data.unused;
     //  qDebug() << data.disksize << data.disklabel;
 
 

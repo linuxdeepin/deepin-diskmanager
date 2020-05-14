@@ -109,8 +109,10 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         QRect m_lefticonRect2;
         QRect m_textRect;
         QRect m_textRect1;
-        QString text = data.disklabel;
+        QString text = data.diskpath;
         QString text1 = data.disksize;
+        QString text2 = data.partitonpath;
+        QString text3 = data.partitionsize;
         //qDebug() << data.level;
         if (data.level == 0) {
             m_lefticon1Rect.setRect(paintRect.left() + 8, paintRect.top() + 20, 8, 8);
@@ -128,9 +130,9 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             QImage image1(":/icons/deepin/builtin/exception-logo.svg");
             painter->drawImage(m_lefticon1Rect, image1);
             m_textRect.setRect(paintRect.left() + 60, paintRect.top() + 5, 100, 100);
-            painter->drawText(m_textRect, text);
+            painter->drawText(m_textRect, text2);
             m_textRect1.setRect(paintRect.left() + 60, paintRect.top() + 20, 100, 100);
-            painter->drawText(m_textRect1, text1);
+            painter->drawText(m_textRect1, text3);
         }
 
 

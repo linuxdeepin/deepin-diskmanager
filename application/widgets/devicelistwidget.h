@@ -24,7 +24,6 @@ signals:
 
 public slots:
     void slotUpdateDeviceInfo();
-    void slotUpdateLwInfo(const DeviceInfoMap &infomap);
 
 };
 

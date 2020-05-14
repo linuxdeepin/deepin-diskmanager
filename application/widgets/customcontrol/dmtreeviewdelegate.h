@@ -28,11 +28,14 @@
 #include <DApplicationHelper>
 
 struct DiskInfoData {
-    QString disklabel;
+    QString diskpath;
     QString disksize;
     QImage iconImage;
-    QString partitonlabel;
+    QString partitonpath;
     QString partitionsize;
+    double used;
+    double unused;
+    Sector sectors_unallocated;
     Sector start;
     Sector end;
     int level;

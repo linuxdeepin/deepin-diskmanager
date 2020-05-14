@@ -127,6 +127,10 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             m_lefticon1Rect.setRect(paintRect.left() + 5, paintRect.top() + 5, 15, 15);
             QImage image1(":/icons/deepin/builtin/exception-logo.svg");
             painter->drawImage(m_lefticon1Rect, image1);
+            m_textRect.setRect(paintRect.left() + 60, paintRect.top() + 5, 100, 100);
+            painter->drawText(m_textRect, text);
+            m_textRect1.setRect(paintRect.left() + 60, paintRect.top() + 20, 100, 100);
+            painter->drawText(m_textRect1, text1);
         }
 
 

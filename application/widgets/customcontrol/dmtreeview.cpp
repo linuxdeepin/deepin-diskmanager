@@ -108,15 +108,15 @@ void DmTreeview::addItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
     QStandardItem *t_item;
     DiskInfoData data;
     //qDebug() << infobox->level;
-    data.disksize = infobox->disksize;
-    data.disklabel = infobox->disklabel;
+    data.disksize = infobox->m_disksize;
+    data.disklabel = infobox->m_diskpath;
     data.partitionsize = infobox->partitionsize;
     data.partitonlabel = infobox->partitonlabel;
     //  qDebug() << data.disksize << data.disklabel;
 
 
     //  qDebug() << infobox->disksize;
-    if (infobox->level <= 0) {
+    if (infobox->m_level <= 0) {
         data.level = 0;
         t_item = this->addtopitem(data);
     } else {
@@ -142,14 +142,14 @@ void DmTreeview::addItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
 
 void DmTreeview::addTopItem(DmDiskinfoBox *infobox)
 {
-    infobox->level = 0;
+    infobox->m_level = 0;
     addItem(infobox);
 }
 
 void DmTreeview::addSubItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
 {
-    if (infobox->level < 1) {
-        infobox->level = 0;
+    if (infobox->m_level < 1) {
+        infobox->m_level = 0;
     }
     addItem(infobox, pcurItem);
 }
@@ -165,6 +165,7 @@ QModelIndex DmTreeview::setDefaultdmItem()
     //QModelIndex index = m_pSortViewFilter->index(0, 0, getRootItemIndex());
     this->setCurrentIndex(model()->index(0, 0).child(0, 0));
     return model()->index(0, 0);
+
 }
 QStandardItem *DmTreeview::getRootItem()
 {

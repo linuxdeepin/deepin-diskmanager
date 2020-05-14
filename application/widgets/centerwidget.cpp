@@ -13,7 +13,7 @@ CenterWidget::CenterWidget(DWidget *parent) : Dtk::Widget::DWidget(parent)
     m_handler =  DMDbusHandler::instance(this);
     initUi();
     initConnection();
-    m_handler->getDeviceinfo();
+//    m_handler->getDeviceinfo();
 }
 
 CenterWidget::~CenterWidget()
@@ -51,6 +51,11 @@ void CenterWidget::initUi()
 void CenterWidget::initConnection()
 {
     connect(m_handler, &DMDbusHandler::sigShowSpinerWindow, this, &CenterWidget::slotshowSpinerWindow);
+<<<<<<< Updated upstream
+=======
+//    connect(m_handler, &DMDbusHandler::sigUpdateDeviceInfo, this, &CenterWidget::slotUpdateDeviceInfo);
+
+>>>>>>> Stashed changes
 }
 
 void CenterWidget::slotshowSpinerWindow(bool bshow)

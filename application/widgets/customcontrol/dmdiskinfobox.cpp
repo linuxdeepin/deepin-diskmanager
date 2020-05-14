@@ -18,21 +18,16 @@
 
 
 #include <QDebug>
-DmDiskinfoBox::DmDiskinfoBox()
+DmDiskinfoBox::DmDiskinfoBox(int level, QString diskpath, QString disksize): m_level(level), m_diskpath(diskpath), m_disksize(disksize)
 {
-    id = 0;
-    level = 0;
-    QString disklabel = "";
-    QString disksize = "";
-    QString partitonlabel = "";
-    QString partitionsize = "";
+
     childs.clear();
 
 }
 
 int DmDiskinfoBox::addChild(DmDiskinfoBox *child)
 {
-    child->level = level + 1;
+    child->m_level = m_level + 1;
     foreach (DmDiskinfoBox *item, childs) {
         if (item->id == child->id) {
             childs.removeOne(item);
@@ -50,8 +45,8 @@ int DmDiskinfoBox::childCount()
 
 void DmDiskinfoBox::print()
 {
-    qDebug() << "----asdd----Id::" << id << "  level::" << level
-             << "  disklabel:" << disklabel << " disksize::" << disksize
+    qDebug() << "----asdd----Id::" << id << "  level::" << m_level
+             << "  disklabel:" << m_diskpath << " disksize::" << m_disksize
              << "  partitonlabel::" << partitonlabel << " partitionsize::" << partitionsize  << "  childs num::" << childs.count() << endl;
 
 }

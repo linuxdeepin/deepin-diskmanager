@@ -22,7 +22,7 @@
 class DmDiskinfoBox
 {
 public:
-    DmDiskinfoBox();
+    DmDiskinfoBox(int level, QString diskpath, QString disksize);
     ~DmDiskinfoBox();
 
 public:
@@ -31,9 +31,9 @@ public:
     void print();
 public:
     int id;
-    int level;
-    QString disklabel;
-    QString disksize;
+    int m_level;
+    QString m_diskpath;
+    QString m_disksize;
     QString partitonlabel;
     QString partitionsize;
     QList<DmDiskinfoBox *> childs;

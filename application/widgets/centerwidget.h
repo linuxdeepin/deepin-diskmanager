@@ -3,6 +3,7 @@
 
 #include <DWidget>
 #include "partedproxy/dmdbushandler.h"
+#include "devicelistwidget.h"
 DWIDGET_USE_NAMESPACE
 
 class TitleWidget;

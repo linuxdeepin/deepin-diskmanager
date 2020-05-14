@@ -33,7 +33,6 @@
 #include <QSizePolicy>
 #include <DHorizontalLine>
 #include <DMessageManager>
-#include "myframe.h"
 #include "piechartwidget.h"
 
 DWIDGET_USE_NAMESPACE

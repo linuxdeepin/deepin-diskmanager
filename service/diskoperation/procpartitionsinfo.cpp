@@ -42,7 +42,7 @@ void ProcPartitionsInfo::load_proc_partitions_info_cache()
         in.skipWhiteSpace();
         QString line = in.readLine();
         QString device;
-        while (!in.atEnd()) {
+        while (!in.atEnd() || !line.isEmpty()) {
             qDebug() << __FUNCTION__ << "-----++++++------";
             QStringList strlist = line.split(" ");
             unsigned long maj = 0;

@@ -5,6 +5,8 @@
 #include <limits.h>
 #include <mntent.h>
 #include <QFile>
+#include <QTextStream>
+#include <QDebug>
 
 namespace DiskManager {
 static MountInfo::MountMapping mount_info;
@@ -66,11 +68,11 @@ void MountInfo::read_mountpoints_from_file(const QString &filename, MountInfo::M
         QString node = p->mnt_fsname;
         QString mountpoint = p->mnt_dir;
 
-        QString uuid = Utils::regexp_label(node, "^UUID=(.*)");
+        QString uuid = Utils::regexp_label(node, "(?<=UUID\\=).*");
         if (! uuid.isEmpty())
             node = FsInfo::get_path_by_uuid(uuid);
 
-        QString label = Utils::regexp_label(node, "^LABEL=(.*)");
+        QString label = Utils::regexp_label(node, "(?<=UUID\\=).*");
         if (! label.isEmpty())
             node = FsInfo::get_path_by_label(label);
 
@@ -95,17 +97,43 @@ void MountInfo::add_mountpoint_entry(MountInfo::MountMapping &map, QString &node
 
 bool MountInfo::parse_readonly_flag(const QString &str)
 {
-
+    QStringList mntopts = str.split(",");
+    for (unsigned int i = 0 ; i < mntopts.size() ; i ++) {
+        if (mntopts[i] == "rw")
+            return false;
+        else if (mntopts[i] == "ro")
+            return true;
+    }
+    return false;  // Default is read-write mount
 }
 
 void MountInfo::read_mountpoints_from_file_swaps(const QString &filename, MountInfo::MountMapping &map)
 {
-
+    QFile file(filename);
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&file);
+        QString line = in.readLine();
+        QString node;
+        while (!in.atEnd() || !line.isEmpty()) {
+            qDebug() << line;
+            node = Utils::regexp_label(line, "^(/[^ ]+)");
+            if (node.size() > 0)
+                map[BlockSpecial(node)].mountpoints.push_back("" /* no mountpoint for swap */);
+            line = in.readLine();
+        }
+    }
 }
 
 bool MountInfo::have_rootfs_dev(MountInfo::MountMapping &map)
 {
-
+    MountMapping::const_iterator iter_mp;
+    for (iter_mp = mount_info.begin() ; iter_mp != mount_info.end() ; iter_mp ++) {
+        if (! iter_mp.value().mountpoints.isEmpty() && iter_mp.value().mountpoints[0] == "/") {
+            if (iter_mp.key().m_name != "rootfs" && iter_mp.key().m_name != "/dev/root")
+                return true;
+        }
+    }
+    return false;
 }
 
 void MountInfo::read_mountpoints_from_mount_command(MountInfo::MountMapping &map)
@@ -117,9 +145,10 @@ void MountInfo::read_mountpoints_from_mount_command(MountInfo::MountMapping &map
         lines = output.split("\n");
         for (unsigned int i = 0 ; i < lines .size() ; i ++) {
             // Process line like "/dev/sda3 on / type ext4 (rw)"
-            QString node = Utils::regexp_label(lines[ i ], "^([^[:blank:]]+) on ");
-            QString mountpoint = Utils::regexp_label(lines[ i ], "^[^[:blank:]]+ on ([^[:blank:]]+) ");
-            QString mntopts = Utils::regexp_label(lines[i], " type [^[:blank:]]+ \\(([^\\)]*)\\)");
+            QString node = Utils::regexp_label(lines[ i ], ".*?(?= )");
+            QString mountpoint = Utils::regexp_label(lines[ i ], "(?<=on ).*?(?= type)");
+            QString mntopts = Utils::regexp_label(lines[i], "(?<=\\().*?(?=\\))");
+            // qDebug() << node << mountpoint << mntopts;
             if (! node.isEmpty())
                 add_mountpoint_entry(map, node, mountpoint, parse_readonly_flag(mntopts));
         }

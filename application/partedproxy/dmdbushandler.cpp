@@ -74,11 +74,14 @@ void DMDbusHandler::slotUpdateDeviceInfo(const DeviceInfoMap &infomap)
 //                 << info.sector_size << info.max_prims << info.highest_busy << info.readonly
 //                 << info.max_partition_name_length;
         for (auto it = info.partition.begin(); it != info.partition.end(); it++) {
-            qDebug() << __FUNCTION__ /*<< it->device_path << it->partition_number << it->type << it->status << it->alignment << it->fstype << it->uuid
-                     << it->name << it->sector_start << it->sector_end*/ << it->sectors_used << it->sectors_unused;
+
+//            qDebug() << __FUNCTION__ << it->device_path << it->partition_number << it->type << it->status << it->alignment << it->fstype << it->uuid
+//                     << it->name << it->sector_start << it->sector_end << it->sectors_used << it->sectors_unused
 //                     << it->sectors_unallocated << it->significant_threshold << it->free_space_before
 //                     << it->sector_size << it->fs_block_size << it->path << it->filesystem_label;
 //            qDebug() << it->sector_end << it->sector_start << Utils::sector_to_unit(it->sector_size, it->sector_end - it->sector_start, SIZE_UNIT::UNIT_GIB);
+            qDebug() << it->name << it->device_path << it->partition_number << it->sectors_used << it->sectors_unused << it->sector_start << it->sector_end;
+
         }
     }
     emit sigUpdateDeviceInfo();

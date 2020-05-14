@@ -33,9 +33,16 @@ PartitionWidget::PartitionWidget(QWidget *parent) : DDialog(parent)
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
     mainLayout->setSpacing(5);
 
-    topFrame = new MyFrame(mainFrame);
+    topFrame = new DFrame(mainFrame);
     topFrameSetting();
-    topFrame->setFrameStyle(DFrame::NoFrame);
+    topFrame->setFrameRounded(true);
+//    topFrame->setFrameStyle(DFrame::NoFrame);
+
+    DPalette pa = DApplicationHelper::instance()->palette(topFrame);
+    pa.setBrush(DPalette::Base, pa.itemBackground());
+    DApplicationHelper::instance()->setPalette(topFrame, pa);
+    topFrame->setAutoFillBackground(true);
+
     botFrame = new DFrame(mainFrame);
     botFrameSetting();
     botFrame->setFrameStyle(DFrame::NoFrame);
@@ -256,6 +263,9 @@ void PartitionWidget::partInfoShowing()
     infoLayout->addWidget(partWidget);
 
     scroll = new DScrollArea(partWidget);
+    DPalette pa = palette();
+    pa.setColor(DPalette::Base, QColor(255, 255, 255, 0));
+    scroll->setPalette(pa);
     scroll->setMaximumHeight(180);
     scroll->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
     scroll->setWidgetResizable(true);
@@ -355,9 +365,10 @@ void PartitionWidget::partedInfo()
 
 void PartitionWidget::paintEvent(QPaintEvent *event)
 {
-//    DPalette pa = DApplicationHelper::instance()->palette(infoWidget);
-//    pa.setBrush(DPalette::Background, pa.background());
-//    DApplicationHelper::instance()->setPalette(infoWidget, pa);
-//    infoWidget->setAutoFillBackground(true);
+
+
+
+//       DApplicationHelper::instance()->setPalette(scroll, pa);
+//       scroll->setAutoFillBackground(true);
 //    QWidget::paintEvent(event);
 }

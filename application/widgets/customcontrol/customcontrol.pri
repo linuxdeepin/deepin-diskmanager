@@ -11,8 +11,7 @@ HEADERS += \
     $$PWD/partitionwidget.h \
     $$PWD/piechartwidget.h \
     $$PWD/dmdiskinfobox.h \
-    $$PWD/sizeinfowidget.h \
-    $$PWD/myframe.h
+    $$PWD/sizeinfowidget.h
 SOURCES += \
     $$PWD/bufferwin.cpp\
     $$PWD/tipdialog.cpp \
@@ -26,6 +25,5 @@ SOURCES += \
     $$PWD/partitionwidget.cpp \
     $$PWD/piechartwidget.cpp \
     $$PWD/dmdiskinfobox.cpp \
-    $$PWD/sizeinfowidget.cpp \
-    $$PWD/myframe.cpp
+    $$PWD/sizeinfowidget.cpp
 

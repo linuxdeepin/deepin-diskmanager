@@ -60,7 +60,7 @@ protected:
 public slots:
 private:
     QWidget *mainFrame;
-    MyFrame *topFrame;
+    DFrame *topFrame;
     DFrame *botFrame;
 //    DFrame *parInfoFrame;
     DLabel *deviceInfoLabel;

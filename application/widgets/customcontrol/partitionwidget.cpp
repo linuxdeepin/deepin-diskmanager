@@ -22,7 +22,7 @@ PartitionWidget::PartitionWidget(QWidget *parent) : DDialog(parent)
 {
 
     dataValue << 0;
-    strName << "last 256GB";
+    strName << "SSD 256GB";
     this->setModal(true);
     this->setFixedSize(800, 600);
     mainFrame = new DFrame(this);
@@ -120,7 +120,7 @@ void PartitionWidget::botFrameSetting()
             if (last >= 0) {
                 dataValue.append(size);
                 dataValue.replace(0, last);
-                strName.replace(0, QString::number(last) + listWidget.at(i)->findChild<DComboBox *>("partCombox")->currentText());
+                strName.replace(0, "SSD " + QString::number(last) + listWidget.at(i)->findChild<DComboBox *>("partCombox")->currentText());
             } else {
                 DMessageManager::instance()->sendMessage(this, QIcon(":/images/warning"), tr("内存分配有误"));
                 return;
@@ -196,35 +196,45 @@ void PartitionWidget::botFrameSetting()
 
 void PartitionWidget::partInfoShowing()
 {
+    QFont font;
+    font.setPointSize(10);
     deviceInfoLabel = new DLabel(tr("Device Information"), botFrame);
+    deviceInfoLabel->setFont(font);
     QHBoxLayout *line1Layout = new QHBoxLayout();
     deviceNameLabel = new DLabel(tr("Device:"), botFrame);
     deviceName = new DLabel("SSD256G", botFrame);
     line1Layout->addWidget(deviceNameLabel);
     line1Layout->addWidget(deviceName);
+    line1Layout->setContentsMargins(0, 0, 130, 0);
 
     QHBoxLayout *line2Layout = new QHBoxLayout();
     deviceFormateLabel = new DLabel(tr("Formate:"), botFrame);
     deviceFormate = new DLabel("EXT3", botFrame);
     line2Layout->addWidget(deviceFormateLabel);
     line2Layout->addWidget(deviceFormate);
+    line2Layout->setContentsMargins(0, 0, 130, 0);
 
     QHBoxLayout *line3Layout = new QHBoxLayout();
     selectedPartLabel = new DLabel(tr("Selected Partition:"), botFrame);
     selectedPartition = new DLabel("SDA3");
     line3Layout->addWidget(selectedPartLabel);
     line3Layout->addWidget(selectedPartition);
+    line3Layout->setContentsMargins(0, 0, 130, 0);
 
     QHBoxLayout *line4Layout = new QHBoxLayout();
     allMemoryLabel  = new DLabel(tr("Total Capacity:"), botFrame);
     allMemory = new DLabel("125GB", botFrame);
     line4Layout->addWidget(allMemoryLabel);
     line4Layout->addWidget(allMemory);
+    line4Layout->setContentsMargins(0, 0, 130, 0);
 //    allMemoryLabel->setStyleSheet("border:1px solid gray");
 //    allMemory->setStyleSheet("border:1px solid gray");
 
     QHBoxLayout *line5Layout = new QHBoxLayout();
+    QFont font1;
+    font1.setPointSize(10);
     partInfoLabel = new DLabel(tr("Partition Information"), botFrame);
+    partInfoLabel->setFont(font1);
     partInfoLabel->setMaximumSize(100, 50);
     addButton = new DIconButton(DStyle::SP_IncreaseElement);
     remButton = new DIconButton(DStyle::SP_DecreaseElement);

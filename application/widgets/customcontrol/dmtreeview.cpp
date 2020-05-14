@@ -96,7 +96,7 @@ void DmTreeview::currentChanged(const QModelIndex &current, const QModelIndex &p
     DiskInfoData data = current.data(Qt::UserRole + 1).value<DiskInfoData>();
     qDebug() << data.disksize << data.disklabel << data.partitionsize << data.partitonlabel;
     emit sigselectitem(current);
-    // emit sigCurSelectChanged();
+    emit sigCurSelectChanged(data.disklabel, data.partitonlabel, data.start, data.end);
 
 }
 void DmTreeview::mousePressEvent(QMouseEvent *event)

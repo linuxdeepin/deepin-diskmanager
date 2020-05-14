@@ -1,16 +1,13 @@
 #include "devicelistwidget.h"
-#include "partedproxy/dmdbushandler.h"
 #include <DPalette>
 #include <QVBoxLayout>
 #include <QDebug>
-
+#include "customcontrol/dmdiskinfobox.h"
 DeviceListWidget::DeviceListWidget(QWidget *parent): DWidget(parent)
 {
     setAutoFillBackground(true);
     auto plt = this->palette();
     plt.setBrush(QPalette::Background, QBrush(Qt::white));
-    m_handler =  DMDbusHandler::instance(this);
-    m_handler->getDeviceinfo();
     setPalette(plt);
     setMaximumWidth(360);
     setMinimumWidth(100);
@@ -32,64 +29,64 @@ void DeviceListWidget::initUi()
 void DeviceListWidget::initConnection()
 {
     connect(DMDbusHandler::instance(), &DMDbusHandler::sigUpdateDeviceInfo, this, &DeviceListWidget::slotUpdateDeviceInfo);
-    // connect(m_handler, &DMDbusHandler::sigUpdateDeviceInfo, this, &DeviceListWidget::slotUpdateLwInfo, Qt::QueuedConnection);
+    connect(m_treeview, &DmTreeview::sigCurSelectChanged, DMDbusHandler::instance(), &DMDbusHandler::sigCurSelectChanged);
 }
 void DeviceListWidget::add()
 {
 //    DmDiskinfoBox *m_box = new DmDiskinfoBox();
-//    m_box->disklabel = "/dev/sda";
-//    m_box->disksize = "200GB";
-//    m_box->level = 0;
+//    m_box->m_diskpath = "/dev/sda";
+//    m_box->m_disksize = "200GB";
+//    m_box->m_level = 0;
 //    DmDiskinfoBox *m_childbox = new DmDiskinfoBox() ;
-//    m_childbox->level = 1;
-//    m_childbox->disksize = "100GB";
-//    m_childbox->disklabel = "/dev/sda1";
+//    m_childbox->m_level = 1;
+//    m_childbox->m_disksize = "100GB";
+//    m_childbox->m_diskpath = "/dev/sda1";
 //    m_box->childs.append(m_childbox);
 //    DmDiskinfoBox *m_childbox1 = new DmDiskinfoBox() ;
-//    m_childbox1->level = 1;
-//    m_childbox1->disksize = "150GB";
-//    m_childbox1->disklabel = "/dev/sda2";
+//    m_childbox1->m_level = 1;
+//    m_childbox1->m_disksize = "150GB";
+//    m_childbox1->m_diskpath = "/dev/sda2";
 //    m_box->childs.append(m_childbox1);
 //    m_treeview->addTopItem(m_box);
 //    DmDiskinfoBox *m_box1 = new DmDiskinfoBox();
-//    m_box1->disklabel = "/dev/sdb";
-//    m_box1->disksize = "300GB";
-//    m_box1->level = 0;
+//    m_box1->m_diskpath = "/dev/sdb";
+//    m_box1->m_disksize = "300GB";
+//    m_box1->m_level = 0;
 //    DmDiskinfoBox *m_childbox2 = new DmDiskinfoBox() ;
-//    m_childbox2->level = 1;
-//    m_childbox2->disksize = "4000GB";
-//    m_childbox2->disklabel = "/dev/sdb1";
+//    m_childbox2->m_level = 1;
+//    m_childbox2->m_disksize = "4000GB";
+//    m_childbox2->m_diskpath = "/dev/sdb1";
 //    m_box1->childs.append(m_childbox2);
 //    m_treeview->addTopItem(m_box1);
 //    DmDiskinfoBox *m_box2 = new DmDiskinfoBox();
-//    m_box2->disklabel = "/dev/sdc";
-//    m_box2->disksize = "350GB";
-//    m_box2->level = 0;
+//    m_box2->m_diskpath = "/dev/sdc";
+//    m_box2->m_disksize = "350GB";
+//    m_box2->m_level = 0;
 //    DmDiskinfoBox *m_childbox3 = new DmDiskinfoBox() ;
-//    m_childbox3->level = 1;
-//    m_childbox3->disksize = "4000GB";
-//    m_childbox3->disklabel = "/dev/sdb1";
+//    m_childbox3->m_level = 1;
+//    m_childbox3->m_disksize = "4000GB";
+//    m_childbox3->m_diskpath = "/dev/sdb1";
 //    m_box2->childs.append(m_childbox3);
 //    DmDiskinfoBox *m_childbox4 = new DmDiskinfoBox() ;
-//    m_childbox4->level = 1;
+//    m_childbox4->m_level = 1;
 //    m_box2->childs.append(m_childbox4);
 //    DmDiskinfoBox *m_childbox5 = new DmDiskinfoBox() ;
-//    m_childbox5->level = 1;
+//    m_childbox5->m_level = 1;
 //    m_box2->childs.append(m_childbox5);
 //    DmDiskinfoBox *m_childbox6 = new DmDiskinfoBox() ;
-//    m_childbox6->level = 1;
+//    m_childbox6->m_level = 1;
 //    m_box2->childs.append(m_childbox6);
 //    DmDiskinfoBox *m_childbox7 = new DmDiskinfoBox() ;
-//    m_childbox7->level = 1;
+//    m_childbox7->m_level = 1;
 //    m_box2->childs.append(m_childbox7);
 //    DmDiskinfoBox *m_childbox8 = new DmDiskinfoBox() ;
-//    m_childbox8->level = 1;
+//    m_childbox8->m_level = 1;
 //    m_box2->childs.append(m_childbox8);
 //    DmDiskinfoBox m_childbox9;
-//    m_childbox9.level = 1;
-//    m_box2->childs.append(m_childbox9);
+//    m_childbox9.m_level = 1;
+//    // m_box2->childs.append(m_childbox9);
 
-//   m_treeview->addTopItem(m_box2);
+//    m_treeview->addTopItem(m_box2);
 }
 
 void DeviceListWidget::slotUpdateDeviceInfo()
@@ -97,11 +94,7 @@ void DeviceListWidget::slotUpdateDeviceInfo()
     //ToDo:
 //更新DmTreeview
 //设置当前选项
-
-//    m_treeview->addTopItem(m_box2);
-
-
-
+    DeviceInfoMap infomap = DMDbusHandler::instance()->probDeviceInfo();
 
 }
 

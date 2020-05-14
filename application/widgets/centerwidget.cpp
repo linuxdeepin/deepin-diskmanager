@@ -13,7 +13,7 @@ CenterWidget::CenterWidget(DWidget *parent) : Dtk::Widget::DWidget(parent)
     m_handler =  DMDbusHandler::instance(this);
     initUi();
     initConnection();
-//    m_handler->getDeviceinfo();
+    m_handler->getDeviceinfo();
 }
 
 CenterWidget::~CenterWidget()

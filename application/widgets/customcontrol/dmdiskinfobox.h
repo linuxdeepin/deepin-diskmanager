@@ -23,6 +23,7 @@ class DmDiskinfoBox
 {
 public:
     DmDiskinfoBox(int level, QString diskpath, QString disksize);
+    DmDiskinfoBox() {}
     ~DmDiskinfoBox();
 
 public:

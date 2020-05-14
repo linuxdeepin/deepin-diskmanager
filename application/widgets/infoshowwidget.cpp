@@ -174,4 +174,6 @@ void InfoShowWidget::slotShowDiskInfo(QString diskname, QString diskformat, QStr
 void InfoShowWidget::slotCurSelectChanged(const QString &devicepath, const QString &partitionpath, Sector start, Sector end)
 {
     qDebug() << __FUNCTION__ << "-0--0-";
+    DeviceInfoMap infomap = DMDbusHandler::instance()->probDeviceInfo();
+
 }

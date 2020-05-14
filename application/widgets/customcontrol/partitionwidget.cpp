@@ -98,7 +98,7 @@ void PartitionWidget::botFrameSetting()
     connect(applyBtn, &DPushButton::clicked, this, [ = ] {
 
         qreal all = 0;
-        for (int i = 0; i < dataValue.size(); i++)
+        for (int i = 1; i < dataValue.size(); i++)
         {
             all = all + dataValue.at(i);
         }
@@ -119,6 +119,8 @@ void PartitionWidget::botFrameSetting()
             qDebug() << "last" << last;
             if (last >= 0) {
                 dataValue.append(size);
+                dataValue.replace(0, last);
+                strName.replace(0, QString::number(last) + listWidget.at(i)->findChild<DComboBox *>("partCombox")->currentText());
             } else {
                 DMessageManager::instance()->sendMessage(this, QIcon(":/images/warning"), tr("内存分配有误"));
                 return;
@@ -139,21 +141,32 @@ void PartitionWidget::botFrameSetting()
     //复原
     reveBtn = new DPushButton(tr("Revert"), botFrame);
     connect(reveBtn, &DPushButton::clicked, this, [ = ] {
-        qDebug() << "currentRcount" << currentRcount;
-        qDebug() << dataValue.size() << dataValue.size() - currentRcount;
+
         if (currentRcount == 0)
             return ;
-        for (int i = 0; i < currentRcount; i++)
-        {
-            qDebug() << dataValue.at(dataValue.size() - i - 1) << strName.at(strName.size() - i - 1);
-            dataValue.removeAt(dataValue.size() - i - 1);
-            strName.removeAt(strName.size() - i - 1);
-            pieWidget->update();
 
+        for (int i = 1; i <= currentRcount; ++i)
+        {
+            int m = dataValue.size();
+            int n = strName.size();
+            qDebug() << dataValue.size() - i << dataValue.at(dataValue.size() - i) << strName.size() - i << strName.at(strName.size() - i);
+            dataValue.removeAt(m - 1);
+            strName.removeAt(n - 1);
+            pieWidget->update();
         }
 
-        currentRcount = 0;
+        qreal all = 0;
+        for (int i = 1; i < dataValue.size(); i++)
+        {
+            all = all + dataValue.at(i);
+        }
 
+
+        qreal last = 256  - all;
+        qDebug() << "last" << last;
+        dataValue.replace(0, last);
+        strName.replace(0, QString::number(last) + listWidget.at(0)->findChild<DComboBox *>("partCombox")->currentText());
+        currentRcount = 0;
         for (int i = layoutCount; i >= 1; i--)
         {
             QWidget *p = scrollLayout->itemAt(i - 1)->widget();
@@ -162,11 +175,12 @@ void PartitionWidget::botFrameSetting()
                 return;
             }
             scrollLayout->removeWidget(p);
+            p->deleteLater();
             layoutCount = scrollLayout->count();
             scrollWidget->setMinimumSize(380, layoutCount * 140);
         }
-
     });
+
     applyBtn->setMinimumWidth(120);
     cancleBtn->setMinimumWidth(120);
     reveBtn->setMinimumWidth(120);

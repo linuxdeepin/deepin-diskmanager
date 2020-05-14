@@ -19,6 +19,9 @@ private:
 
 signals:
     void sigPartitionSelectChanged();
+
+public slots:
+    void slotUpdateDeviceInfo();
 };
 
 #endif // DEVICELISTWIDGET_H

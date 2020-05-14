@@ -1,6 +1,8 @@
 #include "devicelistwidget.h"
+#include "partedproxy/dmdbushandler.h"
 #include <DPalette>
 #include <QVBoxLayout>
+#include <QDebug>
 
 DeviceListWidget::DeviceListWidget(QWidget *parent): DWidget(parent)
 {
@@ -15,23 +17,21 @@ DeviceListWidget::DeviceListWidget(QWidget *parent): DWidget(parent)
     initUi();
     initConnection();
     add();
-
-
 }
 
 void DeviceListWidget::initUi()
 {
-
-
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setSpacing(0);
+    this->setLayout(layout);
     m_treeview = new DmTreeview(this);
-    m_treeview->setFixedHeight(500);
-
-
+    layout->addWidget(m_treeview);
 }
 
 void DeviceListWidget::initConnection()
 {
-
+    connect(DMDbusHandler::instance(), &DMDbusHandler::sigUpdateDeviceInfo, this, &DeviceListWidget::slotUpdateDeviceInfo);
 }
 void DeviceListWidget::add()
 {
@@ -88,8 +88,11 @@ void DeviceListWidget::add()
 //    m_childbox9.level = 1;
 //    m_box2->childs.append(m_childbox9);
     m_treeview->addTopItem(m_box2);
+}
 
-
-
-
+void DeviceListWidget::slotUpdateDeviceInfo()
+{
+    //ToDo:
+//更新DmTreeview
+//设置当前选项
 }

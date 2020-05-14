@@ -19,9 +19,11 @@ private:
     void initConnection();
 signals:
     void sigShowSpinerWindow(bool);
-    void sigUpdateDeviceInfo(const DeviceInfoMap &infomap);
+    void sigUpdateDeviceInfo();
+    void sigCurSelectChanged(const QString &devicepath, const QString &partitionpath);
 private slots:
     void MessageReport(const QString &msg);
+    void slotUpdateDeviceInfo(const DeviceInfoMap &infomap);
 
 private:
     DMDBusInterface        *m_dbus = nullptr;

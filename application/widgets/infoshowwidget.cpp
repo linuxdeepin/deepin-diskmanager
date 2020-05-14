@@ -1,4 +1,5 @@
 #include "infoshowwidget.h"
+#include "partedproxy/dmdbushandler.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QPainter>
@@ -13,6 +14,7 @@ InfoShowWidget::InfoShowWidget(DWidget *parent): DWidget(parent)
     plt.setBrush(QPalette::Background, QBrush(Qt::lightGray));
     setPalette(plt);
     initUi();
+    initConnection();
 }
 
 
@@ -57,6 +59,11 @@ void InfoShowWidget::initUi()
     framelayout->addWidget(pframebottom);
     framelayout->addStretch();
 
+}
+
+void InfoShowWidget::initConnection()
+{
+    connect(DMDbusHandler::instance(), &DMDbusHandler::sigCurSelectChanged, this, &InfoShowWidget::slotCurSelectChanged);
 }
 
 
@@ -162,5 +169,10 @@ void InfoShowWidget::slotShowDiskInfo(QString diskname, QString diskformat, QStr
     QString format = "格式: EXT3";
     typeLabel->setText(format);
     allmemoryLabel->setText("256GB");
+
+}
+
+void InfoShowWidget::slotCurSelectChanged(const QString &devicepath, const QString &partitionpath)
+{
 
 }

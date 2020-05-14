@@ -31,7 +31,6 @@ signals:
 
 public slots:
     void slotshowSpinerWindow(bool bshow = false);
-    void slotUpdateDeviceInfo(const DeviceInfoMap &infomap);
 private:
     DMDbusHandler  *m_handler;
     TitleWidget     *m_titlewidget;

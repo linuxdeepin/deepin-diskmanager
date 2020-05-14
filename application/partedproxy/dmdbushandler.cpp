@@ -38,6 +38,7 @@ void DMDbusHandler::initConnection()
 {
     connect(m_dbus, &DMDBusInterface::MessageReport, this, &DMDbusHandler::MessageReport);
     connect(m_dbus, &DMDBusInterface::sigUpdateDeviceInfo, this, &DMDbusHandler::sigUpdateDeviceInfo);
+    connect(m_dbus, &DMDBusInterface::sigUpdateDeviceInfo, this, &DMDbusHandler::slotUpdateDeviceInfo);
 }
 
 void DMDbusHandler::Quit()
@@ -55,6 +56,26 @@ void DMDbusHandler::getDeviceinfo()
 void DMDbusHandler::MessageReport(const QString &msg)
 {
     qDebug() << "MessageReport:" << msg;
+}
+
+void DMDbusHandler::slotUpdateDeviceInfo(const DeviceInfoMap &infomap)
+{
+    m_devicemap = infomap;
+    for (auto it = infomap.begin(); it != infomap.end(); it++) {
+        DeviceInfo info = it.value();
+        qDebug() << __FUNCTION__ << info.m_path << info.length << info.heads << info.sectors
+                 << info.cylinders << info.cylsize << info.model << info.serial_number << info.disktype
+                 << info.sector_size << info.max_prims << info.highest_busy << info.readonly
+                 << info.max_partition_name_length;
+        for (auto it = info.partition.begin(); it != info.partition.end(); it++) {
+            qDebug() << __FUNCTION__ << it->device_path << it->partition_number << it->type << it->status << it->alignment << it->fstype << it->uuid
+                     << it->name << it->sector_start << it->sector_end << it->sectors_used << it->sectors_unused
+                     << it->sectors_unallocated << it->significant_threshold << it->free_space_before
+                     << it->sector_size << it->fs_block_size << it->path << it->filesystem_label;
+        }
+    }
+    emit sigUpdateDeviceInfo();
+    emit sigShowSpinerWindow(false);
 }
 
 

@@ -4,20 +4,20 @@
 
 MainSplitter::MainSplitter(DWidget *parent): DSplitter(parent)
 {
+    setFrameShape(QFrame::NoFrame);
+
     initui();
     initConnection();
 }
 
 void MainSplitter::initui()
 {
-    setHandleWidth(5);
+    setHandleWidth(1);
     setChildrenCollapsible(false);  //  子部件不可拉伸到 0
-    m_devicelist = new DeviceListWidget;
-    m_infoshow = new InfoShowWidget;
+    m_devicelist = new DeviceListWidget(this);
+    m_infoshow = new InfoShowWidget(this);
     addWidget(m_devicelist);
     addWidget(m_infoshow);
-
-
 }
 
 void MainSplitter::initConnection()

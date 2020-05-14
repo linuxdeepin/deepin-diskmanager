@@ -20,7 +20,6 @@ QList<qreal> dataValue;
 QList<QString> strName;
 PartitionWidget::PartitionWidget(QWidget *parent) : DDialog(parent)
 {
-
     dataValue << 0;
     strName << "SSD 256GB";
     this->setModal(true);

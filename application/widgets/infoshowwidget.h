@@ -22,8 +22,10 @@ protected:
     void paintEvent(QPaintEvent *event);
 public slots:
     void slotShowDiskInfo(QString diskname, QString diskformat, QString diskmemory);
+    void slotCurSelectChanged(const QString &devicepath, const QString &partitionpath);
 private:
     void initUi();
+    void initConnection();
     DFrame *pframe;
     DFrame *pframetop;
     DFrame *pframemid;

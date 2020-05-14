@@ -24,7 +24,7 @@ PartitionWidget::PartitionWidget(QWidget *parent) : DDialog(parent)
     strName << "SSD 256GB";
     this->setModal(true);
     this->setFixedSize(800, 600);
-    mainFrame = new DFrame(this);
+    mainFrame = new QWidget(this);
 
 //    mainFrame->setAttribute(Qt::WA_TranslucentBackground, true);
 
@@ -33,15 +33,13 @@ PartitionWidget::PartitionWidget(QWidget *parent) : DDialog(parent)
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
     mainLayout->setSpacing(5);
 
-    topFrame = new DFrame(mainFrame);
+    topFrame = new MyFrame(mainFrame);
     topFrameSetting();
+    topFrame->setFrameStyle(DFrame::NoFrame);
     botFrame = new DFrame(mainFrame);
     botFrameSetting();
     botFrame->setFrameStyle(DFrame::NoFrame);
-//    DPalette pa = DApplicationHelper::instance()->palette(topFrame);
-//    pa.setBrush(DPalette::Background, QColor(200, 200, 200));
-//    DApplicationHelper::instance()->setPalette(topFrame, pa);
-//    topFrame->setAutoFillBackground(true);
+
 
 
     mainLayout->addWidget(topFrame, 2);
@@ -261,7 +259,8 @@ void PartitionWidget::partInfoShowing()
     scroll->setMaximumHeight(180);
     scroll->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
     scroll->setWidgetResizable(true);
-    scrollWidget = new QWidget(partWidget);
+    scrollWidget = new DFrame(partWidget);
+    scrollWidget->setFrameStyle(DFrame::NoFrame);
     scrollLayout  = new QVBoxLayout(scrollWidget);
 
     addWidget();
@@ -356,5 +355,9 @@ void PartitionWidget::partedInfo()
 
 void PartitionWidget::paintEvent(QPaintEvent *event)
 {
-
+//    DPalette pa = DApplicationHelper::instance()->palette(infoWidget);
+//    pa.setBrush(DPalette::Background, pa.background());
+//    DApplicationHelper::instance()->setPalette(infoWidget, pa);
+//    infoWidget->setAutoFillBackground(true);
+//    QWidget::paintEvent(event);
 }

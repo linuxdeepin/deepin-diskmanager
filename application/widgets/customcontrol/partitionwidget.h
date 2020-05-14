@@ -33,6 +33,7 @@
 #include <QSizePolicy>
 #include <DHorizontalLine>
 #include <DMessageManager>
+#include "myframe.h"
 #include "piechartwidget.h"
 
 DWIDGET_USE_NAMESPACE
@@ -58,8 +59,8 @@ protected:
     virtual void paintEvent(QPaintEvent *event) override;
 public slots:
 private:
-    DFrame *mainFrame;
-    DFrame *topFrame;
+    QWidget *mainFrame;
+    MyFrame *topFrame;
     DFrame *botFrame;
 //    DFrame *parInfoFrame;
     DLabel *deviceInfoLabel;
@@ -74,7 +75,7 @@ private:
     DLabel *partInfoLabel;
     DIconButton *addButton;
     DIconButton *remButton;
-    DScrollArea *scrollArea;
+//    DScrollArea *scrollArea;
     QWidget *partWidget;
     QVBoxLayout *infoLayout;
     QVBoxLayout *scrollLayout;
@@ -88,7 +89,7 @@ private:
     DPushButton *reveBtn;
 
     DScrollArea *scroll;
-    QWidget *scrollWidget;
+    DFrame *scrollWidget;
     PieChartWidget *pieWidget;
 
     QWidget *infoWidget;

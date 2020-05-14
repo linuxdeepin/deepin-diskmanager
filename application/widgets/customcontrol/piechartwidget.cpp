@@ -61,24 +61,31 @@ void PieChartWidget::drawPie(QPainter *painter)
     qreal mid = 0;
     qreal rec = 0;
 
-    for (int i = 0; i < dataValue.size(); i++) {
-        qreal value = dataValue.at(i);
-//        all = getAlldata(dataValue);
-//        qDebug() << all;
-        qreal len = (value / 256) * 360;
-        qDebug() << value;
-
-        painter->setPen(Qt::NoPen);
-        painter->setBrush(color.at(i));
-        painter->drawPie(20.0, 20.0, 300.0, 300.0, int(rec * 16), int(len * 16));
-        rec = rec + len;
-
-        mid = qreal(sum + len / 2);
-        sum = sum + len;
-
+    if (strName.size() == 1) {
         painter->setPen(QColor(Qt::black));
-        painter->drawText(QPoint(170 + 75 * qCos((mid * 3.14) / 180) - strName.at(i).length() - 10, 170 - 75 * qSin((mid * 3.14) / 180)), strName.at(i));
+        qDebug() << strName.size() << strName.at(0);
+        painter->drawText(QPoint(140, 220), strName.at(0));
+    } else {
+        for (int i = 0; i < dataValue.size(); i++) {
+            qreal value = dataValue.at(i);
+            //        all = getAlldata(dataValue);
+            //        qDebug() << all;
+            qreal len = (value / 256) * 360;
+            qDebug() << value;
 
+            painter->setPen(Qt::NoPen);
+            painter->setBrush(color.at(i));
+            painter->drawPie(20.0, 20.0, 300.0, 300.0, int(rec * 16), int(len * 16));
+            rec = rec + len;
+
+            mid = qreal(sum + len / 2);
+            sum = sum + len;
+
+            painter->setPen(QColor(Qt::black));
+            painter->drawText(QPoint(170 + 75 * qCos((mid * 3.14) / 180) - strName.at(i).length() - 10, 170 - 75 * qSin((mid * 3.14) / 180)), strName.at(i));
+
+        }
+        sum = 0;
     }
-    sum = 0;
+
 }

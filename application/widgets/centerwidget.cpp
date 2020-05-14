@@ -51,11 +51,6 @@ void CenterWidget::initUi()
 void CenterWidget::initConnection()
 {
     connect(m_handler, &DMDbusHandler::sigShowSpinerWindow, this, &CenterWidget::slotshowSpinerWindow);
-<<<<<<< Updated upstream
-=======
-//    connect(m_handler, &DMDbusHandler::sigUpdateDeviceInfo, this, &CenterWidget::slotUpdateDeviceInfo);
-
->>>>>>> Stashed changes
 }
 
 void CenterWidget::slotshowSpinerWindow(bool bshow)

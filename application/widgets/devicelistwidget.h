@@ -23,14 +23,11 @@ private:
     DMDbusHandler *m_handler;
 signals:
     void sigPartitionSelectChanged();
-<<<<<<< Updated upstream
 
 public slots:
     void slotUpdateDeviceInfo();
-=======
-public slots:
     void slotUpdateLwInfo(const DeviceInfoMap &infomap);
->>>>>>> Stashed changes
+
 };
 
 #endif // DEVICELISTWIDGET_H

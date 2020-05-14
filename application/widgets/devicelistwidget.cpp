@@ -21,36 +21,21 @@ DeviceListWidget::DeviceListWidget(QWidget *parent): DWidget(parent)
 
 void DeviceListWidget::initUi()
 {
-<<<<<<< Updated upstream
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     this->setLayout(layout);
     m_treeview = new DmTreeview(this);
     layout->addWidget(m_treeview);
-=======
-
-    QHBoxLayout *mainlayout = new QHBoxLayout(this);
-    m_treeview = new DmTreeview();
-    mainlayout->addWidget(m_treeview);
-
->>>>>>> Stashed changes
 }
 
 void DeviceListWidget::initConnection()
 {
-<<<<<<< Updated upstream
     connect(DMDbusHandler::instance(), &DMDbusHandler::sigUpdateDeviceInfo, this, &DeviceListWidget::slotUpdateDeviceInfo);
-=======
-
-    connect(m_handler, &DMDbusHandler::sigUpdateDeviceInfo, this, &DeviceListWidget::slotUpdateLwInfo, Qt::QueuedConnection);
->>>>>>> Stashed changes
+    // connect(m_handler, &DMDbusHandler::sigUpdateDeviceInfo, this, &DeviceListWidget::slotUpdateLwInfo, Qt::QueuedConnection);
 }
 void DeviceListWidget::add()
 {
-
-
-
 //    DmDiskinfoBox *m_box = new DmDiskinfoBox();
 //    m_box->disklabel = "/dev/sda";
 //    m_box->disksize = "200GB";
@@ -103,8 +88,8 @@ void DeviceListWidget::add()
 //    DmDiskinfoBox m_childbox9;
 //    m_childbox9.level = 1;
 //    m_box2->childs.append(m_childbox9);
-<<<<<<< Updated upstream
-    m_treeview->addTopItem(m_box2);
+
+//   m_treeview->addTopItem(m_box2);
 }
 
 void DeviceListWidget::slotUpdateDeviceInfo()
@@ -112,7 +97,7 @@ void DeviceListWidget::slotUpdateDeviceInfo()
     //ToDo:
 //更新DmTreeview
 //设置当前选项
-=======
+
 //    m_treeview->addTopItem(m_box2);
 
 
@@ -172,5 +157,4 @@ void DeviceListWidget::slotUpdateLwInfo(const DeviceInfoMap &infomap)
 
 
 
->>>>>>> Stashed changes
 }

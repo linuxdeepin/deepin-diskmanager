@@ -1,9 +1,11 @@
 #include "titlewidget.h"
+#include "partedproxy/dmdbushandler.h"
 #include <QHBoxLayout>
 
 TitleWidget::TitleWidget(DWidget *parent): DWidget(parent)
 {
     initUi();
+    initConnection();
 }
 
 void TitleWidget::initUi()
@@ -45,6 +47,11 @@ void TitleWidget::initUi()
     });
 }
 
+void TitleWidget::initConnection()
+{
+    connect(DMDbusHandler::instance(), &DMDbusHandler::sigCurSelectChanged, this, &TitleWidget::slotCurSelectChanged);
+}
+
 DPushButton *TitleWidget::createBtn(const QString &btnName, bool bCheckable)
 {
     auto btn = new DPushButton(this);
@@ -62,6 +69,11 @@ DPushButton *TitleWidget::createBtn(const QString &btnName, bool bCheckable)
 }
 
 void TitleWidget::updateCurPath(const QString &path)
+{
+
+}
+
+void TitleWidget::slotCurSelectChanged(const QString &devicepath, const QString &partitionpath)
 {
 
 }

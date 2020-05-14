@@ -18,10 +18,12 @@ class TitleWidget: public DWidget
 public:
     explicit TitleWidget(DWidget *parent = nullptr);
     void initUi();
+    void initConnection();
     DPushButton *createBtn(const QString &btnName, bool bCheckable = false);
 
 public slots:
     void updateCurPath(const QString &path);
+    void slotCurSelectChanged(const QString &devicepath, const QString &partitionpath);
 
 private:
     DPushButton *m_btnparted;

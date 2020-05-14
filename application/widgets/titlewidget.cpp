@@ -1,5 +1,4 @@
 #include "titlewidget.h"
-#include "partedproxy/dmdbushandler.h"
 #include <QHBoxLayout>
 
 TitleWidget::TitleWidget(DWidget *parent): DWidget(parent)
@@ -73,7 +72,8 @@ void TitleWidget::updateCurPath(const QString &path)
 
 }
 
-void TitleWidget::slotCurSelectChanged(const QString &devicepath, const QString &partitionpath)
+void TitleWidget::slotCurSelectChanged(const QString &devicepath, const QString &partitionpath, Sector start, Sector end)
 {
-
+    qDebug() << __FUNCTION__ << "-1--1-";
 }
+

@@ -93,7 +93,10 @@ QStandardItem *DmTreeview::getModelByIndex(const QModelIndex &index)
 void DmTreeview::currentChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(previous);
+    DiskInfoData data = current.data(Qt::UserRole + 1).value<DiskInfoData>();
+    qDebug() << data.disksize << data.disklabel << data.partitionsize << data.partitonlabel;
     emit sigselectitem(current);
+    // emit sigCurSelectChanged();
 
 }
 void DmTreeview::mousePressEvent(QMouseEvent *event)

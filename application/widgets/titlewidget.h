@@ -9,6 +9,7 @@
 #include "customcontrol/tipmountdialog.h"
 #include "customcontrol/tipumountdialog.h"
 #include "customcontrol/tippartdialog.h"
+#include "partedproxy/dmdbushandler.h"
 DWIDGET_USE_NAMESPACE
 
 
@@ -23,7 +24,7 @@ public:
 
 public slots:
     void updateCurPath(const QString &path);
-    void slotCurSelectChanged(const QString &devicepath, const QString &partitionpath);
+    void slotCurSelectChanged(const QString &devicepath, const QString &partitionpath, Sector start, Sector end);
 
 private:
     DPushButton *m_btnparted;

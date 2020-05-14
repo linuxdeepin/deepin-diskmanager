@@ -16,7 +16,7 @@
 */
 #ifndef DMTREEVIEWDELEGATE_H
 #define DMTREEVIEWDELEGATE_H
-
+#include "commondef.h"
 #include <QObject>
 #include <QWidget>
 #include <DStyledItemDelegate>
@@ -33,6 +33,8 @@ struct DiskInfoData {
     QImage iconImage;
     QString partitonlabel;
     QString partitionsize;
+    Sector start;
+    Sector end;
     int level;
 };
 Q_DECLARE_METATYPE(DiskInfoData)

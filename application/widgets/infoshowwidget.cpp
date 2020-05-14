@@ -1,5 +1,4 @@
 #include "infoshowwidget.h"
-#include "partedproxy/dmdbushandler.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QPainter>
@@ -172,7 +171,7 @@ void InfoShowWidget::slotShowDiskInfo(QString diskname, QString diskformat, QStr
 
 }
 
-void InfoShowWidget::slotCurSelectChanged(const QString &devicepath, const QString &partitionpath)
+void InfoShowWidget::slotCurSelectChanged(const QString &devicepath, const QString &partitionpath, Sector start, Sector end)
 {
-
+    qDebug() << __FUNCTION__ << "-0--0-";
 }

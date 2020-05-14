@@ -13,6 +13,7 @@ public:
     static DMDbusHandler *instance(QObject *parent = nullptr);
     void Quit();
     void getDeviceinfo();
+    DeviceInfoMap probDeviceInfo()const;
 
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
@@ -20,7 +21,7 @@ private:
 signals:
     void sigShowSpinerWindow(bool);
     void sigUpdateDeviceInfo();
-    void sigCurSelectChanged(const QString &devicepath, const QString &partitionpath);
+    void sigCurSelectChanged(const QString &devicepath, const QString &partitionpath, Sector start, Sector end);
 private slots:
     void MessageReport(const QString &msg);
     void slotUpdateDeviceInfo(const DeviceInfoMap &infomap);

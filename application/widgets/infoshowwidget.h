@@ -1,11 +1,12 @@
 #ifndef INFOSHOWWIDGET_H
 #define INFOSHOWWIDGET_H
+#include "customcontrol/sizeinfowidget.h"
+#include "partedproxy/dmdbushandler.h"
 #include <DWidget>
 #include <DLabel>
 #include <DFrame>
 #include <DPalette>
 #include <DApplicationHelper>
-#include "customcontrol/sizeinfowidget.h"
 #include <QPixmap>
 
 DWIDGET_USE_NAMESPACE
@@ -22,7 +23,7 @@ protected:
     void paintEvent(QPaintEvent *event);
 public slots:
     void slotShowDiskInfo(QString diskname, QString diskformat, QString diskmemory);
-    void slotCurSelectChanged(const QString &devicepath, const QString &partitionpath);
+    void slotCurSelectChanged(const QString &devicepath, const QString &partitionpath, Sector start, Sector end);
 private:
     void initUi();
     void initConnection();

@@ -22,6 +22,7 @@ public:
     bool filesystem_label_known() const;
     void set_filesystem_label(const QString &filesystem_label);
     void add_mountpoint(const QString &mountpoint);
+    void add_mountpoints(const QVector<QString> &mountpoints);
     QVector<QString> get_mountpoints() const ;
     QString get_mountpoint() const ;
     void set_sector_usage(Sector sectors_fs_size, Sector sectors_fs_unused) ;

@@ -6,7 +6,7 @@ namespace DiskManager {
 
 Partition::Partition()
 {
-
+    Reset();
 }
 
 Partition *Partition::clone() const
@@ -125,6 +125,11 @@ void Partition::add_mountpoint(const QString &mountpoint)
     this->mountpoints .push_back(mountpoint) ;
 }
 
+void Partition::add_mountpoints(const QVector<QString> &mountpoints)
+{
+    this->mountpoints = mountpoints;
+}
+
 QVector<QString> Partition::get_mountpoints() const
 {
     return mountpoints;
@@ -209,6 +214,10 @@ PartitionInfo Partition::getPartitionInfo()
     info.fs_block_size = fs_block_size;
     info.path = path;
     info.filesystem_label = filesystem_label;
+    info.inside_extended = inside_extended;
+    info.busy = busy;
+    info.fs_readonly = fs_readonly;
+    info.mountpoints = mountpoints;
     qDebug() << info.device_path << info.partition_number << info.type << info.status << info.alignment << info.fstype << info.uuid
              << info.name << info.sector_start << info.sector_end << info.sectors_used << info.sectors_unused
              << info.sectors_unallocated << info.significant_threshold << info.free_space_before

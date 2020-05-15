@@ -128,7 +128,7 @@ void PartedCore::probedeviceinfo(const QString &path)
     qDebug() << __FUNCTION__ << "**3";
     FsInfo::load_cache();
     qDebug() << __FUNCTION__ << "**4";
-    //MountInfo::load_cache();
+    MountInfo::load_cache();
     qDebug() << __FUNCTION__ << "**6";
     ped_device_probe_all();
     qDebug() << __FUNCTION__ << "**7";
@@ -425,12 +425,14 @@ void PartedCore::set_partition_label_and_uuid(Partition &partition)
     }
 }
 
-bool PartedCore::is_busy(FSType fstype, const QString &path)
+bool PartedCore::is_busy(FSType fstype, const QString &path, const PedPartition *lp_partition)
 {
     FileSystem *p_filesystem = NULL ;
     bool busy = false ;
-
-    if (supported_filesystem(fstype)) {
+    if (nullptr != lp_partition) {
+        busy = ped_partition_is_busy(lp_partition);
+    }
+    if (!busy && supported_filesystem(fstype)) {
         switch (get_fs(fstype) .busy) {
         case FS::GPARTED:
             //Search GParted internal mounted partitions map
@@ -446,17 +448,6 @@ bool PartedCore::is_busy(FSType fstype, const QString &path)
         default:
             break ;
         }
-    } else {
-//            DMRaid dmraid;
-
-//            //Still search GParted internal mounted partitions map in case an
-//            //  unknown file system is mounted
-//            busy = Mount_Info::is_dev_mounted( path );
-
-//            // Custom checks for recognised but other not-supported file system types.
-//            busy |= (fstype == FS_LINUX_SWRAID && SWRaid_Info::is_member_active(path));
-//            busy |= (fstype == FS_ATARAID      && (SWRaid_Info::is_member_active(path) ||
-//                                                   dmraid.is_member_active(path)         ));
     }
 
     return busy ;
@@ -519,38 +510,34 @@ void PartedCore::set_mountpoints(Partition &partition)
     }
     // Swap spaces don't have mount points so don't bother trying to add them.
     else if (partition.fstype != FS_LINUX_SWAP) {
-//        if (partition.busy) {
-//#ifndef USE_LIBPARTED_DMRAID
-//            // Handle dmraid devices differently because there may be more
-//            // than one partition name.
-//            // E.g., there might be names with and/or without a 'p' between
-//            //       the device name and partition number.
-//            if (dmraid.is_dmraid_device(partition.device_path)) {
-//                // Try device_name + partition_number
-//                QString dmraid_path = partition.device_path +
-//                                            Utils::num_to_str(partition.partition_number);
-//                if (set_mountpoints_helper(partition, dmraid_path))
-//                    return;
+        if (partition.busy) {
+            // Normal device, not DMRaid device
+            if (set_mountpoints_helper(partition, partition.get_path()))
+                return;
 
-//                // Try device_name + p + partition_number
-//                dmraid_path = partition.device_path + "p" +
-//                              Utils::num_to_str(partition.partition_number);
-//                if (set_mountpoints_helper(partition, dmraid_path))
-//                    return;
-//            } else
-//#endif
-//            {
-//                // Normal device, not DMRaid device
-//                if (set_mountpoints_helper(partition, partition.get_path()))
-//                    return;
-//            }
-
-//            if (partition.get_mountpoints().empty())
-//                partition.push_back_message(_("Unable to find mount point"));
-//        } else { // Not busy file system
-//            partition.add_mountpoints(Mount_Info::get_fstab_mountpoints(partition.get_path()));
-//        }
+            qDebug() << __FUNCTION__ << "xxxUnable to find mount point";
+        } else { // Not busy file system
+            partition.add_mountpoints(MountInfo::get_fstab_mountpoints(partition.get_path()));
+        }
     }
+}
+
+bool PartedCore::set_mountpoints_helper(Partition &partition, const QString &path)
+{
+    QString search_path ;
+    if (partition.fstype == FS_BTRFS)
+        search_path = path;//btrfs::get_mount_device( path ) ;
+    else
+        search_path = path ;
+
+    const QVector<QString> &mountpoints = MountInfo::get_mounted_mountpoints(search_path);
+    if (mountpoints.size()) {
+        partition.add_mountpoints(mountpoints);
+        partition.fs_readonly = MountInfo::is_dev_mounted_readonly(search_path);
+        return true ;
+    }
+
+    return false;
 }
 
 void PartedCore::set_used_sectors(Partition &partition, PedDisk *lp_disk)
@@ -652,7 +639,8 @@ void PartedCore::set_device_partitions(Device &device, PedDevice *lp_device, Ped
         case PED_PARTITION_LOGICAL:
             fstype = detect_filesystem(lp_device, lp_partition);
             partition_path = get_partition_path(lp_partition);
-            partition_is_busy = is_busy(fstype, partition_path);
+            partition_is_busy = is_busy(fstype, partition_path, lp_partition);
+            qDebug() << partition_is_busy << lp_partition->num << lp_partition->disk->dev->path;
 //            if (fstype == FS_LUKS)
 //                partition_temp = new PartitionLUKS();
 //            else
@@ -699,6 +687,7 @@ void PartedCore::set_device_partitions(Device &device, PedDevice *lp_device, Ped
             break ;
 
         default:
+            qDebug() << ped_partition_is_busy(lp_partition) << lp_partition->num << lp_partition->disk->dev->path;
             // Ignore libparted reported partitions with other type
             // bits set.
             break;

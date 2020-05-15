@@ -29,9 +29,10 @@ public:
     Byte_Value fs_block_size;  // Block size of of the file system, or -1 when unknown.
     QString path;  //partition path
     QString filesystem_label;
-//    bool inside_extended;
-//    bool busy;
-//    bool fs_readonly;
+    bool inside_extended;
+    bool busy;
+    bool fs_readonly;
+    QVector<QString> mountpoints ;
 };
 Q_DECLARE_METATYPE(PartitionInfo)
 QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info);

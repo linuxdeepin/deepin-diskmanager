@@ -24,6 +24,7 @@ public:
         length = heads = sectors = cylinders = cylsize = sector_size = max_prims = highest_busy = max_partition_name_length = 0;
         m_path = model = serial_number = disktype = QString("");
         readonly = false;
+        partition.clear();
     }
 public:
     Sector length;

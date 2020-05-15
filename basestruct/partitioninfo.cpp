@@ -3,7 +3,11 @@
 
 PartitionInfo::PartitionInfo()
 {
-
+    // inside_extended = busy = fs_readonly = false;
+    device_path = uuid = name = path = filesystem_label = "";
+    partition_number = type = status = alignment = fstype = 0;
+    sector_start = sector_end = sectors_used = sectors_unused = sectors_unallocated = significant_threshold = free_space_before = 0;
+    // mountpoints.clear();
 }
 
 QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info)
@@ -27,7 +31,11 @@ QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info)
              << info.sector_size
              << info.fs_block_size
              << info.path
-             << info.filesystem_label;
+             << info.filesystem_label
+             << info.inside_extended
+             << info.busy
+             << info.fs_readonly
+             << info.mountpoints;
     argument.endStructure();
 
     return argument;
@@ -55,7 +63,11 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PartitionInfo &in
              >> info.sector_size
              >> info.fs_block_size
              >> info.path
-             >> info.filesystem_label;
+             >> info.filesystem_label
+             >> info.inside_extended
+             >> info.busy
+             >> info.fs_readonly
+             >> info.mountpoints;
     argument.endStructure();
 
     return argument;

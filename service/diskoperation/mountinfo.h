@@ -13,6 +13,10 @@ public:
     static void load_cache();
     static bool is_dev_mounted(const QString &path);
     static bool is_dev_mounted(const BlockSpecial &bs);
+    static bool is_dev_mounted_readonly(const QString &path);
+    static bool is_dev_mounted_readonly(const BlockSpecial &bs);
+    static const QVector<QString> &get_mounted_mountpoints(const QString &path);
+    static const QVector<QString> &get_fstab_mountpoints(const QString &path);
 
 private:
     static void read_mountpoints_from_file(const QString &filename, MountMapping &map);

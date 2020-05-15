@@ -51,10 +51,11 @@ private:
     void set_device_serial_number(Device &device);
     void set_device_one_partition(Device &device, PedDevice *lp_device, FSType fstype);
     void set_partition_label_and_uuid(Partition &partition);
-    bool is_busy(FSType fstype, const QString &path);
+    bool is_busy(FSType fstype, const QString &path, const PedPartition *lp_partition = nullptr);
     void read_label(Partition &partition) ;
     void read_uuid(Partition &partition) ;
     void set_mountpoints(Partition &partition);
+    bool set_mountpoints_helper(Partition &partition, const QString &path);
     void set_used_sectors(Partition &partition, PedDisk *lp_disk);
     void mounted_fs_set_used_sectors(Partition &partition);
     void set_device_partitions(Device &device, PedDevice *lp_device, PedDisk *lp_disk) ;

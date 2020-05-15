@@ -57,6 +57,29 @@ bool MountInfo::is_dev_mounted(const BlockSpecial &bs)
     return iter_mp != mount_info.end();
 }
 
+bool MountInfo::is_dev_mounted_readonly(const QString &path)
+{
+    return is_dev_mounted_readonly(BlockSpecial(path));
+}
+
+bool MountInfo::is_dev_mounted_readonly(const BlockSpecial &bs)
+{
+    MountMapping::const_iterator iter_mp = mount_info.find(bs);
+    if (iter_mp == mount_info.end())
+        return false;
+    return iter_mp.value().readonly;
+}
+
+const QVector<QString> &MountInfo::get_mounted_mountpoints(const QString &path)
+{
+    return find(mount_info, path).mountpoints;
+}
+
+const QVector<QString> &MountInfo::get_fstab_mountpoints(const QString &path)
+{
+    return find(fstab_info, path).mountpoints;
+}
+
 void MountInfo::read_mountpoints_from_file(const QString &filename, MountInfo::MountMapping &map)
 {
     FILE *fp = setmntent(filename.toStdString().c_str(), "r");
@@ -157,7 +180,12 @@ void MountInfo::read_mountpoints_from_mount_command(MountInfo::MountMapping &map
 
 const MountEntry &MountInfo::find(const MountInfo::MountMapping &map, const QString &path)
 {
+    MountMapping::const_iterator iter_mp = map.find(BlockSpecial(path));
+    if (iter_mp != map.end())
+        return iter_mp.value();
 
+    static MountEntry not_mounted = MountEntry();
+    return not_mounted;
 }
 
 }

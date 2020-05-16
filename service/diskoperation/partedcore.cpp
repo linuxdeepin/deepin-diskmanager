@@ -67,46 +67,47 @@ bool PartedCore::filesystem_resize_disallowed(const Partition &partition)
     return false ;
 }
 
-void PartedCore::insert_unallocated(const QString &device_path, PartitionVector &partitions, Sector start, Sector end, Byte_Value sector_size, bool inside_extended)
+void PartedCore::insert_unallocated(const QString &device_path, QVector<Partition *> &partitions, Sector start, Sector end, Byte_Value sector_size, bool inside_extended)
 {
     //if there are no partitions at all..
     if (partitions .empty()) {
         Partition *partition_temp = new Partition();
         partition_temp->Set_Unallocated(device_path, start, end, sector_size, inside_extended);
-        partitions.push_back_adopt(partition_temp);
+        partitions.push_back(partition_temp);
         return ;
     }
 
     //start <---> first partition start
-    if ((partitions .front() .sector_start - start) > (MEBIBYTE / sector_size)) {
-        Sector temp_end = partitions.front().sector_start - 1;
+    if ((partitions .front() ->sector_start - start) > (MEBIBYTE / sector_size)) {
+        Sector temp_end = partitions.front()->sector_start - 1;
         Partition *partition_temp = new Partition();
         partition_temp->Set_Unallocated(device_path, start, temp_end, sector_size, inside_extended);
-        partitions.insert_adopt(partitions.begin(), partition_temp);
+        partitions.insert(partitions.begin(), partition_temp);
     }
 
     //look for gaps in between
     for (unsigned int t = 0 ; t < partitions .size() - 1 ; t++) {
-        if (((partitions[ t + 1 ] .sector_start - partitions[ t ] .sector_end - 1) > (MEBIBYTE / sector_size))
-                || ((partitions[ t + 1 ] .type != TYPE_LOGICAL)       // Only show exactly 1 MiB if following partition is not logical.
-                    && ((partitions[ t + 1 ] .sector_start - partitions[ t ] .sector_end - 1) == (MEBIBYTE / sector_size))
+        if (((partitions.at(t + 1)->sector_start - partitions.at(t)->sector_end - 1) > (MEBIBYTE / sector_size))
+                || ((partitions.at(t + 1)->type != TYPE_LOGICAL)       // Only show exactly 1 MiB if following partition is not logical.
+                    && ((partitions.at(t + 1)->sector_start - partitions.at(t)->sector_end - 1) == (MEBIBYTE / sector_size))
                    )
            ) {
-            Sector temp_start = partitions[t].sector_end + 1;
-            Sector temp_end   = partitions[t + 1].sector_start - 1;
+            Sector temp_start = partitions.at(t)->sector_end + 1;
+            Sector temp_end   = partitions.at(t + 1)->sector_start - 1;
             Partition *partition_temp = new Partition();
             partition_temp->Set_Unallocated(device_path, temp_start, temp_end,
                                             sector_size, inside_extended);
-            partitions.insert_adopt(partitions.begin() + ++t, partition_temp);
+            partitions.insert(partitions.begin() + (++t), partition_temp);
+            // partitions.insert_adopt(partitions.begin() + ++t, partition_temp);
         }
     }
-
+    partitions.back();
     //last partition end <---> end
-    if ((end - partitions .back() .sector_end) >= (MEBIBYTE / sector_size)) {
-        Sector temp_start = partitions.back().sector_end + 1;
+    if ((end - partitions .back()->sector_end) >= (MEBIBYTE / sector_size)) {
+        Sector temp_start = partitions.back()->sector_end + 1;
         Partition *partition_temp = new Partition();
         partition_temp->Set_Unallocated(device_path, temp_start, end, sector_size, inside_extended);
-        partitions.push_back_adopt(partition_temp);
+        partitions.push_back(partition_temp);
     }
 }
 
@@ -120,8 +121,9 @@ void PartedCore::set_flags(Partition &partition, PedPartition *lp_partition)
 
 void PartedCore::probedeviceinfo(const QString &path)
 {
+    QVector<QString> devicepaths;
     qDebug() << __FUNCTION__ << "**1";
-    m_devicepaths.clear();
+    devicepaths.clear();
     BlockSpecial::clear_cache();
     qDebug() << __FUNCTION__ << "**2";
     ProcPartitionsInfo::load_cache();
@@ -139,30 +141,29 @@ void PartedCore::probedeviceinfo(const QString &path)
 
         //only add this device if we can read the first sector (which means it's a real device)
         if (useable_device(lp_device))
-            m_devicepaths.push_back(lp_device->path);
+            devicepaths.push_back(lp_device->path);
         qDebug() << lp_device->path;
         lp_device = ped_device_get_next(lp_device) ;
     }
-    qDebug() << __FUNCTION__ << "devicepaths size=" << m_devicepaths.size();
-    std::sort(m_devicepaths .begin(), m_devicepaths .end()) ;
+    qDebug() << __FUNCTION__ << "devicepaths size=" << devicepaths.size();
+    std::sort(devicepaths .begin(), devicepaths .end()) ;
     qDebug() << __FUNCTION__ << "**8";
-    for (unsigned int t = 0 ; t < m_devicepaths .size() ; t++) {
+    for (unsigned int t = 0 ; t < devicepaths .size() ; t++) {
         /*TO TRANSLATORS: looks like Searching /dev/sda partitions */
         Device temp_device;
-        set_device_from_disk(temp_device, m_devicepaths[t]);
-        //devices.push_back(temp_device);
-        devicemap.insert(m_devicepaths.at(t), temp_device);
+        set_device_from_disk(temp_device, devicepaths[t]);
+        devicemap.insert(devicepaths.at(t), temp_device);
     }
     qDebug() << __FUNCTION__ << "**9";
     for (auto it = devicemap.begin(); it != devicemap.end(); it++) {
         DeviceInfo devinfo = it.value().getDeviceInfo();
         for (int i = 0; i < it.value().partitions.size(); i++) {
-            Partition   pat = it->partitions[i];
+            Partition   pat = *(it.value().partitions.at(i));
             PartitionInfo partinfo = pat.getPartitionInfo();
 
             if (pat.type == TYPE_EXTENDED) {
                 for (int k = 0; k < pat.logicals.size(); k++) {
-                    Partition   plogic = pat.logicals[k];
+                    Partition   plogic = *(pat.logicals.at(k));
                     partinfo = plogic.getPartitionInfo();
                     devinfo.partition.push_back(partinfo);
                 }
@@ -255,7 +256,7 @@ void PartedCore::set_device_from_disk(Device &device, const QString &device_path
                                                   device.sector_size,
                                                   false);
                 // Place unknown file system message in this partition.
-                device.partitions.push_back_adopt(partition_temp);
+                device.partitions.push_back(partition_temp);
             }
             // Unrecognised, unpartitioned drive.
             else {
@@ -269,7 +270,7 @@ void PartedCore::set_device_from_disk(Device &device, const QString &device_path
                                                   device.length,
                                                   device.sector_size,
                                                   false);
-                device.partitions.push_back_adopt(partition_temp);
+                device.partitions.push_back(partition_temp);
             }
         }
         destroy_device_and_disk(lp_device, lp_disk);
@@ -324,6 +325,14 @@ void PartedCore::destroy_device_and_disk(PedDevice *&lp_device, PedDisk *&lp_dis
     if (lp_device)
         ped_device_destroy(lp_device) ;
     lp_device = NULL ;
+}
+
+bool PartedCore::infoBelongToPartition(const Partition &partition, const PartitionInfo info)
+{
+    bool belong = false;
+    if (info.sector_end == partition.sector_end && info.sector_start == partition.sector_start)
+        belong = true;
+    return belong;
 }
 
 void PartedCore::set_device_serial_number(Device &device)
@@ -384,7 +393,7 @@ void PartedCore::set_device_one_partition(Device &device, PedDevice *lp_device, 
     set_partition_label_and_uuid(*partition_temp);
     set_mountpoints(*partition_temp);
     set_used_sectors(*partition_temp, NULL);
-    device.partitions.push_back_adopt(partition_temp);
+    device.partitions.push_back(partition_temp);
 }
 
 void PartedCore::set_partition_label_and_uuid(Partition &partition)
@@ -705,9 +714,9 @@ void PartedCore::set_device_partitions(Device &device, PedDevice *lp_device, Ped
                 partition_temp->name = ped_partition_get_name(lp_partition);
 
             if (! partition_temp->inside_extended)
-                device.partitions.push_back_adopt(partition_temp);
+                device.partitions.push_back(partition_temp);
             else
-                device.partitions[EXT_INDEX].logicals.push_back_adopt(partition_temp);
+                device.partitions[EXT_INDEX]->logicals.push_back(partition_temp);
         }
 
         //next partition (if any)
@@ -716,17 +725,17 @@ void PartedCore::set_device_partitions(Device &device, PedDevice *lp_device, Ped
 
     if (EXT_INDEX > -1) {
         insert_unallocated(device.m_path,
-                           device .partitions[ EXT_INDEX ] .logicals,
-                           device .partitions[ EXT_INDEX ] .sector_start,
-                           device .partitions[ EXT_INDEX ] .sector_end,
+                           device .partitions.at(EXT_INDEX)->logicals,
+                           device .partitions.at(EXT_INDEX)->sector_start,
+                           device .partitions.at(EXT_INDEX)->sector_end,
                            device .sector_size,
                            true) ;
 
         //Set busy status of extended partition if and only if
         //  there is at least one busy logical partition.
-        for (unsigned int t = 0 ; t < device .partitions[ EXT_INDEX ] .logicals .size() ; t ++) {
-            if (device .partitions[ EXT_INDEX ] .logicals[ t ] .busy) {
-                device .partitions[ EXT_INDEX ] .busy = true ;
+        for (unsigned int t = 0 ; t < device .partitions.at(EXT_INDEX)->logicals .size() ; t ++) {
+            if (device .partitions.at(EXT_INDEX)->logicals.at(t)->busy) {
+                device .partitions.at(EXT_INDEX)->busy = true ;
                 break ;
             }
         }
@@ -926,10 +935,34 @@ QString PartedCore::get_partition_path(PedPartition *lp_partition)
     return partition_path ;
 }
 
+bool PartedCore::mount(const QString &partitionpath, const QString &mountpath)
+{
+    bool success = true;
+    QString output, errstr;
+    QString cmd = QString("mount -v %1 %2").arg(partitionpath).arg(mountpath);
+    int exitcode = Utils::executcmd(cmd, output, errstr);
+    if (exitcode != 0) {
+        // QString type = Utils::get_filesystem_kernel_name(curpartition.fstype);
+        // cmd = QString("mount -v -t %1 %2 %3").arg("").arg(partitionpath).arg(mountpath);
+        success = false;
+    }
+    return success;
+}
+
+bool PartedCore::unmount(const QString &mountpath)
+{
+    QString output, errstr;
+    bool bsuccess = true;
+    QString cmd = QString("umount -v ").arg(mountpath);
+    int exitcode = Utils::executcmd(cmd, output, errstr);
+    if (0 != exitcode)
+        bsuccess = false;
+    return bsuccess;
+}
+
 DeviceInfo PartedCore::getDeviceinfo()
 {
-    qDebug() << __FUNCTION__ << devices.size() << "^^^^^^^";
-    DeviceInfo info = devices.at(0);
+    DeviceInfo info ;
     qDebug() << __FUNCTION__ << "#########";
     qDebug() << info.m_path << info.heads << info.cylinders << info.serial_number << info.max_prims;
     return  info;
@@ -940,6 +973,31 @@ DeviceInfoMap PartedCore::getAllDeviceinfo()
     return inforesult;
 }
 
+void PartedCore::curSelectedChanged(const PartitionInfo &info)
+{
+    bool bfind = false;
+    for (auto it = devicemap.begin(); it != devicemap.end() && !bfind; it++) {
+        if (it.key() == info.device_path) {
+            Device dev = it.value();
+            for (auto itpart = dev.partitions.begin(); itpart != dev.partitions.end() && !bfind; itpart++) {
+                Partition part = *(*itpart);
+                if (infoBelongToPartition(part, info)) {
+                    curpartition = part;
+                    bfind = true;
+                }
+                if (part.inside_extended && !bfind) {
+                    for (auto itextend = part.logicals.begin(); itextend != part.logicals.end(); itextend++) {
+                        Partition partlogical = *(*itextend);
+                        if (infoBelongToPartition(partlogical, info)) {
+                            curpartition = partlogical;
+                            bfind = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
+}
 
 }//end namespace

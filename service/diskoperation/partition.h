@@ -2,7 +2,6 @@
 #define PARTITION_H
 #include "commondef.h"
 #include "partitioninfo.h"
-#include "partitionvector.h"
 
 namespace DiskManager {
 
@@ -51,8 +50,8 @@ public:
     bool fs_readonly;  // Is the file system mounted read-only?
     std::vector<QString> flags ;
 
-    PartitionVector logicals;
-
+    //PartitionVector logicals;
+    QVector<Partition *> logicals;
     bool strict_start ; //Indicator if start sector must stay unchanged
     Sector free_space_before ;  //Free space preceding partition value
 

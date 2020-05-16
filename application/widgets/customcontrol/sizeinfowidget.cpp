@@ -130,9 +130,9 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
     painter.drawText(rectsizenum, usedsize);
     rectsizenum.moveTo(paintRect.bottomRight().x() - 45, paintRect.bottomLeft().y() + 20);
     painter.drawText(rectsizenum, trueusedsize);
-    QWidget::paintEvent(event);
+    // QWidget::paintEvent(event);
 
-    update();
+    // update();
     painter.restore();
 
 }

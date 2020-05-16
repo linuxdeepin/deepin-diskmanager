@@ -5,7 +5,6 @@ HEADERS += \
     $$PWD/blockspecial.h \
     $$PWD/partition.h\
      $$PWD/device.h \
-    $$PWD/partitionvector.h \
     $$PWD/fsinfo.h \
     $$PWD/procpartitionsinfo.h \
     $$PWD/supportedfilesystems.h \
@@ -16,7 +15,6 @@ SOURCES += \
     $$PWD/blockspecial.cpp \
     $$PWD/partition.cpp\
     $$PWD/device.cpp \
-    $$PWD/partitionvector.cpp \
     $$PWD/fsinfo.cpp \
     $$PWD/procpartitionsinfo.cpp \
     $$PWD/supportedfilesystems.cpp \

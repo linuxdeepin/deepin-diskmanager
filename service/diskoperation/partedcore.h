@@ -19,6 +19,7 @@ public:
 
     DeviceInfo getDeviceinfo();
     DeviceInfoMap getAllDeviceinfo();
+    void curSelectedChanged(const PartitionInfo &info);
 public:
 
     //static
@@ -28,7 +29,7 @@ public:
     static FileSystem *get_filesystem_object(FSType fstype);
     static bool filesystem_resize_disallowed(const Partition &partition) ;
     static void insert_unallocated(const QString &device_path,
-                                   PartitionVector &partitions,
+                                   QVector<Partition *> &partitions,
                                    Sector start,
                                    Sector end,
                                    Byte_Value sector_size,
@@ -44,6 +45,7 @@ private:
     static bool get_device(const QString &device_path, PedDevice *&lp_device, bool flush);
     static bool get_disk(PedDevice *&lp_device, PedDisk *&lp_disk, bool strict = true);
     static void destroy_device_and_disk(PedDevice *&lp_device, PedDisk *&lp_disk);
+    bool infoBelongToPartition(const Partition &partition, const PartitionInfo info);
 
     //detectionstuff..
     void probedeviceinfo(const QString &path = QString());
@@ -65,6 +67,8 @@ private:
     static QString get_partition_path(PedPartition *lp_partition);
 
     //operationstuff...
+    bool mount(const QString &partitionpath, const QString &mountpath);
+    bool unmount(const QString &mountpath);
 signals:
 
 public slots:
@@ -72,10 +76,9 @@ public slots:
 
 private:
     QVector<PedPartitionFlag> flags;
-    QVector<QString> m_devicepaths;
-    QVector<DeviceInfo> devices;
     QMap<QString, Device> devicemap;
     DeviceInfoMap inforesult;
+    Partition curpartition;
     static SupportedFileSystems *supported_filesystems;
 
 };

@@ -1,8 +1,9 @@
 #ifndef DEVICE_H
 #define DEVICE_H
 #include "deviceinfo.h"
-#include "partitionvector.h"
+#include "partition.h"
 #include <QtDBus/QtDBus>
+#include <QVector>
 
 namespace DiskManager {
 
@@ -29,7 +30,8 @@ public:
     int max_prims ;
     int highest_busy ;
     bool readonly ;
-    PartitionVector partitions;
+    //PartitionVector partitions;
+    QVector<Partition *> partitions;
 private:
     int max_partition_name_length;
 

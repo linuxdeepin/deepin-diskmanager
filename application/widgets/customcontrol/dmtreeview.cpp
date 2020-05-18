@@ -94,9 +94,9 @@ void DmTreeview::currentChanged(const QModelIndex &current, const QModelIndex &p
 {
     Q_UNUSED(previous);
     DiskInfoData data = current.data(Qt::UserRole + 1).value<DiskInfoData>();
-    qDebug() << data.diskpath << data.disksize << data.partitionsize << data.partitonpath << data.level << data.used << data.unused << data.start << data.end;
+    qDebug() << data.diskpath << data.disksize << data.partitionsize << data.partitonpath << data.level << data.used << data.unused << data.start << data.end << data.fstype << data.mountpoints << data.syslabel;
     emit sigselectitem(current);
-    emit sigCurSelectChanged(data.diskpath, data.partitonpath, data.start, data.end);
+    emit sigCurSelectChanged(data);
 
 }
 void DmTreeview::mousePressEvent(QMouseEvent *event)
@@ -120,6 +120,9 @@ void DmTreeview::addItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
     data.start = infobox->m_start;
     data.end = infobox->m_end;
     data.sectors_unallocated = infobox->m_sectors_unallocated;
+    data.fstype = infobox->m_fstype;
+    data.syslabel = infobox->m_syslabel;
+    data.mountpoints = infobox->m_mountpoints;
 //    qDebug() << data.used << data.unused;
     //  qDebug() << data.disksize << data.disklabel;
 
@@ -165,8 +168,8 @@ void DmTreeview::addSubItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
 
 void DmTreeview::showEvent(QShowEvent *event)
 {
-    setDefaultdmItem();
-    return DTreeView::showEvent(event);
+//    setDefaultdmItem();
+//    return DTreeView::showEvent(event);
 }
 QModelIndex DmTreeview::setDefaultdmItem()
 {

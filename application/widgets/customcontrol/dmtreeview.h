@@ -52,7 +52,7 @@ public:
     void showEvent(QShowEvent *event)override;
 signals:
     void sigselectitem(const QModelIndex &index);
-    void sigCurSelectChanged(const QString &devicepath, const QString &partitionpath, Sector start, Sector end);
+    void sigCurSelectChanged(DiskInfoData data);
 public slots:
 private:
     QStandardItemModel *m_model {nullptr};

@@ -113,6 +113,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         QString text1 = data.disksize;
         QString text2 = data.partitonpath;
         QString text3 = data.partitionsize;
+
         //qDebug() << data.level;
         if (data.level == 0) {
             m_lefticon1Rect.setRect(paintRect.left() + 8, paintRect.top() + 20, 8, 8);

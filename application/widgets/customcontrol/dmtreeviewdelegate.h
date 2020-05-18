@@ -33,12 +33,17 @@ struct DiskInfoData {
     QImage iconImage;
     QString partitonpath;
     QString partitionsize;
-    double used;
-    double unused;
+    QString used;
+    QString unused;
+    QString fstype;
+    QString syslabel;
+    QString mountpoints;
     Sector sectors_unallocated;
     Sector start;
     Sector end;
+
     int level;
+
 };
 Q_DECLARE_METATYPE(DiskInfoData)
 DWIDGET_USE_NAMESPACE

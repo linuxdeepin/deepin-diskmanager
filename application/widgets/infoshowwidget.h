@@ -11,6 +11,11 @@
 #include <QStandardItemModel>
 #include <QStandardItem>
 #include <DTableView>
+#include"customcontrol/dmframewidget.h"
+#include <DLabel>
+#include <DFontSizeManager>
+#include "customcontrol/dmtreeviewdelegate.h"
+
 
 DWIDGET_USE_NAMESPACE
 class InfoShowWidget: public DWidget
@@ -26,14 +31,14 @@ protected:
     void paintEvent(QPaintEvent *event);
 public slots:
     void slotShowDiskInfo(QString diskname, QString diskformat, QString diskmemory);
-    void slotCurSelectChanged(const QString &devicepath, const QString &partitionpath, Sector start, Sector end);
+    void slotCurSelectChanged(DiskInfoData infodata);
 private:
     void initUi();
     void initConnection();
     DFrame *pframe;
     DFrame *pframetop;
     DFrame *pframemid;
-    DFrame *pframebottom;
+    DmFrameWidget *pframebottom = nullptr;
     DLabel *picLabel;
     DLabel *nameLabel;
     DLabel *typeLabel;
@@ -47,6 +52,7 @@ private:
     double m_allsize;
     double m_used;
     double m_trueused;
+    DiskInfoData data;
 
 };
 

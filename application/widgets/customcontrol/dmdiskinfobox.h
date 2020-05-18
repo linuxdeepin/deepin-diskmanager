@@ -24,8 +24,8 @@ class DmDiskinfoBox
 {
 public:
     DmDiskinfoBox(int level, QString diskpath = "", QString disksize = "", QString partitionpath = "",
-                  QString partitionsize = "", double used = 0, double unused = 0,
-                  Sector sectors_unallocated = 0, Sector start = 0, Sector end = 0);
+                  QString partitionsize = "", QString used = "", QString unused = "",
+                  Sector sectors_unallocated = 0, Sector start = 0, Sector end = 0, QString fstype = "", QString mountpoints = "", QString systemlabel = "");
     DmDiskinfoBox() {}
     ~DmDiskinfoBox();
 
@@ -40,8 +40,12 @@ public:
     QString m_disksize;
     QString m_partitionpath;
     QString m_partitionsize;
-    double m_used;
-    double m_unused;
+    QString m_used;
+    QString m_unused;
+    QString m_total;
+    QString m_fstype;
+    QString m_mountpoints;
+    QString m_syslabel;
     Sector m_sectors_unallocated;
     Sector m_start;
     Sector m_end;

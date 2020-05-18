@@ -22,9 +22,9 @@ void InfoShowWidget::paintEvent(QPaintEvent *event)
 {
 //    DWidget::paintEvent(event);
 
-    DPalette pa = DApplicationHelper::instance()->palette(pframetop);
-    pa.setBrush(DPalette::Background, pa.background());
-    DApplicationHelper::instance()->setPalette(pframetop, pa);
+//    DPalette pa = DApplicationHelper::instance()->palette(pframetop);
+//    pa.setBrush(DPalette::Background, pa.background());
+//    DApplicationHelper::instance()->setPalette(pframetop, pa);
 //    QPainter painter(this);
 //    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 
@@ -35,8 +35,8 @@ void InfoShowWidget::paintEvent(QPaintEvent *event)
 void InfoShowWidget::initUi()
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
+    pframe = new DFrame();
     layout->setContentsMargins(10, 10, 10, 10);
-    pframe = new DFrame;
     layout->addWidget(pframe);
 
     QVBoxLayout *framelayout = new QVBoxLayout(pframe);
@@ -52,12 +52,11 @@ void InfoShowWidget::initUi()
     pframemid->setFrameShape(QFrame::NoFrame);
     framelayout->addWidget(pframemid);
     midFramSettings();
-
-    pframebottom = new DFrame;
-    // pframebottom->setFixedHeight(300);
+    pframebottom = new DmFrameWidget(data);
+    pframebottom->setFixedHeight(150);
     framelayout->addWidget(pframebottom);
     framelayout->addStretch();
-
+    bottomFramSettings();
 }
 
 void InfoShowWidget::initConnection()
@@ -160,13 +159,50 @@ void InfoShowWidget::midFramSettings()
 
 void InfoShowWidget::bottomFramSettings()
 {
-    QVBoxLayout *mainlayout = new QVBoxLayout(pframebottom);
-    tableview = new DTableView();
-    QStandardItemModel *model = new QStandardItemModel();
-    QStandardItem *item = new QStandardItem(0);
-
-
-
+    QVBoxLayout *infolayout = new QVBoxLayout();
+    QVBoxLayout *info1layout = new QVBoxLayout();
+    DLabel *m_label = new  DLabel("mount point:");
+    m_label->setAlignment(Qt::AlignLeft);
+    m_label->setWordWrap(true);
+    m_label->adjustSize();
+    DFontSizeManager::instance()->bind(m_label, DFontSizeManager::T5);
+    DLabel *m_label1 = new  DLabel("The available capacity:");
+    m_label1->setWordWrap(true);
+    m_label1->adjustSize();
+    m_label1->setAlignment(Qt::AlignLeft);
+    DFontSizeManager::instance()->bind(m_label1, DFontSizeManager::T5);
+    DLabel *m_label2 = new  DLabel("Used space:");
+    m_label2->setWordWrap(true);
+    m_label2->adjustSize();
+    m_label2->setAlignment(Qt::AlignLeft);
+    DFontSizeManager::instance()->bind(m_label2, DFontSizeManager::T5);
+    DLabel *m_label3 = new  DLabel("type:");
+    m_label3->setWordWrap(true);
+    m_label3->adjustSize();
+    DFontSizeManager::instance()->bind(m_label3, DFontSizeManager::T5);
+    DLabel *m_label4 = new  DLabel("The total capacity:");
+    m_label4->setWordWrap(true);
+    m_label4->adjustSize();
+    DFontSizeManager::instance()->bind(m_label4, DFontSizeManager::T5);
+    DLabel *m_label5 = new  DLabel("Partition volume label:");
+    m_label5->setWordWrap(true);
+    m_label5->adjustSize();
+    DFontSizeManager::instance()->bind(m_label5, DFontSizeManager::T5);
+    infolayout->addWidget(m_label);
+    infolayout->addSpacing(20);
+    infolayout->addWidget(m_label1);
+    infolayout->addSpacing(20);
+    infolayout->addWidget(m_label2);
+    infolayout->addStretch();
+    info1layout->addWidget(m_label3);
+    info1layout->addSpacing(20);
+    info1layout->addWidget(m_label4);
+    info1layout->addSpacing(20);
+    info1layout->addWidget(m_label5);
+    info1layout->addStretch();
+    QHBoxLayout *mainlayout = new QHBoxLayout(pframebottom);
+    mainlayout->addLayout(infolayout);
+    mainlayout->addLayout(info1layout);
 
 
 }
@@ -185,12 +221,14 @@ void InfoShowWidget::slotShowDiskInfo(QString diskname, QString diskformat, QStr
 
 }
 
-void InfoShowWidget::slotCurSelectChanged(const QString &devicepath, const QString &partitionpath, Sector start, Sector end)
+void InfoShowWidget::slotCurSelectChanged(DiskInfoData data)
 {
     qDebug() << __FUNCTION__ << "-0--0-";
     DeviceInfoMap infomap = DMDbusHandler::instance()->probDeviceInfo();
-    qDebug() << devicepath;
-    qDebug() << partitionpath;
+    qDebug() << data.mountpoints;
+    pframebottom->setFrameData(data);
 
-    //    m_allsize = infomap[partitionpath].length * infomap[partitionpath].sector_size / 1024.0 / 1024.0 / 1024.0;
+
+
+
 }

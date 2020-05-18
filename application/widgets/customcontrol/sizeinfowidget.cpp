@@ -111,7 +111,6 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
     painter.setFont(font);
 
     painter.setPen(Qt::black);
-//    rectlabel.moveTo(paintRect.bottomLeft().x() + 20, paintRect.bottomLeft().y() + 20);
     painter.drawText(recttext, QString(tr("The total amount:")));
     recttext.moveTo(paintRect.width() / 2 - 40, paintRect.bottomLeft().y() + 17);
     painter.drawText(recttext, QString(tr("Has been used:")));
@@ -125,14 +124,10 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
     font.setPointSize(8);
     painter.setFont(font);
     painter.drawText(rectsizenum, totalsize);
-//    QRect rectsizeusednum = QRect(paintRect.bottomLeft().x() + 1, paintRect.bottomLeft().y() + 20, 100, 20);
     rectsizenum.moveTo(paintRect.width() / 2 + 60, paintRect.bottomLeft().y() + 20);
     painter.drawText(rectsizenum, usedsize);
     rectsizenum.moveTo(paintRect.bottomRight().x() - 45, paintRect.bottomLeft().y() + 20);
     painter.drawText(rectsizenum, trueusedsize);
-    // QWidget::paintEvent(event);
-
-    // update();
     painter.restore();
 
 }

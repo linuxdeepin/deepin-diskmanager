@@ -25,7 +25,7 @@ private:
     DPushButton *createBtn(const QString &btnName, bool bCheckable = false);
 
 public slots:
-    void slotCurSelectChanged(const QString &devicepath, const QString &partitionpath, Sector start, Sector end);
+    void slotCurSelectChanged(DiskInfoData infodata);
 
 private:
     DPushButton *m_btnparted;

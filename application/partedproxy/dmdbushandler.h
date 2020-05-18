@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QDebug>
 #include <QDBusConnection>
+#include "../widgets/customcontrol/dmtreeviewdelegate.h"
 
 class DMDbusHandler : public QObject
 {
@@ -21,7 +22,7 @@ private:
 signals:
     void sigShowSpinerWindow(bool);
     void sigUpdateDeviceInfo();
-    void sigCurSelectChanged(const QString &devicepath, const QString &partitionpath, Sector start, Sector end);
+    void sigCurSelectChanged(DiskInfoData infodata);
 private slots:
     void MessageReport(const QString &msg);
     void slotUpdateDeviceInfo(const DeviceInfoMap &infomap);

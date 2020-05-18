@@ -49,13 +49,13 @@ public:
     void addTopItem(DmDiskinfoBox *mailbox);
     void addSubItem(DmDiskinfoBox *mailbox, QStandardItem *pcurItem);
 
-    void showEvent(QShowEvent *event)override;
+    QStandardItemModel *m_model {nullptr};
 signals:
     void sigselectitem(const QModelIndex &index);
     void sigCurSelectChanged(const QString &devicepath, const QString &partitionpath, Sector start, Sector end);
 public slots:
 private:
-    QStandardItemModel *m_model {nullptr};
+
     QAbstractItemDelegate *m_delegate {nullptr};
     QSortFilterProxyModel *m_pSortViewFilter {nullptr};
 protected:

@@ -2,7 +2,9 @@
 #include <DPalette>
 #include <QVBoxLayout>
 #include <QDebug>
+
 #include "customcontrol/dmdiskinfobox.h"
+
 DeviceListWidget::DeviceListWidget(QWidget *parent): DWidget(parent)
 {
     setAutoFillBackground(true);
@@ -13,6 +15,12 @@ DeviceListWidget::DeviceListWidget(QWidget *parent): DWidget(parent)
     setMinimumWidth(100);
     initUi();
     initConnection();
+}
+
+DeviceListWidget::~DeviceListWidget()
+{
+    delete m_box;
+    delete m_childbox;
 }
 
 void DeviceListWidget::initUi()
@@ -34,9 +42,12 @@ void DeviceListWidget::initConnection()
 
 void DeviceListWidget::slotUpdateDeviceInfo()
 {
+    qDebug() << __FUNCTION__ << "               1";
+//    m_treeview->close();
     //ToDo:
 //更新DmTreeview
 //设置当前选项
+    m_treeview->m_model->clear();
     DeviceInfoMap infomap = DMDbusHandler::instance()->probDeviceInfo();
 
     for (auto it = infomap.begin(); it != infomap.end(); it++) {
@@ -46,7 +57,7 @@ void DeviceListWidget::slotUpdateDeviceInfo()
         double_t sectorall = (info.length * info.sector_size) / 1024.0 / 1024.0 / 1024.0;
         QString s_disksize = QString::number(sectorall, 'f', 2) + "GB";
 //        QString s_disksize = QString::number(Utils::sector_to_unit(info.sectors, info.sector_size, SIZE_UNIT::UNIT_GIB)) + "GB";
-        DmDiskinfoBox *m_box = new DmDiskinfoBox(0, info.m_path, s_disksize);
+        m_box = new DmDiskinfoBox(0, info.m_path, s_disksize);
         for (auto it = info.partition.begin(); it != info.partition.end(); it++) {
 //            qDebug() << Utils::sector_to_unit(it->sector_end - it->sector_end, it->sector_size, SIZE_UNIT::UNIT_GIB);
 
@@ -80,12 +91,14 @@ void DeviceListWidget::slotUpdateDeviceInfo()
             qDebug() << it->filesystem_label;
             QString s_filesystem_label = it->filesystem_label;
             //            qDebug() << s_unused;
-            DmDiskinfoBox *m_childbox = new DmDiskinfoBox(1, it->device_path, "", s_partitionpath, s_pdisksize, s_usedstr, s_unusedstr, it->sectors_unallocated,
-                                                          it->sector_start, it->sector_end, s_fstype, s_mountpoints, s_filesystem_label);
+            m_childbox = new DmDiskinfoBox(1, it->device_path, "", s_partitionpath, s_pdisksize, s_usedstr, s_unusedstr, it->sectors_unallocated,
+                                           it->sector_start, it->sector_end, s_fstype, s_mountpoints, s_filesystem_label);
 //            qDebug() << it->path << it << s_pdisksize;
             m_box->childs.append(m_childbox);
         }
 
         m_treeview->addTopItem(m_box);
     }
+
+    m_treeview->setDefaultdmItem();
 }

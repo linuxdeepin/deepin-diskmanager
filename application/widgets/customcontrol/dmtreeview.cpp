@@ -108,7 +108,7 @@ void DmTreeview::mousePressEvent(QMouseEvent *event)
 }
 void DmTreeview::addItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
 {
-    QStandardItem *t_item;
+    QStandardItem *t_item = nullptr;
     DiskInfoData data;
     //qDebug() << infobox->level;
     data.disksize = infobox->m_disksize;
@@ -166,11 +166,6 @@ void DmTreeview::addSubItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
     addItem(infobox, pcurItem);
 }
 
-void DmTreeview::showEvent(QShowEvent *event)
-{
-//    setDefaultdmItem();
-//    return DTreeView::showEvent(event);
-}
 QModelIndex DmTreeview::setDefaultdmItem()
 {
 

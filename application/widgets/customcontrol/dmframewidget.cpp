@@ -10,6 +10,8 @@ DmFrameWidget::DmFrameWidget(DiskInfoData data, QWidget *parent): DFrame(parent)
 
 void DmFrameWidget::setFrameData(const PartitionInfo &data)
 {
+    DiskInfoData temp;
+    m_infodata = temp;
     for (QString strpoint : data.mountpoints)
         m_infodata.mountpoints.append(strpoint);
     m_infodata.unused = QString::number(Utils::sector_to_unit(data.sectors_unused, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";

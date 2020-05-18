@@ -39,7 +39,6 @@ void DeviceListWidget::initConnection()
     connect(m_treeview, &DmTreeview::sigCurSelectChanged, DMDbusHandler::instance(), &DMDbusHandler::slotsetCurSelect);
 }
 
-
 void DeviceListWidget::slotUpdateDeviceInfo()
 {
     qDebug() << __FUNCTION__ << "               1";
@@ -65,7 +64,6 @@ void DeviceListWidget::slotUpdateDeviceInfo()
             QString s_partitionpath = it->path;
             double s_used = (it->sectors_used * it->sector_size) / 1024.0 / 1024.0 / 1024.0;
             //            qDebug() << s_used;
-
 //            if (it->partition_number == 4)
 //                int a = 0;
 //            qDebug() << it->sector_end << it->sector_start << it->sectors_used << it->sectors_unused << it->sectors_unallocated;

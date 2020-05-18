@@ -20,6 +20,7 @@
 PartitionWidget::PartitionWidget(QWidget *parent) : DDialog(parent)
 {
     initUi();
+    initConnection();
 }
 
 void PartitionWidget::initUi()
@@ -42,6 +43,7 @@ void PartitionWidget::initUi()
     tipLabel->setAlignment(Qt::AlignCenter);
     topFrame = new DFrame(mainFrame);
     topFrameSetting();
+    initTopFrameData();
     topFrame->setFrameRounded(true);
 
     DPalette pa = DApplicationHelper::instance()->palette(topFrame);
@@ -79,7 +81,7 @@ void PartitionWidget::topFrameSetting()
     hLayout->setContentsMargins(30, 0, 0, 0);
 
     QVBoxLayout *vLayout = new QVBoxLayout(topFrame);
-    vLayout->setContentsMargins(0, 20, 0, 20);
+    vLayout->setContentsMargins(10, 20, 0, 20);
     QFont font;
     font.setPointSize(11);
     deviceInfoLabel = new DLabel(tr("Device Information"), topFrame);
@@ -96,6 +98,7 @@ void PartitionWidget::topFrameSetting()
     selectedPartition = new DLabel("sda3");
     line4Layout->addWidget(allMemoryLabel);
     line4Layout->addWidget(allMemory);
+    allMemory->setMinimumWidth(70);
     line4Layout->addWidget(selectedPartLabel);
     line4Layout->addWidget(selectedPartition);
     line4Layout->setContentsMargins(0, 0, 360, 0);
@@ -105,6 +108,7 @@ void PartitionWidget::topFrameSetting()
     deviceNameLabel = new DLabel(tr("Device:"), topFrame);
     deviceNameLabel->setMaximumWidth(40);
     deviceName = new DLabel("/dev/sda", topFrame);
+    deviceName->setMinimumWidth(115);
     deviceName->setAlignment(Qt::AlignLeft);
     deviceFormateLabel = new DLabel(tr("Formate:"), topFrame);
     deviceFormateLabel->setMaximumWidth(50);
@@ -221,7 +225,7 @@ void PartitionWidget::partInfoShowing()
     partComCobox->addItem("MB");
     line3Layout2->addWidget(partSizeLabel, 1);
     line3Layout2->addWidget(hSlider, 2);
-    line3Layout2->addWidget(partSizeEdit, 2);
+    line3Layout2->addWidget(partSizeEdit, 3);
     line3Layout2->addWidget(partComCobox, 2);
 
     line3Layout->addLayout(line3Layout1);
@@ -244,6 +248,35 @@ void PartitionWidget::partedInfo()
 
 }
 
+void PartitionWidget::getPartitionInfo(const PartitionInfo &data, const QString &disksize)
+{
+    QString s_pdisksize = QString::number(Utils::sector_to_unit(data.sector_end - data.sector_start, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
+    qDebug() << data.device_path << disksize << data.path << s_pdisksize << Utils::FSTypeToString((FSType)data.fstype);
+    devicePath = data.device_path ;
+    deviceSize = disksize;
+    partPath = data.path;
+    partSize = s_pdisksize;
+    partFstype = Utils::FSTypeToString((FSType)data.fstype);
+    initTopFrameData();
+}
+
+void PartitionWidget::initTopFrameData()
+{
+    allMemory->setText(deviceSize);
+    int i = partPath.lastIndexOf("/");
+    QString selectPartition = partPath.right(partPath.length() - i - 1);
+    selectedPartition->setText(selectPartition);
+    deviceName->setText(devicePath);
+    deviceFormate->setText(partFstype);
+    qDebug() << devicePath << selectPartition;
+}
+
+void PartitionWidget::initConnection()
+{
+    connect(hSlider, &DSlider::valueChanged, this, &PartitionWidget::slotSliderValueChanged);
+    connect(partSizeEdit, &DLineEdit::textEdited, this, &PartitionWidget::slotSetSliderValue);
+}
+
 void PartitionWidget::paintEvent(QPaintEvent *event)
 {
 //       DApplicationHelper::instance()->setPalette(scroll, pa);
@@ -251,3 +284,14 @@ void PartitionWidget::paintEvent(QPaintEvent *event)
     //    QWidget::paintEvent(event);
 }
 
+void PartitionWidget::slotSliderValueChanged(int value)
+{
+    QString strSize = QString("%1").arg(value);
+    partSizeEdit->setText(strSize);
+}
+
+void PartitionWidget::slotSetSliderValue()
+{
+    QString value = partSizeEdit->text();
+    hSlider->setValue(value.toInt());
+}

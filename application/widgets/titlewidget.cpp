@@ -93,7 +93,17 @@ void TitleWidget::showResizeInfoWIdget()
 void TitleWidget::slotCurSelectChanged()
 {
     qDebug() << __FUNCTION__ << "-1--1-";
+    //for (auto it = DMDbusHandler::instance()->probDeviceInfo().begin(); it != DMDbusHandler::instance()->probDeviceInfo().end(); it++) {
+    auto it = DMDbusHandler::instance()->probDeviceInfo().find(DMDbusHandler::instance()->getCurPartititonInfo().device_path);
+    if (it != DMDbusHandler::instance()->probDeviceInfo().end()) {
+        double_t sectorall = (it.value().length * it.value().sector_size) / 1024.0 / 1024.0 / 1024.0;
+        QString s_disksize = QString::number(sectorall, 'f', 2) + "GB";
+        qDebug() << it.value().m_path << s_disksize;
+        partitionWidget->getPartitionInfo(DMDbusHandler::instance()->getCurPartititonInfo(), s_disksize);
+    }
+    // }
 }
+
 
 
 

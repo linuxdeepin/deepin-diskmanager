@@ -34,6 +34,5 @@ TipFormateDialog::TipFormateDialog(QWidget *parent) : TipDialog(parent)
 
             }
         });
-
     }
 }

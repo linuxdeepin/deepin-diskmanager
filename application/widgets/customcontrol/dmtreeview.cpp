@@ -97,6 +97,8 @@ void DmTreeview::currentChanged(const QModelIndex &current, const QModelIndex &p
     qDebug() << data.diskpath << data.disksize << data.partitionsize << data.partitonpath << data.level << data.used << data.unused << data.start << data.end << data.fstype << data.mountpoints << data.syslabel;
     emit sigselectitem(current);
     emit sigCurSelectChanged(data.diskpath, data.partitonpath, data.start, data.end);
+    diskSize = data.disksize;
+//    emit sigSendInfo(data.diskpath, data.disksize, data.partitonpath, data.partitionsize, data.fstype, data.start, data.end);
 
 }
 void DmTreeview::mousePressEvent(QMouseEvent *event)
@@ -123,7 +125,7 @@ void DmTreeview::addItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
     data.fstype = infobox->m_fstype;
     data.syslabel = infobox->m_syslabel;
     data.mountpoints = infobox->m_mountpoints;
-//    qDebug() << data.used << data.unused;
+    //  qDebug() << data.used << data.unused;
     //  qDebug() << data.disksize << data.disklabel;
 
 
@@ -165,6 +167,7 @@ void DmTreeview::addSubItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
     }
     addItem(infobox, pcurItem);
 }
+
 
 QModelIndex DmTreeview::setDefaultdmItem()
 {

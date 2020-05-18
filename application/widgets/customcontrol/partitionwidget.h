@@ -34,6 +34,8 @@
 #include <DHorizontalLine>
 #include <DMessageManager>
 #include <DSlider>
+#include "partitioninfo.h"
+#include "utils.h"
 #include "partchartshowing.h"
 #include "sizeinfowidget.h"
 
@@ -51,8 +53,9 @@ public:
     void botFrameSetting();
     void partInfoShowing();
     void partedInfo();
-
-
+    void getPartitionInfo(const PartitionInfo &data, const QString &disksize);
+    void initTopFrameData();
+    void initConnection();
 
 signals:
     void senderData(int x, int y, int z);
@@ -60,7 +63,8 @@ signals:
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
 public slots:
-
+    void slotSliderValueChanged(int value);
+    void slotSetSliderValue();
 private:
     QWidget *mainFrame;
     DFrame *topFrame;
@@ -91,10 +95,7 @@ private:
     DPushButton *cancleBtn;
     DPushButton *reveBtn;
 
-    DScrollArea *scroll;
-    DFrame *scrollWidget;
     PartChartShowing *partChartWidget;
-    SizeInfoWidget *infoWidget;
 
     DLabel *partNameLabel;
     DLineEdit *partNameEdit;
@@ -105,6 +106,12 @@ private:
     DComboBox *partComCobox;
     DLabel *partDoLabel;
     DSlider *hSlider;
+
+    QString devicePath;
+    QString deviceSize;
+    QString partPath;
+    QString partSize;
+    QString partFstype;
 
 
 

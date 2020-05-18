@@ -11,6 +11,7 @@
 #include "customcontrol/tippartdialog.h"
 #include "partedproxy/dmdbushandler.h"
 #include "customcontrol/partitionwidget.h"
+#include "customcontrol/dmtreeview.h"
 DWIDGET_USE_NAMESPACE
 
 
@@ -30,9 +31,10 @@ private:
     void showUnmountInfoWidget();
     void showResizeInfoWIdget();
 
+
 public slots:
     void slotCurSelectChanged();
-
+//    void slotGetInfo(const QString &devicepath, const QString &partitionpath, Sector start, Sector end);
 
 private:
     DPushButton *m_btnparted;
@@ -46,6 +48,7 @@ private:
     TipUmountDialog *tipUnmountDialog;
     TipPartDialog *tipPartDialog;
     PartitionWidget *partitionWidget;
+    DmTreeview *treeView;
 };
 
 

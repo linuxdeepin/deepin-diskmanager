@@ -20,13 +20,15 @@
 #include <QObject>
 #include "commondef.h"
 
-class DmDiskinfoBox
+class DmDiskinfoBox : public QObject
 {
+
+    Q_OBJECT
 public:
-    DmDiskinfoBox(int level, QString diskpath = "", QString disksize = "", QString partitionpath = "",
+    DmDiskinfoBox(int level, QObject *parent = nullptr, QString diskpath = "", QString disksize = "", QString partitionpath = "",
                   QString partitionsize = "", QString used = "", QString unused = "",
                   Sector sectors_unallocated = 0, Sector start = 0, Sector end = 0, QString fstype = "", QString mountpoints = "", QString systemlabel = "");
-    DmDiskinfoBox() {}
+    DmDiskinfoBox(QObject *parent = nullptr);
     ~DmDiskinfoBox();
 
 public:

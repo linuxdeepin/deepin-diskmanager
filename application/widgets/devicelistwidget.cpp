@@ -19,8 +19,8 @@ DeviceListWidget::DeviceListWidget(QWidget *parent): DWidget(parent)
 
 DeviceListWidget::~DeviceListWidget()
 {
-    delete m_box;
-    delete m_childbox;
+//    delete m_box;
+//    delete m_childbox;
 }
 
 void DeviceListWidget::initUi()
@@ -57,7 +57,7 @@ void DeviceListWidget::slotUpdateDeviceInfo()
         double_t sectorall = (info.length * info.sector_size) / 1024.0 / 1024.0 / 1024.0;
         QString s_disksize = QString::number(sectorall, 'f', 2) + "GB";
 //        QString s_disksize = QString::number(Utils::sector_to_unit(info.sectors, info.sector_size, SIZE_UNIT::UNIT_GIB)) + "GB";
-        m_box = new DmDiskinfoBox(0, info.m_path, s_disksize);
+        auto m_box = new DmDiskinfoBox(0, this, info.m_path, s_disksize);
         for (auto it = info.partition.begin(); it != info.partition.end(); it++) {
 //            qDebug() << Utils::sector_to_unit(it->sector_end - it->sector_end, it->sector_size, SIZE_UNIT::UNIT_GIB);
 
@@ -91,8 +91,8 @@ void DeviceListWidget::slotUpdateDeviceInfo()
             qDebug() << it->filesystem_label;
             QString s_filesystem_label = it->filesystem_label;
             //            qDebug() << s_unused;
-            m_childbox = new DmDiskinfoBox(1, it->device_path, "", s_partitionpath, s_pdisksize, s_usedstr, s_unusedstr, it->sectors_unallocated,
-                                           it->sector_start, it->sector_end, s_fstype, s_mountpoints, s_filesystem_label);
+            auto m_childbox = new DmDiskinfoBox(1, this, it->device_path, "", s_partitionpath, s_pdisksize, s_usedstr, s_unusedstr, it->sectors_unallocated,
+                                                it->sector_start, it->sector_end, s_fstype, s_mountpoints, s_filesystem_label);
 //            qDebug() << it->path << it << s_pdisksize;
             m_box->childs.append(m_childbox);
         }

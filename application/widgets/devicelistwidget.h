@@ -25,8 +25,8 @@ public slots:
     void slotUpdateDeviceInfo();
 
 private:
-    DmDiskinfoBox *m_box = nullptr;
-    DmDiskinfoBox *m_childbox = nullptr;
+//    DmDiskinfoBox *m_box = nullptr;
+//    DmDiskinfoBox *m_childbox = nullptr;
 };
 
 #endif // DEVICELISTWIDGET_H

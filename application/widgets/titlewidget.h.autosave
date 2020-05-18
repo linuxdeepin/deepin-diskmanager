@@ -32,6 +32,7 @@ private:
 
 public slots:
     void slotCurSelectChanged();
+     void slotCurSelectChanged(DiskInfoData infodata);
 
 
 private:

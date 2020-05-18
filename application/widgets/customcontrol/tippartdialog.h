@@ -19,7 +19,6 @@
 
 #include <QWidget>
 #include "tipdialog.h"
-#include "partitionwidget.h"
 class TipPartDialog : public TipDialog
 {
     Q_OBJECT
@@ -30,7 +29,7 @@ signals:
 
 public slots:
 private:
-    PartitionWidget *partitionWidget;
+//    PartitionWidget *partitionWidget;
 };
 
 #endif // TIPPARTDIALOG_H

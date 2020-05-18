@@ -14,32 +14,43 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef PIECHARTWIDGET_H
-#define PIECHARTWIDGET_H
-
+#ifndef PARTCHARTSHOWING_H
+#define PARTCHARTSHOWING_H
 #include <QWidget>
+#include <DWidget>
+#include <QRect>
+#include <QPainterPath>
 #include <QPainter>
-#include <QtMath>
-class PieChartWidget : public QWidget
+#include <QPalette>
+#include <DPalette>
+#include <QBrush>
+#include <DApplicationHelper>
+#include <QPointF>
+#include <QLine>
+
+DWIDGET_USE_NAMESPACE
+
+
+
+class PartChartShowing : public QWidget
 {
     Q_OBJECT
 public:
-    explicit PieChartWidget(QWidget *parent = nullptr);
-//    int getAlldata(QList<qreal> list);
+    explicit PartChartShowing(QWidget *parent = nullptr);
+    PartChartShowing(int used, int trueused, int noused, QWidget *parent = nullptr);
+
 signals:
 
 public slots:
-
+    void getData(int used, int trueused, int noused);
 
     // QWidget interface
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
-    void drawPie(QPainter *painter);
 private:
-    QList<QColor> color;
-//    QList<qreal> dataValue;
-//    QList<QString> strName;
-    int all = 0;
+    int m_used;
+    int m_tureused;
+    int m_noused;
 };
 
-#endif // PIECHARTWIDGET_H
+#endif // PARTCHARTSHOWING_H

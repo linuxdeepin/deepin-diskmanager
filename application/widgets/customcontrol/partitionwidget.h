@@ -33,7 +33,9 @@
 #include <QSizePolicy>
 #include <DHorizontalLine>
 #include <DMessageManager>
-#include "piechartwidget.h"
+#include <DSlider>
+#include "partchartshowing.h"
+#include "sizeinfowidget.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -42,24 +44,27 @@ class PartitionWidget : public DDialog
     Q_OBJECT
 public:
     explicit PartitionWidget(QWidget *parent = nullptr);
+    void initUi();
+//    void initConnection();
     void topFrameSetting();
+    void midFrameSetting();
     void botFrameSetting();
     void partInfoShowing();
-    void addWidget();
-    void remWidget();
     void partedInfo();
 
 
 
 signals:
-
+    void senderData(int x, int y, int z);
     // QWidget interface
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
 public slots:
+
 private:
     QWidget *mainFrame;
     DFrame *topFrame;
+    DFrame *midFrame;
     DFrame *botFrame;
 //    DFrame *parInfoFrame;
     DLabel *deviceInfoLabel;
@@ -76,8 +81,7 @@ private:
     DIconButton *remButton;
 //    DScrollArea *scrollArea;
     QWidget *partWidget;
-    QVBoxLayout *infoLayout;
-    QVBoxLayout *scrollLayout;
+
 
     DLabel *picLabel;
     DLabel *titleLabel;
@@ -89,9 +93,9 @@ private:
 
     DScrollArea *scroll;
     DFrame *scrollWidget;
-    PieChartWidget *pieWidget;
+    PartChartShowing *partChartWidget;
+    SizeInfoWidget *infoWidget;
 
-    QWidget *infoWidget;
     DLabel *partNameLabel;
     DLineEdit *partNameEdit;
     DLabel *partFormateLabel;
@@ -99,11 +103,12 @@ private:
     DLabel *partSizeLabel;
     DLineEdit *partSizeEdit;
     DComboBox *partComCobox;
+    DLabel *partDoLabel;
+    DSlider *hSlider;
 
-    QList<QWidget *> listWidget;
 
-    int layoutCount = 1;
-    int currentRcount = 0;
+
+
 
 
 

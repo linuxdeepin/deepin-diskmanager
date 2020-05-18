@@ -16,359 +16,238 @@
 */
 #include "partitionwidget.h"
 #include <QDebug>
-QList<qreal> dataValue;
-QList<QString> strName;
+
 PartitionWidget::PartitionWidget(QWidget *parent) : DDialog(parent)
 {
-    dataValue << 0;
-    strName << "SSD 256GB";
+    initUi();
+}
+
+void PartitionWidget::initUi()
+{
     this->setModal(true);
     this->setFixedSize(800, 600);
     mainFrame = new QWidget(this);
 
 //    mainFrame->setAttribute(Qt::WA_TranslucentBackground, true);
 
-
-
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
     mainLayout->setSpacing(5);
-
+    titleLabel = new DLabel(tr("Will XXX system space be partitioned?"), mainFrame);
+    QFont font;
+    font.setBold(true);
+    font.setPointSize(11);
+    titleLabel->setFont(font);
+    titleLabel->setAlignment(Qt::AlignCenter);
+    tipLabel = new DLabel(tr("Click the '+' button to increase the number of partitions on the device,and click each partition to change the name formate"), mainFrame);
+    tipLabel->setAlignment(Qt::AlignCenter);
     topFrame = new DFrame(mainFrame);
     topFrameSetting();
     topFrame->setFrameRounded(true);
-//    topFrame->setFrameStyle(DFrame::NoFrame);
 
     DPalette pa = DApplicationHelper::instance()->palette(topFrame);
     pa.setBrush(DPalette::Base, pa.itemBackground());
     DApplicationHelper::instance()->setPalette(topFrame, pa);
     topFrame->setAutoFillBackground(true);
 
+    midFrame = new DFrame(mainFrame);
+    midFrameSetting();
+    midFrame->setFrameStyle(DFrame::NoFrame);
+
     botFrame = new DFrame(mainFrame);
     botFrameSetting();
     botFrame->setFrameStyle(DFrame::NoFrame);
 
-
-
-    mainLayout->addWidget(topFrame, 2);
-    mainLayout->addWidget(botFrame, 8);
-
+    mainLayout->addWidget(titleLabel, 1);
+    mainLayout->addWidget(tipLabel, 1);
+    mainLayout->addWidget(topFrame, 1);
+    mainLayout->addWidget(midFrame, 3);
+    mainLayout->addWidget(botFrame, 10);
 
     this->addContent(mainFrame);
-
-
 }
 
 void PartitionWidget::topFrameSetting()
 {
+
     picLabel = new DLabel(topFrame);
     picLabel->setMaximumSize(60, 70);
     picLabel->setStyleSheet("border:1px solid gray");
 
-    titleLabel = new DLabel(tr("Will XXX system space be partitioned?"), topFrame);
-    QFont font;
-    font.setBold(true);
-    font.setPointSize(13);
-    titleLabel->setFont(font);
-    tipLabel = new DLabel(tr("Click the '+' button to increase the number of partitions on the device,and click each partition to change the name \n formate"), topFrame);
+
     QHBoxLayout *hLayout = new QHBoxLayout(topFrame);
-    hLayout->setSpacing(10);
-    hLayout->setContentsMargins(20, 10, 0, 10);
+    hLayout->setSpacing(5);
+    hLayout->setContentsMargins(30, 0, 0, 0);
 
-    QVBoxLayout *vLayout = new QVBoxLayout();
-    vLayout->addWidget(titleLabel);
-    vLayout->addWidget(tipLabel);
+    QVBoxLayout *vLayout = new QVBoxLayout(topFrame);
+    vLayout->setContentsMargins(0, 20, 0, 20);
+    QFont font;
+    font.setPointSize(11);
+    deviceInfoLabel = new DLabel(tr("Device Information"), topFrame);
+    deviceInfoLabel->setFont(font);
+    QHBoxLayout *line1Layout = new QHBoxLayout();
 
+    line1Layout->addWidget(deviceInfoLabel);
+    line1Layout->addStretch();
+//
+    QHBoxLayout *line4Layout = new QHBoxLayout();
+    allMemoryLabel  = new DLabel(tr("Total Capacity:"), topFrame);
+    allMemory = new DLabel("256GB", topFrame);
+    selectedPartLabel = new DLabel(tr("Selected Partition:"), topFrame);
+    selectedPartition = new DLabel("sda3");
+    line4Layout->addWidget(allMemoryLabel);
+    line4Layout->addWidget(allMemory);
+    line4Layout->addWidget(selectedPartLabel);
+    line4Layout->addWidget(selectedPartition);
+    line4Layout->setContentsMargins(0, 0, 360, 0);
+//    line4Layout->addStretch();
+
+    QHBoxLayout *line2Layout = new QHBoxLayout();
+    deviceNameLabel = new DLabel(tr("Device:"), topFrame);
+    deviceNameLabel->setMaximumWidth(40);
+    deviceName = new DLabel("/dev/sda", topFrame);
+    deviceName->setAlignment(Qt::AlignLeft);
+    deviceFormateLabel = new DLabel(tr("Formate:"), topFrame);
+    deviceFormateLabel->setMaximumWidth(50);
+    deviceFormate = new DLabel("EXT3", topFrame);
+    line2Layout->addWidget(deviceNameLabel);
+    line2Layout->addWidget(deviceName);
+    line2Layout->addWidget(deviceFormateLabel);
+    line2Layout->addWidget(deviceFormate);
+//    line2Layout->addStretch();
+    line2Layout->setContentsMargins(0, 0, 370, 0);
+
+    vLayout->addLayout(line1Layout);
+    vLayout->addLayout(line4Layout);
+    vLayout->addLayout(line2Layout);
     hLayout->addWidget(picLabel, 1);
     hLayout->addLayout(vLayout, 10);
 }
 
+void PartitionWidget::midFrameSetting()
+{
+    midFrame->setMinimumHeight(100);
+    QVBoxLayout *mainLayout = new QVBoxLayout(midFrame);
+    partChartWidget = new PartChartShowing(100, 200, 300, midFrame);
+    mainLayout->addWidget(partChartWidget);
+
+}
+
 void PartitionWidget::botFrameSetting()
 {
-    pieWidget = new PieChartWidget(botFrame);
-    pieWidget->setMinimumSize(200, 300);
-    QVBoxLayout *topLayout = new QVBoxLayout(botFrame);
-    QHBoxLayout *horLayput = new QHBoxLayout();
-    horLayput->addWidget(pieWidget);
+    QVBoxLayout *vLayout = new QVBoxLayout(botFrame);
 
+    partWidget = new QWidget(botFrame);
     //分区详细页
-    infoLayout = new QVBoxLayout();
-    infoLayout->setSpacing(5);
     partInfoShowing();
-    horLayput->addLayout(infoLayout);
-    topLayout->addLayout(horLayput);
-
+    vLayout->addWidget(partWidget, 5);
     //按钮
     applyBtn = new DPushButton(tr("Apply"), botFrame);
-    connect(applyBtn, &DPushButton::clicked, this, [ = ] {
-
-        qreal all = 0;
-        for (int i = 1; i < dataValue.size(); i++)
-        {
-            all = all + dataValue.at(i);
-        }
-        listWidget = partWidget->findChildren<QWidget *>("test");
-        qDebug() << "listWidget.size()" << listWidget.size() << listWidget;
-        for (int i = 0; i < listWidget.size(); i++)
-        {
-            if (listWidget.at(i)->findChild<DLineEdit *>("sizeEdit")->text() == "") {
-                DMessageManager::instance()->sendMessage(this, QIcon(":/images/warning"), tr("分区填写不完整"));
-                return ;
-            }
-        }
-        for (int i = 0; i < listWidget.size(); i++)
-        {
-            qreal size = listWidget.at(i)->findChild<DLineEdit *>("sizeEdit")->text().toInt();
-            qDebug() << "size" << size;
-            qreal last = 256  - all - size;
-            qDebug() << "last" << last;
-            if (last >= 0) {
-                dataValue.append(size);
-                dataValue.replace(0, last);
-                strName.replace(0, "SSD " + QString::number(last) + listWidget.at(i)->findChild<DComboBox *>("partCombox")->currentText());
-            } else {
-                DMessageManager::instance()->sendMessage(this, QIcon(":/images/warning"), tr("内存分配有误"));
-                return;
-            }
-            QString str = listWidget.at(i)->findChild<DLineEdit *>("sizeEdit")->text() + listWidget.at(i)->findChild<DComboBox *>("partCombox")->currentText();
-            strName.append(str);
-            listWidget.at(i)->findChild<DLineEdit *>("sizeEdit")->setText("");
-            pieWidget->update();
-        }
-        currentRcount = layoutCount;
-        qDebug() << "currentRcount" << currentRcount;
-
-    });
+    //取消
     cancleBtn = new DPushButton(tr("Cancle"), botFrame);
-    connect(cancleBtn, &DPushButton::clicked, this, [ = ] {
-        this->close();
-    });
     //复原
     reveBtn = new DPushButton(tr("Revert"), botFrame);
-    connect(reveBtn, &DPushButton::clicked, this, [ = ] {
 
-        if (currentRcount == 0)
-            return ;
-
-        for (int i = 1; i <= currentRcount; ++i)
-        {
-            int m = dataValue.size();
-            int n = strName.size();
-            qDebug() << dataValue.size() - i << dataValue.at(dataValue.size() - i) << strName.size() - i << strName.at(strName.size() - i);
-            dataValue.removeAt(m - 1);
-            strName.removeAt(n - 1);
-            pieWidget->update();
-        }
-
-        qreal all = 0;
-        for (int i = 1; i < dataValue.size(); i++)
-        {
-            all = all + dataValue.at(i);
-        }
-
-
-        qreal last = 256  - all;
-        qDebug() << "last" << last;
-        dataValue.replace(0, last);
-        strName.replace(0, QString::number(last) + listWidget.at(0)->findChild<DComboBox *>("partCombox")->currentText());
-        currentRcount = 0;
-        for (int i = layoutCount; i >= 1; i--)
-        {
-            QWidget *p = scrollLayout->itemAt(i - 1)->widget();
-            if (layoutCount == 1) {
-                remButton->setEnabled(false);
-                return;
-            }
-            scrollLayout->removeWidget(p);
-            p->deleteLater();
-            layoutCount = scrollLayout->count();
-            scrollWidget->setMinimumSize(380, layoutCount * 140);
-        }
-    });
 
     applyBtn->setMinimumWidth(120);
     cancleBtn->setMinimumWidth(120);
     reveBtn->setMinimumWidth(120);
     QHBoxLayout *btnLayout = new QHBoxLayout();
-    btnLayout->addWidget(reveBtn, 1, Qt::AlignRight);
+    btnLayout->addWidget(reveBtn, 1, Qt::AlignLeft);
     btnLayout->addWidget(cancleBtn);
     btnLayout->addWidget(applyBtn);
 
-    topLayout->addLayout(btnLayout);
+    vLayout->addLayout(btnLayout, 1);
 
 
 }
 
 void PartitionWidget::partInfoShowing()
 {
-    QFont font;
-    font.setPointSize(10);
-    deviceInfoLabel = new DLabel(tr("Device Information"), botFrame);
-    deviceInfoLabel->setFont(font);
+    QVBoxLayout *vLayout = new QVBoxLayout(partWidget);
     QHBoxLayout *line1Layout = new QHBoxLayout();
-    deviceNameLabel = new DLabel(tr("Device:"), botFrame);
-    deviceName = new DLabel("SSD256G", botFrame);
-    line1Layout->addWidget(deviceNameLabel);
-    line1Layout->addWidget(deviceName);
-    line1Layout->setContentsMargins(0, 0, 130, 0);
-
-    QHBoxLayout *line2Layout = new QHBoxLayout();
-    deviceFormateLabel = new DLabel(tr("Formate:"), botFrame);
-    deviceFormate = new DLabel("EXT3", botFrame);
-    line2Layout->addWidget(deviceFormateLabel);
-    line2Layout->addWidget(deviceFormate);
-    line2Layout->setContentsMargins(0, 0, 130, 0);
-
-    QHBoxLayout *line3Layout = new QHBoxLayout();
-    selectedPartLabel = new DLabel(tr("Selected Partition:"), botFrame);
-    selectedPartition = new DLabel("SDA3");
-    line3Layout->addWidget(selectedPartLabel);
-    line3Layout->addWidget(selectedPartition);
-    line3Layout->setContentsMargins(0, 0, 130, 0);
-
-    QHBoxLayout *line4Layout = new QHBoxLayout();
-    allMemoryLabel  = new DLabel(tr("Total Capacity:"), botFrame);
-    allMemory = new DLabel("125GB", botFrame);
-    line4Layout->addWidget(allMemoryLabel);
-    line4Layout->addWidget(allMemory);
-    line4Layout->setContentsMargins(0, 0, 130, 0);
-//    allMemoryLabel->setStyleSheet("border:1px solid gray");
-//    allMemory->setStyleSheet("border:1px solid gray");
-
-    QHBoxLayout *line5Layout = new QHBoxLayout();
     QFont font1;
-    font1.setPointSize(10);
-    partInfoLabel = new DLabel(tr("Partition Information"), botFrame);
+    font1.setPointSize(11);
+    partInfoLabel = new DLabel(tr("Partition Information"), partWidget);
     partInfoLabel->setFont(font1);
     partInfoLabel->setMaximumSize(100, 50);
+
+    line1Layout->addWidget(partInfoLabel);
+    line1Layout->addStretch();
+
+    QHBoxLayout *line2Layout = new QHBoxLayout();
+    line2Layout->setContentsMargins(0, 10, 0, 10);
+    QHBoxLayout *line2Layout1 = new QHBoxLayout();
+    partDoLabel = new DLabel(tr("Partition operation:"), partWidget);
+
     addButton = new DIconButton(DStyle::SP_IncreaseElement);
     remButton = new DIconButton(DStyle::SP_DecreaseElement);
-    line5Layout->addWidget(partInfoLabel);
-    connect(addButton, &DIconButton::clicked, this, &PartitionWidget::addWidget);
-    connect(remButton, &DPushButton::clicked, this, &PartitionWidget::remWidget);
-    partInfoLabel->setMaximumWidth(130);
-    line5Layout->addWidget(addButton);
-    line5Layout->addWidget(remButton);
-    line5Layout->setContentsMargins(0, 0, 180, 0);
-//    partInfoLabel->setStyleSheet("border:1px solid gray");
+    partInfoLabel->setMaximumWidth(200);
+    line2Layout1->addWidget(partDoLabel, 1, Qt::AlignLeft);
+    line2Layout1->addWidget(addButton);
+    line2Layout1->addWidget(remButton);
 
-    partWidget = new QWidget(botFrame);
-    partWidget->setFixedSize(400, 250);
-
-    infoLayout->addWidget(deviceInfoLabel);
-    infoLayout->addLayout(line1Layout);
-    infoLayout->addLayout(line2Layout);
-    infoLayout->addLayout(line3Layout);
-    infoLayout->addLayout(line4Layout);
-    infoLayout->addLayout(line5Layout);
-    infoLayout->addWidget(partWidget);
-
-    scroll = new DScrollArea(partWidget);
-    DPalette pa = palette();
-    pa.setColor(DPalette::Base, QColor(255, 255, 255, 0));
-    scroll->setPalette(pa);
-    scroll->setMaximumHeight(180);
-    scroll->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
-    scroll->setWidgetResizable(true);
-    scrollWidget = new DFrame(partWidget);
-    scrollWidget->setFrameStyle(DFrame::NoFrame);
-    scrollLayout  = new QVBoxLayout(scrollWidget);
-
-    addWidget();
-    if (scrollLayout->count() == 1) {
-        remButton->setEnabled(false);
-    }
-
-
-}
-
-void PartitionWidget::addWidget()
-{
-    infoWidget = new QWidget(partWidget);
-    infoWidget->setObjectName("test");
-    infoWidget->setFixedSize(380, 140);
-//    listWidget.append(infoWidget);
-//    infoWidget->setStyleSheet("border:1px solid red");
-    scrollLayout->addWidget(infoWidget);
-    scrollWidget->setMinimumSize(380, scrollLayout->count() * 140);
-    qDebug() << "12121212121" << scrollLayout->count() * infoWidget->height();
-    scroll->setWidget(scrollWidget);
-    layoutCount = scrollLayout->count();
-    if (layoutCount > 1) {
-        remButton->setEnabled(true);
-    }
-    partedInfo();
-}
-
-void PartitionWidget::remWidget()
-{
-    QWidget *p = scrollLayout->itemAt(layoutCount - 1)->widget();
-    layoutCount --;
-    if (layoutCount == 1) {
-        remButton->setEnabled(false);
-    }
-    scrollLayout->removeWidget(p);
-    p->deleteLater();
-    scrollWidget->setMinimumSize(380, layoutCount * 140);
-    qDebug() << "21212121212121" << layoutCount * 140  << layoutCount;
-}
-
-void PartitionWidget::partedInfo()
-{
-    QVBoxLayout *vLayout = new QVBoxLayout(infoWidget);
-    vLayout->setContentsMargins(5, 10, 0, 10);
-    vLayout->setSpacing(10);
-    QHBoxLayout *lineLayout1 = new QHBoxLayout();
-    partNameLabel = new DLabel(tr("Partition name:"), infoWidget);
-    partNameEdit = new DLineEdit(infoWidget);
+    QHBoxLayout *line2Layout2 = new QHBoxLayout();
+    line2Layout2->setContentsMargins(50, 0, 0, 0);
+    partNameLabel = new DLabel(tr("Partition name:"), partWidget);
+    partNameEdit = new DLineEdit(partWidget);
+    partNameEdit->setMinimumWidth(250);
     if (partNameEdit->text().isEmpty()) {
         partNameEdit->lineEdit()->setPlaceholderText("SSD256G");
     }
     partNameLabel->setMaximumHeight(20);
-    lineLayout1->addWidget(partNameLabel);
-    lineLayout1->addWidget(partNameEdit);
+    line2Layout2->addWidget(partNameLabel);
+    line2Layout2->addWidget(partNameEdit);
+    line2Layout->addLayout(line2Layout1);
+    line2Layout->addLayout(line2Layout2);
 
-    QHBoxLayout *lineLayout2 = new QHBoxLayout();
-    partFormateLabel = new DLabel(tr("Partiton formate:"), infoWidget);
-    partFormateCombox = new DComboBox(infoWidget);
+    QHBoxLayout *line3Layout = new QHBoxLayout();
+    QHBoxLayout *line3Layout1 = new QHBoxLayout();
+    partFormateLabel = new DLabel(tr("Partiton formate:"), partWidget);
+    partFormateCombox = new DComboBox(partWidget);
     partFormateCombox->addItem("APFS");
-    lineLayout2->addWidget(partFormateLabel, 1);
-    lineLayout2->addWidget(partFormateCombox, 3);
-
-    QHBoxLayout *lineLayout3 = new QHBoxLayout();
-    partSizeLabel = new DLabel(tr("Partition size:"), infoWidget);
-    partSizeEdit = new DLineEdit(infoWidget);
+    line3Layout1->addWidget(partFormateLabel, 1);
+    line3Layout1->addWidget(partFormateCombox, 3);
+    QHBoxLayout *line3Layout2 = new QHBoxLayout();
+    line3Layout2->setContentsMargins(50, 0, 0, 0);
+    partSizeLabel = new DLabel(tr("Partition size:"), partWidget);
+    hSlider = new DSlider(Qt::Horizontal);
+    partSizeEdit = new DLineEdit(partWidget);
     partSizeEdit->setObjectName("sizeEdit");
     if (partSizeEdit->text().isEmpty()) {
         partSizeEdit->lineEdit()->setPlaceholderText("125");
     }
-    partComCobox = new DComboBox(infoWidget);
+    partComCobox = new DComboBox(partWidget);
     partComCobox->addItem("GB");
     partComCobox->addItem("MB");
-    partComCobox->setObjectName("partCombox");
-    lineLayout3->addWidget(partSizeLabel, 1);
-    lineLayout3->addWidget(partSizeEdit, 2);
-    lineLayout3->addWidget(partComCobox, 1);
+    line3Layout2->addWidget(partSizeLabel, 1);
+    line3Layout2->addWidget(hSlider, 2);
+    line3Layout2->addWidget(partSizeEdit, 2);
+    line3Layout2->addWidget(partComCobox, 2);
 
-    if (layoutCount > 1) {
-        DHorizontalLine *line = new DHorizontalLine(infoWidget);
-        line->setLineWidth(2);
-        vLayout->addWidget(line);
-    }
-    vLayout->addLayout(lineLayout1);
-    vLayout->addLayout(lineLayout2);
-    vLayout->addLayout(lineLayout3);
-    layoutCount = scrollLayout->count();
+    line3Layout->addLayout(line3Layout1);
+    line3Layout->addLayout(line3Layout2);
+//    line3Layout->addLayout(line)
+    vLayout->addLayout(line1Layout);
+    vLayout->addLayout(line2Layout);
+    vLayout->addLayout(line3Layout);
+    vLayout->addStretch();
+}
 
-    qDebug() << "xzxzxz" << layoutCount;
+
+
+
+
+void PartitionWidget::partedInfo()
+{
+
+
 
 }
 
 void PartitionWidget::paintEvent(QPaintEvent *event)
 {
-
-
-
 //       DApplicationHelper::instance()->setPalette(scroll, pa);
 //       scroll->setAutoFillBackground(true);
-//    QWidget::paintEvent(event);
+    //    QWidget::paintEvent(event);
 }
+

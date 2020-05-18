@@ -23,15 +23,5 @@ TipPartDialog::TipPartDialog(QWidget *parent) : TipDialog(parent)
     this->mountLabel->hide();
     this->nameLineEdit->hide();
     this->typeCombox->hide();
-    QList<QAbstractButton *> list3 = getButtons();
-    for (int i = 0; i < list3.size(); i++) {
-        connect(list3.at(i), &QAbstractButton::clicked, this, [ = ] {
-            if (list3.at(i)->text() == "Ok")
-            {
-                partitionWidget = new PartitionWidget(this);
-                partitionWidget->show();
-            }
-        });
 
-    }
 }

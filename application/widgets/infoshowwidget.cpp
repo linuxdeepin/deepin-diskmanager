@@ -224,5 +224,5 @@ void InfoShowWidget::slotShowDiskInfo(QString diskname, QString diskformat, QStr
 void InfoShowWidget::slotCurSelectChanged()
 {
     qDebug() << __FUNCTION__ << "-0--0-";
-    //pframebottom->setFrameData(DMDbusHandler::instance());
+    pframebottom->setFrameData(DMDbusHandler::instance()->getCurPartititonInfo());
 }

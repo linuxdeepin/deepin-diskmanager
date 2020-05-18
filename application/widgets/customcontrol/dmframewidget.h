@@ -21,7 +21,7 @@ public:
 signals:
 
 public:
-    //  void setFrameData(PartitionInfo data);
+    void setFrameData(const PartitionInfo &data);
 
 public slots:
 protected:

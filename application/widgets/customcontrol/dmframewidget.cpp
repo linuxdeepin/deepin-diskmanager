@@ -1,4 +1,5 @@
 #include "dmframewidget.h"
+#include "utils.h"
 #include <QDebug>
 
 
@@ -7,11 +8,17 @@ DmFrameWidget::DmFrameWidget(DiskInfoData data, QWidget *parent): DFrame(parent)
 
 }
 
-//void DmFrameWidget::setFrameData(DiskInfoData data)
-//{
-//    m_infodata = data;
-//    update();
-//}
+void DmFrameWidget::setFrameData(const PartitionInfo &data)
+{
+    for (QString strpoint : data.mountpoints)
+        m_infodata.mountpoints.append(strpoint);
+    m_infodata.unused = QString::number(Utils::sector_to_unit(data.sectors_unused, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
+    m_infodata.used = QString::number(Utils::sector_to_unit(data.sectors_used, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
+    m_infodata.fstype = Utils::FSTypeToString((FSType)data.fstype);
+    m_infodata.partitionsize = QString::number(Utils::sector_to_unit(data.sector_end - data.sector_start, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
+    m_infodata.syslabel = data.filesystem_label;
+    update();
+}
 
 void DmFrameWidget::paintEvent(QPaintEvent *event)
 {

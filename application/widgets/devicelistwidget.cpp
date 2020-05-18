@@ -28,7 +28,7 @@ void DeviceListWidget::initUi()
 void DeviceListWidget::initConnection()
 {
     connect(DMDbusHandler::instance(), &DMDbusHandler::sigUpdateDeviceInfo, this, &DeviceListWidget::slotUpdateDeviceInfo);
-    connect(m_treeview, &DmTreeview::sigCurSelectChanged, DMDbusHandler::instance(), &DMDbusHandler::sigCurSelectChanged);
+    connect(m_treeview, &DmTreeview::sigCurSelectChanged, DMDbusHandler::instance(), &DMDbusHandler::slotsetCurSelect);
 }
 
 
@@ -80,7 +80,7 @@ void DeviceListWidget::slotUpdateDeviceInfo()
             qDebug() << it->filesystem_label;
             QString s_filesystem_label = it->filesystem_label;
             //            qDebug() << s_unused;
-            DmDiskinfoBox *m_childbox = new DmDiskinfoBox(1, "", "", s_partitionpath, s_pdisksize, s_usedstr, s_unusedstr, it->sectors_unallocated,
+            DmDiskinfoBox *m_childbox = new DmDiskinfoBox(1, it->device_path, "", s_partitionpath, s_pdisksize, s_usedstr, s_unusedstr, it->sectors_unallocated,
                                                           it->sector_start, it->sector_end, s_fstype, s_mountpoints, s_filesystem_label);
 //            qDebug() << it->path << it << s_pdisksize;
             m_box->childs.append(m_childbox);

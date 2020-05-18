@@ -15,14 +15,20 @@ public:
     void Quit();
     void getDeviceinfo();
     DeviceInfoMap probDeviceInfo()const;
+    const PartitionInfo &getCurPartititonInfo();
 
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
     void initConnection();
+
 signals:
     void sigShowSpinerWindow(bool);
     void sigUpdateDeviceInfo();
-    void sigCurSelectChanged(DiskInfoData infodata);
+    void sigCurSelectChanged();
+
+public slots:
+    void slotsetCurSelect(const QString &devicepath, const QString &partitionpath, Sector start, Sector end);
+
 private slots:
     void MessageReport(const QString &msg);
     void slotUpdateDeviceInfo(const DeviceInfoMap &infomap);
@@ -30,8 +36,10 @@ private slots:
 private:
     DMDBusInterface        *m_dbus = nullptr;
     static DMDbusHandler    *m_statichandeler;
-    QString                 m_curdevice;
+    QString                 m_curdevicepath;
+    QString                 m_curpartitionpath;
     DeviceInfoMap           m_devicemap;
+    PartitionInfo           m_curpartitioninfo;
 };
 
 #endif // DMDBUSHANDLER_H

@@ -25,7 +25,8 @@ private:
     DPushButton *createBtn(const QString &btnName, bool bCheckable = false);
 
 public slots:
-    void slotCurSelectChanged(DiskInfoData infodata);
+    void slotCurSelectChanged();
+
 
 private:
     DPushButton *m_btnparted;

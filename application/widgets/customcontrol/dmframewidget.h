@@ -8,6 +8,7 @@
 #include <DApplicationHelper>
 #include <DFontSizeManager>
 #include "dmtreeviewdelegate.h"
+#include "partitioninfo.h"
 DWIDGET_USE_NAMESPACE
 
 
@@ -20,7 +21,7 @@ public:
 signals:
 
 public:
-    void setFrameData(DiskInfoData data);
+    //  void setFrameData(PartitionInfo data);
 
 public slots:
 protected:

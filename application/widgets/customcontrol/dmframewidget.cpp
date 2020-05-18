@@ -7,11 +7,11 @@ DmFrameWidget::DmFrameWidget(DiskInfoData data, QWidget *parent): DFrame(parent)
 
 }
 
-void DmFrameWidget::setFrameData(DiskInfoData data)
-{
-    m_infodata = data;
-    update();
-}
+//void DmFrameWidget::setFrameData(DiskInfoData data)
+//{
+//    m_infodata = data;
+//    update();
+//}
 
 void DmFrameWidget::paintEvent(QPaintEvent *event)
 {

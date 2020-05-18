@@ -67,7 +67,7 @@ DPushButton *TitleWidget::createBtn(const QString &btnName, bool bCheckable)
     return btn;
 }
 
-void TitleWidget::slotCurSelectChanged(DiskInfoData infodata)
+void TitleWidget::slotCurSelectChanged()
 {
     qDebug() << __FUNCTION__ << "-1--1-";
 }

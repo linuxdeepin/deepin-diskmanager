@@ -31,7 +31,8 @@ protected:
     void paintEvent(QPaintEvent *event);
 public slots:
     void slotShowDiskInfo(QString diskname, QString diskformat, QString diskmemory);
-    void slotCurSelectChanged(DiskInfoData infodata);
+    void slotCurSelectChanged();
+
 private:
     void initUi();
     void initConnection();

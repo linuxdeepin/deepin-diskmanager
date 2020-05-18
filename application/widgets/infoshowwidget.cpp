@@ -221,14 +221,8 @@ void InfoShowWidget::slotShowDiskInfo(QString diskname, QString diskformat, QStr
 
 }
 
-void InfoShowWidget::slotCurSelectChanged(DiskInfoData data)
+void InfoShowWidget::slotCurSelectChanged()
 {
     qDebug() << __FUNCTION__ << "-0--0-";
-    DeviceInfoMap infomap = DMDbusHandler::instance()->probDeviceInfo();
-    qDebug() << data.mountpoints;
-    pframebottom->setFrameData(data);
-
-
-
-
+    //pframebottom->setFrameData(DMDbusHandler::instance());
 }

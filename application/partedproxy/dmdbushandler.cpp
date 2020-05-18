@@ -41,6 +41,27 @@ void DMDbusHandler::initConnection()
     connect(m_dbus, &DMDBusInterface::sigUpdateDeviceInfo, this, &DMDbusHandler::slotUpdateDeviceInfo);
 }
 
+void DMDbusHandler::slotsetCurSelect(const QString &devicepath, const QString &partitionpath, Sector start, Sector end)
+{
+    //点击切换才触发
+    if (devicepath != m_curdevicepath && partitionpath != m_curpartitionpath && m_devicemap.size() > 0) {
+        //判断是否为未分配空间
+        auto it = m_devicemap.find(devicepath);
+        if (it != m_devicemap.end()) {
+            for (PartitionInfo info : it.value().partition) {
+                if (info.path == partitionpath) {
+                    m_curpartitioninfo = info;
+                    break;
+                } else if (info.sector_start == start && info.sector_end == end) {
+                    m_curpartitioninfo = info;
+                    break;
+                }
+            }
+        }
+        emit sigCurSelectChanged();
+    }
+}
+
 void DMDbusHandler::Quit()
 {
     m_dbus->Quit();
@@ -56,6 +77,11 @@ void DMDbusHandler::getDeviceinfo()
 DeviceInfoMap DMDbusHandler::probDeviceInfo() const
 {
     return m_devicemap;
+}
+
+const PartitionInfo &DMDbusHandler::getCurPartititonInfo()
+{
+    return m_curpartitioninfo;
 }
 
 void DMDbusHandler::MessageReport(const QString &msg)

@@ -18,17 +18,34 @@
 
 
 #include <QDebug>
-DmDiskinfoBox::DmDiskinfoBox(int level, QString diskpath, QString disksize, QString partitionpath,
-                             QString partitionsize, QString used, QString unused,
-                             Sector sectors_unallocated, Sector start, Sector end, QString fstype, QString mountpoints, QString systemlabel): m_level(level), m_diskpath(diskpath), m_disksize(disksize),
-    m_partitionpath(partitionpath), m_partitionsize(partitionsize), m_used(used), m_unused(unused),
-    m_sectors_unallocated(sectors_unallocated), m_start(start), m_end(end), m_fstype(fstype), m_mountpoints(mountpoints), m_syslabel(systemlabel)
+DmDiskinfoBox::DmDiskinfoBox(int level, QObject *parent, QString diskpath, QString disksize,
+                             QString partitionpath, QString partitionsize, QString used, QString unused,
+                             Sector sectors_unallocated, Sector start, Sector end, QString fstype,
+                             QString mountpoints, QString systemlabel)
+    : QObject(parent), m_level(level), m_diskpath(diskpath), m_disksize(disksize),
+      m_partitionpath(partitionpath), m_partitionsize(partitionsize), m_used(used), m_unused(unused),
+      m_fstype(fstype), m_mountpoints(mountpoints), m_syslabel(systemlabel),
+      m_sectors_unallocated(sectors_unallocated), m_start(start), m_end(end)
+{
+    childs.clear();
+}
 
+DmDiskinfoBox::DmDiskinfoBox(QObject *parent)
+    : QObject(parent)
 {
 
-    childs.clear();
-
 }
+
+DmDiskinfoBox::~DmDiskinfoBox()
+{
+    for (int i = 0; i < childs.length(); i++) {
+        if (childs.at(i) != nullptr) {
+            delete childs.at(i);
+        }
+    }
+    childs.clear();
+}
+
 
 int DmDiskinfoBox::addChild(DmDiskinfoBox *child)
 {
@@ -54,14 +71,4 @@ void DmDiskinfoBox::print()
              << "  disklabel:" << m_diskpath << " disksize::" << m_disksize
              << "  partitonlabel::" << m_partitionpath << " partitionsize::" << m_partitionsize  << "  childs num::" << childs.count() << endl;
 
-}
-
-DmDiskinfoBox::~DmDiskinfoBox()
-{
-    for (int i = 0; i < childs.length(); i++) {
-        if (childs.at(i) != nullptr) {
-            delete childs.at(i);
-        }
-    }
-    childs.clear();
 }

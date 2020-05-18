@@ -95,8 +95,5 @@ void TitleWidget::slotCurSelectChanged()
     qDebug() << __FUNCTION__ << "-1--1-";
 }
 
-void TitleWidget::slotCurSelectChanged(DiskInfoData infodata)
-{
 
-}
 

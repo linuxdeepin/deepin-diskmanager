@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     a.loadTranslator();
     a.setApplicationName("deepin-diskmanager");
     a.setOrganizationName("deepin");
-    a.setWindowIcon(QIcon::fromTheme("deepin-reader"));
+    a.setWindowIcon(QIcon::fromTheme("deepin-diskmanager"));
     a.setApplicationDisplayName(QObject::tr("ISO disk administrator"));
     a.setApplicationVersion(DApplication::buildVersion("20191227"));
     const QString acknowledgementLink = "https://www.deepin.org/acknowledgments/deepin_reader";

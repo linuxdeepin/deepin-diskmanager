@@ -1,2 +1,21 @@
-<!DOCTYPE RCC>
-<RCC version="1.0"/>
+<RCC>
+    <qresource prefix="/">
+        <file>icons/deepin/builtin/exception-logo.svg</file>
+        <file>icons/deepin/builtin/ok.svg</file>
+        <file>icons/deepin/builtin/select.svg</file>
+        <file>icons/deepin/builtin/warning.svg</file>
+        <file>icons/deepin/builtin/deepin-diskmanager.svg</file>
+        <file>icons/deepin/builtin/deepin-diskmanager_512px.svg</file>
+        <file>icons/deepin/builtin/deepin-diskmanager_96px.svg</file>
+        <file>icons/deepin/builtin/light/actions/dm_formatting_36px.svg</file>
+        <file>icons/deepin/builtin/light/actions/dm_harddisk_48px.svg</file>
+        <file>icons/deepin/builtin/light/actions/dm_mount_36px.svg</file>
+        <file>icons/deepin/builtin/light/actions/dm_partition_36px.svg</file>
+        <file>icons/deepin/builtin/light/actions/dm_uninstall_36px.svg</file>
+        <file>icons/deepin/builtin/light/actions/dm_spacetoadjus_36px.svg</file>
+        <file>icons/deepin/builtin/light/actions/dm_uninstallicon_10px.svg</file>
+        <file>icons/deepin/builtin/light/actions/dm_mounticon_10px.svg</file>
+        <file>icons/deepin/builtin/light/actions/dm_labeldisk_85px.svg</file>
+        <file>icons/deepin/builtin/light/actions/dm_treedisk_38px.svg</file>
+    </qresource>
+</RCC>

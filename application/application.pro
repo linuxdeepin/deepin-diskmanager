@@ -54,7 +54,8 @@ CONFIG(release, debug|release) {
 INSTALLS += target desktop icon_files
 
 RESOURCES += \
-    resource.qrc
+    resource.qrc \
+    icons.qrc
 
 HEADERS += \
     cusapplication.h

@@ -1,15 +1,14 @@
 [Desktop Entry]
 Categories=Office;Viewer;
-Exec=deepin-reader %f
-GenericName=Document Viewer
-GenericName[zh_CN]=文档查看器
-GenericName[zh_TW]=文檔查看器
-Icon=deepin-reader
-MimeType=application/pdf;
-Name=Deepin Document Viewer
-Name[zh_CN]=文档查看器
-Name[zh_TW]=Deepin 文檔查看器
+Exec=deepin-diskmanager
+GenericName=diskmanager
+GenericName[zh_CN]=磁盘管理器
+GenericName[zh_TW]=磁盘管理器
+Icon=deepin-diskmanager
+Name=deepin-diskmanager
+Name[zh_CN]=磁盘管理器
+Name[zh_TW]=磁盘管理器
 StartupNotify=true
-TryExec=deepin-reader
+TryExec=deepin-diskmanager
 Type=Application
 X-Deepin-Vendor=user-custom

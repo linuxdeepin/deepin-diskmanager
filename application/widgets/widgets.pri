@@ -6,7 +6,8 @@ HEADERS += \
     $$PWD/titlewidget.h \
     $$PWD/mainsplitter.h \
     $$PWD/devicelistwidget.h \
-    $$PWD/infoshowwidget.h
+    $$PWD/infoshowwidget.h \
+    $$PWD/widgetdeclare.h
 
 SOURCES += \
     $$PWD/mainwindow.cpp \

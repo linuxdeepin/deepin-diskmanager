@@ -10,6 +10,8 @@
 #include "widgets/mainwindow.h"
 #include <signal.h>
 
+#include "widgets/widgetdeclare.h"
+
 DWIDGET_USE_NAMESPACE
 
 
@@ -25,15 +27,15 @@ int main(int argc, char *argv[])
     CusApplication a(argc, argv);
     a.setAttribute(Qt::AA_UseHighDpiPixmaps);
     a.loadTranslator();
-    a.setApplicationName("deepin-diskmanager");
+    a.setApplicationName(app_name);
     a.setOrganizationName("deepin");
-    a.setWindowIcon(QIcon::fromTheme("deepin-diskmanager"));
+    a.setWindowIcon(QIcon::fromTheme(app_name));
     a.setApplicationDisplayName(QObject::tr("ISO disk administrator"));
     a.setApplicationVersion(DApplication::buildVersion("20191227"));
     const QString acknowledgementLink = "https://www.deepin.org/acknowledgments/deepin_reader";
     a.setApplicationAcknowledgementPage(acknowledgementLink);
 
-    QPixmap px(QIcon::fromTheme("deepin-diskmanager").pixmap(256 * qApp->devicePixelRatio(), 256 * qApp->devicePixelRatio()));
+    QPixmap px(QIcon::fromTheme(app_name).pixmap(256 * qApp->devicePixelRatio(), 256 * qApp->devicePixelRatio()));
     px.setDevicePixelRatio(qApp->devicePixelRatio());
     a.setProductIcon(QIcon(px));
     a.setApplicationDescription(QObject::tr("ISO disk manager is a disk management tool provided by tongxin to the installation manufacture"));
@@ -42,7 +44,7 @@ int main(int argc, char *argv[])
     Dtk::Core::DLogManager::registerConsoleAppender();
     Dtk::Core::DLogManager::registerFileAppender();
     MainWindow w;
-    if (a.setSingleInstance("deepin-diskmanager")) {
+    if (a.setSingleInstance(app_name)) {
         QObject::connect(&a, &DApplication::newInstanceStarted, &w, [&] {qDebug() << "======"; w.activateWindow();});
     } else {
         exit(0);

@@ -8,6 +8,8 @@
 #include <QRect>
 #include <QDebug>
 
+#include "widgetdeclare.h"
+
 MainWindow::MainWindow(QWidget *parent) : DMainWindow(parent)
 {
     initUi();
@@ -25,7 +27,7 @@ void MainWindow::initUi()
 {
     m_central = new CenterWidget(this);
     setCentralWidget(m_central);
-    titlebar()->setIcon(QIcon::fromTheme("deepin-diskmanager"));
+    titlebar()->setIcon(QIcon::fromTheme(app_name));
     titlebar()->setTitle("");
     // titlebar()->setMenu(m_central->titleMenu());
     titlebar()->addWidget(m_central->titlewidget(), Qt::AlignCenter);

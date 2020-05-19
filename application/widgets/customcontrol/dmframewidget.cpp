@@ -45,11 +45,13 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)
     QRect textRect = QRect(rect.width() / 2 - 80, rect.topLeft().y() + 10, 80, 40);
     QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
     painter.setPen(Qt::black);
-    painter.drawText(textRect, m_infodata.mountpoints);
+    QTextOption option;
+//    option.setAlignment(Qt::AlignRight | Qt::AlignCenter);
+    painter.drawText(textRect, m_infodata.mountpoints, option);
     textRect.moveTo(rect.width() / 2 - 80, rect.topLeft().y() + 60);
-    painter.drawText(textRect, m_infodata.unused);
+    painter.drawText(textRect, m_infodata.unused, option);
     textRect.moveTo(rect.width() / 2 - 80, rect.topLeft().y() + 110);
-    painter.drawText(textRect, m_infodata.used);
+    painter.drawText(textRect, m_infodata.used, option);
     textRect.moveTo(rect.width() - 80, rect.topLeft().y() + 10);
     painter.drawText(textRect, m_infodata.fstype);
     textRect.moveTo(rect.width() - 80, rect.topLeft().y() + 60);

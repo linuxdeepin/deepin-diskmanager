@@ -15,7 +15,8 @@
 #include <DLabel>
 #include <DFontSizeManager>
 #include "customcontrol/dmtreeviewdelegate.h"
-
+#include <QVector>
+#include <QRgb>
 
 DWIDGET_USE_NAMESPACE
 class InfoShowWidget: public DWidget
@@ -52,7 +53,7 @@ private:
     SizeInfoWidget *m_infowidget;
     double m_allsize;
     double m_used;
-    double m_trueused;
+    double m_noused;
     DiskInfoData data;
 
 };

@@ -53,21 +53,26 @@ void DeviceListWidget::slotUpdateDeviceInfo()
         DeviceInfo info = it.value();
 //        qDebug() << Utils::sector_to_unit(info.sectors, info.sector_size, SIZE_UNIT::UNIT_GIB);
 
-        double_t sectorall = (info.length * info.sector_size) / 1024.0 / 1024.0 / 1024.0;
-        QString s_disksize = QString::number(sectorall, 'f', 2) + "GB";
 //        QString s_disksize = QString::number(Utils::sector_to_unit(info.sectors, info.sector_size, SIZE_UNIT::UNIT_GIB)) + "GB";
+
+
+//        double_t sectorall = (info.length * info.sector_size) / 1024.0 / 1024.0 / 1024.0;
+//        QString s_disksize = QString::number(sectorall, 'f', 2) + "GB";
+        QString s_disksize = QString::number(Utils::sector_to_unit(info.length, info.sector_size, SIZE_UNIT::UNIT_GIB)) + "GB";
         auto m_box = new DmDiskinfoBox(0, this, info.m_path, s_disksize);
         for (auto it = info.partition.begin(); it != info.partition.end(); it++) {
 //            qDebug() << Utils::sector_to_unit(it->sector_end - it->sector_end, it->sector_size, SIZE_UNIT::UNIT_GIB);
 
             QString s_pdisksize = QString::number(Utils::sector_to_unit(it->sector_end - it->sector_start, it->sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
             QString s_partitionpath = it->path;
-            double s_used = (it->sectors_used * it->sector_size) / 1024.0 / 1024.0 / 1024.0;
+//            double s_used = (it->sectors_used * it->sector_size) / 1024.0 / 1024.0 / 1024.0;
+            double s_used = Utils::sector_to_unit(it->sectors_used, it->sector_size, SIZE_UNIT::UNIT_GIB);
             //            qDebug() << s_used;
 //            if (it->partition_number == 4)
 //                int a = 0;
 //            qDebug() << it->sector_end << it->sector_start << it->sectors_used << it->sectors_unused << it->sectors_unallocated;
-            double s_unused = (it->sectors_unused * it->sector_size) / 1024.0 / 1024.0 / 1024.0;
+            double s_unused = Utils::sector_to_unit(it->sectors_unused, it->sector_size, SIZE_UNIT::UNIT_GIB);
+//                    (it->sectors_unused * it->sector_size) / 1024.0 / 1024.0 / 1024.0;
             QString s_unusedstr = QString::number(s_unused, 'f', 2) + "GB";
             QString s_usedstr = QString::number(s_used, 'f', 2) + "GB";
             qDebug() << it->partition_number;

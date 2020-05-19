@@ -138,7 +138,7 @@ void InfoShowWidget::topFrameSettings()
 void InfoShowWidget::midFramSettings()
 {
     QVBoxLayout *mainLayout = new QVBoxLayout(pframemid);
-    m_infowidget = new SizeInfoWidget(100, 200, 300);
+    m_infowidget = new SizeInfoWidget;
     mainLayout->addWidget(m_infowidget);
 //    totaluseLabel = new DLabel(pframemid);
 //    QFont  font;
@@ -225,4 +225,12 @@ void InfoShowWidget::slotCurSelectChanged()
 {
     qDebug() << __FUNCTION__ << "-0--0-";
     pframebottom->setFrameData(DMDbusHandler::instance()->getCurPartititonInfo());
+    m_noused = Utils::sector_to_unit(DMDbusHandler::instance()->getCurPartititonInfo().sectors_unused, DMDbusHandler::instance()->getCurPartititonInfo().sector_size, SIZE_UNIT::UNIT_GIB);
+    m_used = Utils::sector_to_unit(DMDbusHandler::instance()->getCurPartititonInfo().sectors_used, DMDbusHandler::instance()->getCurPartititonInfo().sector_size, SIZE_UNIT::UNIT_GIB);
+    QColor fillcolor = this->palette().color(DPalette::Normal, DPalette::Highlight);
+    QColor fillcolor1 = this->palette().color(DPalette::Normal, DPalette::ToolTipText);
+    fillcolor1.setAlphaF(0.1);
+    QVector<QColor>color{fillcolor, fillcolor1};
+    QVector<double>size{m_used, m_noused};
+    m_infowidget->setdata(DMDbusHandler::instance()->getCurPartititonInfo(), color, size, 1);
 }

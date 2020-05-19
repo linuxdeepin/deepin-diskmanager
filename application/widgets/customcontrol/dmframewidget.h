@@ -9,6 +9,7 @@
 #include <DFontSizeManager>
 #include "dmtreeviewdelegate.h"
 #include "partitioninfo.h"
+#include <QTextOption>
 DWIDGET_USE_NAMESPACE
 
 

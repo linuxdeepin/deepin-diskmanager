@@ -28,23 +28,33 @@
 #include <DApplicationHelper>
 #include <QPointF>
 #include <QLine>
+#include <QColor>
+#include <QVector>
+#include "partitioninfo.h"
+#include "utils.h"
 DWIDGET_USE_NAMESPACE
+
 class SizeInfoWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit SizeInfoWidget(QWidget *parent = nullptr);
-    SizeInfoWidget(int used, int trueused, int noused, QWidget *parent = nullptr);
+    SizeInfoWidget(double used, double unused, bool flag, QWidget *parent = nullptr);
+    void setdata(PartitionInfo info, QVector<QColor>color, QVector<double>size, bool flag);
+//    void settextdata(PartitionInfo info, bool flag);
 protected:
     virtual void paintEvent(QPaintEvent *event);
 signals:
 
 public slots:
 private:
-    int m_used;
-    int m_tureused;
-    int m_noused;
-//    DPalette m_parentPb;
+    double m_used;
+    double m_noused;
+    double m_totalsize;
+    bool m_flag;
+    QVector<QColor>colorinfo;
+    QVector<double>sizeinfo;
+
 };
 
 #endif // SIZEINFOWIDGET_H

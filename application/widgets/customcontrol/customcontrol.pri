@@ -12,7 +12,8 @@ HEADERS += \
     $$PWD/dmdiskinfobox.h \
     $$PWD/sizeinfowidget.h \
     $$PWD/dmframewidget.h \
-    $$PWD/partchartshowing.h
+    $$PWD/partchartshowing.h \
+    $$PWD/infotopframe.h
 
 SOURCES += \
     $$PWD/bufferwin.cpp\
@@ -28,5 +29,6 @@ SOURCES += \
     $$PWD/dmdiskinfobox.cpp \
     $$PWD/sizeinfowidget.cpp \
     $$PWD/dmframewidget.cpp \
-    $$PWD/partchartshowing.cpp
+    $$PWD/partchartshowing.cpp \
+    $$PWD/infotopframe.cpp
 

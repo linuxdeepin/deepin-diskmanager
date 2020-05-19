@@ -18,6 +18,8 @@
 #include <QVector>
 #include <QRgb>
 
+class InfoTopFrame;
+
 DWIDGET_USE_NAMESPACE
 class InfoShowWidget: public DWidget
 {
@@ -30,22 +32,22 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event);
-public slots:
-    void slotShowDiskInfo(QString diskname, QString diskformat, QString diskmemory);
+
+private slots:
     void slotCurSelectChanged();
 
 private:
     void initUi();
     void initConnection();
+
+private:
+    InfoTopFrame     *m_pInfoTopFrame = nullptr;
+
     DFrame *pframe;
-    DFrame *pframetop;
+
     DFrame *pframemid;
     DmFrameWidget *pframebottom = nullptr;
-    DLabel *picLabel;
-    DLabel *nameLabel;
-    DLabel *typeLabel;
-    DLabel *allnameLabel;
-    DLabel *allmemoryLabel;
+
     DLabel *totaluseLabel;
     DLabel *usedLabel;
     DLabel *trueusedLabel;

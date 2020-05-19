@@ -131,7 +131,7 @@ void PartitionWidget::midFrameSetting()
 {
     midFrame->setMinimumHeight(100);
     QVBoxLayout *mainLayout = new QVBoxLayout(midFrame);
-    partChartWidget = new PartChartShowing(100, 200, 300, midFrame);
+    partChartWidget = new PartChartShowing(midFrame);
     mainLayout->addWidget(partChartWidget);
 
 }
@@ -251,12 +251,16 @@ void PartitionWidget::partedInfo()
 void PartitionWidget::getPartitionInfo(const PartitionInfo &data, const QString &disksize)
 {
     QString s_pdisksize = QString::number(Utils::sector_to_unit(data.sector_end - data.sector_start, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
-    qDebug() << data.device_path << disksize << data.path << s_pdisksize << Utils::FSTypeToString((FSType)data.fstype);
+    QString s_used = QString::number(Utils::sector_to_unit(data.sectors_used, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
+    QString s_unused = QString::number(Utils::sector_to_unit(data.sectors_unused, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
+    qDebug() << data.device_path << disksize << data.path << s_pdisksize << Utils::FSTypeToString((FSType)data.fstype) << s_used << s_unused;
     devicePath = data.device_path ;
     deviceSize = disksize;
     partPath = data.path;
     partSize = s_pdisksize;
     partFstype = Utils::FSTypeToString((FSType)data.fstype);
+    partUsed = s_used;
+    partUnused = s_unused;
     initTopFrameData();
 }
 
@@ -275,6 +279,8 @@ void PartitionWidget::initConnection()
 {
     connect(hSlider, &DSlider::valueChanged, this, &PartitionWidget::slotSliderValueChanged);
     connect(partSizeEdit, &DLineEdit::textEdited, this, &PartitionWidget::slotSetSliderValue);
+    connect(addButton, &DIconButton::clicked, this, &PartitionWidget::addPartitionSlot);
+    connect(remButton, &DIconButton::clicked, this, &PartitionWidget::remPartitionSlot);
 }
 
 void PartitionWidget::paintEvent(QPaintEvent *event)
@@ -294,4 +300,14 @@ void PartitionWidget::slotSetSliderValue()
 {
     QString value = partSizeEdit->text();
     hSlider->setValue(value.toInt());
+}
+
+void PartitionWidget::addPartitionSlot()
+{
+    partChartWidget->getData(1, partSize);
+}
+
+void PartitionWidget::remPartitionSlot()
+{
+    partChartWidget->getData(2, partSize);
 }

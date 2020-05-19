@@ -21,20 +21,20 @@ PartChartShowing::PartChartShowing(QWidget *parent) : QWidget(parent)
 
 }
 
-
-
-PartChartShowing::PartChartShowing(int used, int trueused, int noused, QWidget *parent): m_used(used), m_tureused(trueused), m_noused(noused)
+void PartChartShowing::getData(const int &flag, const QString &totalsize)
 {
-
+    m_flag = flag;
+    m_totalsize = totalsize;
+    qDebug() << m_flag << m_totalsize;
 }
-void PartChartShowing::getData(int used, int trueused, int noused)
-{
-    m_used = used;
-    m_tureused = trueused;
-    m_noused = noused;
-    qDebug() << used << trueused << noused;
 
-}
+
+
+//PartChartShowing::PartChartShowing(int used, int trueused, int noused, QWidget *parent): m_used(used), m_tureused(trueused), m_noused(noused)
+//{
+
+//}
+
 void PartChartShowing::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
@@ -68,37 +68,38 @@ void PartChartShowing::paintEvent(QPaintEvent *event)
     painter.setBrush(QBrush(fillColor));
     painter.fillPath(paintpath, fillColor);
     painter.setPen(QPen(QColor(fillColor), 3));
-    const int total = m_used + m_tureused + m_noused;
-    painter.drawLine(paintRect.topLeft().x() + radius +  paintRect.width() / (total / m_used), paintRect.topLeft().y() + radius, paintRect.topLeft().x() + radius + paintRect.width() / (total / m_used), paintRect.bottomLeft().y() - radius);
-//    QPainterPath paintpath1;
-//    paintpath1.moveTo(QPoint(paintRect.topLeft().x() + radius + paintRect.width() / (total / m_used), paintRect.topLeft().y()));
-//    paintpath1.lineTo(QPoint(paintRect.topLeft().x() + radius +  paintRect.width() / (total / m_used) + paintRect.width() / (total / m_tureused), paintRect.topLeft().y()));
-//    paintpath1.lineTo(QPoint(paintRect.topLeft().x() + radius +  paintRect.width() / (total / m_used) + paintRect.width() / (total / m_tureused), paintRect.bottomRight().y()));
-//    paintpath1.lineTo(QPoint(paintRect.topLeft().x() + radius +  paintRect.width() / (total / m_used), paintRect.bottomRight().y()));
-//    QColor fillcolor1 = Qt::green;
-//    painter.setBrush(QBrush(fillcolor1));
-//    painter.fillPath(paintpath1, fillcolor1);
-//    QPainterPath paintpath2;
-//    paintpath2.moveTo(paintRect.bottomRight() - QPoint(0, radius));
-//    paintpath2.lineTo(paintRect.topRight() + QPoint(0, radius));
-//    paintpath2.arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
-//                           QSize(radius * 2, radius * 2)),
-//                     0, 90);
-//    paintpath2.lineTo(QPoint(paintRect.topLeft().x() + radius +  paintRect.width() / (total / m_used) + paintRect.width() / (total / m_tureused), paintRect.topLeft().y()));
-//    paintpath2.lineTo(QPoint(paintRect.topLeft().x() + radius +  paintRect.width() / (total / m_used) + paintRect.width() / (total / m_tureused), paintRect.bottomLeft().y()));
-//    paintpath2.lineTo(QPoint(paintRect.topRight().x() - radius, paintRect.bottomLeft().y()));
-//    paintpath2.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
-//                           QSize(radius * 2, radius * 2)),
-//                     270, 90);
-//    QColor fillcolor2 = Qt::gray;
-//    painter.setRenderHint(QPainter::Antialiasing);
-//    painter.setBrush(QBrush(fillcolor2));
-//    painter.fillPath(paintpath2, fillcolor2);
+//    const int total = 600;
+    painter.drawLine(paintRect.topLeft().x() + radius, paintRect.topLeft().y() + radius, paintRect.topLeft().x() + radius + paintRect.width(), paintRect.bottomLeft().y() - radius);
+    QColor tipColor = QColor(210, 210, 210);
+
+
+    painter.setPen(tipColor);
+    painter.drawRect(this->x() + 20, this->y() + 50, 10, 10);
+
+    painter.setPen(this->palette().text().color());
+    QRect textRect(this->x() + 35, this->y() + 45, 80, 50);
+    painter.drawText(textRect, tr("Free space"));
+
 
     QWidget::paintEvent(event);
 
     update();
+
+
+
     painter.restore();
 
 
+}
+
+void PartChartShowing::addPaint(QPainter painter)
+{
+    painter.setPen(Qt::NoPen);
+    painter.setRenderHint(QPainter::Antialiasing);
+
+}
+
+void PartChartShowing::remPaint(QPainter painter)
+{
+    painter.setPen(Qt::NoPen);
 }

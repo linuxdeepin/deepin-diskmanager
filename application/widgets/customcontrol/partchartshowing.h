@@ -37,20 +37,21 @@ class PartChartShowing : public QWidget
     Q_OBJECT
 public:
     explicit PartChartShowing(QWidget *parent = nullptr);
-    PartChartShowing(int used, int trueused, int noused, QWidget *parent = nullptr);
-
+//    PartChartShowing(int used, int trueused, int noused, QWidget *parent = nullptr);
+    void getData(const int &flag, const QString &totalsize);
 signals:
 
 public slots:
-    void getData(int used, int trueused, int noused);
+
 
     // QWidget interface
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
+    void addPaint(QPainter painter);
+    void remPaint(QPainter painter);
 private:
-    int m_used;
-    int m_tureused;
-    int m_noused;
+    int m_flag = 0;
+    QString m_totalsize = nullptr;
 };
 
 #endif // PARTCHARTSHOWING_H

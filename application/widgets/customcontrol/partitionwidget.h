@@ -57,6 +57,7 @@ public:
     void initTopFrameData();
     void initConnection();
 
+
 signals:
     void senderData(int x, int y, int z);
     // QWidget interface
@@ -65,6 +66,8 @@ protected:
 public slots:
     void slotSliderValueChanged(int value);
     void slotSetSliderValue();
+    void addPartitionSlot();
+    void remPartitionSlot();
 private:
     QWidget *mainFrame;
     DFrame *topFrame;
@@ -107,6 +110,8 @@ private:
     DLabel *partDoLabel;
     DSlider *hSlider;
 
+    QString partUsed;
+    QString partUnused;
     QString devicePath;
     QString deviceSize;
     QString partPath;

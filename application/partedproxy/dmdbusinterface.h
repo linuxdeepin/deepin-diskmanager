@@ -57,11 +57,16 @@ public Q_SLOTS: // METHODS
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QStringLiteral("getalldevice"), argumentList);
     }
+    inline QDBusPendingReply<>setCurSelect(const PartitionInfo &info)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(info);
+        return asyncCallWithArgumentList(QStringLiteral("setCurSelect"), argumentList);
+    }
 
 
 Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void MessageReport(const QString &msg);
-    Q_SCRIPTABLE void AccessDeviceInfoOver(const DeviceInfo &info);
     Q_SCRIPTABLE void sigUpdateDeviceInfo(const DeviceInfoMap &infomap);
 };
 

@@ -1,5 +1,4 @@
 #include "diskmanagerservice.h"
-#include "diskmanagerserviceprivate.h"
 #include <QCoreApplication>
 #include <QDebug>
 #include <unistd.h>
@@ -7,9 +6,9 @@
 namespace DiskManager {
 
 DiskManagerService::DiskManagerService(QObject *parent) :
-    QObject(parent), d_ptr(new DiskManagerServicePrivate(this))
+    QObject(parent), m_partedcore(new PartedCore(this))
 {
-
+    initConnection();
 
 }
 
@@ -28,18 +27,33 @@ void DiskManagerService::Start()
 
 DeviceInfo DiskManagerService::getDeviceinfo()
 {
-    Q_D(DiskManagerService);
     QString msg = "DiskManagerService::getDeviceinfo";
     Q_EMIT MessageReport(msg);
     qDebug() << "DiskManagerService::getDeviceinfo success *******";
-    return d->getDeviceinfo();
+    return m_partedcore->getDeviceinfo();
 }
 
 void DiskManagerService::getalldevice()
 {
-    Q_D(DiskManagerService);
     qDebug() << "DiskManagerService::getalldevice";
-    d->getalldevice();
+    DeviceInfoMap infores = m_partedcore->getAllDeviceinfo();
+    Q_EMIT sigUpdateDeviceInfo(infores);
+
+}
+
+void DiskManagerService::setCurSelect(const PartitionInfo &info)
+{
+    m_partedcore->setCurSelect(info);
+}
+
+void DiskManagerService::unmount()
+{
+    m_partedcore->unmount();
+}
+
+void DiskManagerService::mount(const QString &mountpath)
+{
+    m_partedcore->mount(mountpath);
 }
 
 stCustest DiskManagerService::interfacetest()
@@ -49,6 +63,11 @@ stCustest DiskManagerService::interfacetest()
     stcus.length = 2000;
     stcus.m_path = "uos";
     return stcus;
+}
+
+void DiskManagerService::initConnection()
+{
+    connect(m_partedcore, &PartedCore::sigUpdateDeviceInfo, this, &DiskManagerService::sigUpdateDeviceInfo);
 }
 
 }

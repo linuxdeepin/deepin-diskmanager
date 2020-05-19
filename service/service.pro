@@ -21,12 +21,10 @@ include(diskoperation/diskoperation.pri)
 
 SOURCES += \
         main.cpp \
-    diskmanagerservice.cpp \
-    diskmanagerserviceprivate.cpp
+    diskmanagerservice.cpp
 
 HEADERS += \
-    diskmanagerservice.h \
-    diskmanagerserviceprivate.h
+    diskmanagerservice.h
 
 isEmpty(PREFIX):PREFIX = /usr
 

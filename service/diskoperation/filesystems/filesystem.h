@@ -15,6 +15,12 @@ public:
     virtual void read_label(Partition &) {}
     virtual void read_uuid(Partition &) {}
     virtual void set_used_sectors(Partition &) {}
+    virtual FS_Limits get_filesystem_limits(const Partition &partition) const  { return fs_limits; }
+    virtual bool create(const Partition &new_partition) { return false; }
+
+
+private:
+    FS_Limits fs_limits;
 };
 }
 #endif // FILESYSTEM_H

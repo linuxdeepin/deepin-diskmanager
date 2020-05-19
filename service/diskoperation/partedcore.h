@@ -19,9 +19,14 @@ public:
 
     DeviceInfo getDeviceinfo();
     DeviceInfoMap getAllDeviceinfo();
-    void curSelectedChanged(const PartitionInfo &info);
-public:
+    void setCurSelect(const PartitionInfo &info);
 
+    //operationstuff...
+    bool mount(const QString &mountpath);
+    bool unmount();
+    bool create(Partition &partition);
+    bool create_partition(Partition &new_partition, Sector min_size = 0) ;
+public:
     //static
     static void find_supported_core();
     static bool supported_filesystem(FSType fstype);
@@ -35,6 +40,9 @@ public:
                                    Byte_Value sector_size,
                                    bool inside_extended);
     void set_flags(Partition &partition, PedPartition *lp_partition) ;
+    static FS_Limits get_filesystem_limits(FSType fstype, const Partition &partition);
+
+
 
 private:
     //general..
@@ -42,11 +50,13 @@ private:
     static void settle_device(std::time_t timeout);
     static bool commit_to_os(PedDisk *lp_disk, std::time_t timeout);
     static bool useable_device(const PedDevice *lp_device);
-    static bool get_device(const QString &device_path, PedDevice *&lp_device, bool flush);
+    static bool get_device(const QString &device_path, PedDevice *&lp_device, bool flush = false);
     static bool get_disk(PedDevice *&lp_device, PedDisk *&lp_disk, bool strict = true);
     static void destroy_device_and_disk(PedDevice *&lp_device, PedDisk *&lp_disk);
     bool infoBelongToPartition(const Partition &partition, const PartitionInfo info);
-
+    static bool get_device_and_disk(const QString &device_path, PedDevice *&lp_device,
+                                    PedDisk *&lp_disk, bool strict = true, bool flush = false);
+    static bool commit(PedDisk *lp_disk);
     //detectionstuff..
     void probedeviceinfo(const QString &path = QString());
     void set_device_from_disk(Device &device, const QString &device_path);
@@ -67,11 +77,16 @@ private:
     static QString get_partition_path(PedPartition *lp_partition);
 
     //operationstuff...
-    bool mount(const QString &partitionpath, const QString &mountpath);
-    bool unmount(const QString &mountpath);
-signals:
+    bool name_partition(const Partition &partition);
+    bool erase_filesystem_signatures(const Partition &partition) ;
+    bool set_partition_type(const Partition &partition) ;
+    bool create_filesystem(const Partition &partition) ;
 
+signals:
+    void sigUpdateDeviceInfo(const DeviceInfoMap &infomap);
+    void sigRefreshDeviceInfo();
 public slots:
+    void slotRefreshDeviceInfo();
 
 
 private:

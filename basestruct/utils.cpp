@@ -350,3 +350,13 @@ int Utils::get_max_partition_name_length(QString &tabletype)
     return 0;
 }
 
+Byte_Value Utils::floor_size(Byte_Value value, Byte_Value rounding_size)
+{
+    return value / rounding_size * rounding_size ;
+}
+
+Byte_Value Utils::ceil_size(Byte_Value value, Byte_Value rounding_size)
+{
+    return (value + rounding_size - 1LL) / rounding_size * rounding_size ;
+}
+

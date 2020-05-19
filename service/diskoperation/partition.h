@@ -25,7 +25,9 @@ public:
     QVector<QString> get_mountpoints() const ;
     QString get_mountpoint() const ;
     void set_sector_usage(Sector sectors_fs_size, Sector sectors_fs_unused) ;
-    QString get_path() const ;
+    inline QString get_path() const {return this->path;}
+    inline void set_path(const QString &path) {this->path = path;}
+    inline Sector get_sector() const {return (sector_start + sector_end) / 2 ;}
     Byte_Value get_byte_length() const ;
     Sector get_sector_length() const ;
     QString get_filesystem_label()const;

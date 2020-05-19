@@ -166,11 +166,6 @@ void Partition::set_sector_usage(Sector sectors_fs_size, Sector sectors_fs_unuse
     }
 }
 
-QString Partition::get_path() const
-{
-    return path;
-}
-
 Byte_Value Partition::get_byte_length() const
 {
     if (get_sector_length() >= 0)

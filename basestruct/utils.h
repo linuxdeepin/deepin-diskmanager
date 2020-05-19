@@ -21,6 +21,8 @@ public:
     static QString format_size(Sector sectors, Byte_Value sector_size) ;
     static double sector_to_unit(Sector sectors, Byte_Value sector_size, SIZE_UNIT size_unit) ;
     static int get_max_partition_name_length(QString &tabletype);
+    static Byte_Value floor_size(Byte_Value value, Byte_Value rounding_size) ;
+    static Byte_Value ceil_size(Byte_Value value, Byte_Value rounding_size) ;
 };
 
 #endif // UTILS_H

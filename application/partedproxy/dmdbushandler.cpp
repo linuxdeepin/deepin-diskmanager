@@ -58,6 +58,7 @@ void DMDbusHandler::slotsetCurSelect(const QString &devicepath, const QString &p
                 }
             }
         }
+        m_dbus->setCurSelect(m_curpartitioninfo);
         emit sigCurSelectChanged();
     }
 }

@@ -37,7 +37,7 @@
 #include "partitioninfo.h"
 #include "utils.h"
 #include "partchartshowing.h"
-#include "sizeinfowidget.h"
+#include "partedproxy/dmdbushandler.h"
 
 DWIDGET_USE_NAMESPACE
 

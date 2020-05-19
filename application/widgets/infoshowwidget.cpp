@@ -77,7 +77,6 @@ void InfoShowWidget::topFrameSettings()
     v->setMargin(20);
     picLabel = new DLabel(pframetop);
     picLabel->setMinimumSize(50, 60);
-    picLabel->setStyleSheet("border:1px solid gray");
     v->addWidget(picLabel);
     v->addStretch();
     mainLayout->addLayout(v);

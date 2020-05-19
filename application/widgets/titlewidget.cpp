@@ -36,7 +36,7 @@ void TitleWidget::initConnection()
     connect(m_btnformat, &DPushButton::clicked, this, &TitleWidget::showFormateInfoWidget);
     connect(m_btnmount, &DPushButton::clicked, this, &TitleWidget::showMountInfoWidget);
     connect(m_btnunmount, &DPushButton::clicked, this, &TitleWidget::showUnmountInfoWidget);
-    connect(m_btnresize, &DPushButton::clicked, this, &TitleWidget::showResizeInfoWIdget);
+    connect(m_btnresize, &DPushButton::clicked, this, &TitleWidget::showResizeInfoWidget);
 }
 
 DPushButton *TitleWidget::createBtn(const QString &btnName, bool bCheckable)
@@ -57,22 +57,36 @@ DPushButton *TitleWidget::createBtn(const QString &btnName, bool bCheckable)
 
 void TitleWidget::showPartInfoWidget()
 {
-    if (!tipPartDialog->isVisible())
-        tipPartDialog->show();
-    QList<QAbstractButton *> list3 = tipPartDialog->getButtons();
-    for (int i = 0; i < list3.size(); i++) {
-        connect(list3.at(i), &QAbstractButton::clicked, this, [ = ] {
-            if (list3.at(i)->text() == "Ok")
-            {
-                partitionWidget->show();
-            }
-        });
+    if (!tipPartDialog->isVisible()) {
+        tipPartDialog->getFlagShow(0);
+        controlButton = 1;
     }
+
+    connect(tipPartDialog->getButton(1), &QAbstractButton::clicked, this, [ = ] {
+        if (controlButton == 1)
+        {
+            partitionWidget->show();
+            partitionWidget->getPartitionInfo(getPartitionInfo, device_size);
+
+        }
+    });
+
 }
 
 void TitleWidget::showFormateInfoWidget()
 {
-    tipFormateDialog->show();
+    if (!tipPartDialog->isVisible()) {
+        tipPartDialog->getFlagShow(1);
+        controlButton = 2;
+    }
+    connect(tipPartDialog->getButton(1), &QAbstractButton::clicked, this, [ = ] {
+        if (controlButton == 2)
+        {
+            qDebug() << "XXX will be formatted";
+
+        }
+    });
+
 }
 
 void TitleWidget::showMountInfoWidget()
@@ -85,23 +99,24 @@ void TitleWidget::showUnmountInfoWidget()
     tipUnmountDialog->show();
 }
 
-void TitleWidget::showResizeInfoWIdget()
+void TitleWidget::showResizeInfoWidget()
 {
     tipResizeDialog->show();
 }
 
+
+
 void TitleWidget::slotCurSelectChanged()
 {
     qDebug() << __FUNCTION__ << "-1--1-";
-    //for (auto it = DMDbusHandler::instance()->probDeviceInfo().begin(); it != DMDbusHandler::instance()->probDeviceInfo().end(); it++) {
     auto it = DMDbusHandler::instance()->probDeviceInfo().find(DMDbusHandler::instance()->getCurPartititonInfo().device_path);
     if (it != DMDbusHandler::instance()->probDeviceInfo().end()) {
-        double_t sectorall = (it.value().length * it.value().sector_size) / 1024.0 / 1024.0 / 1024.0;
-        QString s_disksize = QString::number(sectorall, 'f', 2) + "GB";
-        qDebug() << it.value().m_path << s_disksize;
-        partitionWidget->getPartitionInfo(DMDbusHandler::instance()->getCurPartititonInfo(), s_disksize);
+        //  QString s_disksize = QString::number(((it.value().length * it.value().sector_size) / 1024.0 / 1024.0 / 1024.0), 'f', 2) + "GB";
+        QString s_disksize = QString::number(Utils::sector_to_unit(it.value().length, it.value().sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
+        //  qDebug() << Utils::sector_to_unit(it.value().sectors, it.value().sector_size, SIZE_UNIT::UNIT_GIB) << it.value().m_path << s_disksize << it.value().sectors << it.value().sector_size;
+        getPartitionInfo = DMDbusHandler::instance()->getCurPartititonInfo();
+        device_size = s_disksize;
     }
-    // }
 }
 
 

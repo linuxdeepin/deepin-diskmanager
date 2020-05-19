@@ -101,8 +101,6 @@ void DMDbusHandler::slotUpdateDeviceInfo(const DeviceInfoMap &infomap)
                  << info.sector_size << info.max_prims << info.highest_busy << info.readonly
                  << info.max_partition_name_length;
         for (auto it = info.partition.begin(); it != info.partition.end(); it++) {
-
-
             qDebug() << __FUNCTION__ << it->device_path << it->partition_number << it->type << it->status << it->alignment << it->fstype << it->uuid
                      << it->name << it->sector_start << it->sector_end << it->sectors_used << it->sectors_unused
                      << it->sectors_unallocated << it->significant_threshold << it->free_space_before

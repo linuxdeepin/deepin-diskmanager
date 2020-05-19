@@ -24,12 +24,16 @@ class TipPartDialog : public TipDialog
     Q_OBJECT
 public:
     explicit TipPartDialog(QWidget *parent = nullptr);
-
+    void getFlagShow(const int &showFlag);
+    void showPartDialog();
+    void showFormateDialog();
 signals:
 
 public slots:
 private:
 //    PartitionWidget *partitionWidget;
+    int m_flag = 0;
+    int addButtons = 0;
 };
 
 #endif // TIPPARTDIALOG_H

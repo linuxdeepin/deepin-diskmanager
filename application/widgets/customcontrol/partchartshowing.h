@@ -47,11 +47,12 @@ public slots:
     // QWidget interface
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
-    void addPaint(QPainter painter);
-    void remPaint(QPainter painter);
+    void addPaint(QPainter *painter);
+    void remPaint(QPainter *painter);
 private:
     int m_flag = 0;
-    QString m_totalsize = nullptr;
+    QString m_totalsize;
+    double total = 0.00;
 };
 
 #endif // PARTCHARTSHOWING_H

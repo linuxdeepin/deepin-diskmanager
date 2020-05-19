@@ -73,14 +73,13 @@ void PartitionWidget::topFrameSetting()
 
     picLabel = new DLabel(topFrame);
     picLabel->setMaximumSize(60, 70);
-    picLabel->setStyleSheet("border:1px solid gray");
 
 
     QHBoxLayout *hLayout = new QHBoxLayout(topFrame);
     hLayout->setSpacing(5);
     hLayout->setContentsMargins(30, 0, 0, 0);
 
-    QVBoxLayout *vLayout = new QVBoxLayout(topFrame);
+    QVBoxLayout *vLayout = new QVBoxLayout();
     vLayout->setContentsMargins(10, 20, 0, 20);
     QFont font;
     font.setPointSize(11);
@@ -253,7 +252,7 @@ void PartitionWidget::getPartitionInfo(const PartitionInfo &data, const QString 
     QString s_pdisksize = QString::number(Utils::sector_to_unit(data.sector_end - data.sector_start, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
     QString s_used = QString::number(Utils::sector_to_unit(data.sectors_used, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
     QString s_unused = QString::number(Utils::sector_to_unit(data.sectors_unused, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
-    qDebug() << data.device_path << disksize << data.path << s_pdisksize << Utils::FSTypeToString((FSType)data.fstype) << s_used << s_unused;
+    qDebug() << Utils::sector_to_unit(data.sector_end - data.sector_start, data.sector_size, SIZE_UNIT::UNIT_GIB) << data.device_path << disksize << data.path << s_pdisksize << Utils::FSTypeToString((FSType)data.fstype) << s_used << s_unused;
     devicePath = data.device_path ;
     deviceSize = disksize;
     partPath = data.path;
@@ -262,6 +261,7 @@ void PartitionWidget::getPartitionInfo(const PartitionInfo &data, const QString 
     partUsed = s_used;
     partUnused = s_unused;
     initTopFrameData();
+
 }
 
 void PartitionWidget::initTopFrameData()
@@ -281,6 +281,7 @@ void PartitionWidget::initConnection()
     connect(partSizeEdit, &DLineEdit::textEdited, this, &PartitionWidget::slotSetSliderValue);
     connect(addButton, &DIconButton::clicked, this, &PartitionWidget::addPartitionSlot);
     connect(remButton, &DIconButton::clicked, this, &PartitionWidget::remPartitionSlot);
+
 }
 
 void PartitionWidget::paintEvent(QPaintEvent *event)
@@ -311,3 +312,5 @@ void PartitionWidget::remPartitionSlot()
 {
     partChartWidget->getData(2, partSize);
 }
+
+

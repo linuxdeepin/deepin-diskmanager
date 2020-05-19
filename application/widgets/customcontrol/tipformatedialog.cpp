@@ -18,21 +18,5 @@
 #include <QDebug>
 TipFormateDialog::TipFormateDialog(QWidget *parent) : TipDialog(parent)
 {
-    this->titleLable->setText(tr("XXX will be formatted"));
-    this->tipLabel->setText(tr("The disk will be formatted, all data stored on the disk \n will be deleted, and cannot be undone. Please provide the \n name and format, and click Format content"));
-    this->typeCombox->setItemText(0, "NTFS");
-    this->mountLabel->hide();
-    this->nameLineEdit->show();
-    this->typeCombox->show();
-    QList<QAbstractButton *> list = getButtons();
-    for (int i = 0; i < list.size(); i++) {
 
-        connect(list.at(i), &QAbstractButton::clicked, this, [ = ] {
-            if (list.at(i)->text() == "Ok")
-            {
-                qDebug() << "XXX will be formatted";
-
-            }
-        });
-    }
 }

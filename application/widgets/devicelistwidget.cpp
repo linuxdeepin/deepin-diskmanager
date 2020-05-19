@@ -53,12 +53,19 @@ void DeviceListWidget::slotUpdateDeviceInfo()
         DeviceInfo info = it.value();
 //        qDebug() << Utils::sector_to_unit(info.sectors, info.sector_size, SIZE_UNIT::UNIT_GIB);
 
+
 //        QString s_disksize = QString::number(Utils::sector_to_unit(info.sectors, info.sector_size, SIZE_UNIT::UNIT_GIB)) + "GB";
 
 
 //        double_t sectorall = (info.length * info.sector_size) / 1024.0 / 1024.0 / 1024.0;
 //        QString s_disksize = QString::number(sectorall, 'f', 2) + "GB";
         QString s_disksize = QString::number(Utils::sector_to_unit(info.length, info.sector_size, SIZE_UNIT::UNIT_GIB)) + "GB";
+
+//        double_t sectorall = (info.length * info.sector_size) / 1024.0 / 1024.0 / 1024.0;
+//        QString s_disksize = QString::number(sectorall, 'f', 2) + "GB";
+        //  QString s_disksize = QString::number(Utils::sector_to_unit(info.sectors, info.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
+        //    qDebug() << (Utils::sector_to_unit(info.sectors, info.sector_size, SIZE_UNIT::UNIT_GIB));
+
         auto m_box = new DmDiskinfoBox(0, this, info.m_path, s_disksize);
         for (auto it = info.partition.begin(); it != info.partition.end(); it++) {
 //            qDebug() << Utils::sector_to_unit(it->sector_end - it->sector_end, it->sector_size, SIZE_UNIT::UNIT_GIB);

@@ -24,8 +24,9 @@ PartChartShowing::PartChartShowing(QWidget *parent) : QWidget(parent)
 void PartChartShowing::getData(const int &flag, const QString &totalsize)
 {
     m_flag = flag;
-    m_totalsize = totalsize;
-    qDebug() << m_flag << m_totalsize;
+    int i = totalsize.lastIndexOf("G");
+    total = totalsize.left(i).toDouble();
+    qDebug() << m_flag << total;
 }
 
 
@@ -84,7 +85,11 @@ void PartChartShowing::paintEvent(QPaintEvent *event)
     QWidget::paintEvent(event);
 
     update();
-
+    if (m_flag == 1) {
+        addPaint(&painter);
+    } else if (m_flag == 2) {
+        remPaint(&painter);
+    }
 
 
     painter.restore();
@@ -92,14 +97,17 @@ void PartChartShowing::paintEvent(QPaintEvent *event)
 
 }
 
-void PartChartShowing::addPaint(QPainter painter)
+void PartChartShowing::addPaint(QPainter *painter)
 {
-    painter.setPen(Qt::NoPen);
-    painter.setRenderHint(QPainter::Antialiasing);
+    painter->setPen(Qt::NoPen);
+    painter->setRenderHint(QPainter::Antialiasing);
+
+
 
 }
 
-void PartChartShowing::remPaint(QPainter painter)
+void PartChartShowing::remPaint(QPainter *painter)
 {
-    painter.setPen(Qt::NoPen);
+    painter->setPen(Qt::NoPen);
+    painter->setRenderHint(QPainter::Antialiasing);
 }

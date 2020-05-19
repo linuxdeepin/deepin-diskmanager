@@ -1,4 +1,5 @@
 #include "titlewidget.h"
+#include "mountdialog.h"
 #include <QHBoxLayout>
 
 #include "widgetdeclare.h"
@@ -97,7 +98,8 @@ void TitleWidget::showFormateInfoWidget()
 
 void TitleWidget::showMountInfoWidget()
 {
-    tipMountDialog->show();
+    MountDialog dlg;
+    dlg.exec();
 }
 
 void TitleWidget::showUnmountInfoWidget()

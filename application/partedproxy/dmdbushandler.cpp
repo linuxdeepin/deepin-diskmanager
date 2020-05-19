@@ -85,6 +85,19 @@ const PartitionInfo &DMDbusHandler::getCurPartititonInfo()
     return m_curpartitioninfo;
 }
 
+bool DMDbusHandler::mount(const QString &mountpath)
+{
+    bool success = false;
+    QDBusPendingReply<bool> reply = m_dbus->mount(mountpath);
+    reply.waitForFinished();
+    if (reply.isError()) {
+        qDebug() << reply.error().message();
+    } else {
+        success = reply.value();
+    }
+    return success;
+}
+
 void DMDbusHandler::MessageReport(const QString &msg)
 {
     qDebug() << "MessageReport:" << msg;

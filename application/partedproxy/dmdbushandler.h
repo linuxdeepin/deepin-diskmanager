@@ -5,7 +5,7 @@
 #include <QObject>
 #include <QDebug>
 #include <QDBusConnection>
-#include "../widgets/customcontrol/dmtreeviewdelegate.h"
+
 
 class DMDbusHandler : public QObject
 {
@@ -16,6 +16,7 @@ public:
     void getDeviceinfo();
     DeviceInfoMap probDeviceInfo()const;
     const PartitionInfo &getCurPartititonInfo();
+    bool mount(const QString &mountpath);
 
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);

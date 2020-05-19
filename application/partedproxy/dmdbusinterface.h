@@ -63,6 +63,12 @@ public Q_SLOTS: // METHODS
         argumentList << QVariant::fromValue(info);
         return asyncCallWithArgumentList(QStringLiteral("setCurSelect"), argumentList);
     }
+    inline QDBusPendingReply<bool>mount(const QString &mountpath)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(mountpath);
+        return asyncCallWithArgumentList(QStringLiteral("mount"), argumentList);
+    }
 
 
 Q_SIGNALS: // SIGNALS

@@ -15,11 +15,11 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "tipdialog.h"
-
+#include "widgets/widgetdeclare.h"
 TipDialog::TipDialog(QWidget *parent) : DDialog(parent)
 {
     this->setModal(true);
-    this->setIcon(QIcon::fromTheme("exception-logo"));
+    this->setIcon(QIcon::fromTheme(app_name));
     mainFrame = new DFrame(this);
 
     mainFrame->setFrameRounded(false);

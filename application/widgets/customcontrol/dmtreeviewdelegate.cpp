@@ -17,6 +17,9 @@
 #include "dmtreeviewdelegate.h"
 #include <QDebug>
 #include "dmtreeview.h"
+
+#include "widgets/widgetdeclare.h"
+
 DmTreeviewDelegate::DmTreeviewDelegate(QAbstractItemView *parent) : DStyledItemDelegate(parent), m_parentView(parent)
 {
     m_parentPb = DApplicationHelper::instance()->palette(m_parentView);
@@ -120,16 +123,18 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
 //            QImage image(":/icons/deepin/builtin/light/icons/next_normal.svg");
             painter->drawImage(m_lefticon1Rect, leftImage);
             m_lefticonRect2.setRect(paintRect.left() + 15, paintRect.top() + 4, 40, 40);
-            QImage image2(":/icons/deepin/builtin/light/icons/drive-removable-media-48px.png");
-            painter->drawImage(m_lefticonRect2, image2);
+            QIcon icon = getIcon("treedisk");
+            //QImage image2(":/icons/deepin/builtin/light/icons/drive-removable-media-48px.png");
+            painter->drawPixmap(m_lefticonRect2, icon.pixmap(38, 38));
             m_textRect.setRect(paintRect.left() + 60, paintRect.top() + 5, 100, 100);
             painter->drawText(m_textRect, text);
             m_textRect1.setRect(paintRect.left() + 60, paintRect.top() + 20, 100, 100);
             painter->drawText(m_textRect1, text1);
         } else {
             m_lefticon1Rect.setRect(paintRect.left() + 5, paintRect.top() + 5, 15, 15);
-            QImage image1(":/icons/deepin/builtin/exception-logo.svg");
-            painter->drawImage(m_lefticon1Rect, image1);
+            QIcon icon = getIcon("harddisk");
+//            QImage image1(":/icons/deepin/builtin/exception-logo.svg");
+            painter->drawPixmap(m_lefticon1Rect, icon.pixmap(28, 28));
             m_textRect.setRect(paintRect.left() + 60, paintRect.top() + 5, 100, 100);
             painter->drawText(m_textRect, text2);
             m_textRect1.setRect(paintRect.left() + 60, paintRect.top() + 20, 100, 100);

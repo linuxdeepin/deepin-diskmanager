@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>button/mount_dark</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="95.6533653%" id="linearGradient-1">
+            <stop stop-color="#484848" offset="0%"></stop>
+            <stop stop-color="#414141" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0" y="0" width="36" height="36" rx="8"></rect>
+        <filter x="-19.4%" y="-13.9%" width="138.9%" height="138.9%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.05 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="button/mount_dark" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Rectangle-9">
+            <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+            <use fill-opacity="0.08" fill="#000000" fill-rule="evenodd" xlink:href="#path-2"></use>
+            <rect stroke-opacity="0.03" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="square" fill="url(#linearGradient-1)" fill-rule="evenodd" x="0.5" y="0.5" width="35" height="35" rx="8"></rect>
+        </g>
+        <g id="编组-3" transform="translate(9.000000, 9.000000)">
+            <rect id="矩形" stroke="#C5CFE0" x="0.5" y="0.5" width="17" height="17" rx="2"></rect>
+            <rect id="矩形备份" stroke="#C5CFE0" x="0.5" y="13.5" width="17" height="4" rx="2"></rect>
+            <circle id="椭圆形" stroke="#C5CFE0" cx="14.5" cy="15.5" r="1"></circle>
+            <path d="M8.97487373,2.52512627 L11.0961941,4.64644661 C11.2914562,4.84170876 11.2914562,5.15829124 11.0961941,5.35355339 C10.9009319,5.54881554 10.5843494,5.54881554 10.3890873,5.35355339 L9.121,4.08567966 L9.12132022,11.5 C9.12132022,11.7761424 8.89746259,12 8.62132022,12 C8.34517784,12 8.12132022,11.7761424 8.12132022,11.5 L8.121,4.08567966 L6.85355339,5.35355339 C6.65829124,5.54881554 6.34170876,5.54881554 6.14644661,5.35355339 C5.95118446,5.15829124 5.95118446,4.84170876 6.14644661,4.64644661 L8.26776695,2.52512627 C8.4630291,2.32986412 8.77961159,2.32986412 8.97487373,2.52512627 Z" id="形状结合" fill="#C5CFE0"></path>
+        </g>
+    </g>
+</svg>

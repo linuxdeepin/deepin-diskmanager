@@ -18,9 +18,16 @@
 #define WIDGETDECLARE_H
 
 #include <QString>
+#include <QIcon>
 
 namespace  {
 const QString app_name = "deepin-diskmanager";
+
+static QIcon getIcon(const QString &iconName)
+{
+    return QIcon::fromTheme("dm_" + iconName);
+}
+
 }
 
 #endif // WIDGETDECLARE_H

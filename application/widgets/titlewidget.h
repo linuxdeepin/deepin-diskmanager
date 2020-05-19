@@ -25,7 +25,7 @@ public:
 private:
     void initUi();
     void initConnection();
-    DPushButton *createBtn(const QString &btnName, bool bCheckable = false);
+    DPushButton *createBtn(const QString &btnName, const QString &objName, bool bCheckable = false);
     void showPartInfoWidget();
     void showFormateInfoWidget();
     void showMountInfoWidget();

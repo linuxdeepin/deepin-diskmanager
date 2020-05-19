@@ -1,6 +1,8 @@
 #include "titlewidget.h"
 #include <QHBoxLayout>
 
+#include "widgetdeclare.h"
+
 TitleWidget::TitleWidget(DWidget *parent): DWidget(parent)
 {
     initUi();
@@ -11,11 +13,11 @@ void TitleWidget::initUi()
 {
     QHBoxLayout *layout = new QHBoxLayout(this);
 
-    m_btnparted = createBtn(tr("partition"));
-    m_btnformat = createBtn(tr("format"));
-    m_btnmount = createBtn(tr("mount"));
-    m_btnunmount = createBtn(tr("unmount"));
-    m_btnresize = createBtn(tr("resize"));
+    m_btnparted = createBtn(tr("partition"), "partition");
+    m_btnformat = createBtn(tr("format"), "format");
+    m_btnmount = createBtn(tr("mount"), "mount");
+    m_btnunmount = createBtn(tr("unmount"), "unmount");
+    m_btnresize = createBtn(tr("resize"), "resize");
     layout->addWidget(m_btnparted);
     layout->addWidget(m_btnformat);
     layout->addWidget(m_btnmount);
@@ -39,12 +41,16 @@ void TitleWidget::initConnection()
     connect(m_btnresize, &DPushButton::clicked, this, &TitleWidget::showResizeInfoWidget);
 }
 
-DPushButton *TitleWidget::createBtn(const QString &btnName, bool bCheckable)
+DPushButton *TitleWidget::createBtn(const QString &btnName,  const QString &objName, bool bCheckable)
 {
     auto btn = new DPushButton(this);
-    int tW = 36;
-    btn->setFixedSize(QSize(tW, tW));
-    btn->setIconSize(QSize(tW, tW));
+
+    //  wzx 设置图标icon    2020-05-19
+    QIcon icon = getIcon(objName);
+    btn->setIcon(icon);
+
+    btn->setFixedSize(QSize(36, 36));
+    btn->setIconSize(QSize(18, 18));
     btn->setToolTip(btnName);
     btn->setCheckable(bCheckable);
 

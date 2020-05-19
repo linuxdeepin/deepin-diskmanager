@@ -17,6 +17,7 @@ public:
     DeviceInfoMap probDeviceInfo()const;
     const PartitionInfo &getCurPartititonInfo();
     bool mount(const QString &mountpath);
+    bool unmount();
 
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);

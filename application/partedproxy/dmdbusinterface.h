@@ -69,6 +69,11 @@ public Q_SLOTS: // METHODS
         argumentList << QVariant::fromValue(mountpath);
         return asyncCallWithArgumentList(QStringLiteral("mount"), argumentList);
     }
+    inline QDBusPendingReply<bool>mount()
+    {
+        QList<QVariant> argumentList;
+        return asyncCallWithArgumentList(QStringLiteral("unmount"), argumentList);
+    }
 
 
 Q_SIGNALS: // SIGNALS

@@ -8,7 +8,8 @@ HEADERS += \
     $$PWD/devicelistwidget.h \
     $$PWD/infoshowwidget.h \
     $$PWD/widgetdeclare.h \
-    $$PWD/mountdialog.h
+    $$PWD/mountdialog.h \
+    $$PWD/unmountdialog.h
 
 SOURCES += \
     $$PWD/mainwindow.cpp \
@@ -17,5 +18,6 @@ SOURCES += \
     $$PWD/mainsplitter.cpp \
     $$PWD/devicelistwidget.cpp \
     $$PWD/infoshowwidget.cpp \
-    $$PWD/mountdialog.cpp
+    $$PWD/mountdialog.cpp \
+    $$PWD/unmountdialog.cpp
 

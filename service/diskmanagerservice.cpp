@@ -46,14 +46,14 @@ void DiskManagerService::setCurSelect(const PartitionInfo &info)
     m_partedcore->setCurSelect(info);
 }
 
-void DiskManagerService::unmount()
+bool DiskManagerService::unmount()
 {
-    m_partedcore->unmount();
+    return m_partedcore->unmount();
 }
 
-void DiskManagerService::mount(const QString &mountpath)
+bool DiskManagerService::mount(const QString &mountpath)
 {
-    m_partedcore->mount(mountpath);
+    return m_partedcore->mount(mountpath);
 }
 
 stCustest DiskManagerService::interfacetest()

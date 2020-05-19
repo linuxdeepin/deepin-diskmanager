@@ -1,5 +1,6 @@
 #include "titlewidget.h"
 #include "mountdialog.h"
+#include "unmountdialog.h"
 #include <QHBoxLayout>
 
 #include "widgetdeclare.h"
@@ -26,7 +27,6 @@ void TitleWidget::initUi()
     layout->addWidget(m_btnresize);
     tipPartDialog = new TipPartDialog(this);
     tipFormateDialog = new TipFormateDialog(this);
-    tipMountDialog = new TipMountDialog(this);
     tipUnmountDialog = new TipUmountDialog(this);
     tipResizeDialog = new TipResizeDialog(this);
     partitionWidget = new PartitionWidget(this);
@@ -104,7 +104,9 @@ void TitleWidget::showMountInfoWidget()
 
 void TitleWidget::showUnmountInfoWidget()
 {
-    tipUnmountDialog->show();
+    UnmountDialog dlg;
+    dlg.exec();
+    //tipUnmountDialog->show();
 }
 
 void TitleWidget::showResizeInfoWidget()

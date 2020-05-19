@@ -23,8 +23,8 @@ public Q_SLOTS:
     Q_SCRIPTABLE DeviceInfo getDeviceinfo();
     Q_SCRIPTABLE void getalldevice();
     Q_SCRIPTABLE void setCurSelect(const PartitionInfo &info);
-    Q_SCRIPTABLE void unmount();
-    Q_SCRIPTABLE void mount(const QString &mountpath);
+    Q_SCRIPTABLE bool unmount();
+    Q_SCRIPTABLE bool mount(const QString &mountpath);
     Q_SCRIPTABLE stCustest interfacetest();
 
 private:

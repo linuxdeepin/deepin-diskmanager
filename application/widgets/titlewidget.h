@@ -45,7 +45,6 @@ private:
     DPushButton *m_btnmount;
     DPushButton *m_btnunmount;
     DPushButton *m_btnresize;
-    TipMountDialog *tipMountDialog;
     TipFormateDialog *tipFormateDialog;
     TipResizeDialog *tipResizeDialog;
     TipUmountDialog *tipUnmountDialog;

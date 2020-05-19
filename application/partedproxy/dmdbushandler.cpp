@@ -98,6 +98,19 @@ bool DMDbusHandler::mount(const QString &mountpath)
     return success;
 }
 
+bool DMDbusHandler::unmount()
+{
+    bool success = false;
+    QDBusPendingReply<bool> reply = m_dbus->mount();
+    reply.waitForFinished();
+    if (reply.isError()) {
+        qDebug() << reply.error().message();
+    } else {
+        success = reply.value();
+    }
+    return success;
+}
+
 void DMDbusHandler::MessageReport(const QString &msg)
 {
     qDebug() << "MessageReport:" << msg;

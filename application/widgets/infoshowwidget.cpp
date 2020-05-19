@@ -3,6 +3,7 @@
 #include <QHBoxLayout>
 #include <QPainter>
 
+#include "widgetdeclare.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -42,7 +43,7 @@ void InfoShowWidget::initUi()
     QVBoxLayout *framelayout = new QVBoxLayout(pframe);
     framelayout->setContentsMargins(10, 10, 10, 10);
     pframetop = new DFrame;
-    pframetop->setFixedHeight(100);
+    pframetop->setFixedHeight(110);
     framelayout->addWidget(pframetop);
     topFrameSettings();
 
@@ -76,7 +77,8 @@ void InfoShowWidget::topFrameSettings()
     v->setSpacing(30);
     v->setMargin(20);
     picLabel = new DLabel(pframetop);
-    picLabel->setMinimumSize(50, 60);
+    picLabel->setPixmap(getIcon("labeldisk").pixmap(85, 85));
+    picLabel->setMinimumSize(85, 85);
     v->addWidget(picLabel);
     v->addStretch();
     mainLayout->addLayout(v);

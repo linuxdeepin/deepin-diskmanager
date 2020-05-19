@@ -19,8 +19,10 @@ public:
     virtual bool create(const Partition &new_partition) { return false; }
 
 
-private:
+public:
     FS_Limits fs_limits;
+private:
+
 };
 }
 #endif // FILESYSTEM_H

@@ -170,8 +170,8 @@ void PartedCore::probedeviceinfo(const QString &path)
         for (int i = 0; i < it.value().partitions.size(); i++) {
             Partition   pat = *(it.value().partitions.at(i));
             PartitionInfo partinfo = pat.getPartitionInfo();
-
             if (pat.type == TYPE_EXTENDED) {
+                devinfo.partition.push_back(partinfo);
                 for (int k = 0; k < pat.logicals.size(); k++) {
                     Partition   plogic = *(pat.logicals.at(k));
                     partinfo = plogic.getPartitionInfo();
@@ -1337,6 +1337,25 @@ bool PartedCore::create_partition(Partition &new_partition, Sector min_size)
     bool bsucces = new_partition .partition_number > 0 ;
 
     return bsucces;
+}
+
+bool PartedCore::format(const Partition &partition)
+{
+    bool bsuccess = false;
+    if (partition.fstype == FS_LUKS && partition.busy) {
+        qDebug() << __FUNCTION__ << QString("partition contains open LUKS encryption for a format files system only step");
+        return false;
+    }
+
+    if (partition.fstype == FS_CLEARED)
+        bsuccess =   erase_filesystem_signatures(partition)
+                     && set_partition_type(partition);
+    else
+        bsuccess =   erase_filesystem_signatures(partition)
+                     && set_partition_type(partition)
+                     && create_filesystem(partition) ;
+
+    return bsuccess;
 }
 
 DeviceInfo PartedCore::getDeviceinfo()

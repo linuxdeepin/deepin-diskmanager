@@ -26,6 +26,7 @@ public:
     bool unmount();
     bool create(Partition &partition);
     bool create_partition(Partition &new_partition, Sector min_size = 0) ;
+    bool format(const Partition &partition);
 public:
     //static
     static void find_supported_core();

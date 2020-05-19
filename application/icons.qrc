@@ -22,5 +22,7 @@
         <file>icons/deepin/builtin/light/texts/dm_uninstallicon_10px.svg</file>
         <file>icons/deepin/builtin/light/texts/dm_unmount_36px.svg</file>
         <file>icons/deepin/builtin/light/texts/dm_harddisk_28px.svg</file>
+        <file>icons/deepin/builtin/light/texts/dm_arrow_15px.svg</file>
+        <file>icons/deepin/builtin/light/texts/dm_arrow_right_15px.svg</file>
     </qresource>
 </RCC>

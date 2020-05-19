@@ -17,8 +17,9 @@
 #include "dmtreeviewdelegate.h"
 #include <QDebug>
 #include "dmtreeview.h"
-
+#include <QTextOption>
 #include "widgets/widgetdeclare.h"
+#include <DFontSizeManager>
 
 DmTreeviewDelegate::DmTreeviewDelegate(QAbstractItemView *parent) : DStyledItemDelegate(parent), m_parentView(parent)
 {
@@ -30,8 +31,8 @@ DmTreeviewDelegate::DmTreeviewDelegate(QAbstractItemView *parent) : DStyledItemD
 void DmTreeviewDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     Q_UNUSED(index);
-    qDebug() << option.rect.x() << option.rect.y();
-    editor->setGeometry(option.rect.x() + 100, option.rect.y() + 100, 500, 500);
+//    qDebug() << option.rect.x() << option.rect.y();
+//    editor->setGeometry(option.rect.x() + 100, option.rect.y() + 100, 500, 500);
 
 
 
@@ -40,7 +41,7 @@ QSize DmTreeviewDelegate::sizeHint(const QStyleOptionViewItem &option,
                                    const QModelIndex &index) const
 {
     Q_UNUSED(index)
-    return QSize(30, 50);
+    return QSize(180, 55);
 }
 void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
@@ -63,7 +64,6 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         QRect paintRect = QRect(rect.left(), rect.top(), rect.width() - 20, rect.height());
         QPainterPath path;
         const int radius = 8;
-
         path.moveTo(paintRect.bottomRight() - QPoint(0, radius));
         path.lineTo(paintRect.topRight() + QPoint(0, radius));
         path.arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
@@ -79,7 +79,13 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         path.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
                          QSize(radius * 2, radius * 2)),
                    270, 90);
+        DPalette pa = option.palette;
+        QBrush brush = pa.itemBackground();
+        painter->setBrush(brush);
+        painter->fillPath(path, brush);
 
+
+//        QBrush brush = DApplicationHelper::instance()->palette(this).frameBorder();
         if (option.state & QStyle::State_Selected) {
             QColor fillColor = option.palette.color(DPalette::Normal, DPalette::Highlight);
             painter->setBrush(QBrush(fillColor));
@@ -91,7 +97,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             // qDebug() << "111111111" << endl;
         }
 
-        QImage leftImage;
+        QIcon directionIcon;
 
         bool bHasSubItem = false;
         bool bExpand = false;
@@ -100,9 +106,10 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             bHasSubItem = true;
             if (pTreeView->isExpanded(index)) {
                 bExpand = true;
-                leftImage.load(":/icons/deepin/builtin/light/icons/arrow.svg");
+                directionIcon = getIcon("arrow");
+
             } else {
-                leftImage.load(":/icons/deepin/builtin/light/icons/arrow_right.svg");
+                directionIcon = getIcon("arrow_right");
                 bExpand = false;
             }
         } else {
@@ -121,23 +128,42 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         if (data.level == 0) {
             m_lefticon1Rect.setRect(paintRect.left() + 8, paintRect.top() + 20, 8, 8);
 //            QImage image(":/icons/deepin/builtin/light/icons/next_normal.svg");
-            painter->drawImage(m_lefticon1Rect, leftImage);
+            painter->drawPixmap(m_lefticon1Rect, directionIcon.pixmap(15, 15));
             m_lefticonRect2.setRect(paintRect.left() + 15, paintRect.top() + 4, 40, 40);
             QIcon icon = getIcon("treedisk");
-            //QImage image2(":/icons/deepin/builtin/light/icons/drive-removable-media-48px.png");
+//            QImage image2(":/icons/deepin/builtin/light/icons/drive-removable-media-48px.png");
             painter->drawPixmap(m_lefticonRect2, icon.pixmap(38, 38));
+            QTextOption option;
+            QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
+            QColor textcolor = pa.color(DPalette::Normal, DPalette::TextTips);
+            painter->setPen(textcolor);
+            painter->setFont(font);
             m_textRect.setRect(paintRect.left() + 60, paintRect.top() + 5, 100, 100);
             painter->drawText(m_textRect, text);
-            m_textRect1.setRect(paintRect.left() + 60, paintRect.top() + 20, 100, 100);
+            QColor text1color = pa.color(DPalette::Normal, DPalette::Text);
+            painter->setPen(text1color);
+            font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
+            painter->setFont(font);
+            m_textRect1.setRect(paintRect.left() + 60, paintRect.top() + 25, 100, 100);
             painter->drawText(m_textRect1, text1);
         } else {
-            m_lefticon1Rect.setRect(paintRect.left() + 5, paintRect.top() + 5, 15, 15);
+            m_lefticon1Rect.setRect(paintRect.left() + 25, paintRect.top() + 10, 30, 30);
             QIcon icon = getIcon("harddisk");
-//            QImage image1(":/icons/deepin/builtin/exception-logo.svg");
+            QIcon icon1 = getIcon("mounticon");
             painter->drawPixmap(m_lefticon1Rect, icon.pixmap(28, 28));
-            m_textRect.setRect(paintRect.left() + 60, paintRect.top() + 5, 100, 100);
+            QRect mounticonRect = QRect(paintRect.left() + 45, paintRect.top() + 25, 10, 10);
+            painter->drawPixmap(mounticonRect, icon1.pixmap(10, 10));
+            QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
+            QColor textcolor = pa.color(DPalette::Normal, DPalette::TextTips);
+            painter->setPen(textcolor);
+            painter->setFont(font);
+            m_textRect.setRect(paintRect.left() + 60, paintRect.top() + 8, 100, 100);
             painter->drawText(m_textRect, text2);
-            m_textRect1.setRect(paintRect.left() + 60, paintRect.top() + 20, 100, 100);
+            QColor text1color = pa.color(DPalette::Normal, DPalette::Text);
+            painter->setPen(text1color);
+            font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
+            painter->setFont(font);
+            m_textRect1.setRect(paintRect.left() + 65, paintRect.top() + 28, 100, 100);
             painter->drawText(m_textRect1, text3);
         }
 

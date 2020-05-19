@@ -41,7 +41,6 @@ public:
     explicit SizeInfoWidget(QWidget *parent = nullptr);
     SizeInfoWidget(double used, double unused, bool flag, QWidget *parent = nullptr);
     void setdata(PartitionInfo info, QVector<QColor>color, QVector<double>size, bool flag);
-//    void settextdata(PartitionInfo info, bool flag);
 protected:
     virtual void paintEvent(QPaintEvent *event);
 signals:

@@ -59,7 +59,7 @@ void DeviceListWidget::slotUpdateDeviceInfo()
 
 //        double_t sectorall = (info.length * info.sector_size) / 1024.0 / 1024.0 / 1024.0;
 //        QString s_disksize = QString::number(sectorall, 'f', 2) + "GB";
-        QString s_disksize = QString::number(Utils::sector_to_unit(info.length, info.sector_size, SIZE_UNIT::UNIT_GIB)) + "GB";
+        QString s_disksize = QString::number(Utils::sector_to_unit(info.length, info.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
 
 //        double_t sectorall = (info.length * info.sector_size) / 1024.0 / 1024.0 / 1024.0;
 //        QString s_disksize = QString::number(sectorall, 'f', 2) + "GB";

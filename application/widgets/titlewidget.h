@@ -31,6 +31,8 @@ private:
     void showMountInfoWidget();
     void showUnmountInfoWidget();
     void showResizeInfoWidget();
+    void updateBtnStatus();
+
 
 signals:
 

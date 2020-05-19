@@ -110,10 +110,43 @@ void TitleWidget::showResizeInfoWidget()
     tipResizeDialog->show();
 }
 
-
+void TitleWidget::updateBtnStatus()
+{
+    PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+    //已挂载
+    if (info.mountpoints.size() > 0 && info.busy) {
+        m_btnparted->setDisabled(true);
+        m_btnformat->setDisabled(true);
+        m_btnmount->setDisabled(true);
+        m_btnunmount->setDisabled(false);
+        m_btnresize->setDisabled(true);
+    } else {
+        if (FS_EXTENDED == info.fstype) {
+            m_btnparted->setDisabled(true);
+            m_btnformat->setDisabled(true);
+            m_btnmount->setDisabled(true);
+            m_btnunmount->setDisabled(true);
+            m_btnresize->setDisabled(true);
+        } else {
+            m_btnunmount->setDisabled(true);
+            if (info.fstype == FS_UNALLOCATED) {
+                m_btnparted->setDisabled(false);
+                m_btnformat->setDisabled(true);
+                m_btnmount->setDisabled(true);
+                m_btnresize->setDisabled(true);
+            } else {
+                m_btnparted->setDisabled(true);
+                m_btnformat->setDisabled(false);
+                m_btnmount->setDisabled(false);
+                m_btnresize->setDisabled(false);
+            }
+        }
+    }
+}
 
 void TitleWidget::slotCurSelectChanged()
 {
+    updateBtnStatus();
     qDebug() << __FUNCTION__ << "-1--1-";
     auto it = DMDbusHandler::instance()->probDeviceInfo().find(DMDbusHandler::instance()->getCurPartititonInfo().device_path);
     if (it != DMDbusHandler::instance()->probDeviceInfo().end()) {

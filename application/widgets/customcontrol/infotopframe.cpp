@@ -49,11 +49,10 @@ void InfoTopFrame::InitRightInfo()
     QVBoxLayout *tLayout = new QVBoxLayout();
 
     allnameLabel = new DLabel(tr("Total capacity"), this);
-    allnameLabel->setText(tr("Total capacity"));
     allnameLabel->setAlignment(Qt::AlignRight);
     DFontSizeManager::instance()->bind(allnameLabel, DFontSizeManager::T6);
 
-    allmemoryLabel = new DLabel("256GB", this);
+    allmemoryLabel = new DLabel(this);
     allmemoryLabel->setAlignment(Qt::AlignRight);
     DFontSizeManager::instance()->bind(allmemoryLabel, DFontSizeManager::T1);
 
@@ -67,23 +66,15 @@ void InfoTopFrame::InitLeftInfo()
 {
     QVBoxLayout *tLayout = new QVBoxLayout();
 
-    nameLabel = new DLabel("Boot", this);
-    DFontSizeManager::instance()->bind(nameLabel, DFontSizeManager::T8);
-
-    typeLabel = new DLabel("格式: EXT3", this);
-
-    QFont nameFont;
+    nameLabel = new DLabel(this);
+    QFont nameFont = DFontSizeManager::instance()->get(DFontSizeManager::T5);
     nameFont.setBold(true);
     nameLabel->setFont(nameFont);
 
-    QFont formatFont;
-    formatFont.setPointSize(8);
-    typeLabel->setFont(formatFont);
-
-    nameLabel->setAlignment(Qt::AlignLeft);
-    typeLabel->setAlignment(Qt::AlignLeft);
-
     tLayout->addWidget(nameLabel);
+
+    typeLabel = new DLabel(this);
+    DFontSizeManager::instance()->bind(typeLabel, DFontSizeManager::T8);
     tLayout->addWidget(typeLabel);
 
     DPalette pa = DApplicationHelper::instance()->palette(typeLabel);

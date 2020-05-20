@@ -27,6 +27,7 @@ InfoTopFrame::InfoTopFrame(DWidget *parent)
     : DFrame(parent)
 {
     setFixedHeight(110);
+    setBackgroundRole(DPalette::ItemBackground);
 
     mainLayout = new QHBoxLayout();
     mainLayout->setContentsMargins(30, 0, 20, 0);
@@ -48,6 +49,8 @@ void InfoTopFrame::InitRightInfo()
 {
     QVBoxLayout *tLayout = new QVBoxLayout();
 
+    tLayout->addStretch();
+
     allnameLabel = new DLabel(tr("Total capacity"), this);
     allnameLabel->setAlignment(Qt::AlignRight);
     DFontSizeManager::instance()->bind(allnameLabel, DFontSizeManager::T6);
@@ -59,12 +62,16 @@ void InfoTopFrame::InitRightInfo()
     tLayout->addWidget(allnameLabel);
     tLayout->addWidget(allmemoryLabel);
 
+    tLayout->addStretch();
+
     mainLayout->addLayout(tLayout);
 }
 
 void InfoTopFrame::InitLeftInfo()
 {
     QVBoxLayout *tLayout = new QVBoxLayout();
+
+    tLayout->addStretch();
 
     nameLabel = new DLabel(this);
     QFont nameFont = DFontSizeManager::instance()->get(DFontSizeManager::T5);
@@ -80,6 +87,8 @@ void InfoTopFrame::InitLeftInfo()
     DPalette pa = DApplicationHelper::instance()->palette(typeLabel);
     pa.setBrush(DPalette::Text, pa.textTips());
     DApplicationHelper::instance()->setPalette(typeLabel, pa);
+
+    tLayout->addStretch();
 
     mainLayout->addLayout(tLayout);
 }

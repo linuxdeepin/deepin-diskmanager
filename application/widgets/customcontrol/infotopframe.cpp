@@ -99,7 +99,7 @@ void InfoTopFrame::setShowDiskInfo()
     nameLabel->setText(info.path);
 
     QString s_disksize = QString::number(Utils::sector_to_unit(info.sector_end - info.sector_start,
-                                                               info.sector_size, SIZE_UNIT::UNIT_GIB)) + "GB";
+                                                               info.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
     allmemoryLabel->setText(s_disksize);
 
     QString s_diskType = Utils::FSTypeToString(static_cast<FSType>(info.fstype));

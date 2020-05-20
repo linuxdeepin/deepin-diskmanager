@@ -163,7 +163,7 @@ void InfoShowWidget::bottomFramSettings()
 void InfoShowWidget::slotCurSelectChanged()
 {
     qDebug() << __FUNCTION__ << "-0--0-";
-    pframebottom->setFrameData(DMDbusHandler::instance()->getCurPartititonInfo());
+    pframebottom->setFrameData();
     m_noused = Utils::sector_to_unit(DMDbusHandler::instance()->getCurPartititonInfo().sectors_unused, DMDbusHandler::instance()->getCurPartititonInfo().sector_size, SIZE_UNIT::UNIT_GIB);
     m_used = Utils::sector_to_unit(DMDbusHandler::instance()->getCurPartititonInfo().sectors_used, DMDbusHandler::instance()->getCurPartititonInfo().sector_size, SIZE_UNIT::UNIT_GIB);
     DPalette pa;

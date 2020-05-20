@@ -8,7 +8,6 @@
 #include <DApplicationHelper>
 #include <DFontSizeManager>
 #include "dmtreeviewdelegate.h"
-#include "partitioninfo.h"
 #include <QTextOption>
 DWIDGET_USE_NAMESPACE
 
@@ -22,7 +21,7 @@ public:
 signals:
 
 public:
-    void setFrameData(const PartitionInfo &data);
+    void setFrameData();
 
 public slots:
     void slothandleChangeTheme();

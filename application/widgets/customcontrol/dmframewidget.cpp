@@ -4,6 +4,8 @@
 #include <DFontSizeManager>
 #include <DApplicationHelper>
 
+#include "partitioninfo.h"
+#include "partedproxy/dmdbushandler.h"
 
 DmFrameWidget::DmFrameWidget(DiskInfoData data, QWidget *parent): DFrame(parent), m_infodata(data)
 {
@@ -12,8 +14,10 @@ DmFrameWidget::DmFrameWidget(DiskInfoData data, QWidget *parent): DFrame(parent)
             &DmFrameWidget::slothandleChangeTheme);
 }
 
-void DmFrameWidget::setFrameData(const PartitionInfo &data)
+void DmFrameWidget::setFrameData()
 {
+    PartitionInfo data = DMDbusHandler::instance()->getCurPartititonInfo();
+
     DiskInfoData temp;
     m_infodata = temp;
     for (QString strpoint : data.mountpoints)

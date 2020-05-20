@@ -3,36 +3,20 @@
 #include <QHBoxLayout>
 #include <QPainter>
 
+#include "customcontrol/sizeinfowidget.h"
+#include "partedproxy/dmdbushandler.h"
 #include "customcontrol/infotopframe.h"
+#include "customcontrol/dmframewidget.h"
+
 #include "widgetdeclare.h"
 
 DWIDGET_USE_NAMESPACE
 
-InfoShowWidget::InfoShowWidget(DWidget *parent): DWidget(parent)
+InfoShowWidget::InfoShowWidget(DWidget *parent): DFrame(parent)
 {
-    setAutoFillBackground(true);
-    auto plt = this->palette();
-    plt.setBrush(QPalette::Background, QBrush(Qt::lightGray));
-    setPalette(plt);
     initUi();
     initConnection();
 }
-
-
-
-void InfoShowWidget::paintEvent(QPaintEvent *event)
-{
-//    DWidget::paintEvent(event);
-
-//    DPalette pa = DApplicationHelper::instance()->palette(pframetop);
-//    pa.setBrush(DPalette::Background, pa.background());
-//    DApplicationHelper::instance()->setPalette(pframetop, pa);
-//    QPainter painter(this);
-//    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
-
-}
-
-
 
 void InfoShowWidget::initUi()
 {

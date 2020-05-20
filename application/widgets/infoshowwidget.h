@@ -1,63 +1,47 @@
 #ifndef INFOSHOWWIDGET_H
 #define INFOSHOWWIDGET_H
-#include "customcontrol/sizeinfowidget.h"
-#include "partedproxy/dmdbushandler.h"
+
 #include <DWidget>
 #include <DLabel>
 #include <DFrame>
-#include <DPalette>
-#include <DApplicationHelper>
-#include <QPixmap>
-#include <QStandardItemModel>
-#include <QStandardItem>
-#include <DTableView>
-#include"customcontrol/dmframewidget.h"
-#include <DLabel>
-#include <DFontSizeManager>
 #include "customcontrol/dmtreeviewdelegate.h"
-#include <QVector>
-#include <QRgb>
 
+class DmFrameWidget;
+class SizeInfoWidget;
 class InfoTopFrame;
 
 DWIDGET_USE_NAMESPACE
-class InfoShowWidget: public DWidget
+class InfoShowWidget: public DFrame
 {
     Q_OBJECT
 public:
     explicit InfoShowWidget(DWidget *parent = nullptr);
-    void topFrameSettings();
+
+private:
     void midFramSettings();
     void bottomFramSettings();
-
-protected:
-    void paintEvent(QPaintEvent *event);
+    void initUi();
+    void initConnection();
 
 private slots:
     void slotCurSelectChanged();
 
 private:
-    void initUi();
-    void initConnection();
-
-private:
     InfoTopFrame     *m_pInfoTopFrame = nullptr;
 
-    DFrame *pframe;
-
-    DFrame *pframemid;
+    DFrame *pframe = nullptr;
+    DFrame *pframemid = nullptr;
     DmFrameWidget *pframebottom = nullptr;
 
-    DLabel *totaluseLabel;
-    DLabel *usedLabel;
-    DLabel *trueusedLabel;
-    DTableView *tableview;
-    SizeInfoWidget *m_infowidget;
+    DLabel *totaluseLabel = nullptr;
+    DLabel *usedLabel = nullptr;
+    DLabel *trueusedLabel = nullptr;
+    DTableView *tableview = nullptr;
+    SizeInfoWidget *m_infowidget = nullptr;
     double m_allsize;
     double m_used;
     double m_noused;
     DiskInfoData data;
-
 };
 
 #endif // INFOSHOWWIDGET_H

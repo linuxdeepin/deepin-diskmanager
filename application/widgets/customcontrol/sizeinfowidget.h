@@ -50,7 +50,7 @@ private:
     double m_used;
     double m_noused;
     double m_totalsize;
-    bool m_flag;
+    bool m_flag = false;
     QVector<QColor>colorinfo;
     QVector<double>sizeinfo;
 

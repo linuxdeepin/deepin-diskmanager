@@ -79,15 +79,15 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         path.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
                          QSize(radius * 2, radius * 2)),
                    270, 90);
-        DPalette pa = option.palette;
-        QBrush brush = pa.itemBackground();
+//        DPalette pa = option.palette;
+        QBrush brush = m_parentPb.itemBackground();
         painter->setBrush(brush);
         painter->fillPath(path, brush);
 
 
 //        QBrush brush = DApplicationHelper::instance()->palette(this).frameBorder();
         if (option.state & QStyle::State_Selected) {
-            QColor fillColor = option.palette.color(DPalette::Normal, DPalette::Highlight);
+            QColor fillColor = m_parentPb.color(DPalette::Normal, DPalette::Highlight);
             painter->setBrush(QBrush(fillColor));
             painter->fillPath(path, painter->brush());
             painter->setPen(QPen(Qt::white));
@@ -127,20 +127,18 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         //qDebug() << data.level;
         if (data.level == 0) {
             m_lefticon1Rect.setRect(paintRect.left() + 8, paintRect.top() + 20, 8, 8);
-//            QImage image(":/icons/deepin/builtin/light/icons/next_normal.svg");
             painter->drawPixmap(m_lefticon1Rect, directionIcon.pixmap(15, 15));
             m_lefticonRect2.setRect(paintRect.left() + 15, paintRect.top() + 4, 40, 40);
             QIcon icon = getIcon("treedisk");
-//            QImage image2(":/icons/deepin/builtin/light/icons/drive-removable-media-48px.png");
             painter->drawPixmap(m_lefticonRect2, icon.pixmap(38, 38));
             QTextOption option;
             QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
-            QColor textcolor = pa.color(DPalette::Normal, DPalette::TextTips);
+            QColor textcolor = m_parentPb.color(DPalette::Normal, DPalette::Text);
             painter->setPen(textcolor);
             painter->setFont(font);
             m_textRect.setRect(paintRect.left() + 60, paintRect.top() + 5, 100, 100);
             painter->drawText(m_textRect, text);
-            QColor text1color = pa.color(DPalette::Normal, DPalette::Text);
+            QColor text1color = m_parentPb.color(DPalette::Normal, DPalette::TextTips);
             painter->setPen(text1color);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
             painter->setFont(font);
@@ -154,12 +152,12 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             QRect mounticonRect = QRect(paintRect.left() + 45, paintRect.top() + 25, 10, 10);
             painter->drawPixmap(mounticonRect, icon1.pixmap(10, 10));
             QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
-            QColor textcolor = pa.color(DPalette::Normal, DPalette::TextTips);
+            QColor textcolor = m_parentPb.color(DPalette::Normal, DPalette::Text);
             painter->setPen(textcolor);
             painter->setFont(font);
             m_textRect.setRect(paintRect.left() + 60, paintRect.top() + 8, 100, 100);
             painter->drawText(m_textRect, text2);
-            QColor text1color = pa.color(DPalette::Normal, DPalette::Text);
+            QColor text1color = m_parentPb.color(DPalette::Normal, DPalette::TextTips);
             painter->setPen(text1color);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
             painter->setFont(font);
@@ -175,7 +173,8 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
 }
 void DmTreeviewDelegate::slothandleChangeTheme()
 {
-
+    m_parentPb = Dtk::Gui::DGuiApplicationHelper::instance()->applicationPalette();
+    m_parentView->update(m_parentView->currentIndex());
 
 
 }

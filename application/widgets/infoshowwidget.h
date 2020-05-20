@@ -25,7 +25,7 @@ private:
 
 private slots:
     void slotCurSelectChanged();
-
+    void slothandleChangeTheme();
 private:
     InfoTopFrame     *m_pInfoTopFrame = nullptr;
 
@@ -42,6 +42,10 @@ private:
     double m_used;
     double m_noused;
     DiskInfoData data;
+    DPalette m_parentPb;
+    QColor fillcolor;
+    QColor fillcolor1;
+
 };
 
 #endif // INFOSHOWWIDGET_H

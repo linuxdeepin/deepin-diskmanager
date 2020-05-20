@@ -25,10 +25,12 @@ public:
     void setFrameData(const PartitionInfo &data);
 
 public slots:
+    void slothandleChangeTheme();
 protected:
     void paintEvent(QPaintEvent *event) override;
 private:
     DiskInfoData m_infodata;
+    DPalette m_parentPb;
 };
 
 #endif // DMFRAMEWIDGET_H

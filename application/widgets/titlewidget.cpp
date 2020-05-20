@@ -134,7 +134,7 @@ void TitleWidget::updateBtnStatus()
         } else {
             m_btnunmount->setDisabled(true);
             if (info.fstype == FS_UNALLOCATED) {
-                m_btnparted->setDisabled(false);
+                m_btnparted->setDisabled(true);
                 m_btnformat->setDisabled(true);
                 m_btnmount->setDisabled(true);
                 m_btnresize->setDisabled(true);

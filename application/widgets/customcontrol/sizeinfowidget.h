@@ -46,6 +46,7 @@ protected:
 signals:
 
 public slots:
+    void slothandleChangeTheme();
 private:
     double m_used;
     double m_noused;
@@ -53,7 +54,7 @@ private:
     bool m_flag = false;
     QVector<QColor>colorinfo;
     QVector<double>sizeinfo;
-
+    DPalette m_parentPb;
 };
 
 #endif // SIZEINFOWIDGET_H

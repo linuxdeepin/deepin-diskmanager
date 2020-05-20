@@ -20,11 +20,15 @@
 
 SizeInfoWidget::SizeInfoWidget(QWidget *parent) : QWidget(parent)
 {
-
+    m_parentPb = DApplicationHelper::instance()->palette(this);
+    connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this,
+            &SizeInfoWidget::slothandleChangeTheme);
 }
 SizeInfoWidget::SizeInfoWidget(double used, double unused, bool flag, QWidget *parent): QWidget(parent), m_used(used), m_noused(unused), m_flag(flag)
 {
-
+    m_parentPb = DApplicationHelper::instance()->palette(this);
+    connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this,
+            &SizeInfoWidget::slothandleChangeTheme);
 }
 
 void SizeInfoWidget::setdata(PartitionInfo info, QVector<QColor>color, QVector<double>size, bool flag)
@@ -99,29 +103,96 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
     }
     //绘制首页下方标注
     if (m_flag) {
-        QRect recticon = QRect(paintRect.bottomLeft().x(), paintRect.bottomLeft().y() + 20, 15, 15);
-        QImage image(":/icons/deepin/builtin/light/icons/dr_exception-logo_36px.svg");
-        painter.drawImage(recticon, image);
-        recticon.moveTo(paintRect.width() / 2 - 60, paintRect.bottomLeft().y() + 20);
-        painter.drawImage(recticon, image);
-        QRect recttext = QRect(paintRect.bottomLeft().x() + 20, paintRect.bottomLeft().y() + 17, 140, 20);
-        QFont font;
-        font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
-        QColor textcolor = this->palette().color(DPalette::Normal, DPalette::Text);
-        painter.setFont(font);
-        painter.setPen(textcolor);
-        painter.drawText(recttext, QString(tr("The total amount:")));
-        recttext.moveTo(paintRect.width() / 2 - 40, paintRect.bottomLeft().y() + 17);
-        painter.drawText(recttext, QString(tr("Has been used:")));
-        QString totalsize = QString::number(total, 'f', 2) + "GB";
-        QString usedsize = QString::number(m_used, 'f', 2) + "GB";
-        QRect rectsizenum = QRect(paintRect.bottomLeft().x() + 140, paintRect.bottomLeft().y() + 20, 100, 20);
-        font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
-        painter.setFont(font);
-        painter.drawText(rectsizenum, totalsize);
-        rectsizenum.moveTo(paintRect.width() / 2 + 60, paintRect.bottomLeft().y() + 20);
-        painter.drawText(rectsizenum, usedsize);
+
+        DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+        if (themeType == DGuiApplicationHelper::LightType) {
+            QRect Roundrect = QRect(rect.bottomLeft().x() - 5, rect.bottomLeft().y() - 77, 15, 15);
+//            rect.setWidth(rect.width() - 1);
+//            rect.setHeight(rect.height() - 1);
+            painter.drawRoundedRect(Roundrect, 3, 3);
+//            QRect paintRect = QRect(rect.topLeft().x() + 1, rect.topLeft().y() + (rect.height() / 3), rect.width() - 2, rect.height() / 3);
+            m_parentPb = DApplicationHelper::instance()->palette(this);
+            QBrush brush1 = DApplicationHelper::instance()->palette(this).dark();
+            QColor iconcolor = m_parentPb.color(DPalette::Normal, DPalette::Dark);
+            painter.setBrush(brush1);
+            painter.setPen(iconcolor);
+            painter.fillRect(Roundrect, brush1);
+//            QRect Round1rect1(rect.bottomLeft().x() + paintRect.width() / 2, paintRect.bottomLeft().y() + 20, 15, 15);
+            Roundrect.moveTo(paintRect.width() / 2 - 65, paintRect.bottomLeft().y() + 20);
+            QPainterPath painterPath;
+            painterPath.addRoundedRect(Roundrect, 3, 3);
+            QBrush brush2 = DApplicationHelper::instance()->palette(this).highlight();
+            QColor icon2color = m_parentPb.color(DPalette::Normal, DPalette::LightLively);
+            painter.setBrush(brush2);
+            painter.setPen(icon2color);
+            painter.drawPath(painterPath);
+            QRect recttext = QRect(paintRect.bottomLeft().x() + 28, paintRect.bottomLeft().y() + 17, 140, 20);
+            QFont font;
+            font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
+            QColor textcolor = m_parentPb.color(DPalette::Normal, DPalette::Text);
+            painter.setFont(font);
+            painter.setPen(textcolor);
+            painter.drawText(recttext, QString(tr("The total amount:")));
+            recttext.moveTo(paintRect.width() / 2 - 40, paintRect.bottomLeft().y() + 17);
+            painter.drawText(recttext, QString(tr("Has been used:")));
+            QString totalsize = QString::number(total, 'f', 2) + "GB";
+            QString usedsize = QString::number(m_used, 'f', 2) + "GB";
+            QRect rectsizenum = QRect(paintRect.bottomLeft().x() + 140, paintRect.bottomLeft().y() + 20, 100, 20);
+            font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
+            QColor text1color = m_parentPb.color(DPalette::Normal, DPalette::TextTitle);
+            painter.setFont(font);
+            painter.setPen(text1color);
+            painter.drawText(rectsizenum, totalsize);
+            rectsizenum.moveTo(paintRect.width() / 2 + 60, paintRect.bottomLeft().y() + 20);
+            painter.drawText(rectsizenum, usedsize);
+        } else if (themeType == DGuiApplicationHelper::DarkType) {
+            QRect Roundrect = QRect(rect.bottomLeft().x() - 5, rect.bottomLeft().y() - 77, 15, 15);
+//            rect.setWidth(rect.width() - 1);
+//            rect.setHeight(rect.height() - 1);
+            painter.drawRoundedRect(Roundrect, 3, 3);
+//            QRect paintRect = QRect(rect.topLeft().x() + 1, rect.topLeft().y() + (rect.height() / 3), rect.width() - 2, rect.height() / 3);
+            m_parentPb = DApplicationHelper::instance()->palette(this);
+            QBrush brush1 = DApplicationHelper::instance()->palette(this).dark();
+            QColor iconcolor = m_parentPb.color(DPalette::Normal, DPalette::Dark);
+            painter.setBrush(brush1);
+            painter.setPen(iconcolor);
+            painter.fillRect(Roundrect, brush1);
+//            QRect Round1rect1(rect.bottomLeft().x() + paintRect.width() / 2, paintRect.bottomLeft().y() + 20, 15, 15);
+            Roundrect.moveTo(paintRect.width() / 2 - 65, paintRect.bottomLeft().y() + 20);
+            QPainterPath painterPath;
+            painterPath.addRoundedRect(Roundrect, 3, 3);
+            QBrush brush2 = DApplicationHelper::instance()->palette(this).highlight();
+            QColor icon2color = m_parentPb.color(DPalette::Normal, DPalette::LightLively);
+            painter.setBrush(brush2);
+            painter.setPen(icon2color);
+            painter.drawPath(painterPath);
+            QRect recttext = QRect(paintRect.bottomLeft().x() + 28, paintRect.bottomLeft().y() + 17, 140, 20);
+            QFont font;
+            font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
+            QColor textcolor = m_parentPb.color(DPalette::Normal, DPalette::ToolTipText);
+            painter.setFont(font);
+            painter.setPen(textcolor);
+            painter.drawText(recttext, QString(tr("The total amount:")));
+            recttext.moveTo(paintRect.width() / 2 - 40, paintRect.bottomLeft().y() + 17);
+            painter.drawText(recttext, QString(tr("Has been used:")));
+            QString totalsize = QString::number(total, 'f', 2) + "GB";
+            QString usedsize = QString::number(m_used, 'f', 2) + "GB";
+            QRect rectsizenum = QRect(paintRect.bottomLeft().x() + 140, paintRect.bottomLeft().y() + 20, 100, 20);
+            font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
+            QColor text1color = m_parentPb.color(DPalette::Normal, DPalette::ToolTipText);
+            painter.setFont(font);
+            painter.setPen(text1color);
+            painter.drawText(rectsizenum, totalsize);
+            rectsizenum.moveTo(paintRect.width() / 2 + 60, paintRect.bottomLeft().y() + 20);
+            painter.drawText(rectsizenum, usedsize);
+        }
     }
     painter.restore();
+
+}
+void SizeInfoWidget::slothandleChangeTheme()
+{
+
+    m_parentPb = Dtk::Gui::DGuiApplicationHelper::instance()->applicationPalette();
 
 }

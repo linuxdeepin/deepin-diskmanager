@@ -74,6 +74,17 @@ public Q_SLOTS: // METHODS
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QStringLiteral("unmount"), argumentList);
     }
+    inline QDBusPendingReply<QStringList>getallsupportfs()
+    {
+        QList<QVariant> argumentList;
+        return asyncCallWithArgumentList(QStringLiteral("getallsupportfs"), argumentList);
+    }
+    inline QDBusPendingReply<bool>format(const QString &type)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(type);
+        return asyncCallWithArgumentList(QStringLiteral("format"), argumentList);
+    }
 
 
 Q_SIGNALS: // SIGNALS

@@ -9,7 +9,8 @@ HEADERS += \
     $$PWD/sizeinfowidget.h \
     $$PWD/dmframewidget.h \
     $$PWD/partchartshowing.h \
-    $$PWD/infotopframe.h
+    $$PWD/infotopframe.h \
+    $$PWD/ddbase.h
 
 SOURCES += \
     $$PWD/bufferwin.cpp\
@@ -22,5 +23,6 @@ SOURCES += \
     $$PWD/sizeinfowidget.cpp \
     $$PWD/dmframewidget.cpp \
     $$PWD/partchartshowing.cpp \
-    $$PWD/infotopframe.cpp
+    $$PWD/infotopframe.cpp \
+    $$PWD/ddbase.cpp
 

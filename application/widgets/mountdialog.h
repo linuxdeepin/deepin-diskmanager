@@ -1,12 +1,11 @@
 #ifndef MOUNTDIALOG_H
 #define MOUNTDIALOG_H
-#include <DDialog>
-#include <DPushButton>
+#include "customcontrol/ddbase.h"
 #include <dfilechooseredit.h>
 
 DWIDGET_USE_NAMESPACE
 
-class MountDialog: public DDialog
+class MountDialog: public DDBase
 {
 public:
     explicit MountDialog(QWidget *parent = nullptr);
@@ -21,7 +20,6 @@ public slots:
     void slotbuttonClicked(int index, const QString &text);
 
 private:
-    int okcode;
     DFileChooserEdit *pedit;
 };
 

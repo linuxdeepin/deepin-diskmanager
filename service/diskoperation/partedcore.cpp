@@ -1358,6 +1358,11 @@ bool PartedCore::format(const Partition &partition)
     return bsuccess;
 }
 
+QStringList PartedCore::getallsupportfs()
+{
+    return supported_filesystems->get_all_fsname();
+}
+
 DeviceInfo PartedCore::getDeviceinfo()
 {
     DeviceInfo info ;

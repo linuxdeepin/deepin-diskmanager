@@ -25,6 +25,7 @@ public Q_SLOTS:
     Q_SCRIPTABLE void setCurSelect(const PartitionInfo &info);
     Q_SCRIPTABLE bool unmount();
     Q_SCRIPTABLE bool mount(const QString &mountpath);
+    Q_SCRIPTABLE QStringList getallsupportfs();
     Q_SCRIPTABLE stCustest interfacetest();
 
 private:

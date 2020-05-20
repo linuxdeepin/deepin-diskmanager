@@ -9,7 +9,8 @@ HEADERS += \
     $$PWD/infoshowwidget.h \
     $$PWD/widgetdeclare.h \
     $$PWD/mountdialog.h \
-    $$PWD/unmountdialog.h
+    $$PWD/unmountdialog.h \
+    $$PWD/formatedialog.h
 
 SOURCES += \
     $$PWD/mainwindow.cpp \
@@ -19,5 +20,6 @@ SOURCES += \
     $$PWD/devicelistwidget.cpp \
     $$PWD/infoshowwidget.cpp \
     $$PWD/mountdialog.cpp \
-    $$PWD/unmountdialog.cpp
+    $$PWD/unmountdialog.cpp \
+    $$PWD/formatedialog.cpp
 

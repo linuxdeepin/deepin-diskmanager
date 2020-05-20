@@ -5,7 +5,7 @@
 #include <QVBoxLayout>
 #include <DFrame>
 #include <DFontSizeManager>
-UnmountDialog::UnmountDialog(QWidget *parent) : DDialog(parent)
+UnmountDialog::UnmountDialog(QWidget *parent) : DDBase(parent)
 {
     initUi();
     initConnection();
@@ -14,11 +14,6 @@ UnmountDialog::UnmountDialog(QWidget *parent) : DDialog(parent)
 void UnmountDialog::initUi()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    setModal(true);
-    setIcon(QIcon::fromTheme(app_name));
-    DFrame *mainFrame = new DFrame(this);
-    mainFrame->setFrameRounded(false);
-    mainFrame->setFrameStyle(DFrame::NoFrame);
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
     DLabel *titleLabel = new DLabel(info.path + tr(" will be ummounted"), this);
     titleLabel->setAlignment(Qt::AlignCenter);
@@ -29,10 +24,9 @@ void UnmountDialog::initUi()
 
     mainLayout->addWidget(titleLabel);
     mainLayout->addWidget(tipLabel);
-    addContent(mainFrame);
 
     addButton(tr("Cancel"), false, ButtonNormal);
-    unmountcode = addButton(tr("Unmount"), false, ButtonWarning);
+    okcode = addButton(tr("Unmount"), false, ButtonWarning);
 }
 
 void UnmountDialog::initConnection()
@@ -42,7 +36,7 @@ void UnmountDialog::initConnection()
 
 void UnmountDialog::slotbuttonClicked(int index, const QString &text)
 {
-    if (unmountcode == index) {
+    if (okcode == index) {
         DMDbusHandler::instance()->unmount();
     }
 }

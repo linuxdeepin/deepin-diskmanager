@@ -18,6 +18,8 @@ public:
     const PartitionInfo &getCurPartititonInfo();
     bool mount(const QString &mountpath);
     bool unmount();
+    QStringList getallsupportfs();
+    bool format(const QString &fstype);
 
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
@@ -42,6 +44,7 @@ private:
     QString                 m_curpartitionpath;
     DeviceInfoMap           m_devicemap;
     PartitionInfo           m_curpartitioninfo;
+    QStringList             m_supportfs;
 };
 
 #endif // DMDBUSHANDLER_H

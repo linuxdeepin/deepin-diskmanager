@@ -7,7 +7,7 @@
 #include <parted/parted.h>
 #include <parted/device.h>
 #include <QMap>
-
+#include <QStringList>
 
 namespace DiskManager {
 
@@ -27,6 +27,7 @@ public:
     bool create(Partition &partition);
     bool create_partition(Partition &new_partition, Sector min_size = 0) ;
     bool format(const Partition &partition);
+    QStringList getallsupportfs();
 public:
     //static
     static void find_supported_core();

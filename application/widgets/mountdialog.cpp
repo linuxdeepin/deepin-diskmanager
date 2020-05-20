@@ -7,20 +7,16 @@
 #include <DFontSizeManager>
 #include <QDir>
 
-MountDialog::MountDialog(QWidget *parent): DDialog(parent)
+MountDialog::MountDialog(QWidget *parent): DDBase(parent)
 {
     initUi();
     initConnection();
+
 }
 
 void MountDialog::initUi()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    setModal(true);
-    setIcon(QIcon::fromTheme(app_name));
-    DFrame *mainFrame = new DFrame(this);
-    mainFrame->setFrameRounded(false);
-    mainFrame->setFrameStyle(DFrame::NoFrame);
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
     DLabel *titleLabel = new DLabel(info.path + tr(" will be mounted"), this);
     DFontSizeManager::instance()->bind(titleLabel, DFontSizeManager::T6);
@@ -39,7 +35,6 @@ void MountDialog::initUi()
     mainLayout->addWidget(tipLabel);
     mainLayout->addWidget(mountLabel);
     mainLayout->addWidget(pedit);
-    addContent(mainFrame);
     addButton(tr("Cancel"), true, ButtonNormal);
     okcode = addButton(tr("Ok"), false, ButtonRecommend);
     getButton(okcode)->setDisabled(true);

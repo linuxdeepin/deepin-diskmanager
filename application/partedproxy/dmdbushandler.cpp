@@ -111,6 +111,33 @@ bool DMDbusHandler::unmount()
     return success;
 }
 
+QStringList DMDbusHandler::getallsupportfs()
+{
+    if (m_supportfs.size() <= 0) {
+        QDBusPendingReply<QStringList> reply = m_dbus->getallsupportfs();
+        reply.waitForFinished();
+        if (reply.isError()) {
+            qDebug() << reply.error().message();
+        } else {
+            m_supportfs = reply.value();
+        }
+    }
+    return m_supportfs;
+}
+
+bool DMDbusHandler::format(const QString &fstype)
+{
+    bool success = false;
+    QDBusPendingReply<bool> reply = m_dbus->format(fstype);
+    reply.waitForFinished();
+    if (reply.isError()) {
+        qDebug() << reply.error().message();
+    } else {
+        success = reply.value();
+    }
+    return success;
+}
+
 void DMDbusHandler::MessageReport(const QString &msg)
 {
     qDebug() << "MessageReport:" << msg;

@@ -1,4 +1,5 @@
 #include "supportedfilesystems.h"
+#include "filesystems/ext2.h"
 #include "utils.h"
 #include <QDebug>
 
@@ -10,9 +11,9 @@ SupportedFileSystems::SupportedFileSystems()
     m_fs_objects[FS_OTHER]           = NULL;
 //    m_fs_objects[FS_BTRFS]           = new btrfs();
 //    m_fs_objects[FS_EXFAT]           = new exfat();
-//    m_fs_objects[FS_EXT2]            = new ext2(FS_EXT2);
-//    m_fs_objects[FS_EXT3]            = new ext2(FS_EXT3);
-//    m_fs_objects[FS_EXT4]            = new ext2(FS_EXT4);
+    m_fs_objects[FS_EXT2]            = new EXT2(FS_EXT2);
+    m_fs_objects[FS_EXT3]            = new EXT2(FS_EXT3);
+    m_fs_objects[FS_EXT4]            = new EXT2(FS_EXT4);
 //    m_fs_objects[FS_F2FS]            = new f2fs();
 //    m_fs_objects[FS_FAT16]           = new fat16(FS_FAT16);
 //    m_fs_objects[FS_FAT32]           = new fat16(FS_FAT32);
@@ -60,6 +61,7 @@ void SupportedFileSystems::find_supported_filesystems()
     for (iter = m_fs_objects.begin(); iter != m_fs_objects.end(); iter++) {
         if (iter.value()) {
             FileSystem *psys = iter.value();
+            m_effectivefs.append(Utils::FSTypeToString(iter.key()));
             m_fs_support.push_back(psys->get_filesystem_support());
         } else {
             FS fs_basicsupp(iter.key());
@@ -98,6 +100,11 @@ const QVector<FS> &SupportedFileSystems::get_all_fs_support() const
 bool SupportedFileSystems::supported_filesystem(FSType fstype) const
 {
     return get_fs_object(fstype) != NULL;
+}
+
+const QStringList  &SupportedFileSystems::get_all_fsname()
+{
+    return m_effectivefs;
 }
 
 }

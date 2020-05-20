@@ -56,6 +56,11 @@ bool DiskManagerService::mount(const QString &mountpath)
     return m_partedcore->mount(mountpath);
 }
 
+QStringList DiskManagerService::getallsupportfs()
+{
+    return m_partedcore->getallsupportfs();
+}
+
 stCustest DiskManagerService::interfacetest()
 {
     stCustest stcus;

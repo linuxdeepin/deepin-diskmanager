@@ -1,6 +1,7 @@
 #include "titlewidget.h"
 #include "mountdialog.h"
 #include "unmountdialog.h"
+#include "formatedialog.h"
 #include <QHBoxLayout>
 
 #include "widgetdeclare.h"
@@ -81,17 +82,20 @@ void TitleWidget::showPartInfoWidget()
 
 void TitleWidget::showFormateInfoWidget()
 {
-    tipPartDialog->getButton(1)->disconnect();
-    tipPartDialog->getFlagShow(1);
-    controlButton = 2;
-    connect(tipPartDialog->getButton(1), &QAbstractButton::clicked, this, [ = ] {
-        if (controlButton == 2)
-        {
-            tipPartDialog->close();
-            qDebug() << "XXX will be formatted";
-        }
+//    if (!tipPartDialog->isVisible()) {
+//        tipPartDialog->getFlagShow(1);
+//        controlButton = 2;
+//    }
+//    connect(tipPartDialog->getButton(1), &QAbstractButton::clicked, this, [ = ] {
+//        if (controlButton == 2)
+//        {
+//            qDebug() << "XXX will be formatted";
 
-    });
+//        }
+//    });
+
+    FormateDialog dlg;
+    dlg.exec();
 
 }
 
@@ -157,7 +161,7 @@ void TitleWidget::updateBtnStatus()
 
 void TitleWidget::slotCurSelectChanged()
 {
-//    updateBtnStatus();
+    updateBtnStatus();
     qDebug() << __FUNCTION__ << "-1--1-";
     auto it = DMDbusHandler::instance()->probDeviceInfo().find(DMDbusHandler::instance()->getCurPartititonInfo().device_path);
     if (it != DMDbusHandler::instance()->probDeviceInfo().end()) {

@@ -26,11 +26,6 @@ private:
     void initUi();
     void initConnection();
     DPushButton *createBtn(const QString &btnName, const QString &objName, bool bCheckable = false);
-    void showPartInfoWidget();
-    void showFormateInfoWidget();
-    void showMountInfoWidget();
-    void showUnmountInfoWidget();
-    void showResizeInfoWidget();
     void updateBtnStatus();
 
 
@@ -38,6 +33,11 @@ signals:
 
 public slots:
     void slotCurSelectChanged();
+    void showPartInfoWidget();
+    void showFormateInfoWidget();
+    void showMountInfoWidget();
+    void showUnmountInfoWidget();
+    void showResizeInfoWidget();
 
 private:
     DPushButton *m_btnparted;

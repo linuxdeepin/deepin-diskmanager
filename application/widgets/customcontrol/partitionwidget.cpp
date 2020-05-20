@@ -294,7 +294,9 @@ void PartitionWidget::initConnection()
     connect(partSizeEdit, &DLineEdit::textEdited, this, &PartitionWidget::slotSetSliderValue);
     connect(addButton, &DIconButton::clicked, this, &PartitionWidget::addPartitionSlot);
     connect(remButton, &DIconButton::clicked, this, &PartitionWidget::remPartitionSlot);
-
+    connect(applyBtn, &DPushButton::clicked, this, &PartitionWidget::applyBtnSlot);
+    connect(reveBtn, &DPushButton::clicked, this, &PartitionWidget::revertBtnSlot);
+    connect(cancleBtn, &DPushButton::clicked, this, &PartitionWidget::cancelBtnSlot);
 }
 
 void PartitionWidget::paintEvent(QPaintEvent *event)
@@ -319,6 +321,11 @@ void PartitionWidget::slotSetSliderValue()
 void PartitionWidget::addPartitionSlot()
 {
     double sum = 0.00;
+    if (partNameEdit->text().isEmpty()) {
+        partNameEdit->showAlertMessage(tr("Partition name is not empty"));
+    } else {
+        partName.append(partNameEdit->text());
+    }
     int i = partSize.lastIndexOf("G");
     double total = partSize.left(i).toDouble();
     if (partComCobox->currentText() == "GB") {
@@ -335,8 +342,10 @@ void PartitionWidget::addPartitionSlot()
             break;
     }
     double size = partSizeEdit->text().toDouble();
-    if ((sum < total) && (size != 0.00)) {
+    if ((sum < total) && (size > 0.00)) {
         sizeInfo.append(size);
+    } else if (partSizeEdit->text().isEmpty()) {
+        partSizeEdit->showAlertMessage(tr("Partition Size is not empty"));
     }
 
     partChartWidget->getData(partSize, sizeInfo);
@@ -353,6 +362,28 @@ void PartitionWidget::remPartitionSlot()
     partChartWidget->getData(partSize, sizeInfo);
     partChartWidget->update();
 
+}
+
+void PartitionWidget::applyBtnSlot()
+{
+    sizeInfo.clear();
+    partChartWidget->getData(partSize, sizeInfo);
+    qDebug() << sizeInfo;
+    partChartWidget->update();
+    this->close();
+}
+
+void PartitionWidget::revertBtnSlot()
+{
+    sizeInfo.clear();
+    hSlider->setValue(0);
+    partChartWidget->getData(partSize, sizeInfo);
+    partChartWidget->update();
+}
+
+void PartitionWidget::cancelBtnSlot()
+{
+    this->close();
 }
 
 

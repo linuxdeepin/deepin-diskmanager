@@ -70,6 +70,9 @@ public slots:
     void slotSetSliderValue();
     void addPartitionSlot();
     void remPartitionSlot();
+    void applyBtnSlot();
+    void revertBtnSlot();
+    void cancelBtnSlot();
 private:
     QWidget *mainFrame;
     DFrame *topFrame;
@@ -127,6 +130,7 @@ private:
 //    QVector<QString> partPaths;
 //    QHash<int, QVector<double>> sizeinfos;
     QVector<double> sizeInfo;
+    QVector<QString> partName;
 
 };
 

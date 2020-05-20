@@ -217,7 +217,7 @@ void PartitionWidget::partInfoShowing()
     partSizeEdit = new DLineEdit(partWidget);
     partSizeEdit->setObjectName("sizeEdit");
     if (partSizeEdit->text().isEmpty()) {
-        partSizeEdit->lineEdit()->setPlaceholderText("125");
+        partSizeEdit->lineEdit()->setPlaceholderText("size");
     }
     partComCobox = new DComboBox(partWidget);
     partComCobox->addItem("GB");
@@ -260,8 +260,21 @@ void PartitionWidget::getPartitionInfo(const PartitionInfo &data, const QString 
     partFstype = Utils::FSTypeToString((FSType)data.fstype);
     partUsed = s_used;
     partUnused = s_unused;
-    initTopFrameData();
+    partComCobox->setCurrentText("GB");
+    int j = partSize.lastIndexOf("G");
+    double total = partSize.left(j).toDouble();
+    if (total < 1) {
+        total = total * 1024;
+        partComCobox->setCurrentText("MB");
+    }
 
+    hSlider->setMaximum(total);
+//    hSlider->setValue(120);
+    initTopFrameData();
+//    partPaths.append(partPath);
+//    for (int i = 0; i < partPaths.size(); i++) {
+//       QVector<double> sizeInfos;
+//    }
 }
 
 void PartitionWidget::initTopFrameData()
@@ -305,12 +318,41 @@ void PartitionWidget::slotSetSliderValue()
 
 void PartitionWidget::addPartitionSlot()
 {
-    partChartWidget->getData(1, partSize);
+    double sum = 0.00;
+    int i = partSize.lastIndexOf("G");
+    double total = partSize.left(i).toDouble();
+    if (partComCobox->currentText() == "GB") {
+        if (partSizeEdit->text().toDouble() > total)
+            return;
+    }
+
+    if (total < 1 && partComCobox->currentText() == "MB") {
+        total = total * 1024;
+    }
+    for (int j = 0; j < sizeInfo.count(); j++) {
+        sum = sum + sizeInfo.at(j);
+        if (sum > total)
+            break;
+    }
+    double size = partSizeEdit->text().toDouble();
+    if ((sum < total) && (size != 0.00)) {
+        sizeInfo.append(size);
+    }
+
+    partChartWidget->getData(partSize, sizeInfo);
+    qDebug() << sum << total << size;
+    partChartWidget->update();
+    partSizeEdit->setText("");
 }
 
 void PartitionWidget::remPartitionSlot()
 {
-    partChartWidget->getData(2, partSize);
+    if (sizeInfo.count() < 1)
+        return;
+    sizeInfo.removeAt(sizeInfo.size() - 1);
+    partChartWidget->getData(partSize, sizeInfo);
+    partChartWidget->update();
+
 }
 
 

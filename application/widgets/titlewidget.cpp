@@ -26,9 +26,9 @@ void TitleWidget::initUi()
     layout->addWidget(m_btnunmount);
     layout->addWidget(m_btnresize);
     tipPartDialog = new TipPartDialog(this);
-    tipFormateDialog = new TipFormateDialog(this);
-    tipUnmountDialog = new TipUmountDialog(this);
-    tipResizeDialog = new TipResizeDialog(this);
+//    tipFormateDialog = new TipFormateDialog(this);
+//    tipUnmountDialog = new TipUmountDialog(this);
+//    tipResizeDialog = new TipResizeDialog(this);
     partitionWidget = new PartitionWidget(this);
 }
 
@@ -64,14 +64,13 @@ DPushButton *TitleWidget::createBtn(const QString &btnName,  const QString &objN
 
 void TitleWidget::showPartInfoWidget()
 {
-    if (!tipPartDialog->isVisible()) {
-        tipPartDialog->getFlagShow(0);
-        controlButton = 1;
-    }
-
+    tipPartDialog->getButton(1)->disconnect();
+    tipPartDialog->getFlagShow(0);
+    controlButton = 1;
     connect(tipPartDialog->getButton(1), &QAbstractButton::clicked, this, [ = ] {
         if (controlButton == 1)
         {
+            tipPartDialog->close();
             partitionWidget->show();
             partitionWidget->getPartitionInfo(getPartitionInfo, device_size);
 
@@ -82,16 +81,16 @@ void TitleWidget::showPartInfoWidget()
 
 void TitleWidget::showFormateInfoWidget()
 {
-    if (!tipPartDialog->isVisible()) {
-        tipPartDialog->getFlagShow(1);
-        controlButton = 2;
-    }
+    tipPartDialog->getButton(1)->disconnect();
+    tipPartDialog->getFlagShow(1);
+    controlButton = 2;
     connect(tipPartDialog->getButton(1), &QAbstractButton::clicked, this, [ = ] {
         if (controlButton == 2)
         {
+            tipPartDialog->close();
             qDebug() << "XXX will be formatted";
-
         }
+
     });
 
 }
@@ -106,12 +105,20 @@ void TitleWidget::showUnmountInfoWidget()
 {
     UnmountDialog dlg;
     dlg.exec();
-    //tipUnmountDialog->show();
 }
 
 void TitleWidget::showResizeInfoWidget()
 {
-    tipResizeDialog->show();
+    tipPartDialog->getButton(1)->disconnect();
+    tipPartDialog->getFlagShow(4);
+    controlButton = 5;
+    connect(tipPartDialog->getButton(1), &QAbstractButton::clicked, this, [ = ] {
+        if (controlButton == 5)
+        {
+            tipPartDialog->close();
+            qDebug() << tr("XXX system space is in operation");
+        }
+    });
 }
 
 void TitleWidget::updateBtnStatus()
@@ -150,7 +157,7 @@ void TitleWidget::updateBtnStatus()
 
 void TitleWidget::slotCurSelectChanged()
 {
-    updateBtnStatus();
+//    updateBtnStatus();
     qDebug() << __FUNCTION__ << "-1--1-";
     auto it = DMDbusHandler::instance()->probDeviceInfo().find(DMDbusHandler::instance()->getCurPartititonInfo().device_path);
     if (it != DMDbusHandler::instance()->probDeviceInfo().end()) {

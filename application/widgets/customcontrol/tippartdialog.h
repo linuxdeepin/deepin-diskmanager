@@ -27,6 +27,10 @@ public:
     void getFlagShow(const int &showFlag);
     void showPartDialog();
     void showFormateDialog();
+
+    void showMountDialog();
+    void showUnmoutDialog();
+    void showResizeDialog();
 signals:
 
 public slots:

@@ -4,10 +4,10 @@
 #include <DWidget>
 #include <DPushButton>
 
-#include "customcontrol/tipformatedialog.h"
-#include "customcontrol/tipresizedialog.h"
-#include "customcontrol/tipmountdialog.h"
-#include "customcontrol/tipumountdialog.h"
+//#include "customcontrol/tipformatedialog.h"
+//#include "customcontrol/tipresizedialog.h"
+//#include "customcontrol/tipmountdialog.h"
+//#include "customcontrol/tipumountdialog.h"
 #include "customcontrol/tippartdialog.h"
 #include "partedproxy/dmdbushandler.h"
 #include "customcontrol/partitionwidget.h"
@@ -45,9 +45,9 @@ private:
     DPushButton *m_btnmount;
     DPushButton *m_btnunmount;
     DPushButton *m_btnresize;
-    TipFormateDialog *tipFormateDialog;
-    TipResizeDialog *tipResizeDialog;
-    TipUmountDialog *tipUnmountDialog;
+//    TipFormateDialog *tipFormateDialog;
+//    TipResizeDialog *tipResizeDialog;
+//    TipUmountDialog *tipUnmountDialog;
     TipPartDialog *tipPartDialog;
     PartitionWidget *partitionWidget;
     DmTreeview *treeView;

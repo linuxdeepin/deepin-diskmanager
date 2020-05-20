@@ -27,6 +27,7 @@
 #include <DApplicationHelper>
 #include <QPointF>
 #include <QLine>
+#include <QMouseEvent>
 
 DWIDGET_USE_NAMESPACE
 
@@ -38,7 +39,8 @@ class PartChartShowing : public QWidget
 public:
     explicit PartChartShowing(QWidget *parent = nullptr);
 //    PartChartShowing(int used, int trueused, int noused, QWidget *parent = nullptr);
-    void getData(const int &flag, const QString &totalsize);
+    void getData(const QString &totalsize, const QVector<double> sizeInfo);
+
 signals:
 
 public slots:
@@ -48,11 +50,18 @@ public slots:
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
     void addPaint(QPainter *painter);
-    void remPaint(QPainter *painter);
+    virtual void mousePressEvent(QMouseEvent *event) override;
+
 private:
     int m_flag = 0;
     QString m_totalsize;
     double total = 0.00;
+    QVector<double> partsize;
+    QPoint curPoint;
+    QRect getCurRect;
+    QVector<QRect> allRect;
+
+
 };
 
 #endif // PARTCHARTSHOWING_H

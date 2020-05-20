@@ -41,6 +41,8 @@
 
 DWIDGET_USE_NAMESPACE
 
+
+
 class PartitionWidget : public DDialog
 {
     Q_OBJECT
@@ -119,10 +121,12 @@ private:
     QString partFstype;
 
 
+    int count = 0;
 
 
-
-
+//    QVector<QString> partPaths;
+//    QHash<int, QVector<double>> sizeinfos;
+    QVector<double> sizeInfo;
 
 };
 

@@ -33,6 +33,15 @@ void TipPartDialog::getFlagShow(const int &showFlag)
     case 1:
         showFormateDialog();
         break;
+    case 2:
+        showMountDialog();
+        break;
+    case 3:
+        showUnmoutDialog();
+        break;
+    case 4:
+        showResizeDialog();
+        break;
     default:
         break;
     }
@@ -58,5 +67,42 @@ void TipPartDialog::showFormateDialog()
     this->mountLabel->hide();
     this->nameLineEdit->show();
     this->typeCombox->show();
+    this->show();
+}
+
+void TipPartDialog::showMountDialog()
+{
+    this->setFixedSize(350, 250);
+    this->titleLable->setText(tr("XXX will be mounted"));
+    this->tipLabel->setText(tr("The disk will be mounted. Click mount"));
+    this->mountLabel->show();
+    this->nameLineEdit->hide();
+    this->typeCombox->show();
+    this->typeCombox->setItemText(0, "/space");
+    this->typeCombox->setEditable(true);
+    this->show();
+
+
+}
+
+void TipPartDialog::showUnmoutDialog()
+{
+    this->setFixedSize(400, 200);
+    this->titleLable->setText(tr("About to uninstall XXX"));
+    this->tipLabel->setText(tr("To uninstall XXX, you need to uninstall the disk.\n Make sure that there is no program to uninstall.\n Click uninstall"));
+    this->mountLabel->hide();
+    this->nameLineEdit->hide();
+    this->typeCombox->hide();
+    this->show();
+}
+
+void TipPartDialog::showResizeDialog()
+{
+    this->setFixedSize(420, 200);
+    this->titleLable->setText(tr("XXX system space is in operation"));
+    this->tipLabel->setText(tr("The disk is in use. You will operate on the size of the \n disk space. To confirm the operation, please click OK"));
+    this->mountLabel->hide();
+    this->nameLineEdit->hide();
+    this->typeCombox->hide();
     this->show();
 }

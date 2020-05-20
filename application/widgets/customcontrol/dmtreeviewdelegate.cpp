@@ -40,9 +40,15 @@ void DmTreeviewDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptio
 QSize DmTreeviewDelegate::sizeHint(const QStyleOptionViewItem &option,
                                    const QModelIndex &index) const
 {
-    Q_UNUSED(index)
+    Q_UNUSED(option);
+
+    DiskInfoData d = index.data(Qt::UserRole + 1).value<DiskInfoData>();
+    if (d.level == 0)
+        return QSize(180, 62);
+
     return QSize(180, 55);
 }
+
 void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     if (index.isValid()) {

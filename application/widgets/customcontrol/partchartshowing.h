@@ -60,6 +60,7 @@ private:
     QPoint curPoint;
     QRect getCurRect;
     QVector<QRect> allRect;
+    QVector<QColor> color;
 
 
 };

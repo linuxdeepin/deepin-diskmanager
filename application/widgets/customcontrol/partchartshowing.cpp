@@ -69,19 +69,19 @@ void PartChartShowing::paintEvent(QPaintEvent *event)
                           QSize(radius * 2, radius * 2)),
                     270, 90);
 
-    QColor fillColor = QColor(210, 210, 210); //this->palette().color(DPalette::Normal, DPalette::Highlight)
+    QColor fillColor = QColor(this->palette().mid().color()); //this->palette().color(DPalette::Normal, DPalette::Highlight)
     painter.setBrush(QBrush(fillColor));
     painter.fillPath(paintpath, fillColor);
     painter.setPen(QPen(QColor(fillColor), 3));
     painter.drawLine(paintRect.topLeft().x() + radius, paintRect.topLeft().y() + radius, paintRect.topLeft().x() + radius + paintRect.width(), paintRect.bottomLeft().y() - radius);
-    QColor tipColor = QColor(210, 210, 210);
+    QColor tipColor = QColor(this->palette().mid().color());
 
 
     painter.setPen(tipColor);
-    painter.drawRect(this->x() + 20, this->y() + 50, 10, 10);
+    painter.drawRect(this->x(), this->y() + 50, 10, 10);
 
     painter.setPen(this->palette().text().color());
-    QRect textRect(this->x() + 35, this->y() + 45, 80, 50);
+    QRect textRect(this->x() + 15, this->y() + 45, 80, 50);
     painter.drawText(textRect, tr("Free space"));
 
 
@@ -146,29 +146,30 @@ void PartChartShowing::addPaint(QPainter *painter)
                                             270, 90);
             painter->fillPath(path[partsize.size() - 1], QBrush(QColor(this->palette().highlight().color())));
         }
-        curPoint = QPoint(static_cast<int>(path[i].currentPosition().x()), 0);
+//        curPoint = QPoint(static_cast<int>(path[i].currentPosition().x()), 0);
 //        getCurRect = QRect(curPoint.x(), curPoint.y(), static_cast<int>((partsize.at(i) / total) * paintRect.width()), paintRect.height());
 //        allRect.append(getCurRect);
 
     }
-    getCurRect = QRect(0, 10, rect.width(), 35);
 }
 
 void PartChartShowing::mousePressEvent(QMouseEvent *event)
 {
 
-    if (event->button() == Qt::LeftButton) {
-//        qDebug() << "121212";
-        int x = event->pos().x();
-        int y = event->pos().y();
+//    if (event->button() == Qt::LeftButton) {
+////        qDebug() << "121212";
+//        int x = event->pos().x();
+//        int y = event->pos().y();
+//        for (int i = 0; allRect.size(); i++) {
+//            if (x > allRect[i].x() && x < (allRect[i].width() + allRect[i].x()) && y > allRect[i].y() && y < (allRect[i].y() + allRect[i].height())) {
+//                qDebug() << "232323" ;
+//            }
+//        }
 
-        if (x > 0 && x < getCurRect.width() && y > 10 && y < 45) {
-            qDebug() << "232323" ;
-        }
 
 
-        update();
-    }
+//    update();
+//}
 
 
 }

@@ -132,6 +132,7 @@ private:
     QVector<double> sizeInfo;
     QVector<QString> partName;
 
+
 };
 
 #endif // PARTITIONWIDGET_H

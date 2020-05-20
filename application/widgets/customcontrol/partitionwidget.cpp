@@ -15,6 +15,7 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "partitionwidget.h"
+#include "widgets/widgetdeclare.h"
 #include <QDebug>
 
 PartitionWidget::PartitionWidget(QWidget *parent) : DDialog(parent)
@@ -72,8 +73,8 @@ void PartitionWidget::topFrameSetting()
 {
 
     picLabel = new DLabel(topFrame);
-    picLabel->setMaximumSize(60, 70);
-
+    picLabel->setPixmap(getIcon("labeldisk").pixmap(85, 85));
+    picLabel->setMinimumSize(85, 85);
 
     QHBoxLayout *hLayout = new QHBoxLayout(topFrame);
     hLayout->setSpacing(5);
@@ -161,7 +162,6 @@ void PartitionWidget::botFrameSetting()
 
     vLayout->addLayout(btnLayout, 1);
 
-
 }
 
 void PartitionWidget::partInfoShowing()
@@ -188,7 +188,10 @@ void PartitionWidget::partInfoShowing()
     line2Layout1->addWidget(partDoLabel, 1, Qt::AlignLeft);
     line2Layout1->addWidget(addButton);
     line2Layout1->addWidget(remButton);
-
+    if (sizeInfo.size() == 0)
+        remButton->setEnabled(false);
+    else
+        remButton->setEnabled(true);
     QHBoxLayout *line2Layout2 = new QHBoxLayout();
     line2Layout2->setContentsMargins(50, 0, 0, 0);
     partNameLabel = new DLabel(tr("Partition name:"), partWidget);
@@ -269,12 +272,8 @@ void PartitionWidget::getPartitionInfo(const PartitionInfo &data, const QString 
     }
 
     hSlider->setMaximum(total);
-//    hSlider->setValue(120);
     initTopFrameData();
-//    partPaths.append(partPath);
-//    for (int i = 0; i < partPaths.size(); i++) {
-//       QVector<double> sizeInfos;
-//    }
+
 }
 
 void PartitionWidget::initTopFrameData()
@@ -326,39 +325,46 @@ void PartitionWidget::addPartitionSlot()
     } else {
         partName.append(partNameEdit->text());
     }
+    if (partSizeEdit->text().isEmpty()) {
+        partSizeEdit->showAlertMessage(tr("Partition Size is not empty"));
+    }
     int i = partSize.lastIndexOf("G");
     double total = partSize.left(i).toDouble();
     if (partComCobox->currentText() == "GB") {
         if (partSizeEdit->text().toDouble() > total)
             return;
+        if (total < 1 && partComCobox->currentText() == "MB") {
+            total = total * 1024;
+        }
     }
 
-    if (total < 1 && partComCobox->currentText() == "MB") {
-        total = total * 1024;
-    }
     for (int j = 0; j < sizeInfo.count(); j++) {
         sum = sum + sizeInfo.at(j);
         if (sum > total)
             break;
     }
     double size = partSizeEdit->text().toDouble();
-    if ((sum < total) && (size > 0.00)) {
+    if ((sum < total) && (size > 0.00) && !partNameEdit->text().isEmpty()) {
         sizeInfo.append(size);
-    } else if (partSizeEdit->text().isEmpty()) {
-        partSizeEdit->showAlertMessage(tr("Partition Size is not empty"));
     }
-
+    if (sizeInfo.size() == 0)
+        remButton->setEnabled(false);
+    else
+        remButton->setEnabled(true);
     partChartWidget->getData(partSize, sizeInfo);
     qDebug() << sum << total << size;
     partChartWidget->update();
     partSizeEdit->setText("");
+    partNameEdit->setText("");
 }
 
 void PartitionWidget::remPartitionSlot()
 {
-    if (sizeInfo.count() < 1)
+    if (sizeInfo.size() == 0)
         return;
     sizeInfo.removeAt(sizeInfo.size() - 1);
+    if (sizeInfo.size() == 0)
+        remButton->setEnabled(false);
     partChartWidget->getData(partSize, sizeInfo);
     partChartWidget->update();
 
@@ -367,6 +373,7 @@ void PartitionWidget::remPartitionSlot()
 void PartitionWidget::applyBtnSlot()
 {
     sizeInfo.clear();
+    partName.clear();
     partChartWidget->getData(partSize, sizeInfo);
     qDebug() << sizeInfo;
     partChartWidget->update();
@@ -376,6 +383,7 @@ void PartitionWidget::applyBtnSlot()
 void PartitionWidget::revertBtnSlot()
 {
     sizeInfo.clear();
+    partName.clear();
     hSlider->setValue(0);
     partChartWidget->getData(partSize, sizeInfo);
     partChartWidget->update();

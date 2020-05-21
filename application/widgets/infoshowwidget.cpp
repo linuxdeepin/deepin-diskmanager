@@ -79,30 +79,31 @@ void InfoShowWidget::bottomFramSettings()
 {
     QVBoxLayout *infolayout = new QVBoxLayout();
     QVBoxLayout *info1layout = new QVBoxLayout();
-    DLabel *m_label = new  DLabel("mount point:");
+    DLabel *m_label = new  DLabel("Mount point:");
     m_label->setAlignment(Qt::AlignLeft);
     m_label->setWordWrap(true);
     m_label->adjustSize();
-    DFontSizeManager::instance()->bind(m_label, DFontSizeManager::T5);
-    DLabel *m_label1 = new  DLabel("The available capacity:");
+    m_label->setFixedHeight(30);
+    DFontSizeManager::instance()->bind(m_label, DFontSizeManager::T6);
+    DLabel *m_label1 = new  DLabel("Free:");
     m_label1->setWordWrap(true);
     m_label1->adjustSize();
     m_label1->setAlignment(Qt::AlignLeft);
     DFontSizeManager::instance()->bind(m_label1, DFontSizeManager::T6);
-    DLabel *m_label2 = new  DLabel("Used space:");
+    DLabel *m_label2 = new  DLabel("Used:");
     m_label2->setWordWrap(true);
     m_label2->adjustSize();
     m_label2->setAlignment(Qt::AlignLeft);
     DFontSizeManager::instance()->bind(m_label2, DFontSizeManager::T6);
-    DLabel *m_label3 = new  DLabel("type:");
+    DLabel *m_label3 = new  DLabel("Type:");
     m_label3->setWordWrap(true);
     m_label3->adjustSize();
     DFontSizeManager::instance()->bind(m_label3, DFontSizeManager::T6);
-    DLabel *m_label4 = new  DLabel("The total capacity:");
+    DLabel *m_label4 = new  DLabel("Capacity:");
     m_label4->setWordWrap(true);
     m_label4->adjustSize();
     DFontSizeManager::instance()->bind(m_label4, DFontSizeManager::T6);
-    DLabel *m_label5 = new  DLabel("Partition volume label:");
+    DLabel *m_label5 = new  DLabel("Volume label:");
     m_label5->setWordWrap(true);
     m_label5->adjustSize();
     DFontSizeManager::instance()->bind(m_label5, DFontSizeManager::T6);
@@ -141,16 +142,18 @@ void InfoShowWidget::bottomFramSettings()
     DApplicationHelper::instance()->setPalette(m_label3, pa);
     DApplicationHelper::instance()->setPalette(m_label4, pa);
     DApplicationHelper::instance()->setPalette(m_label5, pa);
+    infolayout->addSpacing(1);
     infolayout->addWidget(m_label);
-    infolayout->addSpacing(20);
+    infolayout->addSpacing(18);
     infolayout->addWidget(m_label1);
-    infolayout->addSpacing(20);
+    infolayout->addSpacing(22);
     infolayout->addWidget(m_label2);
     infolayout->addStretch();
+    info1layout->addSpacing(1);
     info1layout->addWidget(m_label3);
-    info1layout->addSpacing(20);
+    info1layout->addSpacing(22);
     info1layout->addWidget(m_label4);
-    info1layout->addSpacing(20);
+    info1layout->addSpacing(25);
     info1layout->addWidget(m_label5);
     info1layout->addStretch();
     QHBoxLayout *mainlayout = new QHBoxLayout(pframebottom);
@@ -169,7 +172,7 @@ void InfoShowWidget::slotCurSelectChanged()
     DPalette pa;
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
     if (themeType == DGuiApplicationHelper::LightType) {
-        fillcolor = pa.color(DPalette::Normal, DPalette::Highlight);
+        fillcolor = QColor("#0091ff");
         fillcolor1 = pa.color(DPalette::Normal, DPalette::ToolTipText);
         fillcolor1.setAlphaF(0.1);
     } else if (themeType == DGuiApplicationHelper::DarkType) {
@@ -188,7 +191,7 @@ void InfoShowWidget::slothandleChangeTheme()
     DPalette pa;
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
     if (themeType == DGuiApplicationHelper::LightType) {
-        fillcolor = pa.color(DPalette::Normal, DPalette::Highlight);
+        fillcolor =  QColor("#0091ff");
         fillcolor1 = pa.color(DPalette::Normal, DPalette::ToolTipText);
         fillcolor1.setAlphaF(0.1);
 

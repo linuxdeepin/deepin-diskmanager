@@ -61,13 +61,17 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         DiskInfoData data = var.value<DiskInfoData>();
         // qDebug() << data.disksize << data.disklabel;
         QRect rect;
-        rect.setX(option.rect.x());
+        if (data.level == 0) {
+            rect.setX(option.rect.x());
+        } else {
+            rect.setX(option.rect.x() + 10);
+        }
         rect.setY(option.rect.y());
         rect.setWidth(option.rect.width());
         rect.setHeight(option.rect.height());
         painter->setRenderHints(QPainter::SmoothPixmapTransform);
         // QRect paintRect = QRect(rect.left() + 10, rect.top(), rect.width() - 8, rect.height());
-        QRect paintRect = QRect(rect.left(), rect.top(), rect.width() - 20, rect.height());
+        QRect paintRect = QRect(rect.left(), rect.top(), rect.width() - 30, rect.height());
         QPainterPath path;
         const int radius = 8;
         path.moveTo(paintRect.bottomRight() - QPoint(0, radius));
@@ -86,13 +90,13 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
                          QSize(radius * 2, radius * 2)),
                    270, 90);
 //        DPalette pa = option.palette;
-        QBrush brush = m_parentPb.itemBackground();
-        painter->setBrush(brush);
-        painter->fillPath(path, brush);
+        if (data.level == 1) {
+            QBrush brush = m_parentPb.itemBackground();
+            painter->setBrush(brush);
+            painter->fillPath(path, brush);
+        }
 
-
-//        QBrush brush = DApplicationHelper::instance()->palette(this).frameBorder();
-        if (option.state & QStyle::State_Selected) {
+        if (option.state & QStyle::State_Selected && data.level == 1) {
             QColor fillColor = m_parentPb.color(DPalette::Normal, DPalette::Highlight);
             painter->setBrush(QBrush(fillColor));
             painter->fillPath(path, painter->brush());

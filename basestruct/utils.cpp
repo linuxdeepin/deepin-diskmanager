@@ -23,6 +23,7 @@ QString Utils::find_program_in_path(const QString &proname)
 int Utils::executecmdwithartlist(const QString &strcmd, const QStringList &strarg, QString &output, QString &error)
 {
     QProcess proc;
+    proc.open(QIODevice::ReadWrite);
     proc.start(strcmd, strarg);
     proc.waitForFinished(-1);
     output = proc.readAllStandardOutput().data();
@@ -35,11 +36,18 @@ int Utils::executecmdwithartlist(const QString &strcmd, const QStringList &strar
 int Utils::executcmd(const QString &strcmd, QString &output, QString &error)
 {
     QProcess proc;
+    // proc.open(QIODevice::ReadWrite);
     proc.start(strcmd);
     proc.waitForFinished(-1);
-    output = proc.readAllStandardOutput().data();
+    output = proc.readAllStandardOutput();
+    QString stderror = proc.readAllStandardError();
     error = proc.errorString();
     int exitcode = proc.exitCode();
+    // qDebug()<<output<<error<<stderror;
+    //mkfs.ext4 -V have no output,stderror include useful info
+    if (output.isEmpty() && !stderror.isEmpty()) {
+        output = stderror;
+    }
     proc.close();
     return exitcode;
 }

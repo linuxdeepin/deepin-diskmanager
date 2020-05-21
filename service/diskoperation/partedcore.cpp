@@ -1210,6 +1210,25 @@ bool PartedCore::create_filesystem(const Partition &partition)
     return succes ;
 }
 
+bool PartedCore::formatpartition(const Partition &partition)
+{
+    bool bsuccess = false;
+    if (partition.fstype == FS_LUKS && partition.busy) {
+        qDebug() << __FUNCTION__ << QString("partition contains open LUKS encryption for a format files system only step");
+        return false;
+    }
+
+    if (partition.fstype == FS_CLEARED)
+        bsuccess =   erase_filesystem_signatures(partition)
+                     && set_partition_type(partition);
+    else
+        bsuccess =   erase_filesystem_signatures(partition)
+                     && set_partition_type(partition)
+                     && create_filesystem(partition) ;
+
+    return bsuccess;
+}
+
 void PartedCore::slotRefreshDeviceInfo()
 {
     probedeviceinfo();
@@ -1339,23 +1358,11 @@ bool PartedCore::create_partition(Partition &new_partition, Sector min_size)
     return bsucces;
 }
 
-bool PartedCore::format(const Partition &partition)
+bool PartedCore::format(const QString &fstype, const QString &name)
 {
-    bool bsuccess = false;
-    if (partition.fstype == FS_LUKS && partition.busy) {
-        qDebug() << __FUNCTION__ << QString("partition contains open LUKS encryption for a format files system only step");
-        return false;
-    }
-
-    if (partition.fstype == FS_CLEARED)
-        bsuccess =   erase_filesystem_signatures(partition)
-                     && set_partition_type(partition);
-    else
-        bsuccess =   erase_filesystem_signatures(partition)
-                     && set_partition_type(partition)
-                     && create_filesystem(partition) ;
-
-    return bsuccess;
+    Partition part = curpartition;
+    part.fstype = Utils::StringToFSType(fstype);
+    return formatpartition(part);
 }
 
 QStringList PartedCore::getallsupportfs()

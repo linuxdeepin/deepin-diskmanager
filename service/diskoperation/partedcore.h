@@ -26,7 +26,7 @@ public:
     bool unmount();
     bool create(Partition &partition);
     bool create_partition(Partition &new_partition, Sector min_size = 0) ;
-    bool format(const Partition &partition);
+    bool format(const QString &fstype, const QString &name);
     QStringList getallsupportfs();
 public:
     //static
@@ -83,6 +83,7 @@ private:
     bool erase_filesystem_signatures(const Partition &partition) ;
     bool set_partition_type(const Partition &partition) ;
     bool create_filesystem(const Partition &partition) ;
+    bool formatpartition(const Partition &partition);
 
 signals:
     void sigUpdateDeviceInfo(const DeviceInfoMap &infomap);

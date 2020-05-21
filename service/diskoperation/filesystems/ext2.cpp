@@ -28,7 +28,7 @@ FS EXT2::get_filesystem_support()
             int mke2fs_major_ver = 0;
             int mke2fs_minor_ver = 0;
             int mke2fs_patch_ver = 0;
-            if (sscanf(error.toLatin1().data(), "mke2fs %d.%d.%d",
+            if (sscanf(output.toLatin1().data(), "mke2fs %d.%d.%d",
                        &mke2fs_major_ver, &mke2fs_minor_ver, &mke2fs_patch_ver) >= 2) {
                 // Ext4 64bit feature was added in e2fsprogs 1.42, but
                 // only enable large volumes from 1.42.9 when a large
@@ -92,7 +92,7 @@ FS EXT2::get_filesystem_support()
         // than copying all blocks used by GParted's internal method.
         if (! Utils::find_program_in_path("e2image").isEmpty()) {
             Utils::executcmd("e2image", output, error);
-            if (Utils::regexp_label(error, "(-o src_offset)") == "-o src_offset")
+            if (Utils::regexp_label(output, "(-o src_offset)") == "-o src_offset")
                 fs.copy = fs.move = FS::EXTERNAL;
         }
     }
@@ -215,11 +215,13 @@ bool EXT2::create(const Partition &new_partition)
         else
             features = " -O ^64bit";
     }
-    cmd = QString("%1%2%3%4%5%6%7").arg(mkfs_cmd).arg(" -F").arg(features).arg(" -L ").
-          arg(new_partition.get_filesystem_label()).arg(" ").arg(new_partition.get_path());
+    QString strlabel = new_partition.get_filesystem_label();
+    strlabel = strlabel.isEmpty() ? strlabel : QString(" -L %1").arg(strlabel);
+    cmd = QString("%1%2%3%4%5%6").arg(mkfs_cmd).arg(" -F").arg(features).
+          arg(strlabel).arg(" ").arg(new_partition.get_path());
     qDebug() << __FUNCTION__ << cmd;
     Utils::executcmd(cmd, output, error);
-
+    qDebug() << __FUNCTION__ << output << error;
     return true;
 }
 

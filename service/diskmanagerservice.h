@@ -26,6 +26,7 @@ public Q_SLOTS:
     Q_SCRIPTABLE bool unmount();
     Q_SCRIPTABLE bool mount(const QString &mountpath);
     Q_SCRIPTABLE QStringList getallsupportfs();
+    Q_SCRIPTABLE bool format(const QString &fstype, const QString &name = QString());
     Q_SCRIPTABLE stCustest interfacetest();
 
 private:

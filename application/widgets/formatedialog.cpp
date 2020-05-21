@@ -32,7 +32,9 @@ void FormateDialog::initUi()
     DLabel *pformatname = new DLabel(tr("File format:"), this);
     pformatcombo = new DComboBox(this);
     pformatcombo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
-    pformatcombo->addItems(DMDbusHandler::instance()->getallsupportfs());
+    QStringList fslist = DMDbusHandler::instance()->getallsupportfs();
+    pformatcombo->addItems(fslist);
+    pformatcombo->setCurrentIndex(fslist.indexOf(Utils::FSTypeToString((FSType)info.fstype)));
     hlayoutformat->addWidget(pformatname);
     hlayoutformat->addWidget(pformatcombo);
     mainLayout->addWidget(titleLabel);

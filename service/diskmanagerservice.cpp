@@ -61,6 +61,11 @@ QStringList DiskManagerService::getallsupportfs()
     return m_partedcore->getallsupportfs();
 }
 
+bool DiskManagerService::format(const QString &fstype, const QString &name)
+{
+    return m_partedcore->format(fstype, name);
+}
+
 stCustest DiskManagerService::interfacetest()
 {
     stCustest stcus;

@@ -82,17 +82,6 @@ void TitleWidget::showPartInfoWidget()
 
 void TitleWidget::showFormateInfoWidget()
 {
-//    if (!tipPartDialog->isVisible()) {
-//        tipPartDialog->getFlagShow(1);
-//        controlButton = 2;
-//    }
-//    connect(tipPartDialog->getButton(1), &QAbstractButton::clicked, this, [ = ] {
-//        if (controlButton == 2)
-//        {
-//            qDebug() << "XXX will be formatted";
-
-//        }
-//    });
 
     FormateDialog dlg;
     dlg.exec();
@@ -136,6 +125,7 @@ void TitleWidget::updateBtnStatus()
         m_btnunmount->setDisabled(false);
         m_btnresize->setDisabled(true);
     } else {
+        //需判断扩展分区上是否无分区，否则认为不可操作，此处省略操作
         if (FS_EXTENDED == info.fstype) {
             m_btnparted->setDisabled(true);
             m_btnformat->setDisabled(true);
@@ -145,15 +135,20 @@ void TitleWidget::updateBtnStatus()
         } else {
             m_btnunmount->setDisabled(true);
             if (info.fstype == FS_UNALLOCATED) {
-                m_btnparted->setDisabled(true);
+                m_btnparted->setDisabled(false);
                 m_btnformat->setDisabled(true);
+                m_btnmount->setDisabled(true);
+                m_btnresize->setDisabled(true);
+            } else if (info.fstype == FS_UNKNOWN) {
+                m_btnparted->setDisabled(true);
+                m_btnformat->setDisabled(false);
                 m_btnmount->setDisabled(true);
                 m_btnresize->setDisabled(true);
             } else {
                 m_btnparted->setDisabled(true);
                 m_btnformat->setDisabled(false);
                 m_btnmount->setDisabled(false);
-                m_btnresize->setDisabled(false);
+                m_btnresize->setDisabled(true);
             }
         }
     }

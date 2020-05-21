@@ -184,7 +184,9 @@ Sector Partition::get_sector_length() const
 
 QString Partition::get_filesystem_label() const
 {
-    return filesystem_label;
+    if (have_filesystem_label)
+        return filesystem_label;
+    return "";
 }
 
 PartitionInfo Partition::getPartitionInfo()

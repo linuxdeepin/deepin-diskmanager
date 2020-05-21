@@ -33,13 +33,6 @@ void PartChartShowing::getData(const QString &totalsize, const QVector<double>si
     qDebug() << total << partsize;
 }
 
-
-
-//PartChartShowing::PartChartShowing(int used, int trueused, int noused, QWidget *parent): m_used(used), m_tureused(trueused), m_noused(noused)
-//{
-
-//}
-
 void PartChartShowing::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
@@ -86,10 +79,6 @@ void PartChartShowing::paintEvent(QPaintEvent *event)
 
 
     QWidget::paintEvent(event);
-
-
-
-    update();
 
     addPaint(&painter);
     painter.restore();
@@ -138,9 +127,7 @@ void PartChartShowing::addPaint(QPainter *painter)
 
             painter->fillPath(path[i], QBrush(QColor(this->palette().highlight().color())));
 
-            curPoint = QPoint(static_cast<int>(path[i].currentPosition().x()), 0);
-            getCurRect = QRect(curPoint.x(), curPoint.y(), static_cast<int>((partsize.at(i) / total) * paintRect.width()), paintRect.height());
-            allRect.append(getCurRect);
+
 //            if (flag == 2) {
 //                painter->setPen(QColor(this->palette().highlight().color()));
 //                painter->drawPath(path[i]);
@@ -160,7 +147,11 @@ void PartChartShowing::addPaint(QPainter *painter)
             painter->fillPath(path[partsize.size() - 1], QBrush(QColor(this->palette().highlight().color())));
         }
 
-
+//        curPoint = QPoint(static_cast<int>(path[i].currentPosition().x()), 0);
+//        getCurRect = QRect(curPoint.x(), curPoint.y(), static_cast<int>((partsize.at(i) / total) * paintRect.width()), paintRect.height());
+//        allRect.append(getCurRect);
+        allpath = path;
+        qDebug() << allpath.size() << partsize.size();
     }
 }
 
@@ -181,19 +172,17 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
     }
     if (partsize.size() > 0) {
         if (event->button() == Qt::LeftButton) {
-            qDebug() << partsize.size();
-            for (int i = 0; allRect.size(); i++) {
-                if (x > allRect[i].x() && x < (allRect[i].width() + allRect[i].x()) && y > allRect[i].y() && y < (allRect[i].y() + allRect[i].height())) {
-                    qDebug() << "232323" ;
+            for (int i = 0; i < partsize.size(); i++) {
+                int width = static_cast<int>((partsize.at(i) / total) * this->width());
+                if (x > allpath[i].currentPosition().x() && x < (allpath[i].currentPosition().x() + width) && y > 10 && y < 45) {
                     flag = 2;
+                    qDebug() << flag  << event->pos();
+                    number = i;
+                    qDebug() << i;
                 }
             }
-
-
-
-
         }
     }
-    update();
+    emit sendFlag(flag, number);
 }
 

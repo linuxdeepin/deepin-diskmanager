@@ -270,7 +270,7 @@ void PartitionWidget::getPartitionInfo(const PartitionInfo &data, const QString 
         total = total * 1024;
         partComCobox->setCurrentText("MB");
     }
-
+    totalSize = total;
     hSlider->setMaximum(total);
     initTopFrameData();
 
@@ -296,6 +296,20 @@ void PartitionWidget::initConnection()
     connect(applyBtn, &DPushButton::clicked, this, &PartitionWidget::applyBtnSlot);
     connect(reveBtn, &DPushButton::clicked, this, &PartitionWidget::revertBtnSlot);
     connect(cancleBtn, &DPushButton::clicked, this, &PartitionWidget::cancelBtnSlot);
+    connect(partChartWidget, &PartChartShowing::sendFlag, this, &PartitionWidget::showSelectPathInfo);
+}
+
+void PartitionWidget::showSelectPathInfo(const int &flag, const int &num)
+{
+    qDebug() << flag;
+    if (flag == 1) {
+        partNameEdit->setText(tr("Free Space"));
+        partSizeEdit->setText(QString::number(totalSize));
+    }
+    if (flag == 2) {
+        partNameEdit->setText(partName.at(num));
+        partSizeEdit->setText(QString::number(sizeInfo.at(num)));
+    }
 }
 
 void PartitionWidget::paintEvent(QPaintEvent *event)
@@ -333,11 +347,10 @@ void PartitionWidget::addPartitionSlot()
     if (partComCobox->currentText() == "GB") {
         if (partSizeEdit->text().toDouble() > total)
             return;
-        if (total < 1 && partComCobox->currentText() == "MB") {
-            total = total * 1024;
-        }
     }
-
+    if (total < 1 && partComCobox->currentText() == "MB") {
+        total = total * 1024;
+    }
     for (int j = 0; j < sizeInfo.count(); j++) {
         sum = sum + sizeInfo.at(j);
         if (sum > total)

@@ -42,7 +42,7 @@ public:
     void getData(const QString &totalsize, const QVector<double> sizeInfo);
 
 signals:
-
+    void sendFlag(int flag, int num);
 public slots:
 
 
@@ -59,8 +59,10 @@ private:
     QVector<double> partsize;
     QPoint curPoint;
     QRect getCurRect;
-    QVector<QRect> allRect;
     QVector<QColor> color;
+    QVector<QPainterPath> allpath;
+    int number = 0;
+
 
 
 };

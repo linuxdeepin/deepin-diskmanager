@@ -73,6 +73,7 @@ public slots:
     void applyBtnSlot();
     void revertBtnSlot();
     void cancelBtnSlot();
+    void showSelectPathInfo(const int &flag, const int &num);
 private:
     QWidget *mainFrame;
     DFrame *topFrame;
@@ -122,7 +123,7 @@ private:
     QString partPath;
     QString partSize;
     QString partFstype;
-
+    double totalSize = 0.00;
 
     int count = 0;
 

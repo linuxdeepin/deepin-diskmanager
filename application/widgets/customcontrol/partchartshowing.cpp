@@ -18,10 +18,11 @@
 #include <QDebug>
 PartChartShowing::PartChartShowing(QWidget *parent) : QWidget(parent)
 {
-
+    tip = new DToolTip(tr("1213"), false);
+    tip->hide();
 }
 
-void PartChartShowing::getData(const QString &totalsize, const QVector<double>sizeInfo)
+void PartChartShowing::getData(const QString &totalsize, const QVector<double>sizeInfo, const QVector<QString> partNames)
 {
     int i = totalsize.lastIndexOf("G");
     total = totalsize.left(i).toDouble();
@@ -29,6 +30,7 @@ void PartChartShowing::getData(const QString &totalsize, const QVector<double>si
         total = total * 1024;
     }
     partsize = sizeInfo;
+    partname = partNames;
 //    path = paintpath;
     qDebug() << total << partsize;
 }
@@ -146,10 +148,6 @@ void PartChartShowing::addPaint(QPainter *painter)
                                             270, 90);
             painter->fillPath(path[partsize.size() - 1], QBrush(QColor(this->palette().highlight().color())));
         }
-
-//        curPoint = QPoint(static_cast<int>(path[i].currentPosition().x()), 0);
-//        getCurRect = QRect(curPoint.x(), curPoint.y(), static_cast<int>((partsize.at(i) / total) * paintRect.width()), paintRect.height());
-//        allRect.append(getCurRect);
         allpath = path;
         qDebug() << allpath.size() << partsize.size();
     }
@@ -161,11 +159,12 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
     int y = event->pos().y();
     if (partsize.size() == 0) {
         if (event->button() == Qt::LeftButton) {
-            qDebug() << partsize.size();
+//            qDebug() << partsize.size();
             if (x > 0 && x < this->width() && y > 10 && y < 45) {
                 flag = 1;
                 qDebug() << flag << event->pos();
-
+//                tip->show(QPoint(x, y - 10), 1);
+//                tip->setText(tr("Free Space"));
             }
 
         }
@@ -184,5 +183,6 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
         }
     }
     emit sendFlag(flag, number);
+    update();
 }
 

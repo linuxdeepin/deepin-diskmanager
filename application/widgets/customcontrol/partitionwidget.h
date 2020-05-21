@@ -34,6 +34,7 @@
 #include <DHorizontalLine>
 #include <DMessageManager>
 #include <DSlider>
+#include <DFontSizeManager>
 #include "partitioninfo.h"
 #include "utils.h"
 #include "partchartshowing.h"

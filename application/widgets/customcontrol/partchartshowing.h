@@ -28,6 +28,7 @@
 #include <QPointF>
 #include <QLine>
 #include <QMouseEvent>
+#include <DToolTip>
 
 DWIDGET_USE_NAMESPACE
 
@@ -39,7 +40,7 @@ class PartChartShowing : public QWidget
 public:
     explicit PartChartShowing(QWidget *parent = nullptr);
 //    PartChartShowing(int used, int trueused, int noused, QWidget *parent = nullptr);
-    void getData(const QString &totalsize, const QVector<double> sizeInfo);
+    void getData(const QString &totalsize, const QVector<double> sizeInfo, const QVector<QString> partNames);
 
 signals:
     void sendFlag(int flag, int num);
@@ -59,8 +60,10 @@ private:
     QVector<double> partsize;
     QPoint curPoint;
     QRect getCurRect;
-    QVector<QColor> color;
+//    QVector<QColor> color;
     QVector<QPainterPath> allpath;
+    QVector<QString> partname;
+    DToolTip *tip;
     int number = 0;
 
 

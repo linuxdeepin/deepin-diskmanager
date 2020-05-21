@@ -114,8 +114,9 @@ FS EXT2::get_filesystem_support()
 
 void EXT2::set_used_sectors(Partition &partition)
 {
-    QString output, error, strmatch;
-    if (! Utils::executcmd(QString("dumpe2fs -h %1").arg(partition.get_path()), output, error)) {
+    QString output, error, strmatch, strcmd;
+    strcmd = QString("dumpe2fs -h %1").arg(partition.get_path());
+    if (! Utils::executcmd(strcmd, output, error)) {
         strmatch = ("Block count:");
         int index = output.indexOf(strmatch);
         if (index >= output .length() ||
@@ -173,7 +174,7 @@ void EXT2::set_used_sectors(Partition &partition)
 void EXT2::read_label(Partition &partition)
 {
     QString output, error;
-    if (! Utils::executcmd(QString(" %1").arg(partition.get_path()), output, error)) {
+    if (! Utils::executcmd(QString("e2label %1").arg(partition.get_path()), output, error)) {
         partition.set_filesystem_label(output.trimmed());
     }
     qDebug() << __FUNCTION__ << output << error;
@@ -219,9 +220,9 @@ bool EXT2::create(const Partition &new_partition)
     strlabel = strlabel.isEmpty() ? strlabel : QString(" -L %1").arg(strlabel);
     cmd = QString("%1%2%3%4%5%6").arg(mkfs_cmd).arg(" -F").arg(features).
           arg(strlabel).arg(" ").arg(new_partition.get_path());
-    qDebug() << __FUNCTION__ << cmd;
+    qDebug() << " EXT2::create***** " << cmd;
     Utils::executcmd(cmd, output, error);
-    qDebug() << __FUNCTION__ << output << error;
+    qDebug() << "EXT2::create-------" << output << error;
     return true;
 }
 

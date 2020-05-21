@@ -215,10 +215,10 @@ PartitionInfo Partition::getPartitionInfo()
     info.busy = busy;
     info.fs_readonly = fs_readonly;
     info.mountpoints = mountpoints;
-    qDebug() << info.device_path << info.partition_number << info.type << info.status << info.alignment << info.fstype << info.uuid
-             << info.name << info.sector_start << info.sector_end << info.sectors_used << info.sectors_unused
-             << info.sectors_unallocated << info.significant_threshold << info.free_space_before
-             << info.sector_size << info.fs_block_size << info.path << info.filesystem_label;
+//    qDebug() << info.device_path << info.partition_number << info.type << info.status << info.alignment << info.fstype << info.uuid
+//             << info.name << info.sector_start << info.sector_end << info.sectors_used << info.sectors_unused
+//             << info.sectors_unallocated << info.significant_threshold << info.free_space_before
+//             << info.sector_size << info.fs_block_size << info.path << info.filesystem_label;
     return  info;
 }
 

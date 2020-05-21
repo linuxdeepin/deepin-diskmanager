@@ -9,6 +9,16 @@ const QString DiskManagerPath = "/com/deepin/diskmanager";
 
 int main(int argc, char *argv[])
 {
+    //set env otherwise utils excutecmd  excute command failed
+    QString PATH = qgetenv("PATH");
+
+    if (PATH.isEmpty()) {
+        PATH = "/usr/bin";
+    }
+    PATH += ":/usr/sbin";
+    PATH += ":/sbin";
+    qputenv("PATH", PATH.toLatin1());
+
     QCoreApplication a(argc, argv);
     a.setOrganizationName("deepin");
     a.setApplicationName("deepin-diskmanager-service");

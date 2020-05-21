@@ -79,10 +79,10 @@ public Q_SLOTS: // METHODS
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QStringLiteral("getallsupportfs"), argumentList);
     }
-    inline QDBusPendingReply<bool>format(const QString &type)
+    inline QDBusPendingReply<bool>format(const QString &type, const QString &name)
     {
         QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(type);
+        argumentList << QVariant::fromValue(type) << QVariant::fromValue(name);
         return asyncCallWithArgumentList(QStringLiteral("format"), argumentList);
     }
 

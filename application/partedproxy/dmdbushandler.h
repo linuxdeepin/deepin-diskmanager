@@ -19,7 +19,7 @@ public:
     bool mount(const QString &mountpath);
     bool unmount();
     QStringList getallsupportfs();
-    bool format(const QString &fstype);
+    bool format(const QString &fstype, const QString &name = QString());
 
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);

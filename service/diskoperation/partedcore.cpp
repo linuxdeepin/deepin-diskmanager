@@ -1362,7 +1362,10 @@ bool PartedCore::format(const QString &fstype, const QString &name)
 {
     Partition part = curpartition;
     part.fstype = Utils::StringToFSType(fstype);
-    return formatpartition(part);
+    part.set_filesystem_label(name);
+    bool bsuccess = formatpartition(part);
+    emit sigRefreshDeviceInfo();
+    return bsuccess;
 }
 
 QStringList PartedCore::getallsupportfs()

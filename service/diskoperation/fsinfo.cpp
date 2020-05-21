@@ -164,7 +164,7 @@ bool FsInfo::run_blkid_load_cache(const QString &path)
             if (entry_path.length() > 0) {
                 entry_path = "/" + entry_path;
                 fs_entry.path = BlockSpecial(entry_path);
-                fs_entry.type = Utils::regexp_label(strlist[i], "(?<=TYPE=\").*?(?=\")");
+                fs_entry.type = Utils::regexp_label(strlist[i], "(?<= TYPE=\").*?(?=\")");
                 fs_entry.sec_type = Utils::regexp_label(strlist[i], " SEC_TYPE=\"([^\"]*)\"");
                 fs_entry.uuid = Utils::regexp_label(strlist[i], "(?<=UUID=\").*?(?=\")");
                 fs_entry.label = Utils::regexp_label(strlist[i], "(?<=LABEL=\").*?(?=\" )");;

@@ -37,7 +37,7 @@ DMDbusHandler::DMDbusHandler(QObject *parent) : QObject(parent)
 void DMDbusHandler::initConnection()
 {
     connect(m_dbus, &DMDBusInterface::MessageReport, this, &DMDbusHandler::MessageReport);
-    connect(m_dbus, &DMDBusInterface::sigUpdateDeviceInfo, this, &DMDbusHandler::sigUpdateDeviceInfo);
+    //  connect(m_dbus, &DMDBusInterface::sigUpdateDeviceInfo, this, &DMDbusHandler::sigUpdateDeviceInfo);
     connect(m_dbus, &DMDBusInterface::sigUpdateDeviceInfo, this, &DMDbusHandler::slotUpdateDeviceInfo);
 }
 
@@ -50,9 +50,11 @@ void DMDbusHandler::slotsetCurSelect(const QString &devicepath, const QString &p
         if (it != m_devicemap.end()) {
             for (PartitionInfo info : it.value().partition) {
                 if (info.path == partitionpath) {
+                    qDebug() << info.partition_number << info.path << Utils::FSTypeToString((FSType)info.fstype);
                     m_curpartitioninfo = info;
                     break;
                 } else if (info.sector_start == start && info.sector_end == end) {
+                    qDebug() << info.partition_number << info.path << Utils::FSTypeToString((FSType)info.fstype);
                     m_curpartitioninfo = info;
                     break;
                 }
@@ -125,11 +127,11 @@ QStringList DMDbusHandler::getallsupportfs()
     return m_supportfs;
 }
 
-bool DMDbusHandler::format(const QString &fstype)
+bool DMDbusHandler::format(const QString &fstype, const QString &name)
 {
     bool success = false;
-    QDBusPendingReply<bool> reply = m_dbus->format(fstype);
-    reply.waitForFinished();
+    QDBusPendingReply<bool> reply = m_dbus->format(fstype, name);
+    // reply.waitForFinished();
     if (reply.isError()) {
         qDebug() << reply.error().message();
     } else {
@@ -148,19 +150,19 @@ void DMDbusHandler::slotUpdateDeviceInfo(const DeviceInfoMap &infomap)
     m_devicemap = infomap;
     for (auto it = infomap.begin(); it != infomap.end(); it++) {
         DeviceInfo info = it.value();
-        qDebug() << info.sector_size;
-        qDebug() << __FUNCTION__ << info.m_path << info.length << info.heads << info.sectors
-                 << info.cylinders << info.cylsize << info.model << info.serial_number << info.disktype
-                 << info.sector_size << info.max_prims << info.highest_busy << info.readonly
-                 << info.max_partition_name_length;
+//        qDebug() << info.sector_size;
+//        qDebug() << __FUNCTION__ << info.m_path << info.length << info.heads << info.sectors
+//                 << info.cylinders << info.cylsize << info.model << info.serial_number << info.disktype
+//                 << info.sector_size << info.max_prims << info.highest_busy << info.readonly
+//                 << info.max_partition_name_length;
         for (auto it = info.partition.begin(); it != info.partition.end(); it++) {
-            qDebug() << __FUNCTION__ << it->device_path << it->partition_number << it->type << it->status << it->alignment << it->fstype << it->uuid
-                     << it->name << it->sector_start << it->sector_end << it->sectors_used << it->sectors_unused
-                     << it->sectors_unallocated << it->significant_threshold << it->free_space_before
-                     << it->sector_size << it->fs_block_size << it->path << it->filesystem_label;
-            qDebug() << it->sector_end << it->sector_start << Utils::sector_to_unit(it->sector_size, it->sector_end - it->sector_start, SIZE_UNIT::UNIT_GIB);
-            qDebug() << it->name << it->device_path << it->partition_number << it->sectors_used << it->sectors_unused << it->sector_start << it->sector_end
-                     << it->busy << it->fs_readonly << it->inside_extended << it->mountpoints;
+//            qDebug() << __FUNCTION__ << it->device_path << it->partition_number << it->type << it->status << it->alignment << it->fstype << it->uuid
+//                     << it->name << it->sector_start << it->sector_end << it->sectors_used << it->sectors_unused
+//                     << it->sectors_unallocated << it->significant_threshold << it->free_space_before
+//                     << it->sector_size << it->fs_block_size << it->path << it->filesystem_label;
+//            qDebug() << it->sector_end << it->sector_start << Utils::sector_to_unit(it->sector_size, it->sector_end - it->sector_start, SIZE_UNIT::UNIT_GIB);
+//            qDebug() << it->name << it->device_path << it->partition_number << it->sectors_used << it->sectors_unused << it->sector_start << it->sector_end
+//                     << it->busy << it->fs_readonly << it->inside_extended << it->mountpoints;
 
 
 //            qDebug() << __FUNCTION__ << it->device_path << it->partition_number << it->type << it->status << it->alignment << it->fstype << it->uuid
@@ -168,10 +170,10 @@ void DMDbusHandler::slotUpdateDeviceInfo(const DeviceInfoMap &infomap)
 //                     << it->sectors_unallocated << it->significant_threshold << it->free_space_before
 //                     << it->sector_size << it->fs_block_size << it->path << it->filesystem_label;
 //            qDebug() << it->sector_end << it->sector_start << Utils::sector_to_unit(it->sector_size, it->sector_end - it->sector_start, SIZE_UNIT::UNIT_GIB);
-            qDebug() << it->name << it->device_path << it->partition_number << it->sectors_used << it->sectors_unused << it->sector_start << it->sector_end;
+            //        qDebug() << it->name << it->device_path << it->partition_number << it->sectors_used << it->sectors_unused << it->sector_start << it->sector_end;
 
-
-            qDebug() << it->filesystem_label;
+            if (it->path == "/dev/sda3")
+                qDebug() << it->partition_number << it->path << Utils::FSTypeToString((FSType)it->fstype);
         }
     }
     emit sigUpdateDeviceInfo();

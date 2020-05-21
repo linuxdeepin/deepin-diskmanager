@@ -364,7 +364,14 @@ void PartitionWidget::addPartitionSlot()
         remButton->setEnabled(false);
     else
         remButton->setEnabled(true);
-    partChartWidget->getData(partSize, sizeInfo);
+    QColor color("#70BEFF");
+    QColor color1("#4293FF");
+    QColor color2("#6751E4");
+    QColor color3("#FA7404");
+    QColor color4("#FFD027");
+    QColor color5("#2CCBBE");
+    basecolor = QVector<QColor> {color, color1, color2, color3, color4, color5};
+    partChartWidget->getData(partSize, sizeInfo, basecolor);
     qDebug() << sum << total << size;
     partChartWidget->update();
     partSizeEdit->setText("");
@@ -378,7 +385,7 @@ void PartitionWidget::remPartitionSlot()
     sizeInfo.removeAt(sizeInfo.size() - 1);
     if (sizeInfo.size() == 0)
         remButton->setEnabled(false);
-    partChartWidget->getData(partSize, sizeInfo);
+    partChartWidget->getData(partSize, sizeInfo, basecolor);
     partChartWidget->update();
 
 }
@@ -387,7 +394,7 @@ void PartitionWidget::applyBtnSlot()
 {
     sizeInfo.clear();
     partName.clear();
-    partChartWidget->getData(partSize, sizeInfo);
+    partChartWidget->getData(partSize, sizeInfo, basecolor);
     qDebug() << sizeInfo;
     partChartWidget->update();
     this->close();
@@ -398,7 +405,7 @@ void PartitionWidget::revertBtnSlot()
     sizeInfo.clear();
     partName.clear();
     hSlider->setValue(0);
-    partChartWidget->getData(partSize, sizeInfo);
+    partChartWidget->getData(partSize, sizeInfo, basecolor);
     partChartWidget->update();
 }
 

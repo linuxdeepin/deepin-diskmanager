@@ -132,6 +132,7 @@ private:
 //    QHash<int, QVector<double>> sizeinfos;
     QVector<double> sizeInfo;
     QVector<QString> partName;
+    QVector <QColor> basecolor;
 
 
 };

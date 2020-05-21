@@ -40,7 +40,7 @@ void PartitionWidget::initUi()
     font.setPointSize(11);
     titleLabel->setFont(font);
     titleLabel->setAlignment(Qt::AlignCenter);
-    tipLabel = new DLabel(tr("Click the '+' button to increase the number of partitions on the device,and click each partition to change the name formate"), mainFrame);
+    tipLabel = new DLabel(tr("Click the '+' button to increase the number of partitions on the device,\n and click each partition to change the name formate"), mainFrame);
     tipLabel->setAlignment(Qt::AlignCenter);
     topFrame = new DFrame(mainFrame);
     topFrameSetting();
@@ -93,32 +93,32 @@ void PartitionWidget::topFrameSetting()
 //
     QHBoxLayout *line4Layout = new QHBoxLayout();
     allMemoryLabel  = new DLabel(tr("Total Capacity:"), topFrame);
+//    allMemoryLabel->setMinimumWidth(100);
     allMemory = new DLabel("256GB", topFrame);
+    allMemory->setMinimumWidth(90);
+    allMemory->setAlignment(Qt::AlignLeft);
     selectedPartLabel = new DLabel(tr("Selected Partition:"), topFrame);
     selectedPartition = new DLabel("sda3");
     line4Layout->addWidget(allMemoryLabel);
     line4Layout->addWidget(allMemory);
-    allMemory->setMinimumWidth(70);
     line4Layout->addWidget(selectedPartLabel);
     line4Layout->addWidget(selectedPartition);
-    line4Layout->setContentsMargins(0, 0, 360, 0);
-//    line4Layout->addStretch();
+    line4Layout->addStretch();
 
     QHBoxLayout *line2Layout = new QHBoxLayout();
     deviceNameLabel = new DLabel(tr("Device:"), topFrame);
-    deviceNameLabel->setMaximumWidth(40);
+//    deviceNameLabel->setMinimumWidth(80);
     deviceName = new DLabel("/dev/sda", topFrame);
-    deviceName->setMinimumWidth(115);
+    deviceName->setMinimumWidth(140);
     deviceName->setAlignment(Qt::AlignLeft);
     deviceFormateLabel = new DLabel(tr("Formate:"), topFrame);
-    deviceFormateLabel->setMaximumWidth(50);
+
     deviceFormate = new DLabel("EXT3", topFrame);
     line2Layout->addWidget(deviceNameLabel);
     line2Layout->addWidget(deviceName);
     line2Layout->addWidget(deviceFormateLabel);
     line2Layout->addWidget(deviceFormate);
-//    line2Layout->addStretch();
-    line2Layout->setContentsMargins(0, 0, 370, 0);
+    line2Layout->addStretch();
 
     vLayout->addLayout(line1Layout);
     vLayout->addLayout(line4Layout);
@@ -167,15 +167,14 @@ void PartitionWidget::botFrameSetting()
 void PartitionWidget::partInfoShowing()
 {
     QVBoxLayout *vLayout = new QVBoxLayout(partWidget);
-    QHBoxLayout *line1Layout = new QHBoxLayout();
-    QFont font1;
-    font1.setPointSize(11);
-    partInfoLabel = new DLabel(tr("Partition Information"), partWidget);
-    partInfoLabel->setFont(font1);
-    partInfoLabel->setMaximumSize(100, 50);
+//    QHBoxLayout *line1Layout = new QHBoxLayout();
 
-    line1Layout->addWidget(partInfoLabel);
-    line1Layout->addStretch();
+    partInfoLabel = new DLabel(tr("Partition Information"), partWidget);
+    DFontSizeManager::instance()->bind(partInfoLabel, DFontSizeManager::T6);
+//    partInfoLabel->setStyleSheet("border :1px solid red");
+//    partInfoLabel->setFixedWidth(100);
+
+
 
     QHBoxLayout *line2Layout = new QHBoxLayout();
     line2Layout->setContentsMargins(0, 10, 0, 10);
@@ -184,8 +183,10 @@ void PartitionWidget::partInfoShowing()
 
     addButton = new DIconButton(DStyle::SP_IncreaseElement);
     remButton = new DIconButton(DStyle::SP_DecreaseElement);
-    partInfoLabel->setMaximumWidth(200);
-    line2Layout1->addWidget(partDoLabel, 1, Qt::AlignLeft);
+//    partDoLabel->setFixedWidth(140);
+    line2Layout1->addWidget(partDoLabel);
+//    line2Layout1->addSpacing(115);
+    line2Layout1->addStretch();
     line2Layout1->addWidget(addButton);
     line2Layout1->addWidget(remButton);
     if (sizeInfo.size() == 0)
@@ -193,28 +194,31 @@ void PartitionWidget::partInfoShowing()
     else
         remButton->setEnabled(true);
     QHBoxLayout *line2Layout2 = new QHBoxLayout();
-    line2Layout2->setContentsMargins(50, 0, 0, 0);
+//
     partNameLabel = new DLabel(tr("Partition name:"), partWidget);
     partNameEdit = new DLineEdit(partWidget);
-    partNameEdit->setMinimumWidth(250);
+//    partNameEdit->setMinimumWidth(260);
     if (partNameEdit->text().isEmpty()) {
         partNameEdit->lineEdit()->setPlaceholderText("SSD256G");
     }
-    partNameLabel->setMaximumHeight(20);
+//    partNameLabel->setMaximumHeight(20);
+//    partNameLabel->setFixedWidth(100);
     line2Layout2->addWidget(partNameLabel);
     line2Layout2->addWidget(partNameEdit);
     line2Layout->addLayout(line2Layout1);
     line2Layout->addLayout(line2Layout2);
-
+    line2Layout1->setContentsMargins(0, 0, 30, 0);
     QHBoxLayout *line3Layout = new QHBoxLayout();
     QHBoxLayout *line3Layout1 = new QHBoxLayout();
     partFormateLabel = new DLabel(tr("Partiton formate:"), partWidget);
+
     partFormateCombox = new DComboBox(partWidget);
     partFormateCombox->addItem("APFS");
+    partFormateCombox->setFixedWidth(220);
     line3Layout1->addWidget(partFormateLabel, 1);
     line3Layout1->addWidget(partFormateCombox, 3);
     QHBoxLayout *line3Layout2 = new QHBoxLayout();
-    line3Layout2->setContentsMargins(50, 0, 0, 0);
+    line3Layout2->setContentsMargins(25, 0, 0, 0);
     partSizeLabel = new DLabel(tr("Partition size:"), partWidget);
     hSlider = new DSlider(Qt::Horizontal);
     partSizeEdit = new DLineEdit(partWidget);
@@ -233,7 +237,7 @@ void PartitionWidget::partInfoShowing()
     line3Layout->addLayout(line3Layout1);
     line3Layout->addLayout(line3Layout2);
 //    line3Layout->addLayout(line)
-    vLayout->addLayout(line1Layout);
+    vLayout->addWidget(partInfoLabel);
     vLayout->addLayout(line2Layout);
     vLayout->addLayout(line3Layout);
     vLayout->addStretch();
@@ -364,6 +368,7 @@ void PartitionWidget::addPartitionSlot()
         remButton->setEnabled(false);
     else
         remButton->setEnabled(true);
+
     QColor color("#70BEFF");
     QColor color1("#4293FF");
     QColor color2("#6751E4");
@@ -371,7 +376,8 @@ void PartitionWidget::addPartitionSlot()
     QColor color4("#FFD027");
     QColor color5("#2CCBBE");
     basecolor = QVector<QColor> {color, color1, color2, color3, color4, color5};
-    partChartWidget->getData(partSize, sizeInfo, basecolor);
+    partChartWidget->getData(partSize, sizeInfo, partName, basecolor);
+
     qDebug() << sum << total << size;
     partChartWidget->update();
     partSizeEdit->setText("");
@@ -383,9 +389,10 @@ void PartitionWidget::remPartitionSlot()
     if (sizeInfo.size() == 0)
         return;
     sizeInfo.removeAt(sizeInfo.size() - 1);
+    partName.removeAt(partName.size() - 1);
     if (sizeInfo.size() == 0)
         remButton->setEnabled(false);
-    partChartWidget->getData(partSize, sizeInfo, basecolor);
+    partChartWidget->getData(partSize, sizeInfo, partName, basecolor);
     partChartWidget->update();
 
 }
@@ -394,7 +401,7 @@ void PartitionWidget::applyBtnSlot()
 {
     sizeInfo.clear();
     partName.clear();
-    partChartWidget->getData(partSize, sizeInfo, basecolor);
+    partChartWidget->getData(partSize, sizeInfo, partName, basecolor);
     qDebug() << sizeInfo;
     partChartWidget->update();
     this->close();
@@ -405,7 +412,7 @@ void PartitionWidget::revertBtnSlot()
     sizeInfo.clear();
     partName.clear();
     hSlider->setValue(0);
-    partChartWidget->getData(partSize, sizeInfo, basecolor);
+    partChartWidget->getData(partSize, sizeInfo, partName, basecolor);
     partChartWidget->update();
 }
 

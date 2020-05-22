@@ -112,6 +112,8 @@ void PartChartShowing::addPaint(QPainter *painter)
     }
     for (int i = 0; i < partsize.size(); i++) {
         sum = sum + partsize.at(i);
+        qDebug() << sum;
+        qDebug() << partsize.at(i);
         if (i == 0) {
             path[0].moveTo(paintRect.topLeft() + QPoint(radius, 0));
             path[0].arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
@@ -151,14 +153,14 @@ void PartChartShowing::addPaint(QPainter *painter)
 //                painter->setPen(QColor(this->palette().highlight().color()));
 //                painter->drawPath(path[i]);
 //            }
-        } else if (sum >= total) {
+        } else if (i == partsize.size() - 1) {
             path[partsize.size() - 1].moveTo(paintRect.bottomRight() - QPoint(0, radius));
             path[partsize.size() - 1].lineTo(paintRect.topRight() + QPoint(0, radius));
             path[partsize.size() - 1].arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
                                                   QSize(radius * 2, radius * 2)),
                                             0, 90);
-            path[partsize.size() - 1].lineTo(path[partsize.size() - 2].currentPosition() + QPoint(static_cast<int>((partsize.at(partsize.size() - 2) / total))*paintRect.width(), 0));
-            path[partsize.size() - 1].lineTo(path[partsize.size() - 2].currentPosition() + QPoint(static_cast<int>((partsize.at(partsize.size() - 2) / total))*paintRect.width(), paintRect.height() - 1));
+            path[partsize.size() - 1].lineTo(path[partsize.size() - 2].currentPosition() + QPoint(((partsize.at(partsize.size() - 2) / total))*paintRect.width(), 0));
+            path[partsize.size() - 1].lineTo(path[partsize.size() - 2].currentPosition() + QPoint(((partsize.at(partsize.size() - 2) / total))*paintRect.width(), paintRect.height() - 1));
             path[partsize.size() - 1].lineTo(paintRect.bottomRight() - QPoint(radius, 0));
             path[partsize.size() - 1].arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
                                                   QSize(radius * 2, radius * 2)),

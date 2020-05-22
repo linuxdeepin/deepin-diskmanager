@@ -59,6 +59,7 @@ public:
     void getPartitionInfo(const PartitionInfo &data, const QString &disksize);
     void initTopFrameData();
     void initConnection();
+    double leaveSpace();
 
 
 signals:
@@ -125,7 +126,7 @@ private:
     QString partSize;
     QString partFstype;
     double totalSize = 0.00;
-
+    double total = 0.00;
     int count = 0;
 
 

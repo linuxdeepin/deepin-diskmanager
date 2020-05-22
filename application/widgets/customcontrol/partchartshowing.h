@@ -29,7 +29,6 @@
 #include <QLine>
 #include <QMouseEvent>
 #include <DToolTip>
-
 DWIDGET_USE_NAMESPACE
 
 
@@ -44,7 +43,7 @@ public:
 
 
 signals:
-    void sendFlag(int flag, int num);
+    void sendFlag(int flag, int num, int posX);
 public slots:
 
 
@@ -65,7 +64,6 @@ private:
     QVector<QPainterPath> allpath;
     int number = -1;
     QVector<QString> partname;
-    DToolTip *tip;
 
 
 

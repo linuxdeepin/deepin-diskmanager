@@ -16,10 +16,11 @@
 */
 #include "partchartshowing.h"
 #include <QDebug>
+#include <QHBoxLayout>
 PartChartShowing::PartChartShowing(QWidget *parent) : QWidget(parent)
 {
-    tip = new DToolTip(tr("1213"), false);
-    tip->hide();
+//    tip = new ToolTip(this);
+//    tip->hide();
 }
 
 
@@ -183,10 +184,11 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
                 flag = 1;
                 qDebug() << flag << event->pos();
 
+
+//                frame->setToolTip(tr("Free Space"));
+
                 update();
 
-//                tip->show(QPoint(x, y - 10), 1);
-//                tip->setText(tr("Free Space"));
 
             }
 
@@ -199,6 +201,7 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
                 if (x > allpath[i].currentPosition().x() && x < (allpath[i].currentPosition().x() + width) && y > 10 && y < 45) {
                     flag = 2;
                     qDebug() << flag  << event->pos();
+//                    frame->setToolTip(partname.at(i));
                     number = i;
                     qDebug() << i;
                     update();
@@ -206,7 +209,7 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
             }
         }
     }
-    emit sendFlag(flag, number);
+    emit sendFlag(flag, number, x);
 
 }
 

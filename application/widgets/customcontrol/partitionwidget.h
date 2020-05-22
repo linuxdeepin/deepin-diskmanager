@@ -34,11 +34,13 @@
 #include <DHorizontalLine>
 #include <DMessageManager>
 #include <DSlider>
+#include <DToolTip>
 #include <DFontSizeManager>
 #include "partitioninfo.h"
 #include "utils.h"
 #include "partchartshowing.h"
 #include "partedproxy/dmdbushandler.h"
+
 
 DWIDGET_USE_NAMESPACE
 
@@ -47,15 +49,16 @@ DWIDGET_USE_NAMESPACE
 class PartitionWidget : public DDialog
 {
     Q_OBJECT
+
 public:
     explicit PartitionWidget(QWidget *parent = nullptr);
+    ~PartitionWidget() override;
     void initUi();
 //    void initConnection();
     void topFrameSetting();
     void midFrameSetting();
     void botFrameSetting();
     void partInfoShowing();
-    void partedInfo();
     void getPartitionInfo(const PartitionInfo &data, const QString &disksize);
     void initTopFrameData();
     void initConnection();
@@ -67,6 +70,8 @@ signals:
     // QWidget interface
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
+    virtual bool eventFilter(QObject *watched, QEvent *event) override;
+    virtual void closeEvent(QCloseEvent *event) override;
 public slots:
     void slotSliderValueChanged(int value);
     void slotSetSliderValue();
@@ -75,7 +80,7 @@ public slots:
     void applyBtnSlot();
     void revertBtnSlot();
     void cancelBtnSlot();
-    void showSelectPathInfo(const int &flag, const int &num);
+    void showSelectPathInfo(const int &flag, const int &num, const int &posX);
 private:
     QWidget *mainFrame;
     DFrame *topFrame;
@@ -135,6 +140,8 @@ private:
     QVector<double> sizeInfo;
     QVector<QString> partName;
     QVector <QColor> basecolor;
+
+    DToolTip *tip;
 
 
 };

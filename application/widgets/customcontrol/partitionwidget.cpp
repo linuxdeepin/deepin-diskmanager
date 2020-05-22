@@ -18,19 +18,24 @@
 #include "widgets/widgetdeclare.h"
 #include <QDebug>
 
+
+
 PartitionWidget::PartitionWidget(QWidget *parent) : DDialog(parent)
 {
     initUi();
     initConnection();
 }
+PartitionWidget::~PartitionWidget()
+{
 
+}
 void PartitionWidget::initUi()
 {
     this->setModal(true);
     this->setFixedSize(800, 600);
     mainFrame = new QWidget(this);
 
-//    mainFrame->setAttribute(Qt::WA_TranslucentBackground, true);
+
 
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
     mainLayout->setSpacing(5);
@@ -171,10 +176,6 @@ void PartitionWidget::partInfoShowing()
 
     partInfoLabel = new DLabel(tr("Partition Information"), partWidget);
     DFontSizeManager::instance()->bind(partInfoLabel, DFontSizeManager::T6);
-//    partInfoLabel->setStyleSheet("border :1px solid red");
-//    partInfoLabel->setFixedWidth(100);
-
-
 
     QHBoxLayout *line2Layout = new QHBoxLayout();
     line2Layout->setContentsMargins(0, 10, 0, 10);
@@ -183,7 +184,8 @@ void PartitionWidget::partInfoShowing()
 
     addButton = new DIconButton(DStyle::SP_IncreaseElement);
     remButton = new DIconButton(DStyle::SP_DecreaseElement);
-//    partDoLabel->setFixedWidth(140);
+    remButton->setAttribute(Qt::WA_Hover, true);
+    remButton->installEventFilter(this);
     line2Layout1->addWidget(partDoLabel);
 //    line2Layout1->addSpacing(115);
     line2Layout1->addStretch();
@@ -244,16 +246,6 @@ void PartitionWidget::partInfoShowing()
 }
 
 
-
-
-
-void PartitionWidget::partedInfo()
-{
-
-
-
-}
-
 void PartitionWidget::getPartitionInfo(const PartitionInfo &data, const QString &disksize)
 {
     QString s_pdisksize = QString::number(Utils::sector_to_unit(data.sector_end - data.sector_start, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
@@ -313,16 +305,35 @@ double PartitionWidget::leaveSpace()
     return sum;
 }
 
-void PartitionWidget::showSelectPathInfo(const int &flag, const int &num)
+void PartitionWidget::showSelectPathInfo(const int &flag, const int &num, const int &posX)
 {
+    tip = new DToolTip("123", true);
+    tip->setParent(this);
+    tip->setFixedSize(100, 30);
+//    DPalette pa = DApplicationHelper::instance()->palette(tip);
+//    pa.setBrush(DPalette::Base, QColor(Qt::red));
+//    DApplicationHelper::instance()->setPalette(tip, pa);
+    DPalette palette = tip->palette();
+    palette.setColor(DPalette::Inactive, DPalette::ToolTipBase, Qt::red); //设置ToolTip背景色
+//    palette.setColor(DPalette::Inactive, DPalette::ToolTipText, QColor(102, 102, 102, 255)); //设置ToolTip字体色
+    tip->setPalette(palette);
     qDebug() << flag;
     if (flag == 1) {
-        partNameEdit->setText(tr("Free Space"));
-        partSizeEdit->setText(QString::number(total));
-    }
-    if (flag == 2) {
+        topFrame->setToolTip("12333");
+        tip->setText(tr("Free Space"));
+        tip->show(QPoint(posX, topFrame->height() + 130), 1000);
+        partNameEdit->lineEdit()->setPlaceholderText(tr("Free space"));
+        partSizeEdit->lineEdit()->setPlaceholderText(QString::number(total));
+
+    } else if (flag == 2) {
+        tip->setText(partName.at(num));
+        tip->show(QPoint(posX, topFrame->height() + 130), 1000);
         partNameEdit->setText(partName.at(num));
         partSizeEdit->setText(QString::number(sizeInfo.at(num)));
+
+    } else {
+        partNameEdit->lineEdit()->setPlaceholderText(tr("name"));
+        partSizeEdit->lineEdit()->setPlaceholderText(tr("size"));
     }
 }
 
@@ -332,6 +343,24 @@ void PartitionWidget::paintEvent(QPaintEvent *event)
 //       scroll->setAutoFillBackground(true);
     //    QWidget::paintEvent(event);
 }
+
+bool PartitionWidget::eventFilter(QObject *watched, QEvent *event)
+{
+    if (watched == remButton) {
+        if (event->type() == QEvent::HoverMove) {
+            remButton->setToolTip(tr("Delete the latest partition"));
+        }
+    }
+    return QWidget::eventFilter(watched, event);
+}
+
+void PartitionWidget::closeEvent(QCloseEvent *event)
+{
+//    this->setAttribute(Qt::WA_DeleteOnClose);
+}
+
+
+
 
 void PartitionWidget::slotSliderValueChanged(int value)
 {
@@ -347,7 +376,6 @@ void PartitionWidget::slotSetSliderValue()
 
 void PartitionWidget::addPartitionSlot()
 {
-
     if (partNameEdit->text().isEmpty()) {
         partNameEdit->showAlertMessage(tr("Partition name is not empty"));
     } else {
@@ -391,6 +419,8 @@ void PartitionWidget::addPartitionSlot()
     partSizeEdit->setText("");
     partNameEdit->setText("");
     hSlider->setValue(0);
+
+
 }
 
 void PartitionWidget::remPartitionSlot()

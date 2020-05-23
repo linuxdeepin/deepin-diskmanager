@@ -64,6 +64,7 @@ private:
     QVector<QPainterPath> allpath;
     int number = -1;
     QVector<QString> partname;
+    double sum = 0.00;
 
 
 

@@ -17,9 +17,7 @@ void FormateDialog::initUi()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
-    DLabel *titleLabel = new DLabel(tr("Tyr to format partition ") + info.path, this);
-    DFontSizeManager::instance()->bind(titleLabel, DFontSizeManager::T6);
-    titleLabel->setAlignment(Qt::AlignCenter);
+    setTitle(tr("Tyr to format partition ") + info.path);
     DLabel *tipLabel = new DLabel(tr("To format the disk, all data stored on the disk will be deleted and cannot be undone"), this);
     tipLabel ->setAlignment(Qt::AlignCenter);
     DFontSizeManager::instance()->bind(tipLabel, DFontSizeManager::T6);
@@ -37,13 +35,12 @@ void FormateDialog::initUi()
     pformatcombo->setCurrentIndex(fslist.indexOf(Utils::FSTypeToString((FSType)info.fstype)));
     hlayoutformat->addWidget(pformatname);
     hlayoutformat->addWidget(pformatcombo);
-    mainLayout->addWidget(titleLabel);
     mainLayout->addWidget(tipLabel);
     mainLayout->addLayout(hlayoutname);
     mainLayout->addLayout(hlayoutformat);
 
     addButton(tr("Cancel"), true, ButtonNormal);
-    okcode = addButton(tr("Ok"), false, ButtonWarning);
+    okcode = addButton(tr("Confirm"), false, ButtonWarning);
 }
 
 void FormateDialog::initConnection()

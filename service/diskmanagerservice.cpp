@@ -66,6 +66,11 @@ bool DiskManagerService::format(const QString &fstype, const QString &name)
     return m_partedcore->format(fstype, name);
 }
 
+bool DiskManagerService::resize(const PartitionInfo &info)
+{
+    return m_partedcore->resize(info);
+}
+
 stCustest DiskManagerService::interfacetest()
 {
     stCustest stcus;

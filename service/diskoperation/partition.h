@@ -14,6 +14,7 @@ public:
     virtual bool sector_usage_known() const;
     virtual Sector get_sectors_unallocated() const;
     void Reset() ;
+    void Reset(const PartitionInfo &info);
     //simple Set-functions.  only for convenience, since most members are public
     void Set(const QString &device_path, const QString &partition, int partition_number, PartitionType type, FSType fstype, Sector sector_start, Sector sector_end, Byte_Value sector_size, bool inside_extended, bool busy);
     void set_unpartitioned(const QString &device_path, const QString &partition_path, FSType fstype, Sector length, Byte_Value sector_size, bool busy);

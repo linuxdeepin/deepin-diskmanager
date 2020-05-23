@@ -10,6 +10,29 @@ PartitionInfo::PartitionInfo()
     // mountpoints.clear();
 }
 
+Sector PartitionInfo::get_sector_length() const
+{
+    if (sector_start >= 0 && sector_end >= 0)
+        return sector_end - sector_start + 1 ;
+    else
+        return -1 ;
+}
+
+Byte_Value PartitionInfo::get_byte_length() const
+{
+    if (get_sector_length() >= 0)
+        return get_sector_length() * sector_size ;
+    else
+        return -1 ;
+}
+
+bool PartitionInfo::operator==(const PartitionInfo &info) const
+{
+    return device_path == info .device_path &&
+           partition_number == info .partition_number &&
+           sector_start == info .sector_start &&
+           type == info .type ;
+}
 QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info)
 {
     argument.beginStructure();

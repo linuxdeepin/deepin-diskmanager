@@ -105,6 +105,19 @@ enum CUSTOM_TEXT {
     CTEXT_RESIZE_DISALLOWED_WARNING  // File system resizing currently disallowed reason
 };
 
+//resize opertation
+enum Action {
+    NONE            = 0,
+    MOVE_RIGHT      = 1,
+    MOVE_LEFT       = 2,
+    GROW            = 3,
+    SHRINK          = 4,
+    MOVE_RIGHT_GROW     = 5,
+    MOVE_RIGHT_SHRINK   = 6,
+    MOVE_LEFT_GROW      = 7,
+    MOVE_LEFT_SHRINK    = 8
+} ;
+
 // Minimum and maximum file system size limits
 struct FS_Limits {
     Byte_Value min_size;  // 0 => no limit, +ve => limit defined.  (As implemented by)
@@ -131,10 +144,10 @@ enum ExecFlags {
 // Struct to store file system support information
 struct FS {
     enum Support {
-        NONE      = 0,
-        GPARTED   = 1,
-        LIBPARTED = 2,
-        EXTERNAL  = 3
+        NONE      = 0,//not support
+        GPARTED   = 1,//using internal func
+        LIBPARTED = 2,//using libparted func
+        EXTERNAL  = 3//using external func
     };
 
     FSType fstype;

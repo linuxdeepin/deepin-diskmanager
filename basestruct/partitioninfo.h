@@ -8,6 +8,10 @@ class PartitionInfo
 {
 public:
     PartitionInfo();
+    Sector get_sector_length() const;
+    Byte_Value get_byte_length() const;
+    bool operator==(const PartitionInfo &info) const;
+
 
 public:
     QString device_path ;

@@ -27,6 +27,7 @@ public:
     bool create(Partition &partition);
     bool create_partition(Partition &new_partition, Sector min_size = 0) ;
     bool format(const QString &fstype, const QString &name);
+    bool resize(const PartitionInfo &info);
     QStringList getallsupportfs();
 public:
     //static
@@ -59,6 +60,7 @@ private:
     static bool get_device_and_disk(const QString &device_path, PedDevice *&lp_device,
                                     PedDisk *&lp_disk, bool strict = true, bool flush = false);
     static bool commit(PedDisk *lp_disk);
+    static PedPartition *get_lp_partition(const PedDisk *lp_disk, const Partition &partition);
     //detectionstuff..
     void probedeviceinfo(const QString &path = QString());
     void set_device_from_disk(Device &device, const QString &device_path);
@@ -84,6 +86,13 @@ private:
     bool set_partition_type(const Partition &partition) ;
     bool create_filesystem(const Partition &partition) ;
     bool formatpartition(const Partition &partition);
+    bool resize(const Partition &partition_new) ;
+    bool check_repair_filesystem(const Partition &partition) ;
+    bool resize_move_partition(const Partition &partition_old, const Partition &partition_new, bool rollback_on_fail);
+    bool resize_move_partition_implement(const Partition &partition_old, const Partition &partition_new, Sector &new_start, Sector &new_end);
+    bool maximize_filesystem(const Partition &partition) ;
+    bool resize_filesystem_implement(const Partition &partition_old, const Partition &partition_new);
+    bool resize_move_filesystem_using_libparted(const Partition &partition_old, const Partition &partition_new) ;
 
 signals:
     void sigUpdateDeviceInfo(const DeviceInfoMap &infomap);

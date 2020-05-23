@@ -11,6 +11,7 @@ PKGCONFIG += dtkcore
 TEMPLATE = app
 
 LIBS +=-lparted
+LIBS += -lparted-fs-resize
 LIBS += -L$$OUT_PWD/../basestruct/ -lbasestruct
 
 INCLUDEPATH += $$PWD/../basestruct

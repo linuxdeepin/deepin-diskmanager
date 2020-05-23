@@ -201,7 +201,7 @@ bool EXT2::write_uuid(const Partition &partition)
 {
     QString output, error;
     int exitcode = Utils::executcmd(QString("tune2fs -U random ").arg(partition.get_path()), output, error);
-    return exitcode == 0;
+    return exitcode == 0 || error.compare("Unknown error") == 0;
 }
 
 bool EXT2::create(const Partition &new_partition)
@@ -221,9 +221,30 @@ bool EXT2::create(const Partition &new_partition)
     cmd = QString("%1%2%3%4%5%6").arg(mkfs_cmd).arg(" -F").arg(features).
           arg(strlabel).arg(" ").arg(new_partition.get_path());
     qDebug() << " EXT2::create***** " << cmd;
-    Utils::executcmd(cmd, output, error);
+    int exitcode = Utils::executcmd(cmd, output, error);
     qDebug() << "EXT2::create-------" << output << error;
-    return true;
+    return exitcode == 0 || error.compare("Unknown error") == 0;
+}
+
+bool EXT2::resize(const Partition &partition_new, bool fill_partition)
+{
+    QString str_temp =  QString("resize2fs -p %1").arg(partition_new.get_path());
+
+    if (! fill_partition) {
+        str_temp.append(qFloor(Utils::sector_to_unit(partition_new .get_sector_length(), partition_new .sector_size, UNIT_KIB)));
+        str_temp.append("K");
+    }
+    QString output, error;
+    int exitcode = Utils::executcmd(str_temp, output, error);
+    return exitcode == 0 || error.compare("Unknown error") == 0;
+}
+
+bool EXT2::check_repair(const Partition &partition)
+{
+    QString output, error;
+    int exitcode = Utils::executcmd(QString("e2fsck -f -y -v -C 0 %1").arg(partition.get_path()), output, error);
+    qDebug() << QString("EXT2::check_repair---%1----%2").arg(output).arg(error);
+    return exitcode == 0 || error.compare("Unknown error") == 0;
 }
 
 }

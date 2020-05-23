@@ -10,7 +10,8 @@ HEADERS += \
     $$PWD/widgetdeclare.h \
     $$PWD/mountdialog.h \
     $$PWD/unmountdialog.h \
-    $$PWD/formatedialog.h
+    $$PWD/formatedialog.h \
+    $$PWD/resizedialog.h
 
 SOURCES += \
     $$PWD/mainwindow.cpp \
@@ -21,5 +22,6 @@ SOURCES += \
     $$PWD/infoshowwidget.cpp \
     $$PWD/mountdialog.cpp \
     $$PWD/unmountdialog.cpp \
-    $$PWD/formatedialog.cpp
+    $$PWD/formatedialog.cpp \
+    $$PWD/resizedialog.cpp
 

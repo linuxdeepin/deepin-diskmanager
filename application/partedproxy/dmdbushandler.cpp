@@ -44,8 +44,8 @@ void DMDbusHandler::initConnection()
 void DMDbusHandler::slotsetCurSelect(const QString &devicepath, const QString &partitionpath, Sector start, Sector end)
 {
     //点击切换才触发
-    if (devicepath != m_curdevicepath && partitionpath != m_curpartitionpath && m_devicemap.size() > 0) {
-        //判断是否为未分配空间
+    if ((devicepath != m_curdevicepath || partitionpath != m_curpartitionpath) && m_devicemap.size() > 0) {
+        m_curdevicepath = devicepath;
         auto it = m_devicemap.find(devicepath);
         if (it != m_devicemap.end()) {
             for (PartitionInfo info : it.value().partition) {
@@ -80,6 +80,11 @@ void DMDbusHandler::getDeviceinfo()
 DeviceInfoMap DMDbusHandler::probDeviceInfo() const
 {
     return m_devicemap;
+}
+
+QVector<PartitionInfo> DMDbusHandler::getCurDevicePartitionArr()
+{
+    return m_devicemap.find(m_curdevicepath).value().partition;
 }
 
 const PartitionInfo &DMDbusHandler::getCurPartititonInfo()
@@ -130,13 +135,14 @@ QStringList DMDbusHandler::getallsupportfs()
 bool DMDbusHandler::format(const QString &fstype, const QString &name)
 {
     bool success = false;
-    QDBusPendingReply<bool> reply = m_dbus->format(fstype, name);
-    // reply.waitForFinished();
-    if (reply.isError()) {
-        qDebug() << reply.error().message();
-    } else {
-        success = reply.value();
-    }
+    m_dbus->format(fstype, name);
+//    QDBusPendingReply<bool> reply = m_dbus->format(fstype, name);
+//    reply.waitForFinished();
+//    if (reply.isError()) {
+//        qDebug() << reply.error().message();
+//    } else {
+//        success = reply.value();
+//    }
     return success;
 }
 
@@ -171,9 +177,6 @@ void DMDbusHandler::slotUpdateDeviceInfo(const DeviceInfoMap &infomap)
 //                     << it->sector_size << it->fs_block_size << it->path << it->filesystem_label;
 //            qDebug() << it->sector_end << it->sector_start << Utils::sector_to_unit(it->sector_size, it->sector_end - it->sector_start, SIZE_UNIT::UNIT_GIB);
             //        qDebug() << it->name << it->device_path << it->partition_number << it->sectors_used << it->sectors_unused << it->sector_start << it->sector_end;
-
-            if (it->path == "/dev/sda3")
-                qDebug() << it->partition_number << it->path << Utils::FSTypeToString((FSType)it->fstype);
         }
     }
     emit sigUpdateDeviceInfo();

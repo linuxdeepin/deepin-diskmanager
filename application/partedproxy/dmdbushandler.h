@@ -15,6 +15,7 @@ public:
     void Quit();
     void getDeviceinfo();
     DeviceInfoMap probDeviceInfo()const;
+    QVector<PartitionInfo> getCurDevicePartitionArr();
     const PartitionInfo &getCurPartititonInfo();
     bool mount(const QString &mountpath);
     bool unmount();

@@ -372,6 +372,13 @@ bool PartedCore::commit(PedDisk *lp_disk)
     return succes ;
 }
 
+PedPartition *PartedCore::get_lp_partition(const PedDisk *lp_disk, const Partition &partition)
+{
+    if (partition.type == TYPE_EXTENDED)
+        return ped_disk_extended_partition(lp_disk);
+    return ped_disk_get_partition_by_sector(lp_disk, partition.get_sector());
+}
+
 void PartedCore::set_device_serial_number(Device &device)
 {
     if (! hdparm_found)
@@ -1229,6 +1236,244 @@ bool PartedCore::formatpartition(const Partition &partition)
     return bsuccess;
 }
 
+bool PartedCore::resize(const Partition &partition_new)
+{
+    //ToDo fs linux-swap
+    if (partition_new.fstype == FS_LINUX_SWAP) {
+        // linux-swap is recreated, not resized
+//        return    resize_move_partition(partition_old, partition_new, operationdetail, true)
+//                  && recreate_linux_swap_filesystem(partition_new, operationdetail);
+    }
+
+    Sector delta = partition_new.get_sector_length() - curpartition.get_sector_length();
+    if (delta < 0LL) {  // shrink
+//        return    check_repair_filesystem(partition_new)
+//                  && shrink_filesystem(curpartition, partition_new)
+//                  && resize_move_partition(curpartition, partition_new, false);
+    } else if (delta > 0LL) { // grow
+        return    check_repair_filesystem(partition_new)
+                  && resize_move_partition(curpartition, partition_new, true)
+                  && maximize_filesystem(partition_new);
+    }
+
+    return true;
+}
+
+bool PartedCore::check_repair_filesystem(const Partition &partition)
+{
+    if (partition.fstype == FS_LUKS && partition.busy) {
+        qDebug() << "partition contains open LUKS encryption for a check file system only step";
+        return false;
+    }
+
+    if (partition.busy)
+        // Trying to check an online file system is a successful non-operation.
+        return true;
+    qDebug() << QString("PartedCore::check_repair_filesystem:check file system on %1"
+                        " for errors and (if possible) fix them").arg(partition .get_path());
+
+
+    bool succes = false ;
+    FileSystem *p_filesystem = NULL ;
+    switch (get_fs(partition.fstype).check) {
+    case FS::NONE:
+        qDebug() << "PartedCore::check_repair_filesystem ,checking is not available for this file system";
+        break ;
+    case FS::GPARTED:
+        break ;
+    case FS::LIBPARTED:
+        break ;
+    case FS::EXTERNAL:
+        succes = (p_filesystem = get_filesystem_object(partition.fstype)) &&
+                 p_filesystem ->check_repair(partition) ;
+
+        break ;
+    default:
+        break ;
+    }
+
+    return succes ;
+}
+
+bool PartedCore::resize_move_partition(const Partition &partition_old, const Partition &partition_new, bool rollback_on_fail)
+{
+    Action action = NONE ;
+    if (partition_new .get_sector_length() > partition_old .get_sector_length())
+        action = GROW ;
+    else if (partition_new .get_sector_length() < partition_old .get_sector_length())
+        action = SHRINK ;
+
+    if (partition_new .sector_start > partition_old .sector_start &&
+            partition_new .sector_end > partition_old .sector_end)
+        action = action == GROW ? MOVE_RIGHT_GROW : action == SHRINK ? MOVE_RIGHT_SHRINK : MOVE_RIGHT ;
+    else if (partition_new .sector_start < partition_old .sector_start &&
+             partition_new .sector_end < partition_old .sector_end)
+        action = action == GROW ? MOVE_LEFT_GROW : action == SHRINK ? MOVE_LEFT_SHRINK : MOVE_LEFT ;
+
+    Sector new_start = -1;
+    Sector new_end = -1;
+    bool bsuccess = resize_move_partition_implement(partition_old, partition_new, new_start, new_end);
+    if (!bsuccess && rollback_on_fail) {
+        Partition *partition_intersection = partition_new.clone();
+        partition_intersection->sector_start = std::max(partition_old.sector_start,
+                                                        partition_new.sector_start);
+        partition_intersection->sector_end   = std::min(partition_old.sector_end,
+                                                        partition_new.sector_end);
+
+        Partition *partition_restore = partition_old.clone();
+        // Ensure that old partition boundaries are not modified
+        partition_restore->alignment = ALIGN_STRICT;
+
+        resize_move_partition_implement(*partition_intersection, *partition_restore, new_start, new_end);
+        delete partition_restore;
+        partition_restore = NULL;
+        delete partition_intersection;
+        partition_intersection = NULL;
+    }
+
+    return bsuccess;
+}
+
+bool PartedCore::resize_move_partition_implement(const Partition &partition_old, const Partition &partition_new, Sector &new_start, Sector &new_end)
+{
+    bool success = false;
+    PedDevice *lp_device = NULL;
+    PedDisk *lp_disk = NULL;
+    if (get_device_and_disk(partition_old.device_path, lp_device, lp_disk)) {
+        PedPartition *lp_partition = get_lp_partition(lp_disk, partition_old);
+        if (lp_partition) {
+            PedConstraint *constraint = NULL;
+            if (partition_new.alignment == ALIGN_STRICT   ||
+                    partition_new.alignment == ALIGN_MEBIBYTE ||
+                    partition_new.strict_start) {
+                PedGeometry *geom = ped_geometry_new(lp_device,
+                                                     partition_new.sector_start,
+                                                     partition_new.get_sector_length());
+                if (geom) {
+                    constraint = ped_constraint_exact(geom);
+                    ped_geometry_destroy(geom);
+                }
+            } else {
+                constraint = ped_constraint_any(lp_device);
+            }
+
+            if (constraint) {
+                if (ped_disk_set_partition_geom(lp_disk,
+                                                lp_partition,
+                                                constraint,
+                                                partition_new.sector_start,
+                                                partition_new.sector_end)) {
+                    new_start = lp_partition->geom.start;
+                    new_end = lp_partition->geom.end;
+
+                    success = commit(lp_disk);
+                }
+
+                ped_constraint_destroy(constraint);
+            }
+        }
+
+        destroy_device_and_disk(lp_device, lp_disk);
+    }
+
+    return success;
+}
+
+bool PartedCore::maximize_filesystem(const Partition &partition)
+{
+    if (partition.fstype == FS_LUKS && partition.busy) {
+        qDebug() << "PartedCore::maximize_filesystem: partition contains open LUKS encryption for a maximize file system only step";
+        return false;
+    }
+    qDebug() << "PartedCore::maximize_filesystem: grow file system to fill the partition";
+
+    // Checking if growing is available or allowed is only relevant for the check
+    // repair operation to inform the user why the grow step is being skipped.  For a
+    // resize/move operation these growing checks are merely retesting those performed
+    // to allow the operation to be queued in the first place.  See
+    // Win_GParted::set_valid_operations() and
+    // Dialog_Partition_Resize_Move::Resize_Move_Normal().
+    if (get_fs(partition.fstype).grow == FS::NONE) {
+        qDebug() << "PartedCore::maximize_filesystem:growing is not available for this file system";
+        return true ;
+    }
+    bool success = resize_filesystem_implement(partition, partition);
+
+    return success;
+}
+
+bool PartedCore::resize_filesystem_implement(const Partition &partition_old, const Partition &partition_new)
+{
+    bool fill_partition = false;
+    const FS &fs_cap = get_fs(partition_new.fstype);
+    FS::Support action = FS::NONE;
+    if (partition_new.get_sector_length() >= partition_old.get_sector_length()) {
+        // grow (always maximises the file system to fill the partition)
+        fill_partition = true;
+        action = (partition_old.busy) ? fs_cap.online_grow : fs_cap.grow;
+    } else {
+        // shrink
+        fill_partition = false;
+        action = (partition_old.busy) ? fs_cap.online_shrink : fs_cap.shrink;
+    }
+    bool success = false;
+    FileSystem *p_filesystem = NULL;
+    switch (action) {
+    case FS::NONE:
+        break;
+    case FS::GPARTED:
+        break;
+    case FS::LIBPARTED:
+        success = resize_move_filesystem_using_libparted(partition_old, partition_new);
+        break;
+    case FS::EXTERNAL:
+        success = (p_filesystem = get_filesystem_object(partition_new.fstype)) &&
+                  p_filesystem->resize(partition_new, fill_partition);
+        break;
+    default:
+        break;
+    }
+
+    return success;
+}
+
+bool PartedCore::resize_move_filesystem_using_libparted(const Partition &partition_old, const Partition &partition_new)
+{
+    bool return_value = false ;
+    PedDevice *lp_device = NULL ;
+    PedDisk *lp_disk = NULL ;
+    if (get_device_and_disk(partition_old .device_path, lp_device, lp_disk)) {
+        PedFileSystem  *fs = NULL ;
+        PedGeometry *lp_geom = NULL ;
+
+        lp_geom = ped_geometry_new(lp_device,
+                                   partition_old .sector_start,
+                                   partition_old .get_sector_length()) ;
+        if (lp_geom) {
+            fs = ped_file_system_open(lp_geom);
+
+            ped_geometry_destroy(lp_geom);
+            lp_geom = NULL;
+
+            if (fs) {
+                lp_geom = ped_geometry_new(lp_device,
+                                           partition_new .sector_start,
+                                           partition_new .get_sector_length()) ;
+                if (lp_geom) {
+                    if (return_value)
+                        commit(lp_disk) ;
+
+                    ped_geometry_destroy(lp_geom);
+                }
+                ped_file_system_close(fs);
+            }
+        }
+        destroy_device_and_disk(lp_device, lp_disk) ;
+    }
+
+    return return_value ;
+}
+
 void PartedCore::slotRefreshDeviceInfo()
 {
     probedeviceinfo();
@@ -1364,6 +1609,15 @@ bool PartedCore::format(const QString &fstype, const QString &name)
     part.fstype = Utils::StringToFSType(fstype);
     part.set_filesystem_label(name);
     bool bsuccess = formatpartition(part);
+    emit sigRefreshDeviceInfo();
+    return bsuccess;
+}
+
+bool PartedCore::resize(const PartitionInfo &info)
+{
+    Partition new_partition = curpartition;
+    new_partition.Reset(info);
+    bool bsuccess = resize(new_partition);
     emit sigRefreshDeviceInfo();
     return bsuccess;
 }

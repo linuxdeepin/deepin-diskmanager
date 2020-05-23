@@ -50,6 +50,23 @@ void Partition::Reset()
     mountpoints .clear() ;
 }
 
+void Partition::Reset(const PartitionInfo &info)
+{
+    status = (PartitionStatus)info.status;
+    type = (PartitionType)info.type;
+    alignment = (PartitionAlignment)info.alignment ;
+    fstype = (FSType)info.fstype;
+    sector_start = info.sector_start;
+    sector_end = info.sector_end;
+    sectors_used = info.sectors_used;
+    sectors_unused = info.sectors_unused;
+    sectors_unallocated = info.sectors_unallocated ;
+    significant_threshold = info.significant_threshold ;
+    free_space_before = info.free_space_before ;
+    sector_size = info.sector_size ;
+    fs_block_size = info.fs_block_size;
+}
+
 void Partition::Set(const QString &device_path, const QString &partition, int partition_number, PartitionType type, FSType fstype, Sector sector_start, Sector sector_end, Byte_Value sector_size, bool inside_extended, bool busy)
 {
     this ->device_path = device_path ;

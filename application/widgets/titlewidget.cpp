@@ -2,6 +2,7 @@
 #include "mountdialog.h"
 #include "unmountdialog.h"
 #include "formatedialog.h"
+#include "resizedialog.h"
 #include <QHBoxLayout>
 
 #include "widgetdeclare.h"
@@ -102,16 +103,19 @@ void TitleWidget::showUnmountInfoWidget()
 
 void TitleWidget::showResizeInfoWidget()
 {
-    tipPartDialog->getButton(1)->disconnect();
-    tipPartDialog->getFlagShow(4);
-    controlButton = 5;
-    connect(tipPartDialog->getButton(1), &QAbstractButton::clicked, this, [ = ] {
-        if (controlButton == 5)
-        {
-            tipPartDialog->close();
-            qDebug() << tr("XXX system space is in operation");
-        }
-    });
+//    tipPartDialog->getButton(1)->disconnect();
+//    tipPartDialog->getFlagShow(4);
+//    controlButton = 5;
+//    connect(tipPartDialog->getButton(1), &QAbstractButton::clicked, this, [ = ] {
+//        if (controlButton == 5)
+//        {
+//            tipPartDialog->close();
+//            qDebug() << tr("XXX system space is in operation");
+//        }
+//    });
+    ResizeDialog dlg;
+    dlg.exec();
+
 }
 
 void TitleWidget::updateBtnStatus()
@@ -148,7 +152,7 @@ void TitleWidget::updateBtnStatus()
                 m_btnparted->setDisabled(true);
                 m_btnformat->setDisabled(false);
                 m_btnmount->setDisabled(false);
-                m_btnresize->setDisabled(true);
+                m_btnresize->setDisabled(false);
             }
         }
     }

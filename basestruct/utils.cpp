@@ -309,19 +309,19 @@ QString Utils::format_size(Sector sectors, Byte_Value sector_size)
 {
     QString res;
     if ((sectors * sector_size) < KIBIBYTE) {
-        res =  res .setNum(sector_to_unit(sectors, sector_size, UNIT_BYTE), 'g', 2) ;
+        res =  res .setNum(sector_to_unit(sectors, sector_size, UNIT_BYTE), 'f', 2) ;
         res.append(" B");
     } else if ((sectors * sector_size) < MEBIBYTE) {
-        res =  res .setNum(sector_to_unit(sectors, sector_size, UNIT_KIB), 'g', 2);
+        res =  res .setNum(sector_to_unit(sectors, sector_size, UNIT_KIB), 'f', 2);
         res.append(" KiB");
     } else if ((sectors * sector_size) < GIBIBYTE) {
-        res =  res .setNum(sector_to_unit(sectors, sector_size, UNIT_MIB), 'g', 2);
+        res =  res .setNum(sector_to_unit(sectors, sector_size, UNIT_MIB), 'f', 2);
         res.append(" MiB");
     } else if ((sectors * sector_size) < TEBIBYTE) {
-        res =  res .setNum(sector_to_unit(sectors, sector_size, UNIT_GIB), 'g', 2);
+        res =  res .setNum(sector_to_unit(sectors, sector_size, UNIT_GIB), 'f', 2);
         res.append(" GiB");
     } else {
-        res =  res .setNum(sector_to_unit(sectors, sector_size, UNIT_TIB), 'g', 2);
+        res =  res .setNum(sector_to_unit(sectors, sector_size, UNIT_TIB), 'f', 2);
         res.append(" TiB");
     }
     return res;

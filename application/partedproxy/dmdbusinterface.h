@@ -85,6 +85,12 @@ public Q_SLOTS: // METHODS
         argumentList << QVariant::fromValue(type) << QVariant::fromValue(name);
         return asyncCallWithArgumentList(QStringLiteral("format"), argumentList);
     }
+    inline  QDBusPendingReply<bool>resize(const PartitionInfo &info)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(info);
+        return asyncCallWithArgumentList(QStringLiteral("resize"), argumentList);
+    }
 
 
 Q_SIGNALS: // SIGNALS

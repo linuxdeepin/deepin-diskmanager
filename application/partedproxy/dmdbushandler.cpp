@@ -146,6 +146,11 @@ bool DMDbusHandler::format(const QString &fstype, const QString &name)
     return success;
 }
 
+void DMDbusHandler::resize(const PartitionInfo &info)
+{
+    m_dbus->resize(info);
+}
+
 void DMDbusHandler::MessageReport(const QString &msg)
 {
     qDebug() << "MessageReport:" << msg;

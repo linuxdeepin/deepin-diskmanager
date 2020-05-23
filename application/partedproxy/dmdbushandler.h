@@ -21,6 +21,7 @@ public:
     bool unmount();
     QStringList getallsupportfs();
     bool format(const QString &fstype, const QString &name = QString());
+    void resize(const PartitionInfo &info);
 
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);

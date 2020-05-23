@@ -171,6 +171,7 @@ void PartitionWidget::botFrameSetting()
 
 void PartitionWidget::partInfoShowing()
 {
+    qDebug() << "202" << selectedpartName;
     QVBoxLayout *vLayout = new QVBoxLayout(partWidget);
 //    QHBoxLayout *line1Layout = new QHBoxLayout();
 
@@ -187,24 +188,19 @@ void PartitionWidget::partInfoShowing()
     remButton->setAttribute(Qt::WA_Hover, true);
     remButton->installEventFilter(this);
     line2Layout1->addWidget(partDoLabel);
-//    line2Layout1->addSpacing(115);
     line2Layout1->addStretch();
     line2Layout1->addWidget(addButton);
     line2Layout1->addWidget(remButton);
+
     if (sizeInfo.size() == 0)
         remButton->setEnabled(false);
     else
         remButton->setEnabled(true);
     QHBoxLayout *line2Layout2 = new QHBoxLayout();
-//
+
     partNameLabel = new DLabel(tr("Partition name:"), partWidget);
     partNameEdit = new DLineEdit(partWidget);
-//    partNameEdit->setMinimumWidth(260);
-    if (partNameEdit->text().isEmpty()) {
-        partNameEdit->lineEdit()->setPlaceholderText("SSD256G");
-    }
-//    partNameLabel->setMaximumHeight(20);
-//    partNameLabel->setFixedWidth(100);
+
     line2Layout2->addWidget(partNameLabel);
     line2Layout2->addWidget(partNameEdit);
     line2Layout->addLayout(line2Layout1);
@@ -224,10 +220,7 @@ void PartitionWidget::partInfoShowing()
     partSizeLabel = new DLabel(tr("Partition size:"), partWidget);
     hSlider = new DSlider(Qt::Horizontal);
     partSizeEdit = new DLineEdit(partWidget);
-    partSizeEdit->setObjectName("sizeEdit");
-    if (partSizeEdit->text().isEmpty()) {
-        partSizeEdit->lineEdit()->setPlaceholderText("size");
-    }
+
     partComCobox = new DComboBox(partWidget);
     partComCobox->addItem("GB");
     partComCobox->addItem("MB");
@@ -243,6 +236,7 @@ void PartitionWidget::partInfoShowing()
     vLayout->addLayout(line2Layout);
     vLayout->addLayout(line3Layout);
     vLayout->addStretch();
+    setEnable();
 }
 
 
@@ -268,6 +262,13 @@ void PartitionWidget::getPartitionInfo(const PartitionInfo &data, const QString 
     }
     hSlider->setMaximum(total);
     initTopFrameData();
+    if (partNameEdit->text().isEmpty()) {
+        partNameEdit->lineEdit()->setPlaceholderText(selectedpartName);
+
+    }
+    if (partSizeEdit->text().isEmpty()) {
+        partSizeEdit->lineEdit()->setPlaceholderText(QString::number(total));
+    }
 
 }
 
@@ -277,9 +278,10 @@ void PartitionWidget::initTopFrameData()
     int i = partPath.lastIndexOf("/");
     QString selectPartition = partPath.right(partPath.length() - i - 1);
     selectedPartition->setText(selectPartition);
+    selectedpartName = selectPartition;
     deviceName->setText(devicePath);
     deviceFormate->setText(partFstype);
-    qDebug() << devicePath << selectPartition;
+    qDebug() << devicePath << selectPartition << selectedpartName;
 }
 
 void PartitionWidget::initConnection()
@@ -309,15 +311,18 @@ void PartitionWidget::showSelectPathInfo(const int &flag, const int &num, const 
 {
     int x = this->frameGeometry().x();
     int y = this->frameGeometry().y();
-
+    mflag = flag;
+    setEnable();
     if (flag == 1) {
         qDebug() << x << y;
-
+        hSlider->setValue(total);
+        partSizeEdit->setText("");
         QToolTip::showText(QPoint(x + posX, y + 235), "Free Space", this, QRect(QPoint(x + posX, y + 235), QSize(80, 20)), 2000);
         partNameEdit->lineEdit()->setPlaceholderText(tr("Free space"));
         partSizeEdit->lineEdit()->setPlaceholderText(QString::number(total));
 
     } else if (flag == 2) {
+        hSlider->setValue(sizeInfo.at(num));
         QToolTip::showText(QPoint(x + posX, y + 235), partName.at(num), this, QRect(QPoint(x + posX, y + 235), QSize(80, 20)), 2000);
         partNameEdit->lineEdit()->setPlaceholderText(partName.at(num));
         partSizeEdit->lineEdit()->setPlaceholderText(QString::number(sizeInfo.at(num)));
@@ -326,6 +331,34 @@ void PartitionWidget::showSelectPathInfo(const int &flag, const int &num, const 
         QToolTip::showText(QPoint(x + posX, y + 235), "Free Space", this, QRect(QPoint(x + posX, y + 235), QSize(80, 20)), 2000);
         partNameEdit->lineEdit()->setPlaceholderText(tr("name"));
         partSizeEdit->lineEdit()->setPlaceholderText(tr("size"));
+    }
+}
+
+void PartitionWidget::setEnable()
+{
+    if (mflag < 1) {
+        addButton->setEnabled(false);
+        addButton->setEnabled(false);
+        partNameEdit->setEnabled(false);
+        partSizeEdit->setEnabled(false);
+        hSlider->setEnabled(false);
+        partComCobox->setEnabled(false);
+        partFormateCombox->setEnabled(false);
+        DPalette pa = DApplicationHelper::instance()->palette(botFrame);
+        pa.setBrush(DPalette::Text, pa.placeholderText());
+        botFrame->setPalette(pa);
+    } else {
+        qDebug() << mflag;
+        addButton->setEnabled(true);
+        addButton->setEnabled(true);
+        partNameEdit->setEnabled(true);
+        partSizeEdit->setEnabled(true);
+        hSlider->setEnabled(true);
+        partComCobox->setEnabled(true);
+        partFormateCombox->setEnabled(true);
+        DPalette pa = DApplicationHelper::instance()->palette(botFrame);
+        pa.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
+        botFrame->setPalette(pa);
     }
 }
 

@@ -34,7 +34,7 @@
 #include <DHorizontalLine>
 #include <DMessageManager>
 #include <DSlider>
-#include <DToolTip>
+#include <QToolTip>
 #include <DFontSizeManager>
 #include "partitioninfo.h"
 #include "utils.h"
@@ -141,7 +141,7 @@ private:
     QVector<QString> partName;
     QVector <QColor> basecolor;
 
-    DToolTip *tip;
+
 
 
 };

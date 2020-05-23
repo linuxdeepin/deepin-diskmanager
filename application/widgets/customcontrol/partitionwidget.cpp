@@ -307,31 +307,23 @@ double PartitionWidget::leaveSpace()
 
 void PartitionWidget::showSelectPathInfo(const int &flag, const int &num, const int &posX)
 {
-    tip = new DToolTip("123", true);
-    tip->setParent(this);
-    tip->setFixedSize(100, 30);
-//    DPalette pa = DApplicationHelper::instance()->palette(tip);
-//    pa.setBrush(DPalette::Base, QColor(Qt::red));
-//    DApplicationHelper::instance()->setPalette(tip, pa);
-    DPalette palette = tip->palette();
-    palette.setColor(DPalette::Inactive, DPalette::ToolTipBase, Qt::red); //设置ToolTip背景色
-//    palette.setColor(DPalette::Inactive, DPalette::ToolTipText, QColor(102, 102, 102, 255)); //设置ToolTip字体色
-    tip->setPalette(palette);
-    qDebug() << flag;
+    int x = this->frameGeometry().x();
+    int y = this->frameGeometry().y();
+
     if (flag == 1) {
-        topFrame->setToolTip("12333");
-        tip->setText(tr("Free Space"));
-        tip->show(QPoint(posX, topFrame->height() + 130), 1000);
+        qDebug() << x << y;
+
+        QToolTip::showText(QPoint(x + posX, y + 235), "Free Space", this, QRect(QPoint(x + posX, y + 235), QSize(80, 20)), 2000);
         partNameEdit->lineEdit()->setPlaceholderText(tr("Free space"));
         partSizeEdit->lineEdit()->setPlaceholderText(QString::number(total));
 
     } else if (flag == 2) {
-        tip->setText(partName.at(num));
-        tip->show(QPoint(posX, topFrame->height() + 130), 1000);
-        partNameEdit->setText(partName.at(num));
-        partSizeEdit->setText(QString::number(sizeInfo.at(num)));
+        QToolTip::showText(QPoint(x + posX, y + 235), partName.at(num), this, QRect(QPoint(x + posX, y + 235), QSize(80, 20)), 2000);
+        partNameEdit->lineEdit()->setPlaceholderText(partName.at(num));
+        partSizeEdit->lineEdit()->setPlaceholderText(QString::number(sizeInfo.at(num)));
 
     } else {
+        QToolTip::showText(QPoint(x + posX, y + 235), "Free Space", this, QRect(QPoint(x + posX, y + 235), QSize(80, 20)), 2000);
         partNameEdit->lineEdit()->setPlaceholderText(tr("name"));
         partSizeEdit->lineEdit()->setPlaceholderText(tr("size"));
     }
@@ -416,10 +408,10 @@ void PartitionWidget::addPartitionSlot()
     hSlider->setMaximum(total - leaveSpace());
     qDebug() << total - leaveSpace() << leaveSpace() << total << size;
     partChartWidget->update();
-    partSizeEdit->setText("");
+
     partNameEdit->setText("");
     hSlider->setValue(0);
-
+    partSizeEdit->setText("");
 
 }
 
@@ -435,6 +427,7 @@ void PartitionWidget::remPartitionSlot()
     hSlider->setMaximum(total - leaveSpace());
     partChartWidget->update();
     hSlider->setValue(0);
+    partSizeEdit->setText("");
 
 }
 
@@ -452,11 +445,11 @@ void PartitionWidget::revertBtnSlot()
 {
     sizeInfo.clear();
     partName.clear();
-    hSlider->setValue(0);
     partChartWidget->getData(partSize, sizeInfo, partName, basecolor);
     hSlider->setMaximum(total);
     hSlider->setValue(0);
     partChartWidget->update();
+    partSizeEdit->setText("");
 }
 
 void PartitionWidget::cancelBtnSlot()

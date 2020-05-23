@@ -245,7 +245,7 @@ void PartitionWidget::getPartitionInfo(const PartitionInfo &data, const QString 
     QString s_pdisksize = QString::number(Utils::sector_to_unit(data.sector_end - data.sector_start, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
     QString s_used = QString::number(Utils::sector_to_unit(data.sectors_used, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
     QString s_unused = QString::number(Utils::sector_to_unit(data.sectors_unused, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
-    qDebug() << Utils::sector_to_unit(data.sector_end - data.sector_start, data.sector_size, SIZE_UNIT::UNIT_GIB) << data.device_path << disksize << data.path << s_pdisksize << Utils::FSTypeToString((FSType)data.fstype) << s_used << s_unused;
+    qDebug() << Utils::format_size(data.sector_end - data.sector_start, data.sector_size) << Utils::sector_to_unit(data.sector_end - data.sector_start, data.sector_size, SIZE_UNIT::UNIT_GIB);
     devicePath = data.device_path ;
     deviceSize = disksize;
     partPath = data.path;
@@ -317,20 +317,23 @@ void PartitionWidget::showSelectPathInfo(const int &flag, const int &num, const 
         qDebug() << x << y;
         hSlider->setValue(total);
         partSizeEdit->setText("");
-        QToolTip::showText(QPoint(x + posX, y + 235), "Free Space", this, QRect(QPoint(x + posX, y + 235), QSize(80, 20)), 2000);
+        QToolTip::showText(QPoint(x + posX, y + 235), tr("Free Space"), this, QRect(QPoint(x + posX, y + 235), QSize(80, 20)), 2000);
         partNameEdit->lineEdit()->setPlaceholderText(tr("Free space"));
         partSizeEdit->lineEdit()->setPlaceholderText(QString::number(total));
 
     } else if (flag == 2) {
         hSlider->setValue(sizeInfo.at(num));
-        QToolTip::showText(QPoint(x + posX, y + 235), partName.at(num), this, QRect(QPoint(x + posX, y + 235), QSize(80, 20)), 2000);
+        partSizeEdit->setText("");
+        QToolTip::showText(QPoint(x + posX + 5, y + 235), partName.at(num), this, QRect(QPoint(x + posX, y + 235), QSize(80, 20)), 2000);
         partNameEdit->lineEdit()->setPlaceholderText(partName.at(num));
         partSizeEdit->lineEdit()->setPlaceholderText(QString::number(sizeInfo.at(num)));
 
     } else {
-        QToolTip::showText(QPoint(x + posX, y + 235), "Free Space", this, QRect(QPoint(x + posX, y + 235), QSize(80, 20)), 2000);
-        partNameEdit->lineEdit()->setPlaceholderText(tr("name"));
-        partSizeEdit->lineEdit()->setPlaceholderText(tr("size"));
+        hSlider->setValue(total - leaveSpace());
+        partSizeEdit->setText("");
+        QToolTip::showText(QPoint(x + posX + 5, y + 235), tr("Free Space"), this, QRect(QPoint(x + posX, y + 235), QSize(80, 20)), 2000);
+        partNameEdit->lineEdit()->setPlaceholderText(tr("Free Space"));
+        partSizeEdit->lineEdit()->setPlaceholderText(QString::number(total - leaveSpace()));
     }
 }
 
@@ -364,9 +367,7 @@ void PartitionWidget::setEnable()
 
 void PartitionWidget::paintEvent(QPaintEvent *event)
 {
-//       DApplicationHelper::instance()->setPalette(scroll, pa);
-//       scroll->setAutoFillBackground(true);
-    //    QWidget::paintEvent(event);
+
 }
 
 bool PartitionWidget::eventFilter(QObject *watched, QEvent *event)
@@ -381,7 +382,7 @@ bool PartitionWidget::eventFilter(QObject *watched, QEvent *event)
 
 void PartitionWidget::closeEvent(QCloseEvent *event)
 {
-//    this->setAttribute(Qt::WA_DeleteOnClose);
+    this->setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
 
@@ -415,7 +416,6 @@ void PartitionWidget::addPartitionSlot()
     }
     if (total < 1 && partComCobox->currentText() == "MB") {
         total = total * 1024;
-
     }
     double size = partSizeEdit->text().toDouble();
     if (size > (total - leaveSpace()))
@@ -445,6 +445,8 @@ void PartitionWidget::addPartitionSlot()
     partNameEdit->setText("");
     hSlider->setValue(0);
     partSizeEdit->setText("");
+    partNameEdit->lineEdit()->setPlaceholderText(tr("Part Name"));
+    partSizeEdit->lineEdit()->setPlaceholderText(tr("Part Size"));
 
 }
 
@@ -459,8 +461,11 @@ void PartitionWidget::remPartitionSlot()
     partChartWidget->getData(partSize, sizeInfo, partName, basecolor);
     hSlider->setMaximum(total - leaveSpace());
     partChartWidget->update();
+    partNameEdit->setText("");
     hSlider->setValue(0);
     partSizeEdit->setText("");
+    partNameEdit->lineEdit()->setPlaceholderText(tr("Part Name"));
+    partSizeEdit->lineEdit()->setPlaceholderText(tr("Part Size"));
 
 }
 
@@ -483,6 +488,8 @@ void PartitionWidget::revertBtnSlot()
     hSlider->setValue(0);
     partChartWidget->update();
     partSizeEdit->setText("");
+    partNameEdit->lineEdit()->setPlaceholderText(selectedpartName);
+    partSizeEdit->lineEdit()->setPlaceholderText(QString::number(total));
 }
 
 void PartitionWidget::cancelBtnSlot()

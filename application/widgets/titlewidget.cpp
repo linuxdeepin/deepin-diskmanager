@@ -31,7 +31,7 @@ void TitleWidget::initUi()
 //    tipFormateDialog = new TipFormateDialog(this);
 //    tipUnmountDialog = new TipUmountDialog(this);
 //    tipResizeDialog = new TipResizeDialog(this);
-    partitionWidget = new PartitionWidget(this);
+
 }
 
 void TitleWidget::initConnection()
@@ -73,6 +73,7 @@ void TitleWidget::showPartInfoWidget()
         if (controlButton == 1)
         {
             tipPartDialog->close();
+            partitionWidget = new PartitionWidget(this);
             partitionWidget->show();
             partitionWidget->getPartitionInfo(getPartitionInfo, device_size);
 

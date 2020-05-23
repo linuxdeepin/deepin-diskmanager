@@ -79,7 +79,7 @@ void PartChartShowing::paintEvent(QPaintEvent *event)
     painter.drawRect(this->x(), this->y() + 50, 10, 10);
 
     painter.setPen(this->palette().text().color());
-    QRect textRect(this->x() + 15, this->y() + 45, 80, 50);
+    QRect textRect(this->x() + 15, this->y() + 42, 80, 50);
     painter.drawText(textRect, tr("Free space"));
 
 
@@ -245,17 +245,7 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
             if (x > 0 && x < this->width() && y > 10 && y < 45) {
                 flag = 1;
                 qDebug() << flag << event->pos();
-
-
-
-
                 update();
-
-
-
-
-
-
             }
 
         }
@@ -269,11 +259,9 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
                     number = i;
                     update();
                 }
-
-
-
             }
             int width = ((partsize.at(partsize.size() - 1) / total) * this->width());
+            //空闲分区
             if (x > allpath[partsize.size() - 1].currentPosition().x() + width && x < this->width() && y > 10 && y < 45 && static_cast<int>(sum) < static_cast<int>(total)) {
                 flag = 3;
                 i = -1;

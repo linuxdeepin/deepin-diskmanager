@@ -112,7 +112,7 @@ void PartChartShowing::addPaint(QPainter *painter)
     }
 
     for (int i = 0; i < partsize.size(); i++) {
-        sum = sum + partsize.at(i);
+//        sum = sum + partsize.at(i);
         qDebug() << sum;
         qDebug() << partsize.at(i);
         sum = static_cast<int>(sum + partsize.at(i));

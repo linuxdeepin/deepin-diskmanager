@@ -63,6 +63,7 @@ public:
     void initTopFrameData();
     void initConnection();
     double leaveSpace();
+    void setSelectValue();
 
 
 signals:
@@ -82,6 +83,7 @@ public slots:
     void cancelBtnSlot();
     void showSelectPathInfo(const int &flag, const int &num, const int &posX);
     void setEnable();
+    void comboxCurTextSlot();
 private:
     QWidget *mainFrame;
     DFrame *topFrame;
@@ -135,7 +137,8 @@ private:
     double totalSize = 0.00;
     double total = 0.00;
     int mflag = -1;
-
+    double currentSize = 0.00;
+    int GM = 0;
 
 //    QVector<QString> partPaths;
 //    QHash<int, QVector<double>> sizeinfos;

@@ -49,11 +49,7 @@ void DMDbusHandler::slotsetCurSelect(const QString &devicepath, const QString &p
         auto it = m_devicemap.find(devicepath);
         if (it != m_devicemap.end()) {
             for (PartitionInfo info : it.value().partition) {
-                if (info.path == partitionpath) {
-                    qDebug() << info.partition_number << info.path << Utils::FSTypeToString((FSType)info.fstype);
-                    m_curpartitioninfo = info;
-                    break;
-                } else if (info.sector_start == start && info.sector_end == end) {
+                if (info.sector_start == start && info.sector_end == end) {
                     qDebug() << info.partition_number << info.path << Utils::FSTypeToString((FSType)info.fstype);
                     m_curpartitioninfo = info;
                     break;
@@ -77,7 +73,7 @@ void DMDbusHandler::getDeviceinfo()
     qDebug() << __FUNCTION__ << "-------";
 }
 
-DeviceInfoMap DMDbusHandler::probDeviceInfo() const
+const DeviceInfoMap &DMDbusHandler::probDeviceInfo() const
 {
     return m_devicemap;
 }

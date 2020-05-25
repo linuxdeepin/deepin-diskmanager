@@ -14,7 +14,7 @@ public:
     static DMDbusHandler *instance(QObject *parent = nullptr);
     void Quit();
     void getDeviceinfo();
-    DeviceInfoMap probDeviceInfo()const;
+    const DeviceInfoMap &probDeviceInfo()const;
     QVector<PartitionInfo> getCurDevicePartitionArr();
     const PartitionInfo &getCurPartititonInfo();
     const DeviceInfo &getCurDeviceInfo();

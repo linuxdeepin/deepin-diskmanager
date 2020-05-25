@@ -27,9 +27,12 @@ public slots:
     void slothandleChangeTheme();
 protected:
     void paintEvent(QPaintEvent *event) override;
+    void resizeEvent(QResizeEvent *event)override;
 private:
     DiskInfoData m_infodata;
     DPalette m_parentPb;
+    int d_width = 0;
+    int w = 0;
 };
 
 #endif // DMFRAMEWIDGET_H

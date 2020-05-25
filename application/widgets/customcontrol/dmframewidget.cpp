@@ -23,14 +23,24 @@ void DmFrameWidget::setFrameData()
     DiskInfoData temp;
     m_infodata = temp;
     if (data.mountpoints.size() >= 2) {
-        for (QString strpoint : data.mountpoints)
-            m_infodata.mountpoints.append(strpoint + " ");
+        for (QString strpoint : data.mountpoints) {
+            if (strpoint == data.mountpoints.at(data.mountpoints.size() - 1)) {
+                m_infodata.mountpoints.append(strpoint);
+            } else {
+                m_infodata.mountpoints.append(strpoint + " ");
+            }
+        }
     } else {
         for (QString strpoint : data.mountpoints)
             m_infodata.mountpoints.append(strpoint);
-        if (m_infodata.mountpoints.size() > 21) {
-            for (int i = 0; i < 9; i++) {
+        qDebug() << this->width();
+        w = d_width - 749;
+        if (m_infodata.mountpoints.size() > 21 + w) {
+            for (int i = 0; i < 9 + w; i++) {
                 previoustr += m_infodata.mountpoints.at(i);
+                if (i == m_infodata.mountpoints.size() - 10) {
+                    break;
+                }
             }
             previoustr += "...";
             for (int p = m_infodata.mountpoints.size() - 9; p < m_infodata.mountpoints.size(); p++) {
@@ -80,7 +90,7 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)
         QTextOption option1;
         option1.setAlignment(Qt::AlignRight);
         painter.setPen(textcolor);
-        QRect textRect1 = QRect(rect.width() / 2 - 275, rect.topLeft().y() + 10, 257, 40);
+        QRect textRect1 = QRect(rect.width() / 2 - 275 - w / 2 - w / 3, rect.topLeft().y() + 10, 257 + w / 2 + w / 3, 40);
         painter.drawText(textRect1, m_infodata.mountpoints, option);
         textRect.moveTo(rect.width() / 2 - 260, rect.topLeft().y() + 62);
         painter.drawText(textRect, m_infodata.unused, option1);
@@ -119,7 +129,7 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)
         QTextOption option1;
         option1.setAlignment(Qt::AlignRight);
         painter.setPen(textcolor);
-        QRect textRect1 = QRect(rect.width() / 2 - 275, rect.topLeft().y() + 10, 257, 40);
+        QRect textRect1 = QRect(rect.width() / 2 - 275 - w / 2, rect.topLeft().y() + 10, 257 + w / 2, 40);
         painter.drawText(textRect1, m_infodata.mountpoints, option);
         textRect.moveTo(rect.width() / 2 - 260, rect.topLeft().y() + 62);
         painter.drawText(textRect, m_infodata.unused, option1);
@@ -135,6 +145,13 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)
     }
 
 
+}
+
+void DmFrameWidget::resizeEvent(QResizeEvent *event)
+{
+    this->QWidget::resizeEvent(event);
+    d_width = this->width();
+    setFrameData();
 }
 void DmFrameWidget::slothandleChangeTheme()
 {

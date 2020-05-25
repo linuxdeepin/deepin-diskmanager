@@ -29,7 +29,6 @@
 #include <QAbstractButton>
 #include <DIconButton>
 #include <DPushButton>
-#include <DScrollArea>
 #include <QSizePolicy>
 #include <DHorizontalLine>
 #include <DMessageManager>
@@ -60,7 +59,7 @@ public:
     void botFrameSetting();
     void partInfoShowing();
     void getPartitionInfo(const PartitionInfo &data, const QString &disksize);
-    void initTopFrameData();
+
     void initConnection();
     double leaveSpace();
     void setSelectValue();
@@ -70,9 +69,7 @@ signals:
     void senderData(int x, int y, int z);
     // QWidget interface
 protected:
-    virtual void paintEvent(QPaintEvent *event) override;
-    virtual bool eventFilter(QObject *watched, QEvent *event) override;
-    virtual void closeEvent(QCloseEvent *event) override;
+
 public slots:
     void slotSliderValueChanged(int value);
     void slotSetSliderValue();
@@ -90,50 +87,27 @@ private:
     DFrame *midFrame;
     DFrame *botFrame;
 //    DFrame *parInfoFrame;
-    DLabel *deviceInfoLabel;
-    DLabel *deviceNameLabel;
-    DLabel *deviceName;
-    DLabel *deviceFormateLabel;
-    DLabel *deviceFormate;
-    DLabel *selectedPartLabel;
-    DLabel *selectedPartition;
-    DLabel *allMemoryLabel;
+
     DLabel *allMemory;
-    DLabel *partInfoLabel;
+    DLabel *deviceFormate;
+    DLabel *deviceName;
+    DLabel *selectedPartition;
     DIconButton *addButton;
     DIconButton *remButton;
 //    DScrollArea *scrollArea;
     QWidget *partWidget;
-
-
-    DLabel *picLabel;
-    DLabel *titleLabel;
-    DLabel *tipLabel;
-
     DPushButton *applyBtn;
     DPushButton *cancleBtn;
     DPushButton *reveBtn;
-
     PartChartShowing *partChartWidget;
-
-    DLabel *partNameLabel;
     DLineEdit *partNameEdit;
-    DLabel *partFormateLabel;
     DComboBox *partFormateCombox;
-    DLabel *partSizeLabel;
     DLineEdit *partSizeEdit;
     DComboBox *partComCobox;
-    DLabel *partDoLabel;
     DSlider *hSlider;
-
-    QString partUsed;
-    QString partUnused;
-    QString devicePath;
-    QString deviceSize;
-    QString partPath;
     QString partSize;
-    QString partFstype;
     QString selectedpartName;
+
     double totalSize = 0.00;
     double total = 0.00;
     int mflag = -1;

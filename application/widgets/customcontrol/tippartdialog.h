@@ -19,6 +19,7 @@
 
 #include <QWidget>
 #include "tipdialog.h"
+#include "partedproxy/dmdbushandler.h"
 class TipPartDialog : public TipDialog
 {
     Q_OBJECT

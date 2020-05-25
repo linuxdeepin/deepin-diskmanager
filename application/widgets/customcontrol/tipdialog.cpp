@@ -28,7 +28,7 @@ TipDialog::TipDialog(QWidget *parent) : DDialog(parent)
     mainLayout->setSpacing(5);
     QFont font2;
     font2.setPointSize(10);
-    titleLable = new DLabel(tr("XXX will be formatted"));
+    titleLable = new DLabel(this);
     titleLable->setFont(font2);
     titleLable->setAlignment(Qt::AlignCenter);
     QFont font;

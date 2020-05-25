@@ -39,7 +39,7 @@ class PartChartShowing : public QWidget
 public:
     explicit PartChartShowing(QWidget *parent = nullptr);
 //    PartChartShowing(int used, int trueused, int noused, QWidget *parent = nullptr);
-    void getData(const double &totals, const QVector<double> sizeInfo, const QVector<QString> partNames, QVector<QColor>basecolor);
+    void getData(const double &totals, const QVector<double> sizeInfo);
 
 
 signals:
@@ -60,10 +60,9 @@ private:
     QVector<double> partsize;
     QPoint curPoint;
     QRect getCurRect;
-    QVector<QColor> color;
+    QVector<QColor> basecolor;
     QVector<QPainterPath> allpath;
     int number = -1;
-    QVector<QString> partname;
     double sum = 0.00;
 
 

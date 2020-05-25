@@ -49,9 +49,10 @@ void TipPartDialog::getFlagShow(const int &showFlag)
 
 void TipPartDialog::showPartDialog()
 {
-    this->setFixedSize(350, 200);
-    this->titleLable->setText(tr("XXX system space is in operation"));
-    this->tipLabel->setText(tr("The disk is in use. Partition the space in the disk.\n Click OK to confirm the operation"));
+    this->setFixedSize(400, 250);
+    PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+    setTitle(tr("Try to operate partition ") + info.path);
+    this->tipLabel->setText(tr("The disk is in use. Partition the space in \n the disk. Click OK to confirm the operation"));
     this->mountLabel->hide();
     this->nameLineEdit->hide();
     this->typeCombox->hide();
@@ -61,7 +62,8 @@ void TipPartDialog::showPartDialog()
 void TipPartDialog::showFormateDialog()
 {
     this->setFixedSize(450, 300);
-    this->titleLable->setText(tr("XXX will be formatted"));
+    PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+    setTitle(tr("Try to formate partition ") + info.path);
     this->tipLabel->setText(tr("The disk will be formatted, all data stored on the disk \n will be deleted, and cannot be undone. Please provide the \n name and format, and click Format content"));
     this->typeCombox->setItemText(0, "NTFS");
     this->mountLabel->hide();

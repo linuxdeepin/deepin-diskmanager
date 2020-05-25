@@ -19,19 +19,22 @@
 #include <QHBoxLayout>
 PartChartShowing::PartChartShowing(QWidget *parent) : QWidget(parent)
 {
-//    tip = new ToolTip(this);
-//    tip->hide();
+
 }
 
 
-void PartChartShowing::getData(const double &totals, const QVector<double>sizeInfo, const QVector<QString> partNames, QVector<QColor>basecolor)
+void PartChartShowing::getData(const double &totals, const QVector<double>sizeInfo)
 {
 //    int i = totals.lastIndexOf("G");
+    QColor color("#70BEFF");
+    QColor color1("#4293FF");
+    QColor color2("#6751E4");
+    QColor color3("#FA7404");
+    QColor color4("#FFD027");
+    QColor color5("#2CCBBE");
+    basecolor = QVector<QColor> {color, color1, color2, color3, color4, color5};
     total = totals;
-
     partsize = sizeInfo;
-    color = basecolor;
-    partname = partNames;
     total = static_cast<int>(totals);
 //    path = paintpath;
 }
@@ -122,7 +125,7 @@ void PartChartShowing::addPaint(QPainter *painter)
         sum = static_cast<int>(sum + partsize.at(i));
         if (i == 0 && sum >= total) {
             painter->setPen(QColor(this->palette().highlight().color()));
-            painter->setBrush(color.at(0));
+            painter->setBrush(basecolor.at(0));
             painter->drawRoundedRect(paintRect, 8, 8);
 
         }
@@ -157,9 +160,9 @@ void PartChartShowing::addPaint(QPainter *painter)
                               270, 90);
 
             }
-            painter->fillPath(path[0], QBrush(color.at(0)));
+            painter->fillPath(path[0], QBrush(basecolor.at(0)));
             if (number == 0) {
-                painter->setBrush(QBrush(color.at(0)));
+                painter->setBrush(QBrush(basecolor.at(0)));
                 painter->setPen(this->palette().color(DPalette::Normal, DPalette::Highlight));
                 painter->drawPath(path[0]);
                 number = -1;
@@ -176,10 +179,10 @@ void PartChartShowing::addPaint(QPainter *painter)
             path[i].lineTo(path[i - 1].currentPosition() + QPoint((width1), paintRect.height() - 1));
             path[i].lineTo(path[i - 1].currentPosition() + QPoint((width1), 0));
             QColor fillcolor;
-            if (i > color.size() - 1) {
-                fillcolor = color.at(i % (color.size() - 1) - 1);
+            if (i > basecolor.size() - 1) {
+                fillcolor = basecolor.at(i % (basecolor.size() - 1) - 1);
             } else {
-                fillcolor = color.at(i);
+                fillcolor = basecolor.at(i);
             }
             painter->fillPath(path[i], QBrush(fillcolor));
             if (number > 0 && number != -1 && number == i) {
@@ -202,10 +205,10 @@ void PartChartShowing::addPaint(QPainter *painter)
             path[partsize.size() - 1].lineTo(path[partsize.size() - 2].currentPosition() + QPoint(((partsize.at(partsize.size() - 2) / total))*paintRect.width(), paintRect.height() - 1));
             path[partsize.size() - 1].lineTo(path[partsize.size() - 2].currentPosition() + QPoint(((partsize.at(partsize.size() - 2) / total))*paintRect.width(), 0));
             QColor fillcolor;
-            if (i > color.size() - 1) {
-                fillcolor = color.at(i % (color.size() - 1) - 1);
+            if (i > basecolor.size() - 1) {
+                fillcolor = basecolor.at(i % (basecolor.size() - 1) - 1);
             } else {
-                fillcolor = color.at(i);
+                fillcolor = basecolor.at(i);
             }
             painter->fillPath(path[partsize.size() - 1], QBrush(fillcolor));
             if (number == partsize.size() - 1) {

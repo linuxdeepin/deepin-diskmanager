@@ -22,10 +22,10 @@ void DmFrameWidget::setFrameData()
     m_infodata = temp;
     for (QString strpoint : data.mountpoints)
         m_infodata.mountpoints.append(strpoint + " ");
-    m_infodata.unused = QString::number(Utils::sector_to_unit(data.sectors_unused, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
-    m_infodata.used = QString::number(Utils::sector_to_unit(data.sectors_used, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
+    m_infodata.unused = Utils::format_size(data.sectors_unused, data.sector_size);
+    m_infodata.used = Utils::format_size(data.sectors_used, data.sector_size);
     m_infodata.fstype = Utils::FSTypeToString((FSType)data.fstype);
-    m_infodata.partitionsize = QString::number(Utils::sector_to_unit(data.sector_end - data.sector_start, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
+    m_infodata.partitionsize = Utils::format_size(data.sector_end - data.sector_start, data.sector_size);
     m_infodata.syslabel = data.filesystem_label;
     update();
 }

@@ -55,6 +55,8 @@ private:
     QVector<QColor>colorinfo;
     QVector<double>sizeinfo;
     DPalette m_parentPb;
+    QString totalsize;
+    QString usedsize;
 };
 
 #endif // SIZEINFOWIDGET_H

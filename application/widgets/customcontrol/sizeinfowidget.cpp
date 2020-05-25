@@ -36,9 +36,11 @@ void SizeInfoWidget::setdata(PartitionInfo info, QVector<QColor>color, QVector<d
     sizeinfo = size;
     colorinfo = color;
     m_flag = flag;
-    m_noused = Utils::sector_to_unit(info.sectors_unused, info.sector_size, SIZE_UNIT::UNIT_GIB);
-    m_used = Utils::sector_to_unit(info.sectors_used, info.sector_size, SIZE_UNIT::UNIT_GIB);
-    m_totalsize = m_noused + m_used;
+//    m_noused = Utils::sector_to_unit(info.sectors_unused, info.sector_size, SIZE_UNIT::UNIT_GIB);
+//    m_used = Utils::sector_to_unit(info.sectors_used, info.sector_size, SIZE_UNIT::UNIT_GIB);
+    totalsize = Utils::format_size(info.sector_end - info.sector_start, info.sector_size);
+    usedsize = Utils::format_size(info.sectors_used, info.sector_size);
+//    m_totalsize = m_noused + m_used;
     update();
 
 }
@@ -137,8 +139,8 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.drawText(recttext, QString(tr("Capacity:")), option);
             recttext.moveTo(paintRect.width() / 2 - 40, paintRect.bottomLeft().y() + 17);
             painter.drawText(recttext, QString(tr("Used:")), option);
-            QString totalsize = QString::number(total, 'f', 2) + "GB";
-            QString usedsize = QString::number(m_used, 'f', 2) + "GB";
+//            QString totalsize = QString::number(total, 'f', 2) + "GB";
+//            QString usedsize = QString::number(m_used, 'f', 2) + "GB";
             QRect rectsizenum = QRect(paintRect.bottomLeft().x() + 120, paintRect.bottomLeft().y() + 20, 100, 30);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
             QColor text1color = m_parentPb.color(DPalette::Normal, DPalette::TextTitle);
@@ -182,8 +184,6 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.drawText(recttext, QString(tr("Capacity:")), option);
             recttext.moveTo(paintRect.width() / 2 - 40, paintRect.bottomLeft().y() + 17);
             painter.drawText(recttext, QString(tr("Used:")), option);
-            QString totalsize = QString::number(total, 'f', 2) + "GB";
-            QString usedsize = QString::number(m_used, 'f', 2) + "GB";
             QRect rectsizenum = QRect(paintRect.bottomLeft().x() + 120, paintRect.bottomLeft().y() + 20, 100, 30);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
             QColor text1color = m_parentPb.color(DPalette::Normal, DPalette::ToolTipText);

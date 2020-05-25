@@ -465,7 +465,9 @@ void PartitionWidget::addPartitionSlot()
     double total1 = partSize.left(j).toDouble();
     if (partNameEdit->text().isEmpty()) {
 //        partNameEdit->showAlertMessage(tr("Partition name is not empty"));
-        partName.append(" ");
+        partNameEdit->setText(" ");
+    } else {
+        partName.append(partNameEdit->text());
     }
     if (partSizeEdit->text().isEmpty()) {
         partSizeEdit->showAlertMessage(tr("Partition Size is not empty"));

@@ -16,6 +16,7 @@ class PartedCore : public QObject
     Q_OBJECT
 public:
     explicit PartedCore(QObject *parent = nullptr);
+    ~PartedCore() ;
 
     DeviceInfo getDeviceinfo();
     DeviceInfoMap getAllDeviceinfo();

@@ -17,6 +17,7 @@ public:
     DeviceInfoMap probDeviceInfo()const;
     QVector<PartitionInfo> getCurDevicePartitionArr();
     const PartitionInfo &getCurPartititonInfo();
+    const DeviceInfo &getCurDeviceInfo();
     bool mount(const QString &mountpath);
     bool unmount();
     QStringList getallsupportfs();

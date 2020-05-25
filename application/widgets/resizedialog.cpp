@@ -42,7 +42,7 @@ void ResizeDialog::initConnection()
     connect(this, &ResizeDialog::buttonClicked, this, &ResizeDialog::slotbuttonClicked);
 }
 
-void ResizeDialog::slotbuttonClicked(int index, const QString &text)
+void ResizeDialog::slotbuttonClicked(int index, const QString &)
 {
     if (okcode == index) {
         auto phandler = DMDbusHandler::instance();
@@ -59,11 +59,25 @@ void ResizeDialog::slotbuttonClicked(int index, const QString &text)
                 next = arrinfo.at(index + 1);
                 if (next.type == TYPE_UNALLOCATED) {
                     QString strspace = pedit->text();
-                    if (0 == pcombo->currentIndex())
+                    double total = 0;
+                    //目前使用GB为单位精度损失太大，如果扩容全部空闲分区会出现空隙，按当前单位转换后如果差值小于0.01默认全选
+                    if (0 == pcombo->currentIndex()) {
+                        total = Utils::sector_to_unit(next.get_sector_length(),  curinfo.sector_size, UNIT_MIB);
                         expandspace = strspace.toFloat() * (MEBIBYTE / curinfo.sector_size);
-                    else
+                        if (total - strspace.toFloat() < 0.01)
+                            expandspace = next.get_sector_length();
+                        else
+                            expandspace = strspace.toFloat() * (MEBIBYTE / curinfo.sector_size);
+                    } else {
+                        total = Utils::sector_to_unit(next.get_sector_length(),  curinfo.sector_size, UNIT_GIB);
                         expandspace = strspace.toFloat() * (GIBIBYTE / curinfo.sector_size);
+                        if (total - strspace.toFloat() < 0.01)
+                            expandspace = next.get_sector_length();
+                        else
+                            expandspace = strspace.toFloat() * (GIBIBYTE / curinfo.sector_size);
+                    }
 
+                    qDebug() << curinfo.sector_size * 1.0 << GIBIBYTE / curinfo.sector_size << GIBIBYTE / (curinfo.sector_size * 1.0);
                     qDebug() << Utils::format_size(expandspace, curinfo.sector_size) << Utils::format_size(next.get_sector_length(), curinfo.sector_size);
                     canexpand = true;
                     index += 1;
@@ -78,19 +92,26 @@ void ResizeDialog::slotbuttonClicked(int index, const QString &text)
 
         } else {
             PartitionInfo newinfo = curinfo;
-            qDebug() << Utils::format_size(newinfo.sector_end - newinfo.sector_start, curinfo.sector_size) << next.sector_end << expandspace << next.get_sector_length();
-            newinfo.sector_end = expandspace > next.get_sector_length() ? next.sector_end : curinfo.sector_end + expandspace;
-            newinfo.sector_end = next.sector_end;
-//            if (newinfo.sector_end - next.sector_end < MEBIBYTE / newinfo.sector_size) {
+            qDebug() << Utils::format_size(newinfo.sector_end - newinfo.sector_start, curinfo.sector_size) << next.sector_start << next.sector_end << expandspace << next.get_sector_length();
+            //  newinfo.sector_end = expandspace > next.get_sector_length() ? next.sector_end : curinfo.sector_end + expandspace;
 
-//            }
-//            if ( newinfo->type == TYPE_LOGICAL )
-//            {
+            newinfo.sector_end = expandspace + next.sector_start > next.sector_end ? next.sector_end : next.sector_start + expandspace;
 
-//            }
-//            newinfo.sector_end -= MEBIBYTE / newinfo.sector_size;
+            Sector diff = 0;
+            diff = (newinfo.sector_end + 1) % (MEBIBYTE / newinfo.sector_size);
+            if (diff)
+                newinfo.sector_end -= diff;
+            else {
+                // If this is a GPT partition table and the partition ends less than 34 sectors
+                // from the end of the device, then reserve at least a mebibyte for the backup
+                // partition table.
+                DeviceInfo device = phandler->getCurDeviceInfo();
+                if (device.disktype == "gpt" && device.length - newinfo.sector_end < 34)
+                    newinfo.sector_end -= MEBIBYTE / newinfo.sector_size;
+            }
+
             qDebug() << Utils::format_size(newinfo.sector_end - newinfo.sector_start, curinfo.sector_size) << newinfo.sector_start << newinfo.sector_end;
-            newinfo.alignment = ALIGN_STRICT;
+            newinfo.alignment = ALIGN_MEBIBYTE;//ALIGN_MEBIBYTE;
             phandler->resize(newinfo);
             done(index);
         }

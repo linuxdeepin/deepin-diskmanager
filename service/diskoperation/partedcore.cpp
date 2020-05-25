@@ -35,6 +35,12 @@ PartedCore::PartedCore(QObject *parent) : QObject(parent)
     qDebug() << __FUNCTION__ << "^^5";
 }
 
+PartedCore::~PartedCore()
+{
+    delete supported_filesystems;
+    supported_filesystems = NULL;
+}
+
 void PartedCore::find_supported_core()
 {
     udevadm_found = ! Utils::find_program_in_path("udevadm").isEmpty();

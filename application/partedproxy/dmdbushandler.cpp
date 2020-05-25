@@ -92,6 +92,11 @@ const PartitionInfo &DMDbusHandler::getCurPartititonInfo()
     return m_curpartitioninfo;
 }
 
+const DeviceInfo &DMDbusHandler::getCurDeviceInfo()
+{
+    return m_devicemap.find(m_curdevicepath).value();
+}
+
 bool DMDbusHandler::mount(const QString &mountpath)
 {
     bool success = false;

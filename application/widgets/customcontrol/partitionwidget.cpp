@@ -328,7 +328,7 @@ void PartitionWidget::showSelectPathInfo(const int &flag, const int &num, const 
         partNameEdit->lineEdit()->setPlaceholderText(partName.at(num));
         partSizeEdit->lineEdit()->setPlaceholderText(QString::number(sizeInfo.at(num)));
 
-    } else {
+    } else if (flag == 3) {
         hSlider->setValue(total - leaveSpace());
         partSizeEdit->setText("");
         QToolTip::showText(QPoint(x + posX + 5, y + 235), tr("Free Space"), this, QRect(QPoint(x + posX, y + 235), QSize(80, 20)), 2000);

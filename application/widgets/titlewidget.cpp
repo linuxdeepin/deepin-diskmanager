@@ -28,9 +28,6 @@ void TitleWidget::initUi()
     layout->addWidget(m_btnunmount);
     layout->addWidget(m_btnresize);
     tipPartDialog = new TipPartDialog(this);
-//    tipFormateDialog = new TipFormateDialog(this);
-//    tipUnmountDialog = new TipUmountDialog(this);
-//    tipResizeDialog = new TipResizeDialog(this);
 
 }
 

@@ -17,7 +17,7 @@ void FormateDialog::initUi()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
-    setTitle(tr("Tyr to format partition ") + info.path);
+    setTitle(tr("Try to format partition ") + info.path);
     DLabel *tipLabel = new DLabel(tr("To format the disk, all data stored on the disk will be deleted and cannot be undone"), this);
     tipLabel ->setAlignment(Qt::AlignCenter);
     DFontSizeManager::instance()->bind(tipLabel, DFontSizeManager::T6);

@@ -17,11 +17,28 @@ DmFrameWidget::DmFrameWidget(DiskInfoData data, QWidget *parent): DFrame(parent)
 void DmFrameWidget::setFrameData()
 {
     PartitionInfo data = DMDbusHandler::instance()->getCurPartititonInfo();
-
+    QString mountstr;
+    QString previoustr;
+    QString laststr;
     DiskInfoData temp;
     m_infodata = temp;
-    for (QString strpoint : data.mountpoints)
-        m_infodata.mountpoints.append(strpoint + " ");
+    if (data.mountpoints.size() >= 2) {
+        for (QString strpoint : data.mountpoints)
+            m_infodata.mountpoints.append(strpoint + " ");
+    } else {
+        for (QString strpoint : data.mountpoints)
+            m_infodata.mountpoints.append(strpoint);
+        if (m_infodata.mountpoints.size() > 21) {
+            for (int i = 0; i < 9; i++) {
+                previoustr += m_infodata.mountpoints.at(i);
+            }
+            previoustr += "...";
+            for (int p = m_infodata.mountpoints.size() - 9; p < m_infodata.mountpoints.size(); p++) {
+                laststr += m_infodata.mountpoints.at(p);
+            }
+            m_infodata.mountpoints = previoustr + laststr;
+        }
+    }
     m_infodata.unused = Utils::format_size(data.sectors_unused, data.sector_size);
     m_infodata.used = Utils::format_size(data.sectors_used, data.sector_size);
     m_infodata.fstype = Utils::FSTypeToString((FSType)data.fstype);
@@ -55,7 +72,7 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)
         painter.setBrush(brush1);
         painter.fillRect(paintRect, brush1);
         painter.drawLine(paintRect.width() / 2, rect.topLeft().y(), paintRect.width() / 2, rect.bottomLeft().y());
-        QRect textRect = QRect(rect.width() / 2 - 260, rect.topLeft().y() + 12, 240, 35);
+        QRect textRect = QRect(rect.width() / 2 - 300, rect.topLeft().y() + 12, 240, 35);
         QColor textcolor = this->palette().color(DPalette::Normal, DPalette::Text);
         QTextOption option;
         option.setTextDirection(Qt::LeftToRight);
@@ -63,7 +80,8 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)
         QTextOption option1;
         option1.setAlignment(Qt::AlignRight);
         painter.setPen(textcolor);
-        painter.drawText(textRect, m_infodata.mountpoints, option);
+        QRect textRect1 = QRect(rect.width() / 2 - 275, rect.topLeft().y() + 10, 257, 40);
+        painter.drawText(textRect1, m_infodata.mountpoints, option);
         textRect.moveTo(rect.width() / 2 - 260, rect.topLeft().y() + 62);
         painter.drawText(textRect, m_infodata.unused, option1);
         textRect.moveTo(rect.width() / 2 - 260, rect.topLeft().y() + 113);
@@ -92,7 +110,7 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)
         painter.setBrush(QBrush(midcolor));
         painter.fillRect(paintRect, midcolor);
         painter.drawLine(paintRect.width() / 2, rect.topLeft().y(), paintRect.width() / 2, rect.bottomLeft().y());
-        QRect textRect = QRect(rect.width() / 2 - 260, rect.topLeft().y() + 10, 240, 35);
+        QRect textRect = QRect(rect.width() / 2 - 400, rect.topLeft().y() + 10, 240, 35);
         QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
         QColor textcolor = this->palette().color(DPalette::Normal, DPalette::WindowText);
         QTextOption option;
@@ -101,7 +119,8 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)
         QTextOption option1;
         option1.setAlignment(Qt::AlignRight);
         painter.setPen(textcolor);
-        painter.drawText(textRect, m_infodata.mountpoints, option);
+        QRect textRect1 = QRect(rect.width() / 2 - 275, rect.topLeft().y() + 10, 257, 40);
+        painter.drawText(textRect1, m_infodata.mountpoints, option);
         textRect.moveTo(rect.width() / 2 - 260, rect.topLeft().y() + 62);
         painter.drawText(textRect, m_infodata.unused, option1);
         textRect.moveTo(rect.width() / 2 - 260, rect.topLeft().y() + 113);

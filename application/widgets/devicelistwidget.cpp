@@ -42,44 +42,18 @@ void DeviceListWidget::initConnection()
 void DeviceListWidget::slotUpdateDeviceInfo()
 {
     qDebug() << __FUNCTION__ << "               1";
-//    m_treeview->close();
-    //ToDo:
-//更新DmTreeview
+//更新DmTreeview  lx
 //设置当前选项
     m_treeview->m_model->clear();
     DeviceInfoMap infomap = DMDbusHandler::instance()->probDeviceInfo();
 
     for (auto it = infomap.begin(); it != infomap.end(); it++) {
         DeviceInfo info = it.value();
-//        qDebug() << Utils::sector_to_unit(info.sectors, info.sector_size, SIZE_UNIT::UNIT_GIB);
-
-
-//        QString s_disksize = QString::number(Utils::sector_to_unit(info.sectors, info.sector_size, SIZE_UNIT::UNIT_GIB)) + "GB";
-
-
-//        double_t sectorall = (info.length * info.sector_size) / 1024.0 / 1024.0 / 1024.0;
-//        QString s_disksize = QString::number(sectorall, 'f', 2) + "GB";
         QString s_disksize = Utils::format_size(info.length, info.sector_size);
-
-//        double_t sectorall = (info.length * info.sector_size) / 1024.0 / 1024.0 / 1024.0;
-//        QString s_disksize = QString::number(sectorall, 'f', 2) + "GB";
-        //  QString s_disksize = QString::number(Utils::sector_to_unit(info.sectors, info.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
-        //    qDebug() << (Utils::sector_to_unit(info.sectors, info.sector_size, SIZE_UNIT::UNIT_GIB));
-
         auto m_box = new DmDiskinfoBox(0, this, info.m_path, s_disksize);
         for (auto it = info.partition.begin(); it != info.partition.end(); it++) {
-//            qDebug() << Utils::sector_to_unit(it->sector_end - it->sector_end, it->sector_size, SIZE_UNIT::UNIT_GIB);
-
             QString s_pdisksize = Utils::format_size(it->sector_end - it->sector_start, it->sector_size);
             QString s_partitionpath = it->path;
-//            double s_used = (it->sectors_used * it->sector_size) / 1024.0 / 1024.0 / 1024.0;
-//            double s_used = Utils::sector_to_unit(it->sectors_used, it->sector_size, SIZE_UNIT::UNIT_GIB);
-            //            qDebug() << s_used;
-//            if (it->partition_number == 4)
-//                int a = 0;
-//            qDebug() << it->sector_end << it->sector_start << it->sectors_used << it->sectors_unused << it->sectors_unallocated;
-//            double s_unused = Utils::sector_to_unit(it->sectors_unused, it->sector_size, SIZE_UNIT::UNIT_GIB);
-//                    (it->sectors_unused * it->sector_size) / 1024.0 / 1024.0 / 1024.0;
             QString s_unusedstr = Utils::format_size(it->sectors_used, it->sector_size);
             QString s_usedstr = Utils::format_size(it->sectors_unused, it->sector_size);
             qDebug() << it->partition_number;
@@ -100,10 +74,8 @@ void DeviceListWidget::slotUpdateDeviceInfo()
             qDebug() << s_fstype;
             qDebug() << it->filesystem_label;
             QString s_filesystem_label = it->filesystem_label;
-            //            qDebug() << s_unused;
             auto m_childbox = new DmDiskinfoBox(1, this, it->device_path, "", s_partitionpath, s_pdisksize, s_usedstr, s_unusedstr, it->sectors_unallocated,
                                                 it->sector_start, it->sector_end, s_fstype, s_mountpoints, s_filesystem_label);
-//            qDebug() << it->path << it << s_pdisksize;
             m_box->childs.append(m_childbox);
         }
 

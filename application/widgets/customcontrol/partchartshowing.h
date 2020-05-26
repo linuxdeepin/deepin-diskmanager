@@ -54,7 +54,7 @@ protected:
     virtual void mousePressEvent(QMouseEvent *event) override;
 
 private:
-    int flag = 0;
+    int flag = 1;
     QString m_totalsize;
     double total = 0.00;
     QVector<double> partsize;

@@ -110,7 +110,7 @@ void PartChartShowing::addPaint(QPainter *painter)
     if (flag == 1) {
         painter->setPen(QPen(QColor(this->palette().highlight().color()), 2));
         painter->drawRoundedRect(paintRect, 8, 8);
-        flag = 0;
+//        flag = 0;
     }
 
     for (int i = 0; i < partsize.size(); i++) {

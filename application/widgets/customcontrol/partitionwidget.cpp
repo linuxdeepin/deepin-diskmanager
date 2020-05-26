@@ -504,6 +504,7 @@ void PartitionWidget::slotSetSliderValue()
     hSlider->setValue((value / total1) * 100);
 
 
+
 }
 
 void PartitionWidget::addPartitionSlot()
@@ -559,7 +560,6 @@ void PartitionWidget::addPartitionSlot()
     hSlider->setValue(0);
     partSizeEdit->setText("");
     setEnable();
-
 }
 
 void PartitionWidget::remPartitionSlot()

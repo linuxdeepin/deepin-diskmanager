@@ -43,7 +43,13 @@
 
 DWIDGET_USE_NAMESPACE
 
-
+typedef struct STRUCTPART {
+    STRUCTPART() {}
+    double size;
+    Sector count;
+    QString name;
+    QString fstype;
+} stPart;
 
 class PartitionWidget : public DDialog
 {
@@ -64,11 +70,11 @@ public:
     double leaveSpace();
     void setSelectValue();
 
+private:
+    bool max_amount_prim_reached();
 
 signals:
     void senderData(int x, int y, int z);
-    // QWidget interface
-protected:
 
 public slots:
     void slotSliderValueChanged(int value);
@@ -119,7 +125,7 @@ private:
     QVector<double> sizeInfo;
     QVector<QString> partName;
     QVector <QColor> basecolor;
-
+    QVector<stPart> m_patrinfo;
 
 
 

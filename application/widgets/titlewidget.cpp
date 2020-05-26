@@ -3,9 +3,8 @@
 #include "unmountdialog.h"
 #include "formatedialog.h"
 #include "resizedialog.h"
-#include <QHBoxLayout>
-
 #include "widgetdeclare.h"
+#include <QHBoxLayout>
 
 TitleWidget::TitleWidget(DWidget *parent): DWidget(parent)
 {
@@ -63,6 +62,15 @@ DPushButton *TitleWidget::createBtn(const QString &btnName,  const QString &objN
 
 void TitleWidget::showPartInfoWidget()
 {
+    PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+    if (TYPE_UNPARTITIONED == info.type && FS_UNALLOCATED == info.fstype) {
+
+        qDebug() << QString("No partition table found on device %1").arg(info.device_path);
+        qDebug() << "A partition table is required before partitions can be added";
+        //ToDo:empty device create partition table
+        return ;
+    }
+
     tipPartDialog->getButton(1)->disconnect();
     tipPartDialog->getFlagShow(0);
     controlButton = 1;
@@ -101,19 +109,8 @@ void TitleWidget::showUnmountInfoWidget()
 
 void TitleWidget::showResizeInfoWidget()
 {
-//    tipPartDialog->getButton(1)->disconnect();
-//    tipPartDialog->getFlagShow(4);
-//    controlButton = 5;
-//    connect(tipPartDialog->getButton(1), &QAbstractButton::clicked, this, [ = ] {
-//        if (controlButton == 5)
-//        {
-//            tipPartDialog->close();
-//            qDebug() << tr("XXX system space is in operation");
-//        }
-//    });
     ResizeDialog dlg;
     dlg.exec();
-
 }
 
 void TitleWidget::updateBtnStatus()

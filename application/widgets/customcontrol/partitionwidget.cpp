@@ -323,6 +323,27 @@ void PartitionWidget::setSelectValue()
     }
 }
 
+bool PartitionWidget::max_amount_prim_reached()
+{
+    bool breachmax = false;
+    int primary_count = 0;
+    QVector<PartitionInfo> partvector = DMDbusHandler::instance()->getCurDevicePartitionArr();
+    PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+    for (unsigned int i = 0 ; i < partvector.size() ; i ++) {
+        if (partvector[i].type == TYPE_PRIMARY || partvector[i].type == TYPE_EXTENDED)
+            primary_count ++;
+    }
+    int maxprims = DMDbusHandler::instance()->getCurDeviceInfo().max_prims;
+    if (! info.inside_extended && primary_count >= maxprims) {
+        breachmax = true;
+        qDebug() << QString("It is not possible to create more than %1 primary partition").arg(maxprims);
+        qDebug() << QString("If you want more partitions you should first create an extended partition. Such a partition can contain other partitions."
+                            "Because an extended partition is also a primary partition it might be necessary to remove a primary partition first.");
+
+    }
+    return breachmax;
+}
+
 void PartitionWidget::showSelectPathInfo(const int &flag, const int &num, const int &posX)
 {
     int x = this->frameGeometry().x();
@@ -431,6 +452,7 @@ void PartitionWidget::slotSetSliderValue()
 
 void PartitionWidget::addPartitionSlot()
 {
+    stPart part;
     int j = partSize.lastIndexOf("G");
     double total1 = partSize.left(j).toDouble();
     if (partNameEdit->text().isEmpty()) {
@@ -465,6 +487,14 @@ void PartitionWidget::addPartitionSlot()
         remButton->setEnabled(true);
 
     partChartWidget->getData(total, sizeInfo);
+    part.name = partNameEdit->text();
+    part.fstype = partFormateCombox->currentText();
+    Byte_Value sector_size = DMDbusHandler::instance() ->getCurPartititonInfo().sector_size;
+    if (partComCobox->currentText().compare("MB") == 0) {
+        part.count = currentSize * (MEBIBYTE / sector_size);
+    } else {
+        part.count = currentSize * (GIBIBYTE / sector_size);
+    }
     comboxCurTextSlot();
     qDebug() << total - leaveSpace() << total << currentSize;
     partChartWidget->update();
@@ -477,6 +507,7 @@ void PartitionWidget::addPartitionSlot()
 
 void PartitionWidget::remPartitionSlot()
 {
+    m_patrinfo.pop_back();
     addButton->setEnabled(true);
     if (sizeInfo.size() == 0)
         return;
@@ -496,16 +527,20 @@ void PartitionWidget::remPartitionSlot()
 
 void PartitionWidget::applyBtnSlot()
 {
-    sizeInfo.clear();
-    partName.clear();
-    partChartWidget->getData(total, sizeInfo);
-    qDebug() << sizeInfo;
-    partChartWidget->update();
-    this->close();
+    QVector<PartitionInfo> partvector;
+    Sector beforend = 0;
+    for (int i = 0; i < m_patrinfo.size(); i++) {
+        PartitionInfo newpart;
+        //  newpart
+
+    }
+    close();
+
 }
 
 void PartitionWidget::revertBtnSlot()
 {
+    m_patrinfo.clear();
     sizeInfo.clear();
     partName.clear();
     partChartWidget->getData(total, sizeInfo);

@@ -298,7 +298,6 @@ double PartitionWidget::leaveSpace()
     double sum = 0.00;
     for (int j = 0; j < sizeInfo.count(); j++) {
         sum = sum + sizeInfo.at(j);
-        qDebug() << sum << "11sum";
         if (sum >= total)
             break;
     }

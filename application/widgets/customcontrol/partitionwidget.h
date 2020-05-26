@@ -68,7 +68,7 @@ public:
     void initConnection();
     double leaveSpace();
     void setSelectValue();
-
+    bool blockSignals(bool block);
 
 private:
     bool max_amount_prim_reached();

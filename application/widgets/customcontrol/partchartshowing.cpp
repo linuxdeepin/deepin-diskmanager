@@ -108,7 +108,7 @@ void PartChartShowing::addPaint(QPainter *painter)
     const int radius = 8;
     double sum = 0.00;
     if (flag == 1) {
-        painter->setPen(QColor(this->palette().highlight().color()));
+        painter->setPen(QPen(QColor(this->palette().highlight().color()), 2));
         painter->drawRoundedRect(paintRect, 8, 8);
         flag = 0;
     }
@@ -122,9 +122,9 @@ void PartChartShowing::addPaint(QPainter *painter)
         double width1 = 0.00;
         qDebug() << sum;
         qDebug() << partsize.at(i);
-        sum = static_cast<int>(sum + partsize.at(i));
+        sum = sum + partsize.at(i);
         if (i == 0 && sum >= total) {
-            painter->setPen(QColor(this->palette().highlight().color()));
+            painter->setPen(QPen(QColor(this->palette().highlight().color()), 2));
             painter->setBrush(basecolor.at(0));
             painter->drawRoundedRect(paintRect, 8, 8);
 
@@ -163,13 +163,14 @@ void PartChartShowing::addPaint(QPainter *painter)
             painter->fillPath(path[0], QBrush(basecolor.at(0)));
             if (number == 0) {
                 painter->setBrush(QBrush(basecolor.at(0)));
-                painter->setPen(this->palette().color(DPalette::Normal, DPalette::Highlight));
+                painter->setPen(QPen(this->palette().color(DPalette::Normal, DPalette::Highlight), 2));
                 painter->drawPath(path[0]);
                 number = -1;
                 flag = 0;
             }
 
-        } else if (sum < total && i > 0) {
+        } else if (static_cast<int>(sum) < static_cast<int>(total) && i > 0) {
+            qDebug() << sum << total;
             width1 = (partsize.at(i - 1) / total) * paintRect.width();
             if ((partsize.at(i - 1) / total) * paintRect.width() <= 3)
                 width1 = 10;
@@ -187,7 +188,7 @@ void PartChartShowing::addPaint(QPainter *painter)
             painter->fillPath(path[i], QBrush(fillcolor));
             if (number > 0 && number != -1 && number == i) {
                 painter->setBrush(fillcolor);
-                painter->setPen(this->palette().color(DPalette::Normal, DPalette::Highlight));
+                painter->setPen(QPen(this->palette().color(DPalette::Normal, DPalette::Highlight), 2));
                 painter->drawPath(path[number]);
                 flag = 0;
             }
@@ -212,7 +213,7 @@ void PartChartShowing::addPaint(QPainter *painter)
             }
             painter->fillPath(path[partsize.size() - 1], QBrush(fillcolor));
             if (number == partsize.size() - 1) {
-                painter->setPen(this->palette().color(DPalette::Normal, DPalette::Highlight));
+                painter->setPen(QPen(this->palette().color(DPalette::Normal, DPalette::Highlight), 2));
                 painter->setBrush(fillcolor);
                 painter->drawPath(path[partsize.size() - 1]);
                 number = -1;
@@ -231,7 +232,7 @@ void PartChartShowing::addPaint(QPainter *painter)
             width2 = 10;
             qDebug() << "231";
         }
-        painter->setPen(this->palette().color(DPalette::Normal, DPalette::Highlight));
+        painter->setPen(QPen(this->palette().color(DPalette::Normal, DPalette::Highlight), 2));
         //                paintpath.moveTo()
         paintpath.moveTo(paintRect.bottomRight() - QPoint(0, radius));
         paintpath.lineTo(paintRect.topRight() + QPoint(0, radius));

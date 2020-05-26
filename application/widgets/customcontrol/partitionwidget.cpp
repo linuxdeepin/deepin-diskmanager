@@ -301,6 +301,7 @@ double PartitionWidget::leaveSpace()
     double sum = 0.00;
     for (int j = 0; j < sizeInfo.count(); j++) {
         sum = sum + sizeInfo.at(j);
+        qDebug() << sum << "11sum";
         if (sum >= total)
             break;
     }
@@ -464,7 +465,8 @@ void PartitionWidget::slotSetSliderValue()
     double value = partSizeEdit->text().toDouble();
     if (partComCobox->currentText() == "MB")
         value = value / 1024;
-//    hSlider->setValue((value / total1) * 100);
+    hSlider->setValue((value / total1) * 100);
+
 }
 
 void PartitionWidget::addPartitionSlot()

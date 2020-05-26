@@ -59,7 +59,6 @@ public:
     explicit PartitionWidget(QWidget *parent = nullptr);
     ~PartitionWidget() override;
     void initUi();
-//    void initConnection();
     void topFrameSetting();
     void midFrameSetting();
     void botFrameSetting();
@@ -70,8 +69,10 @@ public:
     double leaveSpace();
     void setSelectValue();
 
+
 private:
     bool max_amount_prim_reached();
+
 
 signals:
     void senderData(int x, int y, int z);

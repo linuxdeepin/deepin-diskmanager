@@ -15,15 +15,15 @@ public:
     void Quit();
     void getDeviceinfo();
     const DeviceInfoMap &probDeviceInfo()const;
-    QVector<PartitionInfo> getCurDevicePartitionArr();
+    PartitionVec getCurDevicePartitionArr();
     const PartitionInfo &getCurPartititonInfo();
     const DeviceInfo &getCurDeviceInfo();
     void mount(const QString &mountpath);
     void unmount();
     QStringList getallsupportfs();
-    bool format(const QString &fstype, const QString &name = QString());
+    void format(const QString &fstype, const QString &name = QString());
     void resize(const PartitionInfo &info);
-    void create(const QVector<PartitionInfo> &infovec);
+    void create(const PartitionVec &infovec);
 
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);

@@ -65,6 +65,7 @@ void Partition::Reset(const PartitionInfo &info)
     free_space_before = info.free_space_before ;
     sector_size = info.sector_size ;
     fs_block_size = info.fs_block_size;
+    device_path = info.device_path;
 }
 
 void Partition::Set(const QString &device_path, const QString &partition, int partition_number, PartitionType type, FSType fstype, Sector sector_start, Sector sector_end, Byte_Value sector_size, bool inside_extended, bool busy)

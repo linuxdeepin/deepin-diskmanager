@@ -1516,7 +1516,7 @@ bool PartedCore::unmount()
     return bsuccess;
 }
 
-bool PartedCore::create(const QVector<PartitionInfo> &infovec)
+bool PartedCore::create(const PartitionVec &infovec)
 {
     bool bsuccess = true;
     for (PartitionInfo info : infovec) {
@@ -1527,6 +1527,7 @@ bool PartedCore::create(const QVector<PartitionInfo> &infovec)
             break;
         }
     }
+    emit sigRefreshDeviceInfo();
     return bsuccess;
 }
 

@@ -19,13 +19,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, stCustest &stcus)
 class  DeviceInfo
 {
 public:
-    DeviceInfo()
-    {
-        length = heads = sectors = cylinders = cylsize = sector_size = max_prims = highest_busy = max_partition_name_length = 0;
-        m_path = model = serial_number = disktype = QString("");
-        readonly = false;
-        partition.clear();
-    }
+    DeviceInfo();
 public:
     Sector length;
     Sector heads ;
@@ -41,7 +35,7 @@ public:
     int highest_busy ;
     bool readonly ;
     int max_partition_name_length;
-    QVector<PartitionInfo> partition;
+    PartitionVec partition;
 };
 Q_DECLARE_METATYPE(DeviceInfo)
 

@@ -71,7 +71,7 @@ bool DiskManagerService::resize(const PartitionInfo &info)
     return m_partedcore->resize(info);
 }
 
-bool DiskManagerService::create(const QVector<PartitionInfo> &infovec)
+bool DiskManagerService::create(const PartitionVec &infovec)
 {
 
 }

@@ -42,4 +42,7 @@ Q_DECLARE_METATYPE(PartitionInfo)
 QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info);
 const QDBusArgument &operator>>(const QDBusArgument &argument, PartitionInfo &info);
 
+typedef QVector<PartitionInfo> PartitionVec;
+Q_DECLARE_METATYPE(PartitionVec)
+
 #endif // PARTITIONINFO_H

@@ -1,9 +1,12 @@
 #include "partitioninfo.h"
 #include <QDBusArgument>
 
-PartitionInfo::PartitionInfo()
+PartitionInfo::PartitionInfo():
+    inside_extended(false),
+    busy(false),
+    fs_readonly(false)
 {
-    // inside_extended = busy = fs_readonly = false;
+    //inside_extended = busy = fs_readonly = false;
     device_path = uuid = name = path = filesystem_label = "";
     partition_number = type = status = alignment = fstype = 0;
     sector_start = sector_end = sectors_used = sectors_unused = sectors_unallocated = significant_threshold = free_space_before = 0;

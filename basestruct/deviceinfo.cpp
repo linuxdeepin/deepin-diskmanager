@@ -69,3 +69,11 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, stCustest &stcus)
 }
 
 
+
+DeviceInfo::DeviceInfo():
+    readonly(false)
+{
+    length = heads = sectors = cylinders = cylsize = sector_size = max_prims = highest_busy = max_partition_name_length = 0;
+    m_path = model = serial_number = disktype = QString("");
+    partition.clear();
+}

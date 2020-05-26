@@ -25,7 +25,7 @@ public:
     //operationstuff...
     bool mount(const QString &mountpath);
     bool unmount();
-    bool create(const QVector<PartitionInfo> &infovec);
+    bool create(const PartitionVec &infovec);
     bool format(const QString &fstype, const QString &name);
     bool resize(const PartitionInfo &info);
     QStringList getallsupportfs();

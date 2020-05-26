@@ -91,13 +91,12 @@ public Q_SLOTS: // METHODS
         argumentList << QVariant::fromValue(info);
         return asyncCallWithArgumentList(QStringLiteral("resize"), argumentList);
     }
-    inline  QDBusPendingReply<bool>create(const QVector<PartitionInfo> &infovec)
+    inline  QDBusPendingReply<bool>create(const PartitionVec &infovec)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(infovec);
         return asyncCallWithArgumentList(QStringLiteral("create"), argumentList);
     }
-
 
 
 Q_SIGNALS: // SIGNALS

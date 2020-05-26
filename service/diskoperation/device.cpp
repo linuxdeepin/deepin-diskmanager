@@ -8,6 +8,7 @@ Device::Device()
     qDBusRegisterMetaType<DeviceInfo>();
     qDBusRegisterMetaType<DeviceInfoMap>();
     qDBusRegisterMetaType<PartitionInfo>();
+    qDBusRegisterMetaType<PartitionVec>();
     qDBusRegisterMetaType<stCustest>();
 }
 

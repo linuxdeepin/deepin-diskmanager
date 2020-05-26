@@ -51,7 +51,7 @@ void ResizeDialog::slotbuttonClicked(int index, const QString &)
         Sector expandspace = 0;
         PartitionInfo curinfo = phandler->getCurPartititonInfo();
         PartitionInfo next;
-        QVector<PartitionInfo> arrinfo = phandler->getCurDevicePartitionArr();
+        PartitionVec arrinfo = phandler->getCurDevicePartitionArr();
         int index = 0;
         for (index = 0; index < arrinfo.size(); index++) {
             PartitionInfo tem = arrinfo.at(index);

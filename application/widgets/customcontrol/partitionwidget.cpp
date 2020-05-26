@@ -324,7 +324,7 @@ bool PartitionWidget::max_amount_prim_reached()
 {
     bool breachmax = false;
     int primary_count = 0;
-    QVector<PartitionInfo> partvector = DMDbusHandler::instance()->getCurDevicePartitionArr();
+    PartitionVec partvector = DMDbusHandler::instance()->getCurDevicePartitionArr();
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
     for (unsigned int i = 0 ; i < partvector.size() ; i ++) {
         if (partvector[i].type == TYPE_PRIMARY || partvector[i].type == TYPE_EXTENDED)
@@ -552,6 +552,7 @@ void PartitionWidget::addPartitionSlot()
     } else {
         part.count = currentSize * (GIBIBYTE / sector_size);
     }
+    m_patrinfo.push_back(part);
     comboxCurTextSlot();
     qDebug() << total - leaveSpace() << total << currentSize;
     partChartWidget->update();
@@ -564,7 +565,8 @@ void PartitionWidget::addPartitionSlot()
 
 void PartitionWidget::remPartitionSlot()
 {
-//    m_patrinfo.pop_back();
+    if (m_patrinfo.size() > 0)
+        m_patrinfo.pop_back();
     addButton->setEnabled(true);
     if (sizeInfo.size() == 0)
         return;
@@ -586,7 +588,7 @@ void PartitionWidget::remPartitionSlot()
 void PartitionWidget::applyBtnSlot()
 {
     bool bcancreate = true;
-    QVector<PartitionInfo> partvector;
+    PartitionVec partvector;
     DMDbusHandler *phandler = DMDbusHandler::instance();
     PartitionInfo curinfo = phandler->getCurPartititonInfo();
     DeviceInfo device = phandler->getCurDeviceInfo();
@@ -601,17 +603,23 @@ void PartitionWidget::applyBtnSlot()
         newpart.name = m_patrinfo.at(i).name;
         newpart.alignment = ALIGN_MEBIBYTE;
         newpart.sector_size = curinfo.sector_size;
+        newpart.inside_extended = false;
+        newpart.busy = false;
+        newpart.fs_readonly = false;
+        newpart.device_path = curinfo.device_path;
         if (device.disktype == "gpt") {
             newpart.type = TYPE_PRIMARY;
         } else {
             //非逻辑分区外没有指明创建的分区类型主分区/扩展分区，默认主分区
             if (curinfo.inside_extended) {
                 newpart.type = TYPE_LOGICAL;
+                newpart.inside_extended = true;
+
             } else {
                 newpart.type = TYPE_PRIMARY;
             }
         }
-        if (beforend >= curinfo.sector_end && i <= m_patrinfo.size() - 1) {
+        if (beforend > curinfo.sector_end && i < m_patrinfo.size() - 1) {
             bcancreate = false;
             qDebug() << "create too partition ,no enough space";
             break;

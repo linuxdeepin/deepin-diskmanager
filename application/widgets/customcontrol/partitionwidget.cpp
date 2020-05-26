@@ -257,11 +257,12 @@ void PartitionWidget::getPartitionInfo(const PartitionInfo &data, const QString 
     int j = partSize.lastIndexOf("G");
     total = partSize.left(j).toDouble();
     partComCobox->setEnabled(true);
-    total = total * 1024;
-    partComCobox->setCurrentText("MB");
     if (total < 1) {
         partComCobox->setEnabled(false);
     }
+    total = total * 1024;
+    partComCobox->setCurrentText("MB");
+
     hSlider->setMaximum(100);
     hSlider->setValue(100);
     allMemory->setText(deviceSize);
@@ -355,6 +356,7 @@ void PartitionWidget::showSelectPathInfo(const int &flag, const int &num, const 
         if (partName.at(num) != " ")
             QToolTip::showText(QPoint(x + posX + 5, y + 235), partName.at(num), this, QRect(QPoint(x + posX, y + 235), QSize(80, 20)), 2000);
         partNameEdit->lineEdit()->setPlaceholderText(partName.at(num));
+
         double clicked = sizeInfo.at(num);
         if (partComCobox->currentText() == "GB")
             clicked = clicked / 1024;
@@ -374,7 +376,7 @@ void PartitionWidget::setEnable()
     double total1 = partSize.left(j).toDouble();
     if (mflag == 2) {
         addButton->setEnabled(false);
-        remButton->setEnabled(false);
+        remButton->setEnabled(true);
         if (leaveSpace() >= total) {
             remButton->setEnabled(true);
         }
@@ -386,9 +388,9 @@ void PartitionWidget::setEnable()
         DPalette pa = DApplicationHelper::instance()->palette(botFrame);
         pa.setBrush(DPalette::Text, pa.placeholderText());
         botFrame->setPalette(pa);
-    } else if (mflag == 1 || mflag == 3) {
-        qDebug() << mflag;
+    } else if (mflag == 3) {
         addButton->setEnabled(true);
+        remButton->setEnabled(true);
         if (leaveSpace() >= total) {
             remButton->setEnabled(true);
             addButton->setEnabled(false);
@@ -406,9 +408,7 @@ void PartitionWidget::setEnable()
         pa.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
         botFrame->setPalette(pa);
     }
-//    else {
 
-//    }
 }
 
 void PartitionWidget::comboxCurTextSlot()
@@ -420,6 +420,7 @@ void PartitionWidget::comboxCurTextSlot()
         if (partComCobox->currentText() == "MB") {
             GM = 1;
             hSlider->setEnabled(true);
+
         } else if (partComCobox->currentText() == "GB") {
             GM = 2;
             if (total1 < 5) {
@@ -439,7 +440,7 @@ void PartitionWidget::slotSliderValueChanged(int value)
 {
     qDebug() << value;
     QString strSize;
-    if (mflag != 3) {
+    if (mflag == 1 || mflag == 2) {
         if (partComCobox->currentText() == "MB") {
             strSize = QString::number(((double)value / 100) * total, 'f', 2);
         } else {
@@ -463,7 +464,7 @@ void PartitionWidget::slotSetSliderValue()
     double value = partSizeEdit->text().toDouble();
     if (partComCobox->currentText() == "MB")
         value = value / 1024;
-    hSlider->setValue((value / total1) * 100);
+//    hSlider->setValue((value / total1) * 100);
 }
 
 void PartitionWidget::addPartitionSlot()
@@ -514,7 +515,6 @@ void PartitionWidget::addPartitionSlot()
     comboxCurTextSlot();
     qDebug() << total - leaveSpace() << total << currentSize;
     partChartWidget->update();
-
     partNameEdit->setText("");
     hSlider->setValue(0);
     partSizeEdit->setText("");
@@ -523,7 +523,7 @@ void PartitionWidget::addPartitionSlot()
 
 void PartitionWidget::remPartitionSlot()
 {
-    m_patrinfo.pop_back();
+//    m_patrinfo.pop_back();
     addButton->setEnabled(true);
     if (sizeInfo.size() == 0)
         return;

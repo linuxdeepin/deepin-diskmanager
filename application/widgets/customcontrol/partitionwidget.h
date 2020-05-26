@@ -129,7 +129,7 @@ private:
     QVector<QString> partName;
     QVector<stPart> m_patrinfo;
 
-
+    int block = 0;
 
 };
 

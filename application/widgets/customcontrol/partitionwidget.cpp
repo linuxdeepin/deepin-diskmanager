@@ -39,12 +39,8 @@ void PartitionWidget::initUi()
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
     mainLayout->setSpacing(5);
 
-    DLabel *titleLabel = new DLabel(tr("Will XXX system space be partitioned?"), mainFrame);
-    QFont font;
-    font.setBold(true);
-    DFontSizeManager::instance()->bind(titleLabel, DFontSizeManager::T7);
-    titleLabel->setFont(font);
-    titleLabel->setAlignment(Qt::AlignCenter);
+
+    setTitle(tr("Will XXX system space be partitioned?"));
     DLabel *tipLabel = new DLabel(tr("Click the '+' button to increase the number of partitions on the device,\n and click each partition to change the name formate"), mainFrame);
     tipLabel->setAlignment(Qt::AlignCenter);
     topFrame = new DFrame(mainFrame);
@@ -64,7 +60,7 @@ void PartitionWidget::initUi()
     botFrameSetting();
     botFrame->setFrameStyle(DFrame::NoFrame);
 
-    mainLayout->addWidget(titleLabel, 1);
+
     mainLayout->addWidget(tipLabel, 1);
     mainLayout->addWidget(topFrame, 1);
     mainLayout->addWidget(midFrame, 3);
@@ -475,22 +471,25 @@ void PartitionWidget::comboxCurTextSlot()
 void PartitionWidget::slotSliderValueChanged(int value)
 {
     QString strSize;
-    if (mflag == 2 || mflag == 0) {
-        if (partComCobox->currentText() == "MB") {
-            strSize = QString::number(((double)value / 100) * total, 'f', 2);
+    qDebug() << block;
+    if (block == 0) {
+        if (mflag == 2 || mflag == 0) {
+            if (partComCobox->currentText() == "MB") {
+                strSize = QString::number(((double)value / 100) * total, 'f', 2);
+            } else {
+                strSize = QString::number(((double)value / 100) * (total / 1024), 'f', 2);
+            }
+            partSizeEdit->setText(strSize);
         } else {
-            strSize = QString::number(((double)value / 100) * (total / 1024), 'f', 2);
-        }
-    } else {
-        if (partComCobox->currentText() == "MB") {
-            strSize = QString::number(((double)value / 100) * (total - leaveSpace()), 'f', 2);
-        } else {
-            strSize = QString::number(((double)value / 100) * ((total - leaveSpace()) / 1024), 'f', 2);
+            if (partComCobox->currentText() == "MB") {
+                strSize = QString::number(((double)value / 100) * (total - leaveSpace()), 'f', 2);
+            } else {
+                strSize = QString::number(((double)value / 100) * ((total - leaveSpace()) / 1024), 'f', 2);
+            }
+            partSizeEdit->setText(strSize);
         }
     }
-    partSizeEdit->setText(strSize);
-
-
+    block = 0;
 }
 
 void PartitionWidget::slotSetSliderValue()
@@ -498,13 +497,12 @@ void PartitionWidget::slotSetSliderValue()
     int j = partSize.lastIndexOf("G");
     double total1 = partSize.left(j).toDouble();
     double value = partSizeEdit->text().toDouble();
-    qDebug() << value << "11111" << total1;
+    QString sizeTemp = partSizeEdit->text();
     if (partComCobox->currentText() == "MB")
         value = value / 1024;
+    partSizeEdit->setText(sizeTemp);
+    block = 1;
     hSlider->setValue((value / total1) * 100);
-
-
-
 }
 
 void PartitionWidget::addPartitionSlot()

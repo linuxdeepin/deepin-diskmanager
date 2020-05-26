@@ -1516,6 +1516,20 @@ bool PartedCore::unmount()
     return bsuccess;
 }
 
+bool PartedCore::create(const QVector<PartitionInfo> &infovec)
+{
+    bool bsuccess = true;
+    for (PartitionInfo info : infovec) {
+        Partition new_partition;
+        new_partition.Reset(info);
+        if (!create(new_partition)) {
+            bsuccess = false;
+            break;
+        }
+    }
+    return bsuccess;
+}
+
 bool PartedCore::create(Partition &new_partition)
 {
     bool bsuccess = false;

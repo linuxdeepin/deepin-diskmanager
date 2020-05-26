@@ -18,11 +18,12 @@ public:
     QVector<PartitionInfo> getCurDevicePartitionArr();
     const PartitionInfo &getCurPartititonInfo();
     const DeviceInfo &getCurDeviceInfo();
-    bool mount(const QString &mountpath);
-    bool unmount();
+    void mount(const QString &mountpath);
+    void unmount();
     QStringList getallsupportfs();
     bool format(const QString &fstype, const QString &name = QString());
     void resize(const PartitionInfo &info);
+    void create(const QVector<PartitionInfo> &infovec);
 
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);

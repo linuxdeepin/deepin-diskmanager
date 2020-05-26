@@ -25,8 +25,7 @@ public:
     //operationstuff...
     bool mount(const QString &mountpath);
     bool unmount();
-    bool create(Partition &partition);
-    bool create_partition(Partition &new_partition, Sector min_size = 0) ;
+    bool create(const QVector<PartitionInfo> &infovec);
     bool format(const QString &fstype, const QString &name);
     bool resize(const PartitionInfo &info);
     QStringList getallsupportfs();
@@ -94,7 +93,8 @@ private:
     bool maximize_filesystem(const Partition &partition) ;
     bool resize_filesystem_implement(const Partition &partition_old, const Partition &partition_new);
     bool resize_move_filesystem_using_libparted(const Partition &partition_old, const Partition &partition_new) ;
-
+    bool create(Partition &partition);
+    bool create_partition(Partition &new_partition, Sector min_size = 0) ;
 signals:
     void sigUpdateDeviceInfo(const DeviceInfoMap &infomap);
     void sigRefreshDeviceInfo();

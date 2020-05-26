@@ -69,7 +69,7 @@ public Q_SLOTS: // METHODS
         argumentList << QVariant::fromValue(mountpath);
         return asyncCallWithArgumentList(QStringLiteral("mount"), argumentList);
     }
-    inline QDBusPendingReply<bool>mount()
+    inline QDBusPendingReply<bool>unmount()
     {
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QStringLiteral("unmount"), argumentList);
@@ -91,6 +91,13 @@ public Q_SLOTS: // METHODS
         argumentList << QVariant::fromValue(info);
         return asyncCallWithArgumentList(QStringLiteral("resize"), argumentList);
     }
+    inline  QDBusPendingReply<bool>create(const QVector<PartitionInfo> &infovec)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(infovec);
+        return asyncCallWithArgumentList(QStringLiteral("create"), argumentList);
+    }
+
 
 
 Q_SIGNALS: // SIGNALS

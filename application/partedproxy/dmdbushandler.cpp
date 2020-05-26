@@ -93,30 +93,14 @@ const DeviceInfo &DMDbusHandler::getCurDeviceInfo()
     return m_devicemap.find(m_curdevicepath).value();
 }
 
-bool DMDbusHandler::mount(const QString &mountpath)
+void DMDbusHandler::mount(const QString &mountpath)
 {
-    bool success = false;
-    QDBusPendingReply<bool> reply = m_dbus->mount(mountpath);
-    reply.waitForFinished();
-    if (reply.isError()) {
-        qDebug() << reply.error().message();
-    } else {
-        success = reply.value();
-    }
-    return success;
+    m_dbus->mount(mountpath);
 }
 
-bool DMDbusHandler::unmount()
+void DMDbusHandler::unmount()
 {
-    bool success = false;
-    QDBusPendingReply<bool> reply = m_dbus->mount();
-    reply.waitForFinished();
-    if (reply.isError()) {
-        qDebug() << reply.error().message();
-    } else {
-        success = reply.value();
-    }
-    return success;
+    m_dbus->unmount();
 }
 
 QStringList DMDbusHandler::getallsupportfs()
@@ -150,6 +134,11 @@ bool DMDbusHandler::format(const QString &fstype, const QString &name)
 void DMDbusHandler::resize(const PartitionInfo &info)
 {
     m_dbus->resize(info);
+}
+
+void DMDbusHandler::create(const QVector<PartitionInfo> &infovec)
+{
+    m_dbus->create(infovec);
 }
 
 void DMDbusHandler::MessageReport(const QString &msg)

@@ -543,14 +543,48 @@ void PartitionWidget::remPartitionSlot()
 
 void PartitionWidget::applyBtnSlot()
 {
+    bool bcancreate = true;
     QVector<PartitionInfo> partvector;
-    Sector beforend = 0;
+    DMDbusHandler *phandler = DMDbusHandler::instance();
+    PartitionInfo curinfo = phandler->getCurPartititonInfo();
+    DeviceInfo device = phandler->getCurDeviceInfo();
+    Sector beforend = curinfo.sector_start;
     for (int i = 0; i < m_patrinfo.size(); i++) {
         PartitionInfo newpart;
-        //  newpart
+        newpart.sector_start = beforend;
+        newpart.sector_end = newpart.sector_start + m_patrinfo.at(i).count;
+        beforend = newpart.sector_end + 1;
+        newpart.fstype = Utils::StringToFSType(m_patrinfo.at(i).fstype);
+        newpart.name = m_patrinfo.at(i).name;
+        newpart.alignment = ALIGN_MEBIBYTE;
+        newpart.sector_size = curinfo.sector_size;
+        if (device.disktype == "gpt") {
+            newpart.type = TYPE_PRIMARY;
+        } else {
+            //非逻辑分区外没有指明创建的分区类型主分区/扩展分区，默认主分区
+            if (curinfo.inside_extended) {
+                newpart.type = TYPE_LOGICAL;
+            } else {
+                newpart.type = TYPE_PRIMARY;
+            }
+        }
+        if (beforend >= curinfo.sector_end && i <= m_patrinfo.size() - 1) {
+            bcancreate = false;
+            qDebug() << "create too partition ,no enough space";
+            break;
+        } else {
+            Sector diff = 0;
+            diff = (newpart.sector_end + 1) % (MEBIBYTE / newpart.sector_size);
+            if (diff)
+                newpart.sector_end -= diff;
+            partvector.push_back(newpart);
+        }
 
     }
-    close();
+    if (bcancreate && partvector.size() > 0) {
+        phandler->create(partvector);
+        close();
+    }
 
 }
 

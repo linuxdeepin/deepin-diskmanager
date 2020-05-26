@@ -69,7 +69,7 @@ void DMDbusHandler::Quit()
 
 void DMDbusHandler::getDeviceinfo()
 {
-    // emit sigShowSpinerWindow(true);
+    emit sigShowSpinerWindow(true);
     m_dbus->getalldevice();
     qDebug() << __FUNCTION__ << "-------";
 }
@@ -96,11 +96,13 @@ const DeviceInfo &DMDbusHandler::getCurDeviceInfo()
 
 void DMDbusHandler::mount(const QString &mountpath)
 {
+    emit sigShowSpinerWindow(true);
     m_dbus->mount(mountpath);
 }
 
 void DMDbusHandler::unmount()
 {
+    emit sigShowSpinerWindow(true);
     m_dbus->unmount();
 }
 
@@ -128,16 +130,19 @@ void DMDbusHandler::format(const QString &fstype, const QString &name)
 //    } else {
 //        success = reply.value();
 //    }
+    emit sigShowSpinerWindow(true);
     m_dbus->format(fstype, name);
 }
 
 void DMDbusHandler::resize(const PartitionInfo &info)
 {
+    emit sigShowSpinerWindow(true);
     m_dbus->resize(info);
 }
 
 void DMDbusHandler::create(const PartitionVec &infovec)
 {
+    emit sigShowSpinerWindow(true);
     m_dbus->create(infovec);
 }
 

@@ -624,6 +624,8 @@ void PartitionWidget::applyBtnSlot()
             qDebug() << "create too partition ,no enough space";
             break;
         } else {
+            if (newpart.sector_end > curinfo.sector_end)
+                newpart.sector_end = curinfo.sector_end;
             Sector diff = 0;
             diff = (newpart.sector_end + 1) % (MEBIBYTE / newpart.sector_size);
             if (diff)

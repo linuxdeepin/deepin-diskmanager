@@ -73,7 +73,7 @@ bool DiskManagerService::resize(const PartitionInfo &info)
 
 bool DiskManagerService::create(const PartitionVec &infovec)
 {
-
+    return m_partedcore->create(infovec);
 }
 
 stCustest DiskManagerService::interfacetest()

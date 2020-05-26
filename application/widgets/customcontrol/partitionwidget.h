@@ -87,6 +87,8 @@ public slots:
     void cancelBtnSlot();
     void showSelectPathInfo(const int &flag, const int &num, const int &posX);
     void setEnable();
+    void setUseEnable();
+    void setEnable2();
     void comboxCurTextSlot();
 private:
     QWidget *mainFrame;

@@ -286,7 +286,8 @@ void PartitionWidget::getPartitionInfo(const PartitionInfo &data, const QString 
 void PartitionWidget::initConnection()
 {
     connect(hSlider, &DSlider::valueChanged, this, &PartitionWidget::slotSliderValueChanged);
-    connect(partSizeEdit, &DLineEdit::textEdited, this, &PartitionWidget::slotSetSliderValue);
+    connect(partSizeEdit, &DLineEdit::editingFinished, this, &PartitionWidget::slotSetSliderValue);
+//    connect()
     connect(addButton, &DIconButton::clicked, this, &PartitionWidget::addPartitionSlot);
     connect(remButton, &DIconButton::clicked, this, &PartitionWidget::remPartitionSlot);
     connect(applyBtn, &DPushButton::clicked, this, &PartitionWidget::applyBtnSlot);
@@ -390,25 +391,59 @@ void PartitionWidget::setEnable()
         pa.setBrush(DPalette::Text, pa.placeholderText());
         botFrame->setPalette(pa);
     } else if (mflag == 3) {
-        addButton->setEnabled(true);
         remButton->setEnabled(true);
-        if (leaveSpace() >= total) {
+        setEnable2();
+    } else if (mflag == 1) {
+        remButton->setEnabled(false);
+        setEnable2();
+    }
+    setUseEnable();
+
+}
+
+void PartitionWidget::setUseEnable()
+{
+    if (leaveSpace() >= total) {
+        remButton->setEnabled(true);
+        addButton->setEnabled(false);
+        partNameEdit->setEnabled(false);
+        partSizeEdit->setEnabled(false);
+        hSlider->setEnabled(false);
+        partFormateCombox->setEnabled(false);
+    } else {
+        if (sizeInfo.size() >= 1)
             remButton->setEnabled(true);
-            addButton->setEnabled(false);
-        }
+        else
+            remButton->setEnabled(false);
+        addButton->setEnabled(true);
         partNameEdit->setEnabled(true);
         partSizeEdit->setEnabled(true);
         hSlider->setEnabled(true);
-        if (total1 < 1)
-            partComCobox->setEnabled(false);
-        else {
-            partComCobox->setEnabled(true);
-        }
         partFormateCombox->setEnabled(true);
         DPalette pa = DApplicationHelper::instance()->palette(botFrame);
         pa.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
         botFrame->setPalette(pa);
     }
+
+}
+
+void PartitionWidget::setEnable2()
+{
+    int j = partSize.lastIndexOf("G");
+    double total1 = partSize.left(j).toDouble();
+    addButton->setEnabled(true);
+    partNameEdit->setEnabled(true);
+    partSizeEdit->setEnabled(true);
+    hSlider->setEnabled(true);
+    if (total1 < 1)
+        partComCobox->setEnabled(false);
+    else {
+        partComCobox->setEnabled(true);
+    }
+    partFormateCombox->setEnabled(true);
+    DPalette pa = DApplicationHelper::instance()->palette(botFrame);
+    pa.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
+    botFrame->setPalette(pa);
 
 }
 
@@ -439,9 +474,8 @@ void PartitionWidget::comboxCurTextSlot()
 
 void PartitionWidget::slotSliderValueChanged(int value)
 {
-    qDebug() << value;
     QString strSize;
-    if (mflag == 1 || mflag == 2) {
+    if (mflag == 2 || mflag == 0) {
         if (partComCobox->currentText() == "MB") {
             strSize = QString::number(((double)value / 100) * total, 'f', 2);
         } else {
@@ -454,8 +488,9 @@ void PartitionWidget::slotSliderValueChanged(int value)
             strSize = QString::number(((double)value / 100) * ((total - leaveSpace()) / 1024), 'f', 2);
         }
     }
-
     partSizeEdit->setText(strSize);
+
+
 }
 
 void PartitionWidget::slotSetSliderValue()
@@ -463,9 +498,11 @@ void PartitionWidget::slotSetSliderValue()
     int j = partSize.lastIndexOf("G");
     double total1 = partSize.left(j).toDouble();
     double value = partSizeEdit->text().toDouble();
+    qDebug() << value << "11111" << total1;
     if (partComCobox->currentText() == "MB")
         value = value / 1024;
     hSlider->setValue((value / total1) * 100);
+
 
 }
 
@@ -518,8 +555,10 @@ void PartitionWidget::addPartitionSlot()
     qDebug() << total - leaveSpace() << total << currentSize;
     partChartWidget->update();
     partNameEdit->setText("");
+    qDebug() << "1111";
     hSlider->setValue(0);
     partSizeEdit->setText("");
+    setEnable();
 
 }
 
@@ -541,6 +580,7 @@ void PartitionWidget::remPartitionSlot()
     partSizeEdit->setText("");
     partNameEdit->lineEdit()->setPlaceholderText(tr("Part Name"));
     partSizeEdit->lineEdit()->setPlaceholderText(tr("Part Size"));
+    setEnable();
 }
 
 void PartitionWidget::applyBtnSlot()
@@ -553,6 +593,7 @@ void PartitionWidget::applyBtnSlot()
     Sector beforend = curinfo.sector_start;
     for (int i = 0; i < m_patrinfo.size(); i++) {
         PartitionInfo newpart;
+
         newpart.sector_start = beforend;
         newpart.sector_end = newpart.sector_start + m_patrinfo.at(i).count;
         beforend = newpart.sector_end + 1;
@@ -581,6 +622,7 @@ void PartitionWidget::applyBtnSlot()
                 newpart.sector_end -= diff;
             partvector.push_back(newpart);
         }
+
 
     }
     if (bcancreate && partvector.size() > 0) {

@@ -289,7 +289,6 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
             if (x > allpath[partsize.size() - 1].currentPosition().x() + width1 && x < this->width() && y > 10 && y < 45 && static_cast<int>(sum) < static_cast<int>(total)) {
                 flag = 3;
                 i = -1;
-                qDebug() << "23232323";
                 number = 100;
                 update();
             }

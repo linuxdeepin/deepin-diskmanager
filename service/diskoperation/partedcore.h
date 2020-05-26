@@ -79,6 +79,7 @@ private:
     static FSType detect_filesystem(PedDevice *lp_device, PedPartition *lp_partition);
     static FSType detect_filesystem_internal(const QString &path, Byte_Value sector_size);
     static QString get_partition_path(PedPartition *lp_partition);
+    void LP_set_used_sectors(Partition &partition, PedDisk *lp_disk) ;
 
     //operationstuff...
     bool name_partition(const Partition &partition);

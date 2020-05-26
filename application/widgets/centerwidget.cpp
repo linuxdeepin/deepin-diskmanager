@@ -36,7 +36,7 @@ TitleWidget *CenterWidget::titlewidget()
 void CenterWidget::initUi()
 {
     m_bufferwin = new BufferWin;
-    m_titlewidget = new TitleWidget;
+    m_titlewidget = new TitleWidget(this);
     QVBoxLayout *mainlayout = new QVBoxLayout;
     mainlayout->setContentsMargins(0, 0, 0, 0);
     mainlayout->setSpacing(0);

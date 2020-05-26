@@ -449,25 +449,6 @@ void PartedCore::set_device_one_partition(Device &device, PedDevice *lp_device, 
 void PartedCore::set_partition_label_and_uuid(Partition &partition)
 {
     QString partition_path = partition.get_path();
-    // For SWRaid members only get the label and UUID from SWRaid_Info.  Never use
-    // values from FS_Info to avoid showing incorrect information in cases where blkid
-    // reports the wrong values.
-//    if (partition.fstype == FS_LINUX_SWRAID ||
-//            partition.fstype == FS_ATARAID) {
-//        QString label = SWRaid_Info::get_label(partition_path);
-//        if (! label.isEmpty())b
-//            partition.set_filesystem_label(label);
-
-//        partition.uuid = SWRaid_Info::get_uuid(partition_path);
-//        return;
-//    }
-
-    // Retrieve file system label.  Use file system specific method first because it
-    // has been that way since (#662537) to display Unicode labels correctly.
-    // (#786502) adds support for reading Unicode labels through the FS_Info cache.
-    // Either method should produce the same labels however the FS specific command is
-    // run in the users locale where as blkid is run in the C locale.  Shouldn't
-    // matter but who knows for sure!
     read_label(partition);
     if (! partition.filesystem_label_known()) {
         bool label_found = false;
@@ -983,6 +964,31 @@ QString PartedCore::get_partition_path(PedPartition *lp_partition)
         free(lp_path);
     }
     return partition_path ;
+}
+
+void PartedCore::LP_set_used_sectors(Partition &partition, PedDisk *lp_disk)
+{
+    PedFileSystem *fs = NULL;
+    PedConstraint *constraint = NULL;
+
+    if (lp_disk) {
+        PedPartition *lp_partition = ped_disk_get_partition_by_sector(lp_disk, partition .get_sector()) ;
+
+        if (lp_partition) {
+            fs = ped_file_system_open(& lp_partition ->geom);
+
+            if (fs) {
+                constraint = ped_file_system_get_resize_constraint(fs) ;
+                if (constraint) {
+                    partition .set_sector_usage(fs ->geom ->length,
+                                                fs ->geom ->length - constraint ->min_size) ;
+
+                    ped_constraint_destroy(constraint);
+                }
+                ped_file_system_close(fs) ;
+            }
+        }
+    }
 }
 
 bool PartedCore::name_partition(const Partition &partition)

@@ -41,6 +41,7 @@ void SizeInfoWidget::setdata(PartitionInfo info, QVector<QColor>color, QVector<d
     totalsize = Utils::format_size(info.sector_end - info.sector_start, info.sector_size);
     usedsize = Utils::format_size(info.sectors_used, info.sector_size);
     m_totalsize = m_noused + m_used;
+    m_partitionpath = info.path.remove(0, 5);
     update();
 
 }
@@ -181,7 +182,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(textcolor);
             QTextOption option;
             option.setAlignment(Qt::AlignTop);
-            painter.drawText(recttext, QString(tr("Capacity:")), option);
+            painter.drawText(recttext, QString(m_partitionpath + tr(" Capacity:")), option);
             recttext.moveTo(paintRect.width() / 2 - 40, paintRect.bottomLeft().y() + 17);
             painter.drawText(recttext, QString(tr("Used:")), option);
             QRect rectsizenum = QRect(paintRect.bottomLeft().x() + 120, paintRect.bottomLeft().y() + 20, 100, 30);

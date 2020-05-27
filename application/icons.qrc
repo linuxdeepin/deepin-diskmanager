@@ -14,13 +14,10 @@
         <file>icons/deepin/builtin/dark/texts/dm_partition_36px.svg</file>
         <file>icons/deepin/builtin/dark/texts/dm_resize_36px.svg</file>
         <file>icons/deepin/builtin/dark/texts/dm_unmount_36px.svg</file>
-        <file>icons/deepin/builtin/light/texts/dm_format_36px.svg</file>
         <file>icons/deepin/builtin/light/texts/dm_labeldisk_85px.svg</file>
         <file>icons/deepin/builtin/light/texts/dm_mounticon_10px.svg</file>
-        <file>icons/deepin/builtin/light/texts/dm_resize_36px.svg</file>
         <file>icons/deepin/builtin/light/texts/dm_treedisk_38px.svg</file>
         <file>icons/deepin/builtin/light/texts/dm_uninstallicon_10px.svg</file>
-        <file>icons/deepin/builtin/light/texts/dm_unmount_36px.svg</file>
         <file>icons/deepin/builtin/light/texts/dm_harddisk_28px.svg</file>
         <file>icons/deepin/builtin/light/texts/dm_arrow_15px.svg</file>
         <file>icons/deepin/builtin/light/texts/dm_arrow_right_15px.svg</file>
@@ -30,5 +27,9 @@
         <file>icons/deepin/builtin/dark/texts/dm_labeldisk_85px.svg</file>
         <file>icons/deepin/builtin/dark/texts/dm_mounticon_10px.svg</file>
         <file>icons/deepin/builtin/dark/texts/dm_treedisk_38px.svg</file>
+        <file>icons/deepin/builtin/light/texts/dm_format-36px.svg</file>
+        <file>icons/deepin/builtin/light/texts/dm_unmount_36px.svg</file>
+        <file>icons/deepin/builtin/light/texts/dm_resize_36px.svg</file>
+        <file>icons/deepin/builtin/dark/texts/dm_uninstallicon_10px.svg</file>
     </qresource>
 </RCC>

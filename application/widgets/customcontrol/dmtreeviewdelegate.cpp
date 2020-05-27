@@ -158,14 +158,19 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             m_lefticon1Rect.setRect(paintRect.left() + 25, paintRect.top() + 10, 30, 30);
             QIcon icon = getIcon("harddisk");
             QIcon icon1 = getIcon("mounticon");
+            QIcon icon2 = getIcon("uninstallicon");
             painter->drawPixmap(m_lefticon1Rect, icon.pixmap(28, 28));
             QRect mounticonRect = QRect(paintRect.left() + 45, paintRect.top() + 25, 10, 10);
-            painter->drawPixmap(mounticonRect, icon1.pixmap(10, 10));
+            if (data.fstype == "unallocated") {
+                painter->drawPixmap(mounticonRect, icon2.pixmap(10, 10));
+            } else {
+                painter->drawPixmap(mounticonRect, icon1.pixmap(10, 10));
+            }
             QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
             QColor textcolor = m_parentPb.color(DPalette::Normal, DPalette::Text);
             painter->setPen(textcolor);
             painter->setFont(font);
-            m_textRect.setRect(paintRect.left() + 60, paintRect.top() + 8, 100, 100);
+            m_textRect.setRect(paintRect.left() + 65, paintRect.top() + 8, 100, 100);
             painter->drawText(m_textRect, text2);
             QColor text1color = m_parentPb.color(DPalette::Normal, DPalette::TextTips);
             painter->setPen(text1color);

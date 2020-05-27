@@ -57,6 +57,7 @@ private:
     DPalette m_parentPb;
     QString totalsize;
     QString usedsize;
+    QString m_partitionpath;
 };
 
 #endif // SIZEINFOWIDGET_H

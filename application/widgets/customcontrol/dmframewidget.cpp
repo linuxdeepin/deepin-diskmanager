@@ -33,7 +33,6 @@ void DmFrameWidget::setFrameData()
     } else {
         for (QString strpoint : data.mountpoints)
             m_infodata.mountpoints.append(strpoint);
-        qDebug() << this->width();
         w = d_width - 749;
         if (m_infodata.mountpoints.size() > 21 + w) {
             for (int i = 0; i < 9 + w; i++) {
@@ -50,7 +49,13 @@ void DmFrameWidget::setFrameData()
         }
     }
     m_infodata.unused = Utils::format_size(data.sectors_unused, data.sector_size);
+    if (m_infodata.unused.contains("-")) {
+        m_infodata.unused = "-";
+    }
     m_infodata.used = Utils::format_size(data.sectors_used, data.sector_size);
+    if (m_infodata.used.contains("-")) {
+        m_infodata.used = "-";
+    }
     m_infodata.fstype = Utils::FSTypeToString((FSType)data.fstype);
     m_infodata.partitionsize = Utils::format_size(data.sector_end - data.sector_start, data.sector_size);
     m_infodata.syslabel = data.filesystem_label;

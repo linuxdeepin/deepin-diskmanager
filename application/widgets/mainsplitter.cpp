@@ -16,9 +16,11 @@ void MainSplitter::initui()
     setChildrenCollapsible(false);  //  子部件不可拉伸到 0
     m_devicelist = new DeviceListWidget(this);
     m_infoshow = new InfoShowWidget(this);
+    m_devicelist->setFixedWidth(260);;
     m_infoshow->setFrameShape(QFrame::NoFrame);
     addWidget(m_devicelist);
     addWidget(m_infoshow);
+
 }
 
 void MainSplitter::initConnection()

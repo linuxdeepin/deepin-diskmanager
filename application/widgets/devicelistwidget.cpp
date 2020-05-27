@@ -53,7 +53,7 @@ void DeviceListWidget::slotUpdateDeviceInfo()
         auto m_box = new DmDiskinfoBox(0, this, info.m_path, s_disksize);
         for (auto it = info.partition.begin(); it != info.partition.end(); it++) {
             QString s_pdisksize = Utils::format_size(it->sector_end - it->sector_start, it->sector_size);
-            QString s_partitionpath = it->path;
+            QString s_partitionpath = it->path.remove(0, 5);
             QString s_unusedstr = Utils::format_size(it->sectors_used, it->sector_size);
             QString s_usedstr = Utils::format_size(it->sectors_unused, it->sector_size);
             qDebug() << it->partition_number;

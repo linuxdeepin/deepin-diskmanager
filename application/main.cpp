@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     a.setApplicationName(app_name);
     a.setOrganizationName("deepin");
     a.setWindowIcon(QIcon::fromTheme(app_name));
-    a.setApplicationDisplayName(QObject::tr("ISO disk administrator"));
+    a.setApplicationDisplayName(QObject::tr("Disk Utility"));
     a.setApplicationVersion(DApplication::buildVersion("20191227"));
     const QString acknowledgementLink = "https://www.deepin.org/acknowledgments/deepin_reader";
     a.setApplicationAcknowledgementPage(acknowledgementLink);
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     QPixmap px(QIcon::fromTheme(app_name).pixmap(256 * qApp->devicePixelRatio(), 256 * qApp->devicePixelRatio()));
     px.setDevicePixelRatio(qApp->devicePixelRatio());
     a.setProductIcon(QIcon(px));
-    a.setApplicationDescription(QObject::tr("ISO disk manager is a disk management tool provided by tongxin to the installation manufacture"));
+    a.setApplicationDescription(QObject::tr("Disk Utility is a disk management tool for creating, reorganizing and formatting partitions."));
 
     DApplicationSettings savetheme;
     Dtk::Core::DLogManager::registerConsoleAppender();

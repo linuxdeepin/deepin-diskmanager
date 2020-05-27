@@ -15,21 +15,27 @@ void ResizeDialog::initUi()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
-    setTitle(tr("Try to resize partition ") + info.path);
-    DLabel *tipLabel = new DLabel(tr("It will increase the number of partitions on the disk, \n please set the reserved size first and continue"), this);
+    setTitle(tr("Resize ") + info.path);
+    DLabel *tipLabel = new DLabel(tr("It will resize the partitions on the disk, please set the reserved size first and continue"), this);
     tipLabel ->setAlignment(Qt::AlignCenter);
     DFontSizeManager::instance()->bind(tipLabel, DFontSizeManager::T6);
 
     QHBoxLayout *hlayout = new QHBoxLayout;
     pedit = new DLineEdit(this);
     pcombo = new DComboBox(this);
+    plabel = new DLabel(this);
+    plabel->setText(tr("Reserved size:"));
+    plabel->setAlignment(Qt::AlignLeft | Qt::AlignCenter);
+    DFontSizeManager::instance()->bind(plabel, DFontSizeManager::T6);
     QStringList stritems;
     stritems << "MB" << "GB";
     pcombo->addItems(stritems);
     pcombo->setCurrentIndex(0);
     pcombo->setFixedWidth(70);
+    hlayout->addWidget(plabel);
     hlayout->addWidget(pedit);
     hlayout->addWidget(pcombo);
+
     mainLayout->addWidget(tipLabel);
     mainLayout->addLayout(hlayout);
 

@@ -14,9 +14,9 @@ UnmountDialog::UnmountDialog(QWidget *parent) : DDBase(parent)
 void UnmountDialog::initUi()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    setTitle(info.path + tr(" will be ummounted"));
+    setTitle(tr("Unmount") + info.path);
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
-    DLabel *tipLabel = new DLabel(tr("The disk will be ummounted. Click ummounted"), this);
+    DLabel *tipLabel = new DLabel(tr("Make sure there are no programs running on the disk"), this);
     tipLabel ->setAlignment(Qt::AlignCenter);
     DFontSizeManager::instance()->bind(tipLabel, DFontSizeManager::T6);
 

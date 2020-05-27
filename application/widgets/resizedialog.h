@@ -3,6 +3,7 @@
 #include "customcontrol/ddbase.h"
 #include <DLineEdit>
 #include <DComboBox>
+#include <DLabel>
 
 DWIDGET_USE_NAMESPACE
 
@@ -18,6 +19,7 @@ private:
 
     DLineEdit *pedit;
     DComboBox *pcombo;
+    DLabel   *plabel;
 public slots:
     void slotbuttonClicked(int index, const QString &text);
 

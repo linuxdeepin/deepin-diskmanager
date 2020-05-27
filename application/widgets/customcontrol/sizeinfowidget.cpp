@@ -36,12 +36,16 @@ void SizeInfoWidget::setdata(PartitionInfo info, QVector<QColor>color, QVector<d
     sizeinfo = size;
     colorinfo = color;
     m_flag = flag;
+
     m_noused = Utils::sector_to_unit(info.sectors_unused, info.sector_size, SIZE_UNIT::UNIT_GIB);
     m_used = Utils::sector_to_unit(info.sectors_used, info.sector_size, SIZE_UNIT::UNIT_GIB);
     totalsize = Utils::format_size(info.sector_end - info.sector_start, info.sector_size);
     usedsize = Utils::format_size(info.sectors_used, info.sector_size);
     m_totalsize = m_noused + m_used;
     m_partitionpath = info.path.remove(0, 5);
+    if (size.at(0) < 0.00 || size.at(1) < 0.00) {
+        sizeinfo = QVector<double> {0.00, 0.00};
+    }
     update();
 
 }
@@ -61,11 +65,13 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
     rect.setHeight(this->height());
     QRect paintRect = QRect(0, 60, rect.width(), rect.height() - 150);
     QPainterPath paintpath0;
-    const int radius = 8;
+    int radius = 8;
+    int sizeflag = 8;
     const double total = m_used + m_noused;
     //根据color和size数据遍历绘制矩形
     for (int i = 0; i < sizeinfo.size(); i++) {
         if (i == 0) {
+
             path[0].moveTo(paintRect.topLeft() + QPoint(radius, 0));
             path[0].arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
             path[0].lineTo(paintRect.bottomLeft() - QPoint(0, radius));
@@ -75,9 +81,15 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             path[0].lineTo(paintRect.bottomLeft() + QPoint((sizeinfo[0] / m_totalsize)*paintRect.width() + radius, 0));
             path[0].lineTo(paintRect.topLeft() + QPoint((sizeinfo[0] / m_totalsize)*paintRect.width() + radius, 0));
             path[0].lineTo(paintRect.topLeft() + QPoint(radius, 0));
-            painter.setBrush(QBrush(colorinfo[0]));
-            painter.setPen(QPen(QColor(colorinfo[0]), 3));
-            painter.fillPath(path[0], colorinfo[0]);
+            if (sizeinfo.at(i) == 0.00) {
+                painter.setBrush(QBrush(colorinfo[1]));
+                painter.setPen(QPen(QColor(colorinfo[1]), 3));
+                painter.fillPath(path[0], colorinfo[1]);
+            } else {
+                painter.setBrush(QBrush(colorinfo[0]));
+                painter.setPen(QPen(QColor(colorinfo[0]), 3));
+                painter.fillPath(path[0], colorinfo[0]);
+            }
         } else if (i > 0 && i < sizeinfo.size() - 1) {
             path[i].moveTo(path[i - 1].currentPosition() + QPoint((sizeinfo[i - 1] / m_totalsize)*paintRect.width(), 0));
             path[i].lineTo(path[i - 1].currentPosition() + QPoint((sizeinfo[i - 1] / m_totalsize)*paintRect.width() + (sizeinfo[i] / m_totalsize)*paintRect.width(), 0));
@@ -174,7 +186,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(icon2color);
             painter.drawPath(painterPath);
             painter.fillPath(painterPath, brush2);
-            QRect recttext = QRect(paintRect.bottomLeft().x() + 28, paintRect.bottomLeft().y() + 17, 88, 50);
+            QRect recttext = QRect(paintRect.bottomLeft().x() + 28, paintRect.bottomLeft().y() + 17, 150, 70);
             QFont font;
             font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
             QColor textcolor = m_parentPb.color(DPalette::Normal, DPalette::ToolTipText);
@@ -185,7 +197,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.drawText(recttext, QString(m_partitionpath + tr(" Capacity:")), option);
             recttext.moveTo(paintRect.width() / 2 - 40, paintRect.bottomLeft().y() + 17);
             painter.drawText(recttext, QString(tr("Used:")), option);
-            QRect rectsizenum = QRect(paintRect.bottomLeft().x() + 120, paintRect.bottomLeft().y() + 20, 100, 30);
+            QRect rectsizenum = QRect(paintRect.bottomLeft().x() + 165, paintRect.bottomLeft().y() + 20, 100, 30);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
             QColor text1color = m_parentPb.color(DPalette::Normal, DPalette::ToolTipText);
             painter.setFont(font);
@@ -194,6 +206,9 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             option.setAlignment(Qt::AlignLeft);
             painter.drawText(rectsizenum, totalsize, option1);
             rectsizenum.moveTo(paintRect.width() / 2 + 20, paintRect.bottomLeft().y() + 20);
+            if (usedsize.contains("-")) {
+                usedsize = "-";
+            }
             painter.drawText(rectsizenum, usedsize, option1);
         }
     }

@@ -48,8 +48,8 @@ signals:
 public slots:
     void slothandleChangeTheme();
 private:
-    double m_used;
-    double m_noused;
+    double m_used = 0.00;
+    double m_noused = 0.00;
     double m_totalsize;
     bool m_flag = false;
     QVector<QColor>colorinfo;

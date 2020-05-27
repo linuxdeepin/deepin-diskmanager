@@ -1,0 +1,21 @@
+[main]
+host = http://www.transifex.com
+minimum_perc = 80
+mode = developer
+
+[deepin-diskmanager.deepin-diskmanager]
+file_filter = translations/deepin-diskmanager_zh_CN.ts
+source_file = translations/deepin-diskmanager_en_US.ts
+source_lang = en
+type = QT
+
+[deepin-diskmanager.deepin-diskmanager-desktop-ts]
+file_filter = translations/desktop/desktop_<lang>.ts
+source_file = translations/desktop/desktop.ts
+source_lang = en
+type = QT
+
+DESKTOP_TEMP_FILE=deepin-reader.desktop.tmp
+DESKTOP_SOURCE_FILE=deepin-reader/deepin-reader.desktop
+DESKTOP_DEST_FILE=deepin-reader/deepin-reader.desktop
+DESKTOP_TS_DIR=deepin-reader/translations/desktop

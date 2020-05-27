@@ -4,7 +4,3 @@ SUBDIRS += \
     basestruct\
     application \
     service
-
-
-
-

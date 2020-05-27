@@ -137,7 +137,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         //qDebug() << data.level;
         if (data.level == 0) {
             m_lefticon1Rect.setRect(paintRect.left() + 8, paintRect.top() + 20, 8, 8);
-            painter->drawPixmap(m_lefticon1Rect, directionIcon.pixmap(15, 15));
+            painter->drawPixmap(m_lefticon1Rect, directionIcon.pixmap(17, 17));
             m_lefticonRect2.setRect(paintRect.left() + 15, paintRect.top() + 4, 40, 40);
             QIcon icon = getIcon("treedisk");
             painter->drawPixmap(m_lefticonRect2, icon.pixmap(38, 38));

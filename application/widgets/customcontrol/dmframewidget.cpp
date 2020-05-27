@@ -12,6 +12,7 @@ DmFrameWidget::DmFrameWidget(DiskInfoData data, QWidget *parent): DFrame(parent)
     m_parentPb = DApplicationHelper::instance()->palette(this);
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this,
             &DmFrameWidget::slothandleChangeTheme);
+
 }
 
 void DmFrameWidget::setFrameData()
@@ -33,7 +34,7 @@ void DmFrameWidget::setFrameData()
     } else {
         for (QString strpoint : data.mountpoints)
             m_infodata.mountpoints.append(strpoint);
-        w = d_width - 749;
+        w = d_width - 849;
         if (m_infodata.mountpoints.size() > 21 + w) {
             for (int i = 0; i < 9 + w; i++) {
                 previoustr += m_infodata.mountpoints.at(i);

@@ -33,6 +33,7 @@ private:
     DPalette m_parentPb;
     int d_width = 0;
     int w = 0;
+//    int firstwidth;
 };
 
 #endif // DMFRAMEWIDGET_H

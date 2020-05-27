@@ -1,5 +1,6 @@
 #include "supportedfilesystems.h"
 #include "filesystems/ext2.h"
+#include "filesystems/linuxswap.h"
 #include "utils.h"
 #include <QDebug>
 
@@ -20,7 +21,7 @@ SupportedFileSystems::SupportedFileSystems()
 //    m_fs_objects[FS_HFS]             = new hfs();
 //    m_fs_objects[FS_HFSPLUS]         = new hfsplus();
 //    m_fs_objects[FS_JFS]             = new jfs();
-//    m_fs_objects[FS_LINUX_SWAP]      = new linux_swap();
+    m_fs_objects[FS_LINUX_SWAP]      = new LinuxSwap;
 //    m_fs_objects[FS_LVM2_PV]         = new lvm2_pv();
 //    m_fs_objects[FS_LUKS]            = new luks();
 //    m_fs_objects[FS_MINIX]           = new minix();

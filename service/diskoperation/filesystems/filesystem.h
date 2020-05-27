@@ -23,7 +23,7 @@ public:
     virtual bool resize(const Partition &, bool) { return false; }
     virtual bool check_repair(const Partition &) { return false; }
 
-
+    Sector T, N, S ;  //File system [T]otal num of blocks, [N]um of free (or used) blocks, block [S]ize
 public:
     FS_Limits fs_limits;
 private:

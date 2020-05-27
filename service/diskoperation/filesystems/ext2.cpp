@@ -56,10 +56,6 @@ FS EXT2::get_filesystem_support()
     }
 
     if (! Utils::find_program_in_path("dumpe2fs").isEmpty()) {
-        // Resize2fs is preferred, but not required, to determine the minimum FS
-        // size.  Can fall back to using dumpe2fs instead.  Dumpe2fs is required
-        // for reading FS size and FS block size.  See ext2::set_used_sectors()
-        // implementation for details.
         fs.read = FS::EXTERNAL;
         fs.online_read = FS::EXTERNAL;
     }
@@ -115,6 +111,7 @@ FS EXT2::get_filesystem_support()
 void EXT2::set_used_sectors(Partition &partition)
 {
     QString output, error, strmatch, strcmd;
+    S = N = T = -1;
     strcmd = QString("dumpe2fs -h %1").arg(partition.get_path());
     if (! Utils::executcmd(strcmd, output, error)) {
         strmatch = ("Block count:");

@@ -2,6 +2,7 @@
 #include <sys/statvfs.h>
 #include <QProcess>
 #include <QRegularExpression>
+#include <QUuid>
 #include <QDebug>
 
 Utils::Utils()
@@ -366,5 +367,11 @@ Byte_Value Utils::floor_size(Byte_Value value, Byte_Value rounding_size)
 Byte_Value Utils::ceil_size(Byte_Value value, Byte_Value rounding_size)
 {
     return (value + rounding_size - 1LL) / rounding_size * rounding_size ;
+}
+
+QString Utils::CreateUUid()
+{
+    QUuid uuid;
+    return   uuid.createUuid().toString(QUuid::WithoutBraces);
 }
 

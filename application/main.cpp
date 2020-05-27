@@ -1,4 +1,6 @@
 #include "cusapplication.h"
+#include "widgets/widgetdeclare.h"
+#include "widgets/mainwindow.h"
 #include <DMainWindow>
 #include <DWidgetUtil>
 #include <DApplicationSettings>
@@ -7,10 +9,9 @@
 #include <QPixmap>
 #include <QIcon>
 #include <QDebug>
-#include "widgets/mainwindow.h"
 #include <signal.h>
 
-#include "widgets/widgetdeclare.h"
+
 
 DWIDGET_USE_NAMESPACE
 

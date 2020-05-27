@@ -17,7 +17,6 @@ public:
     bool resize(const Partition &partition_new, bool fill_partition)override;
     bool check_repair(const Partition &partition)override ;
 
-    Sector T, N, S ;  //File system [T]otal num of blocks, [N]um of free (or used) blocks, block [S]ize
 private:
     Byte_Value fs_block_size;  // Holds file system block size for the copy_progress() callback
     bool force_auto_64bit;

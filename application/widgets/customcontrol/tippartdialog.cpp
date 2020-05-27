@@ -63,8 +63,8 @@ void TipPartDialog::showFormateDialog()
 {
     this->setFixedSize(450, 300);
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    setTitle(tr("Try to formate partition ") + info.path);
-    this->tipLabel->setText(tr("The disk will be formatted, all data stored on the disk \n will be deleted, and cannot be undone. Please provide the \n name and format, and click Format content"));
+    setTitle(tr("Format") + info.path);
+    this->tipLabel->setText(tr("Formatting will erase all data on the disk, which cannot be \n undone. \n Please set its name and file system,and then format"));
     this->typeCombox->setItemText(0, "NTFS");
     this->mountLabel->hide();
     this->nameLineEdit->show();

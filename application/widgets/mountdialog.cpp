@@ -17,9 +17,9 @@ MountDialog::MountDialog(QWidget *parent): DDBase(parent)
 void MountDialog::initUi()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    setTitle(info.path + tr(" will be mounted"));
+    setTitle(tr("Mount ") + info.path);
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
-    DLabel *tipLabel = new DLabel(tr("The disk will be mounted. Click mount"), this);
+    DLabel *tipLabel = new DLabel(tr("Choose a mount point please"), this);
     tipLabel ->setAlignment(Qt::AlignCenter);
     DFontSizeManager::instance()->bind(tipLabel, DFontSizeManager::T6);
     DLabel *mountLabel = new DLabel(tr("Mount point:"));
@@ -33,7 +33,7 @@ void MountDialog::initUi()
     mainLayout->addWidget(mountLabel);
     mainLayout->addWidget(pedit);
     addButton(tr("Cancel"), true, ButtonNormal);
-    okcode = addButton(tr("Confirm"), false, ButtonRecommend);
+    okcode = addButton(tr("Mount"), false, ButtonRecommend);
     getButton(okcode)->setDisabled(true);
 }
 

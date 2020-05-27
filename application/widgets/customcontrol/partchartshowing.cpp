@@ -82,11 +82,14 @@ void PartChartShowing::paintEvent(QPaintEvent *event)
 
 
     painter.setPen(tipColor);
+//    QFont font;
+//    font.setBold(true);
+//    painter.setFont(font);
     painter.drawRect(this->x(), this->y() + 50, 10, 10);
 
     painter.setPen(this->palette().text().color());
     QRect textRect(this->x() + 15, this->y() + 42, 80, 50);
-    painter.drawText(textRect, tr("Free space"));
+    painter.drawText(textRect, tr("Unallocated"));
 
 
     QWidget::paintEvent(event);
@@ -115,27 +118,16 @@ void PartChartShowing::addPaint(QPainter *painter)
     if (flag == 1) {
         painter->setPen(QPen(QColor(this->palette().highlight().color()), 2));
         painter->drawRoundedRect(paintRect, 8, 8);
-//        flag = 0;
     }
 
     for (i = 0; i < partsize.size(); i++) {
-//        sum = sum + partsize.at(i);
         double widths = (partsize.at(i) / total) * paintRect.width();
         if ((partsize.at(i) / total)*this->width() <= 3) {
             widths = 10;
         }
         double width1 = 0.00;
         sum = sum + partsize.at(i);
-//        if (i == 0 && sum >= total) {
 
-////            paintRect.setX();/*
-////            painter->setPen(QPen(QColor(this->palette().linkVisited().color()), 2));
-////            flag = 0;
-
-//            painter->setBrush(basecolor.at(0));
-//            painter->drawRoundedRect(paintRect, 8, 8);
-
-//        }
         if (i == 0) {
             if (static_cast<int>(sum) < static_cast<int>(total)) {
                 path[0].moveTo(paintRect.topLeft() + QPoint(radius, 0));
@@ -299,6 +291,7 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
             update();
         }
     }
+
     emit sendFlag(flag, number, x);
 }
 

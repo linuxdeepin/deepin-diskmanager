@@ -3,7 +3,7 @@
 
 #include <DWidget>
 #include <DPushButton>
-#include "customcontrol/tippartdialog.h"
+//#include "customcontrol/tippartdialog.h"
 #include "partedproxy/dmdbushandler.h"
 #include "customcontrol/partitionwidget.h"
 #include "utils.h"
@@ -39,11 +39,11 @@ private:
     DPushButton *m_btnmount;
     DPushButton *m_btnunmount;
     DPushButton *m_btnresize;
-    TipPartDialog *tipPartDialog;
+//    TipPartDialog *tipPartDialog;
     PartitionWidget *partitionWidget;
     PartitionInfo getPartitionInfo;
     QString device_size;
-    int controlButton = 0;
+//    int controlButton = 0;
 //    QList<QAbstractButton *> list;
 };
 

@@ -26,7 +26,7 @@ void TitleWidget::initUi()
     layout->addWidget(m_btnmount);
     layout->addWidget(m_btnunmount);
     layout->addWidget(m_btnresize);
-    tipPartDialog = new TipPartDialog(this);
+//    tipPartDialog = new TipPartDialog(this);
 
 }
 
@@ -70,20 +70,16 @@ void TitleWidget::showPartInfoWidget()
         //ToDo:empty device create partition table
         return ;
     }
+    partitionWidget = new PartitionWidget(this);
+    partitionWidget->show();
+    partitionWidget->getPartitionInfo(getPartitionInfo, device_size);
+//    tipPartDialog->getButton(1)->disconnect();
+//    tipPartDialog->getFlagShow(0);
 
-    tipPartDialog->getButton(1)->disconnect();
-    tipPartDialog->getFlagShow(0);
-    controlButton = 1;
-    connect(tipPartDialog->getButton(1), &QAbstractButton::clicked, this, [ = ] {
-        if (controlButton == 1)
-        {
-            tipPartDialog->close();
-            partitionWidget = new PartitionWidget(this);
-            partitionWidget->show();
-            partitionWidget->getPartitionInfo(getPartitionInfo, device_size);
+//    connect(tipPartDialog->getButton(1), &QAbstractButton::clicked, this, [ = ] {
 
-        }
-    });
+//            tipPartDialog->close();
+//    });
 
 }
 
@@ -160,7 +156,7 @@ void TitleWidget::slotCurSelectChanged()
     auto it = DMDbusHandler::instance()->probDeviceInfo().find(DMDbusHandler::instance()->getCurPartititonInfo().device_path);
     if (it != DMDbusHandler::instance()->probDeviceInfo().end()) {
         //  QString s_disksize = QString::number(((it.value().length * it.value().sector_size) / 1024.0 / 1024.0 / 1024.0), 'f', 2) + "GB";
-        QString s_disksize = QString::number(Utils::sector_to_unit(it.value().length, it.value().sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
+        QString s_disksize = QString::number(Utils::sector_to_unit(it.value().length, it.value().sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GiB";
         //  qDebug() << Utils::sector_to_unit(it.value().sectors, it.value().sector_size, SIZE_UNIT::UNIT_GIB) << it.value().m_path << s_disksize << it.value().sectors << it.value().sector_size;
         getPartitionInfo = DMDbusHandler::instance()->getCurPartititonInfo();
         device_size = s_disksize;

@@ -33,15 +33,15 @@ PartitionWidget::~PartitionWidget()
 void PartitionWidget::initUi()
 {
     this->setModal(true);
-    this->setFixedSize(800, 600);
+    this->setFixedSize(900, 600);
     mainFrame = new QWidget(this);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
     mainLayout->setSpacing(5);
 
-
-    setTitle(tr("Will XXX system space be partitioned?"));
-    DLabel *tipLabel = new DLabel(tr("Click the '+' button to increase the number of partitions on the device,\n and click each partition to change the name formate"), mainFrame);
+    PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+    setTitle(tr("Partitioning ") + info.path);
+    DLabel *tipLabel = new DLabel(tr("Click '+' to increase the number of partitions on the disk,Click on each partition to change its name and file system."), mainFrame);
     tipLabel->setAlignment(Qt::AlignCenter);
     topFrame = new DFrame(mainFrame);
     topFrameSetting();
@@ -84,7 +84,7 @@ void PartitionWidget::topFrameSetting()
     vLayout->setContentsMargins(10, 20, 0, 20);
 
 
-    DLabel *deviceInfoLabel = new DLabel(tr("Device Information"), topFrame);
+    DLabel *deviceInfoLabel = new DLabel(tr("Disk Information"), topFrame);
     DFontSizeManager::instance()->bind(deviceInfoLabel, DFontSizeManager::T6);
     QHBoxLayout *line1Layout = new QHBoxLayout();
 
@@ -92,12 +92,12 @@ void PartitionWidget::topFrameSetting()
     line1Layout->addStretch();
 //
     QHBoxLayout *line4Layout = new QHBoxLayout();
-    DLabel *allMemoryLabel  = new DLabel(tr("Total Capacity:"), topFrame);
+    DLabel *allMemoryLabel  = new DLabel(tr("Capacity:"), topFrame);
 //    allMemoryLabel->setMinimumWidth(100);
-    allMemory = new DLabel("256GB", topFrame);
+    allMemory = new DLabel("256GiB", topFrame);
     allMemory->setMinimumWidth(90);
     allMemory->setAlignment(Qt::AlignLeft);
-    DLabel *selectedPartLabel = new DLabel(tr("Selected Partition:"), topFrame);
+    DLabel *selectedPartLabel = new DLabel(tr("Partition selected:"), topFrame);
     selectedPartition = new DLabel("sda3");
     line4Layout->addWidget(allMemoryLabel);
     line4Layout->addWidget(allMemory);
@@ -106,12 +106,12 @@ void PartitionWidget::topFrameSetting()
     line4Layout->addStretch();
 
     QHBoxLayout *line2Layout = new QHBoxLayout();
-    DLabel *deviceNameLabel = new DLabel(tr("Device:"), topFrame);
+    DLabel *deviceNameLabel = new DLabel(tr("Disk:"), topFrame);
 //    deviceNameLabel->setMinimumWidth(80);
     deviceName = new DLabel("/dev/sda", topFrame);
-    deviceName->setMinimumWidth(140);
+    deviceName->setMinimumWidth(120);
     deviceName->setAlignment(Qt::AlignLeft);
-    DLabel *deviceFormateLabel = new DLabel(tr("Formate:"), topFrame);
+    DLabel *deviceFormateLabel = new DLabel(tr("File system:"), topFrame);
 
     deviceFormate = new DLabel("EXT3", topFrame);
     line2Layout->addWidget(deviceNameLabel);
@@ -145,9 +145,9 @@ void PartitionWidget::botFrameSetting()
     partInfoShowing();
     vLayout->addWidget(partWidget, 5);
     //按钮
-    applyBtn = new DPushButton(tr("Apply"), botFrame);
+    applyBtn = new DPushButton(tr("Confirm"), botFrame);
     //取消
-    cancleBtn = new DPushButton(tr("Cancle"), botFrame);
+    cancleBtn = new DPushButton(tr("Cancel"), botFrame);
     //复原
     reveBtn = new DPushButton(tr("Revert"), botFrame);
 
@@ -171,12 +171,12 @@ void PartitionWidget::partInfoShowing()
 //    QHBoxLayout *line1Layout = new QHBoxLayout();
 
     DLabel *partInfoLabel = new DLabel(tr("Partition Information"), partWidget);
-    DFontSizeManager::instance()->bind(partInfoLabel, DFontSizeManager::T6);
+    DFontSizeManager::instance()->bind(partInfoLabel, DFontSizeManager::T5);
 
     QHBoxLayout *line2Layout = new QHBoxLayout();
     line2Layout->setContentsMargins(0, 10, 0, 10);
     QHBoxLayout *line2Layout1 = new QHBoxLayout();
-    DLabel *partDoLabel = new DLabel(tr("Partition operation:"), partWidget);
+    DLabel *partDoLabel = new DLabel(tr("Number of partitions:"), partWidget);
 
     addButton = new DIconButton(DStyle::SP_IncreaseElement);
     remButton = new DIconButton(DStyle::SP_DecreaseElement);
@@ -192,7 +192,7 @@ void PartitionWidget::partInfoShowing()
         remButton->setEnabled(true);
     QHBoxLayout *line2Layout2 = new QHBoxLayout();
 
-    DLabel *partNameLabel = new DLabel(tr("Partition name:"), partWidget);
+    DLabel *partNameLabel = new DLabel(tr("Name:"), partWidget);
     partNameEdit = new DLineEdit(partWidget);
 
     line2Layout2->addWidget(partNameLabel);
@@ -202,23 +202,23 @@ void PartitionWidget::partInfoShowing()
     line2Layout1->setContentsMargins(0, 0, 30, 0);
     QHBoxLayout *line3Layout = new QHBoxLayout();
     QHBoxLayout *line3Layout1 = new QHBoxLayout();
-    DLabel *partFormateLabel = new DLabel(tr("Partiton formate:"), partWidget);
+    DLabel *partFormateLabel = new DLabel(tr("File system:"), partWidget);
 
     partFormateCombox = new DComboBox(partWidget);
     qDebug() << DMDbusHandler::instance()->getallsupportfs();
     partFormateCombox->addItems(formateList);
-    partFormateCombox->setFixedWidth(220);
+    partFormateCombox->setFixedWidth(300);
     line3Layout1->addWidget(partFormateLabel);
     line3Layout1->addWidget(partFormateCombox);
     QHBoxLayout *line3Layout2 = new QHBoxLayout();
-    line3Layout2->setContentsMargins(25, 0, 0, 0);
-    DLabel *partSizeLabel = new DLabel(tr("Partition size:"), partWidget);
+    line3Layout2->setContentsMargins(30, 0, 0, 0);
+    DLabel *partSizeLabel = new DLabel(tr("Size:"), partWidget);
     hSlider = new DSlider(Qt::Horizontal);
     partSizeEdit = new DLineEdit(partWidget);
-    hSlider->setMaximumWidth(60);
+    hSlider->setMinimumWidth(100);
     partComCobox = new DComboBox(partWidget);
-    partComCobox->addItem("GB");
-    partComCobox->addItem("MB");
+    partComCobox->addItem("GiB");
+    partComCobox->addItem("MiB");
     partComCobox->setMaximumWidth(70);
     line3Layout2->addWidget(partSizeLabel, 1);
     line3Layout2->addWidget(hSlider, 2);
@@ -227,7 +227,6 @@ void PartitionWidget::partInfoShowing()
 
     line3Layout->addLayout(line3Layout1);
     line3Layout->addLayout(line3Layout2);
-//    line3Layout->addLayout(line)
     vLayout->addWidget(partInfoLabel);
     vLayout->addLayout(line2Layout);
     vLayout->addLayout(line3Layout);
@@ -237,9 +236,9 @@ void PartitionWidget::partInfoShowing()
 
 void PartitionWidget::getPartitionInfo(const PartitionInfo &data, const QString &disksize)
 {
-    QString s_pdisksize = QString::number(Utils::sector_to_unit(data.sector_end - data.sector_start, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
-    QString s_used = QString::number(Utils::sector_to_unit(data.sectors_used, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
-    QString s_unused = QString::number(Utils::sector_to_unit(data.sectors_unused, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GB";
+    QString s_pdisksize = QString::number(Utils::sector_to_unit(data.sector_end - data.sector_start, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GiB";
+    QString s_used = QString::number(Utils::sector_to_unit(data.sectors_used, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GiB";
+    QString s_unused = QString::number(Utils::sector_to_unit(data.sectors_unused, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GiB";
     qDebug() << Utils::format_size(data.sector_end - data.sector_start, data.sector_size) << Utils::sector_to_unit(data.sector_end - data.sector_start, data.sector_size, SIZE_UNIT::UNIT_GIB);
 
     QString devicePath = data.device_path ;
@@ -249,7 +248,7 @@ void PartitionWidget::getPartitionInfo(const PartitionInfo &data, const QString 
     QString partFstype = Utils::FSTypeToString((FSType)data.fstype);
     QString partUsed = s_used;
     QString partUnused = s_unused;
-    partComCobox->setCurrentText("GB");
+    partComCobox->setCurrentText("GiB");
     int j = partSize.lastIndexOf("G");
     total = partSize.left(j).toDouble();
     partComCobox->setEnabled(true);
@@ -257,7 +256,7 @@ void PartitionWidget::getPartitionInfo(const PartitionInfo &data, const QString 
         partComCobox->setEnabled(false);
     }
     total = total * 1024;
-    partComCobox->setCurrentText("MB");
+    partComCobox->setCurrentText("MiB");
 
     hSlider->setMaximum(100);
     hSlider->setValue(100);
@@ -283,7 +282,6 @@ void PartitionWidget::initConnection()
 {
     connect(hSlider, &DSlider::valueChanged, this, &PartitionWidget::slotSliderValueChanged);
     connect(partSizeEdit, &DLineEdit::editingFinished, this, &PartitionWidget::slotSetSliderValue);
-//    connect()
     connect(addButton, &DIconButton::clicked, this, &PartitionWidget::addPartitionSlot);
     connect(remButton, &DIconButton::clicked, this, &PartitionWidget::remPartitionSlot);
     connect(applyBtn, &DPushButton::clicked, this, &PartitionWidget::applyBtnSlot);
@@ -306,9 +304,9 @@ double PartitionWidget::leaveSpace()
 
 void PartitionWidget::setSelectValue()
 {
-    partNameEdit->lineEdit()->setPlaceholderText(tr("Free space"));
+    partNameEdit->lineEdit()->setPlaceholderText(tr("Unallocated"));
     partSizeEdit->setText("");
-    if (partComCobox->currentText() == "GB") {
+    if (partComCobox->currentText() == "GiB") {
         partSizeEdit->setText(QString::number((total - leaveSpace()) / 1024));
     } else {
         partSizeEdit->setText(QString::number(total - leaveSpace()));
@@ -344,7 +342,7 @@ void PartitionWidget::showSelectPathInfo(const int &flag, const int &num, const 
 
     if (flag == 1) {
         hSlider->setValue((total - leaveSpace()) / total * 100);
-        QToolTip::showText(QPoint(x + posX, y + 235), tr("Free Space"), this, QRect(QPoint(x + posX, y + 235), QSize(80, 20)), 2000);
+        QToolTip::showText(QPoint(x + posX, y + 235), tr("Unallocated"), this, QRect(QPoint(x + posX, y + 235), QSize(80, 20)), 2000);
         setSelectValue();
 
     } else if (flag == 2) {
@@ -355,12 +353,12 @@ void PartitionWidget::showSelectPathInfo(const int &flag, const int &num, const 
         partNameEdit->lineEdit()->setPlaceholderText(partName.at(num));
 
         double clicked = sizeInfo.at(num);
-        if (partComCobox->currentText() == "GB")
+        if (partComCobox->currentText() == "GiB")
             clicked = clicked / 1024;
         partSizeEdit->setText(QString::number(clicked));
 
     } else if (flag == 3) {
-        QToolTip::showText(QPoint(x + posX + 5, y + 235), tr("Free Space"), this, QRect(QPoint(x + posX, y + 235), QSize(80, 20)), 2000);
+        QToolTip::showText(QPoint(x + posX + 5, y + 235), tr("Unallocated"), this, QRect(QPoint(x + posX, y + 235), QSize(80, 20)), 2000);
         setSelectValue();
         hSlider->setValue(100);
     }
@@ -448,18 +446,17 @@ void PartitionWidget::comboxCurTextSlot()
     double total1 = partSize.left(j).toDouble();
 
     if (total1 >= 1) {
-        if (partComCobox->currentText() == "MB") {
+        if (partComCobox->currentText() == "MiB") {
             GM = 1;
             hSlider->setEnabled(true);
 
-        } else if (partComCobox->currentText() == "GB") {
+        } else if (partComCobox->currentText() == "GiB") {
             GM = 2;
             if (total1 < 5) {
                 hSlider->setEnabled(false);
             } else {
                 hSlider->setEnabled(true);
             }
-
         }
     }
     if (total1 < 1) {
@@ -470,17 +467,16 @@ void PartitionWidget::comboxCurTextSlot()
 void PartitionWidget::slotSliderValueChanged(int value)
 {
     QString strSize;
-    qDebug() << block;
     if (block == 0) {
         if (mflag == 2 || mflag == 0) {
-            if (partComCobox->currentText() == "MB") {
+            if (partComCobox->currentText() == "MiB") {
                 strSize = QString::number(((double)value / 100) * total, 'f', 2);
             } else {
                 strSize = QString::number(((double)value / 100) * (total / 1024), 'f', 2);
             }
             partSizeEdit->setText(strSize);
         } else {
-            if (partComCobox->currentText() == "MB") {
+            if (partComCobox->currentText() == "MiB") {
                 strSize = QString::number(((double)value / 100) * (total - leaveSpace()), 'f', 2);
             } else {
                 strSize = QString::number(((double)value / 100) * ((total - leaveSpace()) / 1024), 'f', 2);
@@ -489,6 +485,7 @@ void PartitionWidget::slotSliderValueChanged(int value)
         }
     }
     block = 0;
+
 }
 
 void PartitionWidget::slotSetSliderValue()
@@ -497,11 +494,15 @@ void PartitionWidget::slotSetSliderValue()
     double total1 = partSize.left(j).toDouble();
     double value = partSizeEdit->text().toDouble();
     QString sizeTemp = partSizeEdit->text();
-    if (partComCobox->currentText() == "MB")
+    if (partComCobox->currentText() == "MiB")
         value = value / 1024;
     partSizeEdit->setText(sizeTemp);
     block = 1;
     hSlider->setValue((value / total1) * 100);
+
+    if (value > total1 - (leaveSpace() / 1024)) {
+        partSizeEdit->showAlertMessage(tr("The value entered is too large,new with space left"));
+    }
 }
 
 void PartitionWidget::addPartitionSlot()
@@ -516,7 +517,7 @@ void PartitionWidget::addPartitionSlot()
     if (partSizeEdit->text().isEmpty()) {
         partSizeEdit->showAlertMessage(tr("Partition Size is not empty"));
     }
-    if (partComCobox->currentText() == "GB") {
+    if (partComCobox->currentText() == "GiB") {
         if (partSizeEdit->text().toDouble() > total)
             return;
     }
@@ -544,7 +545,7 @@ void PartitionWidget::addPartitionSlot()
     part.name = partNameEdit->text();
     part.fstype = partFormateCombox->currentText();
     Byte_Value sector_size = DMDbusHandler::instance() ->getCurPartititonInfo().sector_size;
-    if (partComCobox->currentText().compare("MB") == 0) {
+    if (partComCobox->currentText().compare("MiB") == 0) {
         part.count = currentSize * (MEBIBYTE / sector_size);
     } else {
         part.count = currentSize * (GIBIBYTE / sector_size);
@@ -557,6 +558,8 @@ void PartitionWidget::addPartitionSlot()
     qDebug() << "1111";
     hSlider->setValue(0);
     partSizeEdit->setText("");
+    partNameEdit->lineEdit()->setPlaceholderText(tr("Part Name"));
+    partSizeEdit->lineEdit()->setPlaceholderText(tr("Part Size"));
     setEnable();
     partChartWidget->getflag(0);
 }

@@ -27,7 +27,7 @@ void MainWindow::initUi()
 {
     m_central = new CenterWidget(this);
     setCentralWidget(m_central);
-    titlebar()->setIcon(QIcon::fromTheme(":/icons/deepin/builtin/dm_deepin-diskmanager_32px.svg"));
+    titlebar()->setIcon(QIcon::fromTheme(app_name));
     titlebar()->setTitle("");
     // titlebar()->setMenu(m_central->titleMenu());
     titlebar()->addWidget(m_central->titlewidget(), Qt::AlignCenter);

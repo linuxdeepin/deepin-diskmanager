@@ -558,6 +558,7 @@ void PartitionWidget::addPartitionSlot()
     hSlider->setValue(0);
     partSizeEdit->setText("");
     setEnable();
+    partChartWidget->getflag(0);
 }
 
 void PartitionWidget::remPartitionSlot()

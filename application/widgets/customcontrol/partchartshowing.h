@@ -40,7 +40,7 @@ public:
     explicit PartChartShowing(QWidget *parent = nullptr);
 //    PartChartShowing(int used, int trueused, int noused, QWidget *parent = nullptr);
     void getData(const double &totals, const QVector<double> sizeInfo);
-
+    void getflag(int mflag);
 
 signals:
     void sendFlag(int flag, int num, int posX);

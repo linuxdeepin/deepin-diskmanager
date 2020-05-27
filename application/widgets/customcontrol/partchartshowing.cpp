@@ -36,7 +36,12 @@ void PartChartShowing::getData(const double &totals, const QVector<double>sizeIn
     total = totals;
     partsize = sizeInfo;
     total = static_cast<int>(totals);
-//    path = paintpath;
+}
+
+void PartChartShowing::getflag(int mflag)
+{
+    flag = mflag;
+    update();
 }
 
 void PartChartShowing::paintEvent(QPaintEvent *event)
@@ -120,8 +125,6 @@ void PartChartShowing::addPaint(QPainter *painter)
             widths = 10;
         }
         double width1 = 0.00;
-        qDebug() << sum;
-        qDebug() << partsize.at(i);
         sum = sum + partsize.at(i);
 //        if (i == 0 && sum >= total) {
 
@@ -135,21 +138,17 @@ void PartChartShowing::addPaint(QPainter *painter)
 //        }
         if (i == 0) {
             if (static_cast<int>(sum) < static_cast<int>(total)) {
-                path[0].moveTo(paintRect.topLeft() + QPoint(radius - 3, 0));
+                path[0].moveTo(paintRect.topLeft() + QPoint(radius, 0));
                 path[0].arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
                 path[0].lineTo(paintRect.bottomLeft() - QPoint(0, radius));
                 path[0].arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, radius * 2)),
                                     QSize(radius * 2, radius * 2)),
                               180, 90);
-                qDebug() << partsize.at(i) << total << partsize.at(i) / total << (static_cast<int>((partsize.at(i) / total)));
                 path[0].lineTo(paintRect.bottomLeft() + QPoint((widths + radius), 0));
                 path[0].lineTo(paintRect.topLeft() + QPoint((widths + radius), 0));
                 path[0].lineTo(paintRect.topLeft() + QPoint(radius, 0));
             }
             if (static_cast<int>(sum) >= static_cast<int>(total)) {
-                painter->setPen(QPen(basecolor.at(0), 2));
-                painter->drawRoundedRect(paintRect, 8, 8);
-
                 path[0].moveTo(paintRect.bottomRight() - QPoint(0, radius));
                 path[0].lineTo(paintRect.topRight() + QPoint(0, radius));
                 path[0].arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
@@ -177,7 +176,6 @@ void PartChartShowing::addPaint(QPainter *painter)
             }
 
         } else if (static_cast<int>(sum) < static_cast<int>(total) && i > 0) {
-            qDebug() << sum << total;
             width1 = (partsize.at(i - 1) / total) * paintRect.width();
             if ((partsize.at(i - 1) / total) * paintRect.width() <= 3)
                 width1 = 10;
@@ -224,20 +222,14 @@ void PartChartShowing::addPaint(QPainter *painter)
                 painter->setBrush(fillcolor);
                 painter->drawPath(path[partsize.size() - 1]);
                 number = -1;
-                qDebug() << path[partsize.size() - 1].currentPosition().x() << "yes";
-
             }
-            qDebug() << number << flag;
-            qDebug() << path[partsize.size() - 1].currentPosition().x();
         }
         allpath = path;
-//        qDebug() << allpath.size() << partsize.size();
     }
     if (flag == 3) {
         double width2 = (partsize.at(partsize.size() - 1) / total) * this->width();
         if (width2 <= 3) {
             width2 = 10;
-            qDebug() << "231";
         }
         painter->setPen(QPen(this->palette().color(DPalette::Normal, DPalette::Highlight), 2));
         //                paintpath.moveTo()
@@ -246,8 +238,8 @@ void PartChartShowing::addPaint(QPainter *painter)
         paintpath.arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
                               QSize(radius * 2, radius * 2)),
                         0, 90);
-        paintpath.lineTo(QPoint(allpath[partsize.size() - 1].currentPosition().x() + width2, 10));
-        paintpath.lineTo(QPoint(allpath[partsize.size() - 1].currentPosition().x() + width2, paintRect.height() + 9));
+        paintpath.lineTo(QPoint(allpath[partsize.size() - 1].currentPosition().x() + width2 - 1, 10));
+        paintpath.lineTo(QPoint(allpath[partsize.size() - 1].currentPosition().x() + width2 - 1, paintRect.height() + 9));
         paintpath.lineTo(paintRect.bottomRight() - QPoint(radius, 0));
         paintpath.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
                               QSize(radius * 2, radius * 2)),
@@ -265,7 +257,6 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
     int i ;
     if (partsize.size() == 0) {
         if (event->button() == Qt::LeftButton) {
-//            qDebug() << partsize.size();
             if (x > 0 && x < this->width() && y > 10 && y < 45) {
                 flag = 1;
                 update();
@@ -280,7 +271,6 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
                     width = 10;
                 }
                 if ((x > allpath[i].currentPosition().x() && x < (allpath[i].currentPosition().x() + width) && y > 10 && y < 45) || (i == 0 && y > 10 && y < 45)) {
-                    qDebug() << "121212121";
                     flag = 2;
                     number = i;
                     update();
@@ -309,11 +299,6 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
             update();
         }
     }
-//    if (i == 0 && sum >= total) {
-//        qDebug() << "111111112222";
-//        flag = 0;
-//        update();
-//    }
     emit sendFlag(flag, number, x);
 }
 

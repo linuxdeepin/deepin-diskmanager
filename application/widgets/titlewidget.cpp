@@ -17,9 +17,9 @@ void TitleWidget::initUi()
     QHBoxLayout *layout = new QHBoxLayout(this);
 
     m_btnparted = createBtn(tr("Partition"), "partition");
-    m_btnformat = createBtn(tr("Mount"), "format");
-    m_btnmount = createBtn(tr("Unmount"), "mount");
-    m_btnunmount = createBtn(tr("Format to"), "unmount");
+    m_btnformat = createBtn(tr("Format to"), "format");
+    m_btnmount = createBtn(tr("Mount"), "mount");
+    m_btnunmount = createBtn(tr("Unmount"), "unmount");
     m_btnresize = createBtn(tr("Resize"), "resize");
     layout->addWidget(m_btnparted);
     layout->addWidget(m_btnformat);

@@ -33,7 +33,7 @@ isEmpty(DSRDIR):DSRDIR=/usr/share/deepin-diskmanager
 
 target.path = $$INSTROOT$$BINDIR
 desktop.path = $$INSTROOT$$APPDIR
-desktop.files = $$PWD/deepin-diskmanager.desktop
+desktop.files = $$PWD/icons/deepin-diskmanager.desktop
 
 icon_files.path = /usr/share/icons/hicolor/scalable/apps
 icon_files.files = $$PWD/icons/deepin/builtin/deepin-diskmanager.svg

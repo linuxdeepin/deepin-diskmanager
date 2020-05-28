@@ -17,6 +17,7 @@ void UnmountDialog::initUi()
     setTitle(tr("Unmount") + info.path);
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
     DLabel *tipLabel = new DLabel(tr("Make sure there are no programs running on the disk"), this);
+    tipLabel->setWordWrap(true);
     tipLabel ->setAlignment(Qt::AlignCenter);
     DFontSizeManager::instance()->bind(tipLabel, DFontSizeManager::T6);
 

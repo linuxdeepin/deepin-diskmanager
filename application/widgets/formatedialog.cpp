@@ -19,7 +19,8 @@ void FormateDialog::initUi()
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
     setTitle(tr("Format ") + info.path);
-    DLabel *tipLabel = new DLabel(tr("Formatting will erase all data on the disk, which cannot be \n undone. \n Please set its name and file system,and then format"), this);
+    DLabel *tipLabel = new DLabel(tr("Formatting will erase all data on the disk, which cannot be undone. Please set its name and file system,and then format"), this);
+    tipLabel->setWordWrap(true);
     tipLabel ->setAlignment(Qt::AlignCenter);
     DFontSizeManager::instance()->bind(tipLabel, DFontSizeManager::T6);
     QHBoxLayout *hlayoutname = new QHBoxLayout;
@@ -33,7 +34,7 @@ void FormateDialog::initUi()
     QHBoxLayout *hlayoutformat = new QHBoxLayout;
     DLabel *pformatname = new DLabel(tr("File system:"), this);
     pformatcombo = new DComboBox(this);
-    pformatcombo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
+    pformatcombo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     QStringList fslist = DMDbusHandler::instance()->getallsupportfs();
     pformatcombo->addItems(fslist);
     pformatcombo->setCurrentIndex(fslist.indexOf(Utils::FSTypeToString((FSType)info.fstype)));

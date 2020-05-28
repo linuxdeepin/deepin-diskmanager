@@ -10,33 +10,31 @@
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="22"/>
-        <source>Formatting will erase all data on the disk, which cannot be 
- undone. 
- Please set its name and file system,and then format</source>
+        <source>Formatting will erase all data on the disk, which cannot be undone. Please set its name and file system,and then format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="26"/>
+        <location filename="../widgets/formatedialog.cpp" line="27"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="30"/>
+        <location filename="../widgets/formatedialog.cpp" line="31"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="34"/>
+        <location filename="../widgets/formatedialog.cpp" line="35"/>
         <source>File system:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="46"/>
+        <location filename="../widgets/formatedialog.cpp" line="47"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="47"/>
+        <location filename="../widgets/formatedialog.cpp" line="48"/>
         <source>Format</source>
         <translation type="unfinished"></translation>
     </message>
@@ -103,97 +101,97 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="87"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="88"/>
         <source>Disk Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="95"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="96"/>
         <source>Capacity:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="100"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="101"/>
         <source>Partition selected:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="109"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="110"/>
         <source>Disk:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="114"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="205"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="115"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="206"/>
         <source>File system:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="148"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="149"/>
         <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="150"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="151"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="152"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="153"/>
         <source>Revert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="173"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="174"/>
         <source>Partition Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="179"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="180"/>
         <source>Number of partitions:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="183"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="184"/>
         <source>Delete the latest partition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="195"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="196"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="215"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="216"/>
         <source>Size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="307"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="345"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="361"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="308"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="346"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="362"/>
         <source>Unallocated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="509"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="510"/>
         <source>The value entered is too large,new with space left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="523"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="524"/>
         <source>Partition Size is not empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="566"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="590"/>
-        <source>Part Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="567"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="591"/>
+        <source>Part Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="568"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="592"/>
         <source>Part Size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -225,22 +223,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="27"/>
+        <location filename="../widgets/resizedialog.cpp" line="28"/>
         <source>Reserved size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="42"/>
+        <location filename="../widgets/resizedialog.cpp" line="43"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="43"/>
+        <location filename="../widgets/resizedialog.cpp" line="44"/>
         <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="96"/>
+        <location filename="../widgets/resizedialog.cpp" line="97"/>
         <source>have no unallocated space,can not resize</source>
         <translation type="unfinished"></translation>
     </message>
@@ -380,7 +378,7 @@
     <name>UnmountDialog</name>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="17"/>
-        <location filename="../widgets/unmountdialog.cpp" line="26"/>
+        <location filename="../widgets/unmountdialog.cpp" line="27"/>
         <source>Unmount</source>
         <translation type="unfinished"></translation>
     </message>
@@ -390,7 +388,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="25"/>
+        <location filename="../widgets/unmountdialog.cpp" line="26"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>

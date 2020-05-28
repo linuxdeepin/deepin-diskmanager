@@ -10,22 +10,17 @@
 
 CenterWidget::CenterWidget(DWidget *parent) : Dtk::Widget::DWidget(parent)
 {
-    m_handler =  DMDbusHandler::instance(this);
     initUi();
-    initConnection();
-    m_handler->getDeviceinfo();
 }
 
 CenterWidget::~CenterWidget()
 {
-    if (nullptr != m_bufferwin) {
-        m_bufferwin->deleteLater();
-    }
+
 }
 
 void CenterWidget::HandleQuit()
 {
-    m_handler->Quit();
+
 }
 
 TitleWidget *CenterWidget::titlewidget()
@@ -35,7 +30,6 @@ TitleWidget *CenterWidget::titlewidget()
 
 void CenterWidget::initUi()
 {
-    m_bufferwin = new BufferWin;
     m_titlewidget = new TitleWidget(this);
     QVBoxLayout *mainlayout = new QVBoxLayout;
     mainlayout->setContentsMargins(0, 0, 0, 0);
@@ -48,16 +42,4 @@ void CenterWidget::initUi()
     setLayout(mainlayout);
 }
 
-void CenterWidget::initConnection()
-{
-    connect(m_handler, &DMDbusHandler::sigShowSpinerWindow, this, &CenterWidget::slotshowSpinerWindow);
-}
 
-void CenterWidget::slotshowSpinerWindow(bool bshow)
-{
-    if (bshow) {
-        m_bufferwin->Start();
-    } else {
-        m_bufferwin->Stop();
-    }
-}

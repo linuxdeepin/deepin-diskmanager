@@ -15,7 +15,4 @@ source_file = translations/desktop/desktop.ts
 source_lang = en
 type = QT
 
-DESKTOP_TEMP_FILE=deepin-reader.desktop.tmp
-DESKTOP_SOURCE_FILE=deepin-reader/deepin-reader.desktop
-DESKTOP_DEST_FILE=deepin-reader/deepin-reader.desktop
-DESKTOP_TS_DIR=deepin-reader/translations/desktop
+

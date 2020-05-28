@@ -201,12 +201,12 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="33"/>
+        <location filename="../main.cpp" line="34"/>
         <source>Disk Utility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="41"/>
+        <location filename="../main.cpp" line="42"/>
         <source>Disk Utility is a disk management tool for creating, 
  reorganizing and formatting partitions.</source>
         <translation type="unfinished"></translation>
@@ -248,18 +248,18 @@
 <context>
     <name>SizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="140"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="152"/>
         <source>Capacity:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="142"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="187"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="154"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="199"/>
         <source>Used:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="185"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="197"/>
         <source> Capacity:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -356,17 +356,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="20"/>
+        <location filename="../widgets/titlewidget.cpp" line="21"/>
         <source>Mount</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="21"/>
+        <location filename="../widgets/titlewidget.cpp" line="22"/>
         <source>Unmount</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="22"/>
+        <location filename="../widgets/titlewidget.cpp" line="20"/>
         <source>Format to</source>
         <translation type="unfinished"></translation>
     </message>

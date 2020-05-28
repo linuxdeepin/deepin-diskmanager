@@ -151,7 +151,7 @@ void TitleWidget::updateBtnStatus()
 
 void TitleWidget::slotCurSelectChanged()
 {
-    //updateBtnStatus();
+    updateBtnStatus();
     qDebug() << __FUNCTION__ << "-1--1-";
     auto it = DMDbusHandler::instance()->probDeviceInfo().find(DMDbusHandler::instance()->getCurPartititonInfo().device_path);
     if (it != DMDbusHandler::instance()->probDeviceInfo().end()) {

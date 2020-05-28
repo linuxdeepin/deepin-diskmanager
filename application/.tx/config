@@ -3,13 +3,13 @@ host = http://www.transifex.com
 minimum_perc = 80
 mode = developer
 
-[deepin-diskmanager.deepin-diskmanager]
-file_filter = translations/Deepin Disk Utility_zh_CN.ts
-source_file = translations/Deepin Disk Utility_en_US.ts
+[deepin-disk-utility.deepin-disk-utility]
+file_filter = translations/deepin-diskmanager_<lang>.ts
+source_file = translations/deepin-diskmanager_en_US.ts
 source_lang = en_US
 type = QT
 
-[deepin-diskmanager.deepin-diskmanager-desktop-ts]
+[deepin-disk-utility.deepin-disk-utility-desktop-ts]
 file_filter = translations/desktop/desktop_<lang>.ts
 source_file = translations/desktop/desktop.ts
 source_lang = en_US

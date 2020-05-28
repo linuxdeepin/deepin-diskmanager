@@ -31,23 +31,24 @@ void DmFrameWidget::setFrameData()
                 m_infodata.mountpoints.append(strpoint + " ");
             }
         }
-    } else {
-        for (QString strpoint : data.mountpoints)
+    } else  {
+        for (QString strpoint : data.mountpoints) {
             m_infodata.mountpoints.append(strpoint);
-        w = d_width - 849;
-        if (m_infodata.mountpoints.size() > 21 + w) {
-            for (int i = 0; i < 9 + w; i++) {
-                previoustr += m_infodata.mountpoints.at(i);
-                if (i == m_infodata.mountpoints.size() - 10) {
-                    break;
-                }
-            }
-            previoustr += "...";
-            for (int p = m_infodata.mountpoints.size() - 9; p < m_infodata.mountpoints.size(); p++) {
-                laststr += m_infodata.mountpoints.at(p);
-            }
-            m_infodata.mountpoints = previoustr + laststr;
         }
+    }
+    w = d_width - 849;
+    if (m_infodata.mountpoints.size() > 21 + w) {
+        for (int i = 0; i < 9 + w; i++) {
+            previoustr += m_infodata.mountpoints.at(i);
+            if (i == m_infodata.mountpoints.size() - 10) {
+                break;
+            }
+        }
+        previoustr += "...";
+        for (int p = m_infodata.mountpoints.size() - 9; p < m_infodata.mountpoints.size(); p++) {
+            laststr += m_infodata.mountpoints.at(p);
+        }
+        m_infodata.mountpoints = previoustr + laststr;
     }
     m_infodata.unused = Utils::format_size(data.sectors_unused, data.sector_size);
     if (m_infodata.unused.contains("-")) {

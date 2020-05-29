@@ -31,7 +31,7 @@ PartitionDialog::PartitionDialog(QWidget *parent) : DDBase(parent)
 void PartitionDialog::initUi()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    setTitle(tr("Partition") + QString("%1").arg(info.path));
+    setTitle(tr("Partition %1").arg(info.path));
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
     DLabel *tipLabel = new DLabel(tr("It will increase the number of partitions on the disk"), this);
     tipLabel->setWordWrap(true);

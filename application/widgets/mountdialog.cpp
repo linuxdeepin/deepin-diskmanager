@@ -17,7 +17,7 @@ MountDialog::MountDialog(QWidget *parent): DDBase(parent)
 void MountDialog::initUi()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    setTitle(tr("Mount ") + QString("%1").arg(info.path));
+    setTitle(tr("Mount %1").arg(info.path));
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
     DLabel *tipLabel = new DLabel(tr("Choose a mount point please"), this);
     tipLabel ->setAlignment(Qt::AlignCenter);

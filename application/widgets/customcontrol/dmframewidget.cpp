@@ -21,35 +21,13 @@ void DmFrameWidget::setFrameData()
     QString mountstr;
     QString previoustr;
     QString laststr;
+    QString strstr;
     DiskInfoData temp;
     m_infodata = temp;
-    if (data.mountpoints.size() >= 2) {
-        for (QString strpoint : data.mountpoints) {
-            if (strpoint == data.mountpoints.at(data.mountpoints.size() - 1)) {
-                m_infodata.mountpoints.append(strpoint);
-            } else {
-                m_infodata.mountpoints.append(strpoint + " ");
-            }
-        }
-    } else  {
-        for (QString strpoint : data.mountpoints) {
-            m_infodata.mountpoints.append(strpoint);
-        }
-    }
-    w = d_width - 849;
-    if (m_infodata.mountpoints.size() > 21 + w) {
-        for (int i = 0; i < 9 + w; i++) {
-            previoustr += m_infodata.mountpoints.at(i);
-            if (i == m_infodata.mountpoints.size() - 10) {
-                break;
-            }
-        }
-        previoustr += "...";
-        for (int p = m_infodata.mountpoints.size() - 9; p < m_infodata.mountpoints.size(); p++) {
-            laststr += m_infodata.mountpoints.at(p);
-        }
-        m_infodata.mountpoints = previoustr + laststr;
-    }
+    for (QString strpoint : data.mountpoints)
+        strstr.append(strpoint + " ");
+    qDebug() << strstr;
+    m_infodata.mountpoints = diffMountpoints(d_width, strstr);
     m_infodata.unused = Utils::format_size(data.sectors_unused, data.sector_size);
     if (m_infodata.unused.contains("-")) {
         m_infodata.unused = "-";
@@ -97,7 +75,7 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)
         QTextOption option1;
         option1.setAlignment(Qt::AlignRight);
         painter.setPen(textcolor);
-        QRect textRect1 = QRect(rect.width() / 2 - 275 - w / 2 - w / 3, rect.topLeft().y() + 10, 257 + w / 2 + w / 3, 40);
+        QRect textRect1 = QRect(rect.width() / 2 - 275, rect.topLeft().y() + 10, 257, 40);
         painter.drawText(textRect1, m_infodata.mountpoints, option);
         textRect.moveTo(rect.width() / 2 - 260, rect.topLeft().y() + 62);
         painter.drawText(textRect, m_infodata.unused, option1);
@@ -136,7 +114,7 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)
         QTextOption option1;
         option1.setAlignment(Qt::AlignRight);
         painter.setPen(textcolor);
-        QRect textRect1 = QRect(rect.width() / 2 - 275 - w / 2, rect.topLeft().y() + 10, 257 + w / 2, 40);
+        QRect textRect1 = QRect(rect.width() / 2 - 275, rect.topLeft().y() + 10, 257, 40);
         painter.drawText(textRect1, m_infodata.mountpoints, option);
         textRect.moveTo(rect.width() / 2 - 260, rect.topLeft().y() + 62);
         painter.drawText(textRect, m_infodata.unused, option1);
@@ -165,4 +143,28 @@ void DmFrameWidget::slothandleChangeTheme()
 
     m_parentPb = Dtk::Gui::DGuiApplicationHelper::instance()->applicationPalette();
 
+}
+
+QString DmFrameWidget::diffMountpoints(int width, QString mountpoints)
+{
+    QString previoustr;
+    QString laststr;
+
+    if (mountpoints.size() > 21) {
+        if (width < 1000) {
+            for (int i = 0; i < 9 ; i++) {
+                previoustr += mountpoints.at(i);
+            }
+            previoustr += "...";
+            for (int p = mountpoints.size() - 9; p < mountpoints.size(); p++) {
+                laststr += mountpoints.at(p);
+            }
+            mountpoints = previoustr + laststr;
+            return  mountpoints;
+        } else {
+            return  mountpoints;
+        }
+    } else {
+        return mountpoints;
+    }
 }

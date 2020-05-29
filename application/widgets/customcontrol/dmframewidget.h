@@ -25,6 +25,7 @@ public:
 
 public slots:
     void slothandleChangeTheme();
+    QString diffMountpoints(int width, QString mountpoints);
 protected:
     void paintEvent(QPaintEvent *event) override;
     void resizeEvent(QResizeEvent *event)override;

@@ -5,12 +5,12 @@
     <name>FormateDialog</name>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="21"/>
-        <source>Format </source>
+        <source>Format %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="22"/>
-        <source>Formatting will erase all data on the disk, which cannot be undone. Please set its name and file system,and then format</source>
+        <source>Formatting will erase all data on the disk, which cannot be undone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -43,12 +43,12 @@
     <name>InfoTopFrame</name>
     <message>
         <location filename="../widgets/customcontrol/infotopframe.cpp" line="54"/>
-        <source>Total capacity</source>
+        <source>Capacity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/infotopframe.cpp" line="106"/>
-        <source>format</source>
+        <source>File system</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -56,7 +56,7 @@
     <name>MountDialog</name>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="20"/>
-        <source>Mount </source>
+        <source>Mount %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -83,8 +83,31 @@
 <context>
     <name>PartChartShowing</name>
     <message>
-        <location filename="../widgets/customcontrol/partchartshowing.cpp" line="92"/>
+        <location filename="../widgets/customcontrol/partchartshowing.cpp" line="100"/>
         <source>Unallocated</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PartitionDialog</name>
+    <message>
+        <location filename="../widgets/partitiondialog.cpp" line="36"/>
+        <source>Partition %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/partitiondialog.cpp" line="38"/>
+        <source>It will increase the number of partitions on the disk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/partitiondialog.cpp" line="45"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/partitiondialog.cpp" line="46"/>
+        <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -97,7 +120,7 @@
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="44"/>
-        <source>Click &apos;+&apos; to increase the number of partitions on the disk,Click on each partition to change its name and file system.</source>
+        <source>Click ‘+’ to increase the number of partitions. Click on each partition to change its name and file system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -167,32 +190,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="308"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="346"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="362"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="309"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="347"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="363"/>
         <source>Unallocated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="510"/>
-        <source>The value entered is too large,new with space left</source>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="564"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="589"/>
+        <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="524"/>
-        <source>Partition Size is not empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="567"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="591"/>
-        <source>Part Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="568"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="592"/>
-        <source>Part Size</source>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="565"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="590"/>
+        <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -214,12 +227,12 @@
     <name>ResizeDialog</name>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="18"/>
-        <source>Resize </source>
+        <source>Resize %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="19"/>
-        <source>It will resize the partitions on the disk, please set the reserved size first and continue</source>
+        <source>It will resize the partitions on the disk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -235,11 +248,6 @@
     <message>
         <location filename="../widgets/resizedialog.cpp" line="44"/>
         <source>Confirm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/resizedialog.cpp" line="97"/>
-        <source>have no unallocated space,can not resize</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -259,90 +267,6 @@
     <message>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="197"/>
         <source> Capacity:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>TipDialog</name>
-    <message>
-        <location filename="../widgets/customcontrol/tipdialog.cpp" line="36"/>
-        <source>The disk will be formatted, all data stored on the disk 
- will be deleted, and cannot be undone. Please provide the 
- name and format, and click Format content</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/tipdialog.cpp" line="46"/>
-        <source>name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/tipdialog.cpp" line="58"/>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/tipdialog.cpp" line="59"/>
-        <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>TipPartDialog</name>
-    <message>
-        <location filename="../widgets/customcontrol/tippartdialog.cpp" line="54"/>
-        <source>Try to operate partition </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/tippartdialog.cpp" line="55"/>
-        <source>The disk is in use. Partition the space in 
- the disk. Click OK to confirm the operation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/tippartdialog.cpp" line="66"/>
-        <source>Format</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/tippartdialog.cpp" line="67"/>
-        <source>Formatting will erase all data on the disk, which cannot be 
- undone. 
- Please set its name and file system,and then format</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/tippartdialog.cpp" line="78"/>
-        <source>XXX will be mounted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/tippartdialog.cpp" line="79"/>
-        <source>The disk will be mounted. Click mount</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/tippartdialog.cpp" line="93"/>
-        <source>About to uninstall XXX</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/tippartdialog.cpp" line="94"/>
-        <source>To uninstall XXX, you need to uninstall the disk.
- Make sure that there is no program to uninstall.
- Click uninstall</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/tippartdialog.cpp" line="104"/>
-        <source>XXX system space is in operation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/tippartdialog.cpp" line="105"/>
-        <source>The disk is in use. You will operate on the size of the 
- disk space. To confirm the operation, please click OK</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -377,18 +301,22 @@
 <context>
     <name>UnmountDialog</name>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="17"/>
-        <location filename="../widgets/unmountdialog.cpp" line="27"/>
+        <location filename="../widgets/unmountdialog.cpp" line="29"/>
         <source>Unmount</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="19"/>
+        <location filename="../widgets/unmountdialog.cpp" line="21"/>
         <source>Make sure there are no programs running on the disk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="26"/>
+        <location filename="../widgets/unmountdialog.cpp" line="18"/>
+        <source>Unmount %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/unmountdialog.cpp" line="28"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>

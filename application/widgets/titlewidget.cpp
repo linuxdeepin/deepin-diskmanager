@@ -36,7 +36,7 @@ void TitleWidget::initConnection()
     connect(m_btnmount, &DPushButton::clicked, this, &TitleWidget::showMountInfoWidget);
     connect(m_btnunmount, &DPushButton::clicked, this, &TitleWidget::showUnmountInfoWidget);
     connect(m_btnresize, &DPushButton::clicked, this, &TitleWidget::showResizeInfoWidget);
-    connect(&dlg, &PartitionDialog::showPartWidget, this, &TitleWidget::showPartWidget);
+
 }
 
 DPushButton *TitleWidget::createBtn(const QString &btnName,  const QString &objName, bool bCheckable)
@@ -62,15 +62,21 @@ DPushButton *TitleWidget::createBtn(const QString &btnName,  const QString &objN
 void TitleWidget::showPartInfoWidget()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    if (TYPE_UNPARTITIONED == info.type && FS_UNALLOCATED == info.fstype) {
+    PartitionDialog dlg;
+    if (dlg.exec() == 1) {
+        if (TYPE_UNPARTITIONED == info.type && FS_UNALLOCATED == info.fstype) {
 
-        qDebug() << QString("No partition table found on device %1").arg(info.device_path);
-        qDebug() << "A partition table is required before partitions can be added";
-        //ToDo:empty device create partition table
-        return ;
+            qDebug() << QString("No partition table found on device %1").arg(info.device_path);
+            qDebug() << "A partition table is required before partitions can be added";
+            //ToDo:empty device create partition table
+            return ;
+        }
     }
-    dlg.exec();
 
+    if (partitionWidget == nullptr)
+        partitionWidget = new PartitionWidget(this);
+    partitionWidget->show();
+    partitionWidget->getPartitionInfo(info, device_size);
 
 }
 
@@ -149,7 +155,7 @@ void TitleWidget::updateBtnStatus()
 
 void TitleWidget::slotCurSelectChanged()
 {
-//    updateBtnStatus();
+    updateBtnStatus();
     qDebug() << __FUNCTION__ << "-1--1-";
     auto it = DMDbusHandler::instance()->probDeviceInfo().find(DMDbusHandler::instance()->getCurPartititonInfo().device_path);
     if (it != DMDbusHandler::instance()->probDeviceInfo().end()) {

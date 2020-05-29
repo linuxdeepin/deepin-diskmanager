@@ -290,6 +290,7 @@ void PartitionWidget::initConnection()
     connect(cancleBtn, &DPushButton::clicked, this, &PartitionWidget::cancelBtnSlot);
     connect(partComCobox, &DComboBox::currentTextChanged, this, &PartitionWidget::comboxCurTextSlot);
     connect(partChartWidget, &PartChartShowing::sendFlag, this, &PartitionWidget::showSelectPathInfo);
+//    connect(hSlider, &DSlider::valueChanged, partChartWidget, &PartChartShowing::slotvalue);
 }
 
 double PartitionWidget::leaveSpace()
@@ -472,6 +473,7 @@ void PartitionWidget::comboxCurTextSlot()
 
 void PartitionWidget::slotSliderValueChanged(int value)
 {
+    m_value = value;
     QString strSize;
     if (block == 0) {
         if (mflag == 2 || mflag == 0) {
@@ -561,14 +563,14 @@ void PartitionWidget::addPartitionSlot()
     qDebug() << total - leaveSpace() << total << currentSize;
     partChartWidget->update();
     partNameEdit->setText("");
-    qDebug() << "1111";
+    partChartWidget->getflag(0, m_value);
     hSlider->setValue(0);
     partSizeEdit->setText("");
     partNameEdit->lineEdit()->setPlaceholderText(tr("Part Name"));
     partSizeEdit->lineEdit()->setPlaceholderText(tr("Part Size"));
     setEnable();
     setUseEnable();
-    partChartWidget->getflag(0);
+//    partChartWidget->getflag(0, m_value);
 }
 
 void PartitionWidget::remPartitionSlot()

@@ -38,11 +38,19 @@ void PartChartShowing::getData(const double &totals, const QVector<double>sizeIn
     total = static_cast<int>(totals);
 }
 
-void PartChartShowing::getflag(int mflag)
+void PartChartShowing::getflag(int mflag, int value)
 {
     flag = mflag;
+    sumvalue = value;
     update();
 }
+
+//void PartChartShowing::slotvalue(int value)
+//{
+//    sumvalue += value / 100.00;
+//    qDebug() << value / 100.00;;
+//    qDebug() << sumvalue;
+//}
 
 void PartChartShowing::paintEvent(QPaintEvent *event)
 {
@@ -189,7 +197,7 @@ void PartChartShowing::addPaint(QPainter *painter)
                 painter->drawPath(path[number]);
                 flag = 0;
             }
-        } else if (sum >= total) {
+        } else if (sumvalue >= 99.5) {
             path[partsize.size() - 1].moveTo(path[partsize.size() - 2].currentPosition() + QPoint(((partsize.at(partsize.size() - 2) / total)*paintRect.width()), 0));
             path[partsize.size() - 1].lineTo(paintRect.topRight() - QPoint(radius, 0));
             path[partsize.size() - 1].arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),

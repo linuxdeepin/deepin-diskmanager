@@ -122,6 +122,7 @@ private:
     int mflag = -1;
     double currentSize = 0.00;
     int GM = 0;
+    int m_value = 0;
 
 //    QVector<QString> partPaths;
 //    QHash<int, QVector<double>> sizeinfos;

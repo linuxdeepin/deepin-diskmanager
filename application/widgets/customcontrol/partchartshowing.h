@@ -40,12 +40,12 @@ public:
     explicit PartChartShowing(QWidget *parent = nullptr);
 //    PartChartShowing(int used, int trueused, int noused, QWidget *parent = nullptr);
     void getData(const double &totals, const QVector<double> sizeInfo);
-    void getflag(int mflag);
+    void getflag(int mflag, int value = 0);
 
 signals:
     void sendFlag(int flag, int num, int posX);
 public slots:
-
+    /*    void slotvalue(int value)*/
 
     // QWidget interface
 protected:
@@ -66,6 +66,7 @@ private:
     double sum = 0.00;
     double widths = 0.00;
     int i = 0;
+    double  sumvalue = 0.0000001;
 
 
 

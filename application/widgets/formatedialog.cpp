@@ -18,7 +18,7 @@ void FormateDialog::initUi()
     this->setFixedSize(450, 300);
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
-    setTitle(tr("Format ") + info.path);
+    setTitle(tr("Format ") + QString("%1").arg(info.path));
     DLabel *tipLabel = new DLabel(tr("Formatting will erase all data on the disk, which cannot be undone. Please set its name and file system,and then format"), this);
     tipLabel->setWordWrap(true);
     tipLabel ->setAlignment(Qt::AlignCenter);

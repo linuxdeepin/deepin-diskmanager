@@ -135,7 +135,7 @@ void PartChartShowing::addPaint(QPainter *painter)
         }
         double width1 = 0.00;
         sum = sum + partsize.at(i);
-
+        qDebug() << sumvalue << "sumvalue";
         if (i == 0) {
             if (static_cast<int>(sum) < static_cast<int>(total)) {
                 path[0].moveTo(paintRect.topLeft() + QPoint(radius, 0));
@@ -197,7 +197,7 @@ void PartChartShowing::addPaint(QPainter *painter)
                 painter->drawPath(path[number]);
                 flag = 0;
             }
-        } else if (sumvalue >= 99.5) {
+        } else if (sumvalue >= 99) {
             path[partsize.size() - 1].moveTo(path[partsize.size() - 2].currentPosition() + QPoint(((partsize.at(partsize.size() - 2) / total)*paintRect.width()), 0));
             path[partsize.size() - 1].lineTo(paintRect.topRight() - QPoint(radius, 0));
             path[partsize.size() - 1].arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),

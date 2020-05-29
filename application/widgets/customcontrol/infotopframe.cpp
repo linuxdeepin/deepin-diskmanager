@@ -51,7 +51,7 @@ void InfoTopFrame::InitRightInfo()
 
     tLayout->addStretch();
 
-    allnameLabel = new DLabel(tr("Total capacity"), this);
+    allnameLabel = new DLabel(tr("Capacity"), this);
     allnameLabel->setAlignment(Qt::AlignRight);
     DFontSizeManager::instance()->bind(allnameLabel, DFontSizeManager::T6);
 
@@ -103,5 +103,5 @@ void InfoTopFrame::setShowDiskInfo()
     allmemoryLabel->setText(s_disksize);
 
     QString s_diskType = Utils::FSTypeToString(static_cast<FSType>(info.fstype));
-    typeLabel->setText(tr("format") + ": " + s_diskType);
+    typeLabel->setText(tr("File system") + ": " + s_diskType);
 }

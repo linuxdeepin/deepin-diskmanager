@@ -40,7 +40,7 @@ void PartitionWidget::initUi()
     mainLayout->setSpacing(5);
 
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    setTitle(tr("Partitioning ") + info.path);
+    setTitle(tr("Partitioning ") + QString("%1").arg(info.path));
     DLabel *tipLabel = new DLabel(tr("Click '+' to increase the number of partitions on the disk,Click on each partition to change its name and file system."), mainFrame);
     tipLabel->setWordWrap(true);
     tipLabel->setAlignment(Qt::AlignCenter);

@@ -38,7 +38,6 @@ void CenterWidget::initUi()
     m_mainspliter = new MainSplitter;
     mainlayout->addWidget(m_mainspliter);
 
-
     setLayout(mainlayout);
 }
 

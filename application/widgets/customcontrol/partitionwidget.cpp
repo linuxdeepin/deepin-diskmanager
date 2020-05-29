@@ -444,14 +444,12 @@ void PartitionWidget::setEnable2()
     DPalette pa = DApplicationHelper::instance()->palette(botFrame);
     pa.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
     botFrame->setPalette(pa);
-
 }
 
 void PartitionWidget::comboxCurTextSlot()
 {
     int j = partSize.lastIndexOf("G");
     double total1 = partSize.left(j).toDouble();
-
     if (total1 >= 1) {
         if (partComCobox->currentText() == "MiB") {
             GM = 1;
@@ -491,7 +489,6 @@ void PartitionWidget::slotSliderValueChanged(int value)
         }
     }
     block = 0;
-
 }
 
 void PartitionWidget::slotSetSliderValue()
@@ -625,7 +622,6 @@ void PartitionWidget::applyBtnSlot()
             if (curinfo.inside_extended) {
                 newpart.type = TYPE_LOGICAL;
                 newpart.inside_extended = true;
-
             } else {
                 newpart.type = TYPE_PRIMARY;
             }

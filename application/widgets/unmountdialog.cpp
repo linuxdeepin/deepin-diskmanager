@@ -14,7 +14,9 @@ UnmountDialog::UnmountDialog(QWidget *parent) : DDBase(parent)
 void UnmountDialog::initUi()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+
     setTitle(tr("Unmount %1").arg(info.path));
+
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
     DLabel *tipLabel = new DLabel(tr("Make sure there are no programs running on the disk"), this);
     tipLabel->setWordWrap(true);

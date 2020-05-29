@@ -21,6 +21,7 @@
 #include <QVBoxLayout>
 #include <DFrame>
 #include <DFontSizeManager>
+#include "partitioninfo.h"
 #include <QDebug>
 PartitionDialog::PartitionDialog(QWidget *parent) : DDBase(parent)
 {
@@ -31,6 +32,7 @@ PartitionDialog::PartitionDialog(QWidget *parent) : DDBase(parent)
 void PartitionDialog::initUi()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+
     setTitle(tr("Partition %1").arg(info.path));
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
     DLabel *tipLabel = new DLabel(tr("It will increase the number of partitions on the disk"), this);

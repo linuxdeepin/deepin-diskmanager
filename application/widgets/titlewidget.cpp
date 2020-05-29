@@ -26,8 +26,6 @@ void TitleWidget::initUi()
     layout->addWidget(m_btnmount);
     layout->addWidget(m_btnunmount);
     layout->addWidget(m_btnresize);
-//    tipPartDialog = new TipPartDialog(this);
-
 }
 
 void TitleWidget::initConnection()
@@ -38,6 +36,7 @@ void TitleWidget::initConnection()
     connect(m_btnmount, &DPushButton::clicked, this, &TitleWidget::showMountInfoWidget);
     connect(m_btnunmount, &DPushButton::clicked, this, &TitleWidget::showUnmountInfoWidget);
     connect(m_btnresize, &DPushButton::clicked, this, &TitleWidget::showResizeInfoWidget);
+    connect(&dlg, &PartitionDialog::showPartWidget, this, &TitleWidget::showPartWidget);
 }
 
 DPushButton *TitleWidget::createBtn(const QString &btnName,  const QString &objName, bool bCheckable)
@@ -70,16 +69,8 @@ void TitleWidget::showPartInfoWidget()
         //ToDo:empty device create partition table
         return ;
     }
-    partitionWidget = new PartitionWidget(this);
-    partitionWidget->show();
-    partitionWidget->getPartitionInfo(getPartitionInfo, device_size);
-//    tipPartDialog->getButton(1)->disconnect();
-//    tipPartDialog->getFlagShow(0);
+    dlg.exec();
 
-//    connect(tipPartDialog->getButton(1), &QAbstractButton::clicked, this, [ = ] {
-
-//            tipPartDialog->close();
-//    });
 
 }
 
@@ -107,6 +98,13 @@ void TitleWidget::showResizeInfoWidget()
 {
     ResizeDialog dlg;
     dlg.exec();
+}
+
+void TitleWidget::showPartWidget()
+{
+    PartitionWidget *partitionWidget = new PartitionWidget(this);
+    partitionWidget->show();
+    partitionWidget->getPartitionInfo(getPartitionInfo, device_size);
 }
 
 void TitleWidget::updateBtnStatus()

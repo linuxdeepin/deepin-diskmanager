@@ -6,6 +6,7 @@
 //#include "customcontrol/tippartdialog.h"
 #include "partedproxy/dmdbushandler.h"
 #include "customcontrol/partitionwidget.h"
+#include "partitiondialog.h"
 #include "utils.h"
 DWIDGET_USE_NAMESPACE
 
@@ -32,19 +33,17 @@ public slots:
     void showMountInfoWidget();
     void showUnmountInfoWidget();
     void showResizeInfoWidget();
-
+    void showPartWidget();
 private:
     DPushButton *m_btnparted;
     DPushButton *m_btnformat;
     DPushButton *m_btnmount;
     DPushButton *m_btnunmount;
     DPushButton *m_btnresize;
-//    TipPartDialog *tipPartDialog;
-    PartitionWidget *partitionWidget;
+    PartitionDialog dlg;
+
     PartitionInfo getPartitionInfo;
     QString device_size;
-//    int controlButton = 0;
-//    QList<QAbstractButton *> list;
 };
 
 

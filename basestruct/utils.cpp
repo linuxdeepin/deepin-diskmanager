@@ -12,6 +12,7 @@ Utils::Utils()
 
 QString Utils::find_program_in_path(const QString &proname)
 {
+    qDebug() << "Utils::find_program_in_path----" << proname;
     if (proname.isEmpty())
         return QString();
     QStringList strarg;
@@ -23,19 +24,26 @@ QString Utils::find_program_in_path(const QString &proname)
 
 int Utils::executecmdwithartlist(const QString &strcmd, const QStringList &strarg, QString &output, QString &error)
 {
+    qDebug() << "Utils::executecmdwithartlist----+=" << strcmd;
     QProcess proc;
-    proc.open(QIODevice::ReadWrite);
-    proc.start(strcmd, strarg);
+    // proc.open(QIODevice::ReadWrite);
+    //proc.start(strcmd, strarg);
+    proc.setProgram(strcmd);
+    proc.setArguments(strarg);
+    proc.start(QIODevice::ReadWrite);
+
     proc.waitForFinished(-1);
     output = proc.readAllStandardOutput().data();
     error = proc.errorString();
     int exitcode = proc.exitCode();
+    qDebug() << "Utils::executecmdwithartlist----" << output << error;
     proc.close();
     return exitcode;
 }
 
 int Utils::executcmd(const QString &strcmd, QString &output, QString &error)
 {
+    qDebug() << "Utils::executcmd*******--------" << strcmd;
     QProcess proc;
     // proc.open(QIODevice::ReadWrite);
     proc.start(strcmd);

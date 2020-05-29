@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
     //set env otherwise utils excutecmd  excute command failed
     QString PATH = qgetenv("PATH");
 
+    qDebug() << "main start" << PATH;
     if (PATH.isEmpty()) {
         PATH = "/usr/bin";
     }

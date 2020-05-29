@@ -12,6 +12,11 @@ DMDbusHandler *DMDbusHandler::instance(QObject *parent)
     return m_statichandeler;
 }
 
+DMDbusHandler::~DMDbusHandler()
+{
+    Quit();
+}
+
 DMDbusHandler::DMDbusHandler(QObject *parent) : QObject(parent)
 {
     qRegisterMetaType<DeviceInfo>("DeviceInfo");

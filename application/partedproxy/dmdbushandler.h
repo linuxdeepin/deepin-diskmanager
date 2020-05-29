@@ -12,6 +12,7 @@ class DMDbusHandler : public QObject
     Q_OBJECT
 public:
     static DMDbusHandler *instance(QObject *parent = nullptr);
+    ~DMDbusHandler();
     void Quit();
     void getDeviceinfo();
     const DeviceInfoMap &probDeviceInfo()const;

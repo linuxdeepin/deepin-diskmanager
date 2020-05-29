@@ -94,7 +94,7 @@ void ResizeDialog::slotbuttonClicked(int index, const QString &)
         }
         if (!canexpand) {
             pedit->setAlertMessageAlignment(Qt::AlignTop);
-            pedit->showAlertMessage(tr("have no unallocated space,can not resize"));
+//            pedit->showAlertMessage(tr("have no unallocated space,can not resize"));
             pedit->setAlert(true);
 
         } else {

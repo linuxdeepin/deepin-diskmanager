@@ -328,9 +328,9 @@ bool PartitionWidget::max_amount_prim_reached()
     int maxprims = DMDbusHandler::instance()->getCurDeviceInfo().max_prims;
     if (! info.inside_extended && primary_count >= maxprims) {
         breachmax = true;
-        qDebug() << QString("It is not possible to create more than %1 primary partition").arg(maxprims);
-        qDebug() << QString("If you want more partitions you should first create an extended partition. Such a partition can contain other partitions."
-                            "Because an extended partition is also a primary partition it might be necessary to remove a primary partition first.");
+//        qDebug() << QString("It is not possible to create more than %1 primary partition").arg(maxprims);
+//        qDebug() << QString("If you want more partitions you should first create an extended partition. Such a partition can contain other partitions."
+//                            "Because an extended partition is also a primary partition it might be necessary to remove a primary partition first.");
 
     }
     return breachmax;
@@ -506,9 +506,9 @@ void PartitionWidget::slotSetSliderValue()
     block = 1;
     hSlider->setValue((value / total1) * 100);
 
-    if (value > total1 - (leaveSpace() / 1024)) {
-        partSizeEdit->showAlertMessage(tr("The value entered is too large,new with space left"));
-    }
+//    if (value > total1 - (leaveSpace() / 1024)) {
+//        partSizeEdit->showAlertMessage(tr("The value entered is too large,new with space left"));
+//    }
 }
 
 void PartitionWidget::addPartitionSlot()
@@ -520,9 +520,9 @@ void PartitionWidget::addPartitionSlot()
         partNameEdit->setText(" ");
     }
     partName.append(partNameEdit->text());
-    if (partSizeEdit->text().isEmpty()) {
-        partSizeEdit->showAlertMessage(tr("Partition Size is not empty"));
-    }
+//    if (partSizeEdit->text().isEmpty()) {
+//        partSizeEdit->showAlertMessage(tr("Partition Size is not empty"));
+//    }
     if (partComCobox->currentText() == "GiB") {
         if (partSizeEdit->text().toDouble() > total)
             return;
@@ -564,8 +564,8 @@ void PartitionWidget::addPartitionSlot()
     partChartWidget->getflag(0, m_value);
     hSlider->setValue(100);
     partSizeEdit->setText("");
-    partNameEdit->lineEdit()->setPlaceholderText(tr("Part Name"));
-    partSizeEdit->lineEdit()->setPlaceholderText(tr("Part Size"));
+    partNameEdit->lineEdit()->setPlaceholderText(tr("Name"));
+    partSizeEdit->lineEdit()->setPlaceholderText(tr("Size"));
     setEnable();
     setUseEnable();
     slotSliderValueChanged(100);
@@ -589,8 +589,8 @@ void PartitionWidget::remPartitionSlot()
     partNameEdit->setText("");
     hSlider->setValue(100);
     partSizeEdit->setText("");
-    partNameEdit->lineEdit()->setPlaceholderText(tr("Part Name"));
-    partSizeEdit->lineEdit()->setPlaceholderText(tr("Part Size"));
+    partNameEdit->lineEdit()->setPlaceholderText(tr("Name"));
+    partSizeEdit->lineEdit()->setPlaceholderText(tr("Size"));
     setEnable();
     setUseEnable();
     slotSliderValueChanged(100);
@@ -632,7 +632,7 @@ void PartitionWidget::applyBtnSlot()
         }
         if (beforend > curinfo.sector_end && i < m_patrinfo.size() - 1) {
             bcancreate = false;
-            qDebug() << "create too partition ,no enough space";
+//            qDebug() << "create too partition ,no enough space";
             break;
         } else {
             if (newpart.sector_end > curinfo.sector_end)

@@ -1,7 +1,5 @@
 HEADERS += \
     $$PWD/bufferwin.h\
-    $$PWD/tipdialog.h \
-    $$PWD/tippartdialog.h \
     $$PWD/dmtreeviewdelegate.h \
     $$PWD/dmtreeview.h \
     $$PWD/partitionwidget.h \
@@ -14,8 +12,6 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/bufferwin.cpp\
-    $$PWD/tipdialog.cpp \
-    $$PWD/tippartdialog.cpp \
     $$PWD/dmtreeviewdelegate.cpp \
     $$PWD/dmtreeview.cpp \
     $$PWD/partitionwidget.cpp \

@@ -40,7 +40,7 @@ void PartitionWidget::initUi()
     mainLayout->setSpacing(5);
 
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    setTitle(tr("Partitioning ") + QString("%1").arg(info.path));
+    setTitle(tr("Partitioning %1").arg(info.path));
     DLabel *tipLabel = new DLabel(tr("Click ‘+’ to increase the number of partitions. Click on each partition to change its name and file system."), mainFrame);
     tipLabel->setWordWrap(true);
     tipLabel->setAlignment(Qt::AlignCenter);
@@ -181,7 +181,7 @@ void PartitionWidget::partInfoShowing()
 
     addButton = new DIconButton(DStyle::SP_IncreaseElement);
     remButton = new DIconButton(DStyle::SP_DecreaseElement);
-    remButton->setToolTip(tr("Delete the latest partition"));
+    remButton->setToolTip(tr("Delete last partition"));
     line2Layout1->addWidget(partDoLabel);
     line2Layout1->addStretch();
     line2Layout1->addWidget(addButton);

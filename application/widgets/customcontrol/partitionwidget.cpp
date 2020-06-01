@@ -22,7 +22,7 @@
 
 PartitionWidget::PartitionWidget(QWidget *parent) : DDialog(parent)
 {
-    setAttribute(Qt::WA_DeleteOnClose, true);
+//    setAttribute(Qt::WA_DeleteOnClose, true);
     initUi();
     initConnection();
     getPartitionInfo();
@@ -473,9 +473,7 @@ void PartitionWidget::slotSetSliderValue()
     block = 1;
     hSlider->setValue((value / total1) * 100);
 
-//    if (value > total1 - (leaveSpace() / 1024)) {
-//        partSizeEdit->showAlertMessage(tr("The value entered is too large,new with space left"));
-//    }
+
 }
 
 void PartitionWidget::addPartitionSlot()
@@ -487,9 +485,7 @@ void PartitionWidget::addPartitionSlot()
         partNameEdit->setText(" ");
     }
     partName.append(partNameEdit->text());
-//    if (partSizeEdit->text().isEmpty()) {
-//        partSizeEdit->showAlertMessage(tr("Partition Size is not empty"));
-//    }
+
     if (partComCobox->currentText() == "GiB") {
         if (partSizeEdit->text().toDouble() > total)
             return;

@@ -26,6 +26,7 @@ void TitleWidget::initUi()
     layout->addWidget(m_btnmount);
     layout->addWidget(m_btnunmount);
     layout->addWidget(m_btnresize);
+
 }
 
 void TitleWidget::initConnection()
@@ -42,20 +43,16 @@ void TitleWidget::initConnection()
 DPushButton *TitleWidget::createBtn(const QString &btnName,  const QString &objName, bool bCheckable)
 {
     auto btn = new DPushButton(this);
-
     //  wzx 设置图标icon    2020-05-19
     QIcon icon = getIcon(objName);
     btn->setIcon(icon);
-
     btn->setFixedSize(QSize(36, 36));
     btn->setIconSize(QSize(18, 18));
     btn->setToolTip(btnName);
     btn->setCheckable(bCheckable);
-
     if (bCheckable) {
         btn->setChecked(false);
     }
-    // btn->setDisabled(true);
     return btn;
 }
 
@@ -63,6 +60,7 @@ void TitleWidget::showPartInfoWidget()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
     PartitionDialog dlg;
+
     if (dlg.exec() == 1) {
         if (TYPE_UNPARTITIONED == info.type && FS_UNALLOCATED == info.fstype) {
 
@@ -72,17 +70,15 @@ void TitleWidget::showPartInfoWidget()
 
             return ;
         }
-        partitionWidget = new PartitionWidget(this);
-        partitionWidget->show();
+        PartitionWidget partitionWidget;
+        partitionWidget.exec();
     }
 }
 
 void TitleWidget::showFormateInfoWidget()
 {
-
     FormateDialog dlg;
     dlg.exec();
-
 }
 
 void TitleWidget::showMountInfoWidget()

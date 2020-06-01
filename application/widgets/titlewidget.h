@@ -39,7 +39,6 @@ private:
     DPushButton *m_btnmount;
     DPushButton *m_btnunmount;
     DPushButton *m_btnresize;
-    PartitionWidget *partitionWidget = nullptr;
 };
 
 

@@ -58,52 +58,37 @@ void InfoShowWidget::midFramSettings()
     QVBoxLayout *mainLayout = new QVBoxLayout(pframemid);
     m_infowidget = new SizeInfoWidget;
     mainLayout->addWidget(m_infowidget);
-//    totaluseLabel = new DLabel(pframemid);
-//    QFont  font;
-//    font.setPointSize(20);
-//    QPixmap pixmap;
-//    pixmap.load(":/icons/deepin/builtin/exception-logo.svg");
-//    totaluseLabel->setPixmap(pixmap);
-//    totaluseLabel->setGeometry(0, 100, 10, 10);
-//    totaluseLabel->setFixedSize(20, 20);
-//    mainLayout->addSpacing(40);
-//    mainLayout->addWidget(totaluseLabel, 0, Qt::AlignLeft);
-//    mainLayout->addStretch();
-
-
-
-
 }
 
 void InfoShowWidget::bottomFramSettings()
 {
     QVBoxLayout *infolayout = new QVBoxLayout();
     QVBoxLayout *info1layout = new QVBoxLayout();
-    DLabel *m_label = new  DLabel("Mount point:");
+    DLabel *m_label = new  DLabel(tr("Mount point:"));
     m_label->setAlignment(Qt::AlignLeft);
     m_label->setWordWrap(true);
     m_label->adjustSize();
     m_label->setFixedHeight(30);
     DFontSizeManager::instance()->bind(m_label, DFontSizeManager::T6);
-    DLabel *m_label1 = new  DLabel("Free:");
+    DLabel *m_label1 = new  DLabel(tr("Free:"));
     m_label1->setWordWrap(true);
     m_label1->adjustSize();
     m_label1->setAlignment(Qt::AlignLeft);
     DFontSizeManager::instance()->bind(m_label1, DFontSizeManager::T6);
-    DLabel *m_label2 = new  DLabel("Used:");
+    DLabel *m_label2 = new  DLabel(tr("Used:"));
     m_label2->setWordWrap(true);
     m_label2->adjustSize();
     m_label2->setAlignment(Qt::AlignLeft);
     DFontSizeManager::instance()->bind(m_label2, DFontSizeManager::T6);
-    DLabel *m_label3 = new  DLabel("Type:");
+    DLabel *m_label3 = new  DLabel(tr("Type:"));
     m_label3->setWordWrap(true);
     m_label3->adjustSize();
     DFontSizeManager::instance()->bind(m_label3, DFontSizeManager::T6);
-    DLabel *m_label4 = new  DLabel("Capacity:");
+    DLabel *m_label4 = new  DLabel(tr("Capacity:"));
     m_label4->setWordWrap(true);
     m_label4->adjustSize();
     DFontSizeManager::instance()->bind(m_label4, DFontSizeManager::T6);
-    DLabel *m_label5 = new  DLabel("Volume label:");
+    DLabel *m_label5 = new  DLabel(tr("Volume label:"));
     m_label5->setWordWrap(true);
     m_label5->adjustSize();
     DFontSizeManager::instance()->bind(m_label5, DFontSizeManager::T6);

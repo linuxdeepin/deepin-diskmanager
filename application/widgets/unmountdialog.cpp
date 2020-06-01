@@ -9,6 +9,7 @@ UnmountDialog::UnmountDialog(QWidget *parent) : DDBase(parent)
 {
     initUi();
     initConnection();
+
 }
 
 void UnmountDialog::initUi()

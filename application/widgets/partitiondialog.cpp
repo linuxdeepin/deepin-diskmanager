@@ -26,7 +26,6 @@
 PartitionDialog::PartitionDialog(QWidget *parent) : DDBase(parent)
 {
     initUi();
-    initConnection();
 }
 
 void PartitionDialog::initUi()
@@ -46,13 +45,4 @@ void PartitionDialog::initUi()
     okcode = addButton(tr("Confirm"), true, ButtonRecommend);
 }
 
-void PartitionDialog::initConnection()
-{
-    connect(this, &PartitionDialog::buttonClicked, this, &PartitionDialog::sendSignal);
-}
 
-void PartitionDialog::sendSignal(int index)
-{
-    if (okcode == index)
-        emit showPartWidget();
-}

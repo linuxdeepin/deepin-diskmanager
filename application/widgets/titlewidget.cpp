@@ -71,12 +71,13 @@ void TitleWidget::showPartInfoWidget()
             //ToDo:empty device create partition table
             return ;
         }
+        partitionWidget = new PartitionWidget(this);
+        partitionWidget->show();
     }
 
-    if (partitionWidget == nullptr)
-        partitionWidget = new PartitionWidget(this);
-    partitionWidget->show();
-    partitionWidget->getPartitionInfo(info, device_size);
+
+
+
 
 }
 
@@ -106,12 +107,6 @@ void TitleWidget::showResizeInfoWidget()
     dlg.exec();
 }
 
-void TitleWidget::showPartWidget()
-{
-    PartitionWidget *partitionWidget = new PartitionWidget(this);
-    partitionWidget->show();
-    partitionWidget->getPartitionInfo(getPartitionInfo, device_size);
-}
 
 void TitleWidget::updateBtnStatus()
 {
@@ -157,14 +152,6 @@ void TitleWidget::slotCurSelectChanged()
 {
     updateBtnStatus();
     qDebug() << __FUNCTION__ << "-1--1-";
-    auto it = DMDbusHandler::instance()->probDeviceInfo().find(DMDbusHandler::instance()->getCurPartititonInfo().device_path);
-    if (it != DMDbusHandler::instance()->probDeviceInfo().end()) {
-        //  QString s_disksize = QString::number(((it.value().length * it.value().sector_size) / 1024.0 / 1024.0 / 1024.0), 'f', 2) + "GB";
-        QString s_disksize = QString::number(Utils::sector_to_unit(it.value().length, it.value().sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GiB";
-        //  qDebug() << Utils::sector_to_unit(it.value().sectors, it.value().sector_size, SIZE_UNIT::UNIT_GIB) << it.value().m_path << s_disksize << it.value().sectors << it.value().sector_size;
-        getPartitionInfo = DMDbusHandler::instance()->getCurPartititonInfo();
-        device_size = s_disksize;
-    }
 }
 
 

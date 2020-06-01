@@ -27,11 +27,11 @@ class PartitionDialog : public DDBase
 public:
     explicit PartitionDialog(QWidget *parent = nullptr);
     void initUi();
-    void initConnection();
+//    void initConnection();
 signals:
-    void showPartWidget();
+//    void showPartWidget();
 public slots:
-    void sendSignal(int index);
+//    void sendSignal(int index);
 };
 
 #endif // PARTITIONDIALOG_H

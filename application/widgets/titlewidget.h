@@ -33,7 +33,6 @@ public slots:
     void showMountInfoWidget();
     void showUnmountInfoWidget();
     void showResizeInfoWidget();
-    void showPartWidget();
 private:
     DPushButton *m_btnparted;
     DPushButton *m_btnformat;
@@ -41,9 +40,6 @@ private:
     DPushButton *m_btnunmount;
     DPushButton *m_btnresize;
     PartitionWidget *partitionWidget = nullptr;
-
-    PartitionInfo getPartitionInfo;
-    QString device_size;
 };
 
 

@@ -21,6 +21,7 @@ void FormateDialog::initUi()
     setTitle(tr("Format %1").arg(info.path));
     DLabel *tipLabel = new DLabel(tr("Formatting will erase all data on the disk, which cannot be undone"), this);
     tipLabel->setWordWrap(true);
+    tipLabel->setFixedHeight(50);
     tipLabel ->setAlignment(Qt::AlignCenter);
     DFontSizeManager::instance()->bind(tipLabel, DFontSizeManager::T6);
     QHBoxLayout *hlayoutname = new QHBoxLayout;
@@ -41,6 +42,7 @@ void FormateDialog::initUi()
     hlayoutformat->addWidget(pformatname);
     hlayoutformat->addWidget(pformatcombo);
     mainLayout->addWidget(tipLabel);
+    mainLayout->addSpacing(60);
     mainLayout->addLayout(hlayoutname);
     mainLayout->addLayout(hlayoutformat);
 

@@ -141,7 +141,8 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setBrush(brush2);
             painter.setPen(icon2color);
             painter.drawPath(painterPath);
-            QRect recttext = QRect(paintRect.bottomLeft().x() + 28, paintRect.bottomLeft().y() + 17, 88, 50);
+            painter.fillPath(painterPath, brush2);
+            QRect recttext = QRect(paintRect.bottomLeft().x() + 28, paintRect.bottomLeft().y() + 17, 150, 70);
             QFont font;
             font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
             QColor textcolor = m_parentPb.color(DPalette::Normal, DPalette::Text);
@@ -149,20 +150,21 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(textcolor);
             QTextOption option;
             option.setAlignment(Qt::AlignTop);
-            painter.drawText(recttext, QString(tr("Capacity:")), option);
+            painter.drawText(recttext, QString(m_partitionpath + tr(" Capacity:")), option);
             recttext.moveTo(paintRect.width() / 2 - 40, paintRect.bottomLeft().y() + 17);
             painter.drawText(recttext, QString(tr("Used:")), option);
-//            QString totalsize = QString::number(total, 'f', 2) + "GB";
-//            QString usedsize = QString::number(m_used, 'f', 2) + "GB";
-            QRect rectsizenum = QRect(paintRect.bottomLeft().x() + 120, paintRect.bottomLeft().y() + 20, 100, 30);
+            QRect rectsizenum = QRect(paintRect.bottomLeft().x() + 165, paintRect.bottomLeft().y() + 20, 100, 30);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
             QColor text1color = m_parentPb.color(DPalette::Normal, DPalette::TextTitle);
             painter.setFont(font);
             painter.setPen(text1color);
             QTextOption option1;
-            option1.setAlignment(Qt::AlignLeft);
+            option.setAlignment(Qt::AlignLeft);
             painter.drawText(rectsizenum, totalsize, option1);
-            rectsizenum.moveTo(paintRect.width() / 2 + 20, paintRect.bottomLeft().y() + 20);
+            rectsizenum.moveTo(paintRect.width() / 2 + 80, paintRect.bottomLeft().y() + 20);
+            if (usedsize.contains("-")) {
+                usedsize = "-";
+            }
             painter.drawText(rectsizenum, usedsize, option1);
         } else if (themeType == DGuiApplicationHelper::DarkType) {
             QRect Roundrect = QRect(rect.bottomLeft().x() - 5, rect.bottomLeft().y() - 77, 15, 15);
@@ -205,7 +207,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             QTextOption option1;
             option.setAlignment(Qt::AlignLeft);
             painter.drawText(rectsizenum, totalsize, option1);
-            rectsizenum.moveTo(paintRect.width() / 2 + 20, paintRect.bottomLeft().y() + 20);
+            rectsizenum.moveTo(paintRect.width() / 2 + 80, paintRect.bottomLeft().y() + 20);
             if (usedsize.contains("-")) {
                 usedsize = "-";
             }

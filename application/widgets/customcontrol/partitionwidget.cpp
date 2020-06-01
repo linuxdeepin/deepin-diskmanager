@@ -157,7 +157,7 @@ void PartitionWidget::partInfoShowing()
     DFontSizeManager::instance()->bind(partInfoLabel, DFontSizeManager::T5);
 
     QHBoxLayout *line2Layout = new QHBoxLayout();
-    line2Layout->setContentsMargins(0, 10, 0, 10);
+    line2Layout->setContentsMargins(0, 0, 0, 0);
     QHBoxLayout *line2Layout1 = new QHBoxLayout();
     DLabel *partDoLabel = new DLabel(tr("Number of partitions:"), partWidget);
 

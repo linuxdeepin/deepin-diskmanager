@@ -180,8 +180,8 @@ void PartChartShowing::addPaint(QPainter *painter)
             if ((partsize.at(i - 1) / total) * paintRect.width() <= 3)
                 width1 = 10;
             path[i].moveTo(path[i - 1].currentPosition() + QPoint((width1), 0));
-            path[i].lineTo(path[i - 1].currentPosition() + QPoint((width1 + widths - 0.6), 0));
-            path[i].lineTo(path[i - 1].currentPosition() + QPoint((width1 + widths - 0.6), paintRect.height() - 1));
+            path[i].lineTo(path[i - 1].currentPosition() + QPoint((width1 + widths - 0.2), 0));
+            path[i].lineTo(path[i - 1].currentPosition() + QPoint((width1 + widths - 0.2), paintRect.height() - 1));
             path[i].lineTo(path[i - 1].currentPosition() + QPoint((width1), paintRect.height() - 1));
             path[i].lineTo(path[i - 1].currentPosition() + QPoint((width1), 0));
             QColor fillcolor;
@@ -198,7 +198,7 @@ void PartChartShowing::addPaint(QPainter *painter)
                 flag = 0;
             }
         } else if (sumvalue >= 100) {
-            path[partsize.size() - 1].moveTo(path[partsize.size() - 2].currentPosition() + QPoint(((partsize.at(partsize.size() - 2) / total)*paintRect.width() + 0.5), 0));
+            path[partsize.size() - 1].moveTo(path[partsize.size() - 2].currentPosition() + QPoint(((partsize.at(partsize.size() - 2) / total)*paintRect.width()), 0));
             path[partsize.size() - 1].lineTo(paintRect.topRight() - QPoint(radius, 0));
             path[partsize.size() - 1].arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
                                                   QSize(radius * 2, radius * 2)),

@@ -63,7 +63,7 @@ public:
     void midFrameSetting();
     void botFrameSetting();
     void partInfoShowing();
-    void getPartitionInfo(const PartitionInfo &data, const QString &disksize);
+    void getPartitionInfo();
 
     void initConnection();
     double leaveSpace();

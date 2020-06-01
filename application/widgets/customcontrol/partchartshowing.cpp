@@ -61,7 +61,7 @@ void PartChartShowing::paintEvent(QPaintEvent *event)
     rect.setX(this->x());
     rect.setY(this->y());
     rect.setWidth(this->width());
-    QRect paintRect = QRect(0, 10, rect.width(), 35);
+    QRect paintRect = QRect(5, 10, rect.width() - 3, 35);
     QPainterPath paintpath;
     const int radius = 8;
 
@@ -118,8 +118,8 @@ void PartChartShowing::addPaint(QPainter *painter)
     rect.setY(this->y());
     rect.setWidth(this->width());
     QRect paintRect = QRect(3, 10, rect.width() - 4, 35);
-    QPainterPath path0, path1, path2, path3, path4, path5, path6, path7, path8, path9, path10, path11, path12;
-    QVector<QPainterPath>path{path0, path1, path2, path3, path4, path5, path6, path7, path8, path9, path10, path11, path12};
+    QPainterPath path0, path1, path2, path3, path4, path5, path6, path7, path8, path9, path10, path11, path12, path13, path14, path15, path16, path17, path18, path19, path20;
+    QVector<QPainterPath>path{path0, path1, path2, path3, path4, path5, path6, path7, path8, path9, path10, path11, path12, path13, path14, path15, path16, path17, path18, path19, path20};
     QPainterPath paintpath;
     const int radius = 8;
     double sum = 0.00;
@@ -180,8 +180,8 @@ void PartChartShowing::addPaint(QPainter *painter)
             if ((partsize.at(i - 1) / total) * paintRect.width() <= 3)
                 width1 = 10;
             path[i].moveTo(path[i - 1].currentPosition() + QPoint((width1), 0));
-            path[i].lineTo(path[i - 1].currentPosition() + QPoint((width1 + widths - 0.2), 0));
-            path[i].lineTo(path[i - 1].currentPosition() + QPoint((width1 + widths - 0.2), paintRect.height() - 1));
+            path[i].lineTo(path[i - 1].currentPosition() + QPoint((width1 + widths - 0.6), 0));
+            path[i].lineTo(path[i - 1].currentPosition() + QPoint((width1 + widths - 0.6), paintRect.height() - 1));
             path[i].lineTo(path[i - 1].currentPosition() + QPoint((width1), paintRect.height() - 1));
             path[i].lineTo(path[i - 1].currentPosition() + QPoint((width1), 0));
             QColor fillcolor;

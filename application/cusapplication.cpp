@@ -8,6 +8,6 @@ CusApplication::CusApplication(int &argc, char **argv): DApplication(argc, argv)
 
 void CusApplication::handleQuitAction()
 {
-    //DApplication::handleQuitAction();
-    emit sighandleQuitAction();
+    DApplication::handleQuitAction();
+    //emit sighandleQuitAction();
 }

@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) : DMainWindow(parent)
 {
     m_handler =  DMDbusHandler::instance(this);
     initUi();
+    initConnection();
     m_handler->getDeviceinfo();//call after initUi
     QRect rect = QApplication::desktop()->geometry();
     setMinimumSize(rect.width() * 0.6, rect.height() * 0.6);
@@ -62,7 +63,7 @@ void MainWindow::slotshowSpinerWindow(bool bshow)
         m_bufferwin->Start();
     } else {
         m_bufferwin->Stop();
+        show();
     }
-    show();
 }
 

@@ -453,6 +453,7 @@ void PartitionWidget::slotSliderValueChanged(int value)
 {
     m_value = value;
     QString strSize;
+    mflag = -1;
     if (block == 0) {
         if (mflag == 2 || mflag == 0) {
             if (partComCobox->currentText() == "MiB") {

@@ -1,0 +1,14 @@
+[Desktop Entry]
+Categories=Utility;System;
+Exec=deepin-diskmanager
+GenericName=diskmanager
+GenericName[zh_CN]=磁盘管理器
+GenericName[zh_TW]=磁盘管理器
+Icon=deepin-diskmanager
+Name=Deepin DiskManager
+Name[zh_CN]=磁盘管理器
+Name[zh_TW]=磁盘管理器
+StartupNotify=true
+TryExec=deepin-diskmanager
+Type=Application
+X-Deepin-Vendor=deepin

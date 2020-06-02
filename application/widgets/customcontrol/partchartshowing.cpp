@@ -225,7 +225,7 @@ void PartChartShowing::addPaint(QPainter *painter)
         allpath = path;
     }
     if (flag == 3) {
-        double width2 = (partsize.at(partsize.size() - 1) / total) * (this->width());
+        double width2 = (partsize.at(partsize.size() - 1) / total) * (this->width() - 8);
 //        if (width2 <= 3) {
 //            width2 = 10;
 //        }
@@ -236,8 +236,8 @@ void PartChartShowing::addPaint(QPainter *painter)
         paintpath.arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
                               QSize(radius * 2, radius * 2)),
                         0, 90);
-        paintpath.lineTo(QPoint(allpath[partsize.size() - 1].currentPosition().x() + width2 - 1, 10));
-        paintpath.lineTo(QPoint(allpath[partsize.size() - 1].currentPosition().x() + width2 - 1, paintRect.height() + 9));
+        paintpath.lineTo(QPoint(allpath[partsize.size() - 1].currentPosition().x() + width2, 10));
+        paintpath.lineTo(QPoint(allpath[partsize.size() - 1].currentPosition().x() + width2, paintRect.height() + 9));
         paintpath.lineTo(paintRect.bottomRight() - QPoint(radius, 0));
         paintpath.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
                               QSize(radius * 2, radius * 2)),

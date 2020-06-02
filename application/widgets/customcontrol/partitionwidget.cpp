@@ -257,6 +257,7 @@ void PartitionWidget::initConnection()
 {
     connect(hSlider, &DSlider::valueChanged, this, &PartitionWidget::slotSliderValueChanged);
     connect(partSizeEdit, &DLineEdit::editingFinished, this, &PartitionWidget::slotSetSliderValue);
+    connect(partNameEdit, &DLineEdit::textEdited, this, &PartitionWidget::slotSetPartName);
     connect(addButton, &DIconButton::clicked, this, &PartitionWidget::addPartitionSlot);
     connect(remButton, &DIconButton::clicked, this, &PartitionWidget::remPartitionSlot);
     connect(applyBtn, &DPushButton::clicked, this, &PartitionWidget::applyBtnSlot);
@@ -315,15 +316,16 @@ void PartitionWidget::showSelectPathInfo(const int &flag, const int &num, const 
     int x = this->frameGeometry().x();
     int y = this->frameGeometry().y();
     mflag = flag;
-
-    if (flag == 1) {
+    number = num;
+    if (mflag == 1) {
         hSlider->setValue((total - leaveSpace()) / total * 100);
         QToolTip::showText(QPoint(x + posX, y + 215), tr("Unallocated"), this, QRect(QPoint(x + posX, y + 215), QSize(80, 20)), 2000);
         setSelectValue();
 
-    } else if (flag == 2) {
+    } else if (mflag == 2) {
         hSlider->setValue(sizeInfo.at(num) / total * 100);
         partSizeEdit->setText("");
+        partNameEdit->setText("");
         if (partName.at(num) != " ")
             QToolTip::showText(QPoint(x + posX + 5, y + 215), partName.at(num), this, QRect(QPoint(x + posX, y + 215), QSize(80, 20)), 2000);
         partNameEdit->lineEdit()->setPlaceholderText(partName.at(num));
@@ -333,10 +335,13 @@ void PartitionWidget::showSelectPathInfo(const int &flag, const int &num, const 
             clicked = clicked / 1024;
         partSizeEdit->setText(QString::number(clicked));
 
-    } else if (flag == 3) {
+    } else if (mflag == 3) {
+        partNameEdit->setText("");
         QToolTip::showText(QPoint(x + posX + 5, y + 215), tr("Unallocated"), this, QRect(QPoint(x + posX, y + 215), QSize(80, 20)), 2000);
         setSelectValue();
         hSlider->setValue(100);
+        number = -1;
+
     }
     setEnable();
 }
@@ -350,7 +355,7 @@ void PartitionWidget::setEnable()
         if (leaveSpace() >= total) {
             remButton->setEnabled(true);
         }
-        partNameEdit->setEnabled(false);
+        partNameEdit->setEnabled(true);
         partSizeEdit->setEnabled(false);
         hSlider->setEnabled(false);
         partComCobox->setEnabled(false);
@@ -481,6 +486,13 @@ void PartitionWidget::slotSetSliderValue()
     hSlider->setValue((value / total1) * 100);
 
 
+}
+
+void PartitionWidget::slotSetPartName()
+{
+    if (!partName.isEmpty() && number > -1) {
+        partName.replace(number, partNameEdit->text());
+    }
 }
 
 void PartitionWidget::addPartitionSlot()

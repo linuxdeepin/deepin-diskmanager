@@ -80,6 +80,7 @@ signals:
 public slots:
     void slotSliderValueChanged(int value);
     void slotSetSliderValue();
+    void slotSetPartName();
     void addPartitionSlot();
     void remPartitionSlot();
     void applyBtnSlot();
@@ -118,7 +119,7 @@ private:
     QString partSize;
     QString selectedpartName;
 
-    double totalSize = 0.00;
+    int number = -1;
     double total = 0.00;
     int mflag = -1;
     double currentSize = 0.00;
@@ -130,7 +131,6 @@ private:
     QVector<double> sizeInfo;
     QVector<QString> partName;
     QVector<stPart> m_patrinfo;
-
     int block = 0;
 
 };

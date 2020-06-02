@@ -44,6 +44,7 @@ public:
 
 signals:
     void sendFlag(int flag, int num, int posX);
+    void judgeLastPartition();
 public slots:
     /*    void slotvalue(int value)*/
 
@@ -64,7 +65,7 @@ private:
     QVector<QPainterPath> allpath;
     int number = -1;
     double sum = 0.00;
-    double widths = 0.00;
+//    double widths = 0.00;
     int i = 0;
     double  sumvalue = 0.0000001;
 

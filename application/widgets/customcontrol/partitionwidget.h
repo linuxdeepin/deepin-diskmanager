@@ -90,6 +90,7 @@ public slots:
     void setUseEnable();
     void setEnable2();
     void comboxCurTextSlot();
+    void judgeLastPartitionSlot();
 private:
     QWidget *mainFrame;
     DFrame *topFrame;

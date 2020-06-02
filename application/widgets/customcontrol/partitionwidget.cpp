@@ -264,6 +264,7 @@ void PartitionWidget::initConnection()
     connect(cancleBtn, &DPushButton::clicked, this, &PartitionWidget::cancelBtnSlot);
     connect(partComCobox, &DComboBox::currentTextChanged, this, &PartitionWidget::comboxCurTextSlot);
     connect(partChartWidget, &PartChartShowing::sendFlag, this, &PartitionWidget::showSelectPathInfo);
+    connect(partChartWidget, &PartChartShowing::judgeLastPartition, this, &PartitionWidget::judgeLastPartitionSlot);
 }
 
 double PartitionWidget::leaveSpace()
@@ -435,6 +436,12 @@ void PartitionWidget::comboxCurTextSlot()
             partSizeEdit->setText(QString::number((total - leaveSpace()) / 1024));
         }
     }
+}
+
+void PartitionWidget::judgeLastPartitionSlot()
+{
+    hSlider->setEnabled(false);
+    partSizeEdit->setEnabled(false);
 }
 
 void PartitionWidget::slotSliderValueChanged(int value)

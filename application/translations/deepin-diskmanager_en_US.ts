@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="en_US" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="en_US">
 <context>
     <name>FormateDialog</name>
     <message>
@@ -12,27 +14,27 @@
         <translation>Formatting will erase all data on the disk, which cannot be undone</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="27"/>
+        <location filename="../widgets/formatedialog.cpp" line="28"/>
         <source>Name:</source>
         <translation>Name:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="31"/>
+        <location filename="../widgets/formatedialog.cpp" line="32"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="35"/>
+        <location filename="../widgets/formatedialog.cpp" line="36"/>
         <source>File system:</source>
         <translation>File system:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="47"/>
+        <location filename="../widgets/formatedialog.cpp" line="49"/>
         <source>Cancel</source>
         <translation>Cancel</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="48"/>
+        <location filename="../widgets/formatedialog.cpp" line="50"/>
         <source>Format</source>
         <translation>Format</translation>
     </message>
@@ -286,18 +288,18 @@
 <context>
     <name>SizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="152"/>
         <source>Capacity:</source>
-        <translation>Capacity:</translation>
+        <translation type="vanished">Capacity:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="154"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="199"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="155"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="201"/>
         <source>Used:</source>
         <translation>Used:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="197"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="153"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="199"/>
         <source> Capacity:</source>
         <translation> Capacity:</translation>
     </message>

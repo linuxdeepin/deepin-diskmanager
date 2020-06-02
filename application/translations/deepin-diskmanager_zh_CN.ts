@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN">
 <context>
     <name>FormateDialog</name>
     <message>
@@ -12,27 +14,27 @@
         <translation>格式化分区将会删除储存在磁盘上的所有数据，且无法撤销</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="27"/>
+        <location filename="../widgets/formatedialog.cpp" line="28"/>
         <source>Name:</source>
         <translation>分区名称：</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="31"/>
+        <location filename="../widgets/formatedialog.cpp" line="32"/>
         <source>Name</source>
         <translation>分区名称</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="35"/>
+        <location filename="../widgets/formatedialog.cpp" line="36"/>
         <source>File system:</source>
         <translation>分区格式：</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="47"/>
+        <location filename="../widgets/formatedialog.cpp" line="49"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="48"/>
+        <location filename="../widgets/formatedialog.cpp" line="50"/>
         <source>Format</source>
         <translation>格式化</translation>
     </message>
@@ -285,18 +287,18 @@
 <context>
     <name>SizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="152"/>
         <source>Capacity:</source>
-        <translation>总容量：</translation>
+        <translation type="vanished">总容量：</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="154"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="199"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="155"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="201"/>
         <source>Used:</source>
         <translation>已用空间：</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="197"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="153"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="199"/>
         <source> Capacity:</source>
         <translation>总容量：</translation>
     </message>

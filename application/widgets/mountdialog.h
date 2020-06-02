@@ -7,6 +7,7 @@ DWIDGET_USE_NAMESPACE
 
 class MountDialog: public DDBase
 {
+    Q_OBJECT
 public:
     explicit MountDialog(QWidget *parent = nullptr);
 

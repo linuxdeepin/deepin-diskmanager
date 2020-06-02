@@ -16,7 +16,7 @@ find_package(Qt5 COMPONENTS
     Core
     Widgets
     DBus
-REQUIRED)
+    REQUIRED)
 
 set(LINK_LIBS
     Qt5::Core
@@ -68,9 +68,9 @@ set(CMAKE_INSTALL_PREFIX /usr)
 # Install files
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 file(GLOB APP_QM_FILES "translations/*.qm")
-install(FILES ${APP_QM_FILES} DESTINATION share/${PROJECT_NAME}/translations)
-install(FILES ${APP_ICONPATH} DESTINATION share/icons/hicolor/scalable/apps)
-install(FILES ${APP_DESKTOP} DESTINATION share/applications)
+#install(FILES ${APP_QM_FILES} DESTINATION share/${PROJECT_NAME}/translations)
+#install(FILES ${APP_ICONPATH} DESTINATION share/icons/hicolor/scalable/apps)
+#install(FILES ${APP_DESKTOP} DESTINATION share/applications)
 
 
 

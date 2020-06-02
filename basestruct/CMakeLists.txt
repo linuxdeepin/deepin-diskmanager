@@ -6,7 +6,7 @@ find_package(PkgConfig REQUIRED)
 find_package(Qt5 COMPONENTS
     Core
     DBus
-   REQUIRED)
+REQUIRED)
 
 
 set(CMAKE_CXX_STANDARD 14)

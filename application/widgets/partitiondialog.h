@@ -17,8 +17,9 @@
 #ifndef PARTITIONDIALOG_H
 #define PARTITIONDIALOG_H
 
-#include <QWidget>
 #include "customcontrol/ddbase.h"
+#include <QWidget>
+
 
 DWIDGET_USE_NAMESPACE
 class PartitionDialog : public DDBase

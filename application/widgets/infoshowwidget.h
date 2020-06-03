@@ -1,10 +1,11 @@
 #ifndef INFOSHOWWIDGET_H
 #define INFOSHOWWIDGET_H
 
+#include "customcontrol/dmtreeviewdelegate.h"
 #include <DWidget>
 #include <DLabel>
 #include <DFrame>
-#include "customcontrol/dmtreeviewdelegate.h"
+
 
 class DmFrameWidget;
 class SizeInfoWidget;

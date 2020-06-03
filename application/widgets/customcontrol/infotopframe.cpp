@@ -15,13 +15,13 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "infotopframe.h"
-
+#include "partedproxy/dmdbushandler.h"
+#include "widgets/widgetdeclare.h"
 #include <DPalette>
 #include <DApplicationHelper>
 #include <DFontSizeManager>
 
-#include "partedproxy/dmdbushandler.h"
-#include "widgets/widgetdeclare.h"
+
 
 InfoTopFrame::InfoTopFrame(DWidget *parent)
     : DFrame(parent)

@@ -16,19 +16,20 @@
 */
 #ifndef PARTCHARTSHOWING_H
 #define PARTCHARTSHOWING_H
-#include <QWidget>
+#include <DToolTip>
 #include <DWidget>
+#include <DApplicationHelper>
+#include <QWidget>
 #include <QRect>
 #include <QPainterPath>
 #include <QPainter>
 #include <QPalette>
 #include <DPalette>
 #include <QBrush>
-#include <DApplicationHelper>
 #include <QPointF>
 #include <QLine>
 #include <QMouseEvent>
-#include <DToolTip>
+
 DWIDGET_USE_NAMESPACE
 
 

@@ -17,11 +17,11 @@
 #include "partitiondialog.h"
 #include "widgetdeclare.h"
 #include "partedproxy/dmdbushandler.h"
+#include "partitioninfo.h"
 #include <DLabel>
-#include <QVBoxLayout>
 #include <DFrame>
 #include <DFontSizeManager>
-#include "partitioninfo.h"
+#include <QVBoxLayout>
 #include <QDebug>
 PartitionDialog::PartitionDialog(QWidget *parent) : DDBase(parent)
 {

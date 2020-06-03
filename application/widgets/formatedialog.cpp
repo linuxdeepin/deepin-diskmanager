@@ -1,10 +1,11 @@
 #include "formatedialog.h"
 #include "partedproxy/dmdbushandler.h"
 #include <DLabel>
-#include <QVBoxLayout>
 #include <DFontSizeManager>
-#include <QHBoxLayout>
 #include <DLineEdit>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+
 
 
 FormateDialog::FormateDialog(QWidget *parent) : DDBase(parent)

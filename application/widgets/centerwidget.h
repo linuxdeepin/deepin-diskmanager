@@ -1,9 +1,10 @@
 #ifndef CENTERWIDGET_H
 #define CENTERWIDGET_H
 
-#include <DWidget>
 #include "partedproxy/dmdbushandler.h"
 #include "devicelistwidget.h"
+#include <DWidget>
+
 DWIDGET_USE_NAMESPACE
 
 class TitleWidget;

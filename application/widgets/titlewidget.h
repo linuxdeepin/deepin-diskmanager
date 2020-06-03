@@ -1,13 +1,14 @@
 #ifndef TITLEWIDGET_H
 #define TITLEWIDGET_H
 
-#include <DWidget>
-#include <DPushButton>
-//#include "customcontrol/tippartdialog.h"
 #include "partedproxy/dmdbushandler.h"
 #include "customcontrol/partitionwidget.h"
 #include "partitiondialog.h"
 #include "utils.h"
+#include <DWidget>
+#include <DPushButton>
+//#include "customcontrol/tippartdialog.h"
+
 DWIDGET_USE_NAMESPACE
 
 

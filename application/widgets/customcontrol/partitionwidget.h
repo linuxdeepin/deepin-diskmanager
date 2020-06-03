@@ -17,28 +17,30 @@
 #ifndef PARTITIONWIDGET_H
 #define PARTITIONWIDGET_H
 
-#include <DDialog>
-#include <DLabel>
-#include <DLineEdit>
-#include <DComboBox>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <DFrame>
-#include <DPalette>
-#include <DApplicationHelper>
-#include <QAbstractButton>
-#include <DIconButton>
-#include <DPushButton>
-#include <QSizePolicy>
-#include <DHorizontalLine>
-#include <DMessageManager>
-#include <DSlider>
-#include <QToolTip>
-#include <DFontSizeManager>
 #include "partitioninfo.h"
 #include "utils.h"
 #include "partchartshowing.h"
 #include "partedproxy/dmdbushandler.h"
+#include <DDialog>
+#include <DLabel>
+#include <DHorizontalLine>
+#include <DMessageManager>
+#include <DSlider>
+#include <DLineEdit>
+#include <DComboBox>
+#include <DFrame>
+#include <DPalette>
+#include <DApplicationHelper>
+#include <DPushButton>
+#include <DFontSizeManager>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QAbstractButton>
+#include <DIconButton>
+#include <QSizePolicy>
+#include <QToolTip>
+
+
 
 
 DWIDGET_USE_NAMESPACE

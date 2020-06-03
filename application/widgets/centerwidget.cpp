@@ -3,9 +3,9 @@
 #include "mainsplitter.h"
 #include "customcontrol/bufferwin.h"
 #include "partedproxy/dmdbushandler.h"
-#include <QVBoxLayout>
 #include <DSpinner>
 #include <DWidgetUtil>
+#include <QVBoxLayout>
 #include <QThread>
 
 CenterWidget::CenterWidget(DWidget *parent) : Dtk::Widget::DWidget(parent)

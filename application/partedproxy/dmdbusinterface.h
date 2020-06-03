@@ -11,6 +11,7 @@
 #ifndef DMDBUSINTERFACE_H
 #define DMDBUSINTERFACE_H
 
+#include "deviceinfo.h"
 #include <QtCore/QObject>
 #include <QtCore/QByteArray>
 #include <QtCore/QList>
@@ -19,7 +20,7 @@
 #include <QtCore/QStringList>
 #include <QtCore/QVariant>
 #include <QtDBus/QtDBus>
-#include "deviceinfo.h"
+
 /*
  * Proxy class for interface com.deepin.diskmanager
  */

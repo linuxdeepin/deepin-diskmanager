@@ -63,7 +63,8 @@ void MainWindow::slotshowSpinerWindow(bool bshow)
         m_bufferwin->Start();
     } else {
         m_bufferwin->Stop();
-        show();
+        activateWindow();
     }
+
 }
 

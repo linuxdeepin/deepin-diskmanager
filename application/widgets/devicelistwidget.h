@@ -49,10 +49,9 @@ private:
     int flag = 0;
     int num = 0;
     QString devicepath_;
-//    DMDbusHandler *m_handler;
+    //    DMDbusHandler *m_handler;
     //    DmDiskinfoBox *m_box = nullptr;
-//    DmDiskinfoBox *m_childbox = nullptr;
-
+    //    DmDiskinfoBox *m_childbox = nullptr;
 };
 
 #endif // DEVICELISTWIDGET_H

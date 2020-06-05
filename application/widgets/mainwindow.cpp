@@ -41,7 +41,7 @@ void MainWindow::initUi()
 {
     m_bufferwin = new BufferWin;
     m_spinner = new DSpinner(this);
-    m_spinner-> setWindowFlags(Qt::SplashScreen);
+    m_spinner->setWindowFlags(Qt::SplashScreen);
     m_spinner->setWindowModality(Qt::ApplicationModal);
     m_spinner->setAttribute(Qt::WA_TranslucentBackground, true);
     m_spinner->setGeometry(100, 100, 100, 100);

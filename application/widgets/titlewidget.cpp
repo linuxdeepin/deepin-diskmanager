@@ -65,7 +65,7 @@ void TitleWidget::showPartInfoWidget()
             qDebug() << QString("No partition table found on device %1").arg(info.device_path);
             qDebug() << "A partition table is required before partitions can be added";
             //ToDo:empty device create partition table
-            return ;
+            return;
         }
         PartitionWidget partitionWidget;
         partitionWidget.exec();

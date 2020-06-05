@@ -29,8 +29,7 @@ PartChartShowing::PartChartShowing(QWidget *parent)
     basecolor = QVector<QColor> {color, color1, color2, color3, color4, color5};
 }
 
-
-void PartChartShowing::getData(const double &totals, const QVector<double>sizeInfo)
+void PartChartShowing::getData(const double &totals, const QVector<double> sizeInfo)
 {
     total = totals;
     partsize = sizeInfo;
@@ -128,7 +127,7 @@ void PartChartShowing::addPaint(QPainter *painter)
         }
         double width1 = 0.00;
         sum = sum + partsize.at(i);
-//        qDebug() << sumvalue << "sumvalue";
+        //        qDebug() << sumvalue << "sumvalue";
         if (i == 0) {
             if (static_cast<int>(sum) < static_cast<int>(total)) {
                 path[0].moveTo(paintRect.topLeft() + QPoint(radius, 0));

@@ -62,8 +62,8 @@ void DeviceListWidget::initConnection()
 void DeviceListWidget::slotUpdateDeviceInfo()
 {
     qDebug() << __FUNCTION__ << "               1";
-//更新DmTreeview  lx
-//设置当前选项
+    //更新DmTreeview  lx
+    //设置当前选项
     auto handler = DMDbusHandler::instance();
     num = handler->getCurPartititonInfo().partition_number;
     devicepath_ = handler->getCurPartititonInfo().device_path;
@@ -110,9 +110,6 @@ void DeviceListWidget::slotUpdateDeviceInfo()
         m_treeview->setDefaultdmItem();
     } else {
         m_treeview->setRefreshItem(devicepath_, num);
-
     }
     flag += 1;
-
-
 }

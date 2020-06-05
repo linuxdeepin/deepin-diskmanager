@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="zh_CN">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
 <context>
     <name>FormateDialog</name>
     <message>
@@ -223,21 +221,21 @@
         <translation>分区大小：</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="282"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="320"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="336"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="284"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="322"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="340"/>
         <source>Unallocated</source>
         <translation>空闲空间</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="530"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="555"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="549"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="574"/>
         <source>Name</source>
         <translation>分区名称</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="531"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="556"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="550"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="575"/>
         <source>Size</source>
         <translation>分区大小</translation>
     </message>
@@ -287,20 +285,16 @@
 <context>
     <name>SizeInfoWidget</name>
     <message>
-        <source>Capacity:</source>
-        <translation type="vanished">总容量：</translation>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="153"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="199"/>
+        <source> Capacity:</source>
+        <translation>总容量：</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="155"/>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="201"/>
         <source>Used:</source>
         <translation>已用空间：</translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="153"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="199"/>
-        <source> Capacity:</source>
-        <translation>总容量：</translation>
     </message>
 </context>
 <context>
@@ -309,6 +303,11 @@
         <location filename="../widgets/titlewidget.cpp" line="19"/>
         <source>Partition</source>
         <translation>分区</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="20"/>
+        <source>Format to</source>
+        <translation>格式化</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="21"/>
@@ -321,11 +320,6 @@
         <translation>卸载</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="20"/>
-        <source>Format to</source>
-        <translation>格式化</translation>
-    </message>
-    <message>
         <location filename="../widgets/titlewidget.cpp" line="23"/>
         <source>Resize</source>
         <translation>空间调整</translation>
@@ -334,9 +328,9 @@
 <context>
     <name>UnmountDialog</name>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="30"/>
-        <source>Unmount</source>
-        <translation>卸载</translation>
+        <location filename="../widgets/unmountdialog.cpp" line="19"/>
+        <source>Unmount %1</source>
+        <translation>将对%1进行卸载</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="22"/>
@@ -344,14 +338,14 @@
         <translation>请确认该磁盘无正在运行的程序</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="19"/>
-        <source>Unmount %1</source>
-        <translation>将对%1进行卸载</translation>
-    </message>
-    <message>
         <location filename="../widgets/unmountdialog.cpp" line="29"/>
         <source>Cancel</source>
         <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../widgets/unmountdialog.cpp" line="30"/>
+        <source>Unmount</source>
+        <translation>卸载</translation>
     </message>
 </context>
 </TS>

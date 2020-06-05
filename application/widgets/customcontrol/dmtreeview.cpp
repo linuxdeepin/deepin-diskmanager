@@ -1,4 +1,4 @@
-/*
+﻿/*
 * Copyright (C) 2019 ~ 2020 Uniontech Software Technology Co.,Ltd.
 *
 * Author:     linxun <linxun@uniontech.com>
@@ -180,6 +180,25 @@ QModelIndex DmTreeview::setDefaultdmItem()
     this->setCurrentIndex(model()->index(0, 0).child(0, 0));
     return model()->index(0, 0);
 
+}
+
+void DmTreeview::setRefreshItem(const QString &devicepath, int num)
+{
+    int devicenum = 0;
+    if (devicepath.contains("sda")) {
+        devicenum = 0;
+    } else if (devicepath.contains("sdb")) {
+        devicenum = 1;
+    } else if (devicepath.contains("sdc")) {
+        devicenum = 2;
+    } else if (devicepath.contains("sdd")) {
+        devicenum = 3;
+    } else if (devicepath.contains("sde")) {
+        devicenum = 4;
+    } else if (devicepath.contains("sdf")) {
+        devicenum = 5;
+    }
+    this->setCurrentIndex(model()->index(devicenum, 0).child(num - 1, 0));
 }
 QStandardItem *DmTreeview::getRootItem()
 {

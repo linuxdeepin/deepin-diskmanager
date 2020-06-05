@@ -171,6 +171,7 @@ void DMDbusHandler::slotUpdateDeviceInfo(const DeviceInfoMap &infomap)
             //        qDebug() << it->name << it->device_path << it->partition_number << it->sectors_used << it->sectors_unused << it->sector_start << it->sector_end;
         }
     }
+//    qDebug() << getCurDeviceInfo().serial_number << getCurPartititonInfo().partition_number;
     emit sigUpdateDeviceInfo();
     emit sigShowSpinerWindow(false);
 }

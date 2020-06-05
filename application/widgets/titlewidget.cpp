@@ -37,7 +37,6 @@ void TitleWidget::initConnection()
     connect(m_btnmount, &DPushButton::clicked, this, &TitleWidget::showMountInfoWidget);
     connect(m_btnunmount, &DPushButton::clicked, this, &TitleWidget::showUnmountInfoWidget);
     connect(m_btnresize, &DPushButton::clicked, this, &TitleWidget::showResizeInfoWidget);
-
 }
 
 DPushButton *TitleWidget::createBtn(const QString &btnName,  const QString &objName, bool bCheckable)
@@ -67,7 +66,6 @@ void TitleWidget::showPartInfoWidget()
             qDebug() << QString("No partition table found on device %1").arg(info.device_path);
             qDebug() << "A partition table is required before partitions can be added";
             //ToDo:empty device create partition table
-
             return ;
         }
         PartitionWidget partitionWidget;

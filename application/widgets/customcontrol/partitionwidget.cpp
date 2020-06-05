@@ -97,7 +97,7 @@ void PartitionWidget::topFrameSetting()
     QHBoxLayout *line2Layout = new QHBoxLayout();
     DLabel *deviceNameLabel = new DLabel(tr("Disk:"), topFrame);
     deviceName = new DLabel("/dev/sda", topFrame);
-    deviceName->setMinimumWidth(120);
+    deviceName->setMinimumWidth(103);
     deviceName->setAlignment(Qt::AlignLeft);
     DLabel *deviceFormateLabel = new DLabel(tr("File system:"), topFrame);
     deviceFormate = new DLabel("EXT3", topFrame);
@@ -160,14 +160,15 @@ void PartitionWidget::partInfoShowing()
     line2Layout->setContentsMargins(0, 0, 0, 0);
     QHBoxLayout *line2Layout1 = new QHBoxLayout();
     DLabel *partDoLabel = new DLabel(tr("Number of partitions:"), partWidget);
-
+    DLabel *labelspace = new DLabel(partWidget);
     addButton = new DIconButton(DStyle::SP_IncreaseElement);
     remButton = new DIconButton(DStyle::SP_DecreaseElement);
     remButton->setToolTip(tr("Delete last partition"));
-    line2Layout1->addWidget(partDoLabel);
-    line2Layout1->addStretch();
-    line2Layout1->addWidget(addButton);
-    line2Layout1->addWidget(remButton);
+    line2Layout1->addWidget(partDoLabel, 2);
+//    line2Layout1->addStretch();
+    line2Layout1->addWidget(labelspace, 5);
+    line2Layout1->addWidget(addButton, 1);
+    line2Layout1->addWidget(remButton, 1);
     if (sizeInfo.size() == 0)
         remButton->setEnabled(false);
     else
@@ -183,7 +184,7 @@ void PartitionWidget::partInfoShowing()
     QHBoxLayout *line3Layout = new QHBoxLayout();
     QHBoxLayout *line3Layout1 = new QHBoxLayout();
     DLabel *partFormateLabel = new DLabel(tr("File system:"), partWidget);
-
+    partFormateLabel->setMinimumWidth(80);
     partFormateCombox = new DComboBox(partWidget);
     qDebug() << DMDbusHandler::instance()->getallsupportfs();
     partFormateCombox->addItems(formateList);
@@ -195,16 +196,17 @@ void PartitionWidget::partInfoShowing()
     DLabel *partSizeLabel = new DLabel(tr("Size:"), partWidget);
     hSlider = new DSlider(Qt::Horizontal);
     partSizeEdit = new DLineEdit(partWidget);
-    hSlider->setMinimumWidth(100);
+//    hSlider->setMinimumWidth(80);
     partComCobox = new DComboBox(partWidget);
     partComCobox->addItem("GiB");
     partComCobox->addItem("MiB");
-    partComCobox->setMaximumWidth(70);
+//    partComCobox->setMaximumWidth(70);
     line3Layout2->addWidget(partSizeLabel, 1);
     line3Layout2->addWidget(hSlider, 2);
     line3Layout2->addWidget(partSizeEdit, 3);
     line3Layout2->addWidget(partComCobox, 2);
     line3Layout->addLayout(line3Layout1);
+//    line3Layout->addStretch();
     line3Layout->addLayout(line3Layout2);
     vLayout->addWidget(partInfoLabel);
     vLayout->addLayout(line2Layout);

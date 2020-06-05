@@ -19,13 +19,6 @@
 #include <QHBoxLayout>
 PartChartShowing::PartChartShowing(QWidget *parent) : QWidget(parent)
 {
-
-}
-
-
-void PartChartShowing::getData(const double &totals, const QVector<double>sizeInfo)
-{
-//    int i = totals.lastIndexOf("G");
     QColor color("#70BEFF");
     QColor color1("#4293FF");
     QColor color2("#6751E4");
@@ -33,9 +26,13 @@ void PartChartShowing::getData(const double &totals, const QVector<double>sizeIn
     QColor color4("#FFD027");
     QColor color5("#2CCBBE");
     basecolor = QVector<QColor> {color, color1, color2, color3, color4, color5};
+}
+
+
+void PartChartShowing::getData(const double &totals, const QVector<double>sizeInfo)
+{
     total = totals;
     partsize = sizeInfo;
-//    total = static_cast<int>(totals);
 }
 
 void PartChartShowing::getflag(int mflag, int value)
@@ -129,11 +126,12 @@ void PartChartShowing::addPaint(QPainter *painter)
 
     for (i = 0; i < partsize.size(); i++) {
         double widths = (partsize.at(i) / total) * (paintRect.width() - 8);
-//        if (widths < 3)
-//            widths = 10;
+        if (partsize.at(i) / total < 0.01) {
+            widths = 0.01 * (paintRect.width() - 8);
+        }
         double width1 = 0.00;
         sum = sum + partsize.at(i);
-        qDebug() << sumvalue << "sumvalue";
+//        qDebug() << sumvalue << "sumvalue";
         if (i == 0) {
             if (static_cast<int>(sum) < static_cast<int>(total)) {
                 path[0].moveTo(paintRect.topLeft() + QPoint(radius, 0));
@@ -173,9 +171,48 @@ void PartChartShowing::addPaint(QPainter *painter)
             }
         } else if (static_cast<int>(sum) < static_cast<int>(total) && i > 0) {
             width1 = (partsize.at(i - 1) / total) * (paintRect.width() - 8);
-//            if (width1 <= 3) {
-//                width1 = 10;
+            if (partsize.at(i - 1) / total < 0.01) {
+                width1 = 0.01 * (paintRect.width() - 8);
+            }
+//            int count = 0;
+//            if (partsize.at(partsize.size() - 1) / total < 0.01) {
+//                widths = 0.01 * (paintRect.width() - 8);
+
+//                for (int j = 1; j < partsize.size() - 1; j++) {
+//                    if (partsize.at(j) / total < 0.02 && partsize.at(j) / total > 0.01) {
+//                        count++;
+//                    }
+//                }
+//                double width2 = 0.0;
+//                for (int j = 1; j < partsize.size() - 1; j++) {
+//                    if (partsize.at(j) / total > 0.02) {
+//                        width2 = (partsize.at(j - 1) / total) * (paintRect.width() - 8);
+//                        double rewidth = (partsize.at(j) / total) * (paintRect.width() - 8) - ((0.01 - partsize.at(partsize.size() - 1) / total) * (paintRect.width() - 8)) / (partsize.size() - 2 - count);
+//                        path[j].moveTo(path[j - 1].currentPosition() + QPoint(width2, 0));
+//                        path[j].lineTo(path[j - 1].currentPosition() + QPoint(int(width2 + rewidth), 0));
+//                        path[j].lineTo(path[j - 1].currentPosition() + QPoint(int(width2 + rewidth), paintRect.height() - 1));
+//                        path[j].lineTo(path[j - 1].currentPosition() + QPoint((width2), paintRect.height() - 1));
+//                        path[j].lineTo(path[j - 1].currentPosition() + QPoint((width2), 0));
+//                        width2 = rewidth;
+//                        qDebug() << rewidth;
+//                        QColor fillcolor;
+//                        if (j > basecolor.size() - 1) {
+//                            fillcolor = basecolor.at(j % (basecolor.size() - 1));
+//                        } else {
+//                            fillcolor = basecolor.at(j);
+//                        }
+//                        painter->fillPath(path[j], QBrush(fillcolor));
+//                    }
+//                    if (partsize.at(i - 1) / total < 0.01 && i > 1) {
+//                        width1 = 0.01 * (paintRect.width() - 8);
+//                    } else {
+//                        width1 = (partsize.at(partsize.size() - 2) / total) * (paintRect.width() - 8) - ((0.01 - partsize.at(partsize.size() - 1) / total) * (paintRect.width() - 8)) / (partsize.size() - 2 - count);
+//                    }
+
+//                }
 //            }
+//            qDebug() << widths;
+
             path[i].moveTo(path[i - 1].currentPosition() + QPoint(width1, 0));
             path[i].lineTo(path[i - 1].currentPosition() + QPoint(int(width1 + widths), 0));
             path[i].lineTo(path[i - 1].currentPosition() + QPoint(int(width1 + widths), paintRect.height() - 1));
@@ -200,6 +237,10 @@ void PartChartShowing::addPaint(QPainter *painter)
                 flag = 0;
             }
         } else if (sumvalue >= 100) {
+            double width = ((partsize.at(partsize.size() - 2) / total)) * (paintRect.width() - 8);
+            if (partsize.at(partsize.size() - 2) / total < 0.01) {
+                width = 0.01 * (paintRect.width() - 8);
+            }
             path[partsize.size() - 1].moveTo(path[partsize.size() - 2].currentPosition() + QPoint(int((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - 8)), 0));
             path[partsize.size() - 1].lineTo(paintRect.topRight() - QPoint(radius, 0));
             path[partsize.size() - 1].arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
@@ -210,8 +251,8 @@ void PartChartShowing::addPaint(QPainter *painter)
             path[partsize.size() - 1].arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
                                                   QSize(radius * 2, radius * 2)),
                                             0, -90);
-            path[partsize.size() - 1].lineTo(path[partsize.size() - 2].currentPosition() + QPoint(((partsize.at(partsize.size() - 2) / total)) * (paintRect.width() - 8), paintRect.height() - 1));
-            path[partsize.size() - 1].lineTo(path[partsize.size() - 2].currentPosition() + QPoint(((partsize.at(partsize.size() - 2) / total)) * (paintRect.width() - 8), 0));
+            path[partsize.size() - 1].lineTo(path[partsize.size() - 2].currentPosition() + QPoint(width, paintRect.height() - 1));
+            path[partsize.size() - 1].lineTo(path[partsize.size() - 2].currentPosition() + QPoint(width, 0));
             QColor fillcolor;
             if (i > basecolor.size() - 1) {
                 fillcolor = basecolor.at(i % (basecolor.size() - 1));
@@ -230,9 +271,9 @@ void PartChartShowing::addPaint(QPainter *painter)
     }
     if (flag == 3) {
         double width2 = (partsize.at(partsize.size() - 1) / total) * (this->width() - 8);
-//        if (width2 <= 3) {
-//            width2 = 10;
-//        }
+        if (partsize.at(partsize.size() - 1) / total < 0.01) {
+            width2 = 0.01 * (paintRect.width() - 8);
+        }
         painter->setPen(QPen(this->palette().color(DPalette::Normal, DPalette::Highlight), 1));
         //                paintpath.moveTo()
         paintpath.moveTo(paintRect.bottomRight() - QPoint(0, radius));
@@ -268,22 +309,23 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
     } else if (partsize.size() > 0) {
         if (event->button() == Qt::LeftButton) {
             for (i = 0; i < partsize.size(); i++) {
-                double width = ((partsize.at(i) / total) * (this->width()));
-//                if (width <= 3) {
-//                    width = 10;
-//                }
+                double width = ((partsize.at(i) / total) * (this->width() - 11));
+                if (partsize.at(i) / total < 0.01) {
+                    width = 0.01 * (this->width() - 11);
+                }
                 if ((x > allpath[i].currentPosition().x() && x < (allpath[i].currentPosition().x() + width) && y > 10 && y < 45) || (i == 0 && y > 10 && y < 45)) {
                     flag = 2;
                     number = i;
+                    qDebug() << number;
                     update();
                 }
             }
-            double width1 = ((partsize.at(partsize.size() - 1) / total) * (this->width()));
+            double width1 = ((partsize.at(partsize.size() - 1) / total) * (this->width() - 11));
             //空闲分区
             if (partsize.size() >= 2) {
-//                if (width1 <= 3) {
-//                    width1 = 10;
-//                }
+                if (partsize.at(partsize.size() - 1) / total < 0.01) {
+                    width1 = 0.01 * (this->width() - 11);
+                }
             }
             if (x > allpath[partsize.size() - 1].currentPosition().x() + width1 && x < this->width() - 8 && y > 10 && y < 45 && static_cast<int>(sum) < static_cast<int>(total)) {
                 flag = 3;

@@ -280,9 +280,9 @@ void PartitionWidget::setSelectValue()
     partNameEdit->lineEdit()->setPlaceholderText(tr("Unallocated"));
     partSizeEdit->setText("");
     if (partComCobox->currentText() == "GiB") {
-        partSizeEdit->setText(QString::number((total - leaveSpace()) / 1024));
+        partSizeEdit->setText(QString::number((total - leaveSpace()) / 1024, 'f', 2));
     } else {
-        partSizeEdit->setText(QString::number(total - leaveSpace()));
+        partSizeEdit->setText(QString::number(total - leaveSpace(), 'f', 2));
     }
 }
 
@@ -422,7 +422,7 @@ void PartitionWidget::comboxCurTextSlot()
     if (partComCobox->currentText() == "MiB") {
         GM = 1;
         //        hSlider->setEnabled(true);
-        partSizeEdit->setText(QString::number(total - leaveSpace()));
+        partSizeEdit->setText(QString::number(total - leaveSpace(), 'f', 2));
     } else if (partComCobox->currentText() == "GiB") {
         GM = 2;
         //        if (total1 < 5) {
@@ -430,7 +430,7 @@ void PartitionWidget::comboxCurTextSlot()
         //        } else {
         //            hSlider->setEnabled(true);
         //        }
-        partSizeEdit->setText(QString::number((total - leaveSpace()) / 1024));
+        partSizeEdit->setText(QString::number((total - leaveSpace()) / 1024, 'f', 2));
     }
 }
 
@@ -448,16 +448,16 @@ void PartitionWidget::slotSliderValueChanged(int value)
     if (block == 0) {
         if (mflag == 2 || mflag == 0) {
             if (partComCobox->currentText() == "MiB") {
-                strSize = QString::number(((double)value / 100) * total);
+                strSize = QString::number(((double)value / 100) * total, 'f', 2);
             } else {
-                strSize = QString::number(((double)value / 100) * (total / 1024));
+                strSize = QString::number(((double)value / 100) * (total / 1024), 'f', 2);
             }
             partSizeEdit->setText(strSize);
         } else {
             if (partComCobox->currentText() == "MiB") {
-                strSize = QString::number(((double)value / 100) * (total - leaveSpace()));
+                strSize = QString::number(((double)value / 100) * (total - leaveSpace()), 'f', 2);
             } else {
-                strSize = QString::number(((double)value / 100) * ((total - leaveSpace()) / 1024));
+                strSize = QString::number(((double)value / 100) * ((total - leaveSpace()) / 1024), 'f', 2);
             }
             partSizeEdit->setText(strSize);
         }
@@ -488,17 +488,14 @@ void PartitionWidget::slotSetPartName()
 void PartitionWidget::addPartitionSlot()
 {
     stPart part;
+    if (sizeInfo.size() >= 24)
+        return;
     int j = partSize.lastIndexOf("G");
     double total1 = partSize.left(j).toDouble();
     if (partNameEdit->text().isEmpty()) {
         partNameEdit->setText(" ");
     }
     partName.append(partNameEdit->text());
-
-    if (partComCobox->currentText() == "GiB") {
-        if (partSizeEdit->text().toDouble() > total)
-            return;
-    }
     currentSize = partSizeEdit->text().toDouble();
     if (GM == 2) {
         total = total1 * 1024;
@@ -518,7 +515,6 @@ void PartitionWidget::addPartitionSlot()
         remButton->setEnabled(false);
     else
         remButton->setEnabled(true);
-
     partChartWidget->getData(total, sizeInfo);
     part.name = partNameEdit->text();
     part.fstype = partFormateCombox->currentText();

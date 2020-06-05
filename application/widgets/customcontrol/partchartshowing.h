@@ -64,7 +64,6 @@ private:
     QVector<QPainterPath> allpath;
     int number = -1;
     double sum = 0.00;
-    //    double widths = 0.00;
     int i = 0;
     double sumvalue = 0.0000001;
 };

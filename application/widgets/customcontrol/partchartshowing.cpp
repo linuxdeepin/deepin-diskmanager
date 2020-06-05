@@ -124,10 +124,7 @@ void PartChartShowing::addPaint(QPainter *painter)
             widths = 8;
         }
         sum = sum + partsize.at(i);
-<<<<<<< HEAD
-=======
-        //        qDebug() << sumvalue << "sumvalue";
->>>>>>> a7d2e9514a3262140d050eb97f3b7891d27eb982
+
         if (i == 0) {
             widths = widths - radius;
             if (static_cast<int>(sum) < static_cast<int>(total)) {

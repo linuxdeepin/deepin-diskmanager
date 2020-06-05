@@ -27,7 +27,6 @@ int main(int argc, char *argv[])
     Dtk::Core::DLogManager::registerConsoleAppender();
     Dtk::Core::DLogManager::registerFileAppender();
 
-
     qDebug() << "write log to" << Dtk::Core::DLogManager::getlogFilePath();
     QDBusConnection systemBus = QDBusConnection::systemBus();
     if (!systemBus.registerService(DiskManagerServiceName)) {
@@ -38,8 +37,7 @@ int main(int argc, char *argv[])
     qDebug() << "systemBus.registerService success" << Dtk::Core::DLogManager::getlogFilePath();
     if (!systemBus.registerObject(DiskManagerPath,
                                   &service,
-                                  QDBusConnection::ExportAllSlots |
-                                  QDBusConnection::ExportAllSignals)) {
+                                  QDBusConnection::ExportAllSlots | QDBusConnection::ExportAllSignals)) {
         qCritical() << "registerObject failed:" << systemBus.lastError();
         exit(0x0002);
     }

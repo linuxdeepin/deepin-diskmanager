@@ -25,8 +25,9 @@
 #include <QDebug>
 #include <QTextOption>
 
-
-DmTreeviewDelegate::DmTreeviewDelegate(QAbstractItemView *parent) : DStyledItemDelegate(parent), m_parentView(parent)
+DmTreeviewDelegate::DmTreeviewDelegate(QAbstractItemView *parent)
+    : DStyledItemDelegate(parent)
+    , m_parentView(parent)
 {
     m_parentPb = DApplicationHelper::instance()->palette(m_parentView);
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this,
@@ -36,11 +37,8 @@ DmTreeviewDelegate::DmTreeviewDelegate(QAbstractItemView *parent) : DStyledItemD
 void DmTreeviewDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     Q_UNUSED(index);
-//    qDebug() << option.rect.x() << option.rect.y();
-//    editor->setGeometry(option.rect.x() + 100, option.rect.y() + 100, 500, 500);
-
-
-
+    //    qDebug() << option.rect.x() << option.rect.y();
+    //    editor->setGeometry(option.rect.x() + 100, option.rect.y() + 100, 500, 500);
 }
 QSize DmTreeviewDelegate::sizeHint(const QStyleOptionViewItem &option,
                                    const QModelIndex &index) const
@@ -94,7 +92,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         path.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
                          QSize(radius * 2, radius * 2)),
                    270, 90);
-//        DPalette pa = option.palette;
+        //        DPalette pa = option.palette;
         if (data.level == 1) {
             QBrush brush = m_parentPb.itemBackground();
             painter->setBrush(brush);
@@ -197,19 +195,13 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
                 m_textRect1.setRect(paintRect.left() + 65, paintRect.top() + 28, 100, 100);
                 painter->drawText(m_textRect1, text3);
             }
-
         }
-
 
         painter->restore();
     }
-
-
 }
 void DmTreeviewDelegate::slothandleChangeTheme()
 {
     m_parentPb = Dtk::Gui::DGuiApplicationHelper::instance()->applicationPalette();
     m_parentView->update(m_parentView->currentIndex());
-
-
 }

@@ -40,9 +40,6 @@
 #include <QSizePolicy>
 #include <QToolTip>
 
-
-
-
 DWIDGET_USE_NAMESPACE
 
 typedef struct STRUCTPART {
@@ -75,7 +72,6 @@ public:
 private:
     bool max_amount_prim_reached();
 
-
 signals:
     void senderData(int x, int y, int z);
 
@@ -94,12 +90,13 @@ public slots:
     void setEnable2();
     void comboxCurTextSlot();
     void judgeLastPartitionSlot();
+
 private:
     QWidget *mainFrame;
     DFrame *topFrame;
     DFrame *midFrame;
     DFrame *botFrame;
-//    DFrame *parInfoFrame;
+    //    DFrame *parInfoFrame;
 
     DLabel *allMemory;
     DLabel *deviceFormate;
@@ -107,7 +104,7 @@ private:
     DLabel *selectedPartition;
     DIconButton *addButton;
     DIconButton *remButton;
-//    DScrollArea *scrollArea;
+    //    DScrollArea *scrollArea;
     QWidget *partWidget;
     DPushButton *applyBtn;
     DPushButton *cancleBtn;
@@ -128,13 +125,12 @@ private:
     int GM = 0;
     int m_value = 0;
 
-//    QVector<QString> partPaths;
-//    QHash<int, QVector<double>> sizeinfos;
+    //    QVector<QString> partPaths;
+    //    QHash<int, QVector<double>> sizeinfos;
     QVector<double> sizeInfo;
     QVector<QString> partName;
     QVector<stPart> m_patrinfo;
     int block = 0;
-
 };
 
 #endif // PARTITIONWIDGET_H

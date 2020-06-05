@@ -18,18 +18,16 @@
 #include "widgets/widgetdeclare.h"
 #include <QDebug>
 
-
-
-PartitionWidget::PartitionWidget(QWidget *parent) : DDialog(parent)
+PartitionWidget::PartitionWidget(QWidget *parent)
+    : DDialog(parent)
 {
-//    setAttribute(Qt::WA_DeleteOnClose, true);
+    //    setAttribute(Qt::WA_DeleteOnClose, true);
     initUi();
     initConnection();
     getPartitionInfo();
 }
 PartitionWidget::~PartitionWidget()
 {
-
 }
 void PartitionWidget::initUi()
 {
@@ -68,7 +66,6 @@ void PartitionWidget::initUi()
 
 void PartitionWidget::topFrameSetting()
 {
-
     DLabel *picLabel = new DLabel(topFrame);
     picLabel->setPixmap(getIcon("labeldisk").pixmap(85, 85));
     picLabel->setMinimumSize(85, 85);
@@ -83,7 +80,7 @@ void PartitionWidget::topFrameSetting()
     line1Layout->addWidget(deviceInfoLabel);
     line1Layout->addStretch();
     QHBoxLayout *line4Layout = new QHBoxLayout();
-    DLabel *allMemoryLabel  = new DLabel(tr("Capacity:"), topFrame);
+    DLabel *allMemoryLabel = new DLabel(tr("Capacity:"), topFrame);
     allMemory = new DLabel("256GiB", topFrame);
     allMemory->setMinimumWidth(90);
     allMemory->setAlignment(Qt::AlignLeft);
@@ -143,7 +140,6 @@ void PartitionWidget::botFrameSetting()
     btnLayout->addWidget(applyBtn);
 
     vLayout->addLayout(btnLayout, 1);
-
 }
 
 void PartitionWidget::partInfoShowing()
@@ -151,7 +147,7 @@ void PartitionWidget::partInfoShowing()
     auto formateList = DMDbusHandler::instance()->getallsupportfs();
     qDebug() << "202" << selectedpartName;
     QVBoxLayout *vLayout = new QVBoxLayout(partWidget);
-//    QHBoxLayout *line1Layout = new QHBoxLayout();
+    //    QHBoxLayout *line1Layout = new QHBoxLayout();
 
     DLabel *partInfoLabel = new DLabel(tr("Partition Information"), partWidget);
     DFontSizeManager::instance()->bind(partInfoLabel, DFontSizeManager::T5);
@@ -214,7 +210,6 @@ void PartitionWidget::partInfoShowing()
     vLayout->addStretch();
 }
 
-
 void PartitionWidget::getPartitionInfo()
 {
     QString s_disksize;
@@ -227,7 +222,7 @@ void PartitionWidget::getPartitionInfo()
     QString s_pdisksize = QString::number(Utils::sector_to_unit(data.sector_end - data.sector_start, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GiB";
     QString s_used = QString::number(Utils::sector_to_unit(data.sectors_used, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GiB";
     QString s_unused = QString::number(Utils::sector_to_unit(data.sectors_unused, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GiB";
-    QString devicePath = data.device_path ;
+    QString devicePath = data.device_path;
     QString deviceSize = s_disksize;
     QString partPath = data.path;
     partSize = s_pdisksize;
@@ -247,13 +242,12 @@ void PartitionWidget::getPartitionInfo()
     int j = partSize.lastIndexOf("G");
     total = partSize.left(j).toDouble();
     partComCobox->setEnabled(true);
-//    if (total < 1) {
-//        partComCobox->setEnabled(false);
-//    }
+    //    if (total < 1) {
+    //        partComCobox->setEnabled(false);
+    //    }
     total = total * 1024;
     setSelectValue();
 }
-
 
 void PartitionWidget::initConnection()
 {
@@ -298,17 +292,16 @@ bool PartitionWidget::max_amount_prim_reached()
     int primary_count = 0;
     PartitionVec partvector = DMDbusHandler::instance()->getCurDevicePartitionArr();
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    for (unsigned int i = 0 ; i < partvector.size() ; i ++) {
+    for (unsigned int i = 0; i < partvector.size(); i++) {
         if (partvector[i].type == TYPE_PRIMARY || partvector[i].type == TYPE_EXTENDED)
-            primary_count ++;
+            primary_count++;
     }
     int maxprims = DMDbusHandler::instance()->getCurDeviceInfo().max_prims;
-    if (! info.inside_extended && primary_count >= maxprims) {
+    if (!info.inside_extended && primary_count >= maxprims) {
         breachmax = true;
-//        qDebug() << QString("It is not possible to create more than %1 primary partition").arg(maxprims);
-//        qDebug() << QString("If you want more partitions you should first create an extended partition. Such a partition can contain other partitions."
-//                            "Because an extended partition is also a primary partition it might be necessary to remove a primary partition first.");
-
+        //        qDebug() << QString("It is not possible to create more than %1 primary partition").arg(maxprims);
+        //        qDebug() << QString("If you want more partitions you should first create an extended partition. Such a partition can contain other partitions."
+        //                            "Because an extended partition is also a primary partition it might be necessary to remove a primary partition first.");
     }
     return breachmax;
 }
@@ -343,7 +336,6 @@ void PartitionWidget::showSelectPathInfo(const int &flag, const int &num, const 
         setSelectValue();
         hSlider->setValue(100);
         number = -1;
-
     }
     setEnable();
 }
@@ -373,8 +365,6 @@ void PartitionWidget::setEnable()
         remButton->setEnabled(false);
         setEnable2();
     }
-
-
 }
 
 void PartitionWidget::setUseEnable()
@@ -403,7 +393,6 @@ void PartitionWidget::setUseEnable()
         pa.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
         botFrame->setPalette(pa);
     }
-
 }
 
 void PartitionWidget::setEnable2()
@@ -414,11 +403,11 @@ void PartitionWidget::setEnable2()
     partNameEdit->setEnabled(true);
     partSizeEdit->setEnabled(true);
     hSlider->setEnabled(true);
-//    if (total1 < 1)
-//        partComCobox->setEnabled(false);
-//    else {
-//        partComCobox->setEnabled(true);
-//    }
+    //    if (total1 < 1)
+    //        partComCobox->setEnabled(false);
+    //    else {
+    //        partComCobox->setEnabled(true);
+    //    }
     partFormateCombox->setEnabled(true);
     DPalette pa = DApplicationHelper::instance()->palette(botFrame);
     pa.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
@@ -427,23 +416,22 @@ void PartitionWidget::setEnable2()
 
 void PartitionWidget::comboxCurTextSlot()
 {
-//    int j = partSize.lastIndexOf("G");
-//    double total1 = partSize.left(j).toDouble();
+    //    int j = partSize.lastIndexOf("G");
+    //    double total1 = partSize.left(j).toDouble();
 
     if (partComCobox->currentText() == "MiB") {
         GM = 1;
-//        hSlider->setEnabled(true);
+        //        hSlider->setEnabled(true);
         partSizeEdit->setText(QString::number(total - leaveSpace()));
     } else if (partComCobox->currentText() == "GiB") {
         GM = 2;
-//        if (total1 < 5) {
-//            hSlider->setEnabled(false);
-//        } else {
-//            hSlider->setEnabled(true);
-//        }
+        //        if (total1 < 5) {
+        //            hSlider->setEnabled(false);
+        //        } else {
+        //            hSlider->setEnabled(true);
+        //        }
         partSizeEdit->setText(QString::number((total - leaveSpace()) / 1024));
     }
-
 }
 
 void PartitionWidget::judgeLastPartitionSlot()
@@ -456,7 +444,7 @@ void PartitionWidget::slotSliderValueChanged(int value)
 {
     m_value = value;
     QString strSize;
-//    mflag = -1;
+    //    mflag = -1;
     if (block == 0) {
         if (mflag == 2 || mflag == 0) {
             if (partComCobox->currentText() == "MiB") {
@@ -534,7 +522,7 @@ void PartitionWidget::addPartitionSlot()
     partChartWidget->getData(total, sizeInfo);
     part.name = partNameEdit->text();
     part.fstype = partFormateCombox->currentText();
-    Byte_Value sector_size = DMDbusHandler::instance() ->getCurPartititonInfo().sector_size;
+    Byte_Value sector_size = DMDbusHandler::instance()->getCurPartititonInfo().sector_size;
     if (partComCobox->currentText().compare("MiB") == 0) {
         part.count = currentSize * (MEBIBYTE / sector_size);
     } else {
@@ -554,7 +542,7 @@ void PartitionWidget::addPartitionSlot()
     setUseEnable();
     mflag = -1;
     slotSliderValueChanged(100);
-//    partChartWidget->getflag(0, m_value);
+    //    partChartWidget->getflag(0, m_value);
 }
 
 void PartitionWidget::remPartitionSlot()
@@ -617,7 +605,7 @@ void PartitionWidget::applyBtnSlot()
         }
         if (beforend > curinfo.sector_end && i < m_patrinfo.size() - 1) {
             bcancreate = false;
-//            qDebug() << "create too partition ,no enough space";
+            //            qDebug() << "create too partition ,no enough space";
             break;
         } else {
             if (newpart.sector_end > curinfo.sector_end)
@@ -628,8 +616,6 @@ void PartitionWidget::applyBtnSlot()
                 newpart.sector_end -= diff;
             partvector.push_back(newpart);
         }
-
-
     }
     if (bcancreate && partvector.size() > 0) {
         phandler->create(partvector);
@@ -655,5 +641,3 @@ void PartitionWidget::cancelBtnSlot()
 {
     this->close();
 }
-
-

@@ -31,7 +31,6 @@ class InfoTopFrame : public DFrame
 public:
     explicit InfoTopFrame(DWidget *parent = nullptr);
 
-
 public:
     void setShowDiskInfo();
 
@@ -42,12 +41,12 @@ private:
 private:
     QHBoxLayout *mainLayout = nullptr;
 
-    DLabel  *picLabel = nullptr;
-    DLabel  *nameLabel = nullptr;
-    DLabel  *typeLabel = nullptr;
+    DLabel *picLabel = nullptr;
+    DLabel *nameLabel = nullptr;
+    DLabel *typeLabel = nullptr;
 
-    DLabel  *allnameLabel = nullptr;
-    DLabel  *allmemoryLabel = nullptr;
+    DLabel *allnameLabel = nullptr;
+    DLabel *allmemoryLabel = nullptr;
 };
 
 #endif // INFOTOPFRAME_H

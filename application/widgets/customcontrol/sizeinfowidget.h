@@ -45,20 +45,22 @@ class SizeInfoWidget : public QWidget
 public:
     explicit SizeInfoWidget(QWidget *parent = nullptr);
     SizeInfoWidget(double used, double unused, bool flag, QWidget *parent = nullptr);
-    void setdata(PartitionInfo info, QVector<QColor>color, QVector<double>size, bool flag);
+    void setdata(PartitionInfo info, QVector<QColor> color, QVector<double> size, bool flag);
+
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
 signals:
 
 public slots:
     void slothandleChangeTheme();
+
 private:
     double m_used = 0.00;
     double m_noused = 0.00;
     double m_totalsize;
     bool m_flag = false;
-    QVector<QColor>colorinfo;
-    QVector<double>sizeinfo;
+    QVector<QColor> colorinfo;
+    QVector<double> sizeinfo;
     DPalette m_parentPb;
     QString totalsize;
     QString usedsize;

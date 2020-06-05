@@ -20,29 +20,28 @@
 */
 #include "dmtreeview.h"
 #include <QDebug>
-DmTreeview::DmTreeview(QWidget *parent) : DTreeView(parent)
+DmTreeview::DmTreeview(QWidget *parent)
+    : DTreeView(parent)
 {
     initUI();
     initmodel();
     initdelegate();
-
 }
 void DmTreeview::initUI()
 {
     setFrameShape(QFrame::NoFrame);
     setEditTriggers(QAbstractItemView::NoEditTriggers);
     setVerticalScrollMode(ScrollPerItem);
-    setVerticalScrollBarPolicy(Qt::  ScrollBarAlwaysOn);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setHeaderHidden(true);
-    setIndentation(0);                   //去除树型节点之间的缩进
+    setIndentation(0); //去除树型节点之间的缩进
     setWindowFlags(Qt::FramelessWindowHint); //无边框
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
+    /* setAttribute(Qt::WA_TranslucentBackground)*/; //背景透明
 
-    /* setAttribute(Qt::WA_TranslucentBackground)*/;//背景透明
-
-//    qDebug() << 2222222222222;
+    //    qDebug() << 2222222222222;
 }
 void DmTreeview::additem(QStandardItem *item, DiskInfoData &data)
 {
@@ -51,7 +50,6 @@ void DmTreeview::additem(QStandardItem *item, DiskInfoData &data)
     item->appendRow(pItem);
     // expand(m_pDataModel->indexFromItem(item));
     setExpanded(m_model->indexFromItem(item), true);
-
 }
 QStandardItem *DmTreeview::addtopitem(DiskInfoData &data)
 {
@@ -65,27 +63,22 @@ void DmTreeview::initmodel()
     m_model = new QStandardItemModel(this);
     m_pSortViewFilter = new QSortFilterProxyModel(this);
     this->setModel(m_model);
-//    sort();
+    //    sort();
 }
 void DmTreeview::initdelegate()
 {
     m_delegate = new DmTreeviewDelegate(this);
     this->setItemDelegate(m_delegate);
-
-
 }
 
 QStandardItem *DmTreeview::getcuritem()
 {
-    QModelIndex  index = currentIndex();
+    QModelIndex index = currentIndex();
     if (!index.isValid()) {
-        return  nullptr;
+        return nullptr;
     } else {
         return m_model->itemFromIndex(index);
     }
-
-
-
 }
 QStandardItem *DmTreeview::getModelByIndex(const QModelIndex &index)
 {
@@ -102,8 +95,7 @@ void DmTreeview::currentChanged(const QModelIndex &current, const QModelIndex &p
     emit sigselectitem(current);
     emit sigCurSelectChanged(data.diskpath, data.partitonpath, data.start, data.end);
     diskSize = data.disksize;
-//    emit sigSendInfo(data.diskpath, data.disksize, data.partitonpath, data.partitionsize, data.fstype, data.start, data.end);
-
+    //    emit sigSendInfo(data.diskpath, data.disksize, data.partitonpath, data.partitionsize, data.fstype, data.start, data.end);
 }
 void DmTreeview::mousePressEvent(QMouseEvent *event)
 {
@@ -132,7 +124,6 @@ void DmTreeview::addItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
     //  qDebug() << data.used << data.unused;
     //  qDebug() << data.disksize << data.disklabel;
 
-
     //  qDebug() << infobox->disksize;
     if (infobox->m_level <= 0) {
         data.level = 0;
@@ -150,7 +141,6 @@ void DmTreeview::addItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
         //qDebug() << data.level;
 
         this->additem(pcurItem, data);
-
     }
 
     foreach (auto sub, infobox->childs) {
@@ -172,14 +162,11 @@ void DmTreeview::addSubItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
     addItem(infobox, pcurItem);
 }
 
-
 QModelIndex DmTreeview::setDefaultdmItem()
 {
-
     //QModelIndex index = m_pSortViewFilter->index(0, 0, getRootItemIndex());
     this->setCurrentIndex(model()->index(0, 0).child(0, 0));
     return model()->index(0, 0);
-
 }
 
 void DmTreeview::setRefreshItem(const QString &devicepath, int num)
@@ -202,15 +189,11 @@ void DmTreeview::setRefreshItem(const QString &devicepath, int num)
 }
 QStandardItem *DmTreeview::getRootItem()
 {
-    return  m_model->item(0);
-
+    return m_model->item(0);
 }
 QModelIndex DmTreeview::getRootItemIndex()
 {
-    return  m_pSortViewFilter->mapFromSource(getRootItem()->index());
-
-
-
+    return m_pSortViewFilter->mapFromSource(getRootItem()->index());
 }
 void DmTreeview::sort()
 {

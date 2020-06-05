@@ -26,15 +26,13 @@
 #include <DApplicationHelper>
 #include <QDebug>
 
-
-
-
-DmFrameWidget::DmFrameWidget(DiskInfoData data, QWidget *parent): DFrame(parent), m_infodata(data)
+DmFrameWidget::DmFrameWidget(DiskInfoData data, QWidget *parent)
+    : DFrame(parent)
+    , m_infodata(data)
 {
     m_parentPb = DApplicationHelper::instance()->palette(this);
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this,
             &DmFrameWidget::slothandleChangeTheme);
-
 }
 
 void DmFrameWidget::setFrameData()
@@ -69,7 +67,7 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     QWidget::paintEvent(event);
     painter.save();
-    painter.setRenderHint(QPainter::Antialiasing);  // 反锯齿;
+    painter.setRenderHint(QPainter::Antialiasing); // 反锯齿;
     QRect rect = this->rect();
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
     if (themeType == DGuiApplicationHelper::LightType) {
@@ -150,8 +148,6 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)
         painter.drawText(textRect, m_infodata.syslabel, option1);
         painter.restore();
     }
-
-
 }
 
 void DmFrameWidget::resizeEvent(QResizeEvent *event)
@@ -162,9 +158,7 @@ void DmFrameWidget::resizeEvent(QResizeEvent *event)
 }
 void DmFrameWidget::slothandleChangeTheme()
 {
-
     m_parentPb = Dtk::Gui::DGuiApplicationHelper::instance()->applicationPalette();
-
 }
 
 QString DmFrameWidget::diffMountpoints(int width, QString mountpoints)
@@ -174,7 +168,7 @@ QString DmFrameWidget::diffMountpoints(int width, QString mountpoints)
 
     if (mountpoints.size() > 21) {
         if (width < 1000) {
-            for (int i = 0; i < 9 ; i++) {
+            for (int i = 0; i < 9; i++) {
                 previoustr += mountpoints.at(i);
             }
             previoustr += "...";
@@ -182,9 +176,9 @@ QString DmFrameWidget::diffMountpoints(int width, QString mountpoints)
                 laststr += mountpoints.at(p);
             }
             mountpoints = previoustr + laststr;
-            return  mountpoints;
+            return mountpoints;
         } else {
-            return  mountpoints;
+            return mountpoints;
         }
     } else {
         return mountpoints;

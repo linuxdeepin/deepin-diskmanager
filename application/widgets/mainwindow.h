@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <DMainWindow>
-
+#include <DSpinner>
 DWIDGET_USE_NAMESPACE
 
 class CenterWidget;
@@ -27,11 +27,12 @@ signals:
 public slots:
     void slotHandleQuitAction();
     void slotshowSpinerWindow(bool bshow = false);
+
 private:
     CenterWidget *m_central;
-    BufferWin       *m_bufferwin;
-    DMDbusHandler  *m_handler;
-
+    BufferWin *m_bufferwin;
+    DMDbusHandler *m_handler;
+    DSpinner *m_spinner;
 };
 
 #endif // MAINWINDOW_H

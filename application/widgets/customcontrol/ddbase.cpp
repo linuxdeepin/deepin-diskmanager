@@ -1,8 +1,8 @@
 #include "ddbase.h"
 #include "widgets/widgetdeclare.h"
 
-
-DDBase::DDBase(QWidget *parent) : DDialog(parent)
+DDBase::DDBase(QWidget *parent)
+    : DDialog(parent)
 {
     setModal(true);
     setIcon(QIcon::fromTheme(app_name));

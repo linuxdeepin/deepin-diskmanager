@@ -5,11 +5,11 @@
 
 namespace DiskManager {
 
-DiskManagerService::DiskManagerService(QObject *parent) :
-    QObject(parent), m_partedcore(new PartedCore(this))
+DiskManagerService::DiskManagerService(QObject *parent)
+    : QObject(parent)
+    , m_partedcore(new PartedCore(this))
 {
     initConnection();
-
 }
 
 void DiskManagerService::Quit()
@@ -38,7 +38,6 @@ void DiskManagerService::getalldevice()
     qDebug() << "DiskManagerService::getalldevice";
     DeviceInfoMap infores = m_partedcore->getAllDeviceinfo();
     Q_EMIT sigUpdateDeviceInfo(infores);
-
 }
 
 void DiskManagerService::setCurSelect(const PartitionInfo &info)
@@ -90,4 +89,4 @@ void DiskManagerService::initConnection()
     connect(m_partedcore, &PartedCore::sigUpdateDeviceInfo, this, &DiskManagerService::sigUpdateDeviceInfo);
 }
 
-}
+} // namespace DiskManager

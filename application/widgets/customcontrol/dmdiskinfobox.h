@@ -27,7 +27,6 @@
 
 class DmDiskinfoBox : public QObject
 {
-
     Q_OBJECT
 public:
     DmDiskinfoBox(int level, QObject *parent = nullptr, QString diskpath = "", QString disksize = "", QString partitionpath = "",
@@ -40,6 +39,7 @@ public:
     int addChild(DmDiskinfoBox *child);
     int childCount();
     void print();
+
 public:
     int id;
     int m_level;

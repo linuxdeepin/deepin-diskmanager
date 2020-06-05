@@ -15,8 +15,6 @@ private:
 
 public slots:
     void slotbuttonClicked(int index, const QString &text);
-
-
 };
 
 #endif // UNMOUNTDIALOG_H

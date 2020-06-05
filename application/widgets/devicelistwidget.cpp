@@ -24,9 +24,8 @@
 #include <QVBoxLayout>
 #include <QDebug>
 
-
-
-DeviceListWidget::DeviceListWidget(QWidget *parent): DWidget(parent)
+DeviceListWidget::DeviceListWidget(QWidget *parent)
+    : DWidget(parent)
 {
     setAutoFillBackground(true);
     auto plt = this->palette();
@@ -40,8 +39,8 @@ DeviceListWidget::DeviceListWidget(QWidget *parent): DWidget(parent)
 
 DeviceListWidget::~DeviceListWidget()
 {
-//    delete m_box;
-//    delete m_childbox;
+    //    delete m_box;
+    //    delete m_childbox;
 }
 
 void DeviceListWidget::initUi()
@@ -68,6 +67,7 @@ void DeviceListWidget::slotUpdateDeviceInfo()
     auto handler = DMDbusHandler::instance();
     num = handler->getCurPartititonInfo().partition_number;
     devicepath_ = handler->getCurPartititonInfo().device_path;
+
     m_treeview->m_model->clear();
     DeviceInfoMap infomap = DMDbusHandler::instance()->probDeviceInfo();
 

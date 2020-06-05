@@ -8,39 +8,39 @@ namespace DiskManager {
 
 SupportedFileSystems::SupportedFileSystems()
 {
-    m_fs_objects[FS_UNKNOWN]         = NULL;
-    m_fs_objects[FS_OTHER]           = NULL;
-//    m_fs_objects[FS_BTRFS]           = new btrfs();
-//    m_fs_objects[FS_EXFAT]           = new exfat();
-    m_fs_objects[FS_EXT2]            = new EXT2(FS_EXT2);
-    m_fs_objects[FS_EXT3]            = new EXT2(FS_EXT3);
-    m_fs_objects[FS_EXT4]            = new EXT2(FS_EXT4);
-//    m_fs_objects[FS_F2FS]            = new f2fs();
-//    m_fs_objects[FS_FAT16]           = new fat16(FS_FAT16);
-//    m_fs_objects[FS_FAT32]           = new fat16(FS_FAT32);
-//    m_fs_objects[FS_HFS]             = new hfs();
-//    m_fs_objects[FS_HFSPLUS]         = new hfsplus();
-//    m_fs_objects[FS_JFS]             = new jfs();
-    m_fs_objects[FS_LINUX_SWAP]      = new LinuxSwap;
-//    m_fs_objects[FS_LVM2_PV]         = new lvm2_pv();
-//    m_fs_objects[FS_LUKS]            = new luks();
-//    m_fs_objects[FS_MINIX]           = new minix();
-//    m_fs_objects[FS_NILFS2]          = new nilfs2();
-//    m_fs_objects[FS_NTFS]            = new ntfs();
-//    m_fs_objects[FS_REISER4]         = new reiser4();
-//    m_fs_objects[FS_REISERFS]        = new reiserfs();
-//    m_fs_objects[FS_UDF]             = new udf();
-//    m_fs_objects[FS_XFS]             = new xfs();
-    m_fs_objects[FS_APFS]            = NULL;
-    m_fs_objects[FS_ATARAID]         = NULL;
-    m_fs_objects[FS_BITLOCKER]       = NULL;
-    m_fs_objects[FS_GRUB2_CORE_IMG]  = NULL;
-    m_fs_objects[FS_ISO9660]         = NULL;
-    m_fs_objects[FS_LINUX_SWRAID]    = NULL;
+    m_fs_objects[FS_UNKNOWN] = NULL;
+    m_fs_objects[FS_OTHER] = NULL;
+    //    m_fs_objects[FS_BTRFS]           = new btrfs();
+    //    m_fs_objects[FS_EXFAT]           = new exfat();
+    m_fs_objects[FS_EXT2] = new EXT2(FS_EXT2);
+    m_fs_objects[FS_EXT3] = new EXT2(FS_EXT3);
+    m_fs_objects[FS_EXT4] = new EXT2(FS_EXT4);
+    //    m_fs_objects[FS_F2FS]            = new f2fs();
+    //    m_fs_objects[FS_FAT16]           = new fat16(FS_FAT16);
+    //    m_fs_objects[FS_FAT32]           = new fat16(FS_FAT32);
+    //    m_fs_objects[FS_HFS]             = new hfs();
+    //    m_fs_objects[FS_HFSPLUS]         = new hfsplus();
+    //    m_fs_objects[FS_JFS]             = new jfs();
+    m_fs_objects[FS_LINUX_SWAP] = new LinuxSwap;
+    //    m_fs_objects[FS_LVM2_PV]         = new lvm2_pv();
+    //    m_fs_objects[FS_LUKS]            = new luks();
+    //    m_fs_objects[FS_MINIX]           = new minix();
+    //    m_fs_objects[FS_NILFS2]          = new nilfs2();
+    //    m_fs_objects[FS_NTFS]            = new ntfs();
+    //    m_fs_objects[FS_REISER4]         = new reiser4();
+    //    m_fs_objects[FS_REISERFS]        = new reiserfs();
+    //    m_fs_objects[FS_UDF]             = new udf();
+    //    m_fs_objects[FS_XFS]             = new xfs();
+    m_fs_objects[FS_APFS] = NULL;
+    m_fs_objects[FS_ATARAID] = NULL;
+    m_fs_objects[FS_BITLOCKER] = NULL;
+    m_fs_objects[FS_GRUB2_CORE_IMG] = NULL;
+    m_fs_objects[FS_ISO9660] = NULL;
+    m_fs_objects[FS_LINUX_SWRAID] = NULL;
     m_fs_objects[FS_LINUX_SWSUSPEND] = NULL;
-    m_fs_objects[FS_REFS]            = NULL;
-    m_fs_objects[FS_UFS]             = NULL;
-    m_fs_objects[FS_ZFS]             = NULL;
+    m_fs_objects[FS_REFS] = NULL;
+    m_fs_objects[FS_UFS] = NULL;
+    m_fs_objects[FS_ZFS] = NULL;
 }
 
 SupportedFileSystems::~SupportedFileSystems()
@@ -103,9 +103,9 @@ bool SupportedFileSystems::supported_filesystem(FSType fstype) const
     return get_fs_object(fstype) != NULL;
 }
 
-const QStringList  &SupportedFileSystems::get_all_fsname()
+const QStringList &SupportedFileSystems::get_all_fsname()
 {
     return m_effectivefs;
 }
 
-}
+} // namespace DiskManager

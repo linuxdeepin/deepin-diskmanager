@@ -11,10 +11,7 @@
 #include <QDebug>
 #include <signal.h>
 
-
-
 DWIDGET_USE_NAMESPACE
-
 
 //void dealsig(int sig)
 //{
@@ -46,7 +43,7 @@ int main(int argc, char *argv[])
     Dtk::Core::DLogManager::registerFileAppender();
     MainWindow w;
     if (a.setSingleInstance(app_name)) {
-        QObject::connect(&a, &DApplication::newInstanceStarted, &w, [&] {qDebug() << "======"; w.activateWindow();});
+        QObject::connect(&a, &DApplication::newInstanceStarted, &w, [&] {qDebug() << "======"; w.activateWindow(); });
     } else {
         exit(0);
     }

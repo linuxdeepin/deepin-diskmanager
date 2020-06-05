@@ -11,8 +11,7 @@
 
 DWIDGET_USE_NAMESPACE
 
-
-class TitleWidget: public DWidget
+class TitleWidget : public DWidget
 {
     Q_OBJECT
 public:
@@ -24,7 +23,6 @@ private:
     DPushButton *createBtn(const QString &btnName, const QString &objName, bool bCheckable = false);
     void updateBtnStatus();
 
-
 signals:
 
 public slots:
@@ -34,6 +32,7 @@ public slots:
     void showMountInfoWidget();
     void showUnmountInfoWidget();
     void showResizeInfoWidget();
+
 private:
     DPushButton *m_btnparted;
     DPushButton *m_btnformat;
@@ -41,7 +40,5 @@ private:
     DPushButton *m_btnunmount;
     DPushButton *m_btnresize;
 };
-
-
 
 #endif // TITLEWIDGET_H

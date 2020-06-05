@@ -20,7 +20,7 @@ void MountInfo::load_cache()
     read_mountpoints_from_file("/proc/mounts", mount_info);
     read_mountpoints_from_file_swaps("/proc/swaps", mount_info);
 
-    if (! have_rootfs_dev(mount_info))
+    if (!have_rootfs_dev(mount_info))
         // Old distributions only contain 'rootfs' and '/dev/root' device names
         // for the / (root) file system in /proc/mounts with '/dev/root' being a
         // block device rather than a symlink to the true device.  This prevents
@@ -37,7 +37,7 @@ void MountInfo::load_cache()
 
     // Sort the mount points and remove duplicates ... (no need to do this for fstab_info)
     MountMapping::iterator iter_mp;
-    for (iter_mp = mount_info.begin() ; iter_mp != mount_info.end() ; ++ iter_mp) {
+    for (iter_mp = mount_info.begin(); iter_mp != mount_info.end(); ++iter_mp) {
         std::sort(iter_mp.value().mountpoints.begin(), iter_mp.value().mountpoints.end());
 
         iter_mp.value().mountpoints.erase(
@@ -92,14 +92,14 @@ void MountInfo::read_mountpoints_from_file(const QString &filename, MountInfo::M
         QString mountpoint = p->mnt_dir;
 
         QString uuid = Utils::regexp_label(node, "(?<=UUID\\=).*");
-        if (! uuid.isEmpty())
+        if (!uuid.isEmpty())
             node = FsInfo::get_path_by_uuid(uuid);
 
         QString label = Utils::regexp_label(node, "(?<=UUID\\=).*");
-        if (! label.isEmpty())
+        if (!label.isEmpty())
             node = FsInfo::get_path_by_label(label);
 
-        if (! node.isEmpty())
+        if (!node.isEmpty())
             add_mountpoint_entry(map, node, mountpoint, parse_readonly_flag(p->mnt_opts));
     }
 
@@ -121,13 +121,13 @@ void MountInfo::add_mountpoint_entry(MountInfo::MountMapping &map, QString &node
 bool MountInfo::parse_readonly_flag(const QString &str)
 {
     QStringList mntopts = str.split(",");
-    for (unsigned int i = 0 ; i < mntopts.size() ; i ++) {
+    for (unsigned int i = 0; i < mntopts.size(); i++) {
         if (mntopts[i] == "rw")
             return false;
         else if (mntopts[i] == "ro")
             return true;
     }
-    return false;  // Default is read-write mount
+    return false; // Default is read-write mount
 }
 
 void MountInfo::read_mountpoints_from_file_swaps(const QString &filename, MountInfo::MountMapping &map)
@@ -150,8 +150,8 @@ void MountInfo::read_mountpoints_from_file_swaps(const QString &filename, MountI
 bool MountInfo::have_rootfs_dev(MountInfo::MountMapping &map)
 {
     MountMapping::const_iterator iter_mp;
-    for (iter_mp = mount_info.begin() ; iter_mp != mount_info.end() ; iter_mp ++) {
-        if (! iter_mp.value().mountpoints.isEmpty() && iter_mp.value().mountpoints[0] == "/") {
+    for (iter_mp = mount_info.begin(); iter_mp != mount_info.end(); iter_mp++) {
+        if (!iter_mp.value().mountpoints.isEmpty() && iter_mp.value().mountpoints[0] == "/") {
             if (iter_mp.key().m_name != "rootfs" && iter_mp.key().m_name != "/dev/root")
                 return true;
         }
@@ -163,16 +163,16 @@ void MountInfo::read_mountpoints_from_mount_command(MountInfo::MountMapping &map
 {
     QString output;
     QString error;
-    if (! Utils::executcmd("mount", output, error)) {
+    if (!Utils::executcmd("mount", output, error)) {
         QStringList lines;
         lines = output.split("\n");
-        for (unsigned int i = 0 ; i < lines .size() ; i ++) {
+        for (unsigned int i = 0; i < lines.size(); i++) {
             // Process line like "/dev/sda3 on / type ext4 (rw)"
-            QString node = Utils::regexp_label(lines[ i ], ".*?(?= )");
-            QString mountpoint = Utils::regexp_label(lines[ i ], "(?<=on ).*?(?= type)");
+            QString node = Utils::regexp_label(lines[i], ".*?(?= )");
+            QString mountpoint = Utils::regexp_label(lines[i], "(?<=on ).*?(?= type)");
             QString mntopts = Utils::regexp_label(lines[i], "(?<=\\().*?(?=\\))");
             // qDebug() << node << mountpoint << mntopts;
-            if (! node.isEmpty())
+            if (!node.isEmpty())
                 add_mountpoint_entry(map, node, mountpoint, parse_readonly_flag(mntopts));
         }
     }
@@ -188,4 +188,4 @@ const MountEntry &MountInfo::find(const MountInfo::MountMapping &map, const QStr
     return not_mounted;
 }
 
-}
+} // namespace DiskManager

@@ -6,7 +6,8 @@
 #include "widgetdeclare.h"
 #include <QHBoxLayout>
 
-TitleWidget::TitleWidget(DWidget *parent): DWidget(parent)
+TitleWidget::TitleWidget(DWidget *parent)
+    : DWidget(parent)
 {
     initUi();
     initConnection();
@@ -26,7 +27,6 @@ void TitleWidget::initUi()
     layout->addWidget(m_btnmount);
     layout->addWidget(m_btnunmount);
     layout->addWidget(m_btnresize);
-
 }
 
 void TitleWidget::initConnection()
@@ -39,7 +39,7 @@ void TitleWidget::initConnection()
     connect(m_btnresize, &DPushButton::clicked, this, &TitleWidget::showResizeInfoWidget);
 }
 
-DPushButton *TitleWidget::createBtn(const QString &btnName,  const QString &objName, bool bCheckable)
+DPushButton *TitleWidget::createBtn(const QString &btnName, const QString &objName, bool bCheckable)
 {
     auto btn = new DPushButton(this);
     //  wzx 设置图标icon    2020-05-19
@@ -62,7 +62,6 @@ void TitleWidget::showPartInfoWidget()
 
     if (dlg.exec() == 1) {
         if (TYPE_UNPARTITIONED == info.type && FS_UNALLOCATED == info.fstype) {
-
             qDebug() << QString("No partition table found on device %1").arg(info.device_path);
             qDebug() << "A partition table is required before partitions can be added";
             //ToDo:empty device create partition table
@@ -96,7 +95,6 @@ void TitleWidget::showResizeInfoWidget()
     ResizeDialog dlg;
     dlg.exec();
 }
-
 
 void TitleWidget::updateBtnStatus()
 {
@@ -143,7 +141,3 @@ void TitleWidget::slotCurSelectChanged()
     updateBtnStatus();
     qDebug() << __FUNCTION__ << "-1--1-";
 }
-
-
-
-

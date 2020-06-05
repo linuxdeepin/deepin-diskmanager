@@ -4,7 +4,7 @@
 #include <DApplication>
 DWIDGET_USE_NAMESPACE
 
-class CusApplication: public DApplication
+class CusApplication : public DApplication
 {
     Q_OBJECT
 public:
@@ -16,6 +16,5 @@ protected:
 signals:
     void sighandleQuitAction();
 };
-
 
 #endif // CUSAPPLICATION_H

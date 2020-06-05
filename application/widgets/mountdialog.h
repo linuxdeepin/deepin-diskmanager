@@ -5,7 +5,7 @@
 
 DWIDGET_USE_NAMESPACE
 
-class MountDialog: public DDBase
+class MountDialog : public DDBase
 {
     Q_OBJECT
 public:
@@ -14,7 +14,6 @@ public:
 private:
     void initUi();
     void initConnection();
-
 
 public slots:
     void slotEditContentChanged(const QString &content);

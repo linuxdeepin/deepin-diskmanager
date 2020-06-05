@@ -1,9 +1,8 @@
 #include "cusapplication.h"
 
-
-CusApplication::CusApplication(int &argc, char **argv): DApplication(argc, argv)
+CusApplication::CusApplication(int &argc, char **argv)
+    : DApplication(argc, argv)
 {
-
 }
 
 void CusApplication::handleQuitAction()

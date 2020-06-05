@@ -9,8 +9,8 @@
 
 namespace DiskManager {
 
-bool ProcPartitionsInfo::proc_partitions_info_cache_initialized = false ;
-QVector <QString> ProcPartitionsInfo::device_paths_cache ;
+bool ProcPartitionsInfo::proc_partitions_info_cache_initialized = false;
+QVector<QString> ProcPartitionsInfo::device_paths_cache;
 
 void ProcPartitionsInfo::load_cache()
 {
@@ -26,7 +26,7 @@ const QVector<QString> &ProcPartitionsInfo::get_device_paths()
 
 void ProcPartitionsInfo::initialize_if_required()
 {
-    if (! proc_partitions_info_cache_initialized) {
+    if (!proc_partitions_info_cache_initialized) {
         load_proc_partitions_info_cache();
         proc_partitions_info_cache_initialized = true;
     }
@@ -34,7 +34,7 @@ void ProcPartitionsInfo::initialize_if_required()
 
 void ProcPartitionsInfo::load_proc_partitions_info_cache()
 {
-    device_paths_cache .clear() ;
+    device_paths_cache.clear();
     QFile file("/proc/partitions");
 
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -107,5 +107,4 @@ void ProcPartitionsInfo::load_proc_partitions_info_cache()
     }
 }
 
-
-}//namespace
+} // namespace DiskManager

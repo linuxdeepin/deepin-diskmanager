@@ -7,7 +7,7 @@ DWIDGET_USE_NAMESPACE
 class DeviceListWidget;
 class InfoShowWidget;
 
-class MainSplitter: public DSplitter
+class MainSplitter : public DSplitter
 {
     Q_OBJECT
     Q_DISABLE_COPY(MainSplitter)
@@ -21,7 +21,6 @@ public:
 private:
     InfoShowWidget *m_infoshow;
     DeviceListWidget *m_devicelist;
-
 };
 
 #endif // MAINSPLITTER_H

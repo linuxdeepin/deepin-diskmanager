@@ -8,15 +8,13 @@
 #include <QHBoxLayout>
 #include <QPainter>
 
-
 DWIDGET_USE_NAMESPACE
 
-InfoShowWidget::InfoShowWidget(DWidget *parent): DFrame(parent)
+InfoShowWidget::InfoShowWidget(DWidget *parent)
+    : DFrame(parent)
 {
     initUi();
     initConnection();
-
-
 }
 
 void InfoShowWidget::initUi()
@@ -63,61 +61,59 @@ void InfoShowWidget::bottomFramSettings()
 {
     QVBoxLayout *infolayout = new QVBoxLayout();
     QVBoxLayout *info1layout = new QVBoxLayout();
-    DLabel *m_label = new  DLabel(tr("Mount point:"));
+    DLabel *m_label = new DLabel(tr("Mount point:"));
     m_label->setAlignment(Qt::AlignLeft);
     m_label->setWordWrap(true);
     m_label->adjustSize();
     m_label->setFixedHeight(30);
     DFontSizeManager::instance()->bind(m_label, DFontSizeManager::T6);
-    DLabel *m_label1 = new  DLabel(tr("Free:"));
+    DLabel *m_label1 = new DLabel(tr("Free:"));
     m_label1->setWordWrap(true);
     m_label1->adjustSize();
     m_label1->setAlignment(Qt::AlignLeft);
     DFontSizeManager::instance()->bind(m_label1, DFontSizeManager::T6);
-    DLabel *m_label2 = new  DLabel(tr("Used:"));
+    DLabel *m_label2 = new DLabel(tr("Used:"));
     m_label2->setWordWrap(true);
     m_label2->adjustSize();
     m_label2->setAlignment(Qt::AlignLeft);
     DFontSizeManager::instance()->bind(m_label2, DFontSizeManager::T6);
-    DLabel *m_label3 = new  DLabel(tr("Type:"));
+    DLabel *m_label3 = new DLabel(tr("Type:"));
     m_label3->setWordWrap(true);
     m_label3->adjustSize();
     DFontSizeManager::instance()->bind(m_label3, DFontSizeManager::T6);
-    DLabel *m_label4 = new  DLabel(tr("Capacity:"));
+    DLabel *m_label4 = new DLabel(tr("Capacity:"));
     m_label4->setWordWrap(true);
     m_label4->adjustSize();
     DFontSizeManager::instance()->bind(m_label4, DFontSizeManager::T6);
-    DLabel *m_label5 = new  DLabel(tr("Volume label:"));
+    DLabel *m_label5 = new DLabel(tr("Volume label:"));
     m_label5->setWordWrap(true);
     m_label5->adjustSize();
     DFontSizeManager::instance()->bind(m_label5, DFontSizeManager::T6);
     DPalette pa = DApplicationHelper::instance()->palette(m_label);
     connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged,
-    this, [ = ] {
-        DPalette pa;
-        DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
-        if (themeType == DGuiApplicationHelper::LightType)
-        {
-            pa = palette();
-            pa.setColor(DPalette::Text, QColor("#414d68"));
-            m_label->setPalette(pa);
-            m_label1->setPalette(pa);
-            m_label2->setPalette(pa);
-            m_label3->setPalette(pa);
-            m_label4->setPalette(pa);
-            m_label5->setPalette(pa);
-        } else if (themeType == DGuiApplicationHelper::DarkType)
-        {
-            pa = palette();
-            pa.setColor(DPalette::Text, QColor("#c0c6d4"));
-            m_label->setPalette(pa);
-            m_label1->setPalette(pa);
-            m_label2->setPalette(pa);
-            m_label3->setPalette(pa);
-            m_label4->setPalette(pa);
-            m_label5->setPalette(pa);
-        }
-    });
+            this, [=] {
+                DPalette pa;
+                DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+                if (themeType == DGuiApplicationHelper::LightType) {
+                    pa = palette();
+                    pa.setColor(DPalette::Text, QColor("#414d68"));
+                    m_label->setPalette(pa);
+                    m_label1->setPalette(pa);
+                    m_label2->setPalette(pa);
+                    m_label3->setPalette(pa);
+                    m_label4->setPalette(pa);
+                    m_label5->setPalette(pa);
+                } else if (themeType == DGuiApplicationHelper::DarkType) {
+                    pa = palette();
+                    pa.setColor(DPalette::Text, QColor("#c0c6d4"));
+                    m_label->setPalette(pa);
+                    m_label1->setPalette(pa);
+                    m_label2->setPalette(pa);
+                    m_label3->setPalette(pa);
+                    m_label4->setPalette(pa);
+                    m_label5->setPalette(pa);
+                }
+            });
 
     pa.setBrush(DPalette::Text, pa.color(DPalette::Text));
     DApplicationHelper::instance()->setPalette(m_label, pa);
@@ -143,8 +139,6 @@ void InfoShowWidget::bottomFramSettings()
     QHBoxLayout *mainlayout = new QHBoxLayout(pframebottom);
     mainlayout->addLayout(infolayout);
     mainlayout->addLayout(info1layout);
-
-
 }
 
 void InfoShowWidget::slotCurSelectChanged()
@@ -164,8 +158,8 @@ void InfoShowWidget::slotCurSelectChanged()
         fillcolor1 = pa.color(DPalette::Normal, DPalette::BrightText);
         fillcolor1.setAlphaF(0.2);
     }
-    QVector<QColor>color{fillcolor, fillcolor1};
-    QVector<double>size{m_used, m_noused};
+    QVector<QColor> color {fillcolor, fillcolor1};
+    QVector<double> size {m_used, m_noused};
     m_infowidget->setdata(DMDbusHandler::instance()->getCurPartititonInfo(), color, size, 1);
     m_pInfoTopFrame->setShowDiskInfo();
 }
@@ -175,7 +169,7 @@ void InfoShowWidget::slothandleChangeTheme()
     DPalette pa;
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
     if (themeType == DGuiApplicationHelper::LightType) {
-        fillcolor =  QColor("#0091ff");
+        fillcolor = QColor("#0091ff");
         fillcolor1 = pa.color(DPalette::Normal, DPalette::ToolTipText);
         fillcolor1.setAlphaF(0.1);
 
@@ -187,8 +181,7 @@ void InfoShowWidget::slothandleChangeTheme()
     m_noused = Utils::sector_to_unit(DMDbusHandler::instance()->getCurPartititonInfo().sectors_unused, DMDbusHandler::instance()->getCurPartititonInfo().sector_size, SIZE_UNIT::UNIT_GIB);
     m_used = Utils::sector_to_unit(DMDbusHandler::instance()->getCurPartititonInfo().sectors_used, DMDbusHandler::instance()->getCurPartititonInfo().sector_size, SIZE_UNIT::UNIT_GIB);
 
-
-    QVector<QColor>color{fillcolor, fillcolor1};
-    QVector<double>size{m_used, m_noused};
+    QVector<QColor> color {fillcolor, fillcolor1};
+    QVector<double> size {m_used, m_noused};
     m_infowidget->setdata(DMDbusHandler::instance()->getCurPartititonInfo(), color, size, 1);
 }

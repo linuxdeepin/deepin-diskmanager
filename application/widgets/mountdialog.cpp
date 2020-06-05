@@ -7,11 +7,11 @@
 #include <DFontSizeManager>
 #include <QDir>
 
-MountDialog::MountDialog(QWidget *parent): DDBase(parent)
+MountDialog::MountDialog(QWidget *parent)
+    : DDBase(parent)
 {
     initUi();
     initConnection();
-
 }
 
 void MountDialog::initUi()
@@ -20,7 +20,7 @@ void MountDialog::initUi()
     setTitle(tr("Mount %1").arg(info.path));
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
     DLabel *tipLabel = new DLabel(tr("Choose a mount point please"), this);
-    tipLabel ->setAlignment(Qt::AlignCenter);
+    tipLabel->setAlignment(Qt::AlignCenter);
     DFontSizeManager::instance()->bind(tipLabel, DFontSizeManager::T6);
     DLabel *mountLabel = new DLabel(tr("Mount point:"));
     DFontSizeManager::instance()->bind(mountLabel, DFontSizeManager::T6);
@@ -65,4 +65,3 @@ void MountDialog::slotbuttonClicked(int index, const QString &text)
         DMDbusHandler::instance()->mount(pedit->lineEdit()->text());
     }
 }
-

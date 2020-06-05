@@ -4,7 +4,8 @@
 #include <DFontSizeManager>
 #include <QHBoxLayout>
 
-ResizeDialog::ResizeDialog(QWidget *parent): DDBase(parent)
+ResizeDialog::ResizeDialog(QWidget *parent)
+    : DDBase(parent)
 {
     initUi();
     initConnection();
@@ -18,7 +19,7 @@ void ResizeDialog::initUi()
     setTitle(tr("Resize %1").arg(info.path));
     DLabel *tipLabel = new DLabel(tr("It will resize the partitions on the disk"), this);
     tipLabel->setWordWrap(true);
-    tipLabel ->setAlignment(Qt::AlignCenter);
+    tipLabel->setAlignment(Qt::AlignCenter);
     DFontSizeManager::instance()->bind(tipLabel, DFontSizeManager::T6);
 
     QHBoxLayout *hlayout = new QHBoxLayout;
@@ -29,7 +30,8 @@ void ResizeDialog::initUi()
     plabel->setAlignment(Qt::AlignLeft | Qt::AlignCenter);
     DFontSizeManager::instance()->bind(plabel, DFontSizeManager::T6);
     QStringList stritems;
-    stritems << "MiB" << "GiB";
+    stritems << "MiB"
+             << "GiB";
     pcombo->addItems(stritems);
     pcombo->setCurrentIndex(0);
     pcombo->setFixedWidth(70);
@@ -69,14 +71,14 @@ void ResizeDialog::slotbuttonClicked(int index, const QString &)
                     double total = 0;
                     //目前使用GB为单位精度损失太大，如果扩容全部空闲分区会出现空隙，按当前单位转换后如果差值小于0.01默认全选
                     if (0 == pcombo->currentIndex()) {
-                        total = Utils::sector_to_unit(next.get_sector_length(),  curinfo.sector_size, UNIT_MIB);
+                        total = Utils::sector_to_unit(next.get_sector_length(), curinfo.sector_size, UNIT_MIB);
                         expandspace = strspace.toFloat() * (MEBIBYTE / curinfo.sector_size);
                         if (total - strspace.toFloat() < 0.01)
                             expandspace = next.get_sector_length();
                         else
                             expandspace = strspace.toFloat() * (MEBIBYTE / curinfo.sector_size);
                     } else {
-                        total = Utils::sector_to_unit(next.get_sector_length(),  curinfo.sector_size, UNIT_GIB);
+                        total = Utils::sector_to_unit(next.get_sector_length(), curinfo.sector_size, UNIT_GIB);
                         expandspace = strspace.toFloat() * (GIBIBYTE / curinfo.sector_size);
                         if (total - strspace.toFloat() < 0.01)
                             expandspace = next.get_sector_length();
@@ -94,7 +96,7 @@ void ResizeDialog::slotbuttonClicked(int index, const QString &)
         }
         if (!canexpand) {
             pedit->setAlertMessageAlignment(Qt::AlignTop);
-//            pedit->showAlertMessage(tr("have no unallocated space,can not resize"));
+            //            pedit->showAlertMessage(tr("have no unallocated space,can not resize"));
             pedit->setAlert(true);
 
         } else {
@@ -118,14 +120,11 @@ void ResizeDialog::slotbuttonClicked(int index, const QString &)
             }
 
             qDebug() << Utils::format_size(newinfo.sector_end - newinfo.sector_start, curinfo.sector_size) << newinfo.sector_start << newinfo.sector_end;
-            newinfo.alignment = ALIGN_MEBIBYTE;//ALIGN_MEBIBYTE;
+            newinfo.alignment = ALIGN_MEBIBYTE; //ALIGN_MEBIBYTE;
             phandler->resize(newinfo);
             done(index);
         }
     } else {
         done(index);
     }
-
 }
-
-

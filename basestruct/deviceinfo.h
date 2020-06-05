@@ -9,31 +9,32 @@ class QDBusArgument;
 
 typedef struct CUSSTRUCTTEST {
     Sector length;
-    Sector heads ;
+    Sector heads;
     QString m_path;
 } stCustest;
 Q_DECLARE_METATYPE(stCustest)
 QDBusArgument &operator<<(QDBusArgument &argument, const stCustest &stcus);
 const QDBusArgument &operator>>(const QDBusArgument &argument, stCustest &stcus);
 
-class  DeviceInfo
+class DeviceInfo
 {
 public:
     DeviceInfo();
+
 public:
     Sector length;
-    Sector heads ;
+    Sector heads;
     QString m_path;
-    Sector sectors ;
-    Sector cylinders ;
-    Sector cylsize ;
+    Sector sectors;
+    Sector cylinders;
+    Sector cylsize;
     QString model;
     QString serial_number;
     QString disktype;
-    int sector_size ;
-    int max_prims ;
-    int highest_busy ;
-    bool readonly ;
+    int sector_size;
+    int max_prims;
+    int highest_busy;
+    bool readonly;
     int max_partition_name_length;
     PartitionVec partition;
 };
@@ -44,8 +45,5 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, DeviceInfo &info)
 
 typedef QMap<QString, DeviceInfo> DeviceInfoMap;
 Q_DECLARE_METATYPE(DeviceInfoMap)
-
-
-
 
 #endif // DEVICEINFO_H

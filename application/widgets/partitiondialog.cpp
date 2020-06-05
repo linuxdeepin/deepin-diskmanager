@@ -23,7 +23,8 @@
 #include <DFontSizeManager>
 #include <QVBoxLayout>
 #include <QDebug>
-PartitionDialog::PartitionDialog(QWidget *parent) : DDBase(parent)
+PartitionDialog::PartitionDialog(QWidget *parent)
+    : DDBase(parent)
 {
     initUi();
 }
@@ -44,5 +45,3 @@ void PartitionDialog::initUi()
     addButton(tr("Cancel"), false, ButtonNormal);
     okcode = addButton(tr("Confirm"), true, ButtonRecommend);
 }
-
-

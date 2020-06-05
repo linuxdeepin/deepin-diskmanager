@@ -8,19 +8,18 @@
 #include <QVBoxLayout>
 #include <QThread>
 
-CenterWidget::CenterWidget(DWidget *parent) : Dtk::Widget::DWidget(parent)
+CenterWidget::CenterWidget(DWidget *parent)
+    : Dtk::Widget::DWidget(parent)
 {
     initUi();
 }
 
 CenterWidget::~CenterWidget()
 {
-
 }
 
 void CenterWidget::HandleQuit()
 {
-
 }
 
 TitleWidget *CenterWidget::titlewidget()
@@ -40,5 +39,3 @@ void CenterWidget::initUi()
 
     setLayout(mainlayout);
 }
-
-

@@ -21,8 +21,6 @@
 #include <DApplicationHelper>
 #include <DFontSizeManager>
 
-
-
 InfoTopFrame::InfoTopFrame(DWidget *parent)
     : DFrame(parent)
 {

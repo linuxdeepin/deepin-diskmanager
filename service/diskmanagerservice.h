@@ -7,7 +7,8 @@
 
 namespace DiskManager {
 
-class DiskManagerService : public QObject, protected QDBusContext
+class DiskManagerService : public QObject
+    , protected QDBusContext
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "com.deepin.diskmanager")
@@ -33,10 +34,10 @@ public Q_SLOTS:
 
 private:
     void initConnection();
+
 private:
     PartedCore *m_partedcore;
-
 };
 
-}
+} // namespace DiskManager
 #endif // DISKMANAGERSERVICE_H

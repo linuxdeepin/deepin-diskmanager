@@ -7,17 +7,19 @@
 #include <DTitlebar>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <DWidgetUtil>
 #include <QRect>
 #include <QDebug>
 
 #include "widgetdeclare.h"
 
-MainWindow::MainWindow(QWidget *parent) : DMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent)
+    : DMainWindow(parent)
 {
-    m_handler =  DMDbusHandler::instance(this);
+    m_handler = DMDbusHandler::instance(this);
     initUi();
     initConnection();
-    m_handler->getDeviceinfo();//call after initUi
+    m_handler->getDeviceinfo(); //call after initUi
     QRect rect = QApplication::desktop()->geometry();
     setMinimumSize(rect.width() * 0.6, rect.height() * 0.6);
 }
@@ -38,6 +40,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::initUi()
 {
     m_bufferwin = new BufferWin;
+    m_spinner = new DSpinner(this);
+    m_spinner-> setWindowFlags(Qt::SplashScreen);
+    m_spinner->setWindowModality(Qt::ApplicationModal);
+    m_spinner->setAttribute(Qt::WA_TranslucentBackground, true);
+    m_spinner->setGeometry(100, 100, 100, 100);
     m_central = new CenterWidget(this);
     setCentralWidget(m_central);
     titlebar()->setIcon(QIcon::fromTheme(app_name));
@@ -60,11 +67,15 @@ void MainWindow::slotHandleQuitAction()
 void MainWindow::slotshowSpinerWindow(bool bshow)
 {
     if (bshow) {
-        m_bufferwin->Start();
+        // m_bufferwin->Start();
+        m_spinner->start();
+        Dtk::Widget::moveToCenter(m_spinner);
+        m_spinner->show();
     } else {
-        m_bufferwin->Stop();
+        // m_bufferwin->Stop();
+        m_spinner->stop();
+        m_spinner->hide();
+        raise();
         activateWindow();
     }
-
 }
-

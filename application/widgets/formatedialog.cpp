@@ -6,9 +6,8 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 
-
-
-FormateDialog::FormateDialog(QWidget *parent) : DDBase(parent)
+FormateDialog::FormateDialog(QWidget *parent)
+    : DDBase(parent)
 {
     initUi();
     initConnection();
@@ -23,7 +22,7 @@ void FormateDialog::initUi()
     DLabel *tipLabel = new DLabel(tr("Formatting will erase all data on the disk, which cannot be undone"), this);
     tipLabel->setWordWrap(true);
     tipLabel->setFixedHeight(50);
-    tipLabel ->setAlignment(Qt::AlignCenter);
+    tipLabel->setAlignment(Qt::AlignCenter);
     DFontSizeManager::instance()->bind(tipLabel, DFontSizeManager::T6);
     QHBoxLayout *hlayoutname = new QHBoxLayout;
     DLabel *pfilename = new DLabel(tr("Name:"), this);

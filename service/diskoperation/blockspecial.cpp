@@ -21,12 +21,17 @@ typedef QMap<QString, MM_Number> MMNumberMapping;
 //     mm_number_cache["sysfs"]     = {0, 0}
 static MMNumberMapping mm_number_cache;
 
-BlockSpecial::BlockSpecial(): m_name(""), m_major(0UL), m_minor(0UL)
+BlockSpecial::BlockSpecial()
+    : m_name("")
+    , m_major(0UL)
+    , m_minor(0UL)
 {
-
 }
 
-BlockSpecial::BlockSpecial(const QString &name): m_name(name), m_major(0UL), m_minor(0UL)
+BlockSpecial::BlockSpecial(const QString &name)
+    : m_name(name)
+    , m_major(0UL)
+    , m_minor(0UL)
 {
     MMNumberMapping::const_iterator mm_num_iter = mm_number_cache.find(name);
     if (mm_num_iter != mm_number_cache.end()) {
@@ -52,7 +57,6 @@ BlockSpecial::BlockSpecial(const QString &name): m_name(name), m_major(0UL), m_m
 
 BlockSpecial::~BlockSpecial()
 {
-
 }
 
 void BlockSpecial::clear_cache()
@@ -69,7 +73,7 @@ void BlockSpecial::register_block_special(const QString &name, unsigned long maj
     mm_number_cache[name] = pair;
 }
 
-bool operator ==(const BlockSpecial &lhs, const BlockSpecial &rhs)
+bool operator==(const BlockSpecial &lhs, const BlockSpecial &rhs)
 {
     if (lhs.m_major > 0UL || lhs.m_minor > 0UL)
         // Match block special files by major, minor device numbers.
@@ -79,7 +83,7 @@ bool operator ==(const BlockSpecial &lhs, const BlockSpecial &rhs)
         return lhs.m_name == rhs.m_name;
 }
 
-bool operator <(const BlockSpecial &lhs, const BlockSpecial &rhs)
+bool operator<(const BlockSpecial &lhs, const BlockSpecial &rhs)
 {
     if (lhs.m_major == 0 && rhs.m_major == 0 && lhs.m_minor == 0 && rhs.m_minor == 0)
         // Two non-block special files are ordered by name.
@@ -89,4 +93,4 @@ bool operator <(const BlockSpecial &lhs, const BlockSpecial &rhs)
         return lhs.m_major < rhs.m_major || (lhs.m_major == rhs.m_major && lhs.m_minor < rhs.m_minor);
 }
 
-}
+} // namespace DiskManager

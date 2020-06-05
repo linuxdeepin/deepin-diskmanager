@@ -32,14 +32,12 @@
 
 DWIDGET_USE_NAMESPACE
 
-
-
 class PartChartShowing : public QWidget
 {
     Q_OBJECT
 public:
     explicit PartChartShowing(QWidget *parent = nullptr);
-//    PartChartShowing(int used, int trueused, int noused, QWidget *parent = nullptr);
+    //    PartChartShowing(int used, int trueused, int noused, QWidget *parent = nullptr);
     void getData(const double &totals, const QVector<double> sizeInfo);
     void getflag(int mflag, int value = 0);
 
@@ -66,13 +64,9 @@ private:
     QVector<QPainterPath> allpath;
     int number = -1;
     double sum = 0.00;
-//    double widths = 0.00;
+    //    double widths = 0.00;
     int i = 0;
-    double  sumvalue = 0.0000001;
-
-
-
-
+    double sumvalue = 0.0000001;
 };
 
 #endif // PARTCHARTSHOWING_H

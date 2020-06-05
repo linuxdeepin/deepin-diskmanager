@@ -17,7 +17,8 @@ DMDbusHandler::~DMDbusHandler()
     Quit();
 }
 
-DMDbusHandler::DMDbusHandler(QObject *parent) : QObject(parent)
+DMDbusHandler::DMDbusHandler(QObject *parent)
+    : QObject(parent)
 {
     qRegisterMetaType<DeviceInfo>("DeviceInfo");
     qRegisterMetaType<DeviceInfoMap>("DeviceInfoMap");
@@ -31,7 +32,7 @@ DMDbusHandler::DMDbusHandler(QObject *parent) : QObject(parent)
                                  "/com/deepin/diskmanager",
                                  QDBusConnection::systemBus(),
                                  this);
-//Note: when dealing with remote objects, it is not always possible to determine if it exists when creating a QDBusInterface.
+    //Note: when dealing with remote objects, it is not always possible to determine if it exists when creating a QDBusInterface.
     if (!m_dbus->isValid() && !m_dbus->lastError().message().isEmpty()) {
         qDebug() << "m_dbus isValid false error:" << m_dbus->lastError() << m_dbus->lastError().message();
     }
@@ -127,14 +128,14 @@ QStringList DMDbusHandler::getallsupportfs()
 
 void DMDbusHandler::format(const QString &fstype, const QString &name)
 {
-//   bool success = false;
-//    QDBusPendingReply<bool> reply = m_dbus->format(fstype, name);
-//    reply.waitForFinished();
-//    if (reply.isError()) {
-//        qDebug() << reply.error().message();
-//    } else {
-//        success = reply.value();
-//    }
+    //   bool success = false;
+    //    QDBusPendingReply<bool> reply = m_dbus->format(fstype, name);
+    //    reply.waitForFinished();
+    //    if (reply.isError()) {
+    //        qDebug() << reply.error().message();
+    //    } else {
+    //        success = reply.value();
+    //    }
     emit sigShowSpinerWindow(true);
     m_dbus->format(fstype, name);
 }
@@ -161,13 +162,13 @@ void DMDbusHandler::slotUpdateDeviceInfo(const DeviceInfoMap &infomap)
     m_devicemap = infomap;
     for (auto it = infomap.begin(); it != infomap.end(); it++) {
         DeviceInfo info = it.value();
-//        qDebug() << info.sector_size;
-//        qDebug() << __FUNCTION__ << info.m_path << info.length << info.heads << info.sectors
-//                 << info.cylinders << info.cylsize << info.model << info.serial_number << info.disktype
-//                 << info.sector_size << info.max_prims << info.highest_busy << info.readonly
-//                 << info.max_partition_name_length;
+        //        qDebug() << info.sector_size;
+        //        qDebug() << __FUNCTION__ << info.m_path << info.length << info.heads << info.sectors
+        //                 << info.cylinders << info.cylsize << info.model << info.serial_number << info.disktype
+        //                 << info.sector_size << info.max_prims << info.highest_busy << info.readonly
+        //                 << info.max_partition_name_length;
         for (auto it = info.partition.begin(); it != info.partition.end(); it++) {
-//            qDebug() << it->sector_end << it->sector_start << Utils::sector_to_unit(it->sector_size, it->sector_end - it->sector_start, SIZE_UNIT::UNIT_GIB);
+            //            qDebug() << it->sector_end << it->sector_start << Utils::sector_to_unit(it->sector_size, it->sector_end - it->sector_start, SIZE_UNIT::UNIT_GIB);
             //        qDebug() << it->name << it->device_path << it->partition_number << it->sectors_used << it->sectors_unused << it->sector_start << it->sector_end;
         }
     }
@@ -175,5 +176,3 @@ void DMDbusHandler::slotUpdateDeviceInfo(const DeviceInfoMap &infomap)
     emit sigUpdateDeviceInfo();
     emit sigShowSpinerWindow(false);
 }
-
-

@@ -2,9 +2,10 @@
 #include <DWidgetUtil>
 #include <QVBoxLayout>
 
-BufferWin::BufferWin(DWidget *parent) : DWidget(parent)
+BufferWin::BufferWin(DWidget *parent)
+    : DWidget(parent)
 {
-    setWindowFlags(/*Qt::FramelessWindowHint | Qt::Tool*/Qt::SplashScreen);
+    setWindowFlags(/*Qt::FramelessWindowHint | Qt::Tool*/ Qt::SplashScreen);
     setWindowModality(Qt::ApplicationModal);
     setAttribute(Qt::WA_TranslucentBackground, true);
     setGeometry(100, 100, 100, 100);
@@ -30,5 +31,3 @@ void BufferWin::Stop()
     m_spinner->stop();
     hide();
 }
-
-

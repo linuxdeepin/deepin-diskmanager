@@ -24,15 +24,15 @@
 #include "partedproxy/dmdbushandler.h"
 #include <DWidget>
 
-
 DWIDGET_USE_NAMESPACE
 
-class DeviceListWidget: public DWidget
+class DeviceListWidget : public DWidget
 {
     Q_OBJECT
 public:
     explicit DeviceListWidget(QWidget *parent = nullptr);
     ~DeviceListWidget();
+
 private:
     void initUi();
     void initConnection();
@@ -52,6 +52,7 @@ private:
 //    DMDbusHandler *m_handler;
     //    DmDiskinfoBox *m_box = nullptr;
 //    DmDiskinfoBox *m_childbox = nullptr;
+
 };
 
 #endif // DEVICELISTWIDGET_H

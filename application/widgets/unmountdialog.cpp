@@ -5,11 +5,11 @@
 #include <QVBoxLayout>
 #include <DFrame>
 #include <DFontSizeManager>
-UnmountDialog::UnmountDialog(QWidget *parent) : DDBase(parent)
+UnmountDialog::UnmountDialog(QWidget *parent)
+    : DDBase(parent)
 {
     initUi();
     initConnection();
-
 }
 
 void UnmountDialog::initUi()
@@ -21,7 +21,7 @@ void UnmountDialog::initUi()
     QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
     DLabel *tipLabel = new DLabel(tr("Make sure there are no programs running on the disk"), this);
     tipLabel->setWordWrap(true);
-    tipLabel ->setAlignment(Qt::AlignCenter);
+    tipLabel->setAlignment(Qt::AlignCenter);
     DFontSizeManager::instance()->bind(tipLabel, DFontSizeManager::T6);
 
     mainLayout->addWidget(tipLabel);

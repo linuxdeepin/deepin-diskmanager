@@ -5,8 +5,6 @@
 #include <QVector>
 #include <QMap>
 
-
-
 namespace DiskManager {
 
 class SupportedFileSystems
@@ -25,9 +23,9 @@ private:
     typedef QMap<FSType, FileSystem *> FSObjectsMap;
 
     QVector<FS> m_fs_support;
-    FSObjectsMap    m_fs_objects;
-    QStringList  m_effectivefs;
+    FSObjectsMap m_fs_objects;
+    QStringList m_effectivefs;
 };
 
-}
+} // namespace DiskManager
 #endif // SUPPORTEDFILESYSTEMS_H

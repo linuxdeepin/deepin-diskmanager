@@ -23,4 +23,3 @@ DMDBusInterface::DMDBusInterface(const QString &service, const QString &path, co
 DMDBusInterface::~DMDBusInterface()
 {
 }
-

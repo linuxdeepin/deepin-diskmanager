@@ -19,11 +19,9 @@ private:
 
     DLineEdit *pedit;
     DComboBox *pcombo;
-    DLabel   *plabel;
+    DLabel *plabel;
 public slots:
     void slotbuttonClicked(int index, const QString &text);
-
-
 };
 
 #endif // RESIZEDIALOG_H

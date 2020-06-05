@@ -58,13 +58,13 @@ public:
 signals:
     void sigselectitem(const QModelIndex &index);
     void sigCurSelectChanged(const QString &devicepath, const QString &partitionpath, Sector start, Sector end);
-//    void sigSendInfo(const QString &devicepath, const QString &disksize, const QString &partitionpath, const QString &partsize, const QString &style, Sector start, Sector end);
+    //    void sigSendInfo(const QString &devicepath, const QString &disksize, const QString &partitionpath, const QString &partsize, const QString &style, Sector start, Sector end);
 public slots:
 private:
-
     QAbstractItemDelegate *m_delegate {nullptr};
     QSortFilterProxyModel *m_pSortViewFilter {nullptr};
     QString diskSize;
+
 protected:
     void currentChanged(const QModelIndex &current, const QModelIndex &previous) override;
     void mousePressEvent(QMouseEvent *event) override;

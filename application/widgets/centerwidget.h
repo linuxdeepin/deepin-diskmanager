@@ -10,7 +10,6 @@ DWIDGET_USE_NAMESPACE
 class TitleWidget;
 class MainSplitter;
 
-
 class CenterWidget : public DWidget
 {
     Q_OBJECT
@@ -22,14 +21,12 @@ public:
     void HandleQuit();
     TitleWidget *titlewidget();
 
-
 private:
     void initUi();
 
 private:
-    TitleWidget     *m_titlewidget;
-    MainSplitter    *m_mainspliter;
-
+    TitleWidget *m_titlewidget;
+    MainSplitter *m_mainspliter;
 };
 
 #endif // CENTERWIDGET_H

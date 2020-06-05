@@ -28,5 +28,5 @@ private:
     static const MountEntry &find(const MountMapping &map, const QString &path);
 };
 
-}
+} // namespace DiskManager
 #endif // MOUNTINFO_H

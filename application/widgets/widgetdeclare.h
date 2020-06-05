@@ -20,7 +20,7 @@
 #include <QString>
 #include <QIcon>
 
-namespace  {
+namespace {
 const QString app_name = "deepin-diskmanager";
 
 static QIcon getIcon(const QString &iconName)
@@ -28,6 +28,6 @@ static QIcon getIcon(const QString &iconName)
     return QIcon::fromTheme("dm_" + iconName);
 }
 
-}
+} // namespace
 
 #endif // WIDGETDECLARE_H

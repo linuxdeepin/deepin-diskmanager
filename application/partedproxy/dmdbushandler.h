@@ -6,7 +6,6 @@
 #include <QDebug>
 #include <QDBusConnection>
 
-
 class DMDbusHandler : public QObject
 {
     Q_OBJECT
@@ -15,7 +14,7 @@ public:
     ~DMDbusHandler();
     void Quit();
     void getDeviceinfo();
-    const DeviceInfoMap &probDeviceInfo()const;
+    const DeviceInfoMap &probDeviceInfo() const;
     PartitionVec getCurDevicePartitionArr();
     const PartitionInfo &getCurPartititonInfo();
     const DeviceInfo &getCurDeviceInfo();
@@ -43,13 +42,13 @@ private slots:
     void slotUpdateDeviceInfo(const DeviceInfoMap &infomap);
 
 private:
-    DMDBusInterface        *m_dbus = nullptr;
-    static DMDbusHandler    *m_statichandeler;
-    QString                 m_curdevicepath;
-    QString                 m_curpartitionpath;
-    DeviceInfoMap           m_devicemap;
-    PartitionInfo           m_curpartitioninfo;
-    QStringList             m_supportfs;
+    DMDBusInterface *m_dbus = nullptr;
+    static DMDbusHandler *m_statichandeler;
+    QString m_curdevicepath;
+    QString m_curpartitionpath;
+    DeviceInfoMap m_devicemap;
+    PartitionInfo m_curpartitioninfo;
+    QStringList m_supportfs;
 };
 
 #endif // DMDBUSHANDLER_H

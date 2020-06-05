@@ -6,13 +6,12 @@
 #include <DLabel>
 #include <DFrame>
 
-
 class DmFrameWidget;
 class SizeInfoWidget;
 class InfoTopFrame;
 
 DWIDGET_USE_NAMESPACE
-class InfoShowWidget: public DFrame
+class InfoShowWidget : public DFrame
 {
     Q_OBJECT
 public:
@@ -27,8 +26,9 @@ private:
 private slots:
     void slotCurSelectChanged();
     void slothandleChangeTheme();
+
 private:
-    InfoTopFrame     *m_pInfoTopFrame = nullptr;
+    InfoTopFrame *m_pInfoTopFrame = nullptr;
 
     DFrame *pframe = nullptr;
     DFrame *pframemid = nullptr;
@@ -46,7 +46,6 @@ private:
     DPalette m_parentPb;
     QColor fillcolor;
     QColor fillcolor1;
-
 };
 
 #endif // INFOSHOWWIDGET_H

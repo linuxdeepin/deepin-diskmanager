@@ -31,8 +31,6 @@
 #include <QAbstractItemView>
 #include <QImage>
 
-
-
 struct DiskInfoData {
     QString diskpath;
     QString disksize;
@@ -49,7 +47,6 @@ struct DiskInfoData {
     Sector end;
 
     int level;
-
 };
 Q_DECLARE_METATYPE(DiskInfoData)
 DWIDGET_USE_NAMESPACE
@@ -66,6 +63,7 @@ signals:
 
 public slots:
     void slothandleChangeTheme();
+
 private:
     QAbstractItemView *m_parentView {nullptr};
     DPalette m_parentPb;

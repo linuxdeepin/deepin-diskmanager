@@ -24,12 +24,14 @@
 /*
  * Proxy class for interface com.deepin.diskmanager
  */
-class DMDBusInterface: public QDBusAbstractInterface
+class DMDBusInterface : public QDBusAbstractInterface
 {
     Q_OBJECT
 public:
     static inline const char *staticInterfaceName()
-    { return "com.deepin.diskmanager"; }
+    {
+        return "com.deepin.diskmanager";
+    }
 
 public:
     DMDBusInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = nullptr);
@@ -48,57 +50,56 @@ public Q_SLOTS: // METHODS
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QStringLiteral("Start"), argumentList);
     }
-    inline QDBusPendingReply<DeviceInfo>getDeviceinfo()
+    inline QDBusPendingReply<DeviceInfo> getDeviceinfo()
     {
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QStringLiteral("getDeviceinfo"), argumentList);
     }
-    inline QDBusPendingReply<>getalldevice()
+    inline QDBusPendingReply<> getalldevice()
     {
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QStringLiteral("getalldevice"), argumentList);
     }
-    inline QDBusPendingReply<>setCurSelect(const PartitionInfo &info)
+    inline QDBusPendingReply<> setCurSelect(const PartitionInfo &info)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(info);
         return asyncCallWithArgumentList(QStringLiteral("setCurSelect"), argumentList);
     }
-    inline QDBusPendingReply<bool>mount(const QString &mountpath)
+    inline QDBusPendingReply<bool> mount(const QString &mountpath)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(mountpath);
         return asyncCallWithArgumentList(QStringLiteral("mount"), argumentList);
     }
-    inline QDBusPendingReply<bool>unmount()
+    inline QDBusPendingReply<bool> unmount()
     {
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QStringLiteral("unmount"), argumentList);
     }
-    inline QDBusPendingReply<QStringList>getallsupportfs()
+    inline QDBusPendingReply<QStringList> getallsupportfs()
     {
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QStringLiteral("getallsupportfs"), argumentList);
     }
-    inline QDBusPendingReply<bool>format(const QString &type, const QString &name)
+    inline QDBusPendingReply<bool> format(const QString &type, const QString &name)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(type) << QVariant::fromValue(name);
         return asyncCallWithArgumentList(QStringLiteral("format"), argumentList);
     }
-    inline  QDBusPendingReply<bool>resize(const PartitionInfo &info)
+    inline QDBusPendingReply<bool> resize(const PartitionInfo &info)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(info);
         return asyncCallWithArgumentList(QStringLiteral("resize"), argumentList);
     }
-    inline  QDBusPendingReply<bool>create(const PartitionVec &infovec)
+    inline QDBusPendingReply<bool> create(const PartitionVec &infovec)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(infovec);
         return asyncCallWithArgumentList(QStringLiteral("create"), argumentList);
     }
-
 
 Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void MessageReport(const QString &msg);
@@ -109,5 +110,5 @@ namespace com {
 namespace deepin {
 typedef ::DMDBusInterface diskmanager;
 }
-}
+} // namespace com
 #endif

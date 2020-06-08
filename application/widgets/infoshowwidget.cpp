@@ -30,14 +30,16 @@ void InfoShowWidget::initUi()
     //  右侧 上部数据信息
     m_pInfoTopFrame = new InfoTopFrame(this);
     framelayout->addWidget(m_pInfoTopFrame);
-
+    m_pInfoTopFrame->setMinimumWidth(450);
     pframemid = new DFrame;
+    pframemid->setMinimumWidth(450);
     pframemid->setFixedHeight(200);
     pframemid->setFrameShape(QFrame::NoFrame);
     framelayout->addWidget(pframemid);
     midFramSettings();
     pframebottom = new DmFrameWidget(data);
     pframebottom->setFixedHeight(150);
+    pframebottom->setMinimumWidth(450);
     framelayout->addWidget(pframebottom);
     framelayout->addStretch();
     bottomFramSettings();
@@ -91,29 +93,31 @@ void InfoShowWidget::bottomFramSettings()
     DFontSizeManager::instance()->bind(m_label5, DFontSizeManager::T6);
     DPalette pa = DApplicationHelper::instance()->palette(m_label);
     connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged,
-            this, [=] {
-                DPalette pa;
-                DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
-                if (themeType == DGuiApplicationHelper::LightType) {
-                    pa = palette();
-                    pa.setColor(DPalette::Text, QColor("#414d68"));
-                    m_label->setPalette(pa);
-                    m_label1->setPalette(pa);
-                    m_label2->setPalette(pa);
-                    m_label3->setPalette(pa);
-                    m_label4->setPalette(pa);
-                    m_label5->setPalette(pa);
-                } else if (themeType == DGuiApplicationHelper::DarkType) {
-                    pa = palette();
-                    pa.setColor(DPalette::Text, QColor("#c0c6d4"));
-                    m_label->setPalette(pa);
-                    m_label1->setPalette(pa);
-                    m_label2->setPalette(pa);
-                    m_label3->setPalette(pa);
-                    m_label4->setPalette(pa);
-                    m_label5->setPalette(pa);
-                }
-            });
+    this, [ = ] {
+        DPalette pa;
+        DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+        if (themeType == DGuiApplicationHelper::LightType)
+        {
+            pa = palette();
+            pa.setColor(DPalette::Text, QColor("#414d68"));
+            m_label->setPalette(pa);
+            m_label1->setPalette(pa);
+            m_label2->setPalette(pa);
+            m_label3->setPalette(pa);
+            m_label4->setPalette(pa);
+            m_label5->setPalette(pa);
+        } else if (themeType == DGuiApplicationHelper::DarkType)
+        {
+            pa = palette();
+            pa.setColor(DPalette::Text, QColor("#c0c6d4"));
+            m_label->setPalette(pa);
+            m_label1->setPalette(pa);
+            m_label2->setPalette(pa);
+            m_label3->setPalette(pa);
+            m_label4->setPalette(pa);
+            m_label5->setPalette(pa);
+        }
+    });
 
     pa.setBrush(DPalette::Text, pa.color(DPalette::Text));
     DApplicationHelper::instance()->setPalette(m_label, pa);

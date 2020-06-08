@@ -139,7 +139,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(iconcolor);
             painter.fillRect(Roundrect, brush1);
             //            QRect Round1rect1(rect.bottomLeft().x() + paintRect.width() / 2, paintRect.bottomLeft().y() + 20, 15, 15);
-            Roundrect.moveTo(paintRect.width() / 2 - 65, paintRect.bottomLeft().y() + 20);
+            Roundrect.moveTo(paintRect.width() / 2, paintRect.bottomLeft().y() + 20);
             QPainterPath painterPath;
             painterPath.addRoundedRect(Roundrect, 3, 3);
             QBrush brush2 = DApplicationHelper::instance()->palette(this).lightLively();
@@ -157,9 +157,9 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             QTextOption option;
             option.setAlignment(Qt::AlignTop);
             painter.drawText(recttext, QString(m_partitionpath + tr(" Capacity:")), option);
-            recttext.moveTo(paintRect.width() / 2 - 40, paintRect.bottomLeft().y() + 17);
+            recttext.moveTo(paintRect.width() / 2 + 20, paintRect.bottomLeft().y() + 17);
             painter.drawText(recttext, QString(tr("Used:")), option);
-            QRect rectsizenum = QRect(paintRect.bottomLeft().x() + 165, paintRect.bottomLeft().y() + 20, 100, 30);
+            QRect rectsizenum = QRect(paintRect.bottomLeft().x() + 145, paintRect.bottomLeft().y() + 20, 100, 30);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
             QColor text1color = m_parentPb.color(DPalette::Normal, DPalette::TextTitle);
             painter.setFont(font);
@@ -167,7 +167,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             QTextOption option1;
             option.setAlignment(Qt::AlignLeft);
             painter.drawText(rectsizenum, totalsize, option1);
-            rectsizenum.moveTo(paintRect.width() / 2 + 80, paintRect.bottomLeft().y() + 20);
+            rectsizenum.moveTo(paintRect.width() / 2 + 115, paintRect.bottomLeft().y() + 20);
             if (usedsize.contains("-")) {
                 usedsize = "-";
             }
@@ -185,7 +185,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(iconcolor);
             painter.fillRect(Roundrect, brush1);
             //            QRect Round1rect1(rect.bottomLeft().x() + paintRect.width() / 2, paintRect.bottomLeft().y() + 20, 15, 15);
-            Roundrect.moveTo(paintRect.width() / 2 - 65, paintRect.bottomLeft().y() + 20);
+            Roundrect.moveTo(paintRect.width() / 2, paintRect.bottomLeft().y() + 20);
             QPainterPath painterPath;
             painterPath.addRoundedRect(Roundrect, 3, 3);
             QBrush brush2 = DApplicationHelper::instance()->palette(this).lightLively();
@@ -203,9 +203,9 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             QTextOption option;
             option.setAlignment(Qt::AlignTop);
             painter.drawText(recttext, QString(m_partitionpath + tr(" Capacity:")), option);
-            recttext.moveTo(paintRect.width() / 2 - 40, paintRect.bottomLeft().y() + 17);
+            recttext.moveTo(paintRect.width() / 2 + 20, paintRect.bottomLeft().y() + 17);
             painter.drawText(recttext, QString(tr("Used:")), option);
-            QRect rectsizenum = QRect(paintRect.bottomLeft().x() + 165, paintRect.bottomLeft().y() + 20, 100, 30);
+            QRect rectsizenum = QRect(paintRect.bottomLeft().x() + 145, paintRect.bottomLeft().y() + 20, 100, 30);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
             QColor text1color = m_parentPb.color(DPalette::Normal, DPalette::ToolTipText);
             painter.setFont(font);
@@ -213,7 +213,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             QTextOption option1;
             option.setAlignment(Qt::AlignLeft);
             painter.drawText(rectsizenum, totalsize, option1);
-            rectsizenum.moveTo(paintRect.width() / 2 + 80, paintRect.bottomLeft().y() + 20);
+            rectsizenum.moveTo(paintRect.width() / 2 + 115, paintRect.bottomLeft().y() + 20);
             if (usedsize.contains("-")) {
                 usedsize = "-";
             }

@@ -23,7 +23,7 @@ PartedCore::PartedCore(QObject *parent)
     connect(this, &PartedCore::sigRefreshDeviceInfo, this, &PartedCore::slotRefreshDeviceInfo);
     qDebug() << __FUNCTION__ << "^^1";
     for (PedPartitionFlag flag = ped_partition_flag_next(static_cast<PedPartitionFlag>(NULL));
-         flag; flag = ped_partition_flag_next(flag))
+            flag; flag = ped_partition_flag_next(flag))
         flags.push_back(flag);
     qDebug() << __FUNCTION__ << "^^2";
     find_supported_core();
@@ -96,8 +96,8 @@ void PartedCore::insert_unallocated(const QString &device_path, QVector<Partitio
     //look for gaps in between
     for (unsigned int t = 0; t < partitions.size() - 1; t++) {
         if (((partitions.at(t + 1)->sector_start - partitions.at(t)->sector_end - 1) > (MEBIBYTE / sector_size))
-            || ((partitions.at(t + 1)->type != TYPE_LOGICAL) // Only show exactly 1 MiB if following partition is not logical.
-                && ((partitions.at(t + 1)->sector_start - partitions.at(t)->sector_end - 1) == (MEBIBYTE / sector_size)))) {
+                || ((partitions.at(t + 1)->type != TYPE_LOGICAL) // Only show exactly 1 MiB if following partition is not logical.
+                    && ((partitions.at(t + 1)->sector_start - partitions.at(t)->sector_end - 1) == (MEBIBYTE / sector_size)))) {
             Sector temp_start = partitions.at(t)->sector_end + 1;
             Sector temp_end = partitions.at(t + 1)->sector_start - 1;
             Partition *partition_temp = new Partition();
@@ -684,7 +684,7 @@ void PartedCore::set_device_partitions(Device &device, PedDevice *lp_device, Ped
                                 partition_path,
                                 lp_partition->num,
                                 (lp_partition->type == PED_PARTITION_NORMAL) ? TYPE_PRIMARY
-                                                                             : TYPE_LOGICAL,
+                                : TYPE_LOGICAL,
                                 fstype,
                                 lp_partition->geom.start,
                                 lp_partition->geom.end,
@@ -878,7 +878,8 @@ FSType PartedCore::detect_filesystem_internal(const QString &path, Byte_Value se
         {512LL, "LABELONE", 536LL, "LVM2", FS_LVM2_PV},
         {1030LL, "\x34\x34", 0LL, NULL, FS_NILFS2},
         {65536LL, "ReIsEr4", 0LL, NULL, FS_REISER4},
-        {65600LL, "_BHRfS_M", 0LL, NULL, FS_BTRFS}};
+        {65600LL, "_BHRfS_M", 0LL, NULL, FS_BTRFS}
+    };
     // For simple BitLocker recognition consider validation of BIOS Parameter block
     // fields unnecessary.
     // *   Detecting BitLocker
@@ -1253,7 +1254,6 @@ bool PartedCore::resize(const Partition &partition_new)
                && resize_move_partition(curpartition, partition_new, true)
                && maximize_filesystem(partition_new);
     }
-
     return true;
 }
 
@@ -1269,7 +1269,7 @@ bool PartedCore::check_repair_filesystem(const Partition &partition)
         return true;
     qDebug() << QString("PartedCore::check_repair_filesystem:check file system on %1"
                         " for errors and (if possible) fix them")
-                    .arg(partition.get_path());
+             .arg(partition.get_path());
 
     bool succes = false;
     FileSystem *p_filesystem = NULL;
@@ -1283,7 +1283,6 @@ bool PartedCore::check_repair_filesystem(const Partition &partition)
         break;
     case FS::EXTERNAL:
         succes = (p_filesystem = get_filesystem_object(partition.fstype)) && p_filesystem->check_repair(partition);
-
         break;
     default:
         break;
@@ -1579,7 +1578,7 @@ bool PartedCore::create_partition(Partition &new_partition, Sector min_size)
 
         if (lp_partition) {
             if (new_partition.alignment == ALIGN_STRICT
-                || new_partition.alignment == ALIGN_MEBIBYTE) {
+                    || new_partition.alignment == ALIGN_MEBIBYTE) {
                 PedGeometry *geom = ped_geometry_new(lp_device, new_partition.sector_start, new_partition.get_sector_length());
                 if (geom) {
                     constraint = ped_constraint_exact(geom);

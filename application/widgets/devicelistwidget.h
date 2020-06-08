@@ -48,6 +48,7 @@ public slots:
 private:
     int flag = 0;
     int num = 0;
+    int a = 0;
     QString devicepath_;
     //    DMDbusHandler *m_handler;
     //    DmDiskinfoBox *m_box = nullptr;

@@ -16,10 +16,12 @@
 include /usr/share/dpkg/default.mk
 
 override_dh_auto_configure:
-	dh_auto_configure -- DAPP_VERSION=$(DEB_VERSION_UPSTREAM) DEFINES+="VERSION=$(DEB_VERSION_UPSTREAM)" LIB_INSTALL_DIR=/usr/lib/$(DEB_HOST_MULTIARCH)
+	dh_auto_configure -- \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DAPP_VERSION=$(DEB_VERSION_UPSTREAM) -DVERSION=$(DEB_VERSION_UPSTREAM) LIB_INSTALL_DIR=/usr/lib/$(DEB_HOST_MULTIARCH)
 
 %:
-	dh $@
+	dh $@ --parallel
 
 
 # dh_make generated override targets

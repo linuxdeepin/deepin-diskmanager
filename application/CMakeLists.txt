@@ -60,7 +60,6 @@ set(APP_ICONPATH "${APP_RES_DIR}/icons/deepin-diskmanager.svg")
 #execute_process(COMMAND bash "translate_generation.sh"
 #                    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/")
 
-
 file (GLOB DTNG_TS_FILES translations/*.ts)
 set (DTNG_CPP_FILES_FOR_I18N ${DTNG_CPP_FILES})
 qt5_create_translation(DTNG_QM_FILES
@@ -73,7 +72,7 @@ file(GLOB ALL_SOURCES "*.cpp" "./partedproxy/*.cpp" "./widgets/*.cpp" "./widgets
 file(GLOB ALL_HEADERS "*.h" "./partedproxy/*.h" "./widgets/*.h" "./widgets/customcontrol/*.h")
 
 include_directories(../basestruct)
-link_directories(${PROJECT_BINARY_DIR})
+#link_directories(${PROJECT_BINARY_DIR})
 set(ALL_SRCS   ${ALL_SOURCES} ${ALL_HEADERS})
 
 # 生成执行文件

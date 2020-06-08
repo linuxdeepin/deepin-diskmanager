@@ -1,86 +1,88 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="en_US" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="en_US">
 <context>
     <name>FormateDialog</name>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="21"/>
         <source>Format %1</source>
-        <translation>Format %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="22"/>
         <source>Formatting will erase all data on the disk, which cannot be undone</source>
-        <translation>Formatting will erase all data on the disk, which cannot be undone</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="28"/>
         <source>Name:</source>
-        <translation>Name:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="32"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="36"/>
         <source>File system:</source>
-        <translation>File system:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="49"/>
         <source>Cancel</source>
-        <translation>Cancel</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="50"/>
         <source>Format</source>
-        <translation>Format</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>InfoShowWidget</name>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="67"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="64"/>
         <source>Mount point:</source>
-        <translation>Mount point:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="73"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="70"/>
         <source>Free:</source>
-        <translation>Free:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="78"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="75"/>
         <source>Used:</source>
-        <translation>Used:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="83"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="80"/>
         <source>Type:</source>
-        <translation>Type:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="87"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="84"/>
         <source>Capacity:</source>
-        <translation>Capacity:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="91"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="88"/>
         <source>Volume label:</source>
-        <translation>Volume label:</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>InfoTopFrame</name>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="54"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="52"/>
         <source>Capacity</source>
-        <translation>Capacity</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="106"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="104"/>
         <source>File system</source>
-        <translation>File system</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -88,242 +90,246 @@
     <message>
         <location filename="../widgets/mountdialog.cpp" line="20"/>
         <source>Mount %1</source>
-        <translation>Mount %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="22"/>
         <source>Choose a mount point please</source>
-        <translation>Choose a mount point please</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="25"/>
         <source>Mount point:</source>
-        <translation>Mount point:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="35"/>
         <source>Cancel</source>
-        <translation>Cancel</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="36"/>
         <source>Mount</source>
-        <translation>Mount</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>PartChartShowing</name>
     <message>
-        <location filename="../widgets/customcontrol/partchartshowing.cpp" line="100"/>
+        <location filename="../widgets/customcontrol/partchartshowing.cpp" line="96"/>
         <source>Unallocated</source>
-        <translation>Unallocated</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>PartitionDialog</name>
     <message>
-        <location filename="../widgets/partitiondialog.cpp" line="35"/>
+        <location filename="../widgets/partitiondialog.cpp" line="36"/>
         <source>Partition %1</source>
-        <translation>Partition %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/partitiondialog.cpp" line="37"/>
+        <location filename="../widgets/partitiondialog.cpp" line="38"/>
         <source>It will increase the number of partitions on the disk</source>
-        <translation>It will increase the number of partitions on the disk</translation>
-    </message>
-    <message>
-        <location filename="../widgets/partitiondialog.cpp" line="44"/>
-        <source>Cancel</source>
-        <translation>Cancel</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/partitiondialog.cpp" line="45"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/partitiondialog.cpp" line="46"/>
         <source>Confirm</source>
-        <translation>Confirm</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>PartitionWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="44"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="42"/>
         <source>Partitioning %1</source>
-        <translation>Partitioning %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="45"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="43"/>
         <source>Click ‘+’ to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation>Click ‘+’ to increase the number of partitions. Click on each partition to change its name and file system.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="80"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="77"/>
         <source>Disk Information</source>
-        <translation>Disk Information</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="86"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="83"/>
         <source>Capacity:</source>
-        <translation>Capacity:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="90"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="87"/>
         <source>Partition selected:</source>
-        <translation>Partition selected:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="98"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="95"/>
         <source>Disk:</source>
-        <translation>Disk:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="102"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="185"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="99"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="182"/>
         <source>File system:</source>
-        <translation>File system:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="132"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="129"/>
         <source>Confirm</source>
-        <translation>Confirm</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="134"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="131"/>
         <source>Cancel</source>
-        <translation>Cancel</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="136"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="133"/>
         <source>Revert</source>
-        <translation>Revert</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="156"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="152"/>
         <source>Partition Information</source>
-        <translation>Partition Information</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="158"/>
+        <source>Number of partitions:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="162"/>
-        <source>Number of partitions:</source>
-        <translation>Number of partitions:</translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="166"/>
         <source>Delete last partition</source>
-        <translation>Delete last partition</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="176"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="173"/>
         <source>Name:</source>
-        <translation>Name:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="195"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="192"/>
         <source>Size:</source>
-        <translation>Size:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="284"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="322"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="340"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="280"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="317"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="335"/>
         <source>Unallocated</source>
-        <translation>Unallocated</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="549"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="574"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="539"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="565"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="550"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="575"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="540"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="566"/>
         <source>Size</source>
-        <translation>Size</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="34"/>
+        <location filename="../main.cpp" line="31"/>
         <source>Disk Utility</source>
-        <translation>Disk Utility</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="42"/>
+        <location filename="../main.cpp" line="39"/>
         <source>Disk Utility is a disk management tool for creating, 
  reorganizing and formatting partitions.</source>
-        <translation>Disk Utility is a disk management tool for creating, 
- reorganizing and formatting partitions.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ResizeDialog</name>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="18"/>
-        <source>Resize %1</source>
-        <translation>Resize %1</translation>
-    </message>
-    <message>
         <location filename="../widgets/resizedialog.cpp" line="19"/>
+        <source>Resize %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="20"/>
         <source>It will resize the partitions on the disk</source>
-        <translation>It will resize the partitions on the disk</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="28"/>
+        <location filename="../widgets/resizedialog.cpp" line="29"/>
         <source>Reserved size:</source>
-        <translation>Reserved size:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="43"/>
+        <location filename="../widgets/resizedialog.cpp" line="45"/>
         <source>Cancel</source>
-        <translation>Cancel</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="44"/>
+        <location filename="../widgets/resizedialog.cpp" line="46"/>
         <source>Confirm</source>
-        <translation>Confirm</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="99"/>
+        <source>have no unallocated space,can not resize</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="153"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="199"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="159"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="205"/>
         <source> Capacity:</source>
-        <translation> Capacity:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="155"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="201"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="161"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="207"/>
         <source>Used:</source>
-        <translation>Used:</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>TitleWidget</name>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="19"/>
-        <source>Partition</source>
-        <translation>Partition</translation>
-    </message>
-    <message>
         <location filename="../widgets/titlewidget.cpp" line="20"/>
-        <source>Format to</source>
-        <translation>Format to</translation>
+        <source>Partition</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="21"/>
-        <source>Mount</source>
-        <translation>Mount</translation>
+        <source>Format to</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="22"/>
-        <source>Unmount</source>
-        <translation>Unmount</translation>
+        <source>Mount</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="23"/>
+        <source>Unmount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="24"/>
         <source>Resize</source>
-        <translation>Resize</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -331,22 +337,22 @@
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="19"/>
         <source>Unmount %1</source>
-        <translation>Unmount %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="22"/>
         <source>Make sure there are no programs running on the disk</source>
-        <translation>Make sure there are no programs running on the disk</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="29"/>
         <source>Cancel</source>
-        <translation>Cancel</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="30"/>
         <source>Unmount</source>
-        <translation>Unmount</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

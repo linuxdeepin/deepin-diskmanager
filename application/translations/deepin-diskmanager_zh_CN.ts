@@ -1,86 +1,88 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN">
 <context>
     <name>FormateDialog</name>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="21"/>
         <source>Format %1</source>
-        <translation>将对%1进行格式化</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="22"/>
         <source>Formatting will erase all data on the disk, which cannot be undone</source>
-        <translation>格式化分区将会删除储存在磁盘上的所有数据，且无法撤销</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="28"/>
         <source>Name:</source>
-        <translation>分区名称：</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="32"/>
         <source>Name</source>
-        <translation>分区名称</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="36"/>
         <source>File system:</source>
-        <translation>分区格式：</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="49"/>
         <source>Cancel</source>
-        <translation>取消</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="50"/>
         <source>Format</source>
-        <translation>格式化</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>InfoShowWidget</name>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="67"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="64"/>
         <source>Mount point:</source>
-        <translation>挂载点：</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="73"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="70"/>
         <source>Free:</source>
-        <translation>可用空间：</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="78"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="75"/>
         <source>Used:</source>
-        <translation>已用空间：</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="83"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="80"/>
         <source>Type:</source>
-        <translation>类型：</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="87"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="84"/>
         <source>Capacity:</source>
-        <translation>总容量：</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="91"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="88"/>
         <source>Volume label:</source>
-        <translation>分卷卷标：</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>InfoTopFrame</name>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="54"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="52"/>
         <source>Capacity</source>
-        <translation>总容量</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="106"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="104"/>
         <source>File system</source>
-        <translation>格式</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -88,241 +90,246 @@
     <message>
         <location filename="../widgets/mountdialog.cpp" line="20"/>
         <source>Mount %1</source>
-        <translation>将对%1进行挂载</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="22"/>
         <source>Choose a mount point please</source>
-        <translation>请先设置挂载点</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="25"/>
         <source>Mount point:</source>
-        <translation>挂载点：</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="35"/>
         <source>Cancel</source>
-        <translation>取消</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="36"/>
         <source>Mount</source>
-        <translation>挂载</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>PartChartShowing</name>
     <message>
-        <location filename="../widgets/customcontrol/partchartshowing.cpp" line="100"/>
+        <location filename="../widgets/customcontrol/partchartshowing.cpp" line="96"/>
         <source>Unallocated</source>
-        <translation>空闲空间</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>PartitionDialog</name>
     <message>
-        <location filename="../widgets/partitiondialog.cpp" line="35"/>
+        <location filename="../widgets/partitiondialog.cpp" line="36"/>
         <source>Partition %1</source>
-        <translation>将对%1进行分区操作</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/partitiondialog.cpp" line="37"/>
+        <location filename="../widgets/partitiondialog.cpp" line="38"/>
         <source>It will increase the number of partitions on the disk</source>
-        <translation>即将对磁盘内的空间进行分区操作</translation>
-    </message>
-    <message>
-        <location filename="../widgets/partitiondialog.cpp" line="44"/>
-        <source>Cancel</source>
-        <translation>取消</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/partitiondialog.cpp" line="45"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/partitiondialog.cpp" line="46"/>
         <source>Confirm</source>
-        <translation>确定</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>PartitionWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="44"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="42"/>
         <source>Partitioning %1</source>
-        <translation>正在对%1进行分区操作</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="45"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="43"/>
         <source>Click ‘+’ to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation>点击“+”按钮来增加磁盘上的分区数量，点击每个分区来更改名称样式</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="80"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="77"/>
         <source>Disk Information</source>
-        <translation>磁盘信息</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="86"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="83"/>
         <source>Capacity:</source>
-        <translation>总容量：</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="90"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="87"/>
         <source>Partition selected:</source>
-        <translation>分区名称：</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="98"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="95"/>
         <source>Disk:</source>
-        <translation>磁盘：</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="102"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="185"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="99"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="182"/>
         <source>File system:</source>
-        <translation>分区格式：</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="132"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="129"/>
         <source>Confirm</source>
-        <translation>确定</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="134"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="131"/>
         <source>Cancel</source>
-        <translation>取消</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="136"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="133"/>
         <source>Revert</source>
-        <translation>复原</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="156"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="152"/>
         <source>Partition Information</source>
-        <translation>分区信息</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="158"/>
+        <source>Number of partitions:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="162"/>
-        <source>Number of partitions:</source>
-        <translation>分区操作：</translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="166"/>
         <source>Delete last partition</source>
-        <translation>删除最新分区</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="176"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="173"/>
         <source>Name:</source>
-        <translation>分区名称：</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="195"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="192"/>
         <source>Size:</source>
-        <translation>分区大小：</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="284"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="322"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="340"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="280"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="317"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="335"/>
         <source>Unallocated</source>
-        <translation>空闲空间</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="549"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="574"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="539"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="565"/>
         <source>Name</source>
-        <translation>分区名称</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="550"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="575"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="540"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="566"/>
         <source>Size</source>
-        <translation>分区大小</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="34"/>
+        <location filename="../main.cpp" line="31"/>
         <source>Disk Utility</source>
-        <translation>磁盘管理器</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="42"/>
+        <location filename="../main.cpp" line="39"/>
         <source>Disk Utility is a disk management tool for creating, 
  reorganizing and formatting partitions.</source>
-        <translation>磁盘管理器可帮助用户进行磁盘分区、空间调整、格式化等操作。</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ResizeDialog</name>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="18"/>
-        <source>Resize %1</source>
-        <translation>将对%1进行空间调整</translation>
-    </message>
-    <message>
         <location filename="../widgets/resizedialog.cpp" line="19"/>
+        <source>Resize %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="20"/>
         <source>It will resize the partitions on the disk</source>
-        <translation>即将对磁盘内的空间进行调整</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="28"/>
+        <location filename="../widgets/resizedialog.cpp" line="29"/>
         <source>Reserved size:</source>
-        <translation>保留空间：</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="43"/>
+        <location filename="../widgets/resizedialog.cpp" line="45"/>
         <source>Cancel</source>
-        <translation>取消</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="44"/>
+        <location filename="../widgets/resizedialog.cpp" line="46"/>
         <source>Confirm</source>
-        <translation>确定</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="99"/>
+        <source>have no unallocated space,can not resize</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="153"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="199"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="159"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="205"/>
         <source> Capacity:</source>
-        <translation>总容量：</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="155"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="201"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="161"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="207"/>
         <source>Used:</source>
-        <translation>已用空间：</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>TitleWidget</name>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="19"/>
-        <source>Partition</source>
-        <translation>分区</translation>
-    </message>
-    <message>
         <location filename="../widgets/titlewidget.cpp" line="20"/>
-        <source>Format to</source>
-        <translation>格式化</translation>
+        <source>Partition</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="21"/>
-        <source>Mount</source>
-        <translation>挂载</translation>
+        <source>Format to</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="22"/>
-        <source>Unmount</source>
-        <translation>卸载</translation>
+        <source>Mount</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="23"/>
+        <source>Unmount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="24"/>
         <source>Resize</source>
-        <translation>空间调整</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -330,22 +337,22 @@
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="19"/>
         <source>Unmount %1</source>
-        <translation>将对%1进行卸载</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="22"/>
         <source>Make sure there are no programs running on the disk</source>
-        <translation>请确认该磁盘无正在运行的程序</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="29"/>
         <source>Cancel</source>
-        <translation>取消</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="30"/>
         <source>Unmount</source>
-        <translation>卸载</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

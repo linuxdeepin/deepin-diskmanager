@@ -22,7 +22,10 @@
 #define DEVICELISTWIDGET_H
 #include "customcontrol/dmtreeview.h"
 #include "partedproxy/dmdbushandler.h"
+#include <dirent.h>
 #include <DWidget>
+#include <QTextCodec>
+#include <QByteArray>
 
 DWIDGET_USE_NAMESPACE
 
@@ -37,6 +40,7 @@ private:
     void initUi();
     void initConnection();
     void add();
+    QString toUtf8(char *str);
     DmTreeview *m_treeview = nullptr;
 
 signals:

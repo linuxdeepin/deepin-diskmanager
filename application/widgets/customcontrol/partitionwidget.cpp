@@ -155,7 +155,7 @@ void PartitionWidget::partInfoShowing()
     QHBoxLayout *line2Layout = new QHBoxLayout();
     line2Layout->setContentsMargins(0, 0, 0, 0);
     QHBoxLayout *line2Layout1 = new QHBoxLayout();
-    DLabel *partDoLabel = new DLabel(tr("Number of partitions:"), partWidget);
+    partDoLabel = new DLabel(tr("Number of partitions:"), partWidget);
     DLabel *labelspace = new DLabel(partWidget);
     addButton = new DIconButton(DStyle::SP_IncreaseElement);
     remButton = new DIconButton(DStyle::SP_DecreaseElement);
@@ -352,6 +352,9 @@ void PartitionWidget::setEnable()
         DPalette pa = DApplicationHelper::instance()->palette(botFrame);
         pa.setBrush(DPalette::Text, pa.placeholderText());
         botFrame->setPalette(pa);
+        DPalette pa1 = DApplicationHelper::instance()->palette(partDoLabel);
+        pa1.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
+        partDoLabel->setPalette(pa1);
     } else if (mflag == 3) {
         remButton->setEnabled(true);
         setEnable2();
@@ -574,6 +577,7 @@ void PartitionWidget::applyBtnSlot()
     PartitionInfo curinfo = phandler->getCurPartititonInfo();
     DeviceInfo device = phandler->getCurDeviceInfo();
     Sector beforend = curinfo.sector_start;
+
     for (int i = 0; i < m_patrinfo.size(); i++) {
         PartitionInfo newpart;
         newpart.sector_start = beforend;

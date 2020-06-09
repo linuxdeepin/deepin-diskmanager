@@ -38,7 +38,6 @@ void DmTreeview::initUI()
     setIndentation(0); //去除树型节点之间的缩进
     setWindowFlags(Qt::FramelessWindowHint); //无边框
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
     /* setAttribute(Qt::WA_TranslucentBackground)*/; //背景透明
 
     //    qDebug() << 2222222222222;
@@ -96,7 +95,6 @@ void DmTreeview::currentChanged(const QModelIndex &current, const QModelIndex &p
     emit sigCurSelectChanged(data.diskpath, data.partitonpath, data.start, data.end);
     diskSize = data.disksize;
     curNum = current.row();
-    qDebug() << curNum;
     //    emit sigSendInfo(data.diskpath, data.disksize, data.partitonpath, data.partitionsize, data.fstype, data.start, data.end);
 }
 void DmTreeview::mousePressEvent(QMouseEvent *event)
@@ -163,8 +161,6 @@ void DmTreeview::addSubItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
     }
     addItem(infobox, pcurItem);
 }
-
-
 QModelIndex DmTreeview::setDefaultdmItem()
 {
     //QModelIndex index = m_pSortViewFilter->index(0, 0, getRootItemIndex());

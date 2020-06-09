@@ -59,6 +59,68 @@ void DeviceListWidget::initConnection()
     connect(m_treeview, &DmTreeview::sigCurSelectChanged, DMDbusHandler::instance(), &DMDbusHandler::slotsetCurSelect);
 }
 
+QString DeviceListWidget::toUtf8(char *str)
+{
+    QTextCodec *utf8 = QTextCodec::codecForName("UTF-8");
+    QTextCodec *gbk = QTextCodec::codecForName("");
+    QString strtem("%1");
+    strtem = strtem.arg(str);
+    qDebug() << str;
+    if (strtem.count("\\x") > 0) {
+        QByteArray arr = str;
+        qDebug() << str ;
+        QByteArray ba = str;
+        QString link(ba);
+        QByteArray t_destByteArray;
+        QByteArray t_tmpByteArray;
+        for (int i = 0; i < ba.size(); i++) {
+            if (92 == ba.at(i)) {
+                if (4 == t_tmpByteArray.size()) {
+                    t_destByteArray.append(QByteArray::fromHex(t_tmpByteArray));
+                } else {
+                    if (t_tmpByteArray.size() > 4) {
+                        t_destByteArray.append(QByteArray::fromHex(t_tmpByteArray.left(4)));
+                        t_destByteArray.append(t_tmpByteArray.mid(4));
+                    } else {
+                        t_destByteArray.append(t_tmpByteArray);
+                    }
+                }
+                t_tmpByteArray.clear();
+                t_tmpByteArray.append(ba.at(i));
+                continue;
+            } else if (t_tmpByteArray.size() > 0) {
+                t_tmpByteArray.append(ba.at(i));
+                continue;
+            } else {
+                t_destByteArray.append(ba.at(i));
+            }
+        }
+
+        if (4 == t_tmpByteArray.size()) {
+            t_destByteArray.append(QByteArray::fromHex(t_tmpByteArray));
+        } else {
+            if (t_tmpByteArray.size() > 4) {
+                t_destByteArray.append(QByteArray::fromHex(t_tmpByteArray.left(4)));
+                t_destByteArray.append(t_tmpByteArray.mid(4));
+            } else {
+                t_destByteArray.append(t_tmpByteArray);
+            }
+        }
+
+        link = QTextCodec::codecForName("GBK")->toUnicode(t_destByteArray);
+        qDebug() << link;
+        int idx = link.lastIndexOf("/", link.length() - 1);
+        QString stres = link.mid(idx + 1);
+        if (strtem.count("\\x") > 0) {
+            return stres;
+
+
+        }
+        return  stres;
+    }
+    return  str;
+}
+
 void DeviceListWidget::slotUpdateDeviceInfo()
 {
     qDebug() << __FUNCTION__ << "               1";
@@ -97,7 +159,10 @@ void DeviceListWidget::slotUpdateDeviceInfo()
             qDebug() << s_mountpoints;
             qDebug() << s_fstype;
             qDebug() << it->filesystem_label;
-            QString s_filesystem_label = it->filesystem_label;
+            QByteArray array = it->filesystem_label.toLatin1();
+            char *p = array.data();
+            QString s_filesystem_label = toUtf8(p);
+            qDebug() << s_filesystem_label << "cnmcnm";
             auto m_childbox = new DmDiskinfoBox(1, this, it->device_path, "", s_partitionpath, s_pdisksize, s_usedstr, s_unusedstr, it->sectors_unallocated,
                                                 it->sector_start, it->sector_end, s_fstype, s_mountpoints, s_filesystem_label);
             m_box->childs.append(m_childbox);

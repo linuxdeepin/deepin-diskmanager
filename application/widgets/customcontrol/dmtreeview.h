@@ -23,6 +23,7 @@
 
 #include "dmtreeviewdelegate.h"
 #include "dmdiskinfobox.h"
+#include "partitionwidget.h"
 #include <DTreeView>
 #include <QStandardItemModel>
 #include <QWidget>
@@ -64,7 +65,8 @@ private:
     QSortFilterProxyModel *m_pSortViewFilter {nullptr};
     QString diskSize;
     int curNum = -1;
-
+    PartitionWidget *m_partotionwidget = nullptr;
+    int partitionsize = 0;
 protected:
     void currentChanged(const QModelIndex &current, const QModelIndex &previous) override;
     void mousePressEvent(QMouseEvent *event) override;

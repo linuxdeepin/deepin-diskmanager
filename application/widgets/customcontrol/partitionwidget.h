@@ -78,7 +78,6 @@ private:
 
 signals:
     void senderData(int x, int y, int z);
-
 public slots:
     void slotSliderValueChanged(int value);
     void slotSetSliderValue();
@@ -104,9 +103,10 @@ private:
     DLabel *deviceFormate;
     DLabel *deviceName;
     DLabel *selectedPartition;
+    DLabel *partNameLabel;
+    DLabel *partDoLabel;
     DIconButton *addButton;
     DIconButton *remButton;
-    DLabel *partNameLabel;
     //    DScrollArea *scrollArea;
     QWidget *partWidget;
     DPushButton *applyBtn;
@@ -133,6 +133,8 @@ private:
     QVector<QString> partName;
     QVector<stPart> m_patrinfo;
 
+    //    QVector<QString> partPaths;
+    //    QHash<int, QVector<double>> sizeinfos;
 };
 
 #endif // PARTITIONWIDGET_H

@@ -95,6 +95,8 @@ void DmTreeview::currentChanged(const QModelIndex &current, const QModelIndex &p
     emit sigselectitem(current);
     emit sigCurSelectChanged(data.diskpath, data.partitonpath, data.start, data.end);
     diskSize = data.disksize;
+    curNum = current.row();
+    qDebug() << curNum;
     //    emit sigSendInfo(data.diskpath, data.disksize, data.partitonpath, data.partitionsize, data.fstype, data.start, data.end);
 }
 void DmTreeview::mousePressEvent(QMouseEvent *event)
@@ -162,6 +164,7 @@ void DmTreeview::addSubItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
     addItem(infobox, pcurItem);
 }
 
+
 QModelIndex DmTreeview::setDefaultdmItem()
 {
     //QModelIndex index = m_pSortViewFilter->index(0, 0, getRootItemIndex());
@@ -185,7 +188,12 @@ void DmTreeview::setRefreshItem(const QString &devicepath, int num)
     } else if (devicepath.contains("sdf")) {
         devicenum = 5;
     }
-    this->setCurrentIndex(model()->index(devicenum, 0).child(num - 1, 0));
+    this->setCurrentIndex(model()->index(devicenum, 0).child(num, 0));
+}
+
+int DmTreeview::currentNum()
+{
+    return curNum;
 }
 QStandardItem *DmTreeview::getRootItem()
 {

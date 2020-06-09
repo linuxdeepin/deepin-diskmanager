@@ -49,11 +49,10 @@ public:
     QModelIndex getRootItemIndex();
     QModelIndex setDefaultdmItem();
     void setRefreshItem(const QString &devicepath, int num);
-
+    int currentNum();
     void addItem(DmDiskinfoBox *infobox, QStandardItem *puritem = nullptr);
     void addTopItem(DmDiskinfoBox *mailbox);
     void addSubItem(DmDiskinfoBox *mailbox, QStandardItem *pcurItem);
-
     QStandardItemModel *m_model {nullptr};
 signals:
     void sigselectitem(const QModelIndex &index);
@@ -64,6 +63,7 @@ private:
     QAbstractItemDelegate *m_delegate {nullptr};
     QSortFilterProxyModel *m_pSortViewFilter {nullptr};
     QString diskSize;
+    int curNum = -1;
 
 protected:
     void currentChanged(const QModelIndex &current, const QModelIndex &previous) override;

@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     QPixmap px(QIcon::fromTheme(app_name).pixmap(256 * qApp->devicePixelRatio(), 256 * qApp->devicePixelRatio()));
     px.setDevicePixelRatio(qApp->devicePixelRatio());
     a.setProductIcon(QIcon(px));
-    a.setApplicationDescription(QObject::tr("Disk Utility is a disk management tool for creating, \n reorganizing and formatting partitions."));
+    a.setApplicationDescription(QObject::tr("Disk Utility is a disk management tool for creating, reorganizing and formatting partitions."));
 
     DApplicationSettings savetheme;
     Dtk::Core::DLogManager::registerConsoleAppender();

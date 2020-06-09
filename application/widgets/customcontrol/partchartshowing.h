@@ -63,8 +63,9 @@ private:
     QVector<QColor> basecolor;
     QVector<QPainterPath> allpath;
     int number = -1;
-    double sum = 0.00;
+    double sums = 0.00;
     int i = 0;
+    int count = 0;
     double sumvalue = 0.0000001;
 };
 

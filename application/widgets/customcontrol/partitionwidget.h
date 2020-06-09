@@ -63,7 +63,11 @@ public:
     void botFrameSetting();
     void partInfoShowing();
     void getPartitionInfo();
-
+    void setEnable();
+    void setUseEnable();
+    void setEnable2();
+    void setLabelColor();
+    void setLabelColorGray();
     void initConnection();
     double leaveSpace();
     void setSelectValue();
@@ -85,9 +89,7 @@ public slots:
     void revertBtnSlot();
     void cancelBtnSlot();
     void showSelectPathInfo(const int &flag, const int &num, const int &posX);
-    void setEnable();
-    void setUseEnable();
-    void setEnable2();
+
     void comboxCurTextSlot();
     void judgeLastPartitionSlot();
 
@@ -97,13 +99,14 @@ private:
     DFrame *midFrame;
     DFrame *botFrame;
     //    DFrame *parInfoFrame;
-
+    DLabel *partInfoLabel;
     DLabel *allMemory;
     DLabel *deviceFormate;
     DLabel *deviceName;
     DLabel *selectedPartition;
     DIconButton *addButton;
     DIconButton *remButton;
+    DLabel *partNameLabel;
     //    DScrollArea *scrollArea;
     QWidget *partWidget;
     DPushButton *applyBtn;
@@ -120,17 +123,16 @@ private:
 
     int number = -1;
     double total = 0.00;
+    double mTotal = 0.00;
     int mflag = -1;
     double currentSize = 0.00;
     int GM = 0;
     int m_value = 0;
-
-    //    QVector<QString> partPaths;
-    //    QHash<int, QVector<double>> sizeinfos;
+    int block = 0;
     QVector<double> sizeInfo;
     QVector<QString> partName;
     QVector<stPart> m_patrinfo;
-    int block = 0;
+
 };
 
 #endif // PARTITIONWIDGET_H

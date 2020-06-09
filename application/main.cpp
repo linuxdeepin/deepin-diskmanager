@@ -1,3 +1,4 @@
+#include "environments.h"
 #include "cusapplication.h"
 #include "widgets/widgetdeclare.h"
 #include "widgets/mainwindow.h"
@@ -29,7 +30,7 @@ int main(int argc, char *argv[])
     a.setOrganizationName("deepin");
     a.setWindowIcon(QIcon::fromTheme(app_name));
     a.setApplicationDisplayName(QObject::tr("Disk Utility"));
-    a.setApplicationVersion(DApplication::buildVersion("20191227"));
+    a.setApplicationVersion(/*DApplication::buildVersion("20191227")*/VERSION);
     const QString acknowledgementLink = "https://www.deepin.org/acknowledgments/deepin_reader";
     a.setApplicationAcknowledgementPage(acknowledgementLink);
 

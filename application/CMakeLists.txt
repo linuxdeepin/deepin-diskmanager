@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.0)
 project(deepin-diskmanager)
 
+if (NOT DEFINED VERSION)
+    message(WARNING "Not defined version ,about dialog version set 9.9.9.9")
+    set(VERSION 9.9.9.9)
+endif ()
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)#moc 预编译包含QObject文件，生成xx_moc.h cpp
@@ -35,6 +39,8 @@ set(APP_RES_DIR "assets")
 set(APP_DESKTOP "${APP_RES_DIR}/deepin-diskmanager.desktop")
 set(APP_QRC "${APP_RES_DIR}/icons.qrc")
 set(APP_ICONPATH "${APP_RES_DIR}/icons/deepin-diskmanager.svg")
+
+configure_file(${APP_RES_DIR}/environments.h.in environments.h @ONLY)
 
 #lupdate start
 #set(TS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/translations")

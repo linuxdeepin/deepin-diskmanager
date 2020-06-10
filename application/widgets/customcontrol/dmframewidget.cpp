@@ -57,7 +57,6 @@ void DmFrameWidget::setFrameData()
         m_infodata.used = "-";
     }
     QString partitionpath = data.path.remove(0, 5);
-    qDebug() << data.path.remove(0, 5) << "1111123";
     m_infodata.fstype = Utils::FSTypeToString((FSType)data.fstype);
     m_infodata.partitionsize = Utils::format_size(data.sector_end - data.sector_start, data.sector_size);
     if (data.filesystem_label == "") {
@@ -79,18 +78,15 @@ QString DmFrameWidget::diskVolumn(QString partitionpath)
         qWarning() << "waitForFinished Failed:" << app.errorString();
     }
     QString standardError = app.readAllStandardOutput();
-    qDebug() << app.readAllStandardOutput();
     QStringList mounts = standardError.split("\n").filter(partitionpath);
     QString sr = mounts.last();
     QString st = sr.mid(40).remove(" -> ../../" + partitionpath);
     std::string s = st.toStdString();
     const char *strstr = s.c_str();
-    qDebug() << mounts << endl << sr << endl << st;
     QString strtem("%1");
     strtem = strtem.arg(st);
     if (strtem.count("\\x") > 0) {
         QByteArray arr = strstr;
-        qDebug() << strstr ;
         QByteArray ba = strstr;
         QString link(ba);
         QByteArray t_destByteArray;
@@ -130,11 +126,9 @@ QString DmFrameWidget::diskVolumn(QString partitionpath)
         }
 
         link = QTextCodec::codecForName("GBK")->toUnicode(t_destByteArray);
-        qDebug() << link;
         int idx = link.lastIndexOf("/", link.length() - 1);
         QString stres = link.mid(idx + 1);
         if (strtem.count("\\x") > 0) {
-            qDebug() << stres;
             return  stres;
         }
     } else {

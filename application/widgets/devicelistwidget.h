@@ -40,7 +40,6 @@ private:
     void initUi();
     void initConnection();
     void add();
-    QString toUtf8(char *str);
     DmTreeview *m_treeview = nullptr;
 
 signals:

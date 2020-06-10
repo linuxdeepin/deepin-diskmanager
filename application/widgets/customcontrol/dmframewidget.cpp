@@ -56,10 +56,88 @@ void DmFrameWidget::setFrameData()
     if (m_infodata.used.contains("-")) {
         m_infodata.used = "-";
     }
+    QString partitionpath = data.path.remove(0, 5);
+    qDebug() << data.path.remove(0, 5) << "1111123";
     m_infodata.fstype = Utils::FSTypeToString((FSType)data.fstype);
     m_infodata.partitionsize = Utils::format_size(data.sector_end - data.sector_start, data.sector_size);
-    m_infodata.syslabel = data.filesystem_label;
+
+    m_infodata.syslabel = diskVolumn(partitionpath);
+
     update();
+}
+
+QString DmFrameWidget::diskVolumn(QString partitionpath)
+{
+    QProcess app;
+    app.start("ls", QStringList() << "-al" << "/dev/disk/by-label/");
+    if (!app.waitForStarted()) {
+        qWarning() << "Cmd Exec Failed:" << app.errorString();
+    }
+    if (!app.waitForFinished(-1)) {
+        qWarning() << "waitForFinished Failed:" << app.errorString();
+    }
+    QString standardError = app.readAllStandardOutput();
+    qDebug() << app.readAllStandardOutput();
+    QStringList mounts = standardError.split("\n").filter(partitionpath);
+    QString sr = mounts.last();
+    QString st = sr.mid(40).remove(" -> ../../" + partitionpath);
+    std::string s = st.toStdString();
+    const char *strstr = s.c_str();
+    qDebug() << mounts << endl << sr << endl << st;
+    QString strtem("%1");
+    strtem = strtem.arg(st);
+    if (strtem.count("\\x") > 0) {
+        QByteArray arr = strstr;
+        qDebug() << strstr ;
+        QByteArray ba = strstr;
+        QString link(ba);
+        QByteArray t_destByteArray;
+        QByteArray t_tmpByteArray;
+        for (int i = 0; i < ba.size(); i++) {
+            if (92 == ba.at(i)) {
+                if (4 == t_tmpByteArray.size()) {
+                    t_destByteArray.append(QByteArray::fromHex(t_tmpByteArray));
+                } else {
+                    if (t_tmpByteArray.size() > 4) {
+                        t_destByteArray.append(QByteArray::fromHex(t_tmpByteArray.left(4)));
+                        t_destByteArray.append(t_tmpByteArray.mid(4));
+                    } else {
+                        t_destByteArray.append(t_tmpByteArray);
+                    }
+                }
+                t_tmpByteArray.clear();
+                t_tmpByteArray.append(ba.at(i));
+                continue;
+            } else if (t_tmpByteArray.size() > 0) {
+                t_tmpByteArray.append(ba.at(i));
+                continue;
+            } else {
+                t_destByteArray.append(ba.at(i));
+            }
+        }
+
+        if (4 == t_tmpByteArray.size()) {
+            t_destByteArray.append(QByteArray::fromHex(t_tmpByteArray));
+        } else {
+            if (t_tmpByteArray.size() > 4) {
+                t_destByteArray.append(QByteArray::fromHex(t_tmpByteArray.left(4)));
+                t_destByteArray.append(t_tmpByteArray.mid(4));
+            } else {
+                t_destByteArray.append(t_tmpByteArray);
+            }
+        }
+
+        link = QTextCodec::codecForName("GBK")->toUnicode(t_destByteArray);
+        qDebug() << link;
+        int idx = link.lastIndexOf("/", link.length() - 1);
+        QString stres = link.mid(idx + 1);
+        if (strtem.count("\\x") > 0) {
+            qDebug() << stres;
+            return  stres;
+        }
+    } else {
+        return  st;
+    }
 }
 
 void DmFrameWidget::paintEvent(QPaintEvent *event)
@@ -68,7 +146,6 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)
     QWidget::paintEvent(event);
     painter.save();
     painter.setRenderHint(QPainter::Antialiasing); // 反锯齿;
-    QRect rect = this->rect();
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
     if (themeType == DGuiApplicationHelper::LightType) {
         m_parentPb = DApplicationHelper::instance()->palette(this);

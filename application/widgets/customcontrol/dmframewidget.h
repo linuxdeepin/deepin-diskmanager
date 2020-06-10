@@ -29,6 +29,11 @@
 #include <QWidget>
 #include <QPainter>
 #include <QTextOption>
+#include <QTextCodec>
+#include <dirent.h>
+#include <QByteArray>
+#include <QDebug>
+#include <QProcess>
 DWIDGET_USE_NAMESPACE
 
 class DmFrameWidget : public DFrame
@@ -41,7 +46,7 @@ signals:
 
 public:
     void setFrameData();
-
+    QString diskVolumn(QString partitionpath);
 public slots:
     void slothandleChangeTheme();
     QString diffMountpoints(int width, QString mountpoints);

@@ -99,12 +99,12 @@ private:
     DFrame *botFrame;
     //    DFrame *parInfoFrame;
     DLabel *partInfoLabel;
+    DLabel *partDoLabel;
     DLabel *allMemory;
     DLabel *deviceFormate;
     DLabel *deviceName;
     DLabel *selectedPartition;
     DLabel *partNameLabel;
-    DLabel *partDoLabel;
     DIconButton *addButton;
     DIconButton *remButton;
     //    DScrollArea *scrollArea;

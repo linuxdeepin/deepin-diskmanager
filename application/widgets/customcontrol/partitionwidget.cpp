@@ -216,7 +216,7 @@ void PartitionWidget::getPartitionInfo()
     PartitionInfo data;
     auto it = DMDbusHandler::instance()->probDeviceInfo().find(DMDbusHandler::instance()->getCurPartititonInfo().device_path);
     if (it != DMDbusHandler::instance()->probDeviceInfo().end()) {
-        s_disksize = QString::number(Utils::sector_to_unit(it.value().length, it.value().sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GiB";
+        s_disksize = QString::number(Utils::sector_to_unit(it.value().length, it.value().sector_size, SIZE_UNIT::UNIT_GIB)) + "GiB";
         data = DMDbusHandler::instance()->getCurPartititonInfo();
     }
     QString s_pdisksize = QString::number(Utils::sector_to_unit(data.sector_end - data.sector_start, data.sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GiB";
@@ -352,9 +352,6 @@ void PartitionWidget::setEnable()
         DPalette pa = DApplicationHelper::instance()->palette(botFrame);
         pa.setBrush(DPalette::Text, pa.placeholderText());
         botFrame->setPalette(pa);
-        DPalette pa1 = DApplicationHelper::instance()->palette(partDoLabel);
-        pa1.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
-        partDoLabel->setPalette(pa1);
     } else if (mflag == 3) {
         remButton->setEnabled(true);
         setEnable2();
@@ -364,7 +361,7 @@ void PartitionWidget::setEnable()
     }
     setLabelColor();
     qDebug() << leaveSpace() << mTotal;
-    if (leaveSpace() >= mTotal && mflag == -1) {
+    if (leaveSpace() >= mTotal && (mflag == -1 || mflag == 3)) {
         qDebug() << "11111";
         setLabelColorGray();
     }
@@ -426,6 +423,9 @@ void PartitionWidget::setLabelColor()
     DPalette pa1 = DApplicationHelper::instance()->palette(partInfoLabel);
     pa1.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
     partInfoLabel->setPalette(pa1);
+    DPalette pa2 = DApplicationHelper::instance()->palette(partDoLabel);
+    pa2.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
+    partDoLabel->setPalette(pa2);
 }
 
 void PartitionWidget::setLabelColorGray()
@@ -439,10 +439,16 @@ void PartitionWidget::comboxCurTextSlot()
 {
     if (partComCobox->currentText() == "MiB") {
         GM = 1;
-        partSizeEdit->setText(QString::number(mTotal - leaveSpace()));
+//        partSizeEdit->setText(QString::number(mTotal - leaveSpace()));
+        double m = partSizeEdit->text().toDouble();
+        partSizeEdit->setText(QString::number(m * 1024));
+        qDebug() << m;
+
     } else if (partComCobox->currentText() == "GiB") {
         GM = 2;
-        partSizeEdit->setText(QString::number(total - (leaveSpace() / 1024)));
+        double m = partSizeEdit->text().toDouble();
+        partSizeEdit->setText(QString::number(m / 1024));
+//        partSizeEdit->setText(QString::number(total - (leaveSpace() / 1024)));
     }
 }
 

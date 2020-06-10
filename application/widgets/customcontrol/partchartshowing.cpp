@@ -30,6 +30,7 @@ PartChartShowing::PartChartShowing(QWidget *parent)
     QColor color4("#FFD027");
     QColor color5("#2CCBBE");
     basecolor = QVector<QColor> {color, color1, color2, color3, color4, color5};
+
 }
 
 void PartChartShowing::getData(const double &totals, const QVector<double> sizeInfo)
@@ -45,12 +46,8 @@ void PartChartShowing::getflag(int mflag, int value)
     update();
 }
 
-//void PartChartShowing::slotvalue(int value)
-//{
-//    sumvalue += value / 100.00;
-//    qDebug() << value / 100.00;;
-//    qDebug() << sumvalue;
-//}
+
+
 
 void PartChartShowing::paintEvent(QPaintEvent *event)
 {
@@ -61,9 +58,8 @@ void PartChartShowing::paintEvent(QPaintEvent *event)
     rect.setX(this->x());
     rect.setY(this->y());
     rect.setWidth(this->width());
-    QRect paintRect = QRect(5, 10, rect.width() - 3, 35);
+    QRect paintRect = QRect(5, 10, rect.width() - 5, 35);
     QPainterPath paintpath;
-//    const int radius = 8;
 
     paintpath.moveTo(paintRect.bottomRight() - QPoint(0, radius));
     paintpath.lineTo(paintRect.topRight() + QPoint(0, radius));
@@ -302,3 +298,5 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
         emit sendFlag(flag, number, x);
     }
 }
+
+

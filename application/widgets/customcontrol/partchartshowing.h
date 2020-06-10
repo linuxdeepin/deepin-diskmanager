@@ -29,7 +29,7 @@
 #include <QPointF>
 #include <QLine>
 #include <QMouseEvent>
-
+#include <QEvent>
 DWIDGET_USE_NAMESPACE
 
 class PartChartShowing : public QWidget
@@ -40,7 +40,6 @@ public:
     //    PartChartShowing(int used, int trueused, int noused, QWidget *parent = nullptr);
     void getData(const double &totals, const QVector<double> sizeInfo);
     void getflag(int mflag, int value = 0);
-
 signals:
     void sendFlag(int flag, int num, int posX);
     void judgeLastPartition();
@@ -67,6 +66,7 @@ private:
     int i = 0;
     int count = 0;
     double sumvalue = 0.0000001;
+
 };
 
 #endif // PARTCHARTSHOWING_H

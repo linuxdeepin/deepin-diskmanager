@@ -43,10 +43,9 @@ public:
 signals:
     void sendFlag(int flag, int num, int posX);
     void judgeLastPartition();
+//    void mousemove(QMouseEvent *event);
 public slots:
-    /*    void slotvalue(int value)*/
-
-    // QWidget interface
+//    void showMouseTip(QMouseEvent *event);
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
     void addPaint(QPainter *painter);
@@ -67,6 +66,10 @@ private:
     int count = 0;
     double sumvalue = 0.0000001;
 
+
+    // QWidget interface
+protected:
+    virtual void mouseMoveEvent(QMouseEvent *event) override;
 };
 
 #endif // PARTCHARTSHOWING_H

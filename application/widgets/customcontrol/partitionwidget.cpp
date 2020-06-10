@@ -323,7 +323,6 @@ void PartitionWidget::showSelectPathInfo(const int &flag, const int &num, const 
         if (partName.at(num) != " ")
             QToolTip::showText(QPoint(x + posX + 5, y + 215), partName.at(num), this, QRect(QPoint(x + posX, y + 215), QSize(80, 20)), 2000);
         partNameEdit->lineEdit()->setPlaceholderText(partName.at(num));
-
         double clicked = sizeInfo.at(num);
         if (partComCobox->currentText() == "GiB")
             clicked = clicked / 1024;

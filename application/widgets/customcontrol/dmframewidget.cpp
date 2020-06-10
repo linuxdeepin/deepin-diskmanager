@@ -60,9 +60,11 @@ void DmFrameWidget::setFrameData()
     qDebug() << data.path.remove(0, 5) << "1111123";
     m_infodata.fstype = Utils::FSTypeToString((FSType)data.fstype);
     m_infodata.partitionsize = Utils::format_size(data.sector_end - data.sector_start, data.sector_size);
-
-    m_infodata.syslabel = diskVolumn(partitionpath);
-
+    if (data.filesystem_label == "") {
+        m_infodata.syslabel = "";
+    } else {
+        m_infodata.syslabel = diskVolumn(partitionpath);
+    }
     update();
 }
 
@@ -138,6 +140,7 @@ QString DmFrameWidget::diskVolumn(QString partitionpath)
     } else {
         return  st;
     }
+
 }
 
 void DmFrameWidget::paintEvent(QPaintEvent *event)

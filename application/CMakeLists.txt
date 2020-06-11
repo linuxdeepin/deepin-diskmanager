@@ -43,7 +43,10 @@ set(APP_QRC "${APP_RES_DIR}/icons.qrc")
 set(APP_ICONPATH "${APP_RES_DIR}/icons/deepin-diskmanager.svg")
 
 configure_file(${APP_RES_DIR}/environments.h.in environments.h @ONLY)
-
+#add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/translations")
+#set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM 1 "${CMAKE_CURRENT_SOURCE_DIR}/translations")
+#set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/translations PROPERTY CLEAN_NO_CUSTOM  1)
+set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM 1 )
 #lupdate start
 set(TS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/translations")
 set(TS_FILES
@@ -59,6 +62,7 @@ endforeach()
 file (GLOB DTNG_TS_FILES translations/*.ts)
 qt5_create_translation(DTNG_QM_FILES
     ${DTNG_TS_FILES}
+     ${DTNG_QM_FILES}
      )
 
 file(GLOB ALL_SOURCES "*.cpp" "./partedproxy/*.cpp" "./widgets/*.cpp" "./widgets/customcontrol/*.cpp")

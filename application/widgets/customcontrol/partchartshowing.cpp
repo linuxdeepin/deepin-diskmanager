@@ -315,7 +315,7 @@ void PartChartShowing::mouseMoveEvent(QMouseEvent *event)
             if (partsize.at(i) / total < 0.01) {
                 width = 8;
             }
-            if ((x > allpath[i].currentPosition().x() && x < (allpath[i].currentPosition().x() + width) && y > 10 && y < 40) || (i == 0 && y > 10 && y < 40)) {
+            if ((x > allpath[i].currentPosition().x() && x < (allpath[i].currentPosition().x() + width) && y > 10 && y < 40)) {
                 number = i;
                 emit sendMoveFlag(2, number, x);
             }

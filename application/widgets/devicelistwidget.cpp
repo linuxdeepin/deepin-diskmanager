@@ -79,6 +79,7 @@ void DeviceListWidget::slotUpdateDeviceInfo()
             QString s_partitionpath = it->path.remove(0, 5);
             QString s_unusedstr = Utils::format_size(it->sectors_used, it->sector_size);
             QString s_usedstr = Utils::format_size(it->sectors_unused, it->sector_size);
+            qDebug() << s_pdisksize;
             qDebug() << it->partition_number;
             qDebug() << s_unusedstr << "unused";
             qDebug() << s_usedstr << "used";

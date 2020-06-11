@@ -70,6 +70,10 @@ private:
     // QWidget interface
 protected:
     virtual void mouseMoveEvent(QMouseEvent *event) override;
+
+    // QWidget interface
+protected:
+    virtual void enterEvent(QEvent *event) override;
 };
 
 #endif // PARTCHARTSHOWING_H

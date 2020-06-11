@@ -74,8 +74,8 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
     QRect paintRect = QRect(0, 60, rect.width(), rect.height() - 150);
     QPainterPath paintpath0;
     int radius = 8;
-    int sizeflag = 8;
-    const double total = m_used + m_noused;
+//    int sizeflag = 8;
+//    const double total = m_used + m_noused;
     //根据color和size数据遍历绘制矩形
     for (int i = 0; i < sizeinfo.size(); i++) {
         if (i == 0) {

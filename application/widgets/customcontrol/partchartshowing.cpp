@@ -138,7 +138,7 @@ void PartChartShowing::addPaint(QPainter *painter)
                 path[0].lineTo(paintRect.topLeft() + QPoint((widths + radius), 0));
                 path[0].lineTo(paintRect.topLeft() + QPoint(radius, 0));
             }
-            qDebug() << path[0].currentPosition().x();
+//            qDebug() << path[0].currentPosition().x();
             if (static_cast<int>(sum) >= static_cast<int>(total)) {
                 path[0].moveTo(paintRect.bottomRight() - QPoint(0, radius));
                 path[0].lineTo(paintRect.topRight() + QPoint(0, radius));
@@ -192,7 +192,7 @@ void PartChartShowing::addPaint(QPainter *painter)
                 painter->drawPath(path[number]);
                 flag = 0;
             }
-        } else if (sumvalue >= 100) {
+        } else if (sumvalue >= 100 || sum >= total) {
             double width = ((partsize.at(partsize.size() - 2) / total)) * (paintRect.width() - radius) - rightspace;
             if (partsize.at(partsize.size() - 2) / total < 0.01) {
                 width = 8;
@@ -285,7 +285,7 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
                 i = -1;
                 number = 100;
                 update();
-                qDebug() << x << allpath[partsize.size() - 1].currentPosition().x() + width1 << this->width();
+//                qDebug() << x << allpath[partsize.size() - 1].currentPosition().x() + width1 << this->width();
             }
         }
     }
@@ -319,8 +319,9 @@ void PartChartShowing::mouseMoveEvent(QMouseEvent *event)
             if (partsize.at(i) / total < 0.01) {
                 width = 8;
             }
-            if ((x > allpath[i].currentPosition().x() && x < (allpath[i].currentPosition().x() + width) && y > 10 && y < 45) || (i == 0 && y > 10 && y < 45)) {
-
+            if ((x > allpath[i].currentPosition().x() && x < (allpath[i].currentPosition().x() + width) && y > 10 && y < 40) || (i == 0 && y > 10 && y < 40)) {
+                number = i;
+                this->setToolTip(QString::number(number));
             }
         }
         //空闲分区
@@ -334,6 +335,11 @@ void PartChartShowing::mouseMoveEvent(QMouseEvent *event)
 
         }
     }
+
+}
+
+void PartChartShowing::enterEvent(QEvent *event)
+{
 
 }
 

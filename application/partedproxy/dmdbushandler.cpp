@@ -57,7 +57,7 @@ void DMDbusHandler::slotsetCurSelect(const QString &devicepath, const QString &p
         if (it != m_devicemap.end()) {
             for (PartitionInfo info : it.value().partition) {
                 if (info.sector_start == start && info.sector_end == end) {
-                    qDebug() << info.partition_number << info.path << Utils::FSTypeToString((FSType)info.fstype);
+                    qDebug() << info.partition_number << info.path << Utils::FSTypeToString(static_cast<FSType>(info.fstype));
                     m_curpartitioninfo = info;
                     break;
                 }

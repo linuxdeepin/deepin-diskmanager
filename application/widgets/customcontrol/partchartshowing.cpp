@@ -111,6 +111,7 @@ void PartChartShowing::addPaint(QPainter *painter)
     QVector<QPainterPath> path {path0, path1, path2, path3, path4, path5, path6, path7, path8, path9, path10, path11, path12, path13, path14, path15, path16, path17, path18, path19, path20, path21, path22, path23};
     QPainterPath paintpath;
     double sum = 0.00;
+    //绘制默认选中状态
     if (flag == 1) {
         painter->setPen(QPen(QColor(this->palette().highlight().color()), 2));
         painter->drawRoundedRect(paintRect, 8, 8);
@@ -125,6 +126,7 @@ void PartChartShowing::addPaint(QPainter *painter)
         }
         sum = sum + partsize.at(i);
         sums = sum;
+        //i=0,绘制第一个分区，判断ｎｕｍ绘制选中状态
         if (i == 0) {
             if (static_cast<int>(sum) < static_cast<int>(total)) {
                 path[0].moveTo(paintRect.topLeft() + QPoint(radius, 0));
@@ -165,7 +167,7 @@ void PartChartShowing::addPaint(QPainter *painter)
                 flag = 0;
             }
 
-        } else if (static_cast<int>(sum) < static_cast<int>(total) && i > 0) {
+        } else if (static_cast<int>(sum) < static_cast<int>(total) && i > 0) {//绘制除了第一个分区和最后一个分区以及空闲分区的填充和选中状态
             width1 = (partsize.at(i - 1) / total) * (paintRect.width() - radius);
             width1 = width1 - rightspace;
             if (width1 < 8 || partsize.at(i - 1) / total < 0.01)
@@ -191,7 +193,7 @@ void PartChartShowing::addPaint(QPainter *painter)
                 painter->drawPath(path[number]);
                 flag = 0;
             }
-        } else if (sumvalue >= 100 || sum >= total) {
+        } else if (sumvalue >= 100 || sum >= total) {//绘制最后一个分区当超过整个分区容量的时候以及选中状态
             double width = ((partsize.at(partsize.size() - 2) / total)) * (paintRect.width() - radius) - rightspace;
             if (partsize.at(partsize.size() - 2) / total < 0.01) {
                 width = 8;
@@ -224,6 +226,7 @@ void PartChartShowing::addPaint(QPainter *painter)
         }
 
     }
+    //绘制空闲分区以及选中状态
     if ((flag == 3 && sum < total)) {
         double width2 = (partsize.at(partsize.size() - 1) / total) * (paintRect.width() - radius) - rightspace;
         if (partsize.at(partsize.size() - 1) / total < 0.01) {
@@ -254,6 +257,7 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
     int y = event->pos().y();
     if (partsize.size() == 0) {
         if (event->button() == Qt::LeftButton) {
+            //判断第一个分区的鼠标点击
             if (x > 0 && x < this->width() && y > 10 && y < 45) {
                 flag = 1;
                 update();
@@ -266,7 +270,15 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
                 if (partsize.at(i) / total < 0.01) {
                     width = 8;
                 }
-                if ((x > allpath[i].currentPosition().x() && x < (allpath[i].currentPosition().x() + width) && y > 10 && y < 45)) {
+                //判断除了第一个和最后一个的鼠标点击
+                if ((x > allpath[i].currentPosition().x() && x < (allpath[i].currentPosition().x() + width) && y > 10 && y < 45) || (partsize.size() == 1 && y > 10 && y < 40 && (sumvalue >= 100 || sums >= total))) {
+                    flag = 2;
+                    number = i;
+                    update();
+
+                }
+                //鼠标点击判断最后一个分区点击
+                if (x > allpath[partsize.size() - 1].currentPosition().x() && y > 10 && y < 45 && i == partsize.size() - 1 && (sumvalue >= 100 || sums >= total)) {
                     flag = 2;
                     number = i;
                     update();
@@ -279,6 +291,7 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
                     width1 = 8;
                 }
             }
+            //判断空闲分区鼠标点击
             if (x > allpath[partsize.size() - 1].currentPosition().x() + width1 && y > 10 && y < 45 && int(sums) < int(total)) {
                 flag = 3;
                 i = -1;
@@ -288,6 +301,7 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
             }
         }
     }
+    //判断在分区条之外的鼠标点击
     if (event->button() == Qt::LeftButton) {
         if (!(x > 0 && x < this->width() && y > 10 && y < 45)) {
             flag = 0;
@@ -305,17 +319,18 @@ void PartChartShowing::mouseMoveEvent(QMouseEvent *event)
 {
     int x = event->pos().x();
     int y = event->pos().y();
+    //判断第一个分区的鼠标悬浮
     if (partsize.size() == 0) {
         if (x > 0 && x < this->width() && y > 10 && y < 45) {
             emit sendMoveFlag(1, -1, x);
         }
-    } else if (partsize.size() > 0) {
+    } else if (partsize.size() > 0) {//判断除了第一个分区的鼠标悬浮
         for (i = 0; i < partsize.size(); i++) {
             double width = ((partsize.at(i) / total) * (this->width() - space)) - rightspace;
             if (partsize.at(i) / total < 0.01) {
                 width = 8;
             }
-            if ((x > allpath[i].currentPosition().x() && x < (allpath[i].currentPosition().x() + width) && y > 10 && y < 40)) {
+            if ((x > allpath[i].currentPosition().x() && x < (allpath[i].currentPosition().x() + width) && y > 10 && y < 40) || (partsize.size() == 1 && y > 10 && y < 40 && (sumvalue >= 100 || sums >= total))) {
                 number = i;
                 emit sendMoveFlag(2, number, x);
             }

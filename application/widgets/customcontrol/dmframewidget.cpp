@@ -37,6 +37,7 @@ DmFrameWidget::DmFrameWidget(DiskInfoData data, QWidget *parent)
 
 void DmFrameWidget::setFrameData()
 {
+    //获取首页相关硬盘数据
     PartitionInfo data = DMDbusHandler::instance()->getCurPartititonInfo();
     QString mountstr;
     QString previoustr;
@@ -57,7 +58,7 @@ void DmFrameWidget::setFrameData()
         m_infodata.used = "-";
     }
     QString partitionpath = data.path.remove(0, 5);
-    m_infodata.fstype = Utils::FSTypeToString((FSType)data.fstype);
+    m_infodata.fstype = Utils::FSTypeToString(static_cast<FSType>(data.fstype));
     m_infodata.partitionsize = Utils::format_size(data.sector_end - data.sector_start, data.sector_size);
     if (data.filesystem_label == "") {
         m_infodata.syslabel = "";
@@ -69,6 +70,7 @@ void DmFrameWidget::setFrameData()
 
 QString DmFrameWidget::diskVolumn(QString partitionpath)
 {
+    //将gbk中文乱码转换为正常中文显示
     QProcess app;
     app.start("ls", QStringList() << "-al" << "/dev/disk/by-label/");
     if (!app.waitForStarted()) {
@@ -134,7 +136,7 @@ QString DmFrameWidget::diskVolumn(QString partitionpath)
     } else {
         return  st;
     }
-
+    return "";
 }
 
 void DmFrameWidget::paintEvent(QPaintEvent *event)
@@ -148,7 +150,7 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)
         m_parentPb = DApplicationHelper::instance()->palette(this);
         QBrush brush = DApplicationHelper::instance()->palette(this).itemBackground();
         painter.setBrush(brush);
-        QColor outsidecolor(qRgba(0, 0, 0, 0.1));
+        QColor outsidecolor(qRgba(0, 0, 0, 1));
         outsidecolor.setAlphaF(0.1);
         painter.setPen(outsidecolor);
         QRect rect = this->rect();
@@ -187,7 +189,7 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)
         QColor color = m_parentPb.color(DPalette::Normal, DPalette::TextLively);
         color.setAlphaF(0.05);
         painter.setBrush(QBrush(color));
-        QColor outsidecolor(qRgba(0, 0, 0, 0.1));
+        QColor outsidecolor(qRgba(0, 0, 0, 1));
         outsidecolor.setAlphaF(0.1);
         painter.setPen(outsidecolor);
         QRect rect = this->rect();
@@ -226,6 +228,7 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)
 
 void DmFrameWidget::resizeEvent(QResizeEvent *event)
 {
+    //实时获取整体的大小
     this->QWidget::resizeEvent(event);
     d_width = this->width();
     setFrameData();
@@ -237,6 +240,7 @@ void DmFrameWidget::slothandleChangeTheme()
 
 QString DmFrameWidget::diffMountpoints(int width, QString mountpoints)
 {
+    //区分过长的挂载点，中间做...显示
     QString previoustr;
     QString laststr;
 

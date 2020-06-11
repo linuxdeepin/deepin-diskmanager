@@ -227,9 +227,9 @@ void PartitionWidget::getPartitionInfo()
     QString deviceSize = s_disksize;
     QString partPath = data.path;
     partSize = s_pdisksize;
-    QString partFstype = Utils::FSTypeToString((FSType)data.fstype);
 //    QString partUsed = s_used;
 //    QString partUnused = s_unused;
+    QString partFstype = Utils::FSTypeToString(static_cast<FSType>(data.fstype));
     int i = partPath.lastIndexOf("/");
     QString selectPartition = partPath.right(partPath.length() - i - 1);
     partComCobox->setCurrentText("GiB");

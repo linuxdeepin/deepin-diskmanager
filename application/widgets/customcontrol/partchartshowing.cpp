@@ -134,8 +134,8 @@ void PartChartShowing::addPaint(QPainter *painter)
                 path[0].arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, radius * 2)),
                                     QSize(radius * 2, radius * 2)),
                               180, 90);
-                path[0].lineTo(paintRect.bottomLeft() + QPoint((widths + radius), 0));
-                path[0].lineTo(paintRect.topLeft() + QPoint((widths + radius), 0));
+                path[0].lineTo(paintRect.bottomLeft() + QPoint((static_cast<int>(widths) + radius), 0));
+                path[0].lineTo(paintRect.topLeft() + QPoint((static_cast<int>(widths) + radius), 0));
                 path[0].lineTo(paintRect.topLeft() + QPoint(radius, 0));
             }
 //            qDebug() << path[0].currentPosition().x();
@@ -174,11 +174,11 @@ void PartChartShowing::addPaint(QPainter *painter)
             if (path[i - 1].currentPosition().x() + width1 + widths > paintRect.width() - radius) {
                 emit judgeLastPartition();
             }
-            path[i].moveTo(path[i - 1].currentPosition() + QPoint(width1, 0));
+            path[i].moveTo(path[i - 1].currentPosition() + QPoint(static_cast<int>(width1), 0));
             path[i].lineTo(path[i - 1].currentPosition() + QPoint(int(width1 + widths), 0));
             path[i].lineTo(path[i - 1].currentPosition() + QPoint(int(width1 + widths), paintRect.height() - 1));
-            path[i].lineTo(path[i - 1].currentPosition() + QPoint((width1), paintRect.height() - 1));
-            path[i].lineTo(path[i - 1].currentPosition() + QPoint((width1), 0));
+            path[i].lineTo(path[i - 1].currentPosition() + QPoint((static_cast<int>(width1)), paintRect.height() - 1));
+            path[i].lineTo(path[i - 1].currentPosition() + QPoint((static_cast<int>(width1)), 0));
             QColor fillcolor;
             if (i > basecolor.size() - 1) {
                 fillcolor = basecolor.at(i % (basecolor.size() - 1));
@@ -207,8 +207,8 @@ void PartChartShowing::addPaint(QPainter *painter)
             path[partsize.size() - 1].arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
                                                   QSize(radius * 2, radius * 2)),
                                             0, -90);
-            path[partsize.size() - 1].lineTo(path[partsize.size() - 2].currentPosition() + QPoint(width, paintRect.height() - 1));
-            path[partsize.size() - 1].lineTo(path[partsize.size() - 2].currentPosition() + QPoint(width, 0));
+            path[partsize.size() - 1].lineTo(path[partsize.size() - 2].currentPosition() + QPoint(static_cast<int>(width), paintRect.height() - 1));
+            path[partsize.size() - 1].lineTo(path[partsize.size() - 2].currentPosition() + QPoint(static_cast<int>(width), 0));
             QColor fillcolor;
             if (i > basecolor.size() - 1) {
                 fillcolor = basecolor.at(i % (basecolor.size() - 1));
@@ -237,8 +237,8 @@ void PartChartShowing::addPaint(QPainter *painter)
         paintpath.arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
                               QSize(radius * 2, radius * 2)),
                         0, 90);
-        paintpath.lineTo(QPoint(allpath[partsize.size() - 1].currentPosition().x() + width2, 10));
-        paintpath.lineTo(QPoint(allpath[partsize.size() - 1].currentPosition().x() + width2, paintRect.height() + 9));
+        paintpath.lineTo(QPoint(static_cast<int>(allpath[partsize.size() - 1].currentPosition().x()) + static_cast<int>(width2), 10));
+        paintpath.lineTo(QPoint(static_cast<int>(allpath[partsize.size() - 1].currentPosition().x()) + static_cast<int>(width2), paintRect.height() + 9));
         paintpath.lineTo(paintRect.bottomRight() - QPoint(radius, 0));
         paintpath.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
                               QSize(radius * 2, radius * 2)),

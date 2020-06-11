@@ -34,12 +34,6 @@ DmTreeviewDelegate::DmTreeviewDelegate(QAbstractItemView *parent)
             &DmTreeviewDelegate::slothandleChangeTheme);
 }
 
-void DmTreeviewDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
-{
-    Q_UNUSED(index);
-    //    qDebug() << option.rect.x() << option.rect.y();
-    //    editor->setGeometry(option.rect.x() + 100, option.rect.y() + 100, 500, 500);
-}
 QSize DmTreeviewDelegate::sizeHint(const QStyleOptionViewItem &option,
                                    const QModelIndex &index) const
 {

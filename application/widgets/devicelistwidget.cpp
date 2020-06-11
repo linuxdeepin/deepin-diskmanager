@@ -84,7 +84,7 @@ void DeviceListWidget::slotUpdateDeviceInfo()
             qDebug() << s_unusedstr << "unused";
             qDebug() << s_usedstr << "used";
             qDebug() << it->fstype;
-            FSType fstype1 = (FSType)it->fstype;
+            FSType fstype1 = static_cast<FSType>(it->fstype);
             QString s_fstype = Utils::FSTypeToString(fstype1);
             qDebug() << it->mountpoints;
             QString s_mountpoint;

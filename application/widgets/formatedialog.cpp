@@ -38,7 +38,7 @@ void FormateDialog::initUi()
     pformatcombo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     QStringList fslist = DMDbusHandler::instance()->getallsupportfs();
     pformatcombo->addItems(fslist);
-    pformatcombo->setCurrentIndex(fslist.indexOf(Utils::FSTypeToString((FSType)info.fstype)));
+    pformatcombo->setCurrentIndex(fslist.indexOf(Utils::FSTypeToString(static_cast<FSType>(info.fstype))));
     hlayoutformat->addWidget(pformatname);
     hlayoutformat->addWidget(pformatcombo);
     mainLayout->addWidget(tipLabel);
@@ -57,6 +57,7 @@ void FormateDialog::initConnection()
 
 void FormateDialog::slotbuttonClicked(int index, const QString &text)
 {
+    Q_UNUSED(text);
     if (index == okcode) {
         DMDbusHandler::instance()->format(pformatcombo->currentText());
     }

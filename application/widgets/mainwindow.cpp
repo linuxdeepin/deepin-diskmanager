@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     initConnection();
     m_handler->getDeviceinfo(); //call after initUi
     QRect rect = QApplication::desktop()->geometry();
-    setMinimumSize(rect.width() * 0.6, rect.height() * 0.6);
+    setMinimumSize(rect.width() * 3 / 5, rect.height() * 3 / 5);
 }
 
 MainWindow::~MainWindow()

@@ -37,6 +37,7 @@ void UnmountDialog::initConnection()
 
 void UnmountDialog::slotbuttonClicked(int index, const QString &text)
 {
+    Q_UNUSED(text);
     if (okcode == index) {
         DMDbusHandler::instance()->unmount();
     }

@@ -622,6 +622,14 @@ void PartitionWidget::applyBtnSlot()
                 newpart.type = TYPE_PRIMARY;
             }
         }
+        //newpart .inside_extended && newpart .type == TYPE_UNALLOCATED extend partition
+        //newpart .type == TYPE_LOGICAL logical partition
+        //newpart .sector_start <= (MEBIBYTE / newpart .sector_size) /* Beginning of disk device */
+        if ((newpart .inside_extended && newpart .type == TYPE_UNALLOCATED)
+                || newpart .type == TYPE_LOGICAL
+                || newpart .sector_start <= (MEBIBYTE / newpart .sector_size)) {
+            newpart.sector_start += MEBIBYTE / newpart.sector_size;
+        }
         if (beforend > curinfo.sector_end && i < m_patrinfo.size() - 1) {
             bcancreate = false;
             //            qDebug() << "create too partition ,no enough space";

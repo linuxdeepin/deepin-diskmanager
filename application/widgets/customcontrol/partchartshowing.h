@@ -42,6 +42,7 @@ public:
     void getflag(int mflag, int value = 0);
 signals:
     void sendFlag(int flag, int num, int posX);
+    void sendMoveFlag(int moveflag, int num, int posx);
     void judgeLastPartition();
 //    void mousemove(QMouseEvent *event);
 public slots:
@@ -65,6 +66,7 @@ private:
     int i = 0;
     int count = 0;
     double sumvalue = 0.0000001;
+
 
 
     // QWidget interface

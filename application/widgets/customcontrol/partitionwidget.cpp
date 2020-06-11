@@ -265,7 +265,8 @@ void PartitionWidget::initConnection()
     connect(reveBtn, &DPushButton::clicked, this, &PartitionWidget::revertBtnSlot);
     connect(cancleBtn, &DPushButton::clicked, this, &PartitionWidget::cancelBtnSlot);
     connect(partComCobox, &DComboBox::currentTextChanged, this, &PartitionWidget::comboxCurTextSlot);
-    connect(partChartWidget, &PartChartShowing::sendFlag, this, &PartitionWidget::showSelectPathInfo);
+    connect(partChartWidget, &PartChartShowing::sendFlag, this, &PartitionWidget::getflag);
+    connect(partChartWidget, &PartChartShowing::sendMoveFlag, this, &PartitionWidget::showSelectPathInfo);
     connect(partChartWidget, &PartChartShowing::judgeLastPartition, this, &PartitionWidget::judgeLastPartitionSlot);
 }
 
@@ -317,31 +318,45 @@ void PartitionWidget::showSelectPathInfo(const int &flag, const int &num, const 
 {
     int x = this->frameGeometry().x();
     int y = this->frameGeometry().y();
-    mflag = flag;
-    number = num;
+    int moveflag = flag;
     setEnable();
-    if (mflag == 1) {
-        hSlider->setValue((mTotal - leaveSpace()) / mTotal * 100);
+    if (moveflag == 1) {
         QToolTip::showText(QPoint(x + posX, y + 215), tr("Unallocated"), this, QRect(QPoint(x + posX, y + 215), QSize(80, 20)), 2000);
-        setSelectValue();
-    } else if (mflag == 2) {
-        hSlider->setValue(sizeInfo.at(num) / mTotal * 100);
-        partSizeEdit->setText("");
-        partNameEdit->setText("");
+        if (mflag == 1) {
+            hSlider->setValue((mTotal - leaveSpace()) / mTotal * 100);
+            setSelectValue();
+        }
+    } else if (moveflag == 2) {
         if (partName.at(num) != " ")
             QToolTip::showText(QPoint(x + posX + 5, y + 215), partName.at(num), this, QRect(QPoint(x + posX, y + 215), QSize(80, 20)), 2000);
-        partNameEdit->lineEdit()->setPlaceholderText(partName.at(num));
-        double clicked = sizeInfo.at(num);
-        if (partComCobox->currentText() == "GiB")
-            clicked = clicked / 1024;
-        partSizeEdit->setText(QString::number(clicked));
-    } else if (mflag == 3) {
-        partNameEdit->setText("");
+        if (mflag == 2) {
+            hSlider->setValue(sizeInfo.at(num) / mTotal * 100);
+            qDebug() << "1111122";
+            partSizeEdit->setText("");
+            partNameEdit->setText("");
+
+            partNameEdit->lineEdit()->setPlaceholderText(partName.at(num));
+            double clicked = sizeInfo.at(num);
+            if (partComCobox->currentText() == "GiB")
+                clicked = clicked / 1024;
+            partSizeEdit->setText(QString::number(clicked));
+        }
+    } else if (moveflag  == 3) {
         QToolTip::showText(QPoint(x + posX + 5, y + 215), tr("Unallocated"), this, QRect(QPoint(x + posX, y + 215), QSize(80, 20)), 2000);
-        setSelectValue();
-        hSlider->setValue(100);
-        number = -1;
+        if (mflag == 3) {
+            partNameEdit->setText("");
+            setSelectValue();
+            hSlider->setValue(100);
+            number = -1;
+        }
     }
+}
+
+void PartitionWidget::getflag(const int &flag, const int &num, const int &posX)
+{
+    Q_UNUSED(posX);
+    mflag = flag;
+    number = num;
 }
 
 void PartitionWidget::setEnable()

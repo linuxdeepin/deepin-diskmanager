@@ -88,7 +88,7 @@ public slots:
     void revertBtnSlot();
     void cancelBtnSlot();
     void showSelectPathInfo(const int &flag, const int &num, const int &posX);
-
+    void getflag(const int &flag, const int &num, const int &posX);
     void comboxCurTextSlot();
     void judgeLastPartitionSlot();
 

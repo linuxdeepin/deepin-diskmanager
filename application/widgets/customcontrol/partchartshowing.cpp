@@ -257,6 +257,7 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
         if (event->button() == Qt::LeftButton) {
             if (x > 0 && x < this->width() && y > 10 && y < 45) {
                 flag = 1;
+                emit sendFlag(flag, number, x);
                 update();
             }
         }
@@ -270,6 +271,7 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
                 if ((x > allpath[i].currentPosition().x() && x < (allpath[i].currentPosition().x() + width) && y > 10 && y < 45) || (i == 0 && y > 10 && y < 45)) {
                     flag = 2;
                     number = i;
+                    emit sendFlag(flag, number, x);
                     update();
                 }
             }
@@ -284,8 +286,9 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
                 flag = 3;
                 i = -1;
                 number = 100;
+                emit sendFlag(flag, number, x);
                 update();
-//                qDebug() << x << allpath[partsize.size() - 1].currentPosition().x() + width1 << this->width();
+//                qDebug() << x << allpath[partsize.size() - 1].curentPosition().x() + width1 << this->width();
             }
         }
     }
@@ -297,7 +300,7 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
         }
     }
     if (event->button() == Qt::LeftButton) {
-        emit sendFlag(flag, number, x);
+//        emit sendFlag(flag, number, x);
     }
 }
 
@@ -310,6 +313,9 @@ void PartChartShowing::mouseMoveEvent(QMouseEvent *event)
 
         if (x > 0 && x < this->width() && y > 10 && y < 45) {
 //            this->setToolTip("1212121");
+
+            emit sendMoveFlag(1, number, x);
+
         }
 
     } else if (partsize.size() > 0) {
@@ -321,7 +327,7 @@ void PartChartShowing::mouseMoveEvent(QMouseEvent *event)
             }
             if ((x > allpath[i].currentPosition().x() && x < (allpath[i].currentPosition().x() + width) && y > 10 && y < 40) || (i == 0 && y > 10 && y < 40)) {
                 number = i;
-                this->setToolTip(QString::number(number));
+                emit sendMoveFlag(2, number, x);
             }
         }
         //空闲分区
@@ -332,7 +338,8 @@ void PartChartShowing::mouseMoveEvent(QMouseEvent *event)
             }
         }
         if (x > allpath[partsize.size() - 1].currentPosition().x() + width1 && y > 10 && y < 45 && int(sums) < int(total)) {
-
+            i = -1;
+            emit sendMoveFlag(3, number, x);
         }
     }
 

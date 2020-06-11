@@ -30,9 +30,9 @@ PartChartShowing::PartChartShowing(QWidget *parent)
     QColor color4("#FFD027");
     QColor color5("#2CCBBE");
     basecolor = QVector<QColor> {color, color1, color2, color3, color4, color5};
-
-//    connect(this, SIGNAL(mouseMove(QMouseEvent *)), this, SLOT(showMouseTip(QMouseEvent *)));
     setMouseTracking(true);
+
+
 }
 
 void PartChartShowing::getData(const double &totals, const QVector<double> sizeInfo)
@@ -47,7 +47,6 @@ void PartChartShowing::getflag(int mflag, int value)
     sumvalue = value;
     update();
 }
-
 
 
 
@@ -225,7 +224,7 @@ void PartChartShowing::addPaint(QPainter *painter)
         }
 
     }
-    if (flag == 3 && sum < total) {
+    if ((flag == 3 && sum < total)) {
         double width2 = (partsize.at(partsize.size() - 1) / total) * (paintRect.width() - radius) - rightspace;
         if (partsize.at(partsize.size() - 1) / total < 0.01) {
             width2 = 8;
@@ -257,7 +256,6 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
         if (event->button() == Qt::LeftButton) {
             if (x > 0 && x < this->width() && y > 10 && y < 45) {
                 flag = 1;
-                emit sendFlag(flag, number, x);
                 update();
             }
         }
@@ -268,10 +266,9 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
                 if (partsize.at(i) / total < 0.01) {
                     width = 8;
                 }
-                if ((x > allpath[i].currentPosition().x() && x < (allpath[i].currentPosition().x() + width) && y > 10 && y < 45) || (i == 0 && y > 10 && y < 45)) {
+                if ((x > allpath[i].currentPosition().x() && x < (allpath[i].currentPosition().x() + width) && y > 10 && y < 45)) {
                     flag = 2;
                     number = i;
-                    emit sendFlag(flag, number, x);
                     update();
                 }
             }
@@ -286,9 +283,8 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
                 flag = 3;
                 i = -1;
                 number = 100;
-                emit sendFlag(flag, number, x);
                 update();
-//                qDebug() << x << allpath[partsize.size() - 1].curentPosition().x() + width1 << this->width();
+
             }
         }
     }
@@ -300,7 +296,7 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
         }
     }
     if (event->button() == Qt::LeftButton) {
-//        emit sendFlag(flag, number, x);
+        emit sendFlag(flag, number, x);
     }
 }
 
@@ -310,16 +306,10 @@ void PartChartShowing::mouseMoveEvent(QMouseEvent *event)
     int x = event->pos().x();
     int y = event->pos().y();
     if (partsize.size() == 0) {
-
         if (x > 0 && x < this->width() && y > 10 && y < 45) {
-//            this->setToolTip("1212121");
-
-            emit sendMoveFlag(1, number, x);
-
+            emit sendMoveFlag(1, -1, x);
         }
-
     } else if (partsize.size() > 0) {
-
         for (i = 0; i < partsize.size(); i++) {
             double width = ((partsize.at(i) / total) * (this->width() - space)) - rightspace;
             if (partsize.at(i) / total < 0.01) {
@@ -338,16 +328,11 @@ void PartChartShowing::mouseMoveEvent(QMouseEvent *event)
             }
         }
         if (x > allpath[partsize.size() - 1].currentPosition().x() + width1 && y > 10 && y < 45 && int(sums) < int(total)) {
-            i = -1;
-            emit sendMoveFlag(3, number, x);
+            emit sendMoveFlag(3, -1, x);
         }
     }
-
 }
 
-void PartChartShowing::enterEvent(QEvent *event)
-{
 
-}
 
 

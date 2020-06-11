@@ -88,7 +88,7 @@ public slots:
     void revertBtnSlot();
     void cancelBtnSlot();
     void showSelectPathInfo(const int &flag, const int &num, const int &posX);
-    void getflag(const int &flag, const int &num, const int &posX);
+    void showTip(const int &hover, const int &num, const int &posX);
     void comboxCurTextSlot();
     void judgeLastPartitionSlot();
 
@@ -133,8 +133,6 @@ private:
     QVector<QString> partName;
     QVector<stPart> m_patrinfo;
 
-    //    QVector<QString> partPaths;
-    //    QHash<int, QVector<double>> sizeinfos;
 };
 
 #endif // PARTITIONWIDGET_H

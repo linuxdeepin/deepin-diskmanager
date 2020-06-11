@@ -23,13 +23,11 @@
 #include <QRect>
 #include <QPainterPath>
 #include <QPainter>
-#include <QPalette>
 #include <DPalette>
 #include <QBrush>
 #include <QPointF>
 #include <QLine>
 #include <QMouseEvent>
-#include <QEvent>
 DWIDGET_USE_NAMESPACE
 
 class PartChartShowing : public QWidget
@@ -44,14 +42,13 @@ signals:
     void sendFlag(int flag, int num, int posX);
     void sendMoveFlag(int moveflag, int num, int posx);
     void judgeLastPartition();
-//    void mousemove(QMouseEvent *event);
 public slots:
-//    void showMouseTip(QMouseEvent *event);
+
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
     void addPaint(QPainter *painter);
     virtual void mousePressEvent(QMouseEvent *event) override;
-
+    virtual void mouseMoveEvent(QMouseEvent *event) override;
 private:
     int flag = 1;
     QString m_totalsize;
@@ -61,21 +58,16 @@ private:
     QRect getCurRect;
     QVector<QColor> basecolor;
     QVector<QPainterPath> allpath;
+
     int number = -1;
     double sums = 0.00;
     int i = 0;
     int count = 0;
     double sumvalue = 0.0000001;
+    int hover = 0;
 
 
 
-    // QWidget interface
-protected:
-    virtual void mouseMoveEvent(QMouseEvent *event) override;
-
-    // QWidget interface
-protected:
-    virtual void enterEvent(QEvent *event) override;
 };
 
 #endif // PARTCHARTSHOWING_H

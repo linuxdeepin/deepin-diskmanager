@@ -35,13 +35,13 @@ PartChartShowing::PartChartShowing(QWidget *parent)
 
 }
 
-void PartChartShowing::getData(const double &totals, const QVector<double> sizeInfo)
+void PartChartShowing::transInfos(const double &totals, const QVector<double> sizeInfo)
 {
     total = totals;
     partsize = sizeInfo;
 }
 
-void PartChartShowing::getflag(int mflag, int value)
+void PartChartShowing::transFlag(int mflag, int value)
 {
     flag = mflag;
     sumvalue = value;
@@ -167,7 +167,8 @@ void PartChartShowing::addPaint(QPainter *painter)
                 flag = 0;
             }
 
-        } else if (static_cast<int>(sum) < static_cast<int>(total) && i > 0) {//绘制除了第一个分区和最后一个分区以及空闲分区的填充和选中状态
+        } else if (sum + 1 < total && i > 0) { //绘制除了第一个分区和最后一个分区以及空闲分区的填充和选中状态
+            qDebug() << static_cast<int>(sum) << static_cast<int>(total);
             width1 = (partsize.at(i - 1) / total) * (paintRect.width() - radius);
             width1 = width1 - rightspace;
             if (width1 < 8 || partsize.at(i - 1) / total < 0.01)
@@ -193,7 +194,8 @@ void PartChartShowing::addPaint(QPainter *painter)
                 painter->drawPath(path[number]);
                 flag = 0;
             }
-        } else if (sumvalue >= 100 || sum >= total) {//绘制最后一个分区当超过整个分区容量的时候以及选中状态
+        } else if (sumvalue >= 100) {//绘制最后一个分区当超过整个分区容量的时候以及选中状态
+            qDebug() << "sumvalue" << sumvalue;
             double width = ((partsize.at(partsize.size() - 2) / total)) * (paintRect.width() - radius) - rightspace;
             if (partsize.at(partsize.size() - 2) / total < 0.01) {
                 width = 8;

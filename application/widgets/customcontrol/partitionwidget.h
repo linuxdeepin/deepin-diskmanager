@@ -62,7 +62,7 @@ public:
     void midFrameSetting();
     void botFrameSetting();
     void partInfoShowing();
-    void getPartitionInfo();
+    void recPartitionInfo();
     void setEnable();
     void setUseEnable();
     void setEnable2();
@@ -124,9 +124,8 @@ private:
     int number = -1;
     double total = 0.00;
     double mTotal = 0.00;
+    QString currentEditSize;
     int mflag = -1;
-
-    int GM = 0;
     int m_value = 0;
     int block = 0;
     QVector<double> sizeInfo;

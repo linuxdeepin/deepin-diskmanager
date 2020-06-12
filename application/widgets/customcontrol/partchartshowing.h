@@ -36,8 +36,8 @@ class PartChartShowing : public QWidget
 public:
     explicit PartChartShowing(QWidget *parent = nullptr);
     //    PartChartShowing(int used, int trueused, int noused, QWidget *parent = nullptr);
-    void getData(const double &totals, const QVector<double> sizeInfo);
-    void getflag(int mflag, int value = 0);
+    void transInfos(const double &totals, const QVector<double> sizeInfo);
+    void transFlag(int mflag, int value = 0);
 signals:
     void sendFlag(int flag, int num, int posX);
     void sendMoveFlag(int moveflag, int num, int posx);

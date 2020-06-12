@@ -105,22 +105,12 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         }
 
         QIcon directionIcon;
-
-        bool bHasSubItem = false;
-        bool bExpand = false;
-
         if (pTreeView->getModelByIndex(index) && pTreeView->getModelByIndex(index)->hasChildren()) {
-            bHasSubItem = true;
             if (pTreeView->isExpanded(index)) {
-                bExpand = true;
                 directionIcon = Common::getIcon("arrow");
-
             } else {
                 directionIcon = Common::getIcon("arrow_right");
-                bExpand = false;
             }
-        } else {
-            bHasSubItem = false;
         }
         QRect m_lefticon1Rect;
         QRect m_lefticonRect2;

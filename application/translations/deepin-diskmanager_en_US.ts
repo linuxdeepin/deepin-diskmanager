@@ -42,32 +42,32 @@
 <context>
     <name>InfoShowWidget</name>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="66"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="65"/>
         <source>Mount point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="72"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="71"/>
         <source>Free:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="77"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="76"/>
         <source>Used:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="82"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="81"/>
         <source>Type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="86"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="85"/>
         <source>Capacity:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="90"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="89"/>
         <source>Volume label:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -88,27 +88,27 @@
 <context>
     <name>MountDialog</name>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="20"/>
+        <location filename="../widgets/mountdialog.cpp" line="19"/>
         <source>Mount %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="22"/>
+        <location filename="../widgets/mountdialog.cpp" line="21"/>
         <source>Choose a mount point please</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="25"/>
+        <location filename="../widgets/mountdialog.cpp" line="24"/>
         <source>Mount point:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="35"/>
+        <location filename="../widgets/mountdialog.cpp" line="34"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="36"/>
+        <location filename="../widgets/mountdialog.cpp" line="35"/>
         <source>Mount</source>
         <translation type="unfinished"></translation>
     </message>
@@ -124,22 +124,22 @@
 <context>
     <name>PartitionDialog</name>
     <message>
-        <location filename="../widgets/partitiondialog.cpp" line="36"/>
+        <location filename="../widgets/partitiondialog.cpp" line="35"/>
         <source>Partition %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/partitiondialog.cpp" line="38"/>
+        <location filename="../widgets/partitiondialog.cpp" line="37"/>
         <source>It will increase the number of partitions on the disk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/partitiondialog.cpp" line="45"/>
+        <location filename="../widgets/partitiondialog.cpp" line="44"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/partitiondialog.cpp" line="46"/>
+        <location filename="../widgets/partitiondialog.cpp" line="45"/>
         <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
@@ -335,22 +335,22 @@
 <context>
     <name>UnmountDialog</name>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="19"/>
+        <location filename="../widgets/unmountdialog.cpp" line="18"/>
         <source>Unmount %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="22"/>
+        <location filename="../widgets/unmountdialog.cpp" line="21"/>
         <source>Make sure there are no programs running on the disk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="29"/>
+        <location filename="../widgets/unmountdialog.cpp" line="28"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="30"/>
+        <location filename="../widgets/unmountdialog.cpp" line="29"/>
         <source>Unmount</source>
         <translation type="unfinished"></translation>
     </message>

@@ -125,7 +125,7 @@ private:
     double total = 0.00;
     double mTotal = 0.00;
     int mflag = -1;
-    double currentSize = 0.00;
+
     int GM = 0;
     int m_value = 0;
     int block = 0;

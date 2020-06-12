@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     const QString acknowledgementLink = "https://www.deepin.org/acknowledgments/deepin_reader";
     a.setApplicationAcknowledgementPage(acknowledgementLink);
 
-    QPixmap px(QIcon::fromTheme(app_name).pixmap(256 * qApp->devicePixelRatio(), 256 * qApp->devicePixelRatio()));
+    QPixmap px(QIcon::fromTheme(app_name).pixmap(static_cast<int>(256 * qApp->devicePixelRatio()), static_cast<int>(256 * qApp->devicePixelRatio())));
     px.setDevicePixelRatio(qApp->devicePixelRatio());
     a.setProductIcon(QIcon(px));
     a.setApplicationDescription(QObject::tr("Disk Utility is a disk management tool for creating, reorganizing and formatting partitions."));

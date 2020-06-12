@@ -83,8 +83,8 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             path[0].arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, radius * 2)),
                                 QSize(radius * 2, radius * 2)),
                           180, 90);
-            path[0].lineTo(paintRect.bottomLeft() + QPoint((sizeinfo[0] / m_totalsize) * paintRect.width() + radius, 0));
-            path[0].lineTo(paintRect.topLeft() + QPoint((sizeinfo[0] / m_totalsize) * paintRect.width() + radius, 0));
+            path[0].lineTo(paintRect.bottomLeft() + QPoint(static_cast<int>((sizeinfo[0] / m_totalsize) * paintRect.width() + radius), 0));
+            path[0].lineTo(paintRect.topLeft() + QPoint(static_cast<int>((sizeinfo[0] / m_totalsize) * paintRect.width() + radius), 0));
             path[0].lineTo(paintRect.topLeft() + QPoint(radius, 0));
             if (sizeinfo.at(i) == 0.00) {
                 painter.setBrush(QBrush(colorinfo[1]));
@@ -96,11 +96,11 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
                 painter.fillPath(path[0], colorinfo[0]);
             }
         } else if (i > 0 && i < sizeinfo.size() - 1) {
-            path[i].moveTo(path[i - 1].currentPosition() + QPoint((sizeinfo[i - 1] / m_totalsize) * paintRect.width(), 0));
-            path[i].lineTo(path[i - 1].currentPosition() + QPoint((sizeinfo[i - 1] / m_totalsize) * paintRect.width() + (sizeinfo[i] / m_totalsize) * paintRect.width(), 0));
-            path[i].lineTo(path[i - 1].currentPosition() + QPoint((sizeinfo[i - 1] / m_totalsize) * paintRect.width() + (sizeinfo[i] / m_totalsize) * paintRect.width(), paintRect.height()));
-            path[i].lineTo(path[i - 1].currentPosition() + QPoint((sizeinfo[i - 1] / m_totalsize) * paintRect.width(), paintRect.height()));
-            path[i].lineTo(path[i - 1].currentPosition() + QPoint((sizeinfo[i - 1] / m_totalsize) * paintRect.width(), 0));
+            path[i].moveTo(path[i - 1].currentPosition() + QPoint(static_cast<int>((sizeinfo[i - 1] / m_totalsize) * paintRect.width()), 0));
+            path[i].lineTo(path[i - 1].currentPosition() + QPoint(static_cast<int>((sizeinfo[i - 1] / m_totalsize) * paintRect.width() + (sizeinfo[i] / m_totalsize) * paintRect.width()), 0));
+            path[i].lineTo(path[i - 1].currentPosition() + QPoint(static_cast<int>((sizeinfo[i - 1] / m_totalsize) * paintRect.width() + (sizeinfo[i] / m_totalsize) * paintRect.width()), paintRect.height()));
+            path[i].lineTo(path[i - 1].currentPosition() + QPoint(static_cast<int>((sizeinfo[i - 1] / m_totalsize) * paintRect.width()), paintRect.height()));
+            path[i].lineTo(path[i - 1].currentPosition() + QPoint(static_cast<int>((sizeinfo[i - 1] / m_totalsize) * paintRect.width()), 0));
             painter.setBrush(QBrush(colorinfo[i]));
             painter.setPen(QPen(QColor(colorinfo[i]), 3));
             painter.fillPath(path[i], colorinfo[i]);
@@ -110,8 +110,8 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             path[sizeinfo.size() - 1].arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
                                                   QSize(radius * 2, radius * 2)),
                                             0, 90);
-            path[sizeinfo.size() - 1].lineTo(path[sizeinfo.size() - 2].currentPosition() + QPoint((sizeinfo[sizeinfo.size() - 2] / m_totalsize) * paintRect.width(), 0));
-            path[sizeinfo.size() - 1].lineTo(path[sizeinfo.size() - 2].currentPosition() + QPoint((sizeinfo[sizeinfo.size() - 2] / m_totalsize) * paintRect.width(), paintRect.height() - 1));
+            path[sizeinfo.size() - 1].lineTo(path[sizeinfo.size() - 2].currentPosition() + QPoint(static_cast<int>((sizeinfo[sizeinfo.size() - 2] / m_totalsize) * paintRect.width()), 0));
+            path[sizeinfo.size() - 1].lineTo(path[sizeinfo.size() - 2].currentPosition() + QPoint(static_cast<int>((sizeinfo[sizeinfo.size() - 2] / m_totalsize) * paintRect.width()), paintRect.height() - 1));
             path[sizeinfo.size() - 1].lineTo(paintRect.bottomRight() - QPoint(radius, 0));
             path[sizeinfo.size() - 1].arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
                                                   QSize(radius * 2, radius * 2)),

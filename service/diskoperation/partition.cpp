@@ -52,10 +52,10 @@ void Partition::Reset()
 
 void Partition::Reset(const PartitionInfo &info)
 {
-    status = (PartitionStatus)info.status;
-    type = (PartitionType)info.type;
-    alignment = (PartitionAlignment)info.alignment;
-    fstype = (FSType)info.fstype;
+    status = static_cast<PartitionStatus>(info.status);
+    type = static_cast<PartitionType>(info.type);
+    alignment = static_cast<PartitionAlignment>(info.alignment);
+    fstype = static_cast<FSType>(info.fstype);
     sector_start = info.sector_start;
     sector_end = info.sector_end;
     sectors_used = info.sectors_used;
@@ -165,7 +165,7 @@ void Partition::set_sector_usage(Sector sectors_fs_size, Sector sectors_fs_unuse
 {
     Sector length = get_sector_length();
     if (0 <= sectors_fs_size && sectors_fs_size <= length
-        && 0 <= sectors_fs_unused && sectors_fs_unused <= sectors_fs_size) {
+            && 0 <= sectors_fs_unused && sectors_fs_unused <= sectors_fs_size) {
         sectors_used = sectors_fs_size - sectors_fs_unused;
         sectors_unused = sectors_fs_unused;
         sectors_unallocated = length - sectors_fs_size;

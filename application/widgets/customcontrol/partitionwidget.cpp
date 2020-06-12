@@ -313,10 +313,10 @@ void PartitionWidget::showSelectPathInfo(const int &flag, const int &num, const 
     qDebug() << flag;
     number = num;
     if (mflag == 1) {
-        hSlider->setValue((total - leaveSpace()) / total * 100);
+        hSlider->setValue(static_cast<int>((total - leaveSpace()) / total * 100));
         setSelectValue();
     } else if (mflag == 2) {
-        hSlider->setValue(sizeInfo.at(num) / mTotal * 100);
+        hSlider->setValue(static_cast<int>(sizeInfo.at(num) / mTotal * 100));
         partSizeEdit->setText("");
         partNameEdit->setText("");
         partNameEdit->lineEdit()->setPlaceholderText(partName.at(num));
@@ -500,7 +500,7 @@ void PartitionWidget::slotSetSliderValue()
         value = value / 1024;
     partSizeEdit->setText(sizeTemp);
     block = 1;
-    hSlider->setValue((value / total) * 100);
+    hSlider->setValue(static_cast<int>((value / total) * 100));
 }
 
 void PartitionWidget::slotSetPartName()
@@ -512,6 +512,7 @@ void PartitionWidget::slotSetPartName()
 
 void PartitionWidget::addPartitionSlot()
 {
+    double currentSize = 0.00;
     stPart part;
     if (sizeInfo.size() >= 24)
         return;
@@ -535,13 +536,14 @@ void PartitionWidget::addPartitionSlot()
 
     partChartWidget->getData(mTotal, sizeInfo);
     qDebug() << partName.size();
+    currentSize = partSizeEdit->text().toDouble();
     part.name = partNameEdit->text();
     part.fstype = partFormateCombox->currentText();
     Byte_Value sector_size = DMDbusHandler::instance()->getCurPartititonInfo().sector_size;
     if (partComCobox->currentText().compare("MiB") == 0) {
-        part.count = currentSize * (MEBIBYTE / sector_size);
+        part.count = static_cast<Sector>(currentSize * (MEBIBYTE / sector_size));
     } else {
-        part.count = currentSize * (GIBIBYTE / sector_size);
+        part.count = static_cast<Sector>(currentSize * (GIBIBYTE / sector_size));
     }
     m_patrinfo.push_back(part);
     comboxCurTextSlot();
@@ -597,7 +599,6 @@ void PartitionWidget::applyBtnSlot()
     PartitionInfo curinfo = phandler->getCurPartititonInfo();
     DeviceInfo device = phandler->getCurDeviceInfo();
     Sector beforend = curinfo.sector_start;
-
     for (int i = 0; i < m_patrinfo.size(); i++) {
         PartitionInfo newpart;
         newpart.sector_start = beforend;

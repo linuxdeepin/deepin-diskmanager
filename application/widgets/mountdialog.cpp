@@ -61,6 +61,7 @@ void MountDialog::slotEditContentChanged(const QString &content)
 
 void MountDialog::slotbuttonClicked(int index, const QString &text)
 {
+    Q_UNUSED(text);
     if (index == okcode) {
         DMDbusHandler::instance()->mount(pedit->lineEdit()->text());
     }

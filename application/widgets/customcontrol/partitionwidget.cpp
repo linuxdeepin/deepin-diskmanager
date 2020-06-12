@@ -60,8 +60,9 @@ void PartitionWidget::initUi()
     mainLayout->addWidget(topFrame, 1);
     mainLayout->addWidget(midFrame, 3);
     mainLayout->addWidget(botFrame, 10);
-
+    setIcon(QIcon::fromTheme(app_name));
     this->addContent(mainFrame);
+
 }
 
 void PartitionWidget::topFrameSetting()

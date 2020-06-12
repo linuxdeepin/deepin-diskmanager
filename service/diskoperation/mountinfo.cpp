@@ -121,7 +121,7 @@ void MountInfo::add_mountpoint_entry(MountInfo::MountMapping &map, QString &node
 bool MountInfo::parse_readonly_flag(const QString &str)
 {
     QStringList mntopts = str.split(",");
-    for (unsigned int i = 0; i < mntopts.size(); i++) {
+    for (int i = 0; i < mntopts.size(); i++) {
         if (mntopts[i] == "rw")
             return false;
         else if (mntopts[i] == "ro")
@@ -147,7 +147,7 @@ void MountInfo::read_mountpoints_from_file_swaps(const QString &filename, MountI
     }
 }
 
-bool MountInfo::have_rootfs_dev(MountInfo::MountMapping &map)
+bool MountInfo::have_rootfs_dev(MountInfo::MountMapping &)
 {
     MountMapping::const_iterator iter_mp;
     for (iter_mp = mount_info.begin(); iter_mp != mount_info.end(); iter_mp++) {
@@ -166,7 +166,7 @@ void MountInfo::read_mountpoints_from_mount_command(MountInfo::MountMapping &map
     if (!Utils::executcmd("mount", output, error)) {
         QStringList lines;
         lines = output.split("\n");
-        for (unsigned int i = 0; i < lines.size(); i++) {
+        for (int i = 0; i < lines.size(); i++) {
             // Process line like "/dev/sda3 on / type ext4 (rw)"
             QString node = Utils::regexp_label(lines[i], ".*?(?= )");
             QString mountpoint = Utils::regexp_label(lines[i], "(?<=on ).*?(?= type)");

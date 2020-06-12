@@ -129,6 +129,7 @@ const QString Utils::FSTypeToString(FSType fstype)
          * with a file system.
          */
         strfstype = "unformatted";
+        break;
     case FS_OTHER:
         /* TO TRANSLATORS:  other
          * name shown in the File System Support dialog to list

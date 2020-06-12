@@ -15,7 +15,7 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "partitionwidget.h"
-#include "widgets/widgetdeclare.h"
+#include "common.h"
 #include <QDebug>
 
 PartitionWidget::PartitionWidget(QWidget *parent)
@@ -67,7 +67,7 @@ void PartitionWidget::initUi()
 void PartitionWidget::topFrameSetting()
 {
     DLabel *picLabel = new DLabel(topFrame);
-    picLabel->setPixmap(getIcon("labeldisk").pixmap(85, 85));
+    picLabel->setPixmap(Common::getIcon("labeldisk").pixmap(85, 85));
     picLabel->setMinimumSize(85, 85);
     QHBoxLayout *hLayout = new QHBoxLayout(topFrame);
     hLayout->setSpacing(5);

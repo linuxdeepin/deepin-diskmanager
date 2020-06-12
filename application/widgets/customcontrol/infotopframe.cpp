@@ -16,7 +16,7 @@
 */
 #include "infotopframe.h"
 #include "partedproxy/dmdbushandler.h"
-#include "widgets/widgetdeclare.h"
+#include "common.h"
 #include <DPalette>
 #include <DApplicationHelper>
 #include <DFontSizeManager>
@@ -32,7 +32,7 @@ InfoTopFrame::InfoTopFrame(DWidget *parent)
     this->setLayout(mainLayout);
 
     picLabel = new DLabel(this);
-    picLabel->setPixmap(getIcon("labeldisk").pixmap(85, 85));
+    picLabel->setPixmap(Common::getIcon("labeldisk").pixmap(85, 85));
     picLabel->setMinimumSize(85, 85);
     mainLayout->addWidget(picLabel);
 

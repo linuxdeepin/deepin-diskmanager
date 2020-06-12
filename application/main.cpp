@@ -1,6 +1,6 @@
 #include "environments.h"
 #include "cusapplication.h"
-#include "widgets/widgetdeclare.h"
+#include "common.h"
 #include "widgets/mainwindow.h"
 #include <DMainWindow>
 #include <DWidgetUtil>

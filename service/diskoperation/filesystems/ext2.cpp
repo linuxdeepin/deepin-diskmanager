@@ -5,8 +5,8 @@
 namespace DiskManager {
 
 EXT2::EXT2(FSType type)
-    : specific_type(type)
-    , force_auto_64bit(false)
+    : force_auto_64bit(false)
+    , specific_type(type)
 {
 }
 

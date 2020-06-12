@@ -1,5 +1,5 @@
 #include "ddbase.h"
-#include "widgets/widgetdeclare.h"
+#include "common.h"
 
 DDBase::DDBase(QWidget *parent)
     : DDialog(parent)

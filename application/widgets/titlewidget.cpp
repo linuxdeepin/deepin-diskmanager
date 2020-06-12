@@ -3,7 +3,7 @@
 #include "unmountdialog.h"
 #include "formatedialog.h"
 #include "resizedialog.h"
-#include "widgetdeclare.h"
+#include "common.h"
 #include <QHBoxLayout>
 
 TitleWidget::TitleWidget(DWidget *parent)
@@ -43,7 +43,7 @@ DPushButton *TitleWidget::createBtn(const QString &btnName, const QString &objNa
 {
     auto btn = new DPushButton(this);
     //  wzx 设置图标icon    2020-05-19
-    QIcon icon = getIcon(objName);
+    QIcon icon = Common::getIcon(objName);
     btn->setIcon(icon);
     btn->setFixedSize(QSize(36, 36));
     btn->setIconSize(QSize(18, 18));

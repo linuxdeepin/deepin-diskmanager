@@ -11,7 +11,7 @@
 #include <QRect>
 #include <QDebug>
 
-#include "widgetdeclare.h"
+#include "common.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : DMainWindow(parent)

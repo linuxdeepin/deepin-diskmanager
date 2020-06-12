@@ -23,6 +23,8 @@ public:
     static Byte_Value floor_size(Byte_Value value, Byte_Value rounding_size);
     static Byte_Value ceil_size(Byte_Value value, Byte_Value rounding_size);
     static QString CreateUUid();
+
+
 };
 
 #endif // UTILS_H

@@ -65,13 +65,13 @@ FileSystem *PartedCore::get_filesystem_object(FSType fstype)
 
 bool PartedCore::filesystem_resize_disallowed(const Partition &partition)
 {
-    //    if (partition.fstype == FS_LVM2_PV) {
-    //        //The LVM2 PV can't be resized when it's a member of an export VG
-    //        QString vgname = LVM2_PV_Info::get_vg_name(partition.get_path());
-    //        if (vgname .isEmpty())
-    //            return false ;
-    //        return LVM2_PV_Info::is_vg_exported(vgname);
-    //    }
+    if (partition.fstype == FS_LVM2_PV) {
+        //        //The LVM2 PV can't be resized when it's a member of an export VG
+        //        QString vgname = LVM2_PV_Info::get_vg_name(partition.get_path());
+        //        if (vgname .isEmpty())
+        //            return false ;
+        //        return LVM2_PV_Info::is_vg_exported(vgname);
+    }
     return false;
 }
 
@@ -94,7 +94,7 @@ void PartedCore::insert_unallocated(const QString &device_path, QVector<Partitio
     }
 
     //look for gaps in between
-    for (unsigned int t = 0; t < partitions.size() - 1; t++) {
+    for (int t = 0; t < partitions.size() - 1; t++) {
         if (((partitions.at(t + 1)->sector_start - partitions.at(t)->sector_end - 1) > (MEBIBYTE / sector_size))
                 || ((partitions.at(t + 1)->type != TYPE_LOGICAL) // Only show exactly 1 MiB if following partition is not logical.
                     && ((partitions.at(t + 1)->sector_start - partitions.at(t)->sector_end - 1) == (MEBIBYTE / sector_size)))) {
@@ -119,7 +119,7 @@ void PartedCore::insert_unallocated(const QString &device_path, QVector<Partitio
 
 void PartedCore::set_flags(Partition &partition, PedPartition *lp_partition)
 {
-    for (unsigned int t = 0; t < flags.size(); t++) {
+    for (int t = 0; t < flags.size(); t++) {
         if (ped_partition_is_flag_available(lp_partition, flags[t]) && ped_partition_get_flag(lp_partition, flags[t]))
             partition.flags.push_back(ped_partition_flag_get_name(flags[t]));
     }
@@ -134,7 +134,7 @@ FS_Limits PartedCore::get_filesystem_limits(FSType fstype, const Partition &part
     return fs_limits;
 }
 
-void PartedCore::probedeviceinfo(const QString &path)
+void PartedCore::probedeviceinfo(const QString &)
 {
     QVector<QString> devicepaths;
     qDebug() << __FUNCTION__ << "**1";
@@ -163,7 +163,7 @@ void PartedCore::probedeviceinfo(const QString &path)
     qDebug() << __FUNCTION__ << "devicepaths size=" << devicepaths.size();
     std::sort(devicepaths.begin(), devicepaths.end());
     qDebug() << __FUNCTION__ << "**8";
-    for (unsigned int t = 0; t < devicepaths.size(); t++) {
+    for (int t = 0; t < devicepaths.size(); t++) {
         /*TO TRANSLATORS: looks like Searching /dev/sda partitions */
         Device temp_device;
         set_device_from_disk(temp_device, devicepaths[t]);
@@ -416,9 +416,9 @@ void PartedCore::set_device_one_partition(Device &device, PedDevice *lp_device, 
     bool partition_is_busy = is_busy(fstype, path);
 
     Partition *partition_temp = NULL;
-    if (fstype == FS_LUKS)
-        partition_temp; //= new PartitionLUKS();
-    else
+    if (fstype == FS_LUKS) {
+        partition_temp = NULL; //= new PartitionLUKS();
+    } else
         partition_temp = new Partition();
     if (NULL == partition_temp)
         return;
@@ -577,6 +577,7 @@ bool PartedCore::set_mountpoints_helper(Partition &partition, const QString &pat
 
 void PartedCore::set_used_sectors(Partition &partition, PedDisk *lp_disk)
 {
+    Q_UNUSED(lp_disk)
     if (supported_filesystem(partition.fstype)) {
         FileSystem *p_filesystem = NULL;
         if (partition.busy) {
@@ -759,7 +760,7 @@ void PartedCore::set_device_partitions(Device &device, PedDevice *lp_device, Ped
 
         //Set busy status of extended partition if and only if
         //  there is at least one busy logical partition.
-        for (unsigned int t = 0; t < device.partitions.at(EXT_INDEX)->logicals.size(); t++) {
+        for (int t = 0; t < device.partitions.at(EXT_INDEX)->logicals.size(); t++) {
             if (device.partitions.at(EXT_INDEX)->logicals.at(t)->busy) {
                 device.partitions.at(EXT_INDEX)->busy = true;
                 break;

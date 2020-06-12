@@ -3,7 +3,6 @@
 #include "partedproxy/dmdbushandler.h"
 #include "customcontrol/infotopframe.h"
 #include "customcontrol/dmframewidget.h"
-#include "widgetdeclare.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QPainter>

@@ -15,7 +15,6 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "partitiondialog.h"
-#include "widgetdeclare.h"
 #include "partedproxy/dmdbushandler.h"
 #include "partitioninfo.h"
 #include <DLabel>

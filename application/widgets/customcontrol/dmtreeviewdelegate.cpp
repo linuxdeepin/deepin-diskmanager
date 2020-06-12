@@ -19,7 +19,7 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "dmtreeviewdelegate.h"
-#include "widgets/widgetdeclare.h"
+#include "common.h"
 #include "dmtreeview.h"
 #include <DFontSizeManager>
 #include <QDebug>
@@ -113,10 +113,10 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             bHasSubItem = true;
             if (pTreeView->isExpanded(index)) {
                 bExpand = true;
-                directionIcon = getIcon("arrow");
+                directionIcon = Common::getIcon("arrow");
 
             } else {
-                directionIcon = getIcon("arrow_right");
+                directionIcon = Common::getIcon("arrow_right");
                 bExpand = false;
             }
         } else {
@@ -136,7 +136,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             m_lefticon1Rect.setRect(paintRect.left() + 8, paintRect.top() + 20, 8, 8);
             painter->drawPixmap(m_lefticon1Rect, directionIcon.pixmap(17, 17));
             m_lefticonRect2.setRect(paintRect.left() + 15, paintRect.top() + 4, 40, 40);
-            QIcon icon = getIcon("treedisk");
+            QIcon icon = Common::getIcon("treedisk");
             painter->drawPixmap(m_lefticonRect2, icon.pixmap(38, 38));
             QTextOption option;
             QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
@@ -153,9 +153,9 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             painter->drawText(m_textRect1, text1);
         } else {
             m_lefticon1Rect.setRect(paintRect.left() + 25, paintRect.top() + 10, 30, 30);
-            QIcon icon = getIcon("harddisk");
-            QIcon icon1 = getIcon("mounticon");
-            QIcon icon2 = getIcon("uninstallicon");
+            QIcon icon = Common::getIcon("harddisk");
+            QIcon icon1 = Common::getIcon("mounticon");
+            QIcon icon2 = Common::getIcon("uninstallicon");
             painter->drawPixmap(m_lefticon1Rect, icon.pixmap(28, 28));
             QRect mounticonRect = QRect(paintRect.left() + 45, paintRect.top() + 25, 10, 10);
             if (data.fstype == "unallocated") {

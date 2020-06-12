@@ -1,5 +1,4 @@
 #include "mountdialog.h"
-#include "widgets/widgetdeclare.h"
 #include "partedproxy/dmdbushandler.h"
 #include <DLabel>
 #include <QVBoxLayout>

@@ -49,7 +49,7 @@ QString FsInfo::get_fs_type(const QString &path)
 QString FsInfo::get_path_by_uuid(const QString &uuid)
 {
     initialize_if_required();
-    for (unsigned int i = 0; i < fs_info_cache.size(); i++)
+    for (int i = 0; i < fs_info_cache.size(); i++)
         if (uuid == fs_info_cache[i].uuid)
             return fs_info_cache[i].path.m_name;
 
@@ -60,7 +60,7 @@ QString FsInfo::get_path_by_label(const QString &label)
 {
     initialize_if_required();
     update_fs_info_cache_all_labels();
-    for (unsigned int i = 0; i < fs_info_cache.size(); i++)
+    for (int i = 0; i < fs_info_cache.size(); i++)
         if (label == fs_info_cache[i].label)
             return fs_info_cache[i].path.m_name;
 
@@ -71,7 +71,7 @@ QString FsInfo::get_label(const QString &path, bool &found)
 {
     initialize_if_required();
     BlockSpecial bs = BlockSpecial(path);
-    for (unsigned int i = 0; i < fs_info_cache.size(); i++)
+    for (int i = 0; i < fs_info_cache.size(); i++)
         if (bs == fs_info_cache[i].path) {
             if (fs_info_cache[i].have_label || fs_info_cache[i].type == "") {
                 // Already have the label or this is a blank cache entry
@@ -137,7 +137,7 @@ void FsInfo::load_fs_info_cache()
     // disk device is detected before any embedded partitions within the image.
     const BlockSpecial empty_bs = BlockSpecial();
     QVector<QString> all_devices = ProcPartitionsInfo::get_device_paths();
-    for (unsigned int i = 0; i < all_devices.size(); i++) {
+    for (int i = 0; i < all_devices.size(); i++) {
         const FS_Entry &fs_entry = get_cache_entry_by_path(all_devices[i]);
         if (fs_entry.path == empty_bs) {
             // Run "blkid PATH" and load entry into cache for missing entries.
@@ -180,7 +180,7 @@ bool FsInfo::run_blkid_load_cache(const QString &path)
 const FS_Entry &FsInfo::get_cache_entry_by_path(const QString &path)
 {
     BlockSpecial bs = BlockSpecial(path);
-    for (unsigned int i = 0; i < fs_info_cache.size(); i++)
+    for (int i = 0; i < fs_info_cache.size(); i++)
         if (bs == fs_info_cache[i].path)
             return fs_info_cache[i];
 
@@ -206,7 +206,7 @@ void FsInfo::update_fs_info_cache_all_labels()
 
     // For all cache entries which are file systems but don't yet have a label load it
     // now.
-    for (unsigned int i = 0; i < fs_info_cache.size(); i++)
+    for (int i = 0; i < fs_info_cache.size(); i++)
         if (fs_info_cache[i].type != "" && !fs_info_cache[i].have_label)
             run_blkid_update_cache_one_label(fs_info_cache[i]);
 }

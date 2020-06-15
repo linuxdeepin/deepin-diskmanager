@@ -1244,7 +1244,6 @@ bool PartedCore::resize(const Partition &partition_new)
         //        return    resize_move_partition(partition_old, partition_new, operationdetail, true)
         //                  && recreate_linux_swap_filesystem(partition_new, operationdetail);
     }
-
     Sector delta = partition_new.get_sector_length() - curpartition.get_sector_length();
     if (delta < 0LL) { // shrink
         //        return    check_repair_filesystem(partition_new)
@@ -1365,7 +1364,6 @@ bool PartedCore::resize_move_partition_implement(const Partition &partition_old,
                 ped_constraint_destroy(constraint);
             }
         }
-
         destroy_device_and_disk(lp_device, lp_disk);
     }
 

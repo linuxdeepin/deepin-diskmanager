@@ -39,7 +39,9 @@
 #include <DIconButton>
 #include <QSizePolicy>
 #include <QToolTip>
-
+#include <QRegExp>
+#include <QRegExpValidator>
+#include <QDoubleValidator>
 DWIDGET_USE_NAMESPACE
 
 typedef struct STRUCTPART {
@@ -72,7 +74,7 @@ public:
     double leaveSpace();
     void setSelectValue();
     bool blockSignals(bool block);
-
+    void setRegValidator();
 private:
     bool max_amount_prim_reached();
 
@@ -120,18 +122,16 @@ private:
     DSlider *hSlider;
     QString partSize;
     QString selectedpartName;
-
+    QString currentEditSize;
     int number = -1;
     double total = 0.00;
     double mTotal = 0.00;
-    QString currentEditSize;
     int mflag = -1;
     int m_value = 0;
     int block = 0;
     QVector<double> sizeInfo;
     QVector<QString> partName;
     QVector<stPart> m_patrinfo;
-
 };
 
 #endif // PARTITIONWIDGET_H

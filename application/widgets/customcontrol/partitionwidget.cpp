@@ -28,6 +28,7 @@ PartitionWidget::PartitionWidget(QWidget *parent)
 }
 PartitionWidget::~PartitionWidget()
 {
+
 }
 void PartitionWidget::initUi()
 {
@@ -203,6 +204,7 @@ void PartitionWidget::partInfoShowing()
     vLayout->addLayout(line2Layout);
     vLayout->addLayout(line3Layout);
     vLayout->addStretch();
+    setRegValidator();
 }
 
 void PartitionWidget::recPartitionInfo()
@@ -247,7 +249,7 @@ void PartitionWidget::recPartitionInfo()
 void PartitionWidget::initConnection()
 {
     connect(hSlider, &DSlider::valueChanged, this, &PartitionWidget::slotSliderValueChanged);
-    connect(partSizeEdit, &DLineEdit::editingFinished, this, &PartitionWidget::slotSetSliderValue);
+    connect(partSizeEdit, &DLineEdit::textEdited, this, &PartitionWidget::slotSetSliderValue);
     connect(partNameEdit, &DLineEdit::textEdited, this, &PartitionWidget::slotSetPartName);
     connect(addButton, &DIconButton::clicked, this, &PartitionWidget::addPartitionSlot);
     connect(remButton, &DIconButton::clicked, this, &PartitionWidget::remPartitionSlot);
@@ -282,6 +284,15 @@ void PartitionWidget::setSelectValue()
     }
 }
 
+void PartitionWidget::setRegValidator()
+{
+    QRegExp reg("^[0-9]+(.[0-9]{1,4})?$");
+    QRegExpValidator *va = new QRegExpValidator(reg, this);
+    partSizeEdit->lineEdit()->setValidator(va);
+    QRegExp re("^[\u4E00-\u9FA5A-Za-z0-9_]+$");  //\/:*?"<>|    [a-zA-Z0-9]+$
+    QRegExpValidator *va1 = new QRegExpValidator(re, this);
+    partNameEdit->lineEdit()->setValidator(va1);
+}
 
 
 bool PartitionWidget::max_amount_prim_reached()

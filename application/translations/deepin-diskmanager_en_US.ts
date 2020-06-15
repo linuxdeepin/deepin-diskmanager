@@ -147,98 +147,98 @@
 <context>
     <name>PartitionWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="42"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="43"/>
         <source>Partitioning %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="43"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="44"/>
         <source>Click ‘+’ to increase the number of partitions. Click on each partition to change its name and file system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="77"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="78"/>
         <source>Disk Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="83"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="84"/>
         <source>Capacity:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="87"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="88"/>
         <source>Partition selected:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="95"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="96"/>
         <source>Disk:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="99"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="179"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="100"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="180"/>
         <source>File system:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="129"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="130"/>
         <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="131"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="132"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="133"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="134"/>
         <source>Revert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="150"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="151"/>
         <source>Partition Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="156"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="157"/>
         <source>Number of partitions:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="160"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="161"/>
         <source>Delete last partition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="170"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="171"/>
         <source>Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="189"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="190"/>
         <source>Size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="275"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="331"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="336"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="658"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="276"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="332"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="337"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="660"/>
         <source>Unallocated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="549"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="578"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="551"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="580"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="550"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="579"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="552"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="581"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>

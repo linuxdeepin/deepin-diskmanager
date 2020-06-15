@@ -168,7 +168,7 @@ void PartChartShowing::addPaint(QPainter *painter)
             }
 
         } else if (sum + 1 < total && i > 0) { //绘制除了第一个分区和最后一个分区以及空闲分区的填充和选中状态
-            qDebug() << static_cast<int>(sum) << static_cast<int>(total);
+//            qDebug() << static_cast<int>(sum) << static_cast<int>(total);
             width1 = (partsize.at(i - 1) / total) * (paintRect.width() - radius);
             width1 = width1 - rightspace;
             if (width1 < 8 || partsize.at(i - 1) / total < 0.01)
@@ -195,7 +195,7 @@ void PartChartShowing::addPaint(QPainter *painter)
                 flag = 0;
             }
         } else if (sumvalue >= 100) {//绘制最后一个分区当超过整个分区容量的时候以及选中状态
-            qDebug() << "sumvalue" << sumvalue;
+//            qDebug() << "sumvalue" << sumvalue;
             double width = ((partsize.at(partsize.size() - 2) / total)) * (paintRect.width() - radius) - rightspace;
             if (partsize.at(partsize.size() - 2) / total < 0.01) {
                 width = 8;

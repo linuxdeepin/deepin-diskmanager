@@ -50,7 +50,7 @@ set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM 1 )
 #lupdate start
 set(TS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/translations")
 set(TS_FILES
-    "${TS_DIR}/${PROJECT_NAME}_en_US.ts"
+    "${TS_DIR}/${PROJECT_NAME}_en_US.ts"    
 )
 find_program(LUPDATE_EXECUTABLE lupdate)
 foreach(_ts_file ${TS_FILES})

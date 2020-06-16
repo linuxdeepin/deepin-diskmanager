@@ -51,6 +51,7 @@ void MainWindow::initUi()
     titlebar()->setTitle("");
     // titlebar()->setMenu(m_central->titleMenu());
     titlebar()->addWidget(m_central->titlewidget(), Qt::AlignCenter);
+    titlebar()->menu();
 }
 
 void MainWindow::initConnection()

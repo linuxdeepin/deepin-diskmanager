@@ -162,7 +162,7 @@ void PartChartShowing::addPaint(QPainter *painter)
             painter->fillPath(path[0], QBrush(basecolor.at(0)));
             if (number == 0) {
                 if ((static_cast<int>(widths) == 8) && partsize.size() == 2) {
-//                    qDebug() << (static_cast<int>(widths) - static_cast<int>((8 - widths)));
+                    qDebug() << (static_cast<int>(widths) - static_cast<int>((8 - widths)));
                     QPainterPath seclect1path;
                     seclect1path.moveTo(paintRect.topLeft() + QPoint(radius, 0));
                     seclect1path.arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
@@ -212,13 +212,10 @@ void PartChartShowing::addPaint(QPainter *painter)
                 if (width1 < 8) {
                     width1 = 8;
                 }
-                if (i == partsize.size() - 2) {
+                if (i == partsize.size() - 1) {
+                    painter->drawRect(static_cast<int>(path[number - 1].currentPosition().x() + width1), static_cast<int>(path[number - 1].currentPosition().y()), static_cast<int>(widths), paintRect.height() - 2);
+                } else  {
                     painter->drawRect(static_cast<int>(path[number - 1].currentPosition().x() + width1), static_cast<int>(path[number - 1].currentPosition().y()), static_cast<int>(widths - 1), paintRect.height() - 2);
-                } else {
-                    if (i == partsize.size() - 1)
-                        painter->drawRect(static_cast<int>(path[number - 1].currentPosition().x() + width1), static_cast<int>(path[number - 1].currentPosition().y()), static_cast<int>(widths), paintRect.height() - 1);
-                    else
-                        painter->drawRect(static_cast<int>(path[number - 1].currentPosition().x() + width1), static_cast<int>(path[number - 1].currentPosition().y()), static_cast<int>(widths - 1), paintRect.height() - 1);
                 }
                 flag = 0;
             }
@@ -255,7 +252,6 @@ void PartChartShowing::addPaint(QPainter *painter)
 //                    qDebug() << 8 - (static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) - 1);
                     if (static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) - 1 == 7) {
                         selectpath.moveTo(path[partsize.size() - 2].currentPosition() + QPoint(static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) + (8 - (static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) + 1)), 0));
-//                        qDebug() << "1111223";
                     } else {
                         selectpath.moveTo(path[partsize.size() - 2].currentPosition() + QPoint(static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) + (8 - (static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) - 1)), 0));
                     }

@@ -42,7 +42,7 @@ public:
     void initmodel();
     void initdelegate();
     void sort();
-    void additem(QStandardItem *t_item, DiskInfoData &data);
+    void additem(QStandardItem *t_item, DiskInfoData &data, int flag);
     QStandardItem *getModelByIndex(const QModelIndex &index);
     QStandardItem *addtopitem(DiskInfoData &data);
     QStandardItem *getcuritem();
@@ -51,9 +51,9 @@ public:
     QModelIndex setDefaultdmItem();
     void setRefreshItem(const QString &devicepath, int num);
     int currentNum();
-    void addItem(DmDiskinfoBox *infobox, QStandardItem *puritem = nullptr);
-    void addTopItem(DmDiskinfoBox *mailbox);
-    void addSubItem(DmDiskinfoBox *mailbox, QStandardItem *pcurItem);
+    void addItem(DmDiskinfoBox *infobox, int flag, QStandardItem *puritem = nullptr);
+    void addTopItem(DmDiskinfoBox *mailbox, int flag);
+    void addSubItem(DmDiskinfoBox *mailbox, QStandardItem *pcurItem, int flag);
     QStandardItemModel *m_model {nullptr};
 signals:
     void sigselectitem(const QModelIndex &index);

@@ -42,13 +42,17 @@ void DmTreeview::initUI()
 
     //    qDebug() << 2222222222222;
 }
-void DmTreeview::additem(QStandardItem *item, DiskInfoData &data)
+void DmTreeview::additem(QStandardItem *item, DiskInfoData &data, int flag)
 {
     QStandardItem *pItem = new QStandardItem(data.diskpath);
     pItem->setData(QVariant::fromValue((data)), Qt::UserRole + 1);
     item->appendRow(pItem);
     // expand(m_pDataModel->indexFromItem(item));
-    setExpanded(m_model->indexFromItem(item), true);
+    if (flag == 0) {
+        setExpanded(m_model->index(0, 0), true);
+    } else {
+
+    }
 }
 QStandardItem *DmTreeview::addtopitem(DiskInfoData &data)
 {
@@ -104,7 +108,7 @@ void DmTreeview::mousePressEvent(QMouseEvent *event)
         setExpanded(currentIndex(), !isExpanded(currentIndex()));
     }
 }
-void DmTreeview::addItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
+void DmTreeview::addItem(DmDiskinfoBox *infobox, int flag, QStandardItem *pcurItem)
 {
     QStandardItem *t_item = nullptr;
     DiskInfoData data;
@@ -140,26 +144,26 @@ void DmTreeview::addItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
         data.level = parent_data.level + 1;
         //qDebug() << data.level;
 
-        this->additem(pcurItem, data);
+        this->additem(pcurItem, data, flag);
     }
 
     foreach (auto sub, infobox->childs) {
-        addSubItem(sub, t_item);
+        addSubItem(sub, t_item, flag);
     }
 }
 
-void DmTreeview::addTopItem(DmDiskinfoBox *infobox)
+void DmTreeview::addTopItem(DmDiskinfoBox *infobox, int flag)
 {
     infobox->m_level = 0;
-    addItem(infobox);
+    addItem(infobox, flag);
 }
 
-void DmTreeview::addSubItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem)
+void DmTreeview::addSubItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem, int flag)
 {
     if (infobox->m_level < 1) {
         infobox->m_level = 0;
     }
-    addItem(infobox, pcurItem);
+    addItem(infobox, flag, pcurItem);
 }
 QModelIndex DmTreeview::setDefaultdmItem()
 {
@@ -185,6 +189,7 @@ void DmTreeview::setRefreshItem(const QString &devicepath, int num)
         devicenum = 5;
     }
     this->setCurrentIndex(model()->index(devicenum, 0).child(num, 0));
+    setExpanded(model()->index(devicenum, 0), true);
 }
 
 int DmTreeview::currentNum()

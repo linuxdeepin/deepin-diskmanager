@@ -103,9 +103,9 @@ void DeviceListWidget::slotUpdateDeviceInfo()
             m_box->childs.append(m_childbox);
         }
 
-        m_treeview->addTopItem(m_box);
+        m_treeview->addTopItem(m_box, additem);
     }
-
+    additem = 1;
     if (flag == 0) {
         m_treeview->setDefaultdmItem();
     } else {

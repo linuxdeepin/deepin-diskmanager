@@ -162,7 +162,7 @@ void PartChartShowing::addPaint(QPainter *painter)
             painter->fillPath(path[0], QBrush(basecolor.at(0)));
             if (number == 0) {
                 if ((static_cast<int>(widths) == 8)) {
-                    qDebug() << (static_cast<int>(widths) - static_cast<int>((8 - widths)));
+//                    qDebug() << (static_cast<int>(widths) - static_cast<int>((8 - widths)));
                     QPainterPath seclect1path;
                     seclect1path.moveTo(paintRect.topLeft() + QPoint(radius, 0));
                     seclect1path.arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
@@ -195,8 +195,8 @@ void PartChartShowing::addPaint(QPainter *painter)
                 emit judgeLastPartition();
             }
             path[i].moveTo(path[i - 1].currentPosition() + QPoint(static_cast<int>(width1), 0));
-            path[i].lineTo(path[i - 1].currentPosition() + QPoint(int(width1 + widths), 0));
-            path[i].lineTo(path[i - 1].currentPosition() + QPoint(int(width1 + widths), paintRect.height() - 1));
+            path[i].lineTo(path[i - 1].currentPosition() + QPoint(static_cast<int>(width1 + widths), 0));
+            path[i].lineTo(path[i - 1].currentPosition() + QPoint(static_cast<int>(width1 + widths), paintRect.height() - 1));
             path[i].lineTo(path[i - 1].currentPosition() + QPoint((static_cast<int>(width1)), paintRect.height() - 1));
             path[i].lineTo(path[i - 1].currentPosition() + QPoint((static_cast<int>(width1)), 0));
             QColor fillcolor;
@@ -250,7 +250,7 @@ void PartChartShowing::addPaint(QPainter *painter)
                 painter->setBrush(fillcolor);;
                 QPainterPath selectpath;
                 if (static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) - 1 < 8) {
-                    qDebug() << 8 - (static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) - 1);
+//                    qDebug() << 8 - (static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) - 1);
                     selectpath.moveTo(path[partsize.size() - 2].currentPosition() + QPoint(static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) + (8 - (static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) - 1)), 0));
                     selectpath.lineTo(paintRect.topRight() - QPoint(radius, 0));
                     selectpath.arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),

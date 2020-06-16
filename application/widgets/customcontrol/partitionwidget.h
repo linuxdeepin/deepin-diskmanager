@@ -64,22 +64,22 @@ public:
     void midFrameSetting();
     void botFrameSetting();
     void partInfoShowing();
+    void initConnection();
     void recPartitionInfo();
+    double leaveSpace();
+private:
+    bool max_amount_prim_reached();
     void setEnable();
     void setUseEnable();
     void setEnable2();
     void setLabelColor();
     void setLabelColorGray();
-    void initConnection();
-    double leaveSpace();
+    void setRegValidator();
     void setSelectValue();
     bool blockSignals(bool block);
-    void setRegValidator();
-private:
-    bool max_amount_prim_reached();
-
+    void setAddOrRemResult();
 signals:
-    void senderData(int x, int y, int z);
+
 public slots:
     void slotSliderValueChanged(int value);
     void slotSetSliderValue();

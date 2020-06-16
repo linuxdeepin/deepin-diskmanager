@@ -191,7 +191,7 @@ void PartChartShowing::addPaint(QPainter *painter)
             width1 = width1 - rightspace;
             if (width1 < 8 || partsize.at(i - 1) / total < 0.01)
                 width1 = 8;
-            if (path[i - 1].currentPosition().x() + width1 + widths > paintRect.width() - radius) {
+            if (path[i - 1].currentPosition().x() + width1 + widths > paintRect.width() - 2 * radius) {
                 emit judgeLastPartition();
             }
             path[i].moveTo(path[i - 1].currentPosition() + QPoint(static_cast<int>(width1), 0));
@@ -215,8 +215,10 @@ void PartChartShowing::addPaint(QPainter *painter)
                 if (i == partsize.size() - 2) {
                     painter->drawRect(static_cast<int>(path[number - 1].currentPosition().x() + width1), static_cast<int>(path[number - 1].currentPosition().y()), static_cast<int>(widths - 1), paintRect.height() - 2);
                 } else {
-                    painter->drawRect(static_cast<int>(path[number - 1].currentPosition().x() + width1), static_cast<int>(path[number - 1].currentPosition().y()), static_cast<int>(widths - 1), paintRect.height() - 1);
-
+                    if (i == partsize.size() - 1)
+                        painter->drawRect(static_cast<int>(path[number - 1].currentPosition().x() + width1), static_cast<int>(path[number - 1].currentPosition().y()), static_cast<int>(widths), paintRect.height() - 1);
+                    else
+                        painter->drawRect(static_cast<int>(path[number - 1].currentPosition().x() + width1), static_cast<int>(path[number - 1].currentPosition().y()), static_cast<int>(widths - 1), paintRect.height() - 1);
                 }
                 flag = 0;
             }

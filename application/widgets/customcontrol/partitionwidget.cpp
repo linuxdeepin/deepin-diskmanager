@@ -521,7 +521,7 @@ void PartitionWidget::slotSliderValueChanged(int value)
         }
     }
     currentEditSize = QString::number((static_cast<double>(value) / 100) * (mTotal - leaveSpace()),  'f', 4);
-//    qDebug() << currentEditSize;
+    qDebug() << currentEditSize;
     block = 0;
 }
 
@@ -532,6 +532,8 @@ void PartitionWidget::slotSetSliderValue()
         value = value / 1024;
     block = 1;
     hSlider->setValue(static_cast<int>((value / total) * 100));
+    currentEditSize = QString::number(value * 1024, 'f', 4);
+    qDebug() << value * 1024 << static_cast<int>((value / total) * 100);
 }
 
 void PartitionWidget::slotSetPartName()

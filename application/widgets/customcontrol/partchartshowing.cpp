@@ -161,7 +161,7 @@ void PartChartShowing::addPaint(QPainter *painter)
 
             painter->fillPath(path[0], QBrush(basecolor.at(0)));
             if (number == 0) {
-                if ((static_cast<int>(widths) == 8)) {
+                if ((static_cast<int>(widths) == 8) && partsize.size() == 2) {
 //                    qDebug() << (static_cast<int>(widths) - static_cast<int>((8 - widths)));
                     QPainterPath seclect1path;
                     seclect1path.moveTo(paintRect.topLeft() + QPoint(radius, 0));
@@ -170,8 +170,8 @@ void PartChartShowing::addPaint(QPainter *painter)
                     seclect1path.arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, radius * 2)),
                                              QSize(radius * 2, radius * 2)),
                                        180, 90);
-                    seclect1path.lineTo(paintRect.bottomLeft() + QPoint((static_cast<int>(widths) - 4  + radius), 0));
-                    seclect1path.lineTo(paintRect.topLeft() + QPoint((static_cast<int>(widths) -  4 + radius), 0));
+                    seclect1path.lineTo(paintRect.bottomLeft() + QPoint((static_cast<int>(widths) - 3 + radius), 0));
+                    seclect1path.lineTo(paintRect.topLeft() + QPoint((static_cast<int>(widths) -  3 + radius), 0));
                     seclect1path.lineTo(paintRect.topLeft() + QPoint(radius, 0));
                     painter->setBrush(QBrush(basecolor.at(0)));
                     painter->setPen(QPen(this->palette().color(DPalette::Normal, DPalette::Highlight), 2));
@@ -249,9 +249,14 @@ void PartChartShowing::addPaint(QPainter *painter)
                 painter->setPen(QPen(this->palette().color(DPalette::Normal, DPalette::Highlight), 2));
                 painter->setBrush(fillcolor);;
                 QPainterPath selectpath;
-                if (static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) - 1 < 8) {
+                if (static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) - 1 <= 8) {
 //                    qDebug() << 8 - (static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) - 1);
-                    selectpath.moveTo(path[partsize.size() - 2].currentPosition() + QPoint(static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) + (8 - (static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) - 1)), 0));
+                    if (static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) - 1 == 7) {
+                        selectpath.moveTo(path[partsize.size() - 2].currentPosition() + QPoint(static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) + (8 - (static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) + 1)), 0));
+//                        qDebug() << "1111223";
+                    } else {
+                        selectpath.moveTo(path[partsize.size() - 2].currentPosition() + QPoint(static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) + (8 - (static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) - 1)), 0));
+                    }
                     selectpath.lineTo(paintRect.topRight() - QPoint(radius, 0));
                     selectpath.arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
                                            QSize(radius * 2, radius * 2)),

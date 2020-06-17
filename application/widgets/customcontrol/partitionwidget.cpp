@@ -45,6 +45,7 @@ void PartitionWidget::initUi()
     tipLabel->setWordWrap(true);
     tipLabel->setAlignment(Qt::AlignCenter);
     topFrame = new DFrame(mainFrame);
+    //分区页最上端的布局等
     topFrameSetting();
     topFrame->setFrameRounded(true);
     DPalette pa = DApplicationHelper::instance()->palette(topFrame);
@@ -52,9 +53,11 @@ void PartitionWidget::initUi()
     DApplicationHelper::instance()->setPalette(topFrame, pa);
     topFrame->setAutoFillBackground(true);
     midFrame = new DFrame(mainFrame);
+    //分区页中间部分的图形绘制
     midFrameSetting();
     midFrame->setFrameStyle(DFrame::NoFrame);
     botFrame = new DFrame(mainFrame);
+    //分区页最下端的布局等
     botFrameSetting();
     botFrame->setFrameStyle(DFrame::NoFrame);
     mainLayout->addWidget(tipLabel, 1);
@@ -68,52 +71,59 @@ void PartitionWidget::initUi()
 
 void PartitionWidget::topFrameSetting()
 {
-    DLabel *picLabel = new DLabel(topFrame);
-    picLabel->setPixmap(Common::getIcon("labeldisk").pixmap(85, 85));
-    picLabel->setMinimumSize(85, 85);
+    //整体水平布局
     QHBoxLayout *hLayout = new QHBoxLayout(topFrame);
     hLayout->setSpacing(5);
     hLayout->setContentsMargins(30, 0, 0, 0);
+    DLabel *picLabel = new DLabel(topFrame);
+    picLabel->setPixmap(Common::getIcon("labeldisk").pixmap(85, 85));
+    picLabel->setMinimumSize(85, 85);
+    //垂直布局-右侧三行标签
     QVBoxLayout *vLayout = new QVBoxLayout();
     vLayout->setContentsMargins(10, 20, 0, 20);
     DLabel *deviceInfoLabel = new DLabel(tr("Disk Information"), topFrame);
     DFontSizeManager::instance()->bind(deviceInfoLabel, DFontSizeManager::T6);
+    //第一行
     QHBoxLayout *line1Layout = new QHBoxLayout();
     line1Layout->addWidget(deviceInfoLabel);
     line1Layout->addStretch();
-    QHBoxLayout *line4Layout = new QHBoxLayout();
+    //第二行
+    QHBoxLayout *line2Layout = new QHBoxLayout();
     DLabel *allMemoryLabel = new DLabel(tr("Capacity:"), topFrame);
     allMemory = new DLabel("256GiB", topFrame);
     allMemory->setMinimumWidth(90);
     allMemory->setAlignment(Qt::AlignLeft);
     DLabel *selectedPartLabel = new DLabel(tr("Partition selected:"), topFrame);
     selectedPartition = new DLabel("sda3");
-    line4Layout->addWidget(allMemoryLabel);
-    line4Layout->addWidget(allMemory);
-    line4Layout->addWidget(selectedPartLabel);
-    line4Layout->addWidget(selectedPartition);
-    line4Layout->addStretch();
-    QHBoxLayout *line2Layout = new QHBoxLayout();
+    line2Layout->addWidget(allMemoryLabel);
+    line2Layout->addWidget(allMemory);
+    line2Layout->addWidget(selectedPartLabel);
+    line2Layout->addWidget(selectedPartition);
+    line2Layout->addStretch();
+    //第三行
+    QHBoxLayout *line3Layout = new QHBoxLayout();
     DLabel *deviceNameLabel = new DLabel(tr("Disk:"), topFrame);
     deviceName = new DLabel("/dev/sda", topFrame);
     deviceName->setMinimumWidth(103);
     deviceName->setAlignment(Qt::AlignLeft);
     DLabel *deviceFormateLabel = new DLabel(tr("File system:"), topFrame);
     deviceFormate = new DLabel("EXT3", topFrame);
-    line2Layout->addWidget(deviceNameLabel);
-    line2Layout->addWidget(deviceName);
-    line2Layout->addWidget(deviceFormateLabel);
-    line2Layout->addWidget(deviceFormate);
-    line2Layout->addStretch();
+    line3Layout->addWidget(deviceNameLabel);
+    line3Layout->addWidget(deviceName);
+    line3Layout->addWidget(deviceFormateLabel);
+    line3Layout->addWidget(deviceFormate);
+    line3Layout->addStretch();
     vLayout->addLayout(line1Layout);
-    vLayout->addLayout(line4Layout);
     vLayout->addLayout(line2Layout);
+    vLayout->addLayout(line3Layout);
+
     hLayout->addWidget(picLabel, 1);
     hLayout->addLayout(vLayout, 10);
 }
 
 void PartitionWidget::midFrameSetting()
 {
+    //调用绘制的图形
     midFrame->setMinimumHeight(100);
     QVBoxLayout *mainLayout = new QVBoxLayout(midFrame);
     partChartWidget = new PartChartShowing(midFrame);
@@ -148,67 +158,68 @@ void PartitionWidget::botFrameSetting()
 void PartitionWidget::partInfoShowing()
 {
     auto formateList = DMDbusHandler::instance()->getallsupportfs();
+    //整体垂直布局-三行
     QVBoxLayout *vLayout = new QVBoxLayout(partWidget);
+    //第一行
     partInfoLabel = new DLabel(tr("Partition Information"), partWidget);
     DFontSizeManager::instance()->bind(partInfoLabel, DFontSizeManager::T5);
-
+    //第二行
     QHBoxLayout *line2Layout = new QHBoxLayout();
     line2Layout->setContentsMargins(0, 0, 0, 0);
-    QHBoxLayout *line2Layout1 = new QHBoxLayout();
     partDoLabel = new DLabel(tr("Number of partitions:"), partWidget);
     DLabel *labelspace = new DLabel(partWidget);
     addButton = new DIconButton(DStyle::SP_IncreaseElement);
     remButton = new DIconButton(DStyle::SP_DecreaseElement);
     remButton->setToolTip(tr("Delete last partition"));
-    line2Layout1->addWidget(partDoLabel, 2);
-    line2Layout1->addWidget(labelspace, 5);
-    line2Layout1->addWidget(addButton, 1);
-    line2Layout1->addWidget(remButton, 1);
+    DLabel *space = new DLabel(partWidget);
+    //按钮初始状态
     if (sizeInfo.size() == 0)
         remButton->setEnabled(false);
     else
         remButton->setEnabled(true);
-    QHBoxLayout *line2Layout2 = new QHBoxLayout();
     partNameLabel = new DLabel(tr("Name:"), partWidget);
     partNameEdit = new DLineEdit(partWidget);
-    line2Layout2->addWidget(partNameLabel);
-    line2Layout2->addWidget(partNameEdit);
-    line2Layout->addLayout(line2Layout1);
-    line2Layout->addLayout(line2Layout2);
-    line2Layout1->setContentsMargins(0, 0, 30, 0);
+    line2Layout->addWidget(partDoLabel, 2);
+    line2Layout->addWidget(labelspace, 5);
+    line2Layout->addWidget(addButton, 1);
+    line2Layout->addWidget(remButton, 1);
+    line2Layout->addWidget(space, 1);
+    line2Layout->addWidget(partNameLabel, 2);
+    line2Layout->addWidget(partNameEdit, 7);
+    //第三行
     QHBoxLayout *line3Layout = new QHBoxLayout();
-    QHBoxLayout *line3Layout1 = new QHBoxLayout();
     DLabel *partFormateLabel = new DLabel(tr("File system:"), partWidget);
-    partFormateLabel->setMinimumWidth(80);
     partFormateCombox = new DComboBox(partWidget);
     partFormateCombox->addItems(formateList);
     partFormateCombox->setCurrentIndex(2);
-    partFormateCombox->setFixedWidth(300);
-    line3Layout1->addWidget(partFormateLabel);
-    line3Layout1->addWidget(partFormateCombox);
-    QHBoxLayout *line3Layout2 = new QHBoxLayout();
-    line3Layout2->setContentsMargins(30, 0, 0, 0);
     DLabel *partSizeLabel = new DLabel(tr("Size:"), partWidget);
     hSlider = new DSlider(Qt::Horizontal);
+    hSlider->setMaximum(100);
+    hSlider->setValue(100);
     partSizeEdit = new DLineEdit(partWidget);
     partComCobox = new DComboBox(partWidget);
     partComCobox->addItem("GiB");
     partComCobox->addItem("MiB");
-    line3Layout2->addWidget(partSizeLabel, 1);
-    line3Layout2->addWidget(hSlider, 2);
-    line3Layout2->addWidget(partSizeEdit, 3);
-    line3Layout2->addWidget(partComCobox, 2);
-    line3Layout->addLayout(line3Layout1);
-    line3Layout->addLayout(line3Layout2);
+    partComCobox->setCurrentText("GiB");
+    line3Layout->addWidget(partFormateLabel, 2);
+    line3Layout->addWidget(partFormateCombox, 7);
+    line3Layout->addWidget(space, 1);
+    line3Layout->addWidget(partSizeLabel, 2);
+    line3Layout->addWidget(hSlider, 2);
+    line3Layout->addWidget(partSizeEdit, 3);
+    line3Layout->addWidget(partComCobox, 2);
+
     vLayout->addWidget(partInfoLabel);
     vLayout->addLayout(line2Layout);
     vLayout->addLayout(line3Layout);
     vLayout->addStretch();
+    //输入框正则表达
     setRegValidator();
 }
 
 void PartitionWidget::recPartitionInfo()
 {
+    //获取数据
     QString s_disksize;
     PartitionInfo data;
     auto it = DMDbusHandler::instance()->probDeviceInfo().find(DMDbusHandler::instance()->getCurPartititonInfo().device_path);
@@ -216,34 +227,23 @@ void PartitionWidget::recPartitionInfo()
         s_disksize = QString::number(Utils::sector_to_unit(it.value().length, it.value().sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GiB";
         data = DMDbusHandler::instance()->getCurPartititonInfo();
     }
-    QString s_pdisksize = Utils::format_size(data.sector_end - data.sector_start, data.sector_size);
     QString devicePath = data.device_path;
     QString deviceSize = s_disksize;
     QString partPath = data.path;
-    partSize = s_pdisksize;
     QString partFstype = Utils::FSTypeToString(static_cast<FSType>(data.fstype));
+    //所选空闲分区
     int i = partPath.lastIndexOf("/");
     QString selectPartition = partPath.right(partPath.length() - i - 1);
-    partComCobox->setCurrentText("GiB");
-    hSlider->setMaximum(100);
-    hSlider->setValue(100);
-    selectedpartName = selectPartition;
     selectedPartition->setText(selectPartition);
     deviceName->setText(devicePath);
     allMemory->setText(deviceSize);
     deviceFormate->setText(partFstype);
-    if (s_pdisksize.contains("MiB")) {
-        int j = partSize.lastIndexOf(" M");
-        mTotal = partSize.left(j).toDouble();
-        total = mTotal / 1024;
-    } else {
-        int j = partSize.lastIndexOf(" G");
-        total = partSize.left(j).toDouble();
-        mTotal = total * 1024;
-    }
-//    qDebug() << partSize << total << mTotal;
+    total = Utils::sector_to_unit(data.sector_end - data.sector_start, data.sector_size, SIZE_UNIT::UNIT_GIB);
+    mTotal = total * 1024;
+    //初始值,显示保留两位小数,真正使用保留4位小数
+    currentEditSize = QString::number(mTotal, 'f', 4);
     partComCobox->setEnabled(true);
-    setSelectValue();
+    setSelectUnallocatesSpace();
 }
 
 void PartitionWidget::initConnection()
@@ -262,7 +262,7 @@ void PartitionWidget::initConnection()
     connect(partChartWidget, &PartChartShowing::judgeLastPartition, this, &PartitionWidget::judgeLastPartitionSlot);
 }
 
-double PartitionWidget::leaveSpace()
+double PartitionWidget::sumValue()
 {
     double sum = 0.00;
     for (int j = 0; j < sizeInfo.count(); j++) {
@@ -273,28 +273,30 @@ double PartitionWidget::leaveSpace()
     return sum;
 }
 
-void PartitionWidget::setSelectValue()
+void PartitionWidget::setSelectUnallocatesSpace()
 {
     partNameEdit->lineEdit()->setPlaceholderText(tr("Unallocated"));
     partSizeEdit->setText("");
     if (partComCobox->currentText() == "GiB") {
-        partSizeEdit->setText(QString::number(total - (leaveSpace() / 1024),  'f', 2));
+        partSizeEdit->setText(QString::number(total - (sumValue() / 1024),  'f', 2));
     } else {
-        partSizeEdit->setText(QString::number(mTotal - leaveSpace(),  'f', 2));
+        partSizeEdit->setText(QString::number(mTotal - sumValue(),  'f', 2));
     }
 }
 
-void PartitionWidget::setAddOrRemResult()
+void PartitionWidget::setAddOrRemResult(const bool &isExceed)
 {
     partNameEdit->setText("");
     partSizeEdit->setText("");
-    partChartWidget->transFlag(0, m_value);
+    if (sizeInfo.size() == 0)
+        mflag = 1;
+    else
+        mflag = 0;
+    partChartWidget->transFlag(mflag, m_value);
     hSlider->setValue(100);
     partNameEdit->lineEdit()->setPlaceholderText(tr("Name"));
     partSizeEdit->lineEdit()->setPlaceholderText(tr("Size"));
-    setEnable();
-    setUseEnable();
-    mflag = -1;
+    setEnable(0, isExceed);
     slotSliderValueChanged(100);
 }
 
@@ -303,7 +305,7 @@ void PartitionWidget::setRegValidator()
     QRegExp reg("^[0-9]+(.[0-9]{1,4})?$");
     QRegExpValidator *va = new QRegExpValidator(reg, this);
     partSizeEdit->lineEdit()->setValidator(va);
-    QRegExp re("^[\u4E00-\u9FA5A-Za-z0-9_]+$");  //\/:*?"<>|    [a-zA-Z0-9]+$
+    QRegExp re("^[\u4E00-\u9FA5A-Za-z0-9_]+$");
     QRegExpValidator *va1 = new QRegExpValidator(re, this);
     partNameEdit->lineEdit()->setValidator(va1);
 }
@@ -333,7 +335,11 @@ void PartitionWidget::showSelectPathInfo(const int &flag, const int &num, const 
 {
     mflag = flag;
     number = num;
-    if (mflag == 2) {
+    if (mflag == 1 || mflag == 3) {
+        setSelectUnallocatesSpace();
+        hSlider->setValue(100);
+        number = -1;
+    } else if (mflag == 2) {
         hSlider->setValue(static_cast<int>(sizeInfo.at(num) / mTotal * 100));
         partSizeEdit->setText("");
         partNameEdit->setText("");
@@ -343,116 +349,82 @@ void PartitionWidget::showSelectPathInfo(const int &flag, const int &num, const 
             clicked = clicked / 1024;
         partSizeEdit->setText(QString::number(clicked, 'f', 2));
     }
-    setEnable();
+    setEnable(mflag, isExc);
     showTip(flag, num, posX);
 }
 
 void PartitionWidget::showTip(const int &hover, const int &num, const int &posX)
 {
-//    qDebug() << hover;
     int x = this->frameGeometry().x();
     int y = this->frameGeometry().y();
-    if (hover == 1) {
-        QToolTip::showText(QPoint(x + posX, y + 215), tr("Unallocated"), this, QRect(QPoint(x + posX, y + 215), QSize(80, 20)), 500);
-    } else if (hover == 2) {
+    if (hover == 2) {
         if (partName.at(num) != " ")
             QToolTip::showText(QPoint(x + posX + 5, y + 215), partName.at(num), this, QRect(QPoint(x + posX, y + 215), QSize(80, 20)), 500);
-    } else if (hover == 3) {
+    } else if (hover == 3 || hover == 1) {
         QToolTip::showText(QPoint(x + posX + 5, y + 215), tr("Unallocated"), this, QRect(QPoint(x + posX, y + 215), QSize(80, 20)), 500);
     }
 }
 
 
-void PartitionWidget::setEnable()
+void PartitionWidget::setEnable(const int &flag, const bool &isExceed)
 {
-//    qDebug() << mflag;
-    if (mflag == 2) {
-        setUseEnable();
-        addButton->setEnabled(false);
-        remButton->setEnabled(true);
-        partNameEdit->setEnabled(true);
-        partSizeEdit->setEnabled(false);
-        hSlider->setEnabled(false);
-        partComCobox->setEnabled(false);
-        partFormateCombox->setEnabled(false);
-        DPalette pa = DApplicationHelper::instance()->palette(botFrame);
-        pa.setBrush(DPalette::Text, pa.placeholderText());
-        botFrame->setPalette(pa);
-    } else if (mflag == 3) {
-        remButton->setEnabled(true);
-        partNameEdit->setText("");
-        setSelectValue();
-        hSlider->setValue(100);
-        number = -1;
-        setEnable2();
-    } else if (mflag == 1) {
-        hSlider->setValue(static_cast<int>((total - leaveSpace()) / total * 100));
-        setSelectValue();
-        remButton->setEnabled(false);
-        setEnable2();
+    DPalette pa2 = DApplicationHelper::instance()->palette(partNameLabel);
+    if (isExceed == true) {//还有空闲空间剩余
+        if (flag == 2) {//选中新建的分区
+            setControlEnable(false);
+        }  else {
+            setControlEnable(true);
+        }
+        pa2.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
+    } else {//无空闲空间剩余
+        setControlEnable(false);
+        if (flag != 2) {
+            pa2.setBrush(DPalette::Text, pa2.placeholderText());
+            partNameEdit->setEnabled(false);
+        } else {
+            pa2.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
+            partNameEdit->setEnabled(true);
+        }
     }
-    setLabelColor();
-    if (leaveSpace() >= mTotal && (mflag == -1 || mflag == 3)) {
-        setLabelColorGray();
-    }
-
-}
-void PartitionWidget::setUseEnable()
-{
-    double re = mTotal - leaveSpace();
-//    qDebug() << "4565" << leaveSpace() << mTotal;
-    if ((re >= 0 && re <= 0.5)) {
-//        qDebug() << "123" << leaveSpace() << mTotal;
-        remButton->setEnabled(true);
-        addButton->setEnabled(false);
-        partNameEdit->setEnabled(false);
-        partSizeEdit->setEnabled(false);
-        hSlider->setEnabled(false);
-        partComCobox->setEnabled(false);
-        partFormateCombox->setEnabled(false);
-        DPalette pa = DApplicationHelper::instance()->palette(botFrame);
-        pa.setBrush(DPalette::Text, pa.placeholderText());
-        botFrame->setPalette(pa);
-    } else {
-        if (sizeInfo.size() >= 1)
-            remButton->setEnabled(true);
-        else
-            remButton->setEnabled(false);
-        addButton->setEnabled(true);
-        partNameEdit->setEnabled(true);
-        partSizeEdit->setEnabled(true);
-        hSlider->setEnabled(true);
-        partFormateCombox->setEnabled(true);
-        partComCobox->setEnabled(true);
-        DPalette pa = DApplicationHelper::instance()->palette(botFrame);
-        pa.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
-        botFrame->setPalette(pa);
-        setLabelColor();
-    }
+    partNameLabel->setPalette(pa2);//各情况下,分区名称label的样式
     if (sizeInfo.size() == 0)
         remButton->setEnabled(false);
     else
         remButton->setEnabled(true);
 }
 
-void PartitionWidget::setEnable2()
+void PartitionWidget::setControlEnable(const bool &isTrue)
 {
-    addButton->setEnabled(true);
+    if (isTrue == true) {
+        addButton->setEnabled(true);
+        partSizeEdit->setEnabled(true);
+        hSlider->setEnabled(true);
+        partComCobox->setEnabled(true);
+        partFormateCombox->setEnabled(true);
+
+    } else {
+        addButton->setEnabled(false);
+        partSizeEdit->setEnabled(false);
+        hSlider->setEnabled(false);
+        partComCobox->setEnabled(false);
+        partFormateCombox->setEnabled(false);
+    }
     partNameEdit->setEnabled(true);
-    partSizeEdit->setEnabled(true);
-    hSlider->setEnabled(true);
-    partComCobox->setEnabled(true);
-    partFormateCombox->setEnabled(true);
-    DPalette pa = DApplicationHelper::instance()->palette(botFrame);
-    pa.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
-    botFrame->setPalette(pa);
+    setLabelColor(isTrue);
 }
 
-void PartitionWidget::setLabelColor()
+void PartitionWidget::setLabelColor(const bool &isOk)
 {
-    DPalette pa = DApplicationHelper::instance()->palette(partNameLabel);
-    pa.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
-    partNameLabel->setPalette(pa);
+    if (isOk == true) {
+//        qDebug() << isOk;
+        DPalette pa = DApplicationHelper::instance()->palette(botFrame);
+        pa.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
+        botFrame->setPalette(pa);
+    } else {
+        DPalette pa = DApplicationHelper::instance()->palette(botFrame);
+        pa.setBrush(DPalette::Text, pa.placeholderText());
+        botFrame->setPalette(pa);
+    }
     DPalette pa1 = DApplicationHelper::instance()->palette(partInfoLabel);
     pa1.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
     partInfoLabel->setPalette(pa1);
@@ -461,12 +433,7 @@ void PartitionWidget::setLabelColor()
     partDoLabel->setPalette(pa2);
 }
 
-void PartitionWidget::setLabelColorGray()
-{
-    DPalette pa = DApplicationHelper::instance()->palette(partNameLabel);
-    pa.setBrush(DPalette::Text, pa.placeholderText());
-    partNameLabel->setPalette(pa);
-}
+
 
 void PartitionWidget::comboxCurTextSlot()
 {
@@ -498,30 +465,31 @@ void PartitionWidget::slotSliderValueChanged(int value)
     m_value = value;
     QString strSize;
     if (block == 0) {
-        if (mflag == 2 || mflag == 0) {
+        //选中分区大小与整个空闲分区的占比
+        if (mflag == 2) {
             if (partComCobox->currentText() == "MiB") {
                 strSize = QString::number((static_cast<double>(value) / 100) * mTotal,  'f', 2);
             } else {
                 strSize = QString::number((static_cast<double>(value) / 100) * total,  'f', 2);
             }
             partSizeEdit->setText(strSize);
-        } else {
+        } else {//剩余空间为总大小,占比情况
             if (partComCobox->currentText() == "MiB") {
-                strSize = QString::number((static_cast<double>(value) / 100) * (mTotal - leaveSpace()),  'f', 2);
-                if (mTotal - leaveSpace() < 20.48) {
+                strSize = QString::number((static_cast<double>(value) / 100) * (mTotal - sumValue()),  'f', 2);
+                if (mTotal - sumValue() < 20.48) {
                     judgeLastPartitionSlot();
                 }
             } else {
-                strSize = QString::number(((static_cast<double>(value) / 100) * (mTotal - leaveSpace())) / 1024,  'f', 2);
-                if (total - leaveSpace() / 1024 < 0.02) {
+                strSize = QString::number(((static_cast<double>(value) / 100) * (mTotal - sumValue())) / 1024,  'f', 2);
+                if (total - sumValue() / 1024 < 0.02) {
                     judgeLastPartitionSlot();
                 }
             }
             partSizeEdit->setText(strSize);
         }
     }
-    currentEditSize = QString::number((static_cast<double>(value) / 100) * (mTotal - leaveSpace()),  'f', 4);
-    qDebug() << currentEditSize;
+    currentEditSize = QString::number((static_cast<double>(value) / 100) * (mTotal - sumValue()),  'f', 4);
+//    qDebug() << currentEditSize;
     block = 0;
 }
 
@@ -533,7 +501,7 @@ void PartitionWidget::slotSetSliderValue()
     block = 1;
     hSlider->setValue(static_cast<int>((value / total) * 100));
     currentEditSize = QString::number(value * 1024, 'f', 4);
-    qDebug() << value * 1024 << static_cast<int>((value / total) * 100);
+//    qDebug() << value * 1024 << static_cast<int>((value / total) * 100);
 }
 
 void PartitionWidget::slotSetPartName()
@@ -547,24 +515,24 @@ void PartitionWidget::addPartitionSlot()
 {
     double currentSize = 0.00;
     stPart part;
+    applyBtn->setEnabled(true);
+    //一次新建不超过24个分区
     if (sizeInfo.size() >= 24)
         return;
-    applyBtn->setEnabled(true);
     if (partNameEdit->text().isEmpty()) {
         partNameEdit->setText(" ");
     }
     partName.append(partNameEdit->text());
+    //输入框内的值超过剩余空闲空间,以剩余空间新建
     currentSize = currentEditSize.toDouble();
-    if (currentSize >= (mTotal - leaveSpace())) {
-        currentSize = mTotal - leaveSpace();
-        addButton->setEnabled(false);
+    if (currentSize >= (mTotal - sumValue())) {
+        currentSize = mTotal - sumValue();
     }
-    if ((leaveSpace() < mTotal) && (currentSize > 0.00)) {
+    if ((sumValue() < mTotal) && (currentSize > 0.00)) {
         sizeInfo.append(currentSize);
     }
-
+    //绘制新建分区图形
     partChartWidget->transInfos(mTotal, sizeInfo);
-
     part.name = partNameEdit->text();
     part.fstype = partFormateCombox->currentText();
     Byte_Value sector_size = DMDbusHandler::instance()->getCurPartititonInfo().sector_size;
@@ -574,9 +542,13 @@ void PartitionWidget::addPartitionSlot()
         part.count = static_cast<int>(partSizeEdit->text().toDouble() * (GIBIBYTE / sector_size));
     }
     m_patrinfo.push_back(part);
-//    qDebug() << currentSize << m_value;
     partChartWidget->update();
-    setAddOrRemResult();
+    //新增分区后样式变化
+    if (sumValue() >= mTotal - 0.01)
+        isExc = false;
+    else
+        isExc = true;
+    setAddOrRemResult(isExc);
 }
 
 void PartitionWidget::remPartitionSlot()
@@ -593,9 +565,12 @@ void PartitionWidget::remPartitionSlot()
         remButton->setEnabled(false);
         applyBtn->setEnabled(false);
     }
+    //绘制删除分区图形
     partChartWidget->transInfos(mTotal, sizeInfo);
     partChartWidget->update();
-    setAddOrRemResult();
+    //删除分区后样式变化
+    isExc = true;
+    setAddOrRemResult(isExc);
 }
 
 void PartitionWidget::applyBtnSlot()
@@ -660,11 +635,11 @@ void PartitionWidget::applyBtnSlot()
 
 void PartitionWidget::revertBtnSlot()
 {
+    //复原,即清空
     m_patrinfo.clear();
     sizeInfo.clear();
     partName.clear();
     partChartWidget->transInfos(mTotal, sizeInfo);
-//    comboxCurTextSlot();
     if (sizeInfo.size() == 0) {
         applyBtn->setEnabled(false);
     }
@@ -672,10 +647,9 @@ void PartitionWidget::revertBtnSlot()
     partChartWidget->update();
     partSizeEdit->setText("");
     slotSliderValueChanged(100);
-    partNameEdit->lineEdit()->setPlaceholderText(tr("Unallocated"));
-    partSizeEdit->lineEdit()->setPlaceholderText(QString::number(total));
+    setSelectUnallocatesSpace();
     partChartWidget->transFlag(1, 0);
-    setUseEnable();
+    setEnable(1, true);
 }
 
 void PartitionWidget::cancelBtnSlot()

@@ -66,18 +66,15 @@ public:
     void partInfoShowing();
     void initConnection();
     void recPartitionInfo();
-    double leaveSpace();
+    double sumValue();
 private:
     bool max_amount_prim_reached();
-    void setEnable();
-    void setUseEnable();
-    void setEnable2();
-    void setLabelColor();
-    void setLabelColorGray();
-    void setRegValidator();
-    void setSelectValue();
-    bool blockSignals(bool block);
-    void setAddOrRemResult();
+    void setEnable(const int &flag, const bool &isExceed);
+    void setControlEnable(const bool &isTrue);
+    void setLabelColor(const bool &isOk);//颜色
+    void setRegValidator();//正则表达
+    void setSelectUnallocatesSpace();//选中空闲分区的状态
+    void setAddOrRemResult(const bool &isExceed);
 signals:
 
 public slots:
@@ -89,8 +86,8 @@ public slots:
     void applyBtnSlot();
     void revertBtnSlot();
     void cancelBtnSlot();
-    void showSelectPathInfo(const int &flag, const int &num, const int &posX);
-    void showTip(const int &hover, const int &num, const int &posX);
+    void showSelectPathInfo(const int &flag, const int &num, const int &posX);//点击显示tip
+    void showTip(const int &hover, const int &num, const int &posX);//悬停显示tip
     void comboxCurTextSlot();
     void judgeLastPartitionSlot();
 
@@ -120,8 +117,6 @@ private:
     DLineEdit *partSizeEdit;
     DComboBox *partComCobox;
     DSlider *hSlider;
-    QString partSize;
-    QString selectedpartName;
     QString currentEditSize;
     int number = -1;
     double total = 0.00;
@@ -132,6 +127,7 @@ private:
     QVector<double> sizeInfo;
     QVector<QString> partName;
     QVector<stPart> m_patrinfo;
+    bool isExc = true;
 };
 
 #endif // PARTITIONWIDGET_H

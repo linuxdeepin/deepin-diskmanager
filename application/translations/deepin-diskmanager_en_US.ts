@@ -116,7 +116,7 @@
 <context>
     <name>PartChartShowing</name>
     <message>
-        <location filename="../widgets/customcontrol/partchartshowing.cpp" line="93"/>
+        <location filename="../widgets/customcontrol/partchartshowing.cpp" line="94"/>
         <source>Unallocated</source>
         <translation type="unfinished"></translation>
     </message>
@@ -226,7 +226,6 @@
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="278"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="356"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="361"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="675"/>
         <source>Unallocated</source>
         <translation type="unfinished"></translation>
     </message>

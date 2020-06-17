@@ -52,6 +52,7 @@ void PartChartShowing::transFlag(int mflag, int value)
 
 void PartChartShowing::paintEvent(QPaintEvent *event)
 {
+    //绘制整个分区的空闲空间以及文字颜色
     QPainter painter(this);
     painter.save();
     painter.setRenderHint(QPainter::Antialiasing);
@@ -162,7 +163,7 @@ void PartChartShowing::addPaint(QPainter *painter)
             painter->fillPath(path[0], QBrush(basecolor.at(0)));
             if (number == 0) {
                 if ((static_cast<int>(widths) == 8) && partsize.size() == 2) {
-                    qDebug() << (static_cast<int>(widths) - static_cast<int>((8 - widths)));
+//                    qDebug() << (static_cast<int>(widths) - static_cast<int>((8 - widths)));
                     QPainterPath seclect1path;
                     seclect1path.moveTo(paintRect.topLeft() + QPoint(radius, 0));
                     seclect1path.arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
@@ -191,6 +192,7 @@ void PartChartShowing::addPaint(QPainter *painter)
             width1 = width1 - rightspace;
             if (width1 < 8 || partsize.at(i - 1) / total < 0.01)
                 width1 = 8;
+            //未避免设置最小宽度带来的图形溢出,在所画图形宽度即将到圆角时,不予新增分区
             if (path[i - 1].currentPosition().x() + width1 + widths > paintRect.width() - 2 * radius) {
                 emit judgeLastPartition();
             }
@@ -213,9 +215,9 @@ void PartChartShowing::addPaint(QPainter *painter)
                     width1 = 8;
                 }
                 if (i == partsize.size() - 1) {
-                    painter->drawRect(static_cast<int>(path[number - 1].currentPosition().x() + width1), static_cast<int>(path[number - 1].currentPosition().y()), static_cast<int>(widths), paintRect.height() - 2);
+                    painter->drawRect(static_cast<int>(path[number - 1].currentPosition().x() + width1), static_cast<int>(path[number - 1].currentPosition().y()), static_cast<int>(widths), paintRect.height() - 1);
                 } else  {
-                    painter->drawRect(static_cast<int>(path[number - 1].currentPosition().x() + width1), static_cast<int>(path[number - 1].currentPosition().y()), static_cast<int>(widths - 1), paintRect.height() - 2);
+                    painter->drawRect(static_cast<int>(path[number - 1].currentPosition().x() + width1), static_cast<int>(path[number - 1].currentPosition().y()), static_cast<int>(widths - 1), paintRect.height() - 1);
                 }
                 flag = 0;
             }
@@ -273,7 +275,6 @@ void PartChartShowing::addPaint(QPainter *painter)
                 number = -1;
             }
         }
-
     }
     //绘制空闲分区以及选中状态
     if ((flag == 3 && sum < total)) {
@@ -282,7 +283,6 @@ void PartChartShowing::addPaint(QPainter *painter)
             width2 = 8;
         }
         painter->setPen(QPen(this->palette().color(DPalette::Normal, DPalette::Highlight), 2));
-        //                paintpath.moveTo()
         paintpath.moveTo(paintRect.bottomRight() - QPoint(0, radius));
         paintpath.lineTo(paintRect.topRight() + QPoint(0, radius));
         paintpath.arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
@@ -320,7 +320,7 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
                     width = 8;
                 }
                 //判断除了第一个和最后一个的鼠标点击
-                if ((x > allpath[i].currentPosition().x() && x < (allpath[i].currentPosition().x() + width) && y > 10 && y < 45) || (partsize.size() == 1 && y > 10 && y < 40 && (sumvalue >= 100 || sums >= total))) {
+                if ((x > allpath[i].currentPosition().x() && x < (allpath[i].currentPosition().x() + width) && y > 10 && y < 45) || (partsize.size() == 1 && y > 10 && y < 40 && (sumvalue >= 100 || sums >= total - 0.01))) {
                     flag = 2;
                     number = i;
                     update();
@@ -333,6 +333,7 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
                     update();
                 }
             }
+//            qDebug() << flag;
             //空闲分区
             double width1 = ((partsize.at(partsize.size() - 1) / total) * (this->width() - space)) - rightspace;
             if (partsize.size() > 1) {
@@ -346,7 +347,6 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
                 i = -1;
                 number = 100;
                 update();
-
             }
         }
     }

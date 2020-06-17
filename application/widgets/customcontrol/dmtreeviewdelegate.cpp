@@ -53,10 +53,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         painter->setRenderHint(QPainter::Antialiasing, true);
 
         QVariant var = index.data(Qt::UserRole + 1);
-        //  qDebug() << var.data();
-        // MailAccountData *data = static_cast<MailAccountData *>(var.value<void *>());
         DiskInfoData data = var.value<DiskInfoData>();
-        // qDebug() << data.disksize << data.disklabel;
         QRect rect;
         if (data.level == 0) {
             rect.setX(option.rect.x());
@@ -67,7 +64,6 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         rect.setWidth(option.rect.width());
         rect.setHeight(option.rect.height());
         painter->setRenderHints(QPainter::SmoothPixmapTransform);
-        // QRect paintRect = QRect(rect.left() + 10, rect.top(), rect.width() - 8, rect.height());
         QRect paintRect = QRect(rect.left(), rect.top(), rect.width() - 30, rect.height());
         QPainterPath path;
         const int radius = 8;
@@ -86,7 +82,6 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         path.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
                          QSize(radius * 2, radius * 2)),
                    270, 90);
-        //        DPalette pa = option.palette;
         if (data.level == 1) {
             QBrush brush = m_parentPb.itemBackground();
             painter->setBrush(brush);
@@ -101,7 +96,6 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         }
         DmTreeview *pTreeView = qobject_cast<DmTreeview *>(m_parentView);
         if (pTreeView == nullptr) {
-            // qDebug() << "111111111" << endl;
         }
 
         QIcon directionIcon;
@@ -120,8 +114,6 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         QString text1 = data.disksize;
         QString text2 = data.partitonpath;
         QString text3 = data.partitionsize;
-
-        //qDebug() << data.level;
         if (data.level == 0) {
             m_lefticon1Rect.setRect(paintRect.left() + 8, paintRect.top() + 20, 8, 8);
             painter->drawPixmap(m_lefticon1Rect, directionIcon.pixmap(17, 17));

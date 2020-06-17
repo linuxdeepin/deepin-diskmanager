@@ -74,9 +74,3 @@ int DmDiskinfoBox::childCount()
     return childs.count();
 }
 
-void DmDiskinfoBox::print()
-{
-    qDebug() << "----asdd----Id::" << id << "  level::" << m_level
-             << "  disklabel:" << m_diskpath << " disksize::" << m_disksize
-             << "  partitonlabel::" << m_partitionpath << " partitionsize::" << m_partitionsize << "  childs num::" << childs.count() << endl;
-}

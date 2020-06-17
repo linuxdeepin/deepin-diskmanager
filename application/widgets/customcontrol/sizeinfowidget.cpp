@@ -40,7 +40,7 @@ SizeInfoWidget::SizeInfoWidget(double used, double unused, bool flag, QWidget *p
             &SizeInfoWidget::slothandleChangeTheme);
 }
 
-void SizeInfoWidget::setdata(PartitionInfo info, QVector<QColor> color, QVector<double> size, bool flag)
+void SizeInfoWidget::setData(PartitionInfo info, QVector<QColor> color, QVector<double> size, bool flag)
 {
     sizeinfo = size;
     colorinfo = color;

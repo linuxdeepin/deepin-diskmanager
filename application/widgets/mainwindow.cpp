@@ -10,7 +10,6 @@
 #include <DWidgetUtil>
 #include <QRect>
 #include <QDebug>
-
 #include "common.h"
 
 MainWindow::MainWindow(QWidget *parent)

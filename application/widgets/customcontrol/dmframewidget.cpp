@@ -70,7 +70,7 @@ void DmFrameWidget::setFrameData()
 
 QString DmFrameWidget::diskVolumn(QString partitionpath)
 {
-    //将gbk中文乱码转换为正常中文显示
+    //将gbkｕ盘ｌａｂｅｌ中文乱码转换为正常中文显示
     QProcess app;
     app.start("ls", QStringList() << "-al" << "/dev/disk/by-label/");
     if (!app.waitForStarted()) {
@@ -139,7 +139,7 @@ QString DmFrameWidget::diskVolumn(QString partitionpath)
     return "";
 }
 
-void DmFrameWidget::paintEvent(QPaintEvent *event)
+void DmFrameWidget::paintEvent(QPaintEvent *event)//绘制首页信息展示表格
 {
     QPainter painter(this);
     QWidget::paintEvent(event);

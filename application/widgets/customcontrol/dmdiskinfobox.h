@@ -38,7 +38,6 @@ public:
 public:
     int addChild(DmDiskinfoBox *child);
     int childCount();
-    void print();
 
 public:
     int id;

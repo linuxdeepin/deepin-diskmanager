@@ -39,15 +39,12 @@ void DmTreeview::initUI()
     setWindowFlags(Qt::FramelessWindowHint); //无边框
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     /* setAttribute(Qt::WA_TranslucentBackground)*/; //背景透明
-
-    //    qDebug() << 2222222222222;
 }
 void DmTreeview::additem(QStandardItem *item, DiskInfoData &data, int flag)
 {
     QStandardItem *pItem = new QStandardItem(data.diskpath);
     pItem->setData(QVariant::fromValue((data)), Qt::UserRole + 1);
     item->appendRow(pItem);
-    // expand(m_pDataModel->indexFromItem(item));
     if (flag == 0) {
         setExpanded(m_model->index(0, 0), true);
     } else {
@@ -66,15 +63,13 @@ void DmTreeview::initmodel()
     m_model = new QStandardItemModel(this);
     m_pSortViewFilter = new QSortFilterProxyModel(this);
     this->setModel(m_model);
-    //    sort();
 }
 void DmTreeview::initdelegate()
 {
     m_delegate = new DmTreeviewDelegate(this);
     this->setItemDelegate(m_delegate);
 }
-
-QStandardItem *DmTreeview::getcuritem()
+QStandardItem *DmTreeview::getcuritem()//获取当前ｉｔｅｍ
 {
     QModelIndex index = currentIndex();
     if (!index.isValid()) {
@@ -99,7 +94,6 @@ void DmTreeview::currentChanged(const QModelIndex &current, const QModelIndex &p
     emit sigCurSelectChanged(data.diskpath, data.partitonpath, data.start, data.end);
     diskSize = data.disksize;
     curNum = current.row();
-    //    emit sigSendInfo(data.diskpath, data.disksize, data.partitonpath, data.partitionsize, data.fstype, data.start, data.end);
 }
 void DmTreeview::mousePressEvent(QMouseEvent *event)
 {
@@ -108,11 +102,10 @@ void DmTreeview::mousePressEvent(QMouseEvent *event)
         setExpanded(currentIndex(), !isExpanded(currentIndex()));
     }
 }
-void DmTreeview::addItem(DmDiskinfoBox *infobox, int flag, QStandardItem *pcurItem)
+void DmTreeview::addItem(DmDiskinfoBox *infobox, int flag, QStandardItem *pcurItem)//增加节点
 {
     QStandardItem *t_item = nullptr;
     DiskInfoData data;
-    //qDebug() << infobox->level;
     data.disksize = infobox->m_disksize;
     data.diskpath = infobox->m_diskpath;
     data.partitionsize = infobox->m_partitionsize;
@@ -125,10 +118,6 @@ void DmTreeview::addItem(DmDiskinfoBox *infobox, int flag, QStandardItem *pcurIt
     data.fstype = infobox->m_fstype;
     data.syslabel = infobox->m_syslabel;
     data.mountpoints = infobox->m_mountpoints;
-    //  qDebug() << data.used << data.unused;
-    //  qDebug() << data.disksize << data.disklabel;
-
-    //  qDebug() << infobox->disksize;
     if (infobox->m_level <= 0) {
         data.level = 0;
         t_item = this->addtopitem(data);
@@ -142,8 +131,6 @@ void DmTreeview::addItem(DmDiskinfoBox *infobox, int flag, QStandardItem *pcurIt
         QVariant var = pcurItem->index().data(Qt::UserRole + 1);
         DiskInfoData parent_data = var.value<DiskInfoData>();
         data.level = parent_data.level + 1;
-        //qDebug() << data.level;
-
         this->additem(pcurItem, data, flag);
     }
 
@@ -165,14 +152,14 @@ void DmTreeview::addSubItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem, int
     }
     addItem(infobox, flag, pcurItem);
 }
-QModelIndex DmTreeview::setDefaultdmItem()
+QModelIndex DmTreeview::setDefaultdmItem()//设置默认选中节点
 {
     //QModelIndex index = m_pSortViewFilter->index(0, 0, getRootItemIndex());
     this->setCurrentIndex(model()->index(0, 0).child(0, 0));
     return model()->index(0, 0);
 }
 
-void DmTreeview::setRefreshItem(const QString &devicepath, int num)
+void DmTreeview::setRefreshItem(const QString &devicepath, int num)//设置刷新后默认选择操作分区
 {
     int devicenum = 0;
     if (devicepath.contains("sda")) {
@@ -192,11 +179,11 @@ void DmTreeview::setRefreshItem(const QString &devicepath, int num)
     setExpanded(model()->index(devicenum, 0), true);
 }
 
-int DmTreeview::currentNum()
+int DmTreeview::currentNum()//返回当前选中分区
 {
     return curNum;
 }
-QStandardItem *DmTreeview::getRootItem()
+QStandardItem *DmTreeview::getRootItem()//获取根节点
 {
     return m_model->item(0);
 }

@@ -163,7 +163,7 @@ void InfoShowWidget::slotCurSelectChanged()
     }
     QVector<QColor> color {fillcolor, fillcolor1};
     QVector<double> size {m_used, m_noused};
-    m_infowidget->setdata(DMDbusHandler::instance()->getCurPartititonInfo(), color, size, 1);
+    m_infowidget->setData(DMDbusHandler::instance()->getCurPartititonInfo(), color, size, 1);
     m_pInfoTopFrame->setShowDiskInfo();
 }
 
@@ -186,5 +186,5 @@ void InfoShowWidget::slothandleChangeTheme()
 
     QVector<QColor> color {fillcolor, fillcolor1};
     QVector<double> size {m_used, m_noused};
-    m_infowidget->setdata(DMDbusHandler::instance()->getCurPartititonInfo(), color, size, 1);
+    m_infowidget->setData(DMDbusHandler::instance()->getCurPartititonInfo(), color, size, 1);
 }

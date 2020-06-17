@@ -157,7 +157,13 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.drawText(recttext, QString(m_partitionpath + tr(" Capacity:")), option);
             recttext.moveTo(paintRect.width() / 2 + 20, paintRect.bottomLeft().y() + 17);
             painter.drawText(recttext, QString(tr("Used:")), option);
-            QRect rectsizenum = QRect(paintRect.bottomLeft().x() + 145, paintRect.bottomLeft().y() + 20, 100, 30);
+            int num = 0;
+            if (m_partitionpath == "ocated") {
+                num = 165;
+            } else {
+                num = 145;
+            }
+            QRect rectsizenum = QRect(paintRect.bottomLeft().x() + num, paintRect.bottomLeft().y() + 20, 100, 30);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
             QColor text1color = m_parentPb.color(DPalette::Normal, DPalette::TextTitle);
             painter.setFont(font);
@@ -203,7 +209,13 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.drawText(recttext, QString(m_partitionpath + tr(" Capacity:")), option);
             recttext.moveTo(paintRect.width() / 2 + 20, paintRect.bottomLeft().y() + 17);
             painter.drawText(recttext, QString(tr("Used:")), option);
-            QRect rectsizenum = QRect(paintRect.bottomLeft().x() + 145, paintRect.bottomLeft().y() + 20, 100, 30);
+            int num = 0;
+            if (m_partitionpath == "ocated") {
+                num = 165;
+            } else {
+                num = 145;
+            }
+            QRect rectsizenum = QRect(paintRect.bottomLeft().x() + num, paintRect.bottomLeft().y() + 20, 100, 30);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
             QColor text1color = m_parentPb.color(DPalette::Normal, DPalette::ToolTipText);
             painter.setFont(font);

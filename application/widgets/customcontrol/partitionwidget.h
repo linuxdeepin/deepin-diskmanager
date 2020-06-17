@@ -23,8 +23,6 @@
 #include "partedproxy/dmdbushandler.h"
 #include <DDialog>
 #include <DLabel>
-#include <DHorizontalLine>
-#include <DMessageManager>
 #include <DSlider>
 #include <DLineEdit>
 #include <DComboBox>
@@ -35,13 +33,10 @@
 #include <DFontSizeManager>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-#include <QAbstractButton>
 #include <DIconButton>
-#include <QSizePolicy>
 #include <QToolTip>
 #include <QRegExp>
 #include <QRegExpValidator>
-#include <QDoubleValidator>
 DWIDGET_USE_NAMESPACE
 
 typedef struct STRUCTPART {
@@ -66,7 +61,7 @@ public:
     void partInfoShowing();
     void initConnection();
     void recPartitionInfo();
-    double sumValue();
+    double sumValue();  //已用分区大小的和
 private:
     bool max_amount_prim_reached();
     void setEnable(const int &flag, const bool &isExceed);
@@ -80,15 +75,15 @@ signals:
 public slots:
     void slotSliderValueChanged(int value);
     void slotSetSliderValue();
-    void slotSetPartName();
-    void addPartitionSlot();
-    void remPartitionSlot();
+    void slotSetPartName(); //选个设置或修改分区名称
+    void addPartitionSlot();//"+"新建分区
+    void remPartitionSlot();//"-"删除分区
     void applyBtnSlot();
     void revertBtnSlot();
     void cancelBtnSlot();
     void showSelectPathInfo(const int &flag, const int &num, const int &posX);//点击显示tip
     void showTip(const int &hover, const int &num, const int &posX);//悬停显示tip
-    void comboxCurTextSlot();
+    void comboxCurTextSlot(); //下拉框单位切换
     void judgeLastPartitionSlot();
 
 private:
@@ -96,7 +91,6 @@ private:
     DFrame *topFrame;
     DFrame *midFrame;
     DFrame *botFrame;
-    //    DFrame *parInfoFrame;
     DLabel *partInfoLabel;
     DLabel *partDoLabel;
     DLabel *allMemory;
@@ -106,7 +100,6 @@ private:
     DLabel *partNameLabel;
     DIconButton *addButton;
     DIconButton *remButton;
-    //    DScrollArea *scrollArea;
     QWidget *partWidget;
     DPushButton *applyBtn;
     DPushButton *cancleBtn;

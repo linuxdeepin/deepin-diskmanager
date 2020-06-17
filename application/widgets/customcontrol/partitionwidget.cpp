@@ -451,7 +451,6 @@ void PartitionWidget::comboxCurTextSlot()
         else
             partSizeEdit->setText(QString::number(m / 1024,  'f', 2));
     }
-
 }
 
 void PartitionWidget::judgeLastPartitionSlot()
@@ -513,12 +512,12 @@ void PartitionWidget::slotSetPartName()
 
 void PartitionWidget::addPartitionSlot()
 {
+    if (sizeInfo.size() >= 24)
+        return;
     double currentSize = 0.00;
     stPart part;
     applyBtn->setEnabled(true);
     //一次新建不超过24个分区
-    if (sizeInfo.size() >= 24)
-        return;
     if (partNameEdit->text().isEmpty()) {
         partNameEdit->setText(" ");
     }
@@ -528,9 +527,7 @@ void PartitionWidget::addPartitionSlot()
     if (currentSize >= (mTotal - sumValue())) {
         currentSize = mTotal - sumValue();
     }
-    if ((sumValue() < mTotal) && (currentSize > 0.00)) {
-        sizeInfo.append(currentSize);
-    }
+    sizeInfo.append(currentSize);
     //绘制新建分区图形
     partChartWidget->transInfos(mTotal, sizeInfo);
     part.name = partNameEdit->text();
@@ -556,12 +553,10 @@ void PartitionWidget::remPartitionSlot()
     if (m_patrinfo.size() > 0)
         m_patrinfo.pop_back();
     addButton->setEnabled(true);
-    if (sizeInfo.size() == 0) {
-        return;
-    }
-    sizeInfo.removeAt(sizeInfo.size() - 1);
-    partName.removeAt(partName.size() - 1);
-    if (sizeInfo.size() == 0) {
+    if (sizeInfo.size() > 0) {
+        sizeInfo.removeAt(sizeInfo.size() - 1);
+        partName.removeAt(partName.size() - 1);
+    } else if (sizeInfo.size() == 0) {
         remButton->setEnabled(false);
         applyBtn->setEnabled(false);
     }
@@ -643,9 +638,8 @@ void PartitionWidget::revertBtnSlot()
     if (sizeInfo.size() == 0) {
         applyBtn->setEnabled(false);
     }
-    hSlider->setValue(100);
     partChartWidget->update();
-    partSizeEdit->setText("");
+    hSlider->setValue(100);
     slotSliderValueChanged(100);
     setSelectUnallocatesSpace();
     partChartWidget->transFlag(1, 0);

@@ -267,7 +267,7 @@ double PartitionWidget::sumValue()
     double sum = 0.00;
     for (int j = 0; j < sizeInfo.count(); j++) {
         sum = sum + sizeInfo.at(j);
-        if (sum >= mTotal)
+        if (sum >= mTotal - 0.01)
             break;
     }
     return sum;
@@ -335,6 +335,7 @@ void PartitionWidget::showSelectPathInfo(const int &flag, const int &num, const 
 {
     mflag = flag;
     number = num;
+//    qDebug() << "338" << num;
     if (mflag == 1 || mflag == 3) {
         setSelectUnallocatesSpace();
         hSlider->setValue(100);
@@ -355,13 +356,14 @@ void PartitionWidget::showSelectPathInfo(const int &flag, const int &num, const 
 
 void PartitionWidget::showTip(const int &hover, const int &num, const int &posX)
 {
+//    qDebug() << "359" << num;
     int x = this->frameGeometry().x();
     int y = this->frameGeometry().y();
     if (hover == 2) {
         if (partName.at(num) != " ")
-            QToolTip::showText(QPoint(x + posX + 5, y + 215), partName.at(num), this, QRect(QPoint(x + posX, y + 215), QSize(80, 20)), 500);
+            QToolTip::showText(QPoint(x + posX + 5, y + 215), partName.at(num), this, QRect(QPoint(x + posX, y + 215), QSize(80, 20)), 1000);
     } else if (hover == 3 || hover == 1) {
-        QToolTip::showText(QPoint(x + posX + 5, y + 215), tr("Unallocated"), this, QRect(QPoint(x + posX, y + 215), QSize(80, 20)), 500);
+        QToolTip::showText(QPoint(x + posX + 5, y + 215), tr("Unallocated"), this, QRect(QPoint(x + posX, y + 215), QSize(80, 20)), 1000);
     }
 }
 
@@ -473,12 +475,12 @@ void PartitionWidget::slotSliderValueChanged(int value)
         } else {//剩余空间为总大小,占比情况
             if (partComCobox->currentText() == "MiB") {
                 strSize = QString::number((static_cast<double>(value) / 100) * (mTotal - sumValue()),  'f', 2);
-                if (mTotal - sumValue() < 20.48) {
+                if (mTotal - sumValue() < 51.2) {
                     judgeLastPartitionSlot();
                 }
             } else {
                 strSize = QString::number(((static_cast<double>(value) / 100) * (mTotal - sumValue())) / 1024,  'f', 2);
-                if (total - sumValue() / 1024 < 0.02) {
+                if (total - sumValue() / 1024 < 0.05) {
                     judgeLastPartitionSlot();
                 }
             }
@@ -510,7 +512,7 @@ void PartitionWidget::slotSetPartName()
 
 void PartitionWidget::addPartitionSlot()
 {
-    if (sizeInfo.size() >= 24)
+    if (sizeInfo.size() >= 24 || max_amount_prim_reached() == true)
         return;
     double currentSize = 0.00;
     stPart part;
@@ -526,6 +528,8 @@ void PartitionWidget::addPartitionSlot()
         currentSize = mTotal - sumValue();
         part.blast = true;
     }
+    if (currentSize <= 51.2)
+        return;
     sizeInfo.append(currentSize);
     //绘制新建分区图形
     partChartWidget->transInfos(mTotal, sizeInfo);

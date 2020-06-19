@@ -28,6 +28,8 @@
 #include <QPointF>
 #include <QLine>
 #include <QMouseEvent>
+#include <QTimer>
+
 DWIDGET_USE_NAMESPACE
 
 class PartChartShowing : public QWidget
@@ -43,7 +45,7 @@ signals:
     void sendMoveFlag(int moveflag, int num, int posx);
     void judgeLastPartition();
 public slots:
-
+    void showTipTimerSlot();
 protected:
     virtual void paintEvent(QPaintEvent *event) override;
     void addPaint(QPainter *painter);
@@ -58,16 +60,18 @@ private:
     QRect getCurRect;
     QVector<QColor> basecolor;
     QVector<QPainterPath> allpath;
-
+    QTimer *showTipTimer;
     int number = -1;
+    int number2 = -1;
     double sums = 0.00;
     int i = 0;
-    int count = 0;
+//    int count = 0;
     double sumvalue = 0.0000001;
     int hover = 0;
-
-
-
+    int mx = 0;
+    int showTipFlag = 0;
+    bool mShowFlag = false;
+    int mnum = 0;
 };
 
 #endif // PARTCHARTSHOWING_H

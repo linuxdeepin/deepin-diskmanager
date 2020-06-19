@@ -31,8 +31,8 @@ PartChartShowing::PartChartShowing(QWidget *parent)
     QColor color5("#2CCBBE");
     basecolor = QVector<QColor> {color, color1, color2, color3, color4, color5};
     setMouseTracking(true);
-
-
+    showTipTimer = new QTimer(this);
+    connect(showTipTimer, &QTimer::timeout, this, &PartChartShowing::showTipTimerSlot);
 }
 
 void PartChartShowing::transInfos(const double &totals, const QVector<double> sizeInfo)
@@ -48,7 +48,12 @@ void PartChartShowing::transFlag(int mflag, int value)
     update();
 }
 
-
+void PartChartShowing::showTipTimerSlot()
+{
+//    qDebug() << hover;
+    emit sendMoveFlag(hover, number2, mx);
+    showTipTimer->stop();
+}
 
 void PartChartShowing::paintEvent(QPaintEvent *event)
 {
@@ -345,7 +350,7 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
             if (x > allpath[partsize.size() - 1].currentPosition().x() + width1 && y > 10 && y < 45 && int(sums) < int(total)) {
                 flag = 3;
                 i = -1;
-                number = 100;
+                number = -1;
                 update();
             }
         }
@@ -368,11 +373,19 @@ void PartChartShowing::mouseMoveEvent(QMouseEvent *event)
 {
     int x = event->pos().x();
     int y = event->pos().y();
-    //判断第一个分区的鼠标悬浮
+    mx = x;
+    //判断整个分区的鼠标悬浮
     if (partsize.size() == 0) {
         if (x > 0 && x < this->width() && y > 10 && y < 45) {
-            emit sendMoveFlag(1, -1, x);
+            number2 = -1;
+            showTipFlag++;
+            if (showTipFlag == 1) {
+                hover = 1;
+                showTipTimer->start(200);
+            }
+            showTipFlag = -2;
         }
+
     } else if (partsize.size() > 0) {//判断除了第一个分区的鼠标悬浮
         for (i = 0; i < partsize.size(); i++) {
             double width = ((partsize.at(i) / total) * (this->width() - space)) - rightspace;
@@ -380,8 +393,16 @@ void PartChartShowing::mouseMoveEvent(QMouseEvent *event)
                 width = 8;
             }
             if ((x > allpath[i].currentPosition().x() && x < (allpath[i].currentPosition().x() + width) && y > 10 && y < 40) || (partsize.size() == 1 && y > 10 && y < 40 && (sumvalue >= 100 || sums >= total))) {
-                number = i;
-                emit sendMoveFlag(2, number, x);
+                number2 = i;
+                showTipFlag++;
+
+                if (showTipFlag == 1 || mShowFlag == true || mnum != i) {
+                    hover = 2;
+                    showTipTimer->start(200);
+                }
+                showTipFlag = -2;
+                mShowFlag = false;
+                mnum = i;
             }
         }
         //空闲分区
@@ -392,8 +413,18 @@ void PartChartShowing::mouseMoveEvent(QMouseEvent *event)
             }
         }
         if (x > allpath[partsize.size() - 1].currentPosition().x() + width1 && y > 10 && y < 45 && int(sums) < int(total)) {
-            emit sendMoveFlag(3, -1, x);
+            number2 = -1;
+            showTipFlag++;
+            if (showTipFlag == 1 || mShowFlag == false) {
+                hover = 3;
+                showTipTimer->start(200);
+            }
+            showTipFlag = -2;
+            mShowFlag = true;
         }
+    }
+    if (!(x > 0 && x < this->width() && y > 10 && y < 45)) {
+        showTipFlag = 0;
     }
 }
 

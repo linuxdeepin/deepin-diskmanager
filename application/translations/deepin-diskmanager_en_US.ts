@@ -116,7 +116,7 @@
 <context>
     <name>PartChartShowing</name>
     <message>
-        <location filename="../widgets/customcontrol/partchartshowing.cpp" line="94"/>
+        <location filename="../widgets/customcontrol/partchartshowing.cpp" line="99"/>
         <source>Unallocated</source>
         <translation type="unfinished"></translation>
     </message>
@@ -289,13 +289,13 @@
     <name>SizeInfoWidget</name>
     <message>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="157"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="203"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="209"/>
         <source> Capacity:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="159"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="205"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="211"/>
         <source>Used:</source>
         <translation type="unfinished"></translation>
     </message>

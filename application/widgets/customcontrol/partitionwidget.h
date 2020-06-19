@@ -40,11 +40,18 @@
 DWIDGET_USE_NAMESPACE
 
 typedef struct STRUCTPART {
-    STRUCTPART() {}
+    STRUCTPART()
+    {
+        size = 0.0;
+        count = 0;
+        name = fstype = "";
+        blast = false;
+    }
     double size;
     Sector count;
     QString name;
     QString fstype;
+    bool blast;
 } stPart;
 
 class PartitionWidget : public DDialog

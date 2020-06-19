@@ -30,7 +30,6 @@ public:
     int max_prims;
     int highest_busy;
     bool readonly;
-    //PartitionVector partitions;
     QVector<Partition *> partitions;
 
 private:

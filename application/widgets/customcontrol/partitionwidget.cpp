@@ -433,8 +433,6 @@ void PartitionWidget::setLabelColor(const bool &isOk)
     partDoLabel->setPalette(pa2);
 }
 
-
-
 void PartitionWidget::comboxCurTextSlot()
 {
 //    qDebug() << partSizeEdit->text().toDouble();
@@ -526,6 +524,7 @@ void PartitionWidget::addPartitionSlot()
     currentSize = currentEditSize.toDouble();
     if (currentSize >= (mTotal - sumValue())) {
         currentSize = mTotal - sumValue();
+        part.blast = true;
     }
     sizeInfo.append(currentSize);
     //绘制新建分区图形
@@ -533,11 +532,12 @@ void PartitionWidget::addPartitionSlot()
     part.name = partNameEdit->text();
     part.fstype = partFormateCombox->currentText();
     Byte_Value sector_size = DMDbusHandler::instance()->getCurPartititonInfo().sector_size;
-    if (partComCobox->currentText().compare("MiB") == 0) {
-        part.count = static_cast<int>(partSizeEdit->text().toDouble() * (MEBIBYTE / sector_size)) ;
-    } else {
-        part.count = static_cast<int>(partSizeEdit->text().toDouble() * (GIBIBYTE / sector_size));
-    }
+    part.count = static_cast<int>(currentSize * (MEBIBYTE / sector_size)) ;
+//    if (partComCobox->currentText().compare("MiB") == 0) {
+//        part.count = static_cast<int>(partSizeEdit->text().toDouble() * (MEBIBYTE / sector_size)) ;
+//    } else {
+//        part.count = static_cast<int>(partSizeEdit->text().toDouble() * (GIBIBYTE / sector_size));
+//    }
     m_patrinfo.push_back(part);
     partChartWidget->update();
     //新增分区后样式变化
@@ -579,7 +579,11 @@ void PartitionWidget::applyBtnSlot()
     for (int i = 0; i < m_patrinfo.size(); i++) {
         PartitionInfo newpart;
         newpart.sector_start = beforend;
-        newpart.sector_end = newpart.sector_start + m_patrinfo.at(i).count;
+        if (m_patrinfo.at(i).blast)
+            newpart.sector_end = curinfo.sector_end;
+        else
+            newpart.sector_end = newpart.sector_start + m_patrinfo.at(i).count;
+        qDebug() << beforend << curinfo.sector_start << curinfo.sector_end;
         beforend = newpart.sector_end + 1;
         newpart.fstype = Utils::StringToFSType(m_patrinfo.at(i).fstype);
         newpart.name = m_patrinfo.at(i).name;

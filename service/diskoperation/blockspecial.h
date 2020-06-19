@@ -20,10 +20,6 @@ public:
                                        unsigned long major, unsigned long minor);
 };
 
-// Operator overloading > The Decision between Member and Non-member
-// http://stackoverflow.com/questions/4421706/operator-overloading/4421729#4421729
-//     "2. If a binary operator treats both operands equally (it leaves them unchanged),
-//     implement this operator as a non-member function."
 bool operator==(const BlockSpecial &lhs, const BlockSpecial &rhs);
 bool operator<(const BlockSpecial &lhs, const BlockSpecial &rhs);
 

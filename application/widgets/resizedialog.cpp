@@ -1,8 +1,9 @@
 #include "resizedialog.h"
 #include "partedproxy/dmdbushandler.h"
-#include <DLabel>
 #include <DFontSizeManager>
 #include <QHBoxLayout>
+#include <QRegExpValidator>
+#include <QRegExp>
 
 ResizeDialog::ResizeDialog(QWidget *parent)
     : DDBase(parent)
@@ -24,6 +25,9 @@ void ResizeDialog::initUi()
 
     QHBoxLayout *hlayout = new QHBoxLayout;
     pedit = new DLineEdit(this);
+    QRegExp regexp("^[0-9]*\\.[0-9]{1,2}");
+    QRegExpValidator *pvalidaor = new QRegExpValidator(regexp, this);
+    pedit->lineEdit()->setValidator(pvalidaor);
     pcombo = new DComboBox(this);
     plabel = new DLabel(this);
     plabel->setText(tr("Reserved size:"));
@@ -49,6 +53,8 @@ void ResizeDialog::initUi()
 void ResizeDialog::initConnection()
 {
     connect(this, &ResizeDialog::buttonClicked, this, &ResizeDialog::slotbuttonClicked);
+    connect(pcombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotComboSelectedChanged(int)));
+    connect(pedit, &DLineEdit::textChanged, this, &ResizeDialog::slotEditTextChanged);
 }
 
 void ResizeDialog::slotbuttonClicked(int index, const QString &)
@@ -73,17 +79,20 @@ void ResizeDialog::slotbuttonClicked(int index, const QString &)
                     if (0 == pcombo->currentIndex()) {
                         total = Utils::sector_to_unit(next.get_sector_length(), curinfo.sector_size, UNIT_MIB);
                         expandspace = strspace.toFloat() * (MEBIBYTE / curinfo.sector_size);
+                        if (strspace.toFloat() - total >= 0.01) {
+                            break;
+                        }
                         if (total - strspace.toFloat() < 0.01)
                             expandspace = next.get_sector_length();
-                        else
-                            expandspace = strspace.toFloat() * (MEBIBYTE / curinfo.sector_size);
+
                     } else {
                         total = Utils::sector_to_unit(next.get_sector_length(), curinfo.sector_size, UNIT_GIB);
                         expandspace = strspace.toFloat() * (GIBIBYTE / curinfo.sector_size);
+                        if (strspace.toFloat() - total >= 0.01) {
+                            break;
+                        }
                         if (total - strspace.toFloat() < 0.01)
                             expandspace = next.get_sector_length();
-                        else
-                            expandspace = strspace.toFloat() * (GIBIBYTE / curinfo.sector_size);
                     }
 
                     qDebug() << curinfo.sector_size * 1.0 << GIBIBYTE / curinfo.sector_size << GIBIBYTE / (curinfo.sector_size * 1.0);
@@ -96,8 +105,9 @@ void ResizeDialog::slotbuttonClicked(int index, const QString &)
         }
         if (!canexpand) {
             pedit->setAlertMessageAlignment(Qt::AlignTop);
-            pedit->showAlertMessage(tr("have no unallocated space,can not resize"), mainFrame);
+            pedit->showAlertMessage(tr("Space limit exceeded"), mainFrame);
             pedit->setAlert(true);
+            return ;
 
         } else {
             PartitionInfo newinfo = curinfo;
@@ -127,4 +137,27 @@ void ResizeDialog::slotbuttonClicked(int index, const QString &)
     } else {
         done(index);
     }
+}
+
+void ResizeDialog::slotComboSelectedChanged(int index)
+{
+    QString strspace = pedit->text();
+    QString expandspace;
+    if (!strspace.isEmpty()) {
+        if (index == 0) {
+            //MiB
+            expandspace = QString().setNum(strspace.toFloat() * 1024.0, 'f', 2);
+
+        } else if (index == 1) {
+            //GiB
+            expandspace = QString().setNum(strspace.toFloat() / 1024.0, 'f', 2);
+        }
+        pedit->setText(expandspace);
+    }
+}
+
+void ResizeDialog::slotEditTextChanged(const QString &)
+{
+    if (pedit->isAlert())
+        pedit->setAlert(false);
 }

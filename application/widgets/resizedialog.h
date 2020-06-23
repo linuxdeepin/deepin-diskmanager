@@ -1,9 +1,9 @@
 #ifndef RESIZEDIALOG_H
 #define RESIZEDIALOG_H
 #include "customcontrol/ddbase.h"
+#include <DLabel>
 #include <DLineEdit>
 #include <DComboBox>
-#include <DLabel>
 
 DWIDGET_USE_NAMESPACE
 
@@ -22,6 +22,8 @@ private:
     DLabel *plabel;
 public slots:
     void slotbuttonClicked(int index, const QString &text);
+    void slotComboSelectedChanged(int index);
+    void slotEditTextChanged(const QString &);
 };
 
 #endif // RESIZEDIALOG_H

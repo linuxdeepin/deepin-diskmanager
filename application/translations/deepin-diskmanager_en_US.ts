@@ -224,7 +224,7 @@
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="278"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="364"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="366"/>
         <source>Unallocated</source>
         <translation type="unfinished"></translation>
     </message>
@@ -255,33 +255,33 @@
 <context>
     <name>ResizeDialog</name>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="19"/>
+        <location filename="../widgets/resizedialog.cpp" line="20"/>
         <source>Resize %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="20"/>
+        <location filename="../widgets/resizedialog.cpp" line="21"/>
         <source>It will resize the partitions on the disk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="29"/>
+        <location filename="../widgets/resizedialog.cpp" line="33"/>
         <source>Reserved size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="45"/>
+        <location filename="../widgets/resizedialog.cpp" line="49"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="46"/>
+        <location filename="../widgets/resizedialog.cpp" line="50"/>
         <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="99"/>
-        <source>have no unallocated space,can not resize</source>
+        <location filename="../widgets/resizedialog.cpp" line="108"/>
+        <source>Space limit exceeded</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

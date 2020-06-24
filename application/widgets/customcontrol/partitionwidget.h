@@ -36,6 +36,7 @@
 #include <DIconButton>
 #include <QToolTip>
 #include <QRegExp>
+#include <DMessageManager>
 #include <QRegExpValidator>
 DWIDGET_USE_NAMESPACE
 

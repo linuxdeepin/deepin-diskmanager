@@ -178,7 +178,7 @@
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="109"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="191"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="192"/>
         <source>File system:</source>
         <translation>File system:</translation>
     </message>
@@ -218,23 +218,23 @@
         <translation>Name:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="195"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="196"/>
         <source>Size:</source>
         <translation>Size:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="278"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="366"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="279"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="367"/>
         <source>Unallocated</source>
         <translation>Unallocated</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="297"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="298"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="298"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="299"/>
         <source>Size</source>
         <translation>Size</translation>
     </message>

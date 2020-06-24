@@ -517,8 +517,10 @@ void PartitionWidget::slotSetPartName()
 
 void PartitionWidget::addPartitionSlot()
 {
-    if (sizeInfo.size() >= 24 || max_amount_prim_reached() == true)
+    if (sizeInfo.size() >= 24 || max_amount_prim_reached() == true) {
+        DMessageManager::instance()->sendMessage(this, QIcon(":/icons/deepin/builtin/warning.svg"), "The number of new partitions exceeds the limit");
         return;
+    }
     double currentSize = 0.00;
     stPart part;
     applyBtn->setEnabled(true);

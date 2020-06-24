@@ -389,10 +389,12 @@ void PartitionWidget::setEnable(const int &flag, const bool &isExceed)
         }
     }
     partNameLabel->setPalette(pa2);//各情况下,分区名称label的样式
-    if (sizeInfo.size() == 0)
+    if (sizeInfo.size() == 0) {
         remButton->setEnabled(false);
-    else
+        applyBtn->setEnabled(false);
+    } else {
         remButton->setEnabled(true);
+    }
 }
 
 void PartitionWidget::setControlEnable(const bool &isTrue)
@@ -560,9 +562,6 @@ void PartitionWidget::remPartitionSlot()
     if (sizeInfo.size() > 0) {
         sizeInfo.removeAt(sizeInfo.size() - 1);
         partName.removeAt(partName.size() - 1);
-    } else if (sizeInfo.size() == 0) {
-        remButton->setEnabled(false);
-        applyBtn->setEnabled(false);
     }
     //绘制删除分区图形
     partChartWidget->transInfos(mTotal, sizeInfo);
@@ -642,6 +641,8 @@ void PartitionWidget::revertBtnSlot()
     m_patrinfo.clear();
     sizeInfo.clear();
     partName.clear();
+    partNameEdit->clear();
+    partFormateCombox->setCurrentIndex(2);
     partChartWidget->transInfos(mTotal, sizeInfo);
     if (sizeInfo.size() == 0) {
         applyBtn->setEnabled(false);

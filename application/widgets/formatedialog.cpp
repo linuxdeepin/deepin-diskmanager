@@ -2,7 +2,6 @@
 #include "partedproxy/dmdbushandler.h"
 #include <DLabel>
 #include <DFontSizeManager>
-#include <DLineEdit>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 
@@ -27,7 +26,7 @@ void FormateDialog::initUi()
     QHBoxLayout *hlayoutname = new QHBoxLayout;
     DLabel *pfilename = new DLabel(tr("Name:"), this);
     pfilename->setMinimumWidth(76);
-    DLineEdit *pfilenameedit = new DLineEdit(this);
+    pfilenameedit   = new DLineEdit(this);
     if (pfilenameedit->text().isEmpty())
         pfilenameedit->lineEdit()->setPlaceholderText(tr("Name"));
     hlayoutname->addWidget(pfilename);
@@ -59,6 +58,6 @@ void FormateDialog::slotbuttonClicked(int index, const QString &text)
 {
     Q_UNUSED(text);
     if (index == okcode) {
-        DMDbusHandler::instance()->format(pformatcombo->currentText());
+        DMDbusHandler::instance()->format(pformatcombo->currentText(), pfilenameedit->text());
     }
 }

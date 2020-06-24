@@ -4,37 +4,37 @@
 <context>
     <name>FormateDialog</name>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="21"/>
+        <location filename="../widgets/formatedialog.cpp" line="20"/>
         <source>Format %1</source>
         <translation>Format %1</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="22"/>
+        <location filename="../widgets/formatedialog.cpp" line="21"/>
         <source>Formatting will erase all data on the disk, which cannot be undone</source>
         <translation>Formatting will erase all data on the disk, which cannot be undone</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="28"/>
+        <location filename="../widgets/formatedialog.cpp" line="27"/>
         <source>Name:</source>
         <translation>Name:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="32"/>
+        <location filename="../widgets/formatedialog.cpp" line="31"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="36"/>
+        <location filename="../widgets/formatedialog.cpp" line="35"/>
         <source>File system:</source>
         <translation>File system:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="49"/>
+        <location filename="../widgets/formatedialog.cpp" line="48"/>
         <source>Cancel</source>
         <translation>Cancel</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="50"/>
+        <location filename="../widgets/formatedialog.cpp" line="49"/>
         <source>Format</source>
         <translation>Format</translation>
     </message>

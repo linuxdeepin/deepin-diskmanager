@@ -532,12 +532,13 @@ void PartitionWidget::addPartitionSlot()
         currentSize = mTotal - sumValue();
         part.blast = true;
     }
+
     if (currentSize <= 51.2)
         return;
     sizeInfo.append(currentSize);
     //绘制新建分区图形
     partChartWidget->transInfos(mTotal, sizeInfo);
-    part.name = partNameEdit->text();
+    part.labelname = partNameEdit->text();
     part.fstype = partFormateCombox->currentText();
     Byte_Value sector_size = DMDbusHandler::instance()->getCurPartititonInfo().sector_size;
     part.count = static_cast<int>(currentSize * (MEBIBYTE / sector_size)) ;
@@ -591,7 +592,7 @@ void PartitionWidget::applyBtnSlot()
         qDebug() << beforend << curinfo.sector_start << curinfo.sector_end;
         beforend = newpart.sector_end + 1;
         newpart.fstype = Utils::StringToFSType(m_patrinfo.at(i).fstype);
-        newpart.name = m_patrinfo.at(i).name;
+        newpart.filesystem_label = m_patrinfo.at(i).labelname;
         newpart.alignment = ALIGN_MEBIBYTE;
         newpart.sector_size = curinfo.sector_size;
         newpart.inside_extended = false;

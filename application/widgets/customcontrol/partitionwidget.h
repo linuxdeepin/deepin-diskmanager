@@ -44,12 +44,12 @@ typedef struct STRUCTPART {
     {
         size = 0.0;
         count = 0;
-        name = fstype = "";
+        labelname = fstype = "";
         blast = false;
     }
     double size;
     Sector count;
-    QString name;
+    QString labelname;
     QString fstype;
     bool blast;
 } stPart;

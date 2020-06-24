@@ -1208,9 +1208,13 @@ bool PartedCore::create_filesystem(const Partition &partition)
         break;
     case FS::LIBPARTED:
         break;
-    case FS::EXTERNAL:
+    case FS::EXTERNAL: {
         succes = (p_filesystem = get_filesystem_object(partition.fstype)) && p_filesystem->create(partition);
-        break;
+        if (succes && !partition.get_filesystem_label().isEmpty()) {
+            p_filesystem->write_label(partition);
+        }
+    }
+    break;
     default:
         break;
     }

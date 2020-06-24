@@ -2,7 +2,7 @@
 #define FORMATEDIALOG_H
 #include "customcontrol/ddbase.h"
 #include <DComboBox>
-
+#include <DLineEdit>
 DWIDGET_USE_NAMESPACE
 
 class FormateDialog : public DDBase
@@ -15,8 +15,8 @@ private:
     void initUi();
     void initConnection();
 
-    DComboBox *pformatcombo;
-
+    DComboBox *pformatcombo = nullptr;
+    DLineEdit *pfilenameedit = nullptr;
 signals:
 
 public slots:

@@ -1478,7 +1478,17 @@ bool PartedCore::mount(const QString &mountpath)
 {
     bool success = true;
     QString output, errstr;
-    QString cmd = QString("mount -v %1 %2").arg(curpartition.get_path()).arg(mountpath);
+    QString cmd ;
+    FSType type = curpartition.fstype;
+    QString partitionpath = curpartition.get_path();
+    if (type == FS_FAT32 ||
+            type == FS_FAT16) {
+        cmd = QString("mount -v %1 %2 -o -o dmask=000,fmask=111").arg(partitionpath).arg(mountpath);
+    } else if (type == FS_HFS) {
+        cmd = QString("mount -v %1 %2 -o -o dir_umask=000,file_umask=111").arg(partitionpath).arg(mountpath);
+    } else {
+        cmd = QString("mount -v %1 %2").arg(partitionpath).arg(mountpath);
+    }
     int exitcode = Utils::executcmd(cmd, output, errstr);
     if (exitcode != 0) {
         // QString type = Utils::get_filesystem_kernel_name(curpartition.fstype);

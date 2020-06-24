@@ -179,6 +179,7 @@ void PartitionWidget::partInfoShowing()
         remButton->setEnabled(true);
     partNameLabel = new DLabel(tr("Name:"), partWidget);
     partNameEdit = new DLineEdit(partWidget);
+    partNameEdit->lineEdit()->setMaxLength(256);
     line2Layout->addWidget(partDoLabel, 2);
     line2Layout->addWidget(labelspace, 5);
     line2Layout->addWidget(addButton, 1);
@@ -305,7 +306,7 @@ void PartitionWidget::setRegValidator()
     QRegExp reg("^[0-9]+(.[0-9]{1,4})?$");
     QRegExpValidator *va = new QRegExpValidator(reg, this);
     partSizeEdit->lineEdit()->setValidator(va);
-    QRegExp re("^(?=.{0,256}$)[\u4E00-\u9FA5A-Za-z0-9_]+$");
+    QRegExp re("^[\u4E00-\u9FA5A-Za-z0-9_]+$");
     QRegExpValidator *va1 = new QRegExpValidator(re, this);
     partNameEdit->lineEdit()->setValidator(va1);
 }
@@ -511,7 +512,7 @@ void PartitionWidget::slotSetPartName()
     if (!partName.isEmpty() && number > -1) {
         partName.replace(number, partNameEdit->text());
     }
-//    qDebug() << partNameEdit->text().length();
+    qDebug() << partNameEdit->text().length();
 }
 
 void PartitionWidget::addPartitionSlot()

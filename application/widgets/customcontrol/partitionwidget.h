@@ -91,7 +91,7 @@ public slots:
     void cancelBtnSlot();
     void showSelectPathInfo(const int &flag, const int &num, const int &posX);//点击显示tip
     void showTip(const int &hover, const int &num, const int &posX);//悬停显示tip
-    void comboxCurTextSlot(); //下拉框单位切换
+    void comboxCurTextSlot(int index); //下拉框单位切换
     void judgeLastPartitionSlot();
 
 private:

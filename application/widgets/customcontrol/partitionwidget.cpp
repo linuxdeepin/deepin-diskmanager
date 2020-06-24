@@ -241,6 +241,7 @@ void PartitionWidget::recPartitionInfo()
     deviceFormate->setText(partFstype);
     total = Utils::sector_to_unit(data.sector_end - data.sector_start, data.sector_size, SIZE_UNIT::UNIT_GIB);
     mTotal = total * 1024;
+//    qDebug() << mTotal << total;
     //初始值,显示保留两位小数,真正使用保留4位小数
     currentEditSize = QString::number(mTotal, 'f', 4);
     partComCobox->setEnabled(true);
@@ -257,7 +258,7 @@ void PartitionWidget::initConnection()
     connect(applyBtn, &DPushButton::clicked, this, &PartitionWidget::applyBtnSlot);
     connect(reveBtn, &DPushButton::clicked, this, &PartitionWidget::revertBtnSlot);
     connect(cancleBtn, &DPushButton::clicked, this, &PartitionWidget::cancelBtnSlot);
-    connect(partComCobox, &DComboBox::currentTextChanged, this, &PartitionWidget::comboxCurTextSlot);
+    connect(partComCobox, SIGNAL(currentIndexChanged(int)), this, SLOT(comboxCurTextSlot(int)));
     connect(partChartWidget, &PartChartShowing::sendMoveFlag, this, &PartitionWidget::showTip);
     connect(partChartWidget, &PartChartShowing::sendFlag, this, &PartitionWidget::showSelectPathInfo);
     connect(partChartWidget, &PartChartShowing::judgeLastPartition, this, &PartitionWidget::judgeLastPartitionSlot);
@@ -439,22 +440,26 @@ void PartitionWidget::setLabelColor(const bool &isOk)
     partDoLabel->setPalette(pa2);
 }
 
-void PartitionWidget::comboxCurTextSlot()
+void PartitionWidget::comboxCurTextSlot(int index)
 {
 //    qDebug() << partSizeEdit->text().toDouble();
-    if (partComCobox->currentText() == "MiB") {
-        double m = partSizeEdit->text().toDouble();
-        if (sizeInfo.size() == 0 && hSlider->value() == 100)
-            partSizeEdit->setText(QString::number(mTotal,  'f', 2));
-        else
-            partSizeEdit->setText(QString::number(m * 1024,  'f', 2));
-    } else if (partComCobox->currentText() == "GiB") {
-        double m = partSizeEdit->text().toDouble();
-        if (sizeInfo.size() == 0 && hSlider->value() == 100)
-            partSizeEdit->setText(QString::number(total,  'f', 2));
-        else
-            partSizeEdit->setText(QString::number(m / 1024,  'f', 2));
+    if (!partSizeEdit->text().isEmpty()) {
+        double m = currentEditSize.toDouble();
+        if (index == 1) {
+            if (sizeInfo.size() == 0 && hSlider->value() == 100)
+                partSizeEdit->setText(QString::number(mTotal,  'f', 2));
+            else
+                partSizeEdit->setText(QString::number(m,  'f', 2));
+        } else if (index == 0) {
+//            double m = partSizeEdit->text().toDouble();
+            if (sizeInfo.size() == 0 && hSlider->value() == 100)
+                partSizeEdit->setText(QString::number(total,  'f', 2));
+            else
+                partSizeEdit->setText(QString::number(m / 1024,  'f', 2));
+        }
+//        qDebug() << m;
     }
+
 }
 
 void PartitionWidget::judgeLastPartitionSlot()
@@ -491,8 +496,9 @@ void PartitionWidget::slotSliderValueChanged(int value)
             partSizeEdit->setText(strSize);
         }
     }
+//    QString strSize1 = QString::number((static_cast<double>(value) / 100) * (mTotal - sumValue()),  'f', 2);
     currentEditSize = QString::number((static_cast<double>(value) / 100) * (mTotal - sumValue()),  'f', 4);
-//    qDebug() << currentEditSize;
+    qDebug() << currentEditSize << strSize << value << mTotal - sumValue();
     block = 0;
 }
 
@@ -504,6 +510,7 @@ void PartitionWidget::slotSetSliderValue()
     block = 1;
     hSlider->setValue(static_cast<int>((value / total) * 100));
     currentEditSize = QString::number(value * 1024, 'f', 4);
+//    qDebug() << currentEditSize;
 //    qDebug() << value * 1024 << static_cast<int>((value / total) * 100);
 }
 

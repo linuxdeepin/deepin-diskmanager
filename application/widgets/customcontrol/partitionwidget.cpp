@@ -305,7 +305,7 @@ void PartitionWidget::setRegValidator()
     QRegExp reg("^[0-9]+(.[0-9]{1,4})?$");
     QRegExpValidator *va = new QRegExpValidator(reg, this);
     partSizeEdit->lineEdit()->setValidator(va);
-    QRegExp re("^[\u4E00-\u9FA5A-Za-z0-9_]+$");
+    QRegExp re("^(?=.{1,16}$)[\u4E00-\u9FA5A-Za-z0-9_]+$");
     QRegExpValidator *va1 = new QRegExpValidator(re, this);
     partNameEdit->lineEdit()->setValidator(va1);
 }
@@ -394,6 +394,7 @@ void PartitionWidget::setEnable(const int &flag, const bool &isExceed)
         applyBtn->setEnabled(false);
     } else {
         remButton->setEnabled(true);
+        applyBtn->setEnabled(true);
     }
 }
 
@@ -510,6 +511,7 @@ void PartitionWidget::slotSetPartName()
     if (!partName.isEmpty() && number > -1) {
         partName.replace(number, partNameEdit->text());
     }
+//    qDebug() << partNameEdit->text().length();
 }
 
 void PartitionWidget::addPartitionSlot()

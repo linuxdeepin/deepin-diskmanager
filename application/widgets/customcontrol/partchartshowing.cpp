@@ -329,7 +329,6 @@ void PartChartShowing::mousePressEvent(QMouseEvent *event)
                     flag = 2;
                     number = i;
                     update();
-
                 }
                 //鼠标点击判断最后一个分区点击
                 if (x > allpath[partsize.size() - 1].currentPosition().x() && y > 10 && y < 45 && i == partsize.size() - 1 && (sumvalue >= 100 || sums >= total)) {

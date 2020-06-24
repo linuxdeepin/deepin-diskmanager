@@ -305,7 +305,7 @@ void PartitionWidget::setRegValidator()
     QRegExp reg("^[0-9]+(.[0-9]{1,4})?$");
     QRegExpValidator *va = new QRegExpValidator(reg, this);
     partSizeEdit->lineEdit()->setValidator(va);
-    QRegExp re("^(?=.{1,16}$)[\u4E00-\u9FA5A-Za-z0-9_]+$");
+    QRegExp re("^(?=.{0,256}$)[\u4E00-\u9FA5A-Za-z0-9_]+$");
     QRegExpValidator *va1 = new QRegExpValidator(re, this);
     partNameEdit->lineEdit()->setValidator(va1);
 }

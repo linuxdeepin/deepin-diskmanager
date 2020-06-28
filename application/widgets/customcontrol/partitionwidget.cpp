@@ -158,6 +158,7 @@ void PartitionWidget::botFrameSetting()
 void PartitionWidget::partInfoShowing()
 {
     auto formateList = DMDbusHandler::instance()->getallsupportfs();
+    formateList.removeOne("linux-swap");
     //整体垂直布局-三行
     QVBoxLayout *vLayout = new QVBoxLayout(partWidget);
     //第一行

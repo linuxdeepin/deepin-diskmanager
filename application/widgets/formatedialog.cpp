@@ -36,6 +36,7 @@ void FormateDialog::initUi()
     pformatcombo = new DComboBox(this);
     pformatcombo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     QStringList fslist = DMDbusHandler::instance()->getallsupportfs();
+    fslist.removeOne("linux-swap");
     pformatcombo->addItems(fslist);
     pformatcombo->setCurrentIndex(fslist.indexOf(Utils::FSTypeToString(static_cast<FSType>(info.fstype))));
     hlayoutformat->addWidget(pformatname);

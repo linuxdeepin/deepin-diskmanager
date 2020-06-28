@@ -657,6 +657,7 @@ void PartitionWidget::revertBtnSlot()
     partName.clear();
     partNameEdit->clear();
     partFormateCombox->setCurrentIndex(2);
+    partComCobox->setCurrentIndex(0);
     partChartWidget->transInfos(mTotal, sizeInfo);
     if (sizeInfo.size() == 0) {
         applyBtn->setEnabled(false);

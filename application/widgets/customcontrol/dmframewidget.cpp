@@ -83,6 +83,16 @@ QString DmFrameWidget::diskVolumn(QString partitionpath)
     QStringList mounts = standardError.split("\n").filter(partitionpath);
     QString sr = mounts.last();
     QString st = sr.mid(40).remove(" -> ../../" + partitionpath);
+    qDebug() << __FUNCTION__ << st;
+    if (st.at(1) != "x") {
+        QString strstr1 = st.mid(st.indexOf("\\"));
+        qDebug() << __FUNCTION__ << strstr1 << st.at(1);
+        if (strstr1.at(1) != "x") {
+            QString stres = strstr1;
+        } else {
+            QString stres = st.remove(strstr1);;
+        }
+    }
     std::string s = st.toStdString();
     const char *strstr = s.c_str();
     QString strtem("%1");

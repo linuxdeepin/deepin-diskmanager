@@ -65,8 +65,8 @@ void DeviceListWidget::slotUpdateDeviceInfo()
     //设置当前选项
     auto handler = DMDbusHandler::instance();
     num = handler->getCurPartititonInfo().partition_number;
-    devicenum_ = m_treeview->currentNum();
-    qDebug() << flag << m_treeview->currentNum();
+    devicenum_ = m_treeview->currentTopNum();
+    qDebug() << flag << m_treeview->currentTopNum();
     devicepath_ = handler->getCurPartititonInfo().device_path;
     m_treeview->m_model->clear();
     DeviceInfoMap infomap = DMDbusHandler::instance()->probDeviceInfo();

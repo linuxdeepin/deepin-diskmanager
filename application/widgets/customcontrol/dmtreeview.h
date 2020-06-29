@@ -51,6 +51,7 @@ public:
     QModelIndex setDefaultdmItem();
     void setRefreshItem(int devicenum, int num);
     int currentNum();
+    int currentTopNum();
     void addItem(DmDiskinfoBox *infobox, int flag, QStandardItem *puritem = nullptr);
     void addTopItem(DmDiskinfoBox *mailbox, int flag);
     void addSubItem(DmDiskinfoBox *mailbox, QStandardItem *pcurItem, int flag);
@@ -65,6 +66,7 @@ private:
     QSortFilterProxyModel *m_pSortViewFilter {nullptr};
     QString diskSize;
     int curNum = 0;
+    int diskNum = 0;
     PartitionWidget *m_partotionwidget = nullptr;
 protected:
     void currentChanged(const QModelIndex &current, const QModelIndex &previous) override;

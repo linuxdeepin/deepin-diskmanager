@@ -90,10 +90,12 @@ void DmTreeview::currentChanged(const QModelIndex &current, const QModelIndex &p
     Q_UNUSED(previous);
     DiskInfoData data = current.data(Qt::UserRole + 1).value<DiskInfoData>();
     qDebug() << data.diskpath << data.disksize << data.partitionsize << data.partitonpath << data.level << data.used << data.unused << data.start << data.end << data.fstype << data.mountpoints << data.syslabel;
+    curNum = current.row();
+    diskNum = current.parent().row();
     emit sigselectitem(current);
     emit sigCurSelectChanged(data.diskpath, data.partitonpath, data.start, data.end);
     diskSize = data.disksize;
-    curNum = current.row();
+
 }
 void DmTreeview::mousePressEvent(QMouseEvent *event)
 {
@@ -168,7 +170,13 @@ void DmTreeview::setRefreshItem(int devicenum, int num)//设置刷新后默认�
 
 int DmTreeview::currentNum()//返回当前选中分区
 {
+
     return curNum;
+}
+
+int DmTreeview::currentTopNum()
+{
+    return diskNum;
 }
 QStandardItem *DmTreeview::getRootItem()//获取根节点
 {

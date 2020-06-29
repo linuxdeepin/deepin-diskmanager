@@ -159,22 +159,9 @@ QModelIndex DmTreeview::setDefaultdmItem()//设置默认选中节点
     return model()->index(0, 0);
 }
 
-void DmTreeview::setRefreshItem(const QString &devicepath, int num)//设置刷新后默认选择操作分区
+void DmTreeview::setRefreshItem(int devicenum, int num)//设置刷新后默认选择操作分区
 {
-    int devicenum = 0;
-    if (devicepath.contains("sda")) {
-        devicenum = 0;
-    } else if (devicepath.contains("sdb")) {
-        devicenum = 1;
-    } else if (devicepath.contains("sdc")) {
-        devicenum = 2;
-    } else if (devicepath.contains("sdd")) {
-        devicenum = 3;
-    } else if (devicepath.contains("sde")) {
-        devicenum = 4;
-    } else if (devicepath.contains("sdf")) {
-        devicenum = 5;
-    }
+
     this->setCurrentIndex(model()->index(devicenum, 0).child(num, 0));
     setExpanded(model()->index(devicenum, 0), true);
 }

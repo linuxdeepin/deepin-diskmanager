@@ -54,6 +54,7 @@ private:
     int a = 0;
     int additem = 0;
     QString devicepath_;
+    int devicenum_ ;
     //    DMDbusHandler *m_handler;
     //    DmDiskinfoBox *m_box = nullptr;
     //    DmDiskinfoBox *m_childbox = nullptr;

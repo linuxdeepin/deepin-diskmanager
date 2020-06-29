@@ -60,6 +60,7 @@ private:
     DPalette m_parentPb;
     int d_width = 0;
     int w = 0;
+    QString m_str;
 };
 
 #endif // DMFRAMEWIDGET_H

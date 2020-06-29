@@ -49,7 +49,7 @@ public:
     QStandardItem *getRootItem();
     QModelIndex getRootItemIndex();
     QModelIndex setDefaultdmItem();
-    void setRefreshItem(const QString &devicepath, int num);
+    void setRefreshItem(int devicenum, int num);
     int currentNum();
     void addItem(DmDiskinfoBox *infobox, int flag, QStandardItem *puritem = nullptr);
     void addTopItem(DmDiskinfoBox *mailbox, int flag);

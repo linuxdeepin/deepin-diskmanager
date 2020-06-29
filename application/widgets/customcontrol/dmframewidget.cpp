@@ -45,9 +45,13 @@ void DmFrameWidget::setFrameData()
     QString strstr;
     DiskInfoData temp;
     m_infodata = temp;
-    for (QString strpoint : data.mountpoints)
+    for (QString strpoint : data.mountpoints) {
         strstr.append(strpoint + " ");
-    qDebug() << strstr;
+    }
+    if (strstr.contains("�")) {
+        strstr.remove(strstr.mid(strstr.indexOf("�")));
+        strstr.append(m_str);
+    }
     m_infodata.mountpoints = diffMountpoints(d_width, strstr);
     m_infodata.unused = Utils::format_size(data.sectors_unused, data.sector_size);
     if (m_infodata.unused.contains("-")) {
@@ -64,6 +68,9 @@ void DmFrameWidget::setFrameData()
         m_infodata.syslabel = "";
     } else {
         m_infodata.syslabel = diskVolumn(partitionpath);
+        if (m_infodata.syslabel.contains("�")) {
+            m_infodata.syslabel = m_str;
+        }//==============gbk编码的中文到在应用下无名称格式化文件系统转换时中文乱码
     }
     update();
 }
@@ -140,10 +147,13 @@ QString DmFrameWidget::diskVolumn(QString partitionpath)
         link = QTextCodec::codecForName("GBK")->toUnicode(t_destByteArray);
         int idx = link.lastIndexOf("/", link.length() - 1);
         QString stres = link.mid(idx + 1);
-        if (strtem.count("\\x") > 0) {
+        if (strtem.count("\\x") > 0 && !strtem.contains("�")) {
+            m_str = "-";
             return  stres;
         }
     } else {
+        if (!strtem.contains("�"))
+            m_str = "-";
         return  st;
     }
     return "";

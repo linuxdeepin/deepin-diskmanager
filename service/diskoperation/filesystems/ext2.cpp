@@ -126,17 +126,14 @@ void EXT2::set_used_sectors(Partition &partition)
         if (index >= 0 && index < output.length()) {
             S = Utils::regexp_label(output, QString("(?<=Block size:).*(?=\n)")).trimmed().toLong();
         }
-
         qDebug() << output << output.mid(index, strmatch.length()).toLatin1() << S;
 
         if (partition.busy) {
-            Byte_Value ignored;
+            Byte_Value fs_all;
             Byte_Value fs_free;
-            if (Utils::get_mounted_filesystem_usage(partition.get_mountpoint(), ignored, fs_free) == 0) {
-                N = fs_free / S;
-            } else {
-                N = -1;
-                qDebug() << __FUNCTION__ << "error msg:" << error;
+            if (Utils::get_mounted_filesystem_usage(partition.get_mountpoint(), fs_all, fs_free) == 0) {
+                partition.set_sector_usage(qRound(fs_all / double(partition.sector_size)), qRound(fs_free / double(partition.sector_size)));
+                partition.fs_block_size = S;
             }
         } else {
             // Resize2fs won't shrink a file system smaller than it's own
@@ -154,18 +151,16 @@ void EXT2::set_used_sectors(Partition &partition)
                 if (index < output.length())
                     sscanf(output.mid(index, strmatch.length()).toLatin1(), "Free blocks: %lld", &N);
             }
+            if (T > -1 && N > -1 && S > -1) {
+                T = qRound(T * (S / double(partition.sector_size)));
+                N = qRound(N * (S / double(partition.sector_size)));
 
-            if (N == -1 && !error.isEmpty())
-                qDebug() << __FUNCTION__ << "error msg:" << error;
+                partition.set_sector_usage(T, N);
+                partition.fs_block_size = S;
+            }
         }
 
-        if (T > -1 && N > -1 && S > -1) {
-            T = qRound(T * (S / double(partition.sector_size)));
-            N = qRound(N * (S / double(partition.sector_size)));
 
-            partition.set_sector_usage(T, N);
-            partition.fs_block_size = S;
-        }
     } else {
         qDebug() << __FUNCTION__ << "dumpe2fs -h failed :" << output << error;
     }

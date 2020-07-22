@@ -29,7 +29,30 @@ public:
     bool format(const QString &fstype, const QString &name);
     bool resize(const PartitionInfo &info);
     QStringList getallsupportfs();
-
+    //new add by li 2020/7/20
+    /**
+     * @brief 获取硬盘硬件信息
+     * @return 返回硬盘硬件信息
+     */
+    HardDiskInfo getDeviceHardInfo(const QString &devicepath);
+    //HardDiskInfo getDeviceHardInfo();
+    /**
+     * @brief 获取硬盘状态信息
+     * @return 返回硬盘状态信息
+     */
+    QString getDeviceHardStatus(const QString &devicepath);
+    //QString getDeviceHardStatus();
+    /**
+     * @brief 获取硬盘健康信息
+     * @return 返回硬盘健康信息
+     */
+    HardDiskStatusInfoList getDeviceHardStatusInfo(const QString &devicepath);
+    //HardDiskStatusInfoList getDeviceHardStatusInfo();
+    /**
+     * @brief 个人测试使用
+     * @param 无
+     */
+    void test();
 public:
     //static
     static void find_supported_core();

@@ -1899,25 +1899,33 @@ HardDiskStatusInfoList PartedCore::getDeviceHardStatusInfo(const QString &device
             printbuf = printbuf.replace(QRegExp("\\\n"), "\0");
             QStringList list = printbuf.split(' ');
             list.removeAll("");
-            if(list.size() != 10)
+            if(list.size() >= 10)
             {
-                qDebug() << "get DeviceHardStatus Info size error";
+                qDebug() << "get DeviceHardStatus Info size error" << list.size();
+                hdsinfo.m_id = list.at(0);
+                hdsinfo.m_attributeName = list.at(1);
+                hdsinfo.m_flag = list.at(2);
+                hdsinfo.m_value = list.at(3);
+                hdsinfo.m_worst = list.at(4);
+                hdsinfo.m_thresh = list.at(5);
+                hdsinfo.m_type = list.at(6);
+                hdsinfo.m_updated = list.at(7);
+                hdsinfo.m_whenFailed = list.at(8);
+                for(int k = 9;k < list.size(); k++)
+                {
+                    hdsinfo.m_rawValue += list.at(k);
+                }
+            }
+            if(list.size() == 0)
+            {
+                qDebug() << "get DeviceHardStatus Info size over" << j;
                 break;
             }
-            hdsinfo.m_id = list.at(0);
-            hdsinfo.m_attributeName = list.at(1);
-            hdsinfo.m_flag = list.at(2);
-            hdsinfo.m_value = list.at(3);
-            hdsinfo.m_worst = list.at(4);
-            hdsinfo.m_thresh = list.at(5);
-            hdsinfo.m_type = list.at(6);
-            hdsinfo.m_updated = list.at(7);
-            hdsinfo.m_whenFailed = list.at(8);
-            hdsinfo.m_rawValue = list.at(9);
             hdsilist.append(hdsinfo);
         }
         j++;
     }
+    qDebug() << __FUNCTION__ << hdsilist.size();
     pclose(fd);
     qDebug() << __FUNCTION__ << "getDeviceHardStatusInfo End";
     return hdsilist;

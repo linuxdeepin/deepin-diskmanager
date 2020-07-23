@@ -106,13 +106,13 @@ public Q_SLOTS: // METHODS
         argumentList << QVariant::fromValue(devicepath);
         return asyncCallWithArgumentList(QStringLiteral("onGetDeviceHardStatus"), argumentList);
     }
-    inline QDBusPendingReply<QString> onGetDeviceHardInfo(const QString &devicepath)
+    inline QDBusPendingReply<HardDiskInfo> onGetDeviceHardInfo(const QString &devicepath)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(devicepath);
         return asyncCallWithArgumentList(QStringLiteral("onGetDeviceHardInfo"), argumentList);
     }
-    inline QDBusPendingReply<QString> onGetDeviceHardStatusInfo(const QString &devicepath)
+    inline QDBusPendingReply<HardDiskStatusInfoList> onGetDeviceHardStatusInfo(const QString &devicepath)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(devicepath);

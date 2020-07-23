@@ -31,7 +31,29 @@ public Q_SLOTS:
     Q_SCRIPTABLE bool resize(const PartitionInfo &info);
     Q_SCRIPTABLE bool create(const PartitionVec &infovec);
     Q_SCRIPTABLE stCustest interfacetest();
-
+    /**
+     * @brief 获取硬盘硬件信息
+     * @param 返回硬盘信息表
+     */
+    Q_SCRIPTABLE HardDiskInfo onGetDeviceHardInfo(const QString &devicepath);
+    //Q_SCRIPTABLE HardDiskInfo onGetDeviceHardInfo();
+    /**
+     * @brief 获取硬盘健康状态
+     * @param 返回硬盘健康状态
+     */
+    Q_SCRIPTABLE QString onGetDeviceHardStatus(const QString &devicepath);
+    //Q_SCRIPTABLE QString onGetDeviceHardStatus();
+    /**
+     * @brief 获取硬盘健康信息
+     * @param 返回硬盘健康信息
+     */
+    Q_SCRIPTABLE HardDiskStatusInfoList onGetDeviceHardStatusInfo(const QString &devicepath);
+    //Q_SCRIPTABLE HardDiskStatusInfoList onGetDeviceHardStatusInfo();
+    /**
+     * @brief 个人测试使用
+     * @param 无
+     */
+    Q_SCRIPTABLE void test();
 private:
     void initConnection();
 

@@ -28,6 +28,9 @@ DMDbusHandler::DMDbusHandler(QObject *parent)
     qDBusRegisterMetaType<PartitionInfo>();
     qDBusRegisterMetaType<PartitionVec>();
     qDBusRegisterMetaType<stCustest>();
+    qDBusRegisterMetaType<HardDiskInfo>();
+    qDBusRegisterMetaType<HardDiskStatusInfo>();
+    qDBusRegisterMetaType<HardDiskStatusInfoList>();
     m_dbus = new DMDBusInterface("com.deepin.diskmanager",
                                  "/com/deepin/diskmanager",
                                  QDBusConnection::systemBus(),

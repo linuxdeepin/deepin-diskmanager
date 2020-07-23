@@ -100,6 +100,24 @@ public Q_SLOTS: // METHODS
         argumentList << QVariant::fromValue(infovec);
         return asyncCallWithArgumentList(QStringLiteral("create"), argumentList);
     }
+    inline QDBusPendingReply<QString> onGetDeviceHardStatus(const QString &devicepath)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(devicepath);
+        return asyncCallWithArgumentList(QStringLiteral("onGetDeviceHardStatus"), argumentList);
+    }
+    inline QDBusPendingReply<QString> onGetDeviceHardInfo(const QString &devicepath)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(devicepath);
+        return asyncCallWithArgumentList(QStringLiteral("onGetDeviceHardInfo"), argumentList);
+    }
+    inline QDBusPendingReply<QString> onGetDeviceHardStatusInfo(const QString &devicepath)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(devicepath);
+        return asyncCallWithArgumentList(QStringLiteral("onGetDeviceHardStatusInfo"), argumentList);
+    }
 
 Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void MessageReport(const QString &msg);

@@ -89,4 +89,22 @@ void DiskManagerService::initConnection()
     connect(m_partedcore, &PartedCore::sigUpdateDeviceInfo, this, &DiskManagerService::sigUpdateDeviceInfo);
 }
 
+HardDiskInfo DiskManagerService::onGetDeviceHardInfo(const QString &devicepath)
+{
+    return m_partedcore->getDeviceHardInfo(devicepath);
+}
+
+QString DiskManagerService::onGetDeviceHardStatus(const QString &devicepath)
+{
+    return m_partedcore->getDeviceHardStatus(devicepath);
+}
+
+HardDiskStatusInfoList DiskManagerService::onGetDeviceHardStatusInfo(const QString &devicepath)
+{
+    return m_partedcore->getDeviceHardStatusInfo(devicepath);
+}
+void DiskManagerService::test()
+{
+    m_partedcore->test();
+}
 } // namespace DiskManager

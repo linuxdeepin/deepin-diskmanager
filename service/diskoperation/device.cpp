@@ -10,6 +10,9 @@ Device::Device()
     qDBusRegisterMetaType<PartitionInfo>();
     qDBusRegisterMetaType<PartitionVec>();
     qDBusRegisterMetaType<stCustest>();
+    qDBusRegisterMetaType<HardDiskInfo>();
+    qDBusRegisterMetaType<HardDiskStatusInfo>();
+    qDBusRegisterMetaType<HardDiskStatusInfoList>();
 }
 
 void Device::enable_partition_naming(int length)

@@ -66,6 +66,80 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, stCustest &stcus)
     argument.endStructure();
     return argument;
 }
+QDBusArgument &operator<<(QDBusArgument &argument, const HardDiskInfo &inhdinfo)
+{
+    argument.beginStructure();
+    argument << inhdinfo.m_deviceModel
+             << inhdinfo.m_serialNumber
+             << inhdinfo.m_deviceId
+             << inhdinfo.m_firmwareVersion
+             << inhdinfo.m_userCapacity
+             << inhdinfo.m_sectorSize
+             << inhdinfo.m_rotationRate
+             << inhdinfo.m_formFactor
+             << inhdinfo.m_deviceis
+             << inhdinfo.m_ataVersionIs
+             << inhdinfo.m_sataVersionIs
+             << inhdinfo.m_localTime
+             << inhdinfo.m_smartSupport
+             << inhdinfo.m_smartSupportOn_Off;
+    argument.endStructure();
+    return argument;
+}
+
+const QDBusArgument &operator>>(const QDBusArgument &argument, HardDiskInfo &inhdinfo)
+{
+    argument.beginStructure();
+    argument >> inhdinfo.m_deviceModel
+             >> inhdinfo.m_serialNumber
+             >> inhdinfo.m_deviceId
+             >> inhdinfo.m_firmwareVersion
+             >> inhdinfo.m_userCapacity
+             >> inhdinfo.m_sectorSize
+             >> inhdinfo.m_rotationRate
+             >> inhdinfo.m_formFactor
+             >> inhdinfo.m_deviceis
+             >> inhdinfo.m_ataVersionIs
+             >> inhdinfo.m_sataVersionIs
+             >> inhdinfo.m_localTime
+             >> inhdinfo.m_smartSupport
+             >> inhdinfo.m_smartSupportOn_Off;
+    argument.endStructure();
+    return argument;
+}
+
+QDBusArgument &operator<<(QDBusArgument &argument, const HardDiskStatusInfo &inhdinfo)
+{
+    argument.beginStructure();
+    argument << inhdinfo.m_id
+             << inhdinfo.m_attributeName
+             << inhdinfo.m_flag
+             << inhdinfo.m_value
+             << inhdinfo.m_worst
+             << inhdinfo.m_thresh
+             << inhdinfo.m_type
+             << inhdinfo.m_updated
+             << inhdinfo.m_whenFailed
+             << inhdinfo.m_rawValue;
+    argument.endStructure();
+    return argument;
+}
+const QDBusArgument &operator>>(const QDBusArgument &argument, HardDiskStatusInfo &inhdinfo)
+{
+    argument.beginStructure();
+    argument >> inhdinfo.m_id
+             >> inhdinfo.m_attributeName
+             >> inhdinfo.m_flag
+             >> inhdinfo.m_value
+             >> inhdinfo.m_worst
+             >> inhdinfo.m_thresh
+             >> inhdinfo.m_type
+             >> inhdinfo.m_updated
+             >> inhdinfo.m_whenFailed
+             >> inhdinfo.m_rawValue;
+    argument.endStructure();
+    return argument;
+}
 
 DeviceInfo::DeviceInfo()
     : readonly(false)

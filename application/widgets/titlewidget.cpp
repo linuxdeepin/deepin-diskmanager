@@ -22,6 +22,13 @@ void TitleWidget::initUi()
     m_btnmount = createBtn(tr("Mount"), "mount");
     m_btnunmount = createBtn(tr("Unmount"), "unmount");
     m_btnresize = createBtn(tr("Resize"), "resize");
+
+    m_btnparted->setIconSize(QSize(16, 16));
+    m_btnformat->setIconSize(QSize(18, 18));
+    m_btnmount->setIconSize(QSize(14, 17));
+    m_btnunmount->setIconSize(QSize(14, 15));
+    m_btnresize->setIconSize(QSize(14, 20));
+
     layout->addWidget(m_btnparted);
     layout->addWidget(m_btnformat);
     layout->addWidget(m_btnmount);

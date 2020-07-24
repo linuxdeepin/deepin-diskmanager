@@ -123,6 +123,7 @@ QStringList DMDbusHandler::getallsupportfs()
         if (reply.isError()) {
             qDebug() << reply.error().message();
         } else {
+            qDebug() << reply.value() << "1111111111111111111111";
             m_supportfs = reply.value();
         }
     }
@@ -178,4 +179,40 @@ void DMDbusHandler::slotUpdateDeviceInfo(const DeviceInfoMap &infomap)
     //    qDebug() << getCurDeviceInfo().serial_number << getCurPartititonInfo().partition_number;
     emit sigUpdateDeviceInfo();
     emit sigShowSpinerWindow(false);
+}
+
+HardDiskInfo DMDbusHandler::getHardDiskInfo(const QString &devicePath)
+{
+    QDBusPendingReply<HardDiskInfo> reply = m_dbus->onGetDeviceHardInfo(devicePath);
+    reply.waitForFinished();
+    if (reply.isError()) {
+        qDebug() << reply.error().message();
+    } else {
+        m_hardDiskInfo = reply.value();
+    }
+    return m_hardDiskInfo;
+}
+
+QString DMDbusHandler::getDeviceHardStatus(const QString &devicePath)
+{
+    QDBusPendingReply<QString> reply = m_dbus->onGetDeviceHardStatus(devicePath);
+    reply.waitForFinished();
+    if (reply.isError()) {
+        qDebug() << reply.error().message();
+    } else {
+        m_deviceHardStatus = reply.value();
+    }
+    return m_deviceHardStatus;
+}
+
+HardDiskStatusInfoList DMDbusHandler::getDeviceHardStatusInfo(const QString &devicePath)
+{
+    QDBusPendingReply<HardDiskStatusInfoList> reply = m_dbus->onGetDeviceHardStatusInfo(devicePath);
+    reply.waitForFinished();
+    if (reply.isError()) {
+        qDebug() << reply.error().message();
+    } else {
+        m_hardDiskStatusInfoList = reply.value();
+    }
+    return m_hardDiskStatusInfoList;
 }

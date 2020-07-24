@@ -1,0 +1,137 @@
+#include "diskinfodisplaydialog.h"
+#include "partedproxy/dmdbushandler.h"
+#include "messagebox.h"
+
+#include <DLabel>
+#include <DFrame>
+
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QDebug>
+
+DiskInfoDisplayDialog::DiskInfoDisplayDialog(const QString &devicePath, QWidget *parent)
+    : DDialog(parent)
+{
+    m_devicePath = devicePath;
+
+    initUI();
+    initConnections();
+}
+
+void DiskInfoDisplayDialog::initUI()
+{
+//    setWindowTitle("磁盘信息展示");
+    setTitle("Disk Info"); // 磁盘信息
+    setMinimumSize(500, 474);
+
+    DFrame *infoWidget = new DFrame;
+    infoWidget->setBackgroundRole(DPalette::ItemBackground);
+    infoWidget->setFixedSize(480, 414);
+
+    HardDiskInfo hardDiskInfo = DMDbusHandler::instance()->getHardDiskInfo(m_devicePath);
+
+//    m_diskInfoNameList << tr("序列号：") << tr("设备模型：") << tr("LU WWN 设备Id：") << tr("固件版本：") << tr("用户容量：")
+//                       << tr("扇区大小：") << tr("转速：") << tr("外形系数：") << tr("设备：") << tr("ATA版本为：")
+//                       << tr("SATA版本为：") << tr("当地时间为：") << tr("智能支持：");
+
+    m_diskInfoNameList << tr("Serial Number：") << tr("Device Model：") << tr("LU WWN Device Id：") << tr("Firmware Version：")
+                       << tr("User Capacity：") << tr("Sector Size：") << tr("Rotation Rate：") << tr("Form Factor：")
+                       << tr("Device is：") << tr("ATA Version is：") << tr("SATA Version is：")
+                       << tr("Local Time is：") << tr("SMART support is：");
+
+    QString deviceis = hardDiskInfo.m_deviceis;
+    QStringList deviceNameList = deviceis.split("[");
+
+    m_diskInfoValueList << tr("%1").arg(hardDiskInfo.m_serialNumber) << tr("%1").arg(hardDiskInfo.m_deviceModel)
+                        << tr("%1").arg(hardDiskInfo.m_deviceId) << tr("%1").arg(hardDiskInfo.m_firmwareVersion)
+                        << tr("%1").arg(hardDiskInfo.m_userCapacity) << tr("%1").arg(hardDiskInfo.m_sectorSize)
+                        << tr("%1").arg(hardDiskInfo.m_rotationRate) << tr("%1").arg(hardDiskInfo.m_formFactor)
+                        << tr("%1").arg(deviceNameList.at(0)) << tr("%1").arg(hardDiskInfo.m_ataVersionIs)
+                        << tr("%1").arg(hardDiskInfo.m_sataVersionIs) << tr("%1").arg(hardDiskInfo.m_localTime)
+                        << tr("%1").arg(hardDiskInfo.m_smartSupport);
+
+    QVBoxLayout *infoLayout = new QVBoxLayout(infoWidget);
+
+    DPalette palette1;
+    palette1.setColor(DPalette::WindowText, QColor(0, 0, 0, 0.85));
+
+    DPalette palette2;
+    palette2.setColor(DPalette::WindowText, QColor(0, 0, 0, 0.7));
+
+    for (int i = 0; i < m_diskInfoNameList.count(); i++) {
+        DLabel *nameLabel = new DLabel;
+        nameLabel->setText(m_diskInfoNameList.at(i));
+        nameLabel->setFont(QFont("SourceHanSansSC", 11, 57));
+        nameLabel->setFixedWidth(160);
+        nameLabel->setPalette(palette1);
+
+        DLabel *valueLabel = new DLabel;
+        valueLabel->setText(m_diskInfoValueList.at(i));
+        valueLabel->setFont(QFont("SourceHanSansSC", 11, 50));
+        valueLabel->setPalette(palette2);
+
+        QHBoxLayout *labelLayout = new QHBoxLayout;
+        labelLayout->addWidget(nameLabel);
+        labelLayout->addWidget(valueLabel);
+        labelLayout->setSpacing(0);
+        labelLayout->setContentsMargins(0, 0, 0, 0);
+
+        infoLayout->addLayout(labelLayout);
+    }
+
+    m_linkButton = new DCommandLinkButton("Export"); // 导出
+
+    infoLayout->addWidget(m_linkButton);
+    infoLayout->setContentsMargins(10, 10, 10, 10);
+
+    addContent(infoWidget);
+}
+
+void DiskInfoDisplayDialog::initConnections()
+{
+    connect(m_linkButton, &DCommandLinkButton::clicked, this, &DiskInfoDisplayDialog::onExportButtonClicked);
+}
+
+void DiskInfoDisplayDialog::onExportButtonClicked()
+{
+    //文件保存路径
+    QString fileDirPath = QFileDialog::getSaveFileName(this, tr("Save File"), tr("DiskInfo.txt"), tr("Text files (*.txt)"));// 文件保存   磁盘信息   文件类型
+    if (fileDirPath.isEmpty()) {
+        return;
+    }
+
+    QString strFileName = "/" + fileDirPath.split("/").last();
+    QString fileDir = fileDirPath.split(strFileName).first();
+
+    QFileInfo fileInfo;
+    fileInfo.setFile(fileDir);
+    if (!fileInfo.isWritable()) {
+        MessageBox messageBox;
+        messageBox.setWarings(tr("当前选择的目录没有操作权限，请重新导出！"), tr("确定"));
+        messageBox.exec();
+    } else {
+        if (!fileDirPath.contains(".txt")) {
+            fileDirPath = fileDirPath + ".txt";
+        }
+
+        QFile file(fileDirPath);
+        if (file.open(QIODevice::ReadWrite)) {
+            QTextStream out(&file);
+            for (int i = 0; i < m_diskInfoNameList.count(); i++) {
+                QString strInfo = m_diskInfoNameList.at(i) + m_diskInfoValueList.at(i) + "\n";
+                out << strInfo;
+                out.flush();
+            }
+        }
+
+        file.close();
+
+        MessageBox messageBox;
+        messageBox.setWarings(tr("磁盘信息导出成功！"), tr("确定"));
+        messageBox.exec();
+    }
+}
+
+

@@ -82,12 +82,14 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         path.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
                          QSize(radius * 2, radius * 2)),
                    270, 90);
+        // 设置分区背景色
         if (data.level == 1) {
             QBrush brush = m_parentPb.itemBackground();
             painter->setBrush(brush);
             painter->fillPath(path, brush);
         }
 
+        // 设置分区选中时文本颜色
         if (option.state & QStyle::State_Selected && data.level == 1) {
             QColor fillColor = m_parentPb.color(DPalette::Normal, DPalette::Highlight);
             painter->setBrush(QBrush(fillColor));
@@ -99,13 +101,20 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         }
 
         QIcon directionIcon;
+        int pixmapWidth = 8; // 伸缩按钮宽
+        int pixmapHeight = 8; // 伸缩按钮高
         if (pTreeView->getModelByIndex(index) && pTreeView->getModelByIndex(index)->hasChildren()) {
             if (pTreeView->isExpanded(index)) {
                 directionIcon = Common::getIcon("arrow");
+                pixmapWidth = 10;
+                pixmapHeight = 7;
             } else {
                 directionIcon = Common::getIcon("arrow_right");
+                pixmapWidth = 8;
+                pixmapHeight = 11;
             }
         }
+
         QRect m_lefticon1Rect;
         QRect m_lefticonRect2;
         QRect m_textRect;
@@ -115,7 +124,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         QString text2 = data.partitonpath;
         QString text3 = data.partitionsize;
         if (data.level == 0) {
-            m_lefticon1Rect.setRect(paintRect.left() + 8, paintRect.top() + 20, 8, 8);
+            m_lefticon1Rect.setRect(paintRect.left() + 8, paintRect.top() + 20, pixmapWidth, pixmapHeight);
             painter->drawPixmap(m_lefticon1Rect, directionIcon.pixmap(17, 17));
             m_lefticonRect2.setRect(paintRect.left() + 15, paintRect.top() + 4, 40, 40);
             QIcon icon = Common::getIcon("treedisk");

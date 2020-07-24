@@ -48,6 +48,17 @@ signals:
 public slots:
     void slotUpdateDeviceInfo();
 
+    /**
+     * @brief 设备树右键菜单按钮
+     * @param pos 当前点击树节点位置
+     */
+    void treeMenu(const QPoint &pos);
+
+    /**
+     * @brief 设备树右键按钮响应的槽函数
+     */
+    void onTreeMenuClicked();
+
 private:
     int flag = 0;
     int num = 0;
@@ -55,6 +66,7 @@ private:
     int additem = 0;
     QString devicepath_;
     int devicenum_ ;
+    QString m_diskPath;
     //    DMDbusHandler *m_handler;
     //    DmDiskinfoBox *m_box = nullptr;
     //    DmDiskinfoBox *m_childbox = nullptr;

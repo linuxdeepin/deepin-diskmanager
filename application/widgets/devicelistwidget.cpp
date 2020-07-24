@@ -20,7 +20,12 @@
 */
 #include "devicelistwidget.h"
 #include "customcontrol/dmdiskinfobox.h"
+#include "diskinfodisplaydialog.h"
+#include "diskhealthdetectiondialog.h"
+
 #include <DPalette>
+#include <DMenu>
+
 #include <QVBoxLayout>
 #include <QDebug>
 
@@ -50,14 +55,106 @@ void DeviceListWidget::initUi()
     layout->setSpacing(0);
     this->setLayout(layout);
     m_treeview = new DmTreeview(this);
+    m_treeview->setContextMenuPolicy(Qt::CustomContextMenu);
     layout->addWidget(m_treeview);
 }
 
 void DeviceListWidget::initConnection()
 {
     connect(DMDbusHandler::instance(), &DMDbusHandler::sigUpdateDeviceInfo, this, &DeviceListWidget::slotUpdateDeviceInfo);
-    connect(m_treeview, &DmTreeview::sigCurSelectChanged, DMDbusHandler::instance(), &DMDbusHandler::slotsetCurSelect);
+    connect(m_treeview, &DmTreeview::sigCurSelectChanged, DMDbusHandler::instance(), &DMDbusHandler::slotsetCurSelect);  
+    connect(m_treeview, &QTreeView::customContextMenuRequested, this, &DeviceListWidget::treeMenu);
 }
+
+void DeviceListWidget::treeMenu(const QPoint &pos)
+{
+    QModelIndex curIndex = m_treeview->indexAt(pos);      //当前点击的元素的index
+    QModelIndex index = curIndex.sibling(curIndex.row(),0); //该行的第1列元素的index
+    qDebug() << curIndex << "--------" << index << "---------------" << m_treeview->getRootItem()->index()
+             << m_treeview->getcuritem()->data();
+    DiskInfoData data = m_treeview->getcuritem()->data().value<DiskInfoData>();
+    qDebug() << data.diskpath << data.disksize << data.partitionsize << data.partitonpath << data.level << data.used << data.unused << data.start
+             << data.end << "--------" << data.fstype << "------" << data.mountpoints << data.syslabel << data.iconImage;
+    if (index.isValid()) {
+        DiskInfoData data = m_treeview->getcuritem()->data().value<DiskInfoData>();
+        if (data.level == 0) {
+            m_diskPath = data.diskpath;
+
+            QMenu *menu = new QMenu();
+
+            QAction *actionInfo = new QAction();
+            actionInfo->setText(tr("Disk info")); // 磁盘信息
+            actionInfo->setObjectName(tr("Disk info"));
+            menu->addAction(actionInfo);
+            connect(actionInfo, &QAction::triggered, this, &DeviceListWidget::onTreeMenuClicked);
+//            connect(actionInfo, &QAction::triggered, this, [=] (QVariant value) {
+//                    if (!value.isNull()) {
+//                        DiskInfoDisplayDialog *diskInfoDisplayDialog = new DiskInfoDisplayDialog(data.diskpath);
+//                        diskInfoDisplayDialog->exec();
+//                    }
+//                });
+
+    //        menu->addSeparator();    //添加一个分隔线
+            QMenu *itemChildMenu = new QMenu(QStringLiteral("Health management")); // 健康管理
+            menu->addMenu(itemChildMenu);
+
+            QAction *actionHealthDetection = new QAction();
+            actionHealthDetection->setText(tr("Check health")); // 硬盘健康检测
+            actionHealthDetection->setObjectName("Check health");
+            itemChildMenu->addAction(actionHealthDetection);
+            connect(actionHealthDetection, &QAction::triggered, this, &DeviceListWidget::onTreeMenuClicked);
+//            connect(actionHealthDetection, &QAction::triggered, this, [=] (QVariant value) {
+//                    if (!value.isNull()) {
+//                        DiskHealthDetectionDialog *diskHealthDetectionDialog = new DiskHealthDetectionDialog(data.diskpath);
+//                        diskHealthDetectionDialog->exec();
+//                    }
+//                });
+
+            QAction *actionCheckError = new QAction();
+            actionCheckError->setText(tr("Check partition table error")); // 分区表错误检测
+            actionCheckError->setObjectName("Check partition table error");
+            itemChildMenu->addAction(actionCheckError);
+
+            QAction *actionVerifyRepair = new QAction();
+            actionVerifyRepair->setText(tr("Verify or repair bad sectors")); // 坏道检测与修复
+            actionVerifyRepair->setObjectName("Verify or repair bad sectors");
+            itemChildMenu->addAction(actionVerifyRepair);
+
+            menu->exec(QCursor::pos());  //显示菜单
+        } else {
+            QMenu *menu = new QMenu();
+
+            QAction *actionHidePartition = new QAction();
+            actionHidePartition->setText(tr("Hide partition")); // 隐藏分区
+            menu->addAction(actionHidePartition);
+
+            QAction *actionShowPartition = new QAction();
+            actionShowPartition->setText(tr("Unhide partition")); // 显示分区
+            menu->addAction(actionShowPartition);
+            actionShowPartition->setDisabled(true);
+
+            QAction *actionDelete = new QAction();
+            actionDelete->setText(tr("Delete partition")); // 删除分区
+            menu->addAction(actionDelete);
+
+            menu->exec(QCursor::pos());  //显示菜单
+        }
+    }
+}
+
+void DeviceListWidget::onTreeMenuClicked()
+{
+    QAction *action = qobject_cast<QAction *>(sender());
+
+    if (action->objectName() == "Disk info") {
+        DiskInfoDisplayDialog *diskInfoDisplayDialog = new DiskInfoDisplayDialog(m_diskPath);
+        diskInfoDisplayDialog->exec();
+    } else if (action->objectName() == "Check health") {
+        DiskHealthDetectionDialog *diskHealthDetectionDialog = new DiskHealthDetectionDialog(m_diskPath);
+        diskHealthDetectionDialog->exec();
+    }
+}
+
 void DeviceListWidget::slotUpdateDeviceInfo()
 {
     qDebug() << __FUNCTION__ << "               1";

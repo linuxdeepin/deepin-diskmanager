@@ -24,6 +24,9 @@ public:
     void format(const QString &fstype, const QString &name = QString());
     void resize(const PartitionInfo &info);
     void create(const PartitionVec &infovec);
+    HardDiskInfo getHardDiskInfo(const QString &devicePath);
+    QString getDeviceHardStatus(const QString &devicePath);
+    HardDiskStatusInfoList getDeviceHardStatusInfo(const QString &devicePath);
 
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
@@ -49,6 +52,9 @@ private:
     DeviceInfoMap m_devicemap;
     PartitionInfo m_curpartitioninfo;
     QStringList m_supportfs;
+    HardDiskInfo m_hardDiskInfo;
+    QString m_deviceHardStatus;
+    HardDiskStatusInfoList m_hardDiskStatusInfoList;
 };
 
 #endif // DMDBUSHANDLER_H

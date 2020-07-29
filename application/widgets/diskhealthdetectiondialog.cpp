@@ -7,6 +7,7 @@
 
 #include <DFrame>
 #include <DGuiApplicationHelper>
+#include <DMessageManager>
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -279,9 +280,11 @@ void DiskHealthDetectionDialog::onExportButtonClicked()
     QFileInfo fileInfo;
     fileInfo.setFile(fileDir);
     if (!fileInfo.isWritable()) {
-        MessageBox messageBox;
-        messageBox.setWarings(tr("当前选择的目录没有操作权限，请重新导出！"), tr("确定"));
-        messageBox.exec();
+        DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::ResidentType);
+        floMsg->setIcon(QIcon::fromTheme("://icons/deepin/builtin/warning.svg"));
+        floMsg->setMessage(tr("Wrong path")); // 路径错误
+        DMessageManager::instance()->sendMessage(this, floMsg);
+        DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
     } else {
         if (!fileDirPath.contains(".txt")) {
             fileDirPath = fileDirPath + ".txt";
@@ -307,13 +310,15 @@ void DiskHealthDetectionDialog::onExportButtonClicked()
                 out << strInfo;
                 out.flush();
             }
+
+            file.close();
+
+            DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Export successful")); // 导出成功
+            DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
+        } else {
+            DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Export failed")); // 导出失败
+            DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
         }
-
-        file.close();
-
-        MessageBox messageBox;
-        messageBox.setWarings(tr("硬盘健康检测信息导出成功！"), tr("确定"));
-        messageBox.exec();
     }
 }
 

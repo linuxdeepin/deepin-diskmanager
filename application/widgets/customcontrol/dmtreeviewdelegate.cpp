@@ -147,13 +147,27 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             QIcon icon = Common::getIcon("harddisk");
             QIcon icon1 = Common::getIcon("mounticon");
             QIcon icon2 = Common::getIcon("uninstallicon");
+            QIcon icon3 = Common::getIcon("hidden");
             painter->drawPixmap(m_lefticon1Rect, icon.pixmap(28, 28));
             QRect mounticonRect = QRect(paintRect.left() + 45, paintRect.top() + 25, 10, 10);
+
+            // 获取分区是否隐藏
+            int hide = 0;
+            if (data.mountpoints.isEmpty()) {
+                int result = DMDbusHandler::instance()->getPartitionHiddenFlag(data.diskpath, data.partitonpath);
+                if (1 == result) {
+                    hide = 1;
+                }
+            }
+
             if (data.fstype == "unallocated") {
                 painter->drawPixmap(mounticonRect, icon2.pixmap(10, 10));
+            } else if (1 == hide) {
+                painter->drawPixmap(mounticonRect, icon3.pixmap(10, 10));
             } else {
                 painter->drawPixmap(mounticonRect, icon1.pixmap(10, 10));
             }
+
             QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
             if (option.state & QStyle::State_Selected && data.level == 1) {
                 QColor textcolor = m_parentPb.color(DPalette::Normal, DPalette::HighlightedText);

@@ -7,20 +7,66 @@ MessageBox::MessageBox(DDialog *parent) : DDialog(parent)
 
 }
 
-void MessageBox::setWarings(QString warningMsg, QString surebtntext, QString cancelbtntext)
+void MessageBox::setWarings(const QString &title, const QString &warningMsg, const QString &sureBtnText, const QString &cancalBtnText)
 {
     setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
 
-    setTitle(tr("Warning"));
-
-    addSpacing(10);
-    addLabel(warningMsg);
-    addSpacing(10);
-
-    if (cancelbtntext != "") {
-        addButton(cancelbtntext);
+    if (!title.isEmpty()) {
+        setTitle(title);
+        addSpacing(10);
     }
-    addButton(surebtntext);
+
+    if (!warningMsg.isEmpty()) {
+        addLabel(warningMsg);
+        addSpacing(10);
+    }
+
+    if (!cancalBtnText.isEmpty()) {
+        addButton(cancalBtnText);
+    }
+
+    addButton(sureBtnText);
+    connect(this,&MessageBox::buttonClicked,this, [=]() {
+        close();
+    });
+}
+void MessageBox::setWarings(const QString &title, const QString &warningMsg, const QString &sureBtnText, ButtonType sureBtnType, const QString &cancalBtnText)
+{
+    setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
+
+    if (!title.isEmpty()) {
+        setTitle(title);
+        addSpacing(10);
+    }
+
+    if (!warningMsg.isEmpty()) {
+        addLabel(warningMsg);
+        addSpacing(10);
+    }
+
+    if (!cancalBtnText.isEmpty()) {
+        addButton(cancalBtnText);
+    }
+
+    addButton(sureBtnText, false, sureBtnType);
+    connect(this,&MessageBox::buttonClicked,this, [=]() {
+        close();
+    });
+}
+
+void MessageBox::setProgressBar(const QString &title, const QString &cancalBtnText)
+{
+    setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
+
+    if (!title.isEmpty()) {
+        setTitle(title);
+        addSpacing(10);
+    }
+
+    addProgressBar();
+    addSpacing(10);
+
+    addButton(cancalBtnText);
     connect(this,&MessageBox::buttonClicked,this, [=]() {
         close();
     });
@@ -28,9 +74,17 @@ void MessageBox::setWarings(QString warningMsg, QString surebtntext, QString can
 
 void MessageBox::addLabel(QString text)
 {
-    DLabel * title= new DLabel(this);
-    title->setText(text);
-    this->addContent(title,Qt::AlignHCenter);
+    DLabel *label= new DLabel(this);
+    label->setText(text);
+    addContent(label,Qt::AlignHCenter);
+}
+
+void MessageBox::addProgressBar()
+{
+    m_progressBar = new DProgressBar(this);
+    m_progressBar->setValue(50);
+    m_progressBar->setFixedSize(330, 10);
+    addContent(m_progressBar,Qt::AlignHCenter);
 }
 
 

@@ -22,9 +22,11 @@
 #include "customcontrol/dmdiskinfobox.h"
 #include "diskinfodisplaydialog.h"
 #include "diskhealthdetectiondialog.h"
+#include "messagebox.h"
 
 #include <DPalette>
 #include <DMenu>
+#include <DMessageManager>
 
 #include <QVBoxLayout>
 #include <QDebug>
@@ -76,10 +78,8 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
     qDebug() << data.diskpath << data.disksize << data.partitionsize << data.partitonpath << data.level << data.used << data.unused << data.start
              << data.end << "--------" << data.fstype << "------" << data.mountpoints << data.syslabel << data.iconImage;
     if (index.isValid()) {
-        DiskInfoData data = m_treeview->getcuritem()->data().value<DiskInfoData>();
+        m_curDiskInfoData = m_treeview->getcuritem()->data().value<DiskInfoData>();
         if (data.level == 0) {
-            m_diskPath = data.diskpath;
-
             QMenu *menu = new QMenu();
 
             QAction *actionInfo = new QAction();
@@ -126,16 +126,31 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
 
             QAction *actionHidePartition = new QAction();
             actionHidePartition->setText(tr("Hide partition")); // 隐藏分区
+            actionHidePartition->setObjectName("Hide partition");
             menu->addAction(actionHidePartition);
+            connect(actionHidePartition, &QAction::triggered, this, &DeviceListWidget::onTreeMenuClicked);
 
             QAction *actionShowPartition = new QAction();
             actionShowPartition->setText(tr("Unhide partition")); // 显示分区
+            actionShowPartition->setObjectName("Unhide partition");
             menu->addAction(actionShowPartition);
-            actionShowPartition->setDisabled(true);
+            connect(actionShowPartition, &QAction::triggered, this, &DeviceListWidget::onTreeMenuClicked);
+//            actionShowPartition->setDisabled(true); // 将按钮置为不可选
+
+            int result = DMDbusHandler::instance()->getPartitionHiddenFlag(m_curDiskInfoData.diskpath, m_curDiskInfoData.partitonpath);
+            if (1 == result) {
+                actionHidePartition->setDisabled(true);
+                actionShowPartition->setDisabled(false);
+            } else {
+                actionHidePartition->setDisabled(false);
+                actionShowPartition->setDisabled(true);
+            }
 
             QAction *actionDelete = new QAction();
             actionDelete->setText(tr("Delete partition")); // 删除分区
+            actionDelete->setObjectName("Delete partition");
             menu->addAction(actionDelete);
+            connect(actionDelete, &QAction::triggered, this, &DeviceListWidget::onTreeMenuClicked);
 
             menu->exec(QCursor::pos());  //显示菜单
         }
@@ -147,11 +162,76 @@ void DeviceListWidget::onTreeMenuClicked()
     QAction *action = qobject_cast<QAction *>(sender());
 
     if (action->objectName() == "Disk info") {
-        DiskInfoDisplayDialog *diskInfoDisplayDialog = new DiskInfoDisplayDialog(m_diskPath);
+        DiskInfoDisplayDialog *diskInfoDisplayDialog = new DiskInfoDisplayDialog(m_curDiskInfoData.diskpath);
         diskInfoDisplayDialog->exec();
     } else if (action->objectName() == "Check health") {
-        DiskHealthDetectionDialog *diskHealthDetectionDialog = new DiskHealthDetectionDialog(m_diskPath);
+        DiskHealthDetectionDialog *diskHealthDetectionDialog = new DiskHealthDetectionDialog(m_curDiskInfoData.diskpath);
         diskHealthDetectionDialog->exec();
+    } else if (action->objectName() == "Hide partition") {
+        MessageBox messageBox;
+        // 您是否要隐藏该分区？ 隐藏  取消
+        messageBox.setWarings(tr("Do you want to hide this partition?"), "", tr("Hide"), tr("Cancel"));
+        if (messageBox.exec() == 1) {
+            if (m_curDiskInfoData.mountpoints.isEmpty()) {
+                bool result = DMDbusHandler::instance()->hidePartition(m_curDiskInfoData.diskpath, m_curDiskInfoData.partitonpath);
+
+                if (result) {
+                    // 隐藏分区成功
+                    DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Hide the partition successfully"));
+                    DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
+                } else {
+                    // 隐藏分区失败
+                    DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Failed to Hide the partition"));
+                    DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
+                }
+
+            } else {
+                DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::ResidentType);
+                floMsg->setIcon(QIcon::fromTheme("://icons/deepin/builtin/warning.svg"));
+                floMsg->setMessage(tr("Hide failed: the partition is mounted")); // 隐藏分区失败！该分区未卸载
+                DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), floMsg);
+                DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
+            }
+        }
+    } else if (action->objectName() == "Unhide partition") {
+        MessageBox messageBox;
+        // 您是否要显示该隐藏分区？ 显示  取消
+        messageBox.setWarings(tr("Do you want to unhide this partition?"), "", tr("Unhide"), tr("Cancel"));
+        if (messageBox.exec() == 1) {
+            bool result = DMDbusHandler::instance()->unhidePartition(m_curDiskInfoData.diskpath, m_curDiskInfoData.partitonpath);
+
+            if (result) {
+                // 显示分区成功
+                DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Unhide the partition successfully"));
+                DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
+            } else {
+                // 显示分区失败
+                DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Failed to unhide the partition"));
+                DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
+            }
+        }
+    } else if (action->objectName() == "Delete partition") {
+        MessageBox messageBox;
+        // 您确定要删除该分区吗？ 该分区内所有文件将会丢失  删除  取消
+        messageBox.setWarings(tr("Are you sure you want to delete this partition?"), tr("You will lose all data in it"), tr("Delete"), DDialog::ButtonWarning, tr("Cancel"));
+        if (messageBox.exec() == 1) {
+
+            MessageBox messageBox;
+            messageBox.setProgressBar(tr("Deleting the partition..."), tr("Cancel")); // 正在删除分区...  取消
+            messageBox.show();
+
+            bool result = DMDbusHandler::instance()->deletePartition(m_curDiskInfoData.diskpath, m_curDiskInfoData.partitonpath);
+
+            if (result) {
+                // 删除分区成功
+                DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Delete the partition successfully"));
+                DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
+            } else {
+                // 删除分区失败
+                DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Failed to delete the partition"));
+                DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
+            }
+        }
     }
 }
 

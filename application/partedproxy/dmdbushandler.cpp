@@ -190,6 +190,7 @@ HardDiskInfo DMDbusHandler::getHardDiskInfo(const QString &devicePath)
     } else {
         m_hardDiskInfo = reply.value();
     }
+
     return m_hardDiskInfo;
 }
 
@@ -202,6 +203,7 @@ QString DMDbusHandler::getDeviceHardStatus(const QString &devicePath)
     } else {
         m_deviceHardStatus = reply.value();
     }
+
     return m_deviceHardStatus;
 }
 
@@ -214,5 +216,58 @@ HardDiskStatusInfoList DMDbusHandler::getDeviceHardStatusInfo(const QString &dev
     } else {
         m_hardDiskStatusInfoList = reply.value();
     }
+
     return m_hardDiskStatusInfoList;
+}
+
+bool DMDbusHandler::deletePartition(const QString &devicePath, const QString &parttitionPath)
+{
+    QDBusPendingReply<bool> reply = m_dbus->onDeletePartition(devicePath, parttitionPath);
+    reply.waitForFinished();
+    if (reply.isError()) {
+        qDebug() << reply.error().message();
+    } else {
+        m_deleteResult = reply.value();
+    }
+
+    return m_deleteResult;
+}
+
+bool DMDbusHandler::hidePartition(const QString &devicePath, const QString &parttitionPath)
+{
+    QDBusPendingReply<bool> reply = m_dbus->onHidePartition(devicePath, parttitionPath);
+    reply.waitForFinished();
+    if (reply.isError()) {
+        qDebug() << reply.error().message();
+    } else {
+        m_hideResult = reply.value();
+    }
+
+    return m_hideResult;
+}
+
+bool DMDbusHandler::unhidePartition(const QString &devicePath, const QString &parttitionPath)
+{
+    QDBusPendingReply<bool> reply = m_dbus->onShowPartition(devicePath, parttitionPath);
+    reply.waitForFinished();
+    if (reply.isError()) {
+        qDebug() << reply.error().message();
+    } else {
+        m_unhideResult = reply.value();
+    }
+
+    return m_unhideResult;
+}
+
+int DMDbusHandler::getPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath)
+{
+    QDBusPendingReply<int> reply = m_dbus->onGetPartitionHiddenFlag(devicePath, parttitionPath);
+    reply.waitForFinished();
+    if (reply.isError()) {
+        qDebug() << reply.error().message();
+    } else {
+        m_partitionHiddenFlag = reply.value();
+    }
+
+    return m_partitionHiddenFlag;
 }

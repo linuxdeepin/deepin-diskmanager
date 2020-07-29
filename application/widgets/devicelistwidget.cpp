@@ -226,6 +226,8 @@ void DeviceListWidget::onTreeMenuClicked()
                 // 删除分区成功
                 DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Delete the partition successfully"));
                 DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
+
+                DMDbusHandler::instance()->getDeviceinfo();
             } else {
                 // 删除分区失败
                 DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Failed to delete the partition"));

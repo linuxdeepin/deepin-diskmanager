@@ -1997,17 +1997,17 @@ bool PartedCore::showPartition(const QString &devicePath, const QString &parttit
     }
 }
 
-int PartedCore::getFlag(const QString &devicePath, const QString &parttitionPath)
+int PartedCore::getPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath)
 {
     PedPartition *ped = NULL;
     PedDevice *lp_device = NULL;
     PedDisk *lp_disk = NULL;
     if(!get_device_and_disk(devicePath, lp_device, lp_disk)) {
-        return 0;
+        return -1;
     }
     ped = ped_disk_get_partition(lp_disk, parttitionPath.right(1).toInt());
     if(ped == NULL) {
-        return 0;
+        return -1;
     }
     int i = ped_partition_get_flag(ped, PED_PARTITION_HIDDEN);
     return i;

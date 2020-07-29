@@ -50,6 +50,21 @@ public Q_SLOTS:
     Q_SCRIPTABLE HardDiskStatusInfoList onGetDeviceHardStatusInfo(const QString &devicepath);
     //Q_SCRIPTABLE HardDiskStatusInfoList onGetDeviceHardStatusInfo();
     /**
+     * @brief 删除分区
+     * @param true成功false失败
+     */
+    Q_SCRIPTABLE bool onDeletePartition(const QString &devicepath, const QString &parttitionpath);
+    /**
+     * @brief 隐藏分区
+     * @param true成功false失败
+     */
+    Q_SCRIPTABLE bool onHidePartition(const QString &devicepath, const QString &parttitionpath);
+    /**
+     * @brief 显示分区
+     * @param true成功false失败
+     */
+    Q_SCRIPTABLE bool onShowPartition(const QString &devicepath, const QString &parttitionpath);
+    /**
      * @brief 个人测试使用
      * @param 无
      */

@@ -49,6 +49,21 @@ public:
     HardDiskStatusInfoList getDeviceHardStatusInfo(const QString &devicepath);
     //HardDiskStatusInfoList getDeviceHardStatusInfo();
     /**
+     * @brief 删除分区实际操作
+     * @param true成功false失败
+     */
+    bool deletePartition(const QString &devicePath, const QString &parttitionPath);
+    /**
+     * @brief 隐藏分区
+     * @param true成功false失败
+     */
+    bool hidePartition(const QString &devicePath, const QString &parttitionPath);
+    /**
+     * @brief 显示分区
+     * @param true成功false失败
+     */
+    bool showPartition(const QString &devicePath, const QString &parttitionPath);
+    /**
      * @brief 个人测试使用
      * @param 无
      */
@@ -66,6 +81,7 @@ public:
                                    Sector end,
                                    Byte_Value sector_size,
                                    bool inside_extended);
+    int getFlag(const QString &devicePath, const QString &parttitionPath);
     void set_flags(Partition &partition, PedPartition *lp_partition);
     static FS_Limits get_filesystem_limits(FSType fstype, const Partition &partition);
 

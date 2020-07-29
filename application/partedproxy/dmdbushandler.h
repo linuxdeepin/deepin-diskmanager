@@ -27,6 +27,10 @@ public:
     HardDiskInfo getHardDiskInfo(const QString &devicePath);
     QString getDeviceHardStatus(const QString &devicePath);
     HardDiskStatusInfoList getDeviceHardStatusInfo(const QString &devicePath);
+    bool deletePartition(const QString &devicePath, const QString &parttitionPath);
+    bool hidePartition(const QString &devicePath, const QString &parttitionPath);
+    bool unhidePartition(const QString &devicePath, const QString &parttitionPath);
+    int getPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath);
 
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
@@ -55,6 +59,10 @@ private:
     HardDiskInfo m_hardDiskInfo;
     QString m_deviceHardStatus;
     HardDiskStatusInfoList m_hardDiskStatusInfoList;
+    bool m_deleteResult;
+    bool m_hideResult;
+    bool m_unhideResult;
+    int m_partitionHiddenFlag;
 };
 
 #endif // DMDBUSHANDLER_H

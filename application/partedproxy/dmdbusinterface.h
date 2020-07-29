@@ -140,7 +140,7 @@ public Q_SLOTS: // METHODS
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(devicepath) << QVariant::fromValue(parttitionpath);
-        return asyncCallWithArgumentList(QStringLiteral("onShowPartition"), argumentList);
+        return asyncCallWithArgumentList(QStringLiteral("onGetPartitionHiddenFlag"), argumentList);
     }
 Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void MessageReport(const QString &msg);

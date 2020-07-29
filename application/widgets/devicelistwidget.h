@@ -28,6 +28,8 @@
 #include <QByteArray>
 
 DWIDGET_USE_NAMESPACE
+DCORE_USE_NAMESPACE
+DTK_USE_NAMESPACE
 
 class DeviceListWidget : public DWidget
 {
@@ -66,7 +68,7 @@ private:
     int additem = 0;
     QString devicepath_;
     int devicenum_ ;
-    QString m_diskPath;
+    DiskInfoData m_curDiskInfoData;
     //    DMDbusHandler *m_handler;
     //    DmDiskinfoBox *m_box = nullptr;
     //    DmDiskinfoBox *m_childbox = nullptr;

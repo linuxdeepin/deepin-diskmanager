@@ -115,6 +115,10 @@ bool DiskManagerService::onShowPartition(const QString &devicepath, const QStrin
 {
     return m_partedcore->showPartition(devicepath, parttitionpath);
 }
+int DiskManagerService::onGetPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath)
+{
+    return m_partedcore->getPartitionHiddenFlag(devicePath, parttitionPath);
+}
 void DiskManagerService::test()
 {
     m_partedcore->test();

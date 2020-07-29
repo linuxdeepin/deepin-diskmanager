@@ -136,7 +136,12 @@ public Q_SLOTS: // METHODS
         argumentList << QVariant::fromValue(devicepath) << QVariant::fromValue(parttitionpath);
         return asyncCallWithArgumentList(QStringLiteral("onShowPartition"), argumentList);
     }
-
+    inline QDBusPendingReply<int> onGetPartitionHiddenFlag(const QString &devicepath, const QString &parttitionpath)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(devicepath) << QVariant::fromValue(parttitionpath);
+        return asyncCallWithArgumentList(QStringLiteral("onShowPartition"), argumentList);
+    }
 Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void MessageReport(const QString &msg);
     Q_SCRIPTABLE void sigUpdateDeviceInfo(const DeviceInfoMap &infomap);

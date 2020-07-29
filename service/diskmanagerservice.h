@@ -65,6 +65,11 @@ public Q_SLOTS:
      */
     Q_SCRIPTABLE bool onShowPartition(const QString &devicepath, const QString &parttitionpath);
     /**
+     * @brief 获取隐藏分区是否隐藏属性
+     * @param 1隐藏0没隐藏
+     */
+    Q_SCRIPTABLE int onGetPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath);
+    /**
      * @brief 个人测试使用
      * @param 无
      */

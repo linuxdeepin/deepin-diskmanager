@@ -64,6 +64,11 @@ public:
      */
     bool showPartition(const QString &devicePath, const QString &parttitionPath);
     /**
+     * @brief 获取隐藏分区是否隐藏属性
+     * @param 1隐藏0没隐藏
+     */
+    int getPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath);
+    /**
      * @brief 个人测试使用
      * @param 无
      */
@@ -81,7 +86,7 @@ public:
                                    Sector end,
                                    Byte_Value sector_size,
                                    bool inside_extended);
-    int getFlag(const QString &devicePath, const QString &parttitionPath);
+
     void set_flags(Partition &partition, PedPartition *lp_partition);
     static FS_Limits get_filesystem_limits(FSType fstype, const Partition &partition);
 

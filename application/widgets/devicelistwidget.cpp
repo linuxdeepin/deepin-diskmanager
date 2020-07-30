@@ -251,6 +251,8 @@ void DeviceListWidget::onTreeMenuClicked()
                         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), floMsg);
                         DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
                     }
+
+                    DMDbusHandler::instance()->getDeviceinfo();
                 } else {
                     DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::ResidentType);
                     floMsg->setIcon(QIcon::fromTheme("://icons/deepin/builtin/warning.svg"));

@@ -222,6 +222,8 @@ HardDiskStatusInfoList DMDbusHandler::getDeviceHardStatusInfo(const QString &dev
 
 bool DMDbusHandler::deletePartition(const QString &devicePath, const QString &parttitionPath)
 {
+    emit sigShowSpinerWindow(true);
+
     QDBusPendingReply<bool> reply = m_dbus->onDeletePartition(devicePath, parttitionPath);
     reply.waitForFinished();
     if (reply.isError()) {

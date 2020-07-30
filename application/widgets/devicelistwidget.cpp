@@ -137,20 +137,26 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
             connect(actionShowPartition, &QAction::triggered, this, &DeviceListWidget::onTreeMenuClicked);
 //            actionShowPartition->setDisabled(true); // 将按钮置为不可选
 
-            int result = DMDbusHandler::instance()->getPartitionHiddenFlag(m_curDiskInfoData.diskpath, m_curDiskInfoData.partitonpath);
-            if (1 == result) {
-                actionHidePartition->setDisabled(true);
-                actionShowPartition->setDisabled(false);
-            } else {
-                actionHidePartition->setDisabled(false);
-                actionShowPartition->setDisabled(true);
-            }
-
             QAction *actionDelete = new QAction();
             actionDelete->setText(tr("Delete partition")); // 删除分区
             actionDelete->setObjectName("Delete partition");
             menu->addAction(actionDelete);
             connect(actionDelete, &QAction::triggered, this, &DeviceListWidget::onTreeMenuClicked);
+
+            if (m_curDiskInfoData.fstype == "unallocated") {
+                actionHidePartition->setDisabled(true);
+                actionShowPartition->setDisabled(true);
+                actionDelete->setDisabled(true);
+            } else {
+                int result = DMDbusHandler::instance()->getPartitionHiddenFlag(m_curDiskInfoData.diskpath, m_curDiskInfoData.partitonpath);
+                if (1 == result) {
+                    actionHidePartition->setDisabled(true);
+                    actionShowPartition->setDisabled(false);
+                } else {
+                    actionHidePartition->setDisabled(false);
+                    actionShowPartition->setDisabled(true);
+                }
+            }
 
             menu->exec(QCursor::pos());  //显示菜单
         }
@@ -216,21 +222,21 @@ void DeviceListWidget::onTreeMenuClicked()
         messageBox.setWarings(tr("Are you sure you want to delete this partition?"), tr("You will lose all data in it"), tr("Delete"), DDialog::ButtonWarning, tr("Cancel"));
         if (messageBox.exec() == 1) {
 
-            MessageBox messageBox;
-            messageBox.setProgressBar(tr("Deleting the partition..."), tr("Cancel")); // 正在删除分区...  取消
-            messageBox.show();
-
             bool result = DMDbusHandler::instance()->deletePartition(m_curDiskInfoData.diskpath, m_curDiskInfoData.partitonpath);
 
             if (result) {
                 // 删除分区成功
                 DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Delete the partition successfully"));
                 DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
+
+
             } else {
                 // 删除分区失败
                 DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Failed to delete the partition"));
                 DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
             }
+
+            DMDbusHandler::instance()->getDeviceinfo();
         }
     }
 }

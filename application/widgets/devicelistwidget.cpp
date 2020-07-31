@@ -137,20 +137,26 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
             connect(actionShowPartition, &QAction::triggered, this, &DeviceListWidget::onTreeMenuClicked);
 //            actionShowPartition->setDisabled(true); // 将按钮置为不可选
 
-            int result = DMDbusHandler::instance()->getPartitionHiddenFlag(m_curDiskInfoData.diskpath, m_curDiskInfoData.partitonpath);
-            if (1 == result) {
-                actionHidePartition->setDisabled(true);
-                actionShowPartition->setDisabled(false);
-            } else {
-                actionHidePartition->setDisabled(false);
-                actionShowPartition->setDisabled(true);
-            }
-
             QAction *actionDelete = new QAction();
             actionDelete->setText(tr("Delete partition")); // 删除分区
             actionDelete->setObjectName("Delete partition");
             menu->addAction(actionDelete);
             connect(actionDelete, &QAction::triggered, this, &DeviceListWidget::onTreeMenuClicked);
+
+            if (m_curDiskInfoData.fstype == "unallocated") {
+                actionHidePartition->setDisabled(true);
+                actionShowPartition->setDisabled(true);
+                actionDelete->setDisabled(true);
+            } else {
+                int result = DMDbusHandler::instance()->getPartitionHiddenFlag(m_curDiskInfoData.diskpath, m_curDiskInfoData.partitonpath);
+                if (1 == result) {
+                    actionHidePartition->setDisabled(true);
+                    actionShowPartition->setDisabled(false);
+                } else {
+                    actionHidePartition->setDisabled(false);
+                    actionShowPartition->setDisabled(true);
+                }
+            }
 
             menu->exec(QCursor::pos());  //显示菜单
         }
@@ -252,7 +258,7 @@ void DeviceListWidget::onTreeMenuClicked()
                         DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
                     }
 
-                    DMDbusHandler::instance()->getDeviceinfo();
+                    //DMDbusHandler::instance()->getDeviceinfo();
                 } else {
                     DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::ResidentType);
                     floMsg->setIcon(QIcon::fromTheme("://icons/deepin/builtin/warning.svg"));

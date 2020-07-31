@@ -1932,23 +1932,18 @@ HardDiskStatusInfoList PartedCore::getDeviceHardStatusInfo(const QString &device
 }
 bool PartedCore::deletePartition(const QString &devicePath, const QString &parttitionPath)
 {
-    QString cmd = QString("parted -s %1 rm %2").arg(devicePath).arg(parttitionPath.right(1));
-    QString output, errstr;
-    int exitcode = Utils::executcmd(cmd, output, errstr);
-    if(exitcode != 0)
-    {
-        qDebug() << __FUNCTION__ << output;
-        return false;
-    }
-    return true;
-}
-
-bool PartedCore::hidePartition(const QString &devicePath, const QString &parttitionPath)
-{
-    PedPartitionFlag flag = PED_PARTITION_HIDDEN;
-    PedPartition *ped = NULL;
-    PedDevice *lp_device = NULL;
-    PedDisk *lp_disk = NULL;
+    //QString cmd = QString("parted -s %1 rm %2").arg(devicePath).arg(parttitionPath.right(1));
+    //QString output, errstr;
+    //int exitcode = Utils::executcmd(cmd, output, errstr);
+    //if(exitcode != 0)
+    //{
+    //    qDebug() << __FUNCTION__ << output;
+    //    return false;
+    //}
+    qDebug() << __FUNCTION__ << "deletePartition start";
+    PedPartition *ped = nullptr;
+    PedDevice *lp_device = nullptr;
+    PedDisk *lp_disk = nullptr;
 
     if(!get_device_and_disk(devicePath, lp_device, lp_disk)) {
         qDebug() << __FUNCTION__ << "get device and disk failed";
@@ -1956,16 +1951,51 @@ bool PartedCore::hidePartition(const QString &devicePath, const QString &parttit
     }
 
     ped = ped_disk_get_partition(lp_disk, parttitionPath.right(1).toInt());
-    if(ped == NULL) {
+    if(ped == nullptr) {
+        qDebug() << __FUNCTION__ << "get partition failed";
+        return false;
+    }
+    int i = ped_disk_delete_partition(lp_disk, ped);
+    if(i == 0)
+    {
+        qDebug() << __FUNCTION__ << "delete parttition failed";
+        return false;
+    }
+    if(!commit(lp_disk))
+    {
+        qDebug() << __FUNCTION__ << "commit failed";
+        return false;
+    }
+    destroy_device_and_disk(lp_device, lp_disk);
+    emit sigRefreshDeviceInfo();
+    return true;
+}
+
+bool PartedCore::hidePartition(const QString &devicePath, const QString &parttitionPath)
+{
+    PedPartitionFlag flag = PED_PARTITION_HIDDEN;
+    PedPartition *ped = nullptr;
+    PedDevice *lp_device = nullptr;
+    PedDisk *lp_disk = nullptr;
+
+    if(!get_device_and_disk(devicePath, lp_device, lp_disk)) {
+        qDebug() << __FUNCTION__ << "get device and disk failed";
+        return false;
+    }
+
+    ped = ped_disk_get_partition(lp_disk, parttitionPath.right(1).toInt());
+    if(ped == nullptr) {
         qDebug() << __FUNCTION__ << "get partition failed";
         return false;
     }
     if (ped_partition_set_flag(ped, flag, 1) && commit(lp_disk)) {
         qDebug() << __FUNCTION__ << "hide partition success";
+        destroy_device_and_disk(lp_device, lp_disk);
         return true;
     }
     else {
         qDebug() << __FUNCTION__ << "hide partition failed";
+        destroy_device_and_disk(lp_device, lp_disk);
         return false;
     }
 }
@@ -1973,9 +2003,9 @@ bool PartedCore::hidePartition(const QString &devicePath, const QString &parttit
 bool PartedCore::showPartition(const QString &devicePath, const QString &parttitionPath)
 {
     PedPartitionFlag flag = PED_PARTITION_HIDDEN;
-    PedPartition *ped = NULL;
-    PedDevice *lp_device = NULL;
-    PedDisk *lp_disk = NULL;
+    PedPartition *ped = nullptr;
+    PedDevice *lp_device = nullptr;
+    PedDisk *lp_disk = nullptr;
 
     if(!get_device_and_disk(devicePath, lp_device, lp_disk)) {
         qDebug() << __FUNCTION__ << "get device and disk failed";
@@ -1983,33 +2013,36 @@ bool PartedCore::showPartition(const QString &devicePath, const QString &parttit
     }
 
     ped = ped_disk_get_partition(lp_disk, parttitionPath.right(1).toInt());
-    if(ped == NULL) {
+    if(ped == nullptr) {
         qDebug() << __FUNCTION__ << "get partition failed";
         return false;
     }
     if (ped_partition_set_flag(ped, flag, 0) && commit(lp_disk)) {
         qDebug() << __FUNCTION__ << "hide partition success";
+        destroy_device_and_disk(lp_device, lp_disk);
         return true;
     }
     else {
         qDebug() << __FUNCTION__ << "hide partition failed";
+        destroy_device_and_disk(lp_device, lp_disk);
         return false;
     }
 }
 
 int PartedCore::getPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath)
 {
-    PedPartition *ped = NULL;
-    PedDevice *lp_device = NULL;
-    PedDisk *lp_disk = NULL;
+    PedPartition *ped = nullptr;
+    PedDevice *lp_device = nullptr;
+    PedDisk *lp_disk = nullptr;
     if(!get_device_and_disk(devicePath, lp_device, lp_disk)) {
         return -1;
     }
     ped = ped_disk_get_partition(lp_disk, parttitionPath.right(1).toInt());
-    if(ped == NULL) {
+    if(ped == nullptr) {
         return -1;
     }
     int i = ped_partition_get_flag(ped, PED_PARTITION_HIDDEN);
+    destroy_device_and_disk(lp_device, lp_disk);
     return i;
 }
 

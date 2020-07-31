@@ -23,6 +23,7 @@
 #include "diskinfodisplaydialog.h"
 #include "diskhealthdetectiondialog.h"
 #include "messagebox.h"
+#include "partitiontableerrorsinfodialog.h"
 
 #include <DPalette>
 #include <DMenu>
@@ -114,6 +115,7 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
             actionCheckError->setText(tr("Check partition table error")); // 分区表错误检测
             actionCheckError->setObjectName("Check partition table error");
             itemChildMenu->addAction(actionCheckError);
+            connect(actionCheckError, &QAction::triggered, this, &DeviceListWidget::onTreeMenuClicked);
 
             QAction *actionVerifyRepair = new QAction();
             actionVerifyRepair->setText(tr("Verify or repair bad sectors")); // 坏道检测与修复
@@ -167,6 +169,11 @@ void DeviceListWidget::onTreeMenuClicked()
     } else if (action->objectName() == "Check health") {
         DiskHealthDetectionDialog *diskHealthDetectionDialog = new DiskHealthDetectionDialog(m_curDiskInfoData.diskpath);
         diskHealthDetectionDialog->exec();
+    } else if (action->objectName() == "Check partition table error") {
+        QString deviceInfo = QString("%1(%2)").arg(m_curDiskInfoData.diskpath).arg(m_curDiskInfoData.disksize);
+
+        PartitionTableErrorsInfoDialog *partitionTableErrorsInfoDialog = new PartitionTableErrorsInfoDialog(deviceInfo);
+        partitionTableErrorsInfoDialog->exec();
     } else if (action->objectName() == "Hide partition") {
         MessageBox messageBox;
         // 您是否要隐藏该分区？ 隐藏  取消

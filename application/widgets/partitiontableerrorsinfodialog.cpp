@@ -51,7 +51,7 @@ void PartitionTableErrorsInfoDialog::initUI()
 
     m_standardItemModel->setColumnCount(2);
     m_standardItemModel->setHeaderData(0, Qt::Horizontal, tr("Partition")); // 分区
-    m_standardItemModel->setHeaderData(1, Qt::Horizontal, tr("Status")); // 状态
+    m_standardItemModel->setHeaderData(1, Qt::Horizontal, tr("Error")); // 错误说明
 
     addSpacing(20);
     addContent(m_Label);

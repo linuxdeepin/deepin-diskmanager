@@ -76,7 +76,7 @@ void PartitionWidget::topFrameSetting()
     hLayout->setSpacing(5);
     hLayout->setContentsMargins(30, 0, 0, 0);
     DLabel *picLabel = new DLabel(topFrame);
-    picLabel->setPixmap(Common::getIcon("labeldisk").pixmap(85, 85));
+    picLabel->setPixmap(Common::getIcon("disk").pixmap(85, 85));
     picLabel->setMinimumSize(85, 85);
     //垂直布局-右侧三行标签
     QVBoxLayout *vLayout = new QVBoxLayout();

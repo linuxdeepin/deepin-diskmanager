@@ -38,7 +38,13 @@ void FormateDialog::initUi()
     QStringList fslist = DMDbusHandler::instance()->getallsupportfs();
     fslist.removeOne("linux-swap");
     pformatcombo->addItems(fslist);
-    pformatcombo->setCurrentIndex(fslist.indexOf(Utils::FSTypeToString(static_cast<FSType>(info.fstype))));
+
+    if (-1 == fslist.indexOf(Utils::FSTypeToString(static_cast<FSType>(info.fstype)))) {
+        pformatcombo->setCurrentIndex(fslist.indexOf(Utils::FSTypeToString(static_cast<FSType>(11))));
+    } else {
+        pformatcombo->setCurrentIndex(fslist.indexOf(Utils::FSTypeToString(static_cast<FSType>(info.fstype))));
+    }
+
     hlayoutformat->addWidget(pformatname);
     hlayoutformat->addWidget(pformatcombo);
     mainLayout->addWidget(tipLabel);

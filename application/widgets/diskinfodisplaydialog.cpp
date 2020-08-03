@@ -134,7 +134,7 @@ void DiskInfoDisplayDialog::onExportButtonClicked()
             DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Export successful")); // 导出成功
             DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
         } else {
-            DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Export failed")); // 导出失败
+            DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Export failed")); // 导出失败
             DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
         }
     }

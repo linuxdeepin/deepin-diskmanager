@@ -62,7 +62,14 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         }
         rect.setY(option.rect.y());
         rect.setWidth(option.rect.width());
-        rect.setHeight(option.rect.height());
+//        rect.setHeight(option.rect.height()); // 分区节点间有间隔
+        // 去掉分区节点间隔
+        if (data.level == 0) {
+            rect.setHeight(option.rect.height());
+        } else {
+            rect.setHeight(option.rect.height() + 1);
+        }
+
         painter->setRenderHints(QPainter::SmoothPixmapTransform);
         QRect paintRect = QRect(rect.left(), rect.top(), rect.width() - 30, rect.height());
         QPainterPath path;
@@ -83,11 +90,11 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
                          QSize(radius * 2, radius * 2)),
                    270, 90);
         // 设置分区背景色
-        if (data.level == 1) {
-            QBrush brush = m_parentPb.itemBackground();
-            painter->setBrush(brush);
-            painter->fillPath(path, brush);
-        }
+//        if (data.level == 1) {
+//            QBrush brush = m_parentPb.itemBackground();
+//            painter->setBrush(brush);
+//            painter->fillPath(path, brush);
+//        }
 
         // 设置分区选中时文本颜色
         if (option.state & QStyle::State_Selected && data.level == 1) {

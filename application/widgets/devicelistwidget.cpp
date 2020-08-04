@@ -85,7 +85,7 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
 
             QAction *actionInfo = new QAction();
             actionInfo->setText(tr("Disk info")); // 磁盘信息
-            actionInfo->setObjectName(tr("Disk info"));
+            actionInfo->setObjectName("Disk info");
             menu->addAction(actionInfo);
             connect(actionInfo, &QAction::triggered, this, &DeviceListWidget::onTreeMenuClicked);
 //            connect(actionInfo, &QAction::triggered, this, [=] (QVariant value) {
@@ -96,7 +96,8 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
 //                });
 
     //        menu->addSeparator();    //添加一个分隔线
-            QMenu *itemChildMenu = new QMenu(QStringLiteral("Health management")); // 健康管理
+            QMenu *itemChildMenu = new QMenu();
+            itemChildMenu->setTitle(tr("Health management")); // 健康管理
             menu->addMenu(itemChildMenu);
 
             QAction *actionHealthDetection = new QAction();
@@ -175,11 +176,18 @@ void DeviceListWidget::onTreeMenuClicked()
     } else if (action->objectName() == "Check health") {
         DiskHealthDetectionDialog *diskHealthDetectionDialog = new DiskHealthDetectionDialog(m_curDiskInfoData.diskpath);
         diskHealthDetectionDialog->exec();
-    } else if (action->objectName() == "Check partition table error") {
-        QString deviceInfo = QString("%1(%2)").arg(m_curDiskInfoData.diskpath).arg(m_curDiskInfoData.disksize);
+    } else if (action->objectName() == "Check partition table error") {   
+        bool result = DMDbusHandler::instance()->detectionPartitionTableError(m_curDiskInfoData.diskpath);
+        if (result) {
+            QString deviceInfo = QString("%1(%2)").arg(m_curDiskInfoData.diskpath).arg(m_curDiskInfoData.disksize);
 
-        PartitionTableErrorsInfoDialog *partitionTableErrorsInfoDialog = new PartitionTableErrorsInfoDialog(deviceInfo);
-        partitionTableErrorsInfoDialog->exec();
+            PartitionTableErrorsInfoDialog *partitionTableErrorsInfoDialog = new PartitionTableErrorsInfoDialog(deviceInfo);
+            partitionTableErrorsInfoDialog->exec();
+        } else {
+            // 分区表检测正常
+            DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("No errors found in the partition table"));
+            DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
+        }
     } else if (action->objectName() == "Hide partition") {
         MessageBox messageBox;
         // 您是否要隐藏该分区？ 隐藏  取消

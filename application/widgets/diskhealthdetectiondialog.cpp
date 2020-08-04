@@ -29,7 +29,7 @@ DiskHealthDetectionDialog::DiskHealthDetectionDialog(const QString &devicePath, 
 
 void DiskHealthDetectionDialog::initUI()
 {
-    setTitle("Check Health"); // 硬盘健康检测
+    setTitle(tr("Check Health")); // 硬盘健康检测
     setMinimumSize(726, 676);
 
     QIcon iconDisk = Common::getIcon("disk");
@@ -57,7 +57,7 @@ void DiskHealthDetectionDialog::initUI()
     // 硬盘信息
     HardDiskInfo hardDiskInfo = DMDbusHandler::instance()->getHardDiskInfo(m_devicePath);
 
-    DLabel *serialNumberNameLabel = new DLabel("Serial number"); // 序列号
+    DLabel *serialNumberNameLabel = new DLabel(tr("Serial number")); // 序列号
     serialNumberNameLabel->setFont(QFont("SourceHanSansSC", 10, 57));
     serialNumberNameLabel->setPalette(palette1);
     m_serialNumberValue = new DLabel;
@@ -65,7 +65,7 @@ void DiskHealthDetectionDialog::initUI()
     m_serialNumberValue->setFont(QFont("SourceHanSansSC", 12, 57));
     m_serialNumberValue->setPalette(palette2);
 
-    DLabel *userCapacityNameLabel = new DLabel("Storage"); // 用户容量
+    DLabel *userCapacityNameLabel = new DLabel(tr("Storage")); // 用户容量
     userCapacityNameLabel->setFont(QFont("SourceHanSansSC", 8, 50));
     userCapacityNameLabel->setPalette(palette1);
     m_userCapacityValue = new DLabel;
@@ -85,7 +85,7 @@ void DiskHealthDetectionDialog::initUI()
     // 硬盘健康状态
     QString healthStateValue = DMDbusHandler::instance()->getDeviceHardStatus(m_devicePath);
 
-    DLabel *healthStateLabel = new DLabel("Health Status"); // 健康状态
+    DLabel *healthStateLabel = new DLabel(tr("Health Status")); // 健康状态
     healthStateLabel->setFont(QFont("SourceHanSansSC", 12, 57));
 
     QIcon iconHealth = Common::getIcon("good");
@@ -99,19 +99,19 @@ void DiskHealthDetectionDialog::initUI()
     if (0 == healthStateValue.compare("PASSED", Qt::CaseInsensitive)) {
         iconHealth = Common::getIcon("good");
         iconHealthLabel->setPixmap(iconHealth.pixmap(30, 30));
-        m_healthStateValue->setText("Good"); // 良好    【警告】Warning
+        m_healthStateValue->setText(tr("Good")); // 良好    【警告】Warning
         paletteStateColor.setColor(DPalette::Text, QColor("#00c800"));
         m_healthStateValue->setPalette(paletteStateColor);
     } else if (0 == healthStateValue.compare("Failure", Qt::CaseInsensitive)) {
         iconHealth = Common::getIcon("damage");
         iconHealthLabel->setPixmap(iconHealth.pixmap(30, 30));
-        m_healthStateValue->setText("Damaged"); // 损坏
+        m_healthStateValue->setText(tr("Damaged")); // 损坏
         paletteStateColor.setColor(DPalette::Text, QColor("#E02020"));
         m_healthStateValue->setPalette(paletteStateColor);
     } else {
         iconHealth = Common::getIcon("unknown");
         iconHealthLabel->setPixmap(iconHealth.pixmap(30, 30));
-        m_healthStateValue->setText("Unknown"); // 未知
+        m_healthStateValue->setText(tr("Unknown")); // 未知
         paletteStateColor.setColor(DPalette::Text, QColor("#777777"));
         m_healthStateValue->setPalette(paletteStateColor);
     }
@@ -129,7 +129,7 @@ void DiskHealthDetectionDialog::initUI()
     healthStateLayout->setContentsMargins(0, 0, 0, 0);
 
     // 温度
-    DLabel *temperatureLabel = new DLabel("Temperature"); // 温度
+    DLabel *temperatureLabel = new DLabel(tr("Temperature")); // 温度
     temperatureLabel->setFont(QFont("SourceHanSansSC", 12, 57));
     temperatureLabel->setPalette(palette2);
     m_temperatureValue = new DLabel("50°C");
@@ -239,11 +239,11 @@ void DiskHealthDetectionDialog::initUI()
     tableLayout->setContentsMargins(10, 10, 10, 10);
 
     DLabel *stateTipsLabel = new DLabel;
-    stateTipsLabel->setText("Status：(G: Good | W: Warning | D: Damaged | U: Unknown)"); // 状态：(G: 良好 | W: 警告 | D: 损坏 | U: 未知)
+    stateTipsLabel->setText(tr("Status：(G: Good | W: Warning | D: Damaged | U: Unknown)")); // 状态：(G: 良好 | W: 警告 | D: 损坏 | U: 未知)
     stateTipsLabel->setFont(QFont("SourceHanSansSC", 10, 50));
     stateTipsLabel->setPalette(palette4);
 
-    m_linkButton = new DCommandLinkButton("Export"); // 导出
+    m_linkButton = new DCommandLinkButton(tr("Export")); // 导出
 
     QWidget *bottomWidget = new QWidget;
     QHBoxLayout *bottomLayout = new QHBoxLayout(bottomWidget);
@@ -294,7 +294,7 @@ void DiskHealthDetectionDialog::onExportButtonClicked()
             QTextStream out(&file);
 
             QString headers = tr("ID") + "," + tr("Status") + "," + tr("Current") + "," + tr("Worst")
-                    + "," + tr("Threshold") + "," + tr("Raw Value") + "," + "Attribute name" + "\n";
+                    + "," + tr("Threshold") + "," + tr("Raw Value") + "," + tr("Attribute name") + "\n";
             out << headers;
 
             for (int i = 0; i < m_standardItemModel->rowCount(); i++) {

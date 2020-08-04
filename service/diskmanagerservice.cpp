@@ -119,6 +119,10 @@ int DiskManagerService::onGetPartitionHiddenFlag(const QString &devicePath, cons
 {
     return m_partedcore->getPartitionHiddenFlag(devicePath, parttitionPath);
 }
+bool DiskManagerService::onDetectionPartitionTableError(const QString &devicePath)
+{
+    return m_partedcore->detectionPartitionTableError(devicePath);
+}
 void DiskManagerService::test()
 {
     m_partedcore->test();

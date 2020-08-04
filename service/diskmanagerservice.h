@@ -70,6 +70,11 @@ public Q_SLOTS:
      */
     Q_SCRIPTABLE int onGetPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath);
     /**
+     * @brief 分区表错误检测
+     * @param true错误false正常
+     */
+    Q_SCRIPTABLE bool onDetectionPartitionTableError(const QString &devicePath);
+    /**
      * @brief 个人测试使用
      * @param 无
      */

@@ -1,4 +1,9 @@
 #include "partitiontableerrorsinfodialog.h"
+#include "partitiontableerrorsinfodelegate.h"
+
+#include <DFrame>
+#include <DGuiApplicationHelper>
+#include <DPushButton>
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -16,14 +21,14 @@ PartitionTableErrorsInfoDialog::PartitionTableErrorsInfoDialog(const QString &de
 
 void PartitionTableErrorsInfoDialog::initUI()
 {
-    setTitle("Errors in Partition Table"); // 分区表错误报告
+    setTitle(tr("Errors in Partition Table")); // 分区表错误报告
     setMinimumSize(580, 386);
 
     DPalette palette1;
     palette1.setColor(DPalette::Text, QColor(0, 0, 0, 0.7));
 
     m_Label = new DLabel;
-    m_Label->setText(QString("The partition table of disk  %1  has below errors:").arg(m_deviceInfo)); // 磁盘xxx存在下列分区表问题：
+    m_Label->setText(tr("The partition table of disk  %1  has below errors:").arg(m_deviceInfo)); // 磁盘xxx存在下列分区表问题：
     m_Label->setFont(QFont("SourceHanSansSC", 12, 50));
     m_Label->setPalette(palette1);
 
@@ -40,26 +45,59 @@ void PartitionTableErrorsInfoDialog::initUI()
 //    m_tableView->setPalette(palette5);
     m_tableView->setFont(QFont("SourceHanSansSC", 10, 50));
     m_tableView->horizontalHeader()->setFont(QFont("SourceHanSansSC", 12, 57));
+    m_tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
 
-//    m_diskHealthDetectionDelegate = new DiskHealthDetectionDelegate(this);
-//    m_tableView->setItemDelegate(m_diskHealthDetectionDelegate);
-//    if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) {
-//        m_diskHealthDetectionDelegate->setTextColor(QColor("#C0C6D4"));
-//    } else if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::LightType) {
-//        m_diskHealthDetectionDelegate->setTextColor(QColor("#001A2E"));
-//    }
+    m_partitionTableErrorsInfoDelegatee = new PartitionTableErrorsInfoDelegate(this);
+    m_tableView->setItemDelegate(m_partitionTableErrorsInfoDelegatee);
+    if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) {
+        m_partitionTableErrorsInfoDelegatee->setTextColor(QColor("#C0C6D4"));
+    } else if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::LightType) {
+        m_partitionTableErrorsInfoDelegatee->setTextColor(QColor("#001A2E"));
+    }
 
-    m_standardItemModel->setColumnCount(2);
-    m_standardItemModel->setHeaderData(0, Qt::Horizontal, tr("Partition")); // 分区
-    m_standardItemModel->setHeaderData(1, Qt::Horizontal, tr("Error")); // 错误说明
+    m_standardItemModel->setColumnCount(1);
+    m_standardItemModel->setHeaderData(0, Qt::Horizontal, tr("Error")); // 错误说明
+
+    m_tableView->setModel(m_standardItemModel);
+    m_tableView->horizontalHeader()->setStretchLastSection(true);// 设置最后一列自适应
+    m_tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    m_tableView->horizontalHeader()->setFixedWidth(540);
+
+    QList<QStandardItem*> itemList;
+
+    itemList << new QStandardItem(tr("Partition table entries are not in disk order")); // 分区表项不是按磁盘顺序排列的
+
+    m_standardItemModel->appendRow(itemList);
+
+    DFrame *tableWidget = new DFrame;
+    tableWidget->setFixedWidth(560);
+    QHBoxLayout *tableLayout = new QHBoxLayout(tableWidget);
+    tableLayout->addWidget(m_tableView);
+    tableLayout->setSpacing(0);
+    tableLayout->setContentsMargins(10, 10, 10, 10);
+
+    pushButton = new DPushButton;
+    pushButton->setText(tr("OK")); // 确定
+    pushButton->setFixedSize(220, 36);
+
+    DWidget *buttonWidget = new DWidget;
+    QHBoxLayout *buttonLayout = new QHBoxLayout(buttonWidget);
+    buttonLayout->addStretch();
+    buttonLayout->addWidget(pushButton);
+    buttonLayout->addStretch();
+    buttonLayout->setContentsMargins(0, 0, 0, 0);
 
     addSpacing(20);
     addContent(m_Label);
+    addSpacing(10);
+    addContent(tableWidget);
+    addSpacing(17);
+    addContent(buttonWidget);
 }
 
 void PartitionTableErrorsInfoDialog::initConnections()
 {
-
+    connect(pushButton, &DPushButton::clicked, this, &PartitionTableErrorsInfoDialog::close);
 }
 
 

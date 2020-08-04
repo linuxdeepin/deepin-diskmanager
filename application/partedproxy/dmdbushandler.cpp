@@ -273,3 +273,17 @@ int DMDbusHandler::getPartitionHiddenFlag(const QString &devicePath, const QStri
 
     return m_partitionHiddenFlag;
 }
+
+bool DMDbusHandler::detectionPartitionTableError(const QString &devicePath)
+{
+    QDBusPendingReply<bool> reply = m_dbus->onDetectionPartitionTableError(devicePath);
+    reply.waitForFinished();
+    if (reply.isError()) {
+        qDebug() << reply.error().message();
+    } else {
+        m_partitionTableError = reply.value();
+    }
+
+    return m_partitionTableError;
+}
+

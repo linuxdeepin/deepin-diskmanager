@@ -12,6 +12,7 @@ DCORE_USE_NAMESPACE
 DTK_USE_NAMESPACE
 
 class QStandardItemModel;
+class PartitionTableErrorsInfoDelegate;
 
 class PartitionTableErrorsInfoDialog : public DDialog
 {
@@ -39,6 +40,8 @@ private:
     QString m_deviceInfo;
     DTableView *m_tableView;
     QStandardItemModel *m_standardItemModel;
+    PartitionTableErrorsInfoDelegate *m_partitionTableErrorsInfoDelegatee;
+    DPushButton *pushButton;
 };
 
 #endif // PARTITIONTABLEERRORSINFODIALOG_H

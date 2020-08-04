@@ -24,7 +24,7 @@ DiskInfoDisplayDialog::DiskInfoDisplayDialog(const QString &devicePath, QWidget 
 void DiskInfoDisplayDialog::initUI()
 {
 //    setWindowTitle("磁盘信息展示");
-    setTitle("Disk Info"); // 磁盘信息
+    setTitle(tr("Disk Info")); // 磁盘信息
     setMinimumSize(500, 474);
 
     DFrame *infoWidget = new DFrame;
@@ -82,7 +82,7 @@ void DiskInfoDisplayDialog::initUI()
         infoLayout->addLayout(labelLayout);
     }
 
-    m_linkButton = new DCommandLinkButton("Export"); // 导出
+    m_linkButton = new DCommandLinkButton(tr("Export")); // 导出
 
     infoLayout->addWidget(m_linkButton);
     infoLayout->setContentsMargins(10, 10, 10, 10);

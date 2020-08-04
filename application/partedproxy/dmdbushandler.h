@@ -31,6 +31,7 @@ public:
     bool hidePartition(const QString &devicePath, const QString &parttitionPath);
     bool unhidePartition(const QString &devicePath, const QString &parttitionPath);
     int getPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath);
+    bool detectionPartitionTableError(const QString &devicePath);
 
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
@@ -63,6 +64,7 @@ private:
     bool m_hideResult;
     bool m_unhideResult;
     int m_partitionHiddenFlag;
+    bool m_partitionTableError;
 };
 
 #endif // DMDBUSHANDLER_H

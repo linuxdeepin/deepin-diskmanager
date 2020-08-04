@@ -158,9 +158,9 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             painter->drawPixmap(m_lefticon1Rect, icon.pixmap(28, 28));
             QRect mounticonRect = QRect(paintRect.left() + 45, paintRect.top() + 25, 10, 10);
 
-            // 获取分区是否隐藏
+//            // 获取分区是否隐藏
             int hide = 0;
-            if (data.mountpoints.isEmpty()) {
+            if (data.mountpoints.isEmpty() || data.mountpoints == "/recovery") {
                 int result = DMDbusHandler::instance()->getPartitionHiddenFlag(data.diskpath, data.partitonpath);
                 if (1 == result) {
                     hide = 1;

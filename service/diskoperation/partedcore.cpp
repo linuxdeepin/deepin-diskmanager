@@ -2046,6 +2046,25 @@ int PartedCore::getPartitionHiddenFlag(const QString &devicePath, const QString 
     return i;
 }
 
+bool PartedCore::detectionPartitionTableError(const QString &devicePath)
+{
+    QString cmd = QString("fdisk -l %1").arg(devicePath);
+    FILE *fd = nullptr;
+    fd = popen(cmd.toStdString().data(), "r");
+    char pb[1024];
+    memset(pb, 0, 1024);
+    if(fd == nullptr) {
+        qDebug() << "exeuted cmd failed";
+        return false;
+    }
+    while(fgets(pb, 1024, fd) != nullptr) {
+        if(strstr(pb, "Partition table entries are not in disk order") != nullptr)
+        {
+            return true;
+        }
+    }
+    return false;
+}
 void PartedCore::test()
 {
     PedPartitionFlag flag = PED_PARTITION_HIDDEN;

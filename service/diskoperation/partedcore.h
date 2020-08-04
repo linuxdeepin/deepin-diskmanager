@@ -69,6 +69,11 @@ public:
      */
     int getPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath);
     /**
+     * @brief 分区表错误检测
+     * @param true错误false正常
+     */
+    bool detectionPartitionTableError(const QString &devicePath);
+    /**
      * @brief 个人测试使用
      * @param 无
      */

@@ -1,4 +1,9 @@
 #include "partitiontableerrorsinfodialog.h"
+#include "partitiontableerrorsinfodelegate.h"
+
+#include <DFrame>
+#include <DGuiApplicationHelper>
+#include <DPushButton>
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -41,25 +46,55 @@ void PartitionTableErrorsInfoDialog::initUI()
     m_tableView->setFont(QFont("SourceHanSansSC", 10, 50));
     m_tableView->horizontalHeader()->setFont(QFont("SourceHanSansSC", 12, 57));
 
-//    m_diskHealthDetectionDelegate = new DiskHealthDetectionDelegate(this);
-//    m_tableView->setItemDelegate(m_diskHealthDetectionDelegate);
-//    if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) {
-//        m_diskHealthDetectionDelegate->setTextColor(QColor("#C0C6D4"));
-//    } else if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::LightType) {
-//        m_diskHealthDetectionDelegate->setTextColor(QColor("#001A2E"));
-//    }
+    m_partitionTableErrorsInfoDelegatee = new PartitionTableErrorsInfoDelegate(this);
+    m_tableView->setItemDelegate(m_partitionTableErrorsInfoDelegatee);
+    if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) {
+        m_partitionTableErrorsInfoDelegatee->setTextColor(QColor("#C0C6D4"));
+    } else if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::LightType) {
+        m_partitionTableErrorsInfoDelegatee->setTextColor(QColor("#001A2E"));
+    }
 
-    m_standardItemModel->setColumnCount(2);
-    m_standardItemModel->setHeaderData(0, Qt::Horizontal, tr("Partition")); // 分区
-    m_standardItemModel->setHeaderData(1, Qt::Horizontal, tr("Error")); // 错误说明
+    m_standardItemModel->setColumnCount(1);
+    m_standardItemModel->setHeaderData(0, Qt::Horizontal, tr("Error")); // 错误说明
+
+    m_tableView->setModel(m_standardItemModel);
+    m_tableView->horizontalHeader()->setStretchLastSection(true);// 设置最后一列自适应
+
+    QList<QStandardItem*> itemList;
+
+    itemList << new QStandardItem("Partition table entries are not in disk order"); // 分区表项不是按磁盘顺序排列的
+
+    m_standardItemModel->appendRow(itemList);
+
+    DFrame *tableWidget = new DFrame;
+    tableWidget->setFixedWidth(560);
+    QHBoxLayout *tableLayout = new QHBoxLayout(tableWidget);
+    tableLayout->addWidget(m_tableView);
+    tableLayout->setSpacing(0);
+    tableLayout->setContentsMargins(10, 10, 10, 10);
+
+    pushButton = new DPushButton;
+    pushButton->setText(tr("OK")); // 确定
+    pushButton->setFixedSize(220, 36);
+
+    DWidget *buttonWidget = new DWidget;
+    QHBoxLayout *buttonLayout = new QHBoxLayout(buttonWidget);
+    buttonLayout->addStretch();
+    buttonLayout->addWidget(pushButton);
+    buttonLayout->addStretch();
+    buttonLayout->setContentsMargins(0, 0, 0, 0);
 
     addSpacing(20);
     addContent(m_Label);
+    addSpacing(10);
+    addContent(tableWidget);
+    addSpacing(17);
+    addContent(buttonWidget);
 }
 
 void PartitionTableErrorsInfoDialog::initConnections()
 {
-
+    connect(pushButton, &DPushButton::clicked, this, &PartitionTableErrorsInfoDialog::close);
 }
 
 

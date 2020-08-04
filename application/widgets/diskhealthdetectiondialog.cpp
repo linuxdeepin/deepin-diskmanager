@@ -203,7 +203,6 @@ void DiskHealthDetectionDialog::initUI()
 
     HardDiskStatusInfoList hardDiskStatusInfoList = DMDbusHandler::instance()->getDeviceHardStatusInfo(m_devicePath);
     for (int i = 0; i < hardDiskStatusInfoList.count(); i++) {
-        qDebug() << i << hardDiskStatusInfoList.count();
         HardDiskStatusInfo hardDiskStatusInfo = hardDiskStatusInfoList.at(i);
 
         if (hardDiskStatusInfo.m_id == "194") {
@@ -237,7 +236,7 @@ void DiskHealthDetectionDialog::initUI()
     QHBoxLayout *tableLayout = new QHBoxLayout(tableWidget);
     tableLayout->addWidget(m_tableView);
     tableLayout->setSpacing(0);
-    topLayout->setContentsMargins(0, 0, 0, 0);
+    tableLayout->setContentsMargins(10, 10, 10, 10);
 
     DLabel *stateTipsLabel = new DLabel;
     stateTipsLabel->setText("Status：(G: Good | W: Warning | D: Damaged | U: Unknown)"); // 状态：(G: 良好 | W: 警告 | D: 损坏 | U: 未知)

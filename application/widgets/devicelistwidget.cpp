@@ -118,10 +118,10 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
             itemChildMenu->addAction(actionCheckError);
             connect(actionCheckError, &QAction::triggered, this, &DeviceListWidget::onTreeMenuClicked);
 
-            QAction *actionVerifyRepair = new QAction();
-            actionVerifyRepair->setText(tr("Verify or repair bad sectors")); // 坏道检测与修复
-            actionVerifyRepair->setObjectName("Verify or repair bad sectors");
-            itemChildMenu->addAction(actionVerifyRepair);
+//            QAction *actionVerifyRepair = new QAction();
+//            actionVerifyRepair->setText(tr("Verify or repair bad sectors")); // 坏道检测与修复
+//            actionVerifyRepair->setObjectName("Verify or repair bad sectors");
+//            itemChildMenu->addAction(actionVerifyRepair);
 
             menu->exec(QCursor::pos());  //显示菜单
         } else {

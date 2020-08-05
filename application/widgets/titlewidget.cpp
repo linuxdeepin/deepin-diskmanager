@@ -106,6 +106,8 @@ void TitleWidget::showResizeInfoWidget()
 void TitleWidget::updateBtnStatus()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+    qDebug() << info.partition_number << info.device_path << "ewsdsfffffffffffffffffffffff";
+
     //已挂载
     if (info.mountpoints.size() > 0 && info.busy) {
         m_btnparted->setDisabled(true);
@@ -114,30 +116,39 @@ void TitleWidget::updateBtnStatus()
         m_btnunmount->setDisabled(false);
         m_btnresize->setDisabled(true);
     } else {
-        //需判断扩展分区上是否无分区，否则认为不可操作，此处省略操作
-        if (FS_EXTENDED == info.fstype) {
+        int result = DMDbusHandler::instance()->getPartitionHiddenFlag(info.device_path, QString::number(info.partition_number));
+        if (1 == result) {
             m_btnparted->setDisabled(true);
             m_btnformat->setDisabled(true);
             m_btnmount->setDisabled(true);
             m_btnunmount->setDisabled(true);
             m_btnresize->setDisabled(true);
         } else {
-            m_btnunmount->setDisabled(true);
-            if (info.fstype == FS_UNALLOCATED) {
-                m_btnparted->setDisabled(false);
+            //需判断扩展分区上是否无分区，否则认为不可操作，此处省略操作
+            if (FS_EXTENDED == info.fstype) {
+                m_btnparted->setDisabled(true);
                 m_btnformat->setDisabled(true);
                 m_btnmount->setDisabled(true);
-                m_btnresize->setDisabled(true);
-            } else if (info.fstype == FS_UNKNOWN) {
-                m_btnparted->setDisabled(true);
-                m_btnformat->setDisabled(false);
-                m_btnmount->setDisabled(true);
+                m_btnunmount->setDisabled(true);
                 m_btnresize->setDisabled(true);
             } else {
-                m_btnparted->setDisabled(true);
-                m_btnformat->setDisabled(false);
-                m_btnmount->setDisabled(false);
-                m_btnresize->setDisabled(false);
+                m_btnunmount->setDisabled(true);
+                if (info.fstype == FS_UNALLOCATED) {
+                    m_btnparted->setDisabled(false);
+                    m_btnformat->setDisabled(true);
+                    m_btnmount->setDisabled(true);
+                    m_btnresize->setDisabled(true);
+                } else if (info.fstype == FS_UNKNOWN) {
+                    m_btnparted->setDisabled(true);
+                    m_btnformat->setDisabled(false);
+                    m_btnmount->setDisabled(true);
+                    m_btnresize->setDisabled(true);
+                } else {
+                    m_btnparted->setDisabled(true);
+                    m_btnformat->setDisabled(false);
+                    m_btnmount->setDisabled(false);
+                    m_btnresize->setDisabled(false);
+                }
             }
         }
     }

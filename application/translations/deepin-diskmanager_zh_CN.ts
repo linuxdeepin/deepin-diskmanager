@@ -24,9 +24,8 @@
         <translation>分区表错误检测</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="122"/>
         <source>Verify or repair bad sectors</source>
-        <translation>坏道检测与修复</translation>
+        <translation type="vanished">坏道检测与修复</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="131"/>
@@ -185,42 +184,43 @@
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="183"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="296"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="308"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="184"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="296"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="308"/>
         <source>Status</source>
         <translation>状态</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="185"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="296"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="308"/>
         <source>Current</source>
         <translation>当前值</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="186"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="296"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="308"/>
         <source>Worst</source>
         <translation>历史最差值</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="187"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="297"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="309"/>
         <source>Threshold</source>
         <translation>临界值</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="188"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="297"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="309"/>
         <source>Raw Value</source>
         <translation>原始数据</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="189"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="309"/>
         <source>Attribute name</source>
         <translation>属性名称</translation>
     </message>
@@ -250,17 +250,22 @@
         <translation>文件类型(*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="284"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="286"/>
         <source>Wrong path</source>
         <translation>路径错误</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="315"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="296"/>
+        <source>You do not have access to the path</source>
+        <translation>您无权访问该路径</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="327"/>
         <source>Export successful</source>
         <translation>导出成功</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="318"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="330"/>
         <source>Export failed</source>
         <translation>导出失败</translation>
     </message>
@@ -369,17 +374,22 @@
         <translation>文件类型(*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="115"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="117"/>
         <source>Wrong path</source>
         <translation>路径错误</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="134"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="127"/>
+        <source>You do not have access to the path</source>
+        <translation>您无权访问该路径</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="146"/>
         <source>Export successful</source>
         <translation>导出成功</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="137"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="149"/>
         <source>Export failed</source>
         <translation>导出失败</translation>
     </message>

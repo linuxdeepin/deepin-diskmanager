@@ -245,6 +245,8 @@ bool DMDbusHandler::hidePartition(const QString &devicePath, const QString &part
         m_hideResult = reply.value();
     }
 
+    emit sigCurSelectChanged();
+
     return m_hideResult;
 }
 
@@ -257,6 +259,8 @@ bool DMDbusHandler::unhidePartition(const QString &devicePath, const QString &pa
     } else {
         m_unhideResult = reply.value();
     }
+
+    emit sigCurSelectChanged();
 
     return m_unhideResult;
 }

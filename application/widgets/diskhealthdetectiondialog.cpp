@@ -278,10 +278,22 @@ void DiskHealthDetectionDialog::onExportButtonClicked()
 
     QFileInfo fileInfo;
     fileInfo.setFile(fileDir);
-    if (!fileInfo.isWritable()) {
+    QDir dir(fileDir);
+
+    if (!dir.exists()) {
         DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::ResidentType);
         floMsg->setIcon(QIcon::fromTheme("://icons/deepin/builtin/warning.svg"));
         floMsg->setMessage(tr("Wrong path")); // 路径错误
+        DMessageManager::instance()->sendMessage(this, floMsg);
+        DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
+
+        return;
+    }
+
+    if (!fileInfo.isWritable()) {
+        DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::ResidentType);
+        floMsg->setIcon(QIcon::fromTheme("://icons/deepin/builtin/warning.svg"));
+        floMsg->setMessage(tr("You do not have access to the path")); // 您无权访问该路径
         DMessageManager::instance()->sendMessage(this, floMsg);
         DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
     } else {

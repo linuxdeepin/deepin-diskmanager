@@ -1947,23 +1947,27 @@ bool PartedCore::deletePartition(const QString &devicePath, const QString &partt
 
     if(!get_device_and_disk(devicePath, lp_device, lp_disk)) {
         qDebug() << __FUNCTION__ << "get device and disk failed";
+        emit sigRefreshDeviceInfo();
         return false;
     }
 
     ped = ped_disk_get_partition(lp_disk, parttitionPath.right(1).toInt());
     if(ped == nullptr) {
         qDebug() << __FUNCTION__ << "get partition failed";
+        emit sigRefreshDeviceInfo();
         return false;
     }
     int i = ped_disk_delete_partition(lp_disk, ped);
     if(i == 0)
     {
         qDebug() << __FUNCTION__ << "delete parttition failed";
+        emit sigRefreshDeviceInfo();
         return false;
     }
     if(!commit(lp_disk))
     {
         qDebug() << __FUNCTION__ << "commit failed";
+        emit sigRefreshDeviceInfo();
         return false;
     }
     destroy_device_and_disk(lp_device, lp_disk);

@@ -1,3 +1,15 @@
+deepin-diskmanager (1.1.0.1) stable; urgency=low
+
+  *修改完成第一次送测的任务,
+  *32993 磁盘健康管理
+  *32977 显示分区
+  *31632 分区表错误检测
+  *31631 健康检测
+  *31630 删除分区
+  *31578 隐藏分区
+  *31577 硬盘信息展示
+ -- unknown <unknown@uniontech.com>  Thur., 06 August 2020 11:34:16 +0800
+
 deepin-diskmanager (1.0) unstable; urgency=medium
 
   * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>

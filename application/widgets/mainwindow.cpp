@@ -11,10 +11,15 @@
 #include <QRect>
 #include <QDebug>
 #include "common.h"
+#include "deviceinfoparser.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : DMainWindow(parent)
 {
+    if (false == DeviceInfoParser::Instance().getRootPassword()) {
+        exit(-1);
+    }
+
     m_handler = DMDbusHandler::instance(this);
     initUi();
     initConnection();

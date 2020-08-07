@@ -219,7 +219,7 @@ void DeviceListWidget::onTreeMenuClicked()
                 } else {
                     DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::ResidentType);
                     floMsg->setIcon(QIcon::fromTheme("://icons/deepin/builtin/warning.svg"));
-                    floMsg->setMessage(tr("Hide failed: the partition is mounted")); // 隐藏分区失败！该分区未卸载
+                    floMsg->setMessage(tr("You can only hide the unmounted partition")); // 只有处于卸载状态的分区才能被隐藏
                     DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), floMsg);
                     DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
                 }
@@ -277,7 +277,7 @@ void DeviceListWidget::onTreeMenuClicked()
                 } else {
                     DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::ResidentType);
                     floMsg->setIcon(QIcon::fromTheme("://icons/deepin/builtin/warning.svg"));
-                    floMsg->setMessage(tr("delete failed: the partition is mounted")); // 删除分区失败！该分区未卸载
+                    floMsg->setMessage(tr("You can only delete the unmounted partition")); // 只有处于卸载状态的分区才能被删除
                     DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), floMsg);
                     DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
                 }

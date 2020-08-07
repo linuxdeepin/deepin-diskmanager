@@ -33,6 +33,9 @@ public slots:
     void showUnmountInfoWidget();
     void showResizeInfoWidget();
 
+protected:
+    void mousePressEvent(QMouseEvent *event) override;
+
 private:
     DPushButton *m_btnparted;
     DPushButton *m_btnformat;

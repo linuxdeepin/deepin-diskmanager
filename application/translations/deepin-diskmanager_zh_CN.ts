@@ -81,8 +81,17 @@
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="222"/>
+        <source>You can only hide the unmounted partition</source>
+        <translation>只有处于卸载状态的分区才能被隐藏</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="280"/>
+        <source>You can only delete the unmounted partition</source>
+        <translation>只有处于卸载状态的分区才能被删除</translation>
+    </message>
+    <message>
         <source>Hide failed: the partition is mounted</source>
-        <translation>隐藏分区失败！该分区未卸载</translation>
+        <translation type="vanished">隐藏分区失败！该分区未卸载</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="231"/>
@@ -135,9 +144,8 @@
         <translation>删除分区失败</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="280"/>
         <source>delete failed: the partition is mounted</source>
-        <translation>删除分区失败！该分区未卸载</translation>
+        <translation type="vanished">删除分区失败！该分区未卸载</translation>
     </message>
 </context>
 <context>
@@ -256,8 +264,12 @@
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="296"/>
-        <source>You do not have access to the path</source>
+        <source>You do not have permission to access this path</source>
         <translation>您无权访问该路径</translation>
+    </message>
+    <message>
+        <source>You do not have access to the path</source>
+        <translation type="vanished">您无权访问该路径</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="327"/>
@@ -380,8 +392,12 @@
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="127"/>
-        <source>You do not have access to the path</source>
+        <source>You do not have permission to access this path</source>
         <translation>您无权访问该路径</translation>
+    </message>
+    <message>
+        <source>You do not have access to the path</source>
+        <translation type="vanished">您无权访问该路径</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="146"/>
@@ -724,27 +740,27 @@
 <context>
     <name>TitleWidget</name>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="20"/>
+        <location filename="../widgets/titlewidget.cpp" line="22"/>
         <source>Partition</source>
         <translation>分区</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="21"/>
+        <location filename="../widgets/titlewidget.cpp" line="23"/>
         <source>Format to</source>
         <translation>格式化</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="22"/>
+        <location filename="../widgets/titlewidget.cpp" line="24"/>
         <source>Mount</source>
         <translation>挂载</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="23"/>
+        <location filename="../widgets/titlewidget.cpp" line="25"/>
         <source>Unmount</source>
         <translation>卸载</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="24"/>
+        <location filename="../widgets/titlewidget.cpp" line="26"/>
         <source>Resize</source>
         <translation>空间调整</translation>
     </message>

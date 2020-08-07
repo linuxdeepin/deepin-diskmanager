@@ -124,7 +124,7 @@ qDebug() << fileDirPath;
     if (!fileInfo.isWritable()) {
         DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::ResidentType);
         floMsg->setIcon(QIcon::fromTheme("://icons/deepin/builtin/warning.svg"));
-        floMsg->setMessage(tr("You do not have access to the path")); // 您无权访问该路径
+        floMsg->setMessage(tr("You do not have permission to access this path")); // 您无权访问该路径
         DMessageManager::instance()->sendMessage(this, floMsg);
         DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
     } else {

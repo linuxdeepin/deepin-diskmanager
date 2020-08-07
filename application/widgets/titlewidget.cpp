@@ -4,6 +4,8 @@
 #include "formatedialog.h"
 #include "resizedialog.h"
 #include "common.h"
+
+#include <QMouseEvent>
 #include <QHBoxLayout>
 
 TitleWidget::TitleWidget(DWidget *parent)
@@ -159,3 +161,13 @@ void TitleWidget::slotCurSelectChanged()
     updateBtnStatus();
     qDebug() << __FUNCTION__ << "-1--1-";
 }
+
+void TitleWidget::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::RightButton) {
+        return;
+    }
+
+    QWidget::mousePressEvent(event);
+}
+

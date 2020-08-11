@@ -120,6 +120,7 @@ void DmTreeview::addItem(DmDiskinfoBox *infobox, int flag, QStandardItem *pcurIt
     data.fstype = infobox->m_fstype;
     data.syslabel = infobox->m_syslabel;
     data.mountpoints = infobox->m_mountpoints;
+    data.flag = infobox->m_flag;
     if (infobox->m_level <= 0) {
         data.level = 0;
         t_item = this->addtopitem(data);

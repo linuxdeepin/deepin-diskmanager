@@ -74,12 +74,12 @@ void DiskHealthDetectionDialog::initUI()
     m_userCapacityValue->setPalette(palette2);
 
     QVBoxLayout *diskInfoLayout = new QVBoxLayout;
-    diskInfoLayout->addSpacing(15);
+    diskInfoLayout->addSpacing(7);
     diskInfoLayout->addWidget(serialNumberNameLabel);
     diskInfoLayout->addWidget(m_serialNumberValue);
     diskInfoLayout->addWidget(userCapacityNameLabel);
     diskInfoLayout->addWidget(m_userCapacityValue);
-    diskInfoLayout->addSpacing(13);
+    diskInfoLayout->addSpacing(5);
     diskInfoLayout->setContentsMargins(0, 0, 0, 0);
 
     // 硬盘健康状态
@@ -132,7 +132,7 @@ void DiskHealthDetectionDialog::initUI()
     DLabel *temperatureLabel = new DLabel(tr("Temperature")); // 温度
     temperatureLabel->setFont(QFont("SourceHanSansSC", 12, 57));
     temperatureLabel->setPalette(palette2);
-    m_temperatureValue = new DLabel("50°C");
+    m_temperatureValue = new DLabel("-°C");
     m_temperatureValue->setFont(QFont("SourceHanSansSC", 25, 57));
     m_temperatureValue->setPalette(palette2);
 
@@ -302,7 +302,7 @@ void DiskHealthDetectionDialog::onExportButtonClicked()
         }
 
         QFile file(fileDirPath);
-        if (file.open(QIODevice::ReadWrite)) {
+        if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
             QTextStream out(&file);
 
             QString headers = tr("ID") + "," + tr("Status") + "," + tr("Current") + "," + tr("Worst")

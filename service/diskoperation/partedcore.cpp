@@ -175,6 +175,8 @@ void PartedCore::probedeviceinfo(const QString &)
         for (int i = 0; i < it.value().partitions.size(); i++) {
             Partition pat = *(it.value().partitions.at(i));
             PartitionInfo partinfo = pat.getPartitionInfo();
+            partinfo.flag = getPartitionHiddenFlag(partinfo.device_path, partinfo.path);
+            qDebug() << __FUNCTION__ << partinfo.flag;
             if (pat.type == TYPE_EXTENDED) {
                 devinfo.partition.push_back(partinfo);
                 for (int k = 0; k < pat.logicals.size(); k++) {
@@ -1654,7 +1656,7 @@ HardDiskInfo PartedCore::getDeviceHardInfo(const QString &devicepath)
         qDebug() << "disk path is empty";
         return hdinfo;
     }
-    QString cmd = QString("smartctl -i %1").arg(devicepath);
+    QString cmd = QString("smartctl -i -T verypermissive -d sat %1").arg(devicepath);
     FILE *fd = nullptr;
     fd = popen(cmd.toStdString().data(), "r");
     char pb[1024];
@@ -1702,8 +1704,9 @@ HardDiskInfo PartedCore::getDeviceHardInfo(const QString &devicepath)
            hdinfo.m_userCapacity = hdinfo.m_userCapacity.replace(QRegExp("\\\n"), "\0");
            continue;
         }
-        if(strstr(pb, "Sector Size:") != nullptr) {
-           hdinfo.m_sectorSize += pb+(sizeof("Sector Size:")-1);
+        if(strstr(pb, "Sector Size") != nullptr) {
+           QString buf = pb;
+           hdinfo.m_sectorSize += pb+(buf.split(":").at(0).size())+1;
            //去除空格
            hdinfo.m_sectorSize.remove(QRegExp("^ +\\s*"));
            //替换换行符
@@ -1831,7 +1834,7 @@ QString PartedCore::getDeviceHardStatus(const QString &devicepath)
         qDebug() << "disk path is empty";
         return status;
     }
-    QString cmd = QString("smartctl -H %1").arg(devicepath);
+    QString cmd = QString("smartctl -H -T verypermissive -d sat %1").arg(devicepath);
     FILE *fd = nullptr;
     fd = popen(cmd.toStdString().data(), "r");
     char pb[1024];
@@ -1864,7 +1867,7 @@ HardDiskStatusInfoList PartedCore::getDeviceHardStatusInfo(const QString &device
         qDebug() << "disk path is empty";
         return hdsilist;
     }
-    QString cmd = QString("smartctl -A %1").arg(devicepath);
+    QString cmd = QString("smartctl -A -T verypermissive -d sat %1").arg(devicepath);
     FILE *fd = nullptr;
     fd = popen(cmd.toStdString().data(), "r");
     char pb[1024];
@@ -2071,30 +2074,31 @@ bool PartedCore::detectionPartitionTableError(const QString &devicePath)
 }
 void PartedCore::test()
 {
-    PedPartitionFlag flag = PED_PARTITION_HIDDEN;
+    emit sigRefreshDeviceInfo();
+//    PedPartitionFlag flag = PED_PARTITION_HIDDEN;
 
-    QString device_path = "/dev/sda";
-    PedPartition *ped = NULL;
-    PedDevice *lp_device = NULL;
-    PedDisk *lp_disk = NULL;
+//    QString device_path = "/dev/sda";
+//    PedPartition *ped = NULL;
+//    PedDevice *lp_device = NULL;
+//    PedDisk *lp_disk = NULL;
 
-    if(!get_device_and_disk(device_path, lp_device, lp_disk))
-    {
-        return;
-    }
+//    if(!get_device_and_disk(device_path, lp_device, lp_disk))
+//    {
+//        return;
+//    }
 
-    ped = ped_disk_get_partition(lp_disk, 4);
-    if(ped == NULL)
-    {
-        return;
-    }
-/*
-    if (ped_partition_set_flag(ped, flag, 1) && commit(lp_disk)) {
-        qDebug() << __FUNCTION__ << QString("new partition type: %1").arg(ped->fs_type->name);
-    }
-*/
-    int i = ped_partition_get_flag(ped, flag);
-    qDebug() << __FUNCTION__ << i;
+//    ped = ped_disk_get_partition(lp_disk, 4);
+//    if(ped == NULL)
+//    {
+//        return;
+//    }
+//
+//    if (ped_partition_set_flag(ped, flag, 1) && commit(lp_disk)) {
+//        qDebug() << __FUNCTION__ << QString("new partition type: %1").arg(ped->fs_type->name);
+//    }
+//*/
+//    int i = ped_partition_get_flag(ped, flag);
+//    qDebug() << __FUNCTION__ << i;
     return;
 }
 } // namespace DiskManager

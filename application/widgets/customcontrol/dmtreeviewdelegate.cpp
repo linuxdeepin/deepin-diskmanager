@@ -159,17 +159,17 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             QRect mounticonRect = QRect(paintRect.left() + 45, paintRect.top() + 25, 10, 10);
 
 //            // 获取分区是否隐藏
-            int hide = 0;
-            if (data.mountpoints.isEmpty() || data.mountpoints == "/recovery") {
-                int result = DMDbusHandler::instance()->getPartitionHiddenFlag(data.diskpath, data.partitonpath);
-                if (1 == result) {
-                    hide = 1;
-                }
-            }
+//            int hide = 0;
+//            if (data.mountpoints.isEmpty() || data.mountpoints == "/recovery") {
+//                int result = DMDbusHandler::instance()->getPartitionHiddenFlag(data.diskpath, data.partitonpath);
+//                if (1 == result) {
+//                    hide = 1;
+//                }
+//            }
 
             if (data.fstype == "unallocated") {
                 painter->drawPixmap(mounticonRect, icon2.pixmap(10, 10));
-            } else if (1 == hide) {
+            } else if (1 == data.flag) {
                 painter->drawPixmap(mounticonRect, icon3.pixmap(10, 10));
             } else {
                 painter->drawPixmap(mounticonRect, icon1.pixmap(10, 10));

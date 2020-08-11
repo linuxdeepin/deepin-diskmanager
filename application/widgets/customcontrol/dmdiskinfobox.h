@@ -31,7 +31,8 @@ class DmDiskinfoBox : public QObject
 public:
     DmDiskinfoBox(int level, QObject *parent = nullptr, QString diskpath = "", QString disksize = "", QString partitionpath = "",
                   QString partitionsize = "", QString used = "", QString unused = "",
-                  Sector sectors_unallocated = 0, Sector start = 0, Sector end = 0, QString fstype = "", QString mountpoints = "", QString systemlabel = "");
+                  Sector sectors_unallocated = 0, Sector start = 0, Sector end = 0, QString fstype = "",
+                  QString mountpoints = "", QString systemlabel = "", int flag = 0);
     DmDiskinfoBox(QObject *parent = nullptr);
     ~DmDiskinfoBox();
 
@@ -55,6 +56,7 @@ public:
     Sector m_sectors_unallocated;
     Sector m_start;
     Sector m_end;
+    int m_flag;
     QList<DmDiskinfoBox *> childs;
 };
 

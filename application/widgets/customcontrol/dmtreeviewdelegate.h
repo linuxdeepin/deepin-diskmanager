@@ -47,6 +47,7 @@ struct DiskInfoData {
     Sector end;
 
     int level;
+    int flag;
 };
 Q_DECLARE_METATYPE(DiskInfoData)
 DWIDGET_USE_NAMESPACE

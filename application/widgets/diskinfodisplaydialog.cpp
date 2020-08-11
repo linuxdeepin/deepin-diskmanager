@@ -37,6 +37,7 @@ void DiskInfoDisplayDialog::initUI()
 //                       << tr("扇区大小：") << tr("转速：") << tr("外形系数：") << tr("设备：") << tr("ATA版本为：")
 //                       << tr("SATA版本为：") << tr("当地时间为：") << tr("智能支持：");
 
+    m_diskInfoNameList.clear();
     m_diskInfoNameList << tr("Serial Number：") << tr("Device Model：") << tr("LU WWN Device Id：") << tr("Firmware Version：")
                        << tr("User Capacity：") << tr("Sector Size：") << tr("Rotation Rate：") << tr("Form Factor：")
                        << tr("Device is：") << tr("ATA Version is：") << tr("SATA Version is：")
@@ -45,6 +46,7 @@ void DiskInfoDisplayDialog::initUI()
     QString deviceis = hardDiskInfo.m_deviceis;
     QStringList deviceNameList = deviceis.split("[");
 
+    m_diskInfoValueList.clear();
     m_diskInfoValueList << tr("%1").arg(hardDiskInfo.m_serialNumber) << tr("%1").arg(hardDiskInfo.m_deviceModel)
                         << tr("%1").arg(hardDiskInfo.m_deviceId) << tr("%1").arg(hardDiskInfo.m_firmwareVersion)
                         << tr("%1").arg(hardDiskInfo.m_userCapacity) << tr("%1").arg(hardDiskInfo.m_sectorSize)
@@ -133,7 +135,7 @@ qDebug() << fileDirPath;
         }
 
         QFile file(fileDirPath);
-        if (file.open(QIODevice::ReadWrite)) {
+        if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
             QTextStream out(&file);
             for (int i = 0; i < m_diskInfoNameList.count(); i++) {
                 QString strInfo = m_diskInfoNameList.at(i) + m_diskInfoValueList.at(i) + "\n";

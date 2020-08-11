@@ -22,7 +22,7 @@
 DmDiskinfoBox::DmDiskinfoBox(int level, QObject *parent, QString diskpath, QString disksize,
                              QString partitionpath, QString partitionsize, QString used, QString unused,
                              Sector sectors_unallocated, Sector start, Sector end, QString fstype,
-                             QString mountpoints, QString systemlabel)
+                             QString mountpoints, QString systemlabel, int flag)
     : QObject(parent)
     , m_level(level)
     , m_diskpath(diskpath)
@@ -37,6 +37,7 @@ DmDiskinfoBox::DmDiskinfoBox(int level, QObject *parent, QString diskpath, QStri
     , m_sectors_unallocated(sectors_unallocated)
     , m_start(start)
     , m_end(end)
+    , m_flag(flag)
 {
     childs.clear();
 }

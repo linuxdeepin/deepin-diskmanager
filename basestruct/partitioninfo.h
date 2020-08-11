@@ -19,6 +19,7 @@ public:
     int status; //PartitionStatus: STAT_REAL, STAT_NEW, etc..
     int alignment; //PartitionAlignment: ALIGN_CYLINDER, ALIGN_STRICT, etc
     int fstype;
+    int flag;     //hidden flag
     QString uuid;
     QString name;
     Sector sector_start;

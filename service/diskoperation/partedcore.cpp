@@ -1998,11 +1998,13 @@ bool PartedCore::hidePartition(const QString &devicePath, const QString &parttit
     if (ped_partition_set_flag(ped, flag, 1) && commit(lp_disk)) {
         qDebug() << __FUNCTION__ << "hide partition success";
         destroy_device_and_disk(lp_device, lp_disk);
+        emit sigRefreshDeviceInfo();
         return true;
     }
     else {
         qDebug() << __FUNCTION__ << "hide partition failed";
         destroy_device_and_disk(lp_device, lp_disk);
+        emit sigRefreshDeviceInfo();
         return false;
     }
 }
@@ -2027,11 +2029,13 @@ bool PartedCore::showPartition(const QString &devicePath, const QString &parttit
     if (ped_partition_set_flag(ped, flag, 0) && commit(lp_disk)) {
         qDebug() << __FUNCTION__ << "hide partition success";
         destroy_device_and_disk(lp_device, lp_disk);
+        emit sigRefreshDeviceInfo();
         return true;
     }
     else {
         qDebug() << __FUNCTION__ << "hide partition failed";
         destroy_device_and_disk(lp_device, lp_disk);
+        emit sigRefreshDeviceInfo();
         return false;
     }
 }

@@ -49,6 +49,9 @@ signals:
 
 public slots:
     void slotUpdateDeviceInfo();
+    void slotDeletePartition(const QString &deleteMessage);
+    void slotHidePartition(const QString &hideMessage);
+    void slotShowPartition(const QString &showMessage);
 
     /**
      * @brief 设备树右键菜单按钮

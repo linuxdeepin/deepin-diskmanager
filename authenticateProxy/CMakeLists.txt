@@ -5,7 +5,7 @@ if (NOT DEFINED VERSION)
 endif ()
 
 set(APP_BIN_NAME "deepin-diskmanager-authenticateProxy")
-set(APP_POLICY_FILES "policy/com.deepin.pkexec.deepin-diskmanager-authenticateProxy.policy")
+set(APP_POLICY_FILES "${CMAKE_CURRENT_SOURCE_DIR}/policy/com.deepin.pkexec.deepin-diskmanager-authenticateProxy.policy")
 
 if (${CMAKE_SYSTEM_PROCESSOR} MATCHES "sw_64")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mieee")

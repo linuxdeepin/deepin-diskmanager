@@ -53,5 +53,5 @@ target_link_libraries(${APP_BIN_NAME}
 set(CMAKE_INSTALL_PREFIX /usr)
 
 # Install files
-install(TARGETS ${APP_BIN_NAME} DESTINATION bin/)
-install(FILES ${APP_POLICY_FILES} DESTINATION share/polkit-1/actions/)
+install(TARGETS ${APP_BIN_NAME} DESTINATION bin)
+install(FILES ${APP_POLICY_FILES} DESTINATION share/polkit-1/actions)

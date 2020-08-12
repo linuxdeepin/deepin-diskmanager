@@ -87,6 +87,9 @@ stCustest DiskManagerService::interfacetest()
 void DiskManagerService::initConnection()
 {
     connect(m_partedcore, &PartedCore::sigUpdateDeviceInfo, this, &DiskManagerService::sigUpdateDeviceInfo);
+    connect(m_partedcore, &PartedCore::sigDeletePatition, this, &DiskManagerService::sigDeletePatition);
+    connect(m_partedcore, &PartedCore::sigHidePartition, this, &DiskManagerService::sigHidePartition);
+    connect(m_partedcore, &PartedCore::sigShowPartition, this, &DiskManagerService::sigShowPartition);
 }
 
 HardDiskInfo DiskManagerService::onGetDeviceHardInfo(const QString &devicepath)

@@ -18,6 +18,9 @@ public:
 Q_SIGNALS:
     Q_SCRIPTABLE void MessageReport(const QString &msg);
     Q_SCRIPTABLE void sigUpdateDeviceInfo(const DeviceInfoMap &infomap);
+    Q_SCRIPTABLE void sigDeletePatition(const QString &deleteMessage);
+    Q_SCRIPTABLE void sigHidePartition(const QString &hideMessage);
+    Q_SCRIPTABLE void sigShowPartition(const QString &showMessage);
 public Q_SLOTS:
     Q_SCRIPTABLE void Quit();
     Q_SCRIPTABLE void Start();

@@ -51,6 +51,7 @@ public:
     /**
      * @brief 删除分区实际操作
      * @param true成功false失败
+     * @信号返回值错误信息代表1：设备读取失败2：代表该分区不存在3：执行删除分区操作失败4：报告内核失败（但前几步执行成功，该分区已删除，提示用户重启（系统命令就是这么操作））
      */
     bool deletePartition(const QString &devicePath, const QString &parttitionPath);
     /**
@@ -147,6 +148,9 @@ private:
 signals:
     void sigUpdateDeviceInfo(const DeviceInfoMap &infomap);
     void sigRefreshDeviceInfo();
+    void sigDeletePatition(const QString &deleteMessage);
+    void sigHidePartition(const QString &hideMessage);
+    void sigShowPartition(const QString &showMessage);
 public slots:
     void slotRefreshDeviceInfo();
 

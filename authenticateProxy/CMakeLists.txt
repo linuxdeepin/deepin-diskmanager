@@ -50,7 +50,8 @@ target_link_libraries(${APP_BIN_NAME}
     Qt5::DBus
 )
 
-# Install files
-install(FILES ${APP_POLICY_FILES} DESTINATION /usr/share/polkit-1/actions/)
-install(TARGETS deepin-diskmanager-authenticateProxy DESTINATION bin/)
+set(CMAKE_INSTALL_PREFIX /usr)
 
+# Install files
+install(TARGETS deepin-diskmanager-authenticateProxy DESTINATION bin)
+install(FILES ${APP_POLICY_FILES} DESTINATION share/polkit-1/actions)

@@ -49,6 +49,27 @@ void DMDbusHandler::initConnection()
     connect(m_dbus, &DMDBusInterface::MessageReport, this, &DMDbusHandler::MessageReport);
     //  connect(m_dbus, &DMDBusInterface::sigUpdateDeviceInfo, this, &DMDbusHandler::sigUpdateDeviceInfo);
     connect(m_dbus, &DMDBusInterface::sigUpdateDeviceInfo, this, &DMDbusHandler::slotUpdateDeviceInfo);
+    connect(m_dbus, &DMDBusInterface::sigDeletePatition, this, &DMDbusHandler::slotDeletePartition);
+    connect(m_dbus, &DMDBusInterface::sigHidePartition, this, &DMDbusHandler::slotHidePartition);
+    connect(m_dbus, &DMDBusInterface::sigShowPartition, this, &DMDbusHandler::slotShowPartition);
+}
+
+void DMDbusHandler::slotDeletePartition(const QString &deleteMessage)
+{
+    qDebug() << deleteMessage << "-------1111111111111111------------";
+    emit sigDeletePartition(deleteMessage);
+}
+
+void DMDbusHandler::slotHidePartition(const QString &hideMessage)
+{
+    emit sigHidePartition(hideMessage);
+    emit sigCurSelectChanged();
+}
+
+void DMDbusHandler::slotShowPartition(const QString &showMessage)
+{
+    emit sigShowPartition(showMessage);
+    emit sigCurSelectChanged();
 }
 
 void DMDbusHandler::slotsetCurSelect(const QString &devicepath, const QString &partitionpath, Sector start, Sector end)
@@ -220,49 +241,25 @@ HardDiskStatusInfoList DMDbusHandler::getDeviceHardStatusInfo(const QString &dev
     return m_hardDiskStatusInfoList;
 }
 
-bool DMDbusHandler::deletePartition(const QString &devicePath, const QString &parttitionPath)
+void DMDbusHandler::deletePartition(const QString &devicePath, const QString &parttitionPath)
 {
     emit sigShowSpinerWindow(true);
 
-    QDBusPendingReply<bool> reply = m_dbus->onDeletePartition(devicePath, parttitionPath);
-    reply.waitForFinished();
-    if (reply.isError()) {
-        qDebug() << reply.error().message();
-    } else {
-        m_deleteResult = reply.value();
-    }
-
-    return m_deleteResult;
+    m_dbus->onDeletePartition(devicePath, parttitionPath);
 }
 
-bool DMDbusHandler::hidePartition(const QString &devicePath, const QString &parttitionPath)
+void DMDbusHandler::hidePartition(const QString &devicePath, const QString &parttitionPath)
 {
-    QDBusPendingReply<bool> reply = m_dbus->onHidePartition(devicePath, parttitionPath);
-    reply.waitForFinished();
-    if (reply.isError()) {
-        qDebug() << reply.error().message();
-    } else {
-        m_hideResult = reply.value();
-    }
+    emit sigShowSpinerWindow(true);
 
-    emit sigCurSelectChanged();
-
-    return m_hideResult;
+    m_dbus->onHidePartition(devicePath, parttitionPath);
 }
 
-bool DMDbusHandler::unhidePartition(const QString &devicePath, const QString &parttitionPath)
+void DMDbusHandler::unhidePartition(const QString &devicePath, const QString &parttitionPath)
 {
+    emit sigShowSpinerWindow(true);
+
     QDBusPendingReply<bool> reply = m_dbus->onShowPartition(devicePath, parttitionPath);
-    reply.waitForFinished();
-    if (reply.isError()) {
-        qDebug() << reply.error().message();
-    } else {
-        m_unhideResult = reply.value();
-    }
-
-    emit sigCurSelectChanged();
-
-    return m_unhideResult;
 }
 
 int DMDbusHandler::getPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath)

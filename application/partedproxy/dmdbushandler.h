@@ -27,9 +27,9 @@ public:
     HardDiskInfo getHardDiskInfo(const QString &devicePath);
     QString getDeviceHardStatus(const QString &devicePath);
     HardDiskStatusInfoList getDeviceHardStatusInfo(const QString &devicePath);
-    bool deletePartition(const QString &devicePath, const QString &parttitionPath);
-    bool hidePartition(const QString &devicePath, const QString &parttitionPath);
-    bool unhidePartition(const QString &devicePath, const QString &parttitionPath);
+    void deletePartition(const QString &devicePath, const QString &parttitionPath);
+    void hidePartition(const QString &devicePath, const QString &parttitionPath);
+    void unhidePartition(const QString &devicePath, const QString &parttitionPath);
     int getPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath);
     bool detectionPartitionTableError(const QString &devicePath);
 
@@ -41,6 +41,9 @@ signals:
     void sigShowSpinerWindow(bool);
     void sigUpdateDeviceInfo();
     void sigCurSelectChanged();
+    void sigDeletePartition(const QString &deleteMessage);
+    void sigHidePartition(const QString &hideMessage);
+    void sigShowPartition(const QString &showMessage);
 
 public slots:
     void slotsetCurSelect(const QString &devicepath, const QString &partitionpath, Sector start, Sector end);
@@ -48,6 +51,9 @@ public slots:
 private slots:
     void MessageReport(const QString &msg);
     void slotUpdateDeviceInfo(const DeviceInfoMap &infomap);
+    void slotDeletePartition(const QString &deleteMessage);
+    void slotHidePartition(const QString &hideMessage);
+    void slotShowPartition(const QString &showMessage);
 
 private:
     DMDBusInterface *m_dbus = nullptr;

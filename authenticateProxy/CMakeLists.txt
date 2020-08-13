@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.0)
 
 if (NOT DEFINED VERSION)
     set(VERSION 1.2.2)

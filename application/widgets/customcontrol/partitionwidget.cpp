@@ -526,7 +526,7 @@ void PartitionWidget::slotSetPartName()
 void PartitionWidget::addPartitionSlot()
 {
     if (sizeInfo.size() >= 24 || max_amount_prim_reached() == true) {
-        DMessageManager::instance()->sendMessage(this, QIcon(":/icons/deepin/builtin/warning.svg"), "The number of new partitions exceeds the limit");
+        DMessageManager::instance()->sendMessage(this, QIcon(":/icons/deepin/builtin/warning.svg"), tr("The number of new partitions exceeds the limit"));
         return;
     }
     double currentSize = 0.00;
@@ -552,7 +552,7 @@ void PartitionWidget::addPartitionSlot()
     part.labelname = partNameEdit->text();
     part.fstype = partFormateCombox->currentText();
     Byte_Value sector_size = DMDbusHandler::instance()->getCurPartititonInfo().sector_size;
-    part.count = static_cast<int>(currentSize * (MEBIBYTE / sector_size)) ;
+    part.count = static_cast<Sector>(currentSize * (MEBIBYTE / sector_size));
 //    if (partComCobox->currentText().compare("MiB") == 0) {
 //        part.count = static_cast<int>(partSizeEdit->text().toDouble() * (MEBIBYTE / sector_size)) ;
 //    } else {

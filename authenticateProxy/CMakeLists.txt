@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.0)
 
 if (NOT DEFINED VERSION)
     set(VERSION 1.2.2)
@@ -50,7 +50,8 @@ target_link_libraries(${APP_BIN_NAME}
     Qt5::DBus
 )
 
-# Install files
-install(FILES ${APP_POLICY_FILES} DESTINATION /usr/share/polkit-1/actions/)
-install(TARGETS deepin-diskmanager-authenticateProxy DESTINATION bin/)
+set(CMAKE_INSTALL_PREFIX /usr)
 
+# Install files
+install(TARGETS ${APP_BIN_NAME} DESTINATION bin)
+install(FILES ${APP_POLICY_FILES} DESTINATION share/polkit-1/actions)

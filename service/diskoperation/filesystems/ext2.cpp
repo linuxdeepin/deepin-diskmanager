@@ -212,8 +212,13 @@ bool EXT2::create(const Partition &new_partition)
             features = " -O ^64bit";
     }
     QString strlabel = new_partition.get_filesystem_label();
-    strlabel = strlabel.isEmpty() ? strlabel : QString(" -L %1").arg(strlabel);
-    cmd = QString("%1%2%3%4%5%6").arg(mkfs_cmd).arg(" -F").arg(features).arg(strlabel).arg(" ").arg(new_partition.get_path());
+    if(strlabel == " ") {
+      cmd = QString("%1%2%3%4%5").arg(mkfs_cmd).arg(" -F").arg(features).arg(" ").arg(new_partition.get_path());
+    }
+    else {
+        strlabel = strlabel.isEmpty() ? strlabel : QString(" -L %1").arg(strlabel);
+        cmd = QString("%1%2%3%4%5%6").arg(mkfs_cmd).arg(" -F").arg(features).arg(strlabel).arg(" ").arg(new_partition.get_path());
+    }
     qDebug() << " EXT2::create***** " << cmd;
     int exitcode = Utils::executcmd(cmd, output, error);
     qDebug() << "EXT2::create-------" << output << error;

@@ -175,8 +175,14 @@ void PartedCore::probedeviceinfo(const QString &)
         for (int i = 0; i < it.value().partitions.size(); i++) {
             Partition pat = *(it.value().partitions.at(i));
             PartitionInfo partinfo = pat.getPartitionInfo();
-            partinfo.flag = getPartitionHiddenFlag(partinfo.device_path, partinfo.path);
-            qDebug() << __FUNCTION__ << partinfo.flag;
+            for (auto i = pat.flags.begin();i != pat.flags.end();i++) {
+                if(*i == "hidden") {
+                    partinfo.flag = 1;
+                }
+                else {
+                    partinfo.flag = 0;
+                }
+            }
             if (pat.type == TYPE_EXTENDED) {
                 devinfo.partition.push_back(partinfo);
                 for (int k = 0; k < pat.logicals.size(); k++) {
@@ -1988,10 +1994,16 @@ bool PartedCore::hidePartition(const QString &devicePath, const QString &parttit
         emit sigHidePartition("0");
         return false;
     }
-
     ped = ped_disk_get_partition(lp_disk, parttitionPath.right(1).toInt());
     if(ped == nullptr) {
         qDebug() << __FUNCTION__ << "get partition failed";
+        emit sigRefreshDeviceInfo();
+        emit sigHidePartition("0");
+        return false;
+    }
+    int i = ped_partition_get_flag(ped, PED_PARTITION_HIDDEN);
+    if(i == 1) {
+        qDebug() << __FUNCTION__ << "set partition failed";
         emit sigRefreshDeviceInfo();
         emit sigHidePartition("0");
         return false;
@@ -2007,7 +2019,7 @@ bool PartedCore::hidePartition(const QString &devicePath, const QString &parttit
         qDebug() << __FUNCTION__ << "hide partition failed";
         destroy_device_and_disk(lp_device, lp_disk);
         emit sigRefreshDeviceInfo();
-        emit sigRefreshDeviceInfo();
+        emit sigHidePartition("0");
         return false;
     }
 }
@@ -2025,10 +2037,16 @@ bool PartedCore::showPartition(const QString &devicePath, const QString &parttit
         emit sigShowPartition("0");
         return false;
     }
-
     ped = ped_disk_get_partition(lp_disk, parttitionPath.right(1).toInt());
     if(ped == nullptr) {
         qDebug() << __FUNCTION__ << "get partition failed";
+        emit sigRefreshDeviceInfo();
+        emit sigShowPartition("0");
+        return false;
+    }
+    int i = ped_partition_get_flag(ped, PED_PARTITION_HIDDEN);
+    if(i == 0) {
+        qDebug() << __FUNCTION__ << "set partition failed";
         emit sigRefreshDeviceInfo();
         emit sigShowPartition("0");
         return false;

@@ -119,14 +119,14 @@ void EXT2::set_used_sectors(Partition &partition)
         if (index >= 0 && index < output.length()) {
             T = Utils::regexp_label(output, QString("(?<=Block count:).*(?=\n)")).trimmed().toLong();
         }
-        qDebug() << output;
-        qDebug() << output.mid(index, strmatch.length()).toLatin1() << T;
+//        qDebug() << output;
+//        qDebug() << output.mid(index, strmatch.length()).toLatin1() << T;
         strmatch = ("Block size:");
         index = output.indexOf(strmatch);
         if (index >= 0 && index < output.length()) {
             S = Utils::regexp_label(output, QString("(?<=Block size:).*(?=\n)")).trimmed().toLong();
         }
-        qDebug() << output << output.mid(index, strmatch.length()).toLatin1() << S;
+//        qDebug() << output << output.mid(index, strmatch.length()).toLatin1() << S;
 
         if (partition.busy) {
             Byte_Value fs_all;

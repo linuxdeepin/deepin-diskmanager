@@ -8,6 +8,8 @@
 #include <parted/device.h>
 #include <QMap>
 #include <QStringList>
+#include <QFile>
+#include <QDir>
 
 namespace DiskManager {
 
@@ -28,6 +30,7 @@ public:
     bool create(const PartitionVec &infovec);
     bool format(const QString &fstype, const QString &name);
     bool resize(const PartitionInfo &info);
+    bool autoMount(const QString &partitionPath, const QString &fstype, const QString &mountPath);
     QStringList getallsupportfs();
     //new add by li 2020/7/20
     /**

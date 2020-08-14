@@ -259,7 +259,7 @@ void DMDbusHandler::unhidePartition(const QString &devicePath, const QString &pa
 {
     emit sigShowSpinerWindow(true);
 
-    QDBusPendingReply<bool> reply = m_dbus->onShowPartition(devicePath, parttitionPath);
+    m_dbus->onShowPartition(devicePath, parttitionPath);
 }
 
 int DMDbusHandler::getPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath)

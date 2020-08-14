@@ -94,7 +94,11 @@ void InfoTopFrame::InitLeftInfo()
 void InfoTopFrame::setShowDiskInfo()
 {
     auto info = DMDbusHandler::instance()->getCurPartititonInfo();
+
     nameLabel->setText(info.path);
+    if ("unallocated" == info.path) {
+        nameLabel->setText("ocated");
+    }
 
     QString s_disksize = Utils::format_size(info.sector_end - info.sector_start,
                                             info.sector_size);

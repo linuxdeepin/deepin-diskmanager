@@ -4,22 +4,22 @@
 <context>
     <name>DeviceListWidget</name>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="88"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="90"/>
         <source>Disk info</source>
         <translation>磁盘信息</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="101"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="103"/>
         <source>Health management</source>
         <translation>健康管理</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="105"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="107"/>
         <source>Check health</source>
         <translation>硬盘健康检测</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="117"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="119"/>
         <source>Check partition table error</source>
         <translation>分区表错误检测</translation>
     </message>
@@ -28,64 +28,64 @@
         <translation type="vanished">坏道检测与修复</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="132"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="134"/>
         <source>Hide partition</source>
         <translation>隐藏分区</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="138"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="140"/>
         <source>Unhide partition</source>
         <translation>显示分区</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="145"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="147"/>
         <source>Delete partition</source>
         <translation>删除分区</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="192"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="194"/>
         <source>No errors found in the partition table</source>
         <translation>分区表检测正常</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="198"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="200"/>
         <source>Do you want to hide this partition?</source>
         <translation>您是否要隐藏该分区？</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="198"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="200"/>
         <source>Hide</source>
         <translation>隐藏</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="198"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="235"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="254"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="200"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="224"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="231"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="204"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="206"/>
         <source>Failed to hide the partition: unable to lock it</source>
         <translation>隐藏分区失败！无法锁定该分区</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="213"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="253"/>
         <source>Hide the partition successfully</source>
         <translation>隐藏分区成功</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="218"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="258"/>
         <source>Failed to hide the partition</source>
         <translation>隐藏分区失败</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="226"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="215"/>
         <source>You can only hide the unmounted partition</source>
         <translation>只有处于卸载状态的分区才能被隐藏</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="295"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="290"/>
         <source>Failed to delete the partition:%1</source>
         <translation>删除分区失败：%1</translation>
     </message>
@@ -98,47 +98,47 @@
         <translation type="vanished">隐藏分区失败！该分区未卸载</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="235"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="224"/>
         <source>Do you want to unhide this partition?</source>
         <translation>您是否要显示该隐藏分区？</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="235"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="224"/>
         <source>Unhide</source>
         <translation>显示</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="241"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="268"/>
         <source>Unhide the partition successfully</source>
         <translation>显示分区成功</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="246"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="273"/>
         <source>Failed to unhide the partition</source>
         <translation>显示分区失败</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="254"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="231"/>
         <source>Are you sure you want to delete this partition?</source>
         <translation>您确定要删除该分区吗？</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="254"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="231"/>
         <source>You will lose all data in it</source>
         <translation>该分区内所有文件将会丢失</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="254"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="231"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="262"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="239"/>
         <source>Failed to delete the partition: unable to lock it</source>
         <translation>删除分区失败！无法锁定该分区</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="290"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="285"/>
         <source>Delete the partition successfully</source>
         <translation>删除分区成功</translation>
     </message>
@@ -492,7 +492,7 @@
         <translation>总容量</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="104"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="108"/>
         <source>File system</source>
         <translation>格式</translation>
     </message>
@@ -500,29 +500,40 @@
 <context>
     <name>MountDialog</name>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="19"/>
+        <location filename="../widgets/mountdialog.cpp" line="21"/>
         <source>Mount %1</source>
         <translation>将对%1进行挂载</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="21"/>
+        <location filename="../widgets/mountdialog.cpp" line="27"/>
         <source>Choose a mount point please</source>
         <translation>请先设置挂载点</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="24"/>
+        <location filename="../widgets/mountdialog.cpp" line="30"/>
         <source>Mount point:</source>
         <translation>挂载点：</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="34"/>
+        <location filename="../widgets/mountdialog.cpp" line="59"/>
+        <location filename="../widgets/mountdialog.cpp" line="95"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="35"/>
+        <location filename="../widgets/mountdialog.cpp" line="60"/>
         <source>Mount</source>
         <translation>挂载</translation>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="94"/>
+        <source>The data under this mount point would be lost, please mount the directory to another location</source>
+        <translation>此挂载点的数据可能会丢失，建议将目录挂载到其他位置</translation>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="95"/>
+        <source>OK</source>
+        <translation>确定</translation>
     </message>
 </context>
 <context>
@@ -677,6 +688,11 @@
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="301"/>
         <source>Size</source>
         <translation>分区大小</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="529"/>
+        <source>The number of new partitions exceeds the limit</source>
+        <translation>新分区数超出限制</translation>
     </message>
 </context>
 <context>

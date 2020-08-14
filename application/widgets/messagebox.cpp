@@ -26,7 +26,7 @@ void MessageBox::setWarings(const QString &title, const QString &warningMsg, con
     }
 
     addButton(sureBtnText);
-    connect(this,&MessageBox::buttonClicked,this, [=]() {
+    connect(this, &MessageBox::buttonClicked, this, [=]() {
         close();
     });
 }
@@ -49,7 +49,7 @@ void MessageBox::setWarings(const QString &title, const QString &warningMsg, con
     }
 
     addButton(sureBtnText, false, sureBtnType);
-    connect(this,&MessageBox::buttonClicked,this, [=]() {
+    connect(this, &MessageBox::buttonClicked, this, [=]() {
         close();
     });
 }
@@ -67,7 +67,7 @@ void MessageBox::setProgressBar(const QString &title, const QString &cancalBtnTe
     addSpacing(10);
 
     addButton(cancalBtnText);
-    connect(this,&MessageBox::buttonClicked,this, [=]() {
+    connect(this, &MessageBox::buttonClicked, this, [=]() {
         close();
     });
 }
@@ -76,7 +76,7 @@ void MessageBox::addLabel(QString text)
 {
     DLabel *label= new DLabel(this);
     label->setText(text);
-    addContent(label,Qt::AlignHCenter);
+    addContent(label, Qt::AlignHCenter);
 }
 
 void MessageBox::addProgressBar()
@@ -84,7 +84,7 @@ void MessageBox::addProgressBar()
     m_progressBar = new DProgressBar(this);
     m_progressBar->setValue(50);
     m_progressBar->setFixedSize(330, 10);
-    addContent(m_progressBar,Qt::AlignHCenter);
+    addContent(m_progressBar, Qt::AlignHCenter);
 }
 
 

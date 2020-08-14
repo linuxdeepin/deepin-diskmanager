@@ -1,5 +1,6 @@
 #include "mountdialog.h"
 #include "partedproxy/dmdbushandler.h"
+#include "messagebox.h"
 #include <DLabel>
 #include <QVBoxLayout>
 #include <DFrame>
@@ -23,22 +24,36 @@ void MountDialog::initUi()
     DFontSizeManager::instance()->bind(tipLabel, DFontSizeManager::T6);
     DLabel *mountLabel = new DLabel(tr("Mount point:"));
     DFontSizeManager::instance()->bind(mountLabel, DFontSizeManager::T6);
-    pedit = new DFileChooserEdit(this);
-    pedit->setFileMode(QFileDialog::Directory);
-    pedit->fileDialog()->setOption(QFileDialog::ShowDirsOnly);
-    pedit->fileDialog()->setAcceptMode(QFileDialog::AcceptOpen);
+//    pedit = new DFileChooserEdit(this);
+//    pedit->setFileMode(QFileDialog::Directory);
+//    pedit->fileDialog()->setOption(QFileDialog::ShowDirsOnly);
+//    pedit->fileDialog()->setAcceptMode(QFileDialog::AcceptOpen);
+
+    m_ComboBox = new DComboBox;
+    m_ComboBox->setEditable(true);
+    m_ComboBox->addItem("/mnt");
+    m_ComboBox->addItem("/boot");
+    m_ComboBox->addItem("/");
+    m_ComboBox->addItem("/tmp");
+    m_ComboBox->addItem("/var");
+    m_ComboBox->addItem("/srv");
+    m_ComboBox->addItem("/opt");
+    m_ComboBox->addItem("/usr");
+    m_ComboBox->addItem("/local");
+    m_ComboBox->addItem("/media");
 
     mainLayout->addWidget(tipLabel);
     mainLayout->addWidget(mountLabel);
-    mainLayout->addWidget(pedit);
+    mainLayout->addWidget(m_ComboBox);
     addButton(tr("Cancel"), true, ButtonNormal);
     okcode = addButton(tr("Mount"), false, ButtonRecommend);
-    getButton(okcode)->setDisabled(true);
+//    getButton(okcode)->setDisabled(true);
+    setOnButtonClickedClose(false);
 }
 
 void MountDialog::initConnection()
 {
-    connect(pedit->lineEdit(), &QLineEdit::textChanged, this, &MountDialog::slotEditContentChanged);
+    connect(m_ComboBox->lineEdit(), &QLineEdit::textChanged, this, &MountDialog::slotEditContentChanged);
     connect(this, &MountDialog::buttonClicked, this, &MountDialog::slotbuttonClicked);
 }
 
@@ -50,10 +65,10 @@ void MountDialog::slotEditContentChanged(const QString &content)
         QDir dir(content);
         if (dir.exists()) {
             getButton(okcode)->setDisabled(false);
-            pedit->setAlert(false);
+//            pedit->setAlert(false);
         } else {
             getButton(okcode)->setDisabled(true);
-            pedit->setAlert(true);
+//            pedit->setAlert(true);
         }
     }
 }
@@ -62,6 +77,16 @@ void MountDialog::slotbuttonClicked(int index, const QString &text)
 {
     Q_UNUSED(text);
     if (index == okcode) {
-        DMDbusHandler::instance()->mount(pedit->lineEdit()->text());
+        QDir dir(m_ComboBox->currentText());
+        if (!dir.isEmpty()) {
+            MessageBox messageBox;
+            messageBox.setWarings(tr("The data under this mount point would be lost, please mount the directory to another location"), "", tr("OK"));
+            messageBox.exec();
+        } else {
+            DMDbusHandler::instance()->mount(m_ComboBox->currentText());
+            close();
+        }
+    } else {
+        close();
     }
 }

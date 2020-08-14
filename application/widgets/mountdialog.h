@@ -2,6 +2,7 @@
 #define MOUNTDIALOG_H
 #include "customcontrol/ddbase.h"
 #include <dfilechooseredit.h>
+#include <DComboBox>
 
 DWIDGET_USE_NAMESPACE
 
@@ -21,6 +22,7 @@ public slots:
 
 private:
     DFileChooserEdit *pedit;
+    DComboBox *m_ComboBox;
 };
 
 #endif // MOUNTDIALOG_H

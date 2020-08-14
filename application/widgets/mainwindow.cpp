@@ -38,6 +38,7 @@ MainWindow::~MainWindow()
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     m_central->HandleQuit();
+    m_handler->Quit();
     DMainWindow::closeEvent(event);
 }
 

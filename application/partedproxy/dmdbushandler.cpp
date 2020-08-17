@@ -185,6 +185,7 @@ void DMDbusHandler::MessageReport(const QString &msg)
 void DMDbusHandler::slotUpdateDeviceInfo(const DeviceInfoMap &infomap)
 {
     m_devicemap = infomap;
+    m_isExistUnallocated.clear();
     for (auto it = infomap.begin(); it != infomap.end(); it++) {
         DeviceInfo info = it.value();
 //        qDebug() << info.sector_size;
@@ -192,14 +193,25 @@ void DMDbusHandler::slotUpdateDeviceInfo(const DeviceInfoMap &infomap)
 //                 << info.cylinders << info.cylsize << info.model << info.serial_number << info.disktype
 //                 << info.sector_size << info.max_prims << info.highest_busy << info.readonly
 //                 << info.max_partition_name_length;
+        QString isExistUnallocated = "false";
         for (auto it = info.partition.begin(); it != info.partition.end(); it++) {
             //            qDebug() << it->sector_end << it->sector_start << Utils::sector_to_unit(it->sector_size, it->sector_end - it->sector_start, SIZE_UNIT::UNIT_GIB);
             //        qDebug() << it->name << it->device_path << it->partition_number << it->sectors_used << it->sectors_unused << it->sector_start << it->sector_end;
+           if (it->path == "unallocated") {
+               isExistUnallocated = "true";
+           }
         }
+
+        m_isExistUnallocated[info.m_path] = isExistUnallocated;
     }
     //    qDebug() << getCurDeviceInfo().serial_number << getCurPartititonInfo().partition_number;
     emit sigUpdateDeviceInfo();
     emit sigShowSpinerWindow(false);
+}
+
+QMap<QString, QString> DMDbusHandler::getIsExistUnallocated()
+{
+    return m_isExistUnallocated;
 }
 
 HardDiskInfo DMDbusHandler::getHardDiskInfo(const QString &devicePath)

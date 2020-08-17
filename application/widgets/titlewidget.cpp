@@ -154,6 +154,11 @@ void TitleWidget::updateBtnStatus()
             }
         }
     }
+
+    QMap<QString, QString> isExistUnallocated = DMDbusHandler::instance()->getIsExistUnallocated();
+    if (isExistUnallocated.value(info.device_path) == "false") {
+        m_btnresize->setDisabled(true);
+    }
 }
 
 void TitleWidget::slotCurSelectChanged()

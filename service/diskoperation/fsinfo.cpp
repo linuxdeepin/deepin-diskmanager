@@ -155,7 +155,7 @@ bool FsInfo::run_blkid_load_cache(const QString &path)
     QString error;
     bool loaded_entries = false;
     if (blkid_found && !Utils::executcmd(cmd, output, error)) {
-        qDebug() << output;
+//        qDebug() << output;
         QStringList strlist = output.split("\n");
         for (int i = 0; i < strlist.size(); i++) {
             FS_Entry fs_entry = {BlockSpecial(), "", "", "", false, ""};

@@ -1503,7 +1503,86 @@ bool PartedCore::mount(const QString &mountpath)
         // cmd = QString("mount -v -t %1 %2 %3").arg("").arg(partitionpath).arg(mountpath);
         success = false;
     }
+    //永久挂载
+    QFile file("/etc/fstab");
+    QString displayString;
+    QStringList list;
+    if (!file.open(QIODevice::ReadOnly))//打开指定文件
+    {
+        qDebug() << "文件打开失败";
+        success = false;
+    }
+    else {
+        while(!file.atEnd())
+        {
+            QByteArray line = file.readLine();//获取数据
+            qDebug() << line;
+            if(line.contains("/dev/sda4") || file.atEnd())
+            {
+                QString str = QString("%1      %2      %3      defaults        0 0\n").arg(partitionpath).arg(mountpath).arg(Utils::FSTypeToString(type));
+                list << line;
+                list << str;
+                break;
+            }
+            list << line;
+        }
+        file.close();
+        if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
+            QTextStream out(&file);
+            for (int i = 0; i < list.count(); i++) {
+                out << list.at(i);
+                out.flush();
+            }
+            file.close();
+        }
+        else {
+            success = false;
+        }
+    }
     emit sigRefreshDeviceInfo();
+    return success;
+}
+
+bool PartedCore::autoMount(const QString &partitionPath, const QString &fstype, const QString &mountPath)
+{
+    bool success = true;
+    QString output, errstr;
+    QString cmd;
+    FSType type = Utils::StringToFSType(fstype);
+    QDir dir;
+    if(!dir.mkpath(mountPath))
+    {
+        qDebug() << __FUNCTION__ << "create floder error";
+        success = false;
+        return success;
+    }
+    qDebug() << __FUNCTION__ << mountPath << partitionPath << fstype;
+    if (type == FS_FAT32 ||
+            type == FS_FAT16) {
+        cmd = QString("mount -v %1 %2 -o -o dmask=000,fmask=111").arg(partitionPath).arg(mountPath);
+    } else if (type == FS_HFS) {
+        cmd = QString("mount -v %1 %2 -o -o dir_umask=000,file_umask=111").arg(partitionPath).arg(mountPath);
+    } else {
+        cmd = QString("mount -v %1 %2").arg(partitionPath).arg(mountPath);
+    }
+    int exitcode = Utils::executcmd(cmd, output, errstr);
+    if (exitcode != 0) {
+        qDebug() << __FUNCTION__ << "auto mount order error" << output;
+        success = false;
+        return success;
+    }
+    QFile file("/etc/fstab");
+    if (file.open(QIODevice::ReadWrite | QIODevice::Append)) {
+        QTextStream out(&file);
+        QString mountBuf;
+        mountBuf = QString("%1      %2      %3      defaults        0 0").arg(partitionPath).arg(mountPath).arg(fstype);
+        out << mountBuf;
+        out.flush();
+        file.close();
+    }
+    else {
+        success = false;
+    }
     return success;
 }
 
@@ -1518,6 +1597,41 @@ bool PartedCore::unmount()
         if (0 != exitcode)
             bsuccess = false;
     }
+    //永久卸载
+    QString partitionPath = curpartition.get_path();
+    QFile file("/etc/fstab");
+    QString displayString;
+    if (!file.open(QIODevice::ReadOnly))//打开指定文件
+    {
+        qDebug() << "文件打开失败";
+        bsuccess = false;
+    }
+    else {
+        QStringList list;
+        while(!file.atEnd())
+        {
+            QByteArray line = file.readLine();//获取数据
+            QString str = line;
+            qDebug() << line;
+            if(str.contains(partitionPath))
+            {
+                continue;
+            }
+            list << str;
+        }
+        file.close();
+        if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
+            QTextStream out(&file);
+            for (int i = 0; i < list.count(); i++) {
+                out << list.at(i);
+                out.flush();
+            }
+            file.close();
+        }
+        else {
+            bsuccess = false;
+        }
+    }
     emit sigRefreshDeviceInfo();
     return bsuccess;
 }
@@ -1529,6 +1643,10 @@ bool PartedCore::create(const PartitionVec &infovec)
         Partition new_partition;
         new_partition.Reset(info);
         if (!create(new_partition)) {
+            bsuccess = false;
+            break;
+        }
+        if(!autoMount(new_partition.get_path(), Utils::FSTypeToString(new_partition.fstype), QString("/mnt%1").arg(new_partition.get_path()))) {
             bsuccess = false;
             break;
         }
@@ -2105,31 +2223,15 @@ bool PartedCore::detectionPartitionTableError(const QString &devicePath)
 }
 void PartedCore::test()
 {
-    emit sigRefreshDeviceInfo();
-//    PedPartitionFlag flag = PED_PARTITION_HIDDEN;
-
-//    QString device_path = "/dev/sda";
-//    PedPartition *ped = NULL;
-//    PedDevice *lp_device = NULL;
-//    PedDisk *lp_disk = NULL;
-
-//    if(!get_device_and_disk(device_path, lp_device, lp_disk))
-//    {
-//        return;
-//    }
-
-//    ped = ped_disk_get_partition(lp_disk, 4);
-//    if(ped == NULL)
-//    {
-//        return;
-//    }
-//
-//    if (ped_partition_set_flag(ped, flag, 1) && commit(lp_disk)) {
-//        qDebug() << __FUNCTION__ << QString("new partition type: %1").arg(ped->fs_type->name);
-//    }
-//*/
-//    int i = ped_partition_get_flag(ped, flag);
-//    qDebug() << __FUNCTION__ << i;
+    QDir dir;
+    if(!dir.mkpath("/mnt/dev/sda4"))
+    {
+        qDebug() << "失败";
+    }
+    if(!dir.rmdir("/mnt/dev/sda4"))
+    {
+        qDebug() << "失败";
+    }
     return;
 }
 } // namespace DiskManager

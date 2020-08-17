@@ -32,6 +32,7 @@ public:
     void unhidePartition(const QString &devicePath, const QString &parttitionPath);
     int getPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath);
     bool detectionPartitionTableError(const QString &devicePath);
+    QMap<QString, QString> getIsExistUnallocated();
 
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
@@ -71,6 +72,7 @@ private:
     bool m_unhideResult;
     int m_partitionHiddenFlag;
     bool m_partitionTableError;
+    QMap<QString, QString> m_isExistUnallocated;
 };
 
 #endif // DMDBUSHANDLER_H

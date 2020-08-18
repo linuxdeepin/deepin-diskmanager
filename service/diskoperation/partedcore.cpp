@@ -1646,9 +1646,11 @@ bool PartedCore::create(const PartitionVec &infovec)
             bsuccess = false;
             break;
         }
-        if(!autoMount(new_partition.get_path(), Utils::FSTypeToString(new_partition.fstype), QString("/mnt%1").arg(new_partition.get_path()))) {
-            bsuccess = false;
-            break;
+        else {
+            if(!autoMount(new_partition.get_path(), Utils::FSTypeToString(new_partition.fstype), QString("/mnt%1").arg(new_partition.get_path()))) {
+                bsuccess = false;
+                break;
+            }
         }
     }
     emit sigRefreshDeviceInfo();
@@ -2070,8 +2072,8 @@ bool PartedCore::deletePartition(const QString &devicePath, const QString &partt
         emit sigDeletePatition("0:1");
         return false;
     }
-
-    ped = ped_disk_get_partition(lp_disk, parttitionPath.right(1).toInt());
+    int num = (parttitionPath.split(devicePath.split("/").at(2)).at(1)).toInt();
+    ped = ped_disk_get_partition(lp_disk, num);
     if(ped == nullptr) {
         qDebug() << __FUNCTION__ << "get partition failed";
         emit sigRefreshDeviceInfo();
@@ -2222,16 +2224,17 @@ bool PartedCore::detectionPartitionTableError(const QString &devicePath)
     return false;
 }
 void PartedCore::test()
-{
-    QDir dir;
-    if(!dir.mkpath("/mnt/dev/sda4"))
+{ 
+    udevadm_found = Utils::find_program_in_path("udevadm").isEmpty();
+    if (udevadm_found == true)
     {
-        qDebug() << "失败";
+        qDebug() << "U盘插入";
     }
-    if(!dir.rmdir("/mnt/dev/sda4"))
+    if(udevadm_found == false)
     {
-        qDebug() << "失败";
+        qDebug() << "U盘拔出";
     }
+
     return;
 }
 } // namespace DiskManager

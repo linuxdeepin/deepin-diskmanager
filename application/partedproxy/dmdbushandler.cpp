@@ -144,7 +144,6 @@ QStringList DMDbusHandler::getallsupportfs()
         if (reply.isError()) {
             qDebug() << reply.error().message();
         } else {
-            qDebug() << reply.value() << "1111111111111111111111";
             m_supportfs = reply.value();
         }
     }

@@ -485,7 +485,7 @@ void PartitionWidget::slotSliderValueChanged(int value)
         } else {//剩余空间为总大小,占比情况
             if (partComCobox->currentText() == "MiB") {
                 strSize = QString::number((static_cast<double>(value) / 100) * (mTotal - sumValue()),  'f', 2);
-                if (mTotal - sumValue() < 51.2) {
+                if (mTotal - sumValue() < 52) {
                     judgeLastPartitionSlot();
                 }
             } else {
@@ -544,8 +544,10 @@ void PartitionWidget::addPartitionSlot()
         part.blast = true;
     }
 
-    if (currentSize <= 51.2)
+    if (currentSize <= 52) {
+        DMessageManager::instance()->sendMessage(this, QIcon(":/icons/deepin/builtin/warning.svg"), tr("To create a partition, you need at least 52 MB"));
         return;
+    }
     sizeInfo.append(currentSize);
     //绘制新建分区图形
     partChartWidget->transInfos(mTotal, sizeInfo);

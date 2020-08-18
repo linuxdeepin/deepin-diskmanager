@@ -500,38 +500,37 @@
 <context>
     <name>MountDialog</name>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="21"/>
+        <location filename="../widgets/mountdialog.cpp" line="20"/>
         <source>Mount %1</source>
         <translation>将对%1进行挂载</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="27"/>
+        <location filename="../widgets/mountdialog.cpp" line="22"/>
         <source>Choose a mount point please</source>
         <translation>请先设置挂载点</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="30"/>
+        <location filename="../widgets/mountdialog.cpp" line="25"/>
         <source>Mount point:</source>
         <translation>挂载点：</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="59"/>
-        <location filename="../widgets/mountdialog.cpp" line="95"/>
+        <location filename="../widgets/mountdialog.cpp" line="48"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="60"/>
+        <location filename="../widgets/mountdialog.cpp" line="49"/>
         <source>Mount</source>
         <translation>挂载</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="94"/>
+        <location filename="../widgets/mountdialog.cpp" line="83"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>此挂载点的数据可能会丢失，建议将目录挂载到其他位置</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="95"/>
+        <location filename="../widgets/mountdialog.cpp" line="83"/>
         <source>OK</source>
         <translation>确定</translation>
     </message>
@@ -693,6 +692,11 @@
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="529"/>
         <source>The number of new partitions exceeds the limit</source>
         <translation>新分区数超出限制</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="549"/>
+        <source>To create a partition, you need at least 52 MB</source>
+        <translation>分区空间不得小于52 MB，否则无法创建</translation>
     </message>
 </context>
 <context>

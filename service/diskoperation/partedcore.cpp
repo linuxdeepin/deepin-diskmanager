@@ -2237,9 +2237,17 @@ bool PartedCore::detectionPartitionTableError(const QString &devicePath)
 
 void PartedCore::updateUsb()
 {
+    sleep(5);
     emit sigRefreshDeviceInfo();
-    //emit sigUpdateUsb();
+    emit sigUpdateUsb();
     qDebug() << "ADD";
+}
+
+void PartedCore::updateUsbRemove()
+{
+    emit sigRefreshDeviceInfo();
+    emit sigUpdateUsb();
+    qDebug() << "REMOVE";
 }
 
 int PartedCore::test()

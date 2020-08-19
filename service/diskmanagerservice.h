@@ -79,10 +79,15 @@ public Q_SLOTS:
      */
     Q_SCRIPTABLE bool onDetectionPartitionTableError(const QString &devicePath);
     /**
-     * @brief 测试
+     * @brief USB插入
      * @param 无
      */
     Q_SCRIPTABLE void updateUsb();
+    /**
+     * @brief USB拔出
+     * @param 无
+     */
+    Q_SCRIPTABLE void updateUsbRemove();
     /**
      * @brief 测试
      * @param 无

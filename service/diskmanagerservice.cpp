@@ -131,6 +131,10 @@ void DiskManagerService::updateUsb()
 {
     m_partedcore->updateUsb();
 }
+void DiskManagerService::updateUsbRemove()
+{
+    m_partedcore->updateUsbRemove();
+}
 int DiskManagerService::test()
 {
     return m_partedcore->test();

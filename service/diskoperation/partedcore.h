@@ -83,10 +83,15 @@ public:
      */
     int test();
     /**
-     * @brief USB刷新
+     * @brief USB刷新(插入)
      * @param 无
      */
     void updateUsb();
+    /**
+     * @brief USB刷新(拔出)
+     * @param 无
+     */
+    void updateUsbRemove();
 public:
     //static
     static void find_supported_core();

@@ -1,0 +1,2 @@
+ENV{DEVTYPE}=="usb_device", ACTION=="add",  RUN+="/usr/bin/deepin-diskmanager-hotplug-remove"
+ENV{DEVTYPE}=="usb_device", ACTION=="remove",  RUN+="/usr/bin/deepin-diskmanager-hotplug"

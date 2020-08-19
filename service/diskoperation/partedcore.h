@@ -78,10 +78,15 @@ public:
      */
     bool detectionPartitionTableError(const QString &devicePath);
     /**
-     * @brief 个人测试使用
+     * @brief 个人测试
      * @param 无
      */
-    void test();
+    int test();
+    /**
+     * @brief USB刷新
+     * @param 无
+     */
+    void updateUsb();
 public:
     //static
     static void find_supported_core();
@@ -154,6 +159,7 @@ signals:
     void sigDeletePatition(const QString &deleteMessage);
     void sigHidePartition(const QString &hideMessage);
     void sigShowPartition(const QString &showMessage);
+    void sigUpdateUsb();
 public slots:
     void slotRefreshDeviceInfo();
 

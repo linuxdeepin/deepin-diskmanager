@@ -90,6 +90,7 @@ void DiskManagerService::initConnection()
     connect(m_partedcore, &PartedCore::sigDeletePatition, this, &DiskManagerService::sigDeletePatition);
     connect(m_partedcore, &PartedCore::sigHidePartition, this, &DiskManagerService::sigHidePartition);
     connect(m_partedcore, &PartedCore::sigShowPartition, this, &DiskManagerService::sigShowPartition);
+    connect(m_partedcore, &PartedCore::sigUpdateUsb, this, &DiskManagerService::sigUpdateUsb);
 }
 
 HardDiskInfo DiskManagerService::onGetDeviceHardInfo(const QString &devicepath)
@@ -126,8 +127,12 @@ bool DiskManagerService::onDetectionPartitionTableError(const QString &devicePat
 {
     return m_partedcore->detectionPartitionTableError(devicePath);
 }
-void DiskManagerService::test()
+void DiskManagerService::updateUsb()
 {
-    m_partedcore->test();
+    m_partedcore->updateUsb();
+}
+int DiskManagerService::test()
+{
+    return m_partedcore->test();
 }
 } // namespace DiskManager

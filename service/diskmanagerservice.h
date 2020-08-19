@@ -21,6 +21,7 @@ Q_SIGNALS:
     Q_SCRIPTABLE void sigDeletePatition(const QString &deleteMessage);
     Q_SCRIPTABLE void sigHidePartition(const QString &hideMessage);
     Q_SCRIPTABLE void sigShowPartition(const QString &showMessage);
+    Q_SCRIPTABLE void sigUpdateUsb();
 public Q_SLOTS:
     Q_SCRIPTABLE void Quit();
     Q_SCRIPTABLE void Start();
@@ -78,10 +79,17 @@ public Q_SLOTS:
      */
     Q_SCRIPTABLE bool onDetectionPartitionTableError(const QString &devicePath);
     /**
-     * @brief 个人测试使用
+     * @brief 测试
      * @param 无
      */
-    Q_SCRIPTABLE void test();
+    Q_SCRIPTABLE void updateUsb();
+    /**
+     * @brief 测试
+     * @param 无
+     */
+    Q_SCRIPTABLE int test();
+
+
 private:
     void initConnection();
 

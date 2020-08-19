@@ -136,6 +136,10 @@ FS_Limits PartedCore::get_filesystem_limits(FSType fstype, const Partition &part
 
 void PartedCore::probedeviceinfo(const QString &)
 {
+    inforesult.clear();
+    devicemap.clear();
+    qDebug() << __FUNCTION__ << devicemap.count();
+    qDebug() << __FUNCTION__ << inforesult.count();
     QVector<QString> devicepaths;
     qDebug() << __FUNCTION__ << "**1";
     devicepaths.clear();
@@ -196,6 +200,7 @@ void PartedCore::probedeviceinfo(const QString &)
         }
         inforesult.insert(devinfo.m_path, devinfo);
     }
+    qDebug() << __FUNCTION__ << inforesult.count();
     qDebug() << __FUNCTION__ << "**10";
 }
 
@@ -1632,6 +1637,10 @@ bool PartedCore::unmount()
             bsuccess = false;
         }
     }
+    QString cmd = QString("source /etc/fstab");
+    int exitcode = Utils::executcmd(cmd, output, errstr);
+    if (0 != exitcode)
+        bsuccess = false;
     emit sigRefreshDeviceInfo();
     return bsuccess;
 }
@@ -2114,7 +2123,8 @@ bool PartedCore::hidePartition(const QString &devicePath, const QString &parttit
         emit sigHidePartition("0");
         return false;
     }
-    ped = ped_disk_get_partition(lp_disk, parttitionPath.right(1).toInt());
+    int num = (parttitionPath.split(devicePath.split("/").at(2)).at(1)).toInt();
+    ped = ped_disk_get_partition(lp_disk, num);
     if(ped == nullptr) {
         qDebug() << __FUNCTION__ << "get partition failed";
         emit sigRefreshDeviceInfo();
@@ -2157,7 +2167,8 @@ bool PartedCore::showPartition(const QString &devicePath, const QString &parttit
         emit sigShowPartition("0");
         return false;
     }
-    ped = ped_disk_get_partition(lp_disk, parttitionPath.right(1).toInt());
+    int num = (parttitionPath.split(devicePath.split("/").at(2)).at(1)).toInt();
+    ped = ped_disk_get_partition(lp_disk, num);
     if(ped == nullptr) {
         qDebug() << __FUNCTION__ << "get partition failed";
         emit sigRefreshDeviceInfo();
@@ -2223,18 +2234,17 @@ bool PartedCore::detectionPartitionTableError(const QString &devicePath)
     }
     return false;
 }
-void PartedCore::test()
-{ 
-    udevadm_found = Utils::find_program_in_path("udevadm").isEmpty();
-    if (udevadm_found == true)
-    {
-        qDebug() << "U盘插入";
-    }
-    if(udevadm_found == false)
-    {
-        qDebug() << "U盘拔出";
-    }
 
-    return;
+void PartedCore::updateUsb()
+{
+    emit sigRefreshDeviceInfo();
+    //emit sigUpdateUsb();
+    qDebug() << "ADD";
 }
+
+int PartedCore::test()
+{ 
+    return 1;
+}
+
 } // namespace DiskManager

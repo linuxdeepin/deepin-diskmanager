@@ -159,7 +159,7 @@ void PartedCore::probedeviceinfo(const QString &)
         qDebug() << QString("Confirming %1").arg(lp_device->path);
 
         //only add this device if we can read the first sector (which means it's a real device)
-        //if (useable_device(lp_device))
+        if (useable_device(lp_device))
             devicepaths.push_back(lp_device->path);
         qDebug() << lp_device->path;
         lp_device = ped_device_get_next(lp_device);

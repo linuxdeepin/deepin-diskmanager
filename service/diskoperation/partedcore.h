@@ -112,7 +112,7 @@ public:
 private:
     //general..
     static bool flush_device(PedDevice *lp_device);
-    static void settle_device(std::time_t timeout);
+    //static void settle_device(std::time_t timeout);
     static bool commit_to_os(PedDisk *lp_disk, std::time_t timeout);
     static bool useable_device(const PedDevice *lp_device);
     static bool get_device(const QString &device_path, PedDevice *&lp_device, bool flush = false);

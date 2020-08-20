@@ -154,6 +154,7 @@ Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void sigDeletePatition(const QString &deleteMessage);
     Q_SCRIPTABLE void sigHidePartition(const QString &hideMessage);
     Q_SCRIPTABLE void sigShowPartition(const QString &showMessage);
+    Q_SCRIPTABLE void sigUpdateUsb();
 };
 
 namespace com {

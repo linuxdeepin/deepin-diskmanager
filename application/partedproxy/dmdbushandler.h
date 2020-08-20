@@ -33,6 +33,7 @@ public:
     int getPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath);
     bool detectionPartitionTableError(const QString &devicePath);
     QMap<QString, QString> getIsExistUnallocated();
+    QStringList getDeviceNameList();
 
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
@@ -42,9 +43,10 @@ signals:
     void sigShowSpinerWindow(bool);
     void sigUpdateDeviceInfo();
     void sigCurSelectChanged();
-    void sigDeletePartition(const QString &deleteMessage);
-    void sigHidePartition(const QString &hideMessage);
-    void sigShowPartition(const QString &showMessage);
+    void deletePartitionMessage(const QString &deleteMessage);
+    void hidePartitionMessage(const QString &hideMessage);
+    void showPartitionMessage(const QString &showMessage);
+    void updateUsb();
 
 public slots:
     void slotsetCurSelect(const QString &devicepath, const QString &partitionpath, Sector start, Sector end);
@@ -52,9 +54,10 @@ public slots:
 private slots:
     void MessageReport(const QString &msg);
     void slotUpdateDeviceInfo(const DeviceInfoMap &infomap);
-    void slotDeletePartition(const QString &deleteMessage);
-    void slotHidePartition(const QString &hideMessage);
-    void slotShowPartition(const QString &showMessage);
+    void onDeletePartition(const QString &deleteMessage);
+    void onHidePartition(const QString &hideMessage);
+    void onShowPartition(const QString &showMessage);
+    void onUpdateUsb();
 
 private:
     DMDBusInterface *m_dbus = nullptr;
@@ -73,6 +76,7 @@ private:
     int m_partitionHiddenFlag;
     bool m_partitionTableError;
     QMap<QString, QString> m_isExistUnallocated;
+    QStringList m_deviceNameList;
 };
 
 #endif // DMDBUSHANDLER_H

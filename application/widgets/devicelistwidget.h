@@ -31,6 +31,10 @@ DWIDGET_USE_NAMESPACE
 DCORE_USE_NAMESPACE
 DTK_USE_NAMESPACE
 
+class DiskInfoDisplayDialog;
+class DiskHealthDetectionDialog;
+class PartitionTableErrorsInfoDialog;
+
 class DeviceListWidget : public DWidget
 {
     Q_OBJECT
@@ -48,10 +52,33 @@ signals:
     void sigPartitionSelectChanged();
 
 public slots:
+    /**
+     * @brief 更新设备信息信号响应的槽函数
+     */
     void slotUpdateDeviceInfo();
-    void slotDeletePartition(const QString &deleteMessage);
-    void slotHidePartition(const QString &hideMessage);
-    void slotShowPartition(const QString &showMessage);
+
+    /**
+     * @brief 删除分区信号响应的槽函数
+     * @param deleteMessage 执行结果
+     */
+    void onDeletePartition(const QString &deleteMessage);
+
+    /**
+     * @brief 隐藏分区信号响应的槽函数
+     * @param hideMessage 执行结果
+     */
+    void onHidePartition(const QString &hideMessage);
+
+    /**
+     * @brief 显示分区信号响应的槽函数
+     * @param showMessage 执行结果
+     */
+    void onShowPartition(const QString &showMessage);
+
+    /**
+     * @brief usb热插拔信号响应的槽函数
+     */
+    void onUpdateUsb();
 
     /**
      * @brief 设备树右键菜单按钮
@@ -72,6 +99,10 @@ private:
     QString devicepath_;
     int devicenum_ ;
     DiskInfoData m_curDiskInfoData;
+    QString m_curChooseDevicePath;
+    DiskInfoDisplayDialog *m_diskInfoDisplayDialog;
+    DiskHealthDetectionDialog *m_diskHealthDetectionDialog;
+    PartitionTableErrorsInfoDialog *m_partitionTableErrorsInfoDialog;
     //    DMDbusHandler *m_handler;
     //    DmDiskinfoBox *m_box = nullptr;
     //    DmDiskinfoBox *m_childbox = nullptr;

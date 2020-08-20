@@ -35,6 +35,11 @@
 DeviceListWidget::DeviceListWidget(QWidget *parent)
     : DWidget(parent)
 {
+    m_curChooseDevicePath = "";
+    m_diskInfoDisplayDialog = nullptr;
+    m_diskHealthDetectionDialog = nullptr;
+    m_partitionTableErrorsInfoDialog = nullptr;
+
     setAutoFillBackground(true);
     auto plt = this->palette();
     plt.setBrush(QPalette::Background, QBrush(Qt::white));
@@ -67,20 +72,17 @@ void DeviceListWidget::initConnection()
     connect(DMDbusHandler::instance(), &DMDbusHandler::sigUpdateDeviceInfo, this, &DeviceListWidget::slotUpdateDeviceInfo);
     connect(m_treeview, &DmTreeview::sigCurSelectChanged, DMDbusHandler::instance(), &DMDbusHandler::slotsetCurSelect);
     connect(m_treeview, &QTreeView::customContextMenuRequested, this, &DeviceListWidget::treeMenu);
-    connect(DMDbusHandler::instance(), &DMDbusHandler::sigDeletePartition, this, &DeviceListWidget::slotDeletePartition);
-    connect(DMDbusHandler::instance(), &DMDbusHandler::sigHidePartition, this, &DeviceListWidget::slotHidePartition);
-    connect(DMDbusHandler::instance(), &DMDbusHandler::sigShowPartition, this, &DeviceListWidget::slotShowPartition);
+    connect(DMDbusHandler::instance(), &DMDbusHandler::deletePartitionMessage, this, &DeviceListWidget::onDeletePartition);
+    connect(DMDbusHandler::instance(), &DMDbusHandler::hidePartitionMessage, this, &DeviceListWidget::onHidePartition);
+    connect(DMDbusHandler::instance(), &DMDbusHandler::showPartitionMessage, this, &DeviceListWidget::onShowPartition);
+    connect(DMDbusHandler::instance(), &DMDbusHandler::updateUsb, this, &DeviceListWidget::onUpdateUsb);
 }
 
 void DeviceListWidget::treeMenu(const QPoint &pos)
 {
     QModelIndex curIndex = m_treeview->indexAt(pos);      //当前点击的元素的index
     QModelIndex index = curIndex.sibling(curIndex.row(),0); //该行的第1列元素的index
-//    qDebug() << curIndex << "--------" << index << "---------------" << m_treeview->getRootItem()->index()
-//             << m_treeview->getcuritem()->data();
-//    DiskInfoData data = m_treeview->getcuritem()->data().value<DiskInfoData>();
-//    qDebug() << data.diskpath << data.disksize << data.partitionsize << data.partitonpath << data.level << data.used << data.unused << data.start
-//             << data.end << "--------" << data.fstype << "------" << data.mountpoints << data.syslabel << data.iconImage;
+
     if (index.isValid()) {
         m_curDiskInfoData = m_treeview->getcuritem()->data().value<DiskInfoData>();
         if (m_curDiskInfoData.level == 0) {
@@ -91,12 +93,6 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
             actionInfo->setObjectName("Disk info");
             menu->addAction(actionInfo);
             connect(actionInfo, &QAction::triggered, this, &DeviceListWidget::onTreeMenuClicked);
-//            connect(actionInfo, &QAction::triggered, this, [=] (QVariant value) {
-//                    if (!value.isNull()) {
-//                        DiskInfoDisplayDialog *diskInfoDisplayDialog = new DiskInfoDisplayDialog(data.diskpath);
-//                        diskInfoDisplayDialog->exec();
-//                    }
-//                });
 
     //        menu->addSeparator();    //添加一个分隔线
             QMenu *itemChildMenu = new QMenu();
@@ -108,12 +104,6 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
             actionHealthDetection->setObjectName("Check health");
             itemChildMenu->addAction(actionHealthDetection);
             connect(actionHealthDetection, &QAction::triggered, this, &DeviceListWidget::onTreeMenuClicked);
-//            connect(actionHealthDetection, &QAction::triggered, this, [=] (QVariant value) {
-//                    if (!value.isNull()) {
-//                        DiskHealthDetectionDialog *diskHealthDetectionDialog = new DiskHealthDetectionDialog(data.diskpath);
-//                        diskHealthDetectionDialog->exec();
-//                    }
-//                });
 
             QAction *actionCheckError = new QAction();
             actionCheckError->setText(tr("Check partition table error")); // 分区表错误检测
@@ -177,18 +167,35 @@ void DeviceListWidget::onTreeMenuClicked()
     QAction *action = qobject_cast<QAction *>(sender());
 
     if (action->objectName() == "Disk info") {
+        m_curChooseDevicePath = m_curDiskInfoData.diskpath;
+
         DiskInfoDisplayDialog *diskInfoDisplayDialog = new DiskInfoDisplayDialog(m_curDiskInfoData.diskpath);
+        m_diskInfoDisplayDialog = diskInfoDisplayDialog;
         diskInfoDisplayDialog->exec();
+
+        m_curChooseDevicePath = "";
+        m_diskInfoDisplayDialog = nullptr;
     } else if (action->objectName() == "Check health") {
+        m_curChooseDevicePath = m_curDiskInfoData.diskpath;
+
         DiskHealthDetectionDialog *diskHealthDetectionDialog = new DiskHealthDetectionDialog(m_curDiskInfoData.diskpath);
+        m_diskHealthDetectionDialog = diskHealthDetectionDialog;
         diskHealthDetectionDialog->exec();
+
+        m_curChooseDevicePath = "";
+        m_diskHealthDetectionDialog = nullptr;
     } else if (action->objectName() == "Check partition table error") {   
         bool result = DMDbusHandler::instance()->detectionPartitionTableError(m_curDiskInfoData.diskpath);
         if (result) {
             QString deviceInfo = QString("%1(%2)").arg(m_curDiskInfoData.diskpath).arg(m_curDiskInfoData.disksize);
+            m_curChooseDevicePath = m_curDiskInfoData.diskpath;
 
             PartitionTableErrorsInfoDialog *partitionTableErrorsInfoDialog = new PartitionTableErrorsInfoDialog(deviceInfo);
+            m_partitionTableErrorsInfoDialog = partitionTableErrorsInfoDialog;
             partitionTableErrorsInfoDialog->exec();
+
+            m_curChooseDevicePath = "";
+            m_partitionTableErrorsInfoDialog = nullptr;
         } else {
             // 分区表检测正常
             DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("No errors found in the partition table"));
@@ -246,7 +253,7 @@ void DeviceListWidget::onTreeMenuClicked()
     }
 }
 
-void DeviceListWidget::slotHidePartition(const QString &hideMessage)
+void DeviceListWidget::onHidePartition(const QString &hideMessage)
 {
     if ("1" == hideMessage) {
         // 隐藏分区成功
@@ -261,7 +268,7 @@ void DeviceListWidget::slotHidePartition(const QString &hideMessage)
     }
 }
 
-void DeviceListWidget::slotShowPartition(const QString &showMessage)
+void DeviceListWidget::onShowPartition(const QString &showMessage)
 {
     if ("1" == showMessage) {
         // 显示分区成功
@@ -276,7 +283,7 @@ void DeviceListWidget::slotShowPartition(const QString &showMessage)
     }
 }
 
-void DeviceListWidget::slotDeletePartition(const QString &deleteMessage)
+void DeviceListWidget::onDeletePartition(const QString &deleteMessage)
 {
     QStringList infoList = deleteMessage.split(":");
 
@@ -290,6 +297,27 @@ void DeviceListWidget::slotDeletePartition(const QString &deleteMessage)
         floMsg->setMessage(tr("Failed to delete the partition:%1").arg(infoList.at(1))); // 删除分区失败
         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), floMsg);
         DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
+    }
+}
+
+void DeviceListWidget::onUpdateUsb()
+{
+    if (m_curChooseDevicePath == "")
+        return;
+
+    QStringList deviceNameList = DMDbusHandler::instance()->getDeviceNameList();
+    if (deviceNameList.indexOf(m_curChooseDevicePath) != -1)
+        return;
+
+    if (m_diskInfoDisplayDialog != nullptr) {
+        m_diskInfoDisplayDialog->close();
+        m_diskInfoDisplayDialog = nullptr;
+    } else if (m_diskHealthDetectionDialog != nullptr) {
+        m_diskHealthDetectionDialog->close();
+        m_diskHealthDetectionDialog = nullptr;
+    } else if (m_partitionTableErrorsInfoDialog != nullptr) {
+        m_partitionTableErrorsInfoDialog->close();
+        m_partitionTableErrorsInfoDialog = nullptr;
     }
 }
 

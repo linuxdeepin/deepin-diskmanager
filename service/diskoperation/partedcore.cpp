@@ -44,7 +44,7 @@ PartedCore::~PartedCore()
 
 void PartedCore::find_supported_core()
 {
-    udevadm_found = !Utils::find_program_in_path("udevadm").isEmpty();
+    //udevadm_found = !Utils::find_program_in_path("udevadm").isEmpty();
     hdparm_found = !Utils::find_program_in_path("hdparm").isEmpty();
 }
 
@@ -138,8 +138,6 @@ void PartedCore::probedeviceinfo(const QString &)
 {
     inforesult.clear();
     devicemap.clear();
-    qDebug() << __FUNCTION__ << devicemap.count();
-    qDebug() << __FUNCTION__ << inforesult.count();
     QVector<QString> devicepaths;
     qDebug() << __FUNCTION__ << "**1";
     devicepaths.clear();
@@ -326,7 +324,7 @@ bool PartedCore::get_disk(PedDevice *&lp_device, PedDisk *&lp_disk, bool strict)
         // to complete which remove and re-add all the partition specific /dev
         // entries to avoid FS specific commands failing because they happen to
         // be running when the needed /dev/PTN entries don't exist.
-        settle_device(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS);
+        //settle_device(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS);
 
         // if ! disk and writable it's probably a HD without disklabel.
         // We return true here and deal with them in
@@ -380,7 +378,7 @@ bool PartedCore::commit(PedDisk *lp_disk)
         ped_device_close(lp_disk->dev);
         // Wait for udev rules to complete and partition device nodes to settle
         // from this ped_device_close().
-        settle_device(SETTLE_DEVICE_APPLY_MAX_WAIT_SECONDS);
+        //settle_device(SETTLE_DEVICE_APPLY_MAX_WAIT_SECONDS);
     }
 
     return succes;
@@ -794,21 +792,21 @@ bool PartedCore::flush_device(PedDevice *lp_device)
         // ped_device_close() pair to avoid busy /dev/DISK entry when running file
         // system specific querying commands on the whole disk device in the call
         // sequence after get_device() in set_device_from_disk().
-        settle_device(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS);
+        //settle_device(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS);
     }
     return success;
 }
 
-void PartedCore::settle_device(std::time_t timeout)
-{
-    //如果支持udevadm
-    //udevadm settle [options]　　查看udev事件队列，如果所有事件全部处理完就退出。timeout超时时间
-    if (udevadm_found) {
-        QString out, err;
-        Utils::executcmd(QString("udevadm settle --timeout=%1").arg(timeout), out, err);
-    } else
-        sleep(timeout);
-}
+//void PartedCore::settle_device(std::time_t timeout)
+//{
+//    //如果支持udevadm
+//    //udevadm settle [options]　　查看udev事件队列，如果所有事件全部处理完就退出。timeout超时时间
+//    if (udevadm_found) {
+//        QString out, err;
+//        Utils::executcmd(QString("udevadm settle --timeout=%1").arg(timeout), out, err);
+//    } else
+//        sleep(timeout);
+//}
 
 bool PartedCore::commit_to_os(PedDisk *lp_disk, time_t timeout)
 {
@@ -816,7 +814,7 @@ bool PartedCore::commit_to_os(PedDisk *lp_disk, time_t timeout)
     succes = ped_disk_commit_to_os(lp_disk);
     // Wait for udev rules to complete and partition device nodes to settle from above
     // ped_disk_commit_to_os() initiated kernel update of the partitions.
-    settle_device(timeout);
+    //settle_device(timeout);
     return succes;
 }
 
@@ -1134,7 +1132,7 @@ bool PartedCore::erase_filesystem_signatures(const Partition &partition)
         if (device_is_open) {
             flush_success = ped_device_sync(lp_device);
             ped_device_close(lp_device);
-            settle_device(SETTLE_DEVICE_APPLY_MAX_WAIT_SECONDS);
+            //settle_device(SETTLE_DEVICE_APPLY_MAX_WAIT_SECONDS);
         }
         overall_success &= flush_success;
     }
@@ -1489,6 +1487,7 @@ void PartedCore::slotRefreshDeviceInfo()
 
 bool PartedCore::mount(const QString &mountpath)
 {
+    qDebug() << __FUNCTION__ << "mount start";
     bool success = true;
     QString output, errstr;
     QString cmd ;
@@ -1544,12 +1543,14 @@ bool PartedCore::mount(const QString &mountpath)
             success = false;
         }
     }
+    qDebug() << __FUNCTION__ << "mount end";
     emit sigRefreshDeviceInfo();
     return success;
 }
 
 bool PartedCore::autoMount(const QString &partitionPath, const QString &fstype, const QString &mountPath)
 {
+    qDebug() << __FUNCTION__ << "automount start";
     bool success = true;
     QString output, errstr;
     QString cmd;
@@ -1588,6 +1589,7 @@ bool PartedCore::autoMount(const QString &partitionPath, const QString &fstype, 
     else {
         success = false;
     }
+    qDebug() << __FUNCTION__ << "automount end";
     return success;
 }
 

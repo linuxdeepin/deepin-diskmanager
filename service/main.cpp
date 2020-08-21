@@ -27,10 +27,9 @@ int main(int argc, char *argv[])
 
     QDir dirCheck;
     QString Log_path = QString("%1/%2/%3/Log/")
-        .arg(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation))
+        .arg("/home/config")
         .arg(qApp->organizationName())
         .arg(qApp->applicationName());
-    qDebug()<<Log_path;
     setLogDir(Log_path);
     if (!dirCheck.exists(Log_path))
     {

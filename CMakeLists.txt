@@ -18,6 +18,7 @@ ADD_SUBDIRECTORY(authenticateProxy)
 ADD_SUBDIRECTORY(hotplug)
 ADD_SUBDIRECTORY(hotplugremove)
 ADD_SUBDIRECTORY(basestruct)
+ADD_SUBDIRECTORY(log)
 ADD_SUBDIRECTORY(application)
 ADD_SUBDIRECTORY(service)
 

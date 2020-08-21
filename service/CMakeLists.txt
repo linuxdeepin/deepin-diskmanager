@@ -33,6 +33,7 @@ file(GLOB ALL_SOURCES "*.cpp" "./diskoperation/*.cpp" "./diskoperation/filesyste
 file(GLOB ALL_HEADERS "*.h" "./diskoperation/*.h" "./diskoperation/filesystems/*.h")
 
 include_directories(../basestruct)
+include_directories(../log)
 link_directories(${PROJECT_BINARY_DIR})
 
 add_executable(${PROJECT_NAME} ${ALL_SOURCES} ${ALL_HEADERS})
@@ -42,6 +43,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 )
 #link_libraries(../basestruct/basestruct)
 target_link_libraries(${PROJECT_NAME} ${LINK_LIBS} basestruct)
+target_link_libraries(${PROJECT_NAME} ${LINK_LIBS} ddmlog)
 
 
 set(CMAKE_INSTALL_PREFIX /usr)

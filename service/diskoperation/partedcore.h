@@ -1,5 +1,6 @@
 #ifndef PARTEDCORE_H
 #define PARTEDCORE_H
+#include "log.h"
 #include "device.h"
 #include "supportedfilesystems.h"
 #include <QObject>
@@ -77,6 +78,11 @@ public:
      * @param true错误false正常
      */
     bool detectionPartitionTableError(const QString &devicePath);
+    /**
+     * @brief USB设备拔出，自动卸载
+     * @param 无
+     */
+    void autoUmount();
     /**
      * @brief 个人测试
      * @param 无
@@ -167,6 +173,7 @@ signals:
     void sigUpdateUsb();
 public slots:
     void slotRefreshDeviceInfo();
+    void autoMount();
 
 private:
     QVector<PedPartitionFlag> flags;

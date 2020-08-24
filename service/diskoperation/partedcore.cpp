@@ -1524,7 +1524,7 @@ bool PartedCore::mount(const QString &mountpath)
             qDebug() << line;
             if(line.contains("/dev/sda4") || file.atEnd())
             {
-                QString str = QString("%1      %2      %3      defaults        0 0\n").arg(partitionpath).arg(mountpath).arg(Utils::FSTypeToString(type));
+                QString str = QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(curpartition.uuid).arg(mountpath).arg(Utils::FSTypeToString(type));
                 list << line;
                 list << str;
                 break;
@@ -1546,70 +1546,61 @@ bool PartedCore::mount(const QString &mountpath)
             qDebug() << __FUNCTION__ << "Permanent mount open file error";
         }
     }
-    qDebug() << __FUNCTION__ << "Mount end";
     emit sigRefreshDeviceInfo();
     return success;
 }
 
-bool PartedCore::autoMount(const QString &partitionPath, const QString &fstype, const QString &mountPath)
-{
-    qDebug() << __FUNCTION__ << "Automount start";
-    bool success = true;
-    QString output, errstr;
-    QString cmd;
-    FSType type = Utils::StringToFSType(fstype);
-    QDir dir;
-    if(!dir.mkpath(mountPath))
-    {
-        qDebug() << __FUNCTION__ << "Automount create floder error";
-        success = false;
-        return success;
-    }
-    //qDebug() << __FUNCTION__ << mountPath << partitionPath << fstype;
-    if (type == FS_FAT32 ||
-            type == FS_FAT16) {
-        cmd = QString("mount -v %1 %2 -o -o dmask=000,fmask=111").arg(partitionPath).arg(mountPath);
-    } else if (type == FS_HFS) {
-        cmd = QString("mount -v %1 %2 -o -o dir_umask=000,file_umask=111").arg(partitionPath).arg(mountPath);
-    } else {
-        cmd = QString("mount -v %1 %2").arg(partitionPath).arg(mountPath);
-    }
-    int exitcode = Utils::executcmd(cmd, output, errstr);
-    if (exitcode != 0) {
-        qDebug() << __FUNCTION__ << "Automount order error" << output;
-        success = false;
-        return success;
-    }
-    QFile file("/etc/fstab");
-    if (file.open(QIODevice::ReadWrite | QIODevice::Append)) {
-        QTextStream out(&file);
-        QString mountBuf;
-        mountBuf = QString("%1      %2      %3      defaults        0 0").arg(partitionPath).arg(mountPath).arg(fstype);
-        out << mountBuf;
-        out.flush();
-        file.close();
-    }
-    else {
-        qDebug() << __FUNCTION__ << "Automount open file error";
-        success = false;
-    }
-    qDebug() << __FUNCTION__ << "Automount end";
-    return success;
-}
+//bool PartedCore::autoMount(const QString &partitionPath, const QString &fstype, const QString &mountPath,const QString &uuid)
+//{
+//    qDebug() << __FUNCTION__ << "Automount start";
+//    bool success = true;
+//    QFile file("/etc/fstab");
+//    if (file.open(QIODevice::ReadWrite | QIODevice::Append)) {
+//        QTextStream out(&file);
+//        QString mountBuf;
+//        mountBuf = QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(uuid).arg(mountPath).arg(fstype);
+//        out << mountBuf;
+//        out.flush();
+//        file.close();
+//    }
+//    else {
+//        qDebug() << __FUNCTION__ << "Automount open file error";
+//        success = false;
+//    }
+//    QString output, errstr;
+//    QString cmd;
+//    FSType type = Utils::StringToFSType(fstype);
+//    QDir dir;
+//    if(!dir.mkpath(mountPath))
+//    {
+//        qDebug() << __FUNCTION__ << "Automount create floder error";
+//        success = false;
+//        return success;
+//    }
+//    //qDebug() << __FUNCTION__ << mountPath << partitionPath << fstype;
+//    if (type == FS_FAT32 ||
+//            type == FS_FAT16) {
+//        cmd = QString("mount -v %1 %2 -o -o dmask=000,fmask=111").arg(partitionPath).arg(mountPath);
+//    } else if (type == FS_HFS) {
+//        cmd = QString("mount -v %1 %2 -o -o dir_umask=000,file_umask=111").arg(partitionPath).arg(mountPath);
+//    } else {
+//        cmd = QString("mount -v %1 %2").arg(partitionPath).arg(mountPath);
+//    }
+//    int exitcode = Utils::executcmd(cmd, output, errstr);
+//    if (exitcode != 0) {
+//        qDebug() << __FUNCTION__ << "Automount order error" << output;
+//        success = false;
+//        return success;
+//    }
+//    qDebug() << __FUNCTION__ << "Automount end";
+//    return success;
+//}
 
 bool PartedCore::unmount()
 {
     qDebug() << __FUNCTION__ << "Unmount start";
-    QString output, errstr;
-    bool bsuccess = true;
-    QVector<QString> mountpoints = curpartition.get_mountpoints();
-    for (QString path : mountpoints) {
-        QString cmd = QString("umount -v %1").arg(path);
-        int exitcode = Utils::executcmd(cmd, output, errstr);
-        if (0 != exitcode)
-            bsuccess = false;
-    }
     //永久卸载
+    bool bsuccess = true;
     qDebug() << __FUNCTION__ << "Permanent unmount start";
     QString partitionPath = curpartition.get_path();
     QFile file("/etc/fstab");
@@ -1646,10 +1637,14 @@ bool PartedCore::unmount()
             bsuccess = false;
         }
     }
-    QString cmd = QString("source /etc/fstab");
-    int exitcode = Utils::executcmd(cmd, output, errstr);
-    if (0 != exitcode)
-        bsuccess = false;
+    QString output, errstr;
+    QVector<QString> mountpoints = curpartition.get_mountpoints();
+    for (QString path : mountpoints) {
+        QString cmd = QString("umount -v %1").arg(path);
+        int exitcode = Utils::executcmd(cmd, output, errstr);
+        if (0 != exitcode)
+            bsuccess = false;
+    }
     emit sigRefreshDeviceInfo();
     qDebug() << __FUNCTION__ << "Unmount end";
     return bsuccess;
@@ -1666,13 +1661,6 @@ bool PartedCore::create(const PartitionVec &infovec)
             qDebug() << __FUNCTION__ << "Create Patitione error";
             bsuccess = false;
             break;
-        }
-        else {
-            if(!autoMount(new_partition.get_path(), Utils::FSTypeToString(new_partition.fstype), QString("/mnt%1").arg(new_partition.get_path()))) {
-                qDebug() << __FUNCTION__ << "Create Patitione automount error";
-                bsuccess = false;
-                break;
-            }
         }
     }
     emit sigRefreshDeviceInfo();

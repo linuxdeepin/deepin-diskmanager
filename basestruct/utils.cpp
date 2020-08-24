@@ -23,7 +23,7 @@ QString Utils::find_program_in_path(const QString &proname)
 
 int Utils::executecmdwithartlist(const QString &strcmd, const QStringList &strarg, QString &output, QString &error)
 {
-    qDebug() << "Utils::executecmdwithartlist----+=" << strcmd;
+    //qDebug() << "Utils::executecmdwithartlist----+=" << strcmd;
     QProcess proc;
     // proc.open(QIODevice::ReadWrite);
     //proc.start(strcmd, strarg);
@@ -35,7 +35,7 @@ int Utils::executecmdwithartlist(const QString &strcmd, const QStringList &strar
     output = proc.readAllStandardOutput().data();
     error = proc.errorString();
     int exitcode = proc.exitCode();
-    qDebug() << "Utils::executecmdwithartlist----" << output << error;
+    //qDebug() << "Utils::executecmdwithartlist----" << output << error;
     proc.close();
     return exitcode;
 }

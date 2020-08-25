@@ -1210,6 +1210,7 @@ bool PartedCore::create_filesystem(const Partition &partition)
         qDebug() << __FUNCTION__ << QString("partition contains open LUKS encryption for a create file system only step");
         return false;
     }
+    qDebug() << __FUNCTION__ << partition.sectors_used << partition.sectors_unused;
     qDebug() << __FUNCTION__ << QString("create new %1 file system").arg(partition.fstype);
     bool succes = false;
     FileSystem *p_filesystem = nullptr;
@@ -1538,7 +1539,7 @@ bool PartedCore::mount(const QString &mountpath)
         {
             QByteArray line = file.readLine();//获取数据
             qDebug() << line;
-            if(line.contains("/dev/sda4") || file.atEnd())
+            if(line.contains(curpartition.uuid.toStdString().c_str()) || file.atEnd())
             {
                 QString str = QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(curpartition.uuid).arg(mountpath).arg(Utils::FSTypeToString(type));
                 list << line;
@@ -1618,7 +1619,7 @@ bool PartedCore::unmount()
     //永久卸载
     bool bsuccess = true;
     qDebug() << __FUNCTION__ << "Permanent unmount start";
-    QString partitionPath = curpartition.get_path();
+    QString partitionUuid = curpartition.uuid;
     QFile file("/etc/fstab");
     QString displayString;
     if (!file.open(QIODevice::ReadOnly))//打开指定文件
@@ -1633,7 +1634,7 @@ bool PartedCore::unmount()
             QByteArray line = file.readLine();//获取数据
             QString str = line;
             qDebug() << line;
-            if(str.contains(partitionPath))
+            if(str.contains(partitionUuid))
             {
                 continue;
             }

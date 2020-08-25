@@ -151,10 +151,10 @@ void EXT2::set_used_sectors(Partition &partition)
                 if (index < output.length())
                     sscanf(output.mid(index, strmatch.length()).toLatin1(), "Free blocks: %lld", &N);
             }
-            if (T > -1 && N > -1 && S > -1) {
-                T = qRound(T * (S / double(partition.sector_size)));
-                N = qRound(N * (S / double(partition.sector_size)));
 
+            if (T > -1 && N > -1 && S > -1) {
+                T = qRound64(T * (S / double(partition.sector_size)));
+                N = qRound64(N * (S / double(partition.sector_size)));
                 partition.set_sector_usage(T, N);
                 partition.fs_block_size = S;
             }

@@ -48,7 +48,7 @@ void MountDialog::initUi()
     addButton(tr("Cancel"), true, ButtonNormal);
     okcode = addButton(tr("Mount"), false, ButtonRecommend);
 //    getButton(okcode)->setDisabled(true);
-    setOnButtonClickedClose(false);
+//    setOnButtonClickedClose(false);
 }
 
 void MountDialog::initConnection()
@@ -80,13 +80,16 @@ void MountDialog::slotbuttonClicked(int index, const QString &text)
         QDir dir(m_ComboBox->currentText());
         if (!dir.isEmpty()) {
             MessageBox messageBox;
-            messageBox.setWarings(tr("The data under this mount point would be lost, please mount the directory to another location"), "", tr("OK"));
-            messageBox.exec();
+            messageBox.setWarings(tr("The data under this mount point would be lost, please mount the directory to another location"), "", tr("OK"), tr("Cancel"));
+            if (messageBox.exec() == 1) {
+                DMDbusHandler::instance()->mount(m_ComboBox->currentText());
+//                close();
+            }
         } else {
             DMDbusHandler::instance()->mount(m_ComboBox->currentText());
-            close();
+//            close();
         }
-    } else {
+    }/* else {
         close();
-    }
+    }*/
 }

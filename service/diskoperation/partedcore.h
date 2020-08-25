@@ -84,6 +84,11 @@ public:
      */
     void autoUmount();
     /**
+     * @brief USB设备插入，自动挂载
+     * @param 无
+     */
+    void autoMount();
+    /**
      * @brief 个人测试
      * @param 无
      */
@@ -173,7 +178,6 @@ signals:
     void sigUpdateUsb();
 public slots:
     void slotRefreshDeviceInfo();
-    void autoMount();
 
 private:
     QVector<PedPartitionFlag> flags;

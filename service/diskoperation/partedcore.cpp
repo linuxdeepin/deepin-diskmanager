@@ -21,7 +21,7 @@ PartedCore::PartedCore(QObject *parent)
     : QObject(parent)
 {
     connect(this, &PartedCore::sigRefreshDeviceInfo, this, &PartedCore::slotRefreshDeviceInfo);
-    connect(this, &PartedCore::sigUpdateUsb, this, &PartedCore::autoMount);
+    //connect(this, &PartedCore::sigUpdateUsb, this, &PartedCore::autoMount);
     qDebug() << __FUNCTION__ << "^^1";
     for (PedPartitionFlag flag = ped_partition_flag_next(static_cast<PedPartitionFlag>(NULL));
             flag; flag = ped_partition_flag_next(flag))
@@ -1487,21 +1487,6 @@ void PartedCore::slotRefreshDeviceInfo()
     emit sigUpdateDeviceInfo(inforesult);
 }
 
-void PartedCore::autoMount()
-{
-    //因为永久挂载的原因需要先执行mount -a让系统文件挂载生效
-    qDebug() << __FUNCTION__ << "solt automount start";
-    QString output,errstr;
-    QString cmd = QString("mount -a");
-    int exitcode = Utils::executcmd(cmd, output, errstr);
-    if(exitcode != 0)
-    {
-        qDebug() << __FUNCTION__ << output;
-    }
-    emit sigRefreshDeviceInfo();
-    qDebug() << __FUNCTION__ << "solt automount end";
-}
-
 bool PartedCore::mount(const QString &mountpath)
 {
     qDebug() << __FUNCTION__ << "Mount start";
@@ -2271,9 +2256,10 @@ bool PartedCore::detectionPartitionTableError(const QString &devicePath)
 void PartedCore::updateUsb()
 {
     qDebug() << __FUNCTION__ << "USB add update start";
-    //sleep(5);
+    sleep(5);
     emit sigRefreshDeviceInfo();
     emit sigUpdateUsb();
+    autoMount();
     qDebug() << __FUNCTION__ << "USB add update end";
 }
 
@@ -2284,6 +2270,20 @@ void PartedCore::updateUsbRemove()
     emit sigUpdateUsb();
     autoUmount();
     qDebug() << __FUNCTION__ << "USB add update end";
+}
+
+void PartedCore::autoMount()
+{
+    //因为永久挂载的原因需要先执行mount -a让系统文件挂载生效
+    qDebug() << __FUNCTION__ << "solt automount start";
+    QString output,errstr;
+    QString cmd = QString("mount -a");
+    int exitcode = Utils::executcmd(cmd, output, errstr);
+    if(exitcode != 0) {
+        qDebug() << __FUNCTION__ << output;
+    }
+    emit sigRefreshDeviceInfo();
+    qDebug() << __FUNCTION__ << "solt automount end";
 }
 
 void PartedCore::autoUmount()

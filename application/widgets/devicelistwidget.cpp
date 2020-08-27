@@ -62,16 +62,16 @@ void DeviceListWidget::initUi()
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     this->setLayout(layout);
-    m_treeview = new DmTreeview(this);
-    m_treeview->setContextMenuPolicy(Qt::CustomContextMenu);
-    layout->addWidget(m_treeview);
+    m_treeView = new DmTreeview(this);
+    m_treeView->setContextMenuPolicy(Qt::CustomContextMenu);
+    layout->addWidget(m_treeView);
 }
 
 void DeviceListWidget::initConnection()
 {
     connect(DMDbusHandler::instance(), &DMDbusHandler::sigUpdateDeviceInfo, this, &DeviceListWidget::slotUpdateDeviceInfo);
-    connect(m_treeview, &DmTreeview::sigCurSelectChanged, DMDbusHandler::instance(), &DMDbusHandler::slotsetCurSelect);
-    connect(m_treeview, &QTreeView::customContextMenuRequested, this, &DeviceListWidget::treeMenu);
+    connect(m_treeView, &DmTreeview::sigCurSelectChanged, DMDbusHandler::instance(), &DMDbusHandler::slotsetCurSelect);
+    connect(m_treeView, &QTreeView::customContextMenuRequested, this, &DeviceListWidget::treeMenu);
     connect(DMDbusHandler::instance(), &DMDbusHandler::deletePartitionMessage, this, &DeviceListWidget::onDeletePartition);
     connect(DMDbusHandler::instance(), &DMDbusHandler::hidePartitionMessage, this, &DeviceListWidget::onHidePartition);
     connect(DMDbusHandler::instance(), &DMDbusHandler::showPartitionMessage, this, &DeviceListWidget::onShowPartition);
@@ -80,11 +80,11 @@ void DeviceListWidget::initConnection()
 
 void DeviceListWidget::treeMenu(const QPoint &pos)
 {
-    QModelIndex curIndex = m_treeview->indexAt(pos);      //当前点击的元素的index
+    QModelIndex curIndex = m_treeView->indexAt(pos);      //当前点击的元素的index
     QModelIndex index = curIndex.sibling(curIndex.row(),0); //该行的第1列元素的index
 
     if (index.isValid()) {
-        m_curDiskInfoData = m_treeview->getcuritem()->data().value<DiskInfoData>();
+        m_curDiskInfoData = m_treeView->getcuritem()->data().value<DiskInfoData>();
         if (m_curDiskInfoData.level == 0) {
             QMenu *menu = new QMenu();
 
@@ -169,18 +169,18 @@ void DeviceListWidget::onTreeMenuClicked()
     if (action->objectName() == "Disk info") {
         m_curChooseDevicePath = m_curDiskInfoData.diskpath;
 
-        DiskInfoDisplayDialog *diskInfoDisplayDialog = new DiskInfoDisplayDialog(m_curDiskInfoData.diskpath);
-        m_diskInfoDisplayDialog = diskInfoDisplayDialog;
-        diskInfoDisplayDialog->exec();
+        m_diskInfoDisplayDialog = new DiskInfoDisplayDialog(m_curDiskInfoData.diskpath);
+//        m_diskInfoDisplayDialog = diskInfoDisplayDialog;
+        m_diskInfoDisplayDialog->exec();
 
         m_curChooseDevicePath = "";
         m_diskInfoDisplayDialog = nullptr;
     } else if (action->objectName() == "Check health") {
         m_curChooseDevicePath = m_curDiskInfoData.diskpath;
 
-        DiskHealthDetectionDialog *diskHealthDetectionDialog = new DiskHealthDetectionDialog(m_curDiskInfoData.diskpath);
-        m_diskHealthDetectionDialog = diskHealthDetectionDialog;
-        diskHealthDetectionDialog->exec();
+        m_diskHealthDetectionDialog = new DiskHealthDetectionDialog(m_curDiskInfoData.diskpath);
+//        m_diskHealthDetectionDialog = diskHealthDetectionDialog;
+        m_diskHealthDetectionDialog->exec();
 
         m_curChooseDevicePath = "";
         m_diskHealthDetectionDialog = nullptr;
@@ -190,9 +190,9 @@ void DeviceListWidget::onTreeMenuClicked()
             QString deviceInfo = QString("%1(%2)").arg(m_curDiskInfoData.diskpath).arg(m_curDiskInfoData.disksize);
             m_curChooseDevicePath = m_curDiskInfoData.diskpath;
 
-            PartitionTableErrorsInfoDialog *partitionTableErrorsInfoDialog = new PartitionTableErrorsInfoDialog(deviceInfo);
-            m_partitionTableErrorsInfoDialog = partitionTableErrorsInfoDialog;
-            partitionTableErrorsInfoDialog->exec();
+            m_partitionTableErrorsInfoDialog = new PartitionTableErrorsInfoDialog(deviceInfo);
+//            m_partitionTableErrorsInfoDialog = partitionTableErrorsInfoDialog;
+            m_partitionTableErrorsInfoDialog->exec();
 
             m_curChooseDevicePath = "";
             m_partitionTableErrorsInfoDialog = nullptr;
@@ -327,11 +327,11 @@ void DeviceListWidget::slotUpdateDeviceInfo()
     //更新DmTreeview  lx
     //设置当前选项
     auto handler = DMDbusHandler::instance();
-    num = handler->getCurPartititonInfo().partition_number;
-    devicenum_ = m_treeview->currentTopNum();
-    qDebug() << flag << m_treeview->currentTopNum();
-    devicepath_ = handler->getCurPartititonInfo().device_path;
-    m_treeview->m_model->clear();
+    m_num = handler->getCurPartititonInfo().partition_number;
+    m_deviceNum = m_treeView->currentTopNum();
+    qDebug() << m_flag << m_treeView->currentTopNum();
+    m_devicePath = handler->getCurPartititonInfo().device_path;
+    m_treeView->m_model->clear();
     DeviceInfoMap infomap = DMDbusHandler::instance()->probDeviceInfo();
 
     for (auto it = infomap.begin(); it != infomap.end(); it++) {
@@ -367,14 +367,14 @@ void DeviceListWidget::slotUpdateDeviceInfo()
             m_box->childs.append(m_childbox);
         }
 
-        m_treeview->addTopItem(m_box, additem);
+        m_treeView->addTopItem(m_box, m_additem);
     }
-    additem = 1;
-    if (flag == 0) {
-        m_treeview->setDefaultdmItem();
+    m_additem = 1;
+    if (m_flag == 0) {
+        m_treeView->setDefaultdmItem();
     } else {
-        m_treeview->setRefreshItem(devicenum_, m_treeview->currentNum());
+        m_treeView->setRefreshItem(m_deviceNum, m_treeView->currentNum());
     }
-    flag += 1;
-    qDebug() << flag << m_treeview->currentNum();
+    m_flag += 1;
+    qDebug() << m_flag << m_treeView->currentNum();
 }

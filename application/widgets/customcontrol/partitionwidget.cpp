@@ -603,7 +603,7 @@ void PartitionWidget::applyBtnSlot()
         else
             newpart.sector_end = newpart.sector_start + m_patrinfo.at(i).count;
         qDebug() << beforend << curinfo.sector_start << curinfo.sector_end;
-        beforend = newpart.sector_end + 1;
+
         newpart.fstype = Utils::StringToFSType(m_patrinfo.at(i).fstype);
         newpart.filesystem_label = m_patrinfo.at(i).labelname;
         newpart.alignment = ALIGN_MEBIBYTE;
@@ -630,7 +630,11 @@ void PartitionWidget::applyBtnSlot()
                 || newpart .type == TYPE_LOGICAL
                 || newpart .sector_start <= (MEBIBYTE / newpart .sector_size)) {
             newpart.sector_start += MEBIBYTE / newpart.sector_size;
+            newpart.sector_end += MEBIBYTE / newpart.sector_size;
         }
+
+        beforend = newpart.sector_end + 1;
+
         if (beforend > curinfo.sector_end && i < m_patrinfo.size() - 1) {
             bcancreate = false;
             //            qDebug() << "create too partition ,no enough space";
@@ -638,10 +642,10 @@ void PartitionWidget::applyBtnSlot()
         } else {
             if (newpart.sector_end > curinfo.sector_end)
                 newpart.sector_end = curinfo.sector_end;
-            Sector diff = 0;
-            diff = (newpart.sector_end + 1) % (MEBIBYTE / newpart.sector_size);
-            if (diff)
-                newpart.sector_end -= diff;
+//            Sector diff = 0;
+//            diff = (newpart.sector_end + 1) % (MEBIBYTE / newpart.sector_size);
+//            if (diff)
+//                newpart.sector_end -= diff;
             partvector.push_back(newpart);
         }
     }

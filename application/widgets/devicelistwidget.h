@@ -35,6 +35,11 @@ class DiskInfoDisplayDialog;
 class DiskHealthDetectionDialog;
 class PartitionTableErrorsInfoDialog;
 
+/**
+ * @class DeviceListWidget
+ * @brief 磁盘设备树列表类
+ */
+
 class DeviceListWidget : public DWidget
 {
     Q_OBJECT
@@ -43,13 +48,20 @@ public:
     ~DeviceListWidget();
 
 private:
+
+    /**
+     * @brief 初始化界面
+     */
     void initUi();
+
+    /**
+     * @brief 初始化信号连接
+     */
     void initConnection();
-    void add();
-    DmTreeview *m_treeview = nullptr;
+
+    DmTreeview *m_treeView = nullptr;
 
 signals:
-    void sigPartitionSelectChanged();
 
 public slots:
     /**
@@ -92,12 +104,11 @@ public slots:
     void onTreeMenuClicked();
 
 private:
-    int flag = 0;
-    int num = 0;
-    int a = 0;
-    int additem = 0;
-    QString devicepath_;
-    int devicenum_ ;
+    int m_flag = 0;
+    int m_num = 0;
+    int m_additem = 0;
+    QString m_devicePath;
+    int m_deviceNum;
     DiskInfoData m_curDiskInfoData;
     QString m_curChooseDevicePath;
     DiskInfoDisplayDialog *m_diskInfoDisplayDialog;

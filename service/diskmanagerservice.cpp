@@ -37,7 +37,7 @@ void DiskManagerService::getalldevice()
 {
     qDebug() << "DiskManagerService::getalldevice";
     DeviceInfoMap infores = m_partedcore->getAllDeviceinfo();
-    Q_EMIT updateDeviceInfo(infores);
+    Q_EMIT sigUpdateDeviceInfo(infores);
 }
 
 void DiskManagerService::setCurSelect(const PartitionInfo &info)
@@ -86,11 +86,11 @@ stCustest DiskManagerService::interfacetest()
 
 void DiskManagerService::initConnection()
 {
-    connect(m_partedcore, &PartedCore::updateDeviceInfo, this, &DiskManagerService::updateDeviceInfo);
-    connect(m_partedcore, &PartedCore::deletePatition, this, &DiskManagerService::deletePatition);
-    connect(m_partedcore, &PartedCore::hidePartitionInfo, this, &DiskManagerService::hidePartitionInfo);
-    connect(m_partedcore, &PartedCore::showPartitionInfo, this, &DiskManagerService::showPartitionInfo);
-    connect(m_partedcore, &PartedCore::usbUpdated, this, &DiskManagerService::usbUpdated);
+    connect(m_partedcore, &PartedCore::sigUpdateDeviceInfo, this, &DiskManagerService::sigUpdateDeviceInfo);
+    connect(m_partedcore, &PartedCore::sigDeletePatition, this, &DiskManagerService::sigDeletePatition);
+    connect(m_partedcore, &PartedCore::sigHidePartition, this, &DiskManagerService::sigHidePartition);
+    connect(m_partedcore, &PartedCore::sigShowPartition, this, &DiskManagerService::sigShowPartition);
+    connect(m_partedcore, &PartedCore::sigUpdateUsb, this, &DiskManagerService::sigUpdateUsb);
 }
 
 HardDiskInfo DiskManagerService::onGetDeviceHardInfo(const QString &devicepath)

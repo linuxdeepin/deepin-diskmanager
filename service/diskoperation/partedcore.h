@@ -1,30 +1,3 @@
-/**
- * @copyright 2020-2020 Uniontech Technology Co., Ltd.
- *
- * @file partedcore.h
- *
- * @brief 磁盘操作类
- *
- * @date 2020-08-28 11:07
- *
- * Author: liweigang  <liweigang@uniontech.com>
- *
- * Maintainer: liweigang  <liweigang@uniontech.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
-
 #ifndef PARTEDCORE_H
 #define PARTEDCORE_H
 #include "log.h"
@@ -38,11 +11,6 @@
 #include <QStringList>
 #include <QFile>
 #include <QDir>
-
-/**
- * @class PartedCore
- * @brief 磁盘操作类
- */
 
 namespace DiskManager {
 
@@ -68,87 +36,71 @@ public:
     //new add by li 2020/7/20
     /**
      * @brief 获取硬盘硬件信息
-     * @param devicePath 磁盘路径
      * @return 返回硬盘硬件信息
      */
-    HardDiskInfo getDeviceHardInfo(const QString &devicePath);
-
+    HardDiskInfo getDeviceHardInfo(const QString &devicepath);
+    //HardDiskInfo getDeviceHardInfo();
     /**
      * @brief 获取硬盘状态信息
-     * @param devicePath 磁盘路径
      * @return 返回硬盘状态信息
      */
-    QString getDeviceHardStatus(const QString &devicePath);
-
+    QString getDeviceHardStatus(const QString &devicepath);
+    //QString getDeviceHardStatus();
     /**
      * @brief 获取硬盘健康信息
-     * @param devicePath 磁盘路径
      * @return 返回硬盘健康信息
      */
-    HardDiskStatusInfoList getDeviceHardStatusInfo(const QString &devicePath);
-
+    HardDiskStatusInfoList getDeviceHardStatusInfo(const QString &devicepath);
+    //HardDiskStatusInfoList getDeviceHardStatusInfo();
     /**
      * @brief 删除分区实际操作
-     * @param devicePath 磁盘路径
-     * @param parttitionPath 分区路径
-     * @return true成功false失败
+     * @param true成功false失败
      * @信号返回值错误信息代表1：设备读取失败2：代表该分区不存在3：执行删除分区操作失败4：报告内核失败（但前几步执行成功，该分区已删除，提示用户重启（系统命令就是这么操作））
      */
     bool deletePartition(const QString &devicePath, const QString &parttitionPath);
-
     /**
      * @brief 隐藏分区
-     * @param devicePath 磁盘路径
-     * @param parttitionPath 分区路径
-     * @return true成功false失败
+     * @param true成功false失败
      */
     bool hidePartition(const QString &devicePath, const QString &parttitionPath);
-
     /**
      * @brief 显示分区
-     * @param devicePath 磁盘路径
-     * @param parttitionPath 分区路径
-     * @return true成功false失败
+     * @param true成功false失败
      */
     bool showPartition(const QString &devicePath, const QString &parttitionPath);
-
     /**
      * @brief 获取隐藏分区是否隐藏属性
-     * @param devicePath 磁盘路径
-     * @param parttitionPath 分区路径
-     * @return 1隐藏0没隐藏
+     * @param 1隐藏0没隐藏
      */
     int getPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath);
-
     /**
      * @brief 分区表错误检测
-     * @param devicePath 磁盘路径
-     * @return true错误false正常
+     * @param true错误false正常
      */
     bool detectionPartitionTableError(const QString &devicePath);
-
     /**
      * @brief USB设备拔出，自动卸载
+     * @param 无
      */
     void autoUmount();
-
     /**
      * @brief USB设备插入，自动挂载
+     * @param 无
      */
     void autoMount();
-
     /**
      * @brief 个人测试
+     * @param 无
      */
     int test();
-
     /**
      * @brief USB刷新(插入)
+     * @param 无
      */
     void updateUsb();
-
     /**
      * @brief USB刷新(拔出)
+     * @param 无
      */
     void updateUsbRemove();
 public:
@@ -218,14 +170,14 @@ private:
     bool create(Partition &partition);
     bool create_partition(Partition &new_partition, Sector min_size = 0);
 signals:
-    void updateDeviceInfo(const DeviceInfoMap &infomap);
-    void refreshDeviceInfo();
-    void deletePatition(const QString &deleteMessage);
-    void hidePartitionInfo(const QString &hideMessage);
-    void showPartitionInfo(const QString &showMessage);
-    void usbUpdated();
+    void sigUpdateDeviceInfo(const DeviceInfoMap &infomap);
+    void sigRefreshDeviceInfo();
+    void sigDeletePatition(const QString &deleteMessage);
+    void sigHidePartition(const QString &hideMessage);
+    void sigShowPartition(const QString &showMessage);
+    void sigUpdateUsb();
 public slots:
-    void onRefreshDeviceInfo();
+    void slotRefreshDeviceInfo();
 
 private:
     QVector<PedPartitionFlag> flags;

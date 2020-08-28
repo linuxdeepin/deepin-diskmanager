@@ -17,11 +17,11 @@ public:
 
 Q_SIGNALS:
     Q_SCRIPTABLE void MessageReport(const QString &msg);
-    Q_SCRIPTABLE void sigUpdateDeviceInfo(const DeviceInfoMap &infomap);
-    Q_SCRIPTABLE void sigDeletePatition(const QString &deleteMessage);
-    Q_SCRIPTABLE void sigHidePartition(const QString &hideMessage);
-    Q_SCRIPTABLE void sigShowPartition(const QString &showMessage);
-    Q_SCRIPTABLE void sigUpdateUsb();
+    Q_SCRIPTABLE void updateDeviceInfo(const DeviceInfoMap &infomap);
+    Q_SCRIPTABLE void deletePatition(const QString &deleteMessage);
+    Q_SCRIPTABLE void hidePartitionInfo(const QString &hideMessage);
+    Q_SCRIPTABLE void showPartitionInfo(const QString &showMessage);
+    Q_SCRIPTABLE void usbUpdated();
 public Q_SLOTS:
     Q_SCRIPTABLE void Quit();
     Q_SCRIPTABLE void Start();

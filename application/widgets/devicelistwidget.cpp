@@ -61,7 +61,7 @@ void DeviceListWidget::initUi()
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
-    this->setLayout(layout);
+    setLayout(layout);
     m_treeView = new DmTreeview(this);
     m_treeView->setContextMenuPolicy(Qt::CustomContextMenu);
     layout->addWidget(m_treeView);
@@ -69,7 +69,7 @@ void DeviceListWidget::initUi()
 
 void DeviceListWidget::initConnection()
 {
-    connect(DMDbusHandler::instance(), &DMDbusHandler::sigUpdateDeviceInfo, this, &DeviceListWidget::slotUpdateDeviceInfo);
+    connect(DMDbusHandler::instance(), &DMDbusHandler::sigUpdateDeviceInfo, this, &DeviceListWidget::onUpdateDeviceInfo);
     connect(m_treeView, &DmTreeview::sigCurSelectChanged, DMDbusHandler::instance(), &DMDbusHandler::slotsetCurSelect);
     connect(m_treeView, &QTreeView::customContextMenuRequested, this, &DeviceListWidget::treeMenu);
     connect(DMDbusHandler::instance(), &DMDbusHandler::deletePartitionMessage, this, &DeviceListWidget::onDeletePartition);
@@ -83,172 +83,185 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
     QModelIndex curIndex = m_treeView->indexAt(pos);      //当前点击的元素的index
     QModelIndex index = curIndex.sibling(curIndex.row(),0); //该行的第1列元素的index
 
-    if (index.isValid()) {
-        m_curDiskInfoData = m_treeView->getcuritem()->data().value<DiskInfoData>();
-        if (m_curDiskInfoData.level == 0) {
-            QMenu *menu = new QMenu();
+    if (!index.isValid()) {
+        return;
+    }
 
-            QAction *actionInfo = new QAction();
-            actionInfo->setText(tr("Disk info")); // 磁盘信息
-            actionInfo->setObjectName("Disk info");
-            menu->addAction(actionInfo);
-            connect(actionInfo, &QAction::triggered, this, &DeviceListWidget::onTreeMenuClicked);
+    m_curDiskInfoData = m_treeView->getcuritem()->data().value<DiskInfoData>();
+    if (m_curDiskInfoData.level == 0) {
+        QMenu *menu = new QMenu();
 
-    //        menu->addSeparator();    //添加一个分隔线
-            QMenu *itemChildMenu = new QMenu();
-            itemChildMenu->setTitle(tr("Health management")); // 健康管理
-            menu->addMenu(itemChildMenu);
+        QAction *actionInfo = new QAction();
+        actionInfo->setText(tr("Disk info")); // 磁盘信息
+        actionInfo->setObjectName("Disk info");
+        menu->addAction(actionInfo);
+        connect(actionInfo, &QAction::triggered, this, &DeviceListWidget::onDiskInfoClicked);
 
-            QAction *actionHealthDetection = new QAction();
-            actionHealthDetection->setText(tr("Check health")); // 硬盘健康检测
-            actionHealthDetection->setObjectName("Check health");
-            itemChildMenu->addAction(actionHealthDetection);
-            connect(actionHealthDetection, &QAction::triggered, this, &DeviceListWidget::onTreeMenuClicked);
+        //        menu->addSeparator();    //添加一个分隔线
+        QMenu *itemChildMenu = new QMenu();
+        itemChildMenu->setTitle(tr("Health management")); // 健康管理
+        menu->addMenu(itemChildMenu);
 
-            QAction *actionCheckError = new QAction();
-            actionCheckError->setText(tr("Check partition table error")); // 分区表错误检测
-            actionCheckError->setObjectName("Check partition table error");
-            itemChildMenu->addAction(actionCheckError);
-            connect(actionCheckError, &QAction::triggered, this, &DeviceListWidget::onTreeMenuClicked);
+        QAction *actionHealthDetection = new QAction();
+        actionHealthDetection->setText(tr("Check health")); // 硬盘健康检测
+        actionHealthDetection->setObjectName("Check health");
+        itemChildMenu->addAction(actionHealthDetection);
+        connect(actionHealthDetection, &QAction::triggered, this, &DeviceListWidget::onDiskCheckHealthClicked);
 
-//            QAction *actionVerifyRepair = new QAction();
-//            actionVerifyRepair->setText(tr("Verify or repair bad sectors")); // 坏道检测与修复
-//            actionVerifyRepair->setObjectName("Verify or repair bad sectors");
-//            itemChildMenu->addAction(actionVerifyRepair);
+        QAction *actionCheckError = new QAction();
+        actionCheckError->setText(tr("Check partition table error")); // 分区表错误检测
+        actionCheckError->setObjectName("Check partition table error");
+        itemChildMenu->addAction(actionCheckError);
+        connect(actionCheckError, &QAction::triggered, this, &DeviceListWidget::onPartitionErrorCheckClicked);
 
-            menu->exec(QCursor::pos());  //显示菜单
+        //            QAction *actionVerifyRepair = new QAction();
+        //            actionVerifyRepair->setText(tr("Verify or repair bad sectors")); // 坏道检测与修复
+        //            actionVerifyRepair->setObjectName("Verify or repair bad sectors");
+        //            itemChildMenu->addAction(actionVerifyRepair);
+
+        menu->exec(QCursor::pos());  //显示菜单
+    } else {
+        QMenu *menu = new QMenu();
+
+        QAction *actionHidePartition = new QAction();
+        actionHidePartition->setText(tr("Hide partition")); // 隐藏分区
+        actionHidePartition->setObjectName("Hide partition");
+        menu->addAction(actionHidePartition);
+        connect(actionHidePartition, &QAction::triggered, this, &DeviceListWidget::onHidePartitionClicked);
+
+        QAction *actionShowPartition = new QAction();
+        actionShowPartition->setText(tr("Unhide partition")); // 显示分区
+        actionShowPartition->setObjectName("Unhide partition");
+        menu->addAction(actionShowPartition);
+        connect(actionShowPartition, &QAction::triggered, this, &DeviceListWidget::onShowPartitionClicked);
+        //            actionShowPartition->setDisabled(true); // 将按钮置为不可选
+
+        QAction *actionDelete = new QAction();
+        actionDelete->setText(tr("Delete partition")); // 删除分区
+        actionDelete->setObjectName("Delete partition");
+        menu->addAction(actionDelete);
+        connect(actionDelete, &QAction::triggered, this, &DeviceListWidget::onDeletePartitionClicked);
+
+        if (!m_curDiskInfoData.mountpoints.isEmpty()) {
+            actionDelete->setDisabled(true);
+        }
+
+        if (m_curDiskInfoData.fstype == "unallocated") {
+            actionHidePartition->setDisabled(true);
+            actionShowPartition->setDisabled(true);
+            actionDelete->setDisabled(true);
         } else {
-            QMenu *menu = new QMenu();
-
-            QAction *actionHidePartition = new QAction();
-            actionHidePartition->setText(tr("Hide partition")); // 隐藏分区
-            actionHidePartition->setObjectName("Hide partition");
-            menu->addAction(actionHidePartition);
-            connect(actionHidePartition, &QAction::triggered, this, &DeviceListWidget::onTreeMenuClicked);
-
-            QAction *actionShowPartition = new QAction();
-            actionShowPartition->setText(tr("Unhide partition")); // 显示分区
-            actionShowPartition->setObjectName("Unhide partition");
-            menu->addAction(actionShowPartition);
-            connect(actionShowPartition, &QAction::triggered, this, &DeviceListWidget::onTreeMenuClicked);
-//            actionShowPartition->setDisabled(true); // 将按钮置为不可选
-
-            QAction *actionDelete = new QAction();
-            actionDelete->setText(tr("Delete partition")); // 删除分区
-            actionDelete->setObjectName("Delete partition");
-            menu->addAction(actionDelete);
-            connect(actionDelete, &QAction::triggered, this, &DeviceListWidget::onTreeMenuClicked);
-
-            if (!m_curDiskInfoData.mountpoints.isEmpty()) {
-                actionDelete->setDisabled(true);
-            }
-
-            if (m_curDiskInfoData.fstype == "unallocated") {
+            if (1 == m_curDiskInfoData.flag) {
                 actionHidePartition->setDisabled(true);
-                actionShowPartition->setDisabled(true);
-                actionDelete->setDisabled(true);
+                actionShowPartition->setDisabled(false);
             } else {
-                if (1 == m_curDiskInfoData.flag) {
-                    actionHidePartition->setDisabled(true);
-                    actionShowPartition->setDisabled(false);
-                } else {
-                    actionHidePartition->setDisabled(false);
-                    actionShowPartition->setDisabled(true);
-                }
+                actionHidePartition->setDisabled(false);
+                actionShowPartition->setDisabled(true);
             }
+        }
 
-            menu->exec(QCursor::pos());  //显示菜单
+        menu->exec(QCursor::pos());  //显示菜单
+    }
+}
+
+void DeviceListWidget::onDiskInfoClicked()
+{
+    m_curChooseDevicePath = m_curDiskInfoData.diskpath;
+
+    m_diskInfoDisplayDialog = new DiskInfoDisplayDialog(m_curDiskInfoData.diskpath);
+//        m_diskInfoDisplayDialog = diskInfoDisplayDialog;
+    m_diskInfoDisplayDialog->exec();
+
+    m_curChooseDevicePath = "";
+    m_diskInfoDisplayDialog = nullptr;
+}
+
+void DeviceListWidget::onDiskCheckHealthClicked()
+{
+    m_curChooseDevicePath = m_curDiskInfoData.diskpath;
+
+    m_diskHealthDetectionDialog = new DiskHealthDetectionDialog(m_curDiskInfoData.diskpath);
+//        m_diskHealthDetectionDialog = diskHealthDetectionDialog;
+    m_diskHealthDetectionDialog->exec();
+
+    m_curChooseDevicePath = "";
+    m_diskHealthDetectionDialog = nullptr;
+}
+
+void DeviceListWidget::onPartitionErrorCheckClicked()
+{
+    bool result = DMDbusHandler::instance()->detectionPartitionTableError(m_curDiskInfoData.diskpath);
+    if (result) {
+        QString deviceInfo = QString("%1(%2)").arg(m_curDiskInfoData.diskpath).arg(m_curDiskInfoData.disksize);
+        m_curChooseDevicePath = m_curDiskInfoData.diskpath;
+
+        m_partitionTableErrorsInfoDialog = new PartitionTableErrorsInfoDialog(deviceInfo);
+//            m_partitionTableErrorsInfoDialog = partitionTableErrorsInfoDialog;
+        m_partitionTableErrorsInfoDialog->exec();
+
+        m_curChooseDevicePath = "";
+        m_partitionTableErrorsInfoDialog = nullptr;
+    } else {
+        // 分区表检测正常
+        DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("No errors found in the partition table"));
+        DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
+    }
+}
+
+void DeviceListWidget::onHidePartitionClicked()
+{
+    MessageBox messageBox;
+    // 您是否要隐藏该分区？ 隐藏  取消
+    messageBox.setWarings(tr("Do you want to hide this partition?"), "", tr("Hide"), tr("Cancel"));
+    if (messageBox.exec() == 1) {
+        if (m_curDiskInfoData.mountpoints == "/boot/efi" || m_curDiskInfoData.mountpoints == "/boot"
+                || m_curDiskInfoData.mountpoints == "/" || m_curDiskInfoData.mountpoints.contains("/data")) {
+            DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::ResidentType);
+            floMsg->setIcon(QIcon::fromTheme("://icons/deepin/builtin/warning.svg"));
+            floMsg->setMessage(tr("Failed to hide the partition: unable to lock it")); // 隐藏分区失败！无法锁定该分区
+            DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), floMsg);
+            DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
+        } else {
+            if (m_curDiskInfoData.mountpoints.isEmpty()) {
+                DMDbusHandler::instance()->hidePartition(m_curDiskInfoData.diskpath, m_curDiskInfoData.partitonpath);
+            } else {
+                DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::ResidentType);
+                floMsg->setIcon(QIcon::fromTheme("://icons/deepin/builtin/warning.svg"));
+                floMsg->setMessage(tr("You can only hide the unmounted partition")); // 只有处于卸载状态的分区才能被隐藏
+                DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), floMsg);
+                DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
+            }
         }
     }
 }
 
-void DeviceListWidget::onTreeMenuClicked()
+void DeviceListWidget::onShowPartitionClicked()
 {
-    QAction *action = qobject_cast<QAction *>(sender());
+    MessageBox messageBox;
+    // 您是否要显示该隐藏分区？ 显示  取消
+    messageBox.setWarings(tr("Do you want to unhide this partition?"), "", tr("Unhide"), tr("Cancel"));
+    if (messageBox.exec() == 1) {
+        DMDbusHandler::instance()->unhidePartition(m_curDiskInfoData.diskpath, m_curDiskInfoData.partitonpath);
+    }
+}
 
-    if (action->objectName() == "Disk info") {
-        m_curChooseDevicePath = m_curDiskInfoData.diskpath;
-
-        m_diskInfoDisplayDialog = new DiskInfoDisplayDialog(m_curDiskInfoData.diskpath);
-//        m_diskInfoDisplayDialog = diskInfoDisplayDialog;
-        m_diskInfoDisplayDialog->exec();
-
-        m_curChooseDevicePath = "";
-        m_diskInfoDisplayDialog = nullptr;
-    } else if (action->objectName() == "Check health") {
-        m_curChooseDevicePath = m_curDiskInfoData.diskpath;
-
-        m_diskHealthDetectionDialog = new DiskHealthDetectionDialog(m_curDiskInfoData.diskpath);
-//        m_diskHealthDetectionDialog = diskHealthDetectionDialog;
-        m_diskHealthDetectionDialog->exec();
-
-        m_curChooseDevicePath = "";
-        m_diskHealthDetectionDialog = nullptr;
-    } else if (action->objectName() == "Check partition table error") {   
-        bool result = DMDbusHandler::instance()->detectionPartitionTableError(m_curDiskInfoData.diskpath);
-        if (result) {
-            QString deviceInfo = QString("%1(%2)").arg(m_curDiskInfoData.diskpath).arg(m_curDiskInfoData.disksize);
-            m_curChooseDevicePath = m_curDiskInfoData.diskpath;
-
-            m_partitionTableErrorsInfoDialog = new PartitionTableErrorsInfoDialog(deviceInfo);
-//            m_partitionTableErrorsInfoDialog = partitionTableErrorsInfoDialog;
-            m_partitionTableErrorsInfoDialog->exec();
-
-            m_curChooseDevicePath = "";
-            m_partitionTableErrorsInfoDialog = nullptr;
-        } else {
-            // 分区表检测正常
-            DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("No errors found in the partition table"));
+void DeviceListWidget::onDeletePartitionClicked()
+{
+    MessageBox messageBox;
+    // 您确定要删除该分区吗？ 该分区内所有文件将会丢失  删除  取消
+    messageBox.setWarings(tr("Are you sure you want to delete this partition?"), tr("You will lose all data in it"), tr("Delete"), DDialog::ButtonWarning, tr("Cancel"));
+    int ret = messageBox.exec();
+    if (ret == 1) {
+        if (m_curDiskInfoData.mountpoints == "/boot/efi" || m_curDiskInfoData.mountpoints == "/boot"
+                || m_curDiskInfoData.mountpoints == "/" || m_curDiskInfoData.mountpoints.contains("/data")
+                || m_curDiskInfoData.fstype == "linux-swap") {
+            DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::ResidentType);
+            floMsg->setIcon(QIcon::fromTheme("://icons/deepin/builtin/warning.svg"));
+            floMsg->setMessage(tr("Failed to delete the partition: unable to lock it")); // 删除分区失败！无法锁定该分区
+            DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), floMsg);
             DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
-        }
-    } else if (action->objectName() == "Hide partition") {
-        MessageBox messageBox;
-        // 您是否要隐藏该分区？ 隐藏  取消
-        messageBox.setWarings(tr("Do you want to hide this partition?"), "", tr("Hide"), tr("Cancel"));
-        if (messageBox.exec() == 1) {
-            if (m_curDiskInfoData.mountpoints == "/boot/efi" || m_curDiskInfoData.mountpoints == "/boot"
-                    || m_curDiskInfoData.mountpoints == "/" || m_curDiskInfoData.mountpoints.contains("/data")) {
-                DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::ResidentType);
-                floMsg->setIcon(QIcon::fromTheme("://icons/deepin/builtin/warning.svg"));
-                floMsg->setMessage(tr("Failed to hide the partition: unable to lock it")); // 隐藏分区失败！无法锁定该分区
-                DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), floMsg);
-                DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
-            } else {
-                if (m_curDiskInfoData.mountpoints.isEmpty()) {
-                    DMDbusHandler::instance()->hidePartition(m_curDiskInfoData.diskpath, m_curDiskInfoData.partitonpath);
-                } else {
-                    DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::ResidentType);
-                    floMsg->setIcon(QIcon::fromTheme("://icons/deepin/builtin/warning.svg"));
-                    floMsg->setMessage(tr("You can only hide the unmounted partition")); // 只有处于卸载状态的分区才能被隐藏
-                    DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), floMsg);
-                    DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
-                }
-            }
-        }
-    } else if (action->objectName() == "Unhide partition") {
-        MessageBox messageBox;
-        // 您是否要显示该隐藏分区？ 显示  取消
-        messageBox.setWarings(tr("Do you want to unhide this partition?"), "", tr("Unhide"), tr("Cancel"));
-        if (messageBox.exec() == 1) {
-            DMDbusHandler::instance()->unhidePartition(m_curDiskInfoData.diskpath, m_curDiskInfoData.partitonpath);
-        }
-    } else if (action->objectName() == "Delete partition") {
-        MessageBox messageBox;
-        // 您确定要删除该分区吗？ 该分区内所有文件将会丢失  删除  取消
-        messageBox.setWarings(tr("Are you sure you want to delete this partition?"), tr("You will lose all data in it"), tr("Delete"), DDialog::ButtonWarning, tr("Cancel"));
-        int ret = messageBox.exec();
-        if (ret == 1) {
-            if (m_curDiskInfoData.mountpoints == "/boot/efi" || m_curDiskInfoData.mountpoints == "/boot"
-                    || m_curDiskInfoData.mountpoints == "/" || m_curDiskInfoData.mountpoints.contains("/data")
-                    || m_curDiskInfoData.fstype == "linux-swap") {
-                DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::ResidentType);
-                floMsg->setIcon(QIcon::fromTheme("://icons/deepin/builtin/warning.svg"));
-                floMsg->setMessage(tr("Failed to delete the partition: unable to lock it")); // 删除分区失败！无法锁定该分区
-                DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), floMsg);
-                DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
-            } else {
-                DMDbusHandler::instance()->deletePartition(m_curDiskInfoData.diskpath, m_curDiskInfoData.partitonpath);
-            }
+        } else {
+            DMDbusHandler::instance()->deletePartition(m_curDiskInfoData.diskpath, m_curDiskInfoData.partitonpath);
         }
     }
 }
@@ -321,7 +334,7 @@ void DeviceListWidget::onUpdateUsb()
     }
 }
 
-void DeviceListWidget::slotUpdateDeviceInfo()
+void DeviceListWidget::onUpdateDeviceInfo()
 {
     qDebug() << __FUNCTION__ << "               1";
     //更新DmTreeview  lx
@@ -332,9 +345,9 @@ void DeviceListWidget::slotUpdateDeviceInfo()
     qDebug() << m_flag << m_treeView->currentTopNum();
     m_devicePath = handler->getCurPartititonInfo().device_path;
     m_treeView->m_model->clear();
-    DeviceInfoMap infomap = DMDbusHandler::instance()->probDeviceInfo();
+    DeviceInfoMap infoMap = DMDbusHandler::instance()->probDeviceInfo();
 
-    for (auto it = infomap.begin(); it != infomap.end(); it++) {
+    for (auto it = infoMap.begin(); it != infoMap.end(); it++) {
         DeviceInfo info = it.value();
         QString s_disksize = Utils::format_size(info.length, info.sector_size);
         auto m_box = new DmDiskinfoBox(0, this, info.m_path, s_disksize);
@@ -369,6 +382,7 @@ void DeviceListWidget::slotUpdateDeviceInfo()
 
         m_treeView->addTopItem(m_box, m_additem);
     }
+
     m_additem = 1;
     if (m_flag == 0) {
         m_treeView->setDefaultdmItem();

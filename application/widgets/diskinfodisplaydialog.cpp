@@ -40,9 +40,8 @@
 
 DiskInfoDisplayDialog::DiskInfoDisplayDialog(const QString &devicePath, QWidget *parent)
     : DDialog(parent)
+    , m_devicePath(devicePath)
 {
-    m_devicePath = devicePath;
-
     initUI();
     initConnections();
 }
@@ -131,7 +130,7 @@ void DiskInfoDisplayDialog::onExportButtonClicked()
     if (fileDirPath.isEmpty()) {
         return;
     }
-qDebug() << fileDirPath;
+
     QString strFileName = "/" + fileDirPath.split("/").last();
     QString fileDir = fileDirPath.split(strFileName).first();
 

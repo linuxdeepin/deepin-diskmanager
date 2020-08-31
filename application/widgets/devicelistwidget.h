@@ -64,10 +64,12 @@ private:
 signals:
 
 public slots:
+
+private slots:
     /**
      * @brief 更新设备信息信号响应的槽函数
      */
-    void slotUpdateDeviceInfo();
+    void onUpdateDeviceInfo();
 
     /**
      * @brief 删除分区信号响应的槽函数
@@ -99,9 +101,34 @@ public slots:
     void treeMenu(const QPoint &pos);
 
     /**
-     * @brief 设备树右键按钮响应的槽函数
+     * @brief 磁盘信息按钮点击响应的槽函数
      */
-    void onTreeMenuClicked();
+    void onDiskInfoClicked();
+
+    /**
+     * @brief 磁盘健康检测按钮点击响应的槽函数
+     */
+    void onDiskCheckHealthClicked();
+
+    /**
+     * @brief 分区表错误检测按钮点击响应的槽函数
+     */
+    void onPartitionErrorCheckClicked();
+
+    /**
+     * @brief 隐藏分区按钮点击响应的槽函数
+     */
+    void onHidePartitionClicked();
+
+    /**
+     * @brief 显示分区按钮点击响应的槽函数
+     */
+    void onShowPartitionClicked();
+
+    /**
+     * @brief 删除分区按钮点击响应的槽函数
+     */
+    void onDeletePartitionClicked();
 
 private:
     int m_flag = 0;

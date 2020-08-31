@@ -30,9 +30,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    if (nullptr != m_bufferwin) {
-        m_bufferwin->deleteLater();
-    }
+//    if (nullptr != m_bufferwin) {
+//        m_bufferwin->deleteLater();
+//    }
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -44,7 +44,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::initUi()
 {
-    m_bufferwin = new BufferWin;
+//    m_bufferwin = new BufferWin;
     m_spinner = new DSpinner(this);
     m_spinner->setWindowFlags(Qt::SplashScreen);
     m_spinner->setWindowModality(Qt::ApplicationModal);

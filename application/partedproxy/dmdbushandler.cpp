@@ -48,11 +48,11 @@ void DMDbusHandler::initConnection()
 {
     connect(m_dbus, &DMDBusInterface::MessageReport, this, &DMDbusHandler::MessageReport);
     //  connect(m_dbus, &DMDBusInterface::sigUpdateDeviceInfo, this, &DMDbusHandler::sigUpdateDeviceInfo);
-    connect(m_dbus, &DMDBusInterface::sigUpdateDeviceInfo, this, &DMDbusHandler::slotUpdateDeviceInfo);
-    connect(m_dbus, &DMDBusInterface::sigDeletePatition, this, &DMDbusHandler::onDeletePartition);
-    connect(m_dbus, &DMDBusInterface::sigHidePartition, this, &DMDbusHandler::onHidePartition);
-    connect(m_dbus, &DMDBusInterface::sigShowPartition, this, &DMDbusHandler::onShowPartition);
-    connect(m_dbus, &DMDBusInterface::sigUpdateUsb, this, &DMDbusHandler::onUpdateUsb);
+    connect(m_dbus, &DMDBusInterface::updateDeviceInfo, this, &DMDbusHandler::slotUpdateDeviceInfo);
+    connect(m_dbus, &DMDBusInterface::deletePatition, this, &DMDbusHandler::onDeletePartition);
+    connect(m_dbus, &DMDBusInterface::hidePartitionInfo, this, &DMDbusHandler::onHidePartition);
+    connect(m_dbus, &DMDBusInterface::showPartitionInfo, this, &DMDbusHandler::onShowPartition);
+    connect(m_dbus, &DMDBusInterface::usbUpdated, this, &DMDbusHandler::onUpdateUsb);
 }
 
 void DMDbusHandler::onDeletePartition(const QString &deleteMessage)

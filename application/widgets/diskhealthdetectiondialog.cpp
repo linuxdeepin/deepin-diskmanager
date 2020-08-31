@@ -46,9 +46,8 @@
 
 DiskHealthDetectionDialog::DiskHealthDetectionDialog(const QString &devicePath, QWidget *parent)
     : DDialog(parent)
+    , m_devicePath(devicePath)
 {
-    m_devicePath = devicePath;
-
     initUI();
     initConnections();
 }

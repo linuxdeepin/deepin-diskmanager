@@ -38,9 +38,8 @@
 
 PartitionTableErrorsInfoDialog::PartitionTableErrorsInfoDialog(const QString &deviceInfo, QWidget *parent)
     : DDialog(parent)
+    , m_deviceInfo(deviceInfo)
 {
-    m_deviceInfo = deviceInfo;
-
     initUI();
     initConnections();
 }

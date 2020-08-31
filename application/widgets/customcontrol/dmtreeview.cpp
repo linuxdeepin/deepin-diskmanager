@@ -159,6 +159,7 @@ QModelIndex DmTreeview::setDefaultdmItem()//设置默认选中节点
 {
     //QModelIndex index = m_pSortViewFilter->index(0, 0, getRootItemIndex());
     this->setCurrentIndex(model()->index(0, 0).child(0, 0));
+    setExpanded(model()->index(0, 0), true);
     return model()->index(0, 0);
 }
 

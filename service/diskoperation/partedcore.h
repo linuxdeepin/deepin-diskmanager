@@ -170,14 +170,14 @@ private:
     bool create(Partition &partition);
     bool create_partition(Partition &new_partition, Sector min_size = 0);
 signals:
-    void sigUpdateDeviceInfo(const DeviceInfoMap &infomap);
-    void sigRefreshDeviceInfo();
-    void sigDeletePatition(const QString &deleteMessage);
-    void sigHidePartition(const QString &hideMessage);
-    void sigShowPartition(const QString &showMessage);
-    void sigUpdateUsb();
+    void updateDeviceInfo(const DeviceInfoMap &infomap);
+    void refreshDeviceInfo();
+    void deletePatition(const QString &deleteMessage);
+    void hidePartitionInfo(const QString &hideMessage);
+    void showPartitionInfo(const QString &showMessage);
+    void usbUpdated();
 public slots:
-    void slotRefreshDeviceInfo();
+    void onRefreshDeviceInfo();
 
 private:
     QVector<PedPartitionFlag> flags;

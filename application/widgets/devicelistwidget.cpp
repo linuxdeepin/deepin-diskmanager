@@ -383,6 +383,13 @@ void DeviceListWidget::onUpdateDeviceInfo()
         m_treeView->addTopItem(m_box, m_additem);
     }
 
+    QStringList deviceNameList = DMDbusHandler::instance()->getDeviceNameList();
+    if (deviceNameList.indexOf(DMDbusHandler::instance()->getCurPartititonInfo().device_path) == -1) {
+        m_flag = 0;
+    } else {
+        m_deviceNum = deviceNameList.indexOf(DMDbusHandler::instance()->getCurPartititonInfo().device_path);
+    }
+
     m_additem = 1;
     if (m_flag == 0) {
         m_treeView->setDefaultdmItem();

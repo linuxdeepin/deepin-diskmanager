@@ -266,11 +266,11 @@ private:
      */
     static bool flushDevice(PedDevice *lpDevice);
 
-    /**
-     * @brief 刷新udev事件队列
-     * @param timeout：超时时间
-     */
-    static void settleDevice(std::time_t timeout);
+//    /**
+//     * @brief 刷新udev事件队列
+//     * @param timeout：超时时间
+//     */
+//    static void settleDevice(std::time_t timeout);
 
     /**
      * @brief 等待udev时间处理，启动分区内核更新
@@ -278,7 +278,7 @@ private:
      * @param timeout：超时时间
      * @return true成功false失败
      */
-    static bool commitToOs(PedDisk *lpDisk, time_t timeout);
+    static bool commitToOs(PedDisk *lpDisk);
 
     /**
      * @brief 确定是否是真正的设备

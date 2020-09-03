@@ -108,7 +108,6 @@ void TitleWidget::showResizeInfoWidget()
 void TitleWidget::updateBtnStatus()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    qDebug() << info.partition_number << info.device_path << "ewsdsfffffffffffffffffffffff";
 
     //已挂载
     if (info.mountpoints.size() > 0 && info.busy) {
@@ -118,7 +117,7 @@ void TitleWidget::updateBtnStatus()
         m_btnunmount->setDisabled(false);
         m_btnresize->setDisabled(true);
     } else {
-        int result = DMDbusHandler::instance()->getPartitionHiddenFlag(info.device_path, QString::number(info.partition_number));
+        int result = info.flag;
         if (1 == result) {
             m_btnparted->setDisabled(true);
             m_btnformat->setDisabled(true);

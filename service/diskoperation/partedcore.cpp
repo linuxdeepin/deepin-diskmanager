@@ -11,10 +11,10 @@
 namespace DiskManager {
 //hdparm可检测，显示与设定IDE或SCSI硬盘的参数。
 //udevadm可检测设备热插拔
-static bool udevadm_found = false;
+//static bool udevadm_found = false;
 static bool hdparm_found = false;
 const std::time_t SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS = 1;
-const std::time_t SETTLE_DEVICE_APPLY_MAX_WAIT_SECONDS = 10;
+//const std::time_t SETTLE_DEVICE_APPLY_MAX_WAIT_SECONDS = 10;
 SupportedFileSystems *PartedCore::supported_filesystems = nullptr;
 
 PartedCore::PartedCore(QObject *parent)
@@ -53,7 +53,7 @@ PartedCore::~PartedCore()
 
 void PartedCore::findSupportedCore()
 {
-    udevadm_found = !Utils::find_program_in_path("udevadm").isEmpty();
+    //udevadm_found = !Utils::find_program_in_path("udevadm").isEmpty();
     hdparm_found = !Utils::find_program_in_path("hdparm").isEmpty();
 }
 
@@ -268,7 +268,7 @@ void PartedCore::set_device_from_disk(Device &device, const QString &device_path
                 set_device_partitions(device, lp_device, lp_disk);
 
                 if (device.highest_busy) {
-                    device.readonly = !commitToOs(lp_disk, SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS);
+                    device.readonly = !commitToOs(lp_disk);
                 }
             }
             // Drive just containing libparted "loop" signature and nothing
@@ -333,7 +333,7 @@ bool PartedCore::getDisk(PedDevice *&lpDevice, PedDisk *&lpDisk, bool strict)
         // to complete which remove and re-add all the partition specific /dev
         // entries to avoid FS specific commands failing because they happen to
         // be running when the needed /dev/PTN entries don't exist.
-        settleDevice(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS);
+        //settleDevice(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS);
 
         // if ! disk and writable it's probably a HD without disklabel.
         // We return true here and deal with them in
@@ -381,13 +381,15 @@ bool PartedCore::commit(PedDisk *lpDisk)
 
     bool succes = ped_disk_commit_to_dev(lpDisk);
 
-    succes = commitToOs(lpDisk, SETTLE_DEVICE_APPLY_MAX_WAIT_SECONDS) && succes;
+    succes = commitToOs(lpDisk) && succes;
 
     if (opened) {
         ped_device_close(lpDisk->dev);
         // Wait for udev rules to complete and partition device nodes to settle
         // from this ped_device_close().
-        settleDevice(SETTLE_DEVICE_APPLY_MAX_WAIT_SECONDS);
+        //settleDevice(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS);
+        QString out, err;
+        Utils::executcmd(QString("udevadm settle --timeout=%1").arg(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS), out, err);
     }
 
     return succes;
@@ -801,29 +803,29 @@ bool PartedCore::flushDevice(PedDevice *lpDevice)
         // ped_device_close() pair to avoid busy /dev/DISK entry when running file
         // system specific querying commands on the whole disk device in the call
         // sequence after getDevice() in set_device_from_disk().
-        settleDevice(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS);
+        //settleDevice(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS);
     }
     return success;
 }
 
-void PartedCore::settleDevice(std::time_t timeout)
-{
-    //如果支持udevadm
-    //udevadm settle [options]　　查看udev事件队列，如果所有事件全部处理完就退出。timeout超时时间
-    if (udevadm_found) {
-        QString out, err;
-        Utils::executcmd(QString("udevadm settle --timeout=%1").arg(timeout), out, err);
-    } else
-        sleep(timeout);
-}
+//void PartedCore::settleDevice(std::time_t timeout)
+//{
+//    //如果支持udevadm
+//    //udevadm settle [options]　　查看udev事件队列，如果所有事件全部处理完就退出。timeout超时时间
+//    if (udevadm_found) {
+//        QString out, err;
+//        Utils::executcmd(QString("udevadm settle --timeout=%1").arg(timeout), out, err);
+//    } else
+//        sleep(timeout);
+//}
 
-bool PartedCore::commitToOs(PedDisk *lpDisk, time_t timeout)
+bool PartedCore::commitToOs(PedDisk *lpDisk)
 {
     bool succes;
     succes = ped_disk_commit_to_os(lpDisk);
     // Wait for udev rules to complete and partition device nodes to settle from above
     // ped_disk_commit_to_os() initiated kernel update of the partitions.
-    settleDevice(timeout);
+    //settleDevice(timeout);
     return succes;
 }
 
@@ -1141,7 +1143,7 @@ bool PartedCore::erase_filesystem_signatures(const Partition &partition)
         if (device_is_open) {
             flush_success = ped_device_sync(lp_device);
             ped_device_close(lp_device);
-            settleDevice(SETTLE_DEVICE_APPLY_MAX_WAIT_SECONDS);
+            //settleDevice(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS);
         }
         overall_success &= flush_success;
     }
@@ -2305,10 +2307,11 @@ void PartedCore::updateUsb()
 {
     qDebug() << __FUNCTION__ << "USB add update start";
 
-    //sleep(5);
-
-    autoMount();
+    sleep(3);
+//   emit onRefreshDeviceInfo();
+//    autoMount();
     emit usbUpdated();
+    autoMount();
 
     qDebug() << __FUNCTION__ << "USB add update end";
 }

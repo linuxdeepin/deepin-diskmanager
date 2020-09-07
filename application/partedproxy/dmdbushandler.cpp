@@ -1,15 +1,42 @@
+/**
+ * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ *
+ * @file dmdbushandler.h
+ *
+ * @brief 数据接口类，通过dbus与后端服务进行通信
+ *
+ * @date 2020-09-03 16:46
+ *
+ * Author: yuandandan  <yuandandan@uniontech.com>
+ *
+ * Maintainer: yuandandan  <yuandandan@uniontech.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 #include "dmdbushandler.h"
+
 #include <QObject>
 #include <QDBusError>
 #include <QDBusPendingCallWatcher>
 
-DMDbusHandler *DMDbusHandler::m_statichandeler = nullptr;
+DMDbusHandler *DMDbusHandler::m_staticHandeler = nullptr;
 
 DMDbusHandler *DMDbusHandler::instance(QObject *parent)
 {
-    if (parent != nullptr && m_statichandeler == nullptr)
-        m_statichandeler = new DMDbusHandler(parent);
-    return m_statichandeler;
+    if (parent != nullptr && m_staticHandeler == nullptr)
+        m_staticHandeler = new DMDbusHandler(parent);
+    return m_staticHandeler;
 }
 
 DMDbusHandler::~DMDbusHandler()
@@ -31,24 +58,24 @@ DMDbusHandler::DMDbusHandler(QObject *parent)
     qDBusRegisterMetaType<HardDiskInfo>();
     qDBusRegisterMetaType<HardDiskStatusInfo>();
     qDBusRegisterMetaType<HardDiskStatusInfoList>();
-    m_dbus = new DMDBusInterface("com.deepin.diskmanager",
-                                 "/com/deepin/diskmanager",
-                                 QDBusConnection::systemBus(),
-                                 this);
+
+    m_dbus = new DMDBusInterface("com.deepin.diskmanager", "/com/deepin/diskmanager",
+                                 QDBusConnection::systemBus(), this);
     //Note: when dealing with remote objects, it is not always possible to determine if it exists when creating a QDBusInterface.
     if (!m_dbus->isValid() && !m_dbus->lastError().message().isEmpty()) {
         qDebug() << "m_dbus isValid false error:" << m_dbus->lastError() << m_dbus->lastError().message();
     }
     qDebug() << "m_dbus isValid true";
     initConnection();
+
     m_dbus->Start();
 }
 
 void DMDbusHandler::initConnection()
 {
-    connect(m_dbus, &DMDBusInterface::MessageReport, this, &DMDbusHandler::MessageReport);
+    connect(m_dbus, &DMDBusInterface::MessageReport, this, &DMDbusHandler::onMessageReport);
     //  connect(m_dbus, &DMDBusInterface::sigUpdateDeviceInfo, this, &DMDbusHandler::sigUpdateDeviceInfo);
-    connect(m_dbus, &DMDBusInterface::updateDeviceInfo, this, &DMDbusHandler::slotUpdateDeviceInfo);
+    connect(m_dbus, &DMDBusInterface::updateDeviceInfo, this, &DMDbusHandler::onUpdateDeviceInfo);
     connect(m_dbus, &DMDBusInterface::deletePatition, this, &DMDbusHandler::onDeletePartition);
     connect(m_dbus, &DMDBusInterface::hidePartitionInfo, this, &DMDbusHandler::onHidePartition);
     connect(m_dbus, &DMDBusInterface::showPartitionInfo, this, &DMDbusHandler::onShowPartition);
@@ -63,13 +90,13 @@ void DMDbusHandler::onDeletePartition(const QString &deleteMessage)
 void DMDbusHandler::onHidePartition(const QString &hideMessage)
 {
     emit hidePartitionMessage(hideMessage);
-    emit sigCurSelectChanged();
+    emit curSelectChanged();
 }
 
 void DMDbusHandler::onShowPartition(const QString &showMessage)
 {
     emit showPartitionMessage(showMessage);
-    emit sigCurSelectChanged();
+    emit curSelectChanged();
 }
 
 void DMDbusHandler::onUpdateUsb()
@@ -77,23 +104,23 @@ void DMDbusHandler::onUpdateUsb()
     emit updateUsb();
 }
 
-void DMDbusHandler::slotsetCurSelect(const QString &devicepath, const QString &partitionpath, Sector start, Sector end)
+void DMDbusHandler::onSetCurSelect(const QString &devicePath, const QString &partitionPath, Sector start, Sector end)
 {
     //点击切换才触发
-    if ((devicepath != m_curdevicepath || partitionpath != m_curpartitionpath) && m_devicemap.size() > 0) {
-        m_curdevicepath = devicepath;
-        auto it = m_devicemap.find(devicepath);
-        if (it != m_devicemap.end()) {
+    if ((devicePath != m_curDevicePath || partitionPath != m_curPartitionPath) && m_deviceMap.size() > 0) {
+        m_curDevicePath = devicePath;
+        auto it = m_deviceMap.find(devicePath);
+        if (it != m_deviceMap.end()) {
             for (PartitionInfo info : it.value().partition) {
                 if (info.sector_start == start && info.sector_end == end) {
                     qDebug() << info.partition_number << info.path << Utils::FSTypeToString(static_cast<FSType>(info.fstype));
-                    m_curpartitioninfo = info;
+                    m_curPartitionInfo = info;
                     break;
                 }
             }
         }
-        m_dbus->setCurSelect(m_curpartitioninfo);
-        emit sigCurSelectChanged();
+        m_dbus->setCurSelect(m_curPartitionInfo);
+        emit curSelectChanged();
     }
 }
 
@@ -102,57 +129,63 @@ void DMDbusHandler::Quit()
     m_dbus->Quit();
 }
 
-void DMDbusHandler::getDeviceinfo()
+void DMDbusHandler::getDeviceInfo()
 {
-    emit sigShowSpinerWindow(true);
+    emit showSpinerWindow(true);
+
     m_dbus->getalldevice();
     qDebug() << __FUNCTION__ << "-------";
 }
 
 const DeviceInfoMap &DMDbusHandler::probDeviceInfo() const
 {
-    return m_devicemap;
+    return m_deviceMap;
 }
 
 PartitionVec DMDbusHandler::getCurDevicePartitionArr()
 {
-    return m_devicemap.find(m_curdevicepath).value().partition;
+    return m_deviceMap.find(m_curDevicePath).value().partition;
 }
 
 const PartitionInfo &DMDbusHandler::getCurPartititonInfo()
 {
-    return m_curpartitioninfo;
+    return m_curPartitionInfo;
 }
 
 const DeviceInfo &DMDbusHandler::getCurDeviceInfo()
 {
-    return m_devicemap.find(m_curdevicepath).value();
+    return m_deviceMap.find(m_curDevicePath).value();
 }
 
-void DMDbusHandler::mount(const QString &mountpath)
+void DMDbusHandler::mount(const QString &mountPath)
 {
-    emit sigShowSpinerWindow(true);
-    m_dbus->mount(mountpath);
+    emit showSpinerWindow(true);
+
+    m_dbus->mount(mountPath);
 }
 
 void DMDbusHandler::unmount()
 {
-    emit sigShowSpinerWindow(true);
+    emit showSpinerWindow(true);
+
     m_dbus->unmount();
 }
 
-QStringList DMDbusHandler::getallsupportfs()
+QStringList DMDbusHandler::getAllSupportFileSystem()
 {
-    if (m_supportfs.size() <= 0) {
+    if (m_supportFileSystem.size() <= 0) {
         QDBusPendingReply<QStringList> reply = m_dbus->getallsupportfs();
+
         reply.waitForFinished();
+
         if (reply.isError()) {
             qDebug() << reply.error().message();
         } else {
-            m_supportfs = reply.value();
+            m_supportFileSystem = reply.value();
         }
     }
-    return m_supportfs;
+
+    return m_supportFileSystem;
 }
 
 void DMDbusHandler::format(const QString &fstype, const QString &name)
@@ -165,33 +198,37 @@ void DMDbusHandler::format(const QString &fstype, const QString &name)
     //    } else {
     //        success = reply.value();
     //    }
-    emit sigShowSpinerWindow(true);
+    emit showSpinerWindow(true);
+
     m_dbus->format(fstype, name);
 }
 
 void DMDbusHandler::resize(const PartitionInfo &info)
 {
-    emit sigShowSpinerWindow(true);
+    emit showSpinerWindow(true);
+
     m_dbus->resize(info);
 }
 
 void DMDbusHandler::create(const PartitionVec &infovec)
 {
-    emit sigShowSpinerWindow(true);
+    emit showSpinerWindow(true);
+
     m_dbus->create(infovec);
 }
 
-void DMDbusHandler::MessageReport(const QString &msg)
+void DMDbusHandler::onMessageReport(const QString &msg)
 {
     qDebug() << "MessageReport:" << msg;
 }
 
-void DMDbusHandler::slotUpdateDeviceInfo(const DeviceInfoMap &infomap)
+void DMDbusHandler::onUpdateDeviceInfo(const DeviceInfoMap &infoMap)
 {
-    m_devicemap = infomap;
+    m_deviceMap = infoMap;
     m_isExistUnallocated.clear();
     m_deviceNameList.clear();
-    for (auto it = infomap.begin(); it != infomap.end(); it++) {
+
+    for (auto it = infoMap.begin(); it != infoMap.end(); it++) {
         DeviceInfo info = it.value();
 //        qDebug() << info.sector_size;
 //        qDebug() << __FUNCTION__ << info.m_path << info.length << info.heads << info.sectors
@@ -211,9 +248,9 @@ void DMDbusHandler::slotUpdateDeviceInfo(const DeviceInfoMap &infomap)
         m_isExistUnallocated[info.m_path] = isExistUnallocated;
     }
     //    qDebug() << getCurDeviceInfo().serial_number << getCurPartititonInfo().partition_number;
-    qDebug() << m_deviceNameList;
-    emit sigUpdateDeviceInfo();
-    emit sigShowSpinerWindow(false);
+
+    emit updateDeviceInfo();
+    emit showSpinerWindow(false);
 }
 
 QMap<QString, QString> DMDbusHandler::getIsExistUnallocated()
@@ -229,7 +266,9 @@ QStringList DMDbusHandler::getDeviceNameList()
 HardDiskInfo DMDbusHandler::getHardDiskInfo(const QString &devicePath)
 {
     QDBusPendingReply<HardDiskInfo> reply = m_dbus->onGetDeviceHardInfo(devicePath);
+
     reply.waitForFinished();
+
     if (reply.isError()) {
         qDebug() << reply.error().message();
     } else {
@@ -242,7 +281,9 @@ HardDiskInfo DMDbusHandler::getHardDiskInfo(const QString &devicePath)
 QString DMDbusHandler::getDeviceHardStatus(const QString &devicePath)
 {
     QDBusPendingReply<QString> reply = m_dbus->onGetDeviceHardStatus(devicePath);
+
     reply.waitForFinished();
+
     if (reply.isError()) {
         qDebug() << reply.error().message();
     } else {
@@ -255,7 +296,9 @@ QString DMDbusHandler::getDeviceHardStatus(const QString &devicePath)
 HardDiskStatusInfoList DMDbusHandler::getDeviceHardStatusInfo(const QString &devicePath)
 {
     QDBusPendingReply<HardDiskStatusInfoList> reply = m_dbus->onGetDeviceHardStatusInfo(devicePath);
+
     reply.waitForFinished();
+
     if (reply.isError()) {
         qDebug() << reply.error().message();
     } else {
@@ -267,21 +310,21 @@ HardDiskStatusInfoList DMDbusHandler::getDeviceHardStatusInfo(const QString &dev
 
 void DMDbusHandler::deletePartition(const QString &devicePath, const QString &parttitionPath)
 {
-    emit sigShowSpinerWindow(true);
+    emit showSpinerWindow(true);
 
     m_dbus->onDeletePartition(devicePath, parttitionPath);
 }
 
 void DMDbusHandler::hidePartition(const QString &devicePath, const QString &parttitionPath)
 {
-    emit sigShowSpinerWindow(true);
+    emit showSpinerWindow(true);
 
     m_dbus->onHidePartition(devicePath, parttitionPath);
 }
 
 void DMDbusHandler::unhidePartition(const QString &devicePath, const QString &parttitionPath)
 {
-    emit sigShowSpinerWindow(true);
+    emit showSpinerWindow(true);
 
     m_dbus->onShowPartition(devicePath, parttitionPath);
 }
@@ -289,7 +332,9 @@ void DMDbusHandler::unhidePartition(const QString &devicePath, const QString &pa
 int DMDbusHandler::getPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath)
 {
     QDBusPendingReply<int> reply = m_dbus->onGetPartitionHiddenFlag(devicePath, parttitionPath);
+
     reply.waitForFinished();
+
     if (reply.isError()) {
         qDebug() << reply.error().message();
     } else {
@@ -302,7 +347,9 @@ int DMDbusHandler::getPartitionHiddenFlag(const QString &devicePath, const QStri
 bool DMDbusHandler::detectionPartitionTableError(const QString &devicePath)
 {
     QDBusPendingReply<bool> reply = m_dbus->onDetectionPartitionTableError(devicePath);
+
     reply.waitForFinished();
+
     if (reply.isError()) {
         qDebug() << reply.error().message();
     } else {

@@ -1,3 +1,29 @@
+/**
+ * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ *
+ * @file titlewidget.h
+ *
+ * @brief 标题功能图标按钮类，主要实现功能图标按钮展示以及点击操作
+ *
+ * @date 2020-09-04 14:06
+ *
+ * Author: yuandandan  <yuandandan@uniontech.com>
+ *
+ * Maintainer: yuandandan  <yuandandan@uniontech.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 #include "titlewidget.h"
 #include "mountdialog.h"
 #include "unmountdialog.h"
@@ -19,33 +45,33 @@ void TitleWidget::initUi()
 {
     QHBoxLayout *layout = new QHBoxLayout(this);
 
-    m_btnparted = createBtn(tr("Partition"), "partition");
-    m_btnformat = createBtn(tr("Format to"), "format");
-    m_btnmount = createBtn(tr("Mount"), "mount");
-    m_btnunmount = createBtn(tr("Unmount"), "unmount");
-    m_btnresize = createBtn(tr("Resize"), "resize");
+    m_btnParted = createBtn(tr("Partition"), "partition");
+    m_btnFormat = createBtn(tr("Format to"), "format");
+    m_btnMount = createBtn(tr("Mount"), "mount");
+    m_btnUnmount = createBtn(tr("Unmount"), "unmount");
+    m_btnResize = createBtn(tr("Resize"), "resize");
 
-    m_btnparted->setIconSize(QSize(16, 16));
-    m_btnformat->setIconSize(QSize(18, 18));
-    m_btnmount->setIconSize(QSize(14, 17));
-    m_btnunmount->setIconSize(QSize(14, 15));
-    m_btnresize->setIconSize(QSize(14, 20));
+    m_btnParted->setIconSize(QSize(16, 16));
+    m_btnFormat->setIconSize(QSize(18, 18));
+    m_btnMount->setIconSize(QSize(14, 17));
+    m_btnUnmount->setIconSize(QSize(14, 15));
+    m_btnResize->setIconSize(QSize(14, 20));
 
-    layout->addWidget(m_btnparted);
-    layout->addWidget(m_btnformat);
-    layout->addWidget(m_btnmount);
-    layout->addWidget(m_btnunmount);
-    layout->addWidget(m_btnresize);
+    layout->addWidget(m_btnParted);
+    layout->addWidget(m_btnFormat);
+    layout->addWidget(m_btnMount);
+    layout->addWidget(m_btnUnmount);
+    layout->addWidget(m_btnResize);
 }
 
 void TitleWidget::initConnection()
 {
-    connect(DMDbusHandler::instance(), &DMDbusHandler::sigCurSelectChanged, this, &TitleWidget::slotCurSelectChanged);
-    connect(m_btnparted, &DPushButton::clicked, this, &TitleWidget::showPartInfoWidget);
-    connect(m_btnformat, &DPushButton::clicked, this, &TitleWidget::showFormateInfoWidget);
-    connect(m_btnmount, &DPushButton::clicked, this, &TitleWidget::showMountInfoWidget);
-    connect(m_btnunmount, &DPushButton::clicked, this, &TitleWidget::showUnmountInfoWidget);
-    connect(m_btnresize, &DPushButton::clicked, this, &TitleWidget::showResizeInfoWidget);
+    connect(DMDbusHandler::instance(), &DMDbusHandler::curSelectChanged, this, &TitleWidget::onCurSelectChanged);
+    connect(m_btnParted, &DPushButton::clicked, this, &TitleWidget::showPartInfoWidget);
+    connect(m_btnFormat, &DPushButton::clicked, this, &TitleWidget::showFormateInfoWidget);
+    connect(m_btnMount, &DPushButton::clicked, this, &TitleWidget::showMountInfoWidget);
+    connect(m_btnUnmount, &DPushButton::clicked, this, &TitleWidget::showUnmountInfoWidget);
+    connect(m_btnResize, &DPushButton::clicked, this, &TitleWidget::showResizeInfoWidget);
 }
 
 DPushButton *TitleWidget::createBtn(const QString &btnName, const QString &objName, bool bCheckable)
@@ -53,14 +79,17 @@ DPushButton *TitleWidget::createBtn(const QString &btnName, const QString &objNa
     auto btn = new DPushButton(this);
     //  wzx 设置图标icon    2020-05-19
     QIcon icon = Common::getIcon(objName);
+
     btn->setIcon(icon);
     btn->setFixedSize(QSize(36, 36));
     btn->setIconSize(QSize(18, 18));
     btn->setToolTip(btnName);
     btn->setCheckable(bCheckable);
+
     if (bCheckable) {
         btn->setChecked(false);
     }
+
     return btn;
 }
 
@@ -76,6 +105,7 @@ void TitleWidget::showPartInfoWidget()
             //ToDo:empty device create partition table
             return;
         }
+
         PartitionWidget partitionWidget;
         partitionWidget.exec();
     }
@@ -111,44 +141,44 @@ void TitleWidget::updateBtnStatus()
 
     //已挂载
     if (info.mountpoints.size() > 0 && info.busy) {
-        m_btnparted->setDisabled(true);
-        m_btnformat->setDisabled(true);
-        m_btnmount->setDisabled(true);
-        m_btnunmount->setDisabled(false);
-        m_btnresize->setDisabled(true);
+        m_btnParted->setDisabled(true);
+        m_btnFormat->setDisabled(true);
+        m_btnMount->setDisabled(true);
+        m_btnUnmount->setDisabled(false);
+        m_btnResize->setDisabled(true);
     } else {
         int result = info.flag;
         if (1 == result) {
-            m_btnparted->setDisabled(true);
-            m_btnformat->setDisabled(true);
-            m_btnmount->setDisabled(true);
-            m_btnunmount->setDisabled(true);
-            m_btnresize->setDisabled(true);
+            m_btnParted->setDisabled(true);
+            m_btnFormat->setDisabled(true);
+            m_btnMount->setDisabled(true);
+            m_btnUnmount->setDisabled(true);
+            m_btnResize->setDisabled(true);
         } else {
             //需判断扩展分区上是否无分区，否则认为不可操作，此处省略操作
             if (FS_EXTENDED == info.fstype) {
-                m_btnparted->setDisabled(true);
-                m_btnformat->setDisabled(true);
-                m_btnmount->setDisabled(true);
-                m_btnunmount->setDisabled(true);
-                m_btnresize->setDisabled(true);
+                m_btnParted->setDisabled(true);
+                m_btnFormat->setDisabled(true);
+                m_btnMount->setDisabled(true);
+                m_btnUnmount->setDisabled(true);
+                m_btnResize->setDisabled(true);
             } else {
-                m_btnunmount->setDisabled(true);
+                m_btnUnmount->setDisabled(true);
                 if (info.fstype == FS_UNALLOCATED) {
-                    m_btnparted->setDisabled(false);
-                    m_btnformat->setDisabled(true);
-                    m_btnmount->setDisabled(true);
-                    m_btnresize->setDisabled(true);
+                    m_btnParted->setDisabled(false);
+                    m_btnFormat->setDisabled(true);
+                    m_btnMount->setDisabled(true);
+                    m_btnResize->setDisabled(true);
                 } else if (info.fstype == FS_UNKNOWN) {
-                    m_btnparted->setDisabled(true);
-                    m_btnformat->setDisabled(false);
-                    m_btnmount->setDisabled(true);
-                    m_btnresize->setDisabled(true);
+                    m_btnParted->setDisabled(true);
+                    m_btnFormat->setDisabled(false);
+                    m_btnMount->setDisabled(true);
+                    m_btnResize->setDisabled(true);
                 } else {
-                    m_btnparted->setDisabled(true);
-                    m_btnformat->setDisabled(false);
-                    m_btnmount->setDisabled(false);
-                    m_btnresize->setDisabled(false);
+                    m_btnParted->setDisabled(true);
+                    m_btnFormat->setDisabled(false);
+                    m_btnMount->setDisabled(false);
+                    m_btnResize->setDisabled(false);
                 }
             }
         }
@@ -156,11 +186,11 @@ void TitleWidget::updateBtnStatus()
 
     QMap<QString, QString> isExistUnallocated = DMDbusHandler::instance()->getIsExistUnallocated();
     if (isExistUnallocated.value(info.device_path) == "false") {
-        m_btnresize->setDisabled(true);
+        m_btnResize->setDisabled(true);
     }
 }
 
-void TitleWidget::slotCurSelectChanged()
+void TitleWidget::onCurSelectChanged()
 {
     updateBtnStatus();
     qDebug() << __FUNCTION__ << "-1--1-";

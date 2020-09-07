@@ -64,7 +64,7 @@ void PartitionWidget::initUi()
     mainLayout->addWidget(topFrame, 1);
     mainLayout->addWidget(midFrame, 3);
     mainLayout->addWidget(botFrame, 10);
-    setIcon(QIcon::fromTheme(app_name));
+    setIcon(QIcon::fromTheme(appName));
     this->addContent(mainFrame);
 
 }
@@ -157,7 +157,7 @@ void PartitionWidget::botFrameSetting()
 
 void PartitionWidget::partInfoShowing()
 {
-    auto formateList = DMDbusHandler::instance()->getallsupportfs();
+    auto formateList = DMDbusHandler::instance()->getAllSupportFileSystem();
     formateList.removeOne("linux-swap");
     //整体垂直布局-三行
     QVBoxLayout *vLayout = new QVBoxLayout(partWidget);

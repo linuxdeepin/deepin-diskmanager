@@ -1,23 +1,29 @@
-/*
-* Copyright (C) 2019 ~ 2020 Uniontech Software Technology Co.,Ltd.
-*
-* Author:     linxun <linxun@uniontech.com>
-*
-* Maintainer: linxun <linxun@uniontech.com>
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+/**
+ * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ *
+ * @file devicelistwidget.cpp
+ *
+ * @brief 主要实现磁盘树结构展示以及右键磁盘信息、硬盘健康检测、分区表错误处理、隐藏分区、显示分区、删除分区等操作
+ *
+ * @date 2020-09-03 14:54
+ *
+ * Author: yuandandan  <yuandandan@uniontech.com>
+ *
+ * Maintainer: yuandandan  <yuandandan@uniontech.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 #include "devicelistwidget.h"
 #include "customcontrol/dmdiskinfobox.h"
 #include "diskinfodisplaydialog.h"
@@ -54,6 +60,9 @@ DeviceListWidget::~DeviceListWidget()
 {
     //    delete m_box;
     //    delete m_childbox;
+    delete m_diskInfoDisplayDialog;
+    delete m_diskHealthDetectionDialog;
+    delete m_partitionTableErrorsInfoDialog;
 }
 
 void DeviceListWidget::initUi()
@@ -69,8 +78,8 @@ void DeviceListWidget::initUi()
 
 void DeviceListWidget::initConnection()
 {
-    connect(DMDbusHandler::instance(), &DMDbusHandler::sigUpdateDeviceInfo, this, &DeviceListWidget::onUpdateDeviceInfo);
-    connect(m_treeView, &DmTreeview::sigCurSelectChanged, DMDbusHandler::instance(), &DMDbusHandler::slotsetCurSelect);
+    connect(DMDbusHandler::instance(), &DMDbusHandler::updateDeviceInfo, this, &DeviceListWidget::onUpdateDeviceInfo);
+    connect(m_treeView, &DmTreeview::sigCurSelectChanged, DMDbusHandler::instance(), &DMDbusHandler::onSetCurSelect);
     connect(m_treeView, &QTreeView::customContextMenuRequested, this, &DeviceListWidget::treeMenu);
     connect(DMDbusHandler::instance(), &DMDbusHandler::deletePartitionMessage, this, &DeviceListWidget::onDeletePartition);
     connect(DMDbusHandler::instance(), &DMDbusHandler::hidePartitionMessage, this, &DeviceListWidget::onHidePartition);
@@ -336,66 +345,58 @@ void DeviceListWidget::onUpdateUsb()
 
 void DeviceListWidget::onUpdateDeviceInfo()
 {
-    qDebug() << __FUNCTION__ << "               1";
     //更新DmTreeview  lx
     //设置当前选项
     auto handler = DMDbusHandler::instance();
     m_num = handler->getCurPartititonInfo().partition_number;
     m_deviceNum = m_treeView->currentTopNum();
-    qDebug() << m_flag << m_treeView->currentTopNum();
     m_devicePath = handler->getCurPartititonInfo().device_path;
     m_treeView->m_model->clear();
     DeviceInfoMap infoMap = DMDbusHandler::instance()->probDeviceInfo();
 
     for (auto it = infoMap.begin(); it != infoMap.end(); it++) {
         DeviceInfo info = it.value();
-        QString s_disksize = Utils::format_size(info.length, info.sector_size);
-        auto m_box = new DmDiskinfoBox(0, this, info.m_path, s_disksize);
+        QString diskSize = Utils::format_size(info.length, info.sector_size);
+        auto diskinfoBox = new DmDiskinfoBox(0, this, info.m_path, diskSize);
         for (auto it = info.partition.begin(); it != info.partition.end(); it++) {
-            QString s_pdisksize = Utils::format_size(it->sector_end - it->sector_start + 1, it->sector_size);
-            QString s_partitionpath = it->path.remove(0, 5);
-            QString s_unusedstr = Utils::format_size(it->sectors_used, it->sector_size);
-            QString s_usedstr = Utils::format_size(it->sectors_unused, it->sector_size);
-            qDebug() << s_pdisksize;
-            qDebug() << it->partition_number;
-            qDebug() << s_unusedstr << "unused";
-            qDebug() << s_usedstr << "used";
-            qDebug() << it->fstype;
-            FSType fstype1 = static_cast<FSType>(it->fstype);
-            QString s_fstype = Utils::FSTypeToString(fstype1);
-            qDebug() << it->mountpoints;
-            QString s_mountpoint;
-            QString s_mountpoints;
-            for (int o = 0; o < it->mountpoints.size(); o++) {
-                s_mountpoint = it->mountpoints[o];
-                s_mountpoints += it->mountpoints[o];
-                qDebug() << it->mountpoints[o];
+            QString partitionSize = Utils::format_size(it->sector_end - it->sector_start + 1, it->sector_size);
+            QString partitionPath = it->path.remove(0, 5);
+            QString unused = Utils::format_size(it->sectors_used, it->sector_size);
+            QString used = Utils::format_size(it->sectors_unused, it->sector_size);
+            FSType fstype = static_cast<FSType>(it->fstype);
+            QString fstypeName = Utils::FSTypeToString(fstype);
+            QString mountPoint;
+            QString mountPoints;
+
+            for (int i = 0; i < it->mountpoints.size(); i++) {
+                mountPoint = it->mountpoints[i];
+                mountPoints += it->mountpoints[i];
             }
-            qDebug() << s_mountpoints;
-            qDebug() << s_fstype;
-            qDebug() << it->filesystem_label;
-            QString s_filesystem_label = it->filesystem_label;
-            auto m_childbox = new DmDiskinfoBox(1, this, it->device_path, "", s_partitionpath, s_pdisksize, s_usedstr, s_unusedstr, it->sectors_unallocated,
-                                                it->sector_start, it->sector_end, s_fstype, s_mountpoints, s_filesystem_label, it->flag);
-            m_box->childs.append(m_childbox);
+
+            QString fileSystemLabel = it->filesystem_label;
+            auto childDiskinfoBox = new DmDiskinfoBox(1, this, it->device_path, "", partitionPath, partitionSize, used, unused, it->sectors_unallocated,
+                                                it->sector_start, it->sector_end, fstypeName, mountPoints, fileSystemLabel, it->flag);
+            diskinfoBox->childs.append(childDiskinfoBox);
         }
 
-        m_treeView->addTopItem(m_box, m_additem);
+        m_treeView->addTopItem(diskinfoBox, m_addItem);
     }
 
     QStringList deviceNameList = DMDbusHandler::instance()->getDeviceNameList();
+
     if (deviceNameList.indexOf(DMDbusHandler::instance()->getCurPartititonInfo().device_path) == -1) {
         m_flag = 0;
     } else {
         m_deviceNum = deviceNameList.indexOf(DMDbusHandler::instance()->getCurPartititonInfo().device_path);
     }
 
-    m_additem = 1;
+    m_addItem = 1;
+
     if (m_flag == 0) {
         m_treeView->setDefaultdmItem();
     } else {
         m_treeView->setRefreshItem(m_deviceNum, m_treeView->currentNum());
     }
+
     m_flag += 1;
-    qDebug() << m_flag << m_treeView->currentNum();
 }

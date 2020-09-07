@@ -22,7 +22,7 @@
 #define COMMON_H
 #include <QIcon>
 
-const static QString app_name = "deepin-diskmanager";
+const static QString appName = "deepin-diskmanager";
 class Common
 {
 public:

@@ -26,15 +26,15 @@ int main(int argc, char *argv[])
     CusApplication a(argc, argv);
     a.setAttribute(Qt::AA_UseHighDpiPixmaps);
     a.loadTranslator();
-    a.setApplicationName(app_name);
+    a.setApplicationName(appName);
     a.setOrganizationName("deepin");
-    a.setWindowIcon(QIcon::fromTheme(app_name));
+    a.setWindowIcon(QIcon::fromTheme(appName));
     a.setApplicationDisplayName(QObject::tr("Disk Utility"));
     a.setApplicationVersion(/*DApplication::buildVersion("20191227")*/VERSION);
     const QString acknowledgementLink = "https://www.deepin.org/acknowledgments/deepin_reader";
     a.setApplicationAcknowledgementPage(acknowledgementLink);
 
-    QPixmap px(QIcon::fromTheme(app_name).pixmap(static_cast<int>(256 * qApp->devicePixelRatio()), static_cast<int>(256 * qApp->devicePixelRatio())));
+    QPixmap px(QIcon::fromTheme(appName).pixmap(static_cast<int>(256 * qApp->devicePixelRatio()), static_cast<int>(256 * qApp->devicePixelRatio())));
     px.setDevicePixelRatio(qApp->devicePixelRatio());
     a.setProductIcon(QIcon(px));
     a.setApplicationDescription(QObject::tr("Disk Utility is a disk management tool for creating, reorganizing and formatting partitions."));
@@ -42,12 +42,12 @@ int main(int argc, char *argv[])
     Dtk::Core::DLogManager::registerConsoleAppender();
     Dtk::Core::DLogManager::registerFileAppender();
     MainWindow w;
-    if (a.setSingleInstance(app_name)) {
+    if (a.setSingleInstance(appName)) {
         QObject::connect(&a, &DApplication::newInstanceStarted, &w, [&] {qDebug() << "======"; w.activateWindow(); });
     } else {
         exit(0);
     }
-    QObject::connect(&a, &CusApplication::sighandleQuitAction, &w, &MainWindow::slotHandleQuitAction);
+    QObject::connect(&a, &CusApplication::sighandleQuitAction, &w, &MainWindow::onHandleQuitAction);
     w.show();
 
     Dtk::Widget::moveToCenter(&w);

@@ -5,7 +5,7 @@ DDBase::DDBase(QWidget *parent)
     : DDialog(parent)
 {
     setModal(true);
-    setIcon(QIcon::fromTheme(app_name));
+    setIcon(QIcon::fromTheme(appName));
     mainFrame = new DFrame(this);
     mainFrame->setFrameRounded(false);
     mainFrame->setFrameStyle(DFrame::NoFrame);

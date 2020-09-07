@@ -35,7 +35,7 @@ void FormateDialog::initUi()
     DLabel *pformatname = new DLabel(tr("File system:"), this);
     pformatcombo = new DComboBox(this);
     pformatcombo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    QStringList fslist = DMDbusHandler::instance()->getallsupportfs();
+    QStringList fslist = DMDbusHandler::instance()->getAllSupportFileSystem();
     fslist.removeOne("linux-swap");
     pformatcombo->addItems(fslist);
 

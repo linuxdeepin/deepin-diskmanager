@@ -157,6 +157,11 @@ const DeviceInfo &DMDbusHandler::getCurDeviceInfo()
     return m_deviceMap.find(m_curDevicePath).value();
 }
 
+const Sector &DMDbusHandler::getCurDeviceInfoLength()
+{
+    return m_deviceMap.find(m_curDevicePath).value().length;
+}
+
 void DMDbusHandler::mount(const QString &mountPath)
 {
     emit showSpinerWindow(true);

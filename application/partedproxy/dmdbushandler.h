@@ -76,6 +76,11 @@ public:
     const DeviceInfo &getCurDeviceInfo();
 
     /**
+     * @brief 根据设备路径获取该设备的扇区长度
+     */
+    const Sector &getCurDeviceInfoLength();
+
+    /**
      * @brief 挂载分区
      * @param mountPath 挂载路径
      */

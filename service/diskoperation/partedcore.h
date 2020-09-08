@@ -3,7 +3,7 @@
  *
  * @file partedcore.h
  *
- * @brief 磁盘分区具体实现类
+ * @brief 磁盘操作类
  *
  * @date 2020-09-01 16:47
  *
@@ -42,8 +42,8 @@
 namespace DiskManager {
 
 /**
- * @class DiskManagerService
- * @brief 磁盘分区具体实现类
+ * @class PartedCore
+ * @brief 磁盘操作类
  */
 
 class PartedCore : public QObject
@@ -346,56 +346,281 @@ private:
      */
     static PedPartition *getLpPartition(const PedDisk *lpDisk, const Partition &partition);
     //detectionstuff..
-    void probedeviceinfo(const QString &path = QString());
-    void set_device_from_disk(Device &device, const QString &device_path);
-    void set_device_serial_number(Device &device);
-    void set_device_one_partition(Device &device, PedDevice *lp_device, FSType fstype);
-    void set_partition_label_and_uuid(Partition &partition);
-    bool is_busy(FSType fstype, const QString &path, const PedPartition *lp_partition = nullptr);
-    void read_label(Partition &partition);
-    void read_uuid(Partition &partition);
-    void set_mountpoints(Partition &partition);
-    bool set_mountpoints_helper(Partition &partition, const QString &path);
-    void set_used_sectors(Partition &partition, PedDisk *lp_disk);
-    void mounted_fs_set_used_sectors(Partition &partition);
-    void set_device_partitions(Device &device, PedDevice *lp_device, PedDisk *lp_disk);
 
-    static FSType detect_filesystem(PedDevice *lp_device, PedPartition *lp_partition);
-    static FSType detect_filesystem_internal(const QString &path, Byte_Value sector_size);
-    static QString get_partition_path(PedPartition *lp_partition);
-    void LP_set_used_sectors(Partition &partition, PedDisk *lp_disk);
+    /**
+     * @brief 获取分区详细信息
+     * @param path：默认空
+     */
+    void probeDeviceInfo(const QString &path = QString());
+
+    /**
+     * @brief 设置设备信息根据磁盘
+     * @param device：设备信息
+     * @param devicePath：设备路径
+     */
+    void setDeviceFromDisk(Device &device, const QString &devicePath);
+
+    /**
+     * @brief 设置设备序列号
+     * @param device：设备信息
+     */
+    void setDeviceSerialNumber(Device &device);
+
+    /**
+     * @brief 设置设备分区信息
+     * @param device：设备信息
+     * @param lpDevice：分区详细信息
+     * @param fstype：文件系统格式
+     */
+    void setDeviceOnePartition(Device &device, PedDevice *lpDevice, FSType fstype);
+
+    /**
+     * @brief 设置分区表和分区UUID
+     * @param partition：分区信息
+     */
+    void setPartitionLabelAndUuid(Partition &partition);
+
+    /**
+     * @brief 分区是否挂载状态
+     * @param fstype：文件系统格式
+     * @param path：挂载路径
+     * @param lp_partition：分区详细信息
+     * @return true挂载false没挂载
+     */
+    bool isBusy(FSType fstype, const QString &path, const PedPartition *lpPartition = nullptr);
+
+    /**
+     * @brief 读取分区表
+     * @param partition：分区信息
+     */
+    void readLabel(Partition &partition);
+
+    /**
+     * @brief 读取UUid
+     * @param partition：分区信息
+     */
+    void readUuid(Partition &partition);
+
+    /**
+     * @brief 设置分区挂载点信息
+     * @param partition：分区信息
+     */
+    void setMountPoints(Partition &partition);
+
+    /**
+     * @brief 设置分区挂载点信息帮助
+     * @param partition：分区信息
+     * @param path：挂载路径
+     * @return true成功false失败
+     */
+    bool setMountPointsHelper(Partition &partition, const QString &path);
+
+    /**
+     * @brief 设置分区已用空间
+     * @param partition：分区信息
+     * @param lpDisk：设备信息
+     */
+    void setUsedSectors(Partition &partition, PedDisk *lpDisk);
+
+    /**
+     * @brief 设置挂载状态分区已用空间
+     * @param partition：分区信息
+     */
+    void mountedFileSystemSetUsedSectors(Partition &partition);
+
+    /**
+     * @brief 设置设备分区信息
+     * @param device：设备信息
+     * @param lpDevice:设备详细信息
+     * @param lpDisk：磁盘信息
+     */
+    void setDevicePartitions(Device &device, PedDevice *lpDevice, PedDisk *lpDisk);
+
+    /**
+     * @brief 检查文件系统
+     * @param lpDevice：设备详细信息
+     * @param lpPartition:分区详细信息
+     * @return 文件系统格式
+     */
+    static FSType detectFilesystem(PedDevice *lpDevice, PedPartition *lpPartition);
+
+    /**
+     * @brief 检查内部文件系统
+     * @param path：路径
+     * @param sectorSize:扇区大小
+     * @return 文件系统格式
+     */
+    static FSType detectFilesystemInternal(const QString &path, Byte_Value sectorSize);
+
+    /**
+     * @brief 获取分区路径
+     * @param lpPartition：分区详细信息
+     * @return 分区路径
+     */
+    static QString getPartitionPath(PedPartition *lpPartition);
+
+    /**
+     * @brief 设置分区已用空间
+     * @param partition：分区信息
+     * @param lpDisk：磁盘信息
+     */
+    void LpSetUsedSectors(Partition &partition, PedDisk *lpDisk);
 
     //operationstuff...
-    bool name_partition(const Partition &partition);
-    bool erase_filesystem_signatures(const Partition &partition);
-    bool set_partition_type(const Partition &partition);
-    bool create_filesystem(const Partition &partition);
-    bool formatpartition(const Partition &partition);
-    bool resize(const Partition &partition_new);
-    bool check_repair_filesystem(const Partition &partition);
-    bool resize_move_partition(const Partition &partition_old, const Partition &partition_new, bool rollback_on_fail);
-    bool resize_move_partition_implement(const Partition &partition_old, const Partition &partition_new, Sector &new_start, Sector &new_end);
-    bool maximize_filesystem(const Partition &partition);
-    bool resize_filesystem_implement(const Partition &partition_old, const Partition &partition_new);
-    bool resize_move_filesystem_using_libparted(const Partition &partition_old, const Partition &partition_new);
-    bool create(Partition &partition);
-    bool create_partition(Partition &new_partition, Sector min_size = 0);
+    /**
+     * @brief 设置分区别名
+     * @param partition：分区信息
+     * @return true成功false失败
+     */
+    bool namePartition(const Partition &partition);
+
+    /**
+     * @brief 抹除分区原来的文件系统签名
+     * @param partition：分区信息
+     * @return true成功false失败
+     */
+    bool eraseFilesystemSignatures(const Partition &partition);
+
+    /**
+     * @brief 设置分区格式
+     * @param partition：分区信息
+     * @return true成功false失败
+     */
+    bool setPartitionType(const Partition &partition);
+
+    /**
+     * @brief 创建分区文件系统
+     * @param partition：分区信息
+     * @return true成功false失败
+     */
+    bool createFileSystem(const Partition &partition);
+
+    /**
+     * @brief 格式化分区
+     * @param partition：分区信息
+     * @return true成功false失败
+     */
+    bool formatPartition(const Partition &partition);
+
+    /**
+     * @brief 扩容分区
+     * @param partition：分区信息
+     * @return true成功false失败
+     */
+    bool resize(const Partition &partitionNew);
+
+    /**
+     * @brief 检查修复文件系统
+     * @param partition：分区信息
+     * @return true成功false失败
+     */
+    bool checkRepairFileSystem(const Partition &partition);
+
+    /**
+     * @brief 调整移动分区大小
+     * @param partitionOld：旧分区信息
+     * @param partitionNew：新分区信息
+     * @param rollbackOnFail：回滚标志
+     * @return true成功false失败
+     */
+    bool resizeMovePartition(const Partition &partitionOld, const Partition &partitionNew, bool rollbackOnFail);
+
+
+    /**
+     * @brief 调整移动分区实现大小
+     * @param partitionOld：旧分区信息
+     * @param partitionNew：新分区信息
+     * @param newStart：新分区扇区开始
+     * @param newEnd：新分区扇区结束
+     * @return true成功false失败
+     */
+    bool resizeMovePartitionImplement(const Partition &partitionOld, const Partition &partitionNew, Sector &newStart, Sector &newEnd);
+
+    /**
+     * @brief 最大化文件系统
+     * @param partition：分区信息
+     * @return true成功false失败
+     */
+    bool maxImizeFileSystem(const Partition &partition);
+
+    /**
+     * @brief 调整文件系统大小
+     * @param partitionOld：旧分区信息
+     * @param partitionNew：新分区信息
+     * @return true成功false失败
+     */
+    bool resizeFileSystemImplement(const Partition &partitionOld, const Partition &partitionNew);
+
+    /**
+     * @brief 使用libparted调整移动文件系统大小
+     * @param partitionOld：旧分区信息
+     * @param partitionNew：新分区信息
+     * @return true成功false失败
+     */
+    bool resizeMoveFileSystemUsingLibparted(const Partition &partitionOld, const Partition &partitionNew);
+
+    /**
+     * @brief 创建分区
+     * @param partition：分区信息
+     * @return true成功false失败
+     */
+    bool create(Partition &newPartition);
+
+    /**
+     * @brief 创建分区
+     * @param partition：分区信息
+     * @return true成功false失败
+     */
+    bool createPartition(Partition &newPartition, Sector minSize = 0);
 signals:
+
+    /**
+     * @brief 更新信息信号
+     * @param infomap：硬盘信息
+     */
     void updateDeviceInfo(const DeviceInfoMap &infomap);
+
+    /**
+     * @brief 刷新信息信号
+     */
     void refreshDeviceInfo();
+
+    /**
+     * @brief 删除分区信号
+     * @param deleteMessage：删除结果
+     */
     void deletePatition(const QString &deleteMessage);
+
+    /**
+     * @brief 隐藏分区信号
+     * @param hideMessage：隐藏结果
+     */
     void hidePartitionInfo(const QString &hideMessage);
+
+    /**
+     * @brief 显示分区信号
+     * @param hideMessage：显示结果
+     */
     void showPartitionInfo(const QString &showMessage);
+
+    /**
+     * @brief USB信号
+     */
     void usbUpdated();
+
 public slots:
+
+    /**
+     * @brief 刷新信息槽函数
+     */
     void onRefreshDeviceInfo();
 
 private:
-    QVector<PedPartitionFlag> flags;
-    QMap<QString, Device> devicemap;
-    DeviceInfoMap inforesult;
-    Partition curpartition;
-    static SupportedFileSystems *supported_filesystems;
+    QVector<PedPartitionFlag> m_flags;    //分区标志hidden boot efi等
+    QMap<QString, Device> m_devicemap;    //设备对应信息表
+    DeviceInfoMap m_inforesult;           //全部设备分区信息
+    Partition m_curpartition;             //当前选中分区信息
+    static SupportedFileSystems *m_supportedFileSystems; //支持的文件系统
 };
 
 } // namespace DiskManager

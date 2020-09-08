@@ -1,9 +1,35 @@
+/**
+ * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ *
+ * @file main.cpp
+ *
+ * @brief 注册dbus服务
+ *
+ * @date 2020-09-04 11:06
+ *
+ * Author: liweigang  <liweigang@uniontech.com>
+ *
+ * Maintainer: liweigang  <liweigang@uniontech.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+#include "diskmanagerservice.h"
+#include "log.h"
 #include <QCoreApplication>
 #include <DLog>
 #include <QDBusConnection>
 #include <QDBusError>
-#include "diskmanagerservice.h"
-#include "log.h"
 
 const QString DiskManagerServiceName = "com.deepin.diskmanager";
 const QString DiskManagerPath = "/com/deepin/diskmanager";
@@ -26,14 +52,14 @@ int main(int argc, char *argv[])
     a.setApplicationName("deepin-diskmanager-service");
 
     QDir dirCheck;
-    QString Log_path = QString("%1/%2/%3/Log/")
+    QString LogPath = QString("%1/%2/%3/Log/")
         .arg("/home/config")
         .arg(qApp->organizationName())
         .arg(qApp->applicationName());
-    setLogDir(Log_path);
-    if (!dirCheck.exists(Log_path))
+    setLogDir(LogPath);
+    if (!dirCheck.exists(LogPath))
     {
-        dirCheck.mkpath(Log_path);
+        dirCheck.mkpath(LogPath);
     }
     //检查日志是否过期
     CheckLogTime();
@@ -42,7 +68,6 @@ int main(int argc, char *argv[])
     //创建新日志
     CreateNewLog();
     qInstallMessageHandler(customLogMessageHandler);
-    qDebug()<<Log_path;//QStandardPaths::displayName(QStandardPaths::ConfigLocation);
 //    Dtk::Core::DLogManager::registerConsoleAppender();
 //    Dtk::Core::DLogManager::registerFileAppender();
 

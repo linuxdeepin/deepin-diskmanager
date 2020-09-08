@@ -1,3 +1,30 @@
+/**
+ * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ *
+ * @file partedcore.cpp
+ *
+ * @brief 磁盘操作类
+ *
+ * @date 2020-09-03 17:49
+ *
+ * Author: liweigang  <liweigang@uniontech.com>
+ *
+ * Maintainer: liweigang  <liweigang@uniontech.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "partedcore.h"
 #include "fsinfo.h"
 #include "mountinfo.h"
@@ -15,7 +42,7 @@ namespace DiskManager {
 static bool hdparm_found = false;
 const std::time_t SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS = 1;
 //const std::time_t SETTLE_DEVICE_APPLY_MAX_WAIT_SECONDS = 10;
-SupportedFileSystems *PartedCore::supported_filesystems = nullptr;
+SupportedFileSystems *PartedCore::m_supportedFileSystems = nullptr;
 
 PartedCore::PartedCore(QObject *parent)
     : QObject(parent)
@@ -26,7 +53,7 @@ PartedCore::PartedCore(QObject *parent)
 
     for (PedPartitionFlag flag = ped_partition_flag_next(static_cast<PedPartitionFlag>(NULL));
             flag; flag = ped_partition_flag_next(flag))
-        flags.push_back(flag);
+        m_flags.push_back(flag);
 
     qDebug() << __FUNCTION__ << "^^2";
 
@@ -34,21 +61,21 @@ PartedCore::PartedCore(QObject *parent)
 
     qDebug() << __FUNCTION__ << "^^3";
 
-    supported_filesystems = new SupportedFileSystems();
+    m_supportedFileSystems = new SupportedFileSystems();
     //Determine file system support capabilities for the first time
-    supported_filesystems->find_supported_filesystems();
+    m_supportedFileSystems->findSupportedFilesystems();
 
     qDebug() << __FUNCTION__ << "^^4";
 
-    probedeviceinfo();
+    probeDeviceInfo();
 
     qDebug() << __FUNCTION__ << "^^5";
 }
 
 PartedCore::~PartedCore()
 {
-    delete supported_filesystems;
-    supported_filesystems = nullptr;
+    delete m_supportedFileSystems;
+    m_supportedFileSystems = nullptr;
 }
 
 void PartedCore::findSupportedCore()
@@ -59,24 +86,24 @@ void PartedCore::findSupportedCore()
 
 bool PartedCore::supportedFileSystem(FSType fstype)
 {
-    return supported_filesystems->get_fs_object(fstype) != nullptr;
+    return m_supportedFileSystems->getFsObject(fstype) != nullptr;
 }
 
 const FS &PartedCore::getFileSystem(FSType fstype) const
 {
-    return supported_filesystems->get_fs_support(fstype);
+    return m_supportedFileSystems->getFsSupport(fstype);
 }
 
 FileSystem *PartedCore::getFileSystemObject(FSType fstype)
 {
-    return supported_filesystems->get_fs_object(fstype);
+    return m_supportedFileSystems->getFsObject(fstype);
 }
 
 //bool PartedCore::filesystem_resize_disallowed(const Partition &partition)
 //{
 //    if (partition.fstype == FS_LVM2_PV) {
 //        //        //The LVM2 PV can't be resized when it's a member of an export VG
-//        //        QString vgname = LVM2_PV_Info::get_vg_name(partition.get_path());
+//        //        QString vgname = LVM2_PV_Info::get_vg_name(partition.getPath());
 //        //        if (vgname .isEmpty())
 //        //            return false ;
 //        //        return LVM2_PV_Info::is_vg_exported(vgname);
@@ -88,105 +115,106 @@ void PartedCore::insertUnallocated(const QString &devicePath, QVector<Partition 
 {
     //if there are no partitions at all..
     if (partitions.empty()) {
-        Partition *partition_temp = new Partition();
-        partition_temp->Set_Unallocated(devicePath, start, end, sectorSize, insideExtended);
-        partitions.push_back(partition_temp);
+        Partition *partitionTemp = new Partition();
+        partitionTemp->setUnallocated(devicePath, start, end, sectorSize, insideExtended);
+        partitions.push_back(partitionTemp);
         return;
     }
 
     //start <---> first partition start
-    if ((partitions.front()->sector_start - start) > (MEBIBYTE / sectorSize)) {
-        Sector temp_end = partitions.front()->sector_start - 1;
-        Partition *partition_temp = new Partition();
-        partition_temp->Set_Unallocated(devicePath, start, temp_end, sectorSize, insideExtended);
-        partitions.insert(partitions.begin(), partition_temp);
+    if ((partitions.front()->m_sectorStart - start) > (MEBIBYTE / sectorSize)) {
+        Sector tempEnd = partitions.front()->m_sectorStart - 1;
+        Partition *partitionTemp = new Partition();
+        partitionTemp->setUnallocated(devicePath, start, tempEnd, sectorSize, insideExtended);
+        partitions.insert(partitions.begin(), partitionTemp);
     }
 
     //look for gaps in between
     for (int t = 0; t < partitions.size() - 1; t++) {
-        if (((partitions.at(t + 1)->sector_start - partitions.at(t)->sector_end - 1) > (MEBIBYTE / sectorSize))
-                || ((partitions.at(t + 1)->type != TYPE_LOGICAL) // Only show exactly 1 MiB if following partition is not logical.
-                    && ((partitions.at(t + 1)->sector_start - partitions.at(t)->sector_end - 1) == (MEBIBYTE / sectorSize)))) {
-            Sector temp_start = partitions.at(t)->sector_end + 1;
-            Sector temp_end = partitions.at(t + 1)->sector_start - 1;
-            Partition *partition_temp = new Partition();
-            partition_temp->Set_Unallocated(devicePath, temp_start, temp_end,
+        if (((partitions.at(t + 1)->m_sectorStart - partitions.at(t)->m_sectorEnd - 1) > (MEBIBYTE / sectorSize))
+                || ((partitions.at(t + 1)->m_type != TYPE_LOGICAL) // Only show exactly 1 MiB if following partition is not logical.
+                    && ((partitions.at(t + 1)->m_sectorStart - partitions.at(t)->m_sectorEnd - 1) == (MEBIBYTE / sectorSize)))) {
+            Sector tempStart = partitions.at(t)->m_sectorEnd + 1;
+            Sector tempEnd = partitions.at(t + 1)->m_sectorStart - 1;
+            Partition *partitionTemp = new Partition();
+            partitionTemp->setUnallocated(devicePath, tempStart, tempEnd,
                                             sectorSize, insideExtended);
-            partitions.insert(partitions.begin() + (++t), partition_temp);
+            partitions.insert(partitions.begin() + (++t), partitionTemp);
             // partitions.insert_adopt(partitions.begin() + ++t, partition_temp);
         }
     }
     partitions.back();
     //last partition end <---> end
-    if ((end - partitions.back()->sector_end) >= (MEBIBYTE / sectorSize)) {
-        Sector temp_start = partitions.back()->sector_end + 1;
-        Partition *partition_temp = new Partition();
-        partition_temp->Set_Unallocated(devicePath, temp_start, end, sectorSize, insideExtended);
-        partitions.push_back(partition_temp);
+    if ((end - partitions.back()->m_sectorEnd) >= (MEBIBYTE / sectorSize)) {
+        Sector tempStart = partitions.back()->m_sectorEnd + 1;
+        Partition *partitionTemp = new Partition();
+        partitionTemp->setUnallocated(devicePath, tempStart, end, sectorSize, insideExtended);
+        partitions.push_back(partitionTemp);
     }
 }
 
 void PartedCore::setFlags(Partition &partition, PedPartition *lpPartition)
 {
-    for (int t = 0; t < flags.size(); t++) {
-        if (ped_partition_is_flag_available(lpPartition, flags[t]) && ped_partition_get_flag(lpPartition, flags[t]))
-            partition.flags.push_back(ped_partition_flag_get_name(flags[t]));
+    for (int t = 0; t < m_flags.size(); t++) {
+        if (ped_partition_is_flag_available(lpPartition, m_flags[t]) && ped_partition_get_flag(lpPartition, m_flags[t]))
+            partition.m_flags.push_back(ped_partition_flag_get_name(m_flags[t]));
     }
 }
 
 FS_Limits PartedCore::getFileSystemLimits(FSType fstype, const Partition &partition)
 {
-    FileSystem *p_filesystem = supported_filesystems->get_fs_object(fstype);
-    FS_Limits fs_limits;
-    if (p_filesystem != nullptr)
-        fs_limits = p_filesystem->get_filesystem_limits(partition);
-    return fs_limits;
+    FileSystem *pFileSystem = m_supportedFileSystems->getFsObject(fstype);
+    FS_Limits fsLimits;
+    if (pFileSystem != nullptr)
+        fsLimits = pFileSystem->get_filesystem_limits(partition);
+    return fsLimits;
 }
 
-void PartedCore::probedeviceinfo(const QString &)
+void PartedCore::probeDeviceInfo(const QString &)
 {
-    inforesult.clear();
-    devicemap.clear();
+    m_inforesult.clear();
+    m_devicemap.clear();
     QVector<QString> devicepaths;
     qDebug() << __FUNCTION__ << "**1";
     devicepaths.clear();
     BlockSpecial::clear_cache();
     qDebug() << __FUNCTION__ << "**2";
-    ProcPartitionsInfo::load_cache();
+    ProcPartitionsInfo::loadCache();
     qDebug() << __FUNCTION__ << "**3";
     FsInfo::load_cache();
     qDebug() << __FUNCTION__ << "**4";
-    MountInfo::load_cache();
+    qDebug() << __FUNCTION__ << "**5";
+    MountInfo::loadCache();
     qDebug() << __FUNCTION__ << "**6";
     ped_device_probe_all();
     qDebug() << __FUNCTION__ << "**7";
-    PedDevice *lp_device = ped_device_get_next(nullptr);
-    while (lp_device) {
+    PedDevice *lpDevice = ped_device_get_next(nullptr);
+    while (lpDevice) {
         /* TO TRANSLATORS: looks like   Confirming /dev/sda */
-        qDebug() << QString("Confirming %1").arg(lp_device->path);
+        qDebug() << QString("Confirming %1").arg(lpDevice->path);
 
         //only add this device if we can read the first sector (which means it's a real device)
-        if (useableDevice(lp_device))
-            devicepaths.push_back(lp_device->path);
-        qDebug() << lp_device->path;
-        lp_device = ped_device_get_next(lp_device);
+        if (useableDevice(lpDevice))
+            devicepaths.push_back(lpDevice->path);
+        qDebug() << lpDevice->path;
+        lpDevice = ped_device_get_next(lpDevice);
     }
     qDebug() << __FUNCTION__ << "devicepaths size=" << devicepaths.size();
     std::sort(devicepaths.begin(), devicepaths.end());
     qDebug() << __FUNCTION__ << "**8";
     for (int t = 0; t < devicepaths.size(); t++) {
         /*TO TRANSLATORS: looks like Searching /dev/sda partitions */
-        Device temp_device;
-        set_device_from_disk(temp_device, devicepaths[t]);
-        devicemap.insert(devicepaths.at(t), temp_device);
+        Device tempDevice;
+        setDeviceFromDisk(tempDevice, devicepaths[t]);
+        m_devicemap.insert(devicepaths.at(t), tempDevice);
     }
     qDebug() << __FUNCTION__ << "**9";
-    for (auto it = devicemap.begin(); it != devicemap.end(); it++) {
+    for (auto it = m_devicemap.begin(); it != m_devicemap.end(); it++) {
         DeviceInfo devinfo = it.value().getDeviceInfo();
         for (int i = 0; i < it.value().partitions.size(); i++) {
             Partition pat = *(it.value().partitions.at(i));
             PartitionInfo partinfo = pat.getPartitionInfo();
-            for (auto i = pat.flags.begin();i != pat.flags.end();i++) {
+            for (auto i = pat.m_flags.begin();i != pat.m_flags.end();i++) {
                 if(*i == "hidden") {
                     partinfo.flag = 1;
                 }
@@ -194,10 +222,10 @@ void PartedCore::probedeviceinfo(const QString &)
                     partinfo.flag = 0;
                 }
             }
-            if (pat.type == TYPE_EXTENDED) {
+            if (pat.m_type == TYPE_EXTENDED) {
                 devinfo.partition.push_back(partinfo);
-                for (int k = 0; k < pat.logicals.size(); k++) {
-                    Partition plogic = *(pat.logicals.at(k));
+                for (int k = 0; k < pat.m_logicals.size(); k++) {
+                    Partition plogic = *(pat.m_logicals.at(k));
                     partinfo = plogic.getPartitionInfo();
                     devinfo.partition.push_back(partinfo);
                 }
@@ -205,9 +233,9 @@ void PartedCore::probedeviceinfo(const QString &)
                 devinfo.partition.push_back(partinfo);
             }
         }
-        inforesult.insert(devinfo.m_path, devinfo);
+        m_inforesult.insert(devinfo.m_path, devinfo);
     }
-    qDebug() << __FUNCTION__ << inforesult.count();
+    qDebug() << __FUNCTION__ << m_inforesult.count();
     qDebug() << __FUNCTION__ << "**10";
 }
 
@@ -223,66 +251,66 @@ bool PartedCore::useableDevice(const PedDevice *lpDevice)
     bool success = false;
     int fd = open(lpDevice->path, O_RDONLY | O_NONBLOCK);
     if (fd >= 0) {
-        ssize_t bytes_read = read(fd, buf, lpDevice->sector_size);
-        success = (bytes_read == lpDevice->sector_size);
+        ssize_t bytesRead = read(fd, buf, lpDevice->sector_size);
+        success = (bytesRead == lpDevice->sector_size);
         close(fd);
     }
     free(buf);
     return success;
 }
 
-void PartedCore::set_device_from_disk(Device &device, const QString &device_path)
+void PartedCore::setDeviceFromDisk(Device &device, const QString &devicePath)
 {
-    PedDevice *lp_device = nullptr;
-    PedDisk *lp_disk = nullptr;
-    if (getDevice(device_path, lp_device, true)) {
-        device.heads = lp_device->bios_geom.heads;
-        device.length = lp_device->length;
-        device.m_path = device_path;
-        device.model = lp_device->model;
-        device.sector_size = lp_device->sector_size;
-        device.sectors = lp_device->bios_geom.sectors;
-        device.cylinders = lp_device->bios_geom.cylinders;
+    PedDevice *lpDevice = nullptr;
+    PedDisk *lpDisk = nullptr;
+    if (getDevice(devicePath, lpDevice, true)) {
+        device.heads = lpDevice->bios_geom.heads;
+        device.length = lpDevice->length;
+        device.m_path = devicePath;
+        device.model = lpDevice->model;
+        device.sector_size = lpDevice->sector_size;
+        device.sectors = lpDevice->bios_geom.sectors;
+        device.cylinders = lpDevice->bios_geom.cylinders;
         device.cylsize = device.heads * device.sectors;
-        set_device_serial_number(device);
+        setDeviceSerialNumber(device);
         if (device.cylsize < (MEBIBYTE / device.sector_size))
             device.cylsize = MEBIBYTE / device.sector_size;
 
-        FSType fstype = detect_filesystem(lp_device, nullptr);
+        FSType fstype = detectFilesystem(lpDevice, nullptr);
         if (fstype != FS_UNKNOWN) {
             device.disktype = "none";
             device.max_prims = 1;
-            set_device_one_partition(device, lp_device, fstype);
-        } else if (getDisk(lp_device, lp_disk, false)) {
+            setDeviceOnePartition(device, lpDevice, fstype);
+        } else if (getDisk(lpDevice, lpDisk, false)) {
             // Partitioned drive (excluding "loop"), as recognised by libparted
-            if (lp_disk && lp_disk->type && lp_disk->type->name && strcmp(lp_disk->type->name, "loop") != 0) {
-                device.disktype = lp_disk->type->name;
-                device.max_prims = ped_disk_get_max_primary_partition_count(lp_disk);
+            if (lpDisk && lpDisk->type && lpDisk->type->name && strcmp(lpDisk->type->name, "loop") != 0) {
+                device.disktype = lpDisk->type->name;
+                device.max_prims = ped_disk_get_max_primary_partition_count(lpDisk);
 
                 // Determine if partition naming is supported.
-                if (ped_disk_type_check_feature(lp_disk->type, PED_DISK_TYPE_PARTITION_NAME)) {
+                if (ped_disk_type_check_feature(lpDisk->type, PED_DISK_TYPE_PARTITION_NAME)) {
                     device.enable_partition_naming(
                         Utils::get_max_partition_name_length(device.disktype));
                 }
 
-                set_device_partitions(device, lp_device, lp_disk);
+                setDevicePartitions(device, lpDevice, lpDisk);
 
                 if (device.highest_busy) {
-                    device.readonly = !commitToOs(lp_disk);
+                    device.readonly = !commitToOs(lpDisk);
                 }
             }
             // Drive just containing libparted "loop" signature and nothing
             // else.  (Actually any drive reported by libparted as "loop" but
             // not recognised by blkid on the whole disk device).
-            else if (lp_disk && lp_disk->type && lp_disk->type->name && strcmp(lp_disk->type->name, "loop") == 0) {
-                device.disktype = lp_disk->type->name;
+            else if (lpDisk && lpDisk->type && lpDisk->type->name && strcmp(lpDisk->type->name, "loop") == 0) {
+                device.disktype = lpDisk->type->name;
                 device.max_prims = 1;
 
                 // Create virtual partition covering the whole disk device
                 // with unknown contents.
                 Partition *partition_temp = new Partition();
-                partition_temp->set_unpartitioned(device.m_path,
-                                                  lp_device->path,
+                partition_temp->setUnpartitioned(device.m_path,
+                                                  lpDevice->path,
                                                   FS_UNKNOWN,
                                                   device.length,
                                                   device.sector_size,
@@ -296,7 +324,7 @@ void PartedCore::set_device_from_disk(Device &device, const QString &device_path
                 device.max_prims = 1;
 
                 Partition *partition_temp = new Partition();
-                partition_temp->set_unpartitioned(device.m_path,
+                partition_temp->setUnpartitioned(device.m_path,
                                                   "", // Overridden with "unallocated"
                                                   FS_UNALLOCATED,
                                                   device.length,
@@ -305,7 +333,7 @@ void PartedCore::set_device_from_disk(Device &device, const QString &device_path
                 device.partitions.push_back(partition_temp);
             }
         }
-        destroyDeviceAndDisk(lp_device, lp_disk);
+        destroyDeviceAndDisk(lpDevice, lpDisk);
     }
 }
 
@@ -337,7 +365,7 @@ bool PartedCore::getDisk(PedDevice *&lpDevice, PedDisk *&lpDisk, bool strict)
 
         // if ! disk and writable it's probably a HD without disklabel.
         // We return true here and deal with them in
-        // GParted_Core::set_device_from_disk().
+        // GParted_Core::setDeviceFromDisk().
         if (lpDisk || (!strict && !lpDevice->read_only))
             return true;
 
@@ -361,7 +389,7 @@ void PartedCore::destroyDeviceAndDisk(PedDevice *&lpDevice, PedDisk *&lpDisk)
 bool PartedCore::infoBelongToPartition(const Partition &partition, const PartitionInfo info)
 {
     bool belong = false;
-    if (info.sector_end == partition.sector_end && info.sector_start == partition.sector_start)
+    if (info.sector_end == partition.m_sectorEnd && info.sector_start == partition.m_sectorStart)
         belong = true;
     return belong;
 }
@@ -397,12 +425,12 @@ bool PartedCore::commit(PedDisk *lpDisk)
 
 PedPartition *PartedCore::getLpPartition(const PedDisk *lpDisk, const Partition &partition)
 {
-    if (partition.type == TYPE_EXTENDED)
+    if (partition.m_type == TYPE_EXTENDED)
         return ped_disk_extended_partition(lpDisk);
-    return ped_disk_get_partition_by_sector(lpDisk, partition.get_sector());
+    return ped_disk_get_partition_by_sector(lpDisk, partition.getSector());
 }
 
-void PartedCore::set_device_serial_number(Device &device)
+void PartedCore::setDeviceSerialNumber(Device &device)
 {
     if (!hdparm_found)
         // Serial number left blank when the hdparm command is not installed.
@@ -424,82 +452,82 @@ void PartedCore::set_device_serial_number(Device &device)
         //     SG_IO: bad/missing sense data, sb[]:  70 00 05 00 00 00 00 0a ...
         device.serial_number = "none";
     } else {
-        QString serial_number = Utils::regexp_label(output, "^[[:blank:]]*Serial Number:[[:blank:]]*(.*)[[:blank:]]*$");
-        if (!serial_number.isEmpty())
-            device.serial_number = serial_number;
+        QString serialNumber = Utils::regexp_label(output, "^[[:blank:]]*Serial Number:[[:blank:]]*(.*)[[:blank:]]*$");
+        if (!serialNumber.isEmpty())
+            device.serial_number = serialNumber;
     }
     // Otherwise serial number left blank when not found in the hdparm output.
 }
 
-void PartedCore::set_device_one_partition(Device &device, PedDevice *lp_device, FSType fstype)
+void PartedCore::setDeviceOnePartition(Device &device, PedDevice *lpDevice, FSType fstype)
 {
     device.partitions.clear();
-    QString path(lp_device->path);
-    bool partition_is_busy = is_busy(fstype, path);
+    QString path(lpDevice->path);
+    bool partitionIsBusy = isBusy(fstype, path);
 
-    Partition *partition_temp = nullptr;
+    Partition *partitionTemp = nullptr;
     if (fstype == FS_LUKS) {
-        partition_temp = nullptr; //= new PartitionLUKS();
+        partitionTemp = nullptr; //= new PartitionLUKS();
     } else
-        partition_temp = new Partition();
-    if (nullptr == partition_temp)
+        partitionTemp = new Partition();
+    if (nullptr == partitionTemp)
         return;
-    partition_temp->set_unpartitioned(device.m_path,
+    partitionTemp->setUnpartitioned(device.m_path,
                                       path,
                                       fstype,
                                       device.length,
                                       device.sector_size,
-                                      partition_is_busy);
+                                      partitionIsBusy);
 
     //        if ( fstype == FS_LUKS )
     //            set_luks_partition( *dynamic_cast<PartitionLUKS *>( partition_temp ) );
 
-    if (partition_temp->busy)
+    if (partitionTemp->m_busy)
         device.highest_busy = 1;
 
-    set_partition_label_and_uuid(*partition_temp);
-    set_mountpoints(*partition_temp);
-    set_used_sectors(*partition_temp, nullptr);
-    device.partitions.push_back(partition_temp);
+    setPartitionLabelAndUuid(*partitionTemp);
+    setMountPoints(*partitionTemp);
+    setUsedSectors(*partitionTemp, nullptr);
+    device.partitions.push_back(partitionTemp);
 }
 
-void PartedCore::set_partition_label_and_uuid(Partition &partition)
+void PartedCore::setPartitionLabelAndUuid(Partition &partition)
 {
-    QString partition_path = partition.get_path();
-    read_label(partition);
-    if (!partition.filesystem_label_known()) {
-        bool label_found = false;
-        QString label = FsInfo::get_label(partition_path, label_found);
-        if (label_found)
-            partition.set_filesystem_label(label);
+    QString partitionPath = partition.getPath();
+    readLabel(partition);
+    if (!partition.filesystemLabelKnown()) {
+        bool labelFound = false;
+        QString label = FsInfo::get_label(partitionPath, labelFound);
+        if (labelFound)
+            partition.setFilesystemLabel(label);
     }
 
     // Retrieve file system UUID.  Use cached method first in an effort to speed up
     // device scanning.
-    partition.uuid = FsInfo::get_uuid(partition_path);
-    if (partition.uuid.isEmpty()) {
-        read_uuid(partition);
+    partition.m_uuid = FsInfo::get_uuid(partitionPath);
+    if (partition.m_uuid.isEmpty()) {
+        readUuid(partition);
     }
 }
 
-bool PartedCore::is_busy(FSType fstype, const QString &path, const PedPartition *lp_partition)
+bool PartedCore::isBusy(FSType fstype, const QString &path, const PedPartition *lpPartition)
 {
-    FileSystem *p_filesystem = nullptr;
+    FileSystem *pFilesystem = nullptr;
     bool busy = false;
-    if (nullptr != lp_partition) {
-        busy = ped_partition_is_busy(lp_partition);
+    if (nullptr != lpPartition) {
+        busy = ped_partition_is_busy(lpPartition);
     }
     if (!busy && supportedFileSystem(fstype)) {
         switch (getFileSystem(fstype).busy) {
         case FS::GPARTED:
             //Search GParted internal mounted partitions map
-            busy = MountInfo::is_dev_mounted(path);
+            busy = MountInfo::isDevMounted(path);
             break;
         case FS::EXTERNAL:
             //Call file system specific method
-            p_filesystem = getFileSystemObject(fstype);
-            if (p_filesystem)
-                busy = p_filesystem->is_busy(path);
+            pFilesystem = getFileSystemObject(fstype);
+            if (pFilesystem)
+                busy = pFilesystem->is_busy(path);
             break;
 
         default:
@@ -510,14 +538,14 @@ bool PartedCore::is_busy(FSType fstype, const QString &path, const PedPartition 
     return busy;
 }
 
-void PartedCore::read_label(Partition &partition)
+void PartedCore::readLabel(Partition &partition)
 {
-    FileSystem *p_filesystem = nullptr;
-    switch (getFileSystem(partition.fstype).read_label) {
+    FileSystem *pFilesystem = nullptr;
+    switch (getFileSystem(partition.m_fstype).read_label) {
     case FS::EXTERNAL:
-        p_filesystem = getFileSystemObject(partition.fstype);
-        if (p_filesystem)
-            p_filesystem->read_label(partition);
+        pFilesystem = getFileSystemObject(partition.m_fstype);
+        if (pFilesystem)
+            pFilesystem->read_label(partition);
         break;
 
     default:
@@ -525,14 +553,14 @@ void PartedCore::read_label(Partition &partition)
     }
 }
 
-void PartedCore::read_uuid(Partition &partition)
+void PartedCore::readUuid(Partition &partition)
 {
-    FileSystem *p_filesystem = nullptr;
-    switch (getFileSystem(partition.fstype).read_uuid) {
+    FileSystem *pFilesystem = nullptr;
+    switch (getFileSystem(partition.m_fstype).read_uuid) {
     case FS::EXTERNAL:
-        p_filesystem = getFileSystemObject(partition.fstype);
-        if (p_filesystem)
-            p_filesystem->read_uuid(partition);
+        pFilesystem = getFileSystemObject(partition.m_fstype);
+        if (pFilesystem)
+            pFilesystem->read_uuid(partition);
         break;
 
     default:
@@ -540,92 +568,92 @@ void PartedCore::read_uuid(Partition &partition)
     }
 }
 
-void PartedCore::set_mountpoints(Partition &partition)
+void PartedCore::setMountPoints(Partition &partition)
 {
     //DMRaid dmraid ; //Use cache of dmraid device information
-    if (partition.fstype == FS_LVM2_PV) {
-        //        QString vgname = LVM2_PV_Info::get_vg_name(partition.get_path());
+    if (partition.m_fstype == FS_LVM2_PV) {
+        //        QString vgname = LVM2_PV_Info::get_vg_name(partition.getPath());
         //        if (! vgname.isEmpty())
-        //            partition.add_mountpoint(vgname);
-    } else if (partition.fstype == FS_LINUX_SWRAID) {
-        //        QString array_path = SWRaid_Info::get_array(partition.get_path());
+        //            partition.addMountPoint(vgname);
+    } else if (partition.m_fstype == FS_LINUX_SWRAID) {
+        //        QString array_path = SWRaid_Info::get_array(partition.getPath());
         //        if (! array_path.isEmpty())
-        //            partition.add_mountpoint(array_path);
-    } else if (partition.fstype == FS_ATARAID) {
-        //        QString array_path = SWRaid_Info::get_array(partition.get_path());
+        //            partition.addMountPoint(array_path);
+    } else if (partition.m_fstype == FS_ATARAID) {
+        //        QString array_path = SWRaid_Info::get_array(partition.getPath());
         //        if (! array_path.isEmpty()) {
-        //            partition.add_mountpoint(array_path);
+        //            partition.addMountPoint(array_path);
         //        } else {
-        //            array_path = dmraid.get_array(partition.get_path());
+        //            array_path = dmraid.get_array(partition.getPath());
         //            if (! array_path.isEmpty())
-        //                partition.add_mountpoint(array_path);
+        //                partition.addMountPoint(array_path);
         //        }
-    } else if (partition.fstype == FS_LUKS) {
-        //        LUKS_Mapping mapping = LUKS_Info::get_cache_entry(partition.get_path());
+    } else if (partition.m_fstype == FS_LUKS) {
+        //        LUKS_Mapping mapping = LUKS_Info::get_cache_entry(partition.getPath());
         //        if (! mapping.name.isEmpty())
-        //            partition.add_mountpoint(DEV_MAPPER_PATH + mapping.name);
+        //            partition.addMountPoint(DEV_MAPPER_PATH + mapping.name);
     }
     // Swap spaces don't have mount points so don't bother trying to add them.
-    else if (partition.fstype != FS_LINUX_SWAP) {
-        if (partition.busy) {
+    else if (partition.m_fstype != FS_LINUX_SWAP) {
+        if (partition.m_busy) {
             // Normal device, not DMRaid device
-            if (set_mountpoints_helper(partition, partition.get_path()))
+            if (setMountPointsHelper(partition, partition.getPath()))
                 return;
 
             qDebug() << __FUNCTION__ << "xxxUnable to find mount point";
         } else { // Not busy file system
-            partition.add_mountpoints(MountInfo::get_fstab_mountpoints(partition.get_path()));
+            partition.addMountPoints(MountInfo::getFileSystemTableMountpoints(partition.getPath()));
         }
     }
 }
 
-bool PartedCore::set_mountpoints_helper(Partition &partition, const QString &path)
+bool PartedCore::setMountPointsHelper(Partition &partition, const QString &path)
 {
-    QString search_path;
-    if (partition.fstype == FS_BTRFS)
-        search_path = path; //btrfs::get_mount_device( path ) ;
+    QString searchPath;
+    if (partition.m_fstype == FS_BTRFS)
+        searchPath = path; //btrfs::get_mount_device( path ) ;
     else
-        search_path = path;
+        searchPath = path;
 
-    const QVector<QString> &mountpoints = MountInfo::get_mounted_mountpoints(search_path);
+    const QVector<QString> &mountpoints = MountInfo::getMountedMountpoints(searchPath);
     if (mountpoints.size()) {
-        partition.add_mountpoints(mountpoints);
-        partition.fs_readonly = MountInfo::is_dev_mounted_readonly(search_path);
+        partition.addMountPoints(mountpoints);
+        partition.m_fsReadonly = MountInfo::isDevMountedReadonly(searchPath);
         return true;
     }
 
     return false;
 }
 
-void PartedCore::set_used_sectors(Partition &partition, PedDisk *lp_disk)
+void PartedCore::setUsedSectors(Partition &partition, PedDisk *lpDisk)
 {
-    Q_UNUSED(lp_disk)
-    if (supportedFileSystem(partition.fstype)) {
-        FileSystem *p_filesystem = nullptr;
-        if (partition.busy) {
-            switch (getFileSystem(partition.fstype).online_read) {
+    Q_UNUSED(lpDisk)
+    if (supportedFileSystem(partition.m_fstype)) {
+        FileSystem *pFilesystem = nullptr;
+        if (partition.m_busy) {
+            switch (getFileSystem(partition.m_fstype).online_read) {
             case FS::EXTERNAL:
-                p_filesystem = getFileSystemObject(partition.fstype);
-                if (p_filesystem)
-                    p_filesystem->set_used_sectors(partition);
+                pFilesystem = getFileSystemObject(partition.m_fstype);
+                if (pFilesystem)
+                    pFilesystem->set_used_sectors(partition);
                 break;
             case FS::GPARTED:
-                mounted_fs_set_used_sectors(partition);
+                mountedFileSystemSetUsedSectors(partition);
                 break;
             default:
                 break;
             }
         } else { // Not busy file system
-            switch (getFileSystem(partition.fstype).read) {
+            switch (getFileSystem(partition.m_fstype).read) {
             case FS::EXTERNAL:
-                p_filesystem = getFileSystemObject(partition.fstype);
-                if (p_filesystem)
-                    p_filesystem->set_used_sectors(partition);
+                pFilesystem = getFileSystemObject(partition.m_fstype);
+                if (pFilesystem)
+                    pFilesystem->set_used_sectors(partition);
                 break;
 #ifdef HAVE_LIBPARTED_FS_RESIZE
             case FS::LIBPARTED:
                 if (lp_disk)
-                    LP_set_used_sectors(partition, lp_disk);
+                    LpSetUsedSectors(partition, lp_disk);
                 break;
 #endif
             default:
@@ -636,23 +664,23 @@ void PartedCore::set_used_sectors(Partition &partition, PedDisk *lp_disk)
         Sector unallocated;
         // Only confirm that the above code succeeded in setting the sector usage
         // values for this base Partition object, hence the explicit call to the
-        // base Partition class sector_usage_known() method.  For LUKS this avoids
-        // calling derived PartitionLUKS class sector_usage_known() which also
+        // base Partition class sectorUsageKnown() method.  For LUKS this avoids
+        // calling derived PartitionLUKS class sectorUsageKnown() which also
         // checks for known sector usage in the encrypted file system.  But that
         // wasn't set by the above code so in the case of luks/unknown would
         // produce a false positive.
-        if (!partition.sector_usage_known()) {
-            if (!Utils::get_filesystem_software(partition.fstype).isEmpty()) {
+        if (!partition.sectorUsageKnown()) {
+            if (!Utils::get_filesystem_software(partition.m_fstype).isEmpty()) {
                 QString msg("The following list of software packages is required for %1 file system support:  %2.");
-                msg = msg.arg(Utils::FSTypeToString(partition.fstype)).arg(Utils::get_filesystem_software(partition.fstype));
+                msg = msg.arg(Utils::FSTypeToString(partition.m_fstype)).arg(Utils::get_filesystem_software(partition.m_fstype));
                 qDebug() << __FUNCTION__ << msg;
             }
 
-        } else if ((unallocated = partition.get_sectors_unallocated()) > 0) {
+        } else if ((unallocated = partition.getSectorsUnallocated()) > 0) {
             /* TO TRANSLATORS: looks like   1.28GiB of unallocated space within the partition. */
             QString temp("%1 of unallocated space within the partition.");
-            temp = temp.arg(Utils::format_size(unallocated, partition.sector_size));
-            FS fs = getFileSystem(partition.fstype);
+            temp = temp.arg(Utils::format_size(unallocated, partition.m_sectorSize));
+            FS fs = getFileSystem(partition.m_fstype);
             if (fs.check != FS::NONE && fs.grow != FS::NONE) {
                 temp.append("To grow the file system to fill the partition, select the partition and choose the menu item:\n");
                 temp.append("Partition --> Check.");
@@ -665,87 +693,87 @@ void PartedCore::set_used_sectors(Partition &partition, PedDisk *lp_disk)
 //        }
     } else {
         // Set usage of mounted but unsupported file systems.
-        if (partition.busy)
-            mounted_fs_set_used_sectors(partition);
+        if (partition.m_busy)
+            mountedFileSystemSetUsedSectors(partition);
     }
 }
 
-void PartedCore::mounted_fs_set_used_sectors(Partition &partition)
+void PartedCore::mountedFileSystemSetUsedSectors(Partition &partition)
 {
-    if (partition.get_mountpoints().size() > 0 && MountInfo::is_dev_mounted(partition.get_path())) {
+    if (partition.getMountPoints().size() > 0 && MountInfo::isDevMounted(partition.getPath())) {
         Byte_Value fs_size;
         Byte_Value fs_free;
-        if (Utils::get_mounted_filesystem_usage(partition.get_mountpoint(), fs_size, fs_free) == 0)
-            partition.set_sector_usage(fs_size / partition.sector_size,
-                                       fs_free / partition.sector_size);
+        if (Utils::get_mounted_filesystem_usage(partition.getMountPoint(), fs_size, fs_free) == 0)
+            partition.setSectorUsage(fs_size / partition.m_sectorSize,
+                                       fs_free / partition.m_sectorSize);
     }
 }
 
-void PartedCore::set_device_partitions(Device &device, PedDevice *lp_device, PedDisk *lp_disk)
+void PartedCore::setDevicePartitions(Device &device, PedDevice *lpDevice, PedDisk *lpDisk)
 {
-    int EXT_INDEX = -1;
+    int EXTINDEX = -1;
     device.partitions.clear();
 
-    PedPartition *lp_partition = ped_disk_next_partition(lp_disk, nullptr);
-    while (lp_partition) {
-        Partition *partition_temp = nullptr;
-        bool partition_is_busy = false;
+    PedPartition *lpPartition = ped_disk_next_partition(lpDisk, nullptr);
+    while (lpPartition) {
+        Partition *partitionTemp = nullptr;
+        bool partitionIsBusy = false;
         FSType fstype = FS_UNKNOWN;
-        QString partition_path;
-        switch (lp_partition->type) {
+        QString partitionPath;
+        switch (lpPartition->type) {
         case PED_PARTITION_NORMAL:
         case PED_PARTITION_LOGICAL:
-            fstype = detect_filesystem(lp_device, lp_partition);
-            partition_path = get_partition_path(lp_partition);
-            partition_is_busy = is_busy(fstype, partition_path, lp_partition);
-            qDebug() << partition_is_busy << lp_partition->num << lp_partition->disk->dev->path;
+            fstype = detectFilesystem(lpDevice, lpPartition);
+            partitionPath = getPartitionPath(lpPartition);
+            partitionIsBusy = isBusy(fstype, partitionPath, lpPartition);
+            qDebug() << partitionIsBusy << lpPartition->num << lpPartition->disk->dev->path;
             //            if (fstype == FS_LUKS)
             //                partition_temp = new PartitionLUKS();
             //            else
-            partition_temp = new Partition();
-            partition_temp->Set(device.m_path,
-                                partition_path,
-                                lp_partition->num,
-                                (lp_partition->type == PED_PARTITION_NORMAL) ? TYPE_PRIMARY
+            partitionTemp = new Partition();
+            partitionTemp->set(device.m_path,
+                                partitionPath,
+                                lpPartition->num,
+                                (lpPartition->type == PED_PARTITION_NORMAL) ? TYPE_PRIMARY
                                 : TYPE_LOGICAL,
                                 fstype,
-                                lp_partition->geom.start,
-                                lp_partition->geom.end,
+                                lpPartition->geom.start,
+                                lpPartition->geom.end,
                                 device.sector_size,
-                                (lp_partition->type == PED_PARTITION_LOGICAL),
-                                partition_is_busy);
+                                (lpPartition->type == PED_PARTITION_LOGICAL),
+                                partitionIsBusy);
 
-            setFlags(*partition_temp, lp_partition);
+            setFlags(*partitionTemp, lpPartition);
 
             //if (fstype == FS_LUKS)
             // set_luks_partition(*dynamic_cast<PartitionLUKS *>(partition_temp));
 
-            if (partition_temp->busy && partition_temp->partition_number > device.highest_busy)
-                device.highest_busy = partition_temp->partition_number;
+            if (partitionTemp->m_busy && partitionTemp->m_partitionNumber > device.highest_busy)
+                device.highest_busy = partitionTemp->m_partitionNumber;
             break;
 
         case PED_PARTITION_EXTENDED:
-            partition_path = get_partition_path(lp_partition);
+            partitionPath = getPartitionPath(lpPartition);
 
-            partition_temp = new Partition();
-            partition_temp->Set(device.m_path,
-                                partition_path,
-                                lp_partition->num,
+            partitionTemp = new Partition();
+            partitionTemp->set(device.m_path,
+                                partitionPath,
+                                lpPartition->num,
                                 TYPE_EXTENDED,
                                 FS_EXTENDED,
-                                lp_partition->geom.start,
-                                lp_partition->geom.end,
+                                lpPartition->geom.start,
+                                lpPartition->geom.end,
                                 device.sector_size,
                                 false,
                                 false);
 
-            setFlags(*partition_temp, lp_partition);
+            setFlags(*partitionTemp, lpPartition);
 
-            EXT_INDEX = device.partitions.size();
+            EXTINDEX = device.partitions.size();
             break;
 
         default:
-            qDebug() << ped_partition_is_busy(lp_partition) << lp_partition->num << lp_partition->disk->dev->path;
+            qDebug() << ped_partition_is_busy(lpPartition) << lpPartition->num << lpPartition->disk->dev->path;
             // Ignore libparted reported partitions with other type
             // bits set.
             break;
@@ -753,38 +781,38 @@ void PartedCore::set_device_partitions(Device &device, PedDevice *lp_device, Ped
 
         // Only for libparted reported partition types that we care about: NORMAL,
         // LOGICAL, EXTENDED
-        if (partition_temp != nullptr) {
-            set_partition_label_and_uuid(*partition_temp);
-            set_mountpoints(*partition_temp);
-            set_used_sectors(*partition_temp, lp_disk);
+        if (partitionTemp != nullptr) {
+            setPartitionLabelAndUuid(*partitionTemp);
+            setMountPoints(*partitionTemp);
+            setUsedSectors(*partitionTemp, lpDisk);
 
             // Retrieve partition name
             if (device.partition_naming_supported())
-                partition_temp->name = ped_partition_get_name(lp_partition);
+                partitionTemp->m_name = ped_partition_get_name(lpPartition);
 
-            if (!partition_temp->inside_extended)
-                device.partitions.push_back(partition_temp);
+            if (!partitionTemp->m_insideExtended)
+                device.partitions.push_back(partitionTemp);
             else
-                device.partitions[EXT_INDEX]->logicals.push_back(partition_temp);
+                device.partitions[EXTINDEX]->m_logicals.push_back(partitionTemp);
         }
 
         //next partition (if any)
-        lp_partition = ped_disk_next_partition(lp_disk, lp_partition);
+        lpPartition = ped_disk_next_partition(lpDisk, lpPartition);
     }
 
-    if (EXT_INDEX > -1) {
+    if (EXTINDEX > -1) {
         insertUnallocated(device.m_path,
-                           device.partitions.at(EXT_INDEX)->logicals,
-                           device.partitions.at(EXT_INDEX)->sector_start,
-                           device.partitions.at(EXT_INDEX)->sector_end,
+                           device.partitions.at(EXTINDEX)->m_logicals,
+                           device.partitions.at(EXTINDEX)->m_sectorStart,
+                           device.partitions.at(EXTINDEX)->m_sectorEnd,
                            device.sector_size,
                            true);
 
         //Set busy status of extended partition if and only if
         //  there is at least one busy logical partition.
-        for (int t = 0; t < device.partitions.at(EXT_INDEX)->logicals.size(); t++) {
-            if (device.partitions.at(EXT_INDEX)->logicals.at(t)->busy) {
-                device.partitions.at(EXT_INDEX)->busy = true;
+        for (int t = 0; t < device.partitions.at(EXTINDEX)->m_logicals.size(); t++) {
+            if (device.partitions.at(EXTINDEX)->m_logicals.at(t)->m_busy) {
+                device.partitions.at(EXTINDEX)->m_busy = true;
                 break;
             }
         }
@@ -802,7 +830,7 @@ bool PartedCore::flushDevice(PedDevice *lpDevice)
         // (!46) Wait for udev rules to complete after this ped_device_open() and
         // ped_device_close() pair to avoid busy /dev/DISK entry when running file
         // system specific querying commands on the whole disk device in the call
-        // sequence after getDevice() in set_device_from_disk().
+        // sequence after getDevice() in setDeviceFromDisk().
         //settleDevice(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS);
     }
     return success;
@@ -829,21 +857,21 @@ bool PartedCore::commitToOs(PedDisk *lpDisk)
     return succes;
 }
 
-FSType PartedCore::detect_filesystem(PedDevice *lp_device, PedPartition *lp_partition)
+FSType PartedCore::detectFilesystem(PedDevice *lpDevice, PedPartition *lpPartition)
 {
     QString fsname = "";
     QString path;
     // Will query whole disk device using methods: (Q1) RAID, (Q2) blkid,
     // (Q4) internal
-    if (lp_partition)
-        path = get_partition_path(lp_partition);
+    if (lpPartition)
+        path = getPartitionPath(lpPartition);
     else
-        path = lp_device->path;
+        path = lpDevice->path;
 
     fsname = FsInfo::get_fs_type(path);
     FSType fstype = FS_UNKNOWN;
-    if (fsname.isEmpty() && lp_partition && lp_partition->fs_type)
-        fsname = lp_partition->fs_type->name;
+    if (fsname.isEmpty() && lpPartition && lpPartition->fs_type)
+        fsname = lpPartition->fs_type->name;
     if (!fsname.isEmpty()) {
         fstype = Utils::StringToFSType(fsname);
         qDebug() << fstype;
@@ -851,7 +879,7 @@ FSType PartedCore::detect_filesystem(PedDevice *lp_device, PedPartition *lp_part
             return fstype;
     }
 
-    fstype = detect_filesystem_internal(path, lp_device->sector_size);
+    fstype = detectFilesystemInternal(path, lpDevice->sector_size);
     if (fstype != FS_UNKNOWN)
         return fstype;
 
@@ -865,13 +893,13 @@ FSType PartedCore::detect_filesystem(PedDevice *lp_device, PedPartition *lp_part
     return FS_UNKNOWN;
 }
 
-FSType PartedCore::detect_filesystem_internal(const QString &path, Byte_Value sector_size)
+FSType PartedCore::detectFilesystemInternal(const QString &path, Byte_Value sectorSize)
 {
     char magic1[16]; // Big enough for largest signatures[].sig1 or sig2
     char magic2[16];
     FSType fstype = FS_UNKNOWN;
 
-    char *buf = static_cast<char *>(malloc(sector_size));
+    char *buf = static_cast<char *>(malloc(sectorSize));
     if (!buf)
         return FS_UNKNOWN;
 
@@ -924,8 +952,8 @@ FSType PartedCore::detect_filesystem_internal(const QString &path, Byte_Value se
     // *   Apple File System Reference
     //     https://developer.apple.com/support/apple-file-system/Apple-File-System-Reference.pdf
 
-    Byte_Value prev_read_offset = -1;
-    memset(buf, 0, sector_size);
+    Byte_Value prevReadOffset = -1;
+    memset(buf, 0, sectorSize);
 
     for (unsigned int i = 0; i < sizeof(signatures) / sizeof(signatures[0]); i++) {
         const size_t len1 = std::min((signatures[i].sig1 == nullptr) ? 0U : strlen(signatures[i].sig1),
@@ -938,24 +966,24 @@ FSType PartedCore::detect_filesystem_internal(const QString &path, Byte_Value se
         if (len1 == 0UL || (signatures[i].sig2 != nullptr && len2 == 0UL))
             continue; // Don't allow 0 length signatures to match
 
-        Byte_Value read_offset = signatures[i].offset1 / sector_size * sector_size;
+        Byte_Value readOffset = signatures[i].offset1 / sectorSize * sectorSize;
 
         // Optimisation: only read new sector when it is different to the
         // previously read sector.
-        if (read_offset != prev_read_offset) {
-            if (lseek(fd, read_offset, SEEK_SET) == read_offset && read(fd, buf, sector_size) == sector_size) {
-                prev_read_offset = read_offset;
+        if (readOffset != prevReadOffset) {
+            if (lseek(fd, readOffset, SEEK_SET) == readOffset && read(fd, buf, sectorSize) == sectorSize) {
+                prevReadOffset = readOffset;
             } else {
                 // Outside block device boundaries or other error.
                 continue;
             }
         }
 
-        memcpy(magic1, buf + signatures[i].offset1 % sector_size, len1);
+        memcpy(magic1, buf + signatures[i].offset1 % sectorSize, len1);
 
         // WARNING: This assumes offset2 is in the same sector as offset1
         if (signatures[i].sig2 != nullptr)
-            memcpy(magic2, buf + signatures[i].offset2 % sector_size, len2);
+            memcpy(magic2, buf + signatures[i].offset2 % sectorSize, len2);
 
         if (memcmp(magic1, signatures[i].sig1, len1) == 0 && (signatures[i].sig2 == nullptr || memcmp(magic2, signatures[i].sig2, len2) == 0)) {
             fstype = signatures[i].fstype;
@@ -969,34 +997,34 @@ FSType PartedCore::detect_filesystem_internal(const QString &path, Byte_Value se
     return fstype;
 }
 
-QString PartedCore::get_partition_path(PedPartition *lp_partition)
+QString PartedCore::getPartitionPath(PedPartition *lpPartition)
 {
-    char *lp_path; //we have to free the result of ped_partition_get_path()
-    QString partition_path("Partition path not found");
+    char *lpPath; //we have to free the result of ped_partition_get_path()
+    QString partitionPath("Partition path not found");
 
-    lp_path = ped_partition_get_path(lp_partition);
-    if (lp_path != nullptr) {
-        partition_path = lp_path;
-        free(lp_path);
+    lpPath = ped_partition_get_path(lpPartition);
+    if (lpPath != nullptr) {
+        partitionPath = lpPath;
+        free(lpPath);
     }
-    return partition_path;
+    return partitionPath;
 }
 
-void PartedCore::LP_set_used_sectors(Partition &partition, PedDisk *lp_disk)
+void PartedCore::LpSetUsedSectors(Partition &partition, PedDisk *lpDisk)
 {
     PedFileSystem *fs = nullptr;
     PedConstraint *constraint = nullptr;
 
-    if (lp_disk) {
-        PedPartition *lp_partition = ped_disk_get_partition_by_sector(lp_disk, partition.get_sector());
+    if (lpDisk) {
+        PedPartition *lpPartition = ped_disk_get_partition_by_sector(lpDisk, partition.getSector());
 
-        if (lp_partition) {
-            fs = ped_file_system_open(&lp_partition->geom);
+        if (lpPartition) {
+            fs = ped_file_system_open(&lpPartition->geom);
 
             if (fs) {
                 constraint = ped_file_system_get_resize_constraint(fs);
                 if (constraint) {
-                    partition.set_sector_usage(fs->geom->length,
+                    partition.setSectorUsage(fs->geom->length,
                                                fs->geom->length - constraint->min_size);
 
                     ped_constraint_destroy(constraint);
@@ -1007,65 +1035,65 @@ void PartedCore::LP_set_used_sectors(Partition &partition, PedDisk *lp_disk)
     }
 }
 
-bool PartedCore::name_partition(const Partition &partition)
+bool PartedCore::namePartition(const Partition &partition)
 {
     QString msg;
-    if (partition.name.isEmpty())
-        msg = QString("Clear partition name on %1").arg(partition.get_path());
+    if (partition.m_name.isEmpty())
+        msg = QString("Clear partition name on %1").arg(partition.getPath());
     else
-        msg = QString("Set partition name to \"%1\" on %2").arg(partition.name).arg(partition.get_path());
+        msg = QString("Set partition name to \"%1\" on %2").arg(partition.m_name).arg(partition.getPath());
     qDebug() << __FUNCTION__ << msg;
 
     bool success = false;
-    PedDevice *lp_device = nullptr;
-    PedDisk *lp_disk = nullptr;
-    if (getDeviceAndDisk(partition.device_path, lp_device, lp_disk)) {
-        PedPartition *lp_partition = ped_disk_get_partition_by_sector(lp_disk, partition.get_sector());
-        if (lp_partition) {
-            success = ped_partition_set_name(lp_partition, partition.name.toLatin1())
-                      && commit(lp_disk);
+    PedDevice *lpDevice = nullptr;
+    PedDisk *lpDisk = nullptr;
+    if (getDeviceAndDisk(partition.m_devicePath, lpDevice, lpDisk)) {
+        PedPartition *lpPartition = ped_disk_get_partition_by_sector(lpDisk, partition.getSector());
+        if (lpPartition) {
+            success = ped_partition_set_name(lpPartition, partition.m_name.toLatin1())
+                      && commit(lpDisk);
         }
     }
     return success;
 }
 
-bool PartedCore::erase_filesystem_signatures(const Partition &partition)
+bool PartedCore::eraseFilesystemSignatures(const Partition &partition)
 {
-    if (partition.fstype == FS_LUKS && partition.busy) {
+    if (partition.m_fstype == FS_LUKS && partition.m_busy) {
         qDebug() << __FUNCTION__ << "partition contains open LUKS encryption for an erase file system signatures only step";
         return false;
     }
 
-    bool overall_success = false;
-    qDebug() << __FUNCTION__ << QString("clear old file system signatures in %1").arg(partition.get_path());
+    bool overallSuccess = false;
+    qDebug() << __FUNCTION__ << QString("clear old file system signatures in %1").arg(partition.getPath());
 
     //Get device, disk & partition and open the device.  Allocate buffer and fill with
     //  zeros.  Buffer size is the greater of 4 KiB and the sector size.
-    PedDevice *lp_device = nullptr;
-    PedDisk *lp_disk = nullptr;
-    PedPartition *lp_partition = nullptr;
-    bool device_is_open = false;
+    PedDevice *lpDevice = nullptr;
+    PedDisk *lpDisk = nullptr;
+    PedPartition *lpPartition = nullptr;
+    bool deviceIsOpen = false;
     Byte_Value bufsize = 4LL * KIBIBYTE;
     char *buf = nullptr;
-    if (getDevice(partition.device_path, lp_device)) {
-        if (partition.type == TYPE_UNPARTITIONED) {
+    if (getDevice(partition.m_devicePath, lpDevice)) {
+        if (partition.m_type == TYPE_UNPARTITIONED) {
             // Virtual partition spanning whole disk device
-            overall_success = true;
-        } else if (getDisk(lp_device, lp_disk)) {
+            overallSuccess = true;
+        } else if (getDisk(lpDevice, lpDisk)) {
             // Partitioned device
-            lp_partition = ped_disk_get_partition_by_sector(lp_disk, partition.get_sector());
-            overall_success = (lp_partition != nullptr);
+            lpPartition = ped_disk_get_partition_by_sector(lpDisk, partition.getSector());
+            overallSuccess = (lpPartition != nullptr);
         }
 
-        if (overall_success && ped_device_open(lp_device)) {
-            device_is_open = true;
+        if (overallSuccess && ped_device_open(lpDevice)) {
+            deviceIsOpen = true;
 
-            bufsize = std::max(bufsize, lp_device->sector_size);
+            bufsize = std::max(bufsize, lpDevice->sector_size);
             buf = static_cast<char *>(malloc(bufsize));
             if (buf)
                 memset(buf, 0, bufsize);
         }
-        overall_success &= device_is_open;
+        overallSuccess &= deviceIsOpen;
     }
     struct {
         Byte_Value offset; //Negative offsets work backwards from the end of the partition
@@ -1082,149 +1110,149 @@ bool PartedCore::erase_filesystem_signatures(const Partition &partition)
         {-8LL * KIBIBYTE, 4LL * KIBIBYTE, 8LL * KIBIBYTE} // @-8K SWRaid metadata 1.0 super block
         // and @-4K Nilfs2 secondary super block
     };
-    for (unsigned int i = 0; overall_success && i < sizeof(ranges) / sizeof(ranges[0]); i++) {
+    for (unsigned int i = 0; overallSuccess && i < sizeof(ranges) / sizeof(ranges[0]); i++) {
         //Rounding is performed in multiples of the sector size because writes are in whole sectors.
 
-        Byte_Value rounding_size = Utils::ceil_size(ranges[i].rounding, lp_device->sector_size);
-        Byte_Value byte_offset;
-        Byte_Value byte_len;
+        Byte_Value roundingSize = Utils::ceil_size(ranges[i].rounding, lpDevice->sector_size);
+        Byte_Value byteOffset;
+        Byte_Value byteLen;
         if (ranges[i].offset >= 0LL) {
-            byte_offset = Utils::floor_size(ranges[i].offset, rounding_size);
-            byte_len = Utils::ceil_size(ranges[i].offset + ranges[i].length, lp_device->sector_size) - byte_offset;
+            byteOffset = Utils::floor_size(ranges[i].offset, roundingSize);
+            byteLen = Utils::ceil_size(ranges[i].offset + ranges[i].length, lpDevice->sector_size) - byteOffset;
         } else { //Negative offsets
-            Byte_Value notional_offset = Utils::floor_size(partition.get_byte_length() + ranges[i].offset, ranges[i].rounding);
-            byte_offset = Utils::floor_size(notional_offset, rounding_size);
-            byte_len = Utils::ceil_size(notional_offset + ranges[i].length, lp_device->sector_size) - byte_offset;
+            Byte_Value notionalOffset = Utils::floor_size(partition.getByteLength() + ranges[i].offset, ranges[i].rounding);
+            byteOffset = Utils::floor_size(notionalOffset, roundingSize);
+            byteLen = Utils::ceil_size(notionalOffset + ranges[i].length, lpDevice->sector_size) - byteOffset;
         }
         //Limit range to partition size.
-        if (byte_offset + byte_len <= 0LL) {
+        if (byteOffset + byteLen <= 0LL) {
             //Byte range entirely before partition start.  Programmer error!
             continue;
-        } else if (byte_offset < 0) {
+        } else if (byteOffset < 0) {
             //Byte range spans partition start.  Trim to fit.
-            byte_len += byte_offset;
-            byte_offset = 0LL;
+            byteLen += byteOffset;
+            byteOffset = 0LL;
         }
-        if (byte_offset >= partition.get_byte_length()) {
+        if (byteOffset >= partition.getByteLength()) {
             //Byte range entirely after partition end.  Ignore.
             continue;
-        } else if (byte_offset + byte_len > partition.get_byte_length()) {
+        } else if (byteOffset + byteLen > partition.getByteLength()) {
             //Byte range spans partition end.  Trim to fit.
-            byte_len = partition.get_byte_length() - byte_offset;
+            byteLen = partition.getByteLength() - byteOffset;
         }
 
         Byte_Value written = 0LL;
-        bool zero_success = false;
-        if (device_is_open && buf) {
+        bool zeroSuccess = false;
+        if (deviceIsOpen && buf) {
             // Start sector of the whole disk device or the partition
-            Sector ptn_start = 0LL;
-            if (lp_partition)
-                ptn_start = lp_partition->geom.start;
+            Sector ptnStart = 0LL;
+            if (lpPartition)
+                ptnStart = lpPartition->geom.start;
 
-            while (written < byte_len) {
+            while (written < byteLen) {
                 //Write in bufsize amounts.  Last write may be smaller but
                 //  will still be a whole number of sectors.
-                Byte_Value amount = std::min(bufsize, byte_len - written);
-                zero_success = ped_device_write(lp_device, buf,
-                                                ptn_start + (byte_offset + written) / lp_device->sector_size,
-                                                amount / lp_device->sector_size);
-                if (!zero_success)
+                Byte_Value amount = std::min(bufsize, byteLen - written);
+                zeroSuccess = ped_device_write(lpDevice, buf,
+                                                ptnStart + (byteOffset + written) / lpDevice->sector_size,
+                                                amount / lpDevice->sector_size);
+                if (!zeroSuccess)
                     break;
                 written += amount;
             }
         }
-        overall_success &= zero_success;
+        overallSuccess &= zeroSuccess;
     }
     if (buf)
         free(buf);
 
-    if (overall_success) {
-        bool flush_success = false;
-        if (device_is_open) {
-            flush_success = ped_device_sync(lp_device);
-            ped_device_close(lp_device);
+    if (overallSuccess) {
+        bool flushSuccess = false;
+        if (deviceIsOpen) {
+            flushSuccess = ped_device_sync(lpDevice);
+            ped_device_close(lpDevice);
             //settleDevice(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS);
         }
-        overall_success &= flush_success;
+        overallSuccess &= flushSuccess;
     }
-    destroyDeviceAndDisk(lp_device, lp_disk);
-    return overall_success;
+    destroyDeviceAndDisk(lpDevice, lpDisk);
+    return overallSuccess;
 }
 
-bool PartedCore::set_partition_type(const Partition &partition)
+bool PartedCore::setPartitionType(const Partition &partition)
 {
-    if (partition.type == TYPE_UNPARTITIONED)
+    if (partition.m_type == TYPE_UNPARTITIONED)
         // Trying to set the type of a partition on a non-partitioned whole disk
         // device is a successful non-operation.
         return true;
-    qDebug() << __FUNCTION__ << QString("set partition type on %1").arg(partition.get_path());
+    qDebug() << __FUNCTION__ << QString("set partition type on %1").arg(partition.getPath());
     //Set partition type appropriately for the type of file system stored in the partition.
     //  Libparted treats every type as a file system, except LVM which it treats as a flag.
 
-    bool return_value = false;
+    bool returnValue = false;
 
-    PedDevice *lp_device = nullptr;
-    PedDisk *lp_disk = nullptr;
-    if (getDeviceAndDisk(partition.device_path, lp_device, lp_disk)) {
-        PedPartition *lp_partition = ped_disk_get_partition_by_sector(lp_disk, partition.get_sector());
-        if (lp_partition) {
-            QString fs_type = Utils::FSTypeToString(partition.fstype);
+    PedDevice *lpDevice = nullptr;
+    PedDisk *lpDisk = nullptr;
+    if (getDeviceAndDisk(partition.m_devicePath, lpDevice, lpDisk)) {
+        PedPartition *lpPartition = ped_disk_get_partition_by_sector(lpDisk, partition.getSector());
+        if (lpPartition) {
+            QString fsType = Utils::FSTypeToString(partition.m_fstype);
 
             // Lookup libparted file system type using GParted's name, as most
             // match.  Exclude cleared as the name won't be recognised by
             // libparted and get_filesystem_string() has also translated it.
-            PedFileSystemType *lp_fs_type = nullptr;
-            if (partition.fstype != FS_CLEARED)
-                lp_fs_type = ped_file_system_type_get(fs_type.toLatin1());
+            PedFileSystemType *lpFsType = nullptr;
+            if (partition.m_fstype != FS_CLEARED)
+                lpFsType = ped_file_system_type_get(fsType.toLatin1());
 
             // If not found, and FS is udf, then try ntfs.
             // Actually MBR 07 IFS (Microsoft Installable File System) or
             // GPT BDP (Windows Basic Data Partition).
             // Ref: https://serverfault.com/a/829172
-            if (!lp_fs_type && partition.fstype == FS_UDF)
-                lp_fs_type = ped_file_system_type_get("ntfs");
+            if (!lpFsType && partition.m_fstype == FS_UDF)
+                lpFsType = ped_file_system_type_get("ntfs");
 
             // default is Linux (83)
-            if (!lp_fs_type)
-                lp_fs_type = ped_file_system_type_get("ext2");
+            if (!lpFsType)
+                lpFsType = ped_file_system_type_get("ext2");
 
-            bool supports_lvm_flag = ped_partition_is_flag_available(lp_partition, PED_PARTITION_LVM);
+            bool supportsLvmFlag = ped_partition_is_flag_available(lpPartition, PED_PARTITION_LVM);
 
-            if (lp_fs_type && partition.fstype != FS_LVM2_PV) {
+            if (lpFsType && partition.m_fstype != FS_LVM2_PV) {
                 // Also clear any libparted LVM flag so that it doesn't
                 // override the file system type
-                if ((!supports_lvm_flag || ped_partition_set_flag(lp_partition, PED_PARTITION_LVM, 0)) && ped_partition_set_system(lp_partition, lp_fs_type) && commit(lp_disk)) {
-                    qDebug() << __FUNCTION__ << QString("new partition type: %1").arg(lp_partition->fs_type->name);
-                    return_value = true;
+                if ((!supportsLvmFlag || ped_partition_set_flag(lpPartition, PED_PARTITION_LVM, 0)) && ped_partition_set_system(lpPartition, lpFsType) && commit(lpDisk)) {
+                    qDebug() << __FUNCTION__ << QString("new partition type: %1").arg(lpPartition->fs_type->name);
+                    returnValue = true;
                 }
-            } else if (partition.fstype == FS_LVM2_PV) {
-                if (supports_lvm_flag && ped_partition_set_flag(lp_partition, PED_PARTITION_LVM, 1) && commit(lp_disk)) {
-                    return_value = true;
-                } else if (!supports_lvm_flag) {
+            } else if (partition.m_fstype == FS_LVM2_PV) {
+                if (supportsLvmFlag && ped_partition_set_flag(lpPartition, PED_PARTITION_LVM, 1) && commit(lpDisk)) {
+                    returnValue = true;
+                } else if (!supportsLvmFlag) {
                     // Skip setting the lvm flag because the partition
                     // table type doesn't support it.  Applies to dvh
                     // and pc98 disk labels.
-                    return_value = true;
+                    returnValue = true;
                 }
             }
         }
 
-        destroyDeviceAndDisk(lp_device, lp_disk);
+        destroyDeviceAndDisk(lpDevice, lpDisk);
     }
-    return return_value;
+    return returnValue;
 }
 
-bool PartedCore::create_filesystem(const Partition &partition)
+bool PartedCore::createFileSystem(const Partition &partition)
 {
-    if (partition.fstype == FS_LUKS && partition.busy) {
+    if (partition.m_fstype == FS_LUKS && partition.m_busy) {
         qDebug() << __FUNCTION__ << QString("partition contains open LUKS encryption for a create file system only step");
         return false;
     }
-    qDebug() << __FUNCTION__ << partition.sectors_used << partition.sectors_unused;
-    qDebug() << __FUNCTION__ << QString("create new %1 file system").arg(partition.fstype);
+    qDebug() << __FUNCTION__ << partition.m_sectorsUsed << partition.m_sectorsUnused;
+    qDebug() << __FUNCTION__ << QString("create new %1 file system").arg(partition.m_fstype);
     bool succes = false;
-    FileSystem *p_filesystem = nullptr;
-    switch (getFileSystem(partition.fstype).create) {
+    FileSystem *pFilesystem = nullptr;
+    switch (getFileSystem(partition.m_fstype).create) {
     case FS::NONE:
         break;
     case FS::GPARTED:
@@ -1232,9 +1260,9 @@ bool PartedCore::create_filesystem(const Partition &partition)
     case FS::LIBPARTED:
         break;
     case FS::EXTERNAL: {
-        succes = (p_filesystem = getFileSystemObject(partition.fstype)) && p_filesystem->create(partition);
-        if (succes && !partition.get_filesystem_label().isEmpty()) {
-            p_filesystem->write_label(partition);
+        succes = (pFilesystem = getFileSystemObject(partition.m_fstype)) && pFilesystem->create(partition);
+        if (succes && !partition.getFileSystemLabel().isEmpty()) {
+            pFilesystem->write_label(partition);
         }
     }
     break;
@@ -1244,72 +1272,72 @@ bool PartedCore::create_filesystem(const Partition &partition)
     return succes;
 }
 
-bool PartedCore::formatpartition(const Partition &partition)
+bool PartedCore::formatPartition(const Partition &partition)
 {
     bool success = false;
-    if (partition.fstype == FS_LUKS && partition.busy) {
+    if (partition.m_fstype == FS_LUKS && partition.m_busy) {
         qDebug() << __FUNCTION__ << QString("partition contains open LUKS encryption for a format files system only step");
         return false;
     }
 
-    if (partition.fstype == FS_CLEARED)
-        success = erase_filesystem_signatures(partition)
-                   && set_partition_type(partition);
+    if (partition.m_fstype == FS_CLEARED)
+        success = eraseFilesystemSignatures(partition)
+                   && setPartitionType(partition);
     else
-        success = erase_filesystem_signatures(partition)
-                   && set_partition_type(partition)
-                   && create_filesystem(partition);
+        success = eraseFilesystemSignatures(partition)
+                   && setPartitionType(partition)
+                   && createFileSystem(partition);
 
     return success;
 }
 
-bool PartedCore::resize(const Partition &partition_new)
+bool PartedCore::resize(const Partition &partitionNew)
 {
     //ToDo fs linux-swap
-    if (partition_new.fstype == FS_LINUX_SWAP) {
+    if (partitionNew.m_fstype == FS_LINUX_SWAP) {
         // linux-swap is recreated, not resized
-        //        return    resize_move_partition(partition_old, partition_new, operationdetail, true)
+        //        return    resizeMovePartition(partition_old, partition_new, operationdetail, true)
         //                  && recreate_linux_swap_filesystem(partition_new, operationdetail);
     }
-    Sector delta = partition_new.get_sector_length() - curpartition.get_sector_length();
+    Sector delta = partitionNew.getSectorLength() - m_curpartition.getSectorLength();
     if (delta < 0LL) { // shrink
         //        return    check_repair_filesystem(partition_new)
         //                  && shrink_filesystem(curpartition, partition_new)
-        //                  && resize_move_partition(curpartition, partition_new, false);
+        //                  && resizeMovePartition(curpartition, partition_new, false);
     } else if (delta > 0LL) { // grow
-        return check_repair_filesystem(partition_new)
-               && resize_move_partition(curpartition, partition_new, true)
-               && maximize_filesystem(partition_new);
+        return checkRepairFileSystem(partitionNew)
+               && resizeMovePartition(m_curpartition, partitionNew, true)
+               && maxImizeFileSystem(partitionNew);
     }
     return true;
 }
 
-bool PartedCore::check_repair_filesystem(const Partition &partition)
+bool PartedCore::checkRepairFileSystem(const Partition &partition)
 {
-    if (partition.fstype == FS_LUKS && partition.busy) {
+    if (partition.m_fstype == FS_LUKS && partition.m_busy) {
         qDebug() << "partition contains open LUKS encryption for a check file system only step";
         return false;
     }
 
-    if (partition.busy)
+    if (partition.m_busy)
         // Trying to check an online file system is a successful non-operation.
         return true;
-    qDebug() << QString("PartedCore::check_repair_filesystem:check file system on %1"
+    qDebug() << QString("PartedCore::checkRepairFileSystem:check file system on %1"
                         " for errors and (if possible) fix them")
-             .arg(partition.get_path());
+             .arg(partition.getPath());
 
     bool succes = false;
-    FileSystem *p_filesystem = nullptr;
-    switch (getFileSystem(partition.fstype).check) {
+    FileSystem *pFilesystem = nullptr;
+    switch (getFileSystem(partition.m_fstype).check) {
     case FS::NONE:
-        qDebug() << "PartedCore::check_repair_filesystem ,checking is not available for this file system";
+        qDebug() << "PartedCore::checkRepairFileSystem ,checking is not available for this file system";
         break;
     case FS::GPARTED:
         break;
     case FS::LIBPARTED:
         break;
     case FS::EXTERNAL:
-        succes = (p_filesystem = getFileSystemObject(partition.fstype)) && p_filesystem->check_repair(partition);
+        succes = (pFilesystem = getFileSystemObject(partition.m_fstype)) && pFilesystem->check_repair(partition);
         break;
     default:
         break;
@@ -1318,92 +1346,92 @@ bool PartedCore::check_repair_filesystem(const Partition &partition)
     return succes;
 }
 
-bool PartedCore::resize_move_partition(const Partition &partition_old, const Partition &partition_new, bool rollback_on_fail)
+bool PartedCore::resizeMovePartition(const Partition &partitionOld, const Partition &partitionNew, bool rollbackOnFail)
 {
     Action action = NONE;
-    if (partition_new.get_sector_length() > partition_old.get_sector_length())
+    if (partitionNew.getSectorLength() > partitionOld.getSectorLength())
         action = GROW;
-    else if (partition_new.get_sector_length() < partition_old.get_sector_length())
+    else if (partitionNew.getSectorLength() < partitionOld.getSectorLength())
         action = SHRINK;
 
-    if (partition_new.sector_start > partition_old.sector_start && partition_new.sector_end > partition_old.sector_end)
+    if (partitionNew.m_sectorStart > partitionOld.m_sectorStart && partitionNew.m_sectorEnd > partitionOld.m_sectorEnd)
         action = action == GROW ? MOVE_RIGHT_GROW : action == SHRINK ? MOVE_RIGHT_SHRINK : MOVE_RIGHT;
-    else if (partition_new.sector_start < partition_old.sector_start && partition_new.sector_end < partition_old.sector_end)
+    else if (partitionNew.m_sectorStart < partitionOld.m_sectorStart && partitionNew.m_sectorEnd < partitionOld.m_sectorEnd)
         action = action == GROW ? MOVE_LEFT_GROW : action == SHRINK ? MOVE_LEFT_SHRINK : MOVE_LEFT;
 
-    Sector new_start = -1;
-    Sector new_end = -1;
-    bool success = resize_move_partition_implement(partition_old, partition_new, new_start, new_end);
-    if (!success && rollback_on_fail) {
-        Partition *partition_intersection = partition_new.clone();
-        partition_intersection->sector_start = std::max(partition_old.sector_start,
-                                                        partition_new.sector_start);
-        partition_intersection->sector_end = std::min(partition_old.sector_end,
-                                                      partition_new.sector_end);
+    Sector newStart = -1;
+    Sector newEnd = -1;
+    bool success = resizeMovePartitionImplement(partitionOld, partitionNew, newStart, newEnd);
+    if (!success && rollbackOnFail) {
+        Partition *partitionIntersection = partitionNew.clone();
+        partitionIntersection->m_sectorStart = std::max(partitionOld.m_sectorStart,
+                                                        partitionNew.m_sectorStart);
+        partitionIntersection->m_sectorEnd = std::min(partitionOld.m_sectorEnd,
+                                                      partitionNew.m_sectorEnd);
 
-        Partition *partition_restore = partition_old.clone();
+        Partition *partitionRestore = partitionOld.clone();
         // Ensure that old partition boundaries are not modified
-        partition_restore->alignment = ALIGN_STRICT;
+        partitionRestore->m_alignment = ALIGN_STRICT;
 
-        resize_move_partition_implement(*partition_intersection, *partition_restore, new_start, new_end);
-        delete partition_restore;
-        partition_restore = nullptr;
-        delete partition_intersection;
-        partition_intersection = nullptr;
+        resizeMovePartitionImplement(*partitionIntersection, *partitionRestore, newStart, newEnd);
+        delete partitionRestore;
+        partitionRestore = nullptr;
+        delete partitionIntersection;
+        partitionIntersection = nullptr;
     }
 
     return success;
 }
 
-bool PartedCore::resize_move_partition_implement(const Partition &partition_old, const Partition &partition_new, Sector &new_start, Sector &new_end)
+bool PartedCore::resizeMovePartitionImplement(const Partition &partitionOld, const Partition &partitionNew, Sector &newStart, Sector &newEnd)
 {
     bool success = false;
-    PedDevice *lp_device = nullptr;
-    PedDisk *lp_disk = nullptr;
-    if (getDeviceAndDisk(partition_old.device_path, lp_device, lp_disk)) {
-        PedPartition *lp_partition = getLpPartition(lp_disk, partition_old);
-        if (lp_partition) {
+    PedDevice *lpDevice = nullptr;
+    PedDisk *lpDisk = nullptr;
+    if (getDeviceAndDisk(partitionOld.m_devicePath, lpDevice, lpDisk)) {
+        PedPartition *lpPartition = getLpPartition(lpDisk, partitionOld);
+        if (lpPartition) {
             PedConstraint *constraint = nullptr;
-            if (partition_new.alignment == ALIGN_STRICT || partition_new.alignment == ALIGN_MEBIBYTE || partition_new.strict_start) {
-                PedGeometry *geom = ped_geometry_new(lp_device,
-                                                     partition_new.sector_start,
-                                                     partition_new.get_sector_length());
+            if (partitionNew.m_alignment == ALIGN_STRICT || partitionNew.m_alignment == ALIGN_MEBIBYTE || partitionNew.m_strictStart) {
+                PedGeometry *geom = ped_geometry_new(lpDevice,
+                                                     partitionNew.m_sectorStart,
+                                                     partitionNew.getSectorLength());
                 if (geom) {
                     constraint = ped_constraint_exact(geom);
                     ped_geometry_destroy(geom);
                 }
             } else {
-                constraint = ped_constraint_any(lp_device);
+                constraint = ped_constraint_any(lpDevice);
             }
 
             if (constraint) {
-                if (ped_disk_set_partition_geom(lp_disk,
-                                                lp_partition,
+                if (ped_disk_set_partition_geom(lpDisk,
+                                                lpPartition,
                                                 constraint,
-                                                partition_new.sector_start,
-                                                partition_new.sector_end)) {
-                    new_start = lp_partition->geom.start;
-                    new_end = lp_partition->geom.end;
+                                                partitionNew.m_sectorStart,
+                                                partitionNew.m_sectorEnd)) {
+                    newStart = lpPartition->geom.start;
+                    newEnd = lpPartition->geom.end;
 
-                    success = commit(lp_disk);
+                    success = commit(lpDisk);
                 }
 
                 ped_constraint_destroy(constraint);
             }
         }
-        destroyDeviceAndDisk(lp_device, lp_disk);
+        destroyDeviceAndDisk(lpDevice, lpDisk);
     }
 
     return success;
 }
 
-bool PartedCore::maximize_filesystem(const Partition &partition)
+bool PartedCore::maxImizeFileSystem(const Partition &partition)
 {
-    if (partition.fstype == FS_LUKS && partition.busy) {
-        qDebug() << "PartedCore::maximize_filesystem: partition contains open LUKS encryption for a maximize file system only step";
+    if (partition.m_fstype == FS_LUKS && partition.m_busy) {
+        qDebug() << "PartedCore::maxImizeFileSystem: partition contains open LUKS encryption for a maximize file system only step";
         return false;
     }
-    qDebug() << "PartedCore::maximize_filesystem: grow file system to fill the partition";
+    qDebug() << "PartedCore::maxImizeFileSystem: grow file system to fill the partition";
 
     // Checking if growing is available or allowed is only relevant for the check
     // repair operation to inform the user why the grow step is being skipped.  For a
@@ -1411,41 +1439,41 @@ bool PartedCore::maximize_filesystem(const Partition &partition)
     // to allow the operation to be queued in the first place.  See
     // Win_GParted::set_valid_operations() and
     // Dialog_Partition_Resize_Move::Resize_Move_Normal().
-    if (getFileSystem(partition.fstype).grow == FS::NONE) {
-        qDebug() << "PartedCore::maximize_filesystem:growing is not available for this file system";
+    if (getFileSystem(partition.m_fstype).grow == FS::NONE) {
+        qDebug() << "PartedCore::maxImizeFileSystem:growing is not available for this file system";
         return true;
     }
-    bool success = resize_filesystem_implement(partition, partition);
+    bool success = resizeFileSystemImplement(partition, partition);
 
     return success;
 }
 
-bool PartedCore::resize_filesystem_implement(const Partition &partition_old, const Partition &partition_new)
+bool PartedCore::resizeFileSystemImplement(const Partition &partitionOld, const Partition &partitionNew)
 {
-    bool fill_partition = false;
-    const FS &fs_cap = getFileSystem(partition_new.fstype);
+    bool fillPartition = false;
+    const FS &fsCap = getFileSystem(partitionNew.m_fstype);
     FS::Support action = FS::NONE;
-    if (partition_new.get_sector_length() >= partition_old.get_sector_length()) {
+    if (partitionNew.getSectorLength() >= partitionOld.getSectorLength()) {
         // grow (always maximises the file system to fill the partition)
-        fill_partition = true;
-        action = (partition_old.busy) ? fs_cap.online_grow : fs_cap.grow;
+        fillPartition = true;
+        action = (partitionOld.m_busy) ? fsCap.online_grow : fsCap.grow;
     } else {
         // shrink
-        fill_partition = false;
-        action = (partition_old.busy) ? fs_cap.online_shrink : fs_cap.shrink;
+        fillPartition = false;
+        action = (partitionOld.m_busy) ? fsCap.online_shrink : fsCap.shrink;
     }
     bool success = false;
-    FileSystem *p_filesystem = nullptr;
+    FileSystem *pFilesystem = nullptr;
     switch (action) {
     case FS::NONE:
         break;
     case FS::GPARTED:
         break;
     case FS::LIBPARTED:
-        success = resize_move_filesystem_using_libparted(partition_old, partition_new);
+        success = resizeMoveFileSystemUsingLibparted(partitionOld, partitionNew);
         break;
     case FS::EXTERNAL:
-        success = (p_filesystem = getFileSystemObject(partition_new.fstype)) && p_filesystem->resize(partition_new, fill_partition);
+        success = (pFilesystem = getFileSystemObject(partitionNew.m_fstype)) && pFilesystem->resize(partitionNew, fillPartition);
         break;
     default:
         break;
@@ -1454,47 +1482,47 @@ bool PartedCore::resize_filesystem_implement(const Partition &partition_old, con
     return success;
 }
 
-bool PartedCore::resize_move_filesystem_using_libparted(const Partition &partition_old, const Partition &partition_new)
+bool PartedCore::resizeMoveFileSystemUsingLibparted(const Partition &partitionOld, const Partition &partitionNew)
 {
-    bool return_value = false;
-    PedDevice *lp_device = nullptr;
-    PedDisk *lp_disk = nullptr;
-    if (getDeviceAndDisk(partition_old.device_path, lp_device, lp_disk)) {
+    bool returnValue = false;
+    PedDevice *lpDevice = nullptr;
+    PedDisk *lpDisk = nullptr;
+    if (getDeviceAndDisk(partitionOld.m_devicePath, lpDevice, lpDisk)) {
         PedFileSystem *fs = nullptr;
-        PedGeometry *lp_geom = nullptr;
+        PedGeometry *lpGeom = nullptr;
 
-        lp_geom = ped_geometry_new(lp_device,
-                                   partition_old.sector_start,
-                                   partition_old.get_sector_length());
-        if (lp_geom) {
-            fs = ped_file_system_open(lp_geom);
+        lpGeom = ped_geometry_new(lpDevice,
+                                   partitionOld.m_sectorStart,
+                                   partitionOld.getSectorLength());
+        if (lpGeom) {
+            fs = ped_file_system_open(lpGeom);
 
-            ped_geometry_destroy(lp_geom);
-            lp_geom = nullptr;
+            ped_geometry_destroy(lpGeom);
+            lpGeom = nullptr;
 
             if (fs) {
-                lp_geom = ped_geometry_new(lp_device,
-                                           partition_new.sector_start,
-                                           partition_new.get_sector_length());
-                if (lp_geom) {
-                    if (return_value)
-                        commit(lp_disk);
+                lpGeom = ped_geometry_new(lpDevice,
+                                           partitionNew.m_sectorStart,
+                                           partitionNew.getSectorLength());
+                if (lpGeom) {
+                    if (returnValue)
+                        commit(lpDisk);
 
-                    ped_geometry_destroy(lp_geom);
+                    ped_geometry_destroy(lpGeom);
                 }
                 ped_file_system_close(fs);
             }
         }
-        destroyDeviceAndDisk(lp_device, lp_disk);
+        destroyDeviceAndDisk(lpDevice, lpDisk);
     }
 
-    return return_value;
+    return returnValue;
 }
 
 void PartedCore::onRefreshDeviceInfo()
 {
-    probedeviceinfo();
-    emit updateDeviceInfo(inforesult);
+    probeDeviceInfo();
+    emit updateDeviceInfo(m_inforesult);
 }
 
 bool PartedCore::mount(const QString &mountpath)
@@ -1503,15 +1531,15 @@ bool PartedCore::mount(const QString &mountpath)
     bool success = true;
     QString output, errstr;
     QString cmd ;
-    FSType type = curpartition.fstype;
-    QString partitionpath = curpartition.get_path();
+    FSType type = m_curpartition.m_fstype;
+    QString partitionPath = m_curpartition.getPath();
 
     if (type == FS_FAT32 || type == FS_FAT16) {
-        cmd = QString("mount -v %1 %2 -o -o dmask=000,fmask=111").arg(partitionpath).arg(mountpath);
+        cmd = QString("mount -v %1 %2 -o -o dmask=000,fmask=111").arg(partitionPath).arg(mountpath);
     } else if (type == FS_HFS) {
-        cmd = QString("mount -v %1 %2 -o -o dir_umask=000,file_umask=111").arg(partitionpath).arg(mountpath);
+        cmd = QString("mount -v %1 %2 -o -o dir_umask=000,file_umask=111").arg(partitionPath).arg(mountpath);
     } else {
-        cmd = QString("mount -v %1 %2").arg(partitionpath).arg(mountpath);
+        cmd = QString("mount -v %1 %2").arg(partitionPath).arg(mountpath);
     }
 
     int exitcode = Utils::executcmd(cmd, output, errstr);
@@ -1535,8 +1563,8 @@ bool PartedCore::mount(const QString &mountpath)
             QByteArray line = file.readLine();//获取数据
             qDebug() << line;
 
-            if (line.contains(curpartition.uuid.toStdString().c_str()) || file.atEnd()) {
-                QString str = QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(curpartition.uuid).arg(mountpath).arg(Utils::FSTypeToString(type));
+            if (line.contains(m_curpartition.m_uuid.toStdString().c_str()) || file.atEnd()) {
+                QString str = QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(m_curpartition.m_uuid).arg(mountpath).arg(Utils::FSTypeToString(type));
                 list << line;
                 list << str;
                 break;
@@ -1564,59 +1592,13 @@ bool PartedCore::mount(const QString &mountpath)
     return success;
 }
 
-//bool PartedCore::autoMount(const QString &partitionPath, const QString &fstype, const QString &mountPath,const QString &uuid)
-//{
-//    qDebug() << __FUNCTION__ << "Automount start";
-//    bool success = true;
-//    QFile file("/etc/fstab");
-//    if (file.open(QIODevice::ReadWrite | QIODevice::Append)) {
-//        QTextStream out(&file);
-//        QString mountBuf;
-//        mountBuf = QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(uuid).arg(mountPath).arg(fstype);
-//        out << mountBuf;
-//        out.flush();
-//        file.close();
-//    }
-//    else {
-//        qDebug() << __FUNCTION__ << "Automount open file error";
-//        success = false;
-//    }
-//    QString output, errstr;
-//    QString cmd;
-//    FSType type = Utils::StringToFSType(fstype);
-//    QDir dir;
-//    if(!dir.mkpath(mountPath))
-//    {
-//        qDebug() << __FUNCTION__ << "Automount create floder error";
-//        success = false;
-//        return success;
-//    }
-//    //qDebug() << __FUNCTION__ << mountPath << partitionPath << fstype;
-//    if (type == FS_FAT32 ||
-//            type == FS_FAT16) {
-//        cmd = QString("mount -v %1 %2 -o -o dmask=000,fmask=111").arg(partitionPath).arg(mountPath);
-//    } else if (type == FS_HFS) {
-//        cmd = QString("mount -v %1 %2 -o -o dir_umask=000,file_umask=111").arg(partitionPath).arg(mountPath);
-//    } else {
-//        cmd = QString("mount -v %1 %2").arg(partitionPath).arg(mountPath);
-//    }
-//    int exitcode = Utils::executcmd(cmd, output, errstr);
-//    if (exitcode != 0) {
-//        qDebug() << __FUNCTION__ << "Automount order error" << output;
-//        success = false;
-//        return success;
-//    }
-//    qDebug() << __FUNCTION__ << "Automount end";
-//    return success;
-//}
-
 bool PartedCore::unmount()
 {
     qDebug() << __FUNCTION__ << "Unmount start";
     //永久卸载
     bool success = true;
     qDebug() << __FUNCTION__ << "Permanent unmount start";
-    QString partitionUuid = curpartition.uuid;
+    QString partitionUuid = m_curpartition.m_uuid;
     QFile file("/etc/fstab");
     QString displayString;
 
@@ -1649,7 +1631,7 @@ bool PartedCore::unmount()
     }
 
     QString output, errstr;
-    QVector<QString> mountpoints = curpartition.get_mountpoints();
+    QVector<QString> mountpoints = m_curpartition.getMountPoints();
     for (QString path : mountpoints) {
         QString cmd = QString("umount -v %1").arg(path);
         int exitcode = Utils::executcmd(cmd, output, errstr);
@@ -1669,9 +1651,9 @@ bool PartedCore::create(const PartitionVec &infovec)
     qDebug() << __FUNCTION__ << "Create start";
     bool success = true;
     for (PartitionInfo info : infovec) {
-        Partition new_partition;
-        new_partition.Reset(info);
-        if (!create(new_partition)) {
+        Partition newPartition;
+        newPartition.reset(info);
+        if (!create(newPartition)) {
             qDebug() << __FUNCTION__ << "Create Patitione error";
             success = false;
             break;
@@ -1682,46 +1664,46 @@ bool PartedCore::create(const PartitionVec &infovec)
     return success;
 }
 
-bool PartedCore::create(Partition &new_partition)
+bool PartedCore::create(Partition &newPartition)
 {
     bool success = false;
-    if (new_partition.type == TYPE_EXTENDED) {
-        success = create_partition(new_partition);
+    if (newPartition.m_type == TYPE_EXTENDED) {
+        success = createPartition(newPartition);
     } else {
-        FS_Limits fs_limits = getFileSystemLimits(new_partition.fstype, new_partition);
-        success = create_partition(new_partition, fs_limits.min_size / new_partition.sector_size);
+        FS_Limits fsLimits = getFileSystemLimits(newPartition.m_fstype, newPartition);
+        success = createPartition(newPartition, fsLimits.min_size / newPartition.m_sectorSize);
     }
     if (!success)
         return false;
 
-    if (!new_partition.name.isEmpty()) {
-        if (!name_partition(new_partition))
+    if (!newPartition.m_name.isEmpty()) {
+        if (!namePartition(newPartition))
             return false;
     }
 
-    if (new_partition.type == TYPE_EXTENDED || new_partition.fstype == FS_UNFORMATTED)
+    if (newPartition.m_type == TYPE_EXTENDED || newPartition.m_fstype == FS_UNFORMATTED)
         return true;
-    else if (new_partition.fstype == FS_CLEARED)
-        return erase_filesystem_signatures(new_partition);
+    else if (newPartition.m_fstype == FS_CLEARED)
+        return eraseFilesystemSignatures(newPartition);
     else
-        return erase_filesystem_signatures(new_partition)
-               && set_partition_type(new_partition)
-               && create_filesystem(new_partition);
+        return eraseFilesystemSignatures(newPartition)
+               && setPartitionType(newPartition)
+               && createFileSystem(newPartition);
 
 }
 
-bool PartedCore::create_partition(Partition &new_partition, Sector min_size)
+bool PartedCore::createPartition(Partition &newPartition, Sector minSize)
 {
     qDebug() << __FUNCTION__ << "create empty partition";
-    new_partition.partition_number = 0;
-    PedDevice *lp_device = nullptr;
-    PedDisk *lp_disk = nullptr;
-    if (getDeviceAndDisk(new_partition.device_path, lp_device, lp_disk)) {
+    newPartition.m_partitionNumber = 0;
+    PedDevice *lpDevice = nullptr;
+    PedDisk *lpDisk = nullptr;
+    if (getDeviceAndDisk(newPartition.m_devicePath, lpDevice, lpDisk)) {
         PedPartitionType type;
         PedConstraint *constraint = nullptr;
-        PedFileSystemType *fs_type = nullptr;
+        PedFileSystemType *fsType = nullptr;
         //create new partition
-        switch (new_partition.type) {
+        switch (newPartition.m_type) {
         case TYPE_PRIMARY:
             type = PED_PARTITION_NORMAL;
             break;
@@ -1735,40 +1717,40 @@ bool PartedCore::create_partition(Partition &new_partition, Sector min_size)
         default:
             type = PED_PARTITION_FREESPACE;
         }
-        if (new_partition.type != TYPE_EXTENDED)
-            fs_type = ped_file_system_type_get("ext2");
+        if (newPartition.m_type != TYPE_EXTENDED)
+            fsType = ped_file_system_type_get("ext2");
 
-        PedPartition *lp_partition = ped_partition_new(lp_disk, type, fs_type,
-                                                       new_partition.sector_start, new_partition.sector_end);
+        PedPartition *lpPartition = ped_partition_new(lpDisk, type, fsType,
+                                                       newPartition.m_sectorStart, newPartition.m_sectorEnd);
 
-        if (lp_partition) {
-            if (new_partition.alignment == ALIGN_STRICT
-                    || new_partition.alignment == ALIGN_MEBIBYTE) {
-                PedGeometry *geom = ped_geometry_new(lp_device, new_partition.sector_start, new_partition.get_sector_length());
+        if (lpPartition) {
+            if (newPartition.m_alignment == ALIGN_STRICT
+                    || newPartition.m_alignment == ALIGN_MEBIBYTE) {
+                PedGeometry *geom = ped_geometry_new(lpDevice, newPartition.m_sectorStart, newPartition.getSectorLength());
                 if (geom) {
                     constraint = ped_constraint_exact(geom);
                     ped_geometry_destroy(geom);
                 }
             } else
-                constraint = ped_constraint_any(lp_device);
+                constraint = ped_constraint_any(lpDevice);
 
             if (constraint) {
-                if (min_size > 0 && new_partition.fstype != FS_XFS) // Permit copying to smaller xfs partition
-                    constraint->min_size = min_size;
+                if (minSize > 0 && newPartition.m_fstype != FS_XFS) // Permit copying to smaller xfs partition
+                    constraint->min_size = minSize;
 
-                if (ped_disk_add_partition(lp_disk, lp_partition, constraint) && commit(lp_disk)) {
-                    new_partition.set_path(get_partition_path(lp_partition));
+                if (ped_disk_add_partition(lpDisk, lpPartition, constraint) && commit(lpDisk)) {
+                    newPartition.setPath(getPartitionPath(lpPartition));
 
-                    new_partition.partition_number = lp_partition->num;
-                    new_partition.sector_start = lp_partition->geom.start;
-                    new_partition.sector_end = lp_partition->geom.end;
+                    newPartition.m_partitionNumber = lpPartition->num;
+                    newPartition.m_sectorStart = lpPartition->geom.start;
+                    newPartition.m_sectorEnd = lpPartition->geom.end;
                 }
                 ped_constraint_destroy(constraint);
             }
         }
-        destroyDeviceAndDisk(lp_device, lp_disk);
+        destroyDeviceAndDisk(lpDevice, lpDisk);
     }
-    bool bsucces = new_partition.partition_number > 0;
+    bool bsucces = newPartition.m_partitionNumber > 0;
 
     return bsucces;
 }
@@ -1776,10 +1758,10 @@ bool PartedCore::create_partition(Partition &new_partition, Sector min_size)
 bool PartedCore::format(const QString &fstype, const QString &name)
 {
     qDebug() << __FUNCTION__ << "Format Patitione start";
-    Partition part = curpartition;
-    part.fstype = Utils::StringToFSType(fstype);
-    part.set_filesystem_label(name);
-    bool success = formatpartition(part);
+    Partition part = m_curpartition;
+    part.m_fstype = Utils::StringToFSType(fstype);
+    part.setFilesystemLabel(name);
+    bool success = formatPartition(part);
     emit onRefreshDeviceInfo();
     qDebug() << __FUNCTION__ << "Format Patitione end";
     return success;
@@ -1788,9 +1770,9 @@ bool PartedCore::format(const QString &fstype, const QString &name)
 bool PartedCore::resize(const PartitionInfo &info)
 {
     qDebug() << __FUNCTION__ << "Resize Patitione start";
-    Partition new_partition = curpartition;
-    new_partition.Reset(info);
-    bool success = resize(new_partition);
+    Partition newPartition = m_curpartition;
+    newPartition.reset(info);
+    bool success = resize(newPartition);
     emit onRefreshDeviceInfo();
     qDebug() << __FUNCTION__ << "Resize Patitione end";
     return success;
@@ -1798,7 +1780,7 @@ bool PartedCore::resize(const PartitionInfo &info)
 
 QStringList PartedCore::getallsupportfs()
 {
-    return supported_filesystems->get_all_fsname();
+    return m_supportedFileSystems->getAllFsName();
 }
 
 HardDiskInfo PartedCore::getDeviceHardInfo(const QString &devicepath)
@@ -1922,33 +1904,33 @@ HardDiskInfo PartedCore::getDeviceHardInfo(const QString &devicepath)
 DeviceInfo PartedCore::getDeviceinfo()
 {
     DeviceInfo info;
-    qDebug() << __FUNCTION__ << "#########";
-    qDebug() << info.m_path << info.heads << info.cylinders << info.serial_number << info.max_prims;
+//    qDebug() << __FUNCTION__ << "#########";
+//    qDebug() << info.m_path << info.heads << info.cylinders << info.serial_number << info.max_prims;
     return info;
 }
 
 DeviceInfoMap PartedCore::getAllDeviceinfo()
 {
-    return inforesult;
+    return m_inforesult;
 }
 
 void PartedCore::setCurSelect(const PartitionInfo &info)
 {
     bool bfind = false;
-    for (auto it = devicemap.begin(); it != devicemap.end() && !bfind; it++) {
+    for (auto it = m_devicemap.begin(); it != m_devicemap.end() && !bfind; it++) {
         if (it.key() == info.device_path) {
             Device dev = it.value();
             for (auto itpart = dev.partitions.begin(); itpart != dev.partitions.end() && !bfind; itpart++) {
                 Partition part = *(*itpart);
                 if (infoBelongToPartition(part, info)) {
-                    curpartition = part;
+                    m_curpartition = part;
                     bfind = true;
                 }
-                if (part.inside_extended && !bfind) {
-                    for (auto itextend = part.logicals.begin(); itextend != part.logicals.end(); itextend++) {
+                if (part.m_insideExtended && !bfind) {
+                    for (auto itextend = part.m_logicals.begin(); itextend != part.m_logicals.end(); itextend++) {
                         Partition partlogical = *(*itextend);
                         if (infoBelongToPartition(partlogical, info)) {
-                            curpartition = partlogical;
+                            m_curpartition = partlogical;
                             bfind = true;
                         }
                     }
@@ -2350,7 +2332,7 @@ void PartedCore::autoUmount()
     qDebug() << __FUNCTION__ << "autoUmount start";
     QStringList deviceList;
 
-    for (auto it = inforesult.begin();it != inforesult.end(); it++) {
+    for (auto it = m_inforesult.begin();it != m_inforesult.end(); it++) {
         deviceList << it.key();
     }
 
@@ -2383,7 +2365,6 @@ void PartedCore::autoUmount()
 
 int PartedCore::test()
 {
-    autoUmount();
     return 1;
 }
 

@@ -69,7 +69,7 @@ QString Utils::regexp_label(const QString &strtext, const QString &strpatter)
     if (match.isValid() && match.hasMatch()) {
         for (int i = 0; i <= match.lastCapturedIndex(); i++) {
             result = match.captured(i);
-            qDebug() << __FUNCTION__ << "-------****" << result;
+//            qDebug() << __FUNCTION__ << "-------****" << result;
             break;
         }
     }

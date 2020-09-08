@@ -112,7 +112,7 @@ void EXT2::set_used_sectors(Partition &partition)
 {
     QString output, error, strmatch, strcmd;
     S = N = T = -1;
-    strcmd = QString("dumpe2fs -h %1").arg(partition.get_path());
+    strcmd = QString("dumpe2fs -h %1").arg(partition.getPath());
     if (!Utils::executcmd(strcmd, output, error)) {
         strmatch = ("Block count:");
         int index = output.indexOf(strmatch);
@@ -128,18 +128,18 @@ void EXT2::set_used_sectors(Partition &partition)
         }
 //        qDebug() << output << output.mid(index, strmatch.length()).toLatin1() << S;
 
-        if (partition.busy) {
+        if (partition.m_busy) {
             Byte_Value fs_all;
             Byte_Value fs_free;
-            if (Utils::get_mounted_filesystem_usage(partition.get_mountpoint(), fs_all, fs_free) == 0) {
-                partition.set_sector_usage(qRound(fs_all / double(partition.sector_size)), qRound(fs_free / double(partition.sector_size)));
-                partition.fs_block_size = S;
+            if (Utils::get_mounted_filesystem_usage(partition.getMountPoint(), fs_all, fs_free) == 0) {
+                partition.setSectorUsage(qRound(fs_all / double(partition.m_sectorSize)), qRound(fs_free / double(partition.m_sectorSize)));
+                partition.m_fsBlockSize = S;
             }
         } else {
             // Resize2fs won't shrink a file system smaller than it's own
             // estimated minimum size, so use that to derive the free space.
             N = -1;
-            if (!Utils::executcmd(QString("resize2fs -P %1").arg(partition.get_path()), output, error)) {
+            if (!Utils::executcmd(QString("resize2fs -P %1").arg(partition.getPath()), output, error)) {
                 if (sscanf(output.toLatin1(), "Estimated minimum size of the filesystem: %lld", &N) == 1)
                     N = T - N;
             }
@@ -153,10 +153,10 @@ void EXT2::set_used_sectors(Partition &partition)
             }
 
             if (T > -1 && N > -1 && S > -1) {
-                T = qRound64(T * (S / double(partition.sector_size)));
-                N = qRound64(N * (S / double(partition.sector_size)));
-                partition.set_sector_usage(T, N);
-                partition.fs_block_size = S;
+                T = qRound64(T * (S / double(partition.m_sectorSize)));
+                N = qRound64(N * (S / double(partition.m_sectorSize)));
+                partition.setSectorUsage(T, N);
+                partition.m_fsBlockSize = S;
             }
         }
 
@@ -169,8 +169,8 @@ void EXT2::set_used_sectors(Partition &partition)
 void EXT2::read_label(Partition &partition)
 {
     QString output, error;
-    if (!Utils::executcmd(QString("e2label %1").arg(partition.get_path()), output, error)) {
-        partition.set_filesystem_label(output.trimmed());
+    if (!Utils::executcmd(QString("e2label %1").arg(partition.getPath()), output, error)) {
+        partition.setFilesystemLabel(output.trimmed());
     }
     qDebug() << __FUNCTION__ << output << error;
 }
@@ -178,7 +178,7 @@ void EXT2::read_label(Partition &partition)
 bool EXT2::write_label(const Partition &partition)
 {
     QString output, error;
-    int exitcode = Utils::executcmd(QString("e2label %1 %2").arg(partition.get_path()).arg(partition.get_filesystem_label()), output, error);
+    int exitcode = Utils::executcmd(QString("e2label %1 %2").arg(partition.getPath()).arg(partition.getFileSystemLabel()), output, error);
     qDebug() << __FUNCTION__ << output << error;
     return exitcode == 0;
 }
@@ -186,8 +186,8 @@ bool EXT2::write_label(const Partition &partition)
 void EXT2::read_uuid(Partition &partition)
 {
     QString output, error;
-    if (!Utils::executcmd(QString("tune2fs -l %1").arg(partition.get_path()), output, error)) {
-        partition.uuid = Utils::regexp_label(output, "(?<=Filesystem UUID:).*(?=\n)").trimmed();
+    if (!Utils::executcmd(QString("tune2fs -l %1").arg(partition.getPath()), output, error)) {
+        partition.m_uuid = Utils::regexp_label(output, "(?<=Filesystem UUID:).*(?=\n)").trimmed();
     }
     qDebug() << __FUNCTION__ << output << error;
 }
@@ -195,7 +195,7 @@ void EXT2::read_uuid(Partition &partition)
 bool EXT2::write_uuid(const Partition &partition)
 {
     QString output, error;
-    int exitcode = Utils::executcmd(QString("tune2fs -U random ").arg(partition.get_path()), output, error);
+    int exitcode = Utils::executcmd(QString("tune2fs -U random ").arg(partition.getPath()), output, error);
     return exitcode == 0 || error.compare("Unknown error") == 0;
 }
 
@@ -206,18 +206,18 @@ bool EXT2::create(const Partition &new_partition)
         // (#766910) Manually implement mke2fs.conf(5) auto_64-bit_support option
         // by setting or clearing the 64bit feature on the command line depending
         // of the partition size.
-        if (new_partition.get_byte_length() >= 16 * TEBIBYTE)
+        if (new_partition.getByteLength() >= 16 * TEBIBYTE)
             features = " -O 64bit";
         else
             features = " -O ^64bit";
     }
-    QString strlabel = new_partition.get_filesystem_label();
+    QString strlabel = new_partition.getFileSystemLabel();
     if(strlabel == " ") {
-      cmd = QString("%1%2%3%4%5").arg(mkfs_cmd).arg(" -F").arg(features).arg(" ").arg(new_partition.get_path());
+      cmd = QString("%1%2%3%4%5").arg(mkfs_cmd).arg(" -F").arg(features).arg(" ").arg(new_partition.getPath());
     }
     else {
         strlabel = strlabel.isEmpty() ? strlabel : QString(" -L %1").arg(strlabel);
-        cmd = QString("%1%2%3%4%5%6").arg(mkfs_cmd).arg(" -F").arg(features).arg(strlabel).arg(" ").arg(new_partition.get_path());
+        cmd = QString("%1%2%3%4%5%6").arg(mkfs_cmd).arg(" -F").arg(features).arg(strlabel).arg(" ").arg(new_partition.getPath());
     }
     qDebug() << " EXT2::create***** " << cmd;
     int exitcode = Utils::executcmd(cmd, output, error);
@@ -227,10 +227,10 @@ bool EXT2::create(const Partition &new_partition)
 
 bool EXT2::resize(const Partition &partition_new, bool fill_partition)
 {
-    QString str_temp = QString("resize2fs -p %1").arg(partition_new.get_path());
+    QString str_temp = QString("resize2fs -p %1").arg(partition_new.getPath());
 
     if (!fill_partition) {
-        str_temp.append(qFloor(Utils::sector_to_unit(partition_new.get_sector_length(), partition_new.sector_size, UNIT_KIB)));
+        str_temp.append(qFloor(Utils::sector_to_unit(partition_new.getSectorLength(), partition_new.m_sectorSize, UNIT_KIB)));
         str_temp.append("K");
     }
     QString output, error;
@@ -241,7 +241,7 @@ bool EXT2::resize(const Partition &partition_new, bool fill_partition)
 bool EXT2::check_repair(const Partition &partition)
 {
     QString output, error;
-    int exitcode = Utils::executcmd(QString("e2fsck -f -y -v -C 0 %1").arg(partition.get_path()), output, error);
+    int exitcode = Utils::executcmd(QString("e2fsck -f -y -v -C 0 %1").arg(partition.getPath()), output, error);
     qDebug() << QString("EXT2::check_repair---%1----%2").arg(output).arg(error);
     return exitcode == 0 || error.compare("Unknown error") == 0;
 }

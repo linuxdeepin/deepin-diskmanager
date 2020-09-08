@@ -1,3 +1,30 @@
+/**
+ * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ *
+ * @file mountinfo.cpp
+ *
+ * @brief 挂载点信息类
+ *
+ * @date 2020-09-04 17:59
+ *
+ * Author: liweigang  <liweigang@uniontech.com>
+ *
+ * Maintainer: liweigang  <liweigang@uniontech.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "mountinfo.h"
 #include "utils.h"
 #include "fsinfo.h"
@@ -9,18 +36,18 @@
 #include <QDebug>
 
 namespace DiskManager {
-static MountInfo::MountMapping mount_info;
-static MountInfo::MountMapping fstab_info;
+static MountInfo::MountMapping mountInfo;
+static MountInfo::MountMapping fstabInfo;
 
-void MountInfo::load_cache()
+void MountInfo::loadCache()
 {
-    mount_info.clear();
-    fstab_info.clear();
+    mountInfo.clear();
+    fstabInfo.clear();
 
-    read_mountpoints_from_file("/proc/mounts", mount_info);
-    read_mountpoints_from_file_swaps("/proc/swaps", mount_info);
+    readMountpointsFromFile("/proc/mounts", mountInfo);
+    readMountpointsFromFileSwaps("/proc/swaps", mountInfo);
 
-    if (!have_rootfs_dev(mount_info))
+    if (!haveRootfsDev(mountInfo))
         // Old distributions only contain 'rootfs' and '/dev/root' device names
         // for the / (root) file system in /proc/mounts with '/dev/root' being a
         // block device rather than a symlink to the true device.  This prevents
@@ -31,63 +58,63 @@ void MountInfo::load_cache()
         // btrfs, thus identifying the wrong device as busy.  Instead fall back
         // to reading mounted file systems from the output of the mount command,
         // but only when required.
-        read_mountpoints_from_mount_command(mount_info);
+        readMountpointsFromMountCommand(mountInfo);
 
-    read_mountpoints_from_file("/etc/fstab", fstab_info);
+    readMountpointsFromFile("/etc/fstab", fstabInfo);
 
     // Sort the mount points and remove duplicates ... (no need to do this for fstab_info)
-    MountMapping::iterator iter_mp;
-    for (iter_mp = mount_info.begin(); iter_mp != mount_info.end(); ++iter_mp) {
-        std::sort(iter_mp.value().mountpoints.begin(), iter_mp.value().mountpoints.end());
+    MountMapping::iterator iterMp;
+    for (iterMp = mountInfo.begin(); iterMp != mountInfo.end(); ++iterMp) {
+        std::sort(iterMp.value().mountpoints.begin(), iterMp.value().mountpoints.end());
 
-        iter_mp.value().mountpoints.erase(
-            std::unique(iter_mp.value().mountpoints.begin(), iter_mp.value().mountpoints.end()),
-            iter_mp.value().mountpoints.end());
+        iterMp.value().mountpoints.erase(
+            std::unique(iterMp.value().mountpoints.begin(), iterMp.value().mountpoints.end()),
+            iterMp.value().mountpoints.end());
     }
 }
 
-bool MountInfo::is_dev_mounted(const QString &path)
+bool MountInfo::isDevMounted(const QString &path)
 {
-    return is_dev_mounted(BlockSpecial(path));
+    return isDevMounted(BlockSpecial(path));
 }
 
-bool MountInfo::is_dev_mounted(const BlockSpecial &bs)
+bool MountInfo::isDevMounted(const BlockSpecial &blockSpecial)
 {
-    MountMapping::const_iterator iter_mp = mount_info.find(bs);
-    return iter_mp != mount_info.end();
+    MountMapping::const_iterator iterMp = mountInfo.find(blockSpecial);
+    return iterMp != mountInfo.end();
 }
 
-bool MountInfo::is_dev_mounted_readonly(const QString &path)
+bool MountInfo::isDevMountedReadonly(const QString &path)
 {
-    return is_dev_mounted_readonly(BlockSpecial(path));
+    return isDevMountedReadonly(BlockSpecial(path));
 }
 
-bool MountInfo::is_dev_mounted_readonly(const BlockSpecial &bs)
+bool MountInfo::isDevMountedReadonly(const BlockSpecial &blockSpecial)
 {
-    MountMapping::const_iterator iter_mp = mount_info.find(bs);
-    if (iter_mp == mount_info.end())
+    MountMapping::const_iterator iterMp = mountInfo.find(blockSpecial);
+    if (iterMp == mountInfo.end())
         return false;
-    return iter_mp.value().readonly;
+    return iterMp.value().readonly;
 }
 
-const QVector<QString> &MountInfo::get_mounted_mountpoints(const QString &path)
+const QVector<QString> &MountInfo::getMountedMountpoints(const QString &path)
 {
-    return find(mount_info, path).mountpoints;
+    return find(mountInfo, path).mountpoints;
 }
 
-const QVector<QString> &MountInfo::get_fstab_mountpoints(const QString &path)
+const QVector<QString> &MountInfo::getFileSystemTableMountpoints(const QString &path)
 {
-    return find(fstab_info, path).mountpoints;
+    return find(fstabInfo, path).mountpoints;
 }
 
-void MountInfo::read_mountpoints_from_file(const QString &filename, MountInfo::MountMapping &map)
+void MountInfo::readMountpointsFromFile(const QString &fileName, MountInfo::MountMapping &map)
 {
-    FILE *fp = setmntent(filename.toStdString().c_str(), "r");
-    if (fp == NULL)
+    FILE *fp = setmntent(fileName.toStdString().c_str(), "r");
+    if (fp == nullptr)
         return;
 
-    struct mntent *p = NULL;
-    while ((p = getmntent(fp)) != NULL) {
+    struct mntent *p = nullptr;
+    while ((p = getmntent(fp)) != nullptr) {
         QString node = p->mnt_fsname;
         QString mountpoint = p->mnt_dir;
 
@@ -100,25 +127,25 @@ void MountInfo::read_mountpoints_from_file(const QString &filename, MountInfo::M
             node = FsInfo::get_path_by_label(label);
 
         if (!node.isEmpty())
-            add_mountpoint_entry(map, node, mountpoint, parse_readonly_flag(p->mnt_opts));
+            addMountpointEntry(map, node, mountpoint, parseReadonlyFlag(p->mnt_opts));
     }
 
     endmntent(fp);
 }
 
-void MountInfo::add_mountpoint_entry(MountInfo::MountMapping &map, QString &node, QString &mountpoint, bool readonly)
+void MountInfo::addMountpointEntry(MountInfo::MountMapping &map, QString &node, QString &mountPoint, bool readonly)
 {
     // Only add node path if mount point exists
-    QFile file(mountpoint);
+    QFile file(mountPoint);
     if (file.exists()) {
         // Map::operator[] default constructs MountEntry for new keys (nodes).
         MountEntry &mountentry = map[BlockSpecial(node)];
         mountentry.readonly = mountentry.readonly || readonly;
-        mountentry.mountpoints.push_back(mountpoint);
+        mountentry.mountpoints.push_back(mountPoint);
     }
 }
 
-bool MountInfo::parse_readonly_flag(const QString &str)
+bool MountInfo::parseReadonlyFlag(const QString &str)
 {
     QStringList mntopts = str.split(",");
     for (int i = 0; i < mntopts.size(); i++) {
@@ -130,9 +157,9 @@ bool MountInfo::parse_readonly_flag(const QString &str)
     return false; // Default is read-write mount
 }
 
-void MountInfo::read_mountpoints_from_file_swaps(const QString &filename, MountInfo::MountMapping &map)
+void MountInfo::readMountpointsFromFileSwaps(const QString &fileName, MountInfo::MountMapping &map)
 {
-    QFile file(filename);
+    QFile file(fileName);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&file);
         QString line = in.readLine();
@@ -147,19 +174,19 @@ void MountInfo::read_mountpoints_from_file_swaps(const QString &filename, MountI
     }
 }
 
-bool MountInfo::have_rootfs_dev(MountInfo::MountMapping &)
+bool MountInfo::haveRootfsDev(MountInfo::MountMapping &)
 {
-    MountMapping::const_iterator iter_mp;
-    for (iter_mp = mount_info.begin(); iter_mp != mount_info.end(); iter_mp++) {
-        if (!iter_mp.value().mountpoints.isEmpty() && iter_mp.value().mountpoints[0] == "/") {
-            if (iter_mp.key().m_name != "rootfs" && iter_mp.key().m_name != "/dev/root")
+    MountMapping::const_iterator iterMp;
+    for (iterMp = mountInfo.begin(); iterMp != mountInfo.end(); iterMp++) {
+        if (!iterMp.value().mountpoints.isEmpty() && iterMp.value().mountpoints[0] == "/") {
+            if (iterMp.key().m_name != "rootfs" && iterMp.key().m_name != "/dev/root")
                 return true;
         }
     }
     return false;
 }
 
-void MountInfo::read_mountpoints_from_mount_command(MountInfo::MountMapping &map)
+void MountInfo::readMountpointsFromMountCommand(MountInfo::MountMapping &map)
 {
     QString output;
     QString error;
@@ -173,16 +200,16 @@ void MountInfo::read_mountpoints_from_mount_command(MountInfo::MountMapping &map
             QString mntopts = Utils::regexp_label(lines[i], "(?<=\\().*?(?=\\))");
             // qDebug() << node << mountpoint << mntopts;
             if (!node.isEmpty())
-                add_mountpoint_entry(map, node, mountpoint, parse_readonly_flag(mntopts));
+                addMountpointEntry(map, node, mountpoint, parseReadonlyFlag(mntopts));
         }
     }
 }
 
 const MountEntry &MountInfo::find(const MountInfo::MountMapping &map, const QString &path)
 {
-    MountMapping::const_iterator iter_mp = map.find(BlockSpecial(path));
-    if (iter_mp != map.end())
-        return iter_mp.value();
+    MountMapping::const_iterator iterMp = map.find(BlockSpecial(path));
+    if (iterMp != map.end())
+        return iterMp.value();
 
     static MountEntry not_mounted = MountEntry();
     return not_mounted;

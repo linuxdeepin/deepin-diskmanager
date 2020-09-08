@@ -136,7 +136,7 @@ void FsInfo::load_fs_info_cache()
     // those entries are blank.  Needed so that an ISO9660 image stored on a whole
     // disk device is detected before any embedded partitions within the image.
     const BlockSpecial empty_bs = BlockSpecial();
-    QVector<QString> all_devices = ProcPartitionsInfo::get_device_paths();
+    QVector<QString> all_devices = ProcPartitionsInfo::getDevicePaths();
     for (int i = 0; i < all_devices.size(); i++) {
         const FS_Entry &fs_entry = get_cache_entry_by_path(all_devices[i]);
         if (fs_entry.path == empty_bs) {

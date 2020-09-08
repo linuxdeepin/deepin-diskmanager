@@ -49,10 +49,10 @@ DeviceInfo Device::getDeviceInfo()
     info.max_prims = max_prims;
     info.highest_busy = highest_busy;
     info.max_partition_name_length = max_partition_name_length;
-    //    qDebug() << __FUNCTION__ << info.m_path << info.length << info.heads << info.sectors
-    //             << info.cylinders << info.cylsize << info.model << info.serial_number << info.disktype
-    //             << info.sector_size << info.max_prims << info.highest_busy << info.readonly
-    //             << info.max_partition_name_length;
+//        qDebug() << __FUNCTION__ << info.m_path << info.length << info.heads << info.sectors
+//                 << info.cylinders << info.cylsize << info.model << info.serial_number << info.disktype
+//                 << info.sector_size << info.max_prims << info.highest_busy << info.readonly
+//                 << info.max_partition_name_length;
     return info;
 }
 

@@ -79,7 +79,7 @@ bool DiskManagerService::unmount()
 
 bool DiskManagerService::mount(const QString &mountpath)
 {
-    return m_partedcore->mount(mountpath);
+    return m_partedcore->mountAndWriteFstab(mountpath);
 }
 
 QStringList DiskManagerService::getallsupportfs()

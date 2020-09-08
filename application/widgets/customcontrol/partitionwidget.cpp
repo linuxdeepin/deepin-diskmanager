@@ -595,6 +595,7 @@ void PartitionWidget::applyBtnSlot()
     PartitionInfo curinfo = phandler->getCurPartititonInfo();
     DeviceInfo device = phandler->getCurDeviceInfo();
     Sector beforend = curinfo.sector_start;
+    Sector deviceLength = phandler->getCurDeviceInfoLength();
     for (int i = 0; i < m_patrinfo.size(); i++) {
         PartitionInfo newpart;
         newpart.sector_start = beforend;
@@ -642,6 +643,12 @@ void PartitionWidget::applyBtnSlot()
         } else {
             if (newpart.sector_end > curinfo.sector_end)
                 newpart.sector_end = curinfo.sector_end;
+
+            if (deviceLength == curinfo.sector_end + 1) {
+                if ((newpart.sector_end == curinfo.sector_end - 1) || (newpart.sector_end == curinfo.sector_end))
+                    newpart.sector_end = curinfo.sector_end - 33;
+            }
+
 //            Sector diff = 0;
 //            diff = (newpart.sector_end + 1) % (MEBIBYTE / newpart.sector_size);
 //            if (diff)

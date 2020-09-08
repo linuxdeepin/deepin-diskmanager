@@ -1593,7 +1593,7 @@ bool PartedCore::mountAndWriteFstab(const QString &mountpath)
         }
     }
 
-    emit onRefreshDeviceInfo();
+    emit refreshDeviceInfo();
 
     return success;
 }
@@ -1649,7 +1649,7 @@ bool PartedCore::unmount()
         }
     }
 
-    emit onRefreshDeviceInfo();
+    emit refreshDeviceInfo();
 
     qDebug() << __FUNCTION__ << "Unmount end";
 
@@ -1669,7 +1669,7 @@ bool PartedCore::create(const PartitionVec &infovec)
             break;
         }
     }
-    emit onRefreshDeviceInfo();
+    emit refreshDeviceInfo();
     qDebug() << __FUNCTION__ << "Create end";
     return success;
 }
@@ -1772,7 +1772,7 @@ bool PartedCore::format(const QString &fstype, const QString &name)
     part.m_fstype = Utils::StringToFSType(fstype);
     part.setFilesystemLabel(name);
     bool success = formatPartition(part);
-    emit onRefreshDeviceInfo();
+    emit refreshDeviceInfo();
     qDebug() << __FUNCTION__ << "Format Patitione end";
     return success;
 }
@@ -1783,7 +1783,7 @@ bool PartedCore::resize(const PartitionInfo &info)
     Partition newPartition = m_curpartition;
     newPartition.reset(info);
     bool success = resize(newPartition);
-    emit onRefreshDeviceInfo();
+    emit refreshDeviceInfo();
     qDebug() << __FUNCTION__ << "Resize Patitione end";
     return success;
 }
@@ -2072,7 +2072,7 @@ bool PartedCore::deletePartition(const QString &devicePath, const QString &partt
     if (!getDeviceAndDisk(devicePath, lpDevice, lpDisk)) {
         qDebug() << __FUNCTION__ << "Delete Partition get device and disk failed";
 
-        emit onRefreshDeviceInfo();
+        emit refreshDeviceInfo();
         emit deletePatition("0:1");
 
         return false;
@@ -2084,7 +2084,7 @@ bool PartedCore::deletePartition(const QString &devicePath, const QString &partt
     if (ped == nullptr) {
         qDebug() << __FUNCTION__ << "Delete Partition Get Partition failed";
 
-        emit onRefreshDeviceInfo();
+        emit refreshDeviceInfo();
         emit deletePatition("0:2");
 
         return false;
@@ -2095,7 +2095,7 @@ bool PartedCore::deletePartition(const QString &devicePath, const QString &partt
     if (i == 0) {
         qDebug() << __FUNCTION__ << "Delete Partition failed";
 
-        emit onRefreshDeviceInfo();
+        emit refreshDeviceInfo();
         emit deletePatition("0:3");
 
         return false;
@@ -2104,7 +2104,7 @@ bool PartedCore::deletePartition(const QString &devicePath, const QString &partt
     if (!commit(lpDisk)) {
         qDebug() << __FUNCTION__ << "Delete Partition commit failed";
 
-        emit onRefreshDeviceInfo();
+        emit refreshDeviceInfo();
         emit deletePatition("0:4");
 
         return false;
@@ -2112,7 +2112,7 @@ bool PartedCore::deletePartition(const QString &devicePath, const QString &partt
 
     destroyDeviceAndDisk(lpDevice, lpDisk);
 
-    emit onRefreshDeviceInfo();
+    emit refreshDeviceInfo();
     emit deletePatition("1:0");
 
     qDebug() << __FUNCTION__ << "Delete Partition end";
@@ -2130,7 +2130,7 @@ bool PartedCore::hidePartition(const QString &devicePath, const QString &parttit
     if (!getDeviceAndDisk(devicePath, lpDevice, lpDisk)) {
         qDebug() << __FUNCTION__ << "Hide Partition get device and disk failed";
 
-        emit onRefreshDeviceInfo();
+        emit refreshDeviceInfo();
         emit hidePartitionInfo("0");
 
         return false;
@@ -2142,7 +2142,7 @@ bool PartedCore::hidePartition(const QString &devicePath, const QString &parttit
     if (ped == nullptr) {
         qDebug() << __FUNCTION__ << "Hide Partition get partition failed";
 
-        emit onRefreshDeviceInfo();
+        emit refreshDeviceInfo();
         emit hidePartitionInfo("0");
 
         return false;
@@ -2153,7 +2153,7 @@ bool PartedCore::hidePartition(const QString &devicePath, const QString &parttit
     if (hideenFlag == 1) {
         qDebug() << __FUNCTION__ << "Hide Partition set partition failed";
 
-        emit onRefreshDeviceInfo();
+        emit refreshDeviceInfo();
         emit hidePartitionInfo("0");
 
         return false;
@@ -2164,7 +2164,7 @@ bool PartedCore::hidePartition(const QString &devicePath, const QString &parttit
 
         destroyDeviceAndDisk(lpDevice, lpDisk);
 
-        emit onRefreshDeviceInfo();
+        emit refreshDeviceInfo();
         emit hidePartitionInfo("1");
 
         qDebug() << __FUNCTION__ << "Hide Partition end";
@@ -2174,7 +2174,7 @@ bool PartedCore::hidePartition(const QString &devicePath, const QString &parttit
 
         destroyDeviceAndDisk(lpDevice, lpDisk);
 
-        emit onRefreshDeviceInfo();
+        emit refreshDeviceInfo();
         emit hidePartitionInfo("0");
 
         qDebug() << __FUNCTION__ << "Hide Partition end";
@@ -2193,7 +2193,7 @@ bool PartedCore::showPartition(const QString &devicePath, const QString &parttit
     if (!getDeviceAndDisk(devicePath, lpDevice, lpDisk)) {
         qDebug() << __FUNCTION__ << "Show Partition get device and disk failed";
 
-        emit onRefreshDeviceInfo();
+        emit refreshDeviceInfo();
         emit showPartitionInfo("0");
 
         return false;
@@ -2205,7 +2205,7 @@ bool PartedCore::showPartition(const QString &devicePath, const QString &parttit
     if (ped == nullptr) {
         qDebug() << __FUNCTION__ << "Show Partition get partition failed";
 
-        emit onRefreshDeviceInfo();
+        emit refreshDeviceInfo();
         emit showPartitionInfo("0");
 
         return false;
@@ -2216,7 +2216,7 @@ bool PartedCore::showPartition(const QString &devicePath, const QString &parttit
     if (hideenFlag == 0) {
         qDebug() << __FUNCTION__ << "Show Partition get partition failed";
 
-        emit onRefreshDeviceInfo();
+        emit refreshDeviceInfo();
         emit showPartitionInfo("0");
 
         return false;
@@ -2226,7 +2226,7 @@ bool PartedCore::showPartition(const QString &devicePath, const QString &parttit
         qDebug() << __FUNCTION__ << "Show Partition success";
         destroyDeviceAndDisk(lpDevice, lpDisk);
 
-        emit onRefreshDeviceInfo();
+        emit refreshDeviceInfo();
         emit showPartitionInfo("1");
 
         qDebug() << __FUNCTION__ << "Show Partition end";
@@ -2236,7 +2236,7 @@ bool PartedCore::showPartition(const QString &devicePath, const QString &parttit
 
         destroyDeviceAndDisk(lpDevice, lpDisk);
 
-        emit onRefreshDeviceInfo();
+        emit refreshDeviceInfo();
         emit showPartitionInfo("0");
 
         qDebug() << __FUNCTION__ << "Show Partition end";
@@ -2312,7 +2312,7 @@ void PartedCore::updateUsbRemove()
 {
     qDebug() << __FUNCTION__ << "USB add update remove"; 
 
-    emit onRefreshDeviceInfo();
+    emit refreshDeviceInfo();
     emit usbUpdated();
 
     autoUmount();
@@ -2332,7 +2332,7 @@ void PartedCore::autoMount()
         qDebug() << __FUNCTION__ << output;
     }
 
-    emit onRefreshDeviceInfo();
+    emit refreshDeviceInfo();
 
     qDebug() << __FUNCTION__ << "solt automount end";
 }

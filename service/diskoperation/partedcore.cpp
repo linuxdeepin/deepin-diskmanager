@@ -1643,7 +1643,7 @@ bool PartedCore::unmount()
 //        int exitcode = Utils::executcmd(cmd, output, errstr);
 //        if (0 != exitcode)
 //            success = false;
-        if (umount("/mnt") != 0) {
+        if (umount(path.toStdString().c_str()) != 0) {
             success = false;
             return success;
         }

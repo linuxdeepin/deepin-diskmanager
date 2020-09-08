@@ -1,3 +1,10 @@
+deepin-diskmanager (1.1.1.0) stable; urgency=low
+
+  *解决完成第五次次送测产生的bug,
+ -- unknown <unknown@uniontech.com>  Wed., 8 September 2020 14:34:16 +0800
+  *46551 新建分区-U盘全部空间创建一个分区时失败
+  *46487 新建分区删除后，标题栏“格式化”、“挂载”、“空间调整”按钮仍可点击
+
 deepin-diskmanager (1.1.0.9) stable; urgency=low
 
   *解决完成第四次送测产生的bug,

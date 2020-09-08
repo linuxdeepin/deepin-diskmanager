@@ -35,12 +35,12 @@ FS LinuxSwap::get_filesystem_support()
 
 void LinuxSwap::set_used_sectors(Partition &partition)
 {
-    if (partition.busy) {
+    if (partition.m_busy) {
         N = -1;
         QFile file("/proc/swaps");
         if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
             QString line = file.readLine();
-            BlockSpecial bs_path = BlockSpecial(partition.get_path());
+            BlockSpecial bs_path = BlockSpecial(partition.getPath());
             while (!file.atEnd() || !line.isEmpty()) {
                 QString filename = Utils::regexp_label(line, ".*?(?= )");
                 if (bs_path == BlockSpecial(filename)) {
@@ -55,23 +55,23 @@ void LinuxSwap::set_used_sectors(Partition &partition)
             // overhead.  Instead use partition size as sectors_fs_size so
             // reported used figure for active swap space starts from 0
             // upwards, matching what 'swapon -s' reports.
-            T = partition.get_sector_length();
-            N = qRound(N * (KIBIBYTE / double(partition.sector_size)));
-            partition.set_sector_usage(T, T - N);
+            T = partition.getSectorLength();
+            N = qRound(N * (KIBIBYTE / double(partition.m_sectorSize)));
+            partition.setSectorUsage(T, T - N);
         }
     } else {
         //By definition inactive swap space is 100% free
-        Sector size = partition.get_sector_length();
-        partition.set_sector_usage(size, size);
+        Sector size = partition.getSectorLength();
+        partition.setSectorUsage(size, size);
     }
 }
 
 void LinuxSwap::read_label(Partition &partition)
 {
     QString output, error, label;
-    Utils::executcmd(QString("swaplabel %1").arg(partition.get_path()), output, error);
+    Utils::executcmd(QString("swaplabel %1").arg(partition.getPath()), output, error);
     label = Utils::regexp_label(output, "(?<=LABEL:).*(?=\n)");
-    partition.set_filesystem_label(label);
+    partition.setFilesystemLabel(label);
 
     qDebug() << output << error << "----" << label;
 }
@@ -79,7 +79,7 @@ void LinuxSwap::read_label(Partition &partition)
 bool LinuxSwap::write_label(const Partition &partition)
 {
     QString output, error;
-    int exitcode = Utils::executcmd(QString("swaplabel -L %1 %2").arg(partition.get_filesystem_label()).arg(partition.get_path()),
+    int exitcode = Utils::executcmd(QString("swaplabel -L %1 %2").arg(partition.getFileSystemLabel()).arg(partition.getPath()),
                                     output, error);
     return exitcode == 0 && error.compare("Unknown error") == 0;
 }
@@ -87,14 +87,14 @@ bool LinuxSwap::write_label(const Partition &partition)
 void LinuxSwap::read_uuid(Partition &partition)
 {
     QString output, error;
-    Utils::executcmd(QString("swaplabel %1").arg(partition.get_path()), output, error);
-    partition.uuid = Utils::regexp_label(output, "(?<=UUID:).*(?=\n)");
+    Utils::executcmd(QString("swaplabel %1").arg(partition.getPath()), output, error);
+    partition.m_uuid = Utils::regexp_label(output, "(?<=UUID:).*(?=\n)");
 }
 
 bool LinuxSwap::write_uuid(const Partition &partition)
 {
     QString output, error;
-    int exitcode = Utils::executcmd(QString("swaplabel -L %1 %2").arg(Utils::CreateUUid()).arg(partition.get_path()),
+    int exitcode = Utils::executcmd(QString("swaplabel -L %1 %2").arg(Utils::CreateUUid()).arg(partition.getPath()),
                                     output, error);
     return exitcode == 0 && error.compare("Unknown error") == 0;
 }
@@ -102,7 +102,7 @@ bool LinuxSwap::write_uuid(const Partition &partition)
 bool LinuxSwap::create(const Partition &new_partition)
 {
     QString output, error;
-    int exitcode = Utils::executcmd(QString("mkswap -L %1 %2").arg(new_partition.get_filesystem_label()).arg(new_partition.get_path()),
+    int exitcode = Utils::executcmd(QString("mkswap -L %1 %2").arg(new_partition.getFileSystemLabel()).arg(new_partition.getPath()),
                                     output, error);
     return exitcode == 0 && error.compare("Unknown error") == 0;
 }
@@ -110,10 +110,10 @@ bool LinuxSwap::create(const Partition &new_partition)
 bool LinuxSwap::resize(const Partition &partition_new, bool)
 {
     QString output, error;
-    QString command = QString("mkswap -L %1 ").arg(partition_new.get_filesystem_label());
-    if (!partition_new.uuid.isEmpty())
-        command.append(QString(" -U %1 ").arg(partition_new.uuid));
-    command.append(partition_new.get_path());
+    QString command = QString("mkswap -L %1 ").arg(partition_new.getFileSystemLabel());
+    if (!partition_new.m_uuid.isEmpty())
+        command.append(QString(" -U %1 ").arg(partition_new.m_uuid));
+    command.append(partition_new.getPath());
     int exitcode = Utils::executcmd(command, output, error);
     return exitcode == 0 && error.compare("Unknown error") == 0;
 }

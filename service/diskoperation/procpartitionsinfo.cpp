@@ -1,3 +1,30 @@
+/**
+ * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ *
+ * @file procpartitionsinfo.cpp
+ *
+ * @brief 程序分区信息类
+ *
+ * @date 2020-09-04 13:19
+ *
+ * Author: liweigang  <liweigang@uniontech.com>
+ *
+ * Maintainer: liweigang  <liweigang@uniontech.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "procpartitionsinfo.h"
 #include "blockspecial.h"
 #include "utils.h"
@@ -9,32 +36,32 @@
 
 namespace DiskManager {
 
-bool ProcPartitionsInfo::proc_partitions_info_cache_initialized = false;
-QVector<QString> ProcPartitionsInfo::device_paths_cache;
+bool ProcPartitionsInfo::procPartitionsInfoCacheInitialized = false;
+QVector<QString> ProcPartitionsInfo::devicePathsCache;
 
-void ProcPartitionsInfo::load_cache()
+void ProcPartitionsInfo::loadCache()
 {
-    load_proc_partitions_info_cache();
-    proc_partitions_info_cache_initialized = true;
+    loadProcPartitionsInfoCache();
+    procPartitionsInfoCacheInitialized = true;
 }
 
-const QVector<QString> &ProcPartitionsInfo::get_device_paths()
+const QVector<QString> &ProcPartitionsInfo::getDevicePaths()
 {
-    initialize_if_required();
-    return device_paths_cache;
+    initializeIfRequired();
+    return devicePathsCache;
 }
 
-void ProcPartitionsInfo::initialize_if_required()
+void ProcPartitionsInfo::initializeIfRequired()
 {
-    if (!proc_partitions_info_cache_initialized) {
-        load_proc_partitions_info_cache();
-        proc_partitions_info_cache_initialized = true;
+    if (!procPartitionsInfoCacheInitialized) {
+        loadProcPartitionsInfoCache();
+        procPartitionsInfoCacheInitialized = true;
     }
 }
 
-void ProcPartitionsInfo::load_proc_partitions_info_cache()
+void ProcPartitionsInfo::loadProcPartitionsInfoCache()
 {
-    device_paths_cache.clear();
+    devicePathsCache.clear();
     QFile file("/proc/partitions");
 
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -100,7 +127,7 @@ void ProcPartitionsInfo::load_proc_partitions_info_cache()
 
             if (device != "") {
                 //add potential device to the list
-                device_paths_cache.push_back("/dev/" + device);
+                devicePathsCache.push_back("/dev/" + device);
             }
             line = in.readLine();
         }

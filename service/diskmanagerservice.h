@@ -48,73 +48,102 @@ public:
     explicit DiskManagerService(QObject *parent = nullptr);
 
 Q_SIGNALS:
+    /**
+     * @brief 信息传递信号
+     * @param msg：要传递的信息
+     */
     Q_SCRIPTABLE void MessageReport(const QString &msg);
+
+    /**
+     * @brief 刷新设备信息信号
+     * @param infomap：所有设备分区信息
+     */
     Q_SCRIPTABLE void updateDeviceInfo(const DeviceInfoMap &infomap);
+
+    /**
+     * @brief 删除分区信号
+     * @param deleteMessage：删除信息
+     */
     Q_SCRIPTABLE void deletePatition(const QString &deleteMessage);
+
+    /**
+     * @brief 隐藏分区信号
+     * @param deleteMessage：隐藏信息
+     */
     Q_SCRIPTABLE void hidePartitionInfo(const QString &hideMessage);
+
+    /**
+     * @brief 显示分区信号
+     * @param deleteMessage：显示信息
+     */
     Q_SCRIPTABLE void showPartitionInfo(const QString &showMessage);
+
+    /**
+     * @brief USB刷新信号
+     */
     Q_SCRIPTABLE void usbUpdated();
+
 public Q_SLOTS:
     /**
-         * @brief 退出服务
-    */
+     * @brief 退出服务
+     */
     Q_SCRIPTABLE void Quit();
     /**
-         * @brief 启动服务
+    *@brief 启动服务
     */
     Q_SCRIPTABLE void Start();
     /**
-         * @brief 获取设备信息
-         * return 返回设备信息表
-    */
+     * @brief 获取设备信息
+     * @return 返回设备信息表
+     */
     Q_SCRIPTABLE DeviceInfo getDeviceinfo();
     /**
-         * @brief 获取全部设备信息
-    */
+     * @brief 获取全部设备信息
+     */
     Q_SCRIPTABLE void getalldevice();
     /**
-         * @brief 获取页面选择分区信息
-         * @param 分区信息
-    */
+     * @brief 获取页面选择分区信息
+     * @param 分区信息
+     */
     Q_SCRIPTABLE void setCurSelect(const PartitionInfo &info);
     /**
-         * @brief 卸载
-    */
+     * @brief 卸载
+     */
     Q_SCRIPTABLE bool unmount();
     /**
-         * @brief 挂载
-         * @param 挂载点路径
-         * @return true成功false失败
-    */
+     * @brief 挂载
+     * @param 挂载点路径
+     * @return true成功false失败
+     */
     Q_SCRIPTABLE bool mount(const QString &mountpath);
     /**
-         * @brief 获取全部文件系统格式支持
-         * @return 返回支持文件系统格式列表
-    */
+     * @brief 获取全部文件系统格式支持
+     * @return 返回支持文件系统格式列表
+     */
     Q_SCRIPTABLE QStringList getallsupportfs();
     /**
-         * @brief 格式化分区
-         * @param fstype：文件系统类型
-         * @param name：分区别名
-         * @return true成功false失败
-    */
+     * @brief 格式化分区
+     * @param fstype：文件系统类型
+     * @param name：分区别名
+     * @return true成功false失败
+     */
     Q_SCRIPTABLE bool format(const QString &fstype, const QString &name = QString());
     /**
-         * @brief 扩容分区
-         * @param info：扩容分区信息
-         * @return true成功false失败
-    */
+     * @brief 扩容分区
+     * @param info：扩容分区信息
+     * @return true成功false失败
+     */
     Q_SCRIPTABLE bool resize(const PartitionInfo &info);
     /**
-         * @brief 创建分区
-         * @param infovec：创建分区信息列表
-         * @return true成功false失败
-    */
+     * @brief 创建分区
+     * @param infovec：创建分区信息列表
+     * @return true成功false失败
+     */
     Q_SCRIPTABLE bool create(const PartitionVec &infovec);
     /**
-         * @brief qdbus结构体传参测试
-         * @return 测试结构体
-    */
+     * @brief qdbus结构体传参测试
+     * @return 测试结构体
+     */
     Q_SCRIPTABLE stCustest interfacetest();
     /**
      * @brief 获取硬盘硬件信息
@@ -188,10 +217,14 @@ public Q_SLOTS:
 
 
 private:
+    /**
+     * @brief 初始化信号和槽函数
+     * @param 无
+     */
     void initConnection();
 
 private:
-    PartedCore *m_partedcore;
+    PartedCore *m_partedcore;  //磁盘操作类对象
 };
 
 } // namespace DiskManager

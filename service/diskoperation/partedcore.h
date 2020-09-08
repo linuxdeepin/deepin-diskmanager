@@ -76,7 +76,7 @@ public:
      * @param mountpath：挂载路径
      * @return true成功false失败
      */
-    bool mount(const QString &mountpath);
+    bool mountAndWriteFstab(const QString &mountpath);
 
     /**
      * @brief 卸载分区

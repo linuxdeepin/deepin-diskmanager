@@ -31,6 +31,7 @@
 #include "partition.h"
 #include "procpartitionsinfo.h"
 #include "filesystems/filesystem.h"
+#include <sys/mount.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <QDebug>
@@ -1525,29 +1526,34 @@ void PartedCore::onRefreshDeviceInfo()
     emit updateDeviceInfo(m_inforesult);
 }
 
-bool PartedCore::mount(const QString &mountpath)
+bool PartedCore::mountAndWriteFstab(const QString &mountpath)
 {
     qDebug() << __FUNCTION__ << "Mount start";
     bool success = true;
-    QString output, errstr;
-    QString cmd ;
-    FSType type = m_curpartition.m_fstype;
+//    QString output, errstr;
+//    QString cmd ;
+    QString type = Utils::FSTypeToString(m_curpartition.m_fstype);
     QString partitionPath = m_curpartition.getPath();
-
-    if (type == FS_FAT32 || type == FS_FAT16) {
-        cmd = QString("mount -v %1 %2 -o -o dmask=000,fmask=111").arg(partitionPath).arg(mountpath);
-    } else if (type == FS_HFS) {
-        cmd = QString("mount -v %1 %2 -o -o dir_umask=000,file_umask=111").arg(partitionPath).arg(mountpath);
-    } else {
-        cmd = QString("mount -v %1 %2").arg(partitionPath).arg(mountpath);
+    qDebug() << partitionPath << type << "111111111111";
+    if (mount(partitionPath.toStdString().c_str(), mountpath.toStdString().c_str(), type.toStdString().c_str(), 0, nullptr) != 0) {
+        bool success = false;
+        return success;
     }
+    qDebug() << __FUNCTION__ << "Mount success";
+//    if (type == FS_FAT32 || type == FS_FAT16) {
+//        cmd = QString("mount -v %1 %2 -o -o dmask=000,fmask=111").arg(partitionPath).arg(mountpath);
+//    } else if (type == FS_HFS) {
+//        cmd = QString("mount -v %1 %2 -o -o dir_umask=000,file_umask=111").arg(partitionPath).arg(mountpath);
+//    } else {
+//        cmd = QString("mount -v %1 %2").arg(partitionPath).arg(mountpath);
+//    }
 
-    int exitcode = Utils::executcmd(cmd, output, errstr);
-    if (exitcode != 0) {
-        // QString type = Utils::get_filesystem_kernel_name(curpartition.fstype);
-        // cmd = QString("mount -v -t %1 %2 %3").arg("").arg(partitionpath).arg(mountpath);
-        success = false;
-    }
+//    int exitcode = Utils::executcmd(cmd, output, errstr);
+//    if (exitcode != 0) {
+//        // QString type = Utils::get_filesystem_kernel_name(curpartition.fstype);
+//        // cmd = QString("mount -v -t %1 %2 %3").arg("").arg(partitionpath).arg(mountpath);
+//        success = false;
+//    }
 
     //永久挂载
     qDebug() << __FUNCTION__ << "Permanent mount start";
@@ -1564,7 +1570,7 @@ bool PartedCore::mount(const QString &mountpath)
             qDebug() << line;
 
             if (line.contains(m_curpartition.m_uuid.toStdString().c_str()) || file.atEnd()) {
-                QString str = QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(m_curpartition.m_uuid).arg(mountpath).arg(Utils::FSTypeToString(type));
+                QString str = QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(m_curpartition.m_uuid).arg(mountpath).arg(type);
                 list << line;
                 list << str;
                 break;
@@ -1630,13 +1636,17 @@ bool PartedCore::unmount()
         }
     }
 
-    QString output, errstr;
+//    QString output, errstr;
     QVector<QString> mountpoints = m_curpartition.getMountPoints();
     for (QString path : mountpoints) {
-        QString cmd = QString("umount -v %1").arg(path);
-        int exitcode = Utils::executcmd(cmd, output, errstr);
-        if (0 != exitcode)
+//        QString cmd = QString("umount -v %1").arg(path);
+//        int exitcode = Utils::executcmd(cmd, output, errstr);
+//        if (0 != exitcode)
+//            success = false;
+        if (umount(path.toStdString().c_str()) != 0) {
             success = false;
+            return success;
+        }
     }
 
     emit onRefreshDeviceInfo();

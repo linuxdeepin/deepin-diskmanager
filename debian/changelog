@@ -1,3 +1,10 @@
+deepin-diskmanager (1.1.0.11) stable; urgency=low
+
+  *解决完成第六次次送测产生的bug,
+  *修改debian目录下的control文件
+
+ -- unknown <unknown@uniontech.com>  Wed., 9 September 2020 14:34:16 +0800
+
 deepin-diskmanager (1.1.0.10) stable; urgency=low
 
   *解决完成第五次次送测产生的bug,

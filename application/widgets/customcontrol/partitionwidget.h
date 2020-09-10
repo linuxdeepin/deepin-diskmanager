@@ -1,19 +1,29 @@
-/*
-* Copyright (C) 2019 ~ 2020 Deepin Technology Co., Ltd.
-*
-* Author:     zhangkai <zhangkai@uniontech.com>
-* Maintainer: zhangkai <zhangkai@uniontech.com>
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* any later version.
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-* You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+/**
+ * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ *
+ * @file partitionwidget.h
+ *
+ * @brief 创建分区窗口
+ *
+ * @date 2020-09-08 15:34
+ *
+ * Author: yuandandan  <yuandandan@uniontech.com>
+ *
+ * Maintainer: yuandandan  <yuandandan@uniontech.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 #ifndef PARTITIONWIDGET_H
 #define PARTITIONWIDGET_H
 
@@ -21,6 +31,7 @@
 #include "utils.h"
 #include "partchartshowing.h"
 #include "partedproxy/dmdbushandler.h"
+
 #include <DDialog>
 #include <DLabel>
 #include <DSlider>
@@ -31,29 +42,36 @@
 #include <DApplicationHelper>
 #include <DPushButton>
 #include <DFontSizeManager>
+#include <DIconButton>
+#include <DMessageManager>
+
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-#include <DIconButton>
 #include <QToolTip>
 #include <QRegExp>
-#include <DMessageManager>
 #include <QRegExpValidator>
+
 DWIDGET_USE_NAMESPACE
 
 typedef struct STRUCTPART {
     STRUCTPART()
     {
-        size = 0.0;
-        count = 0;
-        labelname = fstype = "";
-        blast = false;
+        m_size = 0.0;
+        m_count = 0;
+        m_labelName = m_fstype = "";
+        m_blast = false;
     }
-    double size;
-    Sector count;
-    QString labelname;
-    QString fstype;
-    bool blast;
+    double m_size;
+    Sector m_count;
+    QString m_labelName;
+    QString m_fstype;
+    bool m_blast;
 } stPart;
+
+/**
+ * @class PartitionWidget
+ * @brief 创建分区类
+ */
 
 class PartitionWidget : public DDialog
 {
@@ -62,73 +80,197 @@ class PartitionWidget : public DDialog
 public:
     explicit PartitionWidget(QWidget *parent = nullptr);
     ~PartitionWidget() override;
+
+    /**
+     * @brief 初始化界面
+     */
     void initUi();
+
+    /**
+     * @brief 磁盘信息区域展示窗口
+     */
     void topFrameSetting();
+
+    /**
+     * @brief 中间图形绘制区域展示窗口
+     */
     void midFrameSetting();
+
+    /**
+     * @brief 分区页下端展示窗口
+     */
     void botFrameSetting();
+
+    /**
+     * @brief 分区信息显示窗口
+     */
     void partInfoShowing();
+
+    /**
+     * @brief 初始化连接
+     */
     void initConnection();
+
+    /**
+     * @brief 给对应页面控件设置分区信息数据
+     */
     void recPartitionInfo();
+
+    /**
+     * @brief 计算已用分区大小的和
+     */
     double sumValue();  //已用分区大小的和
+
 private:
-    bool max_amount_prim_reached();
+
+    /**
+     * @brief 是否超出最大可建分区个数
+     * @return 超出返回true，没超出返回false
+     */
+    bool maxAmountPrimReached();
+
+    /**
+     * @brief 页面可操作页面是否使能
+     * @param flag 选中分区标志
+     * @param isExceed 是否存在空闲分区
+     */
     void setEnable(const int &flag, const bool &isExceed);
+
+    /**
+     * @brief 设置可操作控件使能
+     * @param isTrue 是否使能
+     */
     void setControlEnable(const bool &isTrue);
+
+    /**
+     * @brief 设置颜色
+     * @param isOk 判断设置对应颜色
+     */
     void setLabelColor(const bool &isOk);//颜色
+
+    /**
+     * @brief 正则表达式，分区名称和分区大小进行输入时不能输入特殊字符
+     */
     void setRegValidator();//正则表达
+
+    /**
+     * @brief 设置选中空闲分区的状态以及值
+     */
     void setSelectUnallocatesSpace();//选中空闲分区的状态
+
+    /**
+     * @brief 设置分区信息操作窗口控件的样式
+     * @param isExceed 是否存在空闲空间
+     */
     void setAddOrRemResult(const bool &isExceed);
+
 signals:
 
 public slots:
-    void slotSliderValueChanged(int value);
-    void slotSetSliderValue();
-    void slotSetPartName(); //选个设置或修改分区名称
-    void addPartitionSlot();//"+"新建分区
-    void remPartitionSlot();//"-"删除分区
-    void applyBtnSlot();
-    void revertBtnSlot();
-    void cancelBtnSlot();
-    void showSelectPathInfo(const int &flag, const int &num, const int &posX);//点击显示tip
-    void showTip(const int &hover, const int &num, const int &posX);//悬停显示tip
-    void comboxCurTextSlot(int index); //下拉框单位切换
-    void judgeLastPartitionSlot();
+
+    /**
+     * @brief 滑动条数值改变响应的槽函数
+     * @param value 分区数值
+     */
+    void onSliderValueChanged(int value);
+
+    /**
+     * @brief 设置滑动条数据
+     */
+    void onSetSliderValue();
+
+    /**
+     * @brief 设置分区名称
+     */
+    void onSetPartName(); //选个设置或修改分区名称
+
+    /**
+     * @brief 添加分区
+     */
+    void onAddPartition();//"+"新建分区
+
+    /**
+     * @brief 删除分区
+     */
+    void onRemovePartition();//"-"删除分区
+
+    /**
+     * @brief 确定按钮点击响应的槽函数
+     */
+    void onApplyButton();
+
+    /**
+     * @brief 复原按钮点击响应的槽函数
+     */
+    void onRevertButton();
+
+    /**
+     * @brief 取消按钮点击响应的槽函数
+     */
+    void onCancelButton();
+
+    /**
+     * @brief 显示选中分区的信息
+     * @param flag 选中分区标志
+     * @param num 选中的第几个分区
+     * @param posX 鼠标点击的X位置
+     */
+    void onShowSelectPathInfo(const int &flag, const int &num, const int &posX);//点击显示tip
+
+    /**
+     * @brief 显示选中分区的信息
+     * @param hover 选中分区标志
+     * @param num 选中的第几个分区
+     * @param posX 鼠标点击的X位置
+     */
+    void onShowTip(const int &hover, const int &num, const int &posX);//悬停显示tip
+
+    /**
+     * @brief 下拉框单位切换
+     * @param index 当前选择index
+     */
+    void onComboxCurTextChange(int index); //下拉框单位切换
+
+    /**
+     * @brief 设置滑动条和输入大小不可用
+     */
+    void onJudgeLastPartition();
 
 private:
-    QWidget *mainFrame;
-    DFrame *topFrame;
-    DFrame *midFrame;
-    DFrame *botFrame;
-    DLabel *partInfoLabel;
-    DLabel *partDoLabel;
-    DLabel *allMemory;
-    DLabel *deviceFormate;
-    DLabel *deviceName;
-    DLabel *selectedPartition;
-    DLabel *partNameLabel;
-    DIconButton *addButton;
-    DIconButton *remButton;
-    QWidget *partWidget;
-    DPushButton *applyBtn;
-    DPushButton *cancleBtn;
-    DPushButton *reveBtn;
-    PartChartShowing *partChartWidget;
-    DLineEdit *partNameEdit;
-    DComboBox *partFormateCombox;
-    DLineEdit *partSizeEdit;
-    DComboBox *partComCobox;
-    DSlider *hSlider;
-    QString currentEditSize;
-    int number = -1;
-    double total = 0.00;
-    double mTotal = 0.00;
-    int mflag = -1;
+    QWidget *m_mainFrame;
+    DFrame *m_topFrame;
+    DFrame *m_midFrame;
+    DFrame *m_botFrame;
+    DLabel *m_partInfoLabel;
+    DLabel *m_partDoLabel;
+    DLabel *m_allMemory;
+    DLabel *m_deviceFormate;
+    DLabel *m_deviceName;
+    DLabel *m_selectedPartition;
+    DLabel *m_partNameLabel;
+    DIconButton *m_addButton;
+    DIconButton *m_remButton;
+    QWidget *m_partWidget;
+    DPushButton *m_applyBtn;
+    DPushButton *m_cancleBtn;
+    DPushButton *m_reveBtn;
+    PartChartShowing *m_partChartWidget;
+    DLineEdit *m_partNameEdit;
+    DComboBox *m_partFormateCombox;
+    DLineEdit *m_partSizeEdit;
+    DComboBox *m_partComboBox;
+    DSlider *m_slider;
+    QString m_currentEditSize;
+    int m_number = -1;
+    double m_total = 0.00;
+    double m_totalSize = 0.00;
+    int m_flag = -1;
     int m_value = 0;
-    int block = 0;
-    QVector<double> sizeInfo;
-    QVector<QString> partName;
+    int m_block = 0;
+    QVector<double> m_sizeInfo;
+    QVector<QString> m_partName;
     QVector<stPart> m_patrinfo;
-    bool isExc = true;
+    bool m_isExceed = true;
 };
 
 #endif // PARTITIONWIDGET_H

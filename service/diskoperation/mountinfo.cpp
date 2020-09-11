@@ -120,11 +120,11 @@ void MountInfo::readMountpointsFromFile(const QString &fileName, MountInfo::Moun
 
         QString uuid = Utils::regexp_label(node, "(?<=UUID\\=).*");
         if (!uuid.isEmpty())
-            node = FsInfo::get_path_by_uuid(uuid);
+            node = FsInfo::getPathByUuid(uuid);
 
         QString label = Utils::regexp_label(node, "(?<=UUID\\=).*");
         if (!label.isEmpty())
-            node = FsInfo::get_path_by_label(label);
+            node = FsInfo::getPathByLabel(label);
 
         if (!node.isEmpty())
             addMountpointEntry(map, node, mountpoint, parseReadonlyFlag(p->mnt_opts));

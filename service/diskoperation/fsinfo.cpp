@@ -1,3 +1,30 @@
+/**
+ * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ *
+ * @file fsinfo.cpp
+ *
+ * @brief 文件系统信息类
+ *
+ * @date 2020-09-09 11:04
+ *
+ * Author: liweigang  <liweigang@uniontech.com>
+ *
+ * Maintainer: liweigang  <liweigang@uniontech.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "fsinfo.h"
 #include "utils.h"
 #include "procpartitionsinfo.h"
@@ -6,28 +33,28 @@
 
 namespace DiskManager {
 
-bool FsInfo::fs_info_cache_initialized = false;
-bool FsInfo::blkid_found = false;
-bool FsInfo::need_blkid_vfat_cache_update_workaround = false;
-QVector<FS_Entry> FsInfo::fs_info_cache;
+bool FsInfo::m_fsInfoCacheInitialized = false;
+bool FsInfo::m_blkidFound = false;
+bool FsInfo::m_needBlkidVfatCacheUpdateWorkaround = false;
+QVector<fileSystemEntry> FsInfo::m_fileSystemInfoCache;
 
-void FsInfo::load_cache()
+void FsInfo::loadCache()
 {
-    set_commands_found();
-    load_fs_info_cache();
-    fs_info_cache_initialized = true;
+    setCommandsFound();
+    loadFileSystemInfoCache();
+    m_fsInfoCacheInitialized = true;
 }
 
-QString FsInfo::get_fs_type(const QString &path)
+QString FsInfo::getFileSystemType(const QString &path)
 {
-    initialize_if_required();
-    const FS_Entry &fs_entry = get_cache_entry_by_path(path);
-    QString fs_type = fs_entry.type;
-    QString fs_sec_type = fs_entry.sec_type;
+    initializeIfRequired();
+    const fileSystemEntry &fsEntry = getCacheEntryByPath(path);
+    QString fsType = fsEntry.m_type;
+    QString fsSecType = fsEntry.m_secType;
 
     // If vfat, decide whether fat16 or fat32
-    if (fs_type == "vfat") {
-        if (need_blkid_vfat_cache_update_workaround) {
+    if (fsType == "vfat") {
+        if (m_needBlkidVfatCacheUpdateWorkaround) {
             // Blkid cache does not correctly add and remove SEC_TYPE when
             // overwriting FAT16 and FAT32 file systems with each other, so
             // prevents correct identification.  Run blkid command again,
@@ -35,192 +62,192 @@ QString FsInfo::get_fs_type(const QString &path)
             QString output;
             QString error;
             if (!Utils::executcmd("blkid -c /dev/null " + path, output, error))
-                fs_sec_type = Utils::regexp_label(output, " SEC_TYPE=\"([^\"]*)\"");
+                fsSecType = Utils::regexp_label(output, " SEC_TYPE=\"([^\"]*)\"");
         }
-        if (fs_sec_type == "msdos")
-            fs_type = "fat16";
+        if (fsSecType == "msdos")
+            fsType = "fat16";
         else
-            fs_type = "fat32";
+            fsType = "fat32";
     }
 
-    return fs_type;
+    return fsType;
 }
 
-QString FsInfo::get_path_by_uuid(const QString &uuid)
+QString FsInfo::getPathByUuid(const QString &uuid)
 {
-    initialize_if_required();
-    for (int i = 0; i < fs_info_cache.size(); i++)
-        if (uuid == fs_info_cache[i].uuid)
-            return fs_info_cache[i].path.m_name;
+    initializeIfRequired();
+    for (int i = 0; i < m_fileSystemInfoCache.size(); i++)
+        if (uuid == m_fileSystemInfoCache[i].m_uuid)
+            return m_fileSystemInfoCache[i].m_path.m_name;
 
     return "";
 }
 
-QString FsInfo::get_path_by_label(const QString &label)
+QString FsInfo::getPathByLabel(const QString &label)
 {
-    initialize_if_required();
-    update_fs_info_cache_all_labels();
-    for (int i = 0; i < fs_info_cache.size(); i++)
-        if (label == fs_info_cache[i].label)
-            return fs_info_cache[i].path.m_name;
+    initializeIfRequired();
+    updateFileSystemInfoCacheAllLabels();
+    for (int i = 0; i < m_fileSystemInfoCache.size(); i++)
+        if (label == m_fileSystemInfoCache[i].m_label)
+            return m_fileSystemInfoCache[i].m_path.m_name;
 
     return "";
 }
 
-QString FsInfo::get_label(const QString &path, bool &found)
+QString FsInfo::getLabel(const QString &path, bool &found)
 {
-    initialize_if_required();
+    initializeIfRequired();
     BlockSpecial bs = BlockSpecial(path);
-    for (int i = 0; i < fs_info_cache.size(); i++)
-        if (bs == fs_info_cache[i].path) {
-            if (fs_info_cache[i].have_label || fs_info_cache[i].type == "") {
+    for (int i = 0; i < m_fileSystemInfoCache.size(); i++)
+        if (bs == m_fileSystemInfoCache[i].m_path) {
+            if (m_fileSystemInfoCache[i].m_haveLabel || m_fileSystemInfoCache[i].m_type == "") {
                 // Already have the label or this is a blank cache entry
                 // for a whole disk device containing a partition table,
                 // so no label (as created by
                 // load_fs_info_cache_extra_for_path()).
-                found = fs_info_cache[i].have_label;
-                return fs_info_cache[i].label;
+                found = m_fileSystemInfoCache[i].m_haveLabel;
+                return m_fileSystemInfoCache[i].m_label;
             }
 
             // Run blkid to get the label for this one partition, update the
             // cache and return the found label.
-            found = run_blkid_update_cache_one_label(fs_info_cache[i]);
-            return fs_info_cache[i].label;
+            found = runBlkidUpdateCacheOneLabel(m_fileSystemInfoCache[i]);
+            return m_fileSystemInfoCache[i].m_label;
         }
     found = false;
     return "";
 }
 
-QString FsInfo::get_uuid(const QString &path)
+QString FsInfo::getUuid(const QString &path)
 {
-    initialize_if_required();
-    const FS_Entry &fs_entry = get_cache_entry_by_path(path);
-    return fs_entry.uuid;
+    initializeIfRequired();
+    const fileSystemEntry &fsEntry = getCacheEntryByPath(path);
+    return fsEntry.m_uuid;
 }
 
-void FsInfo::initialize_if_required()
+void FsInfo::initializeIfRequired()
 {
-    if (!fs_info_cache_initialized) {
-        set_commands_found();
-        load_fs_info_cache();
-        fs_info_cache_initialized = true;
+    if (!m_fsInfoCacheInitialized) {
+        setCommandsFound();
+        loadFileSystemInfoCache();
+        m_fsInfoCacheInitialized = true;
     }
 }
 
-void FsInfo::set_commands_found()
+void FsInfo::setCommandsFound()
 {
-    blkid_found = (!Utils::find_program_in_path("blkid").isEmpty());
-    if (blkid_found) {
+    m_blkidFound = (!Utils::find_program_in_path("blkid").isEmpty());
+    if (m_blkidFound) {
         // Blkid from util-linux before 2.23 has a cache update bug which prevents
         // correct identification between FAT16 and FAT32 when overwriting one
         // with the other.  Detect the need for a workaround.
         QString output, error;
         Utils::executcmd("blkid -v", output, error);
-        QString blkid_version = Utils::regexp_label(output, "blkid.* ([0-9\\.]+) ");
-        int blkid_major_ver = 0;
-        int blkid_minor_ver = 0;
-        if (sscanf(blkid_version.toStdString().c_str(), "%d.%d", &blkid_major_ver, &blkid_minor_ver) == 2) {
-            need_blkid_vfat_cache_update_workaround =
-                (blkid_major_ver < 2 || (blkid_major_ver == 2 && blkid_minor_ver < 23));
+        QString blkidVersion = Utils::regexp_label(output, "blkid.* ([0-9\\.]+) ");
+        int blkidMajorVer = 0;
+        int blkidMinorVer = 0;
+        if (sscanf(blkidVersion.toStdString().c_str(), "%d.%d", &blkidMajorVer, &blkidMinorVer) == 2) {
+            m_needBlkidVfatCacheUpdateWorkaround =
+                (blkidMajorVer < 2 || (blkidMajorVer == 2 && blkidMinorVer < 23));
         }
     }
 }
 
-void FsInfo::load_fs_info_cache()
+void FsInfo::loadFileSystemInfoCache()
 {
-    fs_info_cache.clear();
+    m_fileSystemInfoCache.clear();
     // Run "blkid" and load entries into the cache.
-    run_blkid_load_cache();
+    runBlkidLoadCache();
 
     // (#771244) Ensure the cache has entries for all whole disk devices, even if
     // those entries are blank.  Needed so that an ISO9660 image stored on a whole
     // disk device is detected before any embedded partitions within the image.
-    const BlockSpecial empty_bs = BlockSpecial();
-    QVector<QString> all_devices = ProcPartitionsInfo::getDevicePaths();
-    for (int i = 0; i < all_devices.size(); i++) {
-        const FS_Entry &fs_entry = get_cache_entry_by_path(all_devices[i]);
-        if (fs_entry.path == empty_bs) {
+    const BlockSpecial emptyBs = BlockSpecial();
+    QVector<QString> allDevices = ProcPartitionsInfo::getDevicePaths();
+    for (int i = 0; i < allDevices.size(); i++) {
+        const fileSystemEntry &fsEntry = getCacheEntryByPath(allDevices[i]);
+        if (fsEntry.m_path == emptyBs) {
             // Run "blkid PATH" and load entry into cache for missing entries.
-            load_fs_info_cache_extra_for_path(all_devices[i]);
+            loadFileSystemInfoCacheExtraForPath(allDevices[i]);
         }
     }
 }
 
-bool FsInfo::run_blkid_load_cache(const QString &path)
+bool FsInfo::runBlkidLoadCache(const QString &path)
 {
     QString cmd = "blkid";
     if (path.size())
         cmd = cmd + " " + path; //Glib::shell_quote(path);
     QString output;
     QString error;
-    bool loaded_entries = false;
-    if (blkid_found && !Utils::executcmd(cmd, output, error)) {
+    bool loadedEntries = false;
+    if (m_blkidFound && !Utils::executcmd(cmd, output, error)) {
 //        qDebug() << output;
         QStringList strlist = output.split("\n");
         for (int i = 0; i < strlist.size(); i++) {
-            FS_Entry fs_entry = {BlockSpecial(), "", "", "", false, ""};
-            QString entry_path = Utils::regexp_label(strlist[i], "(?<=/).*?(?=: )");
-            if (entry_path.length() > 0) {
-                entry_path = "/" + entry_path;
-                fs_entry.path = BlockSpecial(entry_path);
-                fs_entry.type = Utils::regexp_label(strlist[i], "(?<= TYPE=\").*?(?=\")");
-                fs_entry.sec_type = Utils::regexp_label(strlist[i], " SEC_TYPE=\"([^\"]*)\"");
-                fs_entry.uuid = Utils::regexp_label(strlist[i], "(?<=UUID=\").*?(?=\")");
-                fs_entry.label = Utils::regexp_label(strlist[i], "(?<=LABEL=\").*?(?=\" )");
-                ;
-                fs_info_cache.push_back(fs_entry);
-                loaded_entries = true;
-                qDebug() << fs_entry.path.m_name << fs_entry.type << fs_entry.sec_type << fs_entry.uuid << fs_entry.label;
+            fileSystemEntry fsEntry = {BlockSpecial(), "", "", "", false, ""};
+            QString entryPath = Utils::regexp_label(strlist[i], "(?<=/).*?(?=: )");
+            if (entryPath.length() > 0) {
+                entryPath = "/" + entryPath;
+                fsEntry.m_path = BlockSpecial(entryPath);
+                fsEntry.m_type = Utils::regexp_label(strlist[i], "(?<= TYPE=\").*?(?=\")");
+                fsEntry.m_secType = Utils::regexp_label(strlist[i], " SEC_TYPE=\"([^\"]*)\"");
+                fsEntry.m_uuid = Utils::regexp_label(strlist[i], "(?<=UUID=\").*?(?=\")");
+                fsEntry.m_label = Utils::regexp_label(strlist[i], "(?<=LABEL=\").*?(?=\" )");
+
+                m_fileSystemInfoCache.push_back(fsEntry);
+                loadedEntries = true;
+                qDebug() << fsEntry.m_path.m_name << fsEntry.m_type << fsEntry.m_secType << fsEntry.m_uuid << fsEntry.m_label;
             }
         }
     }
-    return loaded_entries;
+    return loadedEntries;
 }
 
-const FS_Entry &FsInfo::get_cache_entry_by_path(const QString &path)
+const fileSystemEntry &FsInfo::getCacheEntryByPath(const QString &path)
 {
     BlockSpecial bs = BlockSpecial(path);
-    for (int i = 0; i < fs_info_cache.size(); i++)
-        if (bs == fs_info_cache[i].path)
-            return fs_info_cache[i];
+    for (int i = 0; i < m_fileSystemInfoCache.size(); i++)
+        if (bs == m_fileSystemInfoCache[i].m_path)
+            return m_fileSystemInfoCache[i];
 
-    static FS_Entry not_found = {BlockSpecial(), "", "", "", false, ""};
-    return not_found;
+    static fileSystemEntry notFound = {BlockSpecial(), "", "", "", false, ""};
+    return notFound;
 }
 
-void FsInfo::load_fs_info_cache_extra_for_path(const QString &path)
+void FsInfo::loadFileSystemInfoCacheExtraForPath(const QString &path)
 {
-    bool entry_added = run_blkid_load_cache(path);
-    if (!entry_added) {
+    bool entryAdded = runBlkidLoadCache(path);
+    if (!entryAdded) {
         // Ran "blkid PATH" but didn't find details suitable for loading as a
         // cache entry so add a blank entry for PATH name here.
-        FS_Entry fs_entry = {BlockSpecial(path), "", "", "", false, ""};
-        fs_info_cache.push_back(fs_entry);
+        fileSystemEntry fsEntry = {BlockSpecial(path), "", "", "", false, ""};
+        m_fileSystemInfoCache.push_back(fsEntry);
     }
 }
 
-void FsInfo::update_fs_info_cache_all_labels()
+void FsInfo::updateFileSystemInfoCacheAllLabels()
 {
-    if (!blkid_found)
+    if (!m_blkidFound)
         return;
 
     // For all cache entries which are file systems but don't yet have a label load it
     // now.
-    for (int i = 0; i < fs_info_cache.size(); i++)
-        if (fs_info_cache[i].type != "" && !fs_info_cache[i].have_label)
-            run_blkid_update_cache_one_label(fs_info_cache[i]);
+    for (int i = 0; i < m_fileSystemInfoCache.size(); i++)
+        if (m_fileSystemInfoCache[i].m_type != "" && !m_fileSystemInfoCache[i].m_haveLabel)
+            runBlkidUpdateCacheOneLabel(m_fileSystemInfoCache[i]);
 }
 
-bool FsInfo::run_blkid_update_cache_one_label(FS_Entry &fs_entry)
+bool FsInfo::runBlkidUpdateCacheOneLabel(fileSystemEntry &fsEntry)
 {
-    if (!blkid_found)
+    if (!m_blkidFound)
         return false;
 
     // (#786502) Run a separate blkid execution for a single partition to get the
     // label without blkid's default non-reversible encoding.
     QString output;
     QString error;
-    bool success = !Utils::executcmd("blkid -o value -s LABEL " + fs_entry.path.m_name, output, error);
+    bool success = !Utils::executcmd("blkid -o value -s LABEL " + fsEntry.m_path.m_name, output, error);
     if (!success)
         return false;
 
@@ -232,8 +259,8 @@ bool FsInfo::run_blkid_update_cache_one_label(FS_Entry &fs_entry)
         output.resize(len - 1);
     }
     // Update cache entry with the read label.
-    fs_entry.have_label = true;
-    fs_entry.label = output;
+    fsEntry.m_haveLabel = true;
+    fsEntry.m_label = output;
     return true;
 }
 

@@ -1,3 +1,30 @@
+/**
+ * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ *
+ * @file filesystem.h
+ *
+ * @brief 文件系统类
+ *
+ * @date 2020-09-09 14:43
+ *
+ * Author: liweigang  <liweigang@uniontech.com>
+ *
+ * Maintainer: liweigang  <liweigang@uniontech.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #ifndef FILESYSTEM_H
 #define FILESYSTEM_H
 #include "commondef.h"
@@ -5,27 +32,90 @@
 #include <QtMath>
 
 namespace DiskManager {
+
 class FileSystem
 {
 public:
     FileSystem();
     virtual ~FileSystem() {}
 
-    virtual FS get_filesystem_support() = 0;
-    virtual bool is_busy(const QString &) { return false; }
-    virtual void read_label(Partition &) {}
-    virtual bool write_label(const Partition &) { return false; }
-    virtual void read_uuid(Partition &) {}
-    virtual bool write_uuid(const Partition &) { return false; }
-    virtual void set_used_sectors(Partition &) {}
-    virtual FS_Limits get_filesystem_limits(const Partition &) const { return fs_limits; }
-    virtual bool create(const Partition &) { return false; }
-    virtual bool resize(const Partition &, bool) { return false; }
-    virtual bool check_repair(const Partition &) { return false; }
+    /**
+     * @brief 获取文件系统支持
+     * @return 文件系统
+     */
+    virtual FS getFilesystemSupport() = 0;
 
-    Sector T, N, S; //File system [T]otal num of blocks, [N]um of free (or used) blocks, block [S]ize
+    /**
+     * @brief 文件系统繁忙状态
+     * @param
+     * @return true成功false失败
+     */
+    virtual bool isBusy(const QString &) { return false; }
+
+    /**
+     * @brief 读取表
+     * @param partition：分区信息
+     */
+    virtual void readLabel(Partition &) {}
+
+    /**
+     * @brief 写表
+     * @param partition：分区信息
+     * @return true成功false失败
+     */
+    virtual bool writeLabel(const Partition &) { return false; }
+
+    /**
+     * @brief 读取UUID
+     * @param partition：分区信息
+     */
+    virtual void readUuid(Partition &) {}
+
+    /**
+     * @brief 写UUID
+     * @param partition：分区信息
+     * @return true成功false失败
+     */
+    virtual bool writeUuid(const Partition &) { return false; }
+
+    /**
+     * @brief 设置已用空间
+     * @param partition：分区信息
+     */
+    virtual void setUsedSectors(Partition &) {}
+
+    /**
+     * @brief 获取文件系统限制
+     * @param partition：分区信息
+     * @return 文件系统限制信息
+     */
+    virtual FS_Limits getFilesystemLimits(const Partition &) const { return m_fsLimits; }
+
+    /**
+     * @brief 创建
+     * @param partition：分区信息
+     * @return true成功false失败
+     */
+    virtual bool create(const Partition &) { return false; }
+
+    /**
+     * @brief 扩容
+     * @param partition：分区信息
+     * @param
+     * @return true成功false失败
+     */
+    virtual bool resize(const Partition &, bool) { return false; }
+
+    /**
+     * @brief 检查修补
+     * @param partition：分区信息
+     * @return true成功false失败
+     */
+    virtual bool checkRepair(const Partition &) { return false; }
+
+    Sector m_totalNumOfBlock, m_numOfFreeOrUsedBlocks, m_blocksSize; //File system [T]otal num of blocks, [N]um of free (or used) blocks, block [S]ize
 public:
-    FS_Limits fs_limits;
+    FS_Limits m_fsLimits;
 
 private:
 };

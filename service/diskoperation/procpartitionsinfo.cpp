@@ -87,7 +87,7 @@ void ProcPartitionsInfo::loadProcPartitionsInfoCache()
             }
             qDebug() << name;
 
-            BlockSpecial::register_block_special("/dev/" + name, maj, min);
+            BlockSpecial::registerBlockSpecial("/dev/" + name, maj, min);
 
             // Recognise only whole disk device names, excluding partitions,
             // from /proc/partitions and save in this cache.

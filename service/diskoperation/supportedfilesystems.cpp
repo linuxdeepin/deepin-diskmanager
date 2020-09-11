@@ -90,7 +90,7 @@ void SupportedFileSystems::findSupportedFilesystems()
         if (iter.value()) {
             FileSystem *psys = iter.value();
             m_effectivefs.append(Utils::FSTypeToString(iter.key()));
-            m_fsSupport.push_back(psys->get_filesystem_support());
+            m_fsSupport.push_back(psys->getFilesystemSupport());
         } else {
             FS fsBasicsupp(iter.key());
             fsBasicsupp.move = FS::GPARTED;

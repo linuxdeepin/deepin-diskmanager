@@ -1,3 +1,30 @@
+/**
+ * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ *
+ * @file device.cpp
+ *
+ * @brief 设备信息类
+ *
+ * @date 2020-09-09 13:39
+ *
+ * Author: liweigang  <liweigang@uniontech.com>
+ *
+ * Maintainer: liweigang  <liweigang@uniontech.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "device.h"
 #include <QDebug>
 
@@ -15,40 +42,40 @@ Device::Device()
     qDBusRegisterMetaType<HardDiskStatusInfoList>();
 }
 
-void Device::enable_partition_naming(int length)
+void Device::enablePartitionNaming(int length)
 {
     if (length > 0)
-        max_partition_name_length = length;
+        m_maxPartitionNameLength = length;
     else
-        max_partition_name_length = 0;
+        m_maxPartitionNameLength = 0;
 }
 
-bool Device::partition_naming_supported() const
+bool Device::partitionNamingSupported() const
 {
-    return max_partition_name_length > 0;
+    return m_maxPartitionNameLength > 0;
 }
 
-int Device::get_max_partition_name_length() const
+int Device::getMaxPartitionNameLength() const
 {
-    return max_partition_name_length;
+    return m_maxPartitionNameLength;
 }
 
 DeviceInfo Device::getDeviceInfo()
 {
     DeviceInfo info;
-    info.length = length;
-    info.heads = heads;
+    info.length = m_length;
+    info.heads = m_heads;
     info.m_path = m_path;
-    info.sectors = sectors;
-    info.cylinders = cylinders;
-    info.cylsize = cylsize;
-    info.model = model;
-    info.serial_number = serial_number;
-    info.disktype = disktype;
-    info.sector_size = sector_size;
-    info.max_prims = max_prims;
-    info.highest_busy = highest_busy;
-    info.max_partition_name_length = max_partition_name_length;
+    info.sectors = m_sectors;
+    info.cylinders = m_cylinders;
+    info.cylsize = m_cylsize;
+    info.model = m_model;
+    info.serial_number = m_serialNumber;
+    info.disktype = m_diskType;
+    info.sector_size = m_sectorSize;
+    info.max_prims = m_maxPrims;
+    info.highest_busy = m_highestBusy;
+    info.max_partition_name_length = m_maxPartitionNameLength;
 //        qDebug() << __FUNCTION__ << info.m_path << info.length << info.heads << info.sectors
 //                 << info.cylinders << info.cylsize << info.model << info.serial_number << info.disktype
 //                 << info.sector_size << info.max_prims << info.highest_busy << info.readonly

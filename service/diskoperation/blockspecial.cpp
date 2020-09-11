@@ -1,3 +1,30 @@
+/**
+ * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ *
+ * @file blockspecial.cpp
+ *
+ * @brief 特殊块信息类
+ *
+ * @date 2020-09-09 13:57
+ *
+ * Author: liweigang  <liweigang@uniontech.com>
+ *
+ * Maintainer: liweigang  <liweigang@uniontech.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "blockspecial.h"
 #include <QMap>
 #include <sys/types.h>
@@ -7,19 +34,19 @@
 
 namespace DiskManager {
 
-struct MM_Number {
+struct MmNumber {
     unsigned long m_major;
     unsigned long m_minor;
 };
 
-typedef QMap<QString, MM_Number> MMNumberMapping;
+typedef QMap<QString, MmNumber> MMNumberMapping;
 // Associative array caching name to major, minor number pairs
 // E.g.
 //     mm_number_cache["/dev/sda"]  = {8, 0}
 //     mm_number_cache["/dev/sda1"] = {8, 1}
 //     mm_number_cache["proc"]      = {0, 0}
 //     mm_number_cache["sysfs"]     = {0, 0}
-static MMNumberMapping mm_number_cache;
+static MMNumberMapping mmNumberCache;
 
 BlockSpecial::BlockSpecial()
     : m_name("")
@@ -33,16 +60,16 @@ BlockSpecial::BlockSpecial(const QString &name)
     , m_major(0UL)
     , m_minor(0UL)
 {
-    MMNumberMapping::const_iterator mm_num_iter = mm_number_cache.find(name);
-    if (mm_num_iter != mm_number_cache.end()) {
+    MMNumberMapping::const_iterator mmNumIter = mmNumberCache.find(name);
+    if (mmNumIter != mmNumberCache.end()) {
         // Use already cached major, minor pair
 
-        m_major = mm_num_iter.value().m_major;
-        m_minor = mm_num_iter.value().m_minor;
+        m_major = mmNumIter.value().m_major;
+        m_minor = mmNumIter.value().m_minor;
         return;
     }
 
-    MM_Number pair = {0UL, 0UL};
+    MmNumber pair = {0UL, 0UL};
     // Call stat(name, ...) to get the major, minor pair
     struct stat sb;
     if (stat(name.toStdString().c_str(), &sb) == 0 && S_ISBLK(sb.st_mode)) {
@@ -52,25 +79,25 @@ BlockSpecial::BlockSpecial(const QString &name)
         pair.m_minor = m_minor;
     }
     // Add new cache entry for name to major, minor pair
-    mm_number_cache[name] = pair;
+    mmNumberCache[name] = pair;
 }
 
 BlockSpecial::~BlockSpecial()
 {
 }
 
-void BlockSpecial::clear_cache()
+void BlockSpecial::clearCache()
 {
-    mm_number_cache.clear();
+    mmNumberCache.clear();
 }
 
-void BlockSpecial::register_block_special(const QString &name, unsigned long major, unsigned long minor)
+void BlockSpecial::registerBlockSpecial(const QString &name, unsigned long major, unsigned long minor)
 {
-    MM_Number pair;
+    MmNumber pair;
     pair.m_major = major;
     pair.m_minor = minor;
     // Add new, or update existing, cache entry for name to major, minor pair
-    mm_number_cache[name] = pair;
+    mmNumberCache[name] = pair;
 }
 
 bool operator==(const BlockSpecial &lhs, const BlockSpecial &rhs)

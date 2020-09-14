@@ -11,6 +11,7 @@ set(CMAKE_AUTORCC ON)
 set(APP_RES_DIR "assets")
 set(APP_SERVICE "${APP_RES_DIR}/data/com.deepin.diskmanager.service")
 set(APP_CONFIG "${APP_RES_DIR}/data/com.deepin.diskmanager.conf")
+set(APP_UDEV_FILES "polkit/99-diskmanager.rules")
 
 # Find the library
 find_package(PkgConfig REQUIRED)
@@ -52,3 +53,4 @@ set(CMAKE_INSTALL_PREFIX /usr)
 install(TARGETS ${PROJECT_NAME} DESTINATION lib/deepin-daemon/)
 install(FILES ${APP_SERVICE} DESTINATION share/dbus-1/system-services/)
 install(FILES ${APP_CONFIG} DESTINATION share/dbus-1/system.d/)
+install(FILES ${APP_UDEV_FILES} DESTINATION /etc/udev/rules.d/)

@@ -621,6 +621,7 @@ private:
     DeviceInfoMap m_inforesult;           //全部设备分区信息
     Partition m_curpartition;             //当前选中分区信息
     static SupportedFileSystems *m_supportedFileSystems; //支持的文件系统
+
 };
 
 } // namespace DiskManager

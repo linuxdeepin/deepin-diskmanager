@@ -1,0 +1,5 @@
+ENV{DEVTYPE}=="usb_device", ACTION=="add",RUN+="/usr/bin/dbus-send --system --type=method_call --dest=com.deepin.diskmanager /com/deepin/diskmanager com.deepin.diskmanager.updateUsb"
+ENV{DEVTYPE}=="usb_device", ACTION=="remove", RUN+="/usr/bin/dbus-send --system --type=method_call --dest=com.deepin.diskmanager /com/deepin/diskmanager com.deepin.diskmanager.updateUsbRemove"
+
+
+

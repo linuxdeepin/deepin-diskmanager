@@ -63,18 +63,25 @@ void PartitionWidget::initUi()
     palette.setBrush(DPalette::Base, palette.itemBackground());
     DApplicationHelper::instance()->setPalette(m_topFrame, palette);
     m_topFrame->setAutoFillBackground(true);
+
     m_midFrame = new DFrame(m_mainFrame);
     //分区页中间部分的图形绘制
     midFrameSetting();
     m_midFrame->setFrameStyle(DFrame::NoFrame);
+//    m_midFrame->setStyleSheet("background:red");
     m_botFrame = new DFrame(m_mainFrame);
+//    m_botFrame->setStyleSheet("background:green");
     //分区页最下端的布局等
     botFrameSetting();
     m_botFrame->setFrameStyle(DFrame::NoFrame);
     mainLayout->addWidget(tipLabel, 1);
+    mainLayout->addSpacing(10);
     mainLayout->addWidget(m_topFrame, 1);
+    mainLayout->addSpacing(10);
     mainLayout->addWidget(m_midFrame, 3);
     mainLayout->addWidget(m_botFrame, 10);
+    mainLayout->setSpacing(0);
+
     setIcon(QIcon::fromTheme(appName));
     addContent(m_mainFrame);
 
@@ -93,19 +100,38 @@ void PartitionWidget::topFrameSetting()
     QVBoxLayout *vLayout = new QVBoxLayout();
     vLayout->setContentsMargins(10, 20, 0, 20);
     DLabel *deviceInfoLabel = new DLabel(tr("Disk Information"), m_topFrame);
-    DFontSizeManager::instance()->bind(deviceInfoLabel, DFontSizeManager::T6);
+    DFontSizeManager::instance()->bind(deviceInfoLabel, DFontSizeManager::T6, QFont::Medium);
+    QPalette devicePalette;
+    devicePalette.setColor(QPalette::WindowText, QColor("#414D68"));
+    deviceInfoLabel->setPalette(devicePalette);
+
     //第一行
     QHBoxLayout *line1Layout = new QHBoxLayout();
     line1Layout->addWidget(deviceInfoLabel);
     line1Layout->addStretch();
     //第二行
+    QPalette infoPalette;
+    infoPalette.setColor(QPalette::WindowText, QColor("#001A2E"));
+
     QHBoxLayout *line2Layout = new QHBoxLayout();
     DLabel *allMemoryLabel = new DLabel(tr("Capacity:"), m_topFrame);
+    DFontSizeManager::instance()->bind(allMemoryLabel, DFontSizeManager::T8, QFont::Normal);
+    allMemoryLabel->setPalette(infoPalette);
+
     m_allMemory = new DLabel("256GiB", m_topFrame);
     m_allMemory->setMinimumWidth(90);
     m_allMemory->setAlignment(Qt::AlignLeft);
+    DFontSizeManager::instance()->bind(m_allMemory, DFontSizeManager::T8, QFont::Normal);
+    m_allMemory->setPalette(infoPalette);
+
     DLabel *selectedPartLabel = new DLabel(tr("Partition selected:"), m_topFrame);
+    DFontSizeManager::instance()->bind(selectedPartLabel, DFontSizeManager::T8, QFont::Normal);
+    selectedPartLabel->setPalette(infoPalette);
+
     m_selectedPartition = new DLabel("sda3");
+    DFontSizeManager::instance()->bind(m_selectedPartition, DFontSizeManager::T8, QFont::Normal);
+    m_selectedPartition->setPalette(infoPalette);
+
     line2Layout->addWidget(allMemoryLabel);
     line2Layout->addWidget(m_allMemory);
     line2Layout->addWidget(selectedPartLabel);
@@ -114,11 +140,23 @@ void PartitionWidget::topFrameSetting()
     //第三行
     QHBoxLayout *line3Layout = new QHBoxLayout();
     DLabel *deviceNameLabel = new DLabel(tr("Disk:"), m_topFrame);
+    DFontSizeManager::instance()->bind(deviceNameLabel, DFontSizeManager::T8, QFont::Normal);
+    deviceNameLabel->setPalette(infoPalette);
+
     m_deviceName = new DLabel("/dev/sda", m_topFrame);
     m_deviceName->setMinimumWidth(103);
     m_deviceName->setAlignment(Qt::AlignLeft);
+    DFontSizeManager::instance()->bind(m_deviceName, DFontSizeManager::T8, QFont::Normal);
+    m_deviceName->setPalette(infoPalette);
+
     DLabel *deviceFormateLabel = new DLabel(tr("File system:"), m_topFrame);
+    DFontSizeManager::instance()->bind(deviceFormateLabel, DFontSizeManager::T8, QFont::Normal);
+    deviceFormateLabel->setPalette(infoPalette);
+
     m_deviceFormate = new DLabel("EXT3", m_topFrame);
+    DFontSizeManager::instance()->bind(m_deviceFormate, DFontSizeManager::T8, QFont::Normal);
+    m_deviceFormate->setPalette(infoPalette);
+
     line3Layout->addWidget(deviceNameLabel);
     line3Layout->addWidget(m_deviceName);
     line3Layout->addWidget(deviceFormateLabel);
@@ -135,10 +173,11 @@ void PartitionWidget::topFrameSetting()
 void PartitionWidget::midFrameSetting()
 {
     //调用绘制的图形
-    m_midFrame->setMinimumHeight(100);
+    m_midFrame->setMinimumHeight(85);
     QVBoxLayout *mainLayout = new QVBoxLayout(m_midFrame);
     m_partChartWidget = new PartChartShowing(m_midFrame);
     mainLayout->addWidget(m_partChartWidget);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
 }
 
 void PartitionWidget::botFrameSetting()
@@ -155,15 +194,16 @@ void PartitionWidget::botFrameSetting()
     //复原
     m_reveBtn = new DPushButton(tr("Revert"), m_botFrame);
     m_applyBtn->setEnabled(false);
-    m_applyBtn->setMinimumWidth(120);
-    m_cancleBtn->setMinimumWidth(120);
-    m_reveBtn->setMinimumWidth(120);
+    m_applyBtn->setMinimumWidth(170);
+    m_cancleBtn->setMinimumWidth(170);
+    m_reveBtn->setMinimumWidth(170);
     QHBoxLayout *btnLayout = new QHBoxLayout();
     btnLayout->addWidget(m_reveBtn, 1, Qt::AlignLeft);
     btnLayout->addWidget(m_cancleBtn);
     btnLayout->addWidget(m_applyBtn);
 
     vLayout->addLayout(btnLayout, 1);
+    vLayout->setContentsMargins(0, 0, 0, 0);
 }
 
 void PartitionWidget::partInfoShowing()
@@ -174,11 +214,21 @@ void PartitionWidget::partInfoShowing()
     QVBoxLayout *vLayout = new QVBoxLayout(m_partWidget);
     //第一行
     m_partInfoLabel = new DLabel(tr("Partition Information"), m_partWidget);
-    DFontSizeManager::instance()->bind(m_partInfoLabel, DFontSizeManager::T5);
+    DFontSizeManager::instance()->bind(m_partInfoLabel, DFontSizeManager::T6, QFont::Medium);
+    QPalette partPalette;
+    partPalette.setColor(QPalette::WindowText, QColor("#414D68"));
+    m_partInfoLabel->setPalette(partPalette);
+
     //第二行
+    QPalette infoPalette;
+    infoPalette.setColor(QPalette::WindowText, QColor("#001A2E"));
+
     QHBoxLayout *line2Layout = new QHBoxLayout();
     line2Layout->setContentsMargins(0, 0, 0, 0);
     m_partDoLabel = new DLabel(tr("Number of partitions:"), m_partWidget);
+    DFontSizeManager::instance()->bind(m_partDoLabel, DFontSizeManager::T8, QFont::Normal);
+    m_partDoLabel->setPalette(infoPalette);
+
     DLabel *labelSpace = new DLabel(m_partWidget);
     m_addButton = new DIconButton(DStyle::SP_IncreaseElement);
     m_remButton = new DIconButton(DStyle::SP_DecreaseElement);
@@ -191,22 +241,34 @@ void PartitionWidget::partInfoShowing()
         m_remButton->setEnabled(true);
 
     m_partNameLabel = new DLabel(tr("Name:"), m_partWidget);
+    DFontSizeManager::instance()->bind(m_partNameLabel, DFontSizeManager::T8, QFont::Normal);
+    m_partNameLabel->setPalette(infoPalette);
+
     m_partNameEdit = new DLineEdit(m_partWidget);
     m_partNameEdit->lineEdit()->setMaxLength(256);
-    line2Layout->addWidget(m_partDoLabel, 2);
+
+    line2Layout->addWidget(m_partDoLabel, 1);
+    line2Layout->addSpacing(7);
     line2Layout->addWidget(labelSpace, 5);
     line2Layout->addWidget(m_addButton, 1);
     line2Layout->addWidget(m_remButton, 1);
     line2Layout->addWidget(space, 1);
-    line2Layout->addWidget(m_partNameLabel, 2);
+    line2Layout->addWidget(m_partNameLabel, 1);
     line2Layout->addWidget(m_partNameEdit, 7);
     //第三行
     QHBoxLayout *line3Layout = new QHBoxLayout();
     DLabel *partFormateLabel = new DLabel(tr("File system:"), m_partWidget);
+    DFontSizeManager::instance()->bind(partFormateLabel, DFontSizeManager::T8, QFont::Normal);
+    partFormateLabel->setPalette(infoPalette);
+
     m_partFormateCombox = new DComboBox(m_partWidget);
     m_partFormateCombox->addItems(formateList);
     m_partFormateCombox->setCurrentIndex(2);
+
     DLabel *partSizeLabel = new DLabel(tr("Size:"), m_partWidget);
+    DFontSizeManager::instance()->bind(partSizeLabel, DFontSizeManager::T8, QFont::Normal);
+    partSizeLabel->setPalette(infoPalette);
+
     m_slider = new DSlider(Qt::Horizontal);
     m_slider->setMaximum(100);
     m_slider->setValue(100);
@@ -215,18 +277,21 @@ void PartitionWidget::partInfoShowing()
     m_partComboBox->addItem("GiB");
     m_partComboBox->addItem("MiB");
     m_partComboBox->setCurrentText("GiB");
-    line3Layout->addWidget(partFormateLabel, 2);
+
+    line3Layout->addWidget(partFormateLabel, 1);
     line3Layout->addWidget(m_partFormateCombox, 7);
     line3Layout->addWidget(space, 1);
-    line3Layout->addWidget(partSizeLabel, 2);
+    line3Layout->addWidget(partSizeLabel);
     line3Layout->addWidget(m_slider, 2);
     line3Layout->addWidget(m_partSizeEdit, 3);
     line3Layout->addWidget(m_partComboBox, 2);
 
     vLayout->addWidget(m_partInfoLabel);
     vLayout->addLayout(line2Layout);
+    vLayout->addSpacing(4);
     vLayout->addLayout(line3Layout);
     vLayout->addStretch();
+    vLayout->setContentsMargins(0, 0, 0, 0);
     //输入框正则表达
     setRegValidator();
 }

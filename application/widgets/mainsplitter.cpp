@@ -46,10 +46,10 @@ void MainSplitter::initui()
     m_infoShow = new InfoShowWidget(this);
 
     setMouseTracking(true);
-    setStretchFactor(1, 1);
+//    setStretchFactor(1, 1);
 
     m_deviceList->setMinimumWidth(200);
-    m_deviceList->setMaximumWidth(300);
+    m_deviceList->setMaximumWidth(200);
     m_infoShow->setFrameShape(QFrame::NoFrame);
 
     addWidget(m_deviceList);

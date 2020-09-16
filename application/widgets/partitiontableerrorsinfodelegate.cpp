@@ -53,10 +53,29 @@ void PartitionTableErrorsInfoDelegate::paint(QPainter *painter, const QStyleOpti
 {
     painter->save();
 
+    QRect paintRect = QRect(option.rect.left(), option.rect.top(), option.rect.width(), option.rect.height());
+    QPainterPath path;
+    const int radius = 8;
+    path.moveTo(paintRect.bottomRight() - QPoint(0, radius));
+    path.lineTo(paintRect.topRight() + QPoint(0, radius));
+    path.arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
+                     QSize(radius * 2, radius * 2)),
+               0, 90);
+    path.lineTo(paintRect.topLeft() + QPoint(radius, 0));
+    path.arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
+    path.lineTo(paintRect.bottomLeft() - QPoint(0, radius));
+    path.arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, radius * 2)),
+                     QSize(radius * 2, radius * 2)),
+               180, 90);
+    path.lineTo(paintRect.bottomLeft() + QPoint(radius, 0));
+    path.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
+                     QSize(radius * 2, radius * 2)),
+               270, 90);
+
     if (index.row() % 2 == 1) {
-        painter->fillRect(option.rect, option.palette.base());
+        painter->fillPath(path, option.palette.base());
     } else {
-        painter->fillRect(option.rect, option.palette.alternateBase());
+        painter->fillPath(path, option.palette.alternateBase());
     }
 
     painter->restore();

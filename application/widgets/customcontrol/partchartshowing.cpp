@@ -1,25 +1,40 @@
-/*
-* Copyright (C) 2019 ~ 2020 Deepin Technology Co., Ltd.
-*
-* Author:     zhangkai <zhangkai@uniontech.com>
-* Maintainer: zhangkai <zhangkai@uniontech.com>
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* any later version.
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-* You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+/**
+ * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ *
+ * @file partchartshowing.h
+ *
+ * @brief 分区占比图表显示类，主要实现新建分区图形绘制
+ *
+ * @date 2020-09-10 10:10
+ *
+ * Author: yuandandan  <yuandandan@uniontech.com>
+ *
+ * Maintainer: yuandandan  <yuandandan@uniontech.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 #include "partchartshowing.h"
+
+#include <DFontSizeManager>
+
 #include <QDebug>
 #include <QHBoxLayout>
-#define radius 8
-#define space 11
-#define rightspace 3
+
+#define RADIUS 8
+#define SPACE 11
+#define RIGHTSPACE 3
+
 PartChartShowing::PartChartShowing(QWidget *parent)
     : QWidget(parent)
 {
@@ -29,30 +44,30 @@ PartChartShowing::PartChartShowing(QWidget *parent)
     QColor color3("#FA7404");
     QColor color4("#FFD027");
     QColor color5("#2CCBBE");
-    basecolor = QVector<QColor> {color, color1, color2, color3, color4, color5};
+    m_baseColor = QVector<QColor> {color, color1, color2, color3, color4, color5};
     setMouseTracking(true);
-    showTipTimer = new QTimer(this);
-    connect(showTipTimer, &QTimer::timeout, this, &PartChartShowing::showTipTimerSlot);
+    m_showTipTimer = new QTimer(this);
+    connect(m_showTipTimer, &QTimer::timeout, this, &PartChartShowing::showTipTimerSlot);
 }
 
 void PartChartShowing::transInfos(const double &totals, const QVector<double> sizeInfo)
 {
-    total = totals;
-    partsize = sizeInfo;
+    m_total = totals;
+    m_partSize = sizeInfo;
 }
 
-void PartChartShowing::transFlag(int mflag, int value)
+void PartChartShowing::transFlag(int flag, int value)
 {
-    flag = mflag;
-    sumvalue = value;
+    m_flag = flag;
+    m_sumValue = value;
     update();
 }
 
 void PartChartShowing::showTipTimerSlot()
 {
 //    qDebug() << hover;
-    emit sendMoveFlag(hover, number2, mx);
-    showTipTimer->stop();
+    emit sendMoveFlag(m_hover, m_number2, m_posx);
+    m_showTipTimer->stop();
 }
 
 void PartChartShowing::paintEvent(QPaintEvent *event)
@@ -62,40 +77,45 @@ void PartChartShowing::paintEvent(QPaintEvent *event)
     painter.save();
     painter.setRenderHint(QPainter::Antialiasing);
     QRect rect;
-    rect.setX(this->x());
-    rect.setY(this->y());
-    rect.setWidth(this->width());
-    QRect paintRect = QRect(5, 10, rect.width() - 5, 35);
-    QPainterPath paintpath;
+    rect.setX(x());
+    rect.setY(y());
+    rect.setWidth(width());
+    QRect paintRect = QRect(0, 10, rect.width(), 35);
+    QPainterPath paintPath;
 
-    paintpath.moveTo(paintRect.bottomRight() - QPoint(0, radius));
-    paintpath.lineTo(paintRect.topRight() + QPoint(0, radius));
-    paintpath.arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
-                          QSize(radius * 2, radius * 2)),
+    paintPath.moveTo(paintRect.bottomRight() - QPoint(0, RADIUS));
+    paintPath.lineTo(paintRect.topRight() + QPoint(0, RADIUS));
+    paintPath.arcTo(QRect(QPoint(paintRect.topRight() - QPoint(RADIUS * 2, 0)),
+                          QSize(RADIUS * 2, RADIUS * 2)),
                     0, 90);
-    paintpath.lineTo(paintRect.topLeft() + QPoint(radius, 0));
-    paintpath.arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
-    paintpath.lineTo(paintRect.bottomLeft() - QPoint(0, radius));
-    paintpath.arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, radius * 2)),
-                          QSize(radius * 2, radius * 2)),
+    paintPath.lineTo(paintRect.topLeft() + QPoint(RADIUS, 0));
+    paintPath.arcTo(QRect(QPoint(paintRect.topLeft()), QSize(RADIUS * 2, RADIUS * 2)), 90, 90);
+    paintPath.lineTo(paintRect.bottomLeft() - QPoint(0, RADIUS));
+    paintPath.arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, RADIUS * 2)),
+                          QSize(RADIUS * 2, RADIUS * 2)),
                     180, 90);
-    paintpath.lineTo(paintRect.bottomRight() - QPoint(radius, 0));
-    paintpath.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
-                          QSize(radius * 2, radius * 2)),
+    paintPath.lineTo(paintRect.bottomRight() - QPoint(RADIUS, 0));
+    paintPath.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(RADIUS * 2, RADIUS * 2)),
+                          QSize(RADIUS * 2, RADIUS * 2)),
                     270, 90);
 
-    QColor fillColor = QColor(this->palette().dark().color()); //this->palette().color(DPalette::Normal, DPalette::Highlight)
+    QColor fillColor = QColor(palette().dark().color()); //this->palette().color(DPalette::Normal, DPalette::Highlight)
     painter.setBrush(QBrush(fillColor));
-    painter.fillPath(paintpath, fillColor);
+    painter.fillPath(paintPath, fillColor);
     painter.setPen(QPen(QColor(fillColor), 3));
-    painter.drawLine(paintRect.topLeft().x() + radius, paintRect.topLeft().y() + radius, paintRect.topLeft().x() + radius + paintRect.width(), paintRect.bottomLeft().y() - radius);
-    QColor tipColor = QColor(this->palette().dark().color());
+    painter.drawLine(paintRect.topLeft().x() + RADIUS, paintRect.topLeft().y() + RADIUS, paintRect.topLeft().x() + RADIUS + paintRect.width(), paintRect.bottomLeft().y() - RADIUS);
+    QColor tipColor = QColor(palette().dark().color());
 
     painter.setPen(tipColor);
-    painter.drawRect(this->x(), this->y() + 50, 10, 10);
+    painter.drawRect(x(), y() + 58, 10, 10);
 
-    painter.setPen(this->palette().text().color());
-    QRect textRect(this->x() + 15, this->y() + 42, 100, 50);
+    painter.setPen(palette().text().color());
+    QRect textRect(x() + 15, y() + 52, 100, 50);
+
+    QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T7);
+    font.setWeight(QFont::Medium);
+    painter.setFont(font);
+    painter.setPen(QColor("#001A2E"));
     painter.drawText(textRect, tr("Unallocated"));
 
     QWidget::paintEvent(event);
@@ -109,96 +129,97 @@ void PartChartShowing::addPaint(QPainter *painter)
     painter->setPen(Qt::NoPen);
     painter->setRenderHint(QPainter::Antialiasing);
     QRect rect;
-    rect.setX(this->x());
-    rect.setY(this->y());
-    rect.setWidth(this->width());
+    rect.setX(x());
+    rect.setY(y());
+    rect.setWidth(width());
     QRect paintRect = QRect(3, 10, rect.width() - 4, 35);
     QPainterPath path0, path1, path2, path3, path4, path5, path6, path7, path8, path9, path10, path11, path12, path13, path14, path15, path16, path17, path18, path19, path20, path21, path22, path23;
     QVector<QPainterPath> path {path0, path1, path2, path3, path4, path5, path6, path7, path8, path9, path10, path11, path12, path13, path14, path15, path16, path17, path18, path19, path20, path21, path22, path23};
-    QPainterPath paintpath;
+    QPainterPath paintPath;
     double sum = 0.00;
     //绘制默认选中状态
-    if (flag == 1) {
-        painter->setPen(QPen(QColor(this->palette().highlight().color()), 2));
+    if (m_flag == 1) {
+        painter->setPen(QPen(QColor(palette().highlight().color()), 2));
         painter->drawRoundedRect(paintRect, 8, 8);
     }
 
-    for (i = 0; i < partsize.size(); i++) {
-        double widths = (partsize.at(i) / total) * (paintRect.width() - radius);
+    for (int i = 0; i < m_partSize.size(); i++) {
+        double widths = (m_partSize.at(i) / m_total) * (paintRect.width() - RADIUS);
         double width1 = 0.00;
-        widths = widths - rightspace;
-        if (partsize.at(i) / total < 0.01 || widths < radius) {
+        widths = widths - RIGHTSPACE;
+        if (m_partSize.at(i) / m_total < 0.01 || widths < RADIUS) {
             widths = 8;
         }
-        sum = sum + partsize.at(i);
-        sums = sum;
+        sum = sum + m_partSize.at(i);
+        m_sums = sum;
         //i=0,绘制第一个分区，判断ｎｕｍ绘制选中状态
         if (i == 0) {
-            if (static_cast<int>(sum) < static_cast<int>(total)) {
-                path[0].moveTo(paintRect.topLeft() + QPoint(radius, 0));
-                path[0].arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
-                path[0].lineTo(paintRect.bottomLeft() - QPoint(0, radius));
-                path[0].arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, radius * 2)),
-                                    QSize(radius * 2, radius * 2)),
+            if (static_cast<int>(sum) < static_cast<int>(m_total)) {
+                path[0].moveTo(paintRect.topLeft() + QPoint(RADIUS, 0));
+                path[0].arcTo(QRect(QPoint(paintRect.topLeft()), QSize(RADIUS * 2, RADIUS * 2)), 90, 90);
+                path[0].lineTo(paintRect.bottomLeft() - QPoint(0, RADIUS));
+                path[0].arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, RADIUS * 2)),
+                                    QSize(RADIUS * 2, RADIUS * 2)),
                               180, 90);
-                path[0].lineTo(paintRect.bottomLeft() + QPoint((static_cast<int>(widths) + radius), 0));
-                path[0].lineTo(paintRect.topLeft() + QPoint((static_cast<int>(widths) + radius), 0));
-                path[0].lineTo(paintRect.topLeft() + QPoint(radius, 0));
+                path[0].lineTo(paintRect.bottomLeft() + QPoint((static_cast<int>(widths) + RADIUS), 0));
+                path[0].lineTo(paintRect.topLeft() + QPoint((static_cast<int>(widths) + RADIUS), 0));
+                path[0].lineTo(paintRect.topLeft() + QPoint(RADIUS, 0));
             }
 //            qDebug() << path[0].currentPosition().x();
-            if (static_cast<int>(sum) >= static_cast<int>(total)) {
-                path[0].moveTo(paintRect.bottomRight() - QPoint(0, radius));
-                path[0].lineTo(paintRect.topRight() + QPoint(0, radius));
-                path[0].arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
-                                    QSize(radius * 2, radius * 2)),
+            if (static_cast<int>(sum) >= static_cast<int>(m_total)) {
+                path[0].moveTo(paintRect.bottomRight() - QPoint(0, RADIUS));
+                path[0].lineTo(paintRect.topRight() + QPoint(0, RADIUS));
+                path[0].arcTo(QRect(QPoint(paintRect.topRight() - QPoint(RADIUS * 2, 0)),
+                                    QSize(RADIUS * 2, RADIUS * 2)),
                               0, 90);
-                path[0].lineTo(paintRect.topLeft() + QPoint(radius, 0));
-                path[0].arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
-                path[0].lineTo(paintRect.bottomLeft() - QPoint(0, radius));
-                path[0].arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, radius * 2)),
-                                    QSize(radius * 2, radius * 2)),
+                path[0].lineTo(paintRect.topLeft() + QPoint(RADIUS, 0));
+                path[0].arcTo(QRect(QPoint(paintRect.topLeft()), QSize(RADIUS * 2, RADIUS * 2)), 90, 90);
+                path[0].lineTo(paintRect.bottomLeft() - QPoint(0, RADIUS));
+                path[0].arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, RADIUS * 2)),
+                                    QSize(RADIUS * 2, RADIUS * 2)),
                               180, 90);
-                path[0].lineTo(paintRect.bottomRight() - QPoint(radius, 0));
-                path[0].arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
-                                    QSize(radius * 2, radius * 2)),
+                path[0].lineTo(paintRect.bottomRight() - QPoint(RADIUS, 0));
+                path[0].arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(RADIUS * 2, RADIUS * 2)),
+                                    QSize(RADIUS * 2, RADIUS * 2)),
                               270, 90);
 
             }
 
-            painter->fillPath(path[0], QBrush(basecolor.at(0)));
-            if (number == 0) {
-                if ((static_cast<int>(widths) == 8) && partsize.size() == 2) {
+            painter->fillPath(path[0], QBrush(m_baseColor.at(0)));
+            if (m_number == 0) {
+                if ((static_cast<int>(widths) == 8) && m_partSize.size() == 2) {
 //                    qDebug() << (static_cast<int>(widths) - static_cast<int>((8 - widths)));
                     QPainterPath seclect1path;
-                    seclect1path.moveTo(paintRect.topLeft() + QPoint(radius, 0));
-                    seclect1path.arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
-                    seclect1path.lineTo(paintRect.bottomLeft() - QPoint(0, radius));
-                    seclect1path.arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, radius * 2)),
-                                             QSize(radius * 2, radius * 2)),
+                    seclect1path.moveTo(paintRect.topLeft() + QPoint(RADIUS, 0));
+                    seclect1path.arcTo(QRect(QPoint(paintRect.topLeft()), QSize(RADIUS * 2, RADIUS * 2)), 90, 90);
+                    seclect1path.lineTo(paintRect.bottomLeft() - QPoint(0, RADIUS));
+                    seclect1path.arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, RADIUS * 2)),
+                                             QSize(RADIUS * 2, RADIUS * 2)),
                                        180, 90);
-                    seclect1path.lineTo(paintRect.bottomLeft() + QPoint((static_cast<int>(widths) - 3 + radius), 0));
-                    seclect1path.lineTo(paintRect.topLeft() + QPoint((static_cast<int>(widths) -  3 + radius), 0));
-                    seclect1path.lineTo(paintRect.topLeft() + QPoint(radius, 0));
-                    painter->setBrush(QBrush(basecolor.at(0)));
+                    seclect1path.lineTo(paintRect.bottomLeft() + QPoint((static_cast<int>(widths) - 3 + RADIUS), 0));
+                    seclect1path.lineTo(paintRect.topLeft() + QPoint((static_cast<int>(widths) -  3 + RADIUS), 0));
+                    seclect1path.lineTo(paintRect.topLeft() + QPoint(RADIUS, 0));
+                    painter->setBrush(QBrush(m_baseColor.at(0)));
                     painter->setPen(QPen(this->palette().color(DPalette::Normal, DPalette::Highlight), 2));
                     painter->drawPath(seclect1path);
                 } else {
-                    painter->setBrush(QBrush(basecolor.at(0)));
+                    painter->setBrush(QBrush(m_baseColor.at(0)));
                     painter->setPen(QPen(this->palette().color(DPalette::Normal, DPalette::Highlight), 2));
                     painter->drawPath(path[0]);
                 }
-                number = -1;
-                flag = 0;
+
+                m_number = -1;
+                m_flag = 0;
             }
 
-        } else if (sum + 1 < total && i > 0) { //绘制除了第一个分区和最后一个分区以及空闲分区的填充和选中状态
+        } else if (sum + 1 < m_total && i > 0) { //绘制除了第一个分区和最后一个分区以及空闲分区的填充和选中状态
 //            qDebug() << static_cast<int>(sum) << static_cast<int>(total);
-            width1 = (partsize.at(i - 1) / total) * (paintRect.width() - radius);
-            width1 = width1 - rightspace;
-            if (width1 < 8 || partsize.at(i - 1) / total < 0.01)
+            width1 = (m_partSize.at(i - 1) / m_total) * (paintRect.width() - RADIUS);
+            width1 = width1 - RIGHTSPACE;
+            if (width1 < 8 || m_partSize.at(i - 1) / m_total < 0.01)
                 width1 = 8;
             //未避免设置最小宽度带来的图形溢出,在所画图形宽度即将到圆角时,不予新增分区
-            if (path[i - 1].currentPosition().x() + width1 + widths > paintRect.width() - 2 * radius) {
+            if (path[i - 1].currentPosition().x() + width1 + widths > paintRect.width() - 2 * RADIUS) {
                 emit judgeLastPartition();
             }
             path[i].moveTo(path[i - 1].currentPosition() + QPoint(static_cast<int>(width1), 0));
@@ -206,164 +227,164 @@ void PartChartShowing::addPaint(QPainter *painter)
             path[i].lineTo(path[i - 1].currentPosition() + QPoint(static_cast<int>(width1 + widths), paintRect.height() - 1));
             path[i].lineTo(path[i - 1].currentPosition() + QPoint((static_cast<int>(width1)), paintRect.height() - 1));
             path[i].lineTo(path[i - 1].currentPosition() + QPoint((static_cast<int>(width1)), 0));
-            QColor fillcolor;
-            if (i > basecolor.size() - 1) {
-                fillcolor = basecolor.at(i % (basecolor.size() - 1));
+            QColor fillColor;
+            if (i > m_baseColor.size() - 1) {
+                fillColor = m_baseColor.at(i % (m_baseColor.size() - 1));
             } else {
-                fillcolor = basecolor.at(i);
+                fillColor = m_baseColor.at(i);
             }
-            painter->fillPath(path[i], QBrush(fillcolor));
-            if (number > 0 && number != -1 && number == i) {
-                painter->setBrush(fillcolor);
+            painter->fillPath(path[i], QBrush(fillColor));
+            if (m_number > 0 && m_number != -1 && m_number == i) {
+                painter->setBrush(fillColor);
                 painter->setPen(QPen(this->palette().color(DPalette::Normal, DPalette::Highlight), 2));
                 if (width1 < 8) {
                     width1 = 8;
                 }
-                if (i == partsize.size() - 1) {
-                    painter->drawRect(static_cast<int>(path[number - 1].currentPosition().x() + width1), static_cast<int>(path[number - 1].currentPosition().y()), static_cast<int>(widths), paintRect.height() - 1);
+                if (i == m_partSize.size() - 1) {
+                    painter->drawRect(static_cast<int>(path[m_number - 1].currentPosition().x() + width1), static_cast<int>(path[m_number - 1].currentPosition().y()), static_cast<int>(widths), paintRect.height() - 1);
                 } else  {
-                    painter->drawRect(static_cast<int>(path[number - 1].currentPosition().x() + width1), static_cast<int>(path[number - 1].currentPosition().y()), static_cast<int>(widths - 1), paintRect.height() - 1);
+                    painter->drawRect(static_cast<int>(path[m_number - 1].currentPosition().x() + width1), static_cast<int>(path[m_number - 1].currentPosition().y()), static_cast<int>(widths - 1), paintRect.height() - 1);
                 }
-                flag = 0;
+                m_flag = 0;
             }
-        } else if (sumvalue >= 100) {//绘制最后一个分区当超过整个分区容量的时候以及选中状态
+        } else if (m_sumValue >= 100) {//绘制最后一个分区当超过整个分区容量的时候以及选中状态
 //            qDebug() << "sumvalue" << sumvalue;
-            double width = ((partsize.at(partsize.size() - 2) / total)) * (paintRect.width() - radius) - rightspace;
-            if (partsize.at(partsize.size() - 2) / total < 0.01) {
+            double width = ((m_partSize.at(m_partSize.size() - 2) / m_total)) * (paintRect.width() - RADIUS) - RIGHTSPACE;
+            if (m_partSize.at(m_partSize.size() - 2) / m_total < 0.01) {
                 width = 8;
             }
-            path[partsize.size() - 1].moveTo(path[partsize.size() - 2].currentPosition() + QPoint(static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) - 1, 0));
-            path[partsize.size() - 1].lineTo(paintRect.topRight() - QPoint(radius, 0));
-            path[partsize.size() - 1].arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
-                                                  QSize(radius * 2, radius * 2)),
+            path[m_partSize.size() - 1].moveTo(path[m_partSize.size() - 2].currentPosition() + QPoint(static_cast<int>((m_partSize.at(m_partSize.size() - 2) / m_total) * (paintRect.width() - RADIUS)) - 1, 0));
+            path[m_partSize.size() - 1].lineTo(paintRect.topRight() - QPoint(RADIUS, 0));
+            path[m_partSize.size() - 1].arcTo(QRect(QPoint(paintRect.topRight() - QPoint(RADIUS * 2, 0)),
+                                                  QSize(RADIUS * 2, RADIUS * 2)),
                                             90, -90);
-            path[partsize.size() - 1].lineTo(paintRect.bottomRight() - QPoint(0, radius));
+            path[m_partSize.size() - 1].lineTo(paintRect.bottomRight() - QPoint(0, RADIUS));
 
-            path[partsize.size() - 1].arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
-                                                  QSize(radius * 2, radius * 2)),
+            path[m_partSize.size() - 1].arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(RADIUS * 2, RADIUS * 2)),
+                                                  QSize(RADIUS * 2, RADIUS * 2)),
                                             0, -90);
-            path[partsize.size() - 1].lineTo(path[partsize.size() - 2].currentPosition() + QPoint(static_cast<int>(width), paintRect.height() - 1));
-            path[partsize.size() - 1].lineTo(path[partsize.size() - 2].currentPosition() + QPoint(static_cast<int>(width), 0));
-            QColor fillcolor;
-            if (i > basecolor.size() - 1) {
-                fillcolor = basecolor.at(i % (basecolor.size() - 1));
+            path[m_partSize.size() - 1].lineTo(path[m_partSize.size() - 2].currentPosition() + QPoint(static_cast<int>(width), paintRect.height() - 1));
+            path[m_partSize.size() - 1].lineTo(path[m_partSize.size() - 2].currentPosition() + QPoint(static_cast<int>(width), 0));
+            QColor fillColor;
+            if (i > m_baseColor.size() - 1) {
+                fillColor = m_baseColor.at(i % (m_baseColor.size() - 1));
             } else {
-                fillcolor = basecolor.at(i);
+                fillColor = m_baseColor.at(i);
             }
-            painter->fillPath(path[partsize.size() - 1], QBrush(fillcolor));
-            if (number == partsize.size() - 1) {
+            painter->fillPath(path[m_partSize.size() - 1], QBrush(fillColor));
+            if (m_number == m_partSize.size() - 1) {
                 painter->setPen(QPen(this->palette().color(DPalette::Normal, DPalette::Highlight), 2));
-                painter->setBrush(fillcolor);;
-                QPainterPath selectpath;
-                if (static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) - 1 <= 8) {
-//                    qDebug() << 8 - (static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) - 1);
-                    if (static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) - 1 == 7) {
-                        selectpath.moveTo(path[partsize.size() - 2].currentPosition() + QPoint(static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) + (8 - (static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) + 1)), 0));
+                painter->setBrush(fillColor);
+                QPainterPath selectPath;
+                if (static_cast<int>((m_partSize.at(m_partSize.size() - 2) / m_total) * (paintRect.width() - RADIUS)) - 1 <= 8) {
+//                    qDebug() << 8 - (static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - RADIUS)) - 1);
+                    if (static_cast<int>((m_partSize.at(m_partSize.size() - 2) / m_total) * (paintRect.width() - RADIUS)) - 1 == 7) {
+                        selectPath.moveTo(path[m_partSize.size() - 2].currentPosition() + QPoint(static_cast<int>((m_partSize.at(m_partSize.size() - 2) / m_total) * (paintRect.width() - RADIUS)) + (8 - (static_cast<int>((m_partSize.at(m_partSize.size() - 2) / m_total) * (paintRect.width() - RADIUS)) + 1)), 0));
                     } else {
-                        selectpath.moveTo(path[partsize.size() - 2].currentPosition() + QPoint(static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) + (8 - (static_cast<int>((partsize.at(partsize.size() - 2) / total) * (paintRect.width() - radius)) - 1)), 0));
+                        selectPath.moveTo(path[m_partSize.size() - 2].currentPosition() + QPoint(static_cast<int>((m_partSize.at(m_partSize.size() - 2) / m_total) * (paintRect.width() - RADIUS)) + (8 - (static_cast<int>((m_partSize.at(m_partSize.size() - 2) / m_total) * (paintRect.width() - RADIUS)) - 1)), 0));
                     }
-                    selectpath.lineTo(paintRect.topRight() - QPoint(radius, 0));
-                    selectpath.arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
-                                           QSize(radius * 2, radius * 2)),
+                    selectPath.lineTo(paintRect.topRight() - QPoint(RADIUS, 0));
+                    selectPath.arcTo(QRect(QPoint(paintRect.topRight() - QPoint(RADIUS * 2, 0)),
+                                           QSize(RADIUS * 2, RADIUS * 2)),
                                      90, -90);
-                    selectpath.lineTo(paintRect.bottomRight() - QPoint(0, radius));
+                    selectPath.lineTo(paintRect.bottomRight() - QPoint(0, RADIUS));
 
-                    selectpath.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
-                                           QSize(radius * 2, radius * 2)),
+                    selectPath.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(RADIUS * 2, RADIUS * 2)),
+                                           QSize(RADIUS * 2, RADIUS * 2)),
                                      0, -90);
-                    selectpath.lineTo(path[partsize.size() - 2].currentPosition() + QPoint(static_cast<int>(width), paintRect.height() - 1));
-                    selectpath.lineTo(path[partsize.size() - 2].currentPosition() + QPoint(static_cast<int>(width), 0));
-                    painter->drawPath(selectpath);
+                    selectPath.lineTo(path[m_partSize.size() - 2].currentPosition() + QPoint(static_cast<int>(width), paintRect.height() - 1));
+                    selectPath.lineTo(path[m_partSize.size() - 2].currentPosition() + QPoint(static_cast<int>(width), 0));
+                    painter->drawPath(selectPath);
                 } else {
-                    painter->drawPath(path[partsize.size() - 1]);
+                    painter->drawPath(path[m_partSize.size() - 1]);
                 }
-                number = -1;
+                m_number = -1;
             }
         }
     }
     //绘制空闲分区以及选中状态
-    if ((flag == 3 && sum < total)) {
-        double width2 = (partsize.at(partsize.size() - 1) / total) * (paintRect.width() - radius) - rightspace;
-        if (partsize.at(partsize.size() - 1) / total < 0.01) {
+    if ((m_flag == 3 && sum < m_total)) {
+        double width2 = (m_partSize.at(m_partSize.size() - 1) / m_total) * (paintRect.width() - RADIUS) - RIGHTSPACE;
+        if (m_partSize.at(m_partSize.size() - 1) / m_total < 0.01) {
             width2 = 8;
         }
-        painter->setPen(QPen(this->palette().color(DPalette::Normal, DPalette::Highlight), 2));
-        paintpath.moveTo(paintRect.bottomRight() - QPoint(0, radius));
-        paintpath.lineTo(paintRect.topRight() + QPoint(0, radius));
-        paintpath.arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
-                              QSize(radius * 2, radius * 2)),
+        painter->setPen(QPen(palette().color(DPalette::Normal, DPalette::Highlight), 2));
+        paintPath.moveTo(paintRect.bottomRight() - QPoint(0, RADIUS));
+        paintPath.lineTo(paintRect.topRight() + QPoint(0, RADIUS));
+        paintPath.arcTo(QRect(QPoint(paintRect.topRight() - QPoint(RADIUS * 2, 0)),
+                              QSize(RADIUS * 2, RADIUS * 2)),
                         0, 90);
-        paintpath.lineTo(QPoint(static_cast<int>(allpath[partsize.size() - 1].currentPosition().x()) + static_cast<int>(width2), 10));
-        paintpath.lineTo(QPoint(static_cast<int>(allpath[partsize.size() - 1].currentPosition().x()) + static_cast<int>(width2), paintRect.height() + 9));
-        paintpath.lineTo(paintRect.bottomRight() - QPoint(radius, 0));
-        paintpath.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
-                              QSize(radius * 2, radius * 2)),
+        paintPath.lineTo(QPoint(static_cast<int>(m_allPath[m_partSize.size() - 1].currentPosition().x()) + static_cast<int>(width2), 10));
+        paintPath.lineTo(QPoint(static_cast<int>(m_allPath[m_partSize.size() - 1].currentPosition().x()) + static_cast<int>(width2), paintRect.height() + 9));
+        paintPath.lineTo(paintRect.bottomRight() - QPoint(RADIUS, 0));
+        paintPath.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(RADIUS * 2, RADIUS * 2)),
+                              QSize(RADIUS * 2, RADIUS * 2)),
                         270, 90);
-        painter->drawPath(paintpath);
-        flag = 0;
+        painter->drawPath(paintPath);
+        m_flag = 0;
     }
-    allpath = path;
+    m_allPath = path;
 }
 
 void PartChartShowing::mousePressEvent(QMouseEvent *event)
 {
     int x = event->pos().x();
     int y = event->pos().y();
-    if (partsize.size() == 0) {
+    if (m_partSize.size() == 0) {
         if (event->button() == Qt::LeftButton) {
             //判断第一个分区的鼠标点击
-            if (x > 0 && x < this->width() && y > 10 && y < 45) {
-                flag = 1;
+            if (x > 0 && x < width() && y > 10 && y < 45) {
+                m_flag = 1;
                 update();
             }
         }
-    } else if (partsize.size() > 0) {
+    } else if (m_partSize.size() > 0) {
         if (event->button() == Qt::LeftButton) {
-            for (i = 0; i < partsize.size(); i++) {
-                double width = ((partsize.at(i) / total) * (this->width() - space)) - rightspace;
-                if (partsize.at(i) / total < 0.01) {
+            for (int i = 0; i < m_partSize.size(); i++) {
+                double width = ((m_partSize.at(i) / m_total) * (this->width() - SPACE)) - RIGHTSPACE;
+                if (m_partSize.at(i) / m_total < 0.01) {
                     width = 8;
                 }
                 //判断除了第一个和最后一个的鼠标点击
-                if ((x > allpath[i].currentPosition().x() && x < (allpath[i].currentPosition().x() + width) && y > 10 && y < 45) || (partsize.size() == 1 && y > 10 && y < 40 && (sumvalue >= 100 || sums >= total - 0.01))) {
-                    flag = 2;
-                    number = i;
+                if ((x > m_allPath[i].currentPosition().x() && x < (m_allPath[i].currentPosition().x() + width) && y > 10 && y < 45) || (m_partSize.size() == 1 && y > 10 && y < 40 && (m_sumValue >= 100 || m_sums >= m_total - 0.01))) {
+                    m_flag = 2;
+                    m_number = i;
                     update();
                 }
                 //鼠标点击判断最后一个分区点击
-                if (x > allpath[partsize.size() - 1].currentPosition().x() && y > 10 && y < 45 && i == partsize.size() - 1 && (sumvalue >= 100 || sums >= total)) {
-                    flag = 2;
-                    number = i;
+                if (x > m_allPath[m_partSize.size() - 1].currentPosition().x() && y > 10 && y < 45 && i == m_partSize.size() - 1 && (m_sumValue >= 100 || m_sums >= m_total)) {
+                    m_flag = 2;
+                    m_number = i;
                     update();
                 }
             }
 //            qDebug() << flag;
             //空闲分区
-            double width1 = ((partsize.at(partsize.size() - 1) / total) * (this->width() - space)) - rightspace;
-            if (partsize.size() > 1) {
-                if (partsize.at(partsize.size() - 1) / total < 0.01) {
+            double width1 = ((m_partSize.at(m_partSize.size() - 1) / m_total) * (width() - SPACE)) - RIGHTSPACE;
+            if (m_partSize.size() > 1) {
+                if (m_partSize.at(m_partSize.size() - 1) / m_total < 0.01) {
                     width1 = 8;
                 }
             }
             //判断空闲分区鼠标点击
-            if (x > allpath[partsize.size() - 1].currentPosition().x() + width1 && y > 10 && y < 45 && int(sums) < int(total)) {
-                flag = 3;
-                i = -1;
-                number = -1;
+            if (x > m_allPath[m_partSize.size() - 1].currentPosition().x() + width1 && y > 10 && y < 45 && int(m_sums) < int(m_total)) {
+                m_flag = 3;
+//                i = -1;
+                m_number = -1;
                 update();
             }
         }
     }
     //判断在分区条之外的鼠标点击
     if (event->button() == Qt::LeftButton) {
-        if (!(x > 0 && x < this->width() && y > 10 && y < 45)) {
-            flag = 0;
-            number = -1;
+        if (!(x > 0 && x < width() && y > 10 && y < 45)) {
+            m_flag = 0;
+            m_number = -1;
             update();
         }
     }
     if (event->button() == Qt::LeftButton) {
-        emit sendFlag(flag, number, x);
+        emit sendFlag(m_flag, m_number, x);
     }
 }
 
@@ -372,58 +393,59 @@ void PartChartShowing::mouseMoveEvent(QMouseEvent *event)
 {
     int x = event->pos().x();
     int y = event->pos().y();
-    mx = x;
+    m_posx = x;
     //判断整个分区的鼠标悬浮
-    if (partsize.size() == 0) {
-        if (x > 0 && x < this->width() && y > 10 && y < 45) {
-            number2 = -1;
-            showTipFlag++;
-            if (showTipFlag == 1) {
-                hover = 1;
-                showTipTimer->start(200);
+    if (m_partSize.size() == 0) {
+        if (x > 0 && x < width() && y > 10 && y < 45) {
+            m_number2 = -1;
+            m_showTipFlag++;
+            if (m_showTipFlag == 1) {
+                m_hover = 1;
+                m_showTipTimer->start(200);
             }
-            showTipFlag = -2;
+            m_showTipFlag = -2;
         }
 
-    } else if (partsize.size() > 0) {//判断除了第一个分区的鼠标悬浮
-        for (i = 0; i < partsize.size(); i++) {
-            double width = ((partsize.at(i) / total) * (this->width() - space)) - rightspace;
-            if (partsize.at(i) / total < 0.01) {
+    } else if (m_partSize.size() > 0) {//判断除了第一个分区的鼠标悬浮
+        int number = 0;
+        for (int i = 0; i < m_partSize.size(); i++) {
+            double width = ((m_partSize.at(i) / m_total) * (this->width() - SPACE)) - RIGHTSPACE;
+            if (m_partSize.at(i) / m_total < 0.01) {
                 width = 8;
             }
-            if ((x > allpath[i].currentPosition().x() && x < (allpath[i].currentPosition().x() + width) && y > 10 && y < 40) || (partsize.size() == 1 && y > 10 && y < 40 && (sumvalue >= 100 || sums >= total))) {
-                number2 = i;
-                showTipFlag++;
+            if ((x > m_allPath[i].currentPosition().x() && x < (m_allPath[i].currentPosition().x() + width) && y > 10 && y < 40) || (m_partSize.size() == 1 && y > 10 && y < 40 && (m_sumValue >= 100 || m_sums >= m_total))) {
+                m_number2 = i;
+                m_showTipFlag++;
 
-                if (showTipFlag == 1 || mShowFlag == true || mnum != i) {
-                    hover = 2;
-                    showTipTimer->start(200);
+                if (m_showTipFlag == 1 || m_isShowFlag == true || number != i) {
+                    m_hover = 2;
+                    m_showTipTimer->start(200);
                 }
-                showTipFlag = -2;
-                mShowFlag = false;
-                mnum = i;
+                m_showTipFlag = -2;
+                m_isShowFlag = false;
+                number = i;
             }
         }
         //空闲分区
-        double width1 = ((partsize.at(partsize.size() - 1) / total) * (this->width() - space)) - rightspace;
-        if (partsize.size() > 1) {
-            if (partsize.at(partsize.size() - 1) / total < 0.01) {
-                width1 = 8;
+        double width = ((m_partSize.at(m_partSize.size() - 1) / m_total) * (this->width() - SPACE)) - RIGHTSPACE;
+        if (m_partSize.size() > 1) {
+            if (m_partSize.at(m_partSize.size() - 1) / m_total < 0.01) {
+                width = 8;
             }
         }
-        if (x > allpath[partsize.size() - 1].currentPosition().x() + width1 && y > 10 && y < 45 && int(sums) < int(total)) {
-            number2 = -1;
-            showTipFlag++;
-            if (showTipFlag == 1 || mShowFlag == false) {
-                hover = 3;
-                showTipTimer->start(200);
+        if (x > m_allPath[m_partSize.size() - 1].currentPosition().x() + width && y > 10 && y < 45 && int(m_sums) < int(m_total)) {
+            m_number2 = -1;
+            m_showTipFlag++;
+            if (m_showTipFlag == 1 || m_isShowFlag == false) {
+                m_hover = 3;
+                m_showTipTimer->start(200);
             }
-            showTipFlag = -2;
-            mShowFlag = true;
+            m_showTipFlag = -2;
+            m_isShowFlag = true;
         }
     }
-    if (!(x > 0 && x < this->width() && y > 10 && y < 45)) {
-        showTipFlag = 0;
+    if (!(x > 0 && x < width() && y > 10 && y < 45)) {
+        m_showTipFlag = 0;
     }
 }
 

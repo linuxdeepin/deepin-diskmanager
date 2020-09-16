@@ -71,7 +71,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
     rect.setY(this->y());
     rect.setWidth(this->width());
     rect.setHeight(this->height());
-    QRect paintRect = QRect(0, 60, rect.width(), rect.height() - 150);
+    QRect paintRect = QRect(0, 60, rect.width() + 1, rect.height() - 170);
     QPainterPath paintpath0;
     int radius = 8;
     //根据color和size数据遍历绘制矩形
@@ -125,7 +125,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
     if (m_flag) {
         DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
         if (themeType == DGuiApplicationHelper::LightType) {
-            QRect Roundrect = QRect(rect.bottomLeft().x() - 5, rect.bottomLeft().y() - 77, 15, 15);
+            QRect Roundrect = QRect(rect.bottomLeft().x() + 2, rect.bottomLeft().y() - 90, 15, 15);
             //            rect.setWidth(rect.width() - 1);
             //            rect.setHeight(rect.height() - 1);
             painter.drawRoundedRect(Roundrect, 3, 3);
@@ -155,13 +155,13 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             QTextOption option;
             option.setAlignment(Qt::AlignTop);
             painter.drawText(recttext, QString(m_partitionpath + tr(" Capacity:")), option);
-            recttext.moveTo(paintRect.width() / 2 + 20, paintRect.bottomLeft().y() + 17);
+            recttext.moveTo(paintRect.width() / 2 + 25, paintRect.bottomLeft().y() + 17);
             painter.drawText(recttext, QString(tr("Used:")), option);
             int num = 0;
             if (m_partitionpath == "ocated") {
-                num = 165;
+                num = 135;
             } else {
-                num = 145;
+                num = 120;
             }
             QRect rectsizenum = QRect(paintRect.bottomLeft().x() + num, paintRect.bottomLeft().y() + 20, 100, 30);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
@@ -171,13 +171,13 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             QTextOption option1;
             option.setAlignment(Qt::AlignLeft);
             painter.drawText(rectsizenum, totalsize, option1);
-            rectsizenum.moveTo(paintRect.width() / 2 + 115, paintRect.bottomLeft().y() + 20);
+            rectsizenum.moveTo(paintRect.width() / 2 + 100, paintRect.bottomLeft().y() + 20);
             if (usedsize.contains("-")) {
                 usedsize = "-";
             }
             painter.drawText(rectsizenum, usedsize, option1);
         } else if (themeType == DGuiApplicationHelper::DarkType) {
-            QRect Roundrect = QRect(rect.bottomLeft().x() - 5, rect.bottomLeft().y() - 77, 15, 15);
+            QRect Roundrect = QRect(rect.bottomLeft().x() + 2, rect.bottomLeft().y() - 90, 15, 15);
             //            rect.setWidth(rect.width() - 1);
             //            rect.setHeight(rect.height() - 1);
             painter.drawRoundedRect(Roundrect, 3, 3);
@@ -207,13 +207,13 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             QTextOption option;
             option.setAlignment(Qt::AlignTop);
             painter.drawText(recttext, QString(m_partitionpath + tr(" Capacity:")), option);
-            recttext.moveTo(paintRect.width() / 2 + 20, paintRect.bottomLeft().y() + 17);
+            recttext.moveTo(paintRect.width() / 2 + 25, paintRect.bottomLeft().y() + 17);
             painter.drawText(recttext, QString(tr("Used:")), option);
             int num = 0;
             if (m_partitionpath == "ocated") {
-                num = 165;
+                num = 135;
             } else {
-                num = 145;
+                num = 120;
             }
             QRect rectsizenum = QRect(paintRect.bottomLeft().x() + num, paintRect.bottomLeft().y() + 20, 100, 30);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
@@ -223,7 +223,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             QTextOption option1;
             option.setAlignment(Qt::AlignLeft);
             painter.drawText(rectsizenum, totalsize, option1);
-            rectsizenum.moveTo(paintRect.width() / 2 + 115, paintRect.bottomLeft().y() + 20);
+            rectsizenum.moveTo(paintRect.width() / 2 + 100, paintRect.bottomLeft().y() + 20);
             if (usedsize.contains("-")) {
                 usedsize = "-";
             }

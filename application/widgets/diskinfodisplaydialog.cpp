@@ -27,10 +27,12 @@
 #include "diskinfodisplaydialog.h"
 #include "partedproxy/dmdbushandler.h"
 #include "messagebox.h"
+#include "common.h"
 
 #include <DLabel>
 #include <DFrame>
 #include <DMessageManager>
+#include <DFontSizeManager>
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -49,6 +51,7 @@ DiskInfoDisplayDialog::DiskInfoDisplayDialog(const QString &devicePath, QWidget 
 void DiskInfoDisplayDialog::initUI()
 {
 //    setWindowTitle("磁盘信息展示");
+    setIcon(QIcon::fromTheme(appName));
     setTitle(tr("Disk Info")); // 磁盘信息
     setMinimumSize(500, 474);
 
@@ -63,10 +66,10 @@ void DiskInfoDisplayDialog::initUI()
 //                       << tr("SATA版本为：") << tr("当地时间为：") << tr("智能支持：");
 
     m_diskInfoNameList.clear();
-    m_diskInfoNameList << tr("Serial Number：") << tr("Device Model：") << tr("LU WWN Device Id：") << tr("Firmware Version：")
-                       << tr("User Capacity：") << tr("Sector Size：") << tr("Rotation Rate：") << tr("Form Factor：")
-                       << tr("Device is：") << tr("ATA Version is：") << tr("SATA Version is：")
-                       << tr("Local Time is：") << tr("SMART support is：");
+    m_diskInfoNameList << tr("Serial Number:") << tr("Device Model:") << tr("LU WWN Device Id:") << tr("Firmware Version:")
+                       << tr("User Capacity:") << tr("Sector Size:") << tr("Rotation Rate:") << tr("Form Factor:")
+                       << tr("Device is:") << tr("ATA Version is:") << tr("SATA Version is:")
+                       << tr("Local Time is:") << tr("SMART support is:");
 
     QString deviceis = hardDiskInfo.m_deviceis;
     QStringList deviceNameList = deviceis.split("[");
@@ -83,21 +86,25 @@ void DiskInfoDisplayDialog::initUI()
     QVBoxLayout *infoLayout = new QVBoxLayout(infoWidget);
 
     DPalette palette1;
-    palette1.setColor(DPalette::WindowText, QColor(0, 0, 0, 0.85));
+    QColor color1("#000000");
+    color1.setAlphaF(0.85);
+    palette1.setColor(DPalette::WindowText, color1);
 
     DPalette palette2;
-    palette2.setColor(DPalette::WindowText, QColor(0, 0, 0, 0.7));
+    QColor color2("#000000");
+    color2.setAlphaF(0.7);
+    palette2.setColor(DPalette::WindowText, color2);
 
     for (int i = 0; i < m_diskInfoNameList.count(); i++) {
         DLabel *nameLabel = new DLabel;
         nameLabel->setText(m_diskInfoNameList.at(i));
-        nameLabel->setFont(QFont("SourceHanSansSC", 11, 57));
+        DFontSizeManager::instance()->bind(nameLabel, DFontSizeManager::T7, QFont::Medium);
         nameLabel->setFixedWidth(160);
         nameLabel->setPalette(palette1);
 
         DLabel *valueLabel = new DLabel;
         valueLabel->setText(m_diskInfoValueList.at(i));
-        valueLabel->setFont(QFont("SourceHanSansSC", 11, 50));
+        DFontSizeManager::instance()->bind(valueLabel, DFontSizeManager::T7, QFont::Normal);
         valueLabel->setPalette(palette2);
 
         QHBoxLayout *labelLayout = new QHBoxLayout;

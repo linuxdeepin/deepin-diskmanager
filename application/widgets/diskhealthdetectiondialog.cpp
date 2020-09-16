@@ -34,6 +34,7 @@
 #include <DFrame>
 #include <DGuiApplicationHelper>
 #include <DMessageManager>
+#include <DFontSizeManager>
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -54,6 +55,7 @@ DiskHealthDetectionDialog::DiskHealthDetectionDialog(const QString &devicePath, 
 
 void DiskHealthDetectionDialog::initUI()
 {
+    setIcon(QIcon::fromTheme(appName));
     setTitle(tr("Check Health")); // 硬盘健康检测
     setMinimumSize(726, 676);
 
@@ -62,14 +64,18 @@ void DiskHealthDetectionDialog::initUI()
     diskLabel->setPixmap(iconDisk.pixmap(85, 85));
 
     DPalette palette1;
-    palette1.setColor(DPalette::WindowText, QColor(0, 0, 0, 0.5));
+    QColor color1("#000000");
+    color1.setAlphaF(0.5);
+    palette1.setColor(DPalette::WindowText, color1);
 
     DPalette palette2;
-    palette2.setColor(DPalette::WindowText, QColor(0, 0, 0, 0.85));
+    QColor color2("#000000");
+    color2.setAlphaF(0.85);
+    palette2.setColor(DPalette::WindowText, color2);
 
     // 状态提示字体颜色
     DPalette palette4;
-    palette4.setColor(DPalette::Text, QColor("#526A7F"));
+    palette4.setColor(DPalette::WindowText, QColor("#526A7F"));
 
     // 表格内容颜色
     DPalette palette5;
@@ -83,19 +89,21 @@ void DiskHealthDetectionDialog::initUI()
     HardDiskInfo hardDiskInfo = DMDbusHandler::instance()->getHardDiskInfo(m_devicePath);
 
     DLabel *serialNumberNameLabel = new DLabel(tr("Serial number")); // 序列号
-    serialNumberNameLabel->setFont(QFont("SourceHanSansSC", 10, 57));
+    DFontSizeManager::instance()->bind(serialNumberNameLabel, DFontSizeManager::T8, QFont::Medium);
     serialNumberNameLabel->setPalette(palette1);
+
     m_serialNumberValue = new DLabel;
     m_serialNumberValue->setText(hardDiskInfo.m_serialNumber);
-    m_serialNumberValue->setFont(QFont("SourceHanSansSC", 12, 57));
+    DFontSizeManager::instance()->bind(m_serialNumberValue, DFontSizeManager::T6, QFont::Medium);
     m_serialNumberValue->setPalette(palette2);
 
     DLabel *userCapacityNameLabel = new DLabel(tr("Storage")); // 用户容量
-    userCapacityNameLabel->setFont(QFont("SourceHanSansSC", 8, 50));
+    DFontSizeManager::instance()->bind(userCapacityNameLabel, DFontSizeManager::T8, QFont::Medium);
     userCapacityNameLabel->setPalette(palette1);
+
     m_userCapacityValue = new DLabel;
     m_userCapacityValue->setText(hardDiskInfo.m_userCapacity);
-    m_userCapacityValue->setFont(QFont("SourceHanSansSC", 8, 50));
+    DFontSizeManager::instance()->bind(m_userCapacityValue, DFontSizeManager::T10, QFont::Normal);
     m_userCapacityValue->setPalette(palette2);
 
     QVBoxLayout *diskInfoLayout = new QVBoxLayout;
@@ -111,12 +119,12 @@ void DiskHealthDetectionDialog::initUI()
     QString healthStateValue = DMDbusHandler::instance()->getDeviceHardStatus(m_devicePath);
 
     DLabel *healthStateLabel = new DLabel(tr("Health Status")); // 健康状态
-    healthStateLabel->setFont(QFont("SourceHanSansSC", 12, 57));
+    DFontSizeManager::instance()->bind(healthStateLabel, DFontSizeManager::T6, QFont::Medium);
 
     QIcon iconHealth = Common::getIcon("good");
     DLabel *iconHealthLabel = new DLabel;
     m_healthStateValue = new DLabel;
-    m_healthStateValue->setFont(QFont("SourceHanSansSC", 25, 57));
+    DFontSizeManager::instance()->bind(m_healthStateValue, DFontSizeManager::T2, QFont::Medium);
 
     // 状态颜色
     DPalette paletteStateColor;
@@ -149,23 +157,26 @@ void DiskHealthDetectionDialog::initUI()
     QVBoxLayout *healthStateLayout = new QVBoxLayout;
     healthStateLayout->addSpacing(5);
     healthStateLayout->addWidget(healthStateLabel, 0, Qt::AlignCenter);
+    healthStateLayout->addSpacing(10);
     healthStateLayout->addLayout(healthValueLayout);
-    healthStateLayout->addSpacing(17);
+    healthStateLayout->addSpacing(7);
     healthStateLayout->setContentsMargins(0, 0, 0, 0);
 
     // 温度
     DLabel *temperatureLabel = new DLabel(tr("Temperature")); // 温度
-    temperatureLabel->setFont(QFont("SourceHanSansSC", 12, 57));
+    DFontSizeManager::instance()->bind(temperatureLabel, DFontSizeManager::T6, QFont::Medium);
     temperatureLabel->setPalette(palette2);
+
     m_temperatureValue = new DLabel("-°C");
-    m_temperatureValue->setFont(QFont("SourceHanSansSC", 25, 57));
+    DFontSizeManager::instance()->bind(m_temperatureValue, DFontSizeManager::T2, QFont::Medium);
     m_temperatureValue->setPalette(palette2);
 
     QVBoxLayout *temperatureLayout = new QVBoxLayout;
     temperatureLayout->addSpacing(5);
-    temperatureLayout->addWidget(temperatureLabel, 0, Qt::AlignCenter);
+    temperatureLayout->addWidget(temperatureLabel, 0, Qt::AlignRight);
+    temperatureLayout->addSpacing(10);
     temperatureLayout->addWidget(m_temperatureValue);
-    temperatureLayout->addSpacing(17);
+    temperatureLayout->addSpacing(7);
     temperatureLayout->setContentsMargins(0, 0, 10, 0);
 
     DFrame *infoWidget = new DFrame;
@@ -193,8 +204,12 @@ void DiskHealthDetectionDialog::initUI()
     m_tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     m_tableView->setAlternatingRowColors(true);
     m_tableView->setPalette(palette5);
-    m_tableView->setFont(QFont("SourceHanSansSC", 10, 50));
-    m_tableView->horizontalHeader()->setFont(QFont("SourceHanSansSC", 12, 57));
+//    m_tableView->setFont(QFont("SourceHanSansSC", 10, 50));
+    QFont fontHeader = DFontSizeManager::instance()->get(DFontSizeManager::T6, QFont::Medium);
+    m_tableView->horizontalHeader()->setFont(fontHeader);
+    m_tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    m_tableView->horizontalHeader()->setPalette(palette6);
+//    m_tableView->horizontalHeader()->setFixedHeight(30);
 
     m_diskHealthDetectionDelegate = new DiskHealthDetectionDelegate(this);
     m_tableView->setItemDelegate(m_diskHealthDetectionDelegate);
@@ -215,14 +230,15 @@ void DiskHealthDetectionDialog::initUI()
 
     m_tableView->setModel(m_standardItemModel);
     m_tableView->horizontalHeader()->setStretchLastSection(true);// 设置最后一列自适应
-    m_tableView->horizontalHeader()->setSectionResizeMode(3, QHeaderView::ResizeToContents); // 设置第三列自适应列宽
-    m_tableView->horizontalHeader()->setSectionResizeMode(4, QHeaderView::ResizeToContents); // 设置第四列自适应列宽
+//    m_tableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+//    m_tableView->horizontalHeader()->setSectionResizeMode(3, QHeaderView::ResizeToContents); // 设置第三列自适应列宽
+//    m_tableView->horizontalHeader()->setSectionResizeMode(4, QHeaderView::ResizeToContents); // 设置第四列自适应列宽
 
     m_tableView->setColumnWidth(0, 50);
     m_tableView->setColumnWidth(1, 50);
     m_tableView->setColumnWidth(2, 70);
-//    m_tableView->setColumnWidth(3, 100);
-//    m_tableView->setColumnWidth(4, 70);
+    m_tableView->setColumnWidth(3, 100);
+    m_tableView->setColumnWidth(4, 70);
     m_tableView->setColumnWidth(5, 130);
 //    m_tableView->setColumnWidth(6, 186);
 
@@ -261,11 +277,11 @@ void DiskHealthDetectionDialog::initUI()
     QHBoxLayout *tableLayout = new QHBoxLayout(tableWidget);
     tableLayout->addWidget(m_tableView);
     tableLayout->setSpacing(0);
-    tableLayout->setContentsMargins(10, 10, 10, 10);
+    tableLayout->setContentsMargins(5, 0, 5, 0);
 
     DLabel *stateTipsLabel = new DLabel;
-    stateTipsLabel->setText(tr("Status：(G: Good | W: Warning | D: Damaged | U: Unknown)")); // 状态：(G: 良好 | W: 警告 | D: 损坏 | U: 未知)
-    stateTipsLabel->setFont(QFont("SourceHanSansSC", 10, 50));
+    stateTipsLabel->setText(tr("Status:(G: Good | W: Warning | D: Damaged | U: Unknown)")); // 状态:(G: 良好 | W: 警告 | D: 损坏 | U: 未知)
+    DFontSizeManager::instance()->bind(stateTipsLabel, DFontSizeManager::T8, QFont::Normal);
     stateTipsLabel->setPalette(palette4);
 
     m_linkButton = new DCommandLinkButton(tr("Export")); // 导出
@@ -277,11 +293,11 @@ void DiskHealthDetectionDialog::initUI()
     bottomLayout->addWidget(m_linkButton);
     bottomLayout->setContentsMargins(0, 0, 0, 0);
 
-    addSpacing(15);
+    addSpacing(10);
     addContent(infoWidget);
     addSpacing(10);
     addContent(tableWidget);
-    addSpacing(20);
+    addSpacing(10);
     addContent(bottomWidget);
 }
 

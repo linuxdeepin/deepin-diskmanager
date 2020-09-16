@@ -45,6 +45,9 @@ InfoShowWidget::InfoShowWidget(DWidget *parent)
 
 void InfoShowWidget::initUi()
 {
+    setWindowFlags(Qt::FramelessWindowHint); //无边框
+    setAttribute(Qt::WA_TranslucentBackground); //背景透明
+
     QVBoxLayout *layout = new QVBoxLayout(this);
     pframe = new DFrame();
     layout->setContentsMargins(10, 10, 10, 10);
@@ -83,6 +86,7 @@ void InfoShowWidget::midFramSettings()
     QVBoxLayout *mainLayout = new QVBoxLayout(pframemid);
     m_infowidget = new SizeInfoWidget;
     mainLayout->addWidget(m_infowidget);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
 }
 
 void InfoShowWidget::bottomFramSettings()

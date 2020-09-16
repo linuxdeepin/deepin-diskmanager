@@ -26,10 +26,12 @@
  */
 #include "partitiontableerrorsinfodialog.h"
 #include "partitiontableerrorsinfodelegate.h"
+#include "common.h"
 
 #include <DFrame>
 #include <DGuiApplicationHelper>
 #include <DPushButton>
+#include <DFontSizeManager>
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -46,15 +48,18 @@ PartitionTableErrorsInfoDialog::PartitionTableErrorsInfoDialog(const QString &de
 
 void PartitionTableErrorsInfoDialog::initUI()
 {
+    setIcon(QIcon::fromTheme(appName));
     setTitle(tr("Errors in Partition Table")); // 分区表错误报告
     setMinimumSize(580, 386);
 
     DPalette palette1;
-    palette1.setColor(DPalette::Text, QColor(0, 0, 0, 0.7));
+    QColor color("#000000");
+    color.setAlphaF(0.7);
+    palette1.setColor(DPalette::WindowText, color);
 
     m_Label = new DLabel;
     m_Label->setText(tr("The partition table of disk  %1  has below errors:").arg(m_deviceInfo)); // 磁盘xxx存在下列分区表问题：
-    m_Label->setFont(QFont("SourceHanSansSC", 12, 50));
+    DFontSizeManager::instance()->bind(m_Label, DFontSizeManager::T6, QFont::Normal);
     m_Label->setPalette(palette1);
 
     m_tableView = new DTableView;
@@ -68,8 +73,13 @@ void PartitionTableErrorsInfoDialog::initUI()
     m_tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     m_tableView->setAlternatingRowColors(true);
 //    m_tableView->setPalette(palette5);
-    m_tableView->setFont(QFont("SourceHanSansSC", 10, 50));
-    m_tableView->horizontalHeader()->setFont(QFont("SourceHanSansSC", 12, 57));
+//    m_tableView->setFont(QFont("SourceHanSansSC", 10, 50));
+    QFont fontHeader = DFontSizeManager::instance()->get(DFontSizeManager::T6, QFont::Medium);
+    // 表头字体颜色
+    DPalette paletteHeader;
+    paletteHeader.setColor(DPalette::Text, QColor("#414D68"));
+    m_tableView->horizontalHeader()->setFont(fontHeader);
+    m_tableView->horizontalHeader()->setPalette(paletteHeader);
     m_tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft);
 
     m_partitionTableErrorsInfoDelegatee = new PartitionTableErrorsInfoDelegate(this);
@@ -86,7 +96,7 @@ void PartitionTableErrorsInfoDialog::initUI()
     m_tableView->setModel(m_standardItemModel);
     m_tableView->horizontalHeader()->setStretchLastSection(true);// 设置最后一列自适应
     m_tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    m_tableView->horizontalHeader()->setFixedWidth(540);
+    m_tableView->horizontalHeader()->setFixedWidth(550);
 
     QList<QStandardItem*> itemList;
 
@@ -99,7 +109,7 @@ void PartitionTableErrorsInfoDialog::initUI()
     QHBoxLayout *tableLayout = new QHBoxLayout(tableWidget);
     tableLayout->addWidget(m_tableView);
     tableLayout->setSpacing(0);
-    tableLayout->setContentsMargins(10, 10, 10, 10);
+    tableLayout->setContentsMargins(5, 0, 5, 0);
 
     pushButton = new DPushButton;
     pushButton->setText(tr("OK")); // 确定
@@ -112,7 +122,7 @@ void PartitionTableErrorsInfoDialog::initUI()
     buttonLayout->addStretch();
     buttonLayout->setContentsMargins(0, 0, 0, 0);
 
-    addSpacing(20);
+    addSpacing(10);
     addContent(m_Label);
     addSpacing(10);
     addContent(tableWidget);

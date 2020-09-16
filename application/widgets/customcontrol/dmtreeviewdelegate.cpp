@@ -71,7 +71,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         }
 
         painter->setRenderHints(QPainter::SmoothPixmapTransform);
-        QRect paintRect = QRect(rect.left(), rect.top(), rect.width() - 30, rect.height());
+        QRect paintRect = QRect(rect.left(), rect.top(), rect.width() - 19, rect.height());
         QPainterPath path;
         const int radius = 8;
         path.moveTo(paintRect.bottomRight() - QPoint(0, radius));

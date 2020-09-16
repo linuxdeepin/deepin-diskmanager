@@ -1,10 +1,16 @@
-deepin-diskmanager (1.1.0.12) stable; urgency=low
+deepin-diskmanager (1.1.0.13) stable; urgency=low
 
-  *解决完成第七次送测产生的bug,
+  *解决完成第八次送测产生的bug,
   *47462 使用U盘安装，或重启系统，进入安装器或是重启进入登录页面，鼠标和键盘不能使用，需要等一分钟后才能用
   *47070 新建分区格式化完毕，分区挂载后“已用/可用空间”显示为空
   *47058 移动硬盘创建1个分区，完成挂载后，分区已用/可用空间显示异常
   *47038 剩余空间单次创建多个分区时，点击空闲空间进度条软件闪退
+
+ -- unknown <unknown@uniontech.com>  Wed., 16 September 2020 14:34:16 +0800
+
+deepin-diskmanager (1.1.0.12) stable; urgency=low
+
+  *解决完成第七次送测产生的bug,
 
  -- unknown <unknown@uniontech.com>  Wed., 16 September 2020 14:34:16 +0800
 

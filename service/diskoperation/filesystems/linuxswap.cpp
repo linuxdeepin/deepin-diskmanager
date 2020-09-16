@@ -28,7 +28,9 @@
 #include "linuxswap.h"
 #include "utils.h"
 #include "diskoperation/blockspecial.h"
+
 #include <QFile>
+
 #include <QDebug>
 
 namespace DiskManager {

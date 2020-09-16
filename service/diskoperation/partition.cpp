@@ -27,6 +27,7 @@
 
 #include "partition.h"
 #include "utils.h"
+
 #include <QDebug>
 
 namespace DiskManager {
@@ -166,10 +167,10 @@ void Partition::setFilesystemLabel(const QString &filesystemLabel)
     }
 }
 
-void Partition::addMountPoint(const QString &mountpoint)
-{
-    m_mountpoints.push_back(mountpoint);
-}
+//void Partition::addMountPoint(const QString &mountpoint)
+//{
+//    m_mountpoints.push_back(mountpoint);
+//}
 
 void Partition::addMountPoints(const QVector<QString> &mountpoints)
 {

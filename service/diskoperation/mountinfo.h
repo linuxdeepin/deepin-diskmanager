@@ -29,6 +29,7 @@
 #define MOUNTINFO_H
 #include "blockspecial.h"
 #include "commondef.h"
+
 #include <QMap>
 
 namespace DiskManager {

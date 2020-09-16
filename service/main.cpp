@@ -26,6 +26,7 @@
 */
 #include "diskmanagerservice.h"
 #include "log.h"
+
 #include <QCoreApplication>
 #include <DLog>
 #include <QDBusConnection>

@@ -29,6 +29,7 @@
 #define DEVICE_H
 #include "deviceinfo.h"
 #include "partition.h"
+
 #include <QtDBus/QtDBus>
 #include <QVector>
 
@@ -57,11 +58,11 @@ public:
      */
     bool partitionNamingSupported() const;
 
-    /**
-     * @brief 获得最大分区命名长度
-     * @return 最大分区命名长度
-     */
-    int getMaxPartitionNameLength() const;
+//    /**
+//     * @brief 获得最大分区命名长度
+//     * @return 最大分区命名长度
+//     */
+//    int getMaxPartitionNameLength() const;
 
     /**
      * @brief 获得设备信息

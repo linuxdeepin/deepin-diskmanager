@@ -120,11 +120,11 @@ public:
      */
     void setFilesystemLabel(const QString &filesystemLabel);
 
-    /**
-     * @brief 添加挂载点
-     * @param mountpoint：挂载点
-     */
-    void addMountPoint(const QString &mountpoint);
+//    /**
+//     * @brief 添加挂载点
+//     * @param mountpoint：挂载点
+//     */
+//    void addMountPoint(const QString &mountpoint);
 
     /**
      * @brief 添加挂载点（复数）

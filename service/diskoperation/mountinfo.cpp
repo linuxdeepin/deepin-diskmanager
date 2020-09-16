@@ -28,11 +28,13 @@
 #include "mountinfo.h"
 #include "utils.h"
 #include "fsinfo.h"
-#include <QStringList>
+
 #include <limits.h>
 #include <mntent.h>
+
 #include <QFile>
 #include <QTextStream>
+#include <QStringList>
 #include <QDebug>
 
 namespace DiskManager {

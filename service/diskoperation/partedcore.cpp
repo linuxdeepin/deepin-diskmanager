@@ -31,9 +31,11 @@
 #include "partition.h"
 #include "procpartitionsinfo.h"
 #include "filesystems/filesystem.h"
+
 #include <sys/mount.h>
 #include <unistd.h>
 #include <fcntl.h>
+
 #include <QDebug>
 
 namespace DiskManager {
@@ -2354,9 +2356,9 @@ void PartedCore::autoUmount()
     char pb[1024];
     memset(pb, 0, 1024);
 
-    if (fd == nullptr) {
-        qDebug() << __FUNCTION__ <<"exeuted cmd failed";
-    }
+//    if (fd == nullptr) {
+//        qDebug() << __FUNCTION__ <<"exeuted cmd failed";
+//    }
 
     while (fgets(pb, 1024, fd) != nullptr) {
         QString dfBuf = pb;

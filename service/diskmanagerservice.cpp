@@ -26,9 +26,12 @@
 */
 
 #include "diskmanagerservice.h"
+
+#include <unistd.h>
+
 #include <QCoreApplication>
 #include <QDebug>
-#include <unistd.h>
+
 
 namespace DiskManager {
 
@@ -102,14 +105,14 @@ bool DiskManagerService::create(const PartitionVec &infovec)
     return m_partedcore->create(infovec);
 }
 
-stCustest DiskManagerService::interfacetest()
-{
-    stCustest stcus;
-    stcus.heads = 1000;
-    stcus.length = 2000;
-    stcus.m_path = "uos";
-    return stcus;
-}
+//stCustest DiskManagerService::interfacetest()
+//{
+//    stCustest stcus;
+//    stcus.heads = 1000;
+//    stcus.length = 2000;
+//    stcus.m_path = "uos";
+//    return stcus;
+//}
 
 void DiskManagerService::initConnection()
 {

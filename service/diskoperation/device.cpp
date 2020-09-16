@@ -26,6 +26,7 @@
 */
 
 #include "device.h"
+
 #include <QDebug>
 
 namespace DiskManager {
@@ -55,10 +56,10 @@ bool Device::partitionNamingSupported() const
     return m_maxPartitionNameLength > 0;
 }
 
-int Device::getMaxPartitionNameLength() const
-{
-    return m_maxPartitionNameLength;
-}
+//int Device::getMaxPartitionNameLength() const
+//{
+//    return m_maxPartitionNameLength;
+//}
 
 DeviceInfo Device::getDeviceInfo()
 {

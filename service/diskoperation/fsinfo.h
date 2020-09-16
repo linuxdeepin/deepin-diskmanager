@@ -28,7 +28,9 @@
 #ifndef FSINFO_H
 #define FSINFO_H
 #include "blockspecial.h"
+
 #include <QVector>
+
 namespace DiskManager {
 
 

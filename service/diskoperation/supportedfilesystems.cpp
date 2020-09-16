@@ -29,6 +29,7 @@
 #include "filesystems/ext2.h"
 #include "filesystems/linuxswap.h"
 #include "utils.h"
+
 #include <QDebug>
 
 namespace DiskManager {
@@ -120,15 +121,15 @@ const FS &SupportedFileSystems::getFsSupport(FSType fstype) const
     return fsNotsupp;
 }
 
-const QVector<FS> &SupportedFileSystems::getAllFsSupport() const
-{
-    return m_fsSupport;
-}
+//const QVector<FS> &SupportedFileSystems::getAllFsSupport() const
+//{
+//    return m_fsSupport;
+//}
 
-bool SupportedFileSystems::supportedFilesystem(FSType fstype) const
-{
-    return getFsObject(fstype) != NULL;
-}
+//bool SupportedFileSystems::supportedFilesystem(FSType fstype) const
+//{
+//    return getFsObject(fstype) != NULL;
+//}
 
 const QStringList &SupportedFileSystems::getAllFsName()
 {

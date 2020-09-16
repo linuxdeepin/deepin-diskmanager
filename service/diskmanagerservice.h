@@ -28,6 +28,7 @@
 #ifndef DISKMANAGERSERVICE_H
 #define DISKMANAGERSERVICE_H
 #include "diskoperation/partedcore.h"
+
 #include <QObject>
 #include <QDBusContext>
 #include <QScopedPointer>
@@ -140,11 +141,11 @@ public Q_SLOTS:
      * @return true成功false失败
      */
     Q_SCRIPTABLE bool create(const PartitionVec &infovec);
-    /**
-     * @brief qdbus结构体传参测试
-     * @return 测试结构体
-     */
-    Q_SCRIPTABLE stCustest interfacetest();
+//    /**
+//     * @brief qdbus结构体传参测试
+//     * @return 测试结构体
+//     */
+//    Q_SCRIPTABLE stCustest interfacetest();
     /**
      * @brief 获取硬盘硬件信息
      * @param devicepath：设备信息路径

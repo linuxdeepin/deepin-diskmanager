@@ -29,6 +29,7 @@
 #define SUPPORTEDFILESYSTEMS_H
 #include "filesystems/filesystem.h"
 #include "commondef.h"
+
 #include <QVector>
 #include <QMap>
 
@@ -64,18 +65,18 @@ public:
      */
     const FS &getFsSupport(FSType fstype) const;
 
-    /**
-     * @brief 获取全部支持的文件系统格式
-     * @return 文件系统支持列表
-     */
-    const QVector<FS> &getAllFsSupport() const;
+//    /**
+//     * @brief 获取全部支持的文件系统格式
+//     * @return 文件系统支持列表
+//     */
+//    const QVector<FS> &getAllFsSupport() const;
 
-    /**
-     * @brief 文件系统是否支持
-     * @param fstype：文件系统格式
-     * @return true支持false不支持
-     */
-    bool supportedFilesystem(FSType fstype) const;
+//    /**
+//     * @brief 文件系统是否支持
+//     * @param fstype：文件系统格式
+//     * @return true支持false不支持
+//     */
+//    bool supportedFilesystem(FSType fstype) const;
 
     /**
      * @brief 获取支持的文件系统名字

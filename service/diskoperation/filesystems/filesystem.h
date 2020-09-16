@@ -29,9 +29,15 @@
 #define FILESYSTEM_H
 #include "commondef.h"
 #include "../partition.h"
+
 #include <QtMath>
 
 namespace DiskManager {
+
+/**
+ * @class FileSystem
+ * @brief 文件系统类
+ */
 
 class FileSystem
 {

@@ -30,14 +30,15 @@
 #include "log.h"
 #include "device.h"
 #include "supportedfilesystems.h"
-#include <QObject>
-#include <QVector>
+
 #include <parted/parted.h>
 #include <parted/device.h>
+
+#include <QObject>
+#include <QVector>
 #include <QMap>
 #include <QStringList>
 #include <QFile>
-#include <QDir>
 
 namespace DiskManager {
 

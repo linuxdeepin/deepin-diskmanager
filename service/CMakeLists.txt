@@ -11,7 +11,8 @@ set(CMAKE_AUTORCC ON)
 set(APP_RES_DIR "assets")
 set(APP_SERVICE "${APP_RES_DIR}/data/com.deepin.diskmanager.service")
 set(APP_CONFIG "${APP_RES_DIR}/data/com.deepin.diskmanager.conf")
-set(APP_UDEV_FILES "polkit/99-diskmanager.rules")
+set(APP_EDEV_DIR "polkit")
+set(APP_UDEV_FILES "${APP_EDEV_DIR}/99-diskmanager.rules")
 
 # Find the library
 find_package(PkgConfig REQUIRED)

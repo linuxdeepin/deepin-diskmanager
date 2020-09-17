@@ -1,3 +1,10 @@
+deepin-diskmanager (1.1.0.14) stable; urgency=low
+
+  *解决完成第九次送测产生的bug,
+  *安装配置文件错误的bug
+
+ -- unknown <unknown@uniontech.com>  Thu., 17 September 2020 14:34:16 +0800
+
 deepin-diskmanager (1.1.0.13) stable; urgency=low
 
   *解决完成第八次送测产生的bug,

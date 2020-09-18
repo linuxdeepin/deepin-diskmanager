@@ -1,7 +1,7 @@
 /**
  * @copyright 2020-2020 Uniontech Technology Co., Ltd.
  *
- * @file partitionwidget.h
+ * @file partitionwidget.cpp
  *
  * @brief 创建分区窗口
  *

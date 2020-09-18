@@ -1,23 +1,29 @@
-/*
-* Copyright (C) 2019 ~ 2020 Uniontech Software Technology Co.,Ltd.
-*
-* Author:     linxun <linxun@uniontech.com>
-*
-* Maintainer: linxun <linxun@uniontech.com>
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+/**
+ * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ *
+ * @file dmframewidget.cpp
+ *
+ * @brief 主界面右侧信息展示下部分实现类
+ *
+ * @date 2020-09-17 15:52
+ *
+ * Author: yuandandan  <yuandandan@uniontech.com>
+ *
+ * Maintainer: yuandandan  <yuandandan@uniontech.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 #include "dmframewidget.h"
 #include "utils.h"
 #include "partitioninfo.h"
@@ -28,68 +34,66 @@
 
 DmFrameWidget::DmFrameWidget(DiskInfoData data, QWidget *parent)
     : DFrame(parent)
-    , m_infodata(data)
+    , m_infoData(data)
 {
     m_parentPb = DApplicationHelper::instance()->palette(this);
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this,
-            &DmFrameWidget::slothandleChangeTheme);
+            &DmFrameWidget::onHandleChangeTheme);
 }
 
 void DmFrameWidget::setFrameData()
 {
     //获取首页相关硬盘数据
     PartitionInfo data = DMDbusHandler::instance()->getCurPartititonInfo();
-    QString mountstr;
-    QString previoustr;
-    QString laststr;
-    QString strstr;
+
+    QString mountpoints;
     DiskInfoData temp;
-    m_infodata = temp;
-    for (QString strpoint : data.mountpoints) {
-        strstr.append(strpoint + " ");
+    m_infoData = temp;
+    for (QString point : data.mountpoints) {
+        mountpoints.append(point + " ");
     }
-    if (strstr.contains("�")) {
-        strstr.remove(strstr.mid(strstr.indexOf("�")));
-        strstr.append(m_str);
+    if (mountpoints.contains("�")) {
+        mountpoints.remove(mountpoints.mid(mountpoints.indexOf("�")));
+        mountpoints.append(m_str);
     }
-    m_infodata.mountpoints = diffMountpoints(d_width, strstr);
-    m_infodata.unused = Utils::format_size(data.sectors_unused, data.sector_size);
-    if (m_infodata.unused.contains("-")) {
-        m_infodata.unused = "-";
+    m_infoData.m_mountpoints = diffMountpoints(m_width, mountpoints);
+    m_infoData.m_unused = Utils::format_size(data.sectors_unused, data.sector_size);
+    if (m_infoData.m_unused.contains("-")) {
+        m_infoData.m_unused = "-";
     }
-    m_infodata.used = Utils::format_size(data.sectors_used, data.sector_size);
-    if (m_infodata.used.contains("-")) {
-        m_infodata.used = "-";
+    m_infoData.m_used = Utils::format_size(data.sectors_used, data.sector_size);
+    if (m_infoData.m_used.contains("-")) {
+        m_infoData.m_used = "-";
     }
-    QString partitionpath = data.path.remove(0, 5);
-    m_infodata.fstype = Utils::FSTypeToString(static_cast<FSType>(data.fstype));
-    m_infodata.partitionsize = Utils::format_size(data.sector_end - data.sector_start, data.sector_size);
+    QString partitionPath = data.path.remove(0, 5);
+    m_infoData.m_fstype = Utils::FSTypeToString(static_cast<FSType>(data.fstype));
+    m_infoData.m_partitionSize = Utils::format_size(data.sector_end - data.sector_start, data.sector_size);
     if (data.filesystem_label == "") {
-        m_infodata.syslabel = "";
+        m_infoData.m_sysLabel = "";
     } else {
-        m_infodata.syslabel = diskVolumn(partitionpath);
-        if (m_infodata.syslabel.contains("�")) {
-            m_infodata.syslabel = m_str;
+        m_infoData.m_sysLabel = diskVolumn(partitionPath);
+        if (m_infoData.m_sysLabel.contains("�")) {
+            m_infoData.m_sysLabel = m_str;
         }//==============gbk编码的中文到在应用下无名称格式化文件系统转换时中文乱码
     }
     update();
 }
 
-QString DmFrameWidget::diskVolumn(QString partitionpath)
+QString DmFrameWidget::diskVolumn(QString partitionPath)
 {
     //将gbkｕ盘ｌａｂｅｌ中文乱码转换为正常中文显示
-    QProcess app;
-    app.start("ls", QStringList() << "-al" << "/dev/disk/by-label/");
-    if (!app.waitForStarted()) {
-        qWarning() << "Cmd Exec Failed:" << app.errorString();
+    QProcess process;
+    process.start("ls", QStringList() << "-al" << "/dev/disk/by-label/");
+    if (!process.waitForStarted()) {
+        qWarning() << "Cmd Exec Failed:" << process.errorString();
     }
-    if (!app.waitForFinished(-1)) {
-        qWarning() << "waitForFinished Failed:" << app.errorString();
+    if (!process.waitForFinished(-1)) {
+        qWarning() << "waitForFinished Failed:" << process.errorString();
     }
-    QString standardError = app.readAllStandardOutput();
-    QStringList mounts = standardError.split("\n").filter(partitionpath);
-    QString sr = mounts.last();
-    QString st = sr.mid(40).remove(" -> ../../" + partitionpath);
+    QString standardError = process.readAllStandardOutput();
+    QStringList mountsList = standardError.split("\n").filter(partitionPath);
+    QString sr = mountsList.last();
+    QString st = sr.mid(40).remove(" -> ../../" + partitionPath);
     qDebug() << __FUNCTION__ << st;
     if (st.at(1) != "x") {
         QString strstr1 = st.mid(st.indexOf("\\"));
@@ -108,43 +112,43 @@ QString DmFrameWidget::diskVolumn(QString partitionpath)
         QByteArray arr = strstr;
         QByteArray ba = strstr;
         QString link(ba);
-        QByteArray t_destByteArray;
-        QByteArray t_tmpByteArray;
+        QByteArray destByteArray;
+        QByteArray tmpByteArray;
         for (int i = 0; i < ba.size(); i++) {
             if (92 == ba.at(i)) {
-                if (4 == t_tmpByteArray.size()) {
-                    t_destByteArray.append(QByteArray::fromHex(t_tmpByteArray));
+                if (4 == tmpByteArray.size()) {
+                    destByteArray.append(QByteArray::fromHex(tmpByteArray));
                 } else {
-                    if (t_tmpByteArray.size() > 4) {
-                        t_destByteArray.append(QByteArray::fromHex(t_tmpByteArray.left(4)));
-                        t_destByteArray.append(t_tmpByteArray.mid(4));
+                    if (tmpByteArray.size() > 4) {
+                        destByteArray.append(QByteArray::fromHex(tmpByteArray.left(4)));
+                        destByteArray.append(tmpByteArray.mid(4));
                     } else {
-                        t_destByteArray.append(t_tmpByteArray);
+                        destByteArray.append(tmpByteArray);
                     }
                 }
-                t_tmpByteArray.clear();
-                t_tmpByteArray.append(ba.at(i));
+                tmpByteArray.clear();
+                tmpByteArray.append(ba.at(i));
                 continue;
-            } else if (t_tmpByteArray.size() > 0) {
-                t_tmpByteArray.append(ba.at(i));
+            } else if (tmpByteArray.size() > 0) {
+                tmpByteArray.append(ba.at(i));
                 continue;
             } else {
-                t_destByteArray.append(ba.at(i));
+                destByteArray.append(ba.at(i));
             }
         }
 
-        if (4 == t_tmpByteArray.size()) {
-            t_destByteArray.append(QByteArray::fromHex(t_tmpByteArray));
+        if (4 == tmpByteArray.size()) {
+            destByteArray.append(QByteArray::fromHex(tmpByteArray));
         } else {
-            if (t_tmpByteArray.size() > 4) {
-                t_destByteArray.append(QByteArray::fromHex(t_tmpByteArray.left(4)));
-                t_destByteArray.append(t_tmpByteArray.mid(4));
+            if (tmpByteArray.size() > 4) {
+                destByteArray.append(QByteArray::fromHex(tmpByteArray.left(4)));
+                destByteArray.append(tmpByteArray.mid(4));
             } else {
-                t_destByteArray.append(t_tmpByteArray);
+                destByteArray.append(tmpByteArray);
             }
         }
 
-        link = QTextCodec::codecForName("GBK")->toUnicode(t_destByteArray);
+        link = QTextCodec::codecForName("GBK")->toUnicode(tmpByteArray);
         int idx = link.lastIndexOf("/", link.length() - 1);
         QString stres = link.mid(idx + 1);
         if (strtem.count("\\x") > 0 && !strtem.contains("�")) {
@@ -170,78 +174,78 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)//绘制首页信息展示表�
         m_parentPb = DApplicationHelper::instance()->palette(this);
         QBrush brush = DApplicationHelper::instance()->palette(this).itemBackground();
         painter.setBrush(brush);
-        QColor outsidecolor(qRgba(0, 0, 0, 1));
-        outsidecolor.setAlphaF(0.1);
-        painter.setPen(outsidecolor);
-        QRect rect = this->rect();
-        rect.setWidth(rect.width());
-        rect.setHeight(rect.height() - 1);
-        painter.drawRoundedRect(rect, 15, 15);
-        QRect paintRect = QRect(rect.topLeft().x() + 1, rect.topLeft().y() + (rect.height() / 3), rect.width() - 2, rect.height() / 3);
+        QColor outsideColor(qRgba(0, 0, 0, 1));
+        outsideColor.setAlphaF(0.1);
+        painter.setPen(outsideColor);
+        QRect curRect = rect();
+        curRect.setWidth(curRect.width());
+        curRect.setHeight(curRect.height() - 1);
+        painter.drawRoundedRect(curRect, 15, 15);
+        QRect paintRect = QRect(curRect.topLeft().x() + 1, curRect.topLeft().y() + (curRect.height() / 3), curRect.width() - 2, curRect.height() / 3);
         m_parentPb = DApplicationHelper::instance()->palette(this);
         QBrush brush1 = DApplicationHelper::instance()->palette(this).textLively();
         painter.setBrush(brush1);
         painter.fillRect(paintRect, brush1);
-        painter.drawLine(paintRect.width() / 2, rect.topLeft().y(), paintRect.width() / 2, rect.bottomLeft().y());
-        QRect textRect = QRect(rect.width() / 2 - 300, rect.topLeft().y() + 12, 240, 35);
-        QColor textcolor = this->palette().color(DPalette::Normal, DPalette::Text);
+        painter.drawLine(paintRect.width() / 2, curRect.topLeft().y(), paintRect.width() / 2, curRect.bottomLeft().y());
+        QRect textRect = QRect(curRect.width() / 2 - 300, curRect.topLeft().y() + 12, 240, 35);
+        QColor textColor = this->palette().color(DPalette::Normal, DPalette::Text);
         QTextOption option;
         option.setTextDirection(Qt::LeftToRight);
         option.setAlignment(Qt::AlignRight);
         QTextOption option1;
         option1.setAlignment(Qt::AlignRight);
-        painter.setPen(textcolor);
-        QRect textRect1 = QRect(rect.width() / 2 - 275, rect.topLeft().y() + 10, 257, 40);
-        painter.drawText(textRect1, m_infodata.mountpoints, option);
-        textRect.moveTo(rect.width() / 2 - 260, rect.topLeft().y() + 62);
-        painter.drawText(textRect, m_infodata.unused, option1);
-        textRect.moveTo(rect.width() / 2 - 260, rect.topLeft().y() + 113);
-        painter.drawText(textRect, m_infodata.used, option1);
-        textRect.moveTo(rect.width() - 260, rect.topLeft().y() + 10);
-        painter.drawText(textRect, m_infodata.fstype, option1);
-        textRect.moveTo(rect.width() - 260, rect.topLeft().y() + 60);
-        painter.drawText(textRect, m_infodata.partitionsize, option1);
-        textRect.moveTo(rect.width() - 260, rect.topLeft().y() + 110);
-        painter.drawText(textRect, m_infodata.syslabel, option1);
+        painter.setPen(textColor);
+        QRect textRect1 = QRect(curRect.width() / 2 - 275, curRect.topLeft().y() + 10, 257, 40);
+        painter.drawText(textRect1, m_infoData.m_mountpoints, option);
+        textRect.moveTo(curRect.width() / 2 - 260, curRect.topLeft().y() + 62);
+        painter.drawText(textRect, m_infoData.m_unused, option1);
+        textRect.moveTo(curRect.width() / 2 - 260, curRect.topLeft().y() + 113);
+        painter.drawText(textRect, m_infoData.m_used, option1);
+        textRect.moveTo(curRect.width() - 260, curRect.topLeft().y() + 10);
+        painter.drawText(textRect, m_infoData.m_fstype, option1);
+        textRect.moveTo(curRect.width() - 260, curRect.topLeft().y() + 60);
+        painter.drawText(textRect, m_infoData.m_partitionSize, option1);
+        textRect.moveTo(curRect.width() - 260, curRect.topLeft().y() + 110);
+        painter.drawText(textRect, m_infoData.m_sysLabel, option1);
         painter.restore();
     } else if (themeType == DGuiApplicationHelper::DarkType) {
         m_parentPb = DApplicationHelper::instance()->palette(this);
         QColor color = m_parentPb.color(DPalette::Normal, DPalette::TextLively);
         color.setAlphaF(0.05);
         painter.setBrush(QBrush(color));
-        QColor outsidecolor(qRgba(0, 0, 0, 1));
-        outsidecolor.setAlphaF(0.1);
-        painter.setPen(outsidecolor);
-        QRect rect = this->rect();
-        rect.setWidth(rect.width() - 1);
-        rect.setHeight(rect.height() - 1);
-        painter.drawRoundedRect(rect, 15, 15);
-        QRect paintRect = QRect(rect.topLeft().x() + 1, rect.topLeft().y() + (rect.height() / 3), rect.width() - 2, rect.height() / 3);
-        QColor midcolor = QColor("#252525");
-        painter.setBrush(QBrush(midcolor));
-        painter.fillRect(paintRect, midcolor);
-        painter.drawLine(paintRect.width() / 2, rect.topLeft().y(), paintRect.width() / 2, rect.bottomLeft().y());
-        QRect textRect = QRect(rect.width() / 2 - 400, rect.topLeft().y() + 10, 240, 35);
+        QColor outsideColor(qRgba(0, 0, 0, 1));
+        outsideColor.setAlphaF(0.1);
+        painter.setPen(outsideColor);
+        QRect curRect = rect();
+        curRect.setWidth(curRect.width() - 1);
+        curRect.setHeight(curRect.height() - 1);
+        painter.drawRoundedRect(curRect, 15, 15);
+        QRect paintRect = QRect(curRect.topLeft().x() + 1, curRect.topLeft().y() + (curRect.height() / 3), curRect.width() - 2, curRect.height() / 3);
+        QColor midColor = QColor("#252525");
+        painter.setBrush(QBrush(midColor));
+        painter.fillRect(paintRect, midColor);
+        painter.drawLine(paintRect.width() / 2, curRect.topLeft().y(), paintRect.width() / 2, curRect.bottomLeft().y());
+        QRect textRect = QRect(curRect.width() / 2 - 400, curRect.topLeft().y() + 10, 240, 35);
         QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
-        QColor textcolor = this->palette().color(DPalette::Normal, DPalette::WindowText);
+        QColor textColor = palette().color(DPalette::Normal, DPalette::WindowText);
         QTextOption option;
         option.setTextDirection(Qt::LeftToRight);
         option.setAlignment(Qt::AlignRight);
         QTextOption option1;
         option1.setAlignment(Qt::AlignRight);
-        painter.setPen(textcolor);
-        QRect textRect1 = QRect(rect.width() / 2 - 275, rect.topLeft().y() + 10, 257, 40);
-        painter.drawText(textRect1, m_infodata.mountpoints, option);
-        textRect.moveTo(rect.width() / 2 - 260, rect.topLeft().y() + 62);
-        painter.drawText(textRect, m_infodata.unused, option1);
-        textRect.moveTo(rect.width() / 2 - 260, rect.topLeft().y() + 113);
-        painter.drawText(textRect, m_infodata.used, option1);
-        textRect.moveTo(rect.width() - 260, rect.topLeft().y() + 10);
-        painter.drawText(textRect, m_infodata.fstype, option1);
-        textRect.moveTo(rect.width() - 260, rect.topLeft().y() + 60);
-        painter.drawText(textRect, m_infodata.partitionsize, option1);
-        textRect.moveTo(rect.width() - 260, rect.topLeft().y() + 110);
-        painter.drawText(textRect, m_infodata.syslabel, option1);
+        painter.setPen(textColor);
+        QRect textRect1 = QRect(curRect.width() / 2 - 275, curRect.topLeft().y() + 10, 257, 40);
+        painter.drawText(textRect1, m_infoData.m_mountpoints, option);
+        textRect.moveTo(curRect.width() / 2 - 260, curRect.topLeft().y() + 62);
+        painter.drawText(textRect, m_infoData.m_unused, option1);
+        textRect.moveTo(curRect.width() / 2 - 260, curRect.topLeft().y() + 113);
+        painter.drawText(textRect, m_infoData.m_used, option1);
+        textRect.moveTo(curRect.width() - 260, curRect.topLeft().y() + 10);
+        painter.drawText(textRect, m_infoData.m_fstype, option1);
+        textRect.moveTo(curRect.width() - 260, curRect.topLeft().y() + 60);
+        painter.drawText(textRect, m_infoData.m_partitionSize, option1);
+        textRect.moveTo(curRect.width() - 260, curRect.topLeft().y() + 110);
+        painter.drawText(textRect, m_infoData.m_sysLabel, option1);
         painter.restore();
     }
 }
@@ -249,11 +253,11 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)//绘制首页信息展示表�
 void DmFrameWidget::resizeEvent(QResizeEvent *event)
 {
     //实时获取整体的大小
-    this->QWidget::resizeEvent(event);
-    d_width = this->width();
+    QWidget::resizeEvent(event);
+    m_width = width();
     setFrameData();
 }
-void DmFrameWidget::slothandleChangeTheme()
+void DmFrameWidget::onHandleChangeTheme()
 {
     m_parentPb = Dtk::Gui::DGuiApplicationHelper::instance()->applicationPalette();
 }

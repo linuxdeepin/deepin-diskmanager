@@ -133,7 +133,7 @@ void DiskInfoDisplayDialog::initConnections()
 void DiskInfoDisplayDialog::onExportButtonClicked()
 {
     //文件保存路径
-    QString fileDirPath = QFileDialog::getSaveFileName(this, tr("Save File"), tr("DiskInfo.txt"), tr("Text files (*.txt)"));// 文件保存   磁盘信息   文件类型
+    QString fileDirPath = QFileDialog::getSaveFileName(this, tr("Save File"), "DiskInfo.txt", tr("Text files (*.txt)"));// 文件保存   磁盘信息   文件类型
     if (fileDirPath.isEmpty()) {
         return;
     }

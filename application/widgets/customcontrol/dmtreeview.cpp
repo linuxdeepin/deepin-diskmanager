@@ -1,32 +1,41 @@
-﻿/*
-* Copyright (C) 2019 ~ 2020 Uniontech Software Technology Co.,Ltd.
-*
-* Author:     linxun <linxun@uniontech.com>
-*
-* Maintainer: linxun <linxun@uniontech.com>
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+﻿/**
+ * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ *
+ * @file dmtreeview.cpp
+ *
+ * @brief 实现树状图
+ *
+ * @date 2020-09-18 10:50
+ *
+ * Author: yuandandan  <yuandandan@uniontech.com>
+ *
+ * Maintainer: yuandandan  <yuandandan@uniontech.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 #include "dmtreeview.h"
+
 #include <QDebug>
+
 DmTreeview::DmTreeview(QWidget *parent)
     : DTreeView(parent)
 {
     initUI();
-    initmodel();
-    initdelegate();
+    initModel();
+    initDelegate();
 }
+
 void DmTreeview::initUI()
 {
     setFrameShape(QFrame::NoFrame);
@@ -40,36 +49,41 @@ void DmTreeview::initUI()
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     /* setAttribute(Qt::WA_TranslucentBackground)*/; //背景透明
 }
-void DmTreeview::additem(QStandardItem *item, DiskInfoData &data, int flag)
+
+void DmTreeview::addItem(QStandardItem *item, DiskInfoData &data, int flag)
 {
-    QStandardItem *pItem = new QStandardItem(data.diskpath);
-    pItem->setData(QVariant::fromValue((data)), Qt::UserRole + 1);
-    item->appendRow(pItem);
+    QStandardItem *standardItem = new QStandardItem(data.m_diskPath);
+    standardItem->setData(QVariant::fromValue((data)), Qt::UserRole + 1);
+    item->appendRow(standardItem);
     if (flag == 0) {
         setExpanded(m_model->index(0, 0), true);
     } else {
 
     }
 }
-QStandardItem *DmTreeview::addtopitem(DiskInfoData &data)
+
+QStandardItem *DmTreeview::addTopItem(DiskInfoData &data)
 {
-    QStandardItem *pItem = new QStandardItem;
-    pItem->setData(QVariant::fromValue(data), Qt::UserRole + 1);
-    m_model->appendRow(pItem);
-    return pItem;
+    QStandardItem *item = new QStandardItem;
+    item->setData(QVariant::fromValue(data), Qt::UserRole + 1);
+    m_model->appendRow(item);
+    return item;
 }
-void DmTreeview::initmodel()
+
+void DmTreeview::initModel()
 {
     m_model = new QStandardItemModel(this);
-    m_pSortViewFilter = new QSortFilterProxyModel(this);
+    m_sortViewFilter = new QSortFilterProxyModel(this);
     this->setModel(m_model);
 }
-void DmTreeview::initdelegate()
+
+void DmTreeview::initDelegate()
 {
     m_delegate = new DmTreeviewDelegate(this);
     this->setItemDelegate(m_delegate);
 }
-QStandardItem *DmTreeview::getcuritem()//获取当前ｉｔｅｍ
+
+QStandardItem *DmTreeview::getCurItem()//获取当前ｉｔｅｍ
 {
     QModelIndex index = currentIndex();
     if (!index.isValid()) {
@@ -78,6 +92,7 @@ QStandardItem *DmTreeview::getcuritem()//获取当前ｉｔｅｍ
         return m_model->itemFromIndex(index);
     }
 }
+
 QStandardItem *DmTreeview::getModelByIndex(const QModelIndex &index)
 {
     if (index.isValid()) {
@@ -85,94 +100,106 @@ QStandardItem *DmTreeview::getModelByIndex(const QModelIndex &index)
     }
     return nullptr;
 }
+
 void DmTreeview::currentChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(previous);
     DiskInfoData data = current.data(Qt::UserRole + 1).value<DiskInfoData>();
-    qDebug() << data.diskpath << data.disksize << data.partitionsize << data.partitonpath << data.level << data.used << data.unused << data.start << data.end << data.fstype << data.mountpoints << data.syslabel;
+    qDebug() << data.m_diskPath << data.m_diskSize << data.m_partitionSize << data.m_partitonPath << data.m_level << data.m_used << data.m_unused << data.m_start << data.m_end << data.m_fstype << data.m_mountpoints << data.m_sysLabel;
+
     curNum = current.row();
     diskNum = current.parent().row();
-    emit sigselectitem(current);
-    emit sigCurSelectChanged(data.diskpath, data.partitonpath, data.start, data.end);
-    diskSize = data.disksize;
+
+    emit selectItem(current);
+    emit curSelectChanged(data.m_diskPath, data.m_partitonPath, data.m_start, data.m_end);
+
+    diskSize = data.m_diskSize;
 
 }
+
 void DmTreeview::mousePressEvent(QMouseEvent *event)
 {
     DTreeView::mousePressEvent(event);
+
     if (event->button() == Qt::LeftButton) {
         setExpanded(currentIndex(), !isExpanded(currentIndex()));
     }
 }
-void DmTreeview::addItem(DmDiskinfoBox *infobox, int flag, QStandardItem *pcurItem)//增加节点
+
+void DmTreeview::addItem(DmDiskinfoBox *infoBox, int flag, QStandardItem *purItem)//增加节点
 {
-    QStandardItem *t_item = nullptr;
+    QStandardItem *item = nullptr;
     DiskInfoData data;
-    data.disksize = infobox->m_disksize;
-    data.diskpath = infobox->m_diskpath;
-    data.partitionsize = infobox->m_partitionsize;
-    data.partitonpath = infobox->m_partitionpath;
-    data.used = infobox->m_used;
-    data.unused = infobox->m_unused;
-    data.start = infobox->m_start;
-    data.end = infobox->m_end;
-    data.sectors_unallocated = infobox->m_sectors_unallocated;
-    data.fstype = infobox->m_fstype;
-    data.syslabel = infobox->m_syslabel;
-    data.mountpoints = infobox->m_mountpoints;
-    data.flag = infobox->m_flag;
-    if (infobox->m_level <= 0) {
-        data.level = 0;
-        t_item = this->addtopitem(data);
+    data.m_diskSize = infoBox->m_diskSize;
+    data.m_diskPath = infoBox->m_diskPath;
+    data.m_partitionSize = infoBox->m_partitionSize;
+    data.m_partitonPath = infoBox->m_partitionPath;
+    data.m_used = infoBox->m_used;
+    data.m_unused = infoBox->m_unused;
+    data.m_start = infoBox->m_start;
+    data.m_end = infoBox->m_end;
+    data.m_sectorsUnallocated = infoBox->m_sectorsUnallocated;
+    data.m_fstype = infoBox->m_fstype;
+    data.m_sysLabel = infoBox->m_syslabel;
+    data.m_mountpoints = infoBox->m_mountpoints;
+    data.m_flag = infoBox->m_flag;
+
+    if (infoBox->m_level <= 0) {
+        data.m_level = 0;
+        item = addTopItem(data);
     } else {
-        if (pcurItem == nullptr) {
-            pcurItem = this->getcuritem();
+        if (purItem == nullptr) {
+            purItem = getCurItem();
         }
-        if (pcurItem == nullptr) {
+
+        if (purItem == nullptr) {
             return;
         }
-        QVariant var = pcurItem->index().data(Qt::UserRole + 1);
+
+        QVariant var = purItem->index().data(Qt::UserRole + 1);
         DiskInfoData parent_data = var.value<DiskInfoData>();
-        data.level = parent_data.level + 1;
-        this->additem(pcurItem, data, flag);
+        data.m_level = parent_data.m_level + 1;
+
+        addItem(purItem, data, flag);
     }
 
-    foreach (auto sub, infobox->childs) {
-        addSubItem(sub, t_item, flag);
+    foreach (auto sub, infoBox->m_childs) {
+        addSubItem(sub, item, flag);
     }
 }
 
-void DmTreeview::addTopItem(DmDiskinfoBox *infobox, int flag)
+void DmTreeview::addTopItem(DmDiskinfoBox *mailBox, int flag)
 {
-    infobox->m_level = 0;
-    addItem(infobox, flag);
+    mailBox->m_level = 0;
+    addItem(mailBox, flag);
 }
 
-void DmTreeview::addSubItem(DmDiskinfoBox *infobox, QStandardItem *pcurItem, int flag)
+void DmTreeview::addSubItem(DmDiskinfoBox *mailBox, QStandardItem *curItem, int flag)
 {
-    if (infobox->m_level < 1) {
-        infobox->m_level = 0;
+    if (mailBox->m_level < 1) {
+        mailBox->m_level = 0;
     }
-    addItem(infobox, flag, pcurItem);
+
+    addItem(mailBox, flag, curItem);
 }
+
 QModelIndex DmTreeview::setDefaultdmItem()//设置默认选中节点
 {
     //QModelIndex index = m_pSortViewFilter->index(0, 0, getRootItemIndex());
-    this->setCurrentIndex(model()->index(0, 0).child(0, 0));
+    setCurrentIndex(model()->index(0, 0).child(0, 0));
     setExpanded(model()->index(0, 0), true);
+
     return model()->index(0, 0);
 }
 
 void DmTreeview::setRefreshItem(int devicenum, int num)//设置刷新后默认选择操作分区
 {
-
-    this->setCurrentIndex(model()->index(devicenum, 0).child(num, 0));
+    setCurrentIndex(model()->index(devicenum, 0).child(num, 0));
     setExpanded(model()->index(devicenum, 0), true);
 }
 
 int DmTreeview::currentNum()//返回当前选中分区
 {
-
     return curNum;
 }
 
@@ -180,15 +207,18 @@ int DmTreeview::currentTopNum()
 {
     return diskNum;
 }
+
 QStandardItem *DmTreeview::getRootItem()//获取根节点
 {
     return m_model->item(0);
 }
+
 QModelIndex DmTreeview::getRootItemIndex()
 {
-    return m_pSortViewFilter->mapFromSource(getRootItem()->index());
+    return m_sortViewFilter->mapFromSource(getRootItem()->index());
 }
+
 void DmTreeview::sort()
 {
-    return m_pSortViewFilter->sort(0, Qt::DescendingOrder);
+    return m_sortViewFilter->sort(0, Qt::DescendingOrder);
 }

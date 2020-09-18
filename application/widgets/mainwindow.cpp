@@ -44,7 +44,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : DMainWindow(parent)
 {
-    if (false == DeviceInfoParser::Instance().getRootPassword()) {
+    if (false == DeviceInfoParser::instance().getRootPassword()) {
         exit(-1);
     }
 

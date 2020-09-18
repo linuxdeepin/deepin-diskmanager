@@ -1,7 +1,7 @@
 /**
  * @copyright 2020-2020 Uniontech Technology Co., Ltd.
  *
- * @file titlewidget.h
+ * @file titlewidget.cpp
  *
  * @brief 标题功能图标按钮类，主要实现功能图标按钮展示以及点击操作
  *

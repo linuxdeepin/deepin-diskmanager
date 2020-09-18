@@ -1,6 +1,34 @@
+/**
+ * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ *
+ * @file resizedialog.cpp
+ *
+ * @brief 实现分区空间调整
+ *
+ * @date 2020-09-17 09:25
+ *
+ * Author: yuandandan  <yuandandan@uniontech.com>
+ *
+ * Maintainer: yuandandan  <yuandandan@uniontech.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 #include "resizedialog.h"
 #include "partedproxy/dmdbushandler.h"
+
 #include <DFontSizeManager>
+
 #include <QHBoxLayout>
 #include <QRegExpValidator>
 #include <QRegExp>
@@ -16,122 +44,123 @@ ResizeDialog::ResizeDialog(QWidget *parent)
 void ResizeDialog::initUi()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
+    QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
     setTitle(tr("Resize %1").arg(info.path));
     DLabel *tipLabel = new DLabel(tr("It will resize the partitions on the disk"), this);
     tipLabel->setWordWrap(true);
     tipLabel->setAlignment(Qt::AlignCenter);
     DFontSizeManager::instance()->bind(tipLabel, DFontSizeManager::T6);
 
-    QHBoxLayout *hlayout = new QHBoxLayout;
-    pedit = new DLineEdit(this);
+    QHBoxLayout *hLayout = new QHBoxLayout;
+    m_lineEdit = new DLineEdit(this);
     QRegExp regexp("^[0-9]*\\.[0-9]{1,2}");
     QRegExpValidator *pvalidaor = new QRegExpValidator(regexp, this);
-    pedit->lineEdit()->setValidator(pvalidaor);
-    pcombo = new DComboBox(this);
-    plabel = new DLabel(this);
-    plabel->setText(tr("Reserved size:"));
-    plabel->setAlignment(Qt::AlignLeft | Qt::AlignCenter);
-    DFontSizeManager::instance()->bind(plabel, DFontSizeManager::T6);
+    m_lineEdit->lineEdit()->setValidator(pvalidaor);
+
+    m_comboBox = new DComboBox(this);
+    m_label = new DLabel(this);
+    m_label->setText(tr("Reserved size:"));
+    m_label->setAlignment(Qt::AlignLeft | Qt::AlignCenter);
+    DFontSizeManager::instance()->bind(m_label, DFontSizeManager::T6);
     QStringList stritems;
     stritems << "MiB"
              << "GiB";
-    pcombo->addItems(stritems);
-    pcombo->setCurrentIndex(0);
-    pcombo->setFixedWidth(70);
-    hlayout->addWidget(plabel);
-    hlayout->addWidget(pedit);
-    hlayout->addWidget(pcombo);
+    m_comboBox->addItems(stritems);
+    m_comboBox->setCurrentIndex(0);
+    m_comboBox->setFixedWidth(70);
+    hLayout->addWidget(m_label);
+    hLayout->addWidget(m_lineEdit);
+    hLayout->addWidget(m_comboBox);
 
     mainLayout->addWidget(tipLabel);
-    mainLayout->addLayout(hlayout);
+    mainLayout->addLayout(hLayout);
 
     addButton(tr("Cancel"), false, ButtonNormal);
-    okcode = addButton(tr("Confirm"), true, ButtonRecommend);
+    m_okCode = addButton(tr("Confirm"), true, ButtonRecommend);
 }
 
 void ResizeDialog::initConnection()
 {
-    connect(this, &ResizeDialog::buttonClicked, this, &ResizeDialog::slotbuttonClicked);
-    connect(pcombo, SIGNAL(currentIndexChanged(int)), this, SLOT(slotComboSelectedChanged(int)));
-    connect(pedit, &DLineEdit::textChanged, this, &ResizeDialog::slotEditTextChanged);
+    connect(this, &ResizeDialog::buttonClicked, this, &ResizeDialog::onButtonClicked);
+    connect(m_comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onComboSelectedChanged(int)));
+    connect(m_lineEdit, &DLineEdit::textChanged, this, &ResizeDialog::onEditTextChanged);
 }
 
-void ResizeDialog::slotbuttonClicked(int index, const QString &)
+void ResizeDialog::onButtonClicked(int index, const QString &)
 {
-    if (okcode == index) {
-        auto phandler = DMDbusHandler::instance();
-        Q_ASSERT(phandler != nullptr);
-        bool canexpand = false;
-        Sector expandspace = 0;
-        PartitionInfo curinfo = phandler->getCurPartititonInfo();
+    if (m_okCode == index) {
+        auto handler = DMDbusHandler::instance();
+        Q_ASSERT(handler != nullptr);
+        bool canExpand = false;
+        Sector expandSpace = 0;
+        PartitionInfo curInfo = handler->getCurPartititonInfo();
         PartitionInfo next;
-        PartitionVec arrinfo = phandler->getCurDevicePartitionArr();
+        PartitionVec arrInfo = handler->getCurDevicePartitionArr();
         int index = 0;
-        for (index = 0; index < arrinfo.size(); index++) {
-            PartitionInfo tem = arrinfo.at(index);
-            if (curinfo == tem && index + 1 < arrinfo.size()) {
-                next = arrinfo.at(index + 1);
+        for (index = 0; index < arrInfo.size(); index++) {
+            PartitionInfo tem = arrInfo.at(index);
+            if (curInfo == tem && index + 1 < arrInfo.size()) {
+                next = arrInfo.at(index + 1);
                 if (next.type == TYPE_UNALLOCATED) {
-                    QString strspace = pedit->text();
+                    QString space = m_lineEdit->text();
                     double total = 0;
                     //目前使用GB为单位精度损失太大，如果扩容全部空闲分区会出现空隙，按当前单位转换后如果差值小于0.01默认全选
-                    if (0 == pcombo->currentIndex()) {
-                        total = Utils::sector_to_unit(next.get_sector_length(), curinfo.sector_size, UNIT_MIB);
-                        expandspace = strspace.toFloat() * (MEBIBYTE / curinfo.sector_size);
-                        if (strspace.toFloat() - total >= 0.01) {
+                    if (0 == m_comboBox->currentIndex()) {
+                        total = Utils::sector_to_unit(next.get_sector_length(), curInfo.sector_size, UNIT_MIB);
+                        expandSpace = static_cast<Sector>(space.toFloat() * (MEBIBYTE / curInfo.sector_size));
+                        if (space.toDouble() - total >= 0.01) {
                             break;
                         }
-                        if (total - strspace.toFloat() < 0.01)
-                            expandspace = next.get_sector_length();
+                        if (total - space.toDouble() < 0.01)
+                            expandSpace = next.get_sector_length();
 
                     } else {
-                        total = Utils::sector_to_unit(next.get_sector_length(), curinfo.sector_size, UNIT_GIB);
-                        expandspace = strspace.toFloat() * (GIBIBYTE / curinfo.sector_size);
-                        if (strspace.toFloat() - total >= 0.01) {
+                        total = Utils::sector_to_unit(next.get_sector_length(), curInfo.sector_size, UNIT_GIB);
+                        expandSpace = static_cast<Sector>(space.toFloat() * (GIBIBYTE / curInfo.sector_size));
+                        if (space.toDouble() - total >= 0.01) {
                             break;
                         }
-                        if (total - strspace.toFloat() < 0.01)
-                            expandspace = next.get_sector_length();
+                        if (total - space.toDouble() < 0.01)
+                            expandSpace = next.get_sector_length();
                     }
 
-                    qDebug() << curinfo.sector_size * 1.0 << GIBIBYTE / curinfo.sector_size << GIBIBYTE / (curinfo.sector_size * 1.0);
-                    qDebug() << Utils::format_size(expandspace, curinfo.sector_size) << Utils::format_size(next.get_sector_length(), curinfo.sector_size);
-                    canexpand = true;
+                    qDebug() << curInfo.sector_size * 1.0 << GIBIBYTE / curInfo.sector_size << GIBIBYTE / (curInfo.sector_size * 1.0);
+                    qDebug() << Utils::format_size(expandSpace, curInfo.sector_size) << Utils::format_size(next.get_sector_length(), curInfo.sector_size);
+                    canExpand = true;
                     index += 1;
                     break;
                 }
             }
         }
-        if (!canexpand) {
-            pedit->setAlertMessageAlignment(Qt::AlignTop);
-            pedit->showAlertMessage(tr("Space limit exceeded"), mainFrame);
-            pedit->setAlert(true);
+        if (!canExpand) {
+            m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
+            m_lineEdit->showAlertMessage(tr("Space limit exceeded"), m_mainFrame);
+            m_lineEdit->setAlert(true);
             return ;
 
         } else {
-            PartitionInfo newinfo = curinfo;
-            qDebug() << Utils::format_size(newinfo.sector_end - newinfo.sector_start, curinfo.sector_size) << next.sector_start << next.sector_end << expandspace << next.get_sector_length();
+            PartitionInfo newInfo = curInfo;
+            qDebug() << Utils::format_size(newInfo.sector_end - newInfo.sector_start, curInfo.sector_size) << next.sector_start << next.sector_end << expandSpace << next.get_sector_length();
             //  newinfo.sector_end = expandspace > next.get_sector_length() ? next.sector_end : curinfo.sector_end + expandspace;
 
-            newinfo.sector_end = expandspace + next.sector_start > next.sector_end ? next.sector_end : next.sector_start + expandspace;
+            newInfo.sector_end = expandSpace + next.sector_start > next.sector_end ? next.sector_end : next.sector_start + expandSpace;
 
             Sector diff = 0;
-            diff = (newinfo.sector_end + 1) % (MEBIBYTE / newinfo.sector_size);
+            diff = (newInfo.sector_end + 1) % (MEBIBYTE / newInfo.sector_size);
             if (diff)
-                newinfo.sector_end -= diff;
+                newInfo.sector_end -= diff;
             else {
                 // If this is a GPT partition table and the partition ends less than 34 sectors
                 // from the end of the device, then reserve at least a mebibyte for the backup
                 // partition table.
-                DeviceInfo device = phandler->getCurDeviceInfo();
-                if (device.disktype == "gpt" && device.length - newinfo.sector_end < 34)
-                    newinfo.sector_end -= MEBIBYTE / newinfo.sector_size;
+                DeviceInfo device = handler->getCurDeviceInfo();
+                if (device.disktype == "gpt" && device.length - newInfo.sector_end < 34)
+                    newInfo.sector_end -= MEBIBYTE / newInfo.sector_size;
             }
 
-            qDebug() << Utils::format_size(newinfo.sector_end - newinfo.sector_start, curinfo.sector_size) << newinfo.sector_start << newinfo.sector_end;
-            newinfo.alignment = ALIGN_MEBIBYTE; //ALIGN_MEBIBYTE;
-            phandler->resize(newinfo);
+            qDebug() << Utils::format_size(newInfo.sector_end - newInfo.sector_start, curInfo.sector_size) << newInfo.sector_start << newInfo.sector_end;
+            newInfo.alignment = ALIGN_MEBIBYTE; //ALIGN_MEBIBYTE;
+            handler->resize(newInfo);
             done(index);
         }
     } else {
@@ -139,25 +168,25 @@ void ResizeDialog::slotbuttonClicked(int index, const QString &)
     }
 }
 
-void ResizeDialog::slotComboSelectedChanged(int index)
+void ResizeDialog::onComboSelectedChanged(int index)
 {
-    QString strspace = pedit->text();
-    QString expandspace;
-    if (!strspace.isEmpty()) {
+    QString space = m_lineEdit->text();
+    QString expandSpace;
+    if (!space.isEmpty()) {
         if (index == 0) {
             //MiB
-            expandspace = QString().setNum(strspace.toFloat() * 1024.0, 'f', 2);
+            expandSpace = QString().setNum(space.toFloat() * 1024, 'f', 2);
 
         } else if (index == 1) {
             //GiB
-            expandspace = QString().setNum(strspace.toFloat() / 1024.0, 'f', 2);
+            expandSpace = QString().setNum(space.toFloat() / 1024, 'f', 2);
         }
-        pedit->setText(expandspace);
+        m_lineEdit->setText(expandSpace);
     }
 }
 
-void ResizeDialog::slotEditTextChanged(const QString &)
+void ResizeDialog::onEditTextChanged(const QString &)
 {
-    if (pedit->isAlert())
-        pedit->setAlert(false);
+    if (m_lineEdit->isAlert())
+        m_lineEdit->setAlert(false);
 }

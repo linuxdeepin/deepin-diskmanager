@@ -1,7 +1,7 @@
 /**
  * @copyright 2020-2020 Uniontech Technology Co., Ltd.
  *
- * @file formatedialog.h
+ * @file formatedialog.cpp
  *
  * @brief 格式化窗口类
  *
@@ -44,7 +44,7 @@ void FormateDialog::initUi()
 {
     this->setFixedSize(450, 300);
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
+    QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
     setTitle(tr("Format %1").arg(info.path));
     DLabel *tipLabel = new DLabel(tr("Formatting will erase all data on the disk, which cannot be undone"), this);
     tipLabel->setWordWrap(true);
@@ -84,7 +84,7 @@ void FormateDialog::initUi()
     mainLayout->addLayout(layoutFormat);
 
     addButton(tr("Cancel"), true, ButtonNormal);
-    okcode = addButton(tr("Format"), false, ButtonWarning);
+    m_okCode = addButton(tr("Format"), false, ButtonWarning);
 }
 
 void FormateDialog::initConnection()
@@ -95,7 +95,7 @@ void FormateDialog::initConnection()
 void FormateDialog::onButtonClicked(int index, const QString &text)
 {
     Q_UNUSED(text);
-    if (index == okcode) {
+    if (index == m_okCode) {
         DMDbusHandler::instance()->format(m_formatComboBox->currentText(), m_fileNameEdit->text());
     }
 }

@@ -39,7 +39,6 @@ DCORE_USE_NAMESPACE
 DTK_USE_NAMESPACE
 
 class QStandardItemModel;
-class DiskStandardItemModel;
 class DiskHealthDetectionDelegate;
 
 /**

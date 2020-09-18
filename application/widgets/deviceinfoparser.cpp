@@ -49,7 +49,7 @@ DeviceInfoParser::~DeviceInfoParser()
 bool DeviceInfoParser::getRootPassword()
 {
     bool res = runCmd("id -un");  // file path is fixed. So write cmd direct
-    if (res == true && standOutput_.trimmed() == "root") {
+    if (res == true && m_standOutput.trimmed() == "root") {
         return true;
     }
 
@@ -73,7 +73,7 @@ bool DeviceInfoParser::executeProcess(const QString &cmd)
     }
 
     runCmd("id -un");
-    if (standOutput_.trimmed() == "root") {
+    if (m_standOutput.trimmed() == "root") {
         return runCmd(cmd);
     }
 
@@ -88,18 +88,18 @@ bool DeviceInfoParser::runCmd(const QString &proxy)
 {
     QString key = "devicemanager";
     QString cmd = proxy;
-    QProcess process_;
+    QProcess process;
     int msecs = 10000;
     if (cmd.startsWith("pkexec deepin-diskmanager-authenticateProxy")) {
         cmd = proxy + QString(" ") + key;
         msecs = -1;
     }
 
-    process_.start(cmd);
+    process.start(cmd);
 
-    bool res = process_.waitForFinished(msecs);
-    standOutput_ = process_.readAllStandardOutput();
-    int exitCode = process_.exitCode();
+    bool res = process.waitForFinished(msecs);
+    m_standOutput = process.readAllStandardOutput();
+    int exitCode = process.exitCode();
     if (cmd.startsWith("pkexec deepin-diskmanager-authenticateProxy") && (exitCode == 127 || exitCode == 126)) {
         dError("Run \'" + cmd + "\' failed: Password Error! " + QString::number(exitCode) + "\n");
         return false;
@@ -114,9 +114,9 @@ bool DeviceInfoParser::runCmd(const QString &proxy)
 
 bool DeviceInfoParser::runCmd(const QStringList &cmdList)
 {
-    QProcess process_;
-    process_.start("/bin/bash", cmdList);
-    bool res = process_.waitForFinished(10000);
-    standOutput_ = process_.readAllStandardOutput();
+    QProcess process;
+    process.start("/bin/bash", cmdList);
+    bool res = process.waitForFinished(10000);
+    m_standOutput = process.readAllStandardOutput();
     return res;
 }

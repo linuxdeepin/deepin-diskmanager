@@ -35,23 +35,47 @@ class DeviceInfoParser: public QObject
     Q_OBJECT
 public:
 
-    static DeviceInfoParser &Instance()
+    /**
+     * @brief 单例对象
+     * @return 返回单例对象
+     */
+    static DeviceInfoParser &instance()
     {
-        static DeviceInfoParser _instance;
-        return _instance;
+        static DeviceInfoParser instance;
+        return instance;
     }
+
     DeviceInfoParser();
     ~DeviceInfoParser();
 
-
-
-
 public:
+    /**
+     * @brief 获取root密码
+     * @return true成功false失败
+     */
     bool getRootPassword();
+
+    /**
+     * @brief 调用外部程序
+     * @param cmd 程序名称
+     * @return true成功false失败
+     */
     bool executeProcess(const QString &cmd);
+
+    /**
+     * @brief 执行终端命令
+     * @param cmd 终端命令
+     * @return true成功false失败
+     */
     bool runCmd(const QString &cmd);
+
+    /**
+     * @brief 执行终端命令列表
+     * @param cmdList 终端命令列表
+     * @return true成功false失败
+     */
     bool runCmd(const QStringList &cmdList);
 
-    QString standOutput_;
+    QString m_standOutput;
 };
 

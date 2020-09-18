@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     } else {
         exit(0);
     }
-    QObject::connect(&a, &CusApplication::sighandleQuitAction, &w, &MainWindow::onHandleQuitAction);
+    QObject::connect(&a, &CusApplication::handleQuitActionChanged, &w, &MainWindow::onHandleQuitAction);
     w.show();
 
     Dtk::Widget::moveToCenter(&w);

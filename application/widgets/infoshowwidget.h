@@ -73,26 +73,25 @@ private:
     void initConnection();
 
 private slots:
+    /**
+     * @brief 当前选择分区信号响应的槽函数
+     */
     void onCurSelectChanged();
-    void onhandleChangeTheme();
+
+    /**
+     * @brief 主题切换信号响应的槽函数
+     */
+    void onHandleChangeTheme();
 
 private:
-    InfoTopFrame *m_pInfoTopFrame = nullptr;
-
-    DFrame *pframe = nullptr;
-    DFrame *pframemid = nullptr;
-    DmFrameWidget *pframebottom = nullptr;
-
-    DLabel *totaluseLabel = nullptr;
-    DLabel *usedLabel = nullptr;
-    DLabel *trueusedLabel = nullptr;
-    DTableView *tableview = nullptr;
-    SizeInfoWidget *m_infowidget = nullptr;
-    double m_allsize;
+    InfoTopFrame *m_infoTopFrame = nullptr;
+    DFrame *m_frame = nullptr;
+    DFrame *m_frameMid = nullptr;
+    DmFrameWidget *m_frameBottom = nullptr;
+    SizeInfoWidget *m_infoWidget = nullptr;
     double m_used;
     double m_noused;
-    DiskInfoData data;
-    DPalette m_parentPb;
+    DiskInfoData m_diskInfoData;
     QColor fillcolor;
     QColor fillcolor1;
 };

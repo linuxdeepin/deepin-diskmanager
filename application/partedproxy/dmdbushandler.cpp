@@ -1,7 +1,7 @@
 /**
  * @copyright 2020-2020 Uniontech Technology Co., Ltd.
  *
- * @file dmdbushandler.h
+ * @file dmdbushandler.cpp
  *
  * @brief 数据接口类，通过dbus与后端服务进行通信
  *

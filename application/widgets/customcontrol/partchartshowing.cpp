@@ -1,7 +1,7 @@
 /**
  * @copyright 2020-2020 Uniontech Technology Co., Ltd.
  *
- * @file partchartshowing.h
+ * @file partchartshowing.cpp
  *
  * @brief 分区占比图表显示类，主要实现新建分区图形绘制
  *

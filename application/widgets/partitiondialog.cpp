@@ -1,7 +1,7 @@
 /**
  * @copyright 2020-2020 Uniontech Technology Co., Ltd.
  *
- * @file partitiondialog.h
+ * @file partitiondialog.cpp
  *
  * @brief 是否创建分区选择窗口
  *
@@ -46,7 +46,7 @@ void PartitionDialog::initUi()
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
 
     setTitle(tr("Partition %1").arg(info.path));
-    QVBoxLayout *mainLayout = new QVBoxLayout(mainFrame);
+    QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
     DLabel *tipLabel = new DLabel(tr("It will increase the number of partitions on the disk"), this);
     tipLabel->setWordWrap(true);
     tipLabel->setAlignment(Qt::AlignCenter);
@@ -55,5 +55,5 @@ void PartitionDialog::initUi()
     mainLayout->addWidget(tipLabel);
 
     addButton(tr("Cancel"), false, ButtonNormal);
-    okcode = addButton(tr("Confirm"), true, ButtonRecommend);
+    m_okCode = addButton(tr("Confirm"), true, ButtonRecommend);
 }

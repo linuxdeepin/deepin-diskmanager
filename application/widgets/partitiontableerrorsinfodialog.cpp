@@ -58,7 +58,7 @@ void PartitionTableErrorsInfoDialog::initUI()
     palette1.setColor(DPalette::WindowText, color);
 
     m_Label = new DLabel;
-    m_Label->setText(tr("The partition table of disk  %1  has below errors:").arg(m_deviceInfo)); // 磁盘xxx存在下列分区表问题：
+    m_Label->setText(tr("The partition table of disk %1 has below errors:").arg(m_deviceInfo)); // 磁盘xxx存在下列分区表问题：
     DFontSizeManager::instance()->bind(m_Label, DFontSizeManager::T6, QFont::Normal);
     m_Label->setPalette(palette1);
 

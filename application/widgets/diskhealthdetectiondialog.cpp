@@ -26,7 +26,6 @@
  */
 #include "diskhealthdetectiondialog.h"
 #include "common.h"
-#include "diskstandarditemmodel.h"
 #include "diskhealthdetectiondelegate.h"
 #include "partedproxy/dmdbushandler.h"
 #include "messagebox.h"
@@ -280,7 +279,7 @@ void DiskHealthDetectionDialog::initUI()
     tableLayout->setContentsMargins(5, 0, 5, 0);
 
     DLabel *stateTipsLabel = new DLabel;
-    stateTipsLabel->setText(tr("Status:(G: Good | W: Warning | D: Damaged | U: Unknown)")); // 状态:(G: 良好 | W: 警告 | D: 损坏 | U: 未知)
+    stateTipsLabel->setText(tr("Status: (G: Good | W: Warning | D: Damaged | U: Unknown)")); // 状态:(G: 良好 | W: 警告 | D: 损坏 | U: 未知)
     DFontSizeManager::instance()->bind(stateTipsLabel, DFontSizeManager::T8, QFont::Normal);
     stateTipsLabel->setPalette(palette4);
 
@@ -309,7 +308,7 @@ void DiskHealthDetectionDialog::initConnections()
 void DiskHealthDetectionDialog::onExportButtonClicked()
 {
     //文件保存路径
-    QString fileDirPath = QFileDialog::getSaveFileName(this, tr("Save File"), tr("CheckHealthInfo.txt"), tr("Text files (*.txt)"));// 文件保存   硬盘健康检测信息   文件类型
+    QString fileDirPath = QFileDialog::getSaveFileName(this, tr("Save File"), "CheckHealthInfo.txt", tr("Text files (*.txt)"));// 文件保存   硬盘健康检测信息   文件类型
     if (fileDirPath.isEmpty()) {
         return;
     }

@@ -1,22 +1,33 @@
-/*
-* Copyright (C) 2019 ~ 2019 Deepin Technology Co., Ltd.
-*
-* Author:     wangzhixuan <wangzhixuan@uniontech.com>
-* Maintainer: wangzhixuan <wangzhixuan@uniontech.com>
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* any later version.
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-* You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+/**
+ * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ *
+ * @file infotopframe.cpp
+ *
+ * @brief 主界面右侧信息展示上部分实现类
+ *
+ * @date 2020-09-17 14:05
+ *
+ * Author: yuandandan  <yuandandan@uniontech.com>
+ *
+ * Maintainer: yuandandan  <yuandandan@uniontech.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
 #include "infotopframe.h"
 #include "partedproxy/dmdbushandler.h"
 #include "common.h"
+
 #include <DPalette>
 #include <DApplicationHelper>
 #include <DFontSizeManager>
@@ -27,83 +38,77 @@ InfoTopFrame::InfoTopFrame(DWidget *parent)
     setFixedHeight(110);
     setBackgroundRole(DPalette::ItemBackground);
 
-    mainLayout = new QHBoxLayout();
-    mainLayout->setContentsMargins(30, 0, 20, 0);
-    this->setLayout(mainLayout);
+    m_mainLayout = new QHBoxLayout();
+    m_mainLayout->setContentsMargins(30, 0, 20, 0);
+    setLayout(m_mainLayout);
 
-    picLabel = new DLabel(this);
-    picLabel->setPixmap(Common::getIcon("labeldisk").pixmap(85, 85));
-    picLabel->setMinimumSize(85, 85);
-    mainLayout->addWidget(picLabel);
+    m_pictureLabel = new DLabel(this);
+    m_pictureLabel->setPixmap(Common::getIcon("labeldisk").pixmap(85, 85));
+    m_pictureLabel->setMinimumSize(85, 85);
+    m_mainLayout->addWidget(m_pictureLabel);
 
-    InitLeftInfo();
+    initLeftInfo();
 
-    mainLayout->addStretch();
+    m_mainLayout->addStretch();
 
-    InitRightInfo();
+    initRightInfo();
 }
 
-void InfoTopFrame::InitRightInfo()
+void InfoTopFrame::initRightInfo()
 {
-    QVBoxLayout *tLayout = new QVBoxLayout();
+    m_allNameLabel = new DLabel(tr("Capacity"), this);
+    m_allNameLabel->setAlignment(Qt::AlignRight);
+    DFontSizeManager::instance()->bind(m_allNameLabel, DFontSizeManager::T6);
 
-    tLayout->addStretch();
+    m_allMemoryLabel = new DLabel(this);
+    m_allMemoryLabel->setAlignment(Qt::AlignRight);
+    DFontSizeManager::instance()->bind(m_allMemoryLabel, DFontSizeManager::T1);
 
-    allnameLabel = new DLabel(tr("Capacity"), this);
-    allnameLabel->setAlignment(Qt::AlignRight);
-    DFontSizeManager::instance()->bind(allnameLabel, DFontSizeManager::T6);
+    QVBoxLayout *layout = new QVBoxLayout();
+    layout->addStretch();
+    layout->addWidget(m_allNameLabel);
+    layout->addWidget(m_allMemoryLabel);
+    layout->addStretch();
 
-    allmemoryLabel = new DLabel(this);
-    allmemoryLabel->setAlignment(Qt::AlignRight);
-    DFontSizeManager::instance()->bind(allmemoryLabel, DFontSizeManager::T1);
-
-    tLayout->addWidget(allnameLabel);
-    tLayout->addWidget(allmemoryLabel);
-
-    tLayout->addStretch();
-
-    mainLayout->addLayout(tLayout);
+    m_mainLayout->addLayout(layout);
 }
 
-void InfoTopFrame::InitLeftInfo()
+void InfoTopFrame::initLeftInfo()
 {
-    QVBoxLayout *tLayout = new QVBoxLayout();
-
-    tLayout->addStretch();
-
-    nameLabel = new DLabel(this);
+    m_nameLabel = new DLabel(this);
     QFont nameFont = DFontSizeManager::instance()->get(DFontSizeManager::T5);
     nameFont.setBold(true);
-    nameLabel->setFont(nameFont);
+    m_nameLabel->setFont(nameFont);
 
-    tLayout->addWidget(nameLabel);
+    m_typeLabel = new DLabel(this);
+    DFontSizeManager::instance()->bind(m_typeLabel, DFontSizeManager::T8);
 
-    typeLabel = new DLabel(this);
-    DFontSizeManager::instance()->bind(typeLabel, DFontSizeManager::T8);
-    tLayout->addWidget(typeLabel);
+    DPalette palette = DApplicationHelper::instance()->palette(m_typeLabel);
+    palette.setBrush(DPalette::Text, palette.textTips());
+    DApplicationHelper::instance()->setPalette(m_typeLabel, palette);
 
-    DPalette pa = DApplicationHelper::instance()->palette(typeLabel);
-    pa.setBrush(DPalette::Text, pa.textTips());
-    DApplicationHelper::instance()->setPalette(typeLabel, pa);
+    QVBoxLayout *layout = new QVBoxLayout();
+    layout->addStretch();
+    layout->addWidget(m_nameLabel);
+    layout->addWidget(m_typeLabel);
+    layout->addStretch();
 
-    tLayout->addStretch();
-
-    mainLayout->addLayout(tLayout);
+    m_mainLayout->addLayout(layout);
 }
 
 void InfoTopFrame::setShowDiskInfo()
 {
     auto info = DMDbusHandler::instance()->getCurPartititonInfo();
 
-    nameLabel->setText(info.path);
+    m_nameLabel->setText(info.path);
     if ("unallocated" == info.path) {
-        nameLabel->setText("ocated");
+        m_nameLabel->setText("ocated");
     }
 
-    QString s_disksize = Utils::format_size(info.sector_end - info.sector_start,
+    QString diskSize = Utils::format_size(info.sector_end - info.sector_start,
                                             info.sector_size);
-    allmemoryLabel->setText(s_disksize);
+    m_allMemoryLabel->setText(diskSize);
 
-    QString s_diskType = Utils::FSTypeToString(static_cast<FSType>(info.fstype));
-    typeLabel->setText(tr("File system") + ": " + s_diskType);
+    QString diskType = Utils::FSTypeToString(static_cast<FSType>(info.fstype));
+    m_typeLabel->setText(tr("File system") + ": " + diskType);
 }

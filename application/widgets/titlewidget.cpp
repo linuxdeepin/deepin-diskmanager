@@ -100,7 +100,7 @@ void TitleWidget::showPartInfoWidget()
 
     if (dlg.exec() == 1) {
         if (TYPE_UNPARTITIONED == info.type && FS_UNALLOCATED == info.fstype) {
-            qDebug() << QString("No partition table found on device %1").arg(info.device_path);
+            qDebug() << QString("No partition table found on device %1").arg(info.m_devicePath);
             qDebug() << "A partition table is required before partitions can be added";
             //ToDo:empty device create partition table
             return;
@@ -185,7 +185,7 @@ void TitleWidget::updateBtnStatus()
     }
 
     QMap<QString, QString> isExistUnallocated = DMDbusHandler::instance()->getIsExistUnallocated();
-    if (isExistUnallocated.value(info.device_path) == "false") {
+    if (isExistUnallocated.value(info.m_devicePath) == "false") {
         m_btnResize->setDisabled(true);
     }
 }

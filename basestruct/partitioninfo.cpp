@@ -1,4 +1,32 @@
+/**
+ * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ *
+ * @file partitioninfo.cpp
+ *
+ * @brief 分区信息类
+ *
+ * @date 2020-09-21 14:49
+ *
+ * Author: liweigang  <liweigang@uniontech.com>
+ *
+ * Maintainer: liweigang  <liweigang@uniontech.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "partitioninfo.h"
+
 #include <QDBusArgument>
 
 PartitionInfo::PartitionInfo()
@@ -7,14 +35,14 @@ PartitionInfo::PartitionInfo()
     , fs_readonly(false)
 {
     //inside_extended = busy = fs_readonly = false;
-    device_path = uuid = name = path = filesystem_label = "";
-    partition_number = type = status = alignment = fstype = 0;
+    m_devicePath = uuid = name = path = filesystem_label = "";
+    m_partitionNumber = type = status = alignment = fstype = 0;
     sector_start = sector_end = sectors_used = sectors_unused = sectors_unallocated = significant_threshold = free_space_before = 0;
     flag = 0;
     // mountpoints.clear();
 }
 
-Sector PartitionInfo::get_sector_length() const
+Sector PartitionInfo::getSectorLength() const
 {
     if (sector_start >= 0 && sector_end >= 0)
         return sector_end - sector_start + 1;
@@ -22,23 +50,23 @@ Sector PartitionInfo::get_sector_length() const
         return -1;
 }
 
-Byte_Value PartitionInfo::get_byte_length() const
+Byte_Value PartitionInfo::getByteLength() const
 {
-    if (get_sector_length() >= 0)
-        return get_sector_length() * sector_size;
+    if (getSectorLength() >= 0)
+        return getSectorLength() * sector_size;
     else
         return -1;
 }
 
 bool PartitionInfo::operator==(const PartitionInfo &info) const
 {
-    return device_path == info.device_path && partition_number == info.partition_number && sector_start == info.sector_start && type == info.type;
+    return m_devicePath == info.m_devicePath && m_partitionNumber == info.m_partitionNumber && sector_start == info.sector_start && type == info.type;
 }
 QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info)
 {
     argument.beginStructure();
-    argument << info.device_path
-             << info.partition_number
+    argument << info.m_devicePath
+             << info.m_partitionNumber
              << info.type
              << info.status
              << info.alignment
@@ -70,8 +98,8 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PartitionInfo &in
 {
     argument.beginStructure();
 
-    argument >> info.device_path
-        >> info.partition_number
+    argument >> info.m_devicePath
+        >> info.m_partitionNumber
         >> info.type
         >> info.status
         >> info.alignment

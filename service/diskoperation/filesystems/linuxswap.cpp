@@ -43,7 +43,7 @@ FS LinuxSwap::getFilesystemSupport()
     fs.read = FS::EXTERNAL;
     fs.online_read = FS::EXTERNAL;
 
-    if (!Utils::find_program_in_path("mkswap").isEmpty()) {
+    if (!Utils::findProgramInPath("mkswap").isEmpty()) {
         fs.create = FS::EXTERNAL;
         fs.create_with_label = FS::EXTERNAL;
         fs.grow = FS::EXTERNAL;
@@ -52,7 +52,7 @@ FS LinuxSwap::getFilesystemSupport()
         fs.move = FS::EXTERNAL;
     }
 
-    if (!Utils::find_program_in_path("swaplabel").isEmpty()) {
+    if (!Utils::findProgramInPath("swaplabel").isEmpty()) {
         fs.read_label = FS::EXTERNAL;
         fs.write_label = FS::EXTERNAL;
         fs.read_uuid = FS::EXTERNAL;
@@ -71,7 +71,7 @@ void LinuxSwap::setUsedSectors(Partition &partition)
             QString line = file.readLine();
             BlockSpecial bsPath = BlockSpecial(partition.getPath());
             while (!file.atEnd() || !line.isEmpty()) {
-                QString filename = Utils::regexp_label(line, ".*?(?= )");
+                QString filename = Utils::regexpLabel(line, ".*?(?= )");
                 if (bsPath == BlockSpecial(filename)) {
                     sscanf(line.toLatin1(), "%*s %*s %*d %lld", &m_numOfFreeOrUsedBlocks);
                     break;
@@ -98,8 +98,8 @@ void LinuxSwap::setUsedSectors(Partition &partition)
 void LinuxSwap::readLabel(Partition &partition)
 {
     QString output, error, label;
-    Utils::executcmd(QString("swaplabel %1").arg(partition.getPath()), output, error);
-    label = Utils::regexp_label(output, "(?<=LABEL:).*(?=\n)");
+    Utils::executCmd(QString("swaplabel %1").arg(partition.getPath()), output, error);
+    label = Utils::regexpLabel(output, "(?<=LABEL:).*(?=\n)");
     partition.setFilesystemLabel(label);
 
     qDebug() << output << error << "----" << label;
@@ -108,7 +108,7 @@ void LinuxSwap::readLabel(Partition &partition)
 bool LinuxSwap::writeLabel(const Partition &partition)
 {
     QString output, error;
-    int exitcode = Utils::executcmd(QString("swaplabel -L %1 %2").arg(partition.getFileSystemLabel()).arg(partition.getPath()),
+    int exitcode = Utils::executCmd(QString("swaplabel -L %1 %2").arg(partition.getFileSystemLabel()).arg(partition.getPath()),
                                     output, error);
     return exitcode == 0 && error.compare("Unknown error") == 0;
 }
@@ -116,14 +116,14 @@ bool LinuxSwap::writeLabel(const Partition &partition)
 void LinuxSwap::readUuid(Partition &partition)
 {
     QString output, error;
-    Utils::executcmd(QString("swaplabel %1").arg(partition.getPath()), output, error);
-    partition.m_uuid = Utils::regexp_label(output, "(?<=UUID:).*(?=\n)");
+    Utils::executCmd(QString("swaplabel %1").arg(partition.getPath()), output, error);
+    partition.m_uuid = Utils::regexpLabel(output, "(?<=UUID:).*(?=\n)");
 }
 
 bool LinuxSwap::writeUuid(const Partition &partition)
 {
     QString output, error;
-    int exitcode = Utils::executcmd(QString("swaplabel -L %1 %2").arg(Utils::CreateUUid()).arg(partition.getPath()),
+    int exitcode = Utils::executCmd(QString("swaplabel -L %1 %2").arg(Utils::createUuid()).arg(partition.getPath()),
                                     output, error);
     return exitcode == 0 && error.compare("Unknown error") == 0;
 }
@@ -131,7 +131,7 @@ bool LinuxSwap::writeUuid(const Partition &partition)
 bool LinuxSwap::create(const Partition &new_partition)
 {
     QString output, error;
-    int exitcode = Utils::executcmd(QString("mkswap -L %1 %2").arg(new_partition.getFileSystemLabel()).arg(new_partition.getPath()),
+    int exitcode = Utils::executCmd(QString("mkswap -L %1 %2").arg(new_partition.getFileSystemLabel()).arg(new_partition.getPath()),
                                     output, error);
     return exitcode == 0 && error.compare("Unknown error") == 0;
 }
@@ -143,7 +143,7 @@ bool LinuxSwap::resize(const Partition &partitionNew, bool fillPartition)
     if (!partitionNew.m_uuid.isEmpty())
         command.append(QString(" -U %1 ").arg(partitionNew.m_uuid));
     command.append(partitionNew.getPath());
-    int exitcode = Utils::executcmd(command, output, error);
+    int exitcode = Utils::executCmd(command, output, error);
     return exitcode == 0 && error.compare("Unknown error") == 0;
 }
 

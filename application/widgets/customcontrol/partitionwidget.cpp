@@ -301,17 +301,17 @@ void PartitionWidget::recPartitionInfo()
     //获取数据
     QString diskSize;
     PartitionInfo data;
-    auto it = DMDbusHandler::instance()->probDeviceInfo().find(DMDbusHandler::instance()->getCurPartititonInfo().device_path);
+    auto it = DMDbusHandler::instance()->probDeviceInfo().find(DMDbusHandler::instance()->getCurPartititonInfo().m_devicePath);
 
     if (it != DMDbusHandler::instance()->probDeviceInfo().end()) {
-        diskSize = QString::number(Utils::sector_to_unit(it.value().length, it.value().sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GiB";
+        diskSize = QString::number(Utils::sectorToUnit(it.value().length, it.value().sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GiB";
         data = DMDbusHandler::instance()->getCurPartititonInfo();
     }
 
-    QString devicePath = data.device_path;
+    QString devicePath = data.m_devicePath;
     QString deviceSize = diskSize;
     QString partPath = data.path;
-    QString partFstype = Utils::FSTypeToString(static_cast<FSType>(data.fstype));
+    QString partFstype = Utils::fileSystemTypeToString(static_cast<FSType>(data.fstype));
     //所选空闲分区
     int i = partPath.lastIndexOf("/");
     QString selectPartition = partPath.right(partPath.length() - i - 1);
@@ -319,7 +319,7 @@ void PartitionWidget::recPartitionInfo()
     m_deviceName->setText(devicePath);
     m_allMemory->setText(deviceSize);
     m_deviceFormate->setText(partFstype);
-    m_total = Utils::sector_to_unit(data.sector_end - data.sector_start, data.sector_size, SIZE_UNIT::UNIT_GIB);
+    m_total = Utils::sectorToUnit(data.sector_end - data.sector_start, data.sector_size, SIZE_UNIT::UNIT_GIB);
     m_totalSize = m_total * 1024;
 //    qDebug() << mTotal << total;
     //初始值,显示保留两位小数,真正使用保留4位小数
@@ -723,14 +723,14 @@ void PartitionWidget::onApplyButton()
             newPart.sector_end = newPart.sector_start + m_patrinfo.at(i).m_count;
         qDebug() << beforend << curInfo.sector_start << curInfo.sector_end;
 
-        newPart.fstype = Utils::StringToFSType(m_patrinfo.at(i).m_fstype);
+        newPart.fstype = Utils::stringToFileSystemType(m_patrinfo.at(i).m_fstype);
         newPart.filesystem_label = m_patrinfo.at(i).m_labelName;
         newPart.alignment = ALIGN_MEBIBYTE;
         newPart.sector_size = curInfo.sector_size;
         newPart.inside_extended = false;
         newPart.busy = false;
         newPart.fs_readonly = false;
-        newPart.device_path = curInfo.device_path;
+        newPart.m_devicePath = curInfo.m_devicePath;
         if (device.disktype == "gpt") {
             newPart.type = TYPE_PRIMARY;
         } else {

@@ -113,7 +113,7 @@ void DMDbusHandler::onSetCurSelect(const QString &devicePath, const QString &par
         if (it != m_deviceMap.end()) {
             for (PartitionInfo info : it.value().partition) {
                 if (info.sector_start == start && info.sector_end == end) {
-                    qDebug() << info.partition_number << info.path << Utils::FSTypeToString(static_cast<FSType>(info.fstype));
+                    qDebug() << info.m_partitionNumber << info.path << Utils::fileSystemTypeToString(static_cast<FSType>(info.fstype));
                     m_curPartitionInfo = info;
                     break;
                 }

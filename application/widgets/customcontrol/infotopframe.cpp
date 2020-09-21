@@ -105,10 +105,10 @@ void InfoTopFrame::setShowDiskInfo()
         m_nameLabel->setText("ocated");
     }
 
-    QString diskSize = Utils::format_size(info.sector_end - info.sector_start,
+    QString diskSize = Utils::formatSize(info.sector_end - info.sector_start,
                                             info.sector_size);
     m_allMemoryLabel->setText(diskSize);
 
-    QString diskType = Utils::FSTypeToString(static_cast<FSType>(info.fstype));
+    QString diskType = Utils::fileSystemTypeToString(static_cast<FSType>(info.fstype));
     m_typeLabel->setText(tr("File system") + ": " + diskType);
 }

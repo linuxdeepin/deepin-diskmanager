@@ -57,17 +57,17 @@ void DmFrameWidget::setFrameData()
         mountpoints.append(m_str);
     }
     m_infoData.m_mountpoints = diffMountpoints(m_width, mountpoints);
-    m_infoData.m_unused = Utils::format_size(data.sectors_unused, data.sector_size);
+    m_infoData.m_unused = Utils::formatSize(data.sectors_unused, data.sector_size);
     if (m_infoData.m_unused.contains("-")) {
         m_infoData.m_unused = "-";
     }
-    m_infoData.m_used = Utils::format_size(data.sectors_used, data.sector_size);
+    m_infoData.m_used = Utils::formatSize(data.sectors_used, data.sector_size);
     if (m_infoData.m_used.contains("-")) {
         m_infoData.m_used = "-";
     }
     QString partitionPath = data.path.remove(0, 5);
-    m_infoData.m_fstype = Utils::FSTypeToString(static_cast<FSType>(data.fstype));
-    m_infoData.m_partitionSize = Utils::format_size(data.sector_end - data.sector_start, data.sector_size);
+    m_infoData.m_fstype = Utils::fileSystemTypeToString(static_cast<FSType>(data.fstype));
+    m_infoData.m_partitionSize = Utils::formatSize(data.sector_end - data.sector_start, data.sector_size);
     if (data.filesystem_label == "") {
         m_infoData.m_sysLabel = "";
     } else {

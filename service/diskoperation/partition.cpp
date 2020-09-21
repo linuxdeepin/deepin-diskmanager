@@ -93,7 +93,7 @@ void Partition::reset(const PartitionInfo &info)
     m_freeSpaceBefore = info.free_space_before;
     m_sectorSize = info.sector_size;
     m_fsBlockSize = info.fs_block_size;
-    m_devicePath = info.device_path;
+    m_devicePath = info.m_devicePath;
     setFilesystemLabel(info.filesystem_label);
 }
 
@@ -125,7 +125,7 @@ void Partition::setUnpartitioned(const QString &devicePath, const QString &parti
     // partition path to match what setUnallocated() does when it created such
     // whole disk device partitions.
     set(devicePath,
-        (fstype == FS_UNALLOCATED) ? Utils::FSTypeToString(FS_UNALLOCATED) : partitionPath,
+        (fstype == FS_UNALLOCATED) ? Utils::fileSystemTypeToString(FS_UNALLOCATED) : partitionPath,
         1,
         TYPE_UNPARTITIONED,
         fstype,
@@ -141,7 +141,7 @@ void Partition::setUnallocated(const QString &devicePath, Sector sectorStart, Se
     reset();
 
     set(devicePath,
-        Utils::FSTypeToString(FS_UNALLOCATED),
+        Utils::fileSystemTypeToString(FS_UNALLOCATED),
         -1,
         TYPE_UNALLOCATED,
         FS_UNALLOCATED,
@@ -238,8 +238,8 @@ QString Partition::getFileSystemLabel() const
 PartitionInfo Partition::getPartitionInfo()
 {
     PartitionInfo info;
-    info.device_path = m_devicePath;
-    info.partition_number = m_partitionNumber;
+    info.m_devicePath = m_devicePath;
+    info.m_partitionNumber = m_partitionNumber;
     info.type = m_type;
     info.status = m_status;
     info.alignment = m_alignment;
@@ -261,10 +261,10 @@ PartitionInfo Partition::getPartitionInfo()
     info.busy = m_busy;
     info.fs_readonly = m_fsReadonly;
     info.mountpoints = m_mountpoints;
-        qDebug() << info.device_path << info.partition_number << info.type << info.status << info.alignment << info.fstype << info.uuid
-                 << info.name << info.sector_start << info.sector_end << info.sectors_used << info.sectors_unused
-                 << info.sectors_unallocated << info.significant_threshold << info.free_space_before
-                 << info.sector_size << info.fs_block_size << info.path << info.filesystem_label;
+//        qDebug() << info.devicePath << info.partition_number << info.type << info.status << info.alignment << info.fstype << info.uuid
+//                 << info.name << info.sector_start << info.sector_end << info.sectors_used << info.sectors_unused
+//                 << info.sectors_unallocated << info.significant_threshold << info.free_space_before
+//                 << info.sector_size << info.fs_block_size << info.path << info.filesystem_label;
     return info;
 }
 

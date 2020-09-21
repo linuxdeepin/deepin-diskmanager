@@ -70,10 +70,10 @@ void FormateDialog::initUi()
     fslist.removeOne("linux-swap");
     m_formatComboBox->addItems(fslist);
 
-    if (-1 == fslist.indexOf(Utils::FSTypeToString(static_cast<FSType>(info.fstype)))) {
-        m_formatComboBox->setCurrentIndex(fslist.indexOf(Utils::FSTypeToString(static_cast<FSType>(11))));
+    if (-1 == fslist.indexOf(Utils::fileSystemTypeToString(static_cast<FSType>(info.fstype)))) {
+        m_formatComboBox->setCurrentIndex(fslist.indexOf(Utils::fileSystemTypeToString(static_cast<FSType>(11))));
     } else {
-        m_formatComboBox->setCurrentIndex(fslist.indexOf(Utils::FSTypeToString(static_cast<FSType>(info.fstype))));
+        m_formatComboBox->setCurrentIndex(fslist.indexOf(Utils::fileSystemTypeToString(static_cast<FSType>(info.fstype))));
     }
 
     layoutFormat->addWidget(formatName);

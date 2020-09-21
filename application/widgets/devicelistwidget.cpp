@@ -348,9 +348,9 @@ void DeviceListWidget::onUpdateDeviceInfo()
     //更新DmTreeview  lx
     //设置当前选项
     auto handler = DMDbusHandler::instance();
-    m_num = handler->getCurPartititonInfo().partition_number;
+    m_num = handler->getCurPartititonInfo().m_partitionNumber;
     m_deviceNum = m_treeView->currentTopNum();
-    m_devicePath = handler->getCurPartititonInfo().device_path;
+    m_devicePath = handler->getCurPartititonInfo().m_devicePath;
     m_treeView->m_model->clear();
     DeviceInfoMap infoMap = DMDbusHandler::instance()->probDeviceInfo();
     QMap<int, int> countMap;
@@ -358,17 +358,17 @@ void DeviceListWidget::onUpdateDeviceInfo()
 
     for (auto it = infoMap.begin(); it != infoMap.end(); it++) {
         DeviceInfo info = it.value();
-        QString diskSize = Utils::format_size(info.length, info.sector_size);
+        QString diskSize = Utils::formatSize(info.length, info.sector_size);
         auto diskinfoBox = new DmDiskinfoBox(0, this, info.m_path, diskSize);
         int partitionCount = 0;
 
         for (auto it = info.partition.begin(); it != info.partition.end(); it++) {
-            QString partitionSize = Utils::format_size(it->sector_end - it->sector_start + 1, it->sector_size);
+            QString partitionSize = Utils::formatSize(it->sector_end - it->sector_start + 1, it->sector_size);
             QString partitionPath = it->path.remove(0, 5);
-            QString unused = Utils::format_size(it->sectors_used, it->sector_size);
-            QString used = Utils::format_size(it->sectors_unused, it->sector_size);
+            QString unused = Utils::formatSize(it->sectors_used, it->sector_size);
+            QString used = Utils::formatSize(it->sectors_unused, it->sector_size);
             FSType fstype = static_cast<FSType>(it->fstype);
-            QString fstypeName = Utils::FSTypeToString(fstype);
+            QString fstypeName = Utils::fileSystemTypeToString(fstype);
             QString mountpoint;
             QString mountpoints;
 
@@ -378,7 +378,7 @@ void DeviceListWidget::onUpdateDeviceInfo()
             }
 
             QString fileSystemLabel = it->filesystem_label;
-            auto childDiskinfoBox = new DmDiskinfoBox(1, this, it->device_path, "", partitionPath, partitionSize, used, unused, it->sectors_unallocated,
+            auto childDiskinfoBox = new DmDiskinfoBox(1, this, it->m_devicePath, "", partitionPath, partitionSize, used, unused, it->sectors_unallocated,
                                                 it->sector_start, it->sector_end, fstypeName, mountpoints, fileSystemLabel, it->flag);
             diskinfoBox->m_childs.append(childDiskinfoBox);
 
@@ -393,10 +393,10 @@ void DeviceListWidget::onUpdateDeviceInfo()
 
     QStringList deviceNameList = DMDbusHandler::instance()->getDeviceNameList();
 
-    if (deviceNameList.indexOf(DMDbusHandler::instance()->getCurPartititonInfo().device_path) == -1) {
+    if (deviceNameList.indexOf(DMDbusHandler::instance()->getCurPartititonInfo().m_devicePath) == -1) {
         m_flag = 0;
     } else {
-        m_deviceNum = deviceNameList.indexOf(DMDbusHandler::instance()->getCurPartititonInfo().device_path);
+        m_deviceNum = deviceNameList.indexOf(DMDbusHandler::instance()->getCurPartititonInfo().m_devicePath);
     }
 
     m_addItem = 1;

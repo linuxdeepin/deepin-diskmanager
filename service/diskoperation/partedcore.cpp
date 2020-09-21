@@ -83,8 +83,8 @@ PartedCore::~PartedCore()
 
 void PartedCore::findSupportedCore()
 {
-    //udevadm_found = !Utils::find_program_in_path("udevadm").isEmpty();
-    hdparm_found = !Utils::find_program_in_path("hdparm").isEmpty();
+    //udevadm_found = !Utils::findProgramInPath("udevadm").isEmpty();
+    hdparm_found = !Utils::findProgramInPath("hdparm").isEmpty();
 }
 
 bool PartedCore::supportedFileSystem(FSType fstype)
@@ -293,7 +293,7 @@ void PartedCore::setDeviceFromDisk(Device &device, const QString &devicePath)
                 // Determine if partition naming is supported.
                 if (ped_disk_type_check_feature(lpDisk->type, PED_DISK_TYPE_PARTITION_NAME)) {
                     device.enablePartitionNaming(
-                        Utils::get_max_partition_name_length(device.m_diskType));
+                        Utils::getMaxPartitionNameLength(device.m_diskType));
                 }
 
                 setDevicePartitions(device, lpDevice, lpDisk);
@@ -420,7 +420,7 @@ bool PartedCore::commit(PedDisk *lpDisk)
         // from this ped_device_close().
         //settleDevice(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS);
         QString out, err;
-        Utils::executcmd(QString("udevadm settle --timeout=%1").arg(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS), out, err);
+        Utils::executCmd(QString("udevadm settle --timeout=%1").arg(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS), out, err);
     }
 
     return succes;
@@ -440,7 +440,7 @@ void PartedCore::setDeviceSerialNumber(Device &device)
         return;
 
     QString output, error;
-    Utils::executcmd(QString("hdparm -I %1").arg(device.m_path), output, error);
+    Utils::executCmd(QString("hdparm -I %1").arg(device.m_path), output, error);
     if (!error.isEmpty()) {
         // hdparm reported an error message to stderr.  Assume it's a device
         // without a hard drive serial number.
@@ -455,7 +455,7 @@ void PartedCore::setDeviceSerialNumber(Device &device)
         //     SG_IO: bad/missing sense data, sb[]:  70 00 05 00 00 00 00 0a ...
         device.m_serialNumber = "none";
     } else {
-        QString serialNumber = Utils::regexp_label(output, "^[[:blank:]]*Serial Number:[[:blank:]]*(.*)[[:blank:]]*$");
+        QString serialNumber = Utils::regexpLabel(output, "^[[:blank:]]*Serial Number:[[:blank:]]*(.*)[[:blank:]]*$");
         if (!serialNumber.isEmpty())
             device.m_serialNumber = serialNumber;
     }
@@ -673,16 +673,16 @@ void PartedCore::setUsedSectors(Partition &partition, PedDisk *lpDisk)
         // wasn't set by the above code so in the case of luks/unknown would
         // produce a false positive.
         if (!partition.sectorUsageKnown()) {
-            if (!Utils::get_filesystem_software(partition.m_fstype).isEmpty()) {
+            if (!Utils::getFileSystemSoftWare(partition.m_fstype).isEmpty()) {
                 QString msg("The following list of software packages is required for %1 file system support:  %2.");
-                msg = msg.arg(Utils::FSTypeToString(partition.m_fstype)).arg(Utils::get_filesystem_software(partition.m_fstype));
+                msg = msg.arg(Utils::fileSystemTypeToString(partition.m_fstype)).arg(Utils::getFileSystemSoftWare(partition.m_fstype));
                 qDebug() << __FUNCTION__ << msg;
             }
 
         } else if ((unallocated = partition.getSectorsUnallocated()) > 0) {
             /* TO TRANSLATORS: looks like   1.28GiB of unallocated space within the partition. */
             QString temp("%1 of unallocated space within the partition.");
-            temp = temp.arg(Utils::format_size(unallocated, partition.m_sectorSize));
+            temp = temp.arg(Utils::formatSize(unallocated, partition.m_sectorSize));
             FS fs = getFileSystem(partition.m_fstype);
             if (fs.check != FS::NONE && fs.grow != FS::NONE) {
                 temp.append("To grow the file system to fill the partition, select the partition and choose the menu item:\n");
@@ -706,7 +706,7 @@ void PartedCore::mountedFileSystemSetUsedSectors(Partition &partition)
     if (partition.getMountPoints().size() > 0 && MountInfo::isDevMounted(partition.getPath())) {
         Byte_Value fs_size;
         Byte_Value fs_free;
-        if (Utils::get_mounted_filesystem_usage(partition.getMountPoint(), fs_size, fs_free) == 0)
+        if (Utils::getMountedFileSystemUsage(partition.getMountPoint(), fs_size, fs_free) == 0)
             partition.setSectorUsage(fs_size / partition.m_sectorSize,
                                        fs_free / partition.m_sectorSize);
     }
@@ -836,7 +836,7 @@ bool PartedCore::flushDevice(PedDevice *lpDevice)
         // sequence after getDevice() in setDeviceFromDisk().
         //settleDevice(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS);
         QString out, err;
-        Utils::executcmd(QString("udevadm settle --timeout=%1").arg(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS), out, err);
+        Utils::executCmd(QString("udevadm settle --timeout=%1").arg(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS), out, err);
     }
     return success;
 }
@@ -847,7 +847,7 @@ bool PartedCore::flushDevice(PedDevice *lpDevice)
 //    //udevadm settle [options]　　查看udev事件队列，如果所有事件全部处理完就退出。timeout超时时间
 //    if (udevadm_found) {
 //        QString out, err;
-//        Utils::executcmd(QString("udevadm settle --timeout=%1").arg(timeout), out, err);
+//        Utils::executCmd(QString("udevadm settle --timeout=%1").arg(timeout), out, err);
 //    } else
 //        sleep(timeout);
 //}
@@ -878,7 +878,7 @@ FSType PartedCore::detectFilesystem(PedDevice *lpDevice, PedPartition *lpPartiti
     if (fsname.isEmpty() && lpPartition && lpPartition->fs_type)
         fsname = lpPartition->fs_type->name;
     if (!fsname.isEmpty()) {
-        fstype = Utils::StringToFSType(fsname);
+        fstype = Utils::stringToFileSystemType(fsname);
         qDebug() << fstype;
         if (fstype != FS_UNKNOWN)
             return fstype;
@@ -1118,16 +1118,16 @@ bool PartedCore::eraseFilesystemSignatures(const Partition &partition)
     for (unsigned int i = 0; overallSuccess && i < sizeof(ranges) / sizeof(ranges[0]); i++) {
         //Rounding is performed in multiples of the sector size because writes are in whole sectors.
 
-        Byte_Value roundingSize = Utils::ceil_size(ranges[i].rounding, lpDevice->sector_size);
+        Byte_Value roundingSize = Utils::ceilSize(ranges[i].rounding, lpDevice->sector_size);
         Byte_Value byteOffset;
         Byte_Value byteLen;
         if (ranges[i].offset >= 0LL) {
-            byteOffset = Utils::floor_size(ranges[i].offset, roundingSize);
-            byteLen = Utils::ceil_size(ranges[i].offset + ranges[i].length, lpDevice->sector_size) - byteOffset;
+            byteOffset = Utils::floorSize(ranges[i].offset, roundingSize);
+            byteLen = Utils::ceilSize(ranges[i].offset + ranges[i].length, lpDevice->sector_size) - byteOffset;
         } else { //Negative offsets
-            Byte_Value notionalOffset = Utils::floor_size(partition.getByteLength() + ranges[i].offset, ranges[i].rounding);
-            byteOffset = Utils::floor_size(notionalOffset, roundingSize);
-            byteLen = Utils::ceil_size(notionalOffset + ranges[i].length, lpDevice->sector_size) - byteOffset;
+            Byte_Value notionalOffset = Utils::floorSize(partition.getByteLength() + ranges[i].offset, ranges[i].rounding);
+            byteOffset = Utils::floorSize(notionalOffset, roundingSize);
+            byteLen = Utils::ceilSize(notionalOffset + ranges[i].length, lpDevice->sector_size) - byteOffset;
         }
         //Limit range to partition size.
         if (byteOffset + byteLen <= 0LL) {
@@ -1201,7 +1201,7 @@ bool PartedCore::setPartitionType(const Partition &partition)
     if (getDeviceAndDisk(partition.m_devicePath, lpDevice, lpDisk)) {
         PedPartition *lpPartition = ped_disk_get_partition_by_sector(lpDisk, partition.getSector());
         if (lpPartition) {
-            QString fsType = Utils::FSTypeToString(partition.m_fstype);
+            QString fsType = Utils::fileSystemTypeToString(partition.m_fstype);
 
             // Lookup libparted file system type using GParted's name, as most
             // match.  Exclude cleared as the name won't be recognised by
@@ -1536,7 +1536,7 @@ bool PartedCore::mountAndWriteFstab(const QString &mountpath)
     bool success = true;
 //    QString output, errstr;
 //    QString cmd ;
-    QString type = Utils::FSTypeToString(m_curpartition.m_fstype);
+    QString type = Utils::fileSystemTypeToString(m_curpartition.m_fstype);
     QString partitionPath = m_curpartition.getPath();
     qDebug() << partitionPath << type << "111111111111";
     if (mount(partitionPath.toStdString().c_str(), mountpath.toStdString().c_str(), type.toStdString().c_str(), 0, nullptr) != 0) {
@@ -1773,7 +1773,7 @@ bool PartedCore::format(const QString &fstype, const QString &name)
 {
     qDebug() << __FUNCTION__ << "Format Patitione start";
     Partition part = m_curpartition;
-    part.m_fstype = Utils::StringToFSType(fstype);
+    part.m_fstype = Utils::stringToFileSystemType(fstype);
     part.setFilesystemLabel(name);
     bool success = formatPartition(part);
     emit refreshDeviceInfo();
@@ -1932,7 +1932,7 @@ void PartedCore::setCurSelect(const PartitionInfo &info)
 {
     bool bfind = false;
     for (auto it = m_devicemap.begin(); it != m_devicemap.end() && !bfind; it++) {
-        if (it.key() == info.device_path) {
+        if (it.key() == info.m_devicePath) {
             Device dev = it.value();
             for (auto itpart = dev.m_partitions.begin(); itpart != dev.m_partitions.end() && !bfind; itpart++) {
                 Partition part = *(*itpart);
@@ -2330,7 +2330,7 @@ void PartedCore::autoMount()
     qDebug() << __FUNCTION__ << "solt automount start";
     QString output,errstr;
     QString cmd = QString("mount -a");
-    int exitcode = Utils::executcmd(cmd, output, errstr);
+    int exitcode = Utils::executCmd(cmd, output, errstr);
 
     if (exitcode != 0) {
         qDebug() << __FUNCTION__ << output;
@@ -2367,7 +2367,7 @@ void PartedCore::autoUmount()
         if (deviceList.indexOf(dfList.at(0).left(dfList.at(0).size()-1)) == -1 && dfList.at(0).contains("/dev/")) {
             cmd = QString("umount -v %1").arg(dfList.last());
             QString output, errstr;
-            int exitcode = Utils::executcmd(cmd, output, errstr);
+            int exitcode = Utils::executCmd(cmd, output, errstr);
             if (exitcode != 0) {
                 qDebug() << __FUNCTION__ << "卸载挂载点失败";
             }

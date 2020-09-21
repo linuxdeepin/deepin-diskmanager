@@ -120,11 +120,11 @@ void MountInfo::readMountpointsFromFile(const QString &fileName, MountInfo::Moun
         QString node = p->mnt_fsname;
         QString mountpoint = p->mnt_dir;
 
-        QString uuid = Utils::regexp_label(node, "(?<=UUID\\=).*");
+        QString uuid = Utils::regexpLabel(node, "(?<=UUID\\=).*");
         if (!uuid.isEmpty())
             node = FsInfo::getPathByUuid(uuid);
 
-        QString label = Utils::regexp_label(node, "(?<=UUID\\=).*");
+        QString label = Utils::regexpLabel(node, "(?<=UUID\\=).*");
         if (!label.isEmpty())
             node = FsInfo::getPathByLabel(label);
 
@@ -168,7 +168,7 @@ void MountInfo::readMountpointsFromFileSwaps(const QString &fileName, MountInfo:
         QString node;
         while (!in.atEnd() || !line.isEmpty()) {
             qDebug() << line;
-            node = Utils::regexp_label(line, "^(/[^ ]+)");
+            node = Utils::regexpLabel(line, "^(/[^ ]+)");
             if (node.size() > 0)
                 map[BlockSpecial(node)].mountpoints.push_back("" /* no mountpoint for swap */);
             line = in.readLine();
@@ -192,14 +192,14 @@ void MountInfo::readMountpointsFromMountCommand(MountInfo::MountMapping &map)
 {
     QString output;
     QString error;
-    if (!Utils::executcmd("mount", output, error)) {
+    if (!Utils::executCmd("mount", output, error)) {
         QStringList lines;
         lines = output.split("\n");
         for (int i = 0; i < lines.size(); i++) {
             // Process line like "/dev/sda3 on / type ext4 (rw)"
-            QString node = Utils::regexp_label(lines[i], ".*?(?= )");
-            QString mountpoint = Utils::regexp_label(lines[i], "(?<=on ).*?(?= type)");
-            QString mntopts = Utils::regexp_label(lines[i], "(?<=\\().*?(?=\\))");
+            QString node = Utils::regexpLabel(lines[i], ".*?(?= )");
+            QString mountpoint = Utils::regexpLabel(lines[i], "(?<=on ).*?(?= type)");
+            QString mntopts = Utils::regexpLabel(lines[i], "(?<=\\().*?(?=\\))");
             // qDebug() << node << mountpoint << mntopts;
             if (!node.isEmpty())
                 addMountpointEntry(map, node, mountpoint, parseReadonlyFlag(mntopts));

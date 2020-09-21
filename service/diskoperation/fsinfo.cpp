@@ -62,8 +62,8 @@ QString FsInfo::getFileSystemType(const QString &path)
             // bypassing the the cache to get the correct results.
             QString output;
             QString error;
-            if (!Utils::executcmd("blkid -c /dev/null " + path, output, error))
-                fsSecType = Utils::regexp_label(output, " SEC_TYPE=\"([^\"]*)\"");
+            if (!Utils::executCmd("blkid -c /dev/null " + path, output, error))
+                fsSecType = Utils::regexpLabel(output, " SEC_TYPE=\"([^\"]*)\"");
         }
         if (fsSecType == "msdos")
             fsType = "fat16";
@@ -137,14 +137,14 @@ void FsInfo::initializeIfRequired()
 
 void FsInfo::setCommandsFound()
 {
-    m_blkidFound = (!Utils::find_program_in_path("blkid").isEmpty());
+    m_blkidFound = (!Utils::findProgramInPath("blkid").isEmpty());
     if (m_blkidFound) {
         // Blkid from util-linux before 2.23 has a cache update bug which prevents
         // correct identification between FAT16 and FAT32 when overwriting one
         // with the other.  Detect the need for a workaround.
         QString output, error;
-        Utils::executcmd("blkid -v", output, error);
-        QString blkidVersion = Utils::regexp_label(output, "blkid.* ([0-9\\.]+) ");
+        Utils::executCmd("blkid -v", output, error);
+        QString blkidVersion = Utils::regexpLabel(output, "blkid.* ([0-9\\.]+) ");
         int blkidMajorVer = 0;
         int blkidMinorVer = 0;
         if (sscanf(blkidVersion.toStdString().c_str(), "%d.%d", &blkidMajorVer, &blkidMinorVer) == 2) {
@@ -182,19 +182,19 @@ bool FsInfo::runBlkidLoadCache(const QString &path)
     QString output;
     QString error;
     bool loadedEntries = false;
-    if (m_blkidFound && !Utils::executcmd(cmd, output, error)) {
+    if (m_blkidFound && !Utils::executCmd(cmd, output, error)) {
 //        qDebug() << output;
         QStringList strlist = output.split("\n");
         for (int i = 0; i < strlist.size(); i++) {
             fileSystemEntry fsEntry = {BlockSpecial(), "", "", "", false, ""};
-            QString entryPath = Utils::regexp_label(strlist[i], "(?<=/).*?(?=: )");
+            QString entryPath = Utils::regexpLabel(strlist[i], "(?<=/).*?(?=: )");
             if (entryPath.length() > 0) {
                 entryPath = "/" + entryPath;
                 fsEntry.m_path = BlockSpecial(entryPath);
-                fsEntry.m_type = Utils::regexp_label(strlist[i], "(?<= TYPE=\").*?(?=\")");
-                fsEntry.m_secType = Utils::regexp_label(strlist[i], " SEC_TYPE=\"([^\"]*)\"");
-                fsEntry.m_uuid = Utils::regexp_label(strlist[i], "(?<=UUID=\").*?(?=\")");
-                fsEntry.m_label = Utils::regexp_label(strlist[i], "(?<=LABEL=\").*?(?=\" )");
+                fsEntry.m_type = Utils::regexpLabel(strlist[i], "(?<= TYPE=\").*?(?=\")");
+                fsEntry.m_secType = Utils::regexpLabel(strlist[i], " SEC_TYPE=\"([^\"]*)\"");
+                fsEntry.m_uuid = Utils::regexpLabel(strlist[i], "(?<=UUID=\").*?(?=\")");
+                fsEntry.m_label = Utils::regexpLabel(strlist[i], "(?<=LABEL=\").*?(?=\" )");
 
                 m_fileSystemInfoCache.push_back(fsEntry);
                 loadedEntries = true;
@@ -248,7 +248,7 @@ bool FsInfo::runBlkidUpdateCacheOneLabel(fileSystemEntry &fsEntry)
     // label without blkid's default non-reversible encoding.
     QString output;
     QString error;
-    bool success = !Utils::executcmd("blkid -o value -s LABEL " + fsEntry.m_path.m_name, output, error);
+    bool success = !Utils::executCmd("blkid -o value -s LABEL " + fsEntry.m_path.m_name, output, error);
     if (!success)
         return false;
 

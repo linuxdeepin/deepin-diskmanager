@@ -90,7 +90,7 @@ void SupportedFileSystems::findSupportedFilesystems()
     for (iter = m_fsObjects.begin(); iter != m_fsObjects.end(); iter++) {
         if (iter.value()) {
             FileSystem *psys = iter.value();
-            m_effectivefs.append(Utils::FSTypeToString(iter.key()));
+            m_effectivefs.append(Utils::fileSystemTypeToString(iter.key()));
             m_fsSupport.push_back(psys->getFilesystemSupport());
         } else {
             FS fsBasicsupp(iter.key());
@@ -103,7 +103,7 @@ void SupportedFileSystems::findSupportedFilesystems()
 
 FileSystem *SupportedFileSystems::getFsObject(FSType fstype) const
 {
-//    qDebug() << Utils::FSTypeToString(fstype);
+//    qDebug() << Utils::fileSystemTypeToString(fstype);
     FSObjectsMap::const_iterator iter = m_fsObjects.find(fstype);
     if (iter == m_fsObjects.end())
         return NULL;

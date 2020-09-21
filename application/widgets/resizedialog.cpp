@@ -106,26 +106,26 @@ void ResizeDialog::onButtonClicked(int index, const QString &)
                     double total = 0;
                     //目前使用GB为单位精度损失太大，如果扩容全部空闲分区会出现空隙，按当前单位转换后如果差值小于0.01默认全选
                     if (0 == m_comboBox->currentIndex()) {
-                        total = Utils::sector_to_unit(next.get_sector_length(), curInfo.sector_size, UNIT_MIB);
+                        total = Utils::sectorToUnit(next.getSectorLength(), curInfo.sector_size, UNIT_MIB);
                         expandSpace = static_cast<Sector>(space.toFloat() * (MEBIBYTE / curInfo.sector_size));
                         if (space.toDouble() - total >= 0.01) {
                             break;
                         }
                         if (total - space.toDouble() < 0.01)
-                            expandSpace = next.get_sector_length();
+                            expandSpace = next.getSectorLength();
 
                     } else {
-                        total = Utils::sector_to_unit(next.get_sector_length(), curInfo.sector_size, UNIT_GIB);
+                        total = Utils::sectorToUnit(next.getSectorLength(), curInfo.sector_size, UNIT_GIB);
                         expandSpace = static_cast<Sector>(space.toFloat() * (GIBIBYTE / curInfo.sector_size));
                         if (space.toDouble() - total >= 0.01) {
                             break;
                         }
                         if (total - space.toDouble() < 0.01)
-                            expandSpace = next.get_sector_length();
+                            expandSpace = next.getSectorLength();
                     }
 
                     qDebug() << curInfo.sector_size * 1.0 << GIBIBYTE / curInfo.sector_size << GIBIBYTE / (curInfo.sector_size * 1.0);
-                    qDebug() << Utils::format_size(expandSpace, curInfo.sector_size) << Utils::format_size(next.get_sector_length(), curInfo.sector_size);
+                    qDebug() << Utils::formatSize(expandSpace, curInfo.sector_size) << Utils::formatSize(next.getSectorLength(), curInfo.sector_size);
                     canExpand = true;
                     index += 1;
                     break;
@@ -140,7 +140,7 @@ void ResizeDialog::onButtonClicked(int index, const QString &)
 
         } else {
             PartitionInfo newInfo = curInfo;
-            qDebug() << Utils::format_size(newInfo.sector_end - newInfo.sector_start, curInfo.sector_size) << next.sector_start << next.sector_end << expandSpace << next.get_sector_length();
+            qDebug() << Utils::formatSize(newInfo.sector_end - newInfo.sector_start, curInfo.sector_size) << next.sector_start << next.sector_end << expandSpace << next.getSectorLength();
             //  newinfo.sector_end = expandspace > next.get_sector_length() ? next.sector_end : curinfo.sector_end + expandspace;
 
             newInfo.sector_end = expandSpace + next.sector_start > next.sector_end ? next.sector_end : next.sector_start + expandSpace;
@@ -158,7 +158,7 @@ void ResizeDialog::onButtonClicked(int index, const QString &)
                     newInfo.sector_end -= MEBIBYTE / newInfo.sector_size;
             }
 
-            qDebug() << Utils::format_size(newInfo.sector_end - newInfo.sector_start, curInfo.sector_size) << newInfo.sector_start << newInfo.sector_end;
+            qDebug() << Utils::formatSize(newInfo.sector_end - newInfo.sector_start, curInfo.sector_size) << newInfo.sector_start << newInfo.sector_end;
             newInfo.alignment = ALIGN_MEBIBYTE; //ALIGN_MEBIBYTE;
             handler->resize(newInfo);
             done(index);

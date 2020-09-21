@@ -1,20 +1,66 @@
+/**
+ * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ *
+ * @file partitioninfo.h
+ *
+ * @brief 分区信息类
+ *
+ * @date 2020-09-21 14:48
+ *
+ * Author: liweigang  <liweigang@uniontech.com>
+ *
+ * Maintainer: liweigang  <liweigang@uniontech.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #ifndef PARTITIONINFO_H
 #define PARTITIONINFO_H
 #include "commondef.h"
+
 #include <QString>
 
+/**
+ * @class PartitionInfo
+ * @brief 分区信息类
+ */
+
 class QDBusArgument;
+
 class PartitionInfo
 {
 public:
     PartitionInfo();
-    Sector get_sector_length() const;
-    Byte_Value get_byte_length() const;
+
+    /**
+     * @brief 获取扇区长度
+     * @return 扇区长度
+     */
+    Sector getSectorLength() const;
+
+    /**
+     * @brief 获取字节长度
+     * @return 字节长度
+     */
+    Byte_Value getByteLength() const;
+
     bool operator==(const PartitionInfo &info) const;
 
 public:
-    QString device_path;
-    int partition_number;
+
+    QString m_devicePath;
+    int m_partitionNumber;
     int type; //PartitionType: UNALLOCATED, PRIMARY, LOGICAL, etc...
     int status; //PartitionStatus: STAT_REAL, STAT_NEW, etc..
     int alignment; //PartitionAlignment: ALIGN_CYLINDER, ALIGN_STRICT, etc

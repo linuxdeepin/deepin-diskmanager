@@ -1,3 +1,10 @@
+deepin-diskmanager (1.1.0.15) stable; urgency=low
+
+  *解决完成第十次送测产生的bug,
+  *新增在界面没有启动时，后台会被USB插拔启动的更改
+
+ -- unknown <unknown@uniontech.com>  Mon., 21 September 2020 14:34:16 +0800
+
 deepin-diskmanager (1.1.0.14) stable; urgency=low
 
   *解决完成第九次送测产生的bug,

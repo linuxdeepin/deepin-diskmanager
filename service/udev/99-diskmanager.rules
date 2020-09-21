@@ -1,0 +1,5 @@
+ENV{DEVTYPE}=="usb_device", ACTION=="add",RUN+="/usr/libexec/openconnect/USBadd.sh"
+ENV{DEVTYPE}=="usb_device", ACTION=="remove", RUN+="/usr/libexec/openconnect/USBremove.sh"
+
+
+

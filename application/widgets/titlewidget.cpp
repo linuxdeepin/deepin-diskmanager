@@ -184,6 +184,15 @@ void TitleWidget::updateBtnStatus()
         }
     }
 
+    qDebug() << info.type << info.fstype;
+    if (info.fstype == FSType::FS_LINUX_SWAP) {
+        m_btnParted->setDisabled(true);
+        m_btnFormat->setDisabled(true);
+        m_btnMount->setDisabled(true);
+        m_btnUnmount->setDisabled(true);
+        m_btnResize->setDisabled(true);
+    }
+
     QMap<QString, QString> isExistUnallocated = DMDbusHandler::instance()->getIsExistUnallocated();
     if (isExistUnallocated.value(info.m_devicePath) == "false") {
         m_btnResize->setDisabled(true);

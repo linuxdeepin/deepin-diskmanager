@@ -155,7 +155,7 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
             actionDelete->setDisabled(true);
         }
 
-        if (m_curDiskInfoData.m_fstype == "unallocated") {
+        if (m_curDiskInfoData.m_fstype == "unallocated" || m_curDiskInfoData.m_fstype == "linux-swap") {
             actionHidePartition->setDisabled(true);
             actionShowPartition->setDisabled(true);
             actionDelete->setDisabled(true);

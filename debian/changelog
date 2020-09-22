@@ -1,9 +1,10 @@
 deepin-diskmanager (1.1.0.16) stable; urgency=low
 
   *解决完成第十一次送测产生的bug,
-  *新增交换分区不允许做任何操作
+  *48756 格式化swap分区，再挂载应用高概率卡死了
+  *48785 右侧分区信息展示界面显示异常
 
- -- unknown <unknown@uniontech.com>  Mon., 21 September 2020 15:34:16 +0800
+     -- unknown <unknown@uniontech.com>  Thu., 22 September 2020 15:34:16 +0800
 
 deepin-diskmanager (1.1.0.15) stable; urgency=low
 

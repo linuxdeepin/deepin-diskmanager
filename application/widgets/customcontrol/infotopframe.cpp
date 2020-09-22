@@ -100,15 +100,15 @@ void InfoTopFrame::setShowDiskInfo()
 {
     auto info = DMDbusHandler::instance()->getCurPartititonInfo();
 
-    m_nameLabel->setText(info.path);
-    if ("unallocated" == info.path) {
+    m_nameLabel->setText(info.m_path);
+    if ("unallocated" == info.m_path) {
         m_nameLabel->setText("ocated");
     }
 
-    QString diskSize = Utils::formatSize(info.sector_end - info.sector_start,
-                                            info.sector_size);
+    QString diskSize = Utils::formatSize(info.m_sectorEnd - info.m_sectorStart,
+                                            info.m_sectorSize);
     m_allMemoryLabel->setText(diskSize);
 
-    QString diskType = Utils::fileSystemTypeToString(static_cast<FSType>(info.fstype));
+    QString diskType = Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType));
     m_typeLabel->setText(tr("File system") + ": " + diskType);
 }

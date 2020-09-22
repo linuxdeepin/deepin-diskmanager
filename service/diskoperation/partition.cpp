@@ -80,21 +80,21 @@ void Partition::reset()
 
 void Partition::reset(const PartitionInfo &info)
 {
-    m_status = static_cast<PartitionStatus>(info.status);
-    m_type = static_cast<PartitionType>(info.type);
-    m_alignment = static_cast<PartitionAlignment>(info.alignment);
-    m_fstype = static_cast<FSType>(info.fstype);
-    m_sectorStart = info.sector_start;
-    m_sectorEnd = info.sector_end;
-    m_sectorsUsed = info.sectors_used;
-    m_sectorsUnused = info.sectors_unused;
-    m_sectorsUnallocated = info.sectors_unallocated;
-    m_significantThreshold = info.significant_threshold;
-    m_freeSpaceBefore = info.free_space_before;
-    m_sectorSize = info.sector_size;
-    m_fsBlockSize = info.fs_block_size;
+    m_status = static_cast<PartitionStatus>(info.m_status);
+    m_type = static_cast<PartitionType>(info.m_type);
+    m_alignment = static_cast<PartitionAlignment>(info.m_alignment);
+    m_fstype = static_cast<FSType>(info.m_fileSystemType);
+    m_sectorStart = info.m_sectorStart;
+    m_sectorEnd = info.m_sectorEnd;
+    m_sectorsUsed = info.m_sectorsUsed;
+    m_sectorsUnused = info.m_sectorsUnused;
+    m_sectorsUnallocated = info.m_sectorsUnallocated;
+    m_significantThreshold = info.m_significantThreshold;
+    m_freeSpaceBefore = info.m_freeSpaceBefore;
+    m_sectorSize = info.m_sectorSize;
+    m_fsBlockSize = info.m_fileSystemBlockSize;
     m_devicePath = info.m_devicePath;
-    setFilesystemLabel(info.filesystem_label);
+    setFilesystemLabel(info.m_fileSystemLabel);
 }
 
 void Partition::set(const QString &devicePath, const QString &partition, int partitionNumber, PartitionType type, FSType fstype, Sector sectorStart, Sector sectorEnd, Byte_Value sectorSize, bool insideExtended, bool busy)
@@ -240,27 +240,27 @@ PartitionInfo Partition::getPartitionInfo()
     PartitionInfo info;
     info.m_devicePath = m_devicePath;
     info.m_partitionNumber = m_partitionNumber;
-    info.type = m_type;
-    info.status = m_status;
-    info.alignment = m_alignment;
-    info.fstype = m_fstype;
-    info.uuid = m_uuid;
-    info.name = m_name;
-    info.sector_start = m_sectorStart;
-    info.sector_end = m_sectorEnd;
-    info.sectors_used = m_sectorsUsed;
-    info.sectors_unused = m_sectorsUnused;
-    info.sectors_unallocated = m_sectorsUnallocated;
-    info.significant_threshold = m_significantThreshold;
-    info.free_space_before = m_freeSpaceBefore;
-    info.sector_size = m_sectorSize;
-    info.fs_block_size = m_fsBlockSize;
-    info.path = m_path;
-    info.filesystem_label = m_filesystemLabel;
-    info.inside_extended = m_insideExtended;
-    info.busy = m_busy;
-    info.fs_readonly = m_fsReadonly;
-    info.mountpoints = m_mountpoints;
+    info.m_type = m_type;
+    info.m_status = m_status;
+    info.m_alignment = m_alignment;
+    info.m_fileSystemType = m_fstype;
+    info.m_uuid = m_uuid;
+    info.m_name = m_name;
+    info.m_sectorStart = m_sectorStart;
+    info.m_sectorEnd = m_sectorEnd;
+    info.m_sectorsUsed = m_sectorsUsed;
+    info.m_sectorsUnused = m_sectorsUnused;
+    info.m_sectorsUnallocated = m_sectorsUnallocated;
+    info.m_significantThreshold = m_significantThreshold;
+    info.m_freeSpaceBefore = m_freeSpaceBefore;
+    info.m_sectorSize = m_sectorSize;
+    info.m_fileSystemBlockSize = m_fsBlockSize;
+    info.m_path = m_path;
+    info.m_fileSystemLabel = m_filesystemLabel;
+    info.m_insideExtended = m_insideExtended;
+    info.m_busy = m_busy;
+    info.m_fileSystemReadOnly = m_fsReadonly;
+    info.m_mountPoints = m_mountpoints;
 //        qDebug() << info.devicePath << info.partition_number << info.type << info.status << info.alignment << info.fstype << info.uuid
 //                 << info.name << info.sector_start << info.sector_end << info.sectors_used << info.sectors_unused
 //                 << info.sectors_unallocated << info.significant_threshold << info.free_space_before

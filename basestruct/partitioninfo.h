@@ -61,28 +61,28 @@ public:
 
     QString m_devicePath;
     int m_partitionNumber;
-    int type; //PartitionType: UNALLOCATED, PRIMARY, LOGICAL, etc...
-    int status; //PartitionStatus: STAT_REAL, STAT_NEW, etc..
-    int alignment; //PartitionAlignment: ALIGN_CYLINDER, ALIGN_STRICT, etc
-    int fstype;
-    int flag;     //hidden flag
-    QString uuid;
-    QString name;
-    Sector sector_start;
-    Sector sector_end;
-    Sector sectors_used;
-    Sector sectors_unused;
-    Sector sectors_unallocated; //Difference between the size of the partition and the file system
-    Sector significant_threshold; //Threshold from intrinsic to significant unallocated sectors
-    Sector free_space_before; //Free space preceding partition value
-    Byte_Value sector_size; //Sector size of the disk device needed for converting to/from sectors and bytes.
-    Byte_Value fs_block_size; // Block size of of the file system, or -1 when unknown.
-    QString path; //partition path
-    QString filesystem_label;
-    bool inside_extended;
-    bool busy;
-    bool fs_readonly;
-    QVector<QString> mountpoints;
+    int m_type; //PartitionType: UNALLOCATED, PRIMARY, LOGICAL, etc...
+    int m_status; //PartitionStatus: STAT_REAL, STAT_NEW, etc..
+    int m_alignment; //PartitionAlignment: ALIGN_CYLINDER, ALIGN_STRICT, etc
+    int m_fileSystemType;
+    int m_flag;     //hidden flag
+    QString m_uuid;
+    QString m_name;
+    Sector m_sectorStart;
+    Sector m_sectorEnd;
+    Sector m_sectorsUsed;
+    Sector m_sectorsUnused;
+    Sector m_sectorsUnallocated; //Difference between the size of the partition and the file system
+    Sector m_significantThreshold; //Threshold from intrinsic to significant unallocated sectors
+    Sector m_freeSpaceBefore; //Free space preceding partition value
+    Byte_Value m_sectorSize; //Sector size of the disk device needed for converting to/from sectors and bytes.
+    Byte_Value m_fileSystemBlockSize; // Block size of of the file system, or -1 when unknown.
+    QString m_path; //partition path
+    QString m_fileSystemLabel;
+    bool m_insideExtended;
+    bool m_busy;
+    bool m_fileSystemReadOnly;
+    QVector<QString> m_mountPoints;
 };
 Q_DECLARE_METATYPE(PartitionInfo)
 QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info);

@@ -219,10 +219,10 @@ void PartedCore::probeDeviceInfo(const QString &)
             PartitionInfo partinfo = pat.getPartitionInfo();
             for (auto i = pat.m_flags.begin();i != pat.m_flags.end();i++) {
                 if(*i == "hidden") {
-                    partinfo.flag = 1;
+                    partinfo.m_flag = 1;
                 }
                 else {
-                    partinfo.flag = 0;
+                    partinfo.m_flag = 0;
                 }
             }
             if (pat.m_type == TYPE_EXTENDED) {
@@ -392,7 +392,7 @@ void PartedCore::destroyDeviceAndDisk(PedDevice *&lpDevice, PedDisk *&lpDisk)
 bool PartedCore::infoBelongToPartition(const Partition &partition, const PartitionInfo info)
 {
     bool belong = false;
-    if (info.sector_end == partition.m_sectorEnd && info.sector_start == partition.m_sectorStart)
+    if (info.m_sectorEnd == partition.m_sectorEnd && info.m_sectorStart == partition.m_sectorStart)
         belong = true;
     return belong;
 }

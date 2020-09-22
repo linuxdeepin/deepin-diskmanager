@@ -49,7 +49,7 @@ void DmFrameWidget::setFrameData()
     QString mountpoints;
     DiskInfoData temp;
     m_infoData = temp;
-    for (QString point : data.mountpoints) {
+    for (QString point : data.m_mountPoints) {
         mountpoints.append(point + " ");
     }
     if (mountpoints.contains("�")) {
@@ -57,18 +57,18 @@ void DmFrameWidget::setFrameData()
         mountpoints.append(m_str);
     }
     m_infoData.m_mountpoints = diffMountpoints(m_width, mountpoints);
-    m_infoData.m_unused = Utils::formatSize(data.sectors_unused, data.sector_size);
+    m_infoData.m_unused = Utils::formatSize(data.m_sectorsUnused, data.m_sectorSize);
     if (m_infoData.m_unused.contains("-")) {
         m_infoData.m_unused = "-";
     }
-    m_infoData.m_used = Utils::formatSize(data.sectors_used, data.sector_size);
+    m_infoData.m_used = Utils::formatSize(data.m_sectorsUsed, data.m_sectorSize);
     if (m_infoData.m_used.contains("-")) {
         m_infoData.m_used = "-";
     }
-    QString partitionPath = data.path.remove(0, 5);
-    m_infoData.m_fstype = Utils::fileSystemTypeToString(static_cast<FSType>(data.fstype));
-    m_infoData.m_partitionSize = Utils::formatSize(data.sector_end - data.sector_start, data.sector_size);
-    if (data.filesystem_label == "") {
+    QString partitionPath = data.m_path.remove(0, 5);
+    m_infoData.m_fstype = Utils::fileSystemTypeToString(static_cast<FSType>(data.m_fileSystemType));
+    m_infoData.m_partitionSize = Utils::formatSize(data.m_sectorEnd - data.m_sectorStart, data.m_sectorSize);
+    if (data.m_fileSystemLabel == "") {
         m_infoData.m_sysLabel = "";
     } else {
         m_infoData.m_sysLabel = diskVolumn(partitionPath);

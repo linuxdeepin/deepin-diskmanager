@@ -45,7 +45,7 @@ void ResizeDialog::initUi()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
     QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
-    setTitle(tr("Resize %1").arg(info.path));
+    setTitle(tr("Resize %1").arg(info.m_path));
     DLabel *tipLabel = new DLabel(tr("It will resize the partitions on the disk"), this);
     tipLabel->setWordWrap(true);
     tipLabel->setAlignment(Qt::AlignCenter);
@@ -101,13 +101,13 @@ void ResizeDialog::onButtonClicked(int index, const QString &)
             PartitionInfo tem = arrInfo.at(index);
             if (curInfo == tem && index + 1 < arrInfo.size()) {
                 next = arrInfo.at(index + 1);
-                if (next.type == TYPE_UNALLOCATED) {
+                if (next.m_type == TYPE_UNALLOCATED) {
                     QString space = m_lineEdit->text();
                     double total = 0;
                     //目前使用GB为单位精度损失太大，如果扩容全部空闲分区会出现空隙，按当前单位转换后如果差值小于0.01默认全选
                     if (0 == m_comboBox->currentIndex()) {
-                        total = Utils::sectorToUnit(next.getSectorLength(), curInfo.sector_size, UNIT_MIB);
-                        expandSpace = static_cast<Sector>(space.toFloat() * (MEBIBYTE / curInfo.sector_size));
+                        total = Utils::sectorToUnit(next.getSectorLength(), curInfo.m_sectorSize, UNIT_MIB);
+                        expandSpace = static_cast<Sector>(space.toFloat() * (MEBIBYTE / curInfo.m_sectorSize));
                         if (space.toDouble() - total >= 0.01) {
                             break;
                         }
@@ -115,8 +115,8 @@ void ResizeDialog::onButtonClicked(int index, const QString &)
                             expandSpace = next.getSectorLength();
 
                     } else {
-                        total = Utils::sectorToUnit(next.getSectorLength(), curInfo.sector_size, UNIT_GIB);
-                        expandSpace = static_cast<Sector>(space.toFloat() * (GIBIBYTE / curInfo.sector_size));
+                        total = Utils::sectorToUnit(next.getSectorLength(), curInfo.m_sectorSize, UNIT_GIB);
+                        expandSpace = static_cast<Sector>(space.toFloat() * (GIBIBYTE / curInfo.m_sectorSize));
                         if (space.toDouble() - total >= 0.01) {
                             break;
                         }
@@ -124,8 +124,8 @@ void ResizeDialog::onButtonClicked(int index, const QString &)
                             expandSpace = next.getSectorLength();
                     }
 
-                    qDebug() << curInfo.sector_size * 1.0 << GIBIBYTE / curInfo.sector_size << GIBIBYTE / (curInfo.sector_size * 1.0);
-                    qDebug() << Utils::formatSize(expandSpace, curInfo.sector_size) << Utils::formatSize(next.getSectorLength(), curInfo.sector_size);
+                    qDebug() << curInfo.m_sectorSize * 1.0 << GIBIBYTE / curInfo.m_sectorSize << GIBIBYTE / (curInfo.m_sectorSize * 1.0);
+                    qDebug() << Utils::formatSize(expandSpace, curInfo.m_sectorSize) << Utils::formatSize(next.getSectorLength(), curInfo.m_sectorSize);
                     canExpand = true;
                     index += 1;
                     break;
@@ -140,26 +140,26 @@ void ResizeDialog::onButtonClicked(int index, const QString &)
 
         } else {
             PartitionInfo newInfo = curInfo;
-            qDebug() << Utils::formatSize(newInfo.sector_end - newInfo.sector_start, curInfo.sector_size) << next.sector_start << next.sector_end << expandSpace << next.getSectorLength();
+            qDebug() << Utils::formatSize(newInfo.m_sectorEnd - newInfo.m_sectorStart, curInfo.m_sectorSize) << next.m_sectorStart << next.m_sectorEnd << expandSpace << next.getSectorLength();
             //  newinfo.sector_end = expandspace > next.get_sector_length() ? next.sector_end : curinfo.sector_end + expandspace;
 
-            newInfo.sector_end = expandSpace + next.sector_start > next.sector_end ? next.sector_end : next.sector_start + expandSpace;
+            newInfo.m_sectorEnd = expandSpace + next.m_sectorStart > next.m_sectorEnd ? next.m_sectorEnd : next.m_sectorStart + expandSpace;
 
             Sector diff = 0;
-            diff = (newInfo.sector_end + 1) % (MEBIBYTE / newInfo.sector_size);
+            diff = (newInfo.m_sectorEnd + 1) % (MEBIBYTE / newInfo.m_sectorSize);
             if (diff)
-                newInfo.sector_end -= diff;
+                newInfo.m_sectorEnd -= diff;
             else {
                 // If this is a GPT partition table and the partition ends less than 34 sectors
                 // from the end of the device, then reserve at least a mebibyte for the backup
                 // partition table.
                 DeviceInfo device = handler->getCurDeviceInfo();
-                if (device.disktype == "gpt" && device.length - newInfo.sector_end < 34)
-                    newInfo.sector_end -= MEBIBYTE / newInfo.sector_size;
+                if (device.disktype == "gpt" && device.length - newInfo.m_sectorEnd < 34)
+                    newInfo.m_sectorEnd -= MEBIBYTE / newInfo.m_sectorSize;
             }
 
-            qDebug() << Utils::formatSize(newInfo.sector_end - newInfo.sector_start, curInfo.sector_size) << newInfo.sector_start << newInfo.sector_end;
-            newInfo.alignment = ALIGN_MEBIBYTE; //ALIGN_MEBIBYTE;
+            qDebug() << Utils::formatSize(newInfo.m_sectorEnd - newInfo.m_sectorStart, curInfo.m_sectorSize) << newInfo.m_sectorStart << newInfo.m_sectorEnd;
+            newInfo.m_alignment = ALIGN_MEBIBYTE; //ALIGN_MEBIBYTE;
             handler->resize(newInfo);
             done(index);
         }

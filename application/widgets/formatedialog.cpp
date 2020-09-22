@@ -45,7 +45,7 @@ void FormateDialog::initUi()
     this->setFixedSize(450, 300);
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
     QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
-    setTitle(tr("Format %1").arg(info.path));
+    setTitle(tr("Format %1").arg(info.m_path));
     DLabel *tipLabel = new DLabel(tr("Formatting will erase all data on the disk, which cannot be undone"), this);
     tipLabel->setWordWrap(true);
     tipLabel->setFixedHeight(50);
@@ -70,10 +70,10 @@ void FormateDialog::initUi()
     fslist.removeOne("linux-swap");
     m_formatComboBox->addItems(fslist);
 
-    if (-1 == fslist.indexOf(Utils::fileSystemTypeToString(static_cast<FSType>(info.fstype)))) {
+    if (-1 == fslist.indexOf(Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType)))) {
         m_formatComboBox->setCurrentIndex(fslist.indexOf(Utils::fileSystemTypeToString(static_cast<FSType>(11))));
     } else {
-        m_formatComboBox->setCurrentIndex(fslist.indexOf(Utils::fileSystemTypeToString(static_cast<FSType>(info.fstype))));
+        m_formatComboBox->setCurrentIndex(fslist.indexOf(Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType))));
     }
 
     layoutFormat->addWidget(formatName);

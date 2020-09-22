@@ -51,7 +51,7 @@ void PartitionWidget::initUi()
     mainLayout->setSpacing(5);
 
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    setTitle(tr("Partitioning %1").arg(info.path));
+    setTitle(tr("Partitioning %1").arg(info.m_path));
     DLabel *tipLabel = new DLabel(tr("Click ‘+’ to increase the number of partitions. Click on each partition to change its name and file system."), m_mainFrame);
     tipLabel->setWordWrap(true);
     tipLabel->setAlignment(Qt::AlignCenter);
@@ -310,8 +310,8 @@ void PartitionWidget::recPartitionInfo()
 
     QString devicePath = data.m_devicePath;
     QString deviceSize = diskSize;
-    QString partPath = data.path;
-    QString partFstype = Utils::fileSystemTypeToString(static_cast<FSType>(data.fstype));
+    QString partPath = data.m_path;
+    QString partFstype = Utils::fileSystemTypeToString(static_cast<FSType>(data.m_fileSystemType));
     //所选空闲分区
     int i = partPath.lastIndexOf("/");
     QString selectPartition = partPath.right(partPath.length() - i - 1);
@@ -319,7 +319,7 @@ void PartitionWidget::recPartitionInfo()
     m_deviceName->setText(devicePath);
     m_allMemory->setText(deviceSize);
     m_deviceFormate->setText(partFstype);
-    m_total = Utils::sectorToUnit(data.sector_end - data.sector_start, data.sector_size, SIZE_UNIT::UNIT_GIB);
+    m_total = Utils::sectorToUnit(data.m_sectorEnd - data.m_sectorStart, data.m_sectorSize, SIZE_UNIT::UNIT_GIB);
     m_totalSize = m_total * 1024;
 //    qDebug() << mTotal << total;
     //初始值,显示保留两位小数,真正使用保留4位小数
@@ -407,12 +407,12 @@ bool PartitionWidget::maxAmountPrimReached()
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
 
     for (int i = 0; i < partVector.size(); i++) {
-        if (partVector[i].type == TYPE_PRIMARY || partVector[i].type == TYPE_EXTENDED)
+        if (partVector[i].m_type == TYPE_PRIMARY || partVector[i].m_type == TYPE_EXTENDED)
             primary_count++;
     }
 
     int maxprims = DMDbusHandler::instance()->getCurDeviceInfo().max_prims;
-    if (!info.inside_extended && primary_count >= maxprims) {
+    if (!info.m_insideExtended && primary_count >= maxprims) {
         breachMax = true;
         //        qDebug() << QString("It is not possible to create more than %1 primary partition").arg(maxprims);
         //        qDebug() << QString("If you want more partitions you should first create an extended partition. Such a partition can contain other partitions."
@@ -664,7 +664,7 @@ void PartitionWidget::onAddPartition()
     m_partChartWidget->transInfos(m_totalSize, m_sizeInfo);
     part.m_labelName = m_partNameEdit->text();
     part.m_fstype = m_partFormateCombox->currentText();
-    Byte_Value sectorSize = DMDbusHandler::instance()->getCurPartititonInfo().sector_size;
+    Byte_Value sectorSize = DMDbusHandler::instance()->getCurPartititonInfo().m_sectorSize;
     part.m_count = static_cast<Sector>(currentSize * (MEBIBYTE / sectorSize));
 //    if (partComCobox->currentText().compare("MiB") == 0) {
 //        part.count = static_cast<int>(partSizeEdit->text().toDouble() * (MEBIBYTE / sector_size)) ;
@@ -711,60 +711,60 @@ void PartitionWidget::onApplyButton()
     DMDbusHandler *handler = DMDbusHandler::instance();
     PartitionInfo curInfo = handler->getCurPartititonInfo();
     DeviceInfo device = handler->getCurDeviceInfo();
-    Sector beforend = curInfo.sector_start;
+    Sector beforend = curInfo.m_sectorStart;
     Sector deviceLength = handler->getCurDeviceInfoLength();
 
     for (int i = 0; i < m_patrinfo.size(); i++) {
         PartitionInfo newPart;
-        newPart.sector_start = beforend;
+        newPart.m_sectorStart = beforend;
         if (m_patrinfo.at(i).m_blast)
-            newPart.sector_end = curInfo.sector_end;
+            newPart.m_sectorEnd = curInfo.m_sectorEnd;
         else
-            newPart.sector_end = newPart.sector_start + m_patrinfo.at(i).m_count;
-        qDebug() << beforend << curInfo.sector_start << curInfo.sector_end;
+            newPart.m_sectorEnd = newPart.m_sectorStart + m_patrinfo.at(i).m_count;
+        qDebug() << beforend << curInfo.m_sectorStart << curInfo.m_sectorEnd;
 
-        newPart.fstype = Utils::stringToFileSystemType(m_patrinfo.at(i).m_fstype);
-        newPart.filesystem_label = m_patrinfo.at(i).m_labelName;
-        newPart.alignment = ALIGN_MEBIBYTE;
-        newPart.sector_size = curInfo.sector_size;
-        newPart.inside_extended = false;
-        newPart.busy = false;
-        newPart.fs_readonly = false;
+        newPart.m_fileSystemType = Utils::stringToFileSystemType(m_patrinfo.at(i).m_fstype);
+        newPart.m_fileSystemLabel = m_patrinfo.at(i).m_labelName;
+        newPart.m_alignment = ALIGN_MEBIBYTE;
+        newPart.m_sectorSize = curInfo.m_sectorSize;
+        newPart.m_insideExtended = false;
+        newPart.m_busy = false;
+        newPart.m_fileSystemReadOnly = false;
         newPart.m_devicePath = curInfo.m_devicePath;
         if (device.disktype == "gpt") {
-            newPart.type = TYPE_PRIMARY;
+            newPart.m_type = TYPE_PRIMARY;
         } else {
             //非逻辑分区外没有指明创建的分区类型主分区/扩展分区，默认主分区
-            if (curInfo.inside_extended) {
-                newPart.type = TYPE_LOGICAL;
-                newPart.inside_extended = true;
+            if (curInfo.m_insideExtended) {
+                newPart.m_type = TYPE_LOGICAL;
+                newPart.m_insideExtended = true;
             } else {
-                newPart.type = TYPE_PRIMARY;
+                newPart.m_type = TYPE_PRIMARY;
             }
         }
         //newpart .inside_extended && newpart .type == TYPE_UNALLOCATED extend partition
         //newpart .type == TYPE_LOGICAL logical partition
         //newpart .sector_start <= (MEBIBYTE / newpart .sector_size) /* Beginning of disk device */
-        if ((newPart.inside_extended && newPart.type == TYPE_UNALLOCATED)
-                || newPart.type == TYPE_LOGICAL
-                || newPart.sector_start <= (MEBIBYTE / newPart.sector_size)) {
-            newPart.sector_start += MEBIBYTE / newPart.sector_size;
-            newPart.sector_end += MEBIBYTE / newPart.sector_size;
+        if ((newPart.m_insideExtended && newPart.m_type == TYPE_UNALLOCATED)
+                || newPart.m_type == TYPE_LOGICAL
+                || newPart.m_sectorStart <= (MEBIBYTE / newPart.m_sectorSize)) {
+            newPart.m_sectorStart += MEBIBYTE / newPart.m_sectorSize;
+            newPart.m_sectorEnd += MEBIBYTE / newPart.m_sectorSize;
         }
 
-        beforend = newPart.sector_end + 1;
+        beforend = newPart.m_sectorEnd + 1;
 
-        if (beforend > curInfo.sector_end && i < m_patrinfo.size() - 1) {
+        if (beforend > curInfo.m_sectorEnd && i < m_patrinfo.size() - 1) {
             isCreate = false;
             //            qDebug() << "create too partition ,no enough space";
             break;
         } else {
-            if (newPart.sector_end > curInfo.sector_end)
-                newPart.sector_end = curInfo.sector_end;
+            if (newPart.m_sectorEnd > curInfo.m_sectorEnd)
+                newPart.m_sectorEnd = curInfo.m_sectorEnd;
 
-            if (deviceLength == curInfo.sector_end + 1) {
-                if ((newPart.sector_end == curInfo.sector_end - 1) || (newPart.sector_end == curInfo.sector_end))
-                    newPart.sector_end = curInfo.sector_end - 33;
+            if (deviceLength == curInfo.m_sectorEnd + 1) {
+                if ((newPart.m_sectorEnd == curInfo.m_sectorEnd - 1) || (newPart.m_sectorEnd == curInfo.m_sectorEnd))
+                    newPart.m_sectorEnd = curInfo.m_sectorEnd - 33;
             }
 
 //            Sector diff = 0;

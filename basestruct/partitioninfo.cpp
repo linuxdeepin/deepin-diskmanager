@@ -30,22 +30,22 @@
 #include <QDBusArgument>
 
 PartitionInfo::PartitionInfo()
-    : inside_extended(false)
-    , busy(false)
-    , fs_readonly(false)
+    : m_insideExtended(false)
+    , m_busy(false)
+    , m_fileSystemReadOnly(false)
 {
     //inside_extended = busy = fs_readonly = false;
-    m_devicePath = uuid = name = path = filesystem_label = "";
-    m_partitionNumber = type = status = alignment = fstype = 0;
-    sector_start = sector_end = sectors_used = sectors_unused = sectors_unallocated = significant_threshold = free_space_before = 0;
-    flag = 0;
+    m_devicePath = m_uuid = m_name = m_path = m_fileSystemLabel = "";
+    m_partitionNumber = m_type = m_status = m_alignment = m_fileSystemType = 0;
+    m_sectorStart = m_sectorEnd = m_sectorsUsed = m_sectorsUnused = m_sectorsUnallocated = m_significantThreshold = m_freeSpaceBefore = 0;
+    m_flag = 0;
     // mountpoints.clear();
 }
 
 Sector PartitionInfo::getSectorLength() const
 {
-    if (sector_start >= 0 && sector_end >= 0)
-        return sector_end - sector_start + 1;
+    if (m_sectorStart >= 0 && m_sectorEnd >= 0)
+        return m_sectorEnd - m_sectorStart + 1;
     else
         return -1;
 }
@@ -53,42 +53,43 @@ Sector PartitionInfo::getSectorLength() const
 Byte_Value PartitionInfo::getByteLength() const
 {
     if (getSectorLength() >= 0)
-        return getSectorLength() * sector_size;
+        return getSectorLength() * m_sectorSize;
     else
         return -1;
 }
 
 bool PartitionInfo::operator==(const PartitionInfo &info) const
 {
-    return m_devicePath == info.m_devicePath && m_partitionNumber == info.m_partitionNumber && sector_start == info.sector_start && type == info.type;
+    return m_devicePath == info.m_devicePath && m_partitionNumber == info.m_partitionNumber && m_sectorStart == info.m_sectorStart && m_type == info.m_type;
 }
+
 QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info)
 {
     argument.beginStructure();
     argument << info.m_devicePath
              << info.m_partitionNumber
-             << info.type
-             << info.status
-             << info.alignment
-             << info.fstype
-             << info.uuid
-             << info.name
-             << info.sector_start
-             << info.sector_end
-             << info.sectors_used
-             << info.sectors_unused
-             << info.sectors_unallocated
-             << info.significant_threshold
-             << info.free_space_before
-             << info.sector_size
-             << info.fs_block_size
-             << info.path
-             << info.filesystem_label
-             << info.inside_extended
-             << info.busy
-             << info.fs_readonly
-             << info.flag
-             << info.mountpoints;
+             << info.m_type
+             << info.m_status
+             << info.m_alignment
+             << info.m_fileSystemType
+             << info.m_uuid
+             << info.m_name
+             << info.m_sectorStart
+             << info.m_sectorEnd
+             << info.m_sectorsUsed
+             << info.m_sectorsUnused
+             << info.m_sectorsUnallocated
+             << info.m_significantThreshold
+             << info.m_freeSpaceBefore
+             << info.m_sectorSize
+             << info.m_fileSystemBlockSize
+             << info.m_path
+             << info.m_fileSystemLabel
+             << info.m_insideExtended
+             << info.m_busy
+             << info.m_fileSystemReadOnly
+             << info.m_flag
+             << info.m_mountPoints;
     argument.endStructure();
 
     return argument;
@@ -100,28 +101,28 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PartitionInfo &in
 
     argument >> info.m_devicePath
         >> info.m_partitionNumber
-        >> info.type
-        >> info.status
-        >> info.alignment
-        >> info.fstype
-        >> info.uuid
-        >> info.name
-        >> info.sector_start
-        >> info.sector_end
-        >> info.sectors_used
-        >> info.sectors_unused
-        >> info.sectors_unallocated
-        >> info.significant_threshold
-        >> info.free_space_before
-        >> info.sector_size
-        >> info.fs_block_size
-        >> info.path
-        >> info.filesystem_label
-        >> info.inside_extended
-        >> info.busy
-        >> info.fs_readonly
-        >> info.flag
-        >> info.mountpoints;
+        >> info.m_type
+        >> info.m_status
+        >> info.m_alignment
+        >> info.m_fileSystemType
+        >> info.m_uuid
+        >> info.m_name
+        >> info.m_sectorStart
+        >> info.m_sectorEnd
+        >> info.m_sectorsUsed
+        >> info.m_sectorsUnused
+        >> info.m_sectorsUnallocated
+        >> info.m_significantThreshold
+        >> info.m_freeSpaceBefore
+        >> info.m_sectorSize
+        >> info.m_fileSystemBlockSize
+        >> info.m_path
+        >> info.m_fileSystemLabel
+        >> info.m_insideExtended
+        >> info.m_busy
+        >> info.m_fileSystemReadOnly
+        >> info.m_flag
+        >> info.m_mountPoints;
     argument.endStructure();
 
     return argument;

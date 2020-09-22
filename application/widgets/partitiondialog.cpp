@@ -45,7 +45,7 @@ void PartitionDialog::initUi()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
 
-    setTitle(tr("Partition %1").arg(info.path));
+    setTitle(tr("Partition %1").arg(info.m_path));
     QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
     DLabel *tipLabel = new DLabel(tr("It will increase the number of partitions on the disk"), this);
     tipLabel->setWordWrap(true);

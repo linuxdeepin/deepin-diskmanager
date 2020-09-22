@@ -99,7 +99,7 @@ void TitleWidget::showPartInfoWidget()
     PartitionDialog dlg;
 
     if (dlg.exec() == 1) {
-        if (TYPE_UNPARTITIONED == info.type && FS_UNALLOCATED == info.fstype) {
+        if (TYPE_UNPARTITIONED == info.m_type && FS_UNALLOCATED == info.m_fileSystemType) {
             qDebug() << QString("No partition table found on device %1").arg(info.m_devicePath);
             qDebug() << "A partition table is required before partitions can be added";
             //ToDo:empty device create partition table
@@ -140,14 +140,14 @@ void TitleWidget::updateBtnStatus()
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
 
     //已挂载
-    if (info.mountpoints.size() > 0 && info.busy) {
+    if (info.m_mountPoints.size() > 0 && info.m_busy) {
         m_btnParted->setDisabled(true);
         m_btnFormat->setDisabled(true);
         m_btnMount->setDisabled(true);
         m_btnUnmount->setDisabled(false);
         m_btnResize->setDisabled(true);
     } else {
-        int result = info.flag;
+        int result = info.m_flag;
         if (1 == result) {
             m_btnParted->setDisabled(true);
             m_btnFormat->setDisabled(true);
@@ -156,7 +156,7 @@ void TitleWidget::updateBtnStatus()
             m_btnResize->setDisabled(true);
         } else {
             //需判断扩展分区上是否无分区，否则认为不可操作，此处省略操作
-            if (FS_EXTENDED == info.fstype) {
+            if (FS_EXTENDED == info.m_fileSystemType) {
                 m_btnParted->setDisabled(true);
                 m_btnFormat->setDisabled(true);
                 m_btnMount->setDisabled(true);
@@ -164,12 +164,12 @@ void TitleWidget::updateBtnStatus()
                 m_btnResize->setDisabled(true);
             } else {
                 m_btnUnmount->setDisabled(true);
-                if (info.fstype == FS_UNALLOCATED) {
+                if (info.m_fileSystemType == FS_UNALLOCATED) {
                     m_btnParted->setDisabled(false);
                     m_btnFormat->setDisabled(true);
                     m_btnMount->setDisabled(true);
                     m_btnResize->setDisabled(true);
-                } else if (info.fstype == FS_UNKNOWN) {
+                } else if (info.m_fileSystemType == FS_UNKNOWN) {
                     m_btnParted->setDisabled(true);
                     m_btnFormat->setDisabled(false);
                     m_btnMount->setDisabled(true);
@@ -184,8 +184,8 @@ void TitleWidget::updateBtnStatus()
         }
     }
 
-    qDebug() << info.type << info.fstype;
-    if (info.fstype == FSType::FS_LINUX_SWAP) {
+    qDebug() << info.m_type << info.m_fileSystemType;
+    if (info.m_fileSystemType == FSType::FS_LINUX_SWAP) {
         m_btnParted->setDisabled(true);
         m_btnFormat->setDisabled(true);
         m_btnMount->setDisabled(true);

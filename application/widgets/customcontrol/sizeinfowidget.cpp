@@ -54,12 +54,12 @@ void SizeInfoWidget::setData(PartitionInfo info, QVector<QColor> color, QVector<
     m_colorInfo = color;
     m_flag = flag;
 
-    m_noused = Utils::sectorToUnit(info.sectors_unused, info.sector_size, SIZE_UNIT::UNIT_GIB);
-    m_used = Utils::sectorToUnit(info.sectors_used, info.sector_size, SIZE_UNIT::UNIT_GIB);
-    m_totalSpaceSize = Utils::formatSize(info.sector_end - info.sector_start, info.sector_size);
-    m_usedSize = Utils::formatSize(info.sectors_used, info.sector_size);
+    m_noused = Utils::sectorToUnit(info.m_sectorsUnused, info.m_sectorSize, SIZE_UNIT::UNIT_GIB);
+    m_used = Utils::sectorToUnit(info.m_sectorsUsed, info.m_sectorSize, SIZE_UNIT::UNIT_GIB);
+    m_totalSpaceSize = Utils::formatSize(info.m_sectorEnd - info.m_sectorStart, info.m_sectorSize);
+    m_usedSize = Utils::formatSize(info.m_sectorsUsed, info.m_sectorSize);
     m_totalSize = m_noused + m_used;
-    m_partitionPath = info.path.remove(0, 5);
+    m_partitionPath = info.m_path.remove(0, 5);
     if (size.at(0) < 0.00 || size.at(1) < 0.00) {
         m_sizeInfo = QVector<double> {0.00, 0.00};
     }

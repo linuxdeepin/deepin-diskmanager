@@ -46,7 +46,7 @@ void MountDialog::initUi()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
 
-    setTitle(tr("Mount %1").arg(info.path));
+    setTitle(tr("Mount %1").arg(info.m_path));
 
     QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
     DLabel *tipLabel = new DLabel(tr("Choose a mount point please"), this);

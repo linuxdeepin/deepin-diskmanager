@@ -112,8 +112,8 @@ void DMDbusHandler::onSetCurSelect(const QString &devicePath, const QString &par
         auto it = m_deviceMap.find(devicePath);
         if (it != m_deviceMap.end()) {
             for (PartitionInfo info : it.value().partition) {
-                if (info.sector_start == start && info.sector_end == end) {
-                    qDebug() << info.m_partitionNumber << info.path << Utils::fileSystemTypeToString(static_cast<FSType>(info.fstype));
+                if (info.m_sectorStart == start && info.m_sectorEnd == end) {
+                    qDebug() << info.m_partitionNumber << info.m_path << Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType));
                     m_curPartitionInfo = info;
                     break;
                 }
@@ -245,7 +245,7 @@ void DMDbusHandler::onUpdateDeviceInfo(const DeviceInfoMap &infoMap)
         for (auto it = info.partition.begin(); it != info.partition.end(); it++) {
             //            qDebug() << it->sector_end << it->sector_start << Utils::sector_to_unit(it->sector_size, it->sector_end - it->sector_start, SIZE_UNIT::UNIT_GIB);
             //        qDebug() << it->name << it->device_path << it->partition_number << it->sectors_used << it->sectors_unused << it->sector_start << it->sector_end;
-           if (it->path == "unallocated") {
+           if (it->m_path == "unallocated") {
                isExistUnallocated = "true";
            }
         }

@@ -2066,12 +2066,15 @@ HardDiskStatusInfoList PartedCore::getDeviceHardStatusInfo(const QString &device
     qDebug() << __FUNCTION__ << "Get Device Hard Status Info end";
     return hdsilist;
 }
-bool PartedCore::deletePartition(const QString &devicePath, const QString &parttitionPath)
+bool PartedCore::deletePartition()
 {
     qDebug() << __FUNCTION__ << "Delete Partition start";
     PedPartition *ped = nullptr;
     PedDevice *lpDevice = nullptr;
     PedDisk *lpDisk = nullptr;
+
+    QString parttitionPath = m_curpartition.getPath();
+    QString devicePath = m_curpartition.m_devicePath;
 
     if (!getDeviceAndDisk(devicePath, lpDevice, lpDisk)) {
         qDebug() << __FUNCTION__ << "Delete Partition get device and disk failed";
@@ -2123,13 +2126,16 @@ bool PartedCore::deletePartition(const QString &devicePath, const QString &partt
     return true;
 }
 
-bool PartedCore::hidePartition(const QString &devicePath, const QString &parttitionPath)
+bool PartedCore::hidePartition()
 {
     qDebug() << __FUNCTION__ << "Hide Partition start";
     PedPartitionFlag flag = PED_PARTITION_HIDDEN;
     PedPartition *ped = nullptr;
     PedDevice *lpDevice = nullptr;
     PedDisk *lpDisk = nullptr;
+
+    QString parttitionPath = m_curpartition.getPath();
+    QString devicePath = m_curpartition.m_devicePath;
 
     if (!getDeviceAndDisk(devicePath, lpDevice, lpDisk)) {
         qDebug() << __FUNCTION__ << "Hide Partition get device and disk failed";
@@ -2186,13 +2192,16 @@ bool PartedCore::hidePartition(const QString &devicePath, const QString &parttit
     }
 }
 
-bool PartedCore::showPartition(const QString &devicePath, const QString &parttitionPath)
+bool PartedCore::showPartition()
 {
     qDebug() << __FUNCTION__ << "Show Partition start";
     PedPartitionFlag flag = PED_PARTITION_HIDDEN;
     PedPartition *ped = nullptr;
     PedDevice *lpDevice = nullptr;
     PedDisk *lpDisk = nullptr;
+
+    QString parttitionPath = m_curpartition.getPath();
+    QString devicePath = m_curpartition.m_devicePath;
 
     if (!getDeviceAndDisk(devicePath, lpDevice, lpDisk)) {
         qDebug() << __FUNCTION__ << "Show Partition get device and disk failed";

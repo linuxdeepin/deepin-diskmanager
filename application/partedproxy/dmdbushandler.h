@@ -138,24 +138,18 @@ public:
 
     /**
      * @brief 删除分区
-     * @param devicePath 磁盘路径
-     * @param parttitionPath 分区路径
      */
-    void deletePartition(const QString &devicePath, const QString &parttitionPath);
+    void deletePartition();
 
     /**
      * @brief 隐藏分区
-     * @param devicePath 磁盘路径
-     * @param parttitionPath 分区路径
      */
-    void hidePartition(const QString &devicePath, const QString &parttitionPath);
+    void hidePartition();
 
     /**
      * @brief 显示分区
-     * @param devicePath 磁盘路径
-     * @param parttitionPath 分区路径
      */
-    void unhidePartition(const QString &devicePath, const QString &parttitionPath);
+    void unhidePartition();
 
     /**
      * @brief 获取分区是否隐藏

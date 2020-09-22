@@ -313,25 +313,25 @@ HardDiskStatusInfoList DMDbusHandler::getDeviceHardStatusInfo(const QString &dev
     return m_hardDiskStatusInfoList;
 }
 
-void DMDbusHandler::deletePartition(const QString &devicePath, const QString &parttitionPath)
+void DMDbusHandler::deletePartition()
 {
     emit showSpinerWindow(true);
 
-    m_dbus->onDeletePartition(devicePath, parttitionPath);
+    m_dbus->onDeletePartition();
 }
 
-void DMDbusHandler::hidePartition(const QString &devicePath, const QString &parttitionPath)
+void DMDbusHandler::hidePartition()
 {
     emit showSpinerWindow(true);
 
-    m_dbus->onHidePartition(devicePath, parttitionPath);
+    m_dbus->onHidePartition();
 }
 
-void DMDbusHandler::unhidePartition(const QString &devicePath, const QString &parttitionPath)
+void DMDbusHandler::unhidePartition()
 {
     emit showSpinerWindow(true);
 
-    m_dbus->onShowPartition(devicePath, parttitionPath);
+    m_dbus->onShowPartition();
 }
 
 int DMDbusHandler::getPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath)

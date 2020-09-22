@@ -173,21 +173,21 @@ public Q_SLOTS:
      * @param parttitionpath：分区路径
      * @return true成功false失败
      */
-    Q_SCRIPTABLE bool onDeletePartition(const QString &devicepath, const QString &parttitionpath);
+    Q_SCRIPTABLE bool onDeletePartition();
     /**
      * @brief 隐藏分区
      * @param devicepath：设备信息路径
      * @param parttitionpath：分区路径
      * @return true成功false失败
      */
-    Q_SCRIPTABLE bool onHidePartition(const QString &devicepath, const QString &parttitionpath);
+    Q_SCRIPTABLE bool onHidePartition();
     /**
      * @brief 显示分区
      * @param devicepath：设备信息路径
      * @param parttitionpath：分区路径
      * @return true成功false失败
      */
-    Q_SCRIPTABLE bool onShowPartition(const QString &devicepath, const QString &parttitionpath);
+    Q_SCRIPTABLE bool onShowPartition();
     /**
      * @brief 获取隐藏分区是否隐藏属性
      * @param devicepath：设备信息路径

@@ -140,7 +140,7 @@ public:
      * @param parttitionPath：分区路径
      * @return true成功false失败
      */
-    bool deletePartition(const QString &devicePath, const QString &parttitionPath);
+    bool deletePartition();
 
     /**
      * @brief 隐藏分区
@@ -148,7 +148,7 @@ public:
      * @param parttitionPath：分区路径
      * @return true成功false失败
      */
-    bool hidePartition(const QString &devicePath, const QString &parttitionPath);
+    bool hidePartition();
 
     /**
      * @brief 显示分区
@@ -156,7 +156,7 @@ public:
      * @param parttitionPath：分区路径
      * @return true成功false失败
      */
-    bool showPartition(const QString &devicePath, const QString &parttitionPath);
+    bool showPartition();
 
     /**
      * @brief 获取隐藏分区是否隐藏属性

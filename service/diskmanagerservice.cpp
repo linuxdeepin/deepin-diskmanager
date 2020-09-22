@@ -137,17 +137,17 @@ HardDiskStatusInfoList DiskManagerService::onGetDeviceHardStatusInfo(const QStri
 {
     return m_partedcore->getDeviceHardStatusInfo(devicepath);
 }
-bool DiskManagerService::onDeletePartition(const QString &devicepath, const QString &parttitionpath)
+bool DiskManagerService::onDeletePartition()
 {
-    return m_partedcore->deletePartition(devicepath, parttitionpath);
+    return m_partedcore->deletePartition();
 }
-bool DiskManagerService::onHidePartition(const QString &devicepath, const QString &parttitionpath)
+bool DiskManagerService::onHidePartition()
 {
-    return m_partedcore->hidePartition(devicepath, parttitionpath);
+    return m_partedcore->hidePartition();
 }
-bool DiskManagerService::onShowPartition(const QString &devicepath, const QString &parttitionpath)
+bool DiskManagerService::onShowPartition()
 {
-    return m_partedcore->showPartition(devicepath, parttitionpath);
+    return m_partedcore->showPartition();
 }
 int DiskManagerService::onGetPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath)
 {

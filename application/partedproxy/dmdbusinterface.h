@@ -212,37 +212,28 @@ public Q_SLOTS: // METHODS
 
     /**
      * @brief 删除分区
-     * @param devicePath 磁盘路径
-     * @param parttitionPath 分区路径
      */
-    inline QDBusPendingReply<bool> onDeletePartition(const QString &devicePath, const QString &parttitionPath)
+    inline QDBusPendingReply<bool> onDeletePartition()
     {
         QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(devicePath) << QVariant::fromValue(parttitionPath);
         return asyncCallWithArgumentList(QStringLiteral("onDeletePartition"), argumentList);
     }
 
     /**
      * @brief 隐藏分区
-     * @param devicePath 磁盘路径
-     * @param parttitionPath 分区路径
      */
-    inline QDBusPendingReply<bool> onHidePartition(const QString &devicePath, const QString &parttitionPath)
+    inline QDBusPendingReply<bool> onHidePartition()
     {
         QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(devicePath) << QVariant::fromValue(parttitionPath);
         return asyncCallWithArgumentList(QStringLiteral("onHidePartition"), argumentList);
     }
 
     /**
      * @brief 显示分区
-     * @param devicePath 磁盘路径
-     * @param parttitionPath 分区路径
      */
-    inline QDBusPendingReply<bool> onShowPartition(const QString &devicePath, const QString &parttitionPath)
+    inline QDBusPendingReply<bool> onShowPartition()
     {
         QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(devicePath) << QVariant::fromValue(parttitionPath);
         return asyncCallWithArgumentList(QStringLiteral("onShowPartition"), argumentList);
     }
 

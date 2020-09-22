@@ -232,7 +232,7 @@ void DeviceListWidget::onHidePartitionClicked()
             DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
         } else {
             if (m_curDiskInfoData.m_mountpoints.isEmpty()) {
-                DMDbusHandler::instance()->hidePartition(m_curDiskInfoData.m_diskPath, m_curDiskInfoData.m_partitonPath);
+                DMDbusHandler::instance()->hidePartition();
             } else {
                 DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::ResidentType);
                 floMsg->setIcon(QIcon::fromTheme("://icons/deepin/builtin/warning.svg"));
@@ -250,7 +250,7 @@ void DeviceListWidget::onShowPartitionClicked()
     // 您是否要显示该隐藏分区？ 显示  取消
     messageBox.setWarings(tr("Do you want to unhide this partition?"), "", tr("Unhide"), tr("Cancel"));
     if (messageBox.exec() == 1) {
-        DMDbusHandler::instance()->unhidePartition(m_curDiskInfoData.m_diskPath, m_curDiskInfoData.m_partitonPath);
+        DMDbusHandler::instance()->unhidePartition();
     }
 }
 
@@ -270,7 +270,7 @@ void DeviceListWidget::onDeletePartitionClicked()
             DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), floMsg);
             DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
         } else {
-            DMDbusHandler::instance()->deletePartition(m_curDiskInfoData.m_diskPath, m_curDiskInfoData.m_partitonPath);
+            DMDbusHandler::instance()->deletePartition();
         }
     }
 }

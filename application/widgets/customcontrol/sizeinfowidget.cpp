@@ -154,7 +154,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(icon2Color);
             painter.drawPath(painterPath);
             painter.fillPath(painterPath, brush2);
-            QRect rectText = QRect(paintRect.bottomLeft().x() + 28, paintRect.bottomLeft().y() + 17, 150, 70);
+            QRect rectText = QRect(paintRect.bottomLeft().x() + 28, paintRect.bottomLeft().y() + 17, 300, 70);
             QFont font;
             font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
             QColor textColor = m_parentPb.color(DPalette::Normal, DPalette::Text);
@@ -163,15 +163,25 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             QTextOption option;
             option.setAlignment(Qt::AlignTop);
             painter.drawText(rectText, QString(m_partitionPath + tr(" Capacity:")), option);
+            // 获取总容量字符串显示的宽度
+            QFontMetrics fmCapacity = painter.fontMetrics();
+            int capacityWidth = fmCapacity.width(QString(m_partitionPath + tr(" Capacity:")));
+            int capacityNum = rectText.x() + capacityWidth;
+
             rectText.moveTo(paintRect.width() / 2 + 25, paintRect.bottomLeft().y() + 17);
             painter.drawText(rectText, QString(tr("Used:")), option);
-            int num = 0;
-            if (m_partitionPath == "ocated") {
-                num = 135;
-            } else {
-                num = 120;
-            }
-            QRect rectSizeNum = QRect(paintRect.bottomLeft().x() + num, paintRect.bottomLeft().y() + 20, 100, 30);
+            // 获取已用空间字符串显示的宽度
+            QFontMetrics fmUsed = painter.fontMetrics();
+            int usedWidth = fmCapacity.width(QString(tr("Used:")));
+            int usedNum = rectText.x() + usedWidth;
+
+//            int num = 0;
+//            if (m_partitionPath == "ocated") {
+//                num = 135;
+//            } else {
+//                num = 120;
+//            }
+            QRect rectSizeNum = QRect(paintRect.bottomLeft().x() + capacityNum, paintRect.bottomLeft().y() + 20, 100, 30);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
             QColor text1Color = m_parentPb.color(DPalette::Normal, DPalette::TextTitle);
             painter.setFont(font);
@@ -179,7 +189,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             QTextOption option1;
             option.setAlignment(Qt::AlignLeft);
             painter.drawText(rectSizeNum, m_totalSpaceSize, option1);
-            rectSizeNum.moveTo(paintRect.width() / 2 + 100, paintRect.bottomLeft().y() + 20);
+            rectSizeNum.moveTo(paintRect.bottomLeft().x() + usedNum, paintRect.bottomLeft().y() + 20);
             if (m_usedSize.contains("-")) {
                 m_usedSize = "-";
             }
@@ -206,7 +216,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(icon2Color);
             painter.drawPath(painterPath);
             painter.fillPath(painterPath, brush2);
-            QRect rectText = QRect(paintRect.bottomLeft().x() + 28, paintRect.bottomLeft().y() + 17, 150, 70);
+            QRect rectText = QRect(paintRect.bottomLeft().x() + 28, paintRect.bottomLeft().y() + 17, 300, 70);
             QFont font;
             font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
             QColor textColor = m_parentPb.color(DPalette::Normal, DPalette::ToolTipText);
@@ -215,15 +225,25 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             QTextOption option;
             option.setAlignment(Qt::AlignTop);
             painter.drawText(rectText, QString(m_partitionPath + tr(" Capacity:")), option);
+            // 获取总容量字符串显示的宽度
+            QFontMetrics fmCapacity = painter.fontMetrics();
+            int capacityWidth = fmCapacity.width(QString(m_partitionPath + tr(" Capacity:")));
+            int capacityNum = rectText.x() + capacityWidth;
+
             rectText.moveTo(paintRect.width() / 2 + 25, paintRect.bottomLeft().y() + 17);
             painter.drawText(rectText, QString(tr("Used:")), option);
-            int num = 0;
-            if (m_partitionPath == "ocated") {
-                num = 135;
-            } else {
-                num = 120;
-            }
-            QRect rectSizeNum = QRect(paintRect.bottomLeft().x() + num, paintRect.bottomLeft().y() + 20, 100, 30);
+            // 获取已用空间字符串显示的宽度
+            QFontMetrics fmUsed = painter.fontMetrics();
+            int usedWidth = fmCapacity.width(QString(tr("Used:")));
+            int usedNum = rectText.x() + usedWidth;
+
+//            int num = 0;
+//            if (m_partitionPath == "ocated") {
+//                num = 135;
+//            } else {
+//                num = 120;
+//            }
+            QRect rectSizeNum = QRect(paintRect.bottomLeft().x() + capacityNum, paintRect.bottomLeft().y() + 20, 100, 30);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
             QColor text1Color = m_parentPb.color(DPalette::Normal, DPalette::ToolTipText);
             painter.setFont(font);
@@ -231,7 +251,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             QTextOption option1;
             option.setAlignment(Qt::AlignLeft);
             painter.drawText(rectSizeNum, m_totalSpaceSize, option1);
-            rectSizeNum.moveTo(paintRect.width() / 2 + 100, paintRect.bottomLeft().y() + 20);
+            rectSizeNum.moveTo(paintRect.bottomLeft().x() + usedNum, paintRect.bottomLeft().y() + 20);
             if (m_usedSize.contains("-")) {
                 m_usedSize = "-";
             }

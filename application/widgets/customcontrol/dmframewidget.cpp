@@ -28,8 +28,10 @@
 #include "utils.h"
 #include "partitioninfo.h"
 #include "partedproxy/dmdbushandler.h"
+
 #include <DFontSizeManager>
 #include <DApplicationHelper>
+
 #include <QDebug>
 
 DmFrameWidget::DmFrameWidget(DiskInfoData data, QWidget *parent)
@@ -81,29 +83,32 @@ void DmFrameWidget::setFrameData()
 
 QString DmFrameWidget::diskVolumn(QString partitionPath)
 {
-    //将gbkｕ盘ｌａｂｅｌ中文乱码转换为正常中文显示
-    QProcess process;
-    process.start("ls", QStringList() << "-al" << "/dev/disk/by-label/");
-    if (!process.waitForStarted()) {
-        qWarning() << "Cmd Exec Failed:" << process.errorString();
-    }
-    if (!process.waitForFinished(-1)) {
-        qWarning() << "waitForFinished Failed:" << process.errorString();
-    }
-    QString standardError = process.readAllStandardOutput();
-    QStringList mountsList = standardError.split("\n").filter(partitionPath);
-    QString sr = mountsList.last();
-    QString st = sr.mid(40).remove(" -> ../../" + partitionPath);
-    qDebug() << __FUNCTION__ << st;
-    if (st.at(1) != "x") {
-        QString strstr1 = st.mid(st.indexOf("\\"));
-        qDebug() << __FUNCTION__ << strstr1 << st.at(1);
-        if (strstr1.at(1) != "x") {
-            QString stres = strstr1;
-        } else {
-            QString stres = st.remove(strstr1);;
-        }
-    }
+    DMDbusHandler *handler = DMDbusHandler::instance();
+    PartitionInfo curInfo = handler->getCurPartititonInfo();
+//    //将gbkｕ盘ｌａｂｅｌ中文乱码转换为正常中文显示
+//    QProcess process;
+//    process.start("ls", QStringList() << "-al" << "/dev/disk/by-label/");
+//    if (!process.waitForStarted()) {
+//        qWarning() << "Cmd Exec Failed:" << process.errorString();
+//    }
+//    if (!process.waitForFinished(-1)) {
+//        qWarning() << "waitForFinished Failed:" << process.errorString();
+//    }
+//    QString standardError = process.readAllStandardOutput();
+//    QStringList mountsList = standardError.split("\n").filter(partitionPath);
+//    QString sr = mountsList.last();
+//    QString st = sr.mid(40).remove(" -> ../../" + partitionPath);
+//    qDebug() << __FUNCTION__ << st;
+//    if (st.at(1) != "x") {
+//        QString strstr1 = st.mid(st.indexOf("\\"));
+//        qDebug() << __FUNCTION__ << strstr1 << st.at(1);
+//        if (strstr1.at(1) != "x") {
+//            QString stres = strstr1;
+//        } else {
+//            QString stres = st.remove(strstr1);;
+//        }
+//    }
+    QString st = curInfo.m_fileSystemLabel;
     std::string s = st.toStdString();
     const char *strstr = s.c_str();
     QString strtem("%1");

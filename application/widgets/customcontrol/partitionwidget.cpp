@@ -636,10 +636,14 @@ void PartitionWidget::onSetPartName()
 
 void PartitionWidget::onAddPartition()
 {
-    if (m_sizeInfo.size() >= 24 || maxAmountPrimReached() == true) {
+    DMDbusHandler *handler = DMDbusHandler::instance();
+    DeviceInfo device = handler->getCurDeviceInfo();
+
+    if (m_sizeInfo.size() >= 24 || maxAmountPrimReached() == true || (device.partition.size() + m_sizeInfo.size()) > device.max_prims) {
         DMessageManager::instance()->sendMessage(this, QIcon(":/icons/deepin/builtin/warning.svg"), tr("The number of new partitions exceeds the limit"));
         return;
     }
+
     double currentSize = 0.00;
     stPart part;
     m_applyBtn->setEnabled(true);

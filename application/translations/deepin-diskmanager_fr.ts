@@ -1,132 +1,132 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="fr" version="2.1">
 <context>
     <name>DeviceListWidget</name>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="104"/>
         <source>Disk info</source>
-        <translation>Дані щодо диска</translation>
+        <translation>Informations sur le disque</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="111"/>
         <source>Health management</source>
-        <translation>Керування станом справності</translation>
+        <translation>État de santé</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="115"/>
         <source>Check health</source>
-        <translation>Перевірити стан справності</translation>
+        <translation>Vérifier la santé</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="121"/>
         <source>Check partition table error</source>
-        <translation>Не пройдено перевірку таблиці розділів</translation>
+        <translation>Vérifier les erreurs dans la table de partition</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="136"/>
         <source>Hide partition</source>
-        <translation>Приховати розділ</translation>
+        <translation>Masquer la partition</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="142"/>
         <source>Unhide partition</source>
-        <translation>Показати розділ</translation>
+        <translation>Afficher la partition</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="149"/>
         <source>Delete partition</source>
-        <translation>Вилучити розділ</translation>
+        <translation>Supprimer la partition</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="215"/>
         <source>No errors found in the partition table</source>
-        <translation>У таблиці розділів не знайдено помилок</translation>
+        <translation>Aucune erreur trouvée dans la table de partition</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="224"/>
         <source>Do you want to hide this partition?</source>
-        <translation>Хочете приховати цей розділ?</translation>
+        <translation>Voulez-vous masquer cette partition ?</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="224"/>
         <source>Hide</source>
-        <translation>Приховати</translation>
+        <translation>Masquer</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="224"/>
         <location filename="../widgets/devicelistwidget.cpp" line="251"/>
         <location filename="../widgets/devicelistwidget.cpp" line="261"/>
         <source>Cancel</source>
-        <translation>Скасувати</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="230"/>
         <source>Failed to hide the partition: unable to lock it</source>
-        <translation>Не вдалося приховати розділ: не вдалося заблокувати його</translation>
+        <translation>Impossible de masquer la partition : impossible de la verrouiller</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="239"/>
         <source>You can only hide the unmounted partition</source>
-        <translation>Приховати можна лише демонтований розділ</translation>
+        <translation>Vous ne pouvez masquer que la partition non montée</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="251"/>
         <source>Do you want to unhide this partition?</source>
-        <translation>Хочете, щоб цей розділ було показано?</translation>
+        <translation>Voulez-vous afficher cette partition ?</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="251"/>
         <source>Unhide</source>
-        <translation>Скасувати приховування</translation>
+        <translation>Afficher</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="261"/>
         <source>Are you sure you want to delete this partition?</source>
-        <translation>Ви справді хочете вилучити цей розділ?</translation>
+        <translation>Êtes-vous sûr de vouloir supprimer cette partition ?</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="261"/>
         <source>You will lose all data in it</source>
-        <translation>Ви втратите усі дані на ньому</translation>
+        <translation>Vous perdrez toutes les données qu&apos;elle contient</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="261"/>
         <source>Delete</source>
-        <translation>Вилучити</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="269"/>
         <source>Failed to delete the partition: unable to lock it</source>
-        <translation>Не вдалося вилучити розділ: не вдалося заблокувати його</translation>
+        <translation>Échec de la suppression de la partition: impossible de la verrouiller</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="282"/>
         <source>Hide the partition successfully</source>
-        <translation>Розділ успішно приховано</translation>
+        <translation>La partition a été masquée avec succès</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="287"/>
         <source>Failed to hide the partition</source>
-        <translation>Не вдалося приховати розділ</translation>
+        <translation>Impossible de masquer la partition</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="297"/>
         <source>Unhide the partition successfully</source>
-        <translation>Показ розділу успішно відновлено</translation>
+        <translation>La partition a été affichée avec succès</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="302"/>
         <source>Failed to unhide the partition</source>
-        <translation>Не вдалося відновити показ розділу</translation>
+        <translation>Impossible d&apos;afficher la partition</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="314"/>
         <source>Delete the partition successfully</source>
-        <translation>Розділ успішно вилучено</translation>
+        <translation>Supprimer la partition avec succès</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="319"/>
         <source>Failed to delete the partition: %1</source>
-        <translation>Не вдалося вилучити розділ: %1</translation>
+        <translation>Échec de la suppression de la partition: %1</translation>
     </message>
 </context>
 <context>
@@ -134,124 +134,124 @@
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="58"/>
         <source>Check Health</source>
-        <translation>Перевірити стан справності</translation>
+        <translation>Vérifier état</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="90"/>
         <source>Serial number</source>
-        <translation>Серійний номер</translation>
+        <translation>Numéro de série</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="99"/>
         <source>Storage</source>
-        <translation>Сховище даних</translation>
+        <translation>Espace de stockage</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="120"/>
         <source>Health Status</source>
-        <translation>Стан справності</translation>
+        <translation>État de santé</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="134"/>
         <source>Good</source>
-        <translation>Добрий</translation>
+        <translation>Bon</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="140"/>
         <source>Damaged</source>
-        <translation>Пошкоджено</translation>
+        <translation>Endommagé</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="146"/>
         <source>Unknown</source>
-        <translation>Невідомо</translation>
+        <translation>Inconnu</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="165"/>
         <source>Temperature</source>
-        <translation>Температура</translation>
+        <translation>Température</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="222"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="348"/>
         <source>ID</source>
-        <translation>Ід.</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="223"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="348"/>
         <source>Status</source>
-        <translation>Стан</translation>
+        <translation>Statut</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="224"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="348"/>
         <source>Current</source>
-        <translation>Поточний</translation>
+        <translation>Actuel</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="225"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="348"/>
         <source>Worst</source>
-        <translation>Найгірше значення</translation>
+        <translation>Mauvais</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="226"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="349"/>
         <source>Threshold</source>
-        <translation>Порогове значення</translation>
+        <translation>Seuil</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="227"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="349"/>
         <source>Raw Value</source>
-        <translation>Необроблене значення</translation>
+        <translation>Valeur brute</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="228"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="349"/>
         <source>Attribute name</source>
-        <translation>Назва атрибута</translation>
+        <translation>Nom d&apos;attribut</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="282"/>
         <source>Status: (G: Good | W: Warning | D: Damaged | U: Unknown)</source>
-        <translation>Стан: (G: добрий | W: попередження | D: пошкоджено | U: невідомий)</translation>
+        <translation>Statut : (G : Bon | W : Attention | D : Endommagé | U : Inconnu)</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="286"/>
         <source>Export</source>
-        <translation>Експортувати</translation>
+        <translation>Exporter</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="311"/>
         <source>Save File</source>
-        <translation>Збереження файла</translation>
+        <translation>Enregistrer le fichier</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="311"/>
         <source>Text files (*.txt)</source>
-        <translation>текстові файли (*.txt)</translation>
+        <translation>Fichiers texte (*.txt)</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="326"/>
         <source>Wrong path</source>
-        <translation>Помилковий шлях</translation>
+        <translation>Mauvais chemin</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="336"/>
         <source>You do not have permission to access this path</source>
-        <translation>У вас немає дозволу на доступ до цього шляху</translation>
+        <translation>Vous n&apos;avez pas l&apos;autorisation d&apos;accéder à ce chemin</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="367"/>
         <source>Export successful</source>
-        <translation>Експорт успішний</translation>
+        <translation>Exportation réussie</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="370"/>
         <source>Export failed</source>
-        <translation>Не вдалося експортувати</translation>
+        <translation>L&apos;exportation a échoué</translation>
     </message>
 </context>
 <context>
@@ -259,72 +259,72 @@
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="55"/>
         <source>Disk Info</source>
-        <translation>Дані щодо диска</translation>
+        <translation>Informations sur le disque</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Serial Number:</source>
-        <translation>Серійний номер:</translation>
+        <translation>Numéro de série:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Device Model:</source>
-        <translation>Модель пристрою:</translation>
+        <translation>Modèle d&apos;appareil:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>LU WWN Device Id:</source>
-        <translation>Ід. пристрою LU WWN:</translation>
+        <translation>ID d&apos;appareil LU WWN :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Firmware Version:</source>
-        <translation>Версія мікропрограми:</translation>
+        <translation>Version du firmware:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>User Capacity:</source>
-        <translation>Місткість для користувача:</translation>
+        <translation>Capacité utilisateur:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Sector Size:</source>
-        <translation>Розмір сектора:</translation>
+        <translation>Taille du secteur:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Rotation Rate:</source>
-        <translation>Частота обертання:</translation>
+        <translation>Vitesse de rotation:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Form Factor:</source>
-        <translation>Формфактор:</translation>
+        <translation>Facteur de forme:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="71"/>
         <source>Device is:</source>
-        <translation>Пристрій:</translation>
+        <translation>Modèle:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="71"/>
         <source>ATA Version is:</source>
-        <translation>Версія ATA:</translation>
+        <translation>La version ATA est:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="71"/>
         <source>SATA Version is:</source>
-        <translation>Версія SATA:</translation>
+        <translation>La version SATA est:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="72"/>
         <source>Local Time is:</source>
-        <translation>Місцевий час:</translation>
+        <translation>L&apos;heure locale est:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="72"/>
         <source>SMART support is:</source>
-        <translation>Підтримка SMART:</translation>
+        <translation>Le support SMART est:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="78"/>
@@ -340,37 +340,37 @@
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="119"/>
         <source>Export</source>
-        <translation>Експорт</translation>
+        <translation>Exporter</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="136"/>
         <source>Save File</source>
-        <translation>Збереження файла</translation>
+        <translation>Enregistrer le fichier</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="136"/>
         <source>Text files (*.txt)</source>
-        <translation>текстові файли (*.txt)</translation>
+        <translation>Fichiers texte (*.txt)</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="151"/>
         <source>Wrong path</source>
-        <translation>Помилковий шлях</translation>
+        <translation>Mauvais chemin</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="161"/>
         <source>You do not have permission to access this path</source>
-        <translation>У вас немає дозволу на доступ до цього шляху</translation>
+        <translation>Vous n&apos;avez pas l&apos;autorisation d&apos;accéder à ce chemin</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="180"/>
         <source>Export successful</source>
-        <translation>Експорт успішний</translation>
+        <translation>Exportation réussie</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="183"/>
         <source>Export failed</source>
-        <translation>Не вдалося експортувати</translation>
+        <translation>L&apos;exportation a échoué</translation>
     </message>
 </context>
 <context>
@@ -378,37 +378,37 @@
     <message>
         <location filename="../widgets/formatedialog.cpp" line="48"/>
         <source>Format %1</source>
-        <translation>Форматувати %1</translation>
+        <translation>Format %1</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="49"/>
         <source>Formatting will erase all data on the disk, which cannot be undone</source>
-        <translation>У результаті форматування усі дані з диска буде витерто. Відновити їх буде дуже важко.</translation>
+        <translation>Le formatage effacera toutes les données du disque et ne peut pas être annulé</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="56"/>
         <source>Name:</source>
-        <translation>Назва:</translation>
+        <translation>Nom:</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="60"/>
         <source>Name</source>
-        <translation>Назва</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="65"/>
         <source>File system:</source>
-        <translation>Файлова система:</translation>
+        <translation>Système de fichier:</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="86"/>
         <source>Cancel</source>
-        <translation>Скасувати</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="87"/>
         <source>Format</source>
-        <translation>Форматувати</translation>
+        <translation>Format</translation>
     </message>
 </context>
 <context>
@@ -416,32 +416,32 @@
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="101"/>
         <source>Mount point:</source>
-        <translation>Точка монтування:</translation>
+        <translation>Point de montage:</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="108"/>
         <source>Free:</source>
-        <translation>Вільно:</translation>
+        <translation>Libre:</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="114"/>
         <source>Used:</source>
-        <translation>Використано:</translation>
+        <translation>Utilisé:</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="120"/>
         <source>Type:</source>
-        <translation>Тип:</translation>
+        <translation>Type:</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="125"/>
         <source>Capacity:</source>
-        <translation>Місткість:</translation>
+        <translation>Capacité:</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="130"/>
         <source>Volume label:</source>
-        <translation>Мітка тому:</translation>
+        <translation>Nom du disque:</translation>
     </message>
 </context>
 <context>
@@ -449,12 +449,12 @@
     <message>
         <location filename="../widgets/customcontrol/infotopframe.cpp" line="59"/>
         <source>Capacity</source>
-        <translation>Місткість</translation>
+        <translation>Capacité</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/infotopframe.cpp" line="113"/>
         <source>File system</source>
-        <translation>Файлова система</translation>
+        <translation>Système de fichier</translation>
     </message>
 </context>
 <context>
@@ -462,38 +462,38 @@
     <message>
         <location filename="../widgets/mountdialog.cpp" line="49"/>
         <source>Mount %1</source>
-        <translation>Змонтувати %1</translation>
+        <translation>Monter %1</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="52"/>
         <source>Choose a mount point please</source>
-        <translation>Виберіть, будь ласка, точку монтування</translation>
+        <translation>Veuillez choisir un point de montage</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="55"/>
         <source>Mount point:</source>
-        <translation>Точка монтування:</translation>
+        <translation>Point de montage:</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="79"/>
         <location filename="../widgets/mountdialog.cpp" line="114"/>
         <source>Cancel</source>
-        <translation>Скасувати</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="80"/>
         <source>Mount</source>
-        <translation>Змонтувати</translation>
+        <translation>Monter</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="114"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
-        <translation>Дані з цією точкою монтування може бути втрачено. Будь ласка, змонтуйте каталог до іншої теки.</translation>
+        <translation>Les données sous ce point de montage seraient perdues, veuillez monter le répertoire à un autre endroit</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="114"/>
         <source>OK</source>
-        <translation>Гаразд</translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -501,7 +501,7 @@
     <message>
         <location filename="../widgets/customcontrol/partchartshowing.cpp" line="119"/>
         <source>Unallocated</source>
-        <translation>Нерозподілено</translation>
+        <translation>Non alloué</translation>
     </message>
 </context>
 <context>
@@ -509,22 +509,22 @@
     <message>
         <location filename="../widgets/partitiondialog.cpp" line="48"/>
         <source>Partition %1</source>
-        <translation>Розділ %1</translation>
+        <translation>Partition %1</translation>
     </message>
     <message>
         <location filename="../widgets/partitiondialog.cpp" line="50"/>
         <source>It will increase the number of partitions on the disk</source>
-        <translation>Це збільшить кількість розділів на диску</translation>
+        <translation>Cela augmentera le nombre de partitions sur le disque</translation>
     </message>
     <message>
         <location filename="../widgets/partitiondialog.cpp" line="57"/>
         <source>Cancel</source>
-        <translation>Скасувати</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../widgets/partitiondialog.cpp" line="58"/>
         <source>Confirm</source>
-        <translation>Підтвердити</translation>
+        <translation>Confirmer</translation>
     </message>
 </context>
 <context>
@@ -532,27 +532,27 @@
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="52"/>
         <source>Errors in Partition Table</source>
-        <translation>Помилки у таблиці розділів</translation>
+        <translation>Erreurs dans la table de partition</translation>
     </message>
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="61"/>
         <source>The partition table of disk %1 has below errors:</source>
-        <translation>У таблиці розділів диска %1 виявлено такі помилки:</translation>
+        <translation>La table de partition du disque %1 contient les erreurs suivantes :</translation>
     </message>
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="94"/>
         <source>Error</source>
-        <translation>Помилка</translation>
+        <translation>Erreur</translation>
     </message>
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="103"/>
         <source>Partition table entries are not in disk order</source>
-        <translation>Записи таблиці розділів не у тому порядку, як на диску.</translation>
+        <translation>Les entrées dans la table de partition ne sont pas dans l&apos;ordre des disques</translation>
     </message>
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="115"/>
         <source>OK</source>
-        <translation>Гаразд</translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -560,104 +560,104 @@
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="54"/>
         <source>Partitioning %1</source>
-        <translation>Поділ на розділи %1</translation>
+        <translation>Partitionnement %1</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="55"/>
         <source>Click ‘+’ to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation>Натисніть «+», щоб збільшити кількість розділів. Клацніть на будь-якому розділі, щоб змінити його назву і файлову систему.</translation>
+        <translation>Cliquer sur &quot;+&quot; pour augmenter le nombre de partitions. Cliquer sur chaque partition pour changer son nom et son système de fichiers.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="102"/>
         <source>Disk Information</source>
-        <translation>Дані щодо диска</translation>
+        <translation>Informations du disque</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="117"/>
         <source>Capacity:</source>
-        <translation>Місткість:</translation>
+        <translation>Capacité:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="127"/>
         <source>Partition selected:</source>
-        <translation>Вибраний розділ:</translation>
+        <translation>Partition sélectionnée:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="142"/>
         <source>Disk:</source>
-        <translation>Диск:</translation>
+        <translation>Disque:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="152"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="260"/>
         <source>File system:</source>
-        <translation>Файлова система:</translation>
+        <translation>Système de fichier:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="191"/>
         <source>Confirm</source>
-        <translation>Підтвердити</translation>
+        <translation>Confirmer</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="193"/>
         <source>Cancel</source>
-        <translation>Скасувати</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="195"/>
         <source>Revert</source>
-        <translation>Повернути</translation>
+        <translation>Revenir</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="216"/>
         <source>Partition Information</source>
-        <translation>Відомості щодо розділу</translation>
+        <translation>Informations de partition</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="228"/>
         <source>Number of partitions:</source>
-        <translation>Кількість розділів:</translation>
+        <translation>Nombre de partitions:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="235"/>
         <source>Delete last partition</source>
-        <translation>Вилучити останній розділ</translation>
+        <translation>Supprimer la dernière partition</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="243"/>
         <source>Name:</source>
-        <translation>Назва:</translation>
+        <translation>Nom:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="268"/>
         <source>Size:</source>
-        <translation>Розмір:</translation>
+        <translation>Taille:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="362"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="468"/>
         <source>Unallocated</source>
-        <translation>Нерозподілено</translation>
+        <translation>Non alloué</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="384"/>
         <source>Name</source>
-        <translation>Назва</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="385"/>
         <source>Size</source>
-        <translation>Розмір</translation>
+        <translation>Taille</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="643"/>
         <source>The number of new partitions exceeds the limit</source>
-        <translation>Кількість нових розділів перевищує максимальну можливу</translation>
+        <translation>Le nombre de nouvelles partitions dépasse la limite</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="663"/>
         <source>To create a partition, you need at least 52 MB</source>
-        <translation>Щоб створити розділ, вам потрібно принаймні 52 МБ</translation>
+        <translation>Pour créer une partition, vous avez besoin d&apos;au moins 52 Mo</translation>
     </message>
 </context>
 <context>
@@ -665,12 +665,12 @@
     <message>
         <location filename="../main.cpp" line="32"/>
         <source>Disk Utility</source>
-        <translation>Дисковий додаток</translation>
+        <translation>Utilitaire de disque</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="40"/>
         <source>Disk Utility is a disk management tool for creating, reorganizing and formatting partitions.</source>
-        <translation>«Дисковий додаток» — програма для керування дисками, яку призначено для створення, переупорядковування та форматування розділів.</translation>
+        <translation>L&apos;utilitaire de disque est un outil de gestion de disque pour créer, réorganiser et formater des partitions.</translation>
     </message>
 </context>
 <context>
@@ -678,32 +678,32 @@
     <message>
         <location filename="../widgets/resizedialog.cpp" line="48"/>
         <source>Resize %1</source>
-        <translation>Змінити розмір %1</translation>
+        <translation>Redimensionner %1</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="49"/>
         <source>It will resize the partitions on the disk</source>
-        <translation>Змінить розміри розділів на диску</translation>
+        <translation>Il redimensionnera les partitions sur le disque</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="62"/>
         <source>Reserved size:</source>
-        <translation>Зарезервований розмір:</translation>
+        <translation>Taille réservée:</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="78"/>
         <source>Cancel</source>
-        <translation>Скасувати</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="79"/>
         <source>Confirm</source>
-        <translation>Підтвердити</translation>
+        <translation>Confirmer</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="137"/>
         <source>Space limit exceeded</source>
-        <translation>Перевищено обмеження на розмір</translation>
+        <translation>Limite d&apos;espace dépassée</translation>
     </message>
 </context>
 <context>
@@ -714,7 +714,7 @@
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="227"/>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="230"/>
         <source> Capacity:</source>
-        <translation>Місткість:</translation>
+        <translation> Capacité:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="172"/>
@@ -722,7 +722,7 @@
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="234"/>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="237"/>
         <source>Used:</source>
-        <translation>Використано:</translation>
+        <translation>Utilisé:</translation>
     </message>
 </context>
 <context>
@@ -730,27 +730,27 @@
     <message>
         <location filename="../widgets/titlewidget.cpp" line="48"/>
         <source>Partition</source>
-        <translation>Розділ</translation>
+        <translation>Partition</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="49"/>
         <source>Format to</source>
-        <translation>Форматувати у</translation>
+        <translation>Formater en</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="50"/>
         <source>Mount</source>
-        <translation>Змонтувати</translation>
+        <translation>Monter</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="51"/>
         <source>Unmount</source>
-        <translation>Демонтувати</translation>
+        <translation>Démonter</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="52"/>
         <source>Resize</source>
-        <translation>Змінити розмір</translation>
+        <translation>Redimensionner</translation>
     </message>
 </context>
 <context>
@@ -758,22 +758,22 @@
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="47"/>
         <source>Unmount %1</source>
-        <translation>Демонтувати %1</translation>
+        <translation>Démonter %1</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="50"/>
         <source>Make sure there are no programs running on the disk</source>
-        <translation>Переконайтеся, що з диском не працює жодна інша програма</translation>
+        <translation>Assurez-vous qu&apos;aucun programme n&apos;est en cours d&apos;exécution sur le disque</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="57"/>
         <source>Cancel</source>
-        <translation>Скасувати</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="58"/>
         <source>Unmount</source>
-        <translation>Демонтувати</translation>
+        <translation>Démonter</translation>
     </message>
 </context>
 </TS>

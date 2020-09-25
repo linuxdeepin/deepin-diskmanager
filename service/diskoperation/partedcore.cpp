@@ -1807,7 +1807,7 @@ HardDiskInfo PartedCore::getDeviceHardInfo(const QString &devicepath)
         return hdinfo;
     }
 
-    QString cmd = QString("smartctl -i -T verypermissive -d sat %1").arg(devicepath);
+    QString cmd = QString("smartctl -i %1").arg(devicepath);
     FILE *fd = nullptr;
     fd = popen(cmd.toStdString().data(), "r");
     char pb[1024];
@@ -1964,7 +1964,7 @@ QString PartedCore::getDeviceHardStatus(const QString &devicepath)
         return status;
     }
 
-    QString cmd = QString("smartctl -H -T verypermissive -d sat %1").arg(devicepath);
+    QString cmd = QString("smartctl -H %1").arg(devicepath);
     FILE *fd = nullptr;
     fd = popen(cmd.toStdString().data(), "r");
     char pb[1024];
@@ -1999,7 +1999,7 @@ HardDiskStatusInfoList PartedCore::getDeviceHardStatusInfo(const QString &device
         return hdsilist;
     }
 
-    QString cmd = QString("smartctl -A -T verypermissive -d sat %1").arg(devicepath);
+    QString cmd = QString("smartctl -A %1").arg(devicepath);
     FILE *fd = nullptr;
     fd = popen(cmd.toStdString().data(), "r");
     char pb[1024];

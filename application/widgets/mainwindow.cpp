@@ -69,7 +69,10 @@ MainWindow::~MainWindow()
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     m_central->HandleQuit();
-    m_handler->Quit();
+//    m_handler->Quit();
+    QProcess proc;
+    proc.start("/usr/bin/dbus-send --system --type=method_call --dest=com.deepin.diskmanager /com/deepin/diskmanager com.deepin.diskmanager.Quit");
+
     DMainWindow::closeEvent(event);
 }
 

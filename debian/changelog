@@ -1,3 +1,10 @@
+deepin-diskmanager (1.1.0.18) stable; urgency=low
+
+  *解决完成第十三次送测产生的bug,
+  *解决安装后，USB脚本文件没有执行权限bug
+
+ -- unknown <unknown@uniontech.com>  Sun., 27 September 2020 13:34:16 +0800
+
 deepin-diskmanager (1.1.0.17) stable; urgency=low
 
   *解决完成第十二次送测产生的bug,

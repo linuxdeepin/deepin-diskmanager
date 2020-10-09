@@ -45,10 +45,12 @@ Device::Device()
 
 void Device::enablePartitionNaming(int length)
 {
-    if (length > 0)
+    if (length > 0) {
         m_maxPartitionNameLength = length;
-    else
+    }
+    else {
         m_maxPartitionNameLength = 0;
+    }
 }
 
 bool Device::partitionNamingSupported() const

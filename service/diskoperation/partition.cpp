@@ -49,10 +49,12 @@ bool Partition::sectorUsageKnown() const
 
 Sector Partition::getSectorsUnallocated() const
 {
-    if (m_sectorsUnallocated < m_significantThreshold)
+    if (m_sectorsUnallocated < m_significantThreshold) {
         return 0;
-    else
+    }
+    else {
         return m_sectorsUnallocated;
+    }
 }
 
 void Partition::reset()
@@ -184,8 +186,9 @@ QVector<QString> Partition::getMountPoints() const
 
 QString Partition::getMountPoint() const
 {
-    if (m_mountpoints.size() > 0)
+    if (m_mountpoints.size() > 0) {
         return m_mountpoints.front();
+    }
 
     return "";
 }
@@ -214,24 +217,29 @@ void Partition::setSectorUsage(Sector sectorsFsSize, Sector sectorsFsUnused)
 
 Byte_Value Partition::getByteLength() const
 {
-    if (getSectorLength() >= 0)
+    if (getSectorLength() >= 0) {
         return getSectorLength() * m_sectorSize;
-    else
+    }
+    else {
         return -1;
+    }
 }
 
 Sector Partition::getSectorLength() const
 {
-    if (m_sectorStart >= 0 && m_sectorEnd >= 0)
+    if (m_sectorStart >= 0 && m_sectorEnd >= 0) {
         return m_sectorEnd - m_sectorStart + 1;
-    else
+    }
+    else {
         return -1;
+    }
 }
 
 QString Partition::getFileSystemLabel() const
 {
-    if (m_haveFileSystemLabel)
+    if (m_haveFileSystemLabel) {
         return m_filesystemLabel;
+    }
     return "";
 }
 
@@ -286,8 +294,11 @@ Sector Partition::calcSignificantUnallocatedSectors() const
     } else {
         significant = qRound(length * LOWERUNALLOCATEDFRACTION);
     }
-    if (significant <= 1)
+
+    if (significant <= 1) {
         significant = 1;
+    }
+
     return significant;
 }
 

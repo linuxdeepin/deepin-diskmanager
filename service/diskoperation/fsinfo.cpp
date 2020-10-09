@@ -65,10 +65,12 @@ QString FsInfo::getFileSystemType(const QString &path)
             if (!Utils::executCmd("blkid -c /dev/null " + path, output, error))
                 fsSecType = Utils::regexpLabel(output, " SEC_TYPE=\"([^\"]*)\"");
         }
-        if (fsSecType == "msdos")
+        if (fsSecType == "msdos") {
             fsType = "fat16";
-        else
+        }
+        else {
             fsType = "fat32";
+        }
     }
 
     return fsType;
@@ -77,9 +79,11 @@ QString FsInfo::getFileSystemType(const QString &path)
 QString FsInfo::getPathByUuid(const QString &uuid)
 {
     initializeIfRequired();
-    for (int i = 0; i < m_fileSystemInfoCache.size(); i++)
-        if (uuid == m_fileSystemInfoCache[i].m_uuid)
+    for (int i = 0; i < m_fileSystemInfoCache.size(); i++) {
+        if (uuid == m_fileSystemInfoCache[i].m_uuid) {
             return m_fileSystemInfoCache[i].m_path.m_name;
+        }
+    }
 
     return "";
 }
@@ -88,9 +92,11 @@ QString FsInfo::getPathByLabel(const QString &label)
 {
     initializeIfRequired();
     updateFileSystemInfoCacheAllLabels();
-    for (int i = 0; i < m_fileSystemInfoCache.size(); i++)
-        if (label == m_fileSystemInfoCache[i].m_label)
+    for (int i = 0; i < m_fileSystemInfoCache.size(); i++) {
+        if (label == m_fileSystemInfoCache[i].m_label) {
             return m_fileSystemInfoCache[i].m_path.m_name;
+        }
+    }
 
     return "";
 }
@@ -99,7 +105,7 @@ QString FsInfo::getLabel(const QString &path, bool &found)
 {
     initializeIfRequired();
     BlockSpecial bs = BlockSpecial(path);
-    for (int i = 0; i < m_fileSystemInfoCache.size(); i++)
+    for (int i = 0; i < m_fileSystemInfoCache.size(); i++) {
         if (bs == m_fileSystemInfoCache[i].m_path) {
             if (m_fileSystemInfoCache[i].m_haveLabel || m_fileSystemInfoCache[i].m_type == "") {
                 // Already have the label or this is a blank cache entry
@@ -115,6 +121,7 @@ QString FsInfo::getLabel(const QString &path, bool &found)
             found = runBlkidUpdateCacheOneLabel(m_fileSystemInfoCache[i]);
             return m_fileSystemInfoCache[i].m_label;
         }
+    }
     found = false;
     return "";
 }
@@ -208,9 +215,11 @@ bool FsInfo::runBlkidLoadCache(const QString &path)
 const fileSystemEntry &FsInfo::getCacheEntryByPath(const QString &path)
 {
     BlockSpecial bs = BlockSpecial(path);
-    for (int i = 0; i < m_fileSystemInfoCache.size(); i++)
-        if (bs == m_fileSystemInfoCache[i].m_path)
+    for (int i = 0; i < m_fileSystemInfoCache.size(); i++) {
+        if (bs == m_fileSystemInfoCache[i].m_path) {
             return m_fileSystemInfoCache[i];
+        }
+    }
 
     static fileSystemEntry notFound = {BlockSpecial(), "", "", "", false, ""};
     return notFound;
@@ -229,20 +238,23 @@ void FsInfo::loadFileSystemInfoCacheExtraForPath(const QString &path)
 
 void FsInfo::updateFileSystemInfoCacheAllLabels()
 {
-    if (!m_blkidFound)
+    if (!m_blkidFound) {
         return;
-
+    }
     // For all cache entries which are file systems but don't yet have a label load it
     // now.
-    for (int i = 0; i < m_fileSystemInfoCache.size(); i++)
-        if (m_fileSystemInfoCache[i].m_type != "" && !m_fileSystemInfoCache[i].m_haveLabel)
+    for (int i = 0; i < m_fileSystemInfoCache.size(); i++) {
+        if (m_fileSystemInfoCache[i].m_type != "" && !m_fileSystemInfoCache[i].m_haveLabel) {
             runBlkidUpdateCacheOneLabel(m_fileSystemInfoCache[i]);
+        }
+    }
 }
 
 bool FsInfo::runBlkidUpdateCacheOneLabel(fileSystemEntry &fsEntry)
 {
-    if (!m_blkidFound)
+    if (!m_blkidFound) {
         return false;
+    }
 
     // (#786502) Run a separate blkid execution for a single partition to get the
     // label without blkid's default non-reversible encoding.

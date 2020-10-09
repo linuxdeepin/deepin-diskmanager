@@ -2388,6 +2388,7 @@ void PartedCore::autoUmount()
 
 int PartedCore::test()
 {
+    probeDeviceInfo();
     return 1;
 }
 

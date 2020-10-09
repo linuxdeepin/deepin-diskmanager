@@ -104,22 +104,26 @@ void BlockSpecial::registerBlockSpecial(const QString &name, unsigned long major
 
 bool operator==(const BlockSpecial &lhs, const BlockSpecial &rhs)
 {
-    if (lhs.m_major > 0UL || lhs.m_minor > 0UL)
+    if (lhs.m_major > 0UL || lhs.m_minor > 0UL) {
         // Match block special files by major, minor device numbers.
         return lhs.m_major == rhs.m_major && lhs.m_minor == rhs.m_minor;
-    else
+    }
+    else {
         // For non-block special files fall back to name string compare.
         return lhs.m_name == rhs.m_name;
+    }
 }
 
 bool operator<(const BlockSpecial &lhs, const BlockSpecial &rhs)
 {
-    if (lhs.m_major == 0 && rhs.m_major == 0 && lhs.m_minor == 0 && rhs.m_minor == 0)
+    if (lhs.m_major == 0 && rhs.m_major == 0 && lhs.m_minor == 0 && rhs.m_minor == 0) {
         // Two non-block special files are ordered by name.
         return lhs.m_name < rhs.m_name;
-    else
+    }
+    else {
         // Block special files are ordered by major, minor device numbers.
         return lhs.m_major < rhs.m_major || (lhs.m_major == rhs.m_major && lhs.m_minor < rhs.m_minor);
+    }
 }
 
 } // namespace DiskManager

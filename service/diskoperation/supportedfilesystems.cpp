@@ -76,8 +76,11 @@ SupportedFileSystems::~SupportedFileSystems()
     FSObjectsMap::iterator iter;
     for (iter = m_fsObjects.begin(); iter != m_fsObjects.end(); iter++) {
         auto pvalue = iter.value();
-        if (pvalue != NULL)
+
+        if (pvalue != NULL) {
             delete pvalue;
+        }
+
         iter.value() = NULL;
     }
 }
@@ -105,17 +108,19 @@ FileSystem *SupportedFileSystems::getFsObject(FSType fstype) const
 {
 //    qDebug() << Utils::fileSystemTypeToString(fstype);
     FSObjectsMap::const_iterator iter = m_fsObjects.find(fstype);
-    if (iter == m_fsObjects.end())
+    if (iter == m_fsObjects.end()) {
         return NULL;
-    else
+    } else {
         return iter.value();
+    }
 }
 
 const FS &SupportedFileSystems::getFsSupport(FSType fstype) const
 {
     for (int i = 0; i < m_fsSupport.size(); i++) {
-        if (m_fsSupport[i].fstype == fstype)
+        if (m_fsSupport[i].fstype == fstype) {
             return m_fsSupport[i];
+        }
     }
     static FS fsNotsupp(FS_UNSUPPORTED);
     return fsNotsupp;

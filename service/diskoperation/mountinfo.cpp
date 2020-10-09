@@ -94,8 +94,9 @@ bool MountInfo::isDevMountedReadonly(const QString &path)
 bool MountInfo::isDevMountedReadonly(const BlockSpecial &blockSpecial)
 {
     MountMapping::const_iterator iterMp = mountInfo.find(blockSpecial);
-    if (iterMp == mountInfo.end())
+    if (iterMp == mountInfo.end()) {
         return false;
+    }
     return iterMp.value().readonly;
 }
 
@@ -112,24 +113,27 @@ const QVector<QString> &MountInfo::getFileSystemTableMountpoints(const QString &
 void MountInfo::readMountpointsFromFile(const QString &fileName, MountInfo::MountMapping &map)
 {
     FILE *fp = setmntent(fileName.toStdString().c_str(), "r");
-    if (fp == nullptr)
+    if (fp == nullptr) {
         return;
-
+    }
     struct mntent *p = nullptr;
     while ((p = getmntent(fp)) != nullptr) {
         QString node = p->mnt_fsname;
         QString mountpoint = p->mnt_dir;
 
         QString uuid = Utils::regexpLabel(node, "(?<=UUID\\=).*");
-        if (!uuid.isEmpty())
+        if (!uuid.isEmpty()) {
             node = FsInfo::getPathByUuid(uuid);
+        }
 
         QString label = Utils::regexpLabel(node, "(?<=UUID\\=).*");
-        if (!label.isEmpty())
+        if (!label.isEmpty()) {
             node = FsInfo::getPathByLabel(label);
+        }
 
-        if (!node.isEmpty())
+        if (!node.isEmpty()) {
             addMountpointEntry(map, node, mountpoint, parseReadonlyFlag(p->mnt_opts));
+        }
     }
 
     endmntent(fp);
@@ -151,10 +155,12 @@ bool MountInfo::parseReadonlyFlag(const QString &str)
 {
     QStringList mntopts = str.split(",");
     for (int i = 0; i < mntopts.size(); i++) {
-        if (mntopts[i] == "rw")
+        if (mntopts[i] == "rw") {
             return false;
-        else if (mntopts[i] == "ro")
+        }
+        else if (mntopts[i] == "ro") {
             return true;
+        }
     }
     return false; // Default is read-write mount
 }
@@ -169,8 +175,10 @@ void MountInfo::readMountpointsFromFileSwaps(const QString &fileName, MountInfo:
         while (!in.atEnd() || !line.isEmpty()) {
             qDebug() << line;
             node = Utils::regexpLabel(line, "^(/[^ ]+)");
-            if (node.size() > 0)
+
+            if (node.size() > 0) {
                 map[BlockSpecial(node)].mountpoints.push_back("" /* no mountpoint for swap */);
+            }
             line = in.readLine();
         }
     }
@@ -181,8 +189,9 @@ bool MountInfo::haveRootfsDev(MountInfo::MountMapping &)
     MountMapping::const_iterator iterMp;
     for (iterMp = mountInfo.begin(); iterMp != mountInfo.end(); iterMp++) {
         if (!iterMp.value().mountpoints.isEmpty() && iterMp.value().mountpoints[0] == "/") {
-            if (iterMp.key().m_name != "rootfs" && iterMp.key().m_name != "/dev/root")
+            if (iterMp.key().m_name != "rootfs" && iterMp.key().m_name != "/dev/root") {
                 return true;
+            }
         }
     }
     return false;
@@ -201,8 +210,9 @@ void MountInfo::readMountpointsFromMountCommand(MountInfo::MountMapping &map)
             QString mountpoint = Utils::regexpLabel(lines[i], "(?<=on ).*?(?= type)");
             QString mntopts = Utils::regexpLabel(lines[i], "(?<=\\().*?(?=\\))");
             // qDebug() << node << mountpoint << mntopts;
-            if (!node.isEmpty())
+            if (!node.isEmpty()) {
                 addMountpointEntry(map, node, mountpoint, parseReadonlyFlag(mntopts));
+            }
         }
     }
 }
@@ -210,8 +220,10 @@ void MountInfo::readMountpointsFromMountCommand(MountInfo::MountMapping &map)
 const MountEntry &MountInfo::find(const MountInfo::MountMapping &map, const QString &path)
 {
     MountMapping::const_iterator iterMp = map.find(BlockSpecial(path));
-    if (iterMp != map.end())
+
+    if (iterMp != map.end()) {
         return iterMp.value();
+    }
 
     static MountEntry not_mounted = MountEntry();
     return not_mounted;

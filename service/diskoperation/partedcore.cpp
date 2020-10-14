@@ -441,7 +441,7 @@ void PartedCore::setDeviceSerialNumber(Device &device)
 
     QString output, error;
     Utils::executCmd(QString("hdparm -I %1").arg(device.m_path), output, error);
-    if (!error.isEmpty()) {
+    if (error.isEmpty()) {
         // hdparm reported an error message to stderr.  Assume it's a device
         // without a hard drive serial number.
         //
@@ -455,7 +455,7 @@ void PartedCore::setDeviceSerialNumber(Device &device)
         //     SG_IO: bad/missing sense data, sb[]:  70 00 05 00 00 00 00 0a ...
         device.m_serialNumber = "none";
     } else {
-        QString serialNumber = Utils::regexpLabel(output, "^[[:blank:]]*Serial Number:[[:blank:]]*(.*)[[:blank:]]*$");
+        QString serialNumber = Utils::regexpLabel(output, "(?<=Serial Number:).*(?=\n)").trimmed();
         if (!serialNumber.isEmpty())
             device.m_serialNumber = serialNumber;
     }

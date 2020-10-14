@@ -121,7 +121,10 @@ void DmTreeview::mousePressEvent(QMouseEvent *event)
 {
     DTreeView::mousePressEvent(event);
 
-    if (event->button() == Qt::LeftButton) {
+    QModelIndex curIndex = indexAt(event->pos());
+    QModelIndex index = curIndex.sibling(curIndex.row(),0);
+
+    if (event->button() == Qt::LeftButton && index.isValid()) {
         setExpanded(currentIndex(), !isExpanded(currentIndex()));
     }
 }

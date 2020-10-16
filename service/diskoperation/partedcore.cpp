@@ -1573,7 +1573,11 @@ bool PartedCore::mountAndWriteFstab(const QString &mountpath)
             QByteArray line = file.readLine();//获取数据
             qDebug() << line;
 
-            if (line.contains(m_curpartition.m_uuid.toStdString().c_str()) || file.atEnd()) {
+            if(line.contains(m_curpartition.m_uuid.toStdString().c_str())) {
+                QString str = QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(m_curpartition.m_uuid).arg(mountpath).arg(type);
+                list << str;
+                break;
+            } else if (file.atEnd()) {
                 QString str = QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(m_curpartition.m_uuid).arg(mountpath).arg(type);
                 list << line;
                 list << str;

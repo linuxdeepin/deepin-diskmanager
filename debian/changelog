@@ -1,3 +1,10 @@
+deepin-diskmanager (1.1.0.20) stable; urgency=low
+
+  *解决完成第十五次送测产生的bug,
+  *51245 终端卸载分区挂载点，客户端重启后执行挂载操作，写入两次fstab永久挂载
+
+ -- unknown <unknown@uniontech.com>  Fri., 16 October 2020 13:34:16 +0800
+
 deepin-diskmanager (1.1.0.19) stable; urgency=low
 
   *解决完成第十四次送测产生的bug,

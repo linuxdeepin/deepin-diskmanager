@@ -1534,30 +1534,32 @@ bool PartedCore::mountAndWriteFstab(const QString &mountpath)
 {
     qDebug() << __FUNCTION__ << "Mount start";
     bool success = true;
-//    QString output, errstr;
-//    QString cmd ;
+    QString output, errstr;
+    QString cmd ;
     QString type = Utils::fileSystemTypeToString(m_curpartition.m_fstype);
     QString partitionPath = m_curpartition.getPath();
-    qDebug() << partitionPath << type << "111111111111";
-    if (mount(partitionPath.toStdString().c_str(), mountpath.toStdString().c_str(), type.toStdString().c_str(), 0, nullptr) != 0) {
-        bool success = false;
-        return success;
+//    qDebug() << partitionPath << type << "111111111111";
+//    if (mount(partitionPath.toStdString().c_str(), mountpath.toStdString().c_str(), type.toStdString().c_str(), 0, nullptr) != 0) {
+//        bool success = false;
+//        qDebug() << "111111111111";
+//        emit refreshDeviceInfo();
+//        return success;
+//    }
+//    qDebug() << __FUNCTION__ << "Mount success";
+    if (type == FS_FAT32 || type == FS_FAT16) {
+        cmd = QString("mount -v %1 %2 -o -o dmask=000,fmask=111").arg(partitionPath).arg(mountpath);
+    } else if (type == FS_HFS) {
+        cmd = QString("mount -v %1 %2 -o -o dir_umask=000,file_umask=111").arg(partitionPath).arg(mountpath);
+    } else {
+        cmd = QString("mount -v %1 %2").arg(partitionPath).arg(mountpath);
     }
-    qDebug() << __FUNCTION__ << "Mount success";
-//    if (type == FS_FAT32 || type == FS_FAT16) {
-//        cmd = QString("mount -v %1 %2 -o -o dmask=000,fmask=111").arg(partitionPath).arg(mountpath);
-//    } else if (type == FS_HFS) {
-//        cmd = QString("mount -v %1 %2 -o -o dir_umask=000,file_umask=111").arg(partitionPath).arg(mountpath);
-//    } else {
-//        cmd = QString("mount -v %1 %2").arg(partitionPath).arg(mountpath);
-//    }
 
-//    int exitcode = Utils::executcmd(cmd, output, errstr);
-//    if (exitcode != 0) {
-//        // QString type = Utils::get_filesystem_kernel_name(curpartition.fstype);
-//        // cmd = QString("mount -v -t %1 %2 %3").arg("").arg(partitionpath).arg(mountpath);
-//        success = false;
-//    }
+    int exitcode = Utils::executCmd(cmd, output, errstr);
+    if (exitcode != 0) {
+        // QString type = Utils::get_filesystem_kernel_name(curpartition.fstype);
+        // cmd = QString("mount -v -t %1 %2 %3").arg("").arg(partitionpath).arg(mountpath);
+        success = false;
+    }
 
     //永久挂载
     qDebug() << __FUNCTION__ << "Permanent mount start";
@@ -1568,6 +1570,8 @@ bool PartedCore::mountAndWriteFstab(const QString &mountpath)
     if (!file.open(QIODevice::ReadOnly)) { //打开指定文件
         qDebug() << __FUNCTION__ << "Permanent mount open file error";
         success = false;
+        emit refreshDeviceInfo();
+        return success;
     } else {
         while (!file.atEnd()) {
             QByteArray line = file.readLine();//获取数据
@@ -1597,7 +1601,9 @@ bool PartedCore::mountAndWriteFstab(const QString &mountpath)
             qDebug() << __FUNCTION__ << "Permanent mount end";
         } else {
             success = false;
+            emit refreshDeviceInfo();
             qDebug() << __FUNCTION__ << "Permanent mount open file error";
+            return success;
         }
     }
 
@@ -1619,6 +1625,8 @@ bool PartedCore::unmount()
     if (!file.open(QIODevice::ReadOnly)) { //打开指定文件
         qDebug() << __FUNCTION__ << "Permanent unmount open file error";
         success = false;
+        emit refreshDeviceInfo();
+        return success;
     } else {
         QStringList list;
         while (!file.atEnd()) {
@@ -1641,20 +1649,26 @@ bool PartedCore::unmount()
         } else {
             qDebug() << __FUNCTION__ << "Permanent unmount open file error";
             success = false;
+            emit refreshDeviceInfo();
+            return success;
         }
     }
 
-//    QString output, errstr;
+    QString output, errstr;
     QVector<QString> mountpoints = m_curpartition.getMountPoints();
     for (QString path : mountpoints) {
-//        QString cmd = QString("umount -v %1").arg(path);
-//        int exitcode = Utils::executcmd(cmd, output, errstr);
-//        if (0 != exitcode)
-//            success = false;
-        if (umount(path.toStdString().c_str()) != 0) {
+        QString cmd = QString("umount -v %1").arg(path);
+        int exitcode = Utils::executCmd(cmd, output, errstr);
+        if (0 != exitcode) {
             success = false;
+            emit refreshDeviceInfo();
             return success;
         }
+//        if (umount(path.toStdString().c_str()) != 0) {
+//            success = false;
+//            emit refreshDeviceInfo();
+//            return success;
+//        }
     }
 
     emit refreshDeviceInfo();

@@ -74,8 +74,9 @@ void DmFrameWidget::setFrameData()
         m_infoData.m_sysLabel = "";
     } else {
         m_infoData.m_sysLabel = diskVolumn(partitionPath);
-        if (m_infoData.m_sysLabel.contains("�")) {
-            m_infoData.m_sysLabel = m_str;
+        if (m_infoData.m_sysLabel.contains("�")) {           
+            QString sysLabel = m_infoData.m_sysLabel.split("�").at(0);
+            m_infoData.m_sysLabel = sysLabel;
         }//==============gbk编码的中文到在应用下无名称格式化文件系统转换时中文乱码
     }
     update();

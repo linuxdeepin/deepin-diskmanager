@@ -185,6 +185,11 @@ public slots:
     void onSetPartName(); //选个设置或修改分区名称
 
     /**
+     * @brief 当前文本改变
+     */
+    void onTextChanged(const QString &text);
+
+    /**
      * @brief 添加分区
      */
     void onAddPartition();//"+"新建分区

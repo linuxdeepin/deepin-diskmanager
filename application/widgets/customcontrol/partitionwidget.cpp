@@ -234,6 +234,7 @@ void PartitionWidget::partInfoShowing()
     m_remButton = new DIconButton(DStyle::SP_DecreaseElement);
     m_remButton->setToolTip(tr("Delete last partition"));
     DLabel *space = new DLabel(m_partWidget);
+
     //按钮初始状态
     if (m_sizeInfo.size() == 0)
         m_remButton->setEnabled(false);
@@ -333,6 +334,7 @@ void PartitionWidget::initConnection()
     connect(m_slider, &DSlider::valueChanged, this, &PartitionWidget::onSliderValueChanged);
     connect(m_partSizeEdit, &DLineEdit::textEdited, this, &PartitionWidget::onSetSliderValue);
     connect(m_partNameEdit, &DLineEdit::textEdited, this, &PartitionWidget::onSetPartName);
+    connect(m_partNameEdit, &DLineEdit::textEdited, this, &PartitionWidget::onTextChanged);
     connect(m_addButton, &DIconButton::clicked, this, &PartitionWidget::onAddPartition);
     connect(m_remButton, &DIconButton::clicked, this, &PartitionWidget::onRemovePartition);
     connect(m_applyBtn, &DPushButton::clicked, this, &PartitionWidget::onApplyButton);
@@ -426,6 +428,10 @@ void PartitionWidget::onShowSelectPathInfo(const int &flag, const int &num, cons
 {
     m_flag = flag;
     m_number = num;
+
+    if (m_flag == 0) {
+        return;
+    }
 //    qDebug() << "338" << num;
     if (m_flag == 1 || m_flag == 3) {
         setSelectUnallocatesSpace();
@@ -444,6 +450,7 @@ void PartitionWidget::onShowSelectPathInfo(const int &flag, const int &num, cons
         m_partSizeEdit->setText("");
         m_partNameEdit->setText("");
         m_partNameEdit->lineEdit()->setPlaceholderText(m_partName.at(num));
+
         double clicked = m_sizeInfo.at(num);
 
         if (m_partComboBox->currentText() == "GiB")
@@ -477,19 +484,27 @@ void PartitionWidget::setEnable(const int &flag, const bool &isExceed)
     if (isExceed) {//还有空闲空间剩余
         if (flag == 2) {//选中新建的分区
             setControlEnable(false);
+            m_partNameEdit->setEnabled(false);
         } else {
             setControlEnable(true);
         }
-        palette.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
+//        palette.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
     } else {//无空闲空间剩余
         setControlEnable(false);
-        if (flag != 2) {
-            palette.setBrush(DPalette::Text, palette.placeholderText());
+//        if (flag != 2) {
+//            palette.setBrush(DPalette::Text, palette.placeholderText());
+//            m_partNameEdit->setEnabled(false);
+//        } else {
+//            palette.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
             m_partNameEdit->setEnabled(false);
-        } else {
-            palette.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
-            m_partNameEdit->setEnabled(true);
-        }
+//        }
+    }
+
+    if (m_partNameEdit->text().toUtf8().size() <= 16) {
+        m_partNameEdit->setAlert(false);
+        m_partNameEdit->hideAlertMessage();
+    } else {
+        m_addButton->setEnabled(false);
     }
 
     m_partNameLabel->setPalette(palette);//各情况下,分区名称label的样式
@@ -624,6 +639,22 @@ void PartitionWidget::onSetSliderValue()
     m_currentEditSize = QString::number(value * 1024, 'f', 4);
 //    qDebug() << currentEditSize;
 //    qDebug() << value * 1024 << static_cast<int>((value / total) * 100);
+}
+
+void PartitionWidget::onTextChanged(const QString &text)
+{
+    if (!text.isEmpty()) {
+        QByteArray byteArray = text.toUtf8();
+        if (byteArray.size() > 16) {
+            m_partNameEdit->setAlert(true);
+            m_partNameEdit->showAlertMessage(tr("The length exceeds the limit"), -1);
+            m_addButton->setEnabled(false);
+        } else {
+            m_partNameEdit->setAlert(false);
+            m_partNameEdit->hideAlertMessage();
+            m_addButton->setEnabled(true);
+        }
+    }
 }
 
 void PartitionWidget::onSetPartName()

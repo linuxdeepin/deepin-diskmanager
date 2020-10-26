@@ -90,6 +90,27 @@ void FormateDialog::initUi()
 void FormateDialog::initConnection()
 {
     connect(this, &FormateDialog::buttonClicked, this, &FormateDialog::onButtonClicked);
+    connect(m_fileNameEdit, &DLineEdit::textChanged, this, &FormateDialog::onTextChanged);
+}
+
+void FormateDialog::onTextChanged(const QString &text)
+{
+    if (!text.isEmpty()) {
+        QByteArray byteArray = text.toUtf8();
+        if (byteArray.size() > 16) {
+            m_fileNameEdit->setAlert(true);
+            m_fileNameEdit->showAlertMessage(tr("The length exceeds the limit"), -1);
+
+            QAbstractButton *button = getButton(m_okCode);
+            button->setEnabled(false);
+        } else {
+            m_fileNameEdit->setAlert(false);
+            m_fileNameEdit->hideAlertMessage();
+
+            QAbstractButton *button = getButton(m_okCode);
+            button->setEnabled(true);
+        }
+    }
 }
 
 void FormateDialog::onButtonClicked(int index, const QString &text)

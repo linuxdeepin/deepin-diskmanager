@@ -61,7 +61,7 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="230"/>
         <source>Failed to hide the partition: unable to lock it</source>
-        <translation>Impossible de masquer la partition : impossible de la verrouiller</translation>
+        <translation>Impossible de masquer la partition: impossible de la verrouiller</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="239"/>
@@ -410,6 +410,11 @@
         <source>Format</source>
         <translation>Format</translation>
     </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="102"/>
+        <source>The length exceeds the limit</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>InfoShowWidget</name>
@@ -589,7 +594,7 @@
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="152"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="260"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="261"/>
         <source>File system:</source>
         <translation>Système de fichier:</translation>
     </message>
@@ -624,38 +629,43 @@
         <translation>Supprimer la dernière partition</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="243"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="244"/>
         <source>Name:</source>
         <translation>Nom:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="268"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="269"/>
         <source>Size:</source>
         <translation>Taille:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="362"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="468"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="364"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="475"/>
         <source>Unallocated</source>
         <translation>Non alloué</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="384"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="386"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="385"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="387"/>
         <source>Size</source>
         <translation>Taille</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="643"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="650"/>
+        <source>The length exceeds the limit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="674"/>
         <source>The number of new partitions exceeds the limit</source>
         <translation>Le nombre de nouvelles partitions dépasse la limite</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="663"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="694"/>
         <source>To create a partition, you need at least 52 MB</source>
         <translation>Pour créer une partition, vous avez besoin d&apos;au moins 52 Mo</translation>
     </message>
@@ -714,7 +724,7 @@
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="227"/>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="230"/>
         <source> Capacity:</source>
-        <translation> Capacité:</translation>
+        <translation>Capacité:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="172"/>

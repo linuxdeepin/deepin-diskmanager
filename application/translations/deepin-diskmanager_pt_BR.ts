@@ -410,6 +410,11 @@
         <source>Format</source>
         <translation>Formatar</translation>
     </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="102"/>
+        <source>The length exceeds the limit</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>InfoShowWidget</name>
@@ -589,7 +594,7 @@
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="152"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="260"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="261"/>
         <source>File system:</source>
         <translation>Sistema de arquivos:</translation>
     </message>
@@ -624,38 +629,43 @@
         <translation>Excluir a última partição</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="243"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="244"/>
         <source>Name:</source>
         <translation>Nome:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="268"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="269"/>
         <source>Size:</source>
         <translation>Tamanho:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="362"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="468"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="364"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="475"/>
         <source>Unallocated</source>
         <translation>Não alocado</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="384"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="386"/>
         <source>Name</source>
         <translation>Nome</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="385"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="387"/>
         <source>Size</source>
         <translation>Tamanho</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="643"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="650"/>
+        <source>The length exceeds the limit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="674"/>
         <source>The number of new partitions exceeds the limit</source>
         <translation>O número de novas partições excede o limite</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="663"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="694"/>
         <source>To create a partition, you need at least 52 MB</source>
         <translation>Para criar uma partição, é necessário ter pelo menos 52 MB</translation>
     </message>

@@ -241,17 +241,17 @@
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="336"/>
         <source>You do not have permission to access this path</source>
-        <translation>Nincs engedélye hozzáférni ehhez az útvonalhoz</translation>
+        <translation>Nincs engedélye hogy hozzáférjen ehhez az útvonalhoz</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="367"/>
         <source>Export successful</source>
-        <translation>Exportálás sikeres</translation>
+        <translation>Az exportálás sikeres</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="370"/>
         <source>Export failed</source>
-        <translation>Exportálás sikertelen</translation>
+        <translation>Az exportálás sikertelen</translation>
     </message>
 </context>
 <context>
@@ -360,17 +360,17 @@
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="161"/>
         <source>You do not have permission to access this path</source>
-        <translation>Nincs engedélye hozzáférni ehhez az útvonalhoz</translation>
+        <translation>Nincs engedélye hogy hozzáférjen ehhez az útvonalhoz</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="180"/>
         <source>Export successful</source>
-        <translation>Exportálás sikeres</translation>
+        <translation>Az exportálás sikeres</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="183"/>
         <source>Export failed</source>
-        <translation>Exportálás sikertelen</translation>
+        <translation>Az exportálás sikertelen</translation>
     </message>
 </context>
 <context>
@@ -409,6 +409,11 @@
         <location filename="../widgets/formatedialog.cpp" line="87"/>
         <source>Format</source>
         <translation>Formázás</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="102"/>
+        <source>The length exceeds the limit</source>
+        <translation>A hossz meghaladja a korlátot</translation>
     </message>
 </context>
 <context>
@@ -467,7 +472,7 @@
     <message>
         <location filename="../widgets/mountdialog.cpp" line="52"/>
         <source>Choose a mount point please</source>
-        <translation>Kérem, válasszon csatolási helyet</translation>
+        <translation>Kérjük válasszon csatolási pontot</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="55"/>
@@ -488,7 +493,7 @@
     <message>
         <location filename="../widgets/mountdialog.cpp" line="114"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
-        <translation>Az ezen a csatolási ponton lévő adatok elvesznének, kérjük, illessze be a könyvtárat egy másik helyre</translation>
+        <translation>Az ezen a csatolási ponton lévő adatok elvesznének, kérjük csatolja be a könyvtárat egy másik helyre</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="114"/>
@@ -575,12 +580,12 @@
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="117"/>
         <source>Capacity:</source>
-        <translation>Kapacitás:</translation>
+        <translation>Kapacitás: </translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="127"/>
         <source>Partition selected:</source>
-        <translation>Kiválasztott partíció:</translation>
+        <translation>Kiválasztott partíció: </translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="142"/>
@@ -589,7 +594,7 @@
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="152"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="260"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="261"/>
         <source>File system:</source>
         <translation>Fájlrendszer:</translation>
     </message>
@@ -624,40 +629,45 @@
         <translation>Utoljára hozzáadott partíció törlése</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="243"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="244"/>
         <source>Name:</source>
         <translation>Név:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="268"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="269"/>
         <source>Size:</source>
         <translation>Méret:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="362"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="468"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="364"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="475"/>
         <source>Unallocated</source>
         <translation>Felhasználatlan</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="384"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="386"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="385"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="387"/>
         <source>Size</source>
         <translation>Méret</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="643"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="650"/>
+        <source>The length exceeds the limit</source>
+        <translation>A hossz meghaladja a korlátot</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="674"/>
         <source>The number of new partitions exceeds the limit</source>
         <translation>Az új partíciók száma meghaladja a korlátot</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="663"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="694"/>
         <source>To create a partition, you need at least 52 MB</source>
-        <translation>Partíció létrehozásához legalább 52 MB-ra van szükség</translation>
+        <translation>A partíció létrehozásához legalább 52 MB-ra van szükség</translation>
     </message>
 </context>
 <context>
@@ -722,7 +732,7 @@
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="234"/>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="237"/>
         <source>Used:</source>
-        <translation>Használatban:</translation>
+        <translation>Használatban: </translation>
     </message>
 </context>
 <context>

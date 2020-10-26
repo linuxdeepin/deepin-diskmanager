@@ -61,7 +61,7 @@ private:
     DLineEdit *m_fileNameEdit = nullptr;
 signals:
 
-public slots:
+private slots:
 
     /**
      * @brief 初始化连接
@@ -69,6 +69,12 @@ public slots:
      * @param text 所点击按钮文本
      */
     void onButtonClicked(int index, const QString &text);
+
+    /**
+     * @brief 当前文本改变
+     * @param text 当前文本
+     */
+    void onTextChanged(const QString &text);
 };
 
 #endif // FORMATEDIALOG_H

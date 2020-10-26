@@ -1,3 +1,10 @@
+deepin-diskmanager (1.1.0.23) stable; urgency=low
+
+  *解决完成第十八次送测产生的bug,
+  *51878 分区名称未做长度限制，显示不全
+
+ -- unknown <unknown@uniontech.com>  Mon., 26 October 2020 15:34:16 +0800
+
 deepin-diskmanager (1.1.0.22) stable; urgency=low
 
   *解决完成第十七次送测产生的bug,

@@ -49,8 +49,8 @@ void DmFrameWidget::setFrameData()
     PartitionInfo data = DMDbusHandler::instance()->getCurPartititonInfo();
 
     QString mountpoints;
-    DiskInfoData temp;
-    m_infoData = temp;
+//    DiskInfoData temp;
+//    m_infoData = temp;
     for (QString point : data.m_mountPoints) {
         mountpoints.append(point + " ");
     }
@@ -58,7 +58,8 @@ void DmFrameWidget::setFrameData()
         mountpoints.remove(mountpoints.mid(mountpoints.indexOf("�")));
         mountpoints.append(m_str);
     }
-    m_infoData.m_mountpoints = diffMountpoints(m_width, mountpoints);
+//    m_infoData.m_mountpoints = diffMountpoints(m_width, mountpoints);
+     m_infoData.m_mountpoints = mountpoints;
     m_infoData.m_unused = Utils::formatSize(data.m_sectorsUnused, data.m_sectorSize);
     if (m_infoData.m_unused.contains("-")) {
         m_infoData.m_unused = "-";
@@ -67,7 +68,7 @@ void DmFrameWidget::setFrameData()
     if (m_infoData.m_used.contains("-")) {
         m_infoData.m_used = "-";
     }
-    QString partitionPath = data.m_path.remove(0, 5);
+    QString partitionPath = data.m_path.remove(0, 5); // 从下标0开始，删除5个字符
     m_infoData.m_fstype = Utils::fileSystemTypeToString(static_cast<FSType>(data.m_fileSystemType));
     m_infoData.m_partitionSize = Utils::formatSize(data.m_sectorEnd - data.m_sectorStart, data.m_sectorSize);
     if (data.m_fileSystemLabel == "") {
@@ -110,62 +111,67 @@ QString DmFrameWidget::diskVolumn(QString partitionPath)
 //        }
 //    }
     QString st = curInfo.m_fileSystemLabel;
-    std::string s = st.toStdString();
-    const char *strstr = s.c_str();
+//    std::string s = st.toStdString();
+//    const char *strstr = s.c_str();
     QString strtem("%1");
     strtem = strtem.arg(st);
-    if (strtem.count("\\x") > 0) {
-        QByteArray arr = strstr;
-        QByteArray ba = strstr;
-        QString link(ba);
-        QByteArray destByteArray;
-        QByteArray tmpByteArray;
-        for (int i = 0; i < ba.size(); i++) {
-            if (92 == ba.at(i)) {
-                if (4 == tmpByteArray.size()) {
-                    destByteArray.append(QByteArray::fromHex(tmpByteArray));
-                } else {
-                    if (tmpByteArray.size() > 4) {
-                        destByteArray.append(QByteArray::fromHex(tmpByteArray.left(4)));
-                        destByteArray.append(tmpByteArray.mid(4));
-                    } else {
-                        destByteArray.append(tmpByteArray);
-                    }
-                }
-                tmpByteArray.clear();
-                tmpByteArray.append(ba.at(i));
-                continue;
-            } else if (tmpByteArray.size() > 0) {
-                tmpByteArray.append(ba.at(i));
-                continue;
-            } else {
-                destByteArray.append(ba.at(i));
-            }
-        }
+//    if (strtem.count("\\x") > 0) {
+//        QByteArray arr = strstr;
+//        QByteArray ba = strstr;
+//        QString link(ba);
+//        QByteArray destByteArray;
+//        QByteArray tmpByteArray;
+//        for (int i = 0; i < ba.size(); i++) {
+//            if (92 == ba.at(i)) {
+//                if (4 == tmpByteArray.size()) {
+//                    destByteArray.append(QByteArray::fromHex(tmpByteArray));
+//                } else {
+//                    if (tmpByteArray.size() > 4) {
+//                        destByteArray.append(QByteArray::fromHex(tmpByteArray.left(4)));
+//                        destByteArray.append(tmpByteArray.mid(4));
+//                    } else {
+//                        destByteArray.append(tmpByteArray);
+//                    }
+//                }
+//                tmpByteArray.clear();
+//                tmpByteArray.append(ba.at(i));
+//                continue;
+//            } else if (tmpByteArray.size() > 0) {
+//                tmpByteArray.append(ba.at(i));
+//                continue;
+//            } else {
+//                destByteArray.append(ba.at(i));
+//            }
+//        }
 
-        if (4 == tmpByteArray.size()) {
-            destByteArray.append(QByteArray::fromHex(tmpByteArray));
-        } else {
-            if (tmpByteArray.size() > 4) {
-                destByteArray.append(QByteArray::fromHex(tmpByteArray.left(4)));
-                destByteArray.append(tmpByteArray.mid(4));
-            } else {
-                destByteArray.append(tmpByteArray);
-            }
-        }
+//        if (4 == tmpByteArray.size()) {
+//            destByteArray.append(QByteArray::fromHex(tmpByteArray));
+//        } else {
+//            if (tmpByteArray.size() > 4) {
+//                destByteArray.append(QByteArray::fromHex(tmpByteArray.left(4)));
+//                destByteArray.append(tmpByteArray.mid(4));
+//            } else {
+//                destByteArray.append(tmpByteArray);
+//            }
+//        }
 
-        link = QTextCodec::codecForName("GBK")->toUnicode(tmpByteArray);
-        int idx = link.lastIndexOf("/", link.length() - 1);
-        QString stres = link.mid(idx + 1);
-        if (strtem.count("\\x") > 0 && !strtem.contains("�")) {
-            m_str = "-";
-            return  stres;
-        }
-    } else {
-        if (!strtem.contains("�"))
-            m_str = "-";
+//        link = QTextCodec::codecForName("GBK")->toUnicode(tmpByteArray);
+//        int idx = link.lastIndexOf("/", link.length() - 1);
+//        QString stres = link.mid(idx + 1);
+//        if (strtem.count("\\x") > 0 && !strtem.contains("�")) {
+//            m_str = "-";
+//            return  stres;
+//        }
+//    } else {
+//        if (!strtem.contains("�"))
+//            m_str = "-";
+//        return  st;
+//    }
+    if (!strtem.contains("�")) {
+        m_str = "-";
         return  st;
     }
+
     return "";
 }
 
@@ -202,7 +208,9 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)//绘制首页信息展示表�
         option1.setAlignment(Qt::AlignRight);
         painter.setPen(textColor);
         QRect textRect1 = QRect(curRect.width() / 2 - 275, curRect.topLeft().y() + 10, 257, 40);
-        painter.drawText(textRect1, m_infoData.m_mountpoints, option);
+        QString mountpoints = painter.fontMetrics().elidedText(m_infoData.m_mountpoints, Qt::ElideMiddle, textRect1.width() - 50); // 挂载点过长时，只显示首尾，中间用省略号代替
+        painter.drawText(textRect1, mountpoints, option);
+//        painter.drawText(textRect1, m_infoData.m_mountpoints, option);
         textRect.moveTo(curRect.width() / 2 - 260, curRect.topLeft().y() + 62);
         painter.drawText(textRect, m_infoData.m_unused, option1);
         textRect.moveTo(curRect.width() / 2 - 260, curRect.topLeft().y() + 113);
@@ -241,7 +249,9 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)//绘制首页信息展示表�
         option1.setAlignment(Qt::AlignRight);
         painter.setPen(textColor);
         QRect textRect1 = QRect(curRect.width() / 2 - 275, curRect.topLeft().y() + 10, 257, 40);
-        painter.drawText(textRect1, m_infoData.m_mountpoints, option);
+        QString mountpoints = painter.fontMetrics().elidedText(m_infoData.m_mountpoints, Qt::ElideRight, textRect1.width() - 50);
+        painter.drawText(textRect1, mountpoints, option);
+//        painter.drawText(textRect1, m_infoData.m_mountpoints, option);
         textRect.moveTo(curRect.width() / 2 - 260, curRect.topLeft().y() + 62);
         painter.drawText(textRect, m_infoData.m_unused, option1);
         textRect.moveTo(curRect.width() / 2 - 260, curRect.topLeft().y() + 113);

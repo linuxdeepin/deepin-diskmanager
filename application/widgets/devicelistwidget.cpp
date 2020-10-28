@@ -349,7 +349,7 @@ void DeviceListWidget::onUpdateDeviceInfo()
     //设置当前选项
     auto handler = DMDbusHandler::instance();
     m_num = handler->getCurPartititonInfo().m_partitionNumber;
-    m_deviceNum = m_treeView->currentTopNum();
+    m_deviceNum = m_treeView->getCurrentTopNum();
     m_devicePath = handler->getCurPartititonInfo().m_devicePath;
     m_treeView->m_model->clear();
     DeviceInfoMap infoMap = DMDbusHandler::instance()->probDeviceInfo();
@@ -404,9 +404,9 @@ void DeviceListWidget::onUpdateDeviceInfo()
     if (m_flag == 0) {
         m_treeView->setDefaultdmItem();
     } else {
-        int index = m_treeView->currentNum();
+        int index = m_treeView->getCurrentNum();
         if (countMap.value(m_deviceNum) == index) {
-            index = m_treeView->currentNum() - 1;
+            index = m_treeView->getCurrentNum() - 1;
         }
 
         m_treeView->setRefreshItem(m_deviceNum, index);

@@ -78,21 +78,21 @@ public:
      * @param data 节点数据
      * @param flag 是否展开根节点标志
     */
-    void addItem(QStandardItem *item, DiskInfoData &data, int flag);
+    void addItem(QStandardItem *item, const DiskInfoData &data, int flag);
 
     /**
      * @brief 获取指向与给定索引关联的QStandardItem的指针
      * @param index 索引值
      * @return 返回QStandardItem指针
     */
-    QStandardItem *getModelByIndex(const QModelIndex &index);
+    QStandardItem *getItemByIndex(const QModelIndex &index);
 
     /**
      * @brief 添加根节点
      * @param data 节点数据
      * @return 返回QStandardItem指针
     */
-    QStandardItem *addTopItem(DiskInfoData &data);
+    QStandardItem *addTopItem(const DiskInfoData &data);
 
     /**
      * @brief 获取当前节点
@@ -129,13 +129,13 @@ public:
      * @brief 获取当前选中分区索引值
      * @return 当前选中分区索引值
     */
-    int currentNum();
+    int getCurrentNum();
 
     /**
      * @brief 获取当前选中分区的父节点索引值
      * @return 当前选中分区父节点索引值
     */
-    int currentTopNum();
+    int getCurrentTopNum();
 
     /**
      * @brief 添加子节点
@@ -172,9 +172,9 @@ public slots:
 private:
     QAbstractItemDelegate *m_delegate {nullptr};
     QSortFilterProxyModel *m_sortViewFilter {nullptr};
-    QString diskSize;
-    int curNum = 0;
-    int diskNum = 0;
+    QString m_diskSize;
+    int m_curNum = 0;
+    int m_diskNum = 0;
 
 protected:
 

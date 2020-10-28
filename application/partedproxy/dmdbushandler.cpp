@@ -107,7 +107,7 @@ void DMDbusHandler::onUpdateUsb()
 void DMDbusHandler::onSetCurSelect(const QString &devicePath, const QString &partitionPath, Sector start, Sector end)
 {
     //点击切换才触发
-    if ((devicePath != m_curDevicePath || partitionPath != m_curPartitionPath) && m_deviceMap.size() > 0) {
+    if (((devicePath != m_curDevicePath) || (partitionPath != m_curPartitionPath)) && m_deviceMap.size() > 0) {
         m_curDevicePath = devicePath;
         auto it = m_deviceMap.find(devicePath);
         if (it != m_deviceMap.end()) {

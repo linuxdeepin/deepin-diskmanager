@@ -118,7 +118,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         QIcon directionIcon;
         int pixmapWidth = 8; // 伸缩按钮宽
         int pixmapHeight = 8; // 伸缩按钮高
-        if (treeView->getModelByIndex(index) && treeView->getModelByIndex(index)->hasChildren()) {
+        if (treeView->getItemByIndex(index) && treeView->getItemByIndex(index)->hasChildren()) {
             if (treeView->isExpanded(index)) {
                 directionIcon = Common::getIcon("arrow");
                 pixmapWidth = 10;

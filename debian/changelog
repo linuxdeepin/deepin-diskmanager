@@ -1,3 +1,12 @@
+deepin-diskmanager (1.1.0.24) stable; urgency=low
+
+  *解决完成第十九次送测产生的bug,
+  *52747 新建分区，磁盘进度条加满，复原之后，点击磁盘进度条后，分区信息相关操作失效
+  *52657 硬盘健康监测界面显示异常
+  *修改根目录下生成0文件的错误
+
+ -- unknown <unknown@uniontech.com>  Fri., 30 October 2020 17:34:16 +0800
+
 deepin-diskmanager (1.1.0.23) stable; urgency=low
 
   *解决完成第十八次送测产生的bug,

@@ -40,6 +40,7 @@ DTK_USE_NAMESPACE
 
 class QStandardItemModel;
 class DiskHealthDetectionDelegate;
+class DiskHealthHeaderView;
 
 /**
  * @class DiskHealthDetectionDialog
@@ -83,6 +84,7 @@ private:
     DLabel *m_userCapacityValue;// 用户容量值
     DLabel *m_healthStateValue; // 健康状态值
     DLabel *m_temperatureValue; // 温度值
+    DiskHealthHeaderView *m_diskHealthHeaderView;
 
 };
 

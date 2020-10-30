@@ -825,6 +825,7 @@ void PartitionWidget::onRevertButton()
     m_partFormateCombox->setCurrentIndex(2);
     m_partComboBox->setCurrentIndex(0);
     m_partChartWidget->transInfos(m_totalSize, m_sizeInfo);
+    m_isExceed = true;
 
     if (m_sizeInfo.size() == 0) {
         m_applyBtn->setEnabled(false);

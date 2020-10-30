@@ -29,6 +29,7 @@
 #include "diskhealthdetectiondelegate.h"
 #include "partedproxy/dmdbushandler.h"
 #include "messagebox.h"
+#include "diskhealthheaderview.h"
 
 #include <DFrame>
 #include <DGuiApplicationHelper>
@@ -180,7 +181,7 @@ void DiskHealthDetectionDialog::initUI()
 
     DFrame *infoWidget = new DFrame;
     infoWidget->setBackgroundRole(DPalette::ItemBackground);
-    infoWidget->setFixedSize(706, 108);
+    infoWidget->setMinimumSize(706, 108);
 
     QHBoxLayout *topLayout = new QHBoxLayout(infoWidget);
     topLayout->addWidget(diskLabel);
@@ -203,12 +204,17 @@ void DiskHealthDetectionDialog::initUI()
     m_tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     m_tableView->setAlternatingRowColors(true);
     m_tableView->setPalette(palette5);
+
+    m_diskHealthHeaderView = new DiskHealthHeaderView(Qt::Horizontal, this);
+    m_tableView->setHorizontalHeader(m_diskHealthHeaderView);
+
 //    m_tableView->setFont(QFont("SourceHanSansSC", 10, 50));
     QFont fontHeader = DFontSizeManager::instance()->get(DFontSizeManager::T6, QFont::Medium);
     m_tableView->horizontalHeader()->setFont(fontHeader);
-    m_tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    m_tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft | Qt::AlignCenter);
     m_tableView->horizontalHeader()->setPalette(palette6);
 //    m_tableView->horizontalHeader()->setFixedHeight(30);
+
 
     m_diskHealthDetectionDelegate = new DiskHealthDetectionDelegate(this);
     m_tableView->setItemDelegate(m_diskHealthDetectionDelegate);
@@ -233,8 +239,8 @@ void DiskHealthDetectionDialog::initUI()
 //    m_tableView->horizontalHeader()->setSectionResizeMode(3, QHeaderView::ResizeToContents); // 设置第三列自适应列宽
 //    m_tableView->horizontalHeader()->setSectionResizeMode(4, QHeaderView::ResizeToContents); // 设置第四列自适应列宽
 
-    m_tableView->setColumnWidth(0, 50);
-    m_tableView->setColumnWidth(1, 50);
+    m_tableView->setColumnWidth(0, 70);
+    m_tableView->setColumnWidth(1, 70);
     m_tableView->setColumnWidth(2, 70);
     m_tableView->setColumnWidth(3, 100);
     m_tableView->setColumnWidth(4, 70);
@@ -272,7 +278,7 @@ void DiskHealthDetectionDialog::initUI()
     }
 
     DFrame *tableWidget = new DFrame;
-    tableWidget->setFixedWidth(706);
+    tableWidget->setMinimumSize(706, 451);
     QHBoxLayout *tableLayout = new QHBoxLayout(tableWidget);
     tableLayout->addWidget(m_tableView);
     tableLayout->setSpacing(0);

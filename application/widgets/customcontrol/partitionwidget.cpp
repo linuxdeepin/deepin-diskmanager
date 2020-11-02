@@ -635,7 +635,7 @@ void PartitionWidget::onSetSliderValue()
     if (m_partComboBox->currentText() == "MiB")
         value = value / 1024;
     m_block = 1;
-    m_slider->setValue(static_cast<int>((value / m_total) * 100));
+    m_slider->setValue(static_cast<int>((value / (m_total - (sumValue() / 1024))) * 100));
     m_currentEditSize = QString::number(value * 1024, 'f', 4);
 //    qDebug() << currentEditSize;
 //    qDebug() << value * 1024 << static_cast<int>((value / total) * 100);

@@ -1,150 +1,155 @@
 deepin-diskmanager (1.1.0.24) stable; urgency=low
 
-  *解决完成第十九次送测产生的bug,
-  *52747 新建分区，磁盘进度条加满，复原之后，点击磁盘进度条后，分区信息相关操作失效
-  *52657 硬盘健康监测界面显示异常
-  *修改根目录下生成0文件的错误
+  * 解决完成第十九次送测产生的bug,
+  * 52747 新建分区，磁盘进度条加满，复原之后，点击磁盘进度条后，分区信息相关操作失效
+  * 52657 硬盘健康监测界面显示异常
+  * 修改根目录下生成0文件的错误
 
- -- unknown <unknown@uniontech.com>  Fri., 30 October 2020 17:34:16 +0800
+ -- yuandandan <yuandandan@uniontech.com>  Fri, 30 Oct 2020 17:34:16 +0800
 
 deepin-diskmanager (1.1.0.23) stable; urgency=low
 
-  *解决完成第十八次送测产生的bug,
-  *51878 分区名称未做长度限制，显示不全
+  * 解决完成第十八次送测产生的bug,
+  * 51878 分区名称未做长度限制，显示不全
 
- -- unknown <unknown@uniontech.com>  Mon., 26 October 2020 15:34:16 +0800
+ -- yuandandan <yuandandan@uniontech.com>  Mon, 26 Oct 2020 15:34:16 +0800
 
 deepin-diskmanager (1.1.0.22) stable; urgency=low
 
-  *解决完成第十七次送测产生的bug,
-  *51878 分区名称未做长度限制，显示不全
+  * 解决完成第十七次送测产生的bug,
+  * 51878 分区名称未做长度限制，显示不全
 
- -- unknown <unknown@uniontech.com>  Fri., 23 October 2020 17:34:16 +0800
+ -- yuandandan <yuandandan@uniontech.com>  Fri, 23 Oct 2020 17:34:16 +0800
 
 deepin-diskmanager (1.1.0.21) stable; urgency=low
 
-  *解决完成第十六次送测产生的bug,
-  *51434 客户端执行卸载操作失败
+  * 解决完成第十六次送测产生的bug,
+  * 51434 客户端执行卸载操作失败
 
- -- unknown <unknown@uniontech.com>  Mon., 19 October 2020 16:34:16 +0800
+ -- yuandandan <yuandandan@uniontech.com>  Mon., 19 Oct 2020 16:34:16 +0800
 
 deepin-diskmanager (1.1.0.20) stable; urgency=low
 
-  *解决完成第十五次送测产生的bug,
-  *51245 终端卸载分区挂载点，客户端重启后执行挂载操作，写入两次fstab永久挂载
+  * 解决完成第十五次送测产生的bug,
+  * 51245 终端卸载分区挂载点，客户端重启后执行挂载操作，写入两次fstab永久挂载
 
- -- unknown <unknown@uniontech.com>  Fri., 16 October 2020 13:34:16 +0800
+ -- yuandandan <yuandandan@uniontech.com>  Fri, 16 Oct 2020 13:34:16 +0800
 
 deepin-diskmanager (1.1.0.19) stable; urgency=low
 
-  *解决完成第十四次送测产生的bug,
-  *50782 【第二轮集成测试】点击左侧空白处，可以展开磁盘信息
+  * 解决完成第十四次送测产生的bug,
+  * 50782 【第二轮集成测试】点击左侧空白处，可以展开磁盘信息
 
- -- unknown <unknown@uniontech.com>  Wed., 14 October 2020 13:34:16 +0800
+ -- yuandandan <yuandandan@uniontech.com>  Wed, 14 Oct 2020 13:34:16 +0800
 
 deepin-diskmanager (1.1.0.18) stable; urgency=low
 
-  *解决完成第十三次送测产生的bug,
-  *解决安装后，USB脚本文件没有执行权限bug
+  * 解决完成第十三次送测产生的bug,
+  * 解决安装后，USB脚本文件没有执行权限bug
 
- -- unknown <unknown@uniontech.com>  Sun., 27 September 2020 13:34:16 +0800
+ -- yuandandan <yuandandan@uniontech.com>  Sun, 27 Sep 2020 13:34:16 +0800
 
 deepin-diskmanager (1.1.0.17) stable; urgency=low
 
-  *解决完成第十二次送测产生的bug,
-  *49003 MBR格式分区，分区创建界面“+”添加分区数量大于4时无提示信息
-  *48856 分区格式化时软件闪退
-  *48848 新建分区-单次添加1个分区数量时，软件将剩余空间同步进行了添加，同时分区创建过程中闪退
+  * 解决完成第十二次送测产生的bug,
+  * 49003 MBR格式分区，分区创建界面“+”添加分区数量大于4时无提示信息
+  * 48856 分区格式化时软件闪退
+  * 48848 新建分区-单次添加1个分区数量时，软件将剩余空间同步进行了添加，同时分区创建过程中闪退
 
- -- unknown <unknown@uniontech.com>  Thu., 24 September 2020 15:34:16 +0800
+ -- yuandandan <yuandandan@uniontech.com>  Thu, 24 Sep 2020 15:34:16 +0800
 
 deepin-diskmanager (1.1.0.16) stable; urgency=low
 
-  *解决完成第十一次送测产生的bug,
-  *48756 格式化swap分区，再挂载应用高概率卡死了
-  *48785 右侧分区信息展示界面显示异常
+  * 解决完成第十一次送测产生的bug,
+  * 48756 格式化swap分区，再挂载应用高概率卡死了
+  * 48785 右侧分区信息展示界面显示异常
 
- -- unknown <unknown@uniontech.com>  Tue., 22 September 2020 15:34:16 +0800
+ -- yuandandan <yuandandan@uniontech.com>  Tue, 22 Sep 2020 15:34:16 +0800
 
 deepin-diskmanager (1.1.0.15) stable; urgency=low
 
-  *解决完成第十次送测产生的bug,
-  *新增在界面没有启动时，后台会被USB插拔启动的更改
+  * 解决完成第十次送测产生的bug,
+  * 新增在界面没有启动时，后台会被USB插拔启动的更改
 
- -- unknown <unknown@uniontech.com>  Mon., 21 September 2020 14:34:16 +0800
+ -- yuandandan <yuandandan@uniontech.com>  Mon, 21 Sep 2020 14:34:16 +0800
 
 deepin-diskmanager (1.1.0.14) stable; urgency=low
 
-  *解决完成第九次送测产生的bug,
-  *安装配置文件错误的bug
+  * 解决完成第九次送测产生的bug,
+  * 安装配置文件错误的bug
 
- -- unknown <unknown@uniontech.com>  Thu., 17 September 2020 14:34:16 +0800
+ -- yuandandan <yuandandan@uniontech.com>  Thu, 17 Sep 2020 14:34:16 +0800
 
 deepin-diskmanager (1.1.0.13) stable; urgency=low
 
-  *解决完成第八次送测产生的bug,
-  *47462 使用U盘安装，或重启系统，进入安装器或是重启进入登录页面，鼠标和键盘不能使用，需要等一分钟后才能用
-  *47070 新建分区格式化完毕，分区挂载后“已用/可用空间”显示为空
-  *47058 移动硬盘创建1个分区，完成挂载后，分区已用/可用空间显示异常
-  *47038 剩余空间单次创建多个分区时，点击空闲空间进度条软件闪退
+  * 解决完成第八次送测产生的bug,
+  * 47462 使用U盘安装，或重启系统，进入安装器或是重启进入登录页面，鼠标和键盘不能使用，需要等一分钟后才能用
+  * 47070 新建分区格式化完毕，分区挂载后“已用/可用空间”显示为空
+  * 47058 移动硬盘创建1个分区，完成挂载后，分区已用/可用空间显示异常
+  * 47038 剩余空间单次创建多个分区时，点击空闲空间进度条软件闪退
 
- -- unknown <unknown@uniontech.com>  Wed., 16 September 2020 14:34:16 +0800
+ -- yuandandan <yuandandan@uniontech.com>  Wed, 16 Sep 2020 14:34:16 +0800
 
 deepin-diskmanager (1.1.0.12) stable; urgency=low
 
-  *解决完成第七次送测产生的bug,
+  * 解决完成第七次送测产生的bug,
 
- -- unknown <unknown@uniontech.com>  Wed., 16 September 2020 14:34:16 +0800
+ -- yuandandan <yuandandan@uniontech.com>  Wed, 16 September 2020 14:34:16 +0800
 
 deepin-diskmanager (1.1.0.11) stable; urgency=low
 
-  *解决完成第六次送测产生的bug,
-  *修改debian目录下的control文件
+  * 解决完成第六次送测产生的bug,
+  * 修改debian目录下的control文件
 
- -- unknown <unknown@uniontech.com>  Wed., 9 September 2020 14:34:16 +0800
+ -- yuandandan <yuandandan@uniontech.com>  Wed, 9 Sep 2020 14:34:16 +0800
 
 deepin-diskmanager (1.1.0.10) stable; urgency=low
 
-  *解决完成第五次送测产生的bug,
-  *46551 新建分区-U盘全部空间创建一个分区时失败
-  *46487 新建分区删除后，标题栏“格式化”、“挂载”、“空间调整”按钮仍可点击
+  * 解决完成第五次送测产生的bug,
+  * 46551 新建分区-U盘全部空间创建一个分区时失败
+  * 46487 新建分区删除后，标题栏“格式化”、“挂载”、“空间调整”按钮仍可点击
 
- -- unknown <unknown@uniontech.com>  Wed., 8 September 2020 14:34:16 +0800
+ -- yuandandan <yuandandan@uniontech.com>  Wed, 8 Sep 2020 14:34:16 +0800
 
 deepin-diskmanager (1.1.0.9) stable; urgency=low
 
-  *解决完成第四次送测产生的bug,
- -- unknown <unknown@uniontech.com>  Wed., 3 September 2020 14:34:16 +0800
+  * 解决完成第四次送测产生的bug,
+
+ -- yuandandan <yuandandan@uniontech.com>  Wed, 3 Sep 2020 14:34:16 +0800
 
 deepin-diskmanager (1.1.0.8) stable; urgency=low
 
-  *解决完成第三次送测产生的bug,
- -- unknown <unknown@uniontech.com>  Wed., 26 August 2020 14:34:16 +0800
+  * 解决完成第三次送测产生的bug,
+
+ -- yuandandan <yuandandan@uniontech.com>  Wed, 26 Aug 2020 14:34:16 +0800
 
 deepin-diskmanager (1.1.0.7) stable; urgency=low
 
-  *解决完成第二次送测产生的bug,
- -- unknown <unknown@uniontech.com>  Wed., 19 August 2020 14:34:16 +0800
+  * 解决完成第二次送测产生的bug,
+
+ -- yuandandan <yuandandan@uniontech.com>  Wed, 19 Aug 2020 14:34:16 +0800
 
 deepin-diskmanager (1.1.0.2) stable; urgency=low
 
-  *解决完成第一次送测产生的bug,
- -- unknown <unknown@uniontech.com>  Wed., 12 August 2020 14:34:16 +0800
+  * 解决完成第一次送测产生的bug,
+
+ -- yuandandan <yuandandan@uniontech.com>  Wed, 12 Aug 2020 14:34:16 +0800
 
 deepin-diskmanager (1.1.0.1) stable; urgency=low
 
-  *修改完成第一次送测的任务,
-  *32993 磁盘健康管理
-  *32977 显示分区
-  *31632 分区表错误检测
-  *31631 健康检测
-  *31630 删除分区
-  *31578 隐藏分区
-  *31577 硬盘信息展示
- -- unknown <unknown@uniontech.com>  Thur., 06 August 2020 11:34:16 +0800
+  * 修改完成第一次送测的任务,
+  * 32993 磁盘健康管理
+  * 32977 显示分区
+  * 31632 分区表错误检测
+  * 31631 健康检测
+  * 31630 删除分区
+  * 31578 隐藏分区
+  * 31577 硬盘信息展示
+
+ -- yuandandan <yuandandan@uniontech.com>  Thu, 06 Aug 2020 11:34:16 +0800
 
 deepin-diskmanager (1.0) unstable; urgency=medium
 
   * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
 
- -- unknown <uos@uos-PC>  Fri, 10 Mar 2020 16:48:52 +0800
+ -- yuandandan <yuandandan@uniontech.com>   Fri, 10 Mar 2020 16:48:52 +0800

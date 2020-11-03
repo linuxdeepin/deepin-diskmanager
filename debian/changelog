@@ -1,3 +1,10 @@
+deepin-diskmanager (1.1.0.25) stable; urgency=low
+
+  * 解决完成第十九次送测产生的bug,
+  * 52751 新建分区，多次添加分区时，分区大小大于剩余空间添加，进度条无法加满
+
+ -- yuandandan <yuandandan@uniontech.com>  Mon, 03 Nov 2020 13:34:16 +0800
+
 deepin-diskmanager (1.1.0.24) stable; urgency=low
 
   * 解决完成第十九次送测产生的bug,

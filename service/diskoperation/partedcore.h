@@ -46,7 +46,6 @@ namespace DiskManager {
  * @class PartedCore
  * @brief 磁盘操作类
  */
-
 class PartedCore : public QObject
 {
     Q_OBJECT
@@ -159,34 +158,11 @@ public:
     bool showPartition();
 
     /**
-     * @brief 获取隐藏分区是否隐藏属性
-     * @param devicePath：设备路径
-     * @param parttitionPath：分区路径
-     * @return 1隐藏0没隐藏
-     */
-    int getPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath);
-
-    /**
      * @brief 分区表错误检测
      * @param devicePath：设备路径
      * @return true错误false正常
      */
     bool detectionPartitionTableError(const QString &devicePath);
-
-    /**
-     * @brief USB设备拔出，自动卸载
-     */
-    void autoUmount();
-
-    /**
-     * @brief USB设备插入，自动挂载
-     */
-    void autoMount();
-
-    /**
-     * @brief 个人测试
-     */
-    int test();
 
     /**
      * @brief USB刷新(插入)
@@ -198,7 +174,32 @@ public:
      */
     void updateUsbRemove();
 
-public:
+    /**
+     * @brief 获取隐藏分区是否隐藏属性
+     * @param devicePath：设备路径
+     * @param parttitionPath：分区路径
+     * @return 1隐藏0没隐藏
+     */
+    int getPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath);
+
+
+    /**
+     * @brief 个人测试
+     */
+    int test();
+
+private:
+
+    /**
+     * @brief USB设备拔出，自动卸载
+     */
+    void autoUmount();
+
+    /**
+     * @brief USB设备插入，自动挂载
+     */
+    void autoMount();
+
     //static
     /**
      * @brief 获取hdparm和udevadm的是否支持状态

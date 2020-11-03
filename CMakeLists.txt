@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 3.0)
 project(deepin-diskmanager)
 
+
+option(DOTEST "option for test" OFF)
+
+# 是否开启单元测试编译
+set(DOTEST OFF)
+
 #compile flags
 if (CMAKE_BUILD_TYPE MATCHES Debug)
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra")
@@ -19,4 +25,15 @@ ADD_SUBDIRECTORY(basestruct)
 ADD_SUBDIRECTORY(log)
 ADD_SUBDIRECTORY(application)
 ADD_SUBDIRECTORY(service)
+
+# 开启单元测试
+if(DOTEST)
+    # 添加gocv覆盖率文件的输出
+    set(CMAKE_CXX_FLAGS "-g -fprofile-arcs -ftest-coverage")
+    # 设置测试模块
+    set(QT Core Gui Widgets Network DBus Sql LinguistTools Svg Multimedia Test)
+    find_package(Qt5 COMPONENTS ${QT} REQUIRED)
+    # 添加子模块test
+    add_subdirectory(test)
+endif()
 

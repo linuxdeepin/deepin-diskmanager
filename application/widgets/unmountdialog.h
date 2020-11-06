@@ -53,7 +53,7 @@ private:
      */
     void initConnection();
 
-public slots:
+private slots:
     /**
      * @brief 按钮点击响应的槽函数
      * @param index 当前点击按钮

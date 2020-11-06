@@ -55,6 +55,7 @@ public:
      */
     bool getRootPassword();
 
+private:
     /**
      * @brief 调用外部程序
      * @param cmd 程序名称

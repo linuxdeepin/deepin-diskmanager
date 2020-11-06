@@ -76,7 +76,7 @@ private:
 
 signals:
 
-public slots:
+private slots:
 
     /**
      * @brief 更新按钮是否可选状态

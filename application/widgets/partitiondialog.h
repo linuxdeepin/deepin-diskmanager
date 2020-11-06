@@ -44,6 +44,7 @@ class PartitionDialog : public DDBase
 public:
     explicit PartitionDialog(QWidget *parent = nullptr);
 
+private:
     /**
      * @brief 初始化界面
      */

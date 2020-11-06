@@ -73,6 +73,7 @@ class DmTreeviewDelegate : public DStyledItemDelegate
 public:
     explicit DmTreeviewDelegate(QAbstractItemView *parent = nullptr);
 
+protected:
     /**
      * @brief 重写绘画事件
      * @param painter 画笔
@@ -90,7 +91,7 @@ public:
 
 signals:
 
-public slots:
+private slots:
 
     /**
      * @brief 主题切换信号响应的槽函数

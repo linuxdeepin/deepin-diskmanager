@@ -56,21 +56,20 @@ class DmFrameWidget : public DFrame
 public:
     explicit DmFrameWidget(DiskInfoData data, QWidget *parent = nullptr);
 
-signals:
-
-public:
     /**
      * @brief 设置分区信息，更新界面显示
      */
     void setFrameData();
 
+signals:
+private:
     /**
      * @brief 获取分区卷标
      * @param partitionPath 分区路径
      */
     QString diskVolumn(QString partitionPath);
 
-public slots:
+private slots:
     /**
      * @brief 主题切换信号响应的槽函数
      */

@@ -81,7 +81,7 @@ protected:
     virtual void paintEvent(QPaintEvent *event) override;
 signals:
 
-public slots:
+private slots:
     /**
      * @brief 主题切换信号响应的槽函数
      */

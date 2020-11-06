@@ -55,7 +55,7 @@ private:
      */
     void initConnection();
 
-public slots:
+private slots:
     /**
      * @brief 挂载点输入框改变信号响应的槽函数
      * @param content 当前改变的文本

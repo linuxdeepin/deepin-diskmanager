@@ -45,7 +45,7 @@ class MainSplitter : public DSplitter
 public:
     explicit MainSplitter(DWidget *parent = nullptr);
 
-public:
+private:
 
     /**
      * @brief 初始化页面

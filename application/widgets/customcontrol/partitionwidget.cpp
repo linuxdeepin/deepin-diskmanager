@@ -63,14 +63,18 @@ void PartitionWidget::initUi()
     palette.setBrush(DPalette::Base, palette.itemBackground());
     DApplicationHelper::instance()->setPalette(m_topFrame, palette);
     m_topFrame->setAutoFillBackground(true);
+//    m_topFrame->setStyleSheet("background:red");
+    m_topFrame->setFixedSize(864,110);
 
     m_midFrame = new DFrame(m_mainFrame);
     //分区页中间部分的图形绘制
     midFrameSetting();
     m_midFrame->setFrameStyle(DFrame::NoFrame);
-//    m_midFrame->setStyleSheet("background:red");
+//    m_midFrame->setStyleSheet("background:blue");
+    m_midFrame->setFixedSize(864, 85);
     m_botFrame = new DFrame(m_mainFrame);
 //    m_botFrame->setStyleSheet("background:green");
+    m_botFrame->setFixedSize(864, 253);
     //分区页最下端的布局等
     botFrameSetting();
     m_botFrame->setFrameStyle(DFrame::NoFrame);

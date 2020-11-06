@@ -81,6 +81,7 @@ public:
     explicit PartitionWidget(QWidget *parent = nullptr);
     ~PartitionWidget() override;
 
+private:
     /**
      * @brief 初始化界面
      */
@@ -120,8 +121,6 @@ public:
      * @brief 计算已用分区大小的和
      */
     double sumValue();  //已用分区大小的和
-
-private:
 
     /**
      * @brief 是否超出最大可建分区个数
@@ -166,7 +165,7 @@ private:
 
 signals:
 
-public slots:
+private slots:
 
     /**
      * @brief 滑动条数值改变响应的槽函数

@@ -53,21 +53,6 @@ public:
     explicit DmTreeview(QWidget *parent = nullptr);
 
     /**
-     * @brief 初始化界面
-    */
-    void initUI();
-
-    /**
-     * @brief 初始化模型
-    */
-    void initModel();
-
-    /**
-     * @brief 初始化Delegate
-    */
-    void initDelegate();
-
-    /**
      * @brief 排序
     */
     void sort();
@@ -168,6 +153,22 @@ signals:
     //    void sigSendInfo(const QString &devicepath, const QString &disksize, const QString &partitionpath, const QString &partsize, const QString &style, Sector start, Sector end);
 
 public slots:
+
+private:
+    /**
+     * @brief 初始化界面
+    */
+    void initUI();
+
+    /**
+     * @brief 初始化模型
+    */
+    void initModel();
+
+    /**
+     * @brief 初始化Delegate
+    */
+    void initDelegate();
 
 private:
     QAbstractItemDelegate *m_delegate {nullptr};

@@ -75,7 +75,7 @@ signals:
     void sendMoveFlag(int moveflag, int num, int posx);
     void judgeLastPartition();
 
-public slots:
+private slots:
 
     /**
      * @brief 定时器超时信号响应的槽函数

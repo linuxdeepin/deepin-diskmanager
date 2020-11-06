@@ -1,3 +1,11 @@
+deepin-diskmanager (1.1.0.26) stable; urgency=low
+
+  * 解决完成第十九次送测产生的bug,
+  * 53467 新建分区界面UI显示异常
+  * 53315 软件无法启动
+
+ -- yuandandan <yuandandan@uniontech.com>  Fri, 06 Nov 2020 11:34:16 +0800
+
 deepin-diskmanager (1.1.0.25) stable; urgency=low
 
   * 解决完成第十九次送测产生的bug,

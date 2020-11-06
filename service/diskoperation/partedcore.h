@@ -167,12 +167,12 @@ public:
     /**
      * @brief USB刷新(插入)
      */
-    void updateUsb();
+    bool updateUsb();
 
     /**
      * @brief USB刷新(拔出)
      */
-    void updateUsbRemove();
+    bool updateUsbRemove();
 
     /**
      * @brief 获取隐藏分区是否隐藏属性

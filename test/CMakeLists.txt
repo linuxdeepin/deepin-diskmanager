@@ -8,11 +8,11 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 
-include(../cmake/googletest.cmake)
-fetch_googletest(
-    ${PROJECT_SOURCE_DIR}/cmake
-    ${PROJECT_BINARY_DIR}/googletest
-    )
+#include(../cmake/googletest.cmake)
+#fetch_googletest(
+#    ${PROJECT_SOURCE_DIR}/cmake
+#    ${PROJECT_BINARY_DIR}/googletest
+#    )
 
 #src files
 AUX_SOURCE_DIRECTORY(. SRC_LIST)

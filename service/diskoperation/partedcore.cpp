@@ -1559,6 +1559,10 @@ bool PartedCore::mountAndWriteFstab(const QString &mountpath)
         // QString type = Utils::get_filesystem_kernel_name(curpartition.fstype);
         // cmd = QString("mount -v -t %1 %2 %3").arg("").arg(partitionpath).arg(mountpath);
         success = false;
+
+        emit refreshDeviceInfo();
+
+        return success;
     }
 
     //永久挂载
@@ -2326,7 +2330,7 @@ bool PartedCore::detectionPartitionTableError(const QString &devicePath)
     return false;
 }
 
-void PartedCore::updateUsb()
+bool PartedCore::updateUsb()
 {
     qDebug() << __FUNCTION__ << "USB add update start";
 
@@ -2334,12 +2338,14 @@ void PartedCore::updateUsb()
 //    onRefreshDeviceInfo();
 //    autoMount();
     emit usbUpdated();
+
     autoMount();
 
     qDebug() << __FUNCTION__ << "USB add update end";
+    return true;
 }
 
-void PartedCore::updateUsbRemove()
+bool PartedCore::updateUsbRemove()
 {
     qDebug() << __FUNCTION__ << "USB add update remove"; 
 
@@ -2349,6 +2355,7 @@ void PartedCore::updateUsbRemove()
     autoUmount();
 
     qDebug() << __FUNCTION__ << "USB add update end";
+    return true;
 }
 
 void PartedCore::autoMount()

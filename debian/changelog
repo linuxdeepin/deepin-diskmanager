@@ -1,3 +1,10 @@
+deepin-diskmanager (1.1.0.27) stable; urgency=low
+
+  * 解决完成第二十次送测产生的bug,
+  * 53927 全平台硬盘为/dev/nvme0n1 分区删除失败
+
+ -- yuandandan <yuandandan@uniontech.com>  Wes, 10 Nov 2020 15:34:16 +0800
+
 deepin-diskmanager (1.1.0.26) stable; urgency=low
 
   * 解决完成第十九次送测产生的bug,

@@ -2107,7 +2107,17 @@ bool PartedCore::deletePartition()
         return false;
     }
 
-    int num = (parttitionPath.split(devicePath.split("/").at(2)).at(1)).toInt();
+    QStringList list;
+
+    for (int i=parttitionPath.size()-1;i!=0;i--) {
+        if (parttitionPath.at(i) >= '0' && parttitionPath.at(i) <= '9') {
+                list.insert(0, parttitionPath.at(i));
+        } else {
+            break;
+        }
+    }
+
+    int num = list.join("").toInt();
     ped = ped_disk_get_partition(lpDisk, num);
 
     if (ped == nullptr) {
@@ -2168,7 +2178,17 @@ bool PartedCore::hidePartition()
         return false;
     }
 
-    int num = (parttitionPath.split(devicePath.split("/").at(2)).at(1)).toInt();
+    QStringList list;
+
+    for (int i=parttitionPath.size()-1;i!=0;i--) {
+        if (parttitionPath.at(i) >= '0' && parttitionPath.at(i) <= '9') {
+                list.insert(0, parttitionPath.at(i));
+        } else {
+            break;
+        }
+    }
+
+    int num = list.join("").toInt();
     ped = ped_disk_get_partition(lpDisk, num);
 
     if (ped == nullptr) {
@@ -2234,7 +2254,17 @@ bool PartedCore::showPartition()
         return false;
     }
 
-    int num = (parttitionPath.split(devicePath.split("/").at(2)).at(1)).toInt();
+    QStringList list;
+
+    for (int i=parttitionPath.size()-1;i!=0;i--) {
+        if (parttitionPath.at(i) >= '0' && parttitionPath.at(i) <= '9') {
+                list.insert(0, parttitionPath.at(i));
+        } else {
+            break;
+        }
+    }
+
+    int num = list.join("").toInt();
     ped = ped_disk_get_partition(lpDisk, num);
 
     if (ped == nullptr) {

@@ -149,7 +149,12 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             QColor textcolor = m_parentPb.color(DPalette::Normal, DPalette::Text);
             painter->setPen(textcolor);
             painter->setFont(font);
-            textRect.setRect(paintRect.left() + 60, paintRect.top() + 5, 100, 100);
+
+            // 获取文本宽度
+            QFontMetrics fmCapacity = painter->fontMetrics();
+            int textWidth = fmCapacity.width(text);
+
+            textRect.setRect(paintRect.left() + 60, paintRect.top() + 5, textWidth + 1, 100);
             painter->drawText(textRect, text);
             QColor text1color = m_parentPb.color(DPalette::Normal, DPalette::TextTips);
             painter->setPen(text1color);

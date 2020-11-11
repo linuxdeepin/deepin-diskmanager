@@ -7,6 +7,9 @@ option(DOTEST "option for test" OFF)
 # 是否开启单元测试编译
 set(DOTEST OFF)
 
+option(DOAPP "option for test app" OFF)
+set(DOAPP OFF)
+
 #compile flags
 if (CMAKE_BUILD_TYPE MATCHES Debug)
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra")
@@ -28,6 +31,15 @@ ADD_SUBDIRECTORY(service)
 
 # 开启单元测试
 if(DOTEST)
+    if(DOAPP)
+        # 添加gocv覆盖率文件的输出
+        set(CMAKE_CXX_FLAGS "-g -fprofile-arcs -ftest-coverage")
+        # 设置测试模块
+        set(QT Core Gui Widgets Network DBus Sql LinguistTools Svg Multimedia Test)
+        find_package(Qt5 COMPONENTS ${QT} REQUIRED)
+        # 添加子模块apptest
+        add_subdirectory(apptest)
+    else()
     # 添加gocv覆盖率文件的输出
     set(CMAKE_CXX_FLAGS "-g -fprofile-arcs -ftest-coverage")
     # 设置测试模块
@@ -35,5 +47,6 @@ if(DOTEST)
     find_package(Qt5 COMPONENTS ${QT} REQUIRED)
     # 添加子模块test
     add_subdirectory(test)
+    endif()
 endif()
 

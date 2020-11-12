@@ -27,6 +27,7 @@
 #include "partitiontableerrorsinfodialog.h"
 #include "partitiontableerrorsinfodelegate.h"
 #include "common.h"
+#include "diskhealthheaderview.h"
 
 #include <DFrame>
 #include <DGuiApplicationHelper>
@@ -74,6 +75,10 @@ void PartitionTableErrorsInfoDialog::initUI()
     m_tableView->setAlternatingRowColors(true);
 //    m_tableView->setPalette(palette5);
 //    m_tableView->setFont(QFont("SourceHanSansSC", 10, 50));
+
+    m_diskHealthHeaderView = new DiskHealthHeaderView(Qt::Horizontal, this);
+    m_tableView->setHorizontalHeader(m_diskHealthHeaderView);
+
     QFont fontHeader = DFontSizeManager::instance()->get(DFontSizeManager::T6, QFont::Medium);
     // 表头字体颜色
     DPalette paletteHeader;

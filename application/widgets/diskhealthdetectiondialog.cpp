@@ -290,6 +290,7 @@ void DiskHealthDetectionDialog::initUI()
     stateTipsLabel->setPalette(palette4);
 
     m_linkButton = new DCommandLinkButton(tr("Export")); // 导出
+    m_linkButton->setFixedWidth(28);
 
     QWidget *bottomWidget = new QWidget;
     QHBoxLayout *bottomLayout = new QHBoxLayout(bottomWidget);

@@ -117,8 +117,17 @@ void DiskInfoDisplayDialog::initUI()
     }
 
     m_linkButton = new DCommandLinkButton(tr("Export")); // 导出
+    m_linkButton->setFixedWidth(28);
 
-    infoLayout->addWidget(m_linkButton);
+    QHBoxLayout *exportLayout = new QHBoxLayout;
+    exportLayout->addWidget(m_linkButton);
+    exportLayout->addStretch();
+    exportLayout->setSpacing(0);
+    exportLayout->setContentsMargins(0, 0, 0, 0);
+
+    infoLayout->addLayout(exportLayout);
+
+//    infoLayout->addWidget(m_linkButton);
     infoLayout->setContentsMargins(10, 10, 10, 10);
 
     addSpacing(10);

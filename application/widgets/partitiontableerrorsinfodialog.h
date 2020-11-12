@@ -39,6 +39,7 @@ DTK_USE_NAMESPACE
 
 class QStandardItemModel;
 class PartitionTableErrorsInfoDelegate;
+class DiskHealthHeaderView;
 
 /**
  * @class PartitionTableErrorsInfoDialog
@@ -73,6 +74,7 @@ private:
     QStandardItemModel *m_standardItemModel; // 表格模型
     PartitionTableErrorsInfoDelegate *m_partitionTableErrorsInfoDelegatee; // 表格代理
     DPushButton *pushButton; // 确定按钮
+    DiskHealthHeaderView *m_diskHealthHeaderView;
 };
 
 #endif // PARTITIONTABLEERRORSINFODIALOG_H

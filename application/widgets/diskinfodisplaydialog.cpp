@@ -117,7 +117,9 @@ void DiskInfoDisplayDialog::initUI()
     }
 
     m_linkButton = new DCommandLinkButton(tr("Export")); // 导出
-    m_linkButton->setFixedWidth(28);
+    QFontMetrics fmCapacity = m_linkButton->fontMetrics();
+    int wdith = fmCapacity.width(QString(tr("Export")));
+    m_linkButton->setFixedWidth(wdith);
 
     QHBoxLayout *exportLayout = new QHBoxLayout;
     exportLayout->addWidget(m_linkButton);

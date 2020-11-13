@@ -1,7 +1,14 @@
+deepin-diskmanager (1.1.0.30) stable; urgency=low
+
+  * 解决完成第二十三次送测产生的bug,
+  * 磁盘信息【导出】按钮字符显示不全
+
+ -- yuandandan <yuandandan@uniontech.com>  Fri, 13 Nov 2020 14:34:16 +0800
+
 deepin-diskmanager (1.1.0.29) stable; urgency=low
 
   * 解决完成第二十二次送测产生的bug,
-  * 54024 打开磁盘管理，/dev/nvme0n1硬盘字符重叠
+  * 54214 磁盘信息【导出】按钮位置错误
 
  -- yuandandan <yuandandan@uniontech.com>  Fri, 13 Nov 2020 11:34:16 +0800
 

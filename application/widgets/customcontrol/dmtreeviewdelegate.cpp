@@ -193,8 +193,9 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
                 QColor textColor = m_parentPb.color(DPalette::Normal, DPalette::HighlightedText);
                 painter->setPen(textColor);
                 painter->setFont(font);
-                textRect.setRect(paintRect.left() + 65, paintRect.top() + 8, 100, 100);
-                painter->drawText(textRect, text2);
+                textRect.setRect(paintRect.left() + 65, paintRect.top() + 8, 106, 100);
+                QString text = painter->fontMetrics().elidedText(text2, Qt::ElideMiddle, textRect.width());
+                painter->drawText(textRect, text);
                 QColor text1Color = m_parentPb.color(DPalette::Normal, DPalette::HighlightedText);
                 painter->setPen(text1Color);
                 font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
@@ -205,8 +206,9 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
                 QColor textColor = m_parentPb.color(DPalette::Normal, DPalette::Text);
                 painter->setPen(textColor);
                 painter->setFont(font);
-                textRect.setRect(paintRect.left() + 65, paintRect.top() + 8, 100, 100);
-                painter->drawText(textRect, text2);
+                textRect.setRect(paintRect.left() + 65, paintRect.top() + 8, 106, 100);
+                QString text = painter->fontMetrics().elidedText(text2, Qt::ElideMiddle, textRect.width());
+                painter->drawText(textRect, text);
                 QColor text1Color = m_parentPb.color(DPalette::Normal, DPalette::TextTips);
                 painter->setPen(text1Color);
                 font = DFontSizeManager::instance()->get(DFontSizeManager::T8);

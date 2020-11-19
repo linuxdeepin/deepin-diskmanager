@@ -193,7 +193,7 @@
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="225"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="348"/>
         <source>Worst</source>
-        <translation type="unfinished"/>
+        <translation>Schlechteste</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="226"/>

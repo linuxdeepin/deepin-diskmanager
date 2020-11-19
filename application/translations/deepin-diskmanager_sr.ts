@@ -413,7 +413,7 @@
     <message>
         <location filename="../widgets/formatedialog.cpp" line="102"/>
         <source>The length exceeds the limit</source>
-        <translation type="unfinished"/>
+        <translation>Дужина премашује ограничење</translation>
     </message>
 </context>
 <context>
@@ -657,12 +657,12 @@
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="650"/>
         <source>The length exceeds the limit</source>
-        <translation type="unfinished"/>
+        <translation>Дужина премашује ограничење</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="674"/>
         <source>The number of new partitions exceeds the limit</source>
-        <translation>Број нових партиција превазилази ограничење</translation>
+        <translation>Број нових партиција премашује ограничење</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="694"/>

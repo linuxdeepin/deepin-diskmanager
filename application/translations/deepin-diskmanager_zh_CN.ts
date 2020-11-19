@@ -14,7 +14,7 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="115"/>
         <source>Check health</source>
-        <translation>硬盘健康监测</translation>
+        <translation>硬盘健康检测</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="121"/>
@@ -134,7 +134,7 @@
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="58"/>
         <source>Check Health</source>
-        <translation>硬盘健康监测</translation>
+        <translation>硬盘健康检测</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="90"/>

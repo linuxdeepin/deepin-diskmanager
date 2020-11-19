@@ -388,7 +388,7 @@
     <message>
         <location filename="../widgets/formatedialog.cpp" line="56"/>
         <source>Name:</source>
-        <translation>Név:</translation>
+        <translation>Név:  </translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="60"/>
@@ -398,7 +398,7 @@
     <message>
         <location filename="../widgets/formatedialog.cpp" line="65"/>
         <source>File system:</source>
-        <translation>Fájlrendszer:</translation>
+        <translation>Fájlrendszer:  </translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="86"/>
@@ -421,32 +421,32 @@
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="101"/>
         <source>Mount point:</source>
-        <translation>Csatolási hely:</translation>
+        <translation>Csatolási hely:  </translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="108"/>
         <source>Free:</source>
-        <translation>Szabad:</translation>
+        <translation>Szabad:  </translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="114"/>
         <source>Used:</source>
-        <translation>Használatban:</translation>
+        <translation>Használatban:  </translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="120"/>
         <source>Type:</source>
-        <translation>Típus:</translation>
+        <translation>Típus:  </translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="125"/>
         <source>Capacity:</source>
-        <translation>Kapacitás:</translation>
+        <translation>Kapacitás:  </translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="130"/>
         <source>Volume label:</source>
-        <translation>Kötetcímke:</translation>
+        <translation>Kötetcímke:  </translation>
     </message>
 </context>
 <context>
@@ -477,7 +477,7 @@
     <message>
         <location filename="../widgets/mountdialog.cpp" line="55"/>
         <source>Mount point:</source>
-        <translation>Csatolási pont:</translation>
+        <translation>Csatolási pont:  </translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="79"/>
@@ -580,23 +580,23 @@
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="117"/>
         <source>Capacity:</source>
-        <translation>Kapacitás: </translation>
+        <translation>Kapacitás:  </translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="127"/>
         <source>Partition selected:</source>
-        <translation>Kiválasztott partíció: </translation>
+        <translation>Kiválasztott partíció:  </translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="142"/>
         <source>Disk:</source>
-        <translation>Lemez:</translation>
+        <translation>Lemez:  </translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="152"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="261"/>
         <source>File system:</source>
-        <translation>Fájlrendszer:</translation>
+        <translation>Fájlrendszer:  </translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="191"/>
@@ -621,7 +621,7 @@
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="228"/>
         <source>Number of partitions:</source>
-        <translation>Partíciók száma:</translation>
+        <translation>Partíciók száma:  </translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="235"/>
@@ -631,12 +631,12 @@
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="244"/>
         <source>Name:</source>
-        <translation>Név:</translation>
+        <translation>Név:  </translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="269"/>
         <source>Size:</source>
-        <translation>Méret:</translation>
+        <translation>Méret:  </translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="364"/>
@@ -698,7 +698,7 @@
     <message>
         <location filename="../widgets/resizedialog.cpp" line="62"/>
         <source>Reserved size:</source>
-        <translation>Lefoglalt hely:</translation>
+        <translation>Lefoglalt hely:  </translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="78"/>
@@ -724,7 +724,7 @@
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="227"/>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="230"/>
         <source> Capacity:</source>
-        <translation>Kapacitás:</translation>
+        <translation>Kapacitás:  </translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="172"/>
@@ -732,7 +732,7 @@
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="234"/>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="237"/>
         <source>Used:</source>
-        <translation>Használatban: </translation>
+        <translation>Használatban:  </translation>
     </message>
 </context>
 <context>

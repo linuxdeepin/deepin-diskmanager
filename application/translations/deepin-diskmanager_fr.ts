@@ -61,7 +61,7 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="230"/>
         <source>Failed to hide the partition: unable to lock it</source>
-        <translation>Impossible de masquer la partition: impossible de la verrouiller</translation>
+        <translation>Impossible de masquer la partition : impossible de la verrouiller</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="239"/>
@@ -96,7 +96,7 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="269"/>
         <source>Failed to delete the partition: unable to lock it</source>
-        <translation>Échec de la suppression de la partition: impossible de la verrouiller</translation>
+        <translation>Échec de la suppression de la partition : impossible de la verrouiller</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="282"/>
@@ -126,7 +126,7 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="319"/>
         <source>Failed to delete the partition: %1</source>
-        <translation>Échec de la suppression de la partition: %1</translation>
+        <translation>Échec de la suppression de la partition : %1</translation>
     </message>
 </context>
 <context>
@@ -264,12 +264,12 @@
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Serial Number:</source>
-        <translation>Numéro de série:</translation>
+        <translation>Numéro de série :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Device Model:</source>
-        <translation>Modèle d&apos;appareil:</translation>
+        <translation>Modèle d&apos;appareil :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
@@ -279,52 +279,52 @@
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Firmware Version:</source>
-        <translation>Version du firmware:</translation>
+        <translation>Version du firmware :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>User Capacity:</source>
-        <translation>Capacité utilisateur:</translation>
+        <translation>Capacité utilisateur :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Sector Size:</source>
-        <translation>Taille du secteur:</translation>
+        <translation>Taille du secteur :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Rotation Rate:</source>
-        <translation>Vitesse de rotation:</translation>
+        <translation>Vitesse de rotation :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Form Factor:</source>
-        <translation>Facteur de forme:</translation>
+        <translation>Facteur de forme :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="71"/>
         <source>Device is:</source>
-        <translation>Modèle:</translation>
+        <translation>Modèle :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="71"/>
         <source>ATA Version is:</source>
-        <translation>La version ATA est:</translation>
+        <translation>La version ATA est :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="71"/>
         <source>SATA Version is:</source>
-        <translation>La version SATA est:</translation>
+        <translation>La version SATA est :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="72"/>
         <source>Local Time is:</source>
-        <translation>L&apos;heure locale est:</translation>
+        <translation>L&apos;heure locale est :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="72"/>
         <source>SMART support is:</source>
-        <translation>Le support SMART est:</translation>
+        <translation>Le support SMART est :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="78"/>
@@ -388,7 +388,7 @@
     <message>
         <location filename="../widgets/formatedialog.cpp" line="56"/>
         <source>Name:</source>
-        <translation>Nom:</translation>
+        <translation>Nom :</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="60"/>
@@ -398,7 +398,7 @@
     <message>
         <location filename="../widgets/formatedialog.cpp" line="65"/>
         <source>File system:</source>
-        <translation>Système de fichier:</translation>
+        <translation>Système de fichier :</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="86"/>
@@ -413,7 +413,7 @@
     <message>
         <location filename="../widgets/formatedialog.cpp" line="102"/>
         <source>The length exceeds the limit</source>
-        <translation type="unfinished"/>
+        <translation>La longueur dépasse la limite</translation>
     </message>
 </context>
 <context>
@@ -421,32 +421,32 @@
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="101"/>
         <source>Mount point:</source>
-        <translation>Point de montage:</translation>
+        <translation>Point de montage :</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="108"/>
         <source>Free:</source>
-        <translation>Libre:</translation>
+        <translation>Libre :</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="114"/>
         <source>Used:</source>
-        <translation>Utilisé:</translation>
+        <translation>Utilisé :</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="120"/>
         <source>Type:</source>
-        <translation>Type:</translation>
+        <translation>Type :</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="125"/>
         <source>Capacity:</source>
-        <translation>Capacité:</translation>
+        <translation>Capacité :</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="130"/>
         <source>Volume label:</source>
-        <translation>Nom du disque:</translation>
+        <translation>Nom du disque :</translation>
     </message>
 </context>
 <context>
@@ -477,7 +477,7 @@
     <message>
         <location filename="../widgets/mountdialog.cpp" line="55"/>
         <source>Mount point:</source>
-        <translation>Point de montage:</translation>
+        <translation>Point de montage :</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="79"/>
@@ -580,23 +580,23 @@
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="117"/>
         <source>Capacity:</source>
-        <translation>Capacité:</translation>
+        <translation>Capacité :</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="127"/>
         <source>Partition selected:</source>
-        <translation>Partition sélectionnée:</translation>
+        <translation>Partition sélectionnée :</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="142"/>
         <source>Disk:</source>
-        <translation>Disque:</translation>
+        <translation>Disque :</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="152"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="261"/>
         <source>File system:</source>
-        <translation>Système de fichier:</translation>
+        <translation>Système de fichier :</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="191"/>
@@ -621,7 +621,7 @@
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="228"/>
         <source>Number of partitions:</source>
-        <translation>Nombre de partitions:</translation>
+        <translation>Nombre de partitions :</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="235"/>
@@ -631,12 +631,12 @@
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="244"/>
         <source>Name:</source>
-        <translation>Nom:</translation>
+        <translation>Nom :</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="269"/>
         <source>Size:</source>
-        <translation>Taille:</translation>
+        <translation>Taille :</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="364"/>
@@ -657,7 +657,7 @@
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="650"/>
         <source>The length exceeds the limit</source>
-        <translation type="unfinished"/>
+        <translation>La longueur dépasse la limite</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="674"/>
@@ -698,7 +698,7 @@
     <message>
         <location filename="../widgets/resizedialog.cpp" line="62"/>
         <source>Reserved size:</source>
-        <translation>Taille réservée:</translation>
+        <translation>Taille réservée :</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="78"/>
@@ -724,7 +724,7 @@
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="227"/>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="230"/>
         <source> Capacity:</source>
-        <translation>Capacité:</translation>
+        <translation>Capacité :</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="172"/>
@@ -732,7 +732,7 @@
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="234"/>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="237"/>
         <source>Used:</source>
-        <translation>Utilisé:</translation>
+        <translation>Utilisé :</translation>
     </message>
 </context>
 <context>

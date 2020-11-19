@@ -101,7 +101,7 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="282"/>
         <source>Hide the partition successfully</source>
-        <translation>Ocultar la partición exitosa</translation>
+        <translation>La partición se ocultó exitosamente</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="287"/>
@@ -111,7 +111,7 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="297"/>
         <source>Unhide the partition successfully</source>
-        <translation>Mostrar la partición exitosa</translation>
+        <translation>La partición se mostró exitósamente</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="302"/>
@@ -121,7 +121,7 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="314"/>
         <source>Delete the partition successfully</source>
-        <translation>Borrar la partición exitosa</translation>
+        <translation>La partición se borró exitosamente</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="319"/>
@@ -134,7 +134,7 @@
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="58"/>
         <source>Check Health</source>
-        <translation>Comprobar Salud</translation>
+        <translation>Comprobar salud</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="90"/>
@@ -149,7 +149,7 @@
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="120"/>
         <source>Health Status</source>
-        <translation>Estado de Salud</translation>
+        <translation>Estado de salud</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="134"/>
@@ -205,7 +205,7 @@
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="227"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="349"/>
         <source>Raw Value</source>
-        <translation>Valor Bruto</translation>
+        <translation>Valor bruto</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="228"/>
@@ -226,7 +226,7 @@
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="311"/>
         <source>Save File</source>
-        <translation>Guardar Archivo</translation>
+        <translation>Guardar archivo</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="311"/>
@@ -251,7 +251,7 @@
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="370"/>
         <source>Export failed</source>
-        <translation>Exportación fallida</translation>
+        <translation>La exportación falló</translation>
     </message>
 </context>
 <context>
@@ -264,42 +264,42 @@
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Serial Number:</source>
-        <translation>Número de Serie:</translation>
+        <translation>Número de serie:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Device Model:</source>
-        <translation>Modelo del Dispositivo</translation>
+        <translation>Modelo del dispositivo</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>LU WWN Device Id:</source>
-        <translation>LU WWN ID del Dispositivo:</translation>
+        <translation>LU WWN ID del dispositivo:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Firmware Version:</source>
-        <translation>Version del Firmware</translation>
+        <translation>Version del firmware</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>User Capacity:</source>
-        <translation>Capacidad de Usuario:</translation>
+        <translation>Capacidad de usuario:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Sector Size:</source>
-        <translation>Tamaño de Sector:</translation>
+        <translation>Tamaño de sector:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Rotation Rate:</source>
-        <translation>Radio de Rotación:</translation>
+        <translation>Tasa de rotación:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Form Factor:</source>
-        <translation>Forma de Factor:</translation>
+        <translation>Forma de factor:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="71"/>
@@ -319,12 +319,12 @@
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="72"/>
         <source>Local Time is:</source>
-        <translation>Hora Local es:</translation>
+        <translation>Hora local es:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="72"/>
         <source>SMART support is:</source>
-        <translation>Soporte SMART es:</translation>
+        <translation>Soporte SMART está:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="78"/>
@@ -345,7 +345,7 @@
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="136"/>
         <source>Save File</source>
-        <translation>Guardar Archivo</translation>
+        <translation>Guardar archivo</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="136"/>
@@ -370,7 +370,7 @@
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="183"/>
         <source>Export failed</source>
-        <translation>Exportación fallida</translation>
+        <translation>La exportación falló</translation>
     </message>
 </context>
 <context>
@@ -493,7 +493,7 @@
     <message>
         <location filename="../widgets/mountdialog.cpp" line="114"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
-        <translation>Los datos bajo este punto de montaje podrian perderse, por favor monte el directorio en otra ubicación</translation>
+        <translation>Los datos bajo este punto de montaje podrían perderse, por favor monte la partición en otra ubicación</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="114"/>
@@ -537,7 +537,7 @@
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="52"/>
         <source>Errors in Partition Table</source>
-        <translation>Errores en la Tabla de Partición</translation>
+        <translation>Errores en la tabla de particiones</translation>
     </message>
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="61"/>
@@ -552,7 +552,7 @@
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="103"/>
         <source>Partition table entries are not in disk order</source>
-        <translation>Las entradas de la tabla de particiones no están en orden de disco</translation>
+        <translation>Las entradas de la tabla de particiones no están ordenadas por disco</translation>
     </message>
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="115"/>
@@ -667,7 +667,7 @@
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="694"/>
         <source>To create a partition, you need at least 52 MB</source>
-        <translation>Para crear una partición, al menos necesita 52 MB</translation>
+        <translation>Para crear una partición, necesita al menos 52 MB</translation>
     </message>
 </context>
 <context>

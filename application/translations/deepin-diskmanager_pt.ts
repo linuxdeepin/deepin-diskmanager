@@ -101,7 +101,7 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="282"/>
         <source>Hide the partition successfully</source>
-        <translation>Ocultar a partição com sucesso</translation>
+        <translation>Partição ocultada</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="287"/>
@@ -111,7 +111,7 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="297"/>
         <source>Unhide the partition successfully</source>
-        <translation>Mostrar a partição com sucesso</translation>
+        <translation>Partição visível</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="302"/>
@@ -121,7 +121,7 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="314"/>
         <source>Delete the partition successfully</source>
-        <translation>Eliminar a partição com sucesso</translation>
+        <translation>Partição eliminada</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="319"/>
@@ -216,7 +216,7 @@
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="282"/>
         <source>Status: (G: Good | W: Warning | D: Damaged | U: Unknown)</source>
-        <translation>Estado: (B: Bom | A: Aviso | D: Danificado | D: Desconhecido)</translation>
+        <translation>Estado: (G: Bom | W: Aviso | D: Danificado | U: Desconhecido)</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="286"/>
@@ -413,7 +413,7 @@
     <message>
         <location filename="../widgets/formatedialog.cpp" line="102"/>
         <source>The length exceeds the limit</source>
-        <translation type="unfinished"/>
+        <translation>O comprimento excede o limite</translation>
     </message>
 </context>
 <context>
@@ -657,7 +657,7 @@
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="650"/>
         <source>The length exceeds the limit</source>
-        <translation type="unfinished"/>
+        <translation>O comprimento excede o limite</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="674"/>

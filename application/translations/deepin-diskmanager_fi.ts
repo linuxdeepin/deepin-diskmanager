@@ -413,7 +413,7 @@
     <message>
         <location filename="../widgets/formatedialog.cpp" line="102"/>
         <source>The length exceeds the limit</source>
-        <translation type="unfinished"/>
+        <translation>Pituus ylittää rajan</translation>
     </message>
 </context>
 <context>
@@ -657,7 +657,7 @@
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="650"/>
         <source>The length exceeds the limit</source>
-        <translation type="unfinished"/>
+        <translation>Pituus ylittää rajan</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="674"/>

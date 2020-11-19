@@ -1,3 +1,10 @@
+deepin-diskmanager (1.1.0.32) stable; urgency=low
+
+  * 解决完成第二十四次送测产生的bug,
+  * 55030 硬盘健康检测“监”字与需求设计图“检”字不一致
+
+ -- yuandandan <yuandandan@uniontech.com>  Thu, 19 Nov 2020 10:34:16 +0800
+
 deepin-diskmanager (1.1.0.31) stable; urgency=low
 
   * 解决完成第二十四次送测产生的bug,

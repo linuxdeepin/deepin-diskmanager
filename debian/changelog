@@ -1,3 +1,10 @@
+deepin-diskmanager (1.1.0.34) stable; urgency=low
+
+  * 解决完成第二十六次送测产生的bug,
+  * 添加软件包安装依赖：smartmontools
+
+ -- yuandandan <yuandandan@uniontech.com>  Fri, 20 Nov 2020 13:34:16 +0800
+
 deepin-diskmanager (1.1.0.33) stable; urgency=low
 
   * 解决完成第二十六次送测产生的bug,

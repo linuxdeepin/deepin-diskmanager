@@ -193,10 +193,12 @@ void PartitionWidget::botFrameSetting()
     vLayout->addWidget(m_partWidget, 5);
     //按钮
     m_applyBtn = new DPushButton(tr("Confirm"), m_botFrame);
+    m_applyBtn->setObjectName("confirm");
     //取消
     m_cancleBtn = new DPushButton(tr("Cancel"), m_botFrame);
     //复原
     m_reveBtn = new DPushButton(tr("Revert"), m_botFrame);
+    m_reveBtn->setObjectName("revert");
     m_applyBtn->setEnabled(false);
     m_applyBtn->setMinimumWidth(170);
     m_cancleBtn->setMinimumWidth(170);
@@ -235,15 +237,18 @@ void PartitionWidget::partInfoShowing()
 
     DLabel *labelSpace = new DLabel(m_partWidget);
     m_addButton = new DIconButton(DStyle::SP_IncreaseElement);
-    m_remButton = new DIconButton(DStyle::SP_DecreaseElement);
+    m_addButton->setObjectName("addButton");
+    m_remButton = new DIconButton(DStyle::SP_DecreaseElement);\
+    m_remButton->setObjectName("removeButton");
     m_remButton->setToolTip(tr("Delete last partition"));
     DLabel *space = new DLabel(m_partWidget);
 
     //按钮初始状态
-    if (m_sizeInfo.size() == 0)
+    if (m_sizeInfo.size() == 0) {
         m_remButton->setEnabled(false);
-    else
+    } else {
         m_remButton->setEnabled(true);
+    }
 
     m_partNameLabel = new DLabel(tr("Name:"), m_partWidget);
     DFontSizeManager::instance()->bind(m_partNameLabel, DFontSizeManager::T8, QFont::Normal);
@@ -251,6 +256,7 @@ void PartitionWidget::partInfoShowing()
 
     m_partNameEdit = new DLineEdit(m_partWidget);
     m_partNameEdit->lineEdit()->setMaxLength(256);
+    m_partNameEdit->setObjectName("partName");
 
     line2Layout->addWidget(m_partDoLabel, 1);
     line2Layout->addSpacing(7);
@@ -278,6 +284,7 @@ void PartitionWidget::partInfoShowing()
     m_slider->setMaximum(100);
     m_slider->setValue(100);
     m_partSizeEdit = new DLineEdit(m_partWidget);
+    m_partSizeEdit->setObjectName("partSize");
     m_partComboBox = new DComboBox(m_partWidget);
     m_partComboBox->addItem("GiB");
     m_partComboBox->addItem("MiB");
@@ -336,15 +343,17 @@ void PartitionWidget::recPartitionInfo()
 void PartitionWidget::initConnection()
 {
     connect(m_slider, &DSlider::valueChanged, this, &PartitionWidget::onSliderValueChanged);
-    connect(m_partSizeEdit, &DLineEdit::textEdited, this, &PartitionWidget::onSetSliderValue);
+    connect(m_partSizeEdit, &DLineEdit::textChanged, this, &PartitionWidget::onSetSliderValue);
     connect(m_partNameEdit, &DLineEdit::textEdited, this, &PartitionWidget::onSetPartName);
-    connect(m_partNameEdit, &DLineEdit::textEdited, this, &PartitionWidget::onTextChanged);
+    connect(m_partNameEdit, &DLineEdit::textChanged, this, &PartitionWidget::onTextChanged);
     connect(m_addButton, &DIconButton::clicked, this, &PartitionWidget::onAddPartition);
     connect(m_remButton, &DIconButton::clicked, this, &PartitionWidget::onRemovePartition);
     connect(m_applyBtn, &DPushButton::clicked, this, &PartitionWidget::onApplyButton);
     connect(m_reveBtn, &DPushButton::clicked, this, &PartitionWidget::onRevertButton);
     connect(m_cancleBtn, &DPushButton::clicked, this, &PartitionWidget::onCancelButton);
-    connect(m_partComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onComboxCurTextChange(int)));
+//    connect(m_partComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onComboxCurTextChange(int)));
+    connect(m_partComboBox, static_cast<void (DComboBox:: *)(const int)>(&DComboBox::currentIndexChanged),
+            this, &PartitionWidget::onComboxCurTextChange);
     connect(m_partChartWidget, &PartChartShowing::sendMoveFlag, this, &PartitionWidget::onShowTip);
     connect(m_partChartWidget, &PartChartShowing::sendFlag, this, &PartitionWidget::onShowSelectPathInfo);
     connect(m_partChartWidget, &PartChartShowing::judgeLastPartition, this, &PartitionWidget::onJudgeLastPartition);
@@ -380,10 +389,11 @@ void PartitionWidget::setAddOrRemResult(const bool &isExceed)
     m_partNameEdit->setText("");
     m_partSizeEdit->setText("");
 
-    if (m_sizeInfo.size() == 0)
+    if (m_sizeInfo.size() == 0) {
         m_flag = 1;
-    else
+    } else {
         m_flag = 0;
+    }
 
     m_partChartWidget->transFlag(m_flag, m_value);
     m_slider->setValue(100);
@@ -408,17 +418,17 @@ void PartitionWidget::setRegValidator()
 bool PartitionWidget::maxAmountPrimReached()
 {
     bool breachMax = false;
-    int primary_count = 0;
+    int primaryCount = 0;
     PartitionVec partVector = DMDbusHandler::instance()->getCurDevicePartitionArr();
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
 
     for (int i = 0; i < partVector.size(); i++) {
         if (partVector[i].m_type == TYPE_PRIMARY || partVector[i].m_type == TYPE_EXTENDED)
-            primary_count++;
+            primaryCount++;
     }
 
     int maxprims = DMDbusHandler::instance()->getCurDeviceInfo().max_prims;
-    if (!info.m_insideExtended && primary_count >= maxprims) {
+    if (!info.m_insideExtended && primaryCount >= maxprims) {
         breachMax = true;
         //        qDebug() << QString("It is not possible to create more than %1 primary partition").arg(maxprims);
         //        qDebug() << QString("If you want more partitions you should first create an extended partition. Such a partition can contain other partitions."
@@ -436,7 +446,7 @@ void PartitionWidget::onShowSelectPathInfo(const int &flag, const int &num, cons
     if (m_flag == 0) {
         return;
     }
-//    qDebug() << "338" << num;
+
     if (m_flag == 1 || m_flag == 3) {
         setSelectUnallocatesSpace();
         m_slider->setValue(100);
@@ -457,8 +467,9 @@ void PartitionWidget::onShowSelectPathInfo(const int &flag, const int &num, cons
 
         double clicked = m_sizeInfo.at(num);
 
-        if (m_partComboBox->currentText() == "GiB")
+        if (m_partComboBox->currentText() == "GiB") {
             clicked = clicked / 1024;
+        }
         m_partSizeEdit->setText(QString::number(clicked, 'f', 2));
     }
 
@@ -468,13 +479,13 @@ void PartitionWidget::onShowSelectPathInfo(const int &flag, const int &num, cons
 
 void PartitionWidget::onShowTip(const int &hover, const int &num, const int &posX)
 {
-//    qDebug() << "359" << num;
-    int x = this->frameGeometry().x();
-    int y = this->frameGeometry().y();
+    int x = frameGeometry().x();
+    int y = frameGeometry().y();
 
     if (hover == 2) {
-        if (m_partName.at(num) != " ")
+        if (m_partName.at(num) != " ") {
             QToolTip::showText(QPoint(x + posX + 5, y + 215), m_partName.at(num), this, QRect(QPoint(x + posX, y + 215), QSize(80, 20)), 1000);
+        }
     } else if (hover == 3 || hover == 1) {
         QToolTip::showText(QPoint(x + posX + 5, y + 215), tr("Unallocated"), this, QRect(QPoint(x + posX, y + 215), QSize(80, 20)), 1000);
     }
@@ -500,7 +511,7 @@ void PartitionWidget::setEnable(const int &flag, const bool &isExceed)
 //            m_partNameEdit->setEnabled(false);
 //        } else {
 //            palette.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
-            m_partNameEdit->setEnabled(false);
+        m_partNameEdit->setEnabled(false);
 //        }
     }
 
@@ -513,31 +524,17 @@ void PartitionWidget::setEnable(const int &flag, const bool &isExceed)
 
     m_partNameLabel->setPalette(palette);//各情况下,分区名称label的样式
 
-    if (m_sizeInfo.size() == 0) {
-        m_remButton->setEnabled(false);
-        m_applyBtn->setEnabled(false);
-    } else {
-        m_remButton->setEnabled(true);
-        m_applyBtn->setEnabled(true);
-    }
+    m_remButton->setEnabled(m_sizeInfo.size());
+    m_applyBtn->setEnabled(m_sizeInfo.size());
 }
 
 void PartitionWidget::setControlEnable(const bool &isTrue)
 {
-    if (isTrue) {
-        m_addButton->setEnabled(true);
-        m_partSizeEdit->setEnabled(true);
-        m_slider->setEnabled(true);
-        m_partComboBox->setEnabled(true);
-        m_partFormateCombox->setEnabled(true);
-
-    } else {
-        m_addButton->setEnabled(false);
-        m_partSizeEdit->setEnabled(false);
-        m_slider->setEnabled(false);
-        m_partComboBox->setEnabled(false);
-        m_partFormateCombox->setEnabled(false);
-    }
+    m_addButton->setEnabled(isTrue);
+    m_partSizeEdit->setEnabled(isTrue);
+    m_slider->setEnabled(isTrue);
+    m_partComboBox->setEnabled(isTrue);
+    m_partFormateCombox->setEnabled(isTrue);
 
     m_partNameEdit->setEnabled(true);
     setLabelColor(isTrue);
@@ -546,10 +543,9 @@ void PartitionWidget::setControlEnable(const bool &isTrue)
 void PartitionWidget::setLabelColor(const bool &isOk)
 {
     if (isOk) {
-//        qDebug() << isOk;
-        DPalette palette = DApplicationHelper::instance()->palette(m_botFrame);
-        palette.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
-        m_botFrame->setPalette(palette);
+        DPalette framePalette = DApplicationHelper::instance()->palette(m_botFrame);
+        framePalette.setColor(DPalette::Text, QColor(palette().buttonText().color()));
+        m_botFrame->setPalette(framePalette);
     } else {
         DPalette palette = DApplicationHelper::instance()->palette(m_botFrame);
         palette.setBrush(DPalette::Text, palette.placeholderText());
@@ -557,11 +553,11 @@ void PartitionWidget::setLabelColor(const bool &isOk)
     }
 
     DPalette palette1 = DApplicationHelper::instance()->palette(m_partInfoLabel);
-    palette1.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
+    palette1.setColor(DPalette::Text, QColor(palette().buttonText().color()));
     m_partInfoLabel->setPalette(palette1);
 
     DPalette palatte2 = DApplicationHelper::instance()->palette(m_partDoLabel);
-    palatte2.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
+    palatte2.setColor(DPalette::Text, QColor(palette().buttonText().color()));
     m_partDoLabel->setPalette(palatte2);
 }
 
@@ -573,15 +569,15 @@ void PartitionWidget::onComboxCurTextChange(int index)
 
         if (index == 1) {
             if (m_sizeInfo.size() == 0 && m_slider->value() == 100)
-                m_partSizeEdit->setText(QString::number(m_totalSize,  'f', 2));
+                m_partSizeEdit->setText(QString::number(m_totalSize, 'f', 2));
             else
-                m_partSizeEdit->setText(QString::number(m,  'f', 2));
+                m_partSizeEdit->setText(QString::number(m, 'f', 2));
         } else if (index == 0) {
 //            double m = partSizeEdit->text().toDouble();
             if (m_sizeInfo.size() == 0 && m_slider->value() == 100)
-                m_partSizeEdit->setText(QString::number(m_total,  'f', 2));
+                m_partSizeEdit->setText(QString::number(m_total, 'f', 2));
             else
-                m_partSizeEdit->setText(QString::number(m / 1024,  'f', 2));
+                m_partSizeEdit->setText(QString::number(m / 1024, 'f', 2));
         }
 //        qDebug() << m;
     }
@@ -671,8 +667,7 @@ void PartitionWidget::onSetPartName()
 
 void PartitionWidget::onAddPartition()
 {
-    DMDbusHandler *handler = DMDbusHandler::instance();
-    DeviceInfo device = handler->getCurDeviceInfo();
+    DeviceInfo device = DMDbusHandler::instance()->getCurDeviceInfo();
 
     if (m_sizeInfo.size() >= 24 || maxAmountPrimReached() == true || (device.partition.size() + m_sizeInfo.size()) > device.max_prims) {
         DMessageManager::instance()->sendMessage(this, QIcon(":/icons/deepin/builtin/warning.svg"), tr("The number of new partitions exceeds the limit"));
@@ -747,11 +742,10 @@ void PartitionWidget::onApplyButton()
 {
     bool isCreate = true;
     PartitionVec partVector;
-    DMDbusHandler *handler = DMDbusHandler::instance();
-    PartitionInfo curInfo = handler->getCurPartititonInfo();
-    DeviceInfo device = handler->getCurDeviceInfo();
+    PartitionInfo curInfo = DMDbusHandler::instance()->getCurPartititonInfo();
+    DeviceInfo device = DMDbusHandler::instance()->getCurDeviceInfo();
     Sector beforend = curInfo.m_sectorStart;
-    Sector deviceLength = handler->getCurDeviceInfoLength();
+    Sector deviceLength = DMDbusHandler::instance()->getCurDeviceInfoLength();
 
     for (int i = 0; i < m_patrinfo.size(); i++) {
         PartitionInfo newPart;
@@ -814,7 +808,7 @@ void PartitionWidget::onApplyButton()
         }
     }
     if (isCreate && partVector.size() > 0) {
-        handler->create(partVector);
+        DMDbusHandler::instance()->create(partVector);
         close();
     }
 }

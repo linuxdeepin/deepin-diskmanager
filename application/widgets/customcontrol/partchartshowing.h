@@ -119,7 +119,7 @@ private:
 //    int count = 0;
     double m_sumValue = 0.0000001;
     int m_hover = 0;
-    int m_posx = 0;
+    int m_posX = 0;
     int m_showTipFlag = 0;
     bool m_isShowFlag = false;
 //    int m_mnum = 0;

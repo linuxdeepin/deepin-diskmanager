@@ -56,11 +56,11 @@ InfoTopFrame::InfoTopFrame(DWidget *parent)
 
 void InfoTopFrame::initRightInfo()
 {
-    m_allNameLabel = new DLabel(tr("Capacity"), this);
+    m_allNameLabel = new DLabel(tr("Capacity"));
     m_allNameLabel->setAlignment(Qt::AlignRight);
     DFontSizeManager::instance()->bind(m_allNameLabel, DFontSizeManager::T6);
 
-    m_allMemoryLabel = new DLabel(this);
+    m_allMemoryLabel = new DLabel;
     m_allMemoryLabel->setAlignment(Qt::AlignRight);
     DFontSizeManager::instance()->bind(m_allMemoryLabel, DFontSizeManager::T1);
 
@@ -75,12 +75,12 @@ void InfoTopFrame::initRightInfo()
 
 void InfoTopFrame::initLeftInfo()
 {
-    m_nameLabel = new DLabel(this);
+    m_nameLabel = new DLabel;
     QFont nameFont = DFontSizeManager::instance()->get(DFontSizeManager::T5);
     nameFont.setBold(true);
     m_nameLabel->setFont(nameFont);
 
-    m_typeLabel = new DLabel(this);
+    m_typeLabel = new DLabel;
     DFontSizeManager::instance()->bind(m_typeLabel, DFontSizeManager::T8);
 
     DPalette palette = DApplicationHelper::instance()->palette(m_typeLabel);

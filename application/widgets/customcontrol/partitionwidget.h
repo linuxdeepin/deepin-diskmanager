@@ -81,6 +81,8 @@ public:
     explicit PartitionWidget(QWidget *parent = nullptr);
     ~PartitionWidget() override;
 
+    int partCount(){return m_patrinfo.count();}
+
 private:
     /**
      * @brief 初始化界面

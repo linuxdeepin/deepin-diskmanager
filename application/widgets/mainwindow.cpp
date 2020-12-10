@@ -41,6 +41,15 @@
 #include <QRect>
 #include <QDebug>
 
+MainWindow *MainWindow::instance()
+{
+    static MainWindow *m = nullptr;
+    if (m == nullptr) {
+        m = new MainWindow;
+    }
+    return m;
+}
+
 MainWindow::MainWindow(QWidget *parent)
     : DMainWindow(parent)
 {
@@ -55,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_handler->getDeviceInfo(); //call after initUi
 
-    QRect rect = QApplication::desktop()->geometry();
+    QRect rect = QApplication::desktop()->screenGeometry(0);
     setMinimumSize(rect.width() * 3 / 5 - 150, rect.height() * 3 / 5);
 }
 
@@ -71,7 +80,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     m_central->HandleQuit();
 //    m_handler->Quit();
     QProcess proc;
-    proc.start("/usr/bin/dbus-send --system --type=method_call --dest=com.deepin.diskmanager /com/deepin/diskmanager com.deepin.diskmanager.Quit");
+    proc.startDetached("/usr/bin/dbus-send --system --type=method_call --dest=com.deepin.diskmanager /com/deepin/diskmanager com.deepin.diskmanager.Quit");
 
     DMainWindow::closeEvent(event);
 }

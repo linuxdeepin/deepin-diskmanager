@@ -48,6 +48,8 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow() override;
 
+    static MainWindow *instance();
+
 protected:
 
     /**

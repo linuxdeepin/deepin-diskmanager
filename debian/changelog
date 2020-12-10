@@ -1,3 +1,10 @@
+deepin-diskmanager (1.1.0.37) stable; urgency=low
+
+  * 解决完成第二十六次送测产生的bug,
+  * 适应双屏上下，左右模式，适应复制，扩展模式分屏显示
+
+ -- yuandandan <yuandandan@uniontech.com>  Thu, 10 Dec 2020 15:34:16 +0800
+
 deepin-diskmanager (1.1.0.34) stable; urgency=low
 
   * 解决完成第二十六次送测产生的bug,

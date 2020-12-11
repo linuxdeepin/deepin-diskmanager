@@ -39,6 +39,7 @@
 #include <QModelIndex>
 #include <QDir>
 #include <QDebug>
+#include <QPainterPath>
 
 DiskHealthDetectionDelegate::DiskHealthDetectionDelegate(DDialog *dialog)
 {

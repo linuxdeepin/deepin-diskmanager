@@ -8,6 +8,7 @@
 #include <QPaintEvent>
 #include <QPainter>
 #include <QtMath>
+#include <QPainterPath>
 
 static const int kSpacingMargin = 4;
 // recommend size

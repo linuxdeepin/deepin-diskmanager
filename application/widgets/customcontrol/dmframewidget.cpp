@@ -208,7 +208,7 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)//绘制首页信息展示表�
         option1.setAlignment(Qt::AlignRight);
         painter.setPen(textColor);
         QRect textRect1 = QRect(curRect.width() / 2 - 275, curRect.topLeft().y() + 10, 257, 40);
-        QString mountpoints = painter.fontMetrics().elidedText(m_infoData.m_mountpoints, Qt::ElideMiddle, textRect1.width() - 50); // 挂载点过长时，只显示首尾，中间用省略号代替
+        QString mountpoints = painter.fontMetrics().elidedText(m_infoData.m_mountpoints, Qt::ElideMiddle, textRect1.width() - 100); // 挂载点过长时，只显示首尾，中间用省略号代替
         painter.drawText(textRect1, mountpoints, option);
 //        painter.drawText(textRect1, m_infoData.m_mountpoints, option);
         textRect.moveTo(curRect.width() / 2 - 260, curRect.topLeft().y() + 62);

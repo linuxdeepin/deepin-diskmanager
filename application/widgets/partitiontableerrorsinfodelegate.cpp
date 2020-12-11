@@ -38,6 +38,7 @@
 #include <QModelIndex>
 #include <QDir>
 #include <QDebug>
+#include <QPainterPath>
 
 PartitionTableErrorsInfoDelegate::PartitionTableErrorsInfoDelegate(DDialog *dialog)
 {

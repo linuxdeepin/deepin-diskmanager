@@ -40,6 +40,7 @@
 #include <QDesktopWidget>
 #include <QRect>
 #include <QDebug>
+#include <QScreen>
 
 MainWindow *MainWindow::instance()
 {
@@ -64,8 +65,27 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_handler->getDeviceInfo(); //call after initUi
 
-    QRect rect = QApplication::desktop()->screenGeometry(0);
-    setMinimumSize(rect.width() * 3 / 5 - 150, rect.height() * 3 / 5);
+    QSize normal(1000, 650);
+
+    QList<QScreen *> lst = QGuiApplication::screens();
+    if (lst.size() > 0) {
+        QSize rect = lst.at(0)->size();
+        qDebug() << rect;
+        if ( rect.width() * 3 / 5 - 150 < normal.width() && rect.height() * 3 / 5 < normal.height() ) {
+            normal.setWidth(rect.width() * 3 / 5 - 150);
+            normal.setHeight(rect.height() * 3 / 5);
+        }
+    }
+
+    if(normal.width() < 800 && normal.height() < 600){
+        setMinimumSize(800, 600);
+    } else {
+        setMinimumSize(normal.width(), normal.height());
+    }
+
+    resize(normal);
+//    QRect rect = QApplication::desktop()->screenGeometry(0);
+//    setMinimumSize(rect.width() * 3 / 5 - 150, rect.height() * 3 / 5);
 }
 
 MainWindow::~MainWindow()

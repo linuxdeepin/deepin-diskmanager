@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 
     QDir dirCheck;
     QString LogPath = QString("%1/%2/%3/Log/")
-        .arg("/home/config")
+        .arg("/var/log")
         .arg(qApp->organizationName())
         .arg(qApp->applicationName());
     setLogDir(LogPath);

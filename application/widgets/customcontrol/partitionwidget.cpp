@@ -631,6 +631,10 @@ void PartitionWidget::onSliderValueChanged(int value)
 
 void PartitionWidget::onSetSliderValue()
 {
+    if(m_partSizeEdit->text().trimmed().isEmpty()) {
+        return;
+    }
+
     double value = m_partSizeEdit->text().toDouble();
     if (m_partComboBox->currentText() == "MiB")
         value = value / 1024;

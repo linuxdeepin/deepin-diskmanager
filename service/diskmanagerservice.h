@@ -89,39 +89,47 @@ public Q_SLOTS:
      * @brief 退出服务
      */
     Q_SCRIPTABLE void Quit();
+
     /**
     *@brief 启动服务
     */
     Q_SCRIPTABLE void Start();
+
     /**
      * @brief 获取设备信息
      * @return 返回设备信息表
      */
     Q_SCRIPTABLE DeviceInfo getDeviceinfo();
+
     /**
      * @brief 获取全部设备信息
      */
     Q_SCRIPTABLE void getalldevice();
+
     /**
      * @brief 获取页面选择分区信息
      * @param 分区信息
      */
     Q_SCRIPTABLE void setCurSelect(const PartitionInfo &info);
+
     /**
      * @brief 卸载
      */
     Q_SCRIPTABLE bool unmount();
+
     /**
      * @brief 挂载
      * @param 挂载点路径
      * @return true成功false失败
      */
     Q_SCRIPTABLE bool mount(const QString &mountpath);
+
     /**
      * @brief 获取全部文件系统格式支持
      * @return 返回支持文件系统格式列表
      */
     Q_SCRIPTABLE QStringList getallsupportfs();
+
     /**
      * @brief 格式化分区
      * @param fstype：文件系统类型
@@ -129,23 +137,27 @@ public Q_SLOTS:
      * @return true成功false失败
      */
     Q_SCRIPTABLE bool format(const QString &fstype, const QString &name = QString());
+
     /**
      * @brief 扩容分区
      * @param info：扩容分区信息
      * @return true成功false失败
      */
     Q_SCRIPTABLE bool resize(const PartitionInfo &info);
+
     /**
      * @brief 创建分区
      * @param infovec：创建分区信息列表
      * @return true成功false失败
      */
     Q_SCRIPTABLE bool create(const PartitionVec &infovec);
+
 //    /**
 //     * @brief qdbus结构体传参测试
 //     * @return 测试结构体
 //     */
 //    Q_SCRIPTABLE stCustest interfacetest();
+
     /**
      * @brief 获取硬盘硬件信息
      * @param devicepath：设备信息路径
@@ -153,6 +165,7 @@ public Q_SLOTS:
      */
     Q_SCRIPTABLE HardDiskInfo onGetDeviceHardInfo(const QString &devicepath);
     //Q_SCRIPTABLE HardDiskInfo onGetDeviceHardInfo();
+
     /**
      * @brief 获取硬盘健康状态
      * @param devicepath：设备信息路径
@@ -160,6 +173,7 @@ public Q_SLOTS:
      */
     Q_SCRIPTABLE QString onGetDeviceHardStatus(const QString &devicepath);
     //Q_SCRIPTABLE QString onGetDeviceHardStatus();
+
     /**
      * @brief 获取硬盘健康信息
      * @param devicepath：设备信息路径
@@ -167,6 +181,7 @@ public Q_SLOTS:
      */
     Q_SCRIPTABLE HardDiskStatusInfoList onGetDeviceHardStatusInfo(const QString &devicepath);
     //Q_SCRIPTABLE HardDiskStatusInfoList onGetDeviceHardStatusInfo();
+
     /**
      * @brief 删除分区
      * @param devicepath：设备信息路径
@@ -174,6 +189,7 @@ public Q_SLOTS:
      * @return true成功false失败
      */
     Q_SCRIPTABLE bool onDeletePartition();
+
     /**
      * @brief 隐藏分区
      * @param devicepath：设备信息路径
@@ -181,6 +197,7 @@ public Q_SLOTS:
      * @return true成功false失败
      */
     Q_SCRIPTABLE bool onHidePartition();
+
     /**
      * @brief 显示分区
      * @param devicepath：设备信息路径
@@ -188,28 +205,47 @@ public Q_SLOTS:
      * @return true成功false失败
      */
     Q_SCRIPTABLE bool onShowPartition();
-    /**
-     * @brief 获取隐藏分区是否隐藏属性
-     * @param devicepath：设备信息路径
-     * @param parttitionpath：分区路径
-     * @return 1隐藏0没隐藏
-     */
-    Q_SCRIPTABLE int onGetPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath);
+
     /**
      * @brief 分区表错误检测
      * @param devicepath：设备信息路径
      * @return true错误false正常
      */
     Q_SCRIPTABLE bool onDetectionPartitionTableError(const QString &devicePath);
+
+    /**
+     * @brief 坏道检测（检测次数）
+     * @param devicePath：设备信息路径
+     * @param blockStart：开始柱面
+     * @param blockEnd：结束柱面
+     * @param checkConut：检测次数
+     * @param checkSize：检测柱面大小
+     * @return true错误false正常
+     */
+    Q_SCRIPTABLE bool onCheckBadBlocksCount(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize);
+
+    /**
+     * @brief 坏道检测（检测次数）
+     * @param devicePath：设备信息路径
+     * @param blockStart：开始柱面
+     * @param blockEnd：结束柱面
+     * @param checkTime: 检测超时时间
+     * @param checkSize：检测柱面大小
+     * @return true错误false正常
+     */
+    Q_SCRIPTABLE bool onCheckBadBlocksTime(const QString &devicePath, int blockStart, int blockEnd,const QString &checkTime, int checkSize);
+
     /**
      * @brief USB插入
      */
     Q_SCRIPTABLE void updateUsb();
+
     /**
      * @brief USB拔出
      * @param 无
      */
     Q_SCRIPTABLE void updateUsbRemove();
+
     /**
      * @brief 测试
      * @param 无

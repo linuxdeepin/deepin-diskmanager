@@ -238,18 +238,6 @@ public Q_SLOTS: // METHODS
     }
 
     /**
-     * @brief 获取磁盘隐藏标志
-     * @param devicePath 磁盘路径
-     * @param parttitionPath 分区路径
-     */
-    inline QDBusPendingReply<int> onGetPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath)
-    {
-        QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(devicePath) << QVariant::fromValue(parttitionPath);
-        return asyncCallWithArgumentList(QStringLiteral("onGetPartitionHiddenFlag"), argumentList);
-    }
-
-    /**
      * @brief 分区表错误检测
      * @param devicePath 磁盘路径
      */
@@ -258,6 +246,36 @@ public Q_SLOTS: // METHODS
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(devicePath);
         return asyncCallWithArgumentList(QStringLiteral("onDetectionPartitionTableError"), argumentList);
+    }
+
+    /**
+     * @brief 分区表错误检测
+     * @param devicePath 磁盘路径
+     * @param blockStart 检测开始
+     * @param blockEnd 检测结束
+     * @param checkConut 检测次数
+     * @param checkSize 检测柱面大小
+     */
+    inline QDBusPendingReply<bool> onCheckBadBlocksCount(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(devicePath)<< QVariant::fromValue(blockStart)<< QVariant::fromValue(blockEnd)<< QVariant::fromValue(checkConut)<< QVariant::fromValue(checkSize);
+        return asyncCallWithArgumentList(QStringLiteral("onCheckBadBlocksCount"), argumentList);
+    }
+
+    /**
+     * @brief 分区表错误检测
+     * @param devicePath 磁盘路径
+     * @param blockStart 检测开始
+     * @param blockEnd 检测结束
+     * @param checkTime 检测时间
+     * @param checkSize 检测柱面大小
+     */
+    inline QDBusPendingReply<bool> onCheckBadBlocksTime(const QString &devicePath, int blockStart, int blockEnd, const QString &checkTime, int checkSize)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(devicePath)<< QVariant::fromValue(blockStart)<< QVariant::fromValue(blockEnd)<< QVariant::fromValue(checkTime)<< QVariant::fromValue(checkSize);
+        return asyncCallWithArgumentList(QStringLiteral("onCheckBadBlocksTime"), argumentList);
     }
 
 Q_SIGNALS: // SIGNALS

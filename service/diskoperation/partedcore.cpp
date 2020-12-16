@@ -51,7 +51,7 @@ PartedCore::PartedCore(QObject *parent)
     : QObject(parent)
 {
     connect(this, &PartedCore::refreshDeviceInfo, this, &PartedCore::onRefreshDeviceInfo);
-
+    m_hiddenPartition.clear();
     qDebug() << __FUNCTION__ << "^^1";
 
     for (PedPartitionFlag flag = ped_partition_flag_next(static_cast<PedPartitionFlag>(NULL));
@@ -212,19 +212,28 @@ void PartedCore::probeDeviceInfo(const QString &)
         m_devicemap.insert(devicepaths.at(t), tempDevice);
     }
     qDebug() << __FUNCTION__ << "**9";
+    getPartitionHiddenFlag();
     for (auto it = m_devicemap.begin(); it != m_devicemap.end(); it++) {
         DeviceInfo devinfo = it.value().getDeviceInfo();
         for (int i = 0; i < it.value().m_partitions.size(); i++) {
             Partition pat = *(it.value().m_partitions.at(i));
             PartitionInfo partinfo = pat.getPartitionInfo();
-            for (auto i = pat.m_flags.begin();i != pat.m_flags.end();i++) {
-                if(*i == "hidden") {
-                    partinfo.m_flag = 1;
-                }
-                else {
-                    partinfo.m_flag = 0;
-                }
+//            for (auto i = pat.m_flags.begin();i != pat.m_flags.end();i++) {
+//                if(*i == "hidden") {
+//                    partinfo.m_flag = 1;
+//                }
+//                else {
+//                    partinfo.m_flag = 0;
+//                }
+//            }
+
+            qDebug() << __FUNCTION__ << partinfo.m_uuid << partinfo.m_path << "**9";
+            if(m_hiddenPartition.indexOf(partinfo.m_uuid) != -1 && !partinfo.m_uuid.isEmpty()) {
+                partinfo.m_flag = 1;
+            } else {
+                partinfo.m_flag = 0;
             }
+
             if (pat.m_type == TYPE_EXTENDED) {
                 devinfo.partition.push_back(partinfo);
                 for (int k = 0; k < pat.m_logicals.size(); k++) {
@@ -1446,7 +1455,8 @@ bool PartedCore::maxImizeFileSystem(const Partition &partition)
     // Dialog_Partition_Resize_Move::Resize_Move_Normal().
     if (getFileSystem(partition.m_fstype).grow == FS::NONE) {
         qDebug() << "PartedCore::maxImizeFileSystem:growing is not available for this file system";
-        return true;
+//        return true;
+        return formatPartition(partition);
     }
     bool success = resizeFileSystemImplement(partition, partition);
 
@@ -1568,7 +1578,7 @@ bool PartedCore::mountAndWriteFstab(const QString &mountpath)
     //永久挂载
     qDebug() << __FUNCTION__ << "Permanent mount start";
     QFile file("/etc/fstab");
-    QString displayString;
+//    QString displayString;
     QStringList list;
 
     if (!file.open(QIODevice::ReadOnly)) { //打开指定文件
@@ -1624,7 +1634,7 @@ bool PartedCore::unmount()
     qDebug() << __FUNCTION__ << "Permanent unmount start";
     QString partitionUuid = m_curpartition.m_uuid;
     QFile file("/etc/fstab");
-    QString displayString;
+//    QString displayString;
 
     if (!file.open(QIODevice::ReadOnly)) { //打开指定文件
         qDebug() << __FUNCTION__ << "Permanent unmount open file error";
@@ -2161,179 +2171,341 @@ bool PartedCore::deletePartition()
 bool PartedCore::hidePartition()
 {
     qDebug() << __FUNCTION__ << "Hide Partition start";
-    PedPartitionFlag flag = PED_PARTITION_HIDDEN;
-    PedPartition *ped = nullptr;
-    PedDevice *lpDevice = nullptr;
-    PedDisk *lpDisk = nullptr;
-
-    QString parttitionPath = m_curpartition.getPath();
-    QString devicePath = m_curpartition.m_devicePath;
-
-    if (!getDeviceAndDisk(devicePath, lpDevice, lpDisk)) {
-        qDebug() << __FUNCTION__ << "Hide Partition get device and disk failed";
-
+//ENV{ID_FS_UUID}==\"1ee3b4c6-1c69-46b9-9656-8c534ffd4f43\", ENV{UDISKS_IGNORE}=\"1\"\n
+    getPartitionHiddenFlag();
+    if(m_hiddenPartition.indexOf(m_curpartition.m_uuid) != -1) {
         emit refreshDeviceInfo();
         emit hidePartitionInfo("0");
-
         return false;
     }
-
+    QFile file("/etc/udev/rules.d/80-udisks2.rules");
+//    QString displayString;
     QStringList list;
 
-    for (int i=parttitionPath.size()-1;i!=0;i--) {
-        if (parttitionPath.at(i) >= '0' && parttitionPath.at(i) <= '9') {
-                list.insert(0, parttitionPath.at(i));
-        } else {
-            break;
-        }
-    }
-
-    int num = list.join("").toInt();
-    ped = ped_disk_get_partition(lpDisk, num);
-
-    if (ped == nullptr) {
-        qDebug() << __FUNCTION__ << "Hide Partition get partition failed";
-
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Append)) { //打开指定文件
+        qDebug() << __FUNCTION__ << "Permanent mount open file error";
         emit refreshDeviceInfo();
         emit hidePartitionInfo("0");
-
         return false;
-    }
-
-    int hideenFlag = ped_partition_get_flag(ped, PED_PARTITION_HIDDEN);
-
-    if (hideenFlag == 1) {
-        qDebug() << __FUNCTION__ << "Hide Partition set partition failed";
-
-        emit refreshDeviceInfo();
-        emit hidePartitionInfo("0");
-
-        return false;
-    }
-
-    if (ped_partition_set_flag(ped, flag, 1) && commit(lpDisk)) {
-        qDebug() << __FUNCTION__ << "hide partition success";
-
-        destroyDeviceAndDisk(lpDevice, lpDisk);
-
-        emit refreshDeviceInfo();
-        emit hidePartitionInfo("1");
-
-        qDebug() << __FUNCTION__ << "Hide Partition end";
-        return true;
     } else {
-        qDebug() << __FUNCTION__ << "hide partition failed";
-
-        destroyDeviceAndDisk(lpDevice, lpDisk);
-
-        emit refreshDeviceInfo();
-        emit hidePartitionInfo("0");
-
-        qDebug() << __FUNCTION__ << "Hide Partition end";
-        return false;
+        QTextStream out(&file);
+        out << QString("ENV{ID_FS_UUID}==\"%1\", ENV{UDISKS_IGNORE}=\"1\"").arg(m_curpartition.m_uuid) << endl;
     }
+
+    qDebug() << __FUNCTION__ << "Hide Partition end";
+    QProcess proc;
+    proc.start("udevadm control --reload");
+    proc.waitForFinished(-1);
+    emit refreshDeviceInfo();
+    emit hidePartitionInfo("1");
+    return true;
+//    PedPartitionFlag flag = PED_PARTITION_HIDDEN;
+//    PedPartition *ped = nullptr;
+//    PedDevice *lpDevice = nullptr;
+//    PedDisk *lpDisk = nullptr;
+
+//    QString parttitionPath = m_curpartition.getPath();
+//    QString devicePath = m_curpartition.m_devicePath;
+
+//    if (!getDeviceAndDisk(devicePath, lpDevice, lpDisk)) {
+//        qDebug() << __FUNCTION__ << "Hide Partition get device and disk failed";
+
+//        emit refreshDeviceInfo();
+//        emit hidePartitionInfo("0");
+
+//        return false;
+//    }
+
+//    QStringList list;
+
+//    for (int i=parttitionPath.size()-1;i!=0;i--) {
+//        if (parttitionPath.at(i) >= '0' && parttitionPath.at(i) <= '9') {
+//                list.insert(0, parttitionPath.at(i));
+//        } else {
+//            break;
+//        }
+//    }
+
+//    int num = list.join("").toInt();
+//    ped = ped_disk_get_partition(lpDisk, num);
+
+//    if (ped == nullptr) {
+//        qDebug() << __FUNCTION__ << "Hide Partition get partition failed";
+
+//        emit refreshDeviceInfo();
+//        emit hidePartitionInfo("0");
+
+//        return false;
+//    }
+
+//    int hideenFlag = ped_partition_get_flag(ped, PED_PARTITION_HIDDEN);
+
+//    if (hideenFlag == 1) {
+//        qDebug() << __FUNCTION__ << "Hide Partition set partition failed";
+
+//        emit refreshDeviceInfo();
+//        emit hidePartitionInfo("0");
+
+//        return false;
+//    }
+
+//    if (ped_partition_set_flag(ped, flag, 1) && commit(lpDisk)) {
+//        qDebug() << __FUNCTION__ << "hide partition success";
+
+//        destroyDeviceAndDisk(lpDevice, lpDisk);
+
+//        emit refreshDeviceInfo();
+//        emit hidePartitionInfo("1");
+
+//        qDebug() << __FUNCTION__ << "Hide Partition end";
+//        return true;
+//    } else {
+//        qDebug() << __FUNCTION__ << "hide partition failed";
+
+//        destroyDeviceAndDisk(lpDevice, lpDisk);
+
+//        emit refreshDeviceInfo();
+//        emit hidePartitionInfo("0");
+
+//        qDebug() << __FUNCTION__ << "Hide Partition end";
+//        return false;
+//    }
 }
 
 bool PartedCore::showPartition()
 {
     qDebug() << __FUNCTION__ << "Show Partition start";
-    PedPartitionFlag flag = PED_PARTITION_HIDDEN;
-    PedPartition *ped = nullptr;
-    PedDevice *lpDevice = nullptr;
-    PedDisk *lpDisk = nullptr;
-
-    QString parttitionPath = m_curpartition.getPath();
-    QString devicePath = m_curpartition.m_devicePath;
-
-    if (!getDeviceAndDisk(devicePath, lpDevice, lpDisk)) {
-        qDebug() << __FUNCTION__ << "Show Partition get device and disk failed";
-
+    getPartitionHiddenFlag();
+    if(m_hiddenPartition.indexOf(m_curpartition.m_uuid) == -1) {
         emit refreshDeviceInfo();
         emit showPartitionInfo("0");
-
         return false;
     }
 
+    QFile file("/etc/udev/rules.d/80-udisks2.rules");
     QStringList list;
 
-    for (int i=parttitionPath.size()-1;i!=0;i--) {
-        if (parttitionPath.at(i) >= '0' && parttitionPath.at(i) <= '9') {
-                list.insert(0, parttitionPath.at(i));
-        } else {
-            break;
+    if (!file.open(QIODevice::ReadOnly)) { //打开指定文件
+        qDebug() << __FUNCTION__ << "Permanent unmount open file error";
+        emit refreshDeviceInfo();
+        emit showPartitionInfo("0");
+        return false;
+    } else {
+        QStringList list;
+        while (!file.atEnd()) {
+            QByteArray line = file.readLine();//获取数据
+            QString str = line;
+
+            if (str.contains(m_curpartition.m_uuid)) {
+                continue;
+            }
+            list << str;
+        }
+        file.close();
+        if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
+            QTextStream out(&file);
+            for (int i = 0; i < list.count(); i++) {
+                out << list.at(i);
+                out.flush();
+            }
+            file.close();
         }
     }
 
-    int num = list.join("").toInt();
-    ped = ped_disk_get_partition(lpDisk, num);
+    QProcess proc;
+    proc.start("udevadm control --reload");
+    proc.waitForFinished(-1);
+    emit refreshDeviceInfo();
+    emit showPartitionInfo("1");
 
-    if (ped == nullptr) {
-        qDebug() << __FUNCTION__ << "Show Partition get partition failed";
+    qDebug() << __FUNCTION__ << "Show Partition end";
+    return true;
 
-        emit refreshDeviceInfo();
-        emit showPartitionInfo("0");
+//    PedPartitionFlag flag = PED_PARTITION_HIDDEN;
+//    PedPartition *ped = nullptr;
+//    PedDevice *lpDevice = nullptr;
+//    PedDisk *lpDisk = nullptr;
 
-        return false;
-    }
+//    QString parttitionPath = m_curpartition.getPath();
+//    QString devicePath = m_curpartition.m_devicePath;
 
-    int hideenFlag = ped_partition_get_flag(ped, PED_PARTITION_HIDDEN);
+//    if (!getDeviceAndDisk(devicePath, lpDevice, lpDisk)) {
+//        qDebug() << __FUNCTION__ << "Show Partition get device and disk failed";
 
-    if (hideenFlag == 0) {
-        qDebug() << __FUNCTION__ << "Show Partition get partition failed";
+//        emit refreshDeviceInfo();
+//        emit showPartitionInfo("0");
 
-        emit refreshDeviceInfo();
-        emit showPartitionInfo("0");
+//        return false;
+//    }
 
-        return false;
-    }
+//    QStringList list;
 
-    if (ped_partition_set_flag(ped, flag, 0) && commit(lpDisk)) {
-        qDebug() << __FUNCTION__ << "Show Partition success";
-        destroyDeviceAndDisk(lpDevice, lpDisk);
+//    for (int i=parttitionPath.size()-1;i!=0;i--) {
+//        if (parttitionPath.at(i) >= '0' && parttitionPath.at(i) <= '9') {
+//                list.insert(0, parttitionPath.at(i));
+//        } else {
+//            break;
+//        }
+//    }
 
-        emit refreshDeviceInfo();
-        emit showPartitionInfo("1");
+//    int num = list.join("").toInt();
+//    ped = ped_disk_get_partition(lpDisk, num);
 
-        qDebug() << __FUNCTION__ << "Show Partition end";
-        return true;
-    } else {
-        qDebug() << __FUNCTION__ << "Show Partition failed";
+//    if (ped == nullptr) {
+//        qDebug() << __FUNCTION__ << "Show Partition get partition failed";
 
-        destroyDeviceAndDisk(lpDevice, lpDisk);
+//        emit refreshDeviceInfo();
+//        emit showPartitionInfo("0");
 
-        emit refreshDeviceInfo();
-        emit showPartitionInfo("0");
+//        return false;
+//    }
 
-        qDebug() << __FUNCTION__ << "Show Partition end";
-        return false;
-    }
+//    int hideenFlag = ped_partition_get_flag(ped, PED_PARTITION_HIDDEN);
+
+//    if (hideenFlag == 0) {
+//        qDebug() << __FUNCTION__ << "Show Partition get partition failed";
+
+//        emit refreshDeviceInfo();
+//        emit showPartitionInfo("0");
+
+//        return false;
+//    }
+
+//    if (ped_partition_set_flag(ped, flag, 0) && commit(lpDisk)) {
+//        qDebug() << __FUNCTION__ << "Show Partition success";
+//        destroyDeviceAndDisk(lpDevice, lpDisk);
+
+//        emit refreshDeviceInfo();
+//        emit showPartitionInfo("1");
+
+//        qDebug() << __FUNCTION__ << "Show Partition end";
+//        return true;
+//    } else {
+//        qDebug() << __FUNCTION__ << "Show Partition failed";
+
+//        destroyDeviceAndDisk(lpDevice, lpDisk);
+
+//        emit refreshDeviceInfo();
+//        emit showPartitionInfo("0");
+
+//        qDebug() << __FUNCTION__ << "Show Partition end";
+//        return false;
+//    }
 }
 
-int PartedCore::getPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath)
+int PartedCore::getPartitionHiddenFlag()
 {
     qDebug() << __FUNCTION__ << "Get Partition Hidden Flag start";
-    PedPartition *ped = nullptr;
-    PedDevice *lpDevice = nullptr;
-    PedDisk *lpDisk = nullptr;
+//    PedPartition *ped = nullptr;
+//    PedDevice *lpDevice = nullptr;
+//    PedDisk *lpDisk = nullptr;
 
-    if (!getDeviceAndDisk(devicePath, lpDevice, lpDisk)) {
-        qDebug() << __FUNCTION__ << "Get Partition Hidden Flag get device and disk failed";
+//    if (!getDeviceAndDisk(devicePath, lpDevice, lpDisk)) {
+//        qDebug() << __FUNCTION__ << "Get Partition Hidden Flag get device and disk failed";
+//        return -1;
+//    }
+
+//    ped = ped_disk_get_partition(lpDisk, parttitionPath.right(1).toInt());
+
+//    if (ped == nullptr) {
+//        qDebug() << __FUNCTION__ << "Get Partition Hidden Flag get partition failed";
+//        return -1;
+//    }
+
+//    int hideenFlag = ped_partition_get_flag(ped, PED_PARTITION_HIDDEN);
+
+//    destroyDeviceAndDisk(lpDevice, lpDisk);
+    m_hiddenPartition.clear();
+    QFile file("/etc/udev/rules.d/80-udisks2.rules");
+    QStringList list;
+
+    if (!file.open(QIODevice::ReadOnly)) { //打开指定文件
+        qDebug() << __FUNCTION__ << "Permanent mount open file error";
+        file.close();
         return -1;
+    } else {
+        m_hiddenPartition = file.readAll();
+        qDebug() << m_hiddenPartition;
     }
-
-    ped = ped_disk_get_partition(lpDisk, parttitionPath.right(1).toInt());
-
-    if (ped == nullptr) {
-        qDebug() << __FUNCTION__ << "Get Partition Hidden Flag get partition failed";
-        return -1;
-    }
-
-    int hideenFlag = ped_partition_get_flag(ped, PED_PARTITION_HIDDEN);
-
-    destroyDeviceAndDisk(lpDevice, lpDisk);
-
+    file.close();
     qDebug() << __FUNCTION__ << "Get Partition Hidden Flag end";
-    return hideenFlag;
+    return 0;
+}
+
+bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize)
+{
+    if(devicePath.isEmpty()) {
+        qDebug() << "设备路径为空" << endl;
+        return false;
+    }
+    Sector i = blockStart;
+    Sector j = blockStart+1;
+    QProcess proc;
+    while(j>0 && j < blockEnd+1)
+    {
+        QString cmd = QString("badblocks -sv -c %1 -b %2 %3 %4 %5").arg(checkConut).arg(checkSize).arg(devicePath).arg(j).arg(i);
+
+        qDebug() << cmd << endl;
+
+        QTime ctime = QTime::currentTime();
+        proc.start(cmd);
+        proc.waitForFinished(-1);
+        QTime ctime1 = QTime::currentTime();
+
+        cmd = proc.readAllStandardError();
+        int a = cmd.indexOf("(0/0/0 errors)");
+        if (a)
+        {
+           qDebug() << i << ctime.msecsTo(ctime1) << cmd;
+        }
+
+        i++;
+        j++;
+    }
+    return true;
+}
+
+bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int blockEnd, QString checkTime, int checkSize)
+{
+    if(devicePath.isEmpty()) {
+        qDebug() << "设备路径为空" << endl;
+        return false;
+    }
+    Sector i = blockStart;
+    Sector j = blockStart+1;
+    QProcess proc;
+    while(j>0 && j < blockEnd+1)
+    {
+        QString cmd = QString("badblocks -sv -b %1 %2 %3 %4").arg(checkSize).arg(devicePath).arg(j).arg(i);
+
+        qDebug() << cmd << endl;
+
+        QTime ctime = QTime::currentTime();
+        proc.start(cmd);
+        proc.waitForFinished(checkTime.toInt());
+        QTime ctime1 = QTime::currentTime();
+
+        cmd = proc.readAllStandardError();
+        int a = cmd.indexOf("(0/0/0 errors)");
+        if (a)
+        {
+           qDebug() << i << ctime.msecsTo(ctime1) << cmd;
+        }
+
+        i++;
+        j++;
+    }
+    return true;
+}
+
+bool PartedCore::fixBadBlocks(const QString &devicePath, int blockStart, int checkSize)
+{
+    if(devicePath.isEmpty()) {
+        qDebug() << "设备路径为空" << endl;
+        return false;
+    }
+//    QString cmd = QString("badblocks -sv -b %1 -w %2 %3 %4").arg(checkSize).arg(devicePath).arg(j).arg(i);
+    return true;
 }
 
 bool PartedCore::detectionPartitionTableError(const QString &devicePath)
@@ -2443,6 +2615,57 @@ void PartedCore::autoUmount()
 
 int PartedCore::test()
 {
+//    QFile file("/etc/udev/rules.d/80-udisks2.rules");
+//    QStringList list;
+
+//    if (!file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text)) { //打开指定文件
+//        qDebug() << __FUNCTION__ << "Permanent mount open file error";
+//        file.close();
+//        return -1;
+//    } else {
+//        QTextStream out(&file);
+//        out << QString("ENV{ID_FS_UUID}==\"000000000000000\", ENV{UDISKS_IGNORE}=\"1\"") << endl;
+//    }
+//    file.close();
+//    if(file.open(QIODevice::ReadOnly))
+//    {
+//       m_hiddenPartition = file.readAll();
+//       qDebug() << m_hiddenPartition;
+//    }
+//    file.close();
+
+//    if (!file.open(QIODevice::ReadOnly)) { //打开指定文件
+//        qDebug() << __FUNCTION__ << "Permanent unmount open file error";
+//    } else {
+//        QStringList list;
+//        while (!file.atEnd()) {
+//            QByteArray line = file.readLine();//获取数据
+//            QString str = line;
+
+//            if (str.contains("000000000000000")) {
+//                continue;
+//            }
+//            list << str;
+//        }
+//        file.close();
+//        if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
+//            QTextStream out(&file);
+//            for (int i = 0; i < list.count(); i++) {
+//                out << list.at(i);
+//                out.flush();
+//            }
+//            file.close();
+//        }
+//    }
+
+//    if(file.open(QIODevice::ReadOnly))
+//    {
+//       m_hiddenPartition = file.readAll();
+//       qDebug() << m_hiddenPartition;
+//    }
+//    file.close();
+
+    probeDeviceInfo();
     return 1;
 }
 

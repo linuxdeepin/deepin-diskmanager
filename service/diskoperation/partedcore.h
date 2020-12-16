@@ -176,12 +176,40 @@ public:
 
     /**
      * @brief 获取隐藏分区是否隐藏属性
-     * @param devicePath：设备路径
-     * @param parttitionPath：分区路径
-     * @return 1隐藏0没隐藏
+     * @return 0成功-1失败
      */
-    int getPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath);
+    int getPartitionHiddenFlag();
 
+    /**
+     * @brief 坏道检测（检测次数）
+     * @param devicePath：设备信息路径
+     * @param blockStart：开始柱面
+     * @param blockEnd：结束柱面
+     * @param checkConut：检测次数
+     * @param checkSize：检测柱面大小
+     * @return true错误false正常
+     */
+    bool checkBadBlocks(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize);
+
+    /**
+     * @brief 坏道检测（超时时间）
+     * @param devicePath：设备信息路径
+     * @param blockStart：开始柱面
+     * @param blockEnd：结束柱面
+     * @param checkTime: 检测超时时间
+     * @param checkSize：检测柱面大小
+     * @return true错误false正常
+     */
+    bool checkBadBlocks(const QString &devicePath, int blockStart, int blockEnd, QString checkTime, int checkSize);
+
+    /**
+     * @brief 坏道修复
+     * @param devicePath：设备信息路径
+     * @param blockStart：开始修复柱面(为0则全部修复)
+     * @param checkSize：检测柱面大小
+     * @return true错误false正常
+     */
+    bool fixBadBlocks(const QString &devicePath, int blockStart, int checkSize);
 
     /**
      * @brief 个人测试
@@ -623,7 +651,7 @@ private:
     DeviceInfoMap m_inforesult;           //全部设备分区信息
     Partition m_curpartition;             //当前选中分区信息
     static SupportedFileSystems *m_supportedFileSystems; //支持的文件系统
-
+    QByteArray m_hiddenPartition;         //隐藏分区（规则文件中的隐藏分区）
 };
 
 } // namespace DiskManager

@@ -149,13 +149,18 @@ bool DiskManagerService::onShowPartition()
 {
     return m_partedcore->showPartition();
 }
-int DiskManagerService::onGetPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath)
-{
-    return m_partedcore->getPartitionHiddenFlag(devicePath, parttitionPath);
-}
+
 bool DiskManagerService::onDetectionPartitionTableError(const QString &devicePath)
 {
     return m_partedcore->detectionPartitionTableError(devicePath);
+}
+bool DiskManagerService::onCheckBadBlocksCount(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize)
+{
+    return m_partedcore->checkBadBlocks(devicePath, blockStart, blockEnd, checkConut, checkSize);
+}
+bool DiskManagerService::onCheckBadBlocksTime(const QString &devicePath, int blockStart, int blockEnd, const QString &checkTime, int checkSize)
+{
+    return m_partedcore->checkBadBlocks(devicePath, blockStart, blockEnd, checkTime, checkSize);
 }
 void DiskManagerService::updateUsb()
 {

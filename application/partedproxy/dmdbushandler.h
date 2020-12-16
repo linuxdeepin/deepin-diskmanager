@@ -152,14 +152,6 @@ public:
     void unhidePartition();
 
     /**
-     * @brief 获取分区是否隐藏
-     * @param devicePath 磁盘路径
-     * @param parttitionPath 分区路径
-     * @return 返回1隐藏，0没有隐藏
-     */
-    int getPartitionHiddenFlag(const QString &devicePath, const QString &parttitionPath);
-
-    /**
      * @brief 分区表错误检测
      * @param devicePath 磁盘路径
      * @return 返回true检测错误，0检测正常

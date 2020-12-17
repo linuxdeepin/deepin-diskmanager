@@ -638,6 +638,16 @@ signals:
      */
     void usbUpdated();
 
+    /**
+     * @brief 坏道检测检测信息信号(次数检测)
+     */
+    void checkBadBlocksCountInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
+
+    /**
+     * @brief 坏道检测设备状态异常退出信号
+     */
+    void checkBadBlocksDeviceStatusError();
+
 public slots:
 
     /**

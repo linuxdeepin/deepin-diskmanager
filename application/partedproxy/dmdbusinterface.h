@@ -249,7 +249,7 @@ public Q_SLOTS: // METHODS
     }
 
     /**
-     * @brief 分区表错误检测
+     * @brief 坏道检测(次数)
      * @param devicePath 磁盘路径
      * @param blockStart 检测开始
      * @param blockEnd 检测结束
@@ -264,7 +264,7 @@ public Q_SLOTS: // METHODS
     }
 
     /**
-     * @brief 分区表错误检测
+     * @brief 坏道检测(时间)
      * @param devicePath 磁盘路径
      * @param blockStart 检测开始
      * @param blockEnd 检测结束
@@ -285,6 +285,8 @@ Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void hidePartitionInfo(const QString &hideMessage);
     Q_SCRIPTABLE void showPartitionInfo(const QString &showMessage);
     Q_SCRIPTABLE void usbUpdated();
+    Q_SCRIPTABLE void checkBadBlocksCountInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
+    Q_SCRIPTABLE void checkBadBlocksDeviceStatusError();
 };
 
 namespace com {

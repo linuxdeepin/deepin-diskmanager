@@ -84,6 +84,21 @@ Q_SIGNALS:
      */
     Q_SCRIPTABLE void usbUpdated();
 
+    /**
+     * @brief 坏道检测检测信息信号
+     */
+    Q_SCRIPTABLE void checkBadBlocksCountInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
+
+    /**
+     * @brief 坏道检测设备状态异常退出信号
+     */
+    Q_SCRIPTABLE void checkBadBlocksDeviceStatusError();
+
+//    /**
+//     * @brief 坏道检测检测信息信号(超时时间检测)
+//     */
+//    void checkBadBlocksTime(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
+
 public Q_SLOTS:
     /**
      * @brief 退出服务

@@ -2441,7 +2441,7 @@ bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int b
     Sector i = blockStart;
     Sector j = blockStart+1;
     QProcess proc;
-    while(j>0 && j < blockEnd+1)
+    while(j>0 && j <= blockEnd+1)
     {
         QString cmd = QString("badblocks -sv -c %1 -b %2 %3 %4 %5").arg(checkConut).arg(checkSize).arg(devicePath).arg(j).arg(i);
 
@@ -2484,7 +2484,7 @@ bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int b
     Sector i = blockStart;
     Sector j = blockStart+1;
     QProcess proc;
-    while(j>0 && j < blockEnd+1)
+    while(j>0 && j <= blockEnd+1)
     {
         QString cmd = QString("badblocks -sv -b %1 %2 %3 %4").arg(checkSize).arg(devicePath).arg(j).arg(i);
 
@@ -2492,7 +2492,7 @@ bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int b
 
         QTime ctime = QTime::currentTime();
         proc.start(cmd);
-        proc.waitForFinished(checkTime.toInt());
+        proc.waitForFinished(-1);
         QTime ctime1 = QTime::currentTime();
 
         cmd = proc.readAllStandardError();

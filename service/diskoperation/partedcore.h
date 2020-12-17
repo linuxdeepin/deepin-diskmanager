@@ -640,6 +640,10 @@ signals:
 
     /**
      * @brief 坏道检测检测信息信号(次数检测)
+     * @param cylinderNumber：检测柱面号
+     * @param cylinderTimeConsuming：柱面耗时
+     * @param cylinderStatus：柱面状态
+     * @param cylinderErrorInfo：柱面错误信息
      */
     void checkBadBlocksCountInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
 

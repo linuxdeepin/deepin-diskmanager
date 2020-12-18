@@ -2496,21 +2496,21 @@ bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int b
         QTime ctime1 = QTime::currentTime();
 
         cmd = proc.readAllStandardError();
-        if (cmd.indexOf("(0/0/0 errors)") != -1 && checkTime.toInt() < checkTime.toInt()) {
+        if (cmd.indexOf("(0/0/0 errors)") != -1 && ctime.msecsTo(ctime1) < checkTime.toInt()) {
             QString cylinderNumber = QString("%1").arg(i);
             QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
             QString cylinderStatus = "good";
             QString cylinderErrorInfo = "";
 
             emit checkBadBlocksCountInfo(cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
-        } else if(checkTime.toInt() > checkTime.toInt()) {
+        } else if(ctime.msecsTo(ctime1) > checkTime.toInt()) {
             QString cylinderNumber = QString("%1").arg(i);
             QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
             QString cylinderStatus = "bad";
             QString cylinderErrorInfo = "IO Device Timeout";
 
             emit checkBadBlocksCountInfo(cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
-        } else if(cmd.indexOf("(1/0/0 errors)") != -1 && checkTime.toInt() < checkTime.toInt()) {
+        } else if(cmd.indexOf("(1/0/0 errors)") != -1 && ctime.msecsTo(ctime1) < checkTime.toInt()) {
             QString cylinderNumber = QString("%1").arg(i);
             QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
             QString cylinderStatus = "bad";

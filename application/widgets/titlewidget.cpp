@@ -57,6 +57,12 @@ void TitleWidget::initUi()
     m_btnUnmount->setIconSize(QSize(14, 15));
     m_btnResize->setIconSize(QSize(14, 20));
 
+    m_btnParted->setDisabled(true);
+    m_btnFormat->setDisabled(true);
+    m_btnMount->setDisabled(true);
+    m_btnUnmount->setDisabled(true);
+    m_btnResize->setDisabled(true);
+
     layout->addWidget(m_btnParted);
     layout->addWidget(m_btnFormat);
     layout->addWidget(m_btnMount);
@@ -85,6 +91,8 @@ DPushButton *TitleWidget::createBtn(const QString &btnName, const QString &objNa
     btn->setIconSize(QSize(18, 18));
     btn->setToolTip(btnName);
     btn->setCheckable(bCheckable);
+    btn->setObjectName(objName);
+    btn->setAccessibleName(objName);
 
     if (bCheckable) {
         btn->setChecked(false);
@@ -97,6 +105,7 @@ void TitleWidget::showPartInfoWidget()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
     PartitionDialog dlg;
+    dlg.setObjectName("partitionDialog");
 
     if (dlg.exec() == 1) {
         if (TYPE_UNPARTITIONED == info.m_type && FS_UNALLOCATED == info.m_fileSystemType) {
@@ -107,6 +116,7 @@ void TitleWidget::showPartInfoWidget()
         }
 
         PartitionWidget partitionWidget;
+        partitionWidget.setObjectName("partitionWidget");
         partitionWidget.exec();
     }
 }
@@ -114,24 +124,28 @@ void TitleWidget::showPartInfoWidget()
 void TitleWidget::showFormateInfoWidget()
 {
     FormateDialog dlg;
+    dlg.setObjectName("formateDialog");
     dlg.exec();
 }
 
 void TitleWidget::showMountInfoWidget()
 {
     MountDialog dlg;
+    dlg.setObjectName("mountDialog");
     dlg.exec();
 }
 
 void TitleWidget::showUnmountInfoWidget()
 {
     UnmountDialog dlg;
+    dlg.setObjectName("unmountDialog");
     dlg.exec();
 }
 
 void TitleWidget::showResizeInfoWidget()
 {
     ResizeDialog dlg;
+    dlg.setObjectName("resizeDialog");
     dlg.exec();
 }
 

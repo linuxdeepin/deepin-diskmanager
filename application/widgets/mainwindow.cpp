@@ -77,7 +77,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
-    if(normal.width() < 800 && normal.height() < 600){
+    if (normal.width() < 800 && normal.height() < 600) {
         setMinimumSize(800, 600);
     } else {
         setMinimumSize(normal.width(), normal.height());

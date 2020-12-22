@@ -1,3 +1,11 @@
+deepin-diskmanager (1.1.0.40) stable; urgency=low
+
+  * 解决完成第二十九次送测产生的bug,
+  * 58510 【klu】初始页面新建分区时，点击+号，客户端崩溃闪退
+  * 58418 【主线】MBR格式存在三个主分区,两个空闲分区时,新建分区失败
+
+ -- yuandandan <yuandandan@uniontech.com>  Tue, 22 Dec 2020 17:15:16 +0800
+
 deepin-diskmanager (1.1.0.39) stable; urgency=low
 
   * 解决完成第二十八次送测产生的bug,

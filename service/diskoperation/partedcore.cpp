@@ -51,6 +51,7 @@ PartedCore::PartedCore(QObject *parent)
     : QObject(parent)
 {
     connect(this, &PartedCore::refreshDeviceInfo, this, &PartedCore::onRefreshDeviceInfo);
+    m_flag = 0;
     m_hiddenPartition.clear();
     qDebug() << __FUNCTION__ << "^^1";
 
@@ -1631,42 +1632,6 @@ bool PartedCore::unmount()
     qDebug() << __FUNCTION__ << "Unmount start";
     //永久卸载
     bool success = true;
-    qDebug() << __FUNCTION__ << "Permanent unmount start";
-    QString partitionUuid = m_curpartition.m_uuid;
-    QFile file("/etc/fstab");
-//    QString displayString;
-
-    if (!file.open(QIODevice::ReadOnly)) { //打开指定文件
-        qDebug() << __FUNCTION__ << "Permanent unmount open file error";
-        success = false;
-        emit refreshDeviceInfo();
-        return success;
-    } else {
-        QStringList list;
-        while (!file.atEnd()) {
-            QByteArray line = file.readLine();//获取数据
-            QString str = line;
-
-            if (str.contains(partitionUuid)) {
-                continue;
-            }
-            list << str;
-        }
-        file.close();
-        if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
-            QTextStream out(&file);
-            for (int i = 0; i < list.count(); i++) {
-                out << list.at(i);
-                out.flush();
-            }
-            file.close();
-        } else {
-            qDebug() << __FUNCTION__ << "Permanent unmount open file error";
-            success = false;
-            emit refreshDeviceInfo();
-            return success;
-        }
-    }
 
     QString output, errstr;
     QVector<QString> mountpoints = m_curpartition.getMountPoints();
@@ -1678,13 +1643,45 @@ bool PartedCore::unmount()
             emit refreshDeviceInfo();
             return success;
         }
-//        if (umount(path.toStdString().c_str()) != 0) {
-//            success = false;
-//            emit refreshDeviceInfo();
-//            return success;
-//        }
-    }
 
+
+        qDebug() << __FUNCTION__ << "Permanent unmount start";
+        QString partitionUuid = m_curpartition.m_uuid;
+        QFile file("/etc/fstab");
+        //    QString displayString;
+
+        if (!file.open(QIODevice::ReadOnly)) { //打开指定文件
+            qDebug() << __FUNCTION__ << "Permanent unmount open file error";
+            success = false;
+            emit refreshDeviceInfo();
+            return success;
+        } else {
+            QStringList list;
+            while (!file.atEnd()) {
+                QByteArray line = file.readLine();//获取数据
+                QString str = line;
+
+                if (str.contains(partitionUuid)) {
+                    continue;
+                }
+                list << str;
+            }
+            file.close();
+            if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
+                QTextStream out(&file);
+                for (int i = 0; i < list.count(); i++) {
+                    out << list.at(i);
+                    out.flush();
+                }
+                file.close();
+            } else {
+                qDebug() << __FUNCTION__ << "Permanent unmount open file error";
+                success = false;
+                emit refreshDeviceInfo();
+                return success;
+            }
+        }
+    }
     emit refreshDeviceInfo();
 
     qDebug() << __FUNCTION__ << "Unmount end";
@@ -2432,98 +2429,160 @@ int PartedCore::getPartitionHiddenFlag()
     return 0;
 }
 
-bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize)
+bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize, int flag)
 {
-    if(devicePath.isEmpty()) {
-        qDebug() << "设备路径为空" << endl;
-        return false;
+    if(m_flag == flag) {
+        return true;
     }
-    Sector i = blockStart;
-    Sector j = blockStart+1;
-    QProcess proc;
-    while(j>0 && j <= blockEnd+1)
-    {
-        QString cmd = QString("badblocks -sv -c %1 -b %2 %3 %4 %5").arg(checkConut).arg(checkSize).arg(devicePath).arg(j).arg(i);
+    m_flag = flag;
 
-        QTime ctime = QTime::currentTime();
-        proc.start(cmd);
-        proc.waitForFinished(-1);
-        QTime ctime1 = QTime::currentTime();
-
-        cmd = proc.readAllStandardError();
-
-        if (cmd.indexOf("(0/0/0 errors)") != -1) {
-
-            QString cylinderNumber = QString("%1").arg(i);
-            QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
-            QString cylinderStatus = "good";
-            QString cylinderErrorInfo = "";
-
-            emit checkBadBlocksCountInfo(cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
-        } else {
-            QString cylinderNumber = QString("%1").arg(i);
-            QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
-            QString cylinderStatus = "bad";
-            QString cylinderErrorInfo = "IO Read Error";
-
-            emit checkBadBlocksCountInfo(cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
-        }
-
-        i++;
-        j++;
+    switch(m_flag) {
+    case 1: {
+        workthread checkThread;
+        checkThread.moveToThread(&m_workerThread);
+        checkThread.setConutInfo(devicePath, blockStart, blockEnd, checkConut, checkSize);
+        connect(&m_workerThread, SIGNAL(started()), &checkThread, SLOT(runCount()));
+        m_workerThread.start();
     }
+        break;
+    case 2:
+        qDebug() << "1" << endl;
+        m_workerThread.exit();
+        m_workerThread.quit();
+        m_workerThread.wait();
+        qDebug() << "1" << endl;
+        break;
+    case 3: {
+        workthread checkThread;
+        checkThread.moveToThread(&m_workerThread);
+        checkThread.setConutInfo(devicePath, blockStart, blockEnd, checkConut, checkSize);
+        connect(&m_workerThread, SIGNAL(started()), &checkThread, SLOT(runCount()));
+        m_workerThread.start();
+    }
+        break;
+    default:
+        break;
+    }
+
+
+//    Sector i = blockStart;
+//    Sector j = blockStart+1;
+//    QProcess proc;
+//    while(j>0 && j <= blockEnd+1)
+//    {
+//        QString cmd = QString("badblocks -sv -c %1 -b %2 %3 %4 %5").arg(checkConut).arg(checkSize).arg(devicePath).arg(j).arg(i);
+
+//        QTime ctime = QTime::currentTime();
+//        proc.start(cmd);
+//        proc.waitForFinished(-1);
+//        QTime ctime1 = QTime::currentTime();
+
+//        cmd = proc.readAllStandardError();
+//        qDebug() << cmd << endl;
+//        if (cmd.indexOf("(0/0/0 errors)") != -1) {
+
+//            QString cylinderNumber = QString("%1").arg(i);
+//            QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
+//            QString cylinderStatus = "good";
+//            QString cylinderErrorInfo = "";
+
+//            emit checkBadBlocksCountInfo(cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
+//        } else {
+//            QString cylinderNumber = QString("%1").arg(i);
+//            QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
+//            QString cylinderStatus = "bad";
+//            QString cylinderErrorInfo = "IO Read Error";
+
+//            emit checkBadBlocksCountInfo(cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
+//        }
+
+//        i++;
+//        j++;
+//    }
     return true;
 }
 
-bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int blockEnd, QString checkTime, int checkSize)
+bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int blockEnd, QString checkTime, int checkSize, int flag)
 {
-    if(devicePath.isEmpty()) {
-        qDebug() << "设备路径为空" << endl;
-        return false;
+    if(m_flag == flag) {
+        return true;
     }
-    Sector i = blockStart;
-    Sector j = blockStart+1;
-    QProcess proc;
-    while(j>0 && j <= blockEnd+1)
-    {
-        QString cmd = QString("badblocks -sv -b %1 %2 %3 %4").arg(checkSize).arg(devicePath).arg(j).arg(i);
+    m_flag = flag;
 
-        qDebug() << cmd << endl;
-
-        QTime ctime = QTime::currentTime();
-        proc.start(cmd);
-        proc.waitForFinished(-1);
-        QTime ctime1 = QTime::currentTime();
-
-        cmd = proc.readAllStandardError();
-        if (cmd.indexOf("(0/0/0 errors)") != -1 && ctime.msecsTo(ctime1) < checkTime.toInt()) {
-            QString cylinderNumber = QString("%1").arg(i);
-            QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
-            QString cylinderStatus = "good";
-            QString cylinderErrorInfo = "";
-
-            emit checkBadBlocksCountInfo(cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
-        } else if(ctime.msecsTo(ctime1) > checkTime.toInt()) {
-            QString cylinderNumber = QString("%1").arg(i);
-            QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
-            QString cylinderStatus = "bad";
-            QString cylinderErrorInfo = "IO Device Timeout";
-
-            emit checkBadBlocksCountInfo(cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
-        } else if(cmd.indexOf("(1/0/0 errors)") != -1 && ctime.msecsTo(ctime1) < checkTime.toInt()) {
-            QString cylinderNumber = QString("%1").arg(i);
-            QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
-            QString cylinderStatus = "bad";
-            QString cylinderErrorInfo = "IO Read Error";
-
-            emit checkBadBlocksCountInfo(cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
-        } else {
-            emit checkBadBlocksDeviceStatusError();
-        }
-
-        i++;
-        j++;
+    switch(m_flag) {
+    case 1: {
+        workthread checkThread;
+        checkThread.moveToThread(&m_workerThread);
+        checkThread.setTimeInfo(devicePath, blockStart, blockEnd, checkTime, checkSize);
+        connect(&m_workerThread, SIGNAL(started()), &checkThread, SLOT(runTime()));
+        m_workerThread.start();
     }
+        break;
+    case 2:
+        qDebug() << "1" << endl;
+        m_workerThread.exit();
+        m_workerThread.quit();
+        m_workerThread.wait();
+        qDebug() << "1" << endl;
+        break;
+    case 3: {
+        workthread checkThread;
+        checkThread.moveToThread(&m_workerThread);
+        checkThread.setTimeInfo(devicePath, blockStart, blockEnd, checkTime, checkSize);
+        connect(&m_workerThread, SIGNAL(started()), &checkThread, SLOT(runTime()));
+        m_workerThread.start();
+    }
+        break;
+    default:
+        break;
+    }
+//    if(devicePath.isEmpty()) {
+//        qDebug() << "设备路径为空" << endl;
+//        return false;
+//    }
+//    Sector i = blockStart;
+//    Sector j = blockStart+1;
+//    QProcess proc;
+//    while(j>0 && j <= blockEnd+1)
+//    {
+//        QString cmd = QString("badblocks -sv -b %1 %2 %3 %4").arg(checkSize).arg(devicePath).arg(j).arg(i);
+
+//        qDebug() << cmd << endl;
+
+//        QTime ctime = QTime::currentTime();
+//        proc.start(cmd);
+//        proc.waitForFinished(-1);
+//        QTime ctime1 = QTime::currentTime();
+
+//        cmd = proc.readAllStandardError();
+//        if (cmd.indexOf("(0/0/0 errors)") != -1 && ctime.msecsTo(ctime1) < checkTime.toInt()) {
+//            QString cylinderNumber = QString("%1").arg(i);
+//            QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
+//            QString cylinderStatus = "good";
+//            QString cylinderErrorInfo = "";
+
+////            emit checkBadBlocksCountInfo(cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
+//        } else if(ctime.msecsTo(ctime1) > checkTime.toInt()) {
+//            QString cylinderNumber = QString("%1").arg(i);
+//            QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
+//            QString cylinderStatus = "bad";
+//            QString cylinderErrorInfo = "IO Device Timeout";
+
+////            emit checkBadBlocksCountInfo(cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
+//        } else if(cmd.indexOf("(1/0/0 errors)") != -1 && ctime.msecsTo(ctime1) < checkTime.toInt()) {
+//            QString cylinderNumber = QString("%1").arg(i);
+//            QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
+//            QString cylinderStatus = "bad";
+//            QString cylinderErrorInfo = "IO Read Error";
+
+////            emit checkBadBlocksCountInfo(cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
+//        } else {
+//            emit checkBadBlocksDeviceStatusError();
+//        }
+
+//        i++;
+//        j++;
+//    }
     return true;
 }
 

@@ -121,8 +121,8 @@ void DiskManagerService::initConnection()
     connect(m_partedcore, &PartedCore::hidePartitionInfo, this, &DiskManagerService::hidePartitionInfo);
     connect(m_partedcore, &PartedCore::showPartitionInfo, this, &DiskManagerService::showPartitionInfo);
     connect(m_partedcore, &PartedCore::usbUpdated, this, &DiskManagerService::usbUpdated);
-    connect(m_partedcore, &PartedCore::checkBadBlocksCountInfo, this, &DiskManagerService::checkBadBlocksCountInfo);
-    connect(m_partedcore, &PartedCore::checkBadBlocksDeviceStatusError, this, &DiskManagerService::checkBadBlocksDeviceStatusError);
+    connect(&m_thread, &workthread::checkBadBlocksInfo, this, &DiskManagerService::checkBadBlocksCountInfo);
+    connect(&m_thread, &workthread::checkBadBlocksDeviceStatusError, this, &DiskManagerService::checkBadBlocksDeviceStatusError);
 }
 
 HardDiskInfo DiskManagerService::onGetDeviceHardInfo(const QString &devicepath)
@@ -156,13 +156,13 @@ bool DiskManagerService::onDetectionPartitionTableError(const QString &devicePat
 {
     return m_partedcore->detectionPartitionTableError(devicePath);
 }
-bool DiskManagerService::onCheckBadBlocksCount(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize)
+bool DiskManagerService::onCheckBadBlocksCount(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize, int flag)
 {
-    return m_partedcore->checkBadBlocks(devicePath, blockStart, blockEnd, checkConut, checkSize);
+    return m_partedcore->checkBadBlocks(devicePath, blockStart, blockEnd, checkConut, checkSize, flag);
 }
-bool DiskManagerService::onCheckBadBlocksTime(const QString &devicePath, int blockStart, int blockEnd, const QString &checkTime, int checkSize)
+bool DiskManagerService::onCheckBadBlocksTime(const QString &devicePath, int blockStart, int blockEnd, const QString &checkTime, int checkSize, int flag)
 {
-    return m_partedcore->checkBadBlocks(devicePath, blockStart, blockEnd, checkTime, checkSize);
+    return m_partedcore->checkBadBlocks(devicePath, blockStart, blockEnd, checkTime, checkSize, flag);
 }
 void DiskManagerService::updateUsb()
 {

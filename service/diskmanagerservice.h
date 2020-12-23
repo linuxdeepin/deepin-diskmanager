@@ -28,6 +28,7 @@
 #ifndef DISKMANAGERSERVICE_H
 #define DISKMANAGERSERVICE_H
 #include "diskoperation/partedcore.h"
+#include "diskoperation/thread.h"
 
 #include <QObject>
 #include <QDBusContext>
@@ -241,7 +242,7 @@ public Q_SLOTS:
      * @param checkSize：检测柱面大小
      * @return true错误false正常
      */
-    Q_SCRIPTABLE bool onCheckBadBlocksCount(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize);
+    Q_SCRIPTABLE bool onCheckBadBlocksCount(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize,int flag);
 
     /**
      * @brief 坏道检测（检测次数）
@@ -252,7 +253,7 @@ public Q_SLOTS:
      * @param checkSize：检测柱面大小
      * @return true错误false正常
      */
-    Q_SCRIPTABLE bool onCheckBadBlocksTime(const QString &devicePath, int blockStart, int blockEnd,const QString &checkTime, int checkSize);
+    Q_SCRIPTABLE bool onCheckBadBlocksTime(const QString &devicePath, int blockStart, int blockEnd,const QString &checkTime, int checkSize, int flag);
 
     /**
      * @brief USB插入
@@ -281,6 +282,7 @@ private:
 
 private:
     PartedCore *m_partedcore;  //磁盘操作类对象
+    workthread m_thread;
 };
 
 } // namespace DiskManager

@@ -30,6 +30,7 @@
 #include "log.h"
 #include "device.h"
 #include "supportedfilesystems.h"
+#include "thread.h"
 
 #include <parted/parted.h>
 #include <parted/device.h>
@@ -189,7 +190,7 @@ public:
      * @param checkSize：检测柱面大小
      * @return true错误false正常
      */
-    bool checkBadBlocks(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize);
+    bool checkBadBlocks(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize,int flag);
 
     /**
      * @brief 坏道检测（超时时间）
@@ -200,7 +201,7 @@ public:
      * @param checkSize：检测柱面大小
      * @return true错误false正常
      */
-    bool checkBadBlocks(const QString &devicePath, int blockStart, int blockEnd, QString checkTime, int checkSize);
+    bool checkBadBlocks(const QString &devicePath, int blockStart, int blockEnd, QString checkTime, int checkSize, int flag);
 
     /**
      * @brief 坏道修复
@@ -638,19 +639,19 @@ signals:
      */
     void usbUpdated();
 
-    /**
-     * @brief 坏道检测检测信息信号(次数检测)
-     * @param cylinderNumber：检测柱面号
-     * @param cylinderTimeConsuming：柱面耗时
-     * @param cylinderStatus：柱面状态
-     * @param cylinderErrorInfo：柱面错误信息
-     */
-    void checkBadBlocksCountInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
+//    /**
+//     * @brief 坏道检测检测信息信号(次数检测)
+//     * @param cylinderNumber：检测柱面号
+//     * @param cylinderTimeConsuming：柱面耗时
+//     * @param cylinderStatus：柱面状态
+//     * @param cylinderErrorInfo：柱面错误信息
+//     */
+//    void checkBadBlocksCountInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
 
-    /**
-     * @brief 坏道检测设备状态异常退出信号
-     */
-    void checkBadBlocksDeviceStatusError();
+//    /**
+//     * @brief 坏道检测设备状态异常退出信号
+//     */
+//    void checkBadBlocksDeviceStatusError();
 
 public slots:
 
@@ -666,6 +667,8 @@ private:
     Partition m_curpartition;             //当前选中分区信息
     static SupportedFileSystems *m_supportedFileSystems; //支持的文件系统
     QByteArray m_hiddenPartition;         //隐藏分区（规则文件中的隐藏分区）
+    QThread m_workerThread;
+    int m_flag;
 };
 
 } // namespace DiskManager

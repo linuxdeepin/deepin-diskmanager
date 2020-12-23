@@ -255,11 +255,12 @@ public Q_SLOTS: // METHODS
      * @param blockEnd 检测结束
      * @param checkConut 检测次数
      * @param checkSize 检测柱面大小
+     * @param flag：检测状态(检测，停止，继续)
      */
-    inline QDBusPendingReply<bool> onCheckBadBlocksCount(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize)
+    inline QDBusPendingReply<bool> onCheckBadBlocksCount(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize, int flag)
     {
         QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(devicePath)<< QVariant::fromValue(blockStart)<< QVariant::fromValue(blockEnd)<< QVariant::fromValue(checkConut)<< QVariant::fromValue(checkSize);
+        argumentList << QVariant::fromValue(devicePath)<< QVariant::fromValue(blockStart)<< QVariant::fromValue(blockEnd)<< QVariant::fromValue(checkConut)<< QVariant::fromValue(checkSize)<< QVariant::fromValue(flag);
         return asyncCallWithArgumentList(QStringLiteral("onCheckBadBlocksCount"), argumentList);
     }
 
@@ -270,11 +271,12 @@ public Q_SLOTS: // METHODS
      * @param blockEnd 检测结束
      * @param checkTime 检测时间
      * @param checkSize 检测柱面大小
+     * @param flag：检测状态(检测，停止，继续)
      */
-    inline QDBusPendingReply<bool> onCheckBadBlocksTime(const QString &devicePath, int blockStart, int blockEnd, const QString &checkTime, int checkSize)
+    inline QDBusPendingReply<bool> onCheckBadBlocksTime(const QString &devicePath, int blockStart, int blockEnd, const QString &checkTime, int checkSize, int flag)
     {
         QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(devicePath)<< QVariant::fromValue(blockStart)<< QVariant::fromValue(blockEnd)<< QVariant::fromValue(checkTime)<< QVariant::fromValue(checkSize);
+        argumentList << QVariant::fromValue(devicePath)<< QVariant::fromValue(blockStart)<< QVariant::fromValue(blockEnd)<< QVariant::fromValue(checkTime)<< QVariant::fromValue(checkSize)<< QVariant::fromValue(flag);
         return asyncCallWithArgumentList(QStringLiteral("onCheckBadBlocksTime"), argumentList);
     }
 

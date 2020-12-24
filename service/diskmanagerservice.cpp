@@ -121,8 +121,8 @@ void DiskManagerService::initConnection()
     connect(m_partedcore, &PartedCore::hidePartitionInfo, this, &DiskManagerService::hidePartitionInfo);
     connect(m_partedcore, &PartedCore::showPartitionInfo, this, &DiskManagerService::showPartitionInfo);
     connect(m_partedcore, &PartedCore::usbUpdated, this, &DiskManagerService::usbUpdated);
-    connect(&m_thread, &workthread::checkBadBlocksInfo, this, &DiskManagerService::checkBadBlocksCountInfo);
-    connect(&m_thread, &workthread::checkBadBlocksDeviceStatusError, this, &DiskManagerService::checkBadBlocksDeviceStatusError);
+    connect(m_partedcore, &PartedCore::checkBadBlocksCountInfo, this, &DiskManagerService::checkBadBlocksCountInfo);
+    connect(m_partedcore, &PartedCore::checkBadBlocksDeviceStatusError, this, &DiskManagerService::checkBadBlocksDeviceStatusError);
 }
 
 HardDiskInfo DiskManagerService::onGetDeviceHardInfo(const QString &devicepath)

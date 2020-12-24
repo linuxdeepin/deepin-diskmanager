@@ -282,7 +282,6 @@ private:
 
 private:
     PartedCore *m_partedcore;  //磁盘操作类对象
-    workthread m_thread;
 };
 
 } // namespace DiskManager

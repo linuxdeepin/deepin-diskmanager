@@ -34,7 +34,7 @@ void workthread::runCount()
             QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
             QString cylinderStatus = "good";
             QString cylinderErrorInfo = "";
-
+            qDebug() << "pthread" << endl;
             emit checkBadBlocksInfo(cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
         } else {
             QString cylinderNumber = QString("%1").arg(i);
@@ -48,10 +48,12 @@ void workthread::runCount()
         i++;
         j++;
     }
+    return;
 }
 
 void workthread::runTime()
 {
+
     Sector i = m_blockStart;
     Sector j = m_blockStart+1;
     QProcess proc;
@@ -63,7 +65,7 @@ void workthread::runTime()
         proc.start(cmd);
         proc.waitForFinished(-1);
         QTime ctime1 = QTime::currentTime();
-
+        qDebug() << "phread:time:" << i << endl;
         cmd = proc.readAllStandardError();
         if (cmd.indexOf("(0/0/0 errors)") != -1 && ctime.msecsTo(ctime1) < m_checkTime.toInt()) {
             QString cylinderNumber = QString("%1").arg(i);
@@ -89,7 +91,10 @@ void workthread::runTime()
         } else {
             emit checkBadBlocksDeviceStatusError();
         }
+        i++;
+        j++;
     }
+    return;
 }
 
 void workthread::setConutInfo(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize)

@@ -639,19 +639,19 @@ signals:
      */
     void usbUpdated();
 
-//    /**
-//     * @brief 坏道检测检测信息信号(次数检测)
-//     * @param cylinderNumber：检测柱面号
-//     * @param cylinderTimeConsuming：柱面耗时
-//     * @param cylinderStatus：柱面状态
-//     * @param cylinderErrorInfo：柱面错误信息
-//     */
-//    void checkBadBlocksCountInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
+    /**
+     * @brief 坏道检测检测信息信号(次数检测)
+     * @param cylinderNumber：检测柱面号
+     * @param cylinderTimeConsuming：柱面耗时
+     * @param cylinderStatus：柱面状态
+     * @param cylinderErrorInfo：柱面错误信息
+     */
+    void checkBadBlocksCountInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
 
-//    /**
-//     * @brief 坏道检测设备状态异常退出信号
-//     */
-//    void checkBadBlocksDeviceStatusError();
+    /**
+     * @brief 坏道检测设备状态异常退出信号
+     */
+    void checkBadBlocksDeviceStatusError();
 
 public slots:
 
@@ -669,6 +669,7 @@ private:
     QByteArray m_hiddenPartition;         //隐藏分区（规则文件中的隐藏分区）
     QThread m_workerThread;
     int m_flag;
+    workthread m_checkThread;
 };
 
 } // namespace DiskManager

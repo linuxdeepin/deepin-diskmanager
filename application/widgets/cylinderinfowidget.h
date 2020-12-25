@@ -1,0 +1,144 @@
+/**
+ * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ *
+ * @file cylinderinfowidget.h
+ *
+ * @brief 柱面检测信息展示窗口类
+ *
+ * @date 2020-12-22 15:59
+ *
+ * Author: yuandandan  <yuandandan@uniontech.com>
+ *
+ * Maintainer: yuandandan  <yuandandan@uniontech.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+#ifndef CYLINDERINFOWIDGET_H
+#define CYLINDERINFOWIDGET_H
+
+#include <DFrame>
+#include <DArrowRectangle>
+#include <DScrollBar>
+
+#include <QWidget>
+#include <QSettings>
+
+DWIDGET_USE_NAMESPACE
+DCORE_USE_NAMESPACE
+DTK_USE_NAMESPACE
+
+class QGridLayout;
+
+/**
+ * @class CylinderInfoWidget
+ * @brief 柱面检测信息展示窗口类
+ */
+
+class CylinderInfoWidget : public DFrame
+{
+    Q_OBJECT
+public:
+    explicit CylinderInfoWidget(int cylNumber, QWidget *parent = nullptr);
+
+    /**
+     * @brief 设置将要检测的柱面个数
+     * @param cylNumber 柱面个数
+     */
+    void setCylinderNumber(int cylNumber);
+
+    /**
+     * @brief 当前检测坏道信息
+     * @param cylinderNumber 柱面号
+     * @param cylinderTimeConsuming 柱面耗时
+     * @param cylinderStatus 柱面状态
+     * @param cylinderErrorInfo 当前检测错误信息
+     */
+    void setCurCheckBadBlocksInfo(const QString &LBANumber, const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
+
+signals:
+    /**
+     * @brief 检测完成信号
+     * @param badSectorsCount 坏道个数
+     */
+    void checkCoomplete(int badSectorsCount);
+
+public slots:
+
+protected:
+    /**
+     * @brief 滚轮滑动响应事件
+     */
+    void wheelEvent(QWheelEvent *event);
+
+private slots:
+    /**
+     * @brief 鼠标进入柱面方块响应的槽函数
+     */
+    void enterSlot();
+
+    /**
+     * @brief 鼠标离开柱面方块响应的槽函数
+     */
+    void leaveSlot();
+
+    /**
+     * @brief 滚动条数值改变响应的槽函数
+     * @param value 滚动条当前数值
+     */
+    void onScrollBarValueChanged(int value);
+
+private:
+    /**
+     * @brief 初始化界面
+     */
+    void initUI();
+
+    /**
+     * @brief 初始化信号连接
+     */
+    void initConnections();
+
+    /**
+     * @brief 更新柱面状态以及检测信息
+     * @param number 当前需要更新的方块号
+     * @param LBANumber 柱面LBA名称
+     * @param cylinderNumber 柱面号
+     * @param cylinderTimeConsuming 柱面耗时
+     * @param cylinderStatus 柱面状态
+     * @param cylinderErrorInfo 柱面检测错误信息
+     */
+    void updateCylinderInfo(int number, const QString &LBANumber, const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
+
+private:
+    int m_cylNumber;
+    QWidget *m_widget;
+    QGridLayout *m_gridLayout;
+    DArrowRectangle *m_arrowRectangle;
+    QLabel *m_LBALabel;
+    QLabel *m_cylNumberLabel;
+    QLabel *m_curErrorInfoLabel;
+    QLabel *m_repairLabel;
+    QLabel *m_elapsedTimeLabel;
+    DScrollBar *m_scrollBar;
+    QString m_initColor;
+    QString m_excellentColor;
+    QString m_damagedColor;
+    QString m_unknownColor;
+    int m_curCheckCount;
+    int m_badSectorsCount;
+    QSettings *m_settings;
+    bool m_isChanged = false;
+};
+
+#endif // CYLINDERINFOWIDGET_H

@@ -37,10 +37,6 @@ DWIDGET_USE_NAMESPACE
 DCORE_USE_NAMESPACE
 DTK_USE_NAMESPACE
 
-class DiskInfoDisplayDialog;
-class DiskHealthDetectionDialog;
-class PartitionTableErrorsInfoDialog;
-
 /**
  * @class DeviceListWidget
  * @brief 磁盘设备树列表类
@@ -53,6 +49,9 @@ public:
     explicit DeviceListWidget(QWidget *parent = nullptr);
     ~DeviceListWidget();
 
+    bool isHideSuccess = false;
+    bool isShowSuccess = false;
+    bool isDeleteSuccess = false;
 private:
 
     /**
@@ -136,6 +135,11 @@ private slots:
      */
     void onDeletePartitionClicked();
 
+    /**
+     * @brief 磁盘坏道检测与修复按钮点击响应的槽函数
+     */
+    void onDiskBadSectorsClicked();
+
 private:
     int m_flag = 0;
     int m_num = 0;
@@ -144,9 +148,6 @@ private:
     int m_deviceNum;
     DiskInfoData m_curDiskInfoData;
     QString m_curChooseDevicePath;
-    DiskInfoDisplayDialog *m_diskInfoDisplayDialog;
-    DiskHealthDetectionDialog *m_diskHealthDetectionDialog;
-    PartitionTableErrorsInfoDialog *m_partitionTableErrorsInfoDialog;
     //    DMDbusHandler *m_handler;
     //    DmDiskinfoBox *m_box = nullptr;
     //    DmDiskinfoBox *m_childbox = nullptr;

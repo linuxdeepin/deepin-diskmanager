@@ -53,6 +53,7 @@ void DmTreeview::initUI()
 void DmTreeview::addItem(QStandardItem *item, const DiskInfoData &data, int flag)
 {
     QStandardItem *standardItem = new QStandardItem(data.m_diskPath);
+    standardItem->setAccessibleDescription(data.m_partitonPath);
     standardItem->setData(QVariant::fromValue((data)), Qt::UserRole + 1);
     item->appendRow(standardItem);
     if (flag == 0) {
@@ -63,6 +64,7 @@ void DmTreeview::addItem(QStandardItem *item, const DiskInfoData &data, int flag
 QStandardItem *DmTreeview::addTopItem(const DiskInfoData &data)
 {
     QStandardItem *item = new QStandardItem;
+    item->setAccessibleDescription(data.m_diskPath);
     item->setData(QVariant::fromValue(data), Qt::UserRole + 1);
     m_model->appendRow(item);
     return item;

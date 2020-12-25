@@ -170,6 +170,17 @@ public:
      */
     QStringList getDeviceNameList();
 
+    /**
+     * @brief 坏道检测
+     * @param devicePath 磁盘路径
+     * @param blockStart 检测开始
+     * @param blockEnd 检测结束
+     * @param checkConut 检测次数
+     * @param checkSize 检测柱面大小
+     * @param flag：检测状态(检测: 1，停止: 2，继续: 3)
+     */
+    void checkBadSectors(const QString &devicePath, int blockStart, int blockEnd, int checkNumber, int checkSize, int flag);
+
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
 
@@ -186,6 +197,8 @@ signals:
     void hidePartitionMessage(const QString &hideMessage);
     void showPartitionMessage(const QString &showMessage);
     void updateUsb();
+    void checkBadBlocksCountInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
+    void checkBadBlocksDeviceStatusError();
 
 public slots:
     /**

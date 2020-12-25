@@ -80,6 +80,8 @@ void DMDbusHandler::initConnection()
     connect(m_dbus, &DMDBusInterface::hidePartitionInfo, this, &DMDbusHandler::onHidePartition);
     connect(m_dbus, &DMDBusInterface::showPartitionInfo, this, &DMDbusHandler::onShowPartition);
     connect(m_dbus, &DMDBusInterface::usbUpdated, this, &DMDbusHandler::onUpdateUsb);
+    connect(m_dbus, &DMDBusInterface::checkBadBlocksCountInfo, this, &DMDbusHandler::checkBadBlocksCountInfo);
+    connect(m_dbus, &DMDBusInterface::checkBadBlocksDeviceStatusError, this, &DMDbusHandler::checkBadBlocksDeviceStatusError);
 }
 
 void DMDbusHandler::onDeletePartition(const QString &deleteMessage)
@@ -347,5 +349,15 @@ bool DMDbusHandler::detectionPartitionTableError(const QString &devicePath)
     }
 
     return m_partitionTableError;
+}
+
+void DMDbusHandler::checkBadSectors(const QString &devicePath, int blockStart, int blockEnd, int checkNumber, int checkSize, int flag)
+{
+    if (checkNumber > 16) {
+        m_dbus->onCheckBadBlocksTime(devicePath, blockStart, blockEnd, QString::number(checkNumber), checkSize, flag);
+    } else {
+        m_dbus->onCheckBadBlocksCount(devicePath, blockStart, blockEnd, checkNumber, checkSize, flag);
+    }
+
 }
 

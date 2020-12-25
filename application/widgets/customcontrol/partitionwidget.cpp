@@ -238,8 +238,10 @@ void PartitionWidget::partInfoShowing()
     DLabel *labelSpace = new DLabel(m_partWidget);
     m_addButton = new DIconButton(DStyle::SP_IncreaseElement);
     m_addButton->setObjectName("addButton");
-    m_remButton = new DIconButton(DStyle::SP_DecreaseElement);\
+    m_addButton->setAccessibleName("addButton");
+    m_remButton = new DIconButton(DStyle::SP_DecreaseElement);
     m_remButton->setObjectName("removeButton");
+    m_remButton->setAccessibleName("removeButton");
     m_remButton->setToolTip(tr("Delete last partition"));
     DLabel *space = new DLabel(m_partWidget);
 

@@ -660,6 +660,11 @@ public slots:
      */
     void onRefreshDeviceInfo();
 
+    /**
+     * @brief 线程安全回收函数
+     */
+    void threadSafeRecycle();
+
 private:
     QVector<PedPartitionFlag> m_flags;    //分区标志hidden boot efi等
     QMap<QString, Device> m_devicemap;    //设备对应信息表
@@ -668,7 +673,6 @@ private:
     static SupportedFileSystems *m_supportedFileSystems; //支持的文件系统
     QByteArray m_hiddenPartition;         //隐藏分区（规则文件中的隐藏分区）
     QThread m_workerThread;
-    int m_flag;
     workthread m_checkThread;
 };
 

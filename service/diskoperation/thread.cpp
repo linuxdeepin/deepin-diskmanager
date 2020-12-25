@@ -9,7 +9,12 @@ namespace DiskManager {
 
 workthread::workthread(QObject *parent)
 {
+    m_stopFlag = 0;
+}
 
+void workthread::setStopFlag(int flag)
+{
+    m_stopFlag = flag;
 }
 
 void workthread::runCount()
@@ -17,7 +22,7 @@ void workthread::runCount()
     Sector i = m_blockStart;
     Sector j = m_blockStart+1;
     QProcess proc;
-    while(j>0 && j <= m_blockEnd+1)
+    while(j <= m_blockEnd+1 && m_stopFlag != 2)
     {
         QString cmd = QString("badblocks -sv -c %1 -b %2 %3 %4 %5").arg(m_checkConut).arg(m_checkSize).arg(m_devicePath).arg(j).arg(i);
 
@@ -48,7 +53,7 @@ void workthread::runCount()
         i++;
         j++;
     }
-    return;
+    emit checkBadBlocksDeviceStatusFinished();
 }
 
 void workthread::runTime()
@@ -57,7 +62,7 @@ void workthread::runTime()
     Sector i = m_blockStart;
     Sector j = m_blockStart+1;
     QProcess proc;
-    while(j>0 && j <= m_blockEnd+1)
+    while(j <= m_blockEnd+1 && m_stopFlag != 2)
     {
         QString cmd = QString("badblocks -sv -b %1 %2 %3 %4").arg(m_checkSize).arg(m_devicePath).arg(j).arg(i);
 
@@ -65,7 +70,6 @@ void workthread::runTime()
         proc.start(cmd);
         proc.waitForFinished(-1);
         QTime ctime1 = QTime::currentTime();
-        qDebug() << "phread:time:" << i << endl;
         cmd = proc.readAllStandardError();
         if (cmd.indexOf("(0/0/0 errors)") != -1 && ctime.msecsTo(ctime1) < m_checkTime.toInt()) {
             QString cylinderNumber = QString("%1").arg(i);
@@ -94,7 +98,7 @@ void workthread::runTime()
         i++;
         j++;
     }
-    return;
+    emit checkBadBlocksDeviceStatusFinished();
 }
 
 void workthread::setConutInfo(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize)

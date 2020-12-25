@@ -30,6 +30,11 @@ public:
      */
     void setTimeInfo(const QString &devicePath, int blockStart, int blockEnd, QString checkTime, int checkSize);
 
+    /**
+     * @brief 设置停止状态
+     * @param flag：停止状态
+     */
+    void setStopFlag(int flag);
 
 public slots:
 
@@ -59,6 +64,11 @@ signals:
      */
     void checkBadBlocksDeviceStatusError();
 
+    /**
+     * @brief 坏道检测完成结束信号
+     */
+    void checkBadBlocksDeviceStatusFinished();
+
 private:
     QString m_devicePath;   //设备路径
     int m_blockStart;       //开始检测柱面号
@@ -66,6 +76,7 @@ private:
     int m_checkConut;       //检测次数
     int m_checkSize;        //检测柱面大小
     QString m_checkTime;    //检测超时时间
+    int m_stopFlag;         //暂停状态
 };
 
 }

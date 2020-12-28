@@ -99,10 +99,12 @@ Q_SIGNALS:
      */
     Q_SCRIPTABLE void checkBadBlocksDeviceStatusError();
 
-//    /**
-//     * @brief 坏道检测检测信息信号(超时时间检测)
-//     */
-//    void checkBadBlocksTime(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
+    /**
+     * @brief 坏道修复信息信号
+     * @param cylinderNumber：检测柱面号
+     * @param cylinderStatus：柱面状态
+     */
+    Q_SCRIPTABLE void fixBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus);
 
 public Q_SLOTS:
     /**
@@ -172,19 +174,12 @@ public Q_SLOTS:
      */
     Q_SCRIPTABLE bool create(const PartitionVec &infovec);
 
-//    /**
-//     * @brief qdbus结构体传参测试
-//     * @return 测试结构体
-//     */
-//    Q_SCRIPTABLE stCustest interfacetest();
-
     /**
      * @brief 获取硬盘硬件信息
      * @param devicepath：设备信息路径
      * @return 返回硬盘信息表
      */
     Q_SCRIPTABLE HardDiskInfo onGetDeviceHardInfo(const QString &devicepath);
-    //Q_SCRIPTABLE HardDiskInfo onGetDeviceHardInfo();
 
     /**
      * @brief 获取硬盘健康状态
@@ -192,7 +187,6 @@ public Q_SLOTS:
      * @return 返回硬盘健康状态
      */
     Q_SCRIPTABLE QString onGetDeviceHardStatus(const QString &devicepath);
-    //Q_SCRIPTABLE QString onGetDeviceHardStatus();
 
     /**
      * @brief 获取硬盘健康信息
@@ -200,7 +194,6 @@ public Q_SLOTS:
      * @return 返回硬盘健康信息
      */
     Q_SCRIPTABLE HardDiskStatusInfoList onGetDeviceHardStatusInfo(const QString &devicepath);
-    //Q_SCRIPTABLE HardDiskStatusInfoList onGetDeviceHardStatusInfo();
 
     /**
      * @brief 删除分区
@@ -254,6 +247,17 @@ public Q_SLOTS:
      * @return true错误false正常
      */
     Q_SCRIPTABLE bool onCheckBadBlocksTime(const QString &devicePath, int blockStart, int blockEnd,const QString &checkTime, int checkSize, int flag);
+
+    /**
+     * @brief 坏道检测（检测次数）
+     * @param devicePath：设备信息路径
+     * @param blockStart：开始柱面
+     * @param blockEnd：结束柱面
+     * @param checkTime: 检测超时时间
+     * @param checkSize：检测柱面大小
+     * @return true错误false正常
+     */
+    Q_SCRIPTABLE bool onFixBadBlocks(const QString &devicePath, QStringList badBlocksList, int checkSize, int flag);
 
     /**
      * @brief USB插入

@@ -123,6 +123,7 @@ void DiskManagerService::initConnection()
     connect(m_partedcore, &PartedCore::usbUpdated, this, &DiskManagerService::usbUpdated);
     connect(m_partedcore, &PartedCore::checkBadBlocksCountInfo, this, &DiskManagerService::checkBadBlocksCountInfo);
     connect(m_partedcore, &PartedCore::checkBadBlocksDeviceStatusError, this, &DiskManagerService::checkBadBlocksDeviceStatusError);
+    connect(m_partedcore, &PartedCore::fixBadBlocksInfo, this, &DiskManagerService::fixBadBlocksInfo);
 }
 
 HardDiskInfo DiskManagerService::onGetDeviceHardInfo(const QString &devicepath)
@@ -163,6 +164,10 @@ bool DiskManagerService::onCheckBadBlocksCount(const QString &devicePath, int bl
 bool DiskManagerService::onCheckBadBlocksTime(const QString &devicePath, int blockStart, int blockEnd, const QString &checkTime, int checkSize, int flag)
 {
     return m_partedcore->checkBadBlocks(devicePath, blockStart, blockEnd, checkTime, checkSize, flag);
+}
+bool DiskManagerService::onFixBadBlocks(const QString &devicePath, QStringList badBlocksList, int checkSize, int flag)
+{
+    return m_partedcore->fixBadBlocks(devicePath, badBlocksList, checkSize, flag);
 }
 void DiskManagerService::updateUsb()
 {

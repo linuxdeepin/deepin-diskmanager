@@ -280,6 +280,22 @@ public Q_SLOTS: // METHODS
         return asyncCallWithArgumentList(QStringLiteral("onCheckBadBlocksTime"), argumentList);
     }
 
+    /**
+     * @brief 坏道检测(时间)
+     * @param devicePath 磁盘路径
+     * @param blockStart 检测开始
+     * @param blockEnd 检测结束
+     * @param checkTime 检测时间
+     * @param checkSize 检测柱面大小
+     * @param flag：检测状态(检测，停止，继续)
+     */
+    inline QDBusPendingReply<bool> onFixBadBlocks(const QString &devicePath, QStringList badBlocksList, int checkSize, int flag)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(devicePath)<< QVariant::fromValue(badBlocksList)<< QVariant::fromValue(checkSize)<< QVariant::fromValue(flag);
+        return asyncCallWithArgumentList(QStringLiteral("onFixBadBlocks"), argumentList);
+    }
+
 Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void MessageReport(const QString &msg);
     Q_SCRIPTABLE void updateDeviceInfo(const DeviceInfoMap &infomap);
@@ -289,6 +305,7 @@ Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void usbUpdated();
     Q_SCRIPTABLE void checkBadBlocksCountInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
     Q_SCRIPTABLE void checkBadBlocksDeviceStatusError();
+    Q_SCRIPTABLE void fixBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus);
 };
 
 namespace com {

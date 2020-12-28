@@ -210,7 +210,7 @@ public:
      * @param checkSize：检测柱面大小
      * @return true错误false正常
      */
-    bool fixBadBlocks(const QString &devicePath, int blockStart, int checkSize);
+    bool fixBadBlocks(const QString &devicePath, QStringList badBlocksList, int checkSize, int flag);
 
     /**
      * @brief 个人测试
@@ -653,6 +653,13 @@ signals:
      */
     void checkBadBlocksDeviceStatusError();
 
+    /**
+     * @brief 坏道修复信息信号
+     * @param cylinderNumber：检测柱面号
+     * @param cylinderStatus：柱面状态
+     */
+    void fixBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus);
+
 public slots:
 
     /**
@@ -672,7 +679,7 @@ private:
     Partition m_curpartition;             //当前选中分区信息
     static SupportedFileSystems *m_supportedFileSystems; //支持的文件系统
     QByteArray m_hiddenPartition;         //隐藏分区（规则文件中的隐藏分区）
-    QThread m_workerThread;
+    QThread *m_workerThread;
     workthread m_checkThread;
 };
 

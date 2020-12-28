@@ -31,6 +31,14 @@ public:
     void setTimeInfo(const QString &devicePath, int blockStart, int blockEnd, QString checkTime, int checkSize);
 
     /**
+     * @brief 设置修复数据
+     * @param devicePath：设备路径
+     * @param list: 修复柱面集合
+     * @param checkSize：检测柱面范围大小
+     */
+    void setFixBadBlocksInfo(const QString &devicePath, QStringList list, int checkSize);
+
+    /**
      * @brief 设置停止状态
      * @param flag：停止状态
      */
@@ -47,6 +55,11 @@ public slots:
      * @brief 坏道检测线程(超时时间方式)
      */
     void runTime();
+
+    /**
+     * @brief 坏道修复线程
+     */
+    void runFix();
 
 signals:
 
@@ -69,6 +82,13 @@ signals:
      */
     void checkBadBlocksDeviceStatusFinished();
 
+    /**
+     * @brief 坏道修复信息信号
+     * @param cylinderNumber：检测柱面号
+     * @param cylinderStatus：柱面状态
+     */
+    void fixBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus);
+
 private:
     QString m_devicePath;   //设备路径
     int m_blockStart;       //开始检测柱面号
@@ -77,6 +97,7 @@ private:
     int m_checkSize;        //检测柱面大小
     QString m_checkTime;    //检测超时时间
     int m_stopFlag;         //暂停状态
+    QStringList m_list;     //需要修复柱面集合
 };
 
 }

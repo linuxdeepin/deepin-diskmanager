@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QProcess>
 #include <QTime>
+#include <QThread>
 namespace DiskManager {
 
 workthread::workthread(QObject *parent)
@@ -53,6 +54,7 @@ void workthread::runCount()
         i++;
         j++;
     }
+    qDebug() << QThread::currentThreadId() << endl;
     emit checkBadBlocksDeviceStatusFinished();
 }
 
@@ -101,6 +103,37 @@ void workthread::runTime()
     emit checkBadBlocksDeviceStatusFinished();
 }
 
+void workthread::runFix()
+{
+    int i = 0;
+    QProcess proc;
+    while(i < m_list.size() && m_stopFlag != 2) {
+        Sector j = m_list.at(i).toInt();
+        Sector k = m_list.at(i).toInt() + 1;
+        QString cmd = QString("badblocks -sv -b %1 -w %2 %3 %4").arg(m_checkSize).arg(m_devicePath).arg(k).arg(j);
+        proc.start(cmd);
+        proc.waitForFinished(-1);
+
+        cmd = proc.readAllStandardError();
+
+        if (cmd.indexOf("(0/0/0 errors)") != -1) {
+
+            QString cylinderNumber = QString("%1").arg(j);
+            QString cylinderStatus = "good";
+            qDebug() << "pthread" << endl;
+            emit fixBadBlocksInfo(cylinderNumber, cylinderStatus);
+        } else {
+            QString cylinderNumber = QString("%1").arg(j);
+            QString cylinderStatus = "bad";
+
+            emit fixBadBlocksInfo(cylinderNumber, cylinderStatus);
+        }
+        i++;
+    }
+
+    emit checkBadBlocksDeviceStatusFinished();
+}
+
 void workthread::setConutInfo(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize)
 {
     m_devicePath = devicePath;
@@ -116,6 +149,13 @@ void workthread::setTimeInfo(const QString &devicePath, int blockStart, int bloc
     m_blockStart = blockStart;
     m_blockEnd = blockEnd;
     m_checkTime = checkTime;
+    m_checkSize = checkSize;
+}
+
+void workthread::setFixBadBlocksInfo(const QString &devicePath, QStringList list, int checkSize)
+{
+    m_devicePath = devicePath;
+    m_list = list;
     m_checkSize = checkSize;
 }
 }

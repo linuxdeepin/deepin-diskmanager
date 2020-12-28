@@ -54,6 +54,7 @@ PartedCore::PartedCore(QObject *parent)
     connect(&m_checkThread, &workthread::checkBadBlocksInfo, this, &PartedCore::checkBadBlocksCountInfo);
     connect(&m_checkThread, &workthread::checkBadBlocksDeviceStatusError, this, &PartedCore::checkBadBlocksDeviceStatusError);
     connect(&m_checkThread, &workthread::checkBadBlocksDeviceStatusFinished, this, &PartedCore::threadSafeRecycle);
+    connect(&m_checkThread, &workthread::fixBadBlocksInfo, this, &PartedCore::fixBadBlocksInfo);
 
     qDebug() << __FUNCTION__ << "^^1";
 
@@ -2252,25 +2253,26 @@ int PartedCore::getPartitionHiddenFlag()
 
 bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize, int flag)
 {
-
+    m_workerThread = new QThread();
     switch(flag) {
     case 1: {
-        m_checkThread.moveToThread(&m_workerThread);
+        m_checkThread.moveToThread(m_workerThread);
         m_checkThread.setStopFlag(flag);
+        qDebug() << QThread::currentThreadId() << endl;
         m_checkThread.setConutInfo(devicePath, blockStart, blockEnd, checkConut, checkSize);
-        connect(&m_workerThread, SIGNAL(started()), &m_checkThread, SLOT(runCount()));
-        m_workerThread.start();
+        connect(m_workerThread, SIGNAL(started()), &m_checkThread, SLOT(runCount()));
+        m_workerThread->start();
     }
         break;
     case 2:
         m_checkThread.setStopFlag(flag);
         break;
     case 3: {
-        m_checkThread.moveToThread(&m_workerThread);
+//        m_checkThread.moveToThread(m_workerThread);
         m_checkThread.setStopFlag(flag);
         m_checkThread.setConutInfo(devicePath, blockStart, blockEnd, checkConut, checkSize);
-        connect(&m_workerThread, SIGNAL(started()), &m_checkThread, SLOT(runCount()));
-        m_workerThread.start();
+        connect(m_workerThread, SIGNAL(started()), &m_checkThread, SLOT(runCount()));
+        m_workerThread->start();
     }
         break;
     default:
@@ -2282,24 +2284,25 @@ bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int b
 
 bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int blockEnd, QString checkTime, int checkSize, int flag)
 {
+    m_workerThread = new QThread();
     switch(flag) {
     case 1: {
-        m_checkThread.moveToThread(&m_workerThread);
+        m_checkThread.moveToThread(m_workerThread);
         m_checkThread.setStopFlag(flag);
         m_checkThread.setTimeInfo(devicePath, blockStart, blockEnd, checkTime, checkSize);
-        connect(&m_workerThread, SIGNAL(started()), &m_checkThread, SLOT(runTime()));
-        m_workerThread.start();
+        connect(m_workerThread, SIGNAL(started()), &m_checkThread, SLOT(runTime()));
+        m_workerThread->start();
     }
         break;
     case 2:
         m_checkThread.setStopFlag(flag);
         break;
     case 3: {
-        m_checkThread.moveToThread(&m_workerThread);
+//        m_checkThread.moveToThread(m_workerThread);
         m_checkThread.setStopFlag(flag);
         m_checkThread.setTimeInfo(devicePath, blockStart, blockEnd, checkTime, checkSize);
-        connect(&m_workerThread, SIGNAL(started()), &m_checkThread, SLOT(runTime()));
-        m_workerThread.start();
+        connect(m_workerThread, SIGNAL(started()), &m_checkThread, SLOT(runTime()));
+        m_workerThread->start();
     }
         break;
     default:
@@ -2309,13 +2312,33 @@ bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int b
     return true;
 }
 
-bool PartedCore::fixBadBlocks(const QString &devicePath, int blockStart, int checkSize)
+bool PartedCore::fixBadBlocks(const QString &devicePath, QStringList badBlocksList, int checkSize, int flag)
 {
-    if(devicePath.isEmpty()) {
-        qDebug() << "设备路径为空" << endl;
-        return false;
+    m_workerThread = new QThread();
+    switch(flag) {
+    case 1: {
+        m_checkThread.moveToThread(m_workerThread);
+        m_checkThread.setStopFlag(flag);
+        m_checkThread.setFixBadBlocksInfo(devicePath, badBlocksList, checkSize);
+        connect(m_workerThread, SIGNAL(started()), &m_checkThread, SLOT(runFix()));
+        m_workerThread->start();
     }
-//    QString cmd = QString("badblocks -sv -b %1 -w %2 %3 %4").arg(checkSize).arg(devicePath).arg(j).arg(i);
+        break;
+    case 2:
+        m_checkThread.setStopFlag(flag);
+        break;
+    case 3: {
+//        m_checkThread.moveToThread(m_workerThread);
+        m_checkThread.setStopFlag(flag);
+        m_checkThread.setFixBadBlocksInfo(devicePath, badBlocksList, checkSize);
+        connect(m_workerThread, SIGNAL(started()), &m_checkThread, SLOT(runFix()));
+        m_workerThread->start();
+    }
+        break;
+    default:
+        break;
+    }
+
     return true;
 }
 
@@ -2419,9 +2442,11 @@ void PartedCore::autoUmount()
 
 void PartedCore::threadSafeRecycle()
 {
-    m_workerThread.exit();
-    m_workerThread.quit();
-    m_workerThread.wait();
+    m_workerThread->exit();
+    m_workerThread->quit();
+    m_workerThread->wait();
+    delete m_workerThread;
+    m_workerThread = nullptr;
     qDebug() << "finished thread" << endl;
 }
 

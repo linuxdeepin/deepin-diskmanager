@@ -281,11 +281,9 @@ public Q_SLOTS: // METHODS
     }
 
     /**
-     * @brief 坏道检测(时间)
+     * @brief 坏道修复
      * @param devicePath 磁盘路径
-     * @param blockStart 检测开始
-     * @param blockEnd 检测结束
-     * @param checkTime 检测时间
+     * @param badBlocksList 修复柱面合集
      * @param checkSize 检测柱面大小
      * @param flag：检测状态(检测，停止，继续)
      */
@@ -305,7 +303,7 @@ Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void usbUpdated();
     Q_SCRIPTABLE void checkBadBlocksCountInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
     Q_SCRIPTABLE void checkBadBlocksDeviceStatusError();
-    Q_SCRIPTABLE void fixBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus);
+    Q_SCRIPTABLE void fixBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus, const QString &cylinderTimeConsuming);
 };
 
 namespace com {

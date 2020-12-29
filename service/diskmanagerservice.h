@@ -104,7 +104,7 @@ Q_SIGNALS:
      * @param cylinderNumber：检测柱面号
      * @param cylinderStatus：柱面状态
      */
-    Q_SCRIPTABLE void fixBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus);
+    Q_SCRIPTABLE void fixBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus, const QString &cylinderTimeConsuming);
 
 public Q_SLOTS:
     /**

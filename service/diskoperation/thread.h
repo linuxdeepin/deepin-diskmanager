@@ -87,7 +87,7 @@ signals:
      * @param cylinderNumber：检测柱面号
      * @param cylinderStatus：柱面状态
      */
-    void fixBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus);
+    void fixBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus, const QString &cylinderTimeConsuming);
 
 private:
     QString m_devicePath;   //设备路径

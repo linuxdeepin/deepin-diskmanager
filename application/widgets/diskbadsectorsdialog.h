@@ -115,6 +115,21 @@ private slots:
     void onStopButtonClicked();
 
     /**
+     * @brief 继续按钮点击响应的槽函数
+     */
+    void onContinueButtonClicked();
+
+    /**
+     * @brief 重新检测按钮点击响应的槽函数
+     */
+    void onAgainVerifyButtonClicked();
+
+    /**
+     * @brief 复位按钮点击响应的槽函数
+     */
+    void onResetButtonClicked();
+
+    /**
      * @brief 坏道检测实时信息
      * @param cylinderNumber 柱面号
      * @param cylinderTimeConsuming 柱面耗时

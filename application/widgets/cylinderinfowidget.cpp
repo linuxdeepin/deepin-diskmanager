@@ -158,11 +158,93 @@ void CylinderInfoWidget::initUI()
     mainLayout->setContentsMargins(0, 0, 0, 0);
 
     setLayout(mainLayout);
+
+    m_settings = new QSettings("/tmp/CheckData.conf", QSettings::IniFormat);
 }
 
 void CylinderInfoWidget::initConnections()
 {
     connect(m_scrollBar, &QScrollBar::valueChanged, this, &CylinderInfoWidget::onScrollBarValueChanged);
+}
+
+void CylinderInfoWidget::againVerify(int cylNumber)
+{
+    m_curCheckCount = 0;
+    m_badSectorsCount = 0;
+    m_scrollBar->hide();
+    m_isChanged = false;
+
+    QList<QObject *> lstCylinderWidget = m_widget->children();
+
+    if (cylNumber <= lstCylinderWidget.count() - 1) { // 当将要重新检测的个数小于等于360时
+        for (int i = 1; i < lstCylinderWidget.count(); i ++) {
+            CylinderWidget *cylinderWidget = static_cast<CylinderWidget *>(lstCylinderWidget.at(i));
+            cylinderWidget->setStyleSheet(QString("background:%1;border:0px").arg(m_initColor));
+            cylinderWidget->setUserData("");
+        }
+    } else { // 当将要重新检测的个数大于360
+        for (int i = 0; i < 360; i ++) {
+            if (i < lstCylinderWidget.count() - 1) {
+                CylinderWidget *cylinderWidget = static_cast<CylinderWidget *>(lstCylinderWidget.at(i + 1));
+                cylinderWidget->setStyleSheet(QString("background:%1;border:0px").arg(m_initColor));
+                cylinderWidget->setUserData("");
+            }else {
+                CylinderWidget *cylinderWidget = new CylinderWidget;
+                cylinderWidget->setFixedSize(20, 20);
+                cylinderWidget->setFrameShape(QFrame::Box);
+                cylinderWidget->setObjectName(QString("%1").arg(i));
+                cylinderWidget->setStyleSheet(QString("background:%1;border:0px").arg(m_initColor));
+                connect(cylinderWidget, &CylinderWidget::enter, this, &CylinderInfoWidget::enterSlot);
+                connect(cylinderWidget, &CylinderWidget::leave, this, &CylinderInfoWidget::leaveSlot);
+
+                m_gridLayout->addWidget(cylinderWidget, i / 24, i % 24);
+            }
+
+        }
+    }
+
+}
+
+void CylinderInfoWidget::reset(int cylNumber)
+{
+    m_curCheckCount = 0;
+    m_badSectorsCount = 0;
+    m_scrollBar->hide();
+    m_isChanged = false;
+
+    QList<QObject *> lstCylinderWidget = m_widget->children();
+    for (int i = 1; i < lstCylinderWidget.count(); i ++) {
+        QObject *obj = lstCylinderWidget.at(i);
+        delete obj;
+        obj = nullptr;
+    }
+
+    if (cylNumber <= 360) {
+        for (int i = 0; i < cylNumber; i++) {
+            CylinderWidget *cylinderWidget = new CylinderWidget;
+            cylinderWidget->setFixedSize(20, 20);
+            cylinderWidget->setFrameShape(QFrame::Box);
+            cylinderWidget->setObjectName(QString("%1").arg(i));
+            cylinderWidget->setStyleSheet(QString("background:%1;border:0px").arg(m_initColor));
+            connect(cylinderWidget, &CylinderWidget::enter, this, &CylinderInfoWidget::enterSlot);
+            connect(cylinderWidget, &CylinderWidget::leave, this, &CylinderInfoWidget::leaveSlot);
+
+            m_gridLayout->addWidget(cylinderWidget, i / 24, i % 24);
+        }
+    } else {
+        for (int i = 0; i < 360; i++) {
+            CylinderWidget *cylinderWidget = new CylinderWidget;
+            cylinderWidget->setFixedSize(20, 20);
+            cylinderWidget->setFrameShape(QFrame::Box);
+            cylinderWidget->setObjectName(QString("%1").arg(i));
+            cylinderWidget->setStyleSheet(QString("background:%1;border:0px").arg(m_initColor));
+            connect(cylinderWidget, &CylinderWidget::enter, this, &CylinderInfoWidget::enterSlot);
+            connect(cylinderWidget, &CylinderWidget::leave, this, &CylinderInfoWidget::leaveSlot);
+
+            m_gridLayout->addWidget(cylinderWidget, i / 24, i % 24);
+        }
+    }
+
 }
 
 void CylinderInfoWidget::setCylinderNumber(int cylNumber)
@@ -172,7 +254,7 @@ void CylinderInfoWidget::setCylinderNumber(int cylNumber)
     m_badSectorsCount = 0;
     m_scrollBar->hide();
     m_isChanged = false;
-    m_settings = new QSettings("/mnt/test.conf", QSettings::IniFormat);
+
     qDebug() << m_cylNumber << m_widget->children().count();
 
     QList<QObject *> lstCylinderWidget = m_widget->children();

@@ -66,6 +66,18 @@ public:
      */
     void setCurCheckBadBlocksInfo(const QString &LBANumber, const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
 
+    /**
+     * @brief 重新检测
+     * @param cylNumber 柱面个数
+     */
+    void againVerify(int cylNumber);
+
+    /**
+     * @brief 复位
+     * @param cylNumber 柱面个数
+     */
+    void reset(int cylNumber);
+
 signals:
     /**
      * @brief 检测完成信号

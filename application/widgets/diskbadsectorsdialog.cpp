@@ -361,6 +361,8 @@ void DiskBadSectorsDialog::initUI()
     addSpacing(10);
     addContent(bottomWidget);
 
+    m_settings = new QSettings("/tmp/CheckData.conf", QSettings::IniFormat);
+
 }
 
 void DiskBadSectorsDialog::initConnections()
@@ -373,6 +375,9 @@ void DiskBadSectorsDialog::initConnections()
     connect(m_checkTimesEdit, &DLineEdit::textChanged, this, &DiskBadSectorsDialog::oncheckTimesChanged);
     connect(m_startButton, &DSuggestButton::clicked, this, &DiskBadSectorsDialog::onStartVerifyButtonClicked);
     connect(m_stopButton, &DSuggestButton::clicked, this, &DiskBadSectorsDialog::onStopButtonClicked);
+    connect(m_continueButton, &DSuggestButton::clicked, this, &DiskBadSectorsDialog::onContinueButtonClicked);
+    connect(m_againButton, &DSuggestButton::clicked, this, &DiskBadSectorsDialog::onAgainVerifyButtonClicked);
+    connect(m_resetButton, &DSuggestButton::clicked, this, &DiskBadSectorsDialog::onResetButtonClicked);
     connect(m_exitButton, &DPushButton::clicked, this, &DiskBadSectorsDialog::onExitButtonClicked);
     connect(m_doneButton, &DSuggestButton::clicked, this, &DiskBadSectorsDialog::onDoneButtonClicked);
     connect(DMDbusHandler::instance(), &DMDbusHandler::checkBadBlocksCountInfo, this, &DiskBadSectorsDialog::onCheckBadBlocksInfo);
@@ -440,8 +445,9 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
     m_curType = Check;
     m_buttonStackedWidget->setCurrentIndex(1);
     m_progressWidget->show();
+    m_resetButton->setDisabled(true);
 
-    QFile file("/mnt/test.conf");
+    QFile file("/tmp/CheckData.conf");
     if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
         QTextStream out(&file);
         out << "[SettingData]\n";
@@ -450,9 +456,6 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
         out << "BadSectors=""\n";
         file.close();
     }
-
-    m_settings = new QSettings("/mnt/test.conf", QSettings::IniFormat);
-
 
     DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
 
@@ -474,7 +477,7 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
         int blockStart = m_startLineEdit->text().toInt();
         int blockEnd = m_endLineEdit->text().toInt();
         int checkSize = static_cast<int>(info.heads * info.sectors * info.sector_size);
-        qDebug() << blockStart << blockEnd << checkNumber << checkSize;
+
         m_totalCheckNumber = blockEnd - blockStart + 1;
         m_cylinderInfoWidget->setCylinderNumber(m_totalCheckNumber);
 
@@ -492,7 +495,7 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
         int blockStart = static_cast<int>(m_startLineEdit->text().toLongLong() / info.cylsize);
         int blockEnd = static_cast<int>(m_endLineEdit->text().toLongLong() / info.cylsize);
         int checkSize = static_cast<int>(info.heads * info.sectors * info.sector_size);
-        qDebug() << blockStart << blockEnd << checkNumber << checkSize;
+
         m_totalCheckNumber = blockEnd - blockStart + 1;
         m_cylinderInfoWidget->setCylinderNumber(m_totalCheckNumber);
 
@@ -503,14 +506,14 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
         m_settings->setValue("CheckNumber",checkNumber);
         m_settings->endGroup();
 
-//        DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart, blockEnd, checkNumber, checkSize);
+        DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart, blockEnd, checkNumber, checkSize, 1);
         break;
     }
     case 2: {
         int checkSize = static_cast<int>(info.heads * info.sectors * info.sector_size);
         int blockStart = static_cast<int>(m_startLineEdit->text().toLongLong() * 1024 * 1024 / checkSize);
         int blockEnd = static_cast<int>(m_endLineEdit->text().toLongLong() * 1024 * 1024 / checkSize);
-        qDebug() << blockStart << blockEnd << checkNumber << checkSize;
+
         m_totalCheckNumber = blockEnd - blockStart + 1;
         m_cylinderInfoWidget->setCylinderNumber(m_totalCheckNumber);
 
@@ -521,7 +524,7 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
         m_settings->setValue("CheckNumber",checkNumber);
         m_settings->endGroup();
 
-//        DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart, blockEnd, checkNumber, checkSize);
+        DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart, blockEnd, checkNumber, checkSize, 1);
         break;
     }
     }
@@ -583,6 +586,7 @@ void DiskBadSectorsDialog::onCheckCoomplete(int badSectorsCount)
     m_buttonStackedWidget->setCurrentIndex(3);
     m_checkInfoLabel->setText(tr("Verify completed")); // 检测完成
     m_curType = Normal;
+    m_resetButton->setDisabled(false);
 
     MessageBox messageBox;
     messageBox.setObjectName("messageBox");
@@ -596,6 +600,7 @@ void DiskBadSectorsDialog::onStopButtonClicked()
     switch (m_curType) {
     case Check: {
         m_buttonStackedWidget->setCurrentIndex(2);
+        m_resetButton->setDisabled(false);
         m_curType = StopCheck;
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
 
@@ -614,6 +619,111 @@ void DiskBadSectorsDialog::onStopButtonClicked()
     }
     default:
         break;
+    }
+}
+
+void DiskBadSectorsDialog::onContinueButtonClicked()
+{
+    switch (m_curType) {
+    case StopCheck: {
+        m_buttonStackedWidget->setCurrentIndex(1);
+        m_resetButton->setDisabled(true);
+        m_curType = Check;
+        DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
+
+        int checkSize = m_settings->value("SettingData/CheckSize").toInt();
+        int blockStart = m_settings->value("SettingData/CurCylinder").toInt();
+        int blockEnd = m_settings->value("SettingData/BlockEnd").toInt();
+        int checkNumber = m_settings->value("SettingData/CheckNumber").toInt();
+
+        DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart + 1, blockEnd, checkNumber, checkSize, 3);
+        break;
+    }
+    case StopRepair:{
+        break;
+    }
+    default:
+        break;
+    }
+}
+
+void DiskBadSectorsDialog::onAgainVerifyButtonClicked()
+{
+    m_progressBar->setValue(0);
+    m_usedTimeLabel->setText("00:00:00");
+    m_unusedTimeLabel->setText("00:00:00");
+    m_checkInfoLabel->setText("");
+    m_curType = Check;
+    m_buttonStackedWidget->setCurrentIndex(1);
+    m_resetButton->setDisabled(true);
+    m_curCheckNumber = 0;
+    m_curCheckTime = 0;
+
+    DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
+
+    int checkSize = m_settings->value("SettingData/CheckSize").toInt();
+    int blockStart = m_settings->value("SettingData/BlockStart").toInt();
+    int blockEnd = m_settings->value("SettingData/BlockEnd").toInt();
+    int checkNumber = m_settings->value("SettingData/CheckNumber").toInt();
+
+    QFile file("/tmp/CheckData.conf");
+    if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
+        QTextStream out(&file);
+        out << "[SettingData]\n";
+        out << "[CheckData]\n";
+        out << "[BadSectorsData]\n";
+        out << "BadSectors=""\n";
+        file.close();
+    }
+
+//    m_totalCheckNumber = blockEnd - blockStart + 1;
+//    m_cylinderInfoWidget->setCylinderNumber(m_totalCheckNumber);
+    m_cylinderInfoWidget->againVerify(blockEnd - blockStart + 1);
+
+    m_settings->beginGroup("SettingData");
+    m_settings->setValue("BlockStart", blockStart);
+    m_settings->setValue("BlockEnd", blockEnd);
+    m_settings->setValue("CheckSize", checkSize);
+    m_settings->setValue("CheckNumber", checkNumber);
+    m_settings->endGroup();
+
+    DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart, blockEnd, checkNumber, checkSize, 1);
+}
+
+void DiskBadSectorsDialog::onResetButtonClicked()
+{
+    m_progressBar->setValue(0);
+    m_usedTimeLabel->setText("00:00:00");
+    m_unusedTimeLabel->setText("00:00:00");
+    m_checkInfoLabel->setText("");
+    m_curType = Normal;
+    m_buttonStackedWidget->setCurrentIndex(0);
+    m_progressWidget->hide();
+    m_totalCheckNumber = 0;
+    m_curCheckNumber = 0;
+    m_curCheckTime = 0;
+
+    DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
+    switch (m_verifyComboBox->currentIndex()) {
+    case 0: {
+        int blockStart = m_startLineEdit->text().toInt();
+        int blockEnd = m_endLineEdit->text().toInt();
+        m_cylinderInfoWidget->reset(blockEnd - blockStart + 1);
+        break;
+    }
+    case 1: {
+        int blockStart = static_cast<int>(m_startLineEdit->text().toLongLong() / info.cylsize);
+        int blockEnd = static_cast<int>(m_endLineEdit->text().toLongLong() / info.cylsize);
+        m_cylinderInfoWidget->reset(blockEnd - blockStart + 1);
+        break;
+    }
+    case 2: {
+        int checkSize = static_cast<int>(info.heads * info.sectors * info.sector_size);
+        int blockStart = static_cast<int>(m_startLineEdit->text().toLongLong() * 1024 * 1024 / checkSize);
+        int blockEnd = static_cast<int>(m_endLineEdit->text().toLongLong() * 1024 * 1024 / checkSize);
+        m_cylinderInfoWidget->reset(blockEnd - blockStart + 1);
+        break;
+    }
     }
 }
 
@@ -647,7 +757,7 @@ void DiskBadSectorsDialog::closeEvent(QCloseEvent *event)
 
             DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart, blockEnd, checkNumber, checkSize, 2);
 
-            QFile file("/mnt/test.conf");
+            QFile file("/tmp/CheckData.conf");
             if (file.exists()) {
                 file.remove();
             }
@@ -663,7 +773,7 @@ void DiskBadSectorsDialog::closeEvent(QCloseEvent *event)
         messageBox.setWarings(tr("Repairing bad sectors, exit now?"), tr("The repairing information will not be reserved"),
                               tr("Exit"), tr("Cancel"));
         if (messageBox.exec() == 1) {
-            QFile file("/mnt/test.conf");
+            QFile file("/tmp/CheckData.conf");
             if (file.exists()) {
                 file.remove();
             }
@@ -673,7 +783,7 @@ void DiskBadSectorsDialog::closeEvent(QCloseEvent *event)
         break;
     }
     default:
-        QFile file("/mnt/test.conf");
+        QFile file("/tmp/CheckData.conf");
         if (file.exists()) {
             file.remove();
         }

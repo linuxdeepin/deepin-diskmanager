@@ -304,6 +304,8 @@ Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void checkBadBlocksCountInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
     Q_SCRIPTABLE void checkBadBlocksDeviceStatusError();
     Q_SCRIPTABLE void fixBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus, const QString &cylinderTimeConsuming);
+    Q_SCRIPTABLE void checkBadBlocksFinished();
+    Q_SCRIPTABLE void fixBadBlocksFinished();
 };
 
 namespace com {

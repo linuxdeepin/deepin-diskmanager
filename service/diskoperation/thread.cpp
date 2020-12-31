@@ -72,6 +72,11 @@ void workthread::runCount()
         i++;
         j++;
     }
+
+    if (m_stopFlag != 2) {
+        emit checkBadBlocksFinished();
+    }
+
     emit checkBadBlocksDeviceStatusFinished();
 }
 
@@ -117,6 +122,11 @@ void workthread::runTime()
         i++;
         j++;
     }
+
+    if (m_stopFlag != 2) {
+        emit checkBadBlocksFinished();
+    }
+
     emit checkBadBlocksDeviceStatusFinished();
 }
 
@@ -132,6 +142,7 @@ void fixthread::setStopFlag(int flag)
 
 void fixthread::runFix()
 {
+    qDebug() << m_list << endl;
     int i = 0;
     QProcess proc;
     while(i < m_list.size() && m_stopFlag != 2) {
@@ -160,11 +171,16 @@ void fixthread::runFix()
         i++;
     }
 
+    if (m_stopFlag != 2) {
+        emit fixBadBlocksFinished();
+    }
+
     emit checkBadBlocksDeviceStatusFinished();
 }
 
 void fixthread::setFixBadBlocksInfo(const QString &devicePath, QStringList list, int checkSize)
 {
+    m_list.clear();
     m_devicePath = devicePath;
     m_list = list;
     m_checkSize = checkSize;

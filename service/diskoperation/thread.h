@@ -67,13 +67,13 @@ signals:
      */
     void checkBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
 
-//    /**
-//     * @brief 坏道检测设备状态异常退出信号
-//     */
-//    void checkBadBlocksDeviceStatusError();
+    /**
+     * @brief 坏道检测完成信号
+     */
+    void checkBadBlocksFinished();
 
     /**
-     * @brief 坏道检测完成结束信号
+     * @brief 坏道检测线程回收信号
      */
     void checkBadBlocksDeviceStatusFinished();
 
@@ -113,7 +113,9 @@ public slots:
      * @brief 坏道修复线程
      */
     void runFix();
+
 signals:
+
     /**
      * @brief 坏道修复信息信号
      * @param cylinderNumber：检测柱面号
@@ -122,9 +124,14 @@ signals:
     void fixBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus, const QString &cylinderTimeConsuming);
 
     /**
-     * @brief 坏道检测完成结束信号
+     * @brief 坏道检测线程回收信号
      */
     void checkBadBlocksDeviceStatusFinished();
+
+    /**
+     * @brief 坏道修复完成信号
+     */
+    void fixBadBlocksFinished();
 
 private:
     QString m_devicePath;   //设备路径

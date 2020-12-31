@@ -648,10 +648,15 @@ signals:
      */
     void checkBadBlocksCountInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
 
-//    /**
-//     * @brief 坏道检测设备状态异常退出信号
-//     */
-//    void checkBadBlocksDeviceStatusError();
+    /**
+     * @brief 坏道检测完成信号
+     */
+    void checkBadBlocksFinished();
+
+    /**
+     * @brief 坏道修复完成信号
+     */
+    void fixBadBlocksFinished();
 
     /**
      * @brief 坏道修复信息信号

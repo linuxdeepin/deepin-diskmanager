@@ -52,10 +52,10 @@ PartedCore::PartedCore(QObject *parent)
 {
     connect(this, &PartedCore::refreshDeviceInfo, this, &PartedCore::onRefreshDeviceInfo);
     connect(&m_checkThread, &workthread::checkBadBlocksInfo, this, &PartedCore::checkBadBlocksCountInfo);
-    connect(&m_checkThread, &workthread::checkBadBlocksDeviceStatusError, this, &PartedCore::checkBadBlocksDeviceStatusError);
+//    connect(&m_checkThread, &workthread::checkBadBlocksDeviceStatusError, this, &PartedCore::checkBadBlocksDeviceStatusError);
     connect(&m_checkThread, &workthread::checkBadBlocksDeviceStatusFinished, this, &PartedCore::threadSafeRecycle);
-    connect(&m_checkThread, &workthread::fixBadBlocksInfo, this, &PartedCore::fixBadBlocksInfo);
-
+    connect(&m_fixthread, &fixthread::fixBadBlocksInfo, this, &PartedCore::fixBadBlocksInfo);
+    connect(&m_fixthread, &fixthread::checkBadBlocksDeviceStatusFinished, this, &PartedCore::threadSafeRecycle);
     qDebug() << __FUNCTION__ << "^^1";
 
     for (PedPartitionFlag flag = ped_partition_flag_next(static_cast<PedPartitionFlag>(NULL));
@@ -2317,21 +2317,21 @@ bool PartedCore::fixBadBlocks(const QString &devicePath, QStringList badBlocksLi
     m_workerThread = new QThread();
     switch(flag) {
     case 1: {
-        m_checkThread.moveToThread(m_workerThread);
-        m_checkThread.setStopFlag(flag);
-        m_checkThread.setFixBadBlocksInfo(devicePath, badBlocksList, checkSize);
-        connect(m_workerThread, SIGNAL(started()), &m_checkThread, SLOT(runFix()));
+        m_fixthread.moveToThread(m_workerThread);
+        m_fixthread.setStopFlag(flag);
+        m_fixthread.setFixBadBlocksInfo(devicePath, badBlocksList, checkSize);
+        connect(m_workerThread, SIGNAL(started()), &m_fixthread, SLOT(runFix()));
         m_workerThread->start();
     }
         break;
     case 2:
-        m_checkThread.setStopFlag(flag);
+        m_fixthread.setStopFlag(flag);
         break;
     case 3: {
 //        m_checkThread.moveToThread(m_workerThread);
-        m_checkThread.setStopFlag(flag);
-        m_checkThread.setFixBadBlocksInfo(devicePath, badBlocksList, checkSize);
-        connect(m_workerThread, SIGNAL(started()), &m_checkThread, SLOT(runFix()));
+        m_fixthread.setStopFlag(flag);
+        m_fixthread.setFixBadBlocksInfo(devicePath, badBlocksList, checkSize);
+        connect(m_workerThread, SIGNAL(started()), &m_fixthread, SLOT(runFix()));
         m_workerThread->start();
     }
         break;

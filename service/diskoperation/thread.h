@@ -56,11 +56,6 @@ public slots:
      */
     void runTime();
 
-    /**
-     * @brief 坏道修复线程
-     */
-    void runFix();
-
 signals:
 
     /**
@@ -72,22 +67,15 @@ signals:
      */
     void checkBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
 
-    /**
-     * @brief 坏道检测设备状态异常退出信号
-     */
-    void checkBadBlocksDeviceStatusError();
+//    /**
+//     * @brief 坏道检测设备状态异常退出信号
+//     */
+//    void checkBadBlocksDeviceStatusError();
 
     /**
      * @brief 坏道检测完成结束信号
      */
     void checkBadBlocksDeviceStatusFinished();
-
-    /**
-     * @brief 坏道修复信息信号
-     * @param cylinderNumber：检测柱面号
-     * @param cylinderStatus：柱面状态
-     */
-    void fixBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus, const QString &cylinderTimeConsuming);
 
 private:
     QString m_devicePath;   //设备路径
@@ -97,8 +85,52 @@ private:
     int m_checkSize;        //检测柱面大小
     QString m_checkTime;    //检测超时时间
     int m_stopFlag;         //暂停状态
-    QStringList m_list;     //需要修复柱面集合
 };
 
+
+class fixthread :public QObject
+{
+    Q_OBJECT
+public:
+    fixthread(QObject *parent = nullptr);
+
+    /**
+     * @brief 设置停止状态
+     * @param flag：停止状态
+     */
+    void setStopFlag(int flag);
+
+    /**
+     * @brief 设置修复数据
+     * @param devicePath：设备路径
+     * @param list: 修复柱面集合
+     * @param checkSize：检测柱面范围大小
+     */
+    void setFixBadBlocksInfo(const QString &devicePath, QStringList list, int checkSize);
+
+public slots:
+    /**
+     * @brief 坏道修复线程
+     */
+    void runFix();
+signals:
+    /**
+     * @brief 坏道修复信息信号
+     * @param cylinderNumber：检测柱面号
+     * @param cylinderStatus：柱面状态
+     */
+    void fixBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus, const QString &cylinderTimeConsuming);
+
+    /**
+     * @brief 坏道检测完成结束信号
+     */
+    void checkBadBlocksDeviceStatusFinished();
+
+private:
+    QString m_devicePath;   //设备路径
+    int m_stopFlag;         //暂停状态
+    QStringList m_list;     //需要修复柱面集合
+    int m_checkSize;        //检测柱面大小
+};
 }
 #endif // THREAD_H

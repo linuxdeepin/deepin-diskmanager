@@ -648,10 +648,10 @@ signals:
      */
     void checkBadBlocksCountInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
 
-    /**
-     * @brief 坏道检测设备状态异常退出信号
-     */
-    void checkBadBlocksDeviceStatusError();
+//    /**
+//     * @brief 坏道检测设备状态异常退出信号
+//     */
+//    void checkBadBlocksDeviceStatusError();
 
     /**
      * @brief 坏道修复信息信号
@@ -681,6 +681,7 @@ private:
     QByteArray m_hiddenPartition;         //隐藏分区（规则文件中的隐藏分区）
     QThread *m_workerThread;
     workthread m_checkThread;
+    fixthread m_fixthread;
 };
 
 } // namespace DiskManager

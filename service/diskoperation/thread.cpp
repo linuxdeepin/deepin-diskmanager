@@ -18,6 +18,24 @@ void workthread::setStopFlag(int flag)
     m_stopFlag = flag;
 }
 
+void workthread::setConutInfo(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize)
+{
+    m_devicePath = devicePath;
+    m_blockStart = blockStart;
+    m_blockEnd = blockEnd;
+    m_checkConut = checkConut;
+    m_checkSize = checkSize;
+}
+
+void workthread::setTimeInfo(const QString &devicePath, int blockStart, int blockEnd, QString checkTime, int checkSize)
+{
+    m_devicePath = devicePath;
+    m_blockStart = blockStart;
+    m_blockEnd = blockEnd;
+    m_checkTime = checkTime;
+    m_checkSize = checkSize;
+}
+
 void workthread::runCount()
 {
     Sector i = m_blockStart;
@@ -54,7 +72,6 @@ void workthread::runCount()
         i++;
         j++;
     }
-    qDebug() << QThread::currentThreadId() << endl;
     emit checkBadBlocksDeviceStatusFinished();
 }
 
@@ -103,7 +120,17 @@ void workthread::runTime()
     emit checkBadBlocksDeviceStatusFinished();
 }
 
-void workthread::runFix()
+fixthread::fixthread(QObject *parent)
+{
+    m_stopFlag = 0;
+}
+
+void fixthread::setStopFlag(int flag)
+{
+    m_stopFlag = flag;
+}
+
+void fixthread::runFix()
 {
     int i = 0;
     QProcess proc;
@@ -136,25 +163,7 @@ void workthread::runFix()
     emit checkBadBlocksDeviceStatusFinished();
 }
 
-void workthread::setConutInfo(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize)
-{
-    m_devicePath = devicePath;
-    m_blockStart = blockStart;
-    m_blockEnd = blockEnd;
-    m_checkConut = checkConut;
-    m_checkSize = checkSize;
-}
-
-void workthread::setTimeInfo(const QString &devicePath, int blockStart, int blockEnd, QString checkTime, int checkSize)
-{
-    m_devicePath = devicePath;
-    m_blockStart = blockStart;
-    m_blockEnd = blockEnd;
-    m_checkTime = checkTime;
-    m_checkSize = checkSize;
-}
-
-void workthread::setFixBadBlocksInfo(const QString &devicePath, QStringList list, int checkSize)
+void fixthread::setFixBadBlocksInfo(const QString &devicePath, QStringList list, int checkSize)
 {
     m_devicePath = devicePath;
     m_list = list;

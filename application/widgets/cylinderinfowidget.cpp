@@ -255,8 +255,6 @@ void CylinderInfoWidget::setCylinderNumber(int cylNumber)
     m_scrollBar->hide();
     m_isChanged = false;
 
-    qDebug() << m_cylNumber << m_widget->children().count();
-
     QList<QObject *> lstCylinderWidget = m_widget->children();
 
     if (m_cylNumber == lstCylinderWidget.count() - 1) { // 当前要检测的柱面数等于初始化个数
@@ -323,11 +321,11 @@ void CylinderInfoWidget::setCurCheckBadBlocksInfo(const QString &LBANumber, cons
     }
 
     if (m_cylNumber <= 360) {
-        updateCylinderInfo(cylinderNumber.toInt() % 360, LBANumber, cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
+        updateCylinderInfo(cylinderNumber.toInt() % 360, LBANumber, cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo, "0");
     } else {
         if(m_curCheckCount <= 360)
         {
-            updateCylinderInfo(cylinderNumber.toInt() % 360, LBANumber, cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
+            updateCylinderInfo(cylinderNumber.toInt() % 360, LBANumber, cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo, "0");
         }else {
 
             int rowCount = m_curCheckCount / 24;
@@ -350,14 +348,14 @@ void CylinderInfoWidget::setCurCheckBadBlocksInfo(const QString &LBANumber, cons
                     QString value = m_settings->value(QString("CheckData/%1").arg(i)).toString();
                     if (!value.isEmpty()) {
                         QStringList lst = value.split(",");
-                        updateCylinderInfo((i - start) % 360, lst.at(0), lst.at(1), lst.at(2), lst.at(3), lst.at(4));
+                        updateCylinderInfo((i - start) % 360, lst.at(0), lst.at(1), lst.at(2), lst.at(3), lst.at(4), lst.at(5));
                     } else {
                         if (i > m_settings->value("SettingData/BlockEnd").toInt()) {
                             CylinderWidget *cylinderWidget = m_widget->findChild<CylinderWidget *>(QString("%1").arg((i - start) % 360));
                             delete cylinderWidget;
                             cylinderWidget = nullptr;
                         } else {
-                            updateCylinderInfo((i - start) % 360, "", "", "", "", "");
+                            updateCylinderInfo((i - start) % 360, "", "", "", "", "", "");
                         }
                     }
                 }
@@ -365,12 +363,12 @@ void CylinderInfoWidget::setCurCheckBadBlocksInfo(const QString &LBANumber, cons
         }
     }
 
-    if (m_cylNumber == m_curCheckCount) {
-        emit checkCoomplete(m_badSectorsCount);
-    }
+//    if (m_cylNumber == m_curCheckCount) {
+//        emit checkCoomplete(m_badSectorsCount);
+//    }
 }
 
-void CylinderInfoWidget::updateCylinderInfo(int number, const QString &LBANumber, const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo)
+void CylinderInfoWidget::updateCylinderInfo(int number, const QString &LBANumber, const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo, const QString &repair)
 {
     CylinderWidget *cylinderWidget = m_widget->findChild<CylinderWidget *>(QString("%1").arg(number));
 
@@ -393,9 +391,40 @@ void CylinderInfoWidget::updateCylinderInfo(int number, const QString &LBANumber
         mapInfo["time"] = cylinderTimeConsuming;
         mapInfo["errorinfo"] = cylinderErrorInfo;
         mapInfo["status"] = cylinderStatus;
+        mapInfo["repair"] = repair;
 
         cylinderWidget->setUserData(mapInfo);
     }
+}
+
+void CylinderInfoWidget::setCurRepairBadBlocksInfo(const QString &cylinderNumber)
+{
+    QList<QObject *> lstCylinderWidget = m_widget->children();
+
+    CylinderWidget *firstWidget = static_cast<CylinderWidget *>(lstCylinderWidget.at(1));
+    QMap<QString, QVariant> firstValue = firstWidget->getUserData().toMap();
+
+    CylinderWidget *lastWidget = static_cast<CylinderWidget *>(lstCylinderWidget.at(lstCylinderWidget.count() - 1));
+    QMap<QString, QVariant> lastValue = lastWidget->getUserData().toMap();
+    if (firstValue["number"].toInt() > cylinderNumber.toInt() || lastValue["number"].toInt() < cylinderNumber.toInt()) {
+        return;
+    }
+
+    for (int i = 1; i < lstCylinderWidget.count(); i++) {
+        CylinderWidget *cylinderWidget = static_cast<CylinderWidget *>(lstCylinderWidget.at(i));
+        QMap<QString, QVariant> mapInfo = cylinderWidget->getUserData().toMap();
+
+        if (mapInfo["number"].toInt() == cylinderNumber.toInt()) {
+            cylinderWidget->setStyleSheet(QString("background:%1;border:0px").arg(m_excellentColor));
+            QString curCheckData = m_settings->value(QString("CheckData/%1").arg(cylinderNumber)).toString();
+            QStringList lstCheckData = curCheckData.split(",");
+            mapInfo["status"] = lstCheckData.at(3);
+            mapInfo["repair"] = lstCheckData.at(5);
+            cylinderWidget->setUserData(mapInfo);
+            break;
+        }
+    }
+
 }
 
 void CylinderInfoWidget::enterSlot()
@@ -412,12 +441,22 @@ void CylinderInfoWidget::enterSlot()
     m_cylNumberLabel->setText(QString(tr("Cyl.:%1；")).arg(mapInfo["number"].toString()));
     m_curErrorInfoLabel->setText(QString(tr("Error:%1")).arg(mapInfo["errorinfo"].toString()));
     m_elapsedTimeLabel->setText(QString(tr("Cyl. elapsed time:%1")).arg(mapInfo["time"].toString()) + "ms");
+    m_repairLabel->setText(tr("Status:Repaired")); // 已修复
 
-    if (mapInfo["status"].toString() == "good") {
-        m_curErrorInfoLabel->hide();
-        m_repairLabel->hide();
-    } else {
+    if (mapInfo["repair"].toInt() == 1) {
         m_curErrorInfoLabel->show();
+        m_repairLabel->show();
+        m_elapsedTimeLabel->hide();
+    } else {
+        if (mapInfo["status"].toString() == "good") {
+            m_curErrorInfoLabel->hide();
+            m_repairLabel->hide();
+            m_elapsedTimeLabel->show();
+        } else {
+            m_curErrorInfoLabel->show();
+            m_elapsedTimeLabel->show();
+            m_repairLabel->hide();
+        }
     }
 
     m_arrowRectangle->show(label->mapToGlobal(label->pos()).x() - label->pos().x() + (label->width() / 2),
@@ -432,7 +471,6 @@ void CylinderInfoWidget::leaveSlot()
 
 void CylinderInfoWidget::onScrollBarValueChanged(int value)
 {
-    qDebug() << value;
     if (value < m_scrollBar->maximum()) {
         m_isChanged = true;
     } else {
@@ -458,14 +496,14 @@ void CylinderInfoWidget::onScrollBarValueChanged(int value)
             }
 
             QStringList lst = value.split(",");
-            updateCylinderInfo((i - start) % 360, lst.at(0), lst.at(1), lst.at(2), lst.at(3), lst.at(4));
+            updateCylinderInfo((i - start) % 360, lst.at(0), lst.at(1), lst.at(2), lst.at(3), lst.at(4), lst.at(5));
         } else {
             if (i > m_settings->value("SettingData/BlockEnd").toInt()) {
                 CylinderWidget *cylinderWidget = m_widget->findChild<CylinderWidget *>(QString("%1").arg((i - start) % 360));
                 delete cylinderWidget;
                 cylinderWidget = nullptr;
             } else {
-                updateCylinderInfo((i - start) % 360, "", "", "", "", "");
+                updateCylinderInfo((i - start) % 360, "", "", "", "", "", "");
             }
         }
     }

@@ -37,6 +37,7 @@
 #include <DSuggestButton>
 
 #include <QWidget>
+#include <QTimer>
 
 DWIDGET_USE_NAMESPACE
 DCORE_USE_NAMESPACE
@@ -130,6 +131,11 @@ private slots:
     void onResetButtonClicked();
 
     /**
+     * @brief 尝试修复按钮点击响应的槽函数
+     */
+    void onRepairButtonClicked();
+
+    /**
      * @brief 坏道检测实时信息
      * @param cylinderNumber 柱面号
      * @param cylinderTimeConsuming 柱面耗时
@@ -141,7 +147,25 @@ private slots:
     /**
      * @brief 检测完成响应的槽函数
      */
-    void onCheckCoomplete(int badSectorsCount);
+    void onCheckCoomplete();
+
+    /**
+     * @brief 坏道修复实时信息
+     * @param cylinderNumber 柱面号
+     * @param cylinderStatus 柱面修复后的状态
+     * @param cylinderTimeConsuming 修复柱面耗时
+     */
+    void onRepairBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus, const QString &cylinderTimeConsuming);
+
+    /**
+     * @brief 修复完成响应的槽函数
+     */
+    void onRepairCoomplete();
+
+    /**
+     * @brief 定时器超时信号响应的槽函数
+     */
+    void onTimeOut();
 
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -187,6 +211,13 @@ private:
     int m_curCheckNumber = 0;
     int m_curCheckTime = 0;
     QSettings *m_settings;
+    int m_totalRepairNumber = 0;
+    int m_curRepairNumber = 0;
+    int m_curRepairTime = 0;
+    int m_repairedCount = 0;
+    QTimer m_timer;
+    int m_usedTime = 0;
+    int m_unusedTime = 0;
 };
 
 #endif // DISKBADSECTORSDIALOG_H

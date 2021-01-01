@@ -81,7 +81,10 @@ void DMDbusHandler::initConnection()
     connect(m_dbus, &DMDBusInterface::showPartitionInfo, this, &DMDbusHandler::onShowPartition);
     connect(m_dbus, &DMDBusInterface::usbUpdated, this, &DMDbusHandler::onUpdateUsb);
     connect(m_dbus, &DMDBusInterface::checkBadBlocksCountInfo, this, &DMDbusHandler::checkBadBlocksCountInfo);
-    connect(m_dbus, &DMDBusInterface::checkBadBlocksDeviceStatusError, this, &DMDbusHandler::checkBadBlocksDeviceStatusError);
+    connect(m_dbus, &DMDBusInterface::fixBadBlocksInfo, this, &DMDbusHandler::repairBadBlocksInfo);
+    connect(m_dbus, &DMDBusInterface::checkBadBlocksFinished, this, &DMDbusHandler::checkBadBlocksFinished);
+    connect(m_dbus, &DMDBusInterface::fixBadBlocksFinished, this, &DMDbusHandler::fixBadBlocksFinished);
+//    connect(m_dbus, &DMDBusInterface::checkBadBlocksDeviceStatusError, this, &DMDbusHandler::checkBadBlocksDeviceStatusError);
 }
 
 void DMDbusHandler::onDeletePartition(const QString &deleteMessage)
@@ -359,5 +362,10 @@ void DMDbusHandler::checkBadSectors(const QString &devicePath, int blockStart, i
         m_dbus->onCheckBadBlocksCount(devicePath, blockStart, blockEnd, checkNumber, checkSize, flag);
     }
 
+}
+
+void DMDbusHandler::repairBadBlocks(const QString &devicePath, QStringList badBlocksList, int repairSize, int flag)
+{
+    m_dbus->onFixBadBlocks(devicePath, badBlocksList, repairSize, flag);
 }
 

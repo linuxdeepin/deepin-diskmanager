@@ -78,12 +78,18 @@ public:
      */
     void reset(int cylNumber);
 
+    /**
+     * @brief 当前修复坏道信息
+     * @param cylinderNumber 柱面号
+     */
+    void setCurRepairBadBlocksInfo(const QString &cylinderNumber);
+
 signals:
     /**
      * @brief 检测完成信号
      * @param badSectorsCount 坏道个数
      */
-    void checkCoomplete(int badSectorsCount);
+//    void checkCoomplete(int badSectorsCount);
 
 public slots:
 
@@ -129,8 +135,9 @@ private:
      * @param cylinderTimeConsuming 柱面耗时
      * @param cylinderStatus 柱面状态
      * @param cylinderErrorInfo 柱面检测错误信息
+     * @param repair 是否是已修复，1代表已修复
      */
-    void updateCylinderInfo(int number, const QString &LBANumber, const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
+    void updateCylinderInfo(int number, const QString &LBANumber, const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo, const QString &repair);
 
 private:
     int m_cylNumber;

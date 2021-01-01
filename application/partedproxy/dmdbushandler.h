@@ -181,6 +181,15 @@ public:
      */
     void checkBadSectors(const QString &devicePath, int blockStart, int blockEnd, int checkNumber, int checkSize, int flag);
 
+    /**
+     * @brief 坏道修复
+     * @param devicePath 磁盘路径
+     * @param badBlocksList 坏道列表
+     * @param repairSize 修复柱面大小
+     * @param flag：修复状态(修复: 1，停止: 2，继续: 3)
+     */
+    void repairBadBlocks(const QString &devicePath, QStringList badBlocksList, int repairSize, int flag);
+
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
 
@@ -198,7 +207,10 @@ signals:
     void showPartitionMessage(const QString &showMessage);
     void updateUsb();
     void checkBadBlocksCountInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
-    void checkBadBlocksDeviceStatusError();
+//    void checkBadBlocksDeviceStatusError();
+    void repairBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus, const QString &cylinderTimeConsuming);
+    void checkBadBlocksFinished();
+    void fixBadBlocksFinished();
 
 public slots:
     /**

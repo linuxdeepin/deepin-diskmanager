@@ -399,6 +399,8 @@ void DiskBadSectorsDialog::onVerifyChanged(int index)
         m_startLineEdit->setText("0");
         m_endLineEdit->lineEdit()->setPlaceholderText(QString("%1").arg(info.cylinders));
         m_endLineEdit->setText(QString("%1").arg(info.cylinders));
+        m_endLineEdit->setAlert(false);
+        m_startLineEdit->setAlert(false);
         break;
     }
     case 1: {
@@ -406,6 +408,8 @@ void DiskBadSectorsDialog::onVerifyChanged(int index)
         m_startLineEdit->setText("0");
         m_endLineEdit->lineEdit()->setPlaceholderText(QString("%1").arg(info.length));
         m_endLineEdit->setText(QString("%1").arg(info.length));
+        m_endLineEdit->setAlert(false);
+        m_startLineEdit->setAlert(false);
         break;
     }
     case 2: {
@@ -414,6 +418,8 @@ void DiskBadSectorsDialog::onVerifyChanged(int index)
         m_startLineEdit->setText("0");
         m_endLineEdit->lineEdit()->setPlaceholderText(QString("%1").arg(value));
         m_endLineEdit->setText(QString("%1").arg(value));
+        m_endLineEdit->setAlert(false);
+        m_startLineEdit->setAlert(false);
         break;
     }
     }
@@ -422,6 +428,19 @@ void DiskBadSectorsDialog::onVerifyChanged(int index)
 void DiskBadSectorsDialog::onMethodChanged(int index)
 {
     m_methodStackedWidget->setCurrentIndex(index);
+    switch (index) {
+    case 0: {
+        m_timeoutEdit->setText("3000");
+        m_timeoutEdit->setAlert(false);
+
+        break;
+    }
+    case 1: {
+        m_checkTimesEdit->setText("8");
+        m_checkTimesEdit->setAlert(false);
+        break;
+    }
+    }
 }
 
 void DiskBadSectorsDialog::onSliderValueChanged(int value)
@@ -445,8 +464,75 @@ void DiskBadSectorsDialog::oncheckTimesChanged(const QString &text)
     m_slider->setValue(value);
 }
 
+bool DiskBadSectorsDialog::inputValueIsEffective()
+{
+    bool isEffective = true;
+
+    long long start = m_startLineEdit->lineEdit()->placeholderText().toLongLong();
+    long long end = m_endLineEdit->lineEdit()->placeholderText().toLongLong();
+    long long startValue = m_startLineEdit->text().toLongLong();
+    long long endValue = m_endLineEdit->text().toLongLong();
+
+    // 判断当前输入的检测范围的起始值是否在范围内，若不在就设为警告模式
+    if (startValue >= start && startValue <= end) {
+        m_startLineEdit->setAlert(false);
+    } else {
+        m_startLineEdit->setAlert(true);
+        isEffective = false;
+    }
+
+    // 判断当前输入的检测范围的结束值是否在范围内，若不在就设为警告模式
+    if (endValue >= start && endValue <= end) {
+        m_endLineEdit->setAlert(false);
+    } else {
+        m_endLineEdit->setAlert(true);
+        isEffective = false;
+    }
+
+    // 判断检测范围的起始值和结束值是否合理，若不合理就设为警告模式
+    if (startValue > endValue) {
+        m_endLineEdit->setAlert(true);
+        m_startLineEdit->setAlert(true);
+        isEffective = false;
+    } else {
+        if(isEffective) {
+            m_endLineEdit->setAlert(false);
+            m_startLineEdit->setAlert(false);
+        }
+    }
+
+    switch (m_methodComboBox->currentIndex()) {
+    case 0: { // 判断检测次数是否在范围内
+        int checkNumber = m_checkTimesEdit->text().toInt();
+        if (checkNumber < 1 || checkNumber > 16) {
+            m_checkTimesEdit->setAlert(true);
+            isEffective = false;
+        } else {
+            m_checkTimesEdit->setAlert(false);
+        }
+        break;
+    }
+    case 1: { // 判断超时时间是否在范围内
+        int checkNumber = m_timeoutEdit->text().toInt();
+        if (checkNumber < 100 || checkNumber > 3000) {
+            m_timeoutEdit->setAlert(true);
+            isEffective = false;
+        } else {
+            m_timeoutEdit->setAlert(false);
+        }
+        break;
+    }
+    }
+
+    return isEffective;
+}
+
 void DiskBadSectorsDialog::onStartVerifyButtonClicked()
 {
+    if (!inputValueIsEffective()) {
+        return;
+    }
+
     m_curType = Check;
     m_buttonStackedWidget->setCurrentIndex(1);
     m_progressWidget->show();
@@ -469,7 +555,6 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
     DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
 
     int checkNumber = 8;
-
     switch (m_methodComboBox->currentIndex()) {
     case 0: {
         checkNumber = m_checkTimesEdit->text().toInt();

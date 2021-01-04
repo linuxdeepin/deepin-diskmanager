@@ -181,6 +181,12 @@ private:
      */
     void initConnections();
 
+    /**
+     * @brief 判断检测范围和检测方式输入值是否有效
+     * @return true有效，false则无效
+     */
+    bool inputValueIsEffective();
+
 private:
     DComboBox *m_verifyComboBox;
     DLineEdit *m_startLineEdit;

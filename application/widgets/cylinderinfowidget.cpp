@@ -437,11 +437,11 @@ void CylinderInfoWidget::enterSlot()
         return;
     }
 
-    m_LBALabel->setText(QString(tr("LBA:%1；")).arg(mapInfo["id"].toString()));
-    m_cylNumberLabel->setText(QString(tr("Cyl.:%1；")).arg(mapInfo["number"].toString()));
-    m_curErrorInfoLabel->setText(QString(tr("Error:%1")).arg(mapInfo["errorinfo"].toString()));
-    m_elapsedTimeLabel->setText(QString(tr("Cyl. elapsed time:%1")).arg(mapInfo["time"].toString()) + "ms");
-    m_repairLabel->setText(tr("Status:Repaired")); // 已修复
+    m_LBALabel->setText(QString(tr("LBA: %1")).arg(mapInfo["id"].toString())); // LBA
+    m_cylNumberLabel->setText(QString(tr("Cyl.: %1")).arg(mapInfo["number"].toString())); // 柱面号
+    m_curErrorInfoLabel->setText(QString(tr("Error: %1")).arg(mapInfo["errorinfo"].toString())); // 当前错误信息
+    m_elapsedTimeLabel->setText(QString(tr("Cyl. elapsed time: %1")).arg(mapInfo["time"].toString()) + tr("ms")); // 柱面耗时  毫秒
+    m_repairLabel->setText(tr("Status: Repaired")); // 修复情况：已修复
 
     if (mapInfo["repair"].toInt() == 1) {
         m_curErrorInfoLabel->show();

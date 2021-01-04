@@ -29,13 +29,13 @@
 #include "utils.h"
 #include "fsinfo.h"
 
-#include <limits.h>
-#include <mntent.h>
-
 #include <QFile>
 #include <QTextStream>
 #include <QStringList>
 #include <QDebug>
+
+#include <limits.h>
+#include <mntent.h>
 
 namespace DiskManager {
 static MountInfo::MountMapping mountInfo;

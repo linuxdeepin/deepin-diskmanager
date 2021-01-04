@@ -27,11 +27,10 @@
 
 #include "diskmanagerservice.h"
 
-#include <unistd.h>
-
 #include <QCoreApplication>
 #include <QDebug>
 
+#include <unistd.h>
 
 namespace DiskManager {
 

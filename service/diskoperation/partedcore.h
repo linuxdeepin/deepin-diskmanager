@@ -32,14 +32,14 @@
 #include "supportedfilesystems.h"
 #include "thread.h"
 
-#include <parted/parted.h>
-#include <parted/device.h>
-
 #include <QObject>
 #include <QVector>
 #include <QMap>
 #include <QStringList>
 #include <QFile>
+
+#include <parted/parted.h>
+#include <parted/device.h>
 
 namespace DiskManager {
 
@@ -290,6 +290,11 @@ private:
 
 private:
     //general..
+    /**
+     * @brief 初始化信号槽链接
+     */
+    void initConnection();
+
     /**
      * @brief 刷新设备设置
      * @param lpDevice：设备信息

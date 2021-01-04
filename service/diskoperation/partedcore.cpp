@@ -32,11 +32,10 @@
 #include "procpartitionsinfo.h"
 #include "filesystems/filesystem.h"
 
-#include <sys/mount.h>
+#include <QDebug>
+
 #include <unistd.h>
 #include <fcntl.h>
-
-#include <QDebug>
 
 namespace DiskManager {
 //hdparm可检测，显示与设定IDE或SCSI硬盘的参数。
@@ -50,14 +49,7 @@ SupportedFileSystems *PartedCore::m_supportedFileSystems = nullptr;
 PartedCore::PartedCore(QObject *parent)
     : QObject(parent)
 {
-    connect(this, &PartedCore::refreshDeviceInfo, this, &PartedCore::onRefreshDeviceInfo);
-    connect(&m_checkThread, &workthread::checkBadBlocksInfo, this, &PartedCore::checkBadBlocksCountInfo);
-    connect(&m_checkThread, &workthread::checkBadBlocksDeviceStatusFinished, this, &PartedCore::threadSafeRecycle);
-    connect(&m_checkThread, &workthread::checkBadBlocksFinished, this, &PartedCore::checkBadBlocksFinished);
-    connect(&m_fixthread, &fixthread::fixBadBlocksInfo, this, &PartedCore::fixBadBlocksInfo);
-    connect(&m_fixthread, &fixthread::checkBadBlocksDeviceStatusFinished, this, &PartedCore::threadSafeRecycle);
-    connect(&m_fixthread, &fixthread::fixBadBlocksFinished, this, &PartedCore::fixBadBlocksFinished);
-
+    initConnection();
     qDebug() << __FUNCTION__ << "^^1";
 
     for (PedPartitionFlag flag = ped_partition_flag_next(static_cast<PedPartitionFlag>(NULL));
@@ -85,6 +77,17 @@ PartedCore::~PartedCore()
 {
     delete m_supportedFileSystems;
     m_supportedFileSystems = nullptr;
+}
+
+void PartedCore::initConnection()
+{
+    connect(this, &PartedCore::refreshDeviceInfo, this, &PartedCore::onRefreshDeviceInfo);
+    connect(&m_checkThread, &workthread::checkBadBlocksInfo, this, &PartedCore::checkBadBlocksCountInfo);
+    connect(&m_checkThread, &workthread::checkBadBlocksDeviceStatusFinished, this, &PartedCore::threadSafeRecycle);
+    connect(&m_checkThread, &workthread::checkBadBlocksFinished, this, &PartedCore::checkBadBlocksFinished);
+    connect(&m_fixthread, &fixthread::fixBadBlocksInfo, this, &PartedCore::fixBadBlocksInfo);
+    connect(&m_fixthread, &fixthread::checkBadBlocksDeviceStatusFinished, this, &PartedCore::threadSafeRecycle);
+    connect(&m_fixthread, &fixthread::fixBadBlocksFinished, this, &PartedCore::fixBadBlocksFinished);
 }
 
 void PartedCore::findSupportedCore()
@@ -2273,7 +2276,7 @@ bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int b
         m_checkThread.setStopFlag(flag);
         break;
     case 3: {
-        m_checkThread.moveToThread(m_workerThread);
+//        m_checkThread.moveToThread(m_workerThread);
         m_checkThread.setStopFlag(flag);
         m_checkThread.setConutInfo(devicePath, blockStart, blockEnd, checkConut, checkSize);
         connect(m_workerThread, SIGNAL(started()), &m_checkThread, SLOT(runCount()));
@@ -2306,7 +2309,7 @@ bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int b
         m_checkThread.setStopFlag(flag);
         break;
     case 3: {
-        m_checkThread.moveToThread(m_workerThread);
+//        m_checkThread.moveToThread(m_workerThread);
         m_checkThread.setStopFlag(flag);
         m_checkThread.setTimeInfo(devicePath, blockStart, blockEnd, checkTime, checkSize);
         connect(m_workerThread, SIGNAL(started()), &m_checkThread, SLOT(runTime()));
@@ -2339,7 +2342,7 @@ bool PartedCore::fixBadBlocks(const QString &devicePath, QStringList badBlocksLi
         m_fixthread.setStopFlag(flag);
         break;
     case 3: {
-        m_checkThread.moveToThread(m_workerThread);
+//        m_checkThread.moveToThread(m_workerThread);
         qDebug() << 111 << endl;
         m_fixthread.setStopFlag(flag);
         m_fixthread.setFixBadBlocksInfo(devicePath, badBlocksList, checkSize);

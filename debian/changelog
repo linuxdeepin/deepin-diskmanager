@@ -1,3 +1,14 @@
+deepin-diskmanager (1.2.0.1) stable; urgency=low
+
+  * 1040第一次发版(坏道检测和修复功能)
+  * 49868 子 坏道检测与修复 / 坏道修复前端
+  * 49879 子 坏道检测与修复 / 坏道修复后端
+  * 49878 子 坏道检测与修复 / 坏道检测后端
+  * 49867 子 坏道检测与修复 / 坏道检测前端
+  * 60001 设备不包含可识别的分区表时,新建分区无响应
+
+ -- liweigang <liweigang@uniontech.com>  Tue, 05 Jan 2021 14:15:16 +0800
+
 deepin-diskmanager (1.1.0.39) stable; urgency=low
 
   * 解决完成第二十八次送测产生的bug,

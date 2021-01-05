@@ -1,255 +1,495 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS language="pt" version="2.1">
 <context>
+    <name>CylinderInfoWidget</name>
+    <message>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="440"/>
+        <source>LBA: %1</source>
+        <translation>LBA: %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="441"/>
+        <source>Cyl.: %1</source>
+        <translation>Cil.: %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="442"/>
+        <source>Error: %1</source>
+        <translation>Erro: %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="443"/>
+        <source>ms</source>
+        <translation>ms</translation>
+    </message>
+    <message>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="443"/>
+        <source>Cyl. elapsed time: %1</source>
+        <translation>Cil. tempo decorrido: %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="444"/>
+        <source>Status: Repaired</source>
+        <translation>Estado: Reparado</translation>
+    </message>
+</context>
+<context>
     <name>DeviceListWidget</name>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="104"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="102"/>
         <source>Disk info</source>
         <translation>Info do disco</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="111"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="109"/>
         <source>Health management</source>
-        <translation>Gestão de saúde</translation>
+        <translation>Gestão de estado</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="115"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="114"/>
         <source>Check health</source>
-        <translation>Verificar a saúde</translation>
+        <translation>Verificar o estado</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="121"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="120"/>
         <source>Check partition table error</source>
         <translation>Verificar erro na tabela de partição</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="136"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="126"/>
+        <source>Verify or repair bad sectors</source>
+        <translation>Verificar e reparar sectores danificados</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="138"/>
         <source>Hide partition</source>
         <translation>Ocultar partição</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="142"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="144"/>
         <source>Unhide partition</source>
         <translation>Mostrar partição</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="149"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="151"/>
         <source>Delete partition</source>
         <translation>Eliminar partição</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="215"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="225"/>
         <source>No errors found in the partition table</source>
         <translation>Nenhum erro encontrado na tabela de partição</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="224"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="235"/>
         <source>Do you want to hide this partition?</source>
         <translation>Deseja ocultar esta partição?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="224"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="235"/>
         <source>Hide</source>
         <translation>Ocultar</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="224"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="251"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="261"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="235"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="265"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="275"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="230"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="242"/>
         <source>Failed to hide the partition: unable to lock it</source>
         <translation>Falha ao ocultar a partição: não foi possível bloqueá-la</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="239"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="252"/>
         <source>You can only hide the unmounted partition</source>
         <translation>Só pode ocultar a partição não montada</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="251"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="265"/>
         <source>Do you want to unhide this partition?</source>
         <translation>Deseja mostrar esta partição?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="251"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="265"/>
         <source>Unhide</source>
         <translation>Mostrar</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="261"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="275"/>
         <source>Are you sure you want to delete this partition?</source>
         <translation>Tem a certeza que deseja eliminar esta partição?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="261"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="275"/>
         <source>You will lose all data in it</source>
         <translation>Perderá todos os dados nela contidos</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="261"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="275"/>
         <source>Delete</source>
         <translation>Eliminar</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="269"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="284"/>
         <source>Failed to delete the partition: unable to lock it</source>
         <translation>Falha ao eliminar a partição: não foi possível bloqueá-la</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="282"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="298"/>
         <source>Hide the partition successfully</source>
         <translation>Partição ocultada</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="287"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="304"/>
         <source>Failed to hide the partition</source>
         <translation>Falha ao ocultar a partição</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="297"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="315"/>
         <source>Unhide the partition successfully</source>
         <translation>Partição visível</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="302"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="321"/>
         <source>Failed to unhide the partition</source>
         <translation>Falha ao mostrar a partição</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="314"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>Delete the partition successfully</source>
         <translation>Partição eliminada</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="319"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="340"/>
         <source>Failed to delete the partition: %1</source>
         <translation>Falha ao eliminar a partição: %1</translation>
     </message>
 </context>
 <context>
-    <name>DiskHealthDetectionDialog</name>
+    <name>DiskBadSectorsDialog</name>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="58"/>
-        <source>Check Health</source>
-        <translation>Verificar a saúde</translation>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="57"/>
+        <source>Verify or repair bad sectors</source>
+        <translation>Verificar e reparar sectores danificados</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="90"/>
-        <source>Serial number</source>
-        <translation>Número de série</translation>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="82"/>
+        <source>Verify:</source>
+        <translation>Verificar:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="99"/>
-        <source>Storage</source>
-        <translation>Armazenamento</translation>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="88"/>
+        <source>Cylinders</source>
+        <translation>Cilindros</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="120"/>
-        <source>Health Status</source>
-        <translation>Estado de saúde</translation>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="89"/>
+        <source>Sectors</source>
+        <translation>Sectores</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="134"/>
-        <source>Good</source>
-        <translation>Bom</translation>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="90"/>
+        <source>MB</source>
+        <translation>MB</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="140"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="131"/>
+        <source>Method:</source>
+        <translation>Método:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="137"/>
+        <source>Verifying times</source>
+        <translation>Tempos verificados</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="138"/>
+        <source>Timeout</source>
+        <translation>Tempo esgotado</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="176"/>
+        <source>ms</source>
+        <translation>ms</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="209"/>
+        <source>Result:</source>
+        <translation>Resultado:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="230"/>
+        <source>Excellent</source>
+        <translation>Excelente</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="237"/>
         <source>Damaged</source>
         <translation>Danificado</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="146"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="244"/>
         <source>Unknown</source>
         <translation>Desconhecido</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="165"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="272"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="977"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
+        <source>Exit</source>
+        <translation>Sair</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="274"/>
+        <source>Reset</source>
+        <translation>Repor</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="277"/>
+        <source>Repair</source>
+        <translation>Reparar</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="280"/>
+        <source>Start Verify</source>
+        <translation>Iniciar verificação</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="282"/>
+        <source>Stop</source>
+        <translation>Parar</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="284"/>
+        <source>Continue</source>
+        <translation>Continuar</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="286"/>
+        <source>Verify Again</source>
+        <translation>Verificar novamente</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="288"/>
+        <source>Done</source>
+        <translation>Concluído</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="313"/>
+        <source>Time elapsed:</source>
+        <translation>Tempo decorrido:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="319"/>
+        <source>Time left:</source>
+        <translation>Tempo restante:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="634"/>
+        <source>Verifying cylinder: %1</source>
+        <translation>A verificar cilindro: %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="680"/>
+        <source>Verify completed</source>
+        <translation>Verificação concluída</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="700"/>
+        <source>Disk verify completed. %1 bad blocks found.</source>
+        <translation>Verificação do disco concluída. %1 blocos danificados encontrados.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="700"/>
+        <source>OK</source>
+        <translation>Aceitar</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="857"/>
+        <source>Warning</source>
+        <translation>Aviso</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="857"/>
+        <source>Bad sector repairing cannot recover files,
+ but destroys data on and near bad sectors instead.
+ Please back up all data before repair.</source>
+        <translation>A reparação de sectores danificados não consegue recuperar ficheiros,
+mas em vez disso, destrói dados em e perto de sectores defeituosos.
+Efetue uma cópia de segurança de todos os dados antes da reparação.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="858"/>
+        <source>Start Repair</source>
+        <translation>Iniciar reparação</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="892"/>
+        <source>Repairing cylinder: %1</source>
+        <translation>A reparar cilindro: %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="931"/>
+        <source>Repair completed. Cylinder: %1 repaired.</source>
+        <translation>Reparação concluída. Cilindro: %1 reparado.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="934"/>
+        <source>Disk repair completed. %1 bad blocks repaired.</source>
+        <translation>Reparação do disco concluída. %1 blocos danificados reparados.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="976"/>
+        <source>Verifying for bad sectors, exit now?</source>
+        <translation>A verificar se existem sectores danificados. Sair agora?</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="976"/>
+        <source>The verified information will not be reserved</source>
+        <translation>A informação verificada não será reservada</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="858"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="977"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
+        <source>Cancel</source>
+        <translation>Cancelar</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1001"/>
+        <source>Repairing bad sectors, exit now?</source>
+        <translation>A reparar sectores danificados. Sair agora?</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1001"/>
+        <source>The repairing information will not be reserved</source>
+        <translation>A informação sobre a reparação não será reservada</translation>
+    </message>
+</context>
+<context>
+    <name>DiskHealthDetectionDialog</name>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="59"/>
+        <source>Check Health</source>
+        <translation>Verificar o estado</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="91"/>
+        <source>Serial number</source>
+        <translation>Número de série</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="100"/>
+        <source>Storage</source>
+        <translation>Armazenamento</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="121"/>
+        <source>Health Status</source>
+        <translation>Estado</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="135"/>
+        <source>Good</source>
+        <translation>Bom</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="141"/>
+        <source>Damaged</source>
+        <translation>Danificado</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="147"/>
+        <source>Unknown</source>
+        <translation>Desconhecido</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="166"/>
         <source>Temperature</source>
         <translation>Temperatura</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="222"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="348"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="228"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="357"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="223"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="348"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="229"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="357"/>
         <source>Status</source>
         <translation>Estado</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="224"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="348"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="230"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="357"/>
         <source>Current</source>
         <translation>Atual</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="225"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="348"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="231"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="357"/>
         <source>Worst</source>
         <translation>Pior</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="226"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="349"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="232"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="358"/>
         <source>Threshold</source>
         <translation>Limite</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="227"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="349"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="233"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="358"/>
         <source>Raw Value</source>
         <translation>Valor bruto</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="228"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="349"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="234"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="358"/>
         <source>Attribute name</source>
         <translation>Nome do atributo</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="282"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="288"/>
         <source>Status: (G: Good | W: Warning | D: Damaged | U: Unknown)</source>
         <translation>Estado: (G: Bom | W: Aviso | D: Danificado | U: Desconhecido)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="286"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="292"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="294"/>
         <source>Export</source>
         <translation>Exportar</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="311"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="320"/>
         <source>Save File</source>
         <translation>Guardar ficheiro</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="311"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="320"/>
         <source>Text files (*.txt)</source>
         <translation>Ficheiros de texto (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="326"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="335"/>
         <source>Wrong path</source>
         <translation>Caminho incorreto</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="336"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="345"/>
         <source>You do not have permission to access this path</source>
         <translation>Não tem permissão para aceder a este caminho</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="367"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="376"/>
         <source>Export successful</source>
         <translation>Exportação bem sucedida</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="370"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="379"/>
         <source>Export failed</source>
         <translation>Falha ao exportar</translation>
     </message>
@@ -339,36 +579,37 @@
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="119"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="121"/>
         <source>Export</source>
         <translation>Exportar</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="136"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="147"/>
         <source>Save File</source>
         <translation>Guardar ficheiro</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="136"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="147"/>
         <source>Text files (*.txt)</source>
         <translation>Ficheiros de texto (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="151"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="162"/>
         <source>Wrong path</source>
         <translation>Caminho incorreto</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="161"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="172"/>
         <source>You do not have permission to access this path</source>
         <translation>Não tem permissão para aceder a este caminho</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="180"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="191"/>
         <source>Export successful</source>
         <translation>Exportação bem sucedida</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="183"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="194"/>
         <source>Export failed</source>
         <translation>Falha ao exportar</translation>
     </message>
@@ -504,7 +745,7 @@
 <context>
     <name>PartChartShowing</name>
     <message>
-        <location filename="../widgets/customcontrol/partchartshowing.cpp" line="119"/>
+        <location filename="../widgets/customcontrol/partchartshowing.cpp" line="116"/>
         <source>Unallocated</source>
         <translation>Não atribuído</translation>
     </message>
@@ -535,27 +776,27 @@
 <context>
     <name>PartitionTableErrorsInfoDialog</name>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="52"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="53"/>
         <source>Errors in Partition Table</source>
         <translation>Erros na tabela de partição</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="61"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="62"/>
         <source>The partition table of disk %1 has below errors:</source>
         <translation>A tabela de partição do disco %1 contém os erros abaixo:</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="94"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="99"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="103"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="108"/>
         <source>Partition table entries are not in disk order</source>
         <translation>As entradas da tabela de partição não estão na ordem do disco</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="115"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="120"/>
         <source>OK</source>
         <translation>Aceitar</translation>
     </message>
@@ -573,99 +814,99 @@
         <translation>Clique em &quot;+&quot; para aumentar o número de partições. Clique em cada partição para alterar o nome e sistema de ficheiros.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="102"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="106"/>
         <source>Disk Information</source>
         <translation>Informação do disco</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="117"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="121"/>
         <source>Capacity:</source>
         <translation>Capacidade:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="127"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="131"/>
         <source>Partition selected:</source>
         <translation>Partição selecionada:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="142"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="146"/>
         <source>Disk:</source>
         <translation>Disco:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="152"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="261"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="156"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="273"/>
         <source>File system:</source>
         <translation>Sistema de ficheiros:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="191"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="195"/>
         <source>Confirm</source>
         <translation>Confirmar</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="193"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="198"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="195"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="200"/>
         <source>Revert</source>
         <translation>Reverter</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="216"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="222"/>
         <source>Partition Information</source>
         <translation>Informação da partição</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="228"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="234"/>
         <source>Number of partitions:</source>
         <translation>Número de partições:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="235"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="245"/>
         <source>Delete last partition</source>
         <translation>Eliminar a última partição</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="244"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="255"/>
         <source>Name:</source>
         <translation>Nome:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="269"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="281"/>
         <source>Size:</source>
         <translation>Tamanho:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="364"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="475"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="379"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="492"/>
         <source>Unallocated</source>
         <translation>Não atribuído</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="386"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="402"/>
         <source>Name</source>
         <translation>Nome</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="387"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="403"/>
         <source>Size</source>
         <translation>Tamanho</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="650"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="656"/>
         <source>The length exceeds the limit</source>
         <translation>O comprimento excede o limite</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="674"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="687"/>
         <source>The number of new partitions exceeds the limit</source>
         <translation>O número de novas partições excede o limite</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="694"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="707"/>
         <source>To create a partition, you need at least 52 MB</source>
         <translation>Para criar uma partição, precisa de pelo menos 52 MB</translation>
     </message>
@@ -727,6 +968,10 @@
         <translation>Capacidade:</translation>
     </message>
     <message>
+        <source>Capacity:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="172"/>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="175"/>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="234"/>
@@ -761,6 +1006,11 @@
         <location filename="../widgets/titlewidget.cpp" line="52"/>
         <source>Resize</source>
         <translation>Redimensionar</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="116"/>
+        <source>Cannot recognize its partition table</source>
+        <translation>Não foi possível reconhecer a sua tabela de partição</translation>
     </message>
 </context>
 <context>

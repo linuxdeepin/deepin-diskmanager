@@ -11,6 +11,7 @@ type = QT
 
 [deepin-disk-utility.deepin-disk-utility-desktop-ts]
 file_filter = translations/desktop/desktop_<lang>.ts
+preTranslate_file = application/assets/deepin-diskmanager.desktop
 source_file = translations/desktop/desktop.ts
 source_lang = en_US
 type = QT

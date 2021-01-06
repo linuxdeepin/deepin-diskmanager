@@ -238,28 +238,29 @@ public Q_SLOTS:
      * @param blockEnd：结束柱面
      * @param checkConut：检测次数
      * @param checkSize：检测柱面大小
+     * @param flag：暂停，检测，继续标志
      * @return true错误false正常
      */
     Q_SCRIPTABLE bool onCheckBadBlocksCount(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize,int flag);
 
     /**
-     * @brief 坏道检测（检测次数）
+     * @brief 坏道检测（检测时间）
      * @param devicePath：设备信息路径
      * @param blockStart：开始柱面
      * @param blockEnd：结束柱面
      * @param checkTime: 检测超时时间
      * @param checkSize：检测柱面大小
+     * @param flag：暂停，检测，继续标志
      * @return true错误false正常
      */
     Q_SCRIPTABLE bool onCheckBadBlocksTime(const QString &devicePath, int blockStart, int blockEnd,const QString &checkTime, int checkSize, int flag);
 
     /**
-     * @brief 坏道检测（检测次数）
+     * @brief 坏道修复
      * @param devicePath：设备信息路径
-     * @param blockStart：开始柱面
-     * @param blockEnd：结束柱面
-     * @param checkTime: 检测超时时间
+     * @param badBlocksList：坏道柱面集合
      * @param checkSize：检测柱面大小
+     * @param flag：暂停，检测，继续标志
      * @return true错误false正常
      */
     Q_SCRIPTABLE bool onFixBadBlocks(const QString &devicePath, QStringList badBlocksList, int checkSize, int flag);

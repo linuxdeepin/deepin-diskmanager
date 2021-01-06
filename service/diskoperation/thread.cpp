@@ -65,6 +65,7 @@ void workthread::setTimeInfo(const QString &devicePath, int blockStart, int bloc
 
 void workthread::runCount()
 {
+    qDebug() << QThread::currentThreadId() << endl;
     Sector i = m_blockStart;
     Sector j = m_blockStart+1;
     QProcess proc;

@@ -1557,6 +1557,7 @@ bool PartedCore::mountAndWriteFstab(const QString &mountpath)
         cmd = QString("mount -v %1 %2").arg(partitionPath).arg(mountpath);
     }
 
+    qDebug() << cmd << endl;
     int exitcode = Utils::executCmd(cmd, output, errstr);
     if (exitcode != 0) {
 
@@ -2261,12 +2262,13 @@ bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int b
     if(m_workerThread == nullptr)
     {
       m_workerThread = new QThread();
+      qDebug() << QThread::currentThreadId() << 1111111111111 << endl;
     }
+
     switch(flag) {
     case 1: {
         m_checkThread.moveToThread(m_workerThread);
         m_checkThread.setStopFlag(flag);
-        qDebug() << QThread::currentThreadId() << endl;
         m_checkThread.setConutInfo(devicePath, blockStart, blockEnd, checkConut, checkSize);
         connect(m_workerThread, SIGNAL(started()), &m_checkThread, SLOT(runCount()));
         m_workerThread->start();
@@ -2276,7 +2278,7 @@ bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int b
         m_checkThread.setStopFlag(flag);
         break;
     case 3: {
-//        m_checkThread.moveToThread(m_workerThread);
+        m_checkThread.moveToThread(m_workerThread);
         m_checkThread.setStopFlag(flag);
         m_checkThread.setConutInfo(devicePath, blockStart, blockEnd, checkConut, checkSize);
         connect(m_workerThread, SIGNAL(started()), &m_checkThread, SLOT(runCount()));
@@ -2309,7 +2311,7 @@ bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int b
         m_checkThread.setStopFlag(flag);
         break;
     case 3: {
-//        m_checkThread.moveToThread(m_workerThread);
+        m_checkThread.moveToThread(m_workerThread);
         m_checkThread.setStopFlag(flag);
         m_checkThread.setTimeInfo(devicePath, blockStart, blockEnd, checkTime, checkSize);
         connect(m_workerThread, SIGNAL(started()), &m_checkThread, SLOT(runTime()));
@@ -2342,7 +2344,7 @@ bool PartedCore::fixBadBlocks(const QString &devicePath, QStringList badBlocksLi
         m_fixthread.setStopFlag(flag);
         break;
     case 3: {
-//        m_checkThread.moveToThread(m_workerThread);
+        m_checkThread.moveToThread(m_workerThread);
         qDebug() << 111 << endl;
         m_fixthread.setStopFlag(flag);
         m_fixthread.setFixBadBlocksInfo(devicePath, badBlocksList, checkSize);
@@ -2458,7 +2460,6 @@ void PartedCore::autoUmount()
 
 void PartedCore::threadSafeRecycle()
 {
-    m_workerThread->exit();
     m_workerThread->quit();
     m_workerThread->wait();
     delete m_workerThread;

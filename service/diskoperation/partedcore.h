@@ -31,6 +31,7 @@
 #include "device.h"
 #include "supportedfilesystems.h"
 #include "thread.h"
+#include "DeviceStorage.h"
 
 #include <QObject>
 #include <QVector>

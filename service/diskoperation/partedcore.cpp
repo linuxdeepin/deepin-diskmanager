@@ -1827,109 +1827,29 @@ HardDiskInfo PartedCore::getDeviceHardInfo(const QString &devicepath)
         return hdinfo;
     }
 
-    QString cmd = QString("smartctl -i %1").arg(devicepath);
-    FILE *fd = nullptr;
-    fd = popen(cmd.toStdString().data(), "r");
-    char pb[1024];
-    memset(pb, 0, 1024);
+    DeviceStorage device;
+    device.getDiskInfoFromHwinfo(devicepath);
 
-    if (fd == nullptr) {
-        qDebug() << "exeuted cmd failed";
-        return hdinfo;
-    }
+    device.getDiskInfoFromLshw(devicepath);
 
-    while(fgets(pb, 1024, fd) != nullptr) {
-        if (strstr(pb, "Device Model:") != nullptr) {
-           hdinfo.m_deviceModel += pb+(sizeof("Device Model:")-1);
-           hdinfo.m_deviceModel.remove(QRegExp("^ +\\s*"));
-           hdinfo.m_deviceModel = hdinfo.m_deviceModel.replace(QRegExp("\\\n"), "\0");
-        } else if (strstr(pb, "Serial Number:") != nullptr) {
-           hdinfo.m_serialNumber += pb+(sizeof("Serial Number:")-1);
-           //去除空格
-           hdinfo.m_serialNumber.remove(QRegExp("^ +\\s*"));
-           //替换换行符
-           hdinfo.m_serialNumber = hdinfo.m_serialNumber.replace(QRegExp("\\\n"), "\0");
-        } else if (strstr(pb, "LU WWN Device Id:") != nullptr) {
-           hdinfo.m_deviceId += pb+(sizeof("LU WWN Device Id:")-1);
-           //去除空格
-           hdinfo.m_deviceId.remove(QRegExp("^ +\\s*"));
-           //替换换行符
-           hdinfo.m_deviceId = hdinfo.m_deviceId.replace(QRegExp("\\\n"), "\0");
-        } else if (strstr(pb, "Firmware Version:") != nullptr) {
-           hdinfo.m_firmwareVersion += pb+(sizeof("Firmware Version:")-1);
-           //去除空格
-           hdinfo.m_firmwareVersion.remove(QRegExp("^ +\\s*"));
-           //替换换行符
-           hdinfo.m_firmwareVersion = hdinfo.m_firmwareVersion.replace(QRegExp("\\\n"), "\0");
-        } else if (strstr(pb, "User Capacity:") != nullptr) {
-           hdinfo.m_userCapacity += pb+(sizeof("User Capacity:")-1);
-           //去除空格
-           hdinfo.m_userCapacity.remove(QRegExp("^ +\\s*"));
-           //替换换行符
-           hdinfo.m_userCapacity = hdinfo.m_userCapacity.replace(QRegExp("\\\n"), "\0");
-        } else if (strstr(pb, "Sector Size") != nullptr) {
-           QString buf = pb;
-           hdinfo.m_sectorSize += pb+(buf.split(":").at(0).size())+1;
-           //去除空格
-           hdinfo.m_sectorSize.remove(QRegExp("^ +\\s*"));
-           //替换换行符
-           hdinfo.m_sectorSize = hdinfo.m_sectorSize.replace(QRegExp("\\\n"), "\0");
-        } else if (strstr(pb, "Rotation Rate:") != nullptr) {
-           hdinfo.m_rotationRate += pb+(sizeof("Rotation Rate:")-1);
-           //去除空格
-           hdinfo.m_rotationRate.remove(QRegExp("^ +\\s*"));
-           //替换换行符
-           hdinfo.m_rotationRate = hdinfo.m_rotationRate.replace(QRegExp("\\\n"), "\0");
-        } else if (strstr(pb, "Form Factor:") != nullptr) {
-           hdinfo.m_formFactor += pb+(sizeof("Form Factor:")-1);
-           //去除空格
-           hdinfo.m_formFactor.remove(QRegExp("^ +\\s*"));
-           //替换换行符
-           hdinfo.m_formFactor = hdinfo.m_formFactor.replace(QRegExp("\\\n"), "\0");
-        } else if (strstr(pb, "Device is:") != nullptr) {
-           hdinfo.m_deviceis += pb+(sizeof("Device is:")-1);
-           //去除空格
-           hdinfo.m_deviceis.remove(QRegExp("^ +\\s*"));
-           //替换换行符
-           hdinfo.m_deviceis = hdinfo.m_deviceis.replace(QRegExp("\\\n"), "\0");
-        } else if (strstr(pb, "ATA Version is:") != nullptr) {
-           if (strstr(pb, "SATA Version is:") != nullptr) {
-               hdinfo.m_sataVersionIs += pb+(sizeof("SATA Version is:")-1);
-               //去除空格
-               hdinfo.m_sataVersionIs.remove(QRegExp("^ +\\s*"));
-               //替换换行符
-               hdinfo.m_sataVersionIs = hdinfo.m_sataVersionIs.replace(QRegExp("\\\n"), "\0");
-           } else {
-               hdinfo.m_ataVersionIs += pb+(sizeof("ATA Version is:")-1);
-               //去除空格
-               hdinfo.m_ataVersionIs.remove(QRegExp("^ +\\s*"));
-               //替换换行符
-               hdinfo.m_ataVersionIs = hdinfo.m_ataVersionIs.replace(QRegExp("\\\n"), "\0");
-           }
-        } else if (strstr(pb, "Local Time is:") != nullptr) {
-           hdinfo.m_localTime += pb+(sizeof("Local Time is:")-1);
-           //去除空格
-           hdinfo.m_localTime.remove(QRegExp("^ +\\s*"));
-           //替换换行符
-           hdinfo.m_localTime = hdinfo.m_localTime.replace(QRegExp("\\\n"), "\0");
-        } else if (strstr(pb, "SMART support is:") != nullptr) {
-            if(strstr(pb, "Enabled") != nullptr || strstr(pb, "Disabled") != nullptr) {
-                hdinfo.m_smartSupportOn_Off += pb+(sizeof("SMART support is:")-1);
-                //去除空格
-                hdinfo.m_smartSupportOn_Off.remove(QRegExp("^ +\\s*"));
-                //替换换行符
-                hdinfo.m_smartSupportOn_Off = hdinfo.m_smartSupportOn_Off.replace(QRegExp("\\\n"), "\0");
-            } else {
-                hdinfo.m_smartSupport += pb+(sizeof("SMART support is:")-1);
-                //去除空格
-                hdinfo.m_smartSupport.remove(QRegExp("^ +\\s*"));
-                //替换换行符
-                hdinfo.m_smartSupport = hdinfo.m_smartSupport.replace(QRegExp("\\\n"), "\0");
-            }
-        }
+    device.getDiskInfoFromLsblk(devicepath);
 
-    }
-    pclose(fd);
+    device.getDiskInfoFromSmartCtl(devicepath);
+
+    hdinfo.m_Model = device.m_Model;
+    hdinfo.m_Vendor = device.m_Vendor;
+    hdinfo.m_MediaType = device.m_MediaType;
+    hdinfo.m_Size = device.m_Size;
+    hdinfo.m_RotationRate = device.m_RotationRate;
+    hdinfo.m_Interface = device.m_Interface;
+    hdinfo.m_SerialNumber = device.m_SerialNumber;
+    hdinfo.m_Version = device.m_Version;
+    hdinfo.m_Capabilities = device.m_Capabilities;
+    hdinfo.m_Description = device.m_Description;
+    hdinfo.m_PowerOnHours = device.m_PowerOnHours;
+    hdinfo.m_PowerCycleCount = device.m_PowerCycleCount;
+    hdinfo.m_FirmwareVersion = device.m_FirmwareVersion;
+    hdinfo.m_Speed = device.m_Speed;
 
     qDebug() << __FUNCTION__ << "Get Device Hard Info end";
     return hdinfo;

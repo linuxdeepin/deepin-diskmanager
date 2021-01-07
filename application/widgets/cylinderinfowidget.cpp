@@ -320,12 +320,13 @@ void CylinderInfoWidget::setCurCheckBadBlocksInfo(const QString &LBANumber, cons
         ++m_badSectorsCount;
     }
 
+    int startCylinder = m_settings->value("SettingData/BlockStart").toInt();
     if (m_cylNumber <= 360) {
-        updateCylinderInfo(cylinderNumber.toInt() % 360, LBANumber, cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo, "0");
+        updateCylinderInfo((cylinderNumber.toInt() - startCylinder) % 360, LBANumber, cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo, "0");
     } else {
         if(m_curCheckCount <= 360)
         {
-            updateCylinderInfo(cylinderNumber.toInt() % 360, LBANumber, cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo, "0");
+            updateCylinderInfo((cylinderNumber.toInt() - startCylinder) % 360, LBANumber, cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo, "0");
         }else {
 
             int rowCount = m_curCheckCount / 24;
@@ -343,7 +344,7 @@ void CylinderInfoWidget::setCurCheckBadBlocksInfo(const QString &LBANumber, cons
                 }
 
                 QList<QObject *> lstCylinderWidget = m_widget->children();
-                int start = (rowCount - 15) * 24;
+                int start = (rowCount - 15) * 24 + startCylinder;
                 for (int i = start; i < start + 360; i ++) {
                     QString value = m_settings->value(QString("CheckData/%1").arg(i)).toString();
                     if (!value.isEmpty()) {
@@ -477,8 +478,10 @@ void CylinderInfoWidget::onScrollBarValueChanged(int value)
         m_isChanged = false;
     }
 
+    int startCylinder = m_settings->value("SettingData/BlockStart").toInt();
+
     QList<QObject *> lstCylinderWidget = m_widget->children();
-    int start = value * 24;
+    int start = value * 24 + startCylinder;
     for (int i = start; i < start + 360; i ++) {
         QString value = m_settings->value(QString("CheckData/%1").arg(i)).toString();
         if (!value.isEmpty())

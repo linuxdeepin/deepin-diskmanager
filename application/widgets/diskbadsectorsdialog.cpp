@@ -474,51 +474,73 @@ bool DiskBadSectorsDialog::inputValueIsEffective()
     long long endValue = m_endLineEdit->text().toLongLong();
 
     // 判断当前输入的检测范围的起始值是否在范围内，若不在就设为警告模式
-    if (startValue >= start && startValue <= end) {
-        m_startLineEdit->setAlert(false);
-    } else {
+    if (m_startLineEdit->text().isEmpty()) {
         m_startLineEdit->setAlert(true);
         isEffective = false;
+    } else {
+        if (startValue >= start && startValue <= end) {
+            m_startLineEdit->setAlert(false);
+        } else {
+            m_startLineEdit->setAlert(true);
+            isEffective = false;
+        }
     }
 
     // 判断当前输入的检测范围的结束值是否在范围内，若不在就设为警告模式
-    if (endValue >= start && endValue <= end) {
-        m_endLineEdit->setAlert(false);
-    } else {
+    if (m_endLineEdit->text().isEmpty()) {
         m_endLineEdit->setAlert(true);
         isEffective = false;
+    } else {
+        if (endValue >= start && endValue <= end) {
+            m_endLineEdit->setAlert(false);
+        } else {
+            m_endLineEdit->setAlert(true);
+            isEffective = false;
+        }
     }
 
     // 判断检测范围的起始值和结束值是否合理，若不合理就设为警告模式
-    if (startValue > endValue) {
-        m_endLineEdit->setAlert(true);
-        m_startLineEdit->setAlert(true);
-        isEffective = false;
-    } else {
-        if(isEffective) {
-            m_endLineEdit->setAlert(false);
-            m_startLineEdit->setAlert(false);
+    if (!m_endLineEdit->text().isEmpty() && !m_startLineEdit->text().isEmpty()) {
+        if (startValue > endValue) {
+            m_endLineEdit->setAlert(true);
+            m_startLineEdit->setAlert(true);
+            isEffective = false;
+        } else {
+            if(isEffective) {
+                m_endLineEdit->setAlert(false);
+                m_startLineEdit->setAlert(false);
+            }
         }
     }
 
     switch (m_methodComboBox->currentIndex()) {
     case 0: { // 判断检测次数是否在范围内
-        int checkNumber = m_checkTimesEdit->text().toInt();
-        if (checkNumber < 1 || checkNumber > 16) {
+        if (m_checkTimesEdit->text().isEmpty()) {
             m_checkTimesEdit->setAlert(true);
             isEffective = false;
         } else {
-            m_checkTimesEdit->setAlert(false);
+            int checkNumber = m_checkTimesEdit->text().toInt();
+            if (checkNumber < 1 || checkNumber > 16) {
+                m_checkTimesEdit->setAlert(true);
+                isEffective = false;
+            } else {
+                m_checkTimesEdit->setAlert(false);
+            }
         }
         break;
     }
     case 1: { // 判断超时时间是否在范围内
-        int checkNumber = m_timeoutEdit->text().toInt();
-        if (checkNumber < 100 || checkNumber > 3000) {
+        if (m_timeoutEdit->text().isEmpty()) {
             m_timeoutEdit->setAlert(true);
             isEffective = false;
         } else {
-            m_timeoutEdit->setAlert(false);
+            int checkNumber = m_timeoutEdit->text().toInt();
+            if (checkNumber < 100 || checkNumber > 3000) {
+                m_timeoutEdit->setAlert(true);
+                isEffective = false;
+            } else {
+                m_timeoutEdit->setAlert(false);
+            }
         }
         break;
     }
@@ -851,11 +873,28 @@ void DiskBadSectorsDialog::onResetButtonClicked()
 
 void DiskBadSectorsDialog::onRepairButtonClicked()
 {
-    MessageBox messageBox;
-    messageBox.setObjectName("messageBox");
-    // 警告  修复坏磁道不是数据恢复的手段，修复坏磁道会破坏坏磁道及其附近磁道上的文件数据。请先做好数据备份。   开始修复   取消
-    messageBox.setWarings(tr("Warning"), tr("Bad sector repairing cannot recover files,\n but destroys data on and near bad sectors instead.\n Please back up all data before repair."),
-                          tr("Start Repair"), tr("Cancel"));
+    DDialog messageBox;
+    messageBox.setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
+    messageBox.setTitle(tr("Warning")); // 警告
+    messageBox.addSpacing(10);
+
+    DLabel *label1 = new DLabel(tr("Bad sector repairing cannot recover files,")); // 修复坏磁道不是数据恢复的手段，
+    DLabel *label2 = new DLabel(tr("but destroys data on and near bad sectors instead.")); // 修复坏磁道会破坏坏磁道及其附近磁道上的文件数据。
+    DLabel *label3 = new DLabel(tr("Please back up all data before repair.")); // 请先做好数据备份。
+
+    QVBoxLayout *Layout = new QVBoxLayout;
+    Layout->addWidget(label1, 0, Qt::AlignCenter);
+    Layout->addWidget(label2, 0, Qt::AlignCenter);
+    Layout->addWidget(label3, 0, Qt::AlignCenter);
+    Layout->setContentsMargins(0, 0, 0, 0);
+
+    QWidget *widget = new QWidget;
+    widget->setLayout(Layout);
+    messageBox.addContent(widget, Qt::AlignCenter);
+    messageBox.addSpacing(10);
+
+    messageBox.addButton(tr("Cancel")); // 取消
+    messageBox.addButton(tr("Start Repair")); // 开始修复
     if (messageBox.exec() == 1) {
         m_curType = Repair;
         m_repairButton->setDisabled(true);

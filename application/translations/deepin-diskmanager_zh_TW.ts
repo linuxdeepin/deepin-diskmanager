@@ -2,32 +2,32 @@
 <context>
     <name>CylinderInfoWidget</name>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="440"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="441"/>
         <source>LBA: %1</source>
         <translation>LBA：%1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="441"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="442"/>
         <source>Cyl.: %1</source>
         <translation>柱面號：%1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="442"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="443"/>
         <source>Error: %1</source>
         <translation>當前錯誤信息：%1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="443"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="444"/>
         <source>ms</source>
         <translation>毫秒</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="443"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="444"/>
         <source>Cyl. elapsed time: %1</source>
         <translation>柱面耗時：%1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="444"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="445"/>
         <source>Status: Repaired</source>
         <translation>修復情況：已修復</translation>
     </message>
@@ -236,8 +236,8 @@
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="272"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="977"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1016"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1041"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
@@ -287,83 +287,97 @@
         <translation>剩餘時間：</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="634"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="656"/>
         <source>Verifying cylinder: %1</source>
         <translation>正在檢測%1柱面</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="680"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="702"/>
         <source>Verify completed</source>
         <translation>檢測完成</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="700"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="722"/>
         <source>Disk verify completed. %1 bad blocks found.</source>
         <translation>磁碟檢測完畢，共檢查到%1個壞道區域</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="700"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="722"/>
         <source>OK</source>
         <translation>確定</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="857"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="878"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="857"/>
         <source>Bad sector repairing cannot recover files,
  but destroys data on and near bad sectors instead.
  Please back up all data before repair.</source>
-        <translation>修復壞磁軌不是數據恢復的手段，
+        <translation type="vanished">修復壞磁軌不是數據恢復的手段，
 修復壞磁軌會破壞壞磁軌及其附近磁軌上的文件數據。
 請先做好數據備份。</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="858"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="897"/>
         <source>Start Repair</source>
         <translation>開始修復</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="892"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="931"/>
         <source>Repairing cylinder: %1</source>
         <translation>正在修復%1柱面</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="931"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="970"/>
         <source>Repair completed. Cylinder: %1 repaired.</source>
         <translation>修復完成，已修復%1柱面</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="934"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="973"/>
         <source>Disk repair completed. %1 bad blocks repaired.</source>
         <translation>磁碟修復完畢，共修復%1個壞道區域</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="976"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1015"/>
         <source>Verifying for bad sectors, exit now?</source>
         <translation>正在檢測中，是否退出窗口？</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="976"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1015"/>
         <source>The verified information will not be reserved</source>
         <translation>當前檢測信息不會保留</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="858"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="977"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="896"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1016"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1041"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1001"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="881"/>
+        <source>Bad sector repairing cannot recover files,</source>
+        <translation>修復壞磁軌不是數據恢復的手段，</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="882"/>
+        <source>but destroys data on and near bad sectors instead.</source>
+        <translation>修復壞磁軌會破壞壞磁軌及其附近磁軌上的文件數據。</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="883"/>
+        <source>Please back up all data before repair.</source>
+        <translation>請先做好數據備份。</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1040"/>
         <source>Repairing bad sectors, exit now?</source>
         <translation>正在修復中，是否退出窗口？</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1001"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1040"/>
         <source>The repairing information will not be reserved</source>
         <translation>當前修覆信息不會保留</translation>
     </message>
@@ -704,6 +718,14 @@
     </message>
 </context>
 <context>
+    <name>MainWindow</name>
+    <message>
+        <location filename="../widgets/mainwindow.cpp" line="125"/>
+        <source>Refresh</source>
+        <translation>刷新</translation>
+    </message>
+</context>
+<context>
     <name>MountDialog</name>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="49"/>
@@ -968,10 +990,6 @@
         <translation>總容量：</translation>
     </message>
     <message>
-        <source>Capacity:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="172"/>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="175"/>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="234"/>
@@ -1016,24 +1034,45 @@
 <context>
     <name>UnmountDialog</name>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="47"/>
+        <location filename="../widgets/unmountdialog.cpp" line="48"/>
         <source>Unmount %1</source>
         <translation>將對%1進行移除</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="50"/>
+        <location filename="../widgets/unmountdialog.cpp" line="51"/>
         <source>Make sure there are no programs running on the disk</source>
         <translation>請確認該磁碟無正在執行的程式</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="57"/>
+        <location filename="../widgets/unmountdialog.cpp" line="58"/>
+        <location filename="../widgets/unmountdialog.cpp" line="82"/>
+        <location filename="../widgets/unmountdialog.cpp" line="86"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="58"/>
+        <location filename="../widgets/unmountdialog.cpp" line="59"/>
+        <location filename="../widgets/unmountdialog.cpp" line="86"/>
         <source>Unmount</source>
         <translation>移除</translation>
+    </message>
+    <message>
+        <location filename="../widgets/unmountdialog.cpp" line="82"/>
+        <source>Unmounting system disk may result in system crash,
+ please confirm before proceeding</source>
+        <translation>卸載該系統盤可能會引起系統崩潰，
+請確認是否繼續操作</translation>
+    </message>
+    <message>
+        <location filename="../widgets/unmountdialog.cpp" line="82"/>
+        <source>Continue</source>
+        <translation>繼續</translation>
+    </message>
+    <message>
+        <location filename="../widgets/unmountdialog.cpp" line="86"/>
+        <source>You will take subsequent risks if you continue to unmount the system disk</source>
+        <translation>繼續執行卸載操作，
+後續引發的風險將由您自行承擔</translation>
     </message>
 </context>
 </TS>

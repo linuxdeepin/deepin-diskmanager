@@ -2,32 +2,32 @@
 <context>
     <name>CylinderInfoWidget</name>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="440"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="441"/>
         <source>LBA: %1</source>
         <translation>LBA : %1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="441"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="442"/>
         <source>Cyl.: %1</source>
         <translation>Cyl. : %1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="442"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="443"/>
         <source>Error: %1</source>
         <translation>Erreur : %1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="443"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="444"/>
         <source>ms</source>
         <translation>ms</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="443"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="444"/>
         <source>Cyl. elapsed time: %1</source>
         <translation>Cyl. temps écoulé : %1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="444"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="445"/>
         <source>Status: Repaired</source>
         <translation>Statut : Réparé</translation>
     </message>
@@ -236,8 +236,8 @@
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="272"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="977"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1016"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1041"/>
         <source>Exit</source>
         <translation>Sortie</translation>
     </message>
@@ -287,83 +287,97 @@
         <translation>Temps restant :</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="634"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="656"/>
         <source>Verifying cylinder: %1</source>
         <translation>Vérification du cylindre : %1</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="680"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="702"/>
         <source>Verify completed</source>
         <translation>Vérification terminée</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="700"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="722"/>
         <source>Disk verify completed. %1 bad blocks found.</source>
         <translation>Vérification du disque terminée. %1 blocs défectueux trouvés.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="700"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="722"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="857"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="878"/>
         <source>Warning</source>
         <translation>Attention</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="857"/>
         <source>Bad sector repairing cannot recover files,
  but destroys data on and near bad sectors instead.
  Please back up all data before repair.</source>
-        <translation>La réparation de secteur défectueux ne peut pas récupérer les fichiers, 
+        <translation type="vanished">La réparation de secteur défectueux ne peut pas récupérer les fichiers, 
  mais détruit les données sur et près des secteurs défectueux à la place.
  Veuillez sauvegarder toutes les données avant la réparation.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="858"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="897"/>
         <source>Start Repair</source>
         <translation>Commencer la réparation</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="892"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="931"/>
         <source>Repairing cylinder: %1</source>
         <translation>Réparation du cylindre : %1</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="931"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="970"/>
         <source>Repair completed. Cylinder: %1 repaired.</source>
         <translation>Réparation terminée. Cylindre : %1 réparé.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="934"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="973"/>
         <source>Disk repair completed. %1 bad blocks repaired.</source>
         <translation>Réparation du disque terminée. %1 blocs défectueux réparés.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="976"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1015"/>
         <source>Verifying for bad sectors, exit now?</source>
         <translation>Vérification des secteurs défectueux, quitter maintenant ?</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="976"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1015"/>
         <source>The verified information will not be reserved</source>
         <translation>Les informations vérifiées ne seront pas réservées</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="858"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="977"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="896"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1016"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1041"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1001"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="881"/>
+        <source>Bad sector repairing cannot recover files,</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="882"/>
+        <source>but destroys data on and near bad sectors instead.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="883"/>
+        <source>Please back up all data before repair.</source>
+        <translation>Veuillez sauvegarder toutes les données avant la réparation.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1040"/>
         <source>Repairing bad sectors, exit now?</source>
         <translation>Réparer les secteurs défectueux, quitter maintenant ?</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1001"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1040"/>
         <source>The repairing information will not be reserved</source>
         <translation>Les informations de réparation ne seront pas réservées</translation>
     </message>
@@ -704,6 +718,14 @@
     </message>
 </context>
 <context>
+    <name>MainWindow</name>
+    <message>
+        <location filename="../widgets/mainwindow.cpp" line="125"/>
+        <source>Refresh</source>
+        <translation>Rafraîchir</translation>
+    </message>
+</context>
+<context>
     <name>MountDialog</name>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="49"/>
@@ -968,10 +990,6 @@
         <translation>Capacité :</translation>
     </message>
     <message>
-        <source>Capacity:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="172"/>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="175"/>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="234"/>
@@ -1016,24 +1034,44 @@
 <context>
     <name>UnmountDialog</name>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="47"/>
+        <location filename="../widgets/unmountdialog.cpp" line="48"/>
         <source>Unmount %1</source>
         <translation>Démonter %1</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="50"/>
+        <location filename="../widgets/unmountdialog.cpp" line="51"/>
         <source>Make sure there are no programs running on the disk</source>
         <translation>Assurez-vous qu&apos;aucun programme n&apos;est en cours d&apos;exécution sur le disque</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="57"/>
+        <location filename="../widgets/unmountdialog.cpp" line="58"/>
+        <location filename="../widgets/unmountdialog.cpp" line="82"/>
+        <location filename="../widgets/unmountdialog.cpp" line="86"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="58"/>
+        <location filename="../widgets/unmountdialog.cpp" line="59"/>
+        <location filename="../widgets/unmountdialog.cpp" line="86"/>
         <source>Unmount</source>
         <translation>Démonter</translation>
+    </message>
+    <message>
+        <location filename="../widgets/unmountdialog.cpp" line="82"/>
+        <source>Unmounting system disk may result in system crash,
+ please confirm before proceeding</source>
+        <translation>Le démontage du disque système peut entraîner une panne du système,
+ veuillez confirmer avant de continuer</translation>
+    </message>
+    <message>
+        <location filename="../widgets/unmountdialog.cpp" line="82"/>
+        <source>Continue</source>
+        <translation>Continuer</translation>
+    </message>
+    <message>
+        <location filename="../widgets/unmountdialog.cpp" line="86"/>
+        <source>You will take subsequent risks if you continue to unmount the system disk</source>
+        <translation>Vous prendrez des risques ultérieurs si vous continuez à démonter le disque système</translation>
     </message>
 </context>
 </TS>

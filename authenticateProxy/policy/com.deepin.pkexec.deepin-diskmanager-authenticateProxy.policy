@@ -17,6 +17,8 @@
 		<annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
 		<description xml:lang="hu">Hitelesítés szükséges a Lemezkezelő futtatásához</description>
 		<message xml:lang="hu">Hitelesítés szükséges a lemezinformációk olvasásához</message>
+		<description xml:lang="id">Menjalankan manajer diska membutuhkan autentikasi</description>
+		<message xml:lang="id">Diperlukan autentikasi untuk membaca informasi diska</message>
 		<description xml:lang="ar">إن تشغيل مدير الأقرص يحتاج إلى مصادقة</description>
 		<message xml:lang="ar">المصادقة مطلوبة لقراءة معلومات القرص</message>
 		<description xml:lang="zh_TW">Run Disk Manager Need Authentication</description>

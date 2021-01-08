@@ -1,255 +1,509 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS language="tr" version="2.1">
 <context>
+    <name>CylinderInfoWidget</name>
+    <message>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="441"/>
+        <source>LBA: %1</source>
+        <translation>LBA: %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="442"/>
+        <source>Cyl.: %1</source>
+        <translation>Cyl.: %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="443"/>
+        <source>Error: %1</source>
+        <translation>Hata: %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="444"/>
+        <source>ms</source>
+        <translation>ms</translation>
+    </message>
+    <message>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="444"/>
+        <source>Cyl. elapsed time: %1</source>
+        <translation>Sil. geçen zaman: %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="445"/>
+        <source>Status: Repaired</source>
+        <translation>Durum: Onarıldı</translation>
+    </message>
+</context>
+<context>
     <name>DeviceListWidget</name>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="104"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="102"/>
         <source>Disk info</source>
         <translation>Disk bilgisi</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="111"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="109"/>
         <source>Health management</source>
         <translation>Sağlık yönetimi</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="115"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="114"/>
         <source>Check health</source>
         <translation>Sağlığı denetle</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="121"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="120"/>
         <source>Check partition table error</source>
         <translation>Bölüm tablosu hatası denetle</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="136"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="126"/>
+        <source>Verify or repair bad sectors</source>
+        <translation>Bozuk kesimleri doğrula veya onar</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="138"/>
         <source>Hide partition</source>
         <translation>Bölümü gizle</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="142"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="144"/>
         <source>Unhide partition</source>
         <translation>Bölümü göster</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="149"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="151"/>
         <source>Delete partition</source>
         <translation>Bölümü sil</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="215"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="225"/>
         <source>No errors found in the partition table</source>
         <translation>Bölüm tablosunda hiçbir hata bulunamadı</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="224"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="235"/>
         <source>Do you want to hide this partition?</source>
         <translation>Bu bölümü gizlemek istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="224"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="235"/>
         <source>Hide</source>
         <translation>Gizle</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="224"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="251"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="261"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="235"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="265"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="275"/>
         <source>Cancel</source>
         <translation>İptal</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="230"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="242"/>
         <source>Failed to hide the partition: unable to lock it</source>
         <translation>Bölüm gizlenemedi: kilitlenemiyor</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="239"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="252"/>
         <source>You can only hide the unmounted partition</source>
         <translation>Yalnızca bağlanmamış bölümü gizleyebilirsiniz</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="251"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="265"/>
         <source>Do you want to unhide this partition?</source>
         <translation>Bu bölümü göstermek istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="251"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="265"/>
         <source>Unhide</source>
         <translation>Göster</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="261"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="275"/>
         <source>Are you sure you want to delete this partition?</source>
         <translation>Bu bölümü silmek istediğinizden emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="261"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="275"/>
         <source>You will lose all data in it</source>
         <translation>İçindeki tüm verileri kaybedeceksiniz</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="261"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="275"/>
         <source>Delete</source>
         <translation>Sil</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="269"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="284"/>
         <source>Failed to delete the partition: unable to lock it</source>
         <translation>Bölüm silinemedi: kilitlenemiyor</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="282"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="298"/>
         <source>Hide the partition successfully</source>
         <translation>Bölümü başarıyla gizlendi</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="287"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="304"/>
         <source>Failed to hide the partition</source>
         <translation>Bölüm gizlenemedi</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="297"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="315"/>
         <source>Unhide the partition successfully</source>
         <translation>Bölüm gösterimi başarılı</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="302"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="321"/>
         <source>Failed to unhide the partition</source>
         <translation>Bölüm gizlenemedi</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="314"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>Delete the partition successfully</source>
         <translation>Bölüm başarıyla silindi</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="319"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="340"/>
         <source>Failed to delete the partition: %1</source>
         <translation>Bölüm silinemedi: %1</translation>
     </message>
 </context>
 <context>
-    <name>DiskHealthDetectionDialog</name>
+    <name>DiskBadSectorsDialog</name>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="58"/>
-        <source>Check Health</source>
-        <translation>Sağlığı Denetle</translation>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="57"/>
+        <source>Verify or repair bad sectors</source>
+        <translation>Bozuk kesimleri doğrula veya onar</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="90"/>
-        <source>Serial number</source>
-        <translation>Seri numarası</translation>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="82"/>
+        <source>Verify:</source>
+        <translation>Doğrulama:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="99"/>
-        <source>Storage</source>
-        <translation>Depolama</translation>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="88"/>
+        <source>Cylinders</source>
+        <translation>Silindirler</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="120"/>
-        <source>Health Status</source>
-        <translation>Sağlık Durumu</translation>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="89"/>
+        <source>Sectors</source>
+        <translation>Sektörler</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="134"/>
-        <source>Good</source>
-        <translation>İyi</translation>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="90"/>
+        <source>MB</source>
+        <translation>MB</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="140"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="131"/>
+        <source>Method:</source>
+        <translation>Yöntem:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="137"/>
+        <source>Verifying times</source>
+        <translation>Doğrulama zamanı</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="138"/>
+        <source>Timeout</source>
+        <translation>Geçen zaman</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="176"/>
+        <source>ms</source>
+        <translation>ms</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="209"/>
+        <source>Result:</source>
+        <translation>Sonuç:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="230"/>
+        <source>Excellent</source>
+        <translation>Mükemmel</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="237"/>
         <source>Damaged</source>
         <translation>Hasarlı</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="146"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="244"/>
         <source>Unknown</source>
         <translation>Bilinmiyor</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="165"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="272"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1016"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1041"/>
+        <source>Exit</source>
+        <translation>Çık</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="274"/>
+        <source>Reset</source>
+        <translation>Sıfırla</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="277"/>
+        <source>Repair</source>
+        <translation>Onar</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="280"/>
+        <source>Start Verify</source>
+        <translation>Doğrulamayı Başlat</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="282"/>
+        <source>Stop</source>
+        <translation>Durdur</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="284"/>
+        <source>Continue</source>
+        <translation>Devam Et</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="286"/>
+        <source>Verify Again</source>
+        <translation>Yeniden Doğrula</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="288"/>
+        <source>Done</source>
+        <translation>Bitti</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="313"/>
+        <source>Time elapsed:</source>
+        <translation>Geçen süre:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="319"/>
+        <source>Time left:</source>
+        <translation>Kalan zaman:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="656"/>
+        <source>Verifying cylinder: %1</source>
+        <translation>Doğrulama silindiri: %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="702"/>
+        <source>Verify completed</source>
+        <translation>Doğrulama tamamlandı</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="722"/>
+        <source>Disk verify completed. %1 bad blocks found.</source>
+        <translation>Disk doğrulama tamamlandı. %1 hatalı blok bulundu.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="722"/>
+        <source>OK</source>
+        <translation>Tamam</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="878"/>
+        <source>Warning</source>
+        <translation>Uyarı</translation>
+    </message>
+    <message>
+        <source>Bad sector repairing cannot recover files,
+ but destroys data on and near bad sectors instead.
+ Please back up all data before repair.</source>
+        <translation type="vanished">Kötü sektör onarımı dosyalar kurtarılamaz, 
+ama bozuk sektörlerdeki ve yakınındaki verileri yok eder. 
+Lütfen onarımdan önce tüm verileri yedekleyin.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="897"/>
+        <source>Start Repair</source>
+        <translation>Onarımı Başlat</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="931"/>
+        <source>Repairing cylinder: %1</source>
+        <translation>Silindir onarılıyor: %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="970"/>
+        <source>Repair completed. Cylinder: %1 repaired.</source>
+        <translation>Onarım tamamlandı. Silindir: %1 onarıldı.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="973"/>
+        <source>Disk repair completed. %1 bad blocks repaired.</source>
+        <translation>Disk onarımı tamamlandı. %1 bozuk blok onarıldı.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1015"/>
+        <source>Verifying for bad sectors, exit now?</source>
+        <translation>Kötü sektörler doğrulanıyor, şimdi çıkılsın mı?</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1015"/>
+        <source>The verified information will not be reserved</source>
+        <translation>Doğrulanan bilgiler tutulmayacak.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="896"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1016"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1041"/>
+        <source>Cancel</source>
+        <translation>İptal</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="881"/>
+        <source>Bad sector repairing cannot recover files,</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="882"/>
+        <source>but destroys data on and near bad sectors instead.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="883"/>
+        <source>Please back up all data before repair.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1040"/>
+        <source>Repairing bad sectors, exit now?</source>
+        <translation>Kötü sektörler onarılıyor, şimdi çıkılsın mı?</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1040"/>
+        <source>The repairing information will not be reserved</source>
+        <translation>Onarım bilgileri tutulmayacak</translation>
+    </message>
+</context>
+<context>
+    <name>DiskHealthDetectionDialog</name>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="59"/>
+        <source>Check Health</source>
+        <translation>Sağlığı Denetle</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="91"/>
+        <source>Serial number</source>
+        <translation>Seri numarası</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="100"/>
+        <source>Storage</source>
+        <translation>Depolama</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="121"/>
+        <source>Health Status</source>
+        <translation>Sağlık Durumu</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="135"/>
+        <source>Good</source>
+        <translation>İyi</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="141"/>
+        <source>Damaged</source>
+        <translation>Hasarlı</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="147"/>
+        <source>Unknown</source>
+        <translation>Bilinmiyor</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="166"/>
         <source>Temperature</source>
         <translation>Sıcaklık</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="222"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="348"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="228"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="357"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="223"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="348"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="229"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="357"/>
         <source>Status</source>
         <translation>Durum</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="224"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="348"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="230"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="357"/>
         <source>Current</source>
         <translation>Mevcut</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="225"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="348"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="231"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="357"/>
         <source>Worst</source>
         <translation>Kötü</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="226"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="349"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="232"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="358"/>
         <source>Threshold</source>
         <translation>Eşik</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="227"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="349"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="233"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="358"/>
         <source>Raw Value</source>
         <translation>Ham Değer</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="228"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="349"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="234"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="358"/>
         <source>Attribute name</source>
         <translation>Öznitelik adı</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="282"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="288"/>
         <source>Status: (G: Good | W: Warning | D: Damaged | U: Unknown)</source>
         <translation>Durum: (G: İyi | W: Uyarı | D: Hasarlı | U: Bilinmiyor)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="286"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="292"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="294"/>
         <source>Export</source>
         <translation>Dışarı Aktar</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="311"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="320"/>
         <source>Save File</source>
         <translation>Dosyayı Kaydet</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="311"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="320"/>
         <source>Text files (*.txt)</source>
         <translation>Metin dosyaları: (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="326"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="335"/>
         <source>Wrong path</source>
         <translation>Yanlış yol</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="336"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="345"/>
         <source>You do not have permission to access this path</source>
         <translation>Bu yola erişim izniniz yok</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="367"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="376"/>
         <source>Export successful</source>
         <translation>Dışa aktarım başarılı</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="370"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="379"/>
         <source>Export failed</source>
         <translation>Dışa aktarım başarısız</translation>
     </message>
@@ -339,36 +593,37 @@
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="119"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="121"/>
         <source>Export</source>
         <translation>Dışarı Aktar</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="136"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="147"/>
         <source>Save File</source>
         <translation>Dosyayı Kaydet</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="136"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="147"/>
         <source>Text files (*.txt)</source>
         <translation>Metin dosyaları: (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="151"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="162"/>
         <source>Wrong path</source>
         <translation>Yanlış yol</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="161"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="172"/>
         <source>You do not have permission to access this path</source>
         <translation>Bu yola erişim izniniz yok</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="180"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="191"/>
         <source>Export successful</source>
         <translation>Dışa aktarım başarılı</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="183"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="194"/>
         <source>Export failed</source>
         <translation>Dışa aktarım başarısız</translation>
     </message>
@@ -463,6 +718,14 @@
     </message>
 </context>
 <context>
+    <name>MainWindow</name>
+    <message>
+        <location filename="../widgets/mainwindow.cpp" line="125"/>
+        <source>Refresh</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>MountDialog</name>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="49"/>
@@ -504,7 +767,7 @@
 <context>
     <name>PartChartShowing</name>
     <message>
-        <location filename="../widgets/customcontrol/partchartshowing.cpp" line="119"/>
+        <location filename="../widgets/customcontrol/partchartshowing.cpp" line="116"/>
         <source>Unallocated</source>
         <translation>Ayrılmamış</translation>
     </message>
@@ -535,27 +798,27 @@
 <context>
     <name>PartitionTableErrorsInfoDialog</name>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="52"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="53"/>
         <source>Errors in Partition Table</source>
         <translation>Bölüm Tablosundaki Hatalar</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="61"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="62"/>
         <source>The partition table of disk %1 has below errors:</source>
         <translation>%1 diskinin bölüm tablosunda aşağıdaki hatalar var:</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="94"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="99"/>
         <source>Error</source>
         <translation>Hata</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="103"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="108"/>
         <source>Partition table entries are not in disk order</source>
         <translation>Bölüm tablosu girişleri disk sırasında değil</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="115"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="120"/>
         <source>OK</source>
         <translation>Tamam</translation>
     </message>
@@ -573,99 +836,99 @@
         <translation>Bölüm sayısını artırmak için ‘+’ düğmesini tıkla. Adını ve dosya sistemini değiştirmek için her bölüme tıkla.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="102"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="106"/>
         <source>Disk Information</source>
         <translation>Disk Bilgileri</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="117"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="121"/>
         <source>Capacity:</source>
         <translation>Kapasite:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="127"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="131"/>
         <source>Partition selected:</source>
         <translation>Bölüm seçildi:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="142"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="146"/>
         <source>Disk:</source>
         <translation>Disk:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="152"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="261"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="156"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="273"/>
         <source>File system:</source>
         <translation>Dosya sistemi:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="191"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="195"/>
         <source>Confirm</source>
         <translation>Onayla</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="193"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="198"/>
         <source>Cancel</source>
         <translation>İptal</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="195"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="200"/>
         <source>Revert</source>
         <translation>Geri al</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="216"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="222"/>
         <source>Partition Information</source>
         <translation>Bölüm Bilgileri</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="228"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="234"/>
         <source>Number of partitions:</source>
         <translation>Bölüm sayısı:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="235"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="245"/>
         <source>Delete last partition</source>
         <translation>Son bölümü sil</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="244"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="255"/>
         <source>Name:</source>
         <translation>İsim:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="269"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="281"/>
         <source>Size:</source>
         <translation>Boyut:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="364"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="475"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="379"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="492"/>
         <source>Unallocated</source>
         <translation>Ayrılmamış</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="386"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="402"/>
         <source>Name</source>
         <translation>İsim</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="387"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="403"/>
         <source>Size</source>
         <translation>Boyut</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="650"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="656"/>
         <source>The length exceeds the limit</source>
         <translation>Uzunluk sınırı aşıyor</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="674"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="687"/>
         <source>The number of new partitions exceeds the limit</source>
         <translation>Yeni bölümlerin sayısı sınırı aşıyor</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="694"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="707"/>
         <source>To create a partition, you need at least 52 MB</source>
         <translation>Bir bölüm oluşturmak için en az 52 MB&apos;a ihtiyacınız var</translation>
     </message>
@@ -762,28 +1025,52 @@
         <source>Resize</source>
         <translation>Boyutlandır</translation>
     </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="116"/>
+        <source>Cannot recognize its partition table</source>
+        <translation>Bölüm tablosunu tanıyamıyor</translation>
+    </message>
 </context>
 <context>
     <name>UnmountDialog</name>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="47"/>
+        <location filename="../widgets/unmountdialog.cpp" line="48"/>
         <source>Unmount %1</source>
         <translation>Bağı kaldır %1</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="50"/>
+        <location filename="../widgets/unmountdialog.cpp" line="51"/>
         <source>Make sure there are no programs running on the disk</source>
         <translation>Diskte çalışan program olmadığından emin olun</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="57"/>
+        <location filename="../widgets/unmountdialog.cpp" line="58"/>
+        <location filename="../widgets/unmountdialog.cpp" line="82"/>
+        <location filename="../widgets/unmountdialog.cpp" line="86"/>
         <source>Cancel</source>
         <translation>İptal</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="58"/>
+        <location filename="../widgets/unmountdialog.cpp" line="59"/>
+        <location filename="../widgets/unmountdialog.cpp" line="86"/>
         <source>Unmount</source>
         <translation>Bağı kaldır</translation>
+    </message>
+    <message>
+        <location filename="../widgets/unmountdialog.cpp" line="82"/>
+        <source>Unmounting system disk may result in system crash,
+ please confirm before proceeding</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/unmountdialog.cpp" line="82"/>
+        <source>Continue</source>
+        <translation>Devam Et</translation>
+    </message>
+    <message>
+        <location filename="../widgets/unmountdialog.cpp" line="86"/>
+        <source>You will take subsequent risks if you continue to unmount the system disk</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

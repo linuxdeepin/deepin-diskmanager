@@ -73,10 +73,10 @@ void workthread::runCount()
     {
         QString cmd = QString("badblocks -sv -c %1 -b %2 %3 %4 %5").arg(m_checkConut).arg(m_checkSize).arg(m_devicePath).arg(j).arg(i);
 
-        QTime ctime = QTime::currentTime();
+        QDateTime ctime = QDateTime::currentDateTime();
         proc.start(cmd);
         proc.waitForFinished(-1);
-        QTime ctime1 = QTime::currentTime();
+        QDateTime ctime1 = QDateTime::currentDateTime();
 
         cmd = proc.readAllStandardError();
 
@@ -119,10 +119,10 @@ void workthread::runTime()
     {
         QString cmd = QString("badblocks -sv -b %1 %2 %3 %4").arg(m_checkSize).arg(m_devicePath).arg(j).arg(i);
 
-        QTime ctime = QTime::currentTime();
+        QDateTime ctime = QDateTime::currentDateTime();
         proc.start(cmd);
         proc.waitForFinished(-1);
-        QTime ctime1 = QTime::currentTime();
+        QDateTime ctime1 = QDateTime::currentDateTime();
 
         cmd = proc.readAllStandardError();
 
@@ -182,10 +182,10 @@ void fixthread::runFix()
         Sector k = m_list.at(i).toInt() + 1;
         QString cmd = QString("badblocks -sv -b %1 -w %2 %3 %4").arg(m_checkSize).arg(m_devicePath).arg(k).arg(j);
 
-        QTime ctime = QTime::currentTime();
+        QDateTime ctime = QDateTime::currentDateTime();
         proc.start(cmd);
         proc.waitForFinished(-1);
-        QTime ctime1 = QTime::currentTime();
+        QDateTime ctime1 = QDateTime::currentDateTime();
 
         cmd = proc.readAllStandardError();
 

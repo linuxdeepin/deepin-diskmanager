@@ -167,6 +167,24 @@ private slots:
      */
     void onTimeOut();
 
+    /**
+     * @brief 毫秒转换成时、分、秒的计算
+     * @param msecs 毫秒
+     * @param hore 时
+     * @param minute 分
+     * @param second 秒
+     */
+    void mSecsToTime(qint64 msecs, qint64 &hore, qint64 &minute, qint64 &second);
+
+    /**
+     * @brief 已用时间、剩余时间格式
+     * @param hore 时
+     * @param minute 分
+     * @param second 秒
+     * @return 返回正确的时间格式
+     */
+    QString timeFormat(qint64 &hore, qint64 &minute, qint64 &second);
+
 protected:
     void closeEvent(QCloseEvent *event) override;
 
@@ -210,20 +228,19 @@ private:
     DProgressBar *m_progressBar;
     DLabel *m_usedTimeLabel;
     DLabel *m_unusedTimeLabel;
-    QWidget *m_progressWidget;
     CylinderInfoWidget *m_cylinderInfoWidget;
     StatusType m_curType;
     int m_totalCheckNumber = 0;
     int m_curCheckNumber = 0;
-    int m_curCheckTime = 0;
+    qint64 m_curCheckTime = 0;
     QSettings *m_settings;
     int m_totalRepairNumber = 0;
     int m_curRepairNumber = 0;
-    int m_curRepairTime = 0;
+    qint64 m_curRepairTime = 0;
     int m_repairedCount = 0;
     QTimer m_timer;
-    int m_usedTime = 0;
-    int m_unusedTime = 0;
+    qint64 m_usedTime = 0;
+    qint64 m_unusedTime = 0;
 };
 
 #endif // DISKBADSECTORSDIALOG_H

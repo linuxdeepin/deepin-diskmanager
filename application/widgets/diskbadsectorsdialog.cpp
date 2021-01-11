@@ -271,22 +271,45 @@ void DiskBadSectorsDialog::initUI()
 
     m_exitButton = new DPushButton(tr("Exit")); // 退出
     m_exitButton->setFixedSize(147, 36);
+    m_exitButton->setObjectName("exit");
+    m_exitButton->setAccessibleName("exit");
+
     m_resetButton = new DPushButton(tr("Reset")); // 复位
     m_resetButton->setFixedSize(147, 36);
     m_resetButton->setDisabled(true);
+    m_resetButton->setObjectName("reset");
+    m_resetButton->setAccessibleName("reset");
+
     m_repairButton = new DPushButton(tr("Repair")); // 尝试修复
     m_repairButton->setFixedSize(147, 36);
     m_repairButton->setDisabled(true);
+    m_repairButton->setObjectName("repair");
+    m_repairButton->setAccessibleName("repair");
+
     m_startButton = new DSuggestButton(tr("Start Verify")); // 开始检测
     m_startButton->setFixedSize(147, 36);
+    m_startButton->setObjectName("start");
+    m_startButton->setAccessibleName("start");
+
     m_stopButton = new DPushButton(tr("Stop")); // 停止
     m_stopButton->setFixedSize(147, 36);
+    m_stopButton->setObjectName("stop");
+    m_stopButton->setAccessibleName("stop");
+
     m_continueButton = new DPushButton(tr("Continue")); // 继续
     m_continueButton->setFixedSize(147, 36);
+    m_continueButton->setObjectName("continue");
+    m_continueButton->setAccessibleName("continue");
+
     m_againButton = new DPushButton(tr("Verify Again"));  // 重新检测
     m_againButton->setFixedSize(147, 36);
+    m_againButton->setObjectName("again");
+    m_againButton->setAccessibleName("again");
+
     m_doneButton = new DSuggestButton(tr("Done"));  // 完成
     m_doneButton->setFixedSize(147, 36);
+    m_doneButton->setObjectName("done");
+    m_doneButton->setAccessibleName("done");
 
     m_buttonStackedWidget = new QStackedWidget;
     m_buttonStackedWidget->setFixedHeight(36);
@@ -310,24 +333,18 @@ void DiskBadSectorsDialog::initUI()
     m_progressBar = new DProgressBar;
     m_progressBar->setValue(0);
     m_progressBar->setFixedHeight(8);
-    DLabel *usedTimeLabel = new DLabel(tr("Time elapsed:"));
-    DFontSizeManager::instance()->bind(usedTimeLabel, DFontSizeManager::T8, QFont::Normal);
-    usedTimeLabel->setPalette(palette3);
-    m_usedTimeLabel = new DLabel("0:00:12");
+
+    m_usedTimeLabel = new DLabel(tr("Time elapsed:") + "00:00:12");
     DFontSizeManager::instance()->bind(m_usedTimeLabel, DFontSizeManager::T8, QFont::Normal);
     m_usedTimeLabel->setPalette(palette3);
-    DLabel *unusedTimwLabel = new DLabel(tr("Time left:"));
-    DFontSizeManager::instance()->bind(unusedTimwLabel, DFontSizeManager::T8, QFont::Normal);
-    unusedTimwLabel->setPalette(palette3);
-    m_unusedTimeLabel = new DLabel("0:00:12");
+
+    m_unusedTimeLabel = new DLabel(tr("Time left:") + "00:00:12");
     DFontSizeManager::instance()->bind(m_unusedTimeLabel, DFontSizeManager::T8, QFont::Normal);
     m_unusedTimeLabel->setPalette(palette3);
 
     QHBoxLayout *timeLayout = new QHBoxLayout;
-    timeLayout->addWidget(usedTimeLabel);
     timeLayout->addWidget(m_usedTimeLabel);
     timeLayout->addStretch();
-    timeLayout->addWidget(unusedTimwLabel);
     timeLayout->addWidget(m_unusedTimeLabel);
     timeLayout->setContentsMargins(0, 0, 0, 0);
 
@@ -336,9 +353,12 @@ void DiskBadSectorsDialog::initUI()
     progressLayout->addLayout(timeLayout);
     progressLayout->setContentsMargins(0, 0, 0, 0);
 
-    m_progressWidget = new QWidget;
-    m_progressWidget->setLayout(progressLayout);
-    m_progressWidget->hide();
+    QWidget *progressWidget = new QWidget;
+    progressWidget->setLayout(progressLayout);
+    progressWidget->setFixedHeight(40);
+    m_progressBar->hide();
+    m_usedTimeLabel->hide();
+    m_unusedTimeLabel->hide();
 
     QWidget *bottomWidget = new QWidget;
 //    m_methodStackedWidget->setStyleSheet("background:red");
@@ -348,13 +368,14 @@ void DiskBadSectorsDialog::initUI()
     mainLayout->addLayout(methodLayout);
     mainLayout->addSpacing(10);
     mainLayout->addWidget(horizontalLine);
-//    mainLayout->addSpacing(10);
+    mainLayout->addSpacing(5);
     mainLayout->addLayout(resultLayout);
     mainLayout->addSpacing(10);
     mainLayout->addWidget(m_cylinderInfoWidget);
     mainLayout->addLayout(cylinderLayout);
-    mainLayout->addWidget(m_progressWidget);
-    mainLayout->addStretch();
+    mainLayout->addWidget(progressWidget);
+    mainLayout->addSpacing(25);
+//    mainLayout->addStretch();
     mainLayout->addLayout(buttonLayout);
     mainLayout->setSpacing(0);
     mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -557,12 +578,14 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
 
     m_curType = Check;
     m_buttonStackedWidget->setCurrentIndex(1);
-    m_progressWidget->show();
+    m_progressBar->show();
+    m_usedTimeLabel->show();
+    m_unusedTimeLabel->show();
     m_resetButton->setDisabled(true);
     m_repairButton->setDisabled(true);
     m_progressBar->setValue(0);
-    m_usedTimeLabel->setText("00:00:00");
-    m_unusedTimeLabel->setText("00:00:00");
+    m_usedTimeLabel->setText(tr("Time elapsed:") + "00:00:00");
+    m_unusedTimeLabel->setText(tr("Time left:") + "00:00:00");
 
     QFile file("/tmp/CheckData.conf");
     if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
@@ -647,15 +670,46 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
 
 }
 
+void DiskBadSectorsDialog::mSecsToTime(qint64 msecs, qint64 &hore, qint64 &minute, qint64 &second)
+{
+    hore = msecs / (60 * 60 * 1000);
+    minute = (msecs % (60 * 60 * 1000)) / (60 * 1000);
+    second = ((msecs % (60 * 60 * 1000)) % (60 * 1000)) / 1000;
+}
+
+QString DiskBadSectorsDialog::timeFormat(qint64 &hore, qint64 &minute, qint64 &second)
+{
+    QString time;
+    if (hore <= 9) {
+        time = QString("0%1:").arg(hore);
+    } else {
+        time = QString("%1:").arg(hore);
+    }
+
+    if (minute <= 9) {
+        time += QString("0%1:").arg(minute);
+    } else {
+        time += QString("%1:").arg(minute);
+    }
+
+    if (second <= 9) {
+        time += QString("0%1").arg(second);
+    } else {
+        time += QString("%1").arg(second);
+    }
+
+    return time;
+}
+
 void DiskBadSectorsDialog::onCheckBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo)
 {
     ++m_curCheckNumber;
-    m_curCheckTime += cylinderTimeConsuming.toInt();
+    m_curCheckTime += cylinderTimeConsuming.toLongLong();
     DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
     QString LBANumber = QString::number(cylinderNumber.toLongLong() * info.heads * info.sectors);
     m_checkInfoLabel->setText(tr("Verifying cylinder: %1").arg(cylinderNumber)); // 正在检测xxx柱面
 
-    int totalTime = m_curCheckTime / m_curCheckNumber * m_totalCheckNumber;
+    qint64 totalTime = m_curCheckTime / m_curCheckNumber * m_totalCheckNumber;
     int value = QString::number((float)m_curCheckTime / totalTime,'f', 2).toFloat() * 100;
 
     if (value > 99) {
@@ -663,13 +717,22 @@ void DiskBadSectorsDialog::onCheckBadBlocksInfo(const QString &cylinderNumber, c
     }
 
     m_progressBar->setValue(value);
-    int remainingTime = totalTime - m_curCheckTime;
+    qint64 remainingTime = totalTime - m_curCheckTime;
     if (remainingTime < 1000) {
         remainingTime = 1000;
     }
 
-    m_usedTimeLabel->setText(QTime::fromMSecsSinceStartOfDay(m_curCheckTime).toString("hh:mm:ss"));
-    m_unusedTimeLabel->setText(QTime::fromMSecsSinceStartOfDay(remainingTime).toString("hh:mm:ss"));
+    qint64 usedHore = 0;
+    qint64 usedMinute = 0;
+    qint64 usedSecond = 0;
+    mSecsToTime(m_curCheckTime, usedHore, usedMinute, usedSecond);
+    m_usedTimeLabel->setText(tr("Time elapsed:") + timeFormat(usedHore, usedMinute, usedSecond));
+
+    qint64 remainingHore = 0;
+    qint64 remainingMinute = 0;
+    qint64 remainingSecond = 0;
+    mSecsToTime(remainingTime, remainingHore, remainingMinute, remainingSecond);
+    m_unusedTimeLabel->setText(tr("Time left:") + timeFormat(remainingHore, remainingMinute, remainingSecond));
 //    qDebug() << "111111111" << cylinderTimeConsuming << m_curCheckTime << value << m_usedTimeLabel->text() << remainingTime << QTime::fromMSecsSinceStartOfDay(remainingTime).toString("hh:mm:ss");
 
     m_settings->beginGroup("CheckData");
@@ -697,7 +760,7 @@ void DiskBadSectorsDialog::onCheckBadBlocksInfo(const QString &cylinderNumber, c
 void DiskBadSectorsDialog::onCheckCoomplete()
 {
     m_progressBar->setValue(100);
-    m_unusedTimeLabel->setText("00:00:00");
+    m_unusedTimeLabel->setText(tr("Time left:") + "00:00:00");
     m_buttonStackedWidget->setCurrentIndex(3);
     m_checkInfoLabel->setText(tr("Verify completed")); // 检测完成
     m_curType = Normal;
@@ -796,8 +859,8 @@ void DiskBadSectorsDialog::onContinueButtonClicked()
 void DiskBadSectorsDialog::onAgainVerifyButtonClicked()
 {
     m_progressBar->setValue(0);
-    m_usedTimeLabel->setText("00:00:00");
-    m_unusedTimeLabel->setText("00:00:00");
+    m_usedTimeLabel->setText(tr("Time elapsed:") + "00:00:00");
+    m_unusedTimeLabel->setText(tr("Time left:") + "00:00:00");
     m_checkInfoLabel->setText("");
     m_curType = Check;
     m_buttonStackedWidget->setCurrentIndex(1);
@@ -840,12 +903,14 @@ void DiskBadSectorsDialog::onAgainVerifyButtonClicked()
 void DiskBadSectorsDialog::onResetButtonClicked()
 {
     m_progressBar->setValue(0);
-    m_usedTimeLabel->setText("00:00:00");
-    m_unusedTimeLabel->setText("00:00:00");
+    m_usedTimeLabel->setText(tr("Time elapsed:") + "00:00:00");
+    m_unusedTimeLabel->setText(tr("Time left:") + "00:00:00");
     m_checkInfoLabel->setText("");
     m_curType = Normal;
     m_buttonStackedWidget->setCurrentIndex(0);
-    m_progressWidget->hide();
+    m_progressBar->hide();
+    m_usedTimeLabel->hide();
+    m_unusedTimeLabel->hide();
     m_repairButton->setDisabled(true);
     m_resetButton->setDisabled(true);
     m_totalCheckNumber = 0;
@@ -901,8 +966,8 @@ void DiskBadSectorsDialog::onRepairButtonClicked()
         m_resetButton->setDisabled(true);
         m_buttonStackedWidget->setCurrentIndex(1);
         m_progressBar->setValue(0);
-        m_usedTimeLabel->setText("00:00:00");
-        m_unusedTimeLabel->setText("00:00:00");
+        m_usedTimeLabel->setText(tr("Time elapsed:") + "00:00:00");
+        m_unusedTimeLabel->setText(tr("Time left:") + "00:00:00");
         m_checkInfoLabel->setText("");
         m_repairedCount = 0;
         m_curRepairNumber = 0;
@@ -917,7 +982,12 @@ void DiskBadSectorsDialog::onRepairButtonClicked()
         m_totalRepairNumber = lstBadSectors.count();
         m_usedTime = 0;
         m_unusedTime = m_totalRepairNumber * 2500;
-        m_unusedTimeLabel->setText(QTime::fromMSecsSinceStartOfDay(m_unusedTime).toString("hh:mm:ss"));
+
+        qint64 remainingHore = 0;
+        qint64 remainingMinute = 0;
+        qint64 remainingSecond = 0;
+        mSecsToTime(m_unusedTime, remainingHore, remainingMinute, remainingSecond);
+        m_unusedTimeLabel->setText(tr("Time left:") + timeFormat(remainingHore, remainingMinute, remainingSecond));
 
         DMDbusHandler::instance()->repairBadBlocks(info.m_path, lstBadSectors, repairSize, 1);
         m_timer.start(200);
@@ -927,10 +997,10 @@ void DiskBadSectorsDialog::onRepairButtonClicked()
 void DiskBadSectorsDialog::onRepairBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus, const QString &cylinderTimeConsuming)
 {
     ++m_curRepairNumber;
-    m_curRepairTime += cylinderTimeConsuming.toInt();
+    m_curRepairTime += cylinderTimeConsuming.toLongLong();
     m_checkInfoLabel->setText(tr("Repairing cylinder: %1").arg(cylinderNumber)); // 正在修复xxx柱面
 
-    int totalTime = m_curRepairTime / m_curRepairNumber * m_totalRepairNumber;
+    qint64 totalTime = m_curRepairTime / m_curRepairNumber * m_totalRepairNumber;
     m_usedTime = m_curRepairTime;
     m_unusedTime = totalTime - m_curRepairTime;
     if (m_unusedTime < 1000) {
@@ -962,7 +1032,7 @@ void DiskBadSectorsDialog::onRepairCoomplete()
 {
     m_timer.stop();
     m_progressBar->setValue(100);
-    m_unusedTimeLabel->setText("00:00:00");
+    m_unusedTimeLabel->setText(tr("Time left:") + "00:00:00");
     m_buttonStackedWidget->setCurrentIndex(4);
     m_curType = Normal;
     m_resetButton->setDisabled(false);
@@ -990,8 +1060,17 @@ void DiskBadSectorsDialog::onTimeOut()
         m_unusedTime = 1000;
     }
 
-    m_usedTimeLabel->setText(QTime::fromMSecsSinceStartOfDay(m_usedTime).toString("hh:mm:ss"));
-    m_unusedTimeLabel->setText(QTime::fromMSecsSinceStartOfDay(m_unusedTime).toString("hh:mm:ss"));
+    qint64 usedHore = 0;
+    qint64 usedMinute = 0;
+    qint64 usedSecond = 0;
+    mSecsToTime(m_usedTime, usedHore, usedMinute, usedSecond);
+    m_usedTimeLabel->setText(tr("Time elapsed:") + timeFormat(usedHore, usedMinute, usedSecond));
+
+    qint64 remainingHore = 0;
+    qint64 remainingMinute = 0;
+    qint64 remainingSecond = 0;
+    mSecsToTime(m_unusedTime, remainingHore, remainingMinute, remainingSecond);
+    m_unusedTimeLabel->setText(tr("Time left:") + timeFormat(remainingHore, remainingMinute, remainingSecond));
 }
 
 void DiskBadSectorsDialog::onExitButtonClicked()

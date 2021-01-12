@@ -29,6 +29,7 @@
 
 #include <DMainWindow>
 #include <DSpinner>
+#include <DPushButton>
 
 DWIDGET_USE_NAMESPACE
 
@@ -56,6 +57,13 @@ protected:
      * @brief 窗口关闭事件
      */
     void closeEvent(QCloseEvent *event) override;
+
+private slots:
+
+    /**
+     * @brief 刷新按钮点击响应的槽函数
+     */
+    void onRefreshButtonClicked();
 
 private:
 
@@ -89,6 +97,7 @@ private:
 //    BufferWin *m_bufferWin;
     DMDbusHandler *m_handler;
     DSpinner *m_spinner;
+    DPushButton *m_btnRefresh; // 刷新按钮
 };
 
 #endif // MAINWINDOW_H

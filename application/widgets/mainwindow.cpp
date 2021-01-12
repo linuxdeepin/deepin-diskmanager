@@ -117,9 +117,20 @@ void MainWindow::initUi()
     m_central = new CenterWidget(this);
     setCentralWidget(m_central);
 
+    m_btnRefresh = new DPushButton;
+    QIcon icon = Common::getIcon("refresh");
+    m_btnRefresh->setIcon(icon);
+    m_btnRefresh->setFixedSize(QSize(36, 36));
+    m_btnRefresh->setIconSize(QSize(17, 14));
+    m_btnRefresh->setToolTip(tr("Refresh"));
+    m_btnRefresh->setCheckable(false);
+    m_btnRefresh->setObjectName("refresh");
+    m_btnRefresh->setAccessibleName("refresh");
+
     titlebar()->setIcon(QIcon::fromTheme(appName));
     titlebar()->setTitle("");
     // titlebar()->setMenu(m_central->titleMenu());
+    titlebar()->addWidget(m_btnRefresh, Qt::AlignLeft);
     titlebar()->addWidget(m_central->getTitleWidget(), Qt::AlignCenter);
     titlebar()->menu();
 }
@@ -127,12 +138,18 @@ void MainWindow::initUi()
 void MainWindow::initConnection()
 {
     connect(m_handler, &DMDbusHandler::showSpinerWindow, this, &MainWindow::onShowSpinerWindow);
+    connect(m_btnRefresh, &DPushButton::clicked, this, &MainWindow::onRefreshButtonClicked);
 }
 
 void MainWindow::onHandleQuitAction()
 {
     //ToDo judge exit or no
     qDebug() << __FUNCTION__;
+}
+
+void MainWindow::onRefreshButtonClicked()
+{
+    m_handler->refresh();
 }
 
 void MainWindow::onShowSpinerWindow(bool isShow)

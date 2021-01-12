@@ -134,6 +134,13 @@ void DMDbusHandler::Quit()
     m_dbus->Quit();
 }
 
+void DMDbusHandler::refresh()
+{
+    emit showSpinerWindow(true);
+
+    m_dbus->refreshFunc();
+}
+
 void DMDbusHandler::getDeviceInfo()
 {
     emit showSpinerWindow(true);

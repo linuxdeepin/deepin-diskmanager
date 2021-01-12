@@ -51,6 +51,11 @@ public:
     void Quit();
 
     /**
+     * @brief 刷新
+     */
+    void refresh();
+
+    /**
      * @brief 给服务发获取所有设备信息的消息
      */
     void getDeviceInfo();

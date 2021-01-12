@@ -2330,6 +2330,13 @@ bool PartedCore::updateUsbRemove()
     return true;
 }
 
+void PartedCore::refreshFunc()
+{
+    qDebug() << __FUNCTION__ << "refreshFunc start";
+    emit refreshDeviceInfo();
+    qDebug() << __FUNCTION__ << "refreshFunc end";
+}
+
 void PartedCore::autoMount()
 {
     //因为永久挂载的原因需要先执行mount -a让系统文件挂载生效

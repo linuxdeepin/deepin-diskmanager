@@ -168,6 +168,10 @@ void DiskManagerService::updateUsbRemove()
 {
     m_partedcore->updateUsbRemove();
 }
+void DiskManagerService::refreshFunc()
+{
+    m_partedcore->refreshFunc();
+}
 int DiskManagerService::test()
 {
     return m_partedcore->test();

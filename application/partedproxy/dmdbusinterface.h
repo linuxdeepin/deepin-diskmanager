@@ -86,6 +86,15 @@ public Q_SLOTS: // METHODS
     }
 
     /**
+     * @brief  刷新
+     */
+    inline QDBusPendingReply<> refreshFunc()
+    {
+        QList<QVariant> argumentList;
+        return asyncCallWithArgumentList(QStringLiteral("refreshFunc"), argumentList);
+    }
+
+    /**
      * @brief 获取设备信息
      */
     inline QDBusPendingReply<DeviceInfo> getDeviceinfo()

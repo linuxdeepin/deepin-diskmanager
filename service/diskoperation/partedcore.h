@@ -214,6 +214,11 @@ public:
     bool fixBadBlocks(const QString &devicePath, QStringList badBlocksList, int checkSize, int flag);
 
     /**
+     * @brief 刷新按钮
+     */
+    void refreshFunc();
+
+    /**
      * @brief 个人测试
      */
     int test();

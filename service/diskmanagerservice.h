@@ -272,9 +272,13 @@ public Q_SLOTS:
 
     /**
      * @brief USB拔出
-     * @param 无
      */
     Q_SCRIPTABLE void updateUsbRemove();
+
+    /**
+     * @brief 刷新按钮
+     */
+    Q_SCRIPTABLE void refreshFunc();
 
     /**
      * @brief 测试

@@ -29,6 +29,7 @@
 #define DISKMANAGERSERVICE_H
 #include "diskoperation/partedcore.h"
 #include "diskoperation/thread.h"
+#include "PolicyKitHelper.h"
 
 #include <QObject>
 #include <QDBusContext>
@@ -50,6 +51,12 @@ public:
     explicit DiskManagerService(QObject *parent = nullptr);
 
 Q_SIGNALS:
+    /**
+     * @brief 删除分区信号
+     * @param deleteMessage：删除信息
+     */
+    Q_SCRIPTABLE void rootLogin(const QString &loginMessage);
+
     /**
      * @brief 信息传递信号
      * @param msg：要传递的信息
@@ -120,7 +127,7 @@ public Q_SLOTS:
     /**
     *@brief 启动服务
     */
-    Q_SCRIPTABLE void Start();
+    Q_SCRIPTABLE void Start(qint64 applicationPid);
 
     /**
      * @brief 获取设备信息

@@ -79,9 +79,10 @@ public Q_SLOTS: // METHODS
     /**
      * @brief 启动服务
      */
-    inline QDBusPendingReply<> Start()
+    inline QDBusPendingReply<> Start(qint64 applicationPid)
     {
         QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(applicationPid);
         return asyncCallWithArgumentList(QStringLiteral("Start"), argumentList);
     }
 
@@ -315,6 +316,7 @@ Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void fixBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus, const QString &cylinderTimeConsuming);
     Q_SCRIPTABLE void checkBadBlocksFinished();
     Q_SCRIPTABLE void fixBadBlocksFinished();
+    Q_SCRIPTABLE void rootLogin(const QString &loginMessage);
 };
 
 namespace com {

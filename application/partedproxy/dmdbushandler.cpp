@@ -68,7 +68,7 @@ DMDbusHandler::DMDbusHandler(QObject *parent)
     qDebug() << "m_dbus isValid true";
     initConnection();
 
-    m_dbus->Start();
+//    m_dbus->Start();
 }
 
 void DMDbusHandler::initConnection()

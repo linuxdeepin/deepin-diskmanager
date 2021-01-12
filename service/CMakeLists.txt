@@ -24,6 +24,7 @@ find_package(Qt5 COMPONENTS
     Widgets
     DBus
 REQUIRED)
+find_package(PolkitQt5-1)
 
 set(LINK_LIBS
     Qt5::Core
@@ -31,6 +32,7 @@ set(LINK_LIBS
     ${DtkCore_LIBRARIES}
     parted
     parted-fs-resize
+    PolkitQt5-1::Agent
 )
 
 file(GLOB ALL_SOURCES "*.cpp" "./diskoperation/*.cpp" "./diskoperation/filesystems/*.cpp")

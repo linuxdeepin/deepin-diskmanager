@@ -936,8 +936,42 @@ void DiskBadSectorsDialog::onResetButtonClicked()
     m_cylinderInfoWidget->reset(blockEnd - blockStart + 1);
 }
 
+bool DiskBadSectorsDialog::isExistMountPartition()
+{
+    bool isExist = false;
+
+    DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
+    for (int i = 0; i < info.partition.size(); i++) {
+        PartitionInfo partitionInfo = info.partition.at(i);
+
+        QString mountpoints;
+        for (int j = 0; j < partitionInfo.m_mountPoints.size(); j++) {
+            mountpoints += partitionInfo.m_mountPoints[j];
+        }
+
+        if (!mountpoints.isEmpty()) {
+            isExist = true;
+            break;
+        }
+    }
+
+    return isExist;
+}
+
 void DiskBadSectorsDialog::onRepairButtonClicked()
 {
+    if (isExistMountPartition()) {
+        MessageBox warningBox;
+        QString title1 = tr("The verifying disk contains mounted partitions, so you cannot repair it."); // 当前检测磁盘存在已挂载分区，无法修复坏道，
+//        title1.replace("so", "so\n");
+        QString title2 = tr("Please unmount partitions and then repair the disk."); // 若要修复请先卸载分区
+
+        warningBox.setWarings(title1 + "\n" + title2, "", tr("OK"));
+        warningBox.exec();
+
+        return;
+    }
+
     DDialog messageBox;
     messageBox.setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
     messageBox.setTitle(tr("Warning")); // 警告

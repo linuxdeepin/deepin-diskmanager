@@ -18,13 +18,13 @@
     </message>
     <message>
         <location filename="../widgets/cylinderinfowidget.cpp" line="444"/>
-        <source>ms</source>
-        <translation>ms</translation>
+        <source>Cyl. elapsed time: %1</source>
+        <translation>Cilinder eltelt idő: %1</translation>
     </message>
     <message>
         <location filename="../widgets/cylinderinfowidget.cpp" line="444"/>
-        <source>Cyl. elapsed time: %1</source>
-        <translation>Cilinder eltelt idő: %1</translation>
+        <source>ms</source>
+        <translation>ms</translation>
     </message>
     <message>
         <location filename="../widgets/cylinderinfowidget.cpp" line="445"/>
@@ -236,148 +236,166 @@
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="272"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1016"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1041"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1129"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1154"/>
         <source>Exit</source>
         <translation>Kilépés</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="274"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="277"/>
         <source>Reset</source>
         <translation>Visszaállítás</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="277"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="283"/>
         <source>Repair</source>
         <translation>Javítás</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="280"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="289"/>
         <source>Start Verify</source>
         <translation>Ellenőrzés indítása</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="282"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="294"/>
         <source>Stop</source>
         <translation>Megállítás</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="284"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="299"/>
         <source>Continue</source>
         <translation>Folytatás</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="286"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="304"/>
         <source>Verify Again</source>
         <translation>Újra ellenőrzés</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="288"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="309"/>
         <source>Done</source>
         <translation>Kész</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="313"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="337"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="587"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="729"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="862"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="906"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1003"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1101"/>
         <source>Time elapsed:</source>
         <translation>Eltelt idő:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="319"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="341"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="588"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="735"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="763"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="863"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="907"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1004"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1024"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1069"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1107"/>
         <source>Time left:</source>
         <translation>Hátralévő idő:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="656"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="710"/>
         <source>Verifying cylinder: %1</source>
         <translation>Cilinderek ellenőrzése: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="702"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="765"/>
         <source>Verify completed</source>
         <translation>Az ellenőrzés befejeződött</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="722"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="785"/>
         <source>Disk verify completed. %1 bad blocks found.</source>
         <translation>A lemez ellenőrzése befejeződött. %1 hibás blokk található.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="722"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="785"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="969"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="878"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="965"/>
+        <source>The verifying disk contains mounted partitions, so you cannot repair it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="967"/>
+        <source>Please unmount partitions and then repair the disk.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="977"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <source>Bad sector repairing cannot recover files,
- but destroys data on and near bad sectors instead.
- Please back up all data before repair.</source>
-        <translation type="vanished">A hibás szektorok javítása nem tudja helyreállítani a fájlokat, 
-hanem a rossz szektorokon és azok közelében lévő adatokat semmisíti meg.
-Kérjük a javítás előtt készítsen biztonsági másolatot az összes adatról.</translation>
-    </message>
-    <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="897"/>
-        <source>Start Repair</source>
-        <translation>Javítás indítása</translation>
-    </message>
-    <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="931"/>
-        <source>Repairing cylinder: %1</source>
-        <translation>Cilinderek javítása: %1</translation>
-    </message>
-    <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="970"/>
-        <source>Repair completed. Cylinder: %1 repaired.</source>
-        <translation>A javítás befejeződött. %1 cilinder javítva.</translation>
-    </message>
-    <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="973"/>
-        <source>Disk repair completed. %1 bad blocks repaired.</source>
-        <translation>A lemez javítása befejeződött. %1 hibás blokk javítva.</translation>
-    </message>
-    <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1015"/>
-        <source>Verifying for bad sectors, exit now?</source>
-        <translation>Ellenőrizze a rossz szektorokat, kilépés most?</translation>
-    </message>
-    <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1015"/>
-        <source>The verified information will not be reserved</source>
-        <translation>Az ellenőrzött információk nem kerülnek tárolásra</translation>
-    </message>
-    <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="896"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1016"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1041"/>
-        <source>Cancel</source>
-        <translation>Mégsem</translation>
-    </message>
-    <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="881"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="980"/>
         <source>Bad sector repairing cannot recover files,</source>
-        <translation type="unfinished"/>
+        <translation>A rossz szektorok javításával nem lehet helyreállítani a fájlokat,</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="882"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="981"/>
         <source>but destroys data on and near bad sectors instead.</source>
-        <translation type="unfinished"/>
+        <translation>hanem megsemmisíti a rossz szektorokat, és azok közelében lévő adatokat.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="883"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="982"/>
         <source>Please back up all data before repair.</source>
         <translation>Kérjük mentse az összes adatát, mielőtt javítást végez</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1040"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="995"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1129"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1154"/>
+        <source>Cancel</source>
+        <translation>Mégsem</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="996"/>
+        <source>Start Repair</source>
+        <translation>Javítás indítása</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1035"/>
+        <source>Repairing cylinder: %1</source>
+        <translation>Cilinderek javítása: %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1074"/>
+        <source>Repair completed. Cylinder: %1 repaired.</source>
+        <translation>A javítás befejeződött. %1 cilinder javítva.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1077"/>
+        <source>Disk repair completed. %1 bad blocks repaired.</source>
+        <translation>A lemez javítása befejeződött. %1 hibás blokk javítva.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1128"/>
+        <source>Verifying for bad sectors, exit now?</source>
+        <translation>Ellenőrizze a rossz szektorokat, kilépés most?</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1128"/>
+        <source>The verified information will not be reserved</source>
+        <translation>Az ellenőrzött információk nem kerülnek tárolásra</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1153"/>
         <source>Repairing bad sectors, exit now?</source>
         <translation>Hibás szektorok javítása, kilépés most?</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1040"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1153"/>
         <source>The repairing information will not be reserved</source>
         <translation> A javítási információk nem kerülnek tárolásra</translation>
     </message>
@@ -936,12 +954,12 @@ Kérjük a javítás előtt készítsen biztonsági másolatot az összes adatr�
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="32"/>
+        <location filename="../main.cpp" line="37"/>
         <source>Disk Utility</source>
         <translation>Lemezkezelő</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="40"/>
+        <location filename="../main.cpp" line="45"/>
         <source>Disk Utility is a disk management tool for creating, reorganizing and formatting partitions.</source>
         <translation>A Lemezkezelő egy menedzselő eszköz partíciók létrehozásához, szerkesztéséhez és formázáshoz.</translation>
     </message>
@@ -1045,14 +1063,14 @@ Kérjük a javítás előtt készítsen biztonsági másolatot az összes adatr�
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="58"/>
-        <location filename="../widgets/unmountdialog.cpp" line="82"/>
-        <location filename="../widgets/unmountdialog.cpp" line="86"/>
+        <location filename="../widgets/unmountdialog.cpp" line="83"/>
+        <location filename="../widgets/unmountdialog.cpp" line="88"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="59"/>
-        <location filename="../widgets/unmountdialog.cpp" line="86"/>
+        <location filename="../widgets/unmountdialog.cpp" line="88"/>
         <source>Unmount</source>
         <translation>Lecsatolás</translation>
     </message>
@@ -1064,12 +1082,12 @@ Kérjük a javítás előtt készítsen biztonsági másolatot az összes adatr�
 kérjük erősítse meg, mielőtt folytatja a műveletet</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="82"/>
+        <location filename="../widgets/unmountdialog.cpp" line="83"/>
         <source>Continue</source>
         <translation>Folytatás</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="86"/>
+        <location filename="../widgets/unmountdialog.cpp" line="87"/>
         <source>You will take subsequent risks if you continue to unmount the system disk</source>
         <translation>Későbbi kockázatokat vállal, ha továbbra is folytatja a remdszerlemez leválasztását</translation>
     </message>

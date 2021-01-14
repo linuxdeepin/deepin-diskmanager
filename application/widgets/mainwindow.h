@@ -51,6 +51,12 @@ public:
 
     static MainWindow *instance();
 
+    /**
+     * @brief 获取登录结果
+     * @return 返回登录认证结果
+     */
+    QString getRootLoginResult();
+
 protected:
 
     /**

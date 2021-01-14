@@ -325,12 +325,12 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="965"/>
         <source>The verifying disk contains mounted partitions, so you cannot repair it.</source>
-        <translation type="unfinished"/>
+        <translation>Le disque vérifié contient des partitions montées, vous ne pouvez donc pas le réparer.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="967"/>
         <source>Please unmount partitions and then repair the disk.</source>
-        <translation type="unfinished"/>
+        <translation>Veuillez démonter les partitions, puis réparer le disque.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="977"/>
@@ -536,17 +536,17 @@
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
         <source>Model:</source>
-        <translation type="unfinished"/>
+        <translation>Modèle :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
         <source>Vendor:</source>
-        <translation type="unfinished"/>
+        <translation>Vendeur :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
         <source>Media Type:</source>
-        <translation type="unfinished"/>
+        <translation>Type de support :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
@@ -611,37 +611,37 @@
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Interface:</source>
-        <translation type="unfinished"/>
+        <translation>Interface :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Version:</source>
-        <translation type="unfinished"/>
+        <translation>Version :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Capabilities:</source>
-        <translation type="unfinished"/>
+        <translation>Capacités :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Description :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Power On Hours:</source>
-        <translation type="unfinished"/>
+        <translation>Heures de mise sous tension :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Power Cycle Count:</source>
-        <translation type="unfinished"/>
+        <translation>Nombre de cycles d&apos;alimentation :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Speed:</source>
-        <translation type="unfinished"/>
+        <translation>Vitesse :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="73"/>

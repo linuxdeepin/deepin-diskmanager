@@ -84,7 +84,7 @@ void DMDbusHandler::initConnection()
     connect(m_dbus, &DMDBusInterface::fixBadBlocksInfo, this, &DMDbusHandler::repairBadBlocksInfo);
     connect(m_dbus, &DMDBusInterface::checkBadBlocksFinished, this, &DMDbusHandler::checkBadBlocksFinished);
     connect(m_dbus, &DMDBusInterface::fixBadBlocksFinished, this, &DMDbusHandler::fixBadBlocksFinished);
-//    connect(m_dbus, &DMDBusInterface::checkBadBlocksDeviceStatusError, this, &DMDbusHandler::checkBadBlocksDeviceStatusError);
+    connect(m_dbus, &DMDBusInterface::rootLogin, this, &DMDbusHandler::onRootLogin);
 }
 
 void DMDbusHandler::onDeletePartition(const QString &deleteMessage)
@@ -129,6 +129,11 @@ void DMDbusHandler::onSetCurSelect(const QString &devicePath, const QString &par
     }
 }
 
+void DMDbusHandler::startService(qint64 applicationPid)
+{
+    m_dbus->Start(applicationPid);
+}
+
 void DMDbusHandler::Quit()
 {
     m_dbus->Quit();
@@ -139,6 +144,18 @@ void DMDbusHandler::refresh()
     emit showSpinerWindow(true);
 
     m_dbus->refreshFunc();
+}
+
+void DMDbusHandler::onRootLogin(const QString &loginMessage)
+{
+    m_loginMessage = loginMessage;
+
+    emit rootLogin();
+}
+
+QString DMDbusHandler::getRootLoginResult()
+{
+    return m_loginMessage;
 }
 
 void DMDbusHandler::getDeviceInfo()

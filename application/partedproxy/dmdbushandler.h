@@ -46,6 +46,11 @@ public:
     ~DMDbusHandler();
 
     /**
+     * @brief 开启服务
+     */
+    void startService(qint64 applicationPid);
+
+    /**
      * @brief 关闭服务
      */
     void Quit();
@@ -54,6 +59,12 @@ public:
      * @brief 刷新
      */
     void refresh();
+
+    /**
+     * @brief 获取登录结果
+     * @return 返回登录认证结果
+     */
+    QString getRootLoginResult();
 
     /**
      * @brief 给服务发获取所有设备信息的消息
@@ -195,6 +206,12 @@ public:
      */
     void repairBadBlocks(const QString &devicePath, QStringList badBlocksList, int repairSize, int flag);
 
+    /**
+     * @brief Root认证消息
+     * @param loginMessage 登录消息（1：成功，0：失败）
+     */
+    void onRootLogin(const QString &loginMessage);
+
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
 
@@ -216,6 +233,7 @@ signals:
     void repairBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus, const QString &cylinderTimeConsuming);
     void checkBadBlocksFinished();
     void fixBadBlocksFinished();
+    void rootLogin();
 
 public slots:
     /**
@@ -279,6 +297,7 @@ private:
     bool m_partitionTableError;
     QMap<QString, QString> m_isExistUnallocated;
     QStringList m_deviceNameList;
+    QString m_loginMessage;
 };
 
 #endif // DMDBUSHANDLER_H

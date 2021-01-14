@@ -2,12 +2,12 @@
 	<context>
 		<name>policy</name>
 		<message>
-			<location filename="com.deepin.pkexec.deepin-diskmanager!message" line="0"/>
+			<location filename="com.deepin.diskmanager.Start!message" line="0"/>
 			<source>Authentication is required to read disk information</source>
 			<translation>Se necesita autenticación para leer la información del disco</translation>
 		</message>
 		<message>
-			<location filename="com.deepin.pkexec.deepin-diskmanager!description" line="0"/>
+			<location filename="com.deepin.diskmanager.Start!description" line="0"/>
 			<source>Run Disk Manager Need Authentication</source>
 			<translation>Se necesita autenticación para ejecutar el Administrador de discos</translation>
 		</message>

@@ -23,3 +23,10 @@ source_file = translations/policy/policy.ts
 source_lang = en_US
 type = QT
 
+[deepin-disk-utility.deepin-disk-utility-policy-ts-singlepolicy]
+file_filter = translations/policy/policy_<lang>.ts
+preTranslate_file = service/policy/com.deepin.diskmanager.policy
+source_file = translations/singlepolicy/policy.ts
+source_lang = en_US
+type = QT
+

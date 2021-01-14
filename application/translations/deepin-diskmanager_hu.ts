@@ -325,12 +325,12 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="965"/>
         <source>The verifying disk contains mounted partitions, so you cannot repair it.</source>
-        <translation type="unfinished"/>
+        <translation>Az ellenőrző lemez csatolt partíciókat tartalmaz, ezért nem tudja megjavítani.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="967"/>
         <source>Please unmount partitions and then repair the disk.</source>
-        <translation type="unfinished"/>
+        <translation>Kérjük csatolja le a partíciókat, majd javítsa a lemezt.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="977"/>
@@ -536,17 +536,17 @@
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
         <source>Model:</source>
-        <translation type="unfinished"/>
+        <translation>Modell:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
         <source>Vendor:</source>
-        <translation type="unfinished"/>
+        <translation>Szállító:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
         <source>Media Type:</source>
-        <translation type="unfinished"/>
+        <translation>Média típusa:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
@@ -611,37 +611,37 @@
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Interface:</source>
-        <translation type="unfinished"/>
+        <translation>Felület:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Version:</source>
-        <translation type="unfinished"/>
+        <translation>Verzió:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Capabilities:</source>
-        <translation type="unfinished"/>
+        <translation>Képességek:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Leírás:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Power On Hours:</source>
-        <translation type="unfinished"/>
+        <translation>Bekapcsolt órák száma:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Power Cycle Count:</source>
-        <translation type="unfinished"/>
+        <translation>Teljesítmény ciklusok száma:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Speed:</source>
-        <translation type="unfinished"/>
+        <translation>Sebesség:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="73"/>

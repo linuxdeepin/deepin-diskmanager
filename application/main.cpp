@@ -2,6 +2,7 @@
 #include "cusapplication.h"
 #include "common.h"
 #include "widgets/mainwindow.h"
+#include "partedproxy/dmdbushandler.h"
 #include <DMainWindow>
 #include <DWidgetUtil>
 #include <DApplicationSettings>
@@ -10,7 +11,11 @@
 #include <QPixmap>
 #include <QIcon>
 #include <QDebug>
+#include <QProcess>
 #include <signal.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<unistd.h>
 
 DWIDGET_USE_NAMESPACE
 
@@ -48,9 +53,17 @@ int main(int argc, char *argv[])
         exit(0);
     }
     QObject::connect(&a, &CusApplication::handleQuitActionChanged, &w, &MainWindow::onHandleQuitAction);
-    w.show();
 
-    Dtk::Widget::moveToCenter(&w);
+    DMDbusHandler::instance()->startService(static_cast<qint64>(getpid()));
+    QObject::connect(DMDbusHandler::instance(), &DMDbusHandler::rootLogin, &w, [&] {
+        qDebug() << "Root Authentication Result:" << w.getRootLoginResult();
+        if (w.getRootLoginResult() == "1") {
+            w.show();
+            Dtk::Widget::moveToCenter(&w);
+        } else {
+            exit(0);
+        }
+    });
 
     return a.exec();
 }

@@ -325,12 +325,12 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="965"/>
         <source>The verifying disk contains mounted partitions, so you cannot repair it.</source>
-        <translation type="unfinished"/>
+        <translation>El disc de verificació conté particions muntades, per tant, no es pot reparar.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="967"/>
         <source>Please unmount partitions and then repair the disk.</source>
-        <translation type="unfinished"/>
+        <translation>Si us plau, primer desmunteu les particions i després repareu el disc.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="977"/>
@@ -536,17 +536,17 @@
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
         <source>Model:</source>
-        <translation type="unfinished"/>
+        <translation>Model:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
         <source>Vendor:</source>
-        <translation type="unfinished"/>
+        <translation>Fabricant:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
         <source>Media Type:</source>
-        <translation type="unfinished"/>
+        <translation>Tipus de mitjà:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
@@ -611,37 +611,37 @@
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Interface:</source>
-        <translation type="unfinished"/>
+        <translation>Interfície:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Version:</source>
-        <translation type="unfinished"/>
+        <translation>Versió:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Capabilities:</source>
-        <translation type="unfinished"/>
+        <translation>Capacitats:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Descripció:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Power On Hours:</source>
-        <translation type="unfinished"/>
+        <translation>Hores d&apos;activitat:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Power Cycle Count:</source>
-        <translation type="unfinished"/>
+        <translation>Compte del cicle d&apos;activitat:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Speed:</source>
-        <translation type="unfinished"/>
+        <translation>Velocitat:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="73"/>

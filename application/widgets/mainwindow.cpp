@@ -54,9 +54,9 @@ MainWindow *MainWindow::instance()
 MainWindow::MainWindow(QWidget *parent)
     : DMainWindow(parent)
 {
-    if (false == DeviceInfoParser::instance().getRootPassword()) {
-        exit(-1);
-    }
+//    if (false == DeviceInfoParser::instance().getRootPassword()) {
+//        exit(-1);
+//    }
 
     m_handler = DMDbusHandler::instance(this);
 
@@ -145,6 +145,11 @@ void MainWindow::onHandleQuitAction()
 {
     //ToDo judge exit or no
     qDebug() << __FUNCTION__;
+}
+
+QString MainWindow::getRootLoginResult()
+{
+    return m_handler->getRootLoginResult();
 }
 
 void MainWindow::onRefreshButtonClicked()

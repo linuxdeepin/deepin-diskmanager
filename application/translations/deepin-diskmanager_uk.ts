@@ -325,12 +325,12 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="965"/>
         <source>The verifying disk contains mounted partitions, so you cannot repair it.</source>
-        <translation type="unfinished"/>
+        <translation>На диску, який ви маєте намір перевірити, є змонтовані розділи, тому його не можна виправляти.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="967"/>
         <source>Please unmount partitions and then repair the disk.</source>
-        <translation type="unfinished"/>
+        <translation>Будь ласка, демонтуйте розділи, а потім вже виконуйте виправлення диска.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="977"/>
@@ -534,78 +534,123 @@
         <translation>Дані щодо диска</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
+        <source>Model:</source>
+        <translation>Модель:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
+        <source>Vendor:</source>
+        <translation>Виробник:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
+        <source>Media Type:</source>
+        <translation>Тип носія:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
+        <source>Size:</source>
+        <translation>Розмір:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Serial Number:</source>
         <translation>Серійний номер:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Device Model:</source>
-        <translation>Модель пристрою:</translation>
+        <translation type="vanished">Модель пристрою:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>LU WWN Device Id:</source>
-        <translation>Ід. пристрою LU WWN:</translation>
+        <translation type="vanished">Ід. пристрою LU WWN:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Firmware Version:</source>
         <translation>Версія мікропрограми:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>User Capacity:</source>
-        <translation>Місткість для користувача:</translation>
+        <translation type="vanished">Місткість для користувача:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Sector Size:</source>
-        <translation>Розмір сектора:</translation>
+        <translation type="vanished">Розмір сектора:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Rotation Rate:</source>
         <translation>Частота обертання:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Form Factor:</source>
-        <translation>Формфактор:</translation>
+        <translation type="vanished">Формфактор:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="71"/>
         <source>Device is:</source>
-        <translation>Пристрій:</translation>
+        <translation type="vanished">Пристрій:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="71"/>
         <source>ATA Version is:</source>
-        <translation>Версія ATA:</translation>
+        <translation type="vanished">Версія ATA:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="71"/>
         <source>SATA Version is:</source>
-        <translation>Версія SATA:</translation>
+        <translation type="vanished">Версія SATA:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="72"/>
         <source>Local Time is:</source>
-        <translation>Місцевий час:</translation>
+        <translation type="vanished">Місцевий час:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="72"/>
         <source>SMART support is:</source>
-        <translation>Підтримка SMART:</translation>
+        <translation type="vanished">Підтримка SMART:</translation>
     </message>
     <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
+        <source>Interface:</source>
+        <translation>Інтерфейс:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
+        <source>Version:</source>
+        <translation>Версія:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <source>Capabilities:</source>
+        <translation>Можливості:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <source>Description:</source>
+        <translation>Опис:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <source>Power On Hours:</source>
+        <translation>Тривалість роботи (у год.):</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
+        <source>Power Cycle Count:</source>
+        <translation>К-ть циклів вмик.-вимик.:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
+        <source>Speed:</source>
+        <translation>Швидкість:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="73"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="74"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="75"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="76"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="77"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="78"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="79"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="80"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="81"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="82"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="83"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="84"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
@@ -636,12 +681,12 @@
         <translation>У вас немає дозволу на доступ до цього шляху</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="191"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="198"/>
         <source>Export successful</source>
         <translation>Експорт успішний</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="194"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="201"/>
         <source>Export failed</source>
         <translation>Не вдалося експортувати</translation>
     </message>

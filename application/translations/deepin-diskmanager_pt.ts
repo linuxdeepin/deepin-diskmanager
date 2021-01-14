@@ -534,78 +534,123 @@
         <translation>Info do disco</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
+        <source>Model:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
+        <source>Vendor:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
+        <source>Media Type:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
+        <source>Size:</source>
+        <translation>Tamanho:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Serial Number:</source>
         <translation>Número de série:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Device Model:</source>
-        <translation>Modelo do dispositivo:</translation>
+        <translation type="vanished">Modelo do dispositivo:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>LU WWN Device Id:</source>
-        <translation>Id do dispositivo LU WWN:</translation>
+        <translation type="vanished">Id do dispositivo LU WWN:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Firmware Version:</source>
         <translation>Versão do firmware:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>User Capacity:</source>
-        <translation>Capacidade do utilizador:</translation>
+        <translation type="vanished">Capacidade do utilizador:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Sector Size:</source>
-        <translation>Tamanho do sector:</translation>
+        <translation type="vanished">Tamanho do sector:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Rotation Rate:</source>
         <translation>Taxa de rotação:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Form Factor:</source>
-        <translation>Fator de forma:</translation>
+        <translation type="vanished">Fator de forma:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="71"/>
         <source>Device is:</source>
-        <translation>O dispositivo é:</translation>
+        <translation type="vanished">O dispositivo é:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="71"/>
         <source>ATA Version is:</source>
-        <translation>A versão ATA é:</translation>
+        <translation type="vanished">A versão ATA é:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="71"/>
         <source>SATA Version is:</source>
-        <translation>A versão SATA é:</translation>
+        <translation type="vanished">A versão SATA é:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="72"/>
         <source>Local Time is:</source>
-        <translation>A hora local é:</translation>
+        <translation type="vanished">A hora local é:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="72"/>
         <source>SMART support is:</source>
-        <translation>O suporte SMART é:</translation>
+        <translation type="vanished">O suporte SMART é:</translation>
     </message>
     <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
+        <source>Interface:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
+        <source>Version:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <source>Capabilities:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <source>Description:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <source>Power On Hours:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
+        <source>Power Cycle Count:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
+        <source>Speed:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="73"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="74"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="75"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="76"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="77"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="78"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="79"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="80"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="81"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="82"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="83"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="84"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
@@ -636,12 +681,12 @@
         <translation>Não tem permissão para aceder a este caminho</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="191"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="198"/>
         <source>Export successful</source>
         <translation>Exportação bem sucedida</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="194"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="201"/>
         <source>Export failed</source>
         <translation>Falha ao exportar</translation>
     </message>

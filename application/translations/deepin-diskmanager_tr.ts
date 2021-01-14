@@ -325,12 +325,12 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="965"/>
         <source>The verifying disk contains mounted partitions, so you cannot repair it.</source>
-        <translation type="unfinished"/>
+        <translation>Bağlanmış disk içindekiler doğrulanıyor, bu yüzden onu onaramazsınız.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="967"/>
         <source>Please unmount partitions and then repair the disk.</source>
-        <translation type="unfinished"/>
+        <translation>Lütfen bölümleri ayırın ve ardından diski onarın.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="977"/>
@@ -340,17 +340,17 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="980"/>
         <source>Bad sector repairing cannot recover files,</source>
-        <translation type="unfinished"/>
+        <translation>Kötü sektör onarılıyor dosyalar kurtarılamaz,</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="981"/>
         <source>but destroys data on and near bad sectors instead.</source>
-        <translation type="unfinished"/>
+        <translation>ancak bunun yerine bozuk sektörlerdeki ve yakınındaki verileri yok eder.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="982"/>
         <source>Please back up all data before repair.</source>
-        <translation type="unfinished"/>
+        <translation>Lütfen onarımdan önce tüm verileri yedekleyin.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="995"/>
@@ -534,78 +534,123 @@
         <translation>Disk Bilgisi</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
+        <source>Model:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
+        <source>Vendor:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
+        <source>Media Type:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
+        <source>Size:</source>
+        <translation>Boyut:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Serial Number:</source>
         <translation>Seri Numarası:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Device Model:</source>
-        <translation>Cihaz Modeli:</translation>
+        <translation type="vanished">Cihaz Modeli:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>LU WWN Device Id:</source>
-        <translation>LU WWN Cihaz Id:</translation>
+        <translation type="vanished">LU WWN Cihaz Id:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Firmware Version:</source>
         <translation>Yazılım Sürümü:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>User Capacity:</source>
-        <translation>Kullanıcı Kapasitesi:</translation>
+        <translation type="vanished">Kullanıcı Kapasitesi:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Sector Size:</source>
-        <translation>Sektör Boyutu:</translation>
+        <translation type="vanished">Sektör Boyutu:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Rotation Rate:</source>
         <translation>Dönme Hızı:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Form Factor:</source>
-        <translation>Biçim Etkeni:</translation>
+        <translation type="vanished">Biçim Etkeni:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="71"/>
         <source>Device is:</source>
-        <translation>Cihaz:</translation>
+        <translation type="vanished">Cihaz:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="71"/>
         <source>ATA Version is:</source>
-        <translation>ATA Sürümü:</translation>
+        <translation type="vanished">ATA Sürümü:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="71"/>
         <source>SATA Version is:</source>
-        <translation>SATA Sürümü:</translation>
+        <translation type="vanished">SATA Sürümü:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="72"/>
         <source>Local Time is:</source>
-        <translation>Yerel Saat:</translation>
+        <translation type="vanished">Yerel Saat:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="72"/>
         <source>SMART support is:</source>
-        <translation>SMART desteği:</translation>
+        <translation type="vanished">SMART desteği:</translation>
     </message>
     <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
+        <source>Interface:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
+        <source>Version:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <source>Capabilities:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <source>Description:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <source>Power On Hours:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
+        <source>Power Cycle Count:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
+        <source>Speed:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="73"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="74"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="75"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="76"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="77"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="78"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="79"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="80"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="81"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="82"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="83"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="84"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
@@ -636,12 +681,12 @@
         <translation>Bu yola erişim izniniz yok</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="191"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="198"/>
         <source>Export successful</source>
         <translation>Dışa aktarım başarılı</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="194"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="201"/>
         <source>Export failed</source>
         <translation>Dışa aktarım başarısız</translation>
     </message>
@@ -740,7 +785,7 @@
     <message>
         <location filename="../widgets/mainwindow.cpp" line="125"/>
         <source>Refresh</source>
-        <translation type="unfinished"/>
+        <translation>Yenile</translation>
     </message>
 </context>
 <context>
@@ -1078,7 +1123,8 @@
         <location filename="../widgets/unmountdialog.cpp" line="82"/>
         <source>Unmounting system disk may result in system crash,
  please confirm before proceeding</source>
-        <translation type="unfinished"/>
+        <translation>Sistem diskinin çıkarılması sistemin çökmesine neden olabilir,
+lütfen devam etmeden önce onaylayın</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="83"/>
@@ -1088,7 +1134,7 @@
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="87"/>
         <source>You will take subsequent risks if you continue to unmount the system disk</source>
-        <translation type="unfinished"/>
+        <translation>Sistem diskinin bağlantısını kesmeye devam ederseniz risk almış olacaksınız</translation>
     </message>
 </context>
 </TS>

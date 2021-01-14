@@ -534,78 +534,123 @@
         <translation>Informació del disc</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
+        <source>Model:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
+        <source>Vendor:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
+        <source>Media Type:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
+        <source>Size:</source>
+        <translation>Mida:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Serial Number:</source>
         <translation>Número de sèrie</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Device Model:</source>
-        <translation>Model de dispositiu:</translation>
+        <translation type="vanished">Model de dispositiu:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>LU WWN Device Id:</source>
-        <translation>LU WWN ID del dispositiu:</translation>
+        <translation type="vanished">LU WWN ID del dispositiu:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Firmware Version:</source>
         <translation>Versió del microprogramari:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>User Capacity:</source>
-        <translation>Capacitat de l&apos;usuari:</translation>
+        <translation type="vanished">Capacitat de l&apos;usuari:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Sector Size:</source>
-        <translation>Mida del sector:</translation>
+        <translation type="vanished">Mida del sector:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Rotation Rate:</source>
         <translation>Taxa de rotació:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Form Factor:</source>
-        <translation>Factor de forma:</translation>
+        <translation type="vanished">Factor de forma:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="71"/>
         <source>Device is:</source>
-        <translation>El dispositiu és:</translation>
+        <translation type="vanished">El dispositiu és:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="71"/>
         <source>ATA Version is:</source>
-        <translation>La versió ATA és:</translation>
+        <translation type="vanished">La versió ATA és:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="71"/>
         <source>SATA Version is:</source>
-        <translation>La versió SATA és:</translation>
+        <translation type="vanished">La versió SATA és:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="72"/>
         <source>Local Time is:</source>
-        <translation>L&apos;hora local és:</translation>
+        <translation type="vanished">L&apos;hora local és:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="72"/>
         <source>SMART support is:</source>
-        <translation>El suport SMART és:</translation>
+        <translation type="vanished">El suport SMART és:</translation>
     </message>
     <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
+        <source>Interface:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
+        <source>Version:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <source>Capabilities:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <source>Description:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <source>Power On Hours:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
+        <source>Power Cycle Count:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
+        <source>Speed:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="73"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="74"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="75"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="76"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="77"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="78"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="79"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="80"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="81"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="82"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="83"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="84"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
@@ -636,12 +681,12 @@
         <translation>No teniu permís per accedir a aquest ruta</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="191"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="198"/>
         <source>Export successful</source>
         <translation>L&apos;exportació s&apos;ha realitzat amb èxit</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="194"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="201"/>
         <source>Export failed</source>
         <translation>L&apos;exportació ha fallat</translation>
     </message>

@@ -69,20 +69,20 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, stCustest &stcus)
 QDBusArgument &operator<<(QDBusArgument &argument, const HardDiskInfo &inhdinfo)
 {
     argument.beginStructure();
-    argument << inhdinfo.m_deviceModel
-             << inhdinfo.m_serialNumber
-             << inhdinfo.m_deviceId
-             << inhdinfo.m_firmwareVersion
-             << inhdinfo.m_userCapacity
-             << inhdinfo.m_sectorSize
-             << inhdinfo.m_rotationRate
-             << inhdinfo.m_formFactor
-             << inhdinfo.m_deviceis
-             << inhdinfo.m_ataVersionIs
-             << inhdinfo.m_sataVersionIs
-             << inhdinfo.m_localTime
-             << inhdinfo.m_smartSupport
-             << inhdinfo.m_smartSupportOn_Off;
+    argument << inhdinfo.m_Model
+             << inhdinfo.m_Vendor
+             << inhdinfo.m_MediaType
+             << inhdinfo.m_Size
+             << inhdinfo.m_RotationRate
+             << inhdinfo.m_Interface
+             << inhdinfo.m_SerialNumber
+             << inhdinfo.m_Version
+             << inhdinfo.m_Capabilities
+             << inhdinfo.m_Description
+             << inhdinfo.m_PowerOnHours
+             << inhdinfo.m_PowerCycleCount
+             << inhdinfo.m_FirmwareVersion
+             << inhdinfo.m_Speed;
     argument.endStructure();
     return argument;
 }
@@ -90,20 +90,20 @@ QDBusArgument &operator<<(QDBusArgument &argument, const HardDiskInfo &inhdinfo)
 const QDBusArgument &operator>>(const QDBusArgument &argument, HardDiskInfo &inhdinfo)
 {
     argument.beginStructure();
-    argument >> inhdinfo.m_deviceModel
-             >> inhdinfo.m_serialNumber
-             >> inhdinfo.m_deviceId
-             >> inhdinfo.m_firmwareVersion
-             >> inhdinfo.m_userCapacity
-             >> inhdinfo.m_sectorSize
-             >> inhdinfo.m_rotationRate
-             >> inhdinfo.m_formFactor
-             >> inhdinfo.m_deviceis
-             >> inhdinfo.m_ataVersionIs
-             >> inhdinfo.m_sataVersionIs
-             >> inhdinfo.m_localTime
-             >> inhdinfo.m_smartSupport
-             >> inhdinfo.m_smartSupportOn_Off;
+    argument >> inhdinfo.m_Model
+            >> inhdinfo.m_Vendor
+            >> inhdinfo.m_MediaType
+            >> inhdinfo.m_Size
+            >> inhdinfo.m_RotationRate
+            >> inhdinfo.m_Interface
+            >> inhdinfo.m_SerialNumber
+            >> inhdinfo.m_Version
+            >> inhdinfo.m_Capabilities
+            >> inhdinfo.m_Description
+            >> inhdinfo.m_PowerOnHours
+            >> inhdinfo.m_PowerCycleCount
+            >> inhdinfo.m_FirmwareVersion
+            >> inhdinfo.m_Speed;
     argument.endStructure();
     return argument;
 }

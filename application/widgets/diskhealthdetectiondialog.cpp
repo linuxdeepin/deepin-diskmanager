@@ -93,7 +93,7 @@ void DiskHealthDetectionDialog::initUI()
     serialNumberNameLabel->setPalette(palette1);
 
     m_serialNumberValue = new DLabel;
-    m_serialNumberValue->setText(hardDiskInfo.m_serialNumber);
+    m_serialNumberValue->setText(hardDiskInfo.m_SerialNumber);
     DFontSizeManager::instance()->bind(m_serialNumberValue, DFontSizeManager::T6, QFont::Medium);
     m_serialNumberValue->setPalette(palette2);
 
@@ -102,7 +102,7 @@ void DiskHealthDetectionDialog::initUI()
     userCapacityNameLabel->setPalette(palette1);
 
     m_userCapacityValue = new DLabel;
-    m_userCapacityValue->setText(hardDiskInfo.m_userCapacity);
+    m_userCapacityValue->setText(hardDiskInfo.m_Size);
     DFontSizeManager::instance()->bind(m_userCapacityValue, DFontSizeManager::T10, QFont::Normal);
     m_userCapacityValue->setPalette(palette2);
 

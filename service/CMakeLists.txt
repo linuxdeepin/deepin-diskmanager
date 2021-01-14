@@ -15,6 +15,8 @@ set(APP_EDEV_DIR "udev")
 set(APP_UDEV_FILES "${APP_EDEV_DIR}/99-diskmanager.rules")
 set(APP_USBADD_FILES "${APP_EDEV_DIR}/USBadd.sh")
 set(APP_USBREMOVE_FILES "${APP_EDEV_DIR}/USBremove.sh")
+set(APP_POLICY_DIR "policy")
+set(APP_POLICY_FILES "${APP_POLICY_DIR}/com.deepin.diskmanager.policy")
 
 # Find the library
 find_package(PkgConfig REQUIRED)
@@ -61,3 +63,4 @@ install(FILES ${APP_CONFIG} DESTINATION share/dbus-1/system.d/)
 install(FILES ${APP_USBADD_FILES} DESTINATION libexec/openconnect/)
 install(FILES ${APP_USBREMOVE_FILES} DESTINATION libexec/openconnect/)
 install(FILES ${APP_UDEV_FILES} DESTINATION /lib/udev/rules.d/)
+install(FILES ${APP_POLICY_FILES} DESTINATION share/polkit-1/actions)

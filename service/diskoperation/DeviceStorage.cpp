@@ -427,6 +427,14 @@ bool DeviceStorage::getDiskInfoFromSmartCtl(const QString &devicePath)
     proc.waitForFinished(-1);
     QString outPut  = proc.readAllStandardOutput();
 
+    if (outPut.contains("Please specify device type with the -d option")) {
+        QString cmd = QString("smartctl --all -d sat %1").arg(devicePath);
+        QProcess proc;
+        proc.start(cmd);
+        proc.waitForFinished(-1);
+        outPut = proc.readAllStandardOutput();
+    }
+
     QMap<QString, QString> mapInfo;
 
     getMapInfoFromSmartctl(mapInfo, outPut);

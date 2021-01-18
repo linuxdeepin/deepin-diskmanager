@@ -231,7 +231,8 @@ bool fat16::create(const Partition & new_partition)
     {
         exitcode = Utils::executCmd(QString("mkfs.fat -F %1 -v -I %2").arg(fat_size).arg(new_partition.getPath()), output, error);
     }else {
-        exitcode = Utils::executCmd(QString("mkfs.fat -F %1 -v -I -n %2 %3").arg(fat_size).arg(new_partition.getFileSystemLabel().arg(new_partition.getPath())),output, error);
+        cmd = QString("mkfs.fat -F %1 -v -I -n %2 %3").arg(fat_size).arg(new_partition.getFileSystemLabel()).arg(new_partition.getPath());
+        exitcode = Utils::executCmd(cmd ,output, error);
     }
     return exitcode == 0 && error.compare("Unknown error") == 0;
 }

@@ -99,7 +99,7 @@ void DiskInfoDisplayDialog::initUI()
         if (!m_diskInfoValueList.at(i).isEmpty()) {
             valueLabel->setText(m_diskInfoValueList.at(i));
         } else {
-            valueLabel->setText("unknown");
+            valueLabel->setText("-");
         }
 
         DFontSizeManager::instance()->bind(valueLabel, DFontSizeManager::T7, QFont::Normal);
@@ -184,7 +184,7 @@ void DiskInfoDisplayDialog::onExportButtonClicked()
                 if (!m_diskInfoValueList.at(i).isEmpty()) {
                     strInfo = m_diskInfoNameList.at(i) + m_diskInfoValueList.at(i) + "\n";
                 } else {
-                    strInfo = m_diskInfoNameList.at(i) + "unknown" + "\n";
+                    strInfo = m_diskInfoNameList.at(i) + "-" + "\n";
                 }
 
                 out << strInfo;

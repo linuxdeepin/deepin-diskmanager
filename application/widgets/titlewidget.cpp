@@ -163,6 +163,10 @@ void TitleWidget::updateBtnStatus()
         m_btnMount->setDisabled(true);
         m_btnUnmount->setDisabled(false);
         m_btnResize->setDisabled(true);
+
+        if (1 == info.m_flag) {
+            m_btnUnmount->setDisabled(true);
+        }
     } else {
         int result = info.m_flag;
         if (1 == result) {

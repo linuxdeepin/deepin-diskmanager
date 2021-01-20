@@ -181,7 +181,7 @@ void DeviceStorage::getInfoFromLshw(const QMap<QString, QString> &mapInfo)
 
 void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
 {
-    qDebug() << mapInfo << endl;
+//    qDebug() << mapInfo << endl;
     // 固件版本
     m_FirmwareVersion = mapInfo["Firmware Version"];
 

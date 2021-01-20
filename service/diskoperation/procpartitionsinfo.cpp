@@ -87,7 +87,7 @@ void ProcPartitionsInfo::loadProcPartitionsInfoCache()
                     break;
                 }
             }
-            qDebug() << name;
+//            qDebug() << name;
 
             BlockSpecial::registerBlockSpecial("/dev/" + name, maj, min);
 

@@ -135,7 +135,7 @@ bool ntfs::writeLabel( const Partition & partition)
 {
     QString output, error;
     int exitcode = Utils::executCmd(QString("ntfslabel --force %1 %2").arg(partition.getPath()).arg(partition.getFileSystemLabel()), output, error);
-    qDebug() << __FUNCTION__ << output << error;
+//    qDebug() << __FUNCTION__ << output << error;
     return exitcode == 0;
 }
 
@@ -195,7 +195,7 @@ bool ntfs::checkRepair( const Partition & partition)
 {
     QString output, error;
     int exitcode = Utils::executCmd(QString("ntfsresize -i -f -v %1").arg(partition.getPath()), output, error);
-    qDebug() << QString("NTFS::check_repair---%1----%2").arg(output).arg(error);
+//    qDebug() << QString("NTFS::check_repair---%1----%2").arg(output).arg(error);
     return exitcode == 0 || error.compare("Unknown error") == 0;
 }
 

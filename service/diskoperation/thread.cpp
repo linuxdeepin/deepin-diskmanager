@@ -65,7 +65,7 @@ void workthread::setTimeInfo(const QString &devicePath, int blockStart, int bloc
 
 void workthread::runCount()
 {
-    qDebug() << QThread::currentThreadId() << endl;
+//    qDebug() << QThread::currentThreadId() << endl;
     Sector i = m_blockStart;
     Sector j = m_blockStart+1;
     QProcess proc;
@@ -174,7 +174,7 @@ void fixthread::setStopFlag(int flag)
 
 void fixthread::runFix()
 {
-    qDebug() << m_list << endl;
+//    qDebug() << m_list << endl;
     int i = 0;
     QProcess proc;
     while(i < m_list.size() && m_stopFlag != 2) {

@@ -148,13 +148,13 @@ void EXT2::setUsedSectors(Partition &partition)
             m_totalNumOfBlock = Utils::regexpLabel(output, QString("(?<=Block count:).*(?=\n)")).trimmed().toLong();
         }
 //        qDebug() << output;
-        qDebug() << output.mid(index, strmatch.length()).toLatin1() << m_totalNumOfBlock;
+//        qDebug() << output.mid(index, strmatch.length()).toLatin1() << m_totalNumOfBlock;
         strmatch = ("Block size:");
         index = output.indexOf(strmatch);
         if (index >= 0 && index < output.length()) {
             m_blocksSize = Utils::regexpLabel(output, QString("(?<=Block size:).*(?=\n)")).trimmed().toLong();
         }
-        qDebug() << output << output.mid(index, strmatch.length()).toLatin1() << m_blocksSize;
+//        qDebug() << output << output.mid(index, strmatch.length()).toLatin1() << m_blocksSize;
 
         if (partition.m_busy) {
             Byte_Value fs_all;
@@ -201,14 +201,14 @@ void EXT2::readLabel(Partition &partition)
     if (!Utils::executCmd(QString("e2label %1").arg(partition.getPath()), output, error)) {
         partition.setFilesystemLabel(output.trimmed());
     }
-    qDebug() << __FUNCTION__ << output << error;
+//    qDebug() << __FUNCTION__ << output << error;
 }
 
 bool EXT2::writeLabel(const Partition &partition)
 {
     QString output, error;
     int exitcode = Utils::executCmd(QString("e2label %1 %2").arg(partition.getPath()).arg(partition.getFileSystemLabel()), output, error);
-    qDebug() << __FUNCTION__ << output << error;
+//    qDebug() << __FUNCTION__ << output << error;
     return exitcode == 0;
 }
 
@@ -218,7 +218,7 @@ void EXT2::readUuid(Partition &partition)
     if (!Utils::executCmd(QString("tune2fs -l %1").arg(partition.getPath()), output, error)) {
         partition.m_uuid = Utils::regexpLabel(output, "(?<=Filesystem UUID:).*(?=\n)").trimmed();
     }
-    qDebug() << __FUNCTION__ << output << error;
+//    qDebug() << __FUNCTION__ << output << error;
 }
 
 bool EXT2::writeUuid(const Partition &partition)
@@ -250,7 +250,7 @@ bool EXT2::create(const Partition &new_partition)
     }
     qDebug() << " EXT2::create***** " << cmd;
     int exitcode = Utils::executCmd(cmd, output, error);
-    qDebug() << "EXT2::create-------" << output << error;
+//    qDebug() << "EXT2::create-------" << output << error;
     return exitcode == 0 || error.compare("Unknown error") == 0;
 }
 
@@ -271,7 +271,7 @@ bool EXT2::checkRepair(const Partition &partition)
 {
     QString output, error;
     int exitcode = Utils::executCmd(QString("e2fsck -f -y -v -C 0 %1").arg(partition.getPath()), output, error);
-    qDebug() << QString("EXT2::check_repair---%1----%2").arg(output).arg(error);
+//    qDebug() << QString("EXT2::check_repair---%1----%2").arg(output).arg(error);
     return exitcode == 0 || error.compare("Unknown error") == 0;
 }
 

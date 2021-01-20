@@ -205,7 +205,7 @@ bool FsInfo::runBlkidLoadCache(const QString &path)
 
                 m_fileSystemInfoCache.push_back(fsEntry);
                 loadedEntries = true;
-                qDebug() << fsEntry.m_path.m_name << fsEntry.m_type << fsEntry.m_secType << fsEntry.m_uuid << fsEntry.m_label;
+//                qDebug() << fsEntry.m_path.m_name << fsEntry.m_type << fsEntry.m_secType << fsEntry.m_uuid << fsEntry.m_label;
             }
         }
     }

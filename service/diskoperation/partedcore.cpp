@@ -208,10 +208,10 @@ void PartedCore::probeDeviceInfo(const QString &)
         //only add this device if we can read the first sector (which means it's a real device)
         if (useableDevice(lpDevice))
             devicepaths.push_back(lpDevice->path);
-        qDebug() << lpDevice->path;
+//        qDebug() << lpDevice->path;
         lpDevice = ped_device_get_next(lpDevice);
     }
-    qDebug() << __FUNCTION__ << "devicepaths size=" << devicepaths.size();
+//    qDebug() << __FUNCTION__ << "devicepaths size=" << devicepaths.size();
     std::sort(devicepaths.begin(), devicepaths.end());
     qDebug() << __FUNCTION__ << "**8";
     for (int t = 0; t < devicepaths.size(); t++) {
@@ -247,7 +247,7 @@ void PartedCore::probeDeviceInfo(const QString &)
         }
         m_inforesult.insert(devinfo.m_path, devinfo);
     }
-    qDebug() << __FUNCTION__ << m_inforesult.count();
+//    qDebug() << __FUNCTION__ << m_inforesult.count();
     qDebug() << __FUNCTION__ << "**10";
 }
 
@@ -888,7 +888,7 @@ FSType PartedCore::detectFilesystem(PedDevice *lpDevice, PedPartition *lpPartiti
         fsname = lpPartition->fs_type->name;
     if (!fsname.isEmpty()) {
         fstype = Utils::stringToFileSystemType(fsname);
-        qDebug() << fstype;
+//        qDebug() << fstype;
         if (fstype != FS_UNKNOWN)
             return fstype;
     }
@@ -1262,7 +1262,7 @@ bool PartedCore::createFileSystem(const Partition &partition)
         qDebug() << __FUNCTION__ << QString("partition contains open LUKS encryption for a create file system only step");
         return false;
     }
-    qDebug() << __FUNCTION__ << partition.m_sectorsUsed << partition.m_sectorsUnused;
+//    qDebug() << __FUNCTION__ << partition.m_sectorsUsed << partition.m_sectorsUnused;
     qDebug() << __FUNCTION__ << QString("create new %1 file system").arg(partition.m_fstype);
     bool succes = false;
     FileSystem *pFilesystem = nullptr;
@@ -1557,7 +1557,7 @@ bool PartedCore::mountAndWriteFstab(const QString &mountpath)
         cmd = QString("mount -v %1 %2").arg(partitionPath).arg(mountpath);
     }
 
-    qDebug() << cmd << endl;
+//    qDebug() << cmd << endl;
     int exitcode = Utils::executCmd(cmd, output, errstr);
     if (exitcode != 0) {
 
@@ -1582,7 +1582,7 @@ bool PartedCore::mountAndWriteFstab(const QString &mountpath)
     } else {
         while (!file.atEnd()) {
             QByteArray line = file.readLine();//获取数据
-            qDebug() << line;
+//            qDebug() << line;
 
             if(line.contains(m_curpartition.m_uuid.toStdString().c_str())) {
                 QString str = QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(m_curpartition.m_uuid).arg(mountpath).arg(type);
@@ -1896,13 +1896,26 @@ QString PartedCore::getDeviceHardStatus(const QString &devicepath)
 {
     qDebug() << __FUNCTION__ << "Get Device Hard Status Start";
     QString status;
+    QString devicePath = devicepath;
+    if (devicepath.contains("nvme")) {
+        QStringList list = devicepath.split("nvme");
+        if (list.size() < 2) {
+            return status;
+        }
+        QString str = "";
+        for (int i = 0; i < list.at(1).size(); i++) {
+            if(list.at(1).at(i) >= "0" && list.at(1).at(i) <= "9"){
+                str += list.at(1).at(i);
+            }else {
+                break;
+            }
+        }
 
-    if (devicepath.isEmpty()) {
-        qDebug() << __FUNCTION__ << "Device path is empty";
-        return status;
+        devicePath = list.at(0) + "nvme" + str;
+//        qDebug() << devicePath << "1111111111111111" << endl;
     }
 
-    QString cmd = QString("smartctl -H %1").arg(devicepath);
+    QString cmd = QString("smartctl -H %1").arg(devicePath);
     QProcess proc;
     proc.start(cmd);
     proc.waitForFinished(-1);
@@ -1914,12 +1927,12 @@ QString PartedCore::getDeviceHardStatus(const QString &devicepath)
             if (list.at(i).indexOf("SMART overall-health self-assessment test result:") != -1) {
                 status = list.at(i).mid(strlen("SMART overall-health self-assessment test result:"));
                 status.remove(QRegExp("^ +\\s*"));
-                qDebug() << __FUNCTION__ << status;
+//                qDebug() << __FUNCTION__ << status;
                 break;
             }
         }
     } else {
-        QString cmd = QString("smartctl -H -d sat %1").arg(devicepath);
+        QString cmd = QString("smartctl -H -d sat %1").arg(devicePath);
         QProcess proc;
         proc.start(cmd);
         proc.waitForFinished(-1);
@@ -1931,7 +1944,7 @@ QString PartedCore::getDeviceHardStatus(const QString &devicepath)
                 if (list.at(i).indexOf("SMART overall-health self-assessment test result:") != -1) {
                     status = list.at(i).mid(strlen("SMART overall-health self-assessment test result:"));
                     status.remove(QRegExp("^ +\\s*"));
-                    qDebug() << __FUNCTION__ << status;
+//                    qDebug() << __FUNCTION__ << status;
                     break;
                 }
             }
@@ -1946,91 +1959,129 @@ HardDiskStatusInfoList PartedCore::getDeviceHardStatusInfo(const QString &device
 {
     qDebug() << __FUNCTION__ << "Get Device Hard Status Info Start";
     HardDiskStatusInfoList hdsilist;
-    //QString devicepath = curpartition.device_path;
-    if (devicepath.isEmpty()) {
-        qDebug() << "disk path is empty";
-        return hdsilist;
-    }
 
-    QString cmd = QString("smartctl -A %1").arg(devicepath);
-    QProcess proc;
-    proc.start(cmd);
-    proc.waitForFinished(-1);
-    QString output = proc.readAllStandardOutput();
-
-    if (output.contains("ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE")) {
-        QStringList list = output.split("\n");
-        int n = list.indexOf("ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE");
-        for (int i = n+1;i < list.size(); i++) {
-           HardDiskStatusInfo hdsinfo;
-           QString statusInfo = list.at(i);
-
-
-           QStringList slist = statusInfo.split(' ');
-           slist.removeAll("");
-
-           if (slist.size() == 0) {
-               break;
-           }
-
-           if (list.size() >= 10) {
-               hdsinfo.m_id = slist.at(0);
-               hdsinfo.m_attributeName = slist.at(1);
-               hdsinfo.m_flag = slist.at(2);
-               hdsinfo.m_value = slist.at(3);
-               hdsinfo.m_worst = slist.at(4);
-               hdsinfo.m_thresh = slist.at(5);
-               hdsinfo.m_type = slist.at(6);
-               hdsinfo.m_updated = slist.at(7);
-               hdsinfo.m_whenFailed = slist.at(8);
-               for(int k = 9; k < slist.size(); k++) {
-                   hdsinfo.m_rawValue += slist.at(k);
-               }
-           }
-
-           hdsilist.append(hdsinfo);
+    QString devicePath = devicepath;
+//    QString devicePath = "/dev/nvme12n1";
+    if (devicePath.contains("nvme")) {
+        //重新拼接硬盘字符串
+        QStringList list = devicePath.split("nvme");
+        if (list.size() < 2) {
+            return hdsilist;
         }
-    } else {
-        QString cmd = QString("smartctl -A -d sat %1").arg(devicepath);
+        QString str = "";
+        for (int i = 0; i < list.at(1).size(); i++) {
+            if(list.at(1).at(i) >= "0" && list.at(1).at(i) <= "9"){
+                str += list.at(1).at(i);
+            }else {
+                break;
+            }
+        }
+
+        devicePath = list.at(0) + "nvme" + str;
+
+        QString cmd = QString("smartctl -A %1").arg(devicePath);
         QProcess proc;
         proc.start(cmd);
         proc.waitForFinished(-1);
         QString output = proc.readAllStandardOutput();
+//        QString output = "smartctl 6.6 2017-11-05 r4594 [x86_64-linux-4.19.0-6-amd64] (local build)\nCopyright (C) 2002-17, Bruce Allen, Christian Franke, www.smartmontools.org\n\n=== START OF SMART DATA SECTION ===\nSMART/Health Information (NVMe Log 0x02, NSID 0xffffffff)\nCritical Warning:                   0x00\nTemperature:                        25 Celsius\nAvailable Spare:                    100%\nAvailable Spare Threshold:          5%\nPercentage Used:                    1%\nData Units Read:                    3,196,293 [1.63 TB]\nData Units Written:                 3,708,861 [1.89 TB]\nHost Read Commands:                 47,399,157\nHost Write Commands:                65,181,192\nController Busy Time:               418\nPower Cycles:                       97\nPower On Hours:                     1,362\nUnsafe Shutdowns:                   44\nMedia and Data Integrity Errors:    0\nError Information Log Entries:      171\nWarning  Comp. Temperature Time:    0\nCritical Comp. Temperature Time:    0\n\n";
+        list.clear();
+        list = output.split("\n");
+        for (int i = 0; i < list.size(); i++) {
+            HardDiskStatusInfo hdsinfo;
+            if (list.at(i).contains(":")) {
+                QStringList slist = list.at(i).split(":");
+                if (slist.size() != 2) {
+                    break;
+                }
+                hdsinfo.m_attributeName = slist.at(0);
+                hdsinfo.m_value = slist.at(1).trimmed();
+            } else {
+                continue;
+            }
+            hdsilist.append(hdsinfo);
+        }
+    } else {
+
+        QString cmd = QString("smartctl -A %1").arg(devicepath);
+        QProcess proc;
+        proc.start(cmd);
+        proc.waitForFinished(-1);
+        QString output = proc.readAllStandardOutput();
+
         if (output.contains("ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE")) {
             QStringList list = output.split("\n");
             int n = list.indexOf("ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE");
             for (int i = n+1;i < list.size(); i++) {
-               HardDiskStatusInfo hdsinfo;
-               QString statusInfo = list.at(i);
-               QStringList slist = statusInfo.split(' ');
-               slist.removeAll("");
+                HardDiskStatusInfo hdsinfo;
+                QString statusInfo = list.at(i);
 
-               if (slist.size() == 0) {
-                   break;
-               }
 
-               if (list.size() >= 10) {
-                   hdsinfo.m_id = slist.at(0);
-                   hdsinfo.m_attributeName = slist.at(1);
-                   hdsinfo.m_flag = slist.at(2);
-                   hdsinfo.m_value = slist.at(3);
-                   hdsinfo.m_worst = slist.at(4);
-                   hdsinfo.m_thresh = slist.at(5);
-                   hdsinfo.m_type = slist.at(6);
-                   hdsinfo.m_updated = slist.at(7);
-                   hdsinfo.m_whenFailed = slist.at(8);
-                   for(int k = 9; k < slist.size(); k++) {
-                       hdsinfo.m_rawValue += slist.at(k);
-                   }
-               }
+                QStringList slist = statusInfo.split(' ');
+                slist.removeAll("");
 
-               hdsilist.append(hdsinfo);
+                if (slist.size() == 0) {
+                    break;
+                }
+
+                if (list.size() >= 10) {
+                    hdsinfo.m_id = slist.at(0);
+                    hdsinfo.m_attributeName = slist.at(1);
+                    hdsinfo.m_flag = slist.at(2);
+                    hdsinfo.m_value = slist.at(3);
+                    hdsinfo.m_worst = slist.at(4);
+                    hdsinfo.m_thresh = slist.at(5);
+                    hdsinfo.m_type = slist.at(6);
+                    hdsinfo.m_updated = slist.at(7);
+                    hdsinfo.m_whenFailed = slist.at(8);
+                    for(int k = 9; k < slist.size(); k++) {
+                        hdsinfo.m_rawValue += slist.at(k);
+                    }
+                }
+
+                hdsilist.append(hdsinfo);
             }
         } else {
-            //需要适配的两排显示问题
+            QString cmd = QString("smartctl -A -d sat %1").arg(devicepath);
+            QProcess proc;
+            proc.start(cmd);
+            proc.waitForFinished(-1);
+            QString output = proc.readAllStandardOutput();
+            if (output.contains("ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE")) {
+                QStringList list = output.split("\n");
+                int n = list.indexOf("ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE");
+                for (int i = n+1;i < list.size(); i++) {
+                    HardDiskStatusInfo hdsinfo;
+                    QString statusInfo = list.at(i);
+                    QStringList slist = statusInfo.split(' ');
+                    slist.removeAll("");
+
+                    if (slist.size() == 0) {
+                        break;
+                    }
+
+                    if (list.size() >= 10) {
+                        hdsinfo.m_id = slist.at(0);
+                        hdsinfo.m_attributeName = slist.at(1);
+                        hdsinfo.m_flag = slist.at(2);
+                        hdsinfo.m_value = slist.at(3);
+                        hdsinfo.m_worst = slist.at(4);
+                        hdsinfo.m_thresh = slist.at(5);
+                        hdsinfo.m_type = slist.at(6);
+                        hdsinfo.m_updated = slist.at(7);
+                        hdsinfo.m_whenFailed = slist.at(8);
+                        for(int k = 9; k < slist.size(); k++) {
+                            hdsinfo.m_rawValue += slist.at(k);
+                        }
+                    }
+
+                    hdsilist.append(hdsinfo);
+                }
+            } else {
+                //需要适配的两排显示问题
+            }
         }
     }
-
     qDebug() << __FUNCTION__ << "Get Device Hard Status Info end";
     return hdsilist;
 }
@@ -2200,7 +2251,7 @@ int PartedCore::getPartitionHiddenFlag()
         return -1;
     } else {
         m_hiddenPartition = file.readAll();
-        qDebug() << m_hiddenPartition;
+//        qDebug() << m_hiddenPartition;
     }
     file.close();
     qDebug() << __FUNCTION__ << "Get Partition Hidden Flag end";
@@ -2212,7 +2263,7 @@ bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int b
     if(m_workerThread == nullptr)
     {
       m_workerThread = new QThread();
-      qDebug() << QThread::currentThreadId() << 1111111111111 << endl;
+//      qDebug() << QThread::currentThreadId() << 1111111111111 << endl;
     }
 
     switch(flag) {
@@ -2295,12 +2346,12 @@ bool PartedCore::fixBadBlocks(const QString &devicePath, QStringList badBlocksLi
         break;
     case 3: {
         m_checkThread.moveToThread(m_workerThread);
-        qDebug() << 111 << endl;
+//        qDebug() << 111 << endl;
         m_fixthread.setStopFlag(flag);
         m_fixthread.setFixBadBlocksInfo(devicePath, badBlocksList, checkSize);
         connect(m_workerThread, SIGNAL(started()), &m_fixthread, SLOT(runFix()));
         m_workerThread->start();
-        qDebug() << 222 << endl;
+//        qDebug() << 222 << endl;
     }
         break;
     default:
@@ -2376,7 +2427,7 @@ void PartedCore::autoMount()
     int exitcode = Utils::executCmd(cmd, output, errstr);
 
     if (exitcode != 0) {
-        qDebug() << __FUNCTION__ << output;
+//        qDebug() << __FUNCTION__ << output;
     }
 
     emit refreshDeviceInfo();
@@ -2427,6 +2478,17 @@ void PartedCore::threadSafeRecycle()
 
 int PartedCore::test()
 {
+    QString str = "smartctl 6.6 2017-11-05 r4594 [x86_64-linux-4.19.0-6-amd64] (local build)\nCopyright (C) 2002-17, Bruce Allen, Christian Franke, www.smartmontools.org\n\n=== START OF SMART DATA SECTION ===\nSMART/Health Information (NVMe Log 0x02, NSID 0xffffffff)\nCritical Warning:                   0x00\nTemperature:                        25 Celsius\nAvailable Spare:                    100%\nAvailable Spare Threshold:          5%\nPercentage Used:                    1%\nData Units Read:                    3,196,293 [1.63 TB]\nData Units Written:                 3,708,861 [1.89 TB]\nHost Read Commands:                 47,399,157\nHost Write Commands:                65,181,192\nController Busy Time:               418\nPower Cycles:                       97\nPower On Hours:                     1,362\nUnsafe Shutdowns:                   44\nMedia and Data Integrity Errors:    0\nError Information Log Entries:      171\nWarning  Comp. Temperature Time:    0\nCritical Comp. Temperature Time:    0\n\n";
+    QStringList list = str.split("\n");
+//    qDebug() << list;
+    for (int i = 0; i < list.size(); i++) {
+        if (list.at(i).contains(":")) {
+            QStringList slist = list.at(i).split(":");
+//            qDebug() << slist;
+        }
+    }
+
+
     return 1;
 }
 

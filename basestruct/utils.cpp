@@ -361,7 +361,7 @@ int Utils::getMountedFileSystemUsage(const QString &mountpoint, Byte_Value &file
     } else {
         QString errorMessage("statvfs(\"%1\"):%2 "); // = "statvfs(\"" + mountpoint + "\"): " + Glib::strerror(errno) ;
         errorMessage = errorMessage.arg(mountpoint).arg(errno);
-        qDebug() << errorMessage;
+//        qDebug() << errorMessage;
     }
 
     return ret;

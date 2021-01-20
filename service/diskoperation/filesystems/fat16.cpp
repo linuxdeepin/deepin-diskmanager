@@ -154,22 +154,36 @@ void fat16::setUsedSectors( Partition & partition )
             list = Utils::regexpLabel(output, QString("(?<=big size:).*(?=\n)")).trimmed().split(" ");
             big_size = list.at(0).toLong();
         }
+
+        if (big_size <= 0 && small_size <= 0) {
+            list = output.split("\n");
+            for (int i = 0; i < list.size(); i++) {
+                if (list.at(i).contains("mformat command line: mformat -T ")) {
+                    QStringList slist = list.at(i).split("-T");
+                    list.clear();
+                    list = slist.at(1).split("-h");
+                    m_totalNumOfBlock = list.at(0).trimmed().toLong();
+                }
+            }
+        }
     }
 
 	// FS size in logical sectors
 	long long logical_sectors = -1;
-	if (small_size > 0)
+    if (small_size > 0) {
 		logical_sectors = small_size;
-	else if (big_size > 0)
-		logical_sectors = big_size;
-
+    } else if (big_size > 0) {
+        logical_sectors = big_size;
+    } else {
+        logical_sectors = m_totalNumOfBlock;
+    }
 
     if (m_numOfFreeOrUsedBlocks > -1 && logical_sector_size > -1 && cluster_size > -1 && logical_sectors > -1)
     {
         Sector fs_free = m_numOfFreeOrUsedBlocks / partition.m_sectorSize;
         Sector fs_size = logical_sectors * logical_sector_size / partition.m_sectorSize;
 
-
+        qDebug() << __FUNCTION__ << fs_free << fs_size;
         partition.setSectorUsage(fs_size, fs_free);
         partition.m_fsBlockSize = logical_sector_size * cluster_size;
     }
@@ -195,7 +209,7 @@ bool fat16::writeLabel(const Partition & partition)
 
 
     int exitcode = Utils::executCmd(cmd, output, error);
-    qDebug() << __FUNCTION__ << output << error;
+//    qDebug() << __FUNCTION__ << output << error;
     return exitcode == 0;
 
 }
@@ -211,7 +225,7 @@ void fat16::readUuid( Partition & partition )
         if ( partition .m_uuid == "0000-0000" )
             partition .m_uuid .clear() ;
 	}
-    qDebug() << __FUNCTION__ << output << error;
+//    qDebug() << __FUNCTION__ << output << error;
 }
 
 bool fat16::writeUuid(const Partition & partition)
@@ -241,7 +255,7 @@ bool fat16::checkRepair(const Partition & partition)
 {
     QString output, error;
     int exitcode = Utils::executCmd(QString("fsck.fat -a -w -v %1").arg(partition.getPath()), output, error);
-    qDebug() << QString("EXT2::check_repair---%1----%2").arg(output).arg(error);
+//    qDebug() << QString("EXT2::check_repair---%1----%2").arg(output).arg(error);
     return exitcode == 0 || error.compare("Unknown error") == 0;
 }
 

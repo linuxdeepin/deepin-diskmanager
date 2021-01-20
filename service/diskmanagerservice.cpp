@@ -57,20 +57,20 @@ void DiskManagerService::Start(qint64 applicationPid)
     }
     QString msg = "DiskManagerService::Start called";
     Q_EMIT MessageReport(msg);
-    qDebug() << msg;
+//    qDebug() << msg;
 }
 
 DeviceInfo DiskManagerService::getDeviceinfo()
 {
     QString msg = "DiskManagerService::getDeviceinfo";
     Q_EMIT MessageReport(msg);
-    qDebug() << "DiskManagerService::getDeviceinfo success *******";
+//    qDebug() << "DiskManagerService::getDeviceinfo success *******";
     return m_partedcore->getDeviceinfo();
 }
 
 void DiskManagerService::getalldevice()
 {
-    qDebug() << "DiskManagerService::getalldevice";
+//    qDebug() << "DiskManagerService::getalldevice";
     DeviceInfoMap infores = m_partedcore->getAllDeviceinfo();
     Q_EMIT updateDeviceInfo(infores);
 }

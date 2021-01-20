@@ -101,7 +101,7 @@ void LinuxSwap::readLabel(Partition &partition)
     label = Utils::regexpLabel(output, "(?<=LABEL:).*(?=\n)");
     partition.setFilesystemLabel(label);
 
-    qDebug() << output << error << "----" << label;
+//    qDebug() << output << error << "----" << label;
 }
 
 bool LinuxSwap::writeLabel(const Partition &partition)

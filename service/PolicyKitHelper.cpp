@@ -11,10 +11,10 @@ bool PolicyKitHelper::checkAuthorization(const QString& actionId, qint64 applica
     result = Authority::instance()->checkAuthorizationSync(actionId, UnixProcessSubject(applicationPid),
                                                            Authority::AllowUserInteraction);
     if (result == Authority::Yes) {
-        qDebug() << 111111111;
+//        qDebug() << 111111111;
         return true;
     }else {
-        qDebug() << 22222222;
+//        qDebug() << 22222222;
         return false;
     }
 }

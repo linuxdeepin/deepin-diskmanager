@@ -173,7 +173,7 @@ void MountInfo::readMountpointsFromFileSwaps(const QString &fileName, MountInfo:
         QString line = in.readLine();
         QString node;
         while (!in.atEnd() || !line.isEmpty()) {
-            qDebug() << line;
+//            qDebug() << line;
             node = Utils::regexpLabel(line, "^(/[^ ]+)");
 
             if (node.size() > 0) {

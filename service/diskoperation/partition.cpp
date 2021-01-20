@@ -196,6 +196,7 @@ QString Partition::getMountPoint() const
 void Partition::setSectorUsage(Sector sectorsFsSize, Sector sectorsFsUnused)
 {
     Sector length = getSectorLength();
+    qDebug() << "1111111" << length;
     if (0 <= sectorsFsSize && sectorsFsSize <= length
             && 0 <= sectorsFsUnused && sectorsFsUnused <= sectorsFsSize) {
         m_sectorsUsed = sectorsFsSize - sectorsFsUnused;

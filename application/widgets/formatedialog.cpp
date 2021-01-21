@@ -56,6 +56,9 @@ void FormateDialog::initUi()
     DLabel *fileName = new DLabel(tr("Name:"), this);
     fileName->setMinimumWidth(76);
     m_fileNameEdit   = new DLineEdit(this);
+    QRegExp re("^[\u4E00-\u9FA5A-Za-z0-9_]+$");
+    QRegExpValidator *validator = new QRegExpValidator(re, this);
+    m_fileNameEdit->lineEdit()->setValidator(validator );
     if (m_fileNameEdit->text().isEmpty())
         m_fileNameEdit->lineEdit()->setPlaceholderText(tr("Name"));
     layoutName->addWidget(fileName);

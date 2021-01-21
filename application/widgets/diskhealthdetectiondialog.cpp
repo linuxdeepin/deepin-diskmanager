@@ -129,7 +129,7 @@ void DiskHealthDetectionDialog::initUI()
     // 状态颜色
     DPalette paletteStateColor;
 
-    if (0 == healthStateValue.compare("PASSED", Qt::CaseInsensitive)) {
+    if (0 == healthStateValue.compare("PASSED", Qt::CaseInsensitive) || 0 == healthStateValue.compare("OK", Qt::CaseInsensitive)) {
         iconHealth = Common::getIcon("good");
         iconHealthLabel->setPixmap(iconHealth.pixmap(30, 30));
         m_healthStateValue->setText(tr("Good")); // 良好    【警告】Warning
@@ -251,28 +251,64 @@ void DiskHealthDetectionDialog::initUI()
     for (int i = 0; i < hardDiskStatusInfoList.count(); i++) {
         HardDiskStatusInfo hardDiskStatusInfo = hardDiskStatusInfoList.at(i);
 
-        if (hardDiskStatusInfo.m_id == "194") {
-            m_temperatureValue->setText(QString("%1°C").arg(hardDiskStatusInfo.m_value.toInt()));
+        if (hardDiskStatusInfo.m_id == "194" || hardDiskStatusInfo.m_attributeName == "Temperature") {
+            QStringList data = hardDiskStatusInfo.m_value.split(" ");
+            if (data.count() > 1) {
+                m_temperatureValue->setText(QString("%1°C").arg(data.at(0).toInt()));
+            }
         }
 
         QList<QStandardItem*> itemList;
 
-        itemList << new QStandardItem(hardDiskStatusInfo.m_id);
-        if (hardDiskStatusInfo.m_whenFailed == "-") {
-            itemList << new QStandardItem("G");
-        } else if(0 == hardDiskStatusInfo.m_whenFailed.compare("In_the_past", Qt::CaseInsensitive)) {
-            itemList << new QStandardItem("W");
-        } else if(0 == hardDiskStatusInfo.m_whenFailed.compare("FAILING_NOW", Qt::CaseInsensitive)) {
-            itemList << new QStandardItem("D");
+        if (!hardDiskStatusInfo.m_id.isEmpty()) {
+            itemList << new QStandardItem(hardDiskStatusInfo.m_id);
         } else {
-            itemList << new QStandardItem("U");
+            itemList << new QStandardItem("-");
         }
 
-        itemList << new QStandardItem(hardDiskStatusInfo.m_value);
-        itemList << new QStandardItem(hardDiskStatusInfo.m_worst);
-        itemList << new QStandardItem(hardDiskStatusInfo.m_thresh);
-        itemList << new QStandardItem(hardDiskStatusInfo.m_rawValue);
-        itemList << new QStandardItem(hardDiskStatusInfo.m_attributeName);
+        if (!hardDiskStatusInfo.m_whenFailed.isEmpty()) {
+            if (hardDiskStatusInfo.m_whenFailed == "-") {
+                itemList << new QStandardItem("G");
+            } else if(0 == hardDiskStatusInfo.m_whenFailed.compare("In_the_past", Qt::CaseInsensitive)) {
+                itemList << new QStandardItem("W");
+            } else if(0 == hardDiskStatusInfo.m_whenFailed.compare("FAILING_NOW", Qt::CaseInsensitive)) {
+                itemList << new QStandardItem("D");
+            } else {
+                itemList << new QStandardItem("U");
+            }
+        } else {
+            itemList << new QStandardItem("-");
+        }
+
+        if (!hardDiskStatusInfo.m_value.isEmpty()) {
+            itemList << new QStandardItem(hardDiskStatusInfo.m_value);
+        } else {
+            itemList << new QStandardItem("-");
+        }
+
+        if (!hardDiskStatusInfo.m_worst.isEmpty()) {
+            itemList << new QStandardItem(hardDiskStatusInfo.m_worst);
+        } else {
+            itemList << new QStandardItem("-");
+        }
+
+        if (!hardDiskStatusInfo.m_thresh.isEmpty()) {
+            itemList << new QStandardItem(hardDiskStatusInfo.m_thresh);
+        } else {
+            itemList << new QStandardItem("-");
+        }
+
+        if (!hardDiskStatusInfo.m_rawValue.isEmpty()) {
+            itemList << new QStandardItem(hardDiskStatusInfo.m_rawValue);
+        } else {
+            itemList << new QStandardItem("-");
+        }
+
+        if (!hardDiskStatusInfo.m_attributeName.isEmpty()) {
+            itemList << new QStandardItem(hardDiskStatusInfo.m_attributeName);
+        } else {
+            itemList << new QStandardItem("-");
+        }
 
         m_standardItemModel->appendRow(itemList);
     }

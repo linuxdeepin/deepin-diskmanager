@@ -194,21 +194,22 @@ void fat16::setUsedSectors( Partition & partition )
 void fat16::readLabel( Partition & partition )
 {
     QString output, error;
-    if (!Utils::executCmd(QString("mlabel -s :: -i %1").arg(partition.getPath()), output, error)) {
-        partition.setFilesystemLabel(Utils::regexpLabel( output, "(?<=Volume label is).*(?=\n)" ).trimmed());
+    if (!Utils::executCmd(QString("udisksctl info -b %1").arg(partition.getPath()), output, error)) {
+        partition.setFilesystemLabel(Utils::regexpLabel( output, "(?<=IdLabel:).*(?=\n)" ).trimmed());
     }
 }
 
 bool fat16::writeLabel(const Partition & partition)
 {
     QString output, error, cmd;
-    if ( partition.getFileSystemLabel().isEmpty())
+    if ( partition.getFileSystemLabel().isEmpty() || partition.getFileSystemLabel() == " ")
         cmd = QString("mlabel -c :: -i %1").arg(partition.getPath());
 	else
-        cmd = QString("mlabel :: %1 - i %2").arg(partition.getFileSystemLabel()).arg(partition.getPath());
+        cmd = QString("mlabel :: %1 -i %2").arg(partition.getFileSystemLabel()).arg(partition.getPath());
 
-
+//    qDebug() << __FUNCTION__ << cmd;
     int exitcode = Utils::executCmd(cmd, output, error);
+//    qDebug() << __FUNCTION__ << exitcode;
 //    qDebug() << __FUNCTION__ << output << error;
     return exitcode == 0;
 

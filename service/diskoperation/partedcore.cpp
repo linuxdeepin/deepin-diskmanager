@@ -1995,7 +1995,7 @@ HardDiskStatusInfoList PartedCore::getDeviceHardStatusInfo(const QString &device
                     break;
                 }
                 hdsinfo.m_attributeName = slist.at(0);
-                hdsinfo.m_value = slist.at(1).trimmed();
+                hdsinfo.m_rawValue = slist.at(1).trimmed();
             } else {
                 continue;
             }
@@ -2077,8 +2077,6 @@ HardDiskStatusInfoList PartedCore::getDeviceHardStatusInfo(const QString &device
 
                     hdsilist.append(hdsinfo);
                 }
-            } else {
-                //需要适配的两排显示问题
             }
         }
     }

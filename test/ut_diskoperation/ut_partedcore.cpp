@@ -49,7 +49,7 @@ TEST_F(ut_partedcore, create)
     ut_info.m_insideExtended = false;
     ut_info.m_busy = false;
     ut_info.m_fileSystemReadOnly = false;
-    ut_info.m_devicePath = "/dev/sdb";
+    ut_info.m_devicePath = "/dev/sdc";
     ut_info.m_type = 0;
 
     infovec.push_back(ut_info);
@@ -74,15 +74,103 @@ TEST_F(ut_partedcore, format)
     ut_info.m_insideExtended = false;
     ut_info.m_busy = false;
     ut_info.m_fileSystemReadOnly = false;
-    ut_info.m_devicePath = "/dev/sdb";
+    ut_info.m_devicePath = "/dev/sdc";
     ut_info.m_type = 0;
-    ut_info.m_path = "/dev/sdb1";
+    ut_info.m_path = "/dev/sdc1";
 
 
     PartedCore c;
     c.setCurSelect(ut_info);
 
     bool flag = c.format("ext4", " ");
+
+    EXPECT_TRUE(flag);
+
+}
+TEST_F(ut_partedcore, unmount)
+{
+    PartitionInfo ut_info;
+
+    ut_info.m_sectorStart = 2048;
+    ut_info.m_sectorEnd = 2099200;
+    ut_info.m_fileSystemType = 11;
+    ut_info.m_fileSystemLabel = " ";
+    ut_info.m_alignment = 1;
+    ut_info.m_sectorSize = 512;
+    ut_info.m_insideExtended = false;
+    ut_info.m_busy = true;
+    ut_info.m_fileSystemReadOnly = false;
+    ut_info.m_devicePath = "/dev/sdb";
+    ut_info.m_type = 0;
+    ut_info.m_path = "/dev/sdb1";
+    ut_info.m_mountPoints.push_back("/mnt");
+
+
+    PartedCore c;
+    c.setCurSelect(ut_info);
+
+    bool flag = c.unmount();
+
+    EXPECT_TRUE(flag);
+
+}
+
+TEST_F(ut_partedcore, deletePartition)
+{
+    PartitionInfo ut_info;
+
+    ut_info.m_sectorStart = 2048;
+    ut_info.m_sectorEnd = 2099200;
+    ut_info.m_fileSystemType = 11;
+    ut_info.m_fileSystemLabel = " ";
+    ut_info.m_alignment = 1;
+    ut_info.m_sectorSize = 512;
+    ut_info.m_insideExtended = false;
+    ut_info.m_busy = false;
+    ut_info.m_fileSystemReadOnly = false;
+    ut_info.m_devicePath = "/dev/sdc";
+    ut_info.m_type = 0;
+    ut_info.m_path = "/dev/sdc1";
+    ut_info.m_mountPoints.push_back("/mnt");
+
+
+    PartedCore c;
+    c.setCurSelect(ut_info);
+
+    bool flag = c.deletePartition();
+
+    EXPECT_TRUE(flag);
+
+}
+
+TEST_F(ut_partedcore, detectionPartitionTableError)
+{
+
+    PartedCore c;
+
+    bool flag = c.detectionPartitionTableError("/dev/sdc");
+
+    EXPECT_FALSE(flag);
+
+}
+
+TEST_F(ut_partedcore, updateUsb)
+{
+
+    PartedCore c;
+
+    bool flag = c.updateUsb();
+
+    EXPECT_TRUE(flag);
+
+}
+
+TEST_F(ut_partedcore, updateUsbRemove)
+{
+
+    PartedCore c;
+
+    bool flag = c.updateUsbRemove();
 
     EXPECT_TRUE(flag);
 

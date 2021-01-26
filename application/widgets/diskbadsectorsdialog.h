@@ -190,20 +190,11 @@ private:
     /**
      * @brief 毫秒转换成时、分、秒的计算
      * @param msecs 毫秒
-     * @param hore 时
+     * @param hour 时
      * @param minute 分
      * @param second 秒
      */
-    void mSecsToTime(qint64 msecs, qint64 &hore, qint64 &minute, qint64 &second);
-
-    /**
-     * @brief 已用时间、剩余时间格式
-     * @param hore 时
-     * @param minute 分
-     * @param second 秒
-     * @return 返回正确的时间格式
-     */
-    QString timeFormat(qint64 &hore, qint64 &minute, qint64 &second);
+    void mSecsToTime(qint64 msecs, qint64 &hour, qint64 &minute, qint64 &second);
 
     /**
      * @brief 判断当前检测磁盘是否存在被挂载的分区

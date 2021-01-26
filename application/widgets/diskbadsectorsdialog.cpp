@@ -57,7 +57,7 @@ void DiskBadSectorsDialog::initUI()
     setTitle(tr("Verify or repair bad sectors")); // 坏道检测与修复
     setFixedSize(635, 757);
 
-    m_curType = Normal;
+    m_curType = StatusType::Normal;
 
     DPalette palette1;
     QColor color1("#000000");
@@ -152,16 +152,16 @@ void DiskBadSectorsDialog::initUI()
     m_checkTimesEdit->setFixedSize(100, 36);
     m_checkTimesEdit->lineEdit()->setValidator(validatorCheckTimes);
 
-    DLabel *CheckTimesLabel = new DLabel("(1-16)");
-    DFontSizeManager::instance()->bind(CheckTimesLabel, DFontSizeManager::T8, QFont::Normal);
-    CheckTimesLabel->setPalette(palette2);
+    DLabel *checkTimesLabel = new DLabel("(1-16)");
+    DFontSizeManager::instance()->bind(checkTimesLabel, DFontSizeManager::T8, QFont::Normal);
+    checkTimesLabel->setPalette(palette2);
 
     QHBoxLayout *checkTimesLayout = new QHBoxLayout;
     checkTimesLayout->addWidget(m_slider);
     checkTimesLayout->addSpacing(10);
     checkTimesLayout->addWidget(m_checkTimesEdit);
     checkTimesLayout->addSpacing(10);
-    checkTimesLayout->addWidget(CheckTimesLabel);
+    checkTimesLayout->addWidget(checkTimesLabel);
     checkTimesLayout->addStretch();
     checkTimesLayout->setSpacing(0);
     checkTimesLayout->setContentsMargins(0, 0, 0, 0);
@@ -414,35 +414,29 @@ void DiskBadSectorsDialog::onVerifyChanged(int index)
 {
     DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
 
+    m_startLineEdit->setText("0");
+    m_endLineEdit->setAlert(false);
+    m_startLineEdit->setAlert(false);
+
     switch (index) {
     case 0: {
-//        m_verifyLabel->setText(QString("(0-%1)").arg(info.cylinders));
-        m_startLineEdit->setText("0");
         m_endLineEdit->lineEdit()->setPlaceholderText(QString("%1").arg(info.cylinders));
         m_endLineEdit->setText(QString("%1").arg(info.cylinders));
-        m_endLineEdit->setAlert(false);
-        m_startLineEdit->setAlert(false);
         break;
     }
     case 1: {
-//        m_verifyLabel->setText(QString("(0-%1)").arg(info.length));
-        m_startLineEdit->setText("0");
         m_endLineEdit->lineEdit()->setPlaceholderText(QString("%1").arg(info.length));
         m_endLineEdit->setText(QString("%1").arg(info.length));
-        m_endLineEdit->setAlert(false);
-        m_startLineEdit->setAlert(false);
         break;
     }
     case 2: {
         int value = info.length * info.sector_size / 1024 / 1024;
-//        m_verifyLabel->setText(QString("(0-%1)").arg(value));
-        m_startLineEdit->setText("0");
         m_endLineEdit->lineEdit()->setPlaceholderText(QString("%1").arg(value));
         m_endLineEdit->setText(QString("%1").arg(value));
-        m_endLineEdit->setAlert(false);
-        m_startLineEdit->setAlert(false);
         break;
     }
+    default:
+        break;
     }
 }
 
@@ -453,7 +447,6 @@ void DiskBadSectorsDialog::onMethodChanged(int index)
     case 0: {
         m_timeoutEdit->setText("3000");
         m_timeoutEdit->setAlert(false);
-
         break;
     }
     case 1: {
@@ -461,16 +454,15 @@ void DiskBadSectorsDialog::onMethodChanged(int index)
         m_checkTimesEdit->setAlert(false);
         break;
     }
+    default:
+        break;
     }
 }
 
 void DiskBadSectorsDialog::onSliderValueChanged(int value)
 {
     int count = QString::number((float)value / 100 * 16, 'f', 0).toInt();
-
-    if (count <= 0) {
-        count = 1;
-    }
+    count <= 0 ? count = 1 : count;
 
     m_checkTimesEdit->setText(QString("%1").arg(count));
 }
@@ -565,6 +557,8 @@ bool DiskBadSectorsDialog::inputValueIsEffective()
         }
         break;
     }
+    default:
+        break;
     }
 
     return isEffective;
@@ -576,7 +570,7 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
         return;
     }
 
-    m_curType = Check;
+    m_curType = StatusType::Check;
     m_buttonStackedWidget->setCurrentIndex(1);
     m_progressBar->show();
     m_usedTimeLabel->show();
@@ -609,6 +603,8 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
         checkNumber = m_timeoutEdit->text().toInt();
         break;
     }
+    default:
+        break;
     }
 
     switch (m_verifyComboBox->currentIndex()) {
@@ -666,39 +662,17 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
         DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart, blockEnd, checkNumber, checkSize, 1);
         break;
     }
+    default:
+        break;
     }
 
 }
 
-void DiskBadSectorsDialog::mSecsToTime(qint64 msecs, qint64 &hore, qint64 &minute, qint64 &second)
+void DiskBadSectorsDialog::mSecsToTime(qint64 msecs, qint64 &hour, qint64 &minute, qint64 &second)
 {
-    hore = msecs / (60 * 60 * 1000);
+    hour = msecs / (60 * 60 * 1000);
     minute = (msecs % (60 * 60 * 1000)) / (60 * 1000);
     second = ((msecs % (60 * 60 * 1000)) % (60 * 1000)) / 1000;
-}
-
-QString DiskBadSectorsDialog::timeFormat(qint64 &hore, qint64 &minute, qint64 &second)
-{
-    QString time;
-    if (hore <= 9) {
-        time = QString("0%1:").arg(hore);
-    } else {
-        time = QString("%1:").arg(hore);
-    }
-
-    if (minute <= 9) {
-        time += QString("0%1:").arg(minute);
-    } else {
-        time += QString("%1:").arg(minute);
-    }
-
-    if (second <= 9) {
-        time += QString("0%1").arg(second);
-    } else {
-        time += QString("%1").arg(second);
-    }
-
-    return time;
 }
 
 void DiskBadSectorsDialog::onCheckBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo)
@@ -711,28 +685,23 @@ void DiskBadSectorsDialog::onCheckBadBlocksInfo(const QString &cylinderNumber, c
 
     qint64 totalTime = m_curCheckTime / m_curCheckNumber * m_totalCheckNumber;
     int value = QString::number((float)m_curCheckTime / totalTime,'f', 2).toFloat() * 100;
-
-    if (value > 99) {
-        value = 99;
-    }
+    value > 99 ? value = 99 : value;
 
     m_progressBar->setValue(value);
     qint64 remainingTime = totalTime - m_curCheckTime;
-    if (remainingTime < 1000) {
-        remainingTime = 1000;
-    }
+    remainingTime < 1000 ? remainingTime = 1000 : remainingTime;
 
-    qint64 usedHore = 0;
+    qint64 usedHour = 0;
     qint64 usedMinute = 0;
     qint64 usedSecond = 0;
-    mSecsToTime(m_curCheckTime, usedHore, usedMinute, usedSecond);
-    m_usedTimeLabel->setText(tr("Time elapsed:") + timeFormat(usedHore, usedMinute, usedSecond));
+    mSecsToTime(m_curCheckTime, usedHour, usedMinute, usedSecond);
+    m_usedTimeLabel->setText(tr("Time elapsed:") + QString("%1:%2:%3").arg(usedHour, 2, 10, QLatin1Char('0')).arg(usedMinute, 2, 10, QLatin1Char('0')).arg(usedSecond, 2, 10, QLatin1Char('0'))); // 时、分、秒为一位数时，十位自动补0
 
-    qint64 remainingHore = 0;
+    qint64 remainingHour = 0;
     qint64 remainingMinute = 0;
     qint64 remainingSecond = 0;
-    mSecsToTime(remainingTime, remainingHore, remainingMinute, remainingSecond);
-    m_unusedTimeLabel->setText(tr("Time left:") + timeFormat(remainingHore, remainingMinute, remainingSecond));
+    mSecsToTime(remainingTime, remainingHour, remainingMinute, remainingSecond);
+    m_unusedTimeLabel->setText(tr("Time left:") + QString("%1:%2:%3").arg(remainingHour, 2, 10, QLatin1Char('0')).arg(remainingMinute, 2, 10, QLatin1Char('0')).arg(remainingSecond, 2, 10, QLatin1Char('0')));
 //    qDebug() << "111111111" << cylinderTimeConsuming << m_curCheckTime << value << m_usedTimeLabel->text() << remainingTime << QTime::fromMSecsSinceStartOfDay(remainingTime).toString("hh:mm:ss");
 
     m_settings->beginGroup("CheckData");
@@ -763,7 +732,7 @@ void DiskBadSectorsDialog::onCheckCoomplete()
     m_unusedTimeLabel->setText(tr("Time left:") + "00:00:00");
     m_buttonStackedWidget->setCurrentIndex(3);
     m_checkInfoLabel->setText(tr("Verify completed")); // 检测完成
-    m_curType = Normal;
+    m_curType = StatusType::Normal;
     m_resetButton->setDisabled(false);
 
     int badSectorsCount = 0;
@@ -789,10 +758,10 @@ void DiskBadSectorsDialog::onCheckCoomplete()
 void DiskBadSectorsDialog::onStopButtonClicked()
 {
     switch (m_curType) {
-    case Check: {
+    case StatusType::Check: {
         m_buttonStackedWidget->setCurrentIndex(2);
         m_resetButton->setDisabled(false);
-        m_curType = StopCheck;
+        m_curType = StatusType::StopCheck;
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
 
         int checkSize = m_settings->value("SettingData/CheckSize").toInt();
@@ -803,9 +772,9 @@ void DiskBadSectorsDialog::onStopButtonClicked()
         DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart, blockEnd, checkNumber, checkSize, 2);
         break;
     }
-    case Repair:{
+    case StatusType::Repair:{
         m_buttonStackedWidget->setCurrentIndex(2);
-        m_curType = StopRepair;
+        m_curType = StatusType::StopRepair;
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         int repairSize = static_cast<int>(info.heads * info.sectors * info.sector_size);
 
@@ -824,10 +793,10 @@ void DiskBadSectorsDialog::onStopButtonClicked()
 void DiskBadSectorsDialog::onContinueButtonClicked()
 {
     switch (m_curType) {
-    case StopCheck: {
+    case StatusType::StopCheck: {
         m_buttonStackedWidget->setCurrentIndex(1);
         m_resetButton->setDisabled(true);
-        m_curType = Check;
+        m_curType = StatusType::Check;
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
 
         int checkSize = m_settings->value("SettingData/CheckSize").toInt();
@@ -838,9 +807,9 @@ void DiskBadSectorsDialog::onContinueButtonClicked()
         DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart + 1, blockEnd, checkNumber, checkSize, 3);
         break;
     }
-    case StopRepair:{
+    case StatusType::StopRepair:{
         m_buttonStackedWidget->setCurrentIndex(1);
-        m_curType = Repair;
+        m_curType = StatusType::Repair;
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         int repairSize = static_cast<int>(info.heads * info.sectors * info.sector_size);
 
@@ -862,7 +831,7 @@ void DiskBadSectorsDialog::onAgainVerifyButtonClicked()
     m_usedTimeLabel->setText(tr("Time elapsed:") + "00:00:00");
     m_unusedTimeLabel->setText(tr("Time left:") + "00:00:00");
     m_checkInfoLabel->setText("");
-    m_curType = Check;
+    m_curType = StatusType::Check;
     m_buttonStackedWidget->setCurrentIndex(1);
     m_resetButton->setDisabled(true);
     m_repairButton->setDisabled(true);
@@ -906,7 +875,7 @@ void DiskBadSectorsDialog::onResetButtonClicked()
     m_usedTimeLabel->setText(tr("Time elapsed:") + "00:00:00");
     m_unusedTimeLabel->setText(tr("Time left:") + "00:00:00");
     m_checkInfoLabel->setText("");
-    m_curType = Normal;
+    m_curType = StatusType::Normal;
     m_buttonStackedWidget->setCurrentIndex(0);
     m_progressBar->hide();
     m_usedTimeLabel->hide();
@@ -994,8 +963,8 @@ void DiskBadSectorsDialog::onRepairButtonClicked()
 
     messageBox.addButton(tr("Cancel")); // 取消
     messageBox.addButton(tr("Start Repair")); // 开始修复
-    if (messageBox.exec() == 1) {
-        m_curType = Repair;
+    if (messageBox.exec() == DDialog::Accepted) {
+        m_curType = StatusType::Repair;
         m_repairButton->setDisabled(true);
         m_resetButton->setDisabled(true);
         m_buttonStackedWidget->setCurrentIndex(1);
@@ -1017,11 +986,11 @@ void DiskBadSectorsDialog::onRepairButtonClicked()
         m_usedTime = 0;
         m_unusedTime = m_totalRepairNumber * 2500;
 
-        qint64 remainingHore = 0;
+        qint64 remainingHour = 0;
         qint64 remainingMinute = 0;
         qint64 remainingSecond = 0;
-        mSecsToTime(m_unusedTime, remainingHore, remainingMinute, remainingSecond);
-        m_unusedTimeLabel->setText(tr("Time left:") + timeFormat(remainingHore, remainingMinute, remainingSecond));
+        mSecsToTime(m_unusedTime, remainingHour, remainingMinute, remainingSecond);
+        m_unusedTimeLabel->setText(tr("Time left:") + QString("%1:%2:%3").arg(remainingHour, 2, 10, QLatin1Char('0')).arg(remainingMinute, 2, 10, QLatin1Char('0')).arg(remainingSecond, 2, 10, QLatin1Char('0')));
 
         DMDbusHandler::instance()->repairBadBlocks(info.m_path, lstBadSectors, repairSize, 1);
         m_timer.start(200);
@@ -1037,9 +1006,7 @@ void DiskBadSectorsDialog::onRepairBadBlocksInfo(const QString &cylinderNumber, 
     qint64 totalTime = m_curRepairTime / m_curRepairNumber * m_totalRepairNumber;
     m_usedTime = m_curRepairTime;
     m_unusedTime = totalTime - m_curRepairTime;
-    if (m_unusedTime < 1000) {
-        m_unusedTime = 1000;
-    }
+    m_unusedTime < 1000 ? m_unusedTime = 1000 : m_unusedTime;
 
     QString badSectors = m_settings->value("BadSectorsData/BadSectors").toString();
     QStringList lstBadSectors = badSectors.split(",");
@@ -1068,7 +1035,7 @@ void DiskBadSectorsDialog::onRepairCoomplete()
     m_progressBar->setValue(100);
     m_unusedTimeLabel->setText(tr("Time left:") + "00:00:00");
     m_buttonStackedWidget->setCurrentIndex(4);
-    m_curType = Normal;
+    m_curType = StatusType::Normal;
     m_resetButton->setDisabled(false);
 
     m_checkInfoLabel->setText(tr("Repair completed. Cylinder: %1 repaired.").arg(m_repairedCount)); // 修复完成，已修复XXXXXX柱面
@@ -1084,27 +1051,22 @@ void DiskBadSectorsDialog::onTimeOut()
     m_unusedTime -= 200;
 
     int value = QString::number((float)m_usedTime / (m_usedTime + m_unusedTime),'f', 2).toFloat() * 100;
-    if (value > 99) {
-        value = 99;
-    }
-
+    value > 99 ? value = 99 : value;
     m_progressBar->setValue(value);
 
-    if (m_unusedTime < 1000) {
-        m_unusedTime = 1000;
-    }
+    m_unusedTime < 1000 ? m_unusedTime = 1000 : m_unusedTime;
 
-    qint64 usedHore = 0;
+    qint64 usedHour = 0;
     qint64 usedMinute = 0;
     qint64 usedSecond = 0;
-    mSecsToTime(m_usedTime, usedHore, usedMinute, usedSecond);
-    m_usedTimeLabel->setText(tr("Time elapsed:") + timeFormat(usedHore, usedMinute, usedSecond));
+    mSecsToTime(m_usedTime, usedHour, usedMinute, usedSecond);
+    m_usedTimeLabel->setText(tr("Time elapsed:") + QString("%1:%2:%3").arg(usedHour, 2, 10, QLatin1Char('0')).arg(usedMinute, 2, 10, QLatin1Char('0')).arg(usedSecond, 2, 10, QLatin1Char('0')));
 
-    qint64 remainingHore = 0;
+    qint64 remainingHour = 0;
     qint64 remainingMinute = 0;
     qint64 remainingSecond = 0;
-    mSecsToTime(m_unusedTime, remainingHore, remainingMinute, remainingSecond);
-    m_unusedTimeLabel->setText(tr("Time left:") + timeFormat(remainingHore, remainingMinute, remainingSecond));
+    mSecsToTime(m_unusedTime, remainingHour, remainingMinute, remainingSecond);
+    m_unusedTimeLabel->setText(tr("Time left:") + QString("%1:%2:%3").arg(remainingHour, 2, 10, QLatin1Char('0')).arg(remainingMinute, 2, 10, QLatin1Char('0')).arg(remainingSecond, 2, 10, QLatin1Char('0')));
 }
 
 void DiskBadSectorsDialog::onExitButtonClicked()
@@ -1114,20 +1076,20 @@ void DiskBadSectorsDialog::onExitButtonClicked()
 
 void DiskBadSectorsDialog::onDoneButtonClicked()
 {
-    m_curType = Normal;
+    m_curType = StatusType::Normal;
     close();
 }
 
 void DiskBadSectorsDialog::closeEvent(QCloseEvent *event)
 {
     switch (m_curType) {
-    case Check: {
+    case StatusType::Check: {
         MessageBox messageBox;
         messageBox.setObjectName("messageBox");
         // 正在检测中，是否退出窗口？  当前检测信息不会保留   退出   取消
         messageBox.setWarings(tr("Verifying for bad sectors, exit now?"), tr("The verified information will not be reserved"),
                               tr("Exit"), tr("Cancel"));
-        if (messageBox.exec() == 1) {
+        if (messageBox.exec() == DDialog::Accepted) {
             DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
 
             int checkSize = m_settings->value("SettingData/CheckSize").toInt();
@@ -1146,13 +1108,13 @@ void DiskBadSectorsDialog::closeEvent(QCloseEvent *event)
         }
         break;
     }
-    case Repair:{
+    case StatusType::Repair:{
         MessageBox messageBox;
         messageBox.setObjectName("messageBox");
         // 正在修复中，是否退出窗口？  当前修复信息不会保留   退出   取消
         messageBox.setWarings(tr("Repairing bad sectors, exit now?"), tr("The repairing information will not be reserved"),
                               tr("Exit"), tr("Cancel"));
-        if (messageBox.exec() == 1) {
+        if (messageBox.exec() == DDialog::Accepted) {
 
             DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
             int repairSize = static_cast<int>(info.heads * info.sectors * info.sector_size);

@@ -252,9 +252,17 @@ void DiskHealthDetectionDialog::initUI()
         HardDiskStatusInfo hardDiskStatusInfo = hardDiskStatusInfoList.at(i);
 
         if (hardDiskStatusInfo.m_id == "194" || hardDiskStatusInfo.m_attributeName == "Temperature") {
-            QStringList data = hardDiskStatusInfo.m_value.split(" ");
-            if (data.count() > 1) {
-                m_temperatureValue->setText(QString("%1°C").arg(data.at(0).toInt()));
+            QString value;
+            for (int i = 0; i < hardDiskStatusInfo.m_rawValue.size(); i++) {
+                if (hardDiskStatusInfo.m_rawValue.at(i) >= "0" && hardDiskStatusInfo.m_rawValue.at(i) <= "9") {
+                    value += hardDiskStatusInfo.m_rawValue.at(i);
+                } else {
+                    break;
+                }
+            }
+
+            if (!value.isEmpty()) {
+                m_temperatureValue->setText(QString("%1°C").arg(value));
             }
         }
 

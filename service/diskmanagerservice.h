@@ -70,6 +70,12 @@ Q_SIGNALS:
     Q_SCRIPTABLE void updateDeviceInfo(const DeviceInfoMap &infomap);
 
     /**
+     * @brief 卸载状态信号
+     * @param umountMessage:卸载信息
+     */
+    Q_SCRIPTABLE void unmountPatition(const QString &unmountMessage);
+
+    /**
      * @brief 删除分区信号
      * @param deleteMessage：删除信息
      */

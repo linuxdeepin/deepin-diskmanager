@@ -76,6 +76,7 @@ void DMDbusHandler::initConnection()
     connect(m_dbus, &DMDBusInterface::MessageReport, this, &DMDbusHandler::onMessageReport);
     //  connect(m_dbus, &DMDBusInterface::sigUpdateDeviceInfo, this, &DMDbusHandler::sigUpdateDeviceInfo);
     connect(m_dbus, &DMDBusInterface::updateDeviceInfo, this, &DMDbusHandler::onUpdateDeviceInfo);
+    connect(m_dbus, &DMDBusInterface::unmountPatition, this, &DMDbusHandler::onUnmountPartition);
     connect(m_dbus, &DMDBusInterface::deletePatition, this, &DMDbusHandler::onDeletePartition);
     connect(m_dbus, &DMDBusInterface::hidePartitionInfo, this, &DMDbusHandler::onHidePartition);
     connect(m_dbus, &DMDBusInterface::showPartitionInfo, this, &DMDbusHandler::onShowPartition);
@@ -85,6 +86,12 @@ void DMDbusHandler::initConnection()
     connect(m_dbus, &DMDBusInterface::checkBadBlocksFinished, this, &DMDbusHandler::checkBadBlocksFinished);
     connect(m_dbus, &DMDBusInterface::fixBadBlocksFinished, this, &DMDbusHandler::fixBadBlocksFinished);
     connect(m_dbus, &DMDBusInterface::rootLogin, this, &DMDbusHandler::onRootLogin);
+}
+
+void DMDbusHandler::onUnmountPartition(const QString &unmountMessage)
+{
+    emit unmountPatitionMessage(unmountMessage);
+    emit curSelectChanged();
 }
 
 void DMDbusHandler::onDeletePartition(const QString &deleteMessage)
@@ -202,7 +209,8 @@ void DMDbusHandler::unmount()
 {
     emit showSpinerWindow(true);
 
-    m_dbus->unmount();
+    /*bool result = */m_dbus->unmount();
+//    qDebug() << result << "11111111111111";
 }
 
 QStringList DMDbusHandler::getAllSupportFileSystem()

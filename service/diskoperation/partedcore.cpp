@@ -1633,6 +1633,7 @@ bool PartedCore::unmount()
         if (0 != exitcode) {
             success = false;
             emit refreshDeviceInfo();
+            emit unmountPatition("0");
             return success;
         }
 
@@ -1675,7 +1676,7 @@ bool PartedCore::unmount()
         }
     }
     emit refreshDeviceInfo();
-
+    emit unmountPatition("1");
     qDebug() << __FUNCTION__ << "Unmount end";
 
     return success;

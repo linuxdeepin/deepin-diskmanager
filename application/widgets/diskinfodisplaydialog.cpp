@@ -155,20 +155,16 @@ void DiskInfoDisplayDialog::onExportButtonClicked()
     QDir dir(fileDir);
 
     if (!dir.exists()) {
-        DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::ResidentType);
-        floMsg->setIcon(QIcon::fromTheme("://icons/deepin/builtin/warning.svg"));
-        floMsg->setMessage(tr("Wrong path")); // 路径错误
-        DMessageManager::instance()->sendMessage(this, floMsg);
+        // 路径错误
+        DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Wrong path"));
         DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
 
         return;
     }
 
     if (!fileInfo.isWritable()) {
-        DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::ResidentType);
-        floMsg->setIcon(QIcon::fromTheme("://icons/deepin/builtin/warning.svg"));
-        floMsg->setMessage(tr("You do not have permission to access this path")); // 您无权访问该路径
-        DMessageManager::instance()->sendMessage(this, floMsg);
+        // 您无权访问该路径
+        DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("You do not have permission to access this path"));
         DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
     } else {
         if (!fileDirPath.contains(".txt")) {

@@ -227,6 +227,7 @@ signals:
     void deletePartitionMessage(const QString &deleteMessage);
     void hidePartitionMessage(const QString &hideMessage);
     void showPartitionMessage(const QString &showMessage);
+    void unmountPatitionMessage(const QString &unmountMessage);
     void updateUsb();
     void checkBadBlocksCountInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
 //    void checkBadBlocksDeviceStatusError();
@@ -258,6 +259,12 @@ private slots:
      * @param infoMap 设备信息
      */
     void onUpdateDeviceInfo(const DeviceInfoMap &infoMap);
+
+    /**
+     * @brief 接收卸载分区返回执行结果的槽函数
+     * @param unmountMessage 执行结果
+     */
+    void onUnmountPartition(const QString &unmountMessage);
 
     /**
      * @brief 接收删除分区返回执行结果的槽函数

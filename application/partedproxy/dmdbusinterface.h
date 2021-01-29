@@ -317,6 +317,7 @@ Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void checkBadBlocksFinished();
     Q_SCRIPTABLE void fixBadBlocksFinished();
     Q_SCRIPTABLE void rootLogin(const QString &loginMessage);
+    Q_SCRIPTABLE void unmountPatition(const QString &unmountMessage);
 };
 
 namespace com {

@@ -95,6 +95,12 @@ private slots:
     void onShowPartition(const QString &showMessage);
 
     /**
+     * @brief 卸载分区信号响应的槽函数
+     * @param unmountMessage 执行结果
+     */
+    void onUnmountPartition(const QString &unmountMessage);
+
+    /**
      * @brief usb热插拔信号响应的槽函数
      */
     void onUpdateUsb();

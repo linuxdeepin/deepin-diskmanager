@@ -121,6 +121,7 @@ void DiskManagerService::initConnection()
     connect(m_partedcore, &PartedCore::fixBadBlocksInfo, this, &DiskManagerService::fixBadBlocksInfo);
     connect(m_partedcore, &PartedCore::checkBadBlocksFinished, this, &DiskManagerService::checkBadBlocksFinished);
     connect(m_partedcore, &PartedCore::fixBadBlocksFinished, this, &DiskManagerService::fixBadBlocksFinished);
+    connect(m_partedcore, &PartedCore::unmountPatition, this, &DiskManagerService::unmountPatition);
 }
 
 HardDiskInfo DiskManagerService::onGetDeviceHardInfo(const QString &devicepath)

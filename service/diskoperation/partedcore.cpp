@@ -365,7 +365,8 @@ bool PartedCore::getDisk(PedDevice *&lpDevice, PedDisk *&lpDisk, bool strict)
         // entries to avoid FS specific commands failing because they happen to
         // be running when the needed /dev/PTN entries don't exist.
         //settleDevice(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS);
-
+        QString out, err;
+        Utils::executCmd(QString("udevadm settle --timeout=%1").arg(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS), out, err);
         // if ! disk and writable it's probably a HD without disklabel.
         // We return true here and deal with them in
         // GParted_Core::setDeviceFromDisk().

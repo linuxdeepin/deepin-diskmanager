@@ -52,6 +52,7 @@ public:
     bool isHideSuccess = false;
     bool isShowSuccess = false;
     bool isDeleteSuccess = false;
+    bool isUnmountSuccess = false;
 private:
 
     /**

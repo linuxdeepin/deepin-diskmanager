@@ -5,10 +5,10 @@ project(deepin-diskmanager)
 option(DOTEST "option for test" OFF)
 
 # 是否开启单元测试编译
-set(DOTEST OFF)
+set(DOTEST ON)
 
 option(DOAPP "option for test app" OFF)
-set(DOAPP OFF)
+set(DOAPP ON)
 
 #compile flags
 if (CMAKE_BUILD_TYPE MATCHES Debug)
@@ -35,7 +35,7 @@ if(DOTEST)
         # 添加gocv覆盖率文件的输出
         set(CMAKE_CXX_FLAGS "-g -fprofile-arcs -ftest-coverage")
         # 设置测试模块
-        set(QT Core Gui Widgets Network DBus Sql LinguistTools Svg Multimedia Test)
+        set(QT Core Gui Widgets Network DBus Sql LinguistTools Svg Test)
         find_package(Qt5 COMPONENTS ${QT} REQUIRED)
         # 添加子模块apptest
         add_subdirectory(apptest)

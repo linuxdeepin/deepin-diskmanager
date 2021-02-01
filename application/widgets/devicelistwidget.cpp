@@ -335,10 +335,12 @@ void DeviceListWidget::onDeletePartition(const QString &deleteMessage)
 void DeviceListWidget::onUnmountPartition(const QString &unmountMessage)
 {
     if ("1" == unmountMessage) {
+        isUnmountSuccess = true;
         // 卸载成功
         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Unmounting successful"));
         DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
     } else {
+        isUnmountSuccess = false;
         // 卸载失败
         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Unmounting failed"));
         DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));

@@ -150,10 +150,13 @@ bool DiskManagerService::onShowPartition()
 {
     return m_partedcore->showPartition();
 }
-
 bool DiskManagerService::onDetectionPartitionTableError(const QString &devicePath)
 {
     return m_partedcore->detectionPartitionTableError(devicePath);
+}
+bool DiskManagerService::onCreatePartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel)
+{
+    return m_partedcore->createPartitionTable(devicePath, length, sectorSize, diskLabel);
 }
 bool DiskManagerService::onCheckBadBlocksCount(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize, int flag)
 {

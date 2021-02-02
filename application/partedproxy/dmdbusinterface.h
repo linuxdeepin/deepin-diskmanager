@@ -259,6 +259,21 @@ public Q_SLOTS: // METHODS
     }
 
     /**
+     * @brief 创建分区表
+     * @param devicepath：设备信息路径
+     * @param length:设备大小
+     * @param sectorSize:扇区大小
+     * @param diskLabel:分区表格式
+     * @return true错误false正常
+     */
+    inline QDBusPendingReply<bool> onCreatePartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(devicePath)<< QVariant::fromValue(length)<< QVariant::fromValue(sectorSize)<< QVariant::fromValue(diskLabel);
+        return asyncCallWithArgumentList(QStringLiteral("onCreatePartitionTable"), argumentList);
+    }
+
+    /**
      * @brief 坏道检测(次数)
      * @param devicePath 磁盘路径
      * @param blockStart 检测开始

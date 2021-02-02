@@ -245,6 +245,16 @@ public Q_SLOTS:
     Q_SCRIPTABLE bool onDetectionPartitionTableError(const QString &devicePath);
 
     /**
+     * @brief 创建分区表
+     * @param devicepath：设备信息路径
+     * @param length:设备大小
+     * @param sectorSize:扇区大小
+     * @param diskLabel:分区表格式
+     * @return true错误false正常
+     */
+    Q_SCRIPTABLE bool onCreatePartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel);
+
+    /**
      * @brief 坏道检测（检测次数）
      * @param devicePath：设备信息路径
      * @param blockStart：开始柱面

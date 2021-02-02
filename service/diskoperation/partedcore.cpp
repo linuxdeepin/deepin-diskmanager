@@ -2475,17 +2475,93 @@ void PartedCore::threadSafeRecycle()
     qDebug() << "finished thread" << endl;
 }
 
+bool PartedCore::createPartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel)
+{
+//    Glib::ustring device_path = device.get_path();
+
+    // FIXME: Should call file system specific removal actions
+    // (to remove LVM2 PVs before deleting the partitions).
+
+#ifdef ENABLE_LOOP_DELETE_OLD_PTNS_WORKAROUND
+    // When creating a "loop" table with libparted 2.0 to 3.0 inclusive, it doesn't
+    // inform the kernel to delete old partitions so as a consequence blkid's cache
+    // becomes stale and it won't report a file system subsequently created on the
+    // whole disk device.  Create a GPT first to use that code in libparted to delete
+    // any old partitions.  Fixed in parted 3.1 by commit:
+    //     f5c909c0cd50ed52a48dae6d35907dc08b137e88
+    //     libparted: remove has_partitions check to allow loopback partitions
+    if ( disklabel == "loop" )
+        new_disklabel( device_path, "gpt", false );
+#endif
+
+    // Ensure that any previous whole disk device file system can't be recognised by
+    // libparted in preference to the "loop" partition table signature, or by blkid in
+    // preference to any partition table about to be written.
+//	OperationDetail dummy_od;
+    Sector deviceLength = length.toLongLong();
+    Sector deviceSectorSize = sectorSize.toLong();
+    Partition temp_partition;
+    temp_partition.setUnpartitioned( devicePath,
+                                      "",
+                                      FS_UNALLOCATED,
+                                      deviceLength,
+                                      deviceSectorSize,
+                                      false );
+    eraseFilesystemSignatures(temp_partition);
+
+    emit refreshDeviceInfo();
+    return newDiskLabel( devicePath, diskLabel );
+}
+
+bool PartedCore::newDiskLabel(const QString &devicePath, const QString &diskLabel)
+{
+    bool return_value = false;
+
+    PedDevice* lpDevice = NULL;
+    PedDisk* lpDisk = NULL;
+    if ( getDevice( devicePath, lpDevice ) )
+    {
+        PedDiskType *type = NULL;
+        type = ped_disk_type_get(diskLabel.toStdString().c_str());
+
+        if ( type )
+        {
+            lpDisk = ped_disk_new_fresh( lpDevice, type );
+
+            return_value = commit( lpDisk ) ;
+        }
+
+        destroyDeviceAndDisk( lpDevice, lpDisk ) ;
+    }
+
+//#ifndef USE_LIBPARTED_DMRAID
+//	//delete and recreate disk entries if dmraid
+//	DMRaid dmraid ;
+//	if ( recreate_dmraid_devs && return_value && dmraid.is_dmraid_device( device_path ) )
+//	{
+//		dmraid .purge_dev_map_entries( device_path ) ;
+//		dmraid .create_dev_map_entries( device_path ) ;
+//	}
+//#endif
+
+    return return_value ;
+}
 
 int PartedCore::test()
 {
-    QString str = "smartctl 6.6 2017-11-05 r4594 [x86_64-linux-4.19.0-6-amd64] (local build)\nCopyright (C) 2002-17, Bruce Allen, Christian Franke, www.smartmontools.org\n\n=== START OF SMART DATA SECTION ===\nSMART/Health Information (NVMe Log 0x02, NSID 0xffffffff)\nCritical Warning:                   0x00\nTemperature:                        25 Celsius\nAvailable Spare:                    100%\nAvailable Spare Threshold:          5%\nPercentage Used:                    1%\nData Units Read:                    3,196,293 [1.63 TB]\nData Units Written:                 3,708,861 [1.89 TB]\nHost Read Commands:                 47,399,157\nHost Write Commands:                65,181,192\nController Busy Time:               418\nPower Cycles:                       97\nPower On Hours:                     1,362\nUnsafe Shutdowns:                   44\nMedia and Data Integrity Errors:    0\nError Information Log Entries:      171\nWarning  Comp. Temperature Time:    0\nCritical Comp. Temperature Time:    0\n\n";
-    QStringList list = str.split("\n");
-//    qDebug() << list;
-    for (int i = 0; i < list.size(); i++) {
-        if (list.at(i).contains(":")) {
-            QStringList slist = list.at(i).split(":");
-//            qDebug() << slist;
-        }
+//    QString str = "smartctl 6.6 2017-11-05 r4594 [x86_64-linux-4.19.0-6-amd64] (local build)\nCopyright (C) 2002-17, Bruce Allen, Christian Franke, www.smartmontools.org\n\n=== START OF SMART DATA SECTION ===\nSMART/Health Information (NVMe Log 0x02, NSID 0xffffffff)\nCritical Warning:                   0x00\nTemperature:                        25 Celsius\nAvailable Spare:                    100%\nAvailable Spare Threshold:          5%\nPercentage Used:                    1%\nData Units Read:                    3,196,293 [1.63 TB]\nData Units Written:                 3,708,861 [1.89 TB]\nHost Read Commands:                 47,399,157\nHost Write Commands:                65,181,192\nController Busy Time:               418\nPower Cycles:                       97\nPower On Hours:                     1,362\nUnsafe Shutdowns:                   44\nMedia and Data Integrity Errors:    0\nError Information Log Entries:      171\nWarning  Comp. Temperature Time:    0\nCritical Comp. Temperature Time:    0\n\n";
+//    QStringList list = str.split("\n");
+////    qDebug() << list;
+//    for (int i = 0; i < list.size(); i++) {
+//        if (list.at(i).contains(":")) {
+//            QStringList slist = list.at(i).split(":");
+////            qDebug() << slist;
+//        }
+//    }
+
+    if(createPartitionTable("/dev/sdc","468862128", "512", "msdos"))
+    {
+        return 0;
     }
 
 

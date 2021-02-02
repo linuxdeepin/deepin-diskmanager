@@ -160,6 +160,16 @@ public:
     bool showPartition();
 
     /**
+     * @brief 创建分区表
+     * @param devicepath：设备信息路径
+     * @param length:设备大小
+     * @param sectorSize:扇区大小
+     * @param diskLabel:分区表格式
+     * @return true错误false正常
+     */
+    bool createPartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel);
+
+    /**
      * @brief 分区表错误检测
      * @param devicePath：设备路径
      * @return true错误false正常
@@ -300,6 +310,11 @@ private:
      * @brief 初始化信号槽链接
      */
     void initConnection();
+
+    /**
+     * @brief 创建分区表
+     */
+    bool newDiskLabel(const QString &devicePath, const QString &diskLabel);
 
     /**
      * @brief 刷新设备设置

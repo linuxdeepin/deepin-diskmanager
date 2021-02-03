@@ -313,6 +313,9 @@ private:
 
     /**
      * @brief 创建分区表
+     * @param devicePath:设备路径
+     * @param diskLabel:分区表格式
+     * @return true成功false失败
      */
     bool newDiskLabel(const QString &devicePath, const QString &diskLabel);
 

@@ -2517,11 +2517,11 @@ bool PartedCore::newDiskLabel(const QString &devicePath, const QString &diskLabe
 {
     bool return_value = false;
 
-    PedDevice* lpDevice = NULL;
-    PedDisk* lpDisk = NULL;
+    PedDevice* lpDevice = nullptr;
+    PedDisk* lpDisk = nullptr;
     if ( getDevice( devicePath, lpDevice ) )
     {
-        PedDiskType *type = NULL;
+        PedDiskType *type = nullptr;
         type = ped_disk_type_get(diskLabel.toStdString().c_str());
 
         if ( type )

@@ -6,7 +6,7 @@ Release:        1%{?dist}
 Summary:        Disk Utility Is A Disk Management Tool For Disk
 License:        GPLv3+
 URL:            https://github.com/linuxdeepin/deepin-diskmanager
-Source0:        %{url}/archive/%{version}/%{repo}.tar.gz
+Source0:        %{name}_%{version}.orig.tar.gz
 
 BuildRequires:  gcc-c++
 BuildRequires:  cmake

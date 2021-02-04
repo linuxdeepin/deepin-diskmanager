@@ -1,3 +1,16 @@
+deepin-diskmanager (1.2.4) stable; urgency=low
+
+  * 1040第四次发版(第三次发版送测产生的bug以及新增功能)
+  * 62350 /dev/nvme0n1本地硬盘空闲分区新建分区时分区信息显示异常
+  * 62058 fat32格式新建分区时，分区名称输入中文，显示异常
+  * 57820 优化展示信息 温度获取raw_value
+  * 57854 优化信息 获取raw_value
+  * 58634 分区卸载 加提示弹窗
+  * 59605 新建分区表 （后端）
+  * 59604 新建分区表 (前端)
+
+ -- yuandandan <yuandandan@uniontech.com>  Thu, 4 Feb 2021 14:36:16 +0800
+
 deepin-diskmanager (1.2.3) stable; urgency=low
 
   * 1040第三次发版(第二次发版送测产生的bug以及新增功能)

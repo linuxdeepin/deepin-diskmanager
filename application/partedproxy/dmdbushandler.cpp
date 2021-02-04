@@ -76,10 +76,11 @@ void DMDbusHandler::initConnection()
     connect(m_dbus, &DMDBusInterface::MessageReport, this, &DMDbusHandler::onMessageReport);
     //  connect(m_dbus, &DMDBusInterface::sigUpdateDeviceInfo, this, &DMDbusHandler::sigUpdateDeviceInfo);
     connect(m_dbus, &DMDBusInterface::updateDeviceInfo, this, &DMDbusHandler::onUpdateDeviceInfo);
-    connect(m_dbus, &DMDBusInterface::unmountPatition, this, &DMDbusHandler::onUnmountPartition);
-    connect(m_dbus, &DMDBusInterface::deletePatition, this, &DMDbusHandler::onDeletePartition);
+    connect(m_dbus, &DMDBusInterface::unmountPartition, this, &DMDbusHandler::onUnmountPartition);
+    connect(m_dbus, &DMDBusInterface::deletePartition, this, &DMDbusHandler::onDeletePartition);
     connect(m_dbus, &DMDBusInterface::hidePartitionInfo, this, &DMDbusHandler::onHidePartition);
     connect(m_dbus, &DMDBusInterface::showPartitionInfo, this, &DMDbusHandler::onShowPartition);
+    connect(m_dbus, &DMDBusInterface::createTableMessage, this, &DMDbusHandler::onCreatePartitionTable);
     connect(m_dbus, &DMDBusInterface::usbUpdated, this, &DMDbusHandler::onUpdateUsb);
     connect(m_dbus, &DMDBusInterface::checkBadBlocksCountInfo, this, &DMDbusHandler::checkBadBlocksCountInfo);
     connect(m_dbus, &DMDBusInterface::fixBadBlocksInfo, this, &DMDbusHandler::repairBadBlocksInfo);
@@ -90,7 +91,7 @@ void DMDbusHandler::initConnection()
 
 void DMDbusHandler::onUnmountPartition(const QString &unmountMessage)
 {
-    emit unmountPatitionMessage(unmountMessage);
+    emit unmountPartitionMessage(unmountMessage);
     emit curSelectChanged();
 }
 
@@ -108,6 +109,12 @@ void DMDbusHandler::onHidePartition(const QString &hideMessage)
 void DMDbusHandler::onShowPartition(const QString &showMessage)
 {
     emit showPartitionMessage(showMessage);
+    emit curSelectChanged();
+}
+
+void DMDbusHandler::onCreatePartitionTable(const bool &flag)
+{
+    emit createPartitionTableMessage(flag);
     emit curSelectChanged();
 }
 
@@ -209,8 +216,7 @@ void DMDbusHandler::unmount()
 {
     emit showSpinerWindow(true);
 
-    /*bool result = */m_dbus->unmount();
-//    qDebug() << result << "11111111111111";
+    m_dbus->unmount();
 }
 
 QStringList DMDbusHandler::getAllSupportFileSystem()
@@ -399,5 +405,12 @@ void DMDbusHandler::checkBadSectors(const QString &devicePath, int blockStart, i
 void DMDbusHandler::repairBadBlocks(const QString &devicePath, QStringList badBlocksList, int repairSize, int flag)
 {
     m_dbus->onFixBadBlocks(devicePath, badBlocksList, repairSize, flag);
+}
+
+bool DMDbusHandler::createPartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel)
+{
+    emit showSpinerWindow(true);
+
+    m_dbus->onCreatePartitionTable(devicePath, length, sectorSize, diskLabel);
 }
 

@@ -1634,7 +1634,7 @@ bool PartedCore::unmount()
         if (0 != exitcode) {
             success = false;
             emit refreshDeviceInfo();
-            emit unmountPatition("0");
+            emit unmountPartition("0");
             return success;
         }
 
@@ -1677,7 +1677,7 @@ bool PartedCore::unmount()
         }
     }
     emit refreshDeviceInfo();
-    emit unmountPatition("1");
+    emit unmountPartition("1");
     qDebug() << __FUNCTION__ << "Unmount end";
 
     return success;
@@ -1691,7 +1691,7 @@ bool PartedCore::create(const PartitionVec &infovec)
         Partition newPartition;
         newPartition.reset(info);
         if (!create(newPartition)) {
-            qDebug() << __FUNCTION__ << "Create Patitione error";
+            qDebug() << __FUNCTION__ << "Create Partitione error";
             success = false;
             break;
         }
@@ -1794,24 +1794,24 @@ bool PartedCore::createPartition(Partition &newPartition, Sector minSize)
 
 bool PartedCore::format(const QString &fstype, const QString &name)
 {
-    qDebug() << __FUNCTION__ << "Format Patitione start";
+    qDebug() << __FUNCTION__ << "Format Partitione start";
     Partition part = m_curpartition;
     part.m_fstype = Utils::stringToFileSystemType(fstype);
     part.setFilesystemLabel(name);
     bool success = formatPartition(part);
     emit refreshDeviceInfo();
-    qDebug() << __FUNCTION__ << "Format Patitione end";
+    qDebug() << __FUNCTION__ << "Format Partitione end";
     return success;
 }
 
 bool PartedCore::resize(const PartitionInfo &info)
 {
-    qDebug() << __FUNCTION__ << "Resize Patitione start";
+    qDebug() << __FUNCTION__ << "Resize Partitione start";
     Partition newPartition = m_curpartition;
     newPartition.reset(info);
     bool success = resize(newPartition);
     emit refreshDeviceInfo();
-    qDebug() << __FUNCTION__ << "Resize Patitione end";
+    qDebug() << __FUNCTION__ << "Resize Partitione end";
     return success;
 }
 
@@ -2099,7 +2099,7 @@ bool PartedCore::deletePartition()
         qDebug() << __FUNCTION__ << "Delete Partition get device and disk failed";
 
         emit refreshDeviceInfo();
-        emit deletePatition("0:1");
+        emit deletePartitionMessage("0:1");
 
         return false;
     }
@@ -2121,7 +2121,7 @@ bool PartedCore::deletePartition()
         qDebug() << __FUNCTION__ << "Delete Partition Get Partition failed";
 
         emit refreshDeviceInfo();
-        emit deletePatition("0:2");
+        emit deletePartitionMessage("0:2");
 
         return false;
     }
@@ -2132,7 +2132,7 @@ bool PartedCore::deletePartition()
         qDebug() << __FUNCTION__ << "Delete Partition failed";
 
         emit refreshDeviceInfo();
-        emit deletePatition("0:3");
+        emit deletePartitionMessage("0:3");
 
         return false;
     }
@@ -2141,7 +2141,7 @@ bool PartedCore::deletePartition()
         qDebug() << __FUNCTION__ << "Delete Partition commit failed";
 
         emit refreshDeviceInfo();
-        emit deletePatition("0:4");
+        emit deletePartitionMessage("0:4");
 
         return false;
     }
@@ -2149,7 +2149,7 @@ bool PartedCore::deletePartition()
     destroyDeviceAndDisk(lpDevice, lpDisk);
 
     emit refreshDeviceInfo();
-    emit deletePatition("1:0");
+    emit deletePartitionMessage("1:0");
 
     qDebug() << __FUNCTION__ << "Delete Partition end";
     return true;
@@ -2509,8 +2509,12 @@ bool PartedCore::createPartitionTable(const QString &devicePath, const QString &
                                       false );
     eraseFilesystemSignatures(temp_partition);
 
+    bool flag = newDiskLabel( devicePath, diskLabel );
+
     emit refreshDeviceInfo();
-    return newDiskLabel( devicePath, diskLabel );
+    emit createTableMessage(flag);
+
+    return flag;
 }
 
 bool PartedCore::newDiskLabel(const QString &devicePath, const QString &diskLabel)

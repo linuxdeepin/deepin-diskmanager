@@ -264,7 +264,7 @@ public Q_SLOTS: // METHODS
      * @param length:设备大小
      * @param sectorSize:扇区大小
      * @param diskLabel:分区表格式
-     * @return true错误false正常
+     * @return true成功，false失败
      */
     inline QDBusPendingReply<bool> onCreatePartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel)
     {
@@ -322,7 +322,7 @@ public Q_SLOTS: // METHODS
 Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void MessageReport(const QString &msg);
     Q_SCRIPTABLE void updateDeviceInfo(const DeviceInfoMap &infomap);
-    Q_SCRIPTABLE void deletePatition(const QString &deleteMessage);
+    Q_SCRIPTABLE void deletePartition(const QString &deleteMessage);
     Q_SCRIPTABLE void hidePartitionInfo(const QString &hideMessage);
     Q_SCRIPTABLE void showPartitionInfo(const QString &showMessage);
     Q_SCRIPTABLE void usbUpdated();
@@ -332,7 +332,8 @@ Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void checkBadBlocksFinished();
     Q_SCRIPTABLE void fixBadBlocksFinished();
     Q_SCRIPTABLE void rootLogin(const QString &loginMessage);
-    Q_SCRIPTABLE void unmountPatition(const QString &unmountMessage);
+    Q_SCRIPTABLE void unmountPartition(const QString &unmountMessage);
+    Q_SCRIPTABLE void createTableMessage(const bool &flag);
 };
 
 namespace com {

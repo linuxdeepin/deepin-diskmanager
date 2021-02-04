@@ -165,7 +165,7 @@ public:
      * @param length:设备大小
      * @param sectorSize:扇区大小
      * @param diskLabel:分区表格式
-     * @return true错误false正常
+     * @return true成功false失败
      */
     bool createPartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel);
 
@@ -635,6 +635,12 @@ private:
 signals:
 
     /**
+     * @brief 创建分区表信号
+     * @param flag:true成功false失败
+     */
+    void createTableMessage(const bool &flag);
+
+    /**
      * @brief 更新信息信号
      * @param infomap：硬盘信息
      */
@@ -649,13 +655,13 @@ signals:
      * @brief 卸载状态信号
      * @param umountMessage:卸载信息
      */
-    void unmountPatition(const QString &unmountMessage);
+    void unmountPartition(const QString &unmountMessage);
 
     /**
      * @brief 删除分区信号
      * @param deleteMessage：删除结果
      */
-    void deletePatition(const QString &deleteMessage);
+    void deletePartitionMessage(const QString &deleteMessage);
 
     /**
      * @brief 隐藏分区信号

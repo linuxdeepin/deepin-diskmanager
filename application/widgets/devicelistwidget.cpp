@@ -31,6 +31,7 @@
 #include "messagebox.h"
 #include "partitiontableerrorsinfodialog.h"
 #include "diskbadsectorsdialog.h"
+#include "createpartitiontabledialog.h"
 
 #include <DPalette>
 #include <DMenu>
@@ -77,10 +78,11 @@ void DeviceListWidget::initConnection()
     connect(DMDbusHandler::instance(), &DMDbusHandler::updateDeviceInfo, this, &DeviceListWidget::onUpdateDeviceInfo);
     connect(m_treeView, &DmTreeview::curSelectChanged, DMDbusHandler::instance(), &DMDbusHandler::onSetCurSelect);
     connect(m_treeView, &QTreeView::customContextMenuRequested, this, &DeviceListWidget::treeMenu);
-    connect(DMDbusHandler::instance(), &DMDbusHandler::unmountPatitionMessage, this, &DeviceListWidget::onUnmountPartition);
+    connect(DMDbusHandler::instance(), &DMDbusHandler::unmountPartitionMessage, this, &DeviceListWidget::onUnmountPartition);
     connect(DMDbusHandler::instance(), &DMDbusHandler::deletePartitionMessage, this, &DeviceListWidget::onDeletePartition);
     connect(DMDbusHandler::instance(), &DMDbusHandler::hidePartitionMessage, this, &DeviceListWidget::onHidePartition);
     connect(DMDbusHandler::instance(), &DMDbusHandler::showPartitionMessage, this, &DeviceListWidget::onShowPartition);
+    connect(DMDbusHandler::instance(), &DMDbusHandler::createPartitionTableMessage, this, &DeviceListWidget::onCreatePartitionTableMessage);
     connect(DMDbusHandler::instance(), &DMDbusHandler::updateUsb, this, &DeviceListWidget::onUpdateUsb);
 }
 
@@ -128,6 +130,12 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
         actionVerifyRepair->setObjectName("Verify or repair bad sectors");
         itemChildMenu->addAction(actionVerifyRepair);
         connect(actionVerifyRepair, &QAction::triggered, this, &DeviceListWidget::onDiskBadSectorsClicked);
+
+        QAction *createPartitionTable = new QAction();
+        createPartitionTable->setText(tr("Create partition table")); // 新建分区表
+        createPartitionTable->setObjectName("Create partition table");
+        menu->addAction(createPartitionTable);
+        connect(createPartitionTable, &QAction::triggered, this, &DeviceListWidget::onCreatePartitionTableClicked);
 
         menu->exec(QCursor::pos());  //显示菜单
     } else {
@@ -209,6 +217,50 @@ void DeviceListWidget::onDiskBadSectorsClicked()
     m_curChooseDevicePath = "";
 }
 
+bool DeviceListWidget::isExistMountPartition()
+{
+    bool isExist = false;
+
+    DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
+    for (int i = 0; i < info.partition.size(); i++) {
+        PartitionInfo partitionInfo = info.partition.at(i);
+
+        QString mountpoints;
+        for (int j = 0; j < partitionInfo.m_mountPoints.size(); j++) {
+            mountpoints += partitionInfo.m_mountPoints[j];
+        }
+
+        if (!mountpoints.isEmpty()) {
+            isExist = true;
+            break;
+        }
+    }
+
+    return isExist;
+}
+
+void DeviceListWidget::onCreatePartitionTableClicked()
+{
+    if (isExistMountPartition()) {
+        MessageBox warningBox;
+        // 请先卸载当前磁盘中的所有分区  确定
+        warningBox.setWarings(tr("Please unmount all partitions in the disk first"), "", tr("OK"));
+        warningBox.exec();
+        
+        return;
+    }
+
+    MessageBox messageBox;
+    messageBox.setObjectName("messageBox");
+    // 新建分区表之后将会合并当前磁盘所有分区，丢失所有数据，请谨慎使用  继续  取消
+    messageBox.setWarings(tr("All partitions in this disk will be merged and all data\n will be lost if creating a new partition table,\n please take it carefully"), "", tr("Proceed"), tr("Cancel"));
+    if (messageBox.exec() == DDialog::Accepted) {
+        CreatePartitionTableDialog createPartitionTableDialog;
+        createPartitionTableDialog.setObjectName("createPartitionTable");
+        createPartitionTableDialog.exec();
+    }
+}
+
 void DeviceListWidget::onPartitionErrorCheckClicked()
 {
     bool result = DMDbusHandler::instance()->detectionPartitionTableError(m_curDiskInfoData.m_diskPath);
@@ -234,7 +286,7 @@ void DeviceListWidget::onHidePartitionClicked()
     messageBox.setObjectName("messageBox");
     // 您是否要隐藏该分区？ 隐藏  取消
     messageBox.setWarings(tr("Do you want to hide this partition?"), "", tr("Hide"), tr("Cancel"));
-    if (messageBox.exec() == 1) {
+    if (messageBox.exec() == DDialog::Accepted) {
         if (m_curDiskInfoData.m_mountpoints == "/boot/efi" || m_curDiskInfoData.m_mountpoints == "/boot"
                 || m_curDiskInfoData.m_mountpoints == "/" || m_curDiskInfoData.m_mountpoints.contains("/data")) {
             isHideSuccess = false;
@@ -260,7 +312,7 @@ void DeviceListWidget::onShowPartitionClicked()
     messageBox.setObjectName("showMessageBox");
     // 您是否要显示该隐藏分区？ 显示  取消
     messageBox.setWarings(tr("Do you want to unhide this partition?"), "", tr("Unhide"), tr("Cancel"));
-    if (messageBox.exec() == 1) {
+    if (messageBox.exec() == DDialog::Accepted) {
         DMDbusHandler::instance()->unhidePartition();
     }
 }
@@ -270,8 +322,7 @@ void DeviceListWidget::onDeletePartitionClicked()
     MessageBox messageBox;
     // 您确定要删除该分区吗？ 该分区内所有文件将会丢失  删除  取消
     messageBox.setWarings(tr("Are you sure you want to delete this partition?"), tr("You will lose all data in it"), tr("Delete"), DDialog::ButtonWarning, tr("Cancel"));
-    int ret = messageBox.exec();
-    if (ret == 1) {
+    if (messageBox.exec() == DDialog::Accepted) {
         if (m_curDiskInfoData.m_mountpoints == "/boot/efi" || m_curDiskInfoData.m_mountpoints == "/boot"
                 || m_curDiskInfoData.m_mountpoints == "/" || m_curDiskInfoData.m_mountpoints.contains("/data")
                 || m_curDiskInfoData.m_fstype == "linux-swap") {
@@ -343,6 +394,21 @@ void DeviceListWidget::onUnmountPartition(const QString &unmountMessage)
         isUnmountSuccess = false;
         // 卸载失败
         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Unmounting failed"));
+        DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
+    }
+}
+
+void DeviceListWidget::onCreatePartitionTableMessage(const bool &flag)
+{
+    if (flag) {
+        isCreateTableSuccess = true;
+        // 新建分区表成功
+        DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Creating partition table successful"));
+        DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
+    } else {
+        isCreateTableSuccess = false;
+        // 新建分区表失败
+        DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Creating partition table failed"));
         DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
     }
 }

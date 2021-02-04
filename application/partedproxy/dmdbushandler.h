@@ -212,6 +212,16 @@ public:
      */
     void onRootLogin(const QString &loginMessage);
 
+    /**
+     * @brief 创建分区表
+     * @param devicepath：设备信息路径
+     * @param length:设备大小
+     * @param sectorSize:扇区大小
+     * @param diskLabel:分区表格式
+     * @return true：成功，false：失败
+     */
+    bool createPartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel);
+
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
 
@@ -227,7 +237,8 @@ signals:
     void deletePartitionMessage(const QString &deleteMessage);
     void hidePartitionMessage(const QString &hideMessage);
     void showPartitionMessage(const QString &showMessage);
-    void unmountPatitionMessage(const QString &unmountMessage);
+    void unmountPartitionMessage(const QString &unmountMessage);
+    void createPartitionTableMessage(const bool &flag);
     void updateUsb();
     void checkBadBlocksCountInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo);
 //    void checkBadBlocksDeviceStatusError();
@@ -283,6 +294,12 @@ private slots:
      * @param showMessage 执行结果
      */
     void onShowPartition(const QString &showMessage);
+
+    /**
+     * @brief 接收新建分区表返回执行结果的槽函数
+     * @param flag 执行结果
+     */
+    void onCreatePartitionTable(const bool &flag);
 
     /**
      * @brief 接收USB插拔信号的槽函数

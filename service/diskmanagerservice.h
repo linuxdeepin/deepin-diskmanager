@@ -52,6 +52,12 @@ public:
 
 Q_SIGNALS:
     /**
+     * @brief 创建分区表信号
+     * @param flag:true成功false失败
+     */
+    Q_SCRIPTABLE void createTableMessage(const bool &flag);
+
+    /**
      * @brief 删除分区信号
      * @param deleteMessage：删除信息
      */
@@ -73,13 +79,13 @@ Q_SIGNALS:
      * @brief 卸载状态信号
      * @param umountMessage:卸载信息
      */
-    Q_SCRIPTABLE void unmountPatition(const QString &unmountMessage);
+    Q_SCRIPTABLE void unmountPartition(const QString &unmountMessage);
 
     /**
      * @brief 删除分区信号
      * @param deleteMessage：删除信息
      */
-    Q_SCRIPTABLE void deletePatition(const QString &deleteMessage);
+    Q_SCRIPTABLE void deletePartition(const QString &deleteMessage);
 
     /**
      * @brief 隐藏分区信号

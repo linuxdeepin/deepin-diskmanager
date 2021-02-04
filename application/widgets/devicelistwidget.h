@@ -53,6 +53,7 @@ public:
     bool isShowSuccess = false;
     bool isDeleteSuccess = false;
     bool isUnmountSuccess = false;
+    bool isCreateTableSuccess = false;
 private:
 
     /**
@@ -102,6 +103,12 @@ private slots:
     void onUnmountPartition(const QString &unmountMessage);
 
     /**
+     * @brief 接收新建分区表返回执行结果的槽函数
+     * @param flag 执行结果
+     */
+    void onCreatePartitionTableMessage(const bool &flag);
+
+    /**
      * @brief usb热插拔信号响应的槽函数
      */
     void onUpdateUsb();
@@ -146,6 +153,17 @@ private slots:
      * @brief 磁盘坏道检测与修复按钮点击响应的槽函数
      */
     void onDiskBadSectorsClicked();
+
+    /**
+     * @brief 磁盘新建分区表按钮点击响应的槽函数
+     * @return 存在返回true，否则返回false
+     */
+    bool isExistMountPartition();
+
+    /**
+     * @brief 磁盘新建分区表按钮点击响应的槽函数
+     */
+    void onCreatePartitionTableClicked();
 
 private:
     int m_flag = 0;

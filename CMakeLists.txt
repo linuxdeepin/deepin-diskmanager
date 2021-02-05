@@ -38,7 +38,7 @@ if(DOTEST)
         set(QT Core Gui Widgets Network DBus Sql LinguistTools Svg Test)
         find_package(Qt5 COMPONENTS ${QT} REQUIRED)
         # 添加子模块apptest
-        add_subdirectory(apptest)
+        add_subdirectory(tests)
     else()
     # 添加gocv覆盖率文件的输出
     set(CMAKE_CXX_FLAGS "-g -fprofile-arcs -ftest-coverage")

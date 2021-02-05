@@ -73,7 +73,7 @@ add_custom_target(test
     COMMAND echo " =================== TEST BEGIN ==================== "
     COMMAND mkdir -p coverageResult
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-    COMMAND ${CMAKE_BINARY_DIR}/apptest/${PROJECT_NAME_TEST}
+    COMMAND ${CMAKE_BINARY_DIR}/tests/${PROJECT_NAME_TEST}
     COMMAND echo " =================== TEST END ==================== "
 )
 

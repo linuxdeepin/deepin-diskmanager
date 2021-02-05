@@ -71,6 +71,13 @@ DeviceInfo DiskManagerService::getDeviceinfo()
 void DiskManagerService::getalldevice()
 {
 //    qDebug() << "DiskManagerService::getalldevice";
+//    DeviceInfoMap infores = m_partedcore->getAllDeviceinfo();
+//    Q_EMIT updateDeviceInfo(infores);
+    emit getAllDeviceInfomation();
+}
+
+void DiskManagerService::onGetAllDeviceInfomation()
+{
     DeviceInfoMap infores = m_partedcore->getAllDeviceinfo();
     Q_EMIT updateDeviceInfo(infores);
 }
@@ -123,6 +130,7 @@ void DiskManagerService::initConnection()
     connect(m_partedcore, &PartedCore::fixBadBlocksFinished, this, &DiskManagerService::fixBadBlocksFinished);
     connect(m_partedcore, &PartedCore::unmountPartition, this, &DiskManagerService::unmountPartition);
     connect(m_partedcore, &PartedCore::createTableMessage, this, &DiskManagerService::createTableMessage);
+    connect(this, &DiskManagerService::getAllDeviceInfomation, this, &DiskManagerService::onGetAllDeviceInfomation);
 }
 
 HardDiskInfo DiskManagerService::onGetDeviceHardInfo(const QString &devicepath)

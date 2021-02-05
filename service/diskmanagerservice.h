@@ -322,6 +322,11 @@ private:
      * @param 无
      */
     void initConnection();
+signals:
+    void getAllDeviceInfomation();
+
+private slots:
+    void onGetAllDeviceInfomation();
 
 private:
     PartedCore *m_partedcore;  //磁盘操作类对象

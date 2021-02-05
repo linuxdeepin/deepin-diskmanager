@@ -220,7 +220,7 @@ public:
      * @param diskLabel:分区表格式
      * @return true：成功，false：失败
      */
-    bool createPartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel);
+    void createPartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel);
 
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);

@@ -174,7 +174,7 @@ QString DMDbusHandler::getRootLoginResult()
 
 void DMDbusHandler::getDeviceInfo()
 {
-    emit showSpinerWindow(true);
+//    emit showSpinerWindow(true);
 
     m_dbus->getalldevice();
     qDebug() << __FUNCTION__ << "-------";
@@ -407,7 +407,7 @@ void DMDbusHandler::repairBadBlocks(const QString &devicePath, QStringList badBl
     m_dbus->onFixBadBlocks(devicePath, badBlocksList, repairSize, flag);
 }
 
-bool DMDbusHandler::createPartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel)
+void DMDbusHandler::createPartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel)
 {
     emit showSpinerWindow(true);
 

@@ -193,10 +193,32 @@ void fat16::setUsedSectors( Partition & partition )
 
 void fat16::readLabel( Partition & partition )
 {
-    QString output, error;
-    if (!Utils::executCmd(QString("udisksctl info -b %1").arg(partition.getPath()), output, error)) {
-        partition.setFilesystemLabel(Utils::regexpLabel( output, "(?<=IdLabel:).*(?=\n)" ).trimmed());
+    QString output, error, filesystemLabel;
+    QString partitionPath = partition.getPath().remove("/dev/");
+    if (!Utils::executCmd(QString("ls -l /dev/disk/by-label"), output, error)) {
+        if(output.indexOf(partitionPath))
+        {
+            QStringList list = output.split("\n");
+            for (int i = 0; i < list.size(); i++) {
+                if(list.at(i).indexOf(partitionPath) != -1)
+                {
+                    QStringList slist = list.at(i).split(" ");
+                    for (int j = 0; j < slist.size(); j++) {
+                        if(slist.at(j) == "->")
+                        {
+                            filesystemLabel = slist.at(j-1);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
+    if(!filesystemLabel.isEmpty())
+    {
+        partition.setFilesystemLabel(filesystemLabel);
+    }
+
 }
 
 bool fat16::writeLabel(const Partition & partition)

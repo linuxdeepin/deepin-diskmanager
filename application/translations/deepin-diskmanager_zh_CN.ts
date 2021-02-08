@@ -2,12 +2,11 @@
 <context>
     <name>CreatePartitionTableDialog</name>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
         <source>The disk has a partition table already. Create a new one and replace it?</source>
-        <translation>当前磁盘已有分区表，是否新建并替换此分区表?</translation>
+        <translation type="vanished">当前磁盘已有分区表，是否新建并替换此分区表?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="34"/>
         <source>No partition table in this disk. Create a new one?</source>
         <translation>当前磁盘无分区表，是否新建分区表?</translation>
     </message>
@@ -17,12 +16,17 @@
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="36"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
         <source>Create</source>
         <translation>新建</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="40"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
+        <source>The disk has a partition table already. Replace it?</source>
+        <translation>当前磁盘已有分区表，是否替换此分区表?</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
         <source>Replace</source>
         <translation>替换</translation>
     </message>
@@ -108,12 +112,12 @@
         <translation>删除分区</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="247"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="257"/>
         <source>OK</source>
         <translation>确定</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="256"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="266"/>
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
@@ -121,125 +125,135 @@
 丢失所有数据，请谨慎使用</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="256"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="266"/>
         <source>Proceed</source>
         <translation>继续</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="278"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
         <source>No errors found in the partition table</source>
         <translation>分区表检测正常</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="298"/>
         <source>Do you want to hide this partition?</source>
         <translation>您是否要隐藏该分区？</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="298"/>
         <source>Hide</source>
         <translation>隐藏</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="256"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="314"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="266"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="298"/>
         <location filename="../widgets/devicelistwidget.cpp" line="324"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="247"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="204"/>
+        <source>Failed to get hardware information</source>
+        <translation>获取不到硬件相应信息</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="204"/>
+        <source>Close</source>
+        <translation>关闭</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="257"/>
         <source>Please unmount all partitions in the disk first</source>
         <translation>请先卸载当前磁盘中的所有分区</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="294"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="304"/>
         <source>Failed to hide the partition: unable to lock it</source>
         <translation>隐藏分区失败！无法锁定该分区</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="302"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="312"/>
         <source>You can only hide the unmounted partition</source>
         <translation>只有处于卸载状态的分区才能被隐藏</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="314"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
         <source>Do you want to unhide this partition?</source>
         <translation>您是否要显示该隐藏分区？</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="314"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
         <source>Unhide</source>
         <translation>显示</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>Are you sure you want to delete this partition?</source>
         <translation>您确定要删除该分区吗？</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>You will lose all data in it</source>
         <translation>该分区内所有文件将会丢失</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="331"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="341"/>
         <source>Failed to delete the partition: unable to lock it</source>
         <translation>删除分区失败！无法锁定该分区</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="344"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="354"/>
         <source>Hide the partition successfully</source>
         <translation>隐藏分区成功</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
         <source>Failed to hide the partition</source>
         <translation>隐藏分区失败</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="369"/>
         <source>Unhide the partition successfully</source>
         <translation>显示分区成功</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="364"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="374"/>
         <source>Failed to unhide the partition</source>
         <translation>显示分区失败</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="376"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="386"/>
         <source>Delete the partition successfully</source>
         <translation>删除分区成功</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="381"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="391"/>
         <source>Failed to delete the partition: %1</source>
         <translation>删除分区失败，%1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="391"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="401"/>
         <source>Unmounting successful</source>
         <translation>卸载成功</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="396"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="406"/>
         <source>Unmounting failed</source>
         <translation>卸载失败</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="406"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="416"/>
         <source>Creating partition table successful</source>
         <translation>新建分区表成功</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="411"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="421"/>
         <source>Creating partition table failed</source>
         <translation>新建分区表失败</translation>
     </message>
@@ -521,84 +535,84 @@
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="228"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="229"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>Status</source>
         <translation>状态</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="230"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>Current</source>
         <translation>当前值</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="231"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>Worst</source>
         <translation>历史最差值</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="232"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="398"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
         <source>Threshold</source>
         <translation>临界值</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="233"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="398"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
         <source>Raw Value</source>
         <translation>原始数据</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="234"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="398"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
         <source>Attribute name</source>
         <translation>属性名称</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="332"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="331"/>
         <source>Status: (G: Good | W: Warning | D: Damaged | U: Unknown)</source>
         <translation>状态：（G: 良好  | W: 警告 | D: 损坏 | U: 未知）</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="336"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="338"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="335"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="337"/>
         <source>Export</source>
         <translation>导出</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="364"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="363"/>
         <source>Save File</source>
         <translation>保存文件</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="364"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="363"/>
         <source>Text files (*.txt)</source>
         <translation>文本文件 (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="378"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="377"/>
         <source>Wrong path</source>
         <translation>路径错误</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="386"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="385"/>
         <source>You do not have permission to access this path</source>
         <translation>您无权访问该路径</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="416"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>Export successful</source>
         <translation>导出成功</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="419"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="418"/>
         <source>Export failed</source>
         <translation>导出失败</translation>
     </message>

@@ -27,7 +27,6 @@
 #include "diskhealthdetectiondialog.h"
 #include "common.h"
 #include "diskhealthdetectiondelegate.h"
-#include "partedproxy/dmdbushandler.h"
 #include "messagebox.h"
 #include "diskhealthheaderview.h"
 
@@ -45,9 +44,10 @@
 #include <QMessageBox>
 #include <QDebug>
 
-DiskHealthDetectionDialog::DiskHealthDetectionDialog(const QString &devicePath, QWidget *parent)
+DiskHealthDetectionDialog::DiskHealthDetectionDialog(const QString &devicePath, HardDiskStatusInfoList hardDiskStatusInfoList, QWidget *parent)
     : DDialog(parent)
     , m_devicePath(devicePath)
+    , m_hardDiskStatusInfoList(hardDiskStatusInfoList)
 {
     initUI();
     initConnections();
@@ -247,9 +247,8 @@ void DiskHealthDetectionDialog::initUI()
     m_tableView->setColumnWidth(5, 130);
 //    m_tableView->setColumnWidth(6, 186);
 
-    HardDiskStatusInfoList hardDiskStatusInfoList = DMDbusHandler::instance()->getDeviceHardStatusInfo(m_devicePath);
-    for (int i = 0; i < hardDiskStatusInfoList.count(); i++) {
-        HardDiskStatusInfo hardDiskStatusInfo = hardDiskStatusInfoList.at(i);
+    for (int i = 0; i < m_hardDiskStatusInfoList.count(); i++) {
+        HardDiskStatusInfo hardDiskStatusInfo = m_hardDiskStatusInfoList.at(i);
 
         if (hardDiskStatusInfo.m_id == "194" || hardDiskStatusInfo.m_attributeName == "Temperature") {
             QString value;

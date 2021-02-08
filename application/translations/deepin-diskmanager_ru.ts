@@ -2,12 +2,11 @@
 <context>
     <name>CreatePartitionTableDialog</name>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
         <source>The disk has a partition table already. Create a new one and replace it?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="34"/>
         <source>No partition table in this disk. Create a new one?</source>
         <translation type="unfinished"/>
     </message>
@@ -17,12 +16,17 @@
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="36"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
         <source>Create</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="40"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
+        <source>The disk has a partition table already. Replace it?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
         <source>Replace</source>
         <translation type="unfinished"/>
     </message>
@@ -108,137 +112,147 @@
         <translation>Удалить раздел</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="247"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="257"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="256"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="266"/>
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="256"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="266"/>
         <source>Proceed</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="278"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
         <source>No errors found in the partition table</source>
         <translation>В таблице разделов ошибок не обнаружено</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="298"/>
         <source>Do you want to hide this partition?</source>
         <translation>Вы хотите скрыть этот раздел?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="298"/>
         <source>Hide</source>
         <translation>Скрыть</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="256"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="314"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="266"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="298"/>
         <location filename="../widgets/devicelistwidget.cpp" line="324"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="247"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="204"/>
+        <source>Failed to get hardware information</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="204"/>
+        <source>Close</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="257"/>
         <source>Please unmount all partitions in the disk first</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="294"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="304"/>
         <source>Failed to hide the partition: unable to lock it</source>
         <translation>Не удалось скрыть раздел: не удалось его заблокировать</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="302"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="312"/>
         <source>You can only hide the unmounted partition</source>
         <translation>Вы можете скрыть только размонтированный раздел</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="314"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
         <source>Do you want to unhide this partition?</source>
         <translation>Вы хотите показать этот раздел?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="314"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
         <source>Unhide</source>
         <translation>Показать</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>Are you sure you want to delete this partition?</source>
         <translation>Вы действительно хотите удалить этот раздел?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>You will lose all data in it</source>
         <translation>Вы потеряете все данные в нем</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="331"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="341"/>
         <source>Failed to delete the partition: unable to lock it</source>
         <translation>Не удалось удалить раздел: не удалось его заблокировать</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="344"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="354"/>
         <source>Hide the partition successfully</source>
         <translation>Раздел успешно скрыт</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
         <source>Failed to hide the partition</source>
         <translation>Не удалось скрыть раздел</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="369"/>
         <source>Unhide the partition successfully</source>
         <translation>Отображение раздела прошло успешно</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="364"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="374"/>
         <source>Failed to unhide the partition</source>
         <translation>Не удалось отобразить раздел</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="376"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="386"/>
         <source>Delete the partition successfully</source>
         <translation>Раздел успешно удален</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="381"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="391"/>
         <source>Failed to delete the partition: %1</source>
         <translation>Не удалось удалить раздел: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="391"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="401"/>
         <source>Unmounting successful</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="396"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="406"/>
         <source>Unmounting failed</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="406"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="416"/>
         <source>Creating partition table successful</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="411"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="421"/>
         <source>Creating partition table failed</source>
         <translation type="unfinished"/>
     </message>
@@ -520,84 +534,84 @@
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="228"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="229"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>Status</source>
         <translation>Статус</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="230"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>Current</source>
         <translation>Текущий</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="231"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>Worst</source>
         <translation>Наихудший</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="232"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="398"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
         <source>Threshold</source>
         <translation>Порог</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="233"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="398"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
         <source>Raw Value</source>
         <translation>Исходное значение</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="234"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="398"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
         <source>Attribute name</source>
         <translation>Название атрибута</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="332"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="331"/>
         <source>Status: (G: Good | W: Warning | D: Damaged | U: Unknown)</source>
         <translation>Статус: (Х: Хорошо | О: Опасность | П: Поврежден | Н: Неизвестно)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="336"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="338"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="335"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="337"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="364"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="363"/>
         <source>Save File</source>
         <translation>Сохранить файл</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="364"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="363"/>
         <source>Text files (*.txt)</source>
         <translation>Текстовые файлы (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="378"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="377"/>
         <source>Wrong path</source>
         <translation>Неверный путь</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="386"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="385"/>
         <source>You do not have permission to access this path</source>
         <translation>У вас нет разрешения на доступ к этому пути</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="416"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>Export successful</source>
         <translation>Экспорт успешно завершен</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="419"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="418"/>
         <source>Export failed</source>
         <translation>Не удалось выполнить экспорт</translation>
     </message>

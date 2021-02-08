@@ -2,14 +2,13 @@
 <context>
     <name>CreatePartitionTableDialog</name>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
         <source>The disk has a partition table already. Create a new one and replace it?</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">Deze schijf heeft al een partitietabel. Wil je een nieuwe maken en de huidige vervangen?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="34"/>
         <source>No partition table in this disk. Create a new one?</source>
-        <translation type="unfinished"/>
+        <translation>Deze schijf heeft nog geen partitietabel. Wil je een nieuwe maken?</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="29"/>
@@ -17,14 +16,19 @@
         <translation>Annuleren</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="36"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
         <source>Create</source>
+        <translation>Maken</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
+        <source>The disk has a partition table already. Replace it?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="40"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
         <source>Replace</source>
-        <translation type="unfinished"/>
+        <translation>Vervangen</translation>
     </message>
 </context>
 <context>
@@ -90,7 +94,7 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="135"/>
         <source>Create partition table</source>
-        <translation type="unfinished"/>
+        <translation>Partitietabel maken</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="147"/>
@@ -108,139 +112,151 @@
         <translation>Partitie verwijderen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="247"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="257"/>
         <source>OK</source>
         <translation>Oké</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="256"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="266"/>
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
-        <translation type="unfinished"/>
+        <translation>Alle partities op deze schijf worden samengevoegd. Als je
+tevens een nieuwe partitietabel maakt, dan gaan
+alle gegevens verloren!</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="256"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="266"/>
         <source>Proceed</source>
-        <translation type="unfinished"/>
+        <translation>Doorgaan</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="278"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
         <source>No errors found in the partition table</source>
         <translation>Geen fouten aangetroffen in de partitietabel</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="298"/>
         <source>Do you want to hide this partition?</source>
         <translation>Weet je zeker dat je deze partitie wilt verwijderen?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="298"/>
         <source>Hide</source>
         <translation>Verbergen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="256"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="314"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="266"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="298"/>
         <location filename="../widgets/devicelistwidget.cpp" line="324"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>Cancel</source>
         <translation>Annuleren</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="247"/>
-        <source>Please unmount all partitions in the disk first</source>
+        <location filename="../widgets/devicelistwidget.cpp" line="204"/>
+        <source>Failed to get hardware information</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="294"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="204"/>
+        <source>Close</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="257"/>
+        <source>Please unmount all partitions in the disk first</source>
+        <translation>Koppel alle partities af en probeer het opnieuw</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="304"/>
         <source>Failed to hide the partition: unable to lock it</source>
         <translation>De partitie kan niet worden verborgen wegens een vergrendelfout</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="302"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="312"/>
         <source>You can only hide the unmounted partition</source>
         <translation>Je kunt alleen de afgekoppelde partitie verbergen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="314"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
         <source>Do you want to unhide this partition?</source>
         <translation>Weet je zeker dat je deze partitie wilt tonen?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="314"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
         <source>Unhide</source>
         <translation>Tonen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>Are you sure you want to delete this partition?</source>
         <translation>Weet je zeker dat je deze partitie wilt verwijderen?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>You will lose all data in it</source>
         <translation>Alle gegevens worden permanent verwijderd</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>Delete</source>
         <translation>Verwijderen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="331"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="341"/>
         <source>Failed to delete the partition: unable to lock it</source>
         <translation>De partitie kan niet worden verwijderd wegens een vergrendelfout</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="344"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="354"/>
         <source>Hide the partition successfully</source>
         <translation>De partitie is verborgen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
         <source>Failed to hide the partition</source>
         <translation>De partitie kan niet worden verborgen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="369"/>
         <source>Unhide the partition successfully</source>
         <translation>De partitie wordt weer getoond</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="364"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="374"/>
         <source>Failed to unhide the partition</source>
         <translation>De partitie kan niet worden getoond</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="376"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="386"/>
         <source>Delete the partition successfully</source>
         <translation>De partitie is verwijderd</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="381"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="391"/>
         <source>Failed to delete the partition: %1</source>
         <translation>De partitie kan niet worden verwijderd: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="391"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="401"/>
         <source>Unmounting successful</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="396"/>
-        <source>Unmounting failed</source>
-        <translation type="unfinished"/>
+        <translation>Afkoppelen voltooid</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="406"/>
-        <source>Creating partition table successful</source>
-        <translation type="unfinished"/>
+        <source>Unmounting failed</source>
+        <translation>Afkoppelen mislukt</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="411"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="416"/>
+        <source>Creating partition table successful</source>
+        <translation>De partitietabel is aangemaakt</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="421"/>
         <source>Creating partition table failed</source>
-        <translation type="unfinished"/>
+        <translation>De partitietabel kan niet worden aangemaakt</translation>
     </message>
 </context>
 <context>
@@ -520,84 +536,84 @@
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="228"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="229"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>Status</source>
         <translation>Status</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="230"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>Current</source>
         <translation>Huidig</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="231"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>Worst</source>
         <translation>Enorm veel slijtage</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="232"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="398"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
         <source>Threshold</source>
         <translation>Drempelwaarde</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="233"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="398"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
         <source>Raw Value</source>
         <translation>Technische waarde</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="234"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="398"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
         <source>Attribute name</source>
         <translation>Onderdeelnaam</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="332"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="331"/>
         <source>Status: (G: Good | W: Warning | D: Damaged | U: Unknown)</source>
         <translation>Status: (G: Geen slijtage | W: Waarschuwing | D: Veel slijtage | U: Onbekend)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="336"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="338"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="335"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="337"/>
         <source>Export</source>
         <translation>Exporteren</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="364"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="363"/>
         <source>Save File</source>
         <translation>Bestand opslaan</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="364"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="363"/>
         <source>Text files (*.txt)</source>
         <translation>Tekstbestanden (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="378"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="377"/>
         <source>Wrong path</source>
         <translation>Onjuist pad</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="386"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="385"/>
         <source>You do not have permission to access this path</source>
         <translation>Je bent niet gemachtigd om dit pad te benaderen</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="416"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>Export successful</source>
         <translation>Exporteren voltooid</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="419"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="418"/>
         <source>Export failed</source>
         <translation>Exporteren mislukt</translation>
     </message>

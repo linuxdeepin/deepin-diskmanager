@@ -27,6 +27,8 @@
 #ifndef DISKHEALTHDETECTIONDIALOG_H
 #define DISKHEALTHDETECTIONDIALOG_H
 
+#include "partedproxy/dmdbushandler.h"
+
 #include <DDialog>
 #include <DTableView>
 #include <DCommandLinkButton>
@@ -51,7 +53,7 @@ class DiskHealthDetectionDialog : public DDialog
 {
     Q_OBJECT
 public:
-    explicit DiskHealthDetectionDialog(const QString &devicePath, QWidget *parent = nullptr);
+    explicit DiskHealthDetectionDialog(const QString &devicePath, HardDiskStatusInfoList hardDiskStatusInfoList, QWidget *parent = nullptr);
 
 signals:
 
@@ -85,6 +87,7 @@ private:
     DLabel *m_healthStateValue; // 健康状态值
     DLabel *m_temperatureValue; // 温度值
     DiskHealthHeaderView *m_diskHealthHeaderView;
+    HardDiskStatusInfoList m_hardDiskStatusInfoList;
 
 };
 

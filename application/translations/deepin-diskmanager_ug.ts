@@ -2,14 +2,13 @@
 <context>
     <name>CreatePartitionTableDialog</name>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
         <source>The disk has a partition table already. Create a new one and replace it?</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">نۆۋەتتىكى دىسكىنىڭ رايون جەدۋىلى بار ، بۇ بۆلەك جەدۋىلىنى قۇرماقچى ۋە ئالماشتۇرماقچىمۇ؟</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="34"/>
         <source>No partition table in this disk. Create a new one?</source>
-        <translation type="unfinished"/>
+        <translation>نۆۋەتتىكى دىسكىنىڭ رايون جەدۋىلى يوق ، يېڭىدىن قۇرامسىز؟</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="29"/>
@@ -17,14 +16,19 @@
         <translation>بىكار قىلىش</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="36"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
         <source>Create</source>
+        <translation>قۇرىمەن</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
+        <source>The disk has a partition table already. Replace it?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="40"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
         <source>Replace</source>
-        <translation type="unfinished"/>
+        <translation>ئالماشتۇرىمەن</translation>
     </message>
 </context>
 <context>
@@ -90,7 +94,7 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="135"/>
         <source>Create partition table</source>
-        <translation type="unfinished"/>
+        <translation>رايون جەدۋىلى قۇرۇش</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="147"/>
@@ -108,139 +112,150 @@
         <translation>رايون ئۆچۈرۈش</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="247"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="257"/>
         <source>OK</source>
         <translation>تامام</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="256"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="266"/>
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
-        <translation type="unfinished"/>
+        <translation>يېڭى رايون جەدۋىلى قۇرغاندىن كېيىن ، نۆۋەتتىكى دىسكىنىڭ بارلىق بۆلەكلىرى بىرلەشتۈرۈلىدۇ.
+بارلىق سانلىق مەلۇماتلاريوقىلىدۇ ، ئېھتىيات بىلەن ئىشلىتىڭ</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="256"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="266"/>
         <source>Proceed</source>
-        <translation type="unfinished"/>
+        <translation>داۋاملاشتۇرۇش</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="278"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
         <source>No errors found in the partition table</source>
         <translation>رايونغا ئايرىش جەدۋىلى نورمال</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="298"/>
         <source>Do you want to hide this partition?</source>
         <translation>بۇ رايوننى يوشۇرامسىز؟</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="298"/>
         <source>Hide</source>
         <translation>يوشۇرۇش</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="256"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="314"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="266"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="298"/>
         <location filename="../widgets/devicelistwidget.cpp" line="324"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>Cancel</source>
         <translation>بىكار قىلىش</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="247"/>
-        <source>Please unmount all partitions in the disk first</source>
+        <location filename="../widgets/devicelistwidget.cpp" line="204"/>
+        <source>Failed to get hardware information</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="294"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="204"/>
+        <source>Close</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="257"/>
+        <source>Please unmount all partitions in the disk first</source>
+        <translation>ئالدى بىلەن نۆۋەتتىكى دىسكىدىكى بارلىق رايونلارنى ئۆچۈرۈۋېتىڭ</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="304"/>
         <source>Failed to hide the partition: unable to lock it</source>
         <translation>رايوننى يوشۇرۇش مەغلۇپ بولدى! بۇ رايوننى قۇلۇپلاشقا بولمىدى</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="302"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="312"/>
         <source>You can only hide the unmounted partition</source>
         <translation>پەقەت ئۆچۈرۈلگەن ھالەتتىكى رايوننىلا يوشۇرغىلى بولىدۇ</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="314"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
         <source>Do you want to unhide this partition?</source>
         <translation>بۇ يوشۇرۇن رايوننى كۆرسەتمەكچىمۇ؟</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="314"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
         <source>Unhide</source>
         <translation>كۆرسەت</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>Are you sure you want to delete this partition?</source>
         <translation>بۇ رايوننى ئۆچۈرمەكچىمۇ؟</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>You will lose all data in it</source>
         <translation>بۇ رايوندىكى بارلىق ھۆججەتلەر يوقاپ كېتىدۇ</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>Delete</source>
         <translation>ئۆچۈرۈش</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="331"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="341"/>
         <source>Failed to delete the partition: unable to lock it</source>
         <translation>رايوننى ئۆچۈرگىلى بولمىدى! بۇ رايوننى قۇلۇپلاشقا بولمايدۇ</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="344"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="354"/>
         <source>Hide the partition successfully</source>
         <translation>رايون يوشۇرۇلدى</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
         <source>Failed to hide the partition</source>
         <translation>رايون يوشۇرۇلمىدى</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="369"/>
         <source>Unhide the partition successfully</source>
         <translation>رايون كۆرسىتىلدى</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="364"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="374"/>
         <source>Failed to unhide the partition</source>
         <translation>رايوننى كۆرسىتەلمىدى</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="376"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="386"/>
         <source>Delete the partition successfully</source>
         <translation>رايون ئۆچۈرۈلدى</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="381"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="391"/>
         <source>Failed to delete the partition: %1</source>
         <translation>رايون ئۆچۈرۈلمىدى، %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="391"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="401"/>
         <source>Unmounting successful</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="396"/>
-        <source>Unmounting failed</source>
-        <translation type="unfinished"/>
+        <translation>ئۆچۈرۈلدى</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="406"/>
-        <source>Creating partition table successful</source>
-        <translation type="unfinished"/>
+        <source>Unmounting failed</source>
+        <translation>ئۆچۈرەلمىدى</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="411"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="416"/>
+        <source>Creating partition table successful</source>
+        <translation>رايون جەدۋىلى قۇرۇلدى</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="421"/>
         <source>Creating partition table failed</source>
-        <translation type="unfinished"/>
+        <translation>رايون جەدۋىلى قۇرالمىدى</translation>
     </message>
 </context>
 <context>
@@ -520,84 +535,84 @@
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="228"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="229"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>Status</source>
         <translation>ھالەت</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="230"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>Current</source>
         <translation>نۆۋەتتىكى قىممىتى</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="231"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>Worst</source>
         <translation>بۇرۇنقى ئەڭ ناچار قىممىتى</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="232"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="398"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
         <source>Threshold</source>
         <translation>چەك قىممىتى</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="233"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="398"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
         <source>Raw Value</source>
         <translation>دەسلەپكى سانلىق مەلۇمات</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="234"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="398"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
         <source>Attribute name</source>
         <translation>خاسلىق نامى</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="332"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="331"/>
         <source>Status: (G: Good | W: Warning | D: Damaged | U: Unknown)</source>
         <translation>ھالىتى: (G:  ياخشى | W: ئاگاھلاندۇرۇش | D: بۇزۇلغان | U: نامەلۇم)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="336"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="338"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="335"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="337"/>
         <source>Export</source>
         <translation>چىقىرىش</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="364"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="363"/>
         <source>Save File</source>
         <translation>ساقلاش</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="364"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="363"/>
         <source>Text files (*.txt)</source>
         <translation>تېكىست ھۆججەت  (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="378"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="377"/>
         <source>Wrong path</source>
         <translation>ئورۇن خاتالىقى</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="386"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="385"/>
         <source>You do not have permission to access this path</source>
         <translation>بۇ ئورۇننى زىيارەت قىلىش ھوقۇقىڭىز يوق</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="416"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>Export successful</source>
-        <translation>چىقىرىلدى</translation>
+        <translation>ئۆچۈرۈلدى</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="419"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="418"/>
         <source>Export failed</source>
         <translation>چىقىرالمىدى</translation>
     </message>

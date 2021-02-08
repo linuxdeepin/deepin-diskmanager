@@ -34,8 +34,8 @@ void CreatePartitionTableDialog::initUi()
         setTitle(tr("No partition table in this disk. Create a new one?"));
         m_okCode = addButton(tr("Create"), false, ButtonRecommend);
     } else {
-        // 当前磁盘已有分区表，是否新建并替换此分区表?
-        setTitle(tr("The disk has a partition table already. Create a new one and replace it?"));
+        // 当前磁盘已有分区表，是否替换此分区表?
+        setTitle(tr("The disk has a partition table already. Replace it?"));
         m_okCode = addButton(tr("Replace"), false, ButtonRecommend);
     }
 

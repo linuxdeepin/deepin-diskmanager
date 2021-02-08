@@ -2,14 +2,13 @@
 <context>
     <name>CreatePartitionTableDialog</name>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
         <source>The disk has a partition table already. Create a new one and replace it?</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">A lemezen már található partíciós tábla. Létre hoz egy újat, és lecseréli a mostanit?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="34"/>
         <source>No partition table in this disk. Create a new one?</source>
-        <translation type="unfinished"/>
+        <translation>Nincs partíciós tábla ezen a lemezen. Létre hoz egy újat?</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="29"/>
@@ -17,14 +16,19 @@
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="36"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
         <source>Create</source>
-        <translation type="unfinished"/>
+        <translation>Létrehozás</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="40"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
+        <source>The disk has a partition table already. Replace it?</source>
+        <translation>A lemezen már található partíciós tábla. Lecseréli a mostanit?</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
         <source>Replace</source>
-        <translation type="unfinished"/>
+        <translation>Kicserélés</translation>
     </message>
 </context>
 <context>
@@ -90,7 +94,7 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="135"/>
         <source>Create partition table</source>
-        <translation type="unfinished"/>
+        <translation>Partíciós tábla létrehozása</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="147"/>
@@ -108,139 +112,151 @@
         <translation>Partíció törlése</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="247"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="257"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="256"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="266"/>
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
-        <translation type="unfinished"/>
+        <translation>A lemezen lévő összes partíció összevonásra kerül, és az összes adat
+elveszik, ha új partíciós táblát hoz létre,
+kérjük legyen óvatos</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="256"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="266"/>
         <source>Proceed</source>
-        <translation type="unfinished"/>
+        <translation>Folytassa</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="278"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
         <source>No errors found in the partition table</source>
         <translation>Nem található hiba a partíciós táblában</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="298"/>
         <source>Do you want to hide this partition?</source>
         <translation>Valóban el akarja rejteni ezt a partíciót?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="298"/>
         <source>Hide</source>
         <translation>Elrejtés</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="256"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="314"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="266"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="298"/>
         <location filename="../widgets/devicelistwidget.cpp" line="324"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="247"/>
-        <source>Please unmount all partitions in the disk first</source>
-        <translation type="unfinished"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="204"/>
+        <source>Failed to get hardware information</source>
+        <translation>Nem sikerült beszerezni a hardveres információkat</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="294"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="204"/>
+        <source>Close</source>
+        <translation>Bezárás</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="257"/>
+        <source>Please unmount all partitions in the disk first</source>
+        <translation>Kérjük először csatolja le az összes, lemezen lévő partíciót</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="304"/>
         <source>Failed to hide the partition: unable to lock it</source>
         <translation>Nem sikerült elrejteni a partíciót: nem sikerült lezárni</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="302"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="312"/>
         <source>You can only hide the unmounted partition</source>
         <translation>Csak a leválasztatlan partíciót rejtheti el</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="314"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
         <source>Do you want to unhide this partition?</source>
         <translation>Valóban fel akarja fedni ezt a partíciót?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="314"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
         <source>Unhide</source>
         <translation>Felfedés</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>Are you sure you want to delete this partition?</source>
         <translation>Valóban törölni akarja ezt a partíciót?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>You will lose all data in it</source>
         <translation>Az összes tárolt adat el fog veszni</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="324"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>Delete</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="331"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="341"/>
         <source>Failed to delete the partition: unable to lock it</source>
         <translation>Nem sikerült törölni a partíciót: nem sikerült lezárni</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="344"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="354"/>
         <source>Hide the partition successfully</source>
         <translation>A partíció elrejtése sikeres</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
         <source>Failed to hide the partition</source>
         <translation>A partíció elrejtése sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="369"/>
         <source>Unhide the partition successfully</source>
         <translation>A partíció felfedése sikeres</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="364"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="374"/>
         <source>Failed to unhide the partition</source>
         <translation>A partíció felfedése sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="376"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="386"/>
         <source>Delete the partition successfully</source>
         <translation>A partíció törlése sikeres</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="381"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="391"/>
         <source>Failed to delete the partition: %1</source>
         <translation>A partíció törlése sikertelen: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="391"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="401"/>
         <source>Unmounting successful</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="396"/>
-        <source>Unmounting failed</source>
-        <translation type="unfinished"/>
+        <translation>Az lecsatolás sikeres</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="406"/>
-        <source>Creating partition table successful</source>
-        <translation type="unfinished"/>
+        <source>Unmounting failed</source>
+        <translation>Az lecsatolás sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="411"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="416"/>
+        <source>Creating partition table successful</source>
+        <translation>A partíciós tábla létrehozása sikeres</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="421"/>
         <source>Creating partition table failed</source>
-        <translation type="unfinished"/>
+        <translation>A partíciós tábla létrehozása sikertelen</translation>
     </message>
 </context>
 <context>
@@ -520,84 +536,84 @@
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="228"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>ID</source>
         <translation>Azonosító</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="229"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>Status</source>
         <translation>Állapot</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="230"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>Current</source>
         <translation>Jelenlegi</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="231"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>Worst</source>
         <translation>Legrosszabb</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="232"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="398"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
         <source>Threshold</source>
         <translation>Küszöbérték</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="233"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="398"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
         <source>Raw Value</source>
         <translation>Nyers érték</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="234"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="398"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
         <source>Attribute name</source>
         <translation>Attribútum neve</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="332"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="331"/>
         <source>Status: (G: Good | W: Warning | D: Damaged | U: Unknown)</source>
         <translation>Állapot: (G: Jó | W: Figyelmeztetés | D: Sérült | U: Ismeretlen)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="336"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="338"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="335"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="337"/>
         <source>Export</source>
         <translation>Exportálás</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="364"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="363"/>
         <source>Save File</source>
         <translation>Fájl mentése</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="364"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="363"/>
         <source>Text files (*.txt)</source>
         <translation>Szöveges fájl (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="378"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="377"/>
         <source>Wrong path</source>
         <translation>Hibás útvonal</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="386"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="385"/>
         <source>You do not have permission to access this path</source>
         <translation>Nincs engedélye hogy hozzáférjen ehhez az útvonalhoz</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="416"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>Export successful</source>
         <translation>Az exportálás sikeres</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="419"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="418"/>
         <source>Export failed</source>
         <translation>Az exportálás sikertelen</translation>
     </message>

@@ -197,9 +197,19 @@ void DeviceListWidget::onDiskInfoClicked()
 
 void DeviceListWidget::onDiskCheckHealthClicked()
 {
+    HardDiskStatusInfoList hardDiskStatusInfoList = DMDbusHandler::instance()->getDeviceHardStatusInfo(m_curDiskInfoData.m_diskPath);
+    if (hardDiskStatusInfoList.count() < 1) {
+        MessageBox warningBox;
+        // 获取不到硬件相应信息  关闭
+        warningBox.setWarings(tr("Failed to get hardware information"), "", tr("Close"));
+        warningBox.exec();
+
+        return;
+    }
+
     m_curChooseDevicePath = m_curDiskInfoData.m_diskPath;
 
-    DiskHealthDetectionDialog diskHealthDetectionDialog(m_curDiskInfoData.m_diskPath);
+    DiskHealthDetectionDialog diskHealthDetectionDialog(m_curDiskInfoData.m_diskPath, hardDiskStatusInfoList);
     diskHealthDetectionDialog.setObjectName("diskHealthDetectionDialog");
     diskHealthDetectionDialog.exec();
 

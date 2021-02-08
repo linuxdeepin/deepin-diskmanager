@@ -9,7 +9,7 @@
 		<message>
 			<location filename="com.deepin.diskmanager.Start!description" line="0"/>
 			<source>Run Disk Manager Need Authentication</source>
-			<translation>Run Disk Manager Need Authentication</translation>
+			<translation>A autenticação é necessária para executar o Utilitário de Disco</translation>
 		</message>
 	</context>
 </TS>

@@ -140,6 +140,58 @@ void setCurSelect()
     }
 }
 
+void setCurSelectSecond()
+{
+    QString devicePath = "/dev/sde";
+    QString partitionPath = "sde2";
+    Sector start = 2099201;
+    Sector end = 4196353;
+    if (((devicePath != DMDbusHandler::instance()->m_curDevicePath) || (partitionPath != DMDbusHandler::instance()->m_curPartitionPath)) && DMDbusHandler::instance()->m_deviceMap.size() > 0) {
+        DMDbusHandler::instance()->m_curDevicePath = devicePath;
+        auto it = DMDbusHandler::instance()->m_deviceMap.find(devicePath);
+        if (it != DMDbusHandler::instance()->m_deviceMap.end()) {
+            for (PartitionInfo info : it.value().partition) {
+                if (info.m_sectorStart == start && info.m_sectorEnd == end) {
+                    qDebug() << info.m_partitionNumber << info.m_path << Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType));
+                    DMDbusHandler::instance()->m_curPartitionInfo = info;
+                    break;
+                }
+            }
+        }
+        DMDbusHandler::instance()->emit curSelectChanged();
+    }
+}
+
+void setCurSelectOcated()
+{
+    qDebug() << "setCurSelectOcated";
+    QString devicePath = "/dev/sde";
+    QString partitionPath = "ocated";
+    Sector start = 4196354;
+    Sector end = 468862127;
+    if (((devicePath != DMDbusHandler::instance()->m_curDevicePath) || (partitionPath != DMDbusHandler::instance()->m_curPartitionPath)) && DMDbusHandler::instance()->m_deviceMap.size() > 0) {
+        DMDbusHandler::instance()->m_curDevicePath = devicePath;
+        auto it = DMDbusHandler::instance()->m_deviceMap.find(devicePath);
+        if (it != DMDbusHandler::instance()->m_deviceMap.end()) {
+            for (PartitionInfo info : it.value().partition) {
+                if (info.m_sectorStart == start && info.m_sectorEnd == end) {
+                    qDebug() << info.m_partitionNumber << info.m_path << Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType));
+                    DMDbusHandler::instance()->m_curPartitionInfo = info;
+                    break;
+                }
+            }
+        }
+        DMDbusHandler::instance()->emit curSelectChanged();
+    }
+}
+
+QStringList getAllSupportFileSystem()
+{
+    QStringList list;
+    list << "ext2" << "ext3" << "ext4" << "fat32" << "ntfs";
+    return list;
+}
+
 void hide()
 {
     qDebug() << "hidePartition";
@@ -158,6 +210,21 @@ void deletePartition()
 void unmountPartition()
 {
     qDebug() << "unmountPartition";
+}
+
+void mountPartition()
+{
+    qDebug() << "mountPartition";
+}
+
+void formatPartition()
+{
+    qDebug() << "formatPartition";
+}
+
+void createPartition()
+{
+    qDebug() << "createPartition";
 }
 
 int MessageboxExec()

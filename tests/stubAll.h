@@ -16,6 +16,12 @@ void getDeviceInfo();
 
 void setCurSelect();
 
+void setCurSelectSecond();
+
+void setCurSelectOcated();
+
+QStringList getAllSupportFileSystem();
+
 void hide();
 
 void show();
@@ -23,6 +29,12 @@ void show();
 void deletePartition();
 
 void unmountPartition();
+
+void mountPartition();
+
+void formatPartition();
+
+void createPartition();
 
 int MessageboxExec();
 

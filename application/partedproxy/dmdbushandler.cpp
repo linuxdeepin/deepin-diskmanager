@@ -41,7 +41,7 @@ DMDbusHandler *DMDbusHandler::instance(QObject *parent)
 
 DMDbusHandler::~DMDbusHandler()
 {
-    Quit();
+//    Quit();
 }
 
 DMDbusHandler::DMDbusHandler(QObject *parent)

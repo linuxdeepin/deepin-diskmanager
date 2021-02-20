@@ -1,3 +1,12 @@
+deepin-diskmanager (1.2.5) stable; urgency=low
+
+  * 1040第五次发版(第四次发版送测产生的bug)
+  * 63209 新建分区表崩溃闪退
+  * 63082 从启动器启动磁盘管理器加载时间变长
+  * 62058 fat32格式新建分区时，分区名称输入中文，显示异常
+
+ -- yuandandan <yuandandan@uniontech.com>  Sat, 20 Feb 2021 9:51:16 +0800
+
 deepin-diskmanager (1.2.4) stable; urgency=low
 
   * 1040第四次发版(第三次发版送测产生的bug以及新增功能)

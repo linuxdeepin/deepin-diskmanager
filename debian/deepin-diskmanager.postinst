@@ -1,4 +1,0 @@
-#!/bin/bash
-
-chmod +x /usr/libexec/openconnect/USB*.sh
-chmod +x /usr/bin/deepin-disk-manager

@@ -3,10 +3,10 @@
     <name>CreatePartitionTableDialog</name>
     <message>
         <source>The disk has a partition table already. Create a new one and replace it?</source>
-        <translation type="vanished">O disco já tem uma tabela de partições. Criar uma nova e substituí-la?</translation>
+        <translation type="vanished">O disco já tem uma tabela de partição. Criar uma nova e substituí-la?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="34"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
         <source>No partition table in this disk. Create a new one?</source>
         <translation>Nenhuma tabela de partição neste disco. Criar uma nova?</translation>
     </message>
@@ -16,17 +16,17 @@
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="36"/>
         <source>Create</source>
         <translation>Criar</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="40"/>
         <source>The disk has a partition table already. Replace it?</source>
-        <translation type="unfinished"/>
+        <translation>O disco já tem uma tabela de partição. Substituí-la?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="41"/>
         <source>Replace</source>
         <translation>Substituir</translation>
     </message>
@@ -156,12 +156,12 @@ tome cuidado</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="204"/>
         <source>Failed to get hardware information</source>
-        <translation type="unfinished"/>
+        <translation>Falha ao obter as informações de hardware</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="204"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Fechar</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="257"/>
@@ -249,14 +249,24 @@ tome cuidado</translation>
         <translation>A desmontagem falhou</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="416"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="417"/>
         <source>Creating partition table successful</source>
         <translation>A criação da tabela de partição foi bem-sucedida</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="421"/>
+        <source>Replacing partition table successful</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="429"/>
         <source>Creating partition table failed</source>
         <translation>A criação da tabela de partição falhou</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="433"/>
+        <source>Replacing partition table failed</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

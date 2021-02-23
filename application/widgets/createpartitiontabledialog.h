@@ -39,6 +39,7 @@ private:
 
 private:
     DComboBox *m_ComboBox;
+    QString m_curType;
 };
 
 #endif // CREATEPARTITIONTABLEDIALOG_H

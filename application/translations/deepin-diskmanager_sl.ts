@@ -3,12 +3,12 @@
     <name>CreatePartitionTableDialog</name>
     <message>
         <source>The disk has a partition table already. Create a new one and replace it?</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">Disk že ima tabelo razdelkov. Ustvarim novo in jo zamenjam?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="34"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
         <source>No partition table in this disk. Create a new one?</source>
-        <translation type="unfinished"/>
+        <translation>Disk nima tabele razdelkov. Ustvarim novo?</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="29"/>
@@ -16,19 +16,19 @@
         <translation>Prekini</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="36"/>
         <source>Create</source>
-        <translation type="unfinished"/>
+        <translation>Ustvari</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="40"/>
         <source>The disk has a partition table already. Replace it?</source>
-        <translation type="unfinished"/>
+        <translation>Disk že ima tabelo razdelkov. Jo zamenjam?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="41"/>
         <source>Replace</source>
-        <translation type="unfinished"/>
+        <translation>Zamenjaj</translation>
     </message>
 </context>
 <context>
@@ -94,7 +94,7 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="135"/>
         <source>Create partition table</source>
-        <translation type="unfinished"/>
+        <translation>Ustvari tabelo razdelkov</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="147"/>
@@ -121,12 +121,14 @@
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
-        <translation type="unfinished"/>
+        <translation>Vsi razdelki na disku bodo združeni in vsi
+podatki bodo izgubljeni ob ustvarjanju nove
+tabele razdelkov. Bodite previdni</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="266"/>
         <source>Proceed</source>
-        <translation type="unfinished"/>
+        <translation>Nadaljuj</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="288"/>
@@ -136,7 +138,7 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="298"/>
         <source>Do you want to hide this partition?</source>
-        <translation>želite skriti ta razdelek?</translation>
+        <translation>Želite skriti ta razdelek?</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="298"/>
@@ -154,17 +156,17 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="204"/>
         <source>Failed to get hardware information</source>
-        <translation type="unfinished"/>
+        <translation>Podatkov o strojni opremi ni bilo mogoče pridobiti</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="204"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Zapri</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="257"/>
         <source>Please unmount all partitions in the disk first</source>
-        <translation type="unfinished"/>
+        <translation>Najprej odklopite vse razdelke na disku</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="304"/>
@@ -239,21 +241,31 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="401"/>
         <source>Unmounting successful</source>
-        <translation type="unfinished"/>
+        <translation>Odklapljanje je bilo uspešno</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="406"/>
         <source>Unmounting failed</source>
-        <translation type="unfinished"/>
+        <translation>Odklapljanje ni bilo uspešno</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="416"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="417"/>
         <source>Creating partition table successful</source>
-        <translation type="unfinished"/>
+        <translation>Ustvarjanje tabele razdelkov je bilo uspešno</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="421"/>
+        <source>Replacing partition table successful</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="429"/>
         <source>Creating partition table failed</source>
+        <translation>Ustvarjanje tabele razdelkov ni bilo uspešno</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="433"/>
+        <source>Replacing partition table failed</source>
         <translation type="unfinished"/>
     </message>
 </context>

@@ -6,7 +6,7 @@
         <translation type="vanished">當前磁盤已有分區表，是否新建並替換此分區表?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="34"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
         <source>No partition table in this disk. Create a new one?</source>
         <translation>當前磁盤無分區表，是否新建分區表?</translation>
     </message>
@@ -16,17 +16,17 @@
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="36"/>
         <source>Create</source>
         <translation>新建</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="40"/>
         <source>The disk has a partition table already. Replace it?</source>
         <translation>當前磁盤已有分區表，是否替換此分區表?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="41"/>
         <source>Replace</source>
         <translation>替換</translation>
     </message>
@@ -248,14 +248,24 @@
         <translation>卸載失敗</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="416"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="417"/>
         <source>Creating partition table successful</source>
         <translation>新建分區表成功</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="421"/>
+        <source>Replacing partition table successful</source>
+        <translation>替換分區表成功</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="429"/>
         <source>Creating partition table failed</source>
         <translation>新建分區表失敗</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="433"/>
+        <source>Replacing partition table failed</source>
+        <translation>替換分區表失敗</translation>
     </message>
 </context>
 <context>

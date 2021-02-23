@@ -6,7 +6,7 @@
         <translation type="vanished">Il disco ha già una tabella partizioni. Desideri crearne una nuova sostituendo la precedente?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="34"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
         <source>No partition table in this disk. Create a new one?</source>
         <translation>Nessuna tabella partizioni sul disco. Desideri crearne una?</translation>
     </message>
@@ -16,17 +16,17 @@
         <translation>Annulla</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="36"/>
         <source>Create</source>
         <translation>Crea</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="40"/>
         <source>The disk has a partition table already. Replace it?</source>
-        <translation type="unfinished"/>
+        <translation>Il disco ha già una tabella partizioni. Sostituirla?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="41"/>
         <source>Replace</source>
         <translation>Sostituisci</translation>
     </message>
@@ -156,12 +156,12 @@ per favore presta con attenzione</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="204"/>
         <source>Failed to get hardware information</source>
-        <translation type="unfinished"/>
+        <translation>Ottenimento delle informazioni hardware fallito</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="204"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Chiudi</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="257"/>
@@ -249,14 +249,24 @@ per favore presta con attenzione</translation>
         <translation>Smontaggio fallito</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="416"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="417"/>
         <source>Creating partition table successful</source>
         <translation>Creazione tabella partizioni riuscita</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="421"/>
+        <source>Replacing partition table successful</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="429"/>
         <source>Creating partition table failed</source>
         <translation>Creazione tabella partizioni fallita</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="433"/>
+        <source>Replacing partition table failed</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

@@ -6,7 +6,7 @@
         <translation type="vanished">A lemezen már található partíciós tábla. Létre hoz egy újat, és lecseréli a mostanit?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="34"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
         <source>No partition table in this disk. Create a new one?</source>
         <translation>Nincs partíciós tábla ezen a lemezen. Létre hoz egy újat?</translation>
     </message>
@@ -16,17 +16,17 @@
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="36"/>
         <source>Create</source>
         <translation>Létrehozás</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="40"/>
         <source>The disk has a partition table already. Replace it?</source>
         <translation>A lemezen már található partíciós tábla. Lecseréli a mostanit?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="41"/>
         <source>Replace</source>
         <translation>Kicserélés</translation>
     </message>
@@ -249,14 +249,24 @@ kérjük legyen óvatos</translation>
         <translation>Az lecsatolás sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="416"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="417"/>
         <source>Creating partition table successful</source>
         <translation>A partíciós tábla létrehozása sikeres</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="421"/>
+        <source>Replacing partition table successful</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="429"/>
         <source>Creating partition table failed</source>
         <translation>A partíciós tábla létrehozása sikertelen</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="433"/>
+        <source>Replacing partition table failed</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

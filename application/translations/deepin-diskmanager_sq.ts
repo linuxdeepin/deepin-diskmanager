@@ -3,12 +3,12 @@
     <name>CreatePartitionTableDialog</name>
     <message>
         <source>The disk has a partition table already. Create a new one and replace it?</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">Disku ka tashmë tabelë pjesësh. Të krijohet një e re dhe të zëvendësohet?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="34"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
         <source>No partition table in this disk. Create a new one?</source>
-        <translation type="unfinished"/>
+        <translation>S’ka tabelë pjesësh në këtë disk. Të krijohet një e tillë?</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="29"/>
@@ -16,19 +16,19 @@
         <translation>Anuloje</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="36"/>
         <source>Create</source>
-        <translation type="unfinished"/>
+        <translation>Krijoje</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="40"/>
         <source>The disk has a partition table already. Replace it?</source>
-        <translation type="unfinished"/>
+        <translation>Disku ka tashmë tabelë pjesësh. Të zëvendësohet?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="41"/>
         <source>Replace</source>
-        <translation type="unfinished"/>
+        <translation>Zëvendësoje</translation>
     </message>
 </context>
 <context>
@@ -94,7 +94,7 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="135"/>
         <source>Create partition table</source>
-        <translation type="unfinished"/>
+        <translation>Krijo tabelë pjesësh</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="147"/>
@@ -121,12 +121,14 @@
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
-        <translation type="unfinished"/>
+        <translation>Krejt pjesët në këtë disk do të përzihen dhe krejt të dhënat
+do të humbasin, nëse krijohet një tabelë e re pjesësh,
+ ju lutemi, merreni shtruar</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="266"/>
         <source>Proceed</source>
-        <translation type="unfinished"/>
+        <translation>Bëje</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="288"/>
@@ -154,17 +156,17 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="204"/>
         <source>Failed to get hardware information</source>
-        <translation type="unfinished"/>
+        <translation>S’u arrit të merrej informacion hardware-i</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="204"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Mbylle</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="257"/>
         <source>Please unmount all partitions in the disk first</source>
-        <translation type="unfinished"/>
+        <translation>Ju lutemi, së pari çmontoni krejt pjesët te disku</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="304"/>
@@ -239,21 +241,31 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="401"/>
         <source>Unmounting successful</source>
-        <translation type="unfinished"/>
+        <translation>Çmontim i suksesshëm</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="406"/>
         <source>Unmounting failed</source>
-        <translation type="unfinished"/>
+        <translation>Çmontimi dështoi</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="416"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="417"/>
         <source>Creating partition table successful</source>
-        <translation type="unfinished"/>
+        <translation>Krijim i suksesshëm tabele pjesësh</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="421"/>
+        <source>Replacing partition table successful</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="429"/>
         <source>Creating partition table failed</source>
+        <translation>Krijimi i tabelës së pjesëve dështoi</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="433"/>
+        <source>Replacing partition table failed</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -297,7 +309,7 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="138"/>
         <source>Timeout</source>
-        <translation type="unfinished"/>
+        <translation>Mbarim kohe</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="176"/>

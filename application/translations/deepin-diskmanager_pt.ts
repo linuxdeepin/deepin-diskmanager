@@ -6,7 +6,7 @@
         <translation type="vanished">O disco já tem uma tabela de partição. Criar uma nova e substituí-la?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="34"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
         <source>No partition table in this disk. Create a new one?</source>
         <translation>Nenhuma tabela de partição neste disco. Criar uma nova?</translation>
     </message>
@@ -16,17 +16,17 @@
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="36"/>
         <source>Create</source>
         <translation>Criar</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="40"/>
         <source>The disk has a partition table already. Replace it?</source>
-        <translation type="unfinished"/>
+        <translation>O disco já tem uma tabela de partição. Substitui-la?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="41"/>
         <source>Replace</source>
         <translation>Substituir</translation>
     </message>
@@ -123,7 +123,7 @@
  please take it carefully</source>
         <translation>Todas as partições neste disco serão unidas e todos os dados
  serão perdidos se for criada uma nova tabela de partição,
- por favor, tenha cuidado</translation>
+ tenha cuidado</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="266"/>
@@ -156,12 +156,12 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="204"/>
         <source>Failed to get hardware information</source>
-        <translation type="unfinished"/>
+        <translation>Falha ao obter informação sobre o equipamento</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="204"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Fechar</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="257"/>
@@ -241,7 +241,7 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="401"/>
         <source>Unmounting successful</source>
-        <translation>Desmontagem com êxito</translation>
+        <translation>Desmontagem bem sucedida</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="406"/>
@@ -249,14 +249,24 @@
         <translation>Falha ao desmontar</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="416"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="417"/>
         <source>Creating partition table successful</source>
-        <translation>Criação de tabela de partição com êxito</translation>
+        <translation>Criação de tabela de partição bem sucedida</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="421"/>
+        <source>Replacing partition table successful</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="429"/>
         <source>Creating partition table failed</source>
         <translation>Falha na criação da tabela de partição</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="433"/>
+        <source>Replacing partition table failed</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

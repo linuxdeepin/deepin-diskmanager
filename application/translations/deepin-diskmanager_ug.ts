@@ -6,7 +6,7 @@
         <translation type="vanished">نۆۋەتتىكى دىسكىنىڭ رايون جەدۋىلى بار ، بۇ بۆلەك جەدۋىلىنى قۇرماقچى ۋە ئالماشتۇرماقچىمۇ؟</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="34"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
         <source>No partition table in this disk. Create a new one?</source>
         <translation>نۆۋەتتىكى دىسكىنىڭ رايون جەدۋىلى يوق ، يېڭىدىن قۇرامسىز؟</translation>
     </message>
@@ -16,17 +16,17 @@
         <translation>بىكار قىلىش</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="36"/>
         <source>Create</source>
         <translation>قۇرىمەن</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="40"/>
         <source>The disk has a partition table already. Replace it?</source>
-        <translation type="unfinished"/>
+        <translation>بۇ دىسكىنىڭ رايون جەدۋىلى بار. ئۇنى ئالماشتۇرامسىز؟</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="41"/>
         <source>Replace</source>
         <translation>ئالماشتۇرىمەن</translation>
     </message>
@@ -155,12 +155,12 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="204"/>
         <source>Failed to get hardware information</source>
-        <translation type="unfinished"/>
+        <translation>قاتتىق دېتال ئۇچۇرلىرىغا ئېرىشەلمىدى</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="204"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>تاقاش</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="257"/>
@@ -248,14 +248,24 @@
         <translation>ئۆچۈرەلمىدى</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="416"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="417"/>
         <source>Creating partition table successful</source>
         <translation>رايون جەدۋىلى قۇرۇلدى</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="421"/>
+        <source>Replacing partition table successful</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="429"/>
         <source>Creating partition table failed</source>
         <translation>رايون جەدۋىلى قۇرالمىدى</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="433"/>
+        <source>Replacing partition table failed</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

@@ -407,10 +407,16 @@ void DMDbusHandler::repairBadBlocks(const QString &devicePath, QStringList badBl
     m_dbus->onFixBadBlocks(devicePath, badBlocksList, repairSize, flag);
 }
 
-void DMDbusHandler::createPartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel)
+void DMDbusHandler::createPartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel, const QString &curType)
 {
     emit showSpinerWindow(true);
+    m_curCreateType = curType;
 
     m_dbus->onCreatePartitionTable(devicePath, length, sectorSize, diskLabel);
+}
+
+QString DMDbusHandler::getCurCreatePartitionTableType()
+{
+    return m_curCreateType;
 }
 

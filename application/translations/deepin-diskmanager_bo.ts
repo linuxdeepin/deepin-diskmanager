@@ -6,7 +6,7 @@
         <translation type="vanished">སྡུད་སྡེར་ཁག་བགོའི་རེའུ་མིག་ཡོད་ཟིན་པས། གསར་བཟོ་བྱས་ནས་ཁུལ་བགོའི་རེའུ་མིག་དེ་བརྗེས་སམ།</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="34"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
         <source>No partition table in this disk. Create a new one?</source>
         <translation>སྡུད་སྡེར་ལ་ཁུལ་བགོའི་རེའུ་མིག་མེད་པས། ཁུལ་བགོའི་རེའུ་མིག་གསར་བཟོ་བྱེད་དམ།</translation>
     </message>
@@ -16,17 +16,17 @@
         <translation>འདོར་བ།</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="36"/>
         <source>Create</source>
         <translation>གསར་བཟོ།</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="40"/>
         <source>The disk has a partition table already. Replace it?</source>
-        <translation type="unfinished"/>
+        <translation>མིག་སྔའི་སྡུད་སྡེར་ལ་ཁག་བགོས་རེའུ་མིག་ཡོད་པས། ཁག་བགོས་རེའུ་མིག་འདི་བརྗེ་དགོས་སམ།</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="41"/>
         <source>Replace</source>
         <translation>བརྗེ་བ།</translation>
     </message>
@@ -155,12 +155,12 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="204"/>
         <source>Failed to get hardware information</source>
-        <translation type="unfinished"/>
+        <translation>མཁྲེགས་ཆས་ཀྱི་འབྲེལ་ཡོད་ཆ་འཕྲིན་ཐོབ་མི་ཐུབ།</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="204"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>ཁ་བརྒྱབ།</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="257"/>
@@ -248,14 +248,24 @@
         <translation>བཤིག་འདོན་མི་ཐུབ།</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="416"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="417"/>
         <source>Creating partition table successful</source>
         <translation>ཁག་བགོའི་རེའུ་མིག་གསར་བཟོ་ཐུབ་པ།</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="421"/>
+        <source>Replacing partition table successful</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="429"/>
         <source>Creating partition table failed</source>
         <translation>ཁག་བགོའི་རེའུ་མིག་གསར་བཟོ་མི་ཐུབ་པ།</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="433"/>
+        <source>Replacing partition table failed</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -642,7 +652,7 @@
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="65"/>
         <source>Size:</source>
-        <translation>ཁུལ་ཚན་ཆེ་ཆུང་།</translation>
+        <translation>ཆེ་ཆུང་།</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="66"/>

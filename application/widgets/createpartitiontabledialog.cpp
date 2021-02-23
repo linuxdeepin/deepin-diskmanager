@@ -30,10 +30,12 @@ void CreatePartitionTableDialog::initUi()
 
     DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
     if (info.disktype == "unrecognized") {
+        m_curType = "create";
         // 当前磁盘无分区表，是否新建分区表?
         setTitle(tr("No partition table in this disk. Create a new one?"));
         m_okCode = addButton(tr("Create"), false, ButtonRecommend);
     } else {
+        m_curType = "replace";
         // 当前磁盘已有分区表，是否替换此分区表?
         setTitle(tr("The disk has a partition table already. Replace it?"));
         m_okCode = addButton(tr("Replace"), false, ButtonRecommend);
@@ -51,7 +53,7 @@ void CreatePartitionTableDialog::onButtonClicked(int index, const QString &text)
     Q_UNUSED(text);
     if (index == m_okCode) {
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
-        DMDbusHandler::instance()->createPartitionTable(info.m_path, QString("%1").arg(info.length), QString("%1").arg(info.sector_size), m_ComboBox->currentText());
+        DMDbusHandler::instance()->createPartitionTable(info.m_path, QString("%1").arg(info.length), QString("%1").arg(info.sector_size), m_ComboBox->currentText(), m_curType);
         close();
     } else {
         close();

@@ -218,9 +218,15 @@ public:
      * @param length:设备大小
      * @param sectorSize:扇区大小
      * @param diskLabel:分区表格式
-     * @return true：成功，false：失败
+     * @param curType 当前新建分区表的类型（create：创建，replace：替换）
      */
-    void createPartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel);
+    void createPartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel, const QString &curType);
+
+    /**
+     * @brief 获取当前新建分区表的类型
+     * @return 返回当前新建分区表的类型（create：创建，replace：替换）
+     */
+    QString getCurCreatePartitionTableType();
 
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
@@ -322,6 +328,7 @@ private:
     QMap<QString, QString> m_isExistUnallocated;
     QStringList m_deviceNameList;
     QString m_loginMessage;
+    QString m_curCreateType;
 };
 
 #endif // DMDBUSHANDLER_H

@@ -54,16 +54,19 @@ int main(int argc, char *argv[])
     }
     QObject::connect(&a, &CusApplication::handleQuitActionChanged, &w, &MainWindow::onHandleQuitAction);
 
-    DMDbusHandler::instance()->startService(static_cast<qint64>(getpid()));
-    QObject::connect(DMDbusHandler::instance(), &DMDbusHandler::rootLogin, &w, [&] {
-        qDebug() << "Root Authentication Result:" << w.getRootLoginResult();
-        if (w.getRootLoginResult() == "1") {
-            w.show();
-            Dtk::Widget::moveToCenter(&w);
-        } else {
-            exit(0);
-        }
-    });
+//    DMDbusHandler::instance()->startService(static_cast<qint64>(getpid()));
+//    QObject::connect(DMDbusHandler::instance(), &DMDbusHandler::rootLogin, &w, [&] {
+//        qDebug() << "Root Authentication Result:" << w.getRootLoginResult();
+//        if (w.getRootLoginResult() == "1") {
+//            w.show();
+//            Dtk::Widget::moveToCenter(&w);
+//        } else {
+//            exit(0);
+//        }
+//    });
+
+    w.show();
+    Dtk::Widget::moveToCenter(&w);
 
     return a.exec();
 }

@@ -48,7 +48,7 @@ public:
     /**
      * @brief 开启服务
      */
-    void startService(qint64 applicationPid);
+    void startService();
 
     /**
      * @brief 关闭服务

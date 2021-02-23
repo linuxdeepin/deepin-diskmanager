@@ -47,17 +47,22 @@ void DiskManagerService::Quit()
     QCoreApplication::exit(0);
 }
 
-void DiskManagerService::Start(qint64 applicationPid)
+//void DiskManagerService::Start(qint64 applicationPid)
+//{
+//    if (PolicyKitHelper::instance()->checkAuthorization("com.deepin.diskmanager.Start", applicationPid)) {
+//       emit rootLogin("1");
+//    } else {
+//        emit rootLogin("0");
+//        Quit();
+//    }
+//    QString msg = "DiskManagerService::Start called";
+//    Q_EMIT MessageReport(msg);
+////    qDebug() << msg;
+//}
+void DiskManagerService::Start()
 {
-    if (PolicyKitHelper::instance()->checkAuthorization("com.deepin.diskmanager.Start", applicationPid)) {
-       emit rootLogin("1");
-    } else {
-        emit rootLogin("0");
-        Quit();
-    }
-    QString msg = "DiskManagerService::Start called";
-    Q_EMIT MessageReport(msg);
-//    qDebug() << msg;
+        QString msg = "DiskManagerService::Start called";
+        Q_EMIT MessageReport(msg);
 }
 
 DeviceInfo DiskManagerService::getDeviceinfo()

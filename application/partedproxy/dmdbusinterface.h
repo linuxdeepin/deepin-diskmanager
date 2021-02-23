@@ -76,15 +76,24 @@ public Q_SLOTS: // METHODS
         return asyncCallWithArgumentList(QStringLiteral("Quit"), argumentList);
     }
 
+//    /**
+//     * @brief 启动服务
+//     */
+//    inline QDBusPendingReply<> Start(qint64 applicationPid)
+//    {
+//        QList<QVariant> argumentList;
+//        argumentList << QVariant::fromValue(applicationPid);
+//        return asyncCallWithArgumentList(QStringLiteral("Start"), argumentList);
+//    }
     /**
      * @brief 启动服务
      */
-    inline QDBusPendingReply<> Start(qint64 applicationPid)
+    inline QDBusPendingReply<> Start()
     {
         QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(applicationPid);
         return asyncCallWithArgumentList(QStringLiteral("Start"), argumentList);
     }
+
 
     /**
      * @brief  刷新
@@ -331,7 +340,7 @@ Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void fixBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus, const QString &cylinderTimeConsuming);
     Q_SCRIPTABLE void checkBadBlocksFinished();
     Q_SCRIPTABLE void fixBadBlocksFinished();
-    Q_SCRIPTABLE void rootLogin(const QString &loginMessage);
+//    Q_SCRIPTABLE void rootLogin(const QString &loginMessage);
     Q_SCRIPTABLE void unmountPartition(const QString &unmountMessage);
     Q_SCRIPTABLE void createTableMessage(const bool &flag);
 };

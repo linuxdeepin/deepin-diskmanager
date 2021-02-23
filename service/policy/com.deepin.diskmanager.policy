@@ -2,7 +2,8 @@
 <!DOCTYPE policyconfig PUBLIC "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
 "http://www.freedesktop.org/standards/PolicyKit/1.0/policyconfig.dtd">
 <policyconfig>
-	<action id="com.deepin.diskmanager.Start">
+    <icon_name>deepin-diskmanager</icon_name>
+	<action id="com.deepin.diskmanager">
 		<description>Run Disk Manager Need Authentication</description>
 		<message>Authentication is required to read disk information</message>
 		<defaults>
@@ -60,5 +61,7 @@
 		<message xml:lang="sl">Za branje podatkov o disku je potrebna overitev</message>
 		<description xml:lang="cs">Spuštění Správy disků vyžaduje ověření se</description>
 		<message xml:lang="cs">Pro čtení informací o disku je zapotřebí ověření se</message>
+        <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/deepin-disk-manager</annotate>
+        <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>       
 	</action>
 </policyconfig>

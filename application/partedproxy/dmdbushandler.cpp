@@ -68,7 +68,7 @@ DMDbusHandler::DMDbusHandler(QObject *parent)
     qDebug() << "m_dbus isValid true";
     initConnection();
 
-//    m_dbus->Start();
+    m_dbus->Start();
 }
 
 void DMDbusHandler::initConnection()
@@ -86,7 +86,7 @@ void DMDbusHandler::initConnection()
     connect(m_dbus, &DMDBusInterface::fixBadBlocksInfo, this, &DMDbusHandler::repairBadBlocksInfo);
     connect(m_dbus, &DMDBusInterface::checkBadBlocksFinished, this, &DMDbusHandler::checkBadBlocksFinished);
     connect(m_dbus, &DMDBusInterface::fixBadBlocksFinished, this, &DMDbusHandler::fixBadBlocksFinished);
-    connect(m_dbus, &DMDBusInterface::rootLogin, this, &DMDbusHandler::onRootLogin);
+//    connect(m_dbus, &DMDBusInterface::rootLogin, this, &DMDbusHandler::onRootLogin);
 }
 
 void DMDbusHandler::onUnmountPartition(const QString &unmountMessage)
@@ -143,9 +143,9 @@ void DMDbusHandler::onSetCurSelect(const QString &devicePath, const QString &par
     }
 }
 
-void DMDbusHandler::startService(qint64 applicationPid)
+void DMDbusHandler::startService()
 {
-    m_dbus->Start(applicationPid);
+    m_dbus->Start();
 }
 
 void DMDbusHandler::Quit()
@@ -174,7 +174,7 @@ QString DMDbusHandler::getRootLoginResult()
 
 void DMDbusHandler::getDeviceInfo()
 {
-//    emit showSpinerWindow(true);
+    emit showSpinerWindow(true);
 
     m_dbus->getalldevice();
     qDebug() << __FUNCTION__ << "-------";

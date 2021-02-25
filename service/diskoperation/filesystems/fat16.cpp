@@ -36,36 +36,33 @@ namespace DiskManager
 
 FS fat16::getFilesystemSupport()
 {
-    FS fs( specificType );
+    FS fs(specificType);
 
 	// hack to disable silly mtools warnings
 	setenv( "MTOOLS_SKIP_CHECK", "1", 0 );
 
-	fs .busy = FS::GPARTED ;
+    fs.busy = FS::GPARTED ;
 
-    if (! Utils::findProgramInPath("mdir").isEmpty())
-	{
+    if (!Utils::findProgramInPath("mdir").isEmpty()) {
 		fs.read_uuid = FS::EXTERNAL;
-        if (! Utils::findProgramInPath("minfo").isEmpty())
+        if (!Utils::findProgramInPath("minfo").isEmpty())
 			fs.read = FS::EXTERNAL;
 	}
 
 	//find out if we can create fat file systems
-    if ( ! Utils::findProgramInPath( "mkfs.fat" ) .isEmpty() )
-	{
+    if (!Utils::findProgramInPath( "mkfs.fat" ).isEmpty()) {
 		fs.create = FS::EXTERNAL;
 		fs.create_with_label = FS::EXTERNAL;
 	}
 
-    if ( ! Utils::findProgramInPath( "fsck.fat" ) .isEmpty() )
-	{
+    if (!Utils::findProgramInPath( "fsck.fat" ).isEmpty()) {
 		fs.check = FS::EXTERNAL;
 	}
 
-    if ( ! Utils::findProgramInPath( "mlabel" ) .isEmpty() ) {
-		fs .read_label = FS::EXTERNAL ;
-		fs .write_label = FS::EXTERNAL ;
-		fs .write_uuid = FS::EXTERNAL ;
+    if (!Utils::findProgramInPath( "mlabel" ).isEmpty()) {
+        fs.read_label = FS::EXTERNAL;
+        fs.write_label = FS::EXTERNAL;
+        fs.write_uuid = FS::EXTERNAL;
 	}
 
 #ifdef HAVE_LIBPARTED_FS_RESIZE
@@ -73,17 +70,15 @@ FS fat16::getFilesystemSupport()
 	fs.grow = FS::LIBPARTED;
 	fs.shrink = FS::LIBPARTED;
 #endif
-	fs .move = FS::GPARTED ;
+    fs.move = FS::GPARTED;
 	fs.copy = FS::GPARTED;
-	fs .online_read = FS::GPARTED ;
+    fs.online_read = FS::GPARTED;
 
-	if (fs.fstype == FS_FAT16)
-	{
+    if (fs.fstype == FS_FAT16) {
         m_fsLimits.min_size = 16 * MEBIBYTE;
         m_fsLimits.max_size = (4096 - 1) * MEBIBYTE;  // Maximum seems to be just less than 4096 MiB.
-	}
-	else //FS_FAT32
-	{
+    } else {
+        //FS_FAT32
         m_fsLimits.min_size = 33 * MEBIBYTE;  // Smaller file systems will cause Windows' scandisk to fail.
 
 		// Maximum FAT32 volume size with 512 byte sectors is 2 TiB.
@@ -92,7 +87,7 @@ FS fat16::getFilesystemSupport()
         m_fsLimits.max_size = 2 * TEBIBYTE;
 	}
 
-	return fs ;
+    return fs;
 }
 
 void fat16::setUsedSectors( Partition & partition )
@@ -124,7 +119,7 @@ void fat16::setUsedSectors( Partition & partition )
         QStringList list;
 
         // FS logical sector size in bytes
-        strmatch = ("sector size:");
+        strmatch = "sector size:";
         int index = output.indexOf(strmatch);
         if (index >= 0 && index < output.length()) {
             list = Utils::regexpLabel(output, QString("(?<=sector size:).*(?=\n)")).trimmed().split(" ");
@@ -132,7 +127,7 @@ void fat16::setUsedSectors( Partition & partition )
         }
 
         // Cluster size in FS logical sectors
-        strmatch = ("cluster size:");
+        strmatch = "cluster size:";
         index = output.indexOf(strmatch);
         if (index >= 0 && index < output.length()) {
             list = Utils::regexpLabel(output, QString("(?<=cluster size:).*(?=\n)")).trimmed().split(" ");
@@ -140,7 +135,7 @@ void fat16::setUsedSectors( Partition & partition )
         }
 
         // FS size in logical sectors if <= 65535, or 0 otherwise
-        strmatch = ("small size:");
+        strmatch = "small size:";
         index = output.indexOf(strmatch);
         if (index >= 0 && index < output.length()) {
             list = Utils::regexpLabel(output, QString("(?<=small size:).*(?=\n)")).trimmed().split(" ");
@@ -148,7 +143,7 @@ void fat16::setUsedSectors( Partition & partition )
         }
 
         // FS size in logical sectors if > 65535, or 0 otherwise
-        strmatch = ("big size:");
+        strmatch = "big size:";
         index = output.indexOf(strmatch);
         if (index >= 0 && index < output.length()) {
             list = Utils::regexpLabel(output, QString("(?<=big size:).*(?=\n)")).trimmed().split(" ");
@@ -163,6 +158,7 @@ void fat16::setUsedSectors( Partition & partition )
                     list.clear();
                     list = slist.at(1).split("-h");
                     m_totalNumOfBlock = list.at(0).trimmed().toLong();
+                    break;
                 }
             }
         }
@@ -178,12 +174,11 @@ void fat16::setUsedSectors( Partition & partition )
         logical_sectors = m_totalNumOfBlock;
     }
 
-    if (m_numOfFreeOrUsedBlocks > -1 && logical_sector_size > -1 && cluster_size > -1 && logical_sectors > -1)
-    {
+    if (m_numOfFreeOrUsedBlocks > -1 && logical_sector_size > -1 && cluster_size > -1 && logical_sectors > -1) {
         Sector fs_free = m_numOfFreeOrUsedBlocks / partition.m_sectorSize;
         Sector fs_size = logical_sectors * logical_sector_size / partition.m_sectorSize;
 
-        qDebug() << __FUNCTION__ << fs_free << fs_size;
+//        qDebug() << __FUNCTION__ << fs_free << fs_size;
         partition.setSectorUsage(fs_size, fs_free);
         partition.m_fsBlockSize = logical_sector_size * cluster_size;
     }
@@ -196,16 +191,13 @@ void fat16::readLabel( Partition & partition )
     QString output, error, filesystemLabel;
     QString partitionPath = partition.getPath().remove("/dev/");
     if (!Utils::executCmd(QString("ls -l /dev/disk/by-label"), output, error)) {
-        if(output.indexOf(partitionPath))
-        {
+        if(output.indexOf(partitionPath)) {
             QStringList list = output.split("\n");
             for (int i = 0; i < list.size(); i++) {
-                if(list.at(i).indexOf(partitionPath) != -1)
-                {
+                if(list.at(i).indexOf(partitionPath) != -1) {
                     QStringList slist = list.at(i).split(" ");
                     for (int j = 0; j < slist.size(); j++) {
-                        if(slist.at(j) == "->")
-                        {
+                        if(slist.at(j) == "->" && j != 0) {
                             filesystemLabel = slist.at(j-1);
                             break;
                         }
@@ -214,8 +206,7 @@ void fat16::readLabel( Partition & partition )
             }
         }
     }
-    if(!filesystemLabel.isEmpty())
-    {
+    if (!filesystemLabel.isEmpty()) {
         partition.setFilesystemLabel(filesystemLabel);
     }
 
@@ -224,7 +215,7 @@ void fat16::readLabel( Partition & partition )
 bool fat16::writeLabel(const Partition & partition)
 {
     QString output, error, cmd;
-    if ( partition.getFileSystemLabel().isEmpty() || partition.getFileSystemLabel() == " ")
+    if (partition.getFileSystemLabel().isEmpty() || partition.getFileSystemLabel() == " ")
         cmd = QString("mlabel -c :: -i %1").arg(partition.getPath());
 	else
         cmd = QString("mlabel :: %1 -i %2").arg(partition.getFileSystemLabel()).arg(partition.getPath());
@@ -242,10 +233,9 @@ void fat16::readUuid( Partition & partition )
     QString output, error;
     QString cmd = QString("mdir -f :: -i %1").arg(partition.getPath());
 
-    if ( ! Utils::executCmd( cmd, output, error) )
-	{
-        partition.m_uuid = Utils::regexpLabel(output, "Volume Serial Number is[[:blank:]]([^[:space:]]+)" );
-        if ( partition .m_uuid == "0000-0000" )
+    if (!Utils::executCmd( cmd, output, error)) {
+        partition.m_uuid = Utils::regexpLabel(output, "Volume Serial Number is[[:blank:]]([^[:space:]]+)");
+        if (partition .m_uuid == "0000-0000")
             partition .m_uuid .clear() ;
 	}
 //    qDebug() << __FUNCTION__ << output << error;
@@ -262,12 +252,11 @@ bool fat16::writeUuid(const Partition & partition)
 bool fat16::create(const Partition & new_partition)
 {
     QString output, error, cmd;
-    QString fat_size = specificType == FS_FAT16 ? "16" : "32" ;
+    QString fat_size = (specificType == FS_FAT16 ? "16" : "32");
     int exitcode = -1;
-    if(new_partition.getFileSystemLabel().isEmpty() || new_partition.getFileSystemLabel() == " ")
-    {
+    if(new_partition.getFileSystemLabel().isEmpty() || new_partition.getFileSystemLabel() == " ") {
         exitcode = Utils::executCmd(QString("mkfs.fat -F %1 -v -I %2").arg(fat_size).arg(new_partition.getPath()), output, error);
-    }else {
+    } else {
         cmd = QString("mkfs.fat -F %1 -v -I -n %2 %3").arg(fat_size).arg(new_partition.getFileSystemLabel()).arg(new_partition.getPath());
         exitcode = Utils::executCmd(cmd ,output, error);
     }

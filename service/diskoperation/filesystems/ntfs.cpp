@@ -35,33 +35,30 @@ namespace DiskManager
 
 FS ntfs::getFilesystemSupport()
 {
-	FS fs( FS_NTFS );
+    FS fs(FS_NTFS);
 
-	fs .busy = FS::GPARTED ;
+    fs.busy = FS::GPARTED;
 
     if (!Utils::findProgramInPath("ntfsinfo").isEmpty())
 		fs.read = FS::EXTERNAL;
 
-    if (! Utils::findProgramInPath("ntfslabel").isEmpty())
-	{
+    if (!Utils::findProgramInPath("ntfslabel").isEmpty()) {
 		fs .read_label = FS::EXTERNAL ;
 		fs .write_label = FS::EXTERNAL ;
 		fs.write_uuid = FS::EXTERNAL;
 	}
 
-    if (!Utils::findProgramInPath( "mkntfs" ).isEmpty())
-	{
+    if (!Utils::findProgramInPath( "mkntfs" ).isEmpty()) {
 		fs.create = FS::EXTERNAL;
 		fs.create_with_label = FS::EXTERNAL;
 	}
 
 	//resizing is a delicate process ...
-    if (!Utils::findProgramInPath("ntfsresize").isEmpty())
-	{
+    if (!Utils::findProgramInPath("ntfsresize").isEmpty()) {
 		fs.check = FS::EXTERNAL;
 		fs.grow = FS::EXTERNAL;
 
-		if ( fs .read ) //needed to determine a min file system size..
+        if (fs.read ) //needed to determine a min file system size..
 			fs.shrink = FS::EXTERNAL;
 
 		fs.move = FS::GPARTED;
@@ -70,14 +67,14 @@ FS ntfs::getFilesystemSupport()
     if (!Utils::findProgramInPath( "ntfsclone" ).isEmpty())
 		fs.copy = FS::EXTERNAL;
 
-    fs.online_read = FS::GPARTED ;
+    fs.online_read = FS::GPARTED;
 
 	//Minimum NTFS partition size = (Minimum NTFS volume size) + (backup NTFS boot sector)
 	//                            = (1 MiB) + (1 sector)
 	// For GParted this means 2 MiB because smallest GUI unit is MiB.
     m_fsLimits.min_size = 2 * MEBIBYTE;
 
-	return fs ;
+    return fs;
 }
 
 void ntfs::setUsedSectors( Partition & partition )
@@ -87,36 +84,34 @@ void ntfs::setUsedSectors( Partition & partition )
     m_blocksSize = m_numOfFreeOrUsedBlocks = m_totalNumOfBlock = -1;
     QString cmd = QString("ntfsinfo --mft --force %1").arg(partition.getPath());
 
-    if (!Utils::executCmd(cmd, output, error))
-    {
-        strmatch = ("Cluster Size:");
+    if (!Utils::executCmd(cmd, output, error)) {
+        strmatch = "Cluster Size:";
         int index = output.indexOf(strmatch);
         if (index >= 0 && index < output.length()) {
             m_blocksSize = Utils::regexpLabel(output, QString("(?<=Cluster Size:).*(?=\n)")).trimmed().toLong();
 //             qDebug() << __FUNCTION__ << m_blocksSize << "22222222222" << endl;
         }
 
-        strmatch = ("Volume Size in Clusters:");
+        strmatch = "Volume Size in Clusters:";
         index = output.indexOf(strmatch);
         if (index >= 0 && index < output.length()) {
             m_totalNumOfBlock = Utils::regexpLabel(output, QString("(?<=Volume Size in Clusters:).*(?=\n)")).trimmed().toLong();
 //            qDebug() << __FUNCTION__ << m_totalNumOfBlock << "33333333333333" << endl;
         }
 
-        strmatch = ("Free Clusters:");
+        strmatch = "Free Clusters:";
         index = output.indexOf(strmatch);
         if (index >= 0 && index < output.length()) {
             m_numOfFreeOrUsedBlocks = Utils::regexpLabel(output, QString("(?<=Free Clusters:).*(?=[(])")).trimmed().toLong();
 //            qDebug() << __FUNCTION__ << m_numOfFreeOrUsedBlocks << "4444444444444444" << endl;
         }
     }
-    if (m_blocksSize > -1 && m_totalNumOfBlock > -1 && m_numOfFreeOrUsedBlocks > -1)
-    {
+
+    if (m_blocksSize > -1 && m_totalNumOfBlock > -1 && m_numOfFreeOrUsedBlocks > -1) {
         m_totalNumOfBlock = m_totalNumOfBlock * (m_blocksSize / partition.m_sectorSize);
         m_numOfFreeOrUsedBlocks = m_numOfFreeOrUsedBlocks * (m_blocksSize / partition.m_sectorSize);
 
 //        qDebug() << __FUNCTION__ << m_totalNumOfBlock << m_numOfFreeOrUsedBlocks << "1111111111111111111" << endl;
-
         partition.setSectorUsage(m_totalNumOfBlock, m_numOfFreeOrUsedBlocks);
         partition.m_fsBlockSize = m_blocksSize;
     }
@@ -154,10 +149,9 @@ bool ntfs::create(const Partition & newPartition)
 {
     QString output, error;
     int exitcode = -1;
-    if(newPartition.getFileSystemLabel().isEmpty() || newPartition.getFileSystemLabel() == " ")
-    {
+    if (newPartition.getFileSystemLabel().isEmpty() || newPartition.getFileSystemLabel() == " ") {
         exitcode = Utils::executCmd(QString("mkntfs -Q -v -F %1").arg(newPartition.getPath()), output, error);
-    }else {
+    } else {
         exitcode = Utils::executCmd(QString("mkntfs -Q -v -F %1 -L %2").arg(newPartition.getPath()).arg(newPartition.getFileSystemLabel()),output, error);
     }
     return exitcode == 0 && error.compare("Unknown error") == 0;
@@ -165,21 +159,18 @@ bool ntfs::create(const Partition & newPartition)
 
 bool ntfs::resize(const Partition & partitionNew, bool fillPartition )
 {
-	bool success;
+//	bool success;
     QString output, error;
     QString size;
-    if ( ! fillPartition )
-	{
+    if (!fillPartition) {
         size = QString(" -s %1").arg(floor(Utils::sectorToUnit(partitionNew.getSectorLength(), partitionNew.m_sectorSize, UNIT_BYTE)));
 	}
     QString cmd = "ntfsresize --force --force" + size ;
 
 	// Real resize
     cmd = QString("%1 %2").arg(cmd).arg(partitionNew.getPath());
-    success = !Utils::executCmd(cmd, output, error);
-
-
-	return success;
+//    success = !Utils::executCmd(cmd, output, error);
+    return !Utils::executCmd(cmd, output, error);
 }
 
 //bool ntfs::copy( const Partition & src_part, Partition & dest_part)

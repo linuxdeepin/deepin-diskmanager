@@ -143,18 +143,18 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
         menu->setObjectName("treeMenu");
         menu->setAccessibleName("menu");
 
-        QAction *actionHidePartition = new QAction();
-        actionHidePartition->setText(tr("Hide partition")); // 隐藏分区
-        actionHidePartition->setObjectName("Hide partition");
-        menu->addAction(actionHidePartition);
-        connect(actionHidePartition, &QAction::triggered, this, &DeviceListWidget::onHidePartitionClicked);
+//        QAction *actionHidePartition = new QAction();
+//        actionHidePartition->setText(tr("Hide partition")); // 隐藏分区
+//        actionHidePartition->setObjectName("Hide partition");
+//        menu->addAction(actionHidePartition);
+//        connect(actionHidePartition, &QAction::triggered, this, &DeviceListWidget::onHidePartitionClicked);
 
-        QAction *actionShowPartition = new QAction();
-        actionShowPartition->setText(tr("Unhide partition")); // 显示分区
-        actionShowPartition->setObjectName("Unhide partition");
-        menu->addAction(actionShowPartition);
-        connect(actionShowPartition, &QAction::triggered, this, &DeviceListWidget::onShowPartitionClicked);
-        //            actionShowPartition->setDisabled(true); // 将按钮置为不可选
+//        QAction *actionShowPartition = new QAction();
+//        actionShowPartition->setText(tr("Unhide partition")); // 显示分区
+//        actionShowPartition->setObjectName("Unhide partition");
+//        menu->addAction(actionShowPartition);
+//        connect(actionShowPartition, &QAction::triggered, this, &DeviceListWidget::onShowPartitionClicked);
+//        //            actionShowPartition->setDisabled(true); // 将按钮置为不可选
 
         QAction *actionDelete = new QAction();
         actionDelete->setText(tr("Delete partition")); // 删除分区
@@ -167,10 +167,10 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
         }
 
         if (m_curDiskInfoData.m_fstype == "unallocated" || m_curDiskInfoData.m_fstype == "linux-swap") {
-            actionHidePartition->setDisabled(true);
-            actionShowPartition->setDisabled(true);
+//            actionHidePartition->setDisabled(true);
+//            actionShowPartition->setDisabled(true);
             actionDelete->setDisabled(true);
-        } else {
+        } /*else {
             if (1 == m_curDiskInfoData.m_flag) {
                 actionHidePartition->setDisabled(true);
                 actionShowPartition->setDisabled(false);
@@ -178,7 +178,7 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
                 actionHidePartition->setDisabled(false);
                 actionShowPartition->setDisabled(true);
             }
-        }
+        }*/
 
         menu->exec(QCursor::pos());  //显示菜单
     }

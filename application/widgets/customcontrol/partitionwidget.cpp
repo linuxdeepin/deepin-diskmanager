@@ -651,14 +651,26 @@ void PartitionWidget::onTextChanged(const QString &text)
 {
     if (!text.isEmpty()) {
         QByteArray byteArray = text.toUtf8();
-        if (byteArray.size() > 16) {
-            m_partNameEdit->setAlert(true);
-            m_partNameEdit->showAlertMessage(tr("The length exceeds the limit"), -1);
-            m_addButton->setEnabled(false);
+        if (m_partFormateCombox->currentText() == "fat32") {
+            if (byteArray.size() > 11) {
+                m_partNameEdit->setAlert(true);
+                m_partNameEdit->showAlertMessage(tr("The length exceeds the limit"), -1);
+                m_addButton->setEnabled(false);
+            } else {
+                m_partNameEdit->setAlert(false);
+                m_partNameEdit->hideAlertMessage();
+                m_addButton->setEnabled(true);
+            }
         } else {
-            m_partNameEdit->setAlert(false);
-            m_partNameEdit->hideAlertMessage();
-            m_addButton->setEnabled(true);
+            if (byteArray.size() > 16) {
+                m_partNameEdit->setAlert(true);
+                m_partNameEdit->showAlertMessage(tr("The length exceeds the limit"), -1);
+                m_addButton->setEnabled(false);
+            } else {
+                m_partNameEdit->setAlert(false);
+                m_partNameEdit->hideAlertMessage();
+                m_addButton->setEnabled(true);
+            }
         }
     }
 }

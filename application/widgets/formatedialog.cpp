@@ -100,18 +100,34 @@ void FormateDialog::onTextChanged(const QString &text)
 {
     if (!text.isEmpty()) {
         QByteArray byteArray = text.toUtf8();
-        if (byteArray.size() > 16) {
-            m_fileNameEdit->setAlert(true);
-            m_fileNameEdit->showAlertMessage(tr("The length exceeds the limit"), -1);
+        if (m_formatComboBox->currentText() == "fat32") {
+            if (byteArray.size() > 11) {
+                m_fileNameEdit->setAlert(true);
+                m_fileNameEdit->showAlertMessage(tr("The length exceeds the limit"), -1);
 
-            QAbstractButton *button = getButton(m_okCode);
-            button->setEnabled(false);
+                QAbstractButton *button = getButton(m_okCode);
+                button->setEnabled(false);
+            } else {
+                m_fileNameEdit->setAlert(false);
+                m_fileNameEdit->hideAlertMessage();
+
+                QAbstractButton *button = getButton(m_okCode);
+                button->setEnabled(true);
+            }
         } else {
-            m_fileNameEdit->setAlert(false);
-            m_fileNameEdit->hideAlertMessage();
+            if (byteArray.size() > 16) {
+                m_fileNameEdit->setAlert(true);
+                m_fileNameEdit->showAlertMessage(tr("The length exceeds the limit"), -1);
 
-            QAbstractButton *button = getButton(m_okCode);
-            button->setEnabled(true);
+                QAbstractButton *button = getButton(m_okCode);
+                button->setEnabled(false);
+            } else {
+                m_fileNameEdit->setAlert(false);
+                m_fileNameEdit->hideAlertMessage();
+
+                QAbstractButton *button = getButton(m_okCode);
+                button->setEnabled(true);
+            }
         }
     }
 }

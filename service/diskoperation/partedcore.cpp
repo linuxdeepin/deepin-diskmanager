@@ -2482,7 +2482,7 @@ bool PartedCore::createPartitionTable(const QString &devicePath, const QString &
     // FIXME: Should call file system specific removal actions
     // (to remove LVM2 PVs before deleting the partitions).
 
-#ifdef ENABLE_LOOP_DELETE_OLD_PTNS_WORKAROUND
+//#ifdef ENABLE_LOOP_DELETE_OLD_PTNS_WORKAROUND
     // When creating a "loop" table with libparted 2.0 to 3.0 inclusive, it doesn't
     // inform the kernel to delete old partitions so as a consequence blkid's cache
     // becomes stale and it won't report a file system subsequently created on the
@@ -2490,9 +2490,9 @@ bool PartedCore::createPartitionTable(const QString &devicePath, const QString &
     // any old partitions.  Fixed in parted 3.1 by commit:
     //     f5c909c0cd50ed52a48dae6d35907dc08b137e88
     //     libparted: remove has_partitions check to allow loopback partitions
-    if ( disklabel == "loop" )
-        new_disklabel( device_path, "gpt", false );
-#endif
+//    if ( disklabel == "loop" )
+//        newDiskLabel( device_path, "gpt", false );
+//#endif
 
     // Ensure that any previous whole disk device file system can't be recognised by
     // libparted in preference to the "loop" partition table signature, or by blkid in
@@ -2500,16 +2500,16 @@ bool PartedCore::createPartitionTable(const QString &devicePath, const QString &
 //	OperationDetail dummy_od;
     Sector deviceLength = length.toLongLong();
     Sector deviceSectorSize = sectorSize.toLong();
-    Partition temp_partition;
-    temp_partition.setUnpartitioned( devicePath,
+    Partition tempPartition;
+    tempPartition.setUnpartitioned( devicePath,
                                       "",
                                       FS_UNALLOCATED,
                                       deviceLength,
                                       deviceSectorSize,
                                       false );
-    eraseFilesystemSignatures(temp_partition);
+    eraseFilesystemSignatures(tempPartition);
 
-    bool flag = newDiskLabel( devicePath, diskLabel );
+    bool flag = newDiskLabel(devicePath, diskLabel);
 
     emit refreshDeviceInfo();
     emit createTableMessage(flag);
@@ -2519,23 +2519,20 @@ bool PartedCore::createPartitionTable(const QString &devicePath, const QString &
 
 bool PartedCore::newDiskLabel(const QString &devicePath, const QString &diskLabel)
 {
-    bool return_value = false;
+    bool returnValue = false;
 
     PedDevice* lpDevice = nullptr;
     PedDisk* lpDisk = nullptr;
-    if ( getDevice( devicePath, lpDevice ) )
-    {
+    if (getDevice(devicePath, lpDevice)) {
         PedDiskType *type = nullptr;
         type = ped_disk_type_get(diskLabel.toStdString().c_str());
 
-        if ( type )
-        {
-            lpDisk = ped_disk_new_fresh( lpDevice, type );
-
-            return_value = commit( lpDisk ) ;
+        if (type) {
+            lpDisk = ped_disk_new_fresh(lpDevice, type);
+            returnValue = commit(lpDisk) ;
         }
 
-        destroyDeviceAndDisk( lpDevice, lpDisk ) ;
+        destroyDeviceAndDisk(lpDevice, lpDisk) ;
     }
 
 //#ifndef USE_LIBPARTED_DMRAID
@@ -2548,7 +2545,7 @@ bool PartedCore::newDiskLabel(const QString &devicePath, const QString &diskLabe
 //	}
 //#endif
 
-    return return_value ;
+    return returnValue;
 }
 
 int PartedCore::test()

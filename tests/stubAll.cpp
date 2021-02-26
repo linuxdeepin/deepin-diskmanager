@@ -287,3 +287,46 @@ QString failureDeviceStatus()
     return "Failure";
 }
 
+QString unknownDeviceStatus()
+{
+    return "unknown";
+}
+
+HardDiskStatusInfoList deviceCheckHealthInfo()
+{
+    QStringList list;
+    list << "1,Raw_Read_Error_Rate,0x000b,100,100,050,Pre-fail,Always,-,0"
+         << "9,Power_On_Hours,0x0012,100,100,000,Old_age,Always,,1206"
+         << "12,Power_Cycle_Count,0x0012,,100,000,Old_age,Always,In_the_past,1350"
+         << "168,Unknown_Attribute,0x0012,100,,000,Old_age,Always,-,0"
+         << "170,,0x0003,100,100,000,Pre-fail,Always,FAILING_NOW,474"
+         << "173,Unknown_Attribute,0x0012,100,100,,Old_age,Always,-,131075"
+         << "192,Power-Off_Retract_Count,0x0012,100,100,000,Old_age,Always,-,"
+         << "194,Temperature_Celsius,0x0023,067,067,000,Pre-fail,Always,unknown,33(Min/Max33/33)"
+         << "218,Unknown_Attribute,0x000b,100,100,050,Pre-fail,Always,-,0"
+         << "231,Temperature_Celsius,0x0013,100,100,000,Pre-fail,Always,-,99"
+         << ",Total_LBAs_Written,0x0012,100,100,000,Old_age,Always,-,1334";
+
+    QList<HardDiskStatusInfo> HardDiskStatusInfoList;
+    for (int i = 0; i < list.count(); i++) {
+        QString str = list.at(i);
+        QStringList dataList = str.split(",");
+
+        HardDiskStatusInfo hardDiskStatusInfo;
+        hardDiskStatusInfo.m_id = dataList.at(0);
+        hardDiskStatusInfo.m_attributeName = dataList.at(1);
+        hardDiskStatusInfo.m_flag = dataList.at(2);
+        hardDiskStatusInfo.m_value = dataList.at(3);
+        hardDiskStatusInfo.m_worst = dataList.at(4);
+        hardDiskStatusInfo.m_thresh = dataList.at(5);
+        hardDiskStatusInfo.m_type = dataList.at(6);
+        hardDiskStatusInfo.m_updated = dataList.at(7);
+        hardDiskStatusInfo.m_whenFailed = dataList.at(8);
+        hardDiskStatusInfo.m_rawValue = dataList.at(9);
+
+        HardDiskStatusInfoList << hardDiskStatusInfo;
+    }
+
+    return HardDiskStatusInfoList;
+}
+

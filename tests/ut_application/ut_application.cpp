@@ -508,14 +508,19 @@ TEST_F(ut_application, diskInfo)
 //    qDebug() << "5555555555555555";
 }
 
-//TEST_F(ut_application, diskHealth)
-//{
-//    Stub stub;
-//    stub.set(ADDR(DMDbusHandler, getHardDiskInfo), getDiskInfo);
+TEST_F(ut_application, diskHealth)
+{
+    Stub stub;
+    stub.set(ADDR(DMDbusHandler, getHardDiskInfo), getDiskInfo);
 
-//    CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
-//    MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
-//    DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
-//}
+    Stub stub2;
+    stub2.set(ADDR(DMDbusHandler, getDeviceHardStatus), passedDeviceStatus);
+
+    CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
+    MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
+    DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
+
+    DiskHealthDetectionDialog diskHealthDetectionDialog(deviceListWidget->m_curDiskInfoData.m_diskPath, deviceCheckHealthInfo());
+}
 
 

@@ -55,4 +55,8 @@ QString passedDeviceStatus();
 
 QString failureDeviceStatus();
 
+QString unknownDeviceStatus();
+
+HardDiskStatusInfoList deviceCheckHealthInfo();
+
 #endif // STUBALLTHREAD_H

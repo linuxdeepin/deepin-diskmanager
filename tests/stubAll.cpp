@@ -5,7 +5,6 @@
 void start()
 {
     qDebug() << "start" << "11111";
-    DMDbusHandler::instance()->onRootLogin("1");
 }
 
 void getDeviceInfo()
@@ -227,7 +226,64 @@ void createPartition()
     qDebug() << "createPartition";
 }
 
+void resizePartition()
+{
+    qDebug() << "resizePartition";
+}
+
 int MessageboxExec()
 {
     return 1;
 }
+
+HardDiskInfo getDiskInfo()
+{
+    HardDiskInfo hardDiskInfo;
+    hardDiskInfo.m_Model = "Lenovo SSD SL700 240G";
+    hardDiskInfo.m_Vendor = "External";
+    hardDiskInfo.m_MediaType = "HDD";
+    hardDiskInfo.m_Size = "240 GB";
+    hardDiskInfo.m_RotationRate = "Solid State Device";
+    hardDiskInfo.m_Interface = "USB";
+    hardDiskInfo.m_SerialNumber = "LSL70240B073F01636";
+    hardDiskInfo.m_Version = "0204";
+    hardDiskInfo.m_Capabilities = "";
+    hardDiskInfo.m_Description = "disk";
+    hardDiskInfo.m_PowerOnHours = "1183";
+    hardDiskInfo.m_PowerCycleCount = "1350";
+    hardDiskInfo.m_FirmwareVersion = "SBFM61.3";
+    hardDiskInfo.m_Speed = "6.0 Gb/s (current: 6.0 Gb/s)";
+
+    return hardDiskInfo;
+}
+
+QString filePath()
+{
+    return "/mnt/DiskInfo";
+}
+
+QString emptyFilePath()
+{
+    return "";
+}
+
+QString errorFilePath()
+{
+    return "/user/DiskInfo.txt";
+}
+
+QString noPermissionFilePath()
+{
+    return "/usr/DiskInfo.txt";
+}
+
+QString passedDeviceStatus()
+{
+    return "PASSED";
+}
+
+QString failureDeviceStatus()
+{
+    return "Failure";
+}
+

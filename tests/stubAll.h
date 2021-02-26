@@ -9,6 +9,7 @@
 #include <QCursor>
 #include <QAction>
 #include "../basestruct/commondef.h"
+#include "../basestruct/deviceinfo.h"
 
 void start();
 
@@ -36,6 +37,22 @@ void formatPartition();
 
 void createPartition();
 
+void resizePartition();
+
 int MessageboxExec();
+
+HardDiskInfo getDiskInfo();
+
+QString filePath();
+
+QString emptyFilePath();
+
+QString errorFilePath();
+
+QString noPermissionFilePath();
+
+QString passedDeviceStatus();
+
+QString failureDeviceStatus();
 
 #endif // STUBALLTHREAD_H

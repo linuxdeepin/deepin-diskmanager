@@ -8,6 +8,7 @@
 #include <QObject>
 
 #include "../application/partedproxy/dmdbushandler.h"
+#include "../application/partedproxy/dmdbusinterface.h"
 #include "mainwindow.h"
 #include "centerwidget.h"
 #include "mainsplitter.h"
@@ -23,6 +24,8 @@
 #include "stubAll.h"
 #include "messagebox.h"
 #include "partchartshowing.h"
+#include "diskinfodisplaydialog.h"
+#include "diskhealthdetectiondialog.h"
 
 class ut_application : public ::testing::Test
         , public QObject
@@ -259,10 +262,18 @@ TEST_F(ut_application, formatPartition)
     stub2.set(ADDR(DMDbusHandler, getAllSupportFileSystem), getAllSupportFileSystem);
 
     FormateDialog *formatDialog = new FormateDialog;
+
+    formatDialog->m_formatComboBox->setCurrentText("fat32");
+    formatDialog->m_fileNameEdit->setText("一二三四五六七");
+    formatDialog->m_fileNameEdit->setText("一二三");
+
+    formatDialog->m_formatComboBox->setCurrentText("ext4");
     formatDialog->m_fileNameEdit->setText("一二三四五六七");
     formatDialog->m_fileNameEdit->setText("一二三四五");
 
     formatDialog->onButtonClicked(1, "");
+
+
 }
 
 TEST_F(ut_application, newPartition)
@@ -319,6 +330,11 @@ TEST_F(ut_application, newPartition)
                 QTest::mouseMove(partChartShowing, QPoint(20, 20));
                 QTest::mouseClick(partChartShowing, Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(20, 20));
                 QTest::mouseClick(partChartShowing, Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(-1, -1));
+
+                widget->m_partFormateCombox->setCurrentText("fat32");
+                partName->setText("一二三四五六七");
+                partName->setText("一二三");
+                widget->m_partFormateCombox->setCurrentText("ext4");
 
                 partName->setText("一二三四五六七");
                 ASSERT_FALSE(addButton->isEnabled());
@@ -408,7 +424,98 @@ TEST_F(ut_application, newPartition)
 
 TEST_F(ut_application, resize)
 {
+    Stub stub;
+    stub.set(ADDR(DMDbusHandler, onSetCurSelect), setCurSelectSecond);
 
+    Stub stub2;
+    stub2.set(ADDR(DMDbusHandler, resize), resizePartition);
+
+    CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
+    MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
+    DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
+    DmTreeview *view = deviceListWidget->findChild<DmTreeview *>();
+    QTest::qWait(1000);
+
+    view->setRefreshItem(0, 1);
+    QTest::qWait(1000);
+    EXPECT_EQ(view->getCurrentNum(), 1);
+    EXPECT_EQ(view->getCurrentTopNum(), 0);
+
+    QRect rect = view->visualRect(view->currentIndex());
+    QTest::mouseClick(view->viewport(), Qt::LeftButton, Qt::KeyboardModifiers(), rect.center());
+
+    ResizeDialog *resizeDialog = new ResizeDialog;
+    resizeDialog->m_lineEdit->setText("1024");
+    resizeDialog->m_comboBox->setCurrentIndex(1);
+    resizeDialog->m_comboBox->setCurrentIndex(0);
+    resizeDialog->onButtonClicked(1, "");
+
+    resizeDialog->m_comboBox->setCurrentIndex(1);
+    resizeDialog->m_lineEdit->setText("1");
+    resizeDialog->onButtonClicked(1, "");
+
+    resizeDialog->m_comboBox->setCurrentIndex(1);
+    resizeDialog->m_lineEdit->setText("10000");
+    resizeDialog->onButtonClicked(1, "");
+
+    resizeDialog->m_lineEdit->setText("1");
+    resizeDialog->onButtonClicked(0, "");
 }
+
+TEST_F(ut_application, diskInfo)
+{
+    Stub stub;
+    stub.set(ADDR(DMDbusHandler, getHardDiskInfo), getDiskInfo);
+
+    CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
+    MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
+    DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
+
+    DiskInfoDisplayDialog *diskInfoDisplayDialog = new DiskInfoDisplayDialog(deviceListWidget->m_curDiskInfoData.m_diskPath);
+//qDebug() << "11111111111111" << deviceListWidget->m_curDiskInfoData.m_diskPath;
+//    typedef int (*fptr)(DiskInfoDisplayDialog*);
+//    fptr foo = (fptr)(&QFileDialog::getSaveFileName);
+//    Stub stub2;
+//    stub2.set(foo, emptyFilePath);
+
+//    diskInfoDisplayDialog->onExportButtonClicked();
+//qDebug() << "2222222222222222222";
+//    typedef int (*fptr)(DiskInfoDisplayDialog*);
+//    fptr foo2 = (fptr)(&QFileDialog::getSaveFileName);
+//    Stub stub3;
+//    stub3.set(foo2, errorFilePath);
+
+//    diskInfoDisplayDialog->onExportButtonClicked();
+//qDebug() << "33333333333333333";
+//    typedef int (*fptr)(DiskInfoDisplayDialog*);
+//    fptr foo3 = (fptr)(&QFileDialog::getSaveFileName);
+//    Stub stub4;
+//    stub4.set(foo3, noPermissionFilePath);
+
+//    diskInfoDisplayDialog->onExportButtonClicked();
+//qDebug() << "4444444444444444";
+//    typedef int (*fptr)(DiskInfoDisplayDialog*);
+//    fptr foo4 = (fptr)(&QFileDialog::getSaveFileName);
+//    Stub stub5;
+//    stub5.set(foo4, filePath);
+
+//    diskInfoDisplayDialog->onExportButtonClicked();
+
+//    QFile file("/mnt/DiskInfo.txt");
+//    if (file.exists()) {
+//        file.remove();
+//    }
+//    qDebug() << "5555555555555555";
+}
+
+//TEST_F(ut_application, diskHealth)
+//{
+//    Stub stub;
+//    stub.set(ADDR(DMDbusHandler, getHardDiskInfo), getDiskInfo);
+
+//    CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
+//    MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
+//    DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
+//}
 
 

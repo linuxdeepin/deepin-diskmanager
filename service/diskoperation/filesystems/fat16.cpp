@@ -94,8 +94,8 @@ void fat16::setUsedSectors( Partition & partition )
 {
     QString output, error, strmatch, strcmd;
 
-    Sector logical_sector_size,cluster_size,small_size,big_size;
-    logical_sector_size = cluster_size = small_size = big_size = -1;
+    Sector logicalSectorSize,clusterSize,smallSize,bigSize;
+    logicalSectorSize = clusterSize = smallSize = bigSize = -1;
 
     strcmd = QString("mdir -i %1 ::/").arg(partition.getPath());
 
@@ -105,10 +105,10 @@ void fat16::setUsedSectors( Partition & partition )
 
 	// Bytes free.  Parse the value from the bottom of the directory listing by mdir.
 	// Example line "                        277 221 376 bytes free".
-    QString spaced_number_str = Utils::regexpLabel(output, "^ *([0-9 ]*) bytes free$").remove(QRegExp("\\s")).trimmed();
+    QString spacedNumberStr = Utils::regexpLabel(output, "^ *([0-9 ]*) bytes free$").remove(QRegExp("\\s")).trimmed();
 
-    if (spaced_number_str.size() > 0)
-        m_numOfFreeOrUsedBlocks = atoll(spaced_number_str.toStdString().c_str());
+    if (spacedNumberStr.size() > 0)
+        m_numOfFreeOrUsedBlocks = atoll(spacedNumberStr.toStdString().c_str());
     }
 	// Use minfo's reporting of the BPB (BIOS Parameter Block) to get the file system
 	// size and FS block (cluster) size.
@@ -123,7 +123,7 @@ void fat16::setUsedSectors( Partition & partition )
         int index = output.indexOf(strmatch);
         if (index >= 0 && index < output.length()) {
             list = Utils::regexpLabel(output, QString("(?<=sector size:).*(?=\n)")).trimmed().split(" ");
-            logical_sector_size = list.at(0).toLong();
+            logicalSectorSize = list.at(0).toLong();
         }
 
         // Cluster size in FS logical sectors
@@ -131,7 +131,7 @@ void fat16::setUsedSectors( Partition & partition )
         index = output.indexOf(strmatch);
         if (index >= 0 && index < output.length()) {
             list = Utils::regexpLabel(output, QString("(?<=cluster size:).*(?=\n)")).trimmed().split(" ");
-            cluster_size = list.at(0).toLong();
+            clusterSize = list.at(0).toLong();
         }
 
         // FS size in logical sectors if <= 65535, or 0 otherwise
@@ -139,7 +139,7 @@ void fat16::setUsedSectors( Partition & partition )
         index = output.indexOf(strmatch);
         if (index >= 0 && index < output.length()) {
             list = Utils::regexpLabel(output, QString("(?<=small size:).*(?=\n)")).trimmed().split(" ");
-            small_size = list.at(0).toLong();
+            smallSize = list.at(0).toLong();
         }
 
         // FS size in logical sectors if > 65535, or 0 otherwise
@@ -147,10 +147,10 @@ void fat16::setUsedSectors( Partition & partition )
         index = output.indexOf(strmatch);
         if (index >= 0 && index < output.length()) {
             list = Utils::regexpLabel(output, QString("(?<=big size:).*(?=\n)")).trimmed().split(" ");
-            big_size = list.at(0).toLong();
+            bigSize = list.at(0).toLong();
         }
 
-        if (big_size <= 0 && small_size <= 0) {
+        if (bigSize <= 0 && smallSize <= 0) {
             list = output.split("\n");
             for (int i = 0; i < list.size(); i++) {
                 if (list.at(i).contains("mformat command line: mformat -T ")) {
@@ -166,21 +166,21 @@ void fat16::setUsedSectors( Partition & partition )
 
 	// FS size in logical sectors
 	long long logical_sectors = -1;
-    if (small_size > 0) {
-		logical_sectors = small_size;
-    } else if (big_size > 0) {
-        logical_sectors = big_size;
+    if (smallSize > 0) {
+        logical_sectors = smallSize;
+    } else if (bigSize > 0) {
+        logical_sectors = bigSize;
     } else {
         logical_sectors = m_totalNumOfBlock;
     }
 
-    if (m_numOfFreeOrUsedBlocks > -1 && logical_sector_size > -1 && cluster_size > -1 && logical_sectors > -1) {
-        Sector fs_free = m_numOfFreeOrUsedBlocks / partition.m_sectorSize;
-        Sector fs_size = logical_sectors * logical_sector_size / partition.m_sectorSize;
+    if (m_numOfFreeOrUsedBlocks > -1 && logicalSectorSize > -1 && clusterSize > -1 && logical_sectors > -1) {
+        Sector fsfree = m_numOfFreeOrUsedBlocks / partition.m_sectorSize;
+        Sector fsSize = logical_sectors * logicalSectorSize / partition.m_sectorSize;
 
 //        qDebug() << __FUNCTION__ << fs_free << fs_size;
-        partition.setSectorUsage(fs_size, fs_free);
-        partition.m_fsBlockSize = logical_sector_size * cluster_size;
+        partition.setSectorUsage(fsSize, fsfree);
+        partition.m_fsBlockSize = logicalSectorSize * clusterSize;
     }
 
 }

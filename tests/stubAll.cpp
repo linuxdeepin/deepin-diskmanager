@@ -330,3 +330,13 @@ HardDiskStatusInfoList deviceCheckHealthInfo()
     return HardDiskStatusInfoList;
 }
 
+void badSectorsCheck()
+{
+    qDebug() << "badSectorsCheck";
+}
+
+void badSectorsRepair()
+{
+    qDebug() << "badSectorsRepair";
+}
+

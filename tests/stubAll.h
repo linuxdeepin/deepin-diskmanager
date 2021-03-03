@@ -59,4 +59,8 @@ QString unknownDeviceStatus();
 
 HardDiskStatusInfoList deviceCheckHealthInfo();
 
+void badSectorsCheck();
+
+void badSectorsRepair();
+
 #endif // STUBALLTHREAD_H

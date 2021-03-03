@@ -63,8 +63,6 @@ MainWindow::MainWindow(QWidget *parent)
     initUi();
     initConnection();
 
-    m_handler->getDeviceInfo(); //call after initUi
-
     QSize normal(1000, 650);
 
     QList<QScreen *> lst = QGuiApplication::screens();
@@ -86,6 +84,8 @@ MainWindow::MainWindow(QWidget *parent)
     resize(normal);
 //    QRect rect = QApplication::desktop()->screenGeometry(0);
 //    setMinimumSize(rect.width() * 3 / 5 - 150, rect.height() * 3 / 5);
+//    m_handler->getDeviceInfo(); //call after initUi
+    QTimer::singleShot(200, this, SLOT(getDeviceInfo()));
 }
 
 MainWindow::~MainWindow()
@@ -150,6 +150,11 @@ void MainWindow::onHandleQuitAction()
 QString MainWindow::getRootLoginResult()
 {
     return m_handler->getRootLoginResult();
+}
+
+void MainWindow::getDeviceInfo()
+{
+    m_handler->getDeviceInfo(); //call after initUi
 }
 
 void MainWindow::onRefreshButtonClicked()

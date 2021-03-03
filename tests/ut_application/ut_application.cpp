@@ -26,6 +26,7 @@
 #include "partchartshowing.h"
 #include "diskinfodisplaydialog.h"
 #include "diskhealthdetectiondialog.h"
+#include "diskbadsectorsdialog.h"
 
 class ut_application : public ::testing::Test
         , public QObject
@@ -60,13 +61,13 @@ TEST_F(ut_application, init)
 
     qDebug() << MainWindow::instance()->isHidden();
     qDebug() << MainWindow::instance()->children();
-    qDebug() << DMDbusHandler::instance()->getDeviceNameList();
-    qDebug() << DMDbusHandler::instance()->getCurDeviceInfo().m_path
-             << DMDbusHandler::instance()->getCurDeviceInfo().partition.count()
-             << DMDbusHandler::instance()->getCurPartititonInfo().m_path;
+//    qDebug() << DMDbusHandler::instance()->getDeviceNameList();
+//    qDebug() << DMDbusHandler::instance()->getCurDeviceInfo().m_path
+//             << DMDbusHandler::instance()->getCurDeviceInfo().partition.count()
+//             << DMDbusHandler::instance()->getCurPartititonInfo().m_path;
 
-    ASSERT_FALSE(DMDbusHandler::instance()->getCurDeviceInfo().m_path.isEmpty());
-    ASSERT_FALSE(DMDbusHandler::instance()->getCurPartititonInfo().m_path.isEmpty());
+//    ASSERT_FALSE(DMDbusHandler::instance()->getCurDeviceInfo().m_path.isEmpty());
+//    ASSERT_FALSE(DMDbusHandler::instance()->getCurPartititonInfo().m_path.isEmpty());
 
     MainWindow::instance()->show();
 
@@ -521,6 +522,78 @@ TEST_F(ut_application, diskHealth)
     DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
 
     DiskHealthDetectionDialog diskHealthDetectionDialog(deviceListWidget->m_curDiskInfoData.m_diskPath, deviceCheckHealthInfo());
+}
+
+TEST_F(ut_application, diskBadSectors)
+{
+    Stub stub;
+    stub.set(ADDR(DMDbusHandler, checkBadSectors), badSectorsCheck);
+
+    Stub stub2;
+    stub2.set(ADDR(DMDbusHandler, repairBadBlocks), badSectorsRepair);
+
+    typedef int (*fptr)(DiskBadSectorsDialog*);
+    fptr foo = (fptr)(&MessageBox::exec);
+    Stub stub3;
+    stub3.set(foo, MessageboxExec);
+
+    DiskBadSectorsDialog *diskBadSectorsDialog = new DiskBadSectorsDialog;
+
+    diskBadSectorsDialog->m_startLineEdit->setText("10");
+    diskBadSectorsDialog->m_endLineEdit->setText("5");
+    ASSERT_FALSE(diskBadSectorsDialog->inputValueIsEffective());
+
+    diskBadSectorsDialog->m_startLineEdit->setText("");
+    diskBadSectorsDialog->m_endLineEdit->setText("");
+    diskBadSectorsDialog->m_checkTimesEdit->setText("");
+    ASSERT_FALSE(diskBadSectorsDialog->inputValueIsEffective());
+
+    diskBadSectorsDialog->m_startLineEdit->setText("100000");
+    diskBadSectorsDialog->m_endLineEdit->setText("100000");
+    ASSERT_FALSE(diskBadSectorsDialog->inputValueIsEffective());
+
+    diskBadSectorsDialog->m_methodComboBox->setCurrentIndex(1);
+    diskBadSectorsDialog->m_timeoutEdit->setText("");
+    ASSERT_FALSE(diskBadSectorsDialog->inputValueIsEffective());
+
+    diskBadSectorsDialog->m_timeoutEdit->setText("4000");
+    ASSERT_FALSE(diskBadSectorsDialog->inputValueIsEffective());
+
+    diskBadSectorsDialog->m_verifyComboBox->setCurrentIndex(1);
+    diskBadSectorsDialog->m_timeoutEdit->setText("300");
+    ASSERT_TRUE(diskBadSectorsDialog->inputValueIsEffective());
+    diskBadSectorsDialog->onStartVerifyButtonClicked();
+    diskBadSectorsDialog->onCheckCoomplete();
+    diskBadSectorsDialog->onAgainVerifyButtonClicked(); // 重新检测
+    diskBadSectorsDialog->onExitButtonClicked();
+
+    diskBadSectorsDialog->m_verifyComboBox->setCurrentIndex(2);
+    diskBadSectorsDialog->onStartVerifyButtonClicked();
+    diskBadSectorsDialog->onCheckCoomplete();
+    diskBadSectorsDialog->onResetButtonClicked(); // 复位
+
+    diskBadSectorsDialog->m_methodComboBox->setCurrentIndex(0);
+    diskBadSectorsDialog->m_verifyComboBox->setCurrentIndex(0);
+    diskBadSectorsDialog->m_startLineEdit->setText("10");
+    diskBadSectorsDialog->m_endLineEdit->setText("5");
+    diskBadSectorsDialog->onStartVerifyButtonClicked();
+
+    diskBadSectorsDialog->m_startLineEdit->setText("10");
+    diskBadSectorsDialog->m_endLineEdit->setText("50");
+    diskBadSectorsDialog->onStartVerifyButtonClicked();
+
+    diskBadSectorsDialog->onCheckBadBlocksInfo("10", "62", "good", "");
+    diskBadSectorsDialog->onCheckBadBlocksInfo("11", "389", "bad", "IO Read Error");
+
+    diskBadSectorsDialog->onStopButtonClicked(); // 停止检测
+    diskBadSectorsDialog->onContinueButtonClicked(); // 继续检测
+    diskBadSectorsDialog->onCheckBadBlocksInfo("12", "75", "good", "");
+    diskBadSectorsDialog->onCheckBadBlocksInfo("12", "456", "bad", "IO Read Error");
+
+    diskBadSectorsDialog->onCheckCoomplete(); // 检测完成
+
+    diskBadSectorsDialog->onExitButtonClicked();
+
 }
 
 

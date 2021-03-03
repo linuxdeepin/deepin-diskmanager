@@ -71,6 +71,11 @@ private slots:
      */
     void onRefreshButtonClicked();
 
+    /**
+     * @brief 获取磁盘信息
+     */
+    void getDeviceInfo();
+
 private:
 
     /**

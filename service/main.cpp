@@ -58,8 +58,7 @@ int main(int argc, char *argv[])
         .arg(qApp->organizationName())
         .arg(qApp->applicationName());
     setLogDir(LogPath);
-    if (!dirCheck.exists(LogPath))
-    {
+    if (!dirCheck.exists(LogPath)) {
         dirCheck.mkpath(LogPath);
     }
     //检查日志是否过期

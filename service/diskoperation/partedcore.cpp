@@ -1824,115 +1824,34 @@ HardDiskInfo PartedCore::getDeviceHardInfo(const QString &devicepath)
 {
     qDebug() << __FUNCTION__ << "Get Device Hard Info Start";
     HardDiskInfo hdinfo;
-    //QString devicepath = curpartition.device_path;
     if (devicepath.isEmpty()) {
         qDebug() << "disk path is empty";
         return hdinfo;
     }
 
-    QString cmd = QString("smartctl -i %1").arg(devicepath);
-    FILE *fd = nullptr;
-    fd = popen(cmd.toStdString().data(), "r");
-    char pb[1024];
-    memset(pb, 0, 1024);
+    DeviceStorage device;
+    device.getDiskInfoFromHwinfo(devicepath);
 
-    if (fd == nullptr) {
-        qDebug() << "exeuted cmd failed";
-        return hdinfo;
-    }
+    device.getDiskInfoFromLshw(devicepath);
 
-    while(fgets(pb, 1024, fd) != nullptr) {
-        if (strstr(pb, "Device Model:") != nullptr) {
-           hdinfo.m_deviceModel += pb+(sizeof("Device Model:")-1);
-           hdinfo.m_deviceModel.remove(QRegExp("^ +\\s*"));
-           hdinfo.m_deviceModel = hdinfo.m_deviceModel.replace(QRegExp("\\\n"), "\0");
-        } else if (strstr(pb, "Serial Number:") != nullptr) {
-           hdinfo.m_serialNumber += pb+(sizeof("Serial Number:")-1);
-           //去除空格
-           hdinfo.m_serialNumber.remove(QRegExp("^ +\\s*"));
-           //替换换行符
-           hdinfo.m_serialNumber = hdinfo.m_serialNumber.replace(QRegExp("\\\n"), "\0");
-        } else if (strstr(pb, "LU WWN Device Id:") != nullptr) {
-           hdinfo.m_deviceId += pb+(sizeof("LU WWN Device Id:")-1);
-           //去除空格
-           hdinfo.m_deviceId.remove(QRegExp("^ +\\s*"));
-           //替换换行符
-           hdinfo.m_deviceId = hdinfo.m_deviceId.replace(QRegExp("\\\n"), "\0");
-        } else if (strstr(pb, "Firmware Version:") != nullptr) {
-           hdinfo.m_firmwareVersion += pb+(sizeof("Firmware Version:")-1);
-           //去除空格
-           hdinfo.m_firmwareVersion.remove(QRegExp("^ +\\s*"));
-           //替换换行符
-           hdinfo.m_firmwareVersion = hdinfo.m_firmwareVersion.replace(QRegExp("\\\n"), "\0");
-        } else if (strstr(pb, "User Capacity:") != nullptr) {
-           hdinfo.m_userCapacity += pb+(sizeof("User Capacity:")-1);
-           //去除空格
-           hdinfo.m_userCapacity.remove(QRegExp("^ +\\s*"));
-           //替换换行符
-           hdinfo.m_userCapacity = hdinfo.m_userCapacity.replace(QRegExp("\\\n"), "\0");
-        } else if (strstr(pb, "Sector Size") != nullptr) {
-           QString buf = pb;
-           hdinfo.m_sectorSize += pb+(buf.split(":").at(0).size())+1;
-           //去除空格
-           hdinfo.m_sectorSize.remove(QRegExp("^ +\\s*"));
-           //替换换行符
-           hdinfo.m_sectorSize = hdinfo.m_sectorSize.replace(QRegExp("\\\n"), "\0");
-        } else if (strstr(pb, "Rotation Rate:") != nullptr) {
-           hdinfo.m_rotationRate += pb+(sizeof("Rotation Rate:")-1);
-           //去除空格
-           hdinfo.m_rotationRate.remove(QRegExp("^ +\\s*"));
-           //替换换行符
-           hdinfo.m_rotationRate = hdinfo.m_rotationRate.replace(QRegExp("\\\n"), "\0");
-        } else if (strstr(pb, "Form Factor:") != nullptr) {
-           hdinfo.m_formFactor += pb+(sizeof("Form Factor:")-1);
-           //去除空格
-           hdinfo.m_formFactor.remove(QRegExp("^ +\\s*"));
-           //替换换行符
-           hdinfo.m_formFactor = hdinfo.m_formFactor.replace(QRegExp("\\\n"), "\0");
-        } else if (strstr(pb, "Device is:") != nullptr) {
-           hdinfo.m_deviceis += pb+(sizeof("Device is:")-1);
-           //去除空格
-           hdinfo.m_deviceis.remove(QRegExp("^ +\\s*"));
-           //替换换行符
-           hdinfo.m_deviceis = hdinfo.m_deviceis.replace(QRegExp("\\\n"), "\0");
-        } else if (strstr(pb, "ATA Version is:") != nullptr) {
-           if (strstr(pb, "SATA Version is:") != nullptr) {
-               hdinfo.m_sataVersionIs += pb+(sizeof("SATA Version is:")-1);
-               //去除空格
-               hdinfo.m_sataVersionIs.remove(QRegExp("^ +\\s*"));
-               //替换换行符
-               hdinfo.m_sataVersionIs = hdinfo.m_sataVersionIs.replace(QRegExp("\\\n"), "\0");
-           } else {
-               hdinfo.m_ataVersionIs += pb+(sizeof("ATA Version is:")-1);
-               //去除空格
-               hdinfo.m_ataVersionIs.remove(QRegExp("^ +\\s*"));
-               //替换换行符
-               hdinfo.m_ataVersionIs = hdinfo.m_ataVersionIs.replace(QRegExp("\\\n"), "\0");
-           }
-        } else if (strstr(pb, "Local Time is:") != nullptr) {
-           hdinfo.m_localTime += pb+(sizeof("Local Time is:")-1);
-           //去除空格
-           hdinfo.m_localTime.remove(QRegExp("^ +\\s*"));
-           //替换换行符
-           hdinfo.m_localTime = hdinfo.m_localTime.replace(QRegExp("\\\n"), "\0");
-        } else if (strstr(pb, "SMART support is:") != nullptr) {
-            if(strstr(pb, "Enabled") != nullptr || strstr(pb, "Disabled") != nullptr) {
-                hdinfo.m_smartSupportOn_Off += pb+(sizeof("SMART support is:")-1);
-                //去除空格
-                hdinfo.m_smartSupportOn_Off.remove(QRegExp("^ +\\s*"));
-                //替换换行符
-                hdinfo.m_smartSupportOn_Off = hdinfo.m_smartSupportOn_Off.replace(QRegExp("\\\n"), "\0");
-            } else {
-                hdinfo.m_smartSupport += pb+(sizeof("SMART support is:")-1);
-                //去除空格
-                hdinfo.m_smartSupport.remove(QRegExp("^ +\\s*"));
-                //替换换行符
-                hdinfo.m_smartSupport = hdinfo.m_smartSupport.replace(QRegExp("\\\n"), "\0");
-            }
-        }
+    device.getDiskInfoFromLsblk(devicepath);
 
-    }
-    pclose(fd);
+    device.getDiskInfoFromSmartCtl(devicepath);
+
+    hdinfo.m_Model = device.m_Model;
+    hdinfo.m_Vendor = device.m_Vendor;
+    hdinfo.m_MediaType = device.m_MediaType;
+    hdinfo.m_Size = device.m_Size;
+    hdinfo.m_RotationRate = device.m_RotationRate;
+    hdinfo.m_Interface = device.m_Interface;
+    hdinfo.m_SerialNumber = device.m_SerialNumber;
+    hdinfo.m_Version = device.m_Version;
+    hdinfo.m_Capabilities = device.m_Capabilities;
+    hdinfo.m_Description = device.m_Description;
+    hdinfo.m_PowerOnHours = device.m_PowerOnHours;
+    hdinfo.m_PowerCycleCount = device.m_PowerCycleCount;
+    hdinfo.m_FirmwareVersion = device.m_FirmwareVersion;
+    hdinfo.m_Speed = device.m_Speed;
 
     qDebug() << __FUNCTION__ << "Get Device Hard Info end";
     return hdinfo;
@@ -1981,30 +1900,58 @@ QString PartedCore::getDeviceHardStatus(const QString &devicepath)
 {
     qDebug() << __FUNCTION__ << "Get Device Hard Status Start";
     QString status;
-    //QString devicepath = curpartition.device_path;
-    if (devicepath.isEmpty()) {
-        qDebug() << __FUNCTION__ << "Device path is empty";
-        return status;
+    QString devicePath = devicepath;
+    if (devicepath.contains("nvme")) {
+        QStringList list = devicepath.split("nvme");
+        if (list.size() < 2) {
+            return status;
+        }
+        QString str = "";
+        for (int i = 0; i < list.at(1).size(); i++) {
+            if(list.at(1).at(i) >= "0" && list.at(1).at(i) <= "9"){
+                str += list.at(1).at(i);
+            }else {
+                break;
+            }
+        }
+
+        devicePath = list.at(0) + "nvme" + str;
+//        qDebug() << devicePath << "1111111111111111" << endl;
     }
 
-    QString cmd = QString("smartctl -H %1").arg(devicepath);
-    FILE *fd = nullptr;
-    fd = popen(cmd.toStdString().data(), "r");
-    char pb[1024];
-    memset(pb, 0, 1024);
-    if (fd == nullptr) {
-        qDebug() << __FUNCTION__ << "Get Device Hard Status order error";
-        return status;
-    }
+    QString cmd = QString("smartctl -H %1").arg(devicePath);
+    QProcess proc;
+    proc.start(cmd);
+    proc.waitForFinished(-1);
+    QString output = proc.readAllStandardOutput();
 
-    while (fgets(pb, 1024, fd) != nullptr) {
-        if (strstr(pb, "SMART overall-health self-assessment test result:") != nullptr) {
-            status += pb+(sizeof("SMART overall-health self-assessment test result:")-1);
-            //去除空格
-            status.remove(QRegExp("^ +\\s*"));
-            //替换换行符
-            status = status.replace(QRegExp("\\\n"), "\0");
-            break;
+    if (output.indexOf("SMART overall-health self-assessment test result:") != -1) {
+        QStringList list = output.split("\n");
+        for (int i = 0;i < list.size(); i++) {
+            if (list.at(i).indexOf("SMART overall-health self-assessment test result:") != -1) {
+                status = list.at(i).mid(strlen("SMART overall-health self-assessment test result:"));
+                status.remove(QRegExp("^ +\\s*"));
+//                qDebug() << __FUNCTION__ << status;
+                break;
+            }
+        }
+    } else {
+        QString cmd = QString("smartctl -H -d sat %1").arg(devicePath);
+        QProcess proc;
+        proc.start(cmd);
+        proc.waitForFinished(-1);
+        QString output = proc.readAllStandardOutput();
+
+        if (output.indexOf("SMART overall-health self-assessment test result:") != -1) {
+            QStringList list = output.split("\n");
+            for (int i = 0;i < list.size(); i++) {
+                if (list.at(i).indexOf("SMART overall-health self-assessment test result:") != -1) {
+                    status = list.at(i).mid(strlen("SMART overall-health self-assessment test result:"));
+                    status.remove(QRegExp("^ +\\s*"));
+//                    qDebug() << __FUNCTION__ << status;
+                    break;
+                }
+            }
         }
     }
 
@@ -2016,76 +1963,127 @@ HardDiskStatusInfoList PartedCore::getDeviceHardStatusInfo(const QString &device
 {
     qDebug() << __FUNCTION__ << "Get Device Hard Status Info Start";
     HardDiskStatusInfoList hdsilist;
-    //QString devicepath = curpartition.device_path;
-    if (devicepath.isEmpty()) {
-        qDebug() << "disk path is empty";
-        return hdsilist;
-    }
 
-    QString cmd = QString("smartctl -A %1").arg(devicepath);
-    FILE *fd = nullptr;
-    fd = popen(cmd.toStdString().data(), "r");
-    char pb[1024];
-    memset(pb, 0, 1024);
-
-    if (fd == nullptr) {
-        qDebug() << "Get Device Hard Status Info order error";
-        return hdsilist;
-    }
-
-    int i = 0;
-    while (fgets(pb, 1024, fd) != nullptr) {
-        if (strstr(pb, "ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE") != nullptr) {
-            break;
+    QString devicePath = devicepath;
+//    QString devicePath = "/dev/nvme12n1";
+    if (devicePath.contains("nvme")) {
+        //重新拼接硬盘字符串
+        QStringList list = devicePath.split("nvme");
+        if (list.size() < 2) {
+            return hdsilist;
         }
-        i++;
-    }
-    pclose(fd);
-
-    fd = popen(cmd.toStdString().data(), "r");
-
-    if (fd == nullptr) {
-        qDebug() << "Get Device Hard Status Info read message error";
-        return hdsilist;
-    }
-
-    int j = 0;
-    while (fgets(pb, 1024, fd) != nullptr) {
-        if (j > i) {
-            QString printbuf;
-            printbuf.clear();
-            HardDiskStatusInfo hdsinfo;
-            printbuf += pb;
-            //替换换行符
-            printbuf = printbuf.replace(QRegExp("\\\n"), "\0");
-            QStringList list = printbuf.split(' ');
-            list.removeAll("");
-
-            if (list.size() >= 10) {
-                hdsinfo.m_id = list.at(0);
-                hdsinfo.m_attributeName = list.at(1);
-                hdsinfo.m_flag = list.at(2);
-                hdsinfo.m_value = list.at(3);
-                hdsinfo.m_worst = list.at(4);
-                hdsinfo.m_thresh = list.at(5);
-                hdsinfo.m_type = list.at(6);
-                hdsinfo.m_updated = list.at(7);
-                hdsinfo.m_whenFailed = list.at(8);
-                for(int k = 9; k < list.size(); k++) {
-                    hdsinfo.m_rawValue += list.at(k);
-                }
-            }
-
-            if (list.size() == 0) {
-                qDebug() << "Get Device Hard Status Info size error" << j;
+        QString str = "";
+        for (int i = 0; i < list.at(1).size(); i++) {
+            if(list.at(1).at(i) >= "0" && list.at(1).at(i) <= "9"){
+                str += list.at(1).at(i);
+            }else {
                 break;
+            }
+        }
+
+        devicePath = list.at(0) + "nvme" + str;
+
+        QString cmd = QString("smartctl -A %1").arg(devicePath);
+        QProcess proc;
+        proc.start(cmd);
+        proc.waitForFinished(-1);
+        QString output = proc.readAllStandardOutput();
+//        QString output = "smartctl 6.6 2017-11-05 r4594 [x86_64-linux-4.19.0-6-amd64] (local build)\nCopyright (C) 2002-17, Bruce Allen, Christian Franke, www.smartmontools.org\n\n=== START OF SMART DATA SECTION ===\nSMART/Health Information (NVMe Log 0x02, NSID 0xffffffff)\nCritical Warning:                   0x00\nTemperature:                        25 Celsius\nAvailable Spare:                    100%\nAvailable Spare Threshold:          5%\nPercentage Used:                    1%\nData Units Read:                    3,196,293 [1.63 TB]\nData Units Written:                 3,708,861 [1.89 TB]\nHost Read Commands:                 47,399,157\nHost Write Commands:                65,181,192\nController Busy Time:               418\nPower Cycles:                       97\nPower On Hours:                     1,362\nUnsafe Shutdowns:                   44\nMedia and Data Integrity Errors:    0\nError Information Log Entries:      171\nWarning  Comp. Temperature Time:    0\nCritical Comp. Temperature Time:    0\n\n";
+        list.clear();
+        list = output.split("\n");
+        for (int i = 0; i < list.size(); i++) {
+            HardDiskStatusInfo hdsinfo;
+            if (list.at(i).contains(":")) {
+                QStringList slist = list.at(i).split(":");
+                if (slist.size() != 2) {
+                    break;
+                }
+                hdsinfo.m_attributeName = slist.at(0);
+                hdsinfo.m_rawValue = slist.at(1).trimmed();
+            } else {
+                continue;
             }
             hdsilist.append(hdsinfo);
         }
-        j++;
-    }
-    pclose(fd);
+    } else {
 
+        QString cmd = QString("smartctl -A %1").arg(devicepath);
+        QProcess proc;
+        proc.start(cmd);
+        proc.waitForFinished(-1);
+        QString output = proc.readAllStandardOutput();
+
+        if (output.contains("ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE")) {
+            QStringList list = output.split("\n");
+            int n = list.indexOf("ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE");
+            for (int i = n+1;i < list.size(); i++) {
+                HardDiskStatusInfo hdsinfo;
+                QString statusInfo = list.at(i);
+
+
+                QStringList slist = statusInfo.split(' ');
+                slist.removeAll("");
+
+                if (slist.size() == 0) {
+                    break;
+                }
+
+                if (list.size() >= 10) {
+                    hdsinfo.m_id = slist.at(0);
+                    hdsinfo.m_attributeName = slist.at(1);
+                    hdsinfo.m_flag = slist.at(2);
+                    hdsinfo.m_value = slist.at(3);
+                    hdsinfo.m_worst = slist.at(4);
+                    hdsinfo.m_thresh = slist.at(5);
+                    hdsinfo.m_type = slist.at(6);
+                    hdsinfo.m_updated = slist.at(7);
+                    hdsinfo.m_whenFailed = slist.at(8);
+                    for(int k = 9; k < slist.size(); k++) {
+                        hdsinfo.m_rawValue += slist.at(k);
+                    }
+                }
+
+                hdsilist.append(hdsinfo);
+            }
+        } else {
+            QString cmd = QString("smartctl -A -d sat %1").arg(devicepath);
+            QProcess proc;
+            proc.start(cmd);
+            proc.waitForFinished(-1);
+            QString output = proc.readAllStandardOutput();
+            if (output.contains("ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE")) {
+                QStringList list = output.split("\n");
+                int n = list.indexOf("ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE");
+                for (int i = n+1;i < list.size(); i++) {
+                    HardDiskStatusInfo hdsinfo;
+                    QString statusInfo = list.at(i);
+                    QStringList slist = statusInfo.split(' ');
+                    slist.removeAll("");
+
+                    if (slist.size() == 0) {
+                        break;
+                    }
+
+                    if (list.size() >= 10) {
+                        hdsinfo.m_id = slist.at(0);
+                        hdsinfo.m_attributeName = slist.at(1);
+                        hdsinfo.m_flag = slist.at(2);
+                        hdsinfo.m_value = slist.at(3);
+                        hdsinfo.m_worst = slist.at(4);
+                        hdsinfo.m_thresh = slist.at(5);
+                        hdsinfo.m_type = slist.at(6);
+                        hdsinfo.m_updated = slist.at(7);
+                        hdsinfo.m_whenFailed = slist.at(8);
+                        for(int k = 9; k < slist.size(); k++) {
+                            hdsinfo.m_rawValue += slist.at(k);
+                        }
+                    }
+
+                    hdsilist.append(hdsinfo);
+                }
+            }
+        }
+    }
     qDebug() << __FUNCTION__ << "Get Device Hard Status Info end";
     return hdsilist;
 }

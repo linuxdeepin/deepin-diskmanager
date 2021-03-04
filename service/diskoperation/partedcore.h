@@ -30,6 +30,7 @@
 #include "log.h"
 #include "device.h"
 #include "supportedfilesystems.h"
+#include "DeviceStorage.h"
 
 #include <parted/parted.h>
 #include <parted/device.h>

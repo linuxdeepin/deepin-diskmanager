@@ -97,66 +97,67 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
 
     m_curDiskInfoData = m_treeView->getCurItem()->data().value<DiskInfoData>();
     if (m_curDiskInfoData.m_level == 0) {
-        QMenu *menu = new QMenu();
+        QMenu *menu = new QMenu(this);
         menu->setObjectName("treeMenu");
         menu->setAccessibleName("menu");
 
-        QAction *actionInfo = new QAction();
+        QAction *actionInfo = new QAction(this);
         actionInfo->setText(tr("Disk info")); // 磁盘信息
         actionInfo->setObjectName("Disk info");
         menu->addAction(actionInfo);
         connect(actionInfo, &QAction::triggered, this, &DeviceListWidget::onDiskInfoClicked);
 
         //        menu->addSeparator();    //添加一个分隔线
-        QMenu *itemChildMenu = new QMenu();
+        QMenu *itemChildMenu = new QMenu(this);
         itemChildMenu->setTitle(tr("Health management")); // 健康管理
         itemChildMenu->setAccessibleName("Health management");
         menu->addMenu(itemChildMenu);
 
-        QAction *actionHealthDetection = new QAction();
+        QAction *actionHealthDetection = new QAction(this);
         actionHealthDetection->setText(tr("Check health")); // 硬盘健康检测
         actionHealthDetection->setObjectName("Check health");
         itemChildMenu->addAction(actionHealthDetection);
         connect(actionHealthDetection, &QAction::triggered, this, &DeviceListWidget::onDiskCheckHealthClicked);
 
-        QAction *actionCheckError = new QAction();
+        QAction *actionCheckError = new QAction(this);
         actionCheckError->setText(tr("Check partition table error")); // 分区表错误检测
         actionCheckError->setObjectName("Check partition table error");
         itemChildMenu->addAction(actionCheckError);
         connect(actionCheckError, &QAction::triggered, this, &DeviceListWidget::onPartitionErrorCheckClicked);
 
-        QAction *actionVerifyRepair = new QAction();
+        QAction *actionVerifyRepair = new QAction(this);
         actionVerifyRepair->setText(tr("Verify or repair bad sectors")); // 坏道检测与修复
         actionVerifyRepair->setObjectName("Verify or repair bad sectors");
         itemChildMenu->addAction(actionVerifyRepair);
         connect(actionVerifyRepair, &QAction::triggered, this, &DeviceListWidget::onDiskBadSectorsClicked);
 
-        QAction *createPartitionTable = new QAction();
+        QAction *createPartitionTable = new QAction(this);
         createPartitionTable->setText(tr("Create partition table")); // 新建分区表
         createPartitionTable->setObjectName("Create partition table");
         menu->addAction(createPartitionTable);
         connect(createPartitionTable, &QAction::triggered, this, &DeviceListWidget::onCreatePartitionTableClicked);
 
         menu->exec(QCursor::pos());  //显示菜单
+        delete menu;
     } else {
-        QMenu *menu = new QMenu();
+        QMenu *menu = new QMenu(this);
         menu->setObjectName("treeMenu");
         menu->setAccessibleName("menu");
 
-//        QAction *actionHidePartition = new QAction();
+//        QAction *actionHidePartition = new QAction(this);
 //        actionHidePartition->setText(tr("Hide partition")); // 隐藏分区
 //        actionHidePartition->setObjectName("Hide partition");
 //        menu->addAction(actionHidePartition);
 //        connect(actionHidePartition, &QAction::triggered, this, &DeviceListWidget::onHidePartitionClicked);
 
-//        QAction *actionShowPartition = new QAction();
+//        QAction *actionShowPartition = new QAction(this);
 //        actionShowPartition->setText(tr("Unhide partition")); // 显示分区
 //        actionShowPartition->setObjectName("Unhide partition");
 //        menu->addAction(actionShowPartition);
 //        connect(actionShowPartition, &QAction::triggered, this, &DeviceListWidget::onShowPartitionClicked);
 //        //            actionShowPartition->setDisabled(true); // 将按钮置为不可选
 
-        QAction *actionDelete = new QAction();
+        QAction *actionDelete = new QAction(this);
         actionDelete->setText(tr("Delete partition")); // 删除分区
         actionDelete->setObjectName("Delete partition");
         menu->addAction(actionDelete);
@@ -181,6 +182,7 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
         }*/
 
         menu->exec(QCursor::pos());  //显示菜单
+        delete menu;
     }
 }
 

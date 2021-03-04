@@ -171,7 +171,7 @@ void DiskBadSectorsDialog::initUI()
 
     m_timeoutEdit = new DLineEdit;
     m_timeoutEdit->setText("3000");
-    m_timeoutEdit->lineEdit()->setValidator(new QIntValidator(100, 3000));
+    m_timeoutEdit->lineEdit()->setValidator(new QIntValidator(100, 3000, this));
     m_timeoutEdit->setFixedSize(144, 36);
     DLabel *timeoutLabel = new DLabel(tr("ms"));
     DLabel *timeoutRangeLabel = new DLabel("(100-3000)");
@@ -383,7 +383,7 @@ void DiskBadSectorsDialog::initUI()
     addSpacing(10);
     addContent(bottomWidget);
 
-    m_settings = new QSettings("/tmp/CheckData.conf", QSettings::IniFormat);
+    m_settings = new QSettings("/tmp/CheckData.conf", QSettings::IniFormat, this);
 
 }
 

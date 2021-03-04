@@ -53,6 +53,11 @@ DiskHealthDetectionDialog::DiskHealthDetectionDialog(const QString &devicePath, 
     initConnections();
 }
 
+DiskHealthDetectionDialog::~DiskHealthDetectionDialog()
+{
+    delete m_diskHealthDetectionDelegate;
+}
+
 void DiskHealthDetectionDialog::initUI()
 {
     setIcon(QIcon::fromTheme(appName));
@@ -193,8 +198,8 @@ void DiskHealthDetectionDialog::initUI()
     topLayout->setContentsMargins(10, 10, 10, 10);
 
     // 属性列表
-    m_tableView = new DTableView;
-    m_standardItemModel = new QStandardItemModel;
+    m_tableView = new DTableView(this);
+    m_standardItemModel = new QStandardItemModel(this);
 
     m_tableView->setShowGrid(false);
     m_tableView->setFrameShape(QAbstractItemView::NoFrame);

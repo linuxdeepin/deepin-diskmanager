@@ -159,7 +159,7 @@ void CylinderInfoWidget::initUI()
 
     setLayout(mainLayout);
 
-    m_settings = new QSettings("/tmp/CheckData.conf", QSettings::IniFormat);
+    m_settings = new QSettings("/tmp/CheckData.conf", QSettings::IniFormat, this);
 }
 
 void CylinderInfoWidget::initConnections()

@@ -54,6 +54,7 @@ class DiskHealthDetectionDialog : public DDialog
     Q_OBJECT
 public:
     explicit DiskHealthDetectionDialog(const QString &devicePath, HardDiskStatusInfoList hardDiskStatusInfoList, QWidget *parent = nullptr);
+    ~DiskHealthDetectionDialog();
 
 signals:
 

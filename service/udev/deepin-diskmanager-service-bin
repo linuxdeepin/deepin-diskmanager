@@ -17,7 +17,7 @@
 #
 #  Only permit one instance of deepin-diskmanager to execute at a time
 #
-if test "z`ps -e | grep gpartedbin`" != "z"; then
+if test "z`ps -e | grep deepin-diskmanager-service`" != "z"; then
 	echo "The process gpartedbin is already running."
 	echo "Only one gpartedbin process is permitted."
 	exit 1

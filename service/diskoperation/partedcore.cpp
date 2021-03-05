@@ -221,18 +221,18 @@ void PartedCore::probeDeviceInfo(const QString &)
         m_devicemap.insert(devicepaths.at(t), tempDevice);
     }
     qDebug() << __FUNCTION__ << "**9";
-    getPartitionHiddenFlag();
+//    getPartitionHiddenFlag();
     for (auto it = m_devicemap.begin(); it != m_devicemap.end(); it++) {
         DeviceInfo devinfo = it.value().getDeviceInfo();
         for (int i = 0; i < it.value().m_partitions.size(); i++) {
             Partition pat = *(it.value().m_partitions.at(i));
             PartitionInfo partinfo = pat.getPartitionInfo();
 
-            if(m_hiddenPartition.indexOf(partinfo.m_uuid) != -1 && !partinfo.m_uuid.isEmpty()) {
-                partinfo.m_flag = 1;
-            } else {
-                partinfo.m_flag = 0;
-            }
+//            if(m_hiddenPartition.indexOf(partinfo.m_uuid) != -1 && !partinfo.m_uuid.isEmpty()) {
+//                partinfo.m_flag = 1;
+//            } else {
+//                partinfo.m_flag = 0;
+//            }
 
             if (pat.m_type == TYPE_EXTENDED) {
                 devinfo.partition.push_back(partinfo);

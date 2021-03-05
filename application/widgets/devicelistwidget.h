@@ -144,9 +144,6 @@ private:
     int m_deviceNum;
     DiskInfoData m_curDiskInfoData;
     QString m_curChooseDevicePath;
-    DiskInfoDisplayDialog *m_diskInfoDisplayDialog;
-    DiskHealthDetectionDialog *m_diskHealthDetectionDialog;
-    PartitionTableErrorsInfoDialog *m_partitionTableErrorsInfoDialog;
     //    DMDbusHandler *m_handler;
     //    DmDiskinfoBox *m_box = nullptr;
     //    DmDiskinfoBox *m_childbox = nullptr;

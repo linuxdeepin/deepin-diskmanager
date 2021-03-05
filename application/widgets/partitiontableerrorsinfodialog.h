@@ -51,6 +51,7 @@ class PartitionTableErrorsInfoDialog : public DDialog
     Q_OBJECT
 public:
     explicit PartitionTableErrorsInfoDialog(const QString &deviceInfo, QWidget *parent = nullptr);
+    ~PartitionTableErrorsInfoDialog();
 
 signals:
 

@@ -45,12 +45,18 @@
 #include <QMessageBox>
 #include <QDebug>
 
-DiskHealthDetectionDialog::DiskHealthDetectionDialog(const QString &devicePath, QWidget *parent)
+DiskHealthDetectionDialog::DiskHealthDetectionDialog(const QString &devicePath, HardDiskStatusInfoList hardDiskStatusInfoList, QWidget *parent)
     : DDialog(parent)
     , m_devicePath(devicePath)
+    , m_hardDiskStatusInfoList(hardDiskStatusInfoList)
 {
     initUI();
     initConnections();
+}
+
+DiskHealthDetectionDialog::~DiskHealthDetectionDialog()
+{
+    delete m_diskHealthDetectionDelegate;
 }
 
 void DiskHealthDetectionDialog::initUI()
@@ -193,8 +199,8 @@ void DiskHealthDetectionDialog::initUI()
     topLayout->setContentsMargins(10, 10, 10, 10);
 
     // 属性列表
-    m_tableView = new DTableView;
-    m_standardItemModel = new QStandardItemModel;
+    m_tableView = new DTableView(this);
+    m_standardItemModel = new QStandardItemModel(this);
 
     m_tableView->setShowGrid(false);
     m_tableView->setFrameShape(QAbstractItemView::NoFrame);
@@ -247,32 +253,75 @@ void DiskHealthDetectionDialog::initUI()
     m_tableView->setColumnWidth(5, 130);
 //    m_tableView->setColumnWidth(6, 186);
 
-    HardDiskStatusInfoList hardDiskStatusInfoList = DMDbusHandler::instance()->getDeviceHardStatusInfo(m_devicePath);
-    for (int i = 0; i < hardDiskStatusInfoList.count(); i++) {
-        HardDiskStatusInfo hardDiskStatusInfo = hardDiskStatusInfoList.at(i);
+    for (int i = 0; i < m_hardDiskStatusInfoList.count(); i++) {
+        HardDiskStatusInfo hardDiskStatusInfo = m_hardDiskStatusInfoList.at(i);
 
-        if (hardDiskStatusInfo.m_id == "194") {
-            m_temperatureValue->setText(QString("%1°C").arg(hardDiskStatusInfo.m_value.toInt()));
+        if (hardDiskStatusInfo.m_id == "194" || hardDiskStatusInfo.m_attributeName == "Temperature") {
+            QString value;
+            for (int i = 0; i < hardDiskStatusInfo.m_rawValue.size(); i++) {
+                if (hardDiskStatusInfo.m_rawValue.at(i) >= "0" && hardDiskStatusInfo.m_rawValue.at(i) <= "9") {
+                    value += hardDiskStatusInfo.m_rawValue.at(i);
+                } else {
+                    break;
+                }
+            }
+
+            if (!value.isEmpty()) {
+                m_temperatureValue->setText(QString("%1°C").arg(value));
+            }
         }
 
         QList<QStandardItem*> itemList;
 
-        itemList << new QStandardItem(hardDiskStatusInfo.m_id);
-        if (hardDiskStatusInfo.m_whenFailed == "-") {
-            itemList << new QStandardItem("G");
-        } else if(0 == hardDiskStatusInfo.m_whenFailed.compare("In_the_past", Qt::CaseInsensitive)) {
-            itemList << new QStandardItem("W");
-        } else if(0 == hardDiskStatusInfo.m_whenFailed.compare("FAILING_NOW", Qt::CaseInsensitive)) {
-            itemList << new QStandardItem("D");
+        if (!hardDiskStatusInfo.m_id.isEmpty()) {
+            itemList << new QStandardItem(hardDiskStatusInfo.m_id);
         } else {
-            itemList << new QStandardItem("U");
+            itemList << new QStandardItem("-");
         }
 
-        itemList << new QStandardItem(hardDiskStatusInfo.m_value);
-        itemList << new QStandardItem(hardDiskStatusInfo.m_worst);
-        itemList << new QStandardItem(hardDiskStatusInfo.m_thresh);
-        itemList << new QStandardItem(hardDiskStatusInfo.m_rawValue);
-        itemList << new QStandardItem(hardDiskStatusInfo.m_attributeName);
+        if (!hardDiskStatusInfo.m_whenFailed.isEmpty()) {
+            if (hardDiskStatusInfo.m_whenFailed == "-") {
+                itemList << new QStandardItem("G");
+            } else if(0 == hardDiskStatusInfo.m_whenFailed.compare("In_the_past", Qt::CaseInsensitive)) {
+                itemList << new QStandardItem("W");
+            } else if(0 == hardDiskStatusInfo.m_whenFailed.compare("FAILING_NOW", Qt::CaseInsensitive)) {
+                itemList << new QStandardItem("D");
+            } else {
+                itemList << new QStandardItem("U");
+            }
+        } else {
+            itemList << new QStandardItem("-");
+        }
+
+        if (!hardDiskStatusInfo.m_value.isEmpty()) {
+            itemList << new QStandardItem(hardDiskStatusInfo.m_value);
+        } else {
+            itemList << new QStandardItem("-");
+        }
+
+        if (!hardDiskStatusInfo.m_worst.isEmpty()) {
+            itemList << new QStandardItem(hardDiskStatusInfo.m_worst);
+        } else {
+            itemList << new QStandardItem("-");
+        }
+
+        if (!hardDiskStatusInfo.m_thresh.isEmpty()) {
+            itemList << new QStandardItem(hardDiskStatusInfo.m_thresh);
+        } else {
+            itemList << new QStandardItem("-");
+        }
+
+        if (!hardDiskStatusInfo.m_rawValue.isEmpty()) {
+            itemList << new QStandardItem(hardDiskStatusInfo.m_rawValue);
+        } else {
+            itemList << new QStandardItem("-");
+        }
+
+        if (!hardDiskStatusInfo.m_attributeName.isEmpty()) {
+            itemList << new QStandardItem(hardDiskStatusInfo.m_attributeName);
+        } else {
+            itemList << new QStandardItem("-");
+        }
 
         m_standardItemModel->appendRow(itemList);
     }

@@ -61,27 +61,20 @@ void DiskInfoDisplayDialog::initUI()
 
     HardDiskInfo hardDiskInfo = DMDbusHandler::instance()->getHardDiskInfo(m_devicePath);
 
-//    m_diskInfoNameList << tr("序列号：") << tr("设备模型：") << tr("LU WWN 设备Id：") << tr("固件版本：") << tr("用户容量：")
-//                       << tr("扇区大小：") << tr("转速：") << tr("外形系数：") << tr("设备：") << tr("ATA版本为：")
-//                       << tr("SATA版本为：") << tr("当地时间为：") << tr("智能支持：");
-
     m_diskInfoNameList.clear();
-    m_diskInfoNameList << tr("Serial Number:") << tr("Device Model:") << tr("LU WWN Device Id:") << tr("Firmware Version:")
-                       << tr("User Capacity:") << tr("Sector Size:") << tr("Rotation Rate:") << tr("Form Factor:")
-                       << tr("Device is:") << tr("ATA Version is:") << tr("SATA Version is:")
-                       << tr("Local Time is:") << tr("SMART support is:");
-
-    QString deviceis = hardDiskInfo.m_deviceis;
-    QStringList deviceNameList = deviceis.split("[");
+    m_diskInfoNameList << tr("Model:") << tr("Vendor:") << tr("Media Type:") << tr("Size:")
+                       << tr("Rotation Rate:") << tr("Interface:") << tr("Serial Number:") << tr("Version:")
+                       << tr("Capabilities:") << tr("Description:") << tr("Power On Hours:")
+                       << tr("Power Cycle Count:") << tr("Firmware Version:") << tr("Speed:");
 
     m_diskInfoValueList.clear();
-    m_diskInfoValueList << tr("%1").arg(hardDiskInfo.m_serialNumber) << tr("%1").arg(hardDiskInfo.m_deviceModel)
-                        << tr("%1").arg(hardDiskInfo.m_deviceId) << tr("%1").arg(hardDiskInfo.m_firmwareVersion)
-                        << tr("%1").arg(hardDiskInfo.m_userCapacity) << tr("%1").arg(hardDiskInfo.m_sectorSize)
-                        << tr("%1").arg(hardDiskInfo.m_rotationRate) << tr("%1").arg(hardDiskInfo.m_formFactor)
-                        << tr("%1").arg(deviceNameList.at(0)) << tr("%1").arg(hardDiskInfo.m_ataVersionIs)
-                        << tr("%1").arg(hardDiskInfo.m_sataVersionIs) << tr("%1").arg(hardDiskInfo.m_localTime)
-                        << tr("%1").arg(hardDiskInfo.m_smartSupport);
+    m_diskInfoValueList << tr("%1").arg(hardDiskInfo.m_Model) << tr("%1").arg(hardDiskInfo.m_Vendor)
+                        << tr("%1").arg(hardDiskInfo.m_MediaType) << tr("%1").arg(hardDiskInfo.m_Size)
+                        << tr("%1").arg(hardDiskInfo.m_RotationRate) << tr("%1").arg(hardDiskInfo.m_Interface)
+                        << tr("%1").arg(hardDiskInfo.m_SerialNumber) << tr("%1").arg(hardDiskInfo.m_Version)
+                        << tr("%1").arg(hardDiskInfo.m_Capabilities) << tr("%1").arg(hardDiskInfo.m_Description)
+                        << tr("%1").arg(hardDiskInfo.m_PowerOnHours) << tr("%1").arg(hardDiskInfo.m_PowerCycleCount)
+                        << tr("%1").arg(hardDiskInfo.m_FirmwareVersion) << tr("%1").arg(hardDiskInfo.m_Speed);
 
     QVBoxLayout *infoLayout = new QVBoxLayout(infoWidget);
 
@@ -103,7 +96,11 @@ void DiskInfoDisplayDialog::initUI()
         nameLabel->setPalette(palette1);
 
         DLabel *valueLabel = new DLabel;
-        valueLabel->setText(m_diskInfoValueList.at(i));
+        if (!m_diskInfoValueList.at(i).isEmpty()) {
+            valueLabel->setText(m_diskInfoValueList.at(i));
+        } else {
+            valueLabel->setText("-");
+        }
         DFontSizeManager::instance()->bind(valueLabel, DFontSizeManager::T7, QFont::Normal);
         valueLabel->setPalette(palette2);
 

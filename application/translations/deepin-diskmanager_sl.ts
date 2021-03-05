@@ -1,34 +1,34 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ru" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="sl" version="2.1">
 <context>
     <name>CreatePartitionTableDialog</name>
     <message>
         <source>The disk has a partition table already. Create a new one and replace it?</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">Disk že ima tabelo razdelkov. Ustvarim novo in jo zamenjam?</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
         <source>No partition table in this disk. Create a new one?</source>
-        <translation type="unfinished"/>
+        <translation>Disk nima tabele razdelkov. Ustvarim novo?</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="29"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation>Prekini</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="36"/>
         <source>Create</source>
-        <translation type="unfinished"/>
+        <translation>Ustvari</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="40"/>
         <source>The disk has a partition table already. Replace it?</source>
-        <translation type="unfinished"/>
+        <translation>Disk že ima tabelo razdelkov. Jo zamenjam?</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="41"/>
         <source>Replace</source>
-        <translation type="unfinished"/>
+        <translation>Zamenjaj</translation>
     </message>
 </context>
 <context>
@@ -41,27 +41,27 @@
     <message>
         <location filename="../widgets/cylinderinfowidget.cpp" line="442"/>
         <source>Cyl.: %1</source>
-        <translation>Cyl.: %1</translation>
+        <translation>Cil.: %1</translation>
     </message>
     <message>
         <location filename="../widgets/cylinderinfowidget.cpp" line="443"/>
         <source>Error: %1</source>
-        <translation>Ошибка: %1</translation>
+        <translation>Napaka: %1</translation>
     </message>
     <message>
         <location filename="../widgets/cylinderinfowidget.cpp" line="444"/>
         <source>Cyl. elapsed time: %1</source>
-        <translation>Cyl. прошло времени: %1</translation>
+        <translation>Izmerjeni čas cil.: %1</translation>
     </message>
     <message>
         <location filename="../widgets/cylinderinfowidget.cpp" line="444"/>
         <source>ms</source>
-        <translation>мс</translation>
+        <translation>ms</translation>
     </message>
     <message>
         <location filename="../widgets/cylinderinfowidget.cpp" line="445"/>
         <source>Status: Repaired</source>
-        <translation>Статус: исправлен</translation>
+        <translation>Stanje: popravljeno</translation>
     </message>
 </context>
 <context>
@@ -69,79 +69,81 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="105"/>
         <source>Disk info</source>
-        <translation>О диске</translation>
+        <translation>Podatki o disku</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="112"/>
         <source>Health management</source>
-        <translation>Управление здоровьем</translation>
+        <translation>Upravljanje zanesljivosti</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="117"/>
         <source>Check health</source>
-        <translation>Проверить работоспособность</translation>
+        <translation>Preveri zanesljivost</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="123"/>
         <source>Check partition table error</source>
-        <translation>Проверить ошибки таблицы разделов</translation>
+        <translation>Preveri napake v tabeli razdelkov</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="129"/>
         <source>Verify or repair bad sectors</source>
-        <translation>Проверить или исправить поврежденные сектора</translation>
+        <translation>Preveri ali popravi okvarjene sektorje</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="135"/>
         <source>Create partition table</source>
-        <translation type="unfinished"/>
+        <translation>Ustvari tabelo razdelkov</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="147"/>
         <source>Hide partition</source>
-        <translation>Скрыть раздел</translation>
+        <translation>Skrij razdelek</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="153"/>
         <source>Unhide partition</source>
-        <translation>Показать раздел</translation>
+        <translation>Prikaži razdelek</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="160"/>
         <source>Delete partition</source>
-        <translation>Удалить раздел</translation>
+        <translation>Izbriši razdelek</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="257"/>
         <source>OK</source>
-        <translation>ОК</translation>
+        <translation>V redu</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="266"/>
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
-        <translation type="unfinished"/>
+        <translation>Vsi razdelki na disku bodo združeni in vsi
+podatki bodo izgubljeni ob ustvarjanju nove
+tabele razdelkov. Bodite previdni</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="266"/>
         <source>Proceed</source>
-        <translation type="unfinished"/>
+        <translation>Nadaljuj</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="288"/>
         <source>No errors found in the partition table</source>
-        <translation>В таблице разделов ошибок не обнаружено</translation>
+        <translation>V tabeli razdelka ni bilo najdenih napak</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="298"/>
         <source>Do you want to hide this partition?</source>
-        <translation>Вы хотите скрыть этот раздел?</translation>
+        <translation>Želite skriti ta razdelek?</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="298"/>
         <source>Hide</source>
-        <translation>Скрыть</translation>
+        <translation>Skrij</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="266"/>
@@ -149,107 +151,107 @@
         <location filename="../widgets/devicelistwidget.cpp" line="324"/>
         <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation>Prekini</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="204"/>
         <source>Failed to get hardware information</source>
-        <translation type="unfinished"/>
+        <translation>Podatkov o strojni opremi ni bilo mogoče pridobiti</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="204"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Zapri</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="257"/>
         <source>Please unmount all partitions in the disk first</source>
-        <translation type="unfinished"/>
+        <translation>Najprej odklopite vse razdelke na disku</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="304"/>
         <source>Failed to hide the partition: unable to lock it</source>
-        <translation>Не удалось скрыть раздел: не удалось его заблокировать</translation>
+        <translation>Razdelka ni bilo mogoče skriti: ni ga mogoče zakleniti</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="312"/>
         <source>You can only hide the unmounted partition</source>
-        <translation>Вы можете скрыть только размонтированный раздел</translation>
+        <translation>Skriti je mogoče le odklopljene razdelke</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="324"/>
         <source>Do you want to unhide this partition?</source>
-        <translation>Вы хотите показать этот раздел?</translation>
+        <translation>Ali želite prikazati ta razdelek?</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="324"/>
         <source>Unhide</source>
-        <translation>Показать</translation>
+        <translation>Prikaži</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>Are you sure you want to delete this partition?</source>
-        <translation>Вы действительно хотите удалить этот раздел?</translation>
+        <translation>Ali ste prepričani, da želite izbrisati ta razdelek?</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>You will lose all data in it</source>
-        <translation>Вы потеряете все данные в нем</translation>
+        <translation>Vsi podatki na njemu bodo izgubljeni</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>Delete</source>
-        <translation>Удалить</translation>
+        <translation>Izbriši</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="341"/>
         <source>Failed to delete the partition: unable to lock it</source>
-        <translation>Не удалось удалить раздел: не удалось его заблокировать</translation>
+        <translation>Razdelka ni bilo mogoče izbrisati: ni ga mogoče zakleniti</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="354"/>
         <source>Hide the partition successfully</source>
-        <translation>Раздел успешно скрыт</translation>
+        <translation>Razdelek je bil skrit</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="359"/>
         <source>Failed to hide the partition</source>
-        <translation>Не удалось скрыть раздел</translation>
+        <translation>Razdelka ni bilo mogoče skriti</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="369"/>
         <source>Unhide the partition successfully</source>
-        <translation>Отображение раздела прошло успешно</translation>
+        <translation>Razdelek je viden</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="374"/>
         <source>Failed to unhide the partition</source>
-        <translation>Не удалось отобразить раздел</translation>
+        <translation>Razdelka ni bilo mogoče narediti vidnega</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="386"/>
         <source>Delete the partition successfully</source>
-        <translation>Раздел успешно удален</translation>
+        <translation>Razdelek je bil izbrisan</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="391"/>
         <source>Failed to delete the partition: %1</source>
-        <translation>Не удалось удалить раздел: %1</translation>
+        <translation>Ni bilo mogoče izbrisati razdelka: %1</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="401"/>
         <source>Unmounting successful</source>
-        <translation type="unfinished"/>
+        <translation>Odklapljanje je bilo uspešno</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="406"/>
         <source>Unmounting failed</source>
-        <translation type="unfinished"/>
+        <translation>Odklapljanje ni bilo uspešno</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="417"/>
         <source>Creating partition table successful</source>
-        <translation type="unfinished"/>
+        <translation>Ustvarjanje tabele razdelkov je bilo uspešno</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="421"/>
@@ -259,7 +261,7 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="429"/>
         <source>Creating partition table failed</source>
-        <translation type="unfinished"/>
+        <translation>Ustvarjanje tabele razdelkov ni bilo uspešno</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="433"/>
@@ -272,109 +274,109 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="57"/>
         <source>Verify or repair bad sectors</source>
-        <translation>Проверить или исправить поврежденные сектора</translation>
+        <translation>Preveri ali popravi okvarjene sektorje</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="82"/>
         <source>Verify:</source>
-        <translation>Проверить:</translation>
+        <translation>Preveri:</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="88"/>
         <source>Cylinders</source>
-        <translation>Цилиндров</translation>
+        <translation>Cilindri</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="89"/>
         <source>Sectors</source>
-        <translation>Секторов</translation>
+        <translation>Sektorji</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="90"/>
         <source>MB</source>
-        <translation>МБ</translation>
+        <translation>MB</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="131"/>
         <source>Method:</source>
-        <translation>Метод:</translation>
+        <translation>Metoda:</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="137"/>
         <source>Verifying times</source>
-        <translation>Время проверки</translation>
+        <translation>Število preverb</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="138"/>
         <source>Timeout</source>
-        <translation>Тайм-аут</translation>
+        <translation>Časovna omejitev</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="176"/>
         <source>ms</source>
-        <translation>мс</translation>
+        <translation>ms</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="209"/>
         <source>Result:</source>
-        <translation>Результат:</translation>
+        <translation>Rezultat:</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="230"/>
         <source>Excellent</source>
-        <translation>Отлично</translation>
+        <translation>Odlično</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="237"/>
         <source>Damaged</source>
-        <translation>Поврежден</translation>
+        <translation>Poškodovano</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="244"/>
         <source>Unknown</source>
-        <translation>Неизвестный</translation>
+        <translation>Neznano</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="272"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1091"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1116"/>
         <source>Exit</source>
-        <translation>Выход</translation>
+        <translation>Izhod</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="277"/>
         <source>Reset</source>
-        <translation>Сброс</translation>
+        <translation>Ponastavitev</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="283"/>
         <source>Repair</source>
-        <translation>Исправить</translation>
+        <translation>Popravljanje</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="289"/>
         <source>Start Verify</source>
-        <translation>Начать проверку</translation>
+        <translation>Zaženi preverbo</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="294"/>
         <source>Stop</source>
-        <translation>Остановить</translation>
+        <translation>Zaustavi</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="299"/>
         <source>Continue</source>
-        <translation>Продолжить</translation>
+        <translation>Nadaljuj</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="304"/>
         <source>Verify Again</source>
-        <translation>Проверить снова</translation>
+        <translation>Ponovno preveri</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="309"/>
         <source>Done</source>
-        <translation>Готово</translation>
+        <translation>Končano</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="337"/>
@@ -385,7 +387,7 @@
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="972"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1063"/>
         <source>Time elapsed:</source>
-        <translation>Прошло времени:</translation>
+        <translation>Izmerjeni čas:</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="341"/>
@@ -399,105 +401,105 @@
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1036"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1069"/>
         <source>Time left:</source>
-        <translation>Осталось времени:</translation>
+        <translation>Preostali čas:</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="684"/>
         <source>Verifying cylinder: %1</source>
-        <translation>Проверка цилиндра: %1</translation>
+        <translation>Preverjanje cilindra: %1</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="734"/>
         <source>Verify completed</source>
-        <translation>Проверка завершена</translation>
+        <translation>Preverjanje je končano</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="754"/>
         <source>Disk verify completed. %1 bad blocks found.</source>
-        <translation>Проверка диска завершена. Обнаружено плохих блоков: %1 </translation>
+        <translation>Preverjanje diska je končano. Najdenih je bilo %1 okvarjenih sektorjev.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="754"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="938"/>
         <source>OK</source>
-        <translation>ОК</translation>
+        <translation>V redu</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="934"/>
         <source>The verifying disk contains mounted partitions, so you cannot repair it.</source>
-        <translation>Проверяемый диск содержит смонтированные разделы, поэтому вы не можете его исправить.</translation>
+        <translation>Disk, ki se preverja, vsebuje priklopljene razdelke, zato ga ni mogoče popravljati.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="936"/>
         <source>Please unmount partitions and then repair the disk.</source>
-        <translation>Размонтируйте разделы, а затем исправьте диск.</translation>
+        <translation>Najprej odklopite razdelke, nato popravite disk.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="946"/>
         <source>Warning</source>
-        <translation>Предупреждение</translation>
+        <translation>Opozorilo</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="949"/>
         <source>Bad sector repairing cannot recover files,</source>
-        <translation>Исправление плохих секторов не может восстановить файлы,</translation>
+        <translation>Popravljanje okvarjenih sektorjev ne more opraviti datotek,</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="950"/>
         <source>but destroys data on and near bad sectors instead.</source>
-        <translation>но вместо этого уничтожает данные в поврежденных секторах и рядом с ними. </translation>
+        <translation>lahko pa uniči podatke na okvarjenih in bližnjih sektorjih.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="951"/>
         <source>Please back up all data before repair.</source>
-        <translation>Перед исправлением сделайте резервную копию всех данных.</translation>
+        <translation>Pred popravilom ustvarite varnostno kopijo.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="964"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1091"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1116"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation>Prekini</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="965"/>
         <source>Start Repair</source>
-        <translation>Начать исправление</translation>
+        <translation>Zaženi popravilo</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1004"/>
         <source>Repairing cylinder: %1</source>
-        <translation>Исправление цилиндра: %1</translation>
+        <translation>Popravljanje cilindra: %1</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1041"/>
         <source>Repair completed. Cylinder: %1 repaired.</source>
-        <translation>Исправление завершено. Цилиндр: %1 исправлен.</translation>
+        <translation>Popravilo je končano. Cilinder. %1 je popravljen</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1044"/>
         <source>Disk repair completed. %1 bad blocks repaired.</source>
-        <translation>Исправление диска завершено. Исправлено сбойных блоков: %1 .</translation>
+        <translation>Popravilo diska je končano. Popravljenih je %1 okvarjenih blokov.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1090"/>
         <source>Verifying for bad sectors, exit now?</source>
-        <translation>Проверка на наличие поврежденных секторов, выйти сейчас?</translation>
+        <translation>Opustim iskanje okvarjenih sektorjev?</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1090"/>
         <source>The verified information will not be reserved</source>
-        <translation>Проверенная информация не сохранится</translation>
+        <translation>Preverba ne bo shranjena</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1115"/>
         <source>Repairing bad sectors, exit now?</source>
-        <translation>Исправление поврежденных секторов, выйти сейчас?</translation>
+        <translation>Opustim popravilo okvarjenih sektorjev?</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1115"/>
         <source>The repairing information will not be reserved</source>
-        <translation>Исправленная информация не сохранится</translation>
+        <translation>Podatki o popravilu ne bodo shranjeni</translation>
     </message>
 </context>
 <context>
@@ -505,42 +507,42 @@
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="59"/>
         <source>Check Health</source>
-        <translation>Проверка здоровья</translation>
+        <translation>Preveri zanesljivost</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="91"/>
         <source>Serial number</source>
-        <translation>Серийный номер</translation>
+        <translation>Serijska številka</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="100"/>
         <source>Storage</source>
-        <translation>Хранилище</translation>
+        <translation>Shramba</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="121"/>
         <source>Health Status</source>
-        <translation>Состояние здоровья</translation>
+        <translation>Stanje zanesljivosti</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="135"/>
         <source>Good</source>
-        <translation>Хорошо</translation>
+        <translation>Dobro</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="141"/>
         <source>Damaged</source>
-        <translation>Повреждено</translation>
+        <translation>Poškodovano</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="147"/>
         <source>Unknown</source>
-        <translation>Неизвестно</translation>
+        <translation>Neznano</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="166"/>
         <source>Temperature</source>
-        <translation>Температура</translation>
+        <translation>Temperatura</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="228"/>
@@ -552,78 +554,78 @@
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="229"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>Status</source>
-        <translation>Статус</translation>
+        <translation>Stanje</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="230"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>Current</source>
-        <translation>Текущий</translation>
+        <translation>Trenutno</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="231"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="396"/>
         <source>Worst</source>
-        <translation>Наихудший</translation>
+        <translation>Najslabše</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="232"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
         <source>Threshold</source>
-        <translation>Порог</translation>
+        <translation>Prag</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="233"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
         <source>Raw Value</source>
-        <translation>Исходное значение</translation>
+        <translation>Surova vrednost</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="234"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
         <source>Attribute name</source>
-        <translation>Название атрибута</translation>
+        <translation>Ime atributa</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="331"/>
         <source>Status: (G: Good | W: Warning | D: Damaged | U: Unknown)</source>
-        <translation>Статус: (Х: Хорошо | О: Опасность | П: Поврежден | Н: Неизвестно)</translation>
+        <translation>Stanje (G: dobro | W: opozorilo | D: poškodovano | U: neznano)</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="335"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="337"/>
         <source>Export</source>
-        <translation>Экспорт</translation>
+        <translation>Izvozi</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="363"/>
         <source>Save File</source>
-        <translation>Сохранить файл</translation>
+        <translation>Shrani datoteko</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="363"/>
         <source>Text files (*.txt)</source>
-        <translation>Текстовые файлы (*.txt)</translation>
+        <translation>Besedilne datoteke (*.txt)</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="377"/>
         <source>Wrong path</source>
-        <translation>Неверный путь</translation>
+        <translation>Napačna pot</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="385"/>
         <source>You do not have permission to access this path</source>
-        <translation>У вас нет разрешения на доступ к этому пути</translation>
+        <translation>Nimate pravic za dostop do te poti</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>Export successful</source>
-        <translation>Экспорт успешно завершен</translation>
+        <translation>Izvažanje je uspelo</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="418"/>
         <source>Export failed</source>
-        <translation>Не удалось выполнить экспорт</translation>
+        <translation>Izvažanje ni uspelo</translation>
     </message>
 </context>
 <context>
@@ -631,77 +633,77 @@
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="55"/>
         <source>Disk Info</source>
-        <translation>О диске</translation>
+        <translation>Podatki o disku</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="65"/>
         <source>Model:</source>
-        <translation>Модель:</translation>
+        <translation>Model:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="65"/>
         <source>Vendor:</source>
-        <translation>Производитель:</translation>
+        <translation>Proizvajalec:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="65"/>
         <source>Media Type:</source>
-        <translation>Тип носителя:</translation>
+        <translation>Vrsta nosilca:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="65"/>
         <source>Size:</source>
-        <translation>Размер:</translation>
+        <translation>Velikost:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="66"/>
         <source>Rotation Rate:</source>
-        <translation>Скорость вращения:</translation>
+        <translation>Hitrost vrtenja:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="66"/>
         <source>Interface:</source>
-        <translation>Интерфейс:</translation>
+        <translation>Vmesnik:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="66"/>
         <source>Serial Number:</source>
-        <translation>Серийный номер:</translation>
+        <translation>Serijska številka:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="66"/>
         <source>Version:</source>
-        <translation>Версия:</translation>
+        <translation>Različica:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
         <source>Capabilities:</source>
-        <translation>Возможности:</translation>
+        <translation>Zmožnosti:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
         <source>Description:</source>
-        <translation>Описание:</translation>
+        <translation>Opis:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
         <source>Power On Hours:</source>
-        <translation>Часы работы:</translation>
+        <translation>Čas delovanja v urah:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Power Cycle Count:</source>
-        <translation>Циклов питания:</translation>
+        <translation>Število vklopov:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Firmware Version:</source>
-        <translation>Версия прошивки:</translation>
+        <translation>Različica sistemskih programov:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Speed:</source>
-        <translation>Скорость:</translation>
+        <translation>Hitrost:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="71"/>
@@ -718,37 +720,37 @@
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="117"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="119"/>
         <source>Export</source>
-        <translation>Экспорт</translation>
+        <translation>Izvozi</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="145"/>
         <source>Save File</source>
-        <translation>Сохранить файл</translation>
+        <translation>Shrani datoteko</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="145"/>
         <source>Text files (*.txt)</source>
-        <translation>Текстовые файлы (*.txt)</translation>
+        <translation>Besedilne datoteke (*.txt)</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="159"/>
         <source>Wrong path</source>
-        <translation>Неверный путь</translation>
+        <translation>Napačna pot</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="167"/>
         <source>You do not have permission to access this path</source>
-        <translation>У вас нет разрешения на доступ к этому пути</translation>
+        <translation>Nimate pravic za dostop do te poti</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="192"/>
         <source>Export successful</source>
-        <translation>Экспорт успешно завершен</translation>
+        <translation>Izvažanje je uspelo</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="195"/>
         <source>Export failed</source>
-        <translation>Не удалось выполнить экспорт</translation>
+        <translation>Izvažanje ni uspelo</translation>
     </message>
 </context>
 <context>
@@ -756,42 +758,42 @@
     <message>
         <location filename="../widgets/formatedialog.cpp" line="48"/>
         <source>Format %1</source>
-        <translation>Форматирование %1</translation>
+        <translation>Formatiranje %1</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="49"/>
         <source>Formatting will erase all data on the disk, which cannot be undone</source>
-        <translation>Форматирование приведет к стиранию всех данных на диске, отменить действие будет невозможно</translation>
+        <translation>Formatiranje bo izbrisalo vse podatke na disku, česar ni mogoče razveljaviti</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="56"/>
         <source>Name:</source>
-        <translation>Имя:</translation>
+        <translation>Ime:</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="63"/>
         <source>Name</source>
-        <translation>Имя</translation>
+        <translation>Ime</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="68"/>
         <source>File system:</source>
-        <translation>Файловая система:</translation>
+        <translation>Datotečni sistem:</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="89"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation>Prekini</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="90"/>
         <source>Format</source>
-        <translation>Форматировать</translation>
+        <translation>Formatiraj</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="105"/>
         <source>The length exceeds the limit</source>
-        <translation>Длина превышает лимит</translation>
+        <translation>Dolžina presega omejitev</translation>
     </message>
 </context>
 <context>
@@ -799,32 +801,32 @@
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="101"/>
         <source>Mount point:</source>
-        <translation>Точка монтирования:</translation>
+        <translation>Priklopna točka:</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="108"/>
         <source>Free:</source>
-        <translation>Свободно:</translation>
+        <translation>Prosto:</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="114"/>
         <source>Used:</source>
-        <translation>Использовано:</translation>
+        <translation>Porabljeno:</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="120"/>
         <source>Type:</source>
-        <translation>Тип:</translation>
+        <translation>Vrsta:</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="125"/>
         <source>Capacity:</source>
-        <translation>Вместимость:</translation>
+        <translation>Zmogljivost:</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="130"/>
         <source>Volume label:</source>
-        <translation>Метка тома:</translation>
+        <translation>Oznaka pogona:</translation>
     </message>
 </context>
 <context>
@@ -832,12 +834,12 @@
     <message>
         <location filename="../widgets/customcontrol/infotopframe.cpp" line="59"/>
         <source>Capacity</source>
-        <translation>Вместимость</translation>
+        <translation>Zmogljivost</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/infotopframe.cpp" line="113"/>
         <source>File system</source>
-        <translation>Файловая система</translation>
+        <translation>Datotečni sistem</translation>
     </message>
 </context>
 <context>
@@ -845,7 +847,7 @@
     <message>
         <location filename="../widgets/mainwindow.cpp" line="125"/>
         <source>Refresh</source>
-        <translation>Обновить</translation>
+        <translation>Osveži</translation>
     </message>
 </context>
 <context>
@@ -853,38 +855,38 @@
     <message>
         <location filename="../widgets/mountdialog.cpp" line="49"/>
         <source>Mount %1</source>
-        <translation>Монтировать %1</translation>
+        <translation>Priklop %1</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="52"/>
         <source>Choose a mount point please</source>
-        <translation>Пожалуйста, выберете точку монтирования</translation>
+        <translation>Izberite priklopno točko</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="55"/>
         <source>Mount point:</source>
-        <translation>Точка монтирования:</translation>
+        <translation>Priklopna točka:</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="79"/>
         <location filename="../widgets/mountdialog.cpp" line="114"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation>Prekini</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="80"/>
         <source>Mount</source>
-        <translation>Монтировать</translation>
+        <translation>Priklop</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="114"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
-        <translation>Данные под этой точкой монтирования будут потеряны, пожалуйста, смонтируйте каталог в другое место</translation>
+        <translation>Podatki na tej priklopni točki bi bili izgubljeni. Priklopite imenik na drugo lokacijo</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="114"/>
         <source>OK</source>
-        <translation>ОК</translation>
+        <translation>V redu</translation>
     </message>
 </context>
 <context>
@@ -892,7 +894,7 @@
     <message>
         <location filename="../widgets/customcontrol/partchartshowing.cpp" line="116"/>
         <source>Unallocated</source>
-        <translation>Нераспределенный</translation>
+        <translation>Ni razvrščeno</translation>
     </message>
 </context>
 <context>
@@ -900,22 +902,22 @@
     <message>
         <location filename="../widgets/partitiondialog.cpp" line="48"/>
         <source>Partition %1</source>
-        <translation>Раздел %1</translation>
+        <translation>Razdelek %1</translation>
     </message>
     <message>
         <location filename="../widgets/partitiondialog.cpp" line="50"/>
         <source>It will increase the number of partitions on the disk</source>
-        <translation>Увеличится количество разделов на диске</translation>
+        <translation>To bo povečalo število razdelkov na disku</translation>
     </message>
     <message>
         <location filename="../widgets/partitiondialog.cpp" line="57"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation>Prekini</translation>
     </message>
     <message>
         <location filename="../widgets/partitiondialog.cpp" line="58"/>
         <source>Confirm</source>
-        <translation>Применить</translation>
+        <translation>Potrdi</translation>
     </message>
 </context>
 <context>
@@ -923,27 +925,27 @@
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="53"/>
         <source>Errors in Partition Table</source>
-        <translation>Ошибки в таблице разделов</translation>
+        <translation>Napake v tabeli razdelkov</translation>
     </message>
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="62"/>
         <source>The partition table of disk %1 has below errors:</source>
-        <translation>Таблица разделов диска %1 содержит следующие ошибки:</translation>
+        <translation>Tabela razdelkov diska %1 ima naslednje napake:</translation>
     </message>
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="99"/>
         <source>Error</source>
-        <translation>Ошибка</translation>
+        <translation>Napaka</translation>
     </message>
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="108"/>
         <source>Partition table entries are not in disk order</source>
-        <translation>Записи в таблице разделов не в порядке дисков</translation>
+        <translation>Vnosi v tabelo razdelkov ne ustrezajo razporedu diskov</translation>
     </message>
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="120"/>
         <source>OK</source>
-        <translation>ОК</translation>
+        <translation>V reduV redu</translation>
     </message>
 </context>
 <context>
@@ -951,109 +953,109 @@
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="54"/>
         <source>Partitioning %1</source>
-        <translation>Разбиение на разделы %1 </translation>
+        <translation>Razdeljevanje %1</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="55"/>
         <source>Click ‘+’ to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation>Нажмите кнопку &quot;+&quot;, чтобы увеличить количество разделов. Щелкните на каждом разделе, чтобы изменить его имя и файловую систему.</translation>
+        <translation>Kliknite &apos;+&apos; za večanje števila razdelkov. Kliknite na vsak razdelek, da mu spremenite ime in datotečni sistem.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="106"/>
         <source>Disk Information</source>
-        <translation>Информация о диске</translation>
+        <translation>Podatki o disku</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="121"/>
         <source>Capacity:</source>
-        <translation>Вместимость:</translation>
+        <translation>Zmogljivost:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="131"/>
         <source>Partition selected:</source>
-        <translation>Выбран раздел:</translation>
+        <translation>Izbrani razdelek:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="146"/>
         <source>Disk:</source>
-        <translation>Диск:</translation>
+        <translation>Disk:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="156"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="273"/>
         <source>File system:</source>
-        <translation>Файловая система:</translation>
+        <translation>Datotečni sistem:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="195"/>
         <source>Confirm</source>
-        <translation>Применить</translation>
+        <translation>Potrdi</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="198"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation>Prekini</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="200"/>
         <source>Revert</source>
-        <translation>Вернуть</translation>
+        <translation>Povrni</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="222"/>
         <source>Partition Information</source>
-        <translation>Информация о разделе</translation>
+        <translation>Podatki o razdelku</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="234"/>
         <source>Number of partitions:</source>
-        <translation>Количество разделов</translation>
+        <translation>Število razdelkov:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="245"/>
         <source>Delete last partition</source>
-        <translation>Удалить последний раздел</translation>
+        <translation>Izbriši zadnji razdelek</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="255"/>
         <source>Name:</source>
-        <translation>Имя:</translation>
+        <translation>Ime.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="281"/>
         <source>Size:</source>
-        <translation>Размер:</translation>
+        <translation>Velikost:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="379"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="492"/>
         <source>Unallocated</source>
-        <translation>Нераспределенный</translation>
+        <translation>Ni razvrščeno</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="402"/>
         <source>Name</source>
-        <translation>Имя</translation>
+        <translation>Ime</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="403"/>
         <source>Size</source>
-        <translation>Размер</translation>
+        <translation>Velikost</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="656"/>
         <source>The length exceeds the limit</source>
-        <translation>Длина превышает лимит</translation>
+        <translation>Dolžina presega omejitev</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="687"/>
         <source>The number of new partitions exceeds the limit</source>
-        <translation>Количество новых разделов превышает количество доступных разделов</translation>
+        <translation>Število novih razdelkov presega omejitev</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="707"/>
         <source>To create a partition, you need at least 52 MB</source>
-        <translation>Для создания раздела необходимо не менее 52 МБ</translation>
+        <translation>Za ustvarjanje razdelka je potrebnih vsaj 52 MB</translation>
     </message>
 </context>
 <context>
@@ -1061,12 +1063,12 @@
     <message>
         <location filename="../main.cpp" line="37"/>
         <source>Disk Utility</source>
-        <translation>Дисковая Утилита</translation>
+        <translation>Diskovna orodja</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="45"/>
         <source>Disk Utility is a disk management tool for creating, reorganizing and formatting partitions.</source>
-        <translation>Дисковая Утилита - это инструмент управления дисками для создания, реорганизации и форматирования разделов.</translation>
+        <translation>Diskovna orodja je orodje za upravljanje diskov, ki omogoča ustvarjanje, preoblikovanje in formatiranje razdelkov.</translation>
     </message>
 </context>
 <context>
@@ -1074,32 +1076,32 @@
     <message>
         <location filename="../widgets/resizedialog.cpp" line="48"/>
         <source>Resize %1</source>
-        <translation>Изменить размер %1</translation>
+        <translation>Spreminjanje velikost %1</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="49"/>
         <source>It will resize the partitions on the disk</source>
-        <translation>Изменится размер разделов на диске</translation>
+        <translation>To bo spremenilo velikost razdelkov na disku</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="62"/>
         <source>Reserved size:</source>
-        <translation>Зарезервированный размер:</translation>
+        <translation>Rezervirana velikost:</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="78"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation>Prekini</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="79"/>
         <source>Confirm</source>
-        <translation>Применить</translation>
+        <translation>Potrdi</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="137"/>
         <source>Space limit exceeded</source>
-        <translation>Превышен лимит допустимого пространства</translation>
+        <translation>Omejitev velikosti je presežena</translation>
     </message>
 </context>
 <context>
@@ -1110,7 +1112,7 @@
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="227"/>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="230"/>
         <source> Capacity:</source>
-        <translation> Вместимость:</translation>
+        <translation>Zmogljivost:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="172"/>
@@ -1118,7 +1120,7 @@
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="234"/>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="237"/>
         <source>Used:</source>
-        <translation>Использовано:</translation>
+        <translation>Porabljeno:</translation>
     </message>
 </context>
 <context>
@@ -1126,32 +1128,32 @@
     <message>
         <location filename="../widgets/titlewidget.cpp" line="48"/>
         <source>Partition</source>
-        <translation>Раздел</translation>
+        <translation>Razdelek</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="49"/>
         <source>Format to</source>
-        <translation>Форматировать в</translation>
+        <translation>Formatiraj v</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="50"/>
         <source>Mount</source>
-        <translation>Монтировать</translation>
+        <translation>Priklop</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="51"/>
         <source>Unmount</source>
-        <translation>Размонтировать</translation>
+        <translation>Odklopi</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="52"/>
         <source>Resize</source>
-        <translation>Изменить размер</translation>
+        <translation>Spremeni velikost</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="116"/>
         <source>Cannot recognize its partition table</source>
-        <translation>Не удается распознать таблицу разделов</translation>
+        <translation>Tabele razdelkov ni mogoče prepoznati</translation>
     </message>
 </context>
 <context>
@@ -1159,42 +1161,41 @@
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="48"/>
         <source>Unmount %1</source>
-        <translation>Размонтировать %1</translation>
+        <translation>Odklopi %1</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="51"/>
         <source>Make sure there are no programs running on the disk</source>
-        <translation>Убедитесь, что на диске нет запущенных программ</translation>
+        <translation>Poskrbite, da noben drug program ne uporablja diska</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="58"/>
         <location filename="../widgets/unmountdialog.cpp" line="83"/>
         <location filename="../widgets/unmountdialog.cpp" line="88"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation>Prekini</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="59"/>
         <location filename="../widgets/unmountdialog.cpp" line="88"/>
         <source>Unmount</source>
-        <translation>Размонтировать</translation>
+        <translation>Odklopi</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="82"/>
         <source>Unmounting system disk may result in system crash,
  please confirm before proceeding</source>
-        <translation>Отключение системного диска может привести к сбою системы,
-пожалуйста, подтвердите перед продолжением</translation>
+        <translation>Odklop sistemskega diska lahko povzroči sesutje sistema. Potrdite pred nadaljevanjem</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="83"/>
         <source>Continue</source>
-        <translation>Продолжить</translation>
+        <translation>Nadaljuj</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="87"/>
         <source>You will take subsequent risks if you continue to unmount the system disk</source>
-        <translation>Вы рискуете, если продолжите отключение системного диска</translation>
+        <translation>Če boste nadaljevali z odklapljanjem sistemskega diska, boste morali prevzeti tveganje</translation>
     </message>
 </context>
 </TS>

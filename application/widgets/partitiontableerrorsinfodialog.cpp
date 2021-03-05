@@ -47,6 +47,11 @@ PartitionTableErrorsInfoDialog::PartitionTableErrorsInfoDialog(const QString &de
     initConnections();
 }
 
+PartitionTableErrorsInfoDialog::~PartitionTableErrorsInfoDialog()
+{
+    delete m_partitionTableErrorsInfoDelegatee;
+}
+
 void PartitionTableErrorsInfoDialog::initUI()
 {
     setIcon(QIcon::fromTheme(appName));
@@ -63,8 +68,8 @@ void PartitionTableErrorsInfoDialog::initUI()
     DFontSizeManager::instance()->bind(m_Label, DFontSizeManager::T6, QFont::Normal);
     m_Label->setPalette(palette1);
 
-    m_tableView = new DTableView;
-    m_standardItemModel = new QStandardItemModel;
+    m_tableView = new DTableView(this);
+    m_standardItemModel = new QStandardItemModel(this);
 
     m_tableView->setShowGrid(false);
     m_tableView->setFrameShape(QAbstractItemView::NoFrame);

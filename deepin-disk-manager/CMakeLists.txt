@@ -4,8 +4,7 @@ if (NOT DEFINED VERSION)
     set(VERSION 1.2.2)
 endif ()
 
-set(APP_BIN_NAME "deepin-diskmanager-authenticateProxy")
-set(APP_POLICY_FILES "policy/com.deepin.pkexec.deepin-diskmanager-authenticateProxy.policy")
+set(APP_BIN_NAME "deepin-disk-manager")
 
 if (${CMAKE_SYSTEM_PROCESSOR} MATCHES "sw_64")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mieee")
@@ -54,4 +53,3 @@ set(CMAKE_INSTALL_PREFIX /usr)
 
 # Install files
 install(TARGETS ${APP_BIN_NAME} DESTINATION bin)
-install(FILES ${APP_POLICY_FILES} DESTINATION share/polkit-1/actions)

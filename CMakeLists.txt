@@ -36,7 +36,7 @@ endif()
 #set(CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS_MINSIZEREL} -g -fsanitize=address -O2")
 #set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO}  -g -fsanitize=address -O2")
 
-ADD_SUBDIRECTORY(authenticateProxy)
+ADD_SUBDIRECTORY(deepin-disk-manager)
 ADD_SUBDIRECTORY(basestruct)
 ADD_SUBDIRECTORY(log)
 ADD_SUBDIRECTORY(application)

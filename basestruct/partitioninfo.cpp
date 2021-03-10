@@ -38,7 +38,7 @@ PartitionInfo::PartitionInfo()
     m_devicePath = m_uuid = m_name = m_path = m_fileSystemLabel = "";
     m_partitionNumber = m_type = m_status = m_alignment = m_fileSystemType = 0;
     m_sectorStart = m_sectorEnd = m_sectorsUsed = m_sectorsUnused = m_sectorsUnallocated = m_significantThreshold = m_freeSpaceBefore = 0;
-    m_flag = 0;
+    m_flag = m_sectorSize = m_fileSystemBlockSize = 0;
     // mountpoints.clear();
 }
 

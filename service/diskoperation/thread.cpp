@@ -38,6 +38,10 @@ workthread::workthread(QObject *parent)
 {
     Q_UNUSED(parent);
     m_stopFlag = 0;
+    m_blockStart = 0;
+    m_blockEnd = 0;
+    m_checkConut = 0;
+    m_checkSize = 0;
 }
 
 void workthread::setStopFlag(int flag)
@@ -165,6 +169,7 @@ fixthread::fixthread(QObject *parent)
 {
     Q_UNUSED(parent);
     m_stopFlag = 0;
+    m_checkSize = 0;
 }
 
 void fixthread::setStopFlag(int flag)

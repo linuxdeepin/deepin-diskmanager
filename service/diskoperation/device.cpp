@@ -41,6 +41,11 @@ Device::Device()
     qDBusRegisterMetaType<HardDiskInfo>();
     qDBusRegisterMetaType<HardDiskStatusInfo>();
     qDBusRegisterMetaType<HardDiskStatusInfoList>();
+    m_sectorSize = 0;
+    m_maxPrims = 0;
+    m_highestBusy = 0;
+    m_readonly = false;
+    m_maxPartitionNameLength = 0;
 }
 
 void Device::enablePartitionNaming(int length)

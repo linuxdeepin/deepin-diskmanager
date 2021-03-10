@@ -48,11 +48,15 @@ DmDiskinfoBox::DmDiskinfoBox(int level, QObject *parent, QString diskPath, QStri
     , m_flag(flag)
 {
     m_childs.clear();
+    m_id = 0;
 }
 
 DmDiskinfoBox::DmDiskinfoBox(QObject *parent)
     : QObject(parent)
 {
+    m_id = 0;
+    m_level = 0;
+    m_flag = 0;
 }
 
 DmDiskinfoBox::~DmDiskinfoBox()

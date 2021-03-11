@@ -92,6 +92,7 @@ install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 install(FILES ${DTNG_QM_FILES} DESTINATION share/${PROJECT_NAME}/translations)
 install(FILES ${APP_ICONPATH} DESTINATION share/icons/hicolor/scalable/apps)
 install(FILES ${APP_DESKTOP} DESTINATION share/applications)
+install(DIRECTORY ${APP_RES_DIR}/deepin-diskmanager DESTINATION /usr/share/deepin-manual/manual-assets/application/)
 
 
 

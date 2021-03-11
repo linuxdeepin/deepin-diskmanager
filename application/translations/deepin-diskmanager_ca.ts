@@ -256,7 +256,7 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="421"/>
         <source>Replacing partition table successful</source>
-        <translation type="unfinished"/>
+        <translation>Reemplaçament de la taula de particions correcta</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="429"/>
@@ -266,7 +266,7 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="433"/>
         <source>Replacing partition table failed</source>
-        <translation type="unfinished"/>
+        <translation>Ha fallat reemplaçar la taula de particions.</translation>
     </message>
 </context>
 <context>

@@ -256,7 +256,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="421"/>
         <source>Replacing partition table successful</source>
-        <translation type="unfinished"/>
+        <translation>Remplacement de la table de partition réussi</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="429"/>
@@ -266,7 +266,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="433"/>
         <source>Replacing partition table failed</source>
-        <translation type="unfinished"/>
+        <translation>Le remplacement de la table de partition a échoué</translation>
     </message>
 </context>
 <context>

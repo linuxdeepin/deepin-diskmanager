@@ -75,8 +75,8 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
-    if (normal.width() < 800 && normal.height() < 600) {
-        setMinimumSize(800, 600);
+    if (normal.width() < 850 && normal.height() < 600) {
+        setMinimumSize(850, 600);
     } else {
         setMinimumSize(normal.width(), normal.height());
     }
@@ -121,7 +121,7 @@ void MainWindow::initUi()
     QIcon icon = Common::getIcon("refresh");
     m_btnRefresh->setIcon(icon);
     m_btnRefresh->setFixedSize(QSize(36, 36));
-    m_btnRefresh->setIconSize(QSize(17, 14));
+    m_btnRefresh->setIconSize(QSize(19, 16));
     m_btnRefresh->setToolTip(tr("Refresh"));
     m_btnRefresh->setCheckable(false);
     m_btnRefresh->setObjectName("refresh");

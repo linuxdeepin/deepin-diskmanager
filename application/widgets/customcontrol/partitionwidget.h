@@ -242,6 +242,14 @@ private slots:
      */
     void onJudgeLastPartition();
 
+protected:
+    /**
+     * @brief event:事件变化
+     * @param event事件
+     * @return 布尔
+     */
+    bool event(QEvent *event) override;
+
 private:
     QWidget *m_mainFrame;
     DFrame *m_topFrame;
@@ -251,6 +259,7 @@ private:
     DLabel *m_partDoLabel;
     DLabel *m_allMemory;
     DLabel *m_deviceFormate;
+    DLabel *m_deviceNameLabel;
     DLabel *m_deviceName;
     DLabel *m_selectedPartition;
     DLabel *m_partNameLabel;

@@ -51,6 +51,14 @@ signals:
 
 public slots:
 
+protected:
+    /**
+     * @brief event:事件变化
+     * @param event事件
+     * @return 布尔
+     */
+    bool event(QEvent *event) override;
+
 private slots:
     /**
      * @brief 导出按钮点击响应的槽函数

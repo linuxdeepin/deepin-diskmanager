@@ -39,7 +39,7 @@ InfoTopFrame::InfoTopFrame(DWidget *parent)
     setBackgroundRole(DPalette::ItemBackground);
 
     m_mainLayout = new QHBoxLayout();
-    m_mainLayout->setContentsMargins(30, 0, 20, 0);
+    m_mainLayout->setContentsMargins(20, 0, 20, 0);
     setLayout(m_mainLayout);
 
     m_pictureLabel = new DLabel(this);

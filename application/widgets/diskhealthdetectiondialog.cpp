@@ -43,6 +43,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QDebug>
+#include <QApplication>
 
 DiskHealthDetectionDialog::DiskHealthDetectionDialog(const QString &devicePath, HardDiskStatusInfoList hardDiskStatusInfoList, QWidget *parent)
     : DDialog(parent)
@@ -62,7 +63,7 @@ void DiskHealthDetectionDialog::initUI()
 {
     setIcon(QIcon::fromTheme(appName));
     setTitle(tr("Check Health")); // 硬盘健康检测
-    setMinimumSize(726, 676);
+    setFixedSize(726, 700);
 
     QIcon iconDisk = Common::getIcon("disk");
     DLabel *diskLabel = new DLabel;
@@ -103,7 +104,7 @@ void DiskHealthDetectionDialog::initUI()
     m_serialNumberValue->setPalette(palette2);
 
     DLabel *userCapacityNameLabel = new DLabel(tr("Storage")); // 用户容量
-    DFontSizeManager::instance()->bind(userCapacityNameLabel, DFontSizeManager::T8, QFont::Medium);
+    DFontSizeManager::instance()->bind(userCapacityNameLabel, DFontSizeManager::T10, QFont::Medium);
     userCapacityNameLabel->setPalette(palette1);
 
     m_userCapacityValue = new DLabel;
@@ -186,7 +187,8 @@ void DiskHealthDetectionDialog::initUI()
 
     DFrame *infoWidget = new DFrame;
     infoWidget->setBackgroundRole(DPalette::ItemBackground);
-    infoWidget->setMinimumSize(706, 108);
+    infoWidget->setMinimumSize(706, 118);
+    infoWidget->setLineWidth(0);
 
     QHBoxLayout *topLayout = new QHBoxLayout(infoWidget);
     topLayout->addWidget(diskLabel);
@@ -214,8 +216,9 @@ void DiskHealthDetectionDialog::initUI()
     m_tableView->setHorizontalHeader(m_diskHealthHeaderView);
 
 //    m_tableView->setFont(QFont("SourceHanSansSC", 10, 50));
-    QFont fontHeader = DFontSizeManager::instance()->get(DFontSizeManager::T6, QFont::Medium);
-    m_tableView->horizontalHeader()->setFont(fontHeader);
+//    QFont fontHeader = DFontSizeManager::instance()->get(DFontSizeManager::T6, QFont::Medium);
+//    m_tableView->horizontalHeader()->setFont(fontHeader);
+    DFontSizeManager::instance()->bind(m_tableView->horizontalHeader(), DFontSizeManager::T6, QFont::Medium);
     m_tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft | Qt::AlignCenter);
     m_tableView->horizontalHeader()->setPalette(palette6);
 //    m_tableView->horizontalHeader()->setFixedHeight(30);
@@ -326,7 +329,7 @@ void DiskHealthDetectionDialog::initUI()
     }
 
     DFrame *tableWidget = new DFrame;
-    tableWidget->setMinimumSize(706, 451);
+    tableWidget->setMinimumSize(706, 430);
     QHBoxLayout *tableLayout = new QHBoxLayout(tableWidget);
     tableLayout->addWidget(m_tableView);
     tableLayout->setSpacing(0);
@@ -338,23 +341,35 @@ void DiskHealthDetectionDialog::initUI()
     stateTipsLabel->setPalette(palette4);
 
     m_linkButton = new DCommandLinkButton(tr("Export")); // 导出
-    QFontMetrics fmCapacity = m_linkButton->fontMetrics();
-    int wdith = fmCapacity.width(QString(tr("Export")));
-    m_linkButton->setFixedWidth(wdith);
+    DFontSizeManager::instance()->bind(m_linkButton, DFontSizeManager::T8, QFont::Medium);
+    m_linkButton->setFixedWidth(m_linkButton->fontMetrics().width(QString(tr("Export"))));
 
-    QWidget *bottomWidget = new QWidget;
-    QHBoxLayout *bottomLayout = new QHBoxLayout(bottomWidget);
+//    QWidget *bottomWidget = new QWidget;
+    QHBoxLayout *bottomLayout = new QHBoxLayout/*(bottomWidget)*/;
     bottomLayout->addWidget(stateTipsLabel);
     bottomLayout->addStretch();
     bottomLayout->addWidget(m_linkButton);
     bottomLayout->setContentsMargins(0, 0, 0, 0);
 
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    mainLayout->addWidget(infoWidget);
+    mainLayout->addSpacing(10);
+    mainLayout->addWidget(tableWidget);
+    mainLayout->addSpacing(10);
+    mainLayout->addLayout(bottomLayout);
+    mainLayout->setSpacing(0);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
+
+    QWidget *widget = new QWidget;
+    widget->setLayout(mainLayout);
+
     addSpacing(10);
-    addContent(infoWidget);
-    addSpacing(10);
-    addContent(tableWidget);
-    addSpacing(10);
-    addContent(bottomWidget);
+    addContent(widget);
+//    addContent(infoWidget);
+//    addSpacing(10);
+//    addContent(tableWidget);
+//    addSpacing(10);
+//    addContent(bottomWidget);
 }
 
 void DiskHealthDetectionDialog::initConnections()
@@ -425,5 +440,23 @@ void DiskHealthDetectionDialog::onExportButtonClicked()
         }
     }
 }
+
+bool DiskHealthDetectionDialog::event(QEvent *event)
+{
+    // 字体大小改变
+    if (QEvent::ApplicationFontChange == event->type()) {
+        m_linkButton->setFixedWidth(m_linkButton->fontMetrics().width(QString(tr("Export"))));
+
+        if (QApplication::font().pointSizeF() / 0.75 >= 18 ) {
+            setFixedSize(726, 705);
+        } else {
+            setFixedSize(726, 700);
+        }
+        DDialog::event(event);
+    }
+
+    return DDialog::event(event);
+}
+
 
 

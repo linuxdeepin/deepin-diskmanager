@@ -70,6 +70,14 @@ signals:
 
 public slots:
 
+protected:
+    /**
+     * @brief event:事件变化
+     * @param event事件
+     * @return 布尔
+     */
+    bool event(QEvent *event) override;
+
 private slots:
     /**
      * @brief 接收检测范围切换的槽函数
@@ -207,6 +215,7 @@ private:
     DLineEdit *m_startLineEdit;
     DLineEdit *m_endLineEdit;
     DLabel *m_verifyLabel;
+    DLabel *m_methodLabel;
     DComboBox *m_methodComboBox;
     DSlider *m_slider;
     DLineEdit *m_checkTimesEdit;

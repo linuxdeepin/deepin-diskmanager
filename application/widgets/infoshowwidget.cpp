@@ -52,6 +52,7 @@ void InfoShowWidget::initUi()
     m_frame = new DFrame();
     layout->setContentsMargins(10, 10, 10, 10);
     layout->addWidget(m_frame);
+    m_frame->setLineWidth(0);
 
     QVBoxLayout *frameLayout = new QVBoxLayout(m_frame);
     frameLayout->setContentsMargins(10, 10, 10, 10);
@@ -60,6 +61,7 @@ void InfoShowWidget::initUi()
     m_infoTopFrame = new InfoTopFrame(this);
     frameLayout->addWidget(m_infoTopFrame);
     m_infoTopFrame->setMinimumWidth(450);
+    m_infoTopFrame->setLineWidth(0);
 
     // 右侧 中部数据信息
     m_frameMid = new DFrame;
@@ -186,6 +188,7 @@ void InfoShowWidget::bottomFramSettings()
 
     QHBoxLayout *mainlayout = new QHBoxLayout(m_frameBottom);
     mainlayout->addLayout(leftInfoLayout);
+    mainlayout->addSpacing(10);
     mainlayout->addLayout(rightInfolayout);
 }
 

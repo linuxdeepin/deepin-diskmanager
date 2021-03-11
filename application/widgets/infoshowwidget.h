@@ -32,6 +32,7 @@
 #include <DWidget>
 #include <DLabel>
 #include <DFrame>
+#include <DProgressBar>
 
 class DmFrameWidget;
 class SizeInfoWidget;

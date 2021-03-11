@@ -53,11 +53,12 @@ void DiskInfoDisplayDialog::initUI()
 //    setWindowTitle("磁盘信息展示");
     setIcon(QIcon::fromTheme(appName));
     setTitle(tr("Disk Info")); // 磁盘信息
-    setMinimumSize(500, 474);
+    setFixedSize(550, 554);
 
     DFrame *infoWidget = new DFrame;
     infoWidget->setBackgroundRole(DPalette::ItemBackground);
-    infoWidget->setFixedSize(480, 414);
+    infoWidget->setFixedSize(530, 444);
+    infoWidget->setLineWidth(0);
 
     HardDiskInfo hardDiskInfo = DMDbusHandler::instance()->getHardDiskInfo(m_devicePath);
 
@@ -115,9 +116,10 @@ void DiskInfoDisplayDialog::initUI()
     }
 
     m_linkButton = new DCommandLinkButton(tr("Export")); // 导出
+    DFontSizeManager::instance()->bind(m_linkButton, DFontSizeManager::T8, QFont::Medium);
     QFontMetrics fmCapacity = m_linkButton->fontMetrics();
-    int wdith = fmCapacity.width(QString(tr("Export")));
-    m_linkButton->setFixedWidth(wdith);
+    int width = fmCapacity.width(QString(tr("Export")));
+    m_linkButton->setFixedWidth(width);
 
     QHBoxLayout *exportLayout = new QHBoxLayout;
     exportLayout->addWidget(m_linkButton);
@@ -141,8 +143,10 @@ void DiskInfoDisplayDialog::initConnections()
 
 void DiskInfoDisplayDialog::onExportButtonClicked()
 {
+    qDebug() << "startExport";
     //文件保存路径
     QString fileDirPath = QFileDialog::getSaveFileName(this, tr("Save File"), "DiskInfo.txt", tr("Text files (*.txt)"));// 文件保存   磁盘信息   文件类型
+    qDebug() << "fileDirPath:" << fileDirPath;
     if (fileDirPath.isEmpty()) {
         return;
     }
@@ -197,5 +201,17 @@ void DiskInfoDisplayDialog::onExportButtonClicked()
         }
     }
 }
+
+bool DiskInfoDisplayDialog::event(QEvent *event)
+{
+    // 字体大小改变
+    if (QEvent::ApplicationFontChange == event->type()) {
+        m_linkButton->setFixedWidth(m_linkButton->fontMetrics().width(QString(tr("Export"))));
+        DDialog::event(event);
+    }
+
+    return DDialog::event(event);
+}
+
 
 

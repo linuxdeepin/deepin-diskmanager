@@ -256,7 +256,7 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="421"/>
         <source>Replacing partition table successful</source>
-        <translation type="unfinished"/>
+        <translation>A partíciós tábla cseréje sikeres</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="429"/>
@@ -266,7 +266,7 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="433"/>
         <source>Replacing partition table failed</source>
-        <translation type="unfinished"/>
+        <translation>A partíciós tábla cseréje sikertelen</translation>
     </message>
 </context>
 <context>

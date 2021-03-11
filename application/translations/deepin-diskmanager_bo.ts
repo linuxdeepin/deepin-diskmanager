@@ -3,12 +3,12 @@
     <name>CreatePartitionTableDialog</name>
     <message>
         <source>The disk has a partition table already. Create a new one and replace it?</source>
-        <translation type="vanished">སྡུད་སྡེར་ཁག་བགོའི་རེའུ་མིག་ཡོད་ཟིན་པས། གསར་བཟོ་བྱས་ནས་ཁུལ་བགོའི་རེའུ་མིག་དེ་བརྗེས་སམ།</translation>
+        <translation type="vanished">སྡུད་སྡེར་ཁག་བགོའི་རེའུ་མིག་ཡོད་ཟིན་པས། གསར་བཟོ་བྱས་ནས་ཁུལ་བགོའི་རེའུ་མིག་དེ་བརྗེའམ།</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
         <source>No partition table in this disk. Create a new one?</source>
-        <translation>སྡུད་སྡེར་ལ་ཁུལ་བགོའི་རེའུ་མིག་མེད་པས། ཁུལ་བགོའི་རེའུ་མིག་གསར་བཟོ་བྱེད་དམ།</translation>
+        <translation>སྡུད་སྡེར་ལ་ཁུལ་བགོའི་རེའུ་མིག་མེད་པས། ཁུལ་བགོའི་རེའུ་མིག་གསར་པ་བཟོའམ།</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="29"/>

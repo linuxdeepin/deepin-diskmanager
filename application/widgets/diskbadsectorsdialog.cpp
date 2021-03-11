@@ -55,7 +55,7 @@ void DiskBadSectorsDialog::initUI()
 {
     setIcon(QIcon::fromTheme(appName));
     setTitle(tr("Verify or repair bad sectors")); // 坏道检测与修复
-    setFixedSize(635, 757);
+    setFixedSize(635, 780);
 
     m_curType = StatusType::Normal;
 
@@ -79,16 +79,16 @@ void DiskBadSectorsDialog::initUI()
              << info.sector_size << info.max_prims << info.highest_busy << info.readonly
              << info.max_partition_name_length;
 
-    DLabel *verifyLabel = new DLabel(tr("Verify:")); // 检测范围
-    DFontSizeManager::instance()->bind(verifyLabel, DFontSizeManager::T6, QFont::Normal);
-    verifyLabel->setFixedWidth(74);
-    verifyLabel->setPalette(palette1);
-//    verifyLabel->setStyleSheet("background:yellow");
+    m_verifyLabel = new DLabel(tr("Verify:")); // 检测范围
+    DFontSizeManager::instance()->bind(m_verifyLabel, DFontSizeManager::T6, QFont::Normal);
+    m_verifyLabel->setPalette(palette1);
+//    m_verifyLabel->setStyleSheet("background:yellow");
     m_verifyComboBox = new DComboBox;
     m_verifyComboBox->addItem(tr("Cylinders")); // 柱面范围
     m_verifyComboBox->addItem(tr("Sectors")); // 扇区范围
     m_verifyComboBox->addItem(tr("MB")); // 容量范围
     m_verifyComboBox->setFixedSize(155, 36);
+    DFontSizeManager::instance()->bind(m_verifyComboBox, DFontSizeManager::T6, QFont::Medium);
 
     QRegExp reg("[0-9]+$"); // 只能输入数字正则表达式
     QRegExpValidator *validator = new QRegExpValidator(reg, this);
@@ -96,26 +96,24 @@ void DiskBadSectorsDialog::initUI()
 //    QIntValidator *intValidator = new QIntValidator(0, QString("%1").arg(info.cylinders).toInt(), this);
 
     m_startLineEdit = new DLineEdit;
-    m_startLineEdit->setFixedSize(172, 36);
+    m_startLineEdit->setFixedHeight(36);
     m_startLineEdit->setText("0");
     m_startLineEdit->lineEdit()->setPlaceholderText("0");
     m_startLineEdit->lineEdit()->setValidator(validator);
+    DFontSizeManager::instance()->bind(m_startLineEdit, DFontSizeManager::T6, QFont::Medium);
 //    m_startLineEdit->lineEdit()->setValidator(intValidator);
 
     m_endLineEdit = new DLineEdit;
-    m_endLineEdit->setFixedSize(172, 36);
+    m_endLineEdit->setFixedHeight(36);
     m_endLineEdit->setText(QString("%1").arg(info.cylinders));
     m_endLineEdit->lineEdit()->setPlaceholderText(QString("%1").arg(info.cylinders));
     m_endLineEdit->lineEdit()->setValidator(validator);
+    DFontSizeManager::instance()->bind(m_endLineEdit, DFontSizeManager::T6, QFont::Medium);
 
     DLabel *lineLabel = new DLabel("—");
 
-//    m_verifyLabel = new DLabel(QString("(0-%1)").arg(info.cylinders));
-//    DFontSizeManager::instance()->bind(m_verifyLabel, DFontSizeManager::T8, QFont::Normal);
-//    m_verifyLabel->setPalette(palette2);
-
     QHBoxLayout *verifyLayout = new QHBoxLayout;
-    verifyLayout->addWidget(verifyLabel);
+    verifyLayout->addWidget(m_verifyLabel);
     verifyLayout->addWidget(m_verifyComboBox);
     verifyLayout->addSpacing(10);
     verifyLayout->addWidget(m_startLineEdit);
@@ -123,20 +121,28 @@ void DiskBadSectorsDialog::initUI()
     verifyLayout->addWidget(lineLabel);
     verifyLayout->addSpacing(10);
     verifyLayout->addWidget(m_endLineEdit);
-//    verifyLayout->addSpacing(7);
-//    verifyLayout->addWidget(m_verifyLabel);
     verifyLayout->setSpacing(0);
     verifyLayout->setContentsMargins(0, 0, 0, 0);
 
-    DLabel *methodLabel = new DLabel(tr("Method:")); // 检测方式
-    DFontSizeManager::instance()->bind(methodLabel, DFontSizeManager::T6, QFont::Normal);
-    methodLabel->setFixedWidth(74);
-    methodLabel->setPalette(palette1);
+    m_methodLabel = new DLabel(tr("Method:")); // 检测方式
+    DFontSizeManager::instance()->bind(m_methodLabel, DFontSizeManager::T6, QFont::Normal);
+    m_methodLabel->setPalette(palette1);
+
+    int verifyWidth = m_verifyLabel->fontMetrics().width(QString(tr("Verify:")));
+    int methodWidth = m_methodLabel->fontMetrics().width(QString(tr("Method:")));
+    if (verifyWidth >= methodWidth) {
+        m_verifyLabel->setFixedWidth(verifyWidth);
+        m_methodLabel->setFixedWidth(verifyWidth);
+    } else {
+        m_verifyLabel->setFixedWidth(methodWidth);
+        m_methodLabel->setFixedWidth(methodWidth);
+    }
 
     m_methodComboBox = new DComboBox;
     m_methodComboBox->addItem(tr("Verifying times")); // 检测次数
     m_methodComboBox->addItem(tr("Timeout")); // 超时时间
     m_methodComboBox->setFixedSize(155, 36);
+    DFontSizeManager::instance()->bind(m_methodComboBox, DFontSizeManager::T6, QFont::Medium);
 
     m_slider = new DSlider(Qt::Horizontal);
     m_slider->setFixedWidth(97);
@@ -197,7 +203,7 @@ void DiskBadSectorsDialog::initUI()
     m_methodStackedWidget->setFixedHeight(36);
 
     QHBoxLayout *methodLayout = new QHBoxLayout;
-    methodLayout->addWidget(methodLabel);
+    methodLayout->addWidget(m_methodLabel);
     methodLayout->addWidget(m_methodComboBox);
     methodLayout->addSpacing(10);
     methodLayout->addWidget(m_methodStackedWidget);
@@ -321,13 +327,16 @@ void DiskBadSectorsDialog::initUI()
 
     QHBoxLayout *buttonLayout = new QHBoxLayout;
     buttonLayout->addWidget(m_exitButton);
-    buttonLayout->addSpacing(9);
+//    buttonLayout->addSpacing(10);
+    buttonLayout->addStretch();
     buttonLayout->addWidget(m_resetButton);
-    buttonLayout->addSpacing(9);
+//    buttonLayout->addSpacing(10);
+    buttonLayout->addStretch();
     buttonLayout->addWidget(m_repairButton);
-    buttonLayout->addSpacing(9);
+//    buttonLayout->addSpacing(10);
+    buttonLayout->addStretch();
     buttonLayout->addWidget(m_buttonStackedWidget);
-    buttonLayout->setSpacing(0);
+//    buttonLayout->setSpacing(0);
     buttonLayout->setContentsMargins(0, 0, 0, 0);
 
     m_progressBar = new DProgressBar;
@@ -375,7 +384,7 @@ void DiskBadSectorsDialog::initUI()
     mainLayout->addLayout(cylinderLayout);
     mainLayout->addWidget(progressWidget);
     mainLayout->addSpacing(25);
-//    mainLayout->addStretch();
+    mainLayout->addStretch();
     mainLayout->addLayout(buttonLayout);
     mainLayout->setSpacing(0);
     mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -1141,6 +1150,25 @@ void DiskBadSectorsDialog::closeEvent(QCloseEvent *event)
         }
         break;
     }
+}
+
+bool DiskBadSectorsDialog::event(QEvent *event)
+{
+    // 字体大小改变
+    if (QEvent::ApplicationFontChange == event->type()) {
+        int verifyWidth = m_verifyLabel->fontMetrics().width(QString(tr("Verify:")));
+        int methodWidth = m_methodLabel->fontMetrics().width(QString(tr("Method:")));
+        if (verifyWidth >= methodWidth) {
+            m_verifyLabel->setFixedWidth(verifyWidth);
+            m_methodLabel->setFixedWidth(verifyWidth);
+        } else {
+            m_verifyLabel->setFixedWidth(methodWidth);
+            m_methodLabel->setFixedWidth(methodWidth);
+        }
+        DDialog::event(event);
+    }
+
+    return DDialog::event(event);
 }
 
 

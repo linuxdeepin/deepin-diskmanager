@@ -15,7 +15,7 @@ set(APP_EDEV_DIR "udev")
 set(APP_UDEV_FILES "${APP_EDEV_DIR}/99-diskmanager.rules")
 set(APP_USBADD_FILES "${APP_EDEV_DIR}/USBadd.sh")
 set(APP_USBREMOVE_FILES "${APP_EDEV_DIR}/USBremove.sh")
-set(APP_DEEPIN_DISKMANAGER_SERVICE_BIN "${APP_EDEV_DIR}/deepin-diskmanager-service-bin")
+set(APP_DEEPIN_DISKMANAGER_SERVICE_BIN "${APP_EDEV_DIR}/deepin-diskmanager-authenticateProxy")
 set(APP_POLICY_DIR "policy")
 set(APP_POLICY_FILES "${APP_POLICY_DIR}/com.deepin.diskmanager.policy")
 

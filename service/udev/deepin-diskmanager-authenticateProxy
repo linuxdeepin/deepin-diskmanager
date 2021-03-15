@@ -62,7 +62,7 @@ if test "x`id -u`" != "x0"; then
 	#
 	# Run deepin-diskmanager as root.
 	#
-	pkexec --disable-internal-agent '/usr/bin/deepin-diskmanager-service-bin' "$@"
+	pkexec --disable-internal-agent '/usr/bin/deepin-diskmanager-authenticateProxy' "$@"
 	status=$?
 
 	#
@@ -71,15 +71,6 @@ if test "x`id -u`" != "x0"; then
 	if test "x$GRANTED_XHOST_ROOT" = 'xyes'; then
 		xhost -SI:localuser:root
 	fi
-
-	#
-	# When deepin-diskmanager exited,stop shell_bin deepin-disk-manager.
-	#
-    PROC_SHELL_BIN=`ps -ef |grep '/usr/bin/deepin-disk-manager'|grep -v 'grep'|awk '{print $2}'`
-    if [ $PROC_SHELL_BIN ];then
-        kill $PROC_SHELL_BIN
-    fi
-
 	exit $status
 fi
 

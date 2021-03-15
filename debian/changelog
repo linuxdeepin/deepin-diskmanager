@@ -1,3 +1,12 @@
+deepin-diskmanager (1.1.0.41) stable; urgency=low
+
+  * 1032维护分支第一次发版
+  * 54563 优化磁盘信息展示
+  * 57854 优化信息 获取raw_value
+  * 57820 优化展示信息 温度获取raw_value
+
+ -- yuandandan <yuandandan@uniontech.com>  Mon, 15 Mar 2021 19:25:16 +0800
+
 deepin-diskmanager (1.1.0.39) stable; urgency=low
 
   * 解决完成第二十八次送测产生的bug,

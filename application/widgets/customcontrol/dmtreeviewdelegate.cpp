@@ -72,7 +72,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     } else {
         rect.setX(option.rect.x() + 10);
     }
-    rect.setY(option.rect.y());
+    rect.setY(option.rect.y() + 10);
     rect.setWidth(option.rect.width());
 //    rect.setHeight(option.rect.height()); // 分区节点间有间隔
     // 去掉分区节点间隔

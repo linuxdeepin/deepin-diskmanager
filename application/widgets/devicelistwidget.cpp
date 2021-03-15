@@ -65,7 +65,7 @@ DeviceListWidget::~DeviceListWidget()
 void DeviceListWidget::initUi()
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setContentsMargins(0, 10, 0, 0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     setLayout(layout);
     m_treeView = new DmTreeview(this);

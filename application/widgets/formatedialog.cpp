@@ -52,19 +52,17 @@ void FormateDialog::initUi()
     tipLabel->setAlignment(Qt::AlignCenter);
     DFontSizeManager::instance()->bind(tipLabel, DFontSizeManager::T6);
 
-    QHBoxLayout *layoutName = new QHBoxLayout;
+
     DLabel *fileName = new DLabel(tr("Name:"), this);
-    fileName->setMinimumWidth(76);
+//    fileName->setMinimumWidth(76);
     m_fileNameEdit   = new DLineEdit(this);
     QRegExp re("^[\u4E00-\u9FA5A-Za-z0-9_]+$");
     QRegExpValidator *validator = new QRegExpValidator(re, this);
     m_fileNameEdit->lineEdit()->setValidator(validator );
+    m_fileNameEdit->setFixedHeight(36);
     if (m_fileNameEdit->text().isEmpty())
         m_fileNameEdit->lineEdit()->setPlaceholderText(tr("Name"));
-    layoutName->addWidget(fileName);
-    layoutName->addWidget(m_fileNameEdit);
 
-    QHBoxLayout *layoutFormat = new QHBoxLayout;
     DLabel *formatName = new DLabel(tr("File system:"), this);
     m_formatComboBox = new DComboBox(this);
     m_formatComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -72,6 +70,7 @@ void FormateDialog::initUi()
     QStringList fslist = DMDbusHandler::instance()->getAllSupportFileSystem();
     fslist.removeOne("linux-swap");
     m_formatComboBox->addItems(fslist);
+    m_formatComboBox->setFixedHeight(36);
 
     if (-1 == fslist.indexOf(Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType)))) {
         m_formatComboBox->setCurrentIndex(fslist.indexOf(Utils::fileSystemTypeToString(static_cast<FSType>(11))));
@@ -79,12 +78,29 @@ void FormateDialog::initUi()
         m_formatComboBox->setCurrentIndex(fslist.indexOf(Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType))));
     }
 
-    layoutFormat->addWidget(formatName);
+    QVBoxLayout *layoutName = new QVBoxLayout;
+    layoutName->addWidget(fileName);
+    layoutName->addSpacing(10);
+    layoutName->addWidget(formatName);
+    layoutName->setSpacing(0);
+    layoutName->setContentsMargins(0, 0, 0, 0);
+
+    QVBoxLayout *layoutFormat = new QVBoxLayout;
+    layoutFormat->addWidget(m_fileNameEdit);
+    layoutFormat->addSpacing(10);
     layoutFormat->addWidget(m_formatComboBox);
+    layoutFormat->setSpacing(0);
+    layoutFormat->setContentsMargins(0, 0, 0, 0);
+
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->addLayout(layoutName);
+    layout->addLayout(layoutFormat);
+    layout->setContentsMargins(0, 0, 0, 0);
+
     mainLayout->addWidget(tipLabel);
-    mainLayout->addSpacing(60);
-    mainLayout->addLayout(layoutName);
-    mainLayout->addLayout(layoutFormat);
+//    mainLayout->addSpacing(60);
+    mainLayout->addLayout(layout);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
 
     addButton(tr("Cancel"), true, ButtonNormal);
     m_okCode = addButton(tr("Format"), false, ButtonWarning);

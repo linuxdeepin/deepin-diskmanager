@@ -127,10 +127,18 @@ void MainWindow::initUi()
     m_btnRefresh->setObjectName("refresh");
     m_btnRefresh->setAccessibleName("refresh");
 
+    QHBoxLayout *refreshLayout = new QHBoxLayout;
+    refreshLayout->addSpacing(10);
+    refreshLayout->addWidget(m_btnRefresh);
+    refreshLayout->setContentsMargins(0, 0, 0, 0);
+
+    QWidget *widget = new QWidget;
+    widget->setLayout(refreshLayout);
+
     titlebar()->setIcon(QIcon::fromTheme(appName));
     titlebar()->setTitle("");
     // titlebar()->setMenu(m_central->titleMenu());
-    titlebar()->addWidget(m_btnRefresh, Qt::AlignLeft);
+    titlebar()->addWidget(widget, Qt::AlignLeft);
     titlebar()->addWidget(m_central->getTitleWidget(), Qt::AlignCenter);
     titlebar()->menu();
 }

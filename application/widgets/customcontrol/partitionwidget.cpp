@@ -255,7 +255,9 @@ void PartitionWidget::botFrameSetting()
     QHBoxLayout *btnLayout = new QHBoxLayout();
     btnLayout->addWidget(m_reveBtn, 1, Qt::AlignLeft);
     btnLayout->addWidget(m_cancleBtn);
+    btnLayout->addSpacing(10);
     btnLayout->addWidget(m_applyBtn);
+    btnLayout->setSpacing(0);
     btnLayout->setContentsMargins(0, 0, 0, 10);
 
     vLayout->addLayout(btnLayout, 1);

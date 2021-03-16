@@ -145,7 +145,7 @@ void DiskBadSectorsDialog::initUI()
     DFontSizeManager::instance()->bind(m_methodComboBox, DFontSizeManager::T6, QFont::Medium);
 
     m_slider = new DSlider(Qt::Horizontal);
-    m_slider->setFixedWidth(97);
+    m_slider->setFixedWidth(90);
     m_slider->setMinimum(1);
     m_slider->setMaximum(100);
     m_slider->setValue(50);
@@ -1097,7 +1097,7 @@ void DiskBadSectorsDialog::closeEvent(QCloseEvent *event)
         messageBox.setObjectName("messageBox");
         // 正在检测中，是否退出窗口？  当前检测信息不会保留   退出   取消
         messageBox.setWarings(tr("Verifying for bad sectors, exit now?"), tr("The verified information will not be reserved"),
-                              tr("Exit"), tr("Cancel"));
+                              tr("Exit"), DDialog::ButtonWarning, tr("Cancel"));
         if (messageBox.exec() == DDialog::Accepted) {
             DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
 
@@ -1122,7 +1122,7 @@ void DiskBadSectorsDialog::closeEvent(QCloseEvent *event)
         messageBox.setObjectName("messageBox");
         // 正在修复中，是否退出窗口？  当前修复信息不会保留   退出   取消
         messageBox.setWarings(tr("Repairing bad sectors, exit now?"), tr("The repairing information will not be reserved"),
-                              tr("Exit"), tr("Cancel"));
+                              tr("Exit"), DDialog::ButtonWarning, tr("Cancel"));
         if (messageBox.exec() == DDialog::Accepted) {
 
             DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();

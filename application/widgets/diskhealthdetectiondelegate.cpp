@@ -60,8 +60,8 @@ void DiskHealthDetectionDelegate::paint(QPainter *painter, const QStyleOptionVie
     const int radius = 8;
 //qDebug() << paintRect.topRight() << paintRect.topLeft() + QPoint(radius, 0)
 //         << paintRect.bottomLeft() - QPoint(0, radius) << paintRect.bottomRight();
-    if (index.column() == 0)
-    {
+    if (index.column() == 0) {
+        paintRect = QRect(option.rect.left() + 10, option.rect.top(), option.rect.width() - 10, option.rect.height());
         // 左上和左下角为圆角
         path.moveTo(paintRect.bottomRight() - QPoint(0, radius));
         path.lineTo(paintRect.topRight());
@@ -84,9 +84,8 @@ void DiskHealthDetectionDelegate::paint(QPainter *painter, const QStyleOptionVie
         } else {
             painter->fillPath(path, option.palette.alternateBase());
         }
-    }
-    else if(index.column() == 6)
-    {
+    } else if(index.column() == 6) {
+        paintRect = QRect(option.rect.left(), option.rect.top(), option.rect.width() - 10, option.rect.height());
         // 右上和右下角为圆角
         path.moveTo(paintRect.bottomRight() - QPoint(0, radius));
         path.lineTo(paintRect.topRight());
@@ -109,8 +108,7 @@ void DiskHealthDetectionDelegate::paint(QPainter *painter, const QStyleOptionVie
         } else {
             painter->fillPath(path, option.palette.alternateBase());
         }
-    }
-    else {
+    } else {
         paintRect = QRect(option.rect.left() - 1, option.rect.top(), option.rect.width(), option.rect.height() - 1);
         if(index.column() == 5)
         {
@@ -123,11 +121,6 @@ void DiskHealthDetectionDelegate::paint(QPainter *painter, const QStyleOptionVie
             painter->fillRect(paintRect, option.palette.alternateBase());
         }
     }
-
-
-
-
-
 
     painter->restore();
     painter->save();

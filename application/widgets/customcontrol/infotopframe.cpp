@@ -88,10 +88,13 @@ void InfoTopFrame::initLeftInfo()
     DApplicationHelper::instance()->setPalette(m_typeLabel, palette);
 
     QVBoxLayout *layout = new QVBoxLayout();
-    layout->addStretch();
+//    layout->addStretch();
+    layout->addSpacing(20);
     layout->addWidget(m_nameLabel);
+    layout->addSpacing(10);
     layout->addWidget(m_typeLabel);
     layout->addStretch();
+    layout->setContentsMargins(0, 0, 0, 0);
 
     m_mainLayout->addLayout(layout);
 }

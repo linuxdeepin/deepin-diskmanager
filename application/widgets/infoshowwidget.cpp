@@ -105,34 +105,34 @@ void InfoShowWidget::bottomFramSettings()
     mountpointLabel->setWordWrap(true);
     mountpointLabel->adjustSize();
     mountpointLabel->setFixedHeight(30);
-    DFontSizeManager::instance()->bind(mountpointLabel, DFontSizeManager::T6);
+    DFontSizeManager::instance()->bind(mountpointLabel, DFontSizeManager::T6, QFont::Medium);
 
     DLabel *freeLabel = new DLabel(tr("Free:"));
     freeLabel->setWordWrap(true);
     freeLabel->adjustSize();
     freeLabel->setAlignment(Qt::AlignLeft);
-    DFontSizeManager::instance()->bind(freeLabel, DFontSizeManager::T6);
+    DFontSizeManager::instance()->bind(freeLabel, DFontSizeManager::T6, QFont::Medium);
 
     DLabel *usedLabel = new DLabel(tr("Used:"));
     usedLabel->setWordWrap(true);
     usedLabel->adjustSize();
     usedLabel->setAlignment(Qt::AlignLeft);
-    DFontSizeManager::instance()->bind(usedLabel, DFontSizeManager::T6);
+    DFontSizeManager::instance()->bind(usedLabel, DFontSizeManager::T6, QFont::Medium);
 
     DLabel *typeLabel = new DLabel(tr("Type:"));
     typeLabel->setWordWrap(true);
     typeLabel->adjustSize();
-    DFontSizeManager::instance()->bind(typeLabel, DFontSizeManager::T6);
+    DFontSizeManager::instance()->bind(typeLabel, DFontSizeManager::T6, QFont::Medium);
 
     DLabel *capacityLabel = new DLabel(tr("Capacity:"));
     capacityLabel->setWordWrap(true);
     capacityLabel->adjustSize();
-    DFontSizeManager::instance()->bind(capacityLabel, DFontSizeManager::T6);
+    DFontSizeManager::instance()->bind(capacityLabel, DFontSizeManager::T6, QFont::Medium);
 
     DLabel *volumeLabel = new DLabel(tr("Volume label:"));
     volumeLabel->setWordWrap(true);
     volumeLabel->adjustSize();
-    DFontSizeManager::instance()->bind(volumeLabel, DFontSizeManager::T6);
+    DFontSizeManager::instance()->bind(volumeLabel, DFontSizeManager::T6, QFont::Medium);
 
     connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged,
     this, [ = ] {
@@ -180,9 +180,9 @@ void InfoShowWidget::bottomFramSettings()
 
     rightInfolayout->addSpacing(1);
     rightInfolayout->addWidget(typeLabel);
-    rightInfolayout->addSpacing(22);
-    rightInfolayout->addWidget(capacityLabel);
     rightInfolayout->addSpacing(25);
+    rightInfolayout->addWidget(capacityLabel);
+    rightInfolayout->addSpacing(23);
     rightInfolayout->addWidget(volumeLabel);
     rightInfolayout->addStretch();
 

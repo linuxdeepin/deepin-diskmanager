@@ -59,9 +59,15 @@ void PartitionTableErrorsInfoDialog::initUI()
     setMinimumSize(580, 386);
 
     DPalette palette1;
-    QColor color("#000000");
-    color.setAlphaF(0.7);
-    palette1.setColor(DPalette::WindowText, color);
+    if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) {
+        QColor color("#FFFFFF");
+        color.setAlphaF(0.7);
+        palette1.setColor(DPalette::WindowText, color);
+    } else if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::LightType) {
+        QColor color("#000000");
+        color.setAlphaF(0.7);
+        palette1.setColor(DPalette::WindowText, color);
+    }
 
     m_Label = new DLabel;
     m_Label->setText(tr("The partition table of disk %1 has below errors:").arg(m_deviceInfo)); // 磁盘xxx存在下列分区表问题：

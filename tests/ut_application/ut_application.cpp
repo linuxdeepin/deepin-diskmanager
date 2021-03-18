@@ -27,6 +27,7 @@
 #include "diskinfodisplaydialog.h"
 #include "diskhealthdetectiondialog.h"
 #include "diskbadsectorsdialog.h"
+#include "createpartitiontabledialog.h"
 
 class ut_application : public ::testing::Test
         , public QObject
@@ -524,7 +525,7 @@ TEST_F(ut_application, diskHealth)
     DiskHealthDetectionDialog diskHealthDetectionDialog(deviceListWidget->m_curDiskInfoData.m_diskPath, deviceCheckHealthInfo());
 }
 
-TEST_F(ut_application, diskBadSectors)
+TEST_F(ut_application, diskBadSectorsCheck)
 {
     Stub stub;
     stub.set(ADDR(DMDbusHandler, checkBadSectors), badSectorsCheck);
@@ -588,12 +589,86 @@ TEST_F(ut_application, diskBadSectors)
     diskBadSectorsDialog->onStopButtonClicked(); // 停止检测
     diskBadSectorsDialog->onContinueButtonClicked(); // 继续检测
     diskBadSectorsDialog->onCheckBadBlocksInfo("12", "75", "good", "");
-    diskBadSectorsDialog->onCheckBadBlocksInfo("12", "456", "bad", "IO Read Error");
+    diskBadSectorsDialog->onCheckBadBlocksInfo("13", "456", "bad", "IO Read Error");
 
     diskBadSectorsDialog->onCheckCoomplete(); // 检测完成
 
     diskBadSectorsDialog->onExitButtonClicked();
+}
 
+TEST_F(ut_application, diskBadSectorsRepair)
+{
+    Stub stub;
+    stub.set(ADDR(DMDbusHandler, checkBadSectors), badSectorsCheck);
+
+    Stub stub2;
+    stub2.set(ADDR(DMDbusHandler, repairBadBlocks), badSectorsRepair);
+
+    typedef int (*fptr)(DiskBadSectorsDialog*);
+    fptr foo = (fptr)(&MessageBox::exec);
+    Stub stub3;
+    stub3.set(foo, MessageboxExec);
+
+    typedef int (*fptr)(DiskBadSectorsDialog*);
+    fptr foo2 = (fptr)(&DDialog::exec);
+    Stub stub4;
+    stub4.set(foo2, MessageboxExec);
+
+    DeviceInfoMap oldInfo = DMDbusHandler::instance()->m_deviceMap;
+    DMDbusHandler::instance()->m_deviceMap = deviceInfo_mountPartition();
+
+    DiskBadSectorsDialog *diskBadSectorsDialog = new DiskBadSectorsDialog;
+    diskBadSectorsDialog->onRepairButtonClicked();
+
+    DMDbusHandler::instance()->m_deviceMap = oldInfo;
+    diskBadSectorsDialog->onRepairButtonClicked();
+    diskBadSectorsDialog->onExitButtonClicked();
+
+    diskBadSectorsDialog->m_methodComboBox->setCurrentIndex(0);
+    diskBadSectorsDialog->m_verifyComboBox->setCurrentIndex(0);
+
+    diskBadSectorsDialog->m_startLineEdit->setText("10");
+    diskBadSectorsDialog->m_endLineEdit->setText("15");
+    diskBadSectorsDialog->onStartVerifyButtonClicked();
+
+    diskBadSectorsDialog->onCheckBadBlocksInfo("10", "388", "bad", "IO Read Error");
+    diskBadSectorsDialog->onCheckBadBlocksInfo("11", "385", "bad", "IO Read Error");
+    diskBadSectorsDialog->onCheckBadBlocksInfo("12", "386", "bad", "IO Read Error");
+    diskBadSectorsDialog->onCheckBadBlocksInfo("13", "387", "bad", "IO Read Error");
+    diskBadSectorsDialog->onCheckBadBlocksInfo("14", "389", "bad", "IO Read Error");
+    diskBadSectorsDialog->onCheckBadBlocksInfo("15", "380", "bad", "IO Read Error");
+    diskBadSectorsDialog->onCheckCoomplete();
+
+    diskBadSectorsDialog->onRepairButtonClicked();
+    QTest::qWait(1000);
+    diskBadSectorsDialog->onRepairBadBlocksInfo("10", "good", "334");
+    QTest::qWait(1000);
+    diskBadSectorsDialog->onRepairBadBlocksInfo("11", "good", "338");
+    QTest::qWait(1000);
+
+    diskBadSectorsDialog->onStopButtonClicked(); // 停止修复
+    diskBadSectorsDialog->onContinueButtonClicked(); // 继续修复
+
+    diskBadSectorsDialog->onRepairBadBlocksInfo("12", "good", "339");
+    QTest::qWait(1000);
+    diskBadSectorsDialog->onRepairBadBlocksInfo("13", "good", "357");
+    QTest::qWait(1000);
+    diskBadSectorsDialog->onRepairBadBlocksInfo("14", "good", "358");
+    QTest::qWait(1000);
+    diskBadSectorsDialog->onRepairBadBlocksInfo("15", "good", "355");
+    QTest::qWait(1000);
+    diskBadSectorsDialog->onRepairCoomplete(); // 修复完成
+
+    diskBadSectorsDialog->onDoneButtonClicked();
+}
+
+TEST_F(ut_application, createPartitionTable)
+{
+    Stub stub;
+    stub.set(ADDR(DMDbusHandler, createPartitionTable), createPartitionTable);
+
+    CreatePartitionTableDialog *createPartitionTableDialog = new CreatePartitionTableDialog();
+    createPartitionTableDialog->onButtonClicked(1, createPartitionTableDialog->m_curType);
 }
 
 

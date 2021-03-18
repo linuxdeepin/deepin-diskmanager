@@ -15,6 +15,8 @@ void start();
 
 void getDeviceInfo();
 
+DeviceInfoMap deviceInfo_mountPartition();
+
 void setCurSelect();
 
 void setCurSelectSecond();
@@ -62,5 +64,7 @@ HardDiskStatusInfoList deviceCheckHealthInfo();
 void badSectorsCheck();
 
 void badSectorsRepair();
+
+void createPartitionTable();
 
 #endif // STUBALLTHREAD_H

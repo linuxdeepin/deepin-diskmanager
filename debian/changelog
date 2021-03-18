@@ -1,3 +1,10 @@
+deepin-diskmanager (1.1.0.42) stable; urgency=low
+
+  * 1032维护分支第二次发版
+  * 67640 【专业版1032内测】-硬盘健康检测界面序列号与用户容量获取展示为空
+
+ -- yuandandan <yuandandan@uniontech.com>  Thu, 18 Mar 2021 15:41:16 +0800
+
 deepin-diskmanager (1.1.0.41) stable; urgency=low
 
   * 1032维护分支第一次发版

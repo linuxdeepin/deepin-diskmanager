@@ -69,21 +69,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, stCustest &stcus)
 QDBusArgument &operator<<(QDBusArgument &argument, const HardDiskInfo &inhdinfo)
 {
     argument.beginStructure();
-    argument << inhdinfo.m_deviceModel
-             << inhdinfo.m_serialNumber
-             << inhdinfo.m_deviceId
-             << inhdinfo.m_firmwareVersion
-             << inhdinfo.m_userCapacity
-             << inhdinfo.m_sectorSize
-             << inhdinfo.m_rotationRate
-             << inhdinfo.m_formFactor
-             << inhdinfo.m_deviceis
-             << inhdinfo.m_ataVersionIs
-             << inhdinfo.m_sataVersionIs
-             << inhdinfo.m_localTime
-             << inhdinfo.m_smartSupport
-             << inhdinfo.m_smartSupportOn_Off
-             << inhdinfo.m_Model
+    argument << inhdinfo.m_Model
              << inhdinfo.m_Vendor
              << inhdinfo.m_MediaType
              << inhdinfo.m_Size
@@ -104,21 +90,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const HardDiskInfo &inhdinfo)
 const QDBusArgument &operator>>(const QDBusArgument &argument, HardDiskInfo &inhdinfo)
 {
     argument.beginStructure();
-    argument >> inhdinfo.m_deviceModel
-            >> inhdinfo.m_serialNumber
-            >> inhdinfo.m_deviceId
-            >> inhdinfo.m_firmwareVersion
-            >> inhdinfo.m_userCapacity
-            >> inhdinfo.m_sectorSize
-            >> inhdinfo.m_rotationRate
-            >> inhdinfo.m_formFactor
-            >> inhdinfo.m_deviceis
-            >> inhdinfo.m_ataVersionIs
-            >> inhdinfo.m_sataVersionIs
-            >> inhdinfo.m_localTime
-            >> inhdinfo.m_smartSupport
-            >> inhdinfo.m_smartSupportOn_Off
-            >> inhdinfo.m_Model
+    argument >> inhdinfo.m_Model
             >> inhdinfo.m_Vendor
             >> inhdinfo.m_MediaType
             >> inhdinfo.m_Size

@@ -19,20 +19,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, stCustest &stcus)
 //new by li 2020/7/20
 
 typedef struct HARDDISKINFO {
-    QString m_deviceModel;          //设备模型
-    QString m_serialNumber;         //序列号
-    QString m_deviceId;             //设备Id
-    QString m_firmwareVersion;      //固件版本
-    QString m_userCapacity;         //用户容量
-    QString m_sectorSize;           //扇区大小
-    QString m_rotationRate;         //转速
-    QString m_formFactor;           //外形系数
-    QString m_deviceis;             //设备
-    QString m_ataVersionIs;         //ATA版本为
-    QString m_sataVersionIs;        //SATA版本为
-    QString m_localTime;            //当地时间
-    QString m_smartSupport;         //智能支持SMART
-    QString m_smartSupportOn_Off;   //智能支持SMART是否开启
     QString m_Model;              //<! 【型号】1
     QString m_Vendor;             //<! 【制造商】2 //有可能会没有
     QString m_MediaType;          //<! 【介质类型】3

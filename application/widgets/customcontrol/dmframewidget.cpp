@@ -229,7 +229,7 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)//绘制首页信息展示表�
         QColor color = m_parentPb.color(DPalette::Normal, DPalette::TextLively);
         color.setAlphaF(0.05);
         painter.setBrush(QBrush(color));
-        QColor outsideColor(qRgba(0, 0, 0, 1));
+        QColor outsideColor(qRgba(255, 255, 255, 1));
         outsideColor.setAlphaF(0.1);
         painter.setPen(outsideColor);
         QRect curRect = rect();
@@ -250,19 +250,19 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)//绘制首页信息展示表�
         QTextOption option1;
         option1.setAlignment(Qt::AlignRight);
         painter.setPen(textColor);
-        QRect textRect1 = QRect(curRect.width() / 2 - 275, curRect.topLeft().y() + 10, 257, 40);
+        QRect textRect1 = QRect(curRect.width() / 2 - 265, curRect.topLeft().y() + 10, 257, 40);
         QString mountpoints = painter.fontMetrics().elidedText(m_infoData.m_mountpoints, Qt::ElideRight, textRect1.width() - 50);
         painter.drawText(textRect1, mountpoints, option);
 //        painter.drawText(textRect1, m_infoData.m_mountpoints, option);
-        textRect.moveTo(curRect.width() / 2 - 260, curRect.topLeft().y() + 62);
+        textRect.moveTo(curRect.width() / 2 - 250, curRect.topLeft().y() + 62);
         painter.drawText(textRect, m_infoData.m_unused, option1);
-        textRect.moveTo(curRect.width() / 2 - 260, curRect.topLeft().y() + 113);
+        textRect.moveTo(curRect.width() / 2 - 250, curRect.topLeft().y() + 113);
         painter.drawText(textRect, m_infoData.m_used, option1);
-        textRect.moveTo(curRect.width() - 260, curRect.topLeft().y() + 10);
+        textRect.moveTo(curRect.width() - 250, curRect.topLeft().y() + 10);
         painter.drawText(textRect, m_infoData.m_fstype, option1);
-        textRect.moveTo(curRect.width() - 260, curRect.topLeft().y() + 60);
+        textRect.moveTo(curRect.width() - 250, curRect.topLeft().y() + 62);
         painter.drawText(textRect, m_infoData.m_partitionSize, option1);
-        textRect.moveTo(curRect.width() - 260, curRect.topLeft().y() + 110);
+        textRect.moveTo(curRect.width() - 250, curRect.topLeft().y() + 113);
         painter.drawText(textRect, m_infoData.m_sysLabel, option1);
         painter.restore();
     }

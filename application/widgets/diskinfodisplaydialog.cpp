@@ -53,11 +53,12 @@ void DiskInfoDisplayDialog::initUI()
 //    setWindowTitle("磁盘信息展示");
     setIcon(QIcon::fromTheme(appName));
     setTitle(tr("Disk Info")); // 磁盘信息
-    setMinimumSize(500, 474);
+    setMinimumSize(550, 554);
 
     DFrame *infoWidget = new DFrame;
     infoWidget->setBackgroundRole(DPalette::ItemBackground);
-    infoWidget->setFixedSize(480, 414);
+    infoWidget->setFixedSize(530, 444);
+    infoWidget->setLineWidth(0);
 
     HardDiskInfo hardDiskInfo = DMDbusHandler::instance()->getHardDiskInfo(m_devicePath);
 
@@ -114,9 +115,8 @@ void DiskInfoDisplayDialog::initUI()
     }
 
     m_linkButton = new DCommandLinkButton(tr("Export")); // 导出
-    QFontMetrics fmCapacity = m_linkButton->fontMetrics();
-    int wdith = fmCapacity.width(QString(tr("Export")));
-    m_linkButton->setFixedWidth(wdith);
+    DFontSizeManager::instance()->bind(m_linkButton, DFontSizeManager::T8, QFont::Medium);
+    m_linkButton->setFixedWidth(m_linkButton->fontMetrics().width(QString(tr("Export"))));
 
     QHBoxLayout *exportLayout = new QHBoxLayout;
     exportLayout->addWidget(m_linkButton);
@@ -192,6 +192,17 @@ void DiskInfoDisplayDialog::onExportButtonClicked()
             DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
         }
     }
+}
+
+bool DiskInfoDisplayDialog::event(QEvent *event)
+{
+    // 字体大小改变
+    if (QEvent::ApplicationFontChange == event->type()) {
+        m_linkButton->setFixedWidth(m_linkButton->fontMetrics().width(QString(tr("Export"))));
+        DDialog::event(event);
+    }
+
+    return DDialog::event(event);
 }
 
 

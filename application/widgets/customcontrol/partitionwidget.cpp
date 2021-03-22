@@ -55,7 +55,23 @@ void PartitionWidget::initUi()
     DLabel *tipLabel = new DLabel(tr("Click ‘+’ to increase the number of partitions. Click on each partition to change its name and file system."), m_mainFrame);
     tipLabel->setWordWrap(true);
     tipLabel->setAlignment(Qt::AlignCenter);
+
+    if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::LightType) {
+        DPalette tipPalette;
+        QColor tipColor("#000000");
+        tipColor.setAlphaF(0.7);
+        tipPalette.setColor(DPalette::WindowText, tipColor);
+        tipLabel->setPalette(tipPalette);
+    }  else if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) {
+        DPalette tipPalette;
+        QColor tipColor("#FFFFFF");
+        tipColor.setAlphaF(0.7);
+        tipPalette.setColor(DPalette::WindowText, tipColor);
+        tipLabel->setPalette(tipPalette);
+    }
+
     m_topFrame = new DFrame(m_mainFrame);
+    m_topFrame->setLineWidth(0);
     //分区页最上端的布局等
     topFrameSetting();
     m_topFrame->setFrameRounded(true);
@@ -117,14 +133,13 @@ void PartitionWidget::topFrameSetting()
     QPalette infoPalette;
     infoPalette.setColor(QPalette::WindowText, QColor("#001A2E"));
 
-    QHBoxLayout *line2Layout = new QHBoxLayout();
     DLabel *allMemoryLabel = new DLabel(tr("Capacity:"), m_topFrame);
     DFontSizeManager::instance()->bind(allMemoryLabel, DFontSizeManager::T8, QFont::Normal);
     allMemoryLabel->setPalette(infoPalette);
 
     m_allMemory = new DLabel("256GiB", m_topFrame);
     m_allMemory->setMinimumWidth(90);
-    m_allMemory->setAlignment(Qt::AlignLeft);
+    m_allMemory->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
     DFontSizeManager::instance()->bind(m_allMemory, DFontSizeManager::T8, QFont::Normal);
     m_allMemory->setPalette(infoPalette);
 
@@ -136,20 +151,16 @@ void PartitionWidget::topFrameSetting()
     DFontSizeManager::instance()->bind(m_selectedPartition, DFontSizeManager::T8, QFont::Normal);
     m_selectedPartition->setPalette(infoPalette);
 
-    line2Layout->addWidget(allMemoryLabel);
-    line2Layout->addWidget(m_allMemory);
-    line2Layout->addWidget(selectedPartLabel);
-    line2Layout->addWidget(m_selectedPartition);
-    line2Layout->addStretch();
     //第三行
-    QHBoxLayout *line3Layout = new QHBoxLayout();
-    DLabel *deviceNameLabel = new DLabel(tr("Disk:"), m_topFrame);
-    DFontSizeManager::instance()->bind(deviceNameLabel, DFontSizeManager::T8, QFont::Normal);
-    deviceNameLabel->setPalette(infoPalette);
+    m_deviceNameLabel = new DLabel(tr("Disk:"), m_topFrame);
+    DFontSizeManager::instance()->bind(m_deviceNameLabel, DFontSizeManager::T8, QFont::Normal);
+    m_deviceNameLabel->setPalette(infoPalette);
+    QFontMetrics fm(m_deviceNameLabel->font());
+    m_deviceNameLabel->setFixedWidth(fm.boundingRect(tr("Disk:")).width() + 5);
 
     m_deviceName = new DLabel("/dev/sda", m_topFrame);
-    m_deviceName->setMinimumWidth(103);
-    m_deviceName->setAlignment(Qt::AlignLeft);
+//    m_deviceName->setMinimumWidth(103);
+    m_deviceName->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
     DFontSizeManager::instance()->bind(m_deviceName, DFontSizeManager::T8, QFont::Normal);
     m_deviceName->setPalette(infoPalette);
 
@@ -161,17 +172,51 @@ void PartitionWidget::topFrameSetting()
     DFontSizeManager::instance()->bind(m_deviceFormate, DFontSizeManager::T8, QFont::Normal);
     m_deviceFormate->setPalette(infoPalette);
 
-    line3Layout->addWidget(deviceNameLabel);
-    line3Layout->addWidget(m_deviceName);
-    line3Layout->addWidget(deviceFormateLabel);
-    line3Layout->addWidget(m_deviceFormate);
-    line3Layout->addStretch();
-    vLayout->addLayout(line1Layout);
-    vLayout->addLayout(line2Layout);
-    vLayout->addLayout(line3Layout);
+    QHBoxLayout *line2Layout = new QHBoxLayout();
+    line2Layout->addWidget(allMemoryLabel);
+    line2Layout->addWidget(m_allMemory);
+    line2Layout->setContentsMargins(0, 0, 0, 0);
 
-    hLayout->addWidget(picLabel, 1);
+    QHBoxLayout *line3Layout = new QHBoxLayout();
+    line3Layout->addWidget(selectedPartLabel);
+    line3Layout->addWidget(m_selectedPartition);
+    line3Layout->addStretch();
+    line3Layout->setContentsMargins(0, 0, 0, 0);
+
+    QHBoxLayout *line4Layout = new QHBoxLayout();
+    line4Layout->addWidget(m_deviceNameLabel);
+    line4Layout->addWidget(m_deviceName);
+    line4Layout->setContentsMargins(0, 0, 0, 0);
+
+    QHBoxLayout *line5Layout = new QHBoxLayout();
+    line5Layout->addWidget(deviceFormateLabel);
+    line5Layout->addWidget(m_deviceFormate);
+    line5Layout->addStretch();
+    line5Layout->setContentsMargins(0, 0, 0, 0);
+
+    QVBoxLayout *line6Layout = new QVBoxLayout();
+    line6Layout->addLayout(line2Layout);
+    line6Layout->addLayout(line4Layout);
+    line6Layout->setContentsMargins(0, 0, 0, 0);
+
+    QVBoxLayout *line7Layout = new QVBoxLayout();
+    line7Layout->addLayout(line3Layout);
+    line7Layout->addLayout(line5Layout);
+    line7Layout->setContentsMargins(0, 0, 0, 0);
+
+    QHBoxLayout *line8Layout = new QHBoxLayout();
+    line8Layout->addLayout(line6Layout);
+    line8Layout->addSpacing(50);
+    line8Layout->addLayout(line7Layout);
+    line8Layout->setContentsMargins(0, 0, 0, 0);
+
+    vLayout->addLayout(line1Layout);
+    vLayout->addLayout(line8Layout);
+    vLayout->setContentsMargins(0, 10, 0, 15);
+
+    hLayout->addWidget(picLabel);
     hLayout->addLayout(vLayout, 10);
+    hLayout->setContentsMargins(20, 0, 0, 0);
 }
 
 void PartitionWidget::midFrameSetting()
@@ -206,7 +251,10 @@ void PartitionWidget::botFrameSetting()
     QHBoxLayout *btnLayout = new QHBoxLayout();
     btnLayout->addWidget(m_reveBtn, 1, Qt::AlignLeft);
     btnLayout->addWidget(m_cancleBtn);
+    btnLayout->addSpacing(10);
     btnLayout->addWidget(m_applyBtn);
+    btnLayout->setSpacing(0);
+    btnLayout->setContentsMargins(0, 0, 0, 10);
 
     vLayout->addLayout(btnLayout, 1);
     vLayout->setContentsMargins(0, 0, 0, 0);
@@ -673,7 +721,15 @@ void PartitionWidget::onAddPartition()
 {
     DeviceInfo device = DMDbusHandler::instance()->getCurDeviceInfo();
 
-    if (m_sizeInfo.size() >= 24 || maxAmountPrimReached() == true || (device.partition.size() + m_sizeInfo.size()) > device.max_prims) {
+    int partitionCount = 0;
+    for (int i = 0; i < device.partition.size(); i ++) {
+        PartitionInfo info = device.partition.at(i);
+        if (info.m_path != "unallocated") {
+            partitionCount++;
+        }
+    }
+
+    if (m_sizeInfo.size() >= 24 || maxAmountPrimReached() == true || (partitionCount + m_sizeInfo.size()) >= device.max_prims) {
         DMessageManager::instance()->sendMessage(this, QIcon(":/icons/deepin/builtin/warning.svg"), tr("The number of new partitions exceeds the limit"));
         return;
     }
@@ -844,4 +900,16 @@ void PartitionWidget::onRevertButton()
 void PartitionWidget::onCancelButton()
 {
     close();
+}
+
+bool PartitionWidget::event(QEvent *event)
+{
+    // 字体大小改变
+    if (QEvent::ApplicationFontChange == event->type()) {
+        QFontMetrics fm(m_deviceNameLabel->font());
+        m_deviceNameLabel->setFixedWidth(fm.boundingRect(tr("Disk:")).width() + 5);
+        DWidget::event(event);
+    }
+
+    return DDialog::event(event);
 }

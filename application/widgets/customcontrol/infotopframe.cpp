@@ -39,7 +39,7 @@ InfoTopFrame::InfoTopFrame(DWidget *parent)
     setBackgroundRole(DPalette::ItemBackground);
 
     m_mainLayout = new QHBoxLayout();
-    m_mainLayout->setContentsMargins(30, 0, 20, 0);
+    m_mainLayout->setContentsMargins(20, 0, 20, 0);
     setLayout(m_mainLayout);
 
     m_pictureLabel = new DLabel(this);
@@ -88,10 +88,13 @@ void InfoTopFrame::initLeftInfo()
     DApplicationHelper::instance()->setPalette(m_typeLabel, palette);
 
     QVBoxLayout *layout = new QVBoxLayout();
-    layout->addStretch();
+//    layout->addStretch();
+    layout->addSpacing(20);
     layout->addWidget(m_nameLabel);
+    layout->addSpacing(10);
     layout->addWidget(m_typeLabel);
     layout->addStretch();
+    layout->setContentsMargins(0, 0, 0, 0);
 
     m_mainLayout->addLayout(layout);
 }

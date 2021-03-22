@@ -103,6 +103,9 @@ void TitleWidget::showPartInfoWidget()
             qDebug() << QString("No partition table found on device %1").arg(info.m_devicePath);
             qDebug() << "A partition table is required before partitions can be added";
             //ToDo:empty device create partition table
+            // 无法识别当前设备分区表
+            DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Cannot recognize its partition table"));
+            DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
             return;
         }
 

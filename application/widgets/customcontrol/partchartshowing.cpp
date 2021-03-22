@@ -30,6 +30,7 @@
 
 #include <QDebug>
 #include <QHBoxLayout>
+#include <QApplication>
 
 #define RADIUS 8
 #define SPACE 11
@@ -104,7 +105,8 @@ void PartChartShowing::paintEvent(QPaintEvent *event)
     QColor tipColor = QColor(palette().dark().color());
 
     painter.setPen(tipColor);
-    painter.drawRect(x(), y() + 58, 10, 10);
+    int height = 58 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
+    painter.drawRect(x(), y() + height, 10, 10);
 
     painter.setPen(palette().text().color());
     QRect textRect(x() + 15, y() + 52, 100, 50);
@@ -112,7 +114,11 @@ void PartChartShowing::paintEvent(QPaintEvent *event)
     QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T7);
     font.setWeight(QFont::Medium);
     painter.setFont(font);
-    painter.setPen(QColor("#001A2E"));
+    if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::LightType) {
+        painter.setPen(QColor("#001A2E"));
+    }  else if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) {
+        painter.setPen(QColor("#C0C0C0"));
+    }
     painter.drawText(textRect, tr("Unallocated"));
 
     QWidget::paintEvent(event);

@@ -1,3 +1,12 @@
+deepin-diskmanager (1.1.0.43) stable; urgency=low
+
+  * 1032维护分支第三次发版
+  * 64327 设置系统字号为20号，磁盘管理器部分页面显示不完整
+  * 60001 设备不包含可识别的分区表时,新建分区无响应
+  * 58418 MBR格式存在三个主分区,两个空闲分区时,新建分区失败
+
+ -- yuandandan <yuandandan@uniontech.com>  Mon, 22 Mar 2021 17:30:16 +0800
+
 deepin-diskmanager (1.1.0.42) stable; urgency=low
 
   * 1032维护分支第二次发版

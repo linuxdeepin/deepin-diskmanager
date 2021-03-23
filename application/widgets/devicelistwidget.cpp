@@ -110,6 +110,7 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
         //        menu->addSeparator();    //添加一个分隔线
         QMenu *itemChildMenu = new QMenu(this);
         itemChildMenu->setTitle(tr("Health management")); // 健康管理
+        itemChildMenu->setObjectName("Health management");
         itemChildMenu->setAccessibleName("Health management");
         menu->addMenu(itemChildMenu);
 

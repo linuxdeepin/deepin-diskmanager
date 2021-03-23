@@ -112,7 +112,7 @@ void PartitionTableErrorsInfoDialog::initUI()
     m_tableView->setModel(m_standardItemModel);
     m_tableView->horizontalHeader()->setStretchLastSection(true);// 设置最后一列自适应
     m_tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    m_tableView->horizontalHeader()->setFixedWidth(550);
+    m_tableView->horizontalHeader()->setFixedWidth(558);
 
     QList<QStandardItem*> itemList;
 
@@ -125,7 +125,7 @@ void PartitionTableErrorsInfoDialog::initUI()
     QHBoxLayout *tableLayout = new QHBoxLayout(tableWidget);
     tableLayout->addWidget(m_tableView);
     tableLayout->setSpacing(0);
-    tableLayout->setContentsMargins(5, 0, 5, 0);
+    tableLayout->setContentsMargins(0, 0, 0, 10);
 
     pushButton = new DPushButton;
     pushButton->setText(tr("OK")); // 确定

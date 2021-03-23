@@ -55,6 +55,10 @@ void PartitionTableErrorsInfoDelegate::paint(QPainter *painter, const QStyleOpti
     painter->save();
 
     QRect paintRect = QRect(option.rect.left(), option.rect.top(), option.rect.width(), option.rect.height());
+    if (index.row() % 2 == 0) {
+        paintRect = QRect(option.rect.left() + 10, option.rect.top(), option.rect.width() - 20, option.rect.height());
+    }
+
     QPainterPath path;
     const int radius = 8;
     path.moveTo(paintRect.bottomRight() - QPoint(0, radius));
@@ -83,14 +87,14 @@ void PartitionTableErrorsInfoDelegate::paint(QPainter *painter, const QStyleOpti
     painter->save();
 
     QIcon icon = Common::getIcon("warning");
-    painter->drawPixmap(option.rect.x() + 7, option.rect.y() + 9, icon.pixmap(12, 12));
+    painter->drawPixmap(option.rect.x() + 17, option.rect.y() + 9, icon.pixmap(12, 12));
 
     QString text = painter->fontMetrics().elidedText(index.data().toString(), Qt::ElideRight, option.rect.width() - 25);
 
     painter->setFont(QFont("SourceHanSansSC", 10, 50));
     painter->setPen(m_color);
 
-    painter->drawText(option.rect.x() + 26, option.rect.y() + 20, text);
+    painter->drawText(option.rect.x() + 36, option.rect.y() + 20, text);
 
     painter->restore();
 }

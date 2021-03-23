@@ -54,8 +54,6 @@ void PartitionWidget::initUi()
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
     setTitle(tr("Partitioning %1").arg(info.m_path));
 
-
-
     DLabel *tipLabel = new DLabel(tr("Click ‘+’ to increase the number of partitions. Click on each partition to change its name and file system."), m_mainFrame);
     tipLabel->setWordWrap(true);
     tipLabel->setAlignment(Qt::AlignCenter);

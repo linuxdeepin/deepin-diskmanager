@@ -1632,12 +1632,22 @@ bool PartedCore::unmount()
         QString cmd = QString("umount -v %1").arg(path);
         int exitcode = Utils::executCmd(cmd, output, errstr);
         if (0 != exitcode) {
-            success = false;
-            emit refreshDeviceInfo();
-            emit unmountPartition("0");
-            return success;
+            QProcess proc;
+            proc.start("df");
+            proc.waitForFinished(-1);
+            QString outBuf = proc.readAllStandardOutput();
+            if (outBuf.contains(m_curpartition.getPath())) {
+                success = false;
+                emit refreshDeviceInfo();
+                emit unmountPartition("0");
+                return success;
+            } else {
+                success = true;
+                emit refreshDeviceInfo();
+                emit unmountPartition("1");
+                return success;
+            }
         }
-
 
         qDebug() << __FUNCTION__ << "Permanent unmount start";
         QString partitionUuid = m_curpartition.m_uuid;

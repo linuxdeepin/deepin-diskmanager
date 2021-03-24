@@ -1625,39 +1625,6 @@ bool PartedCore::unmount()
     qDebug() << __FUNCTION__ << "Permanent unmount start";
     QString partitionUuid = m_curpartition.m_uuid;
     QFile file("/etc/fstab");
-    QString displayString;
-
-    if (!file.open(QIODevice::ReadOnly)) { //打开指定文件
-        qDebug() << __FUNCTION__ << "Permanent unmount open file error";
-        success = false;
-        emit refreshDeviceInfo();
-        return success;
-    } else {
-        QStringList list;
-        while (!file.atEnd()) {
-            QByteArray line = file.readLine();//获取数据
-            QString str = line;
-
-            if (str.contains(partitionUuid)) {
-                continue;
-            }
-            list << str;
-        }
-        file.close();
-        if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
-            QTextStream out(&file);
-            for (int i = 0; i < list.count(); i++) {
-                out << list.at(i);
-                out.flush();
-            }
-            file.close();
-        } else {
-            qDebug() << __FUNCTION__ << "Permanent unmount open file error";
-            success = false;
-            emit refreshDeviceInfo();
-            return success;
-        }
-    }
 
     QString output, errstr;
     QVector<QString> mountpoints = m_curpartition.getMountPoints();
@@ -1666,14 +1633,37 @@ bool PartedCore::unmount()
         int exitcode = Utils::executCmd(cmd, output, errstr);
         if (0 != exitcode) {
             success = false;
-            emit refreshDeviceInfo();
-            return success;
+            break;
         }
-//        if (umount(path.toStdString().c_str()) != 0) {
-//            success = false;
-//            emit refreshDeviceInfo();
-//            return success;
-//        }
+        if (!file.open(QIODevice::ReadOnly)) { //打开指定文件
+            qDebug() << __FUNCTION__ << "Permanent unmount open file error";
+            success = false;
+            break;
+        } else {
+            QStringList list;
+            while (!file.atEnd()) {
+                QByteArray line = file.readLine();//获取数据
+                QString str = line;
+
+                if (str.contains(partitionUuid)) {
+                    continue;
+                }
+                list << str;
+            }
+            file.close();
+            if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
+                QTextStream out(&file);
+                for (int i = 0; i < list.count(); i++) {
+                    out << list.at(i);
+                    out.flush();
+                }
+                file.close();
+            } else {
+                qDebug() << __FUNCTION__ << "Permanent unmount open file error";
+                success = false;
+                break;
+            }
+        }
     }
 
     emit refreshDeviceInfo();

@@ -12,4 +12,7 @@ override_dh_auto_configure:
 %:
 	dh $@ --parallel
 
+override_dh_auto_test:
+	# Disable auto tests at build time
+
 

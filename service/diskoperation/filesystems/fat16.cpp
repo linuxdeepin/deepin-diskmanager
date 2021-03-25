@@ -34,7 +34,7 @@
 namespace DiskManager
 {
 
-FS fat16::getFilesystemSupport()
+FS FAT16::getFilesystemSupport()
 {
     FS fs(specificType);
 
@@ -90,7 +90,7 @@ FS fat16::getFilesystemSupport()
     return fs;
 }
 
-void fat16::setUsedSectors( Partition & partition )
+void FAT16::setUsedSectors( Partition & partition )
 {
     QString output, error, strmatch, strcmd;
 
@@ -186,7 +186,7 @@ void fat16::setUsedSectors( Partition & partition )
 }
 
 
-void fat16::readLabel( Partition & partition )
+void FAT16::readLabel( Partition & partition )
 {
     QString output, error, filesystemLabel;
     QString partitionPath = partition.getPath().remove("/dev/");
@@ -212,7 +212,7 @@ void fat16::readLabel( Partition & partition )
 
 }
 
-bool fat16::writeLabel(const Partition & partition)
+bool FAT16::writeLabel(const Partition & partition)
 {
     QString output, error, cmd;
     if (partition.getFileSystemLabel().isEmpty() || partition.getFileSystemLabel() == " ")
@@ -228,7 +228,7 @@ bool fat16::writeLabel(const Partition & partition)
 
 }
 
-void fat16::readUuid( Partition & partition )
+void FAT16::readUuid( Partition & partition )
 {
     QString output, error;
     QString cmd = QString("mdir -f :: -i %1").arg(partition.getPath());
@@ -241,7 +241,7 @@ void fat16::readUuid( Partition & partition )
 //    qDebug() << __FUNCTION__ << output << error;
 }
 
-bool fat16::writeUuid(const Partition & partition)
+bool FAT16::writeUuid(const Partition & partition)
 {
 
     QString output, error;
@@ -249,7 +249,7 @@ bool fat16::writeUuid(const Partition & partition)
     return exitcode == 0 || error.compare("Unknown error") == 0;
 }
 
-bool fat16::create(const Partition & new_partition)
+bool FAT16::create(const Partition & new_partition)
 {
     QString output, error, cmd;
     QString fat_size = (specificType == FS_FAT16 ? "16" : "32");
@@ -263,7 +263,7 @@ bool fat16::create(const Partition & new_partition)
     return exitcode == 0 && error.compare("Unknown error") == 0;
 }
 
-bool fat16::checkRepair(const Partition & partition)
+bool FAT16::checkRepair(const Partition & partition)
 {
     QString output, error;
     int exitcode = Utils::executCmd(QString("fsck.fat -a -w -v %1").arg(partition.getPath()), output, error);

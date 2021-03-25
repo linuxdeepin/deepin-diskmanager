@@ -41,7 +41,7 @@ namespace DiskManager {
 //hdparm可检测，显示与设定IDE或SCSI硬盘的参数。
 //udevadm可检测设备热插拔
 //static bool udevadm_found = false;
-static bool hdparm_found = false;
+static bool hdparmFound = false;
 const std::time_t SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS = 1;
 //const std::time_t SETTLE_DEVICE_APPLY_MAX_WAIT_SECONDS = 10;
 SupportedFileSystems *PartedCore::m_supportedFileSystems = nullptr;
@@ -82,18 +82,18 @@ PartedCore::~PartedCore()
 void PartedCore::initConnection()
 {
     connect(this, &PartedCore::refreshDeviceInfo, this, &PartedCore::onRefreshDeviceInfo);
-    connect(&m_checkThread, &workthread::checkBadBlocksInfo, this, &PartedCore::checkBadBlocksCountInfo);
-    connect(&m_checkThread, &workthread::checkBadBlocksDeviceStatusFinished, this, &PartedCore::threadSafeRecycle);
-    connect(&m_checkThread, &workthread::checkBadBlocksFinished, this, &PartedCore::checkBadBlocksFinished);
-    connect(&m_fixthread, &fixthread::fixBadBlocksInfo, this, &PartedCore::fixBadBlocksInfo);
-    connect(&m_fixthread, &fixthread::checkBadBlocksDeviceStatusFinished, this, &PartedCore::threadSafeRecycle);
-    connect(&m_fixthread, &fixthread::fixBadBlocksFinished, this, &PartedCore::fixBadBlocksFinished);
+    connect(&m_checkThread, &WorkThread::checkBadBlocksInfo, this, &PartedCore::checkBadBlocksCountInfo);
+    connect(&m_checkThread, &WorkThread::checkBadBlocksDeviceStatusFinished, this, &PartedCore::threadSafeRecycle);
+    connect(&m_checkThread, &WorkThread::checkBadBlocksFinished, this, &PartedCore::checkBadBlocksFinished);
+    connect(&m_fixthread, &FixThread::fixBadBlocksInfo, this, &PartedCore::fixBadBlocksInfo);
+    connect(&m_fixthread, &FixThread::checkBadBlocksDeviceStatusFinished, this, &PartedCore::threadSafeRecycle);
+    connect(&m_fixthread, &FixThread::fixBadBlocksFinished, this, &PartedCore::fixBadBlocksFinished);
 }
 
 void PartedCore::findSupportedCore()
 {
     //udevadm_found = !Utils::findProgramInPath("udevadm").isEmpty();
-    hdparm_found = !Utils::findProgramInPath("hdparm").isEmpty();
+    hdparmFound = !Utils::findProgramInPath("hdparm").isEmpty();
 }
 
 bool PartedCore::supportedFileSystem(FSType fstype)
@@ -155,7 +155,7 @@ void PartedCore::insertUnallocated(const QString &devicePath, QVector<Partition 
             // partitions.insert_adopt(partitions.begin() + ++t, partition_temp);
         }
     }
-    partitions.back();
+//    partitions.back();
     //last partition end <---> end
     if ((end - partitions.back()->m_sectorEnd) >= (MEBIBYTE / sectorSize)) {
         Sector tempStart = partitions.back()->m_sectorEnd + 1;
@@ -185,10 +185,10 @@ FS_Limits PartedCore::getFileSystemLimits(FSType fstype, const Partition &partit
 void PartedCore::probeDeviceInfo(const QString &)
 {
     m_inforesult.clear();
-    m_devicemap.clear();
-    QVector<QString> devicepaths;
+    m_deviceMap.clear();
+    QVector<QString> devicePaths;
     qDebug() << __FUNCTION__ << "**1";
-    devicepaths.clear();
+    devicePaths.clear();
     BlockSpecial::clearCache();
     qDebug() << __FUNCTION__ << "**2";
     ProcPartitionsInfo::loadCache();
@@ -207,25 +207,25 @@ void PartedCore::probeDeviceInfo(const QString &)
 
         //only add this device if we can read the first sector (which means it's a real device)
         if (useableDevice(lpDevice))
-            devicepaths.push_back(lpDevice->path);
+            devicePaths.push_back(lpDevice->path);
 //        qDebug() << lpDevice->path;
         lpDevice = ped_device_get_next(lpDevice);
     }
 //    qDebug() << __FUNCTION__ << "devicepaths size=" << devicepaths.size();
-    std::sort(devicepaths.begin(), devicepaths.end());
+    std::sort(devicePaths.begin(), devicePaths.end());
     qDebug() << __FUNCTION__ << "**8";
-    for (int t = 0; t < devicepaths.size(); t++) {
+    for (int t = 0; t < devicePaths.size(); t++) {
         /*TO TRANSLATORS: looks like Searching /dev/sda partitions */
         Device tempDevice;
-        setDeviceFromDisk(tempDevice, devicepaths[t]);
-        m_devicemap.insert(devicepaths.at(t), tempDevice);
+        setDeviceFromDisk(tempDevice, devicePaths[t]);
+        m_deviceMap.insert(devicePaths.at(t), tempDevice);
     }
     qDebug() << __FUNCTION__ << "**9";
 //    getPartitionHiddenFlag();
-    for (auto it = m_devicemap.begin(); it != m_devicemap.end(); it++) {
+    for (auto it = m_deviceMap.begin(); it != m_deviceMap.end(); it++) {
         DeviceInfo devinfo = it.value().getDeviceInfo();
         for (int i = 0; i < it.value().m_partitions.size(); i++) {
-            Partition pat = *(it.value().m_partitions.at(i));
+            const Partition &pat = *(it.value().m_partitions.at(i)); //拷贝构造速度提升 const 引用
             PartitionInfo partinfo = pat.getPartitionInfo();
 
 //            if(m_hiddenPartition.indexOf(partinfo.m_uuid) != -1 && !partinfo.m_uuid.isEmpty()) {
@@ -234,10 +234,10 @@ void PartedCore::probeDeviceInfo(const QString &)
 //                partinfo.m_flag = 0;
 //            }
 
-            if (pat.m_type == TYPE_EXTENDED) {
+            if (pat.m_type == PartitionType::TYPE_EXTENDED) {
                 devinfo.partition.push_back(partinfo);
                 for (int k = 0; k < pat.m_logicals.size(); k++) {
-                    Partition plogic = *(pat.m_logicals.at(k));
+                    const Partition &plogic = *(pat.m_logicals.at(k));
                     partinfo = plogic.getPartitionInfo();
                     devinfo.partition.push_back(partinfo);
                 }
@@ -289,7 +289,7 @@ void PartedCore::setDeviceFromDisk(Device &device, const QString &devicePath)
             device.m_cylsize = MEBIBYTE / device.m_sectorSize;
 
         FSType fstype = detectFilesystem(lpDevice, nullptr);
-        if (fstype != FS_UNKNOWN) {
+        if (fstype != FSType::FS_UNKNOWN) {
             device.m_diskType = "none";
             device.m_maxPrims = 1;
             setDeviceOnePartition(device, lpDevice, fstype);
@@ -301,8 +301,7 @@ void PartedCore::setDeviceFromDisk(Device &device, const QString &devicePath)
 
                 // Determine if partition naming is supported.
                 if (ped_disk_type_check_feature(lpDisk->type, PED_DISK_TYPE_PARTITION_NAME)) {
-                    device.enablePartitionNaming(
-                        Utils::getMaxPartitionNameLength(device.m_diskType));
+                    device.enablePartitionNaming(Utils::getMaxPartitionNameLength(device.m_diskType));
                 }
 
                 setDevicePartitions(device, lpDevice, lpDisk);
@@ -314,9 +313,10 @@ void PartedCore::setDeviceFromDisk(Device &device, const QString &devicePath)
             // Drive just containing libparted "loop" signature and nothing
             // else.  (Actually any drive reported by libparted as "loop" but
             // not recognised by blkid on the whole disk device).
-            else if (lpDisk && lpDisk->type && lpDisk->type->name && strcmp(lpDisk->type->name, "loop") == 0) {
-                device.m_diskType = lpDisk->type->name;
-                device.m_maxPrims = 1;
+            else if (lpDisk && lpDisk->type && strcmp(lpDisk->type->name, "loop") == 0) {
+//            else if (lpDisk && lpDisk->type && lpDisk->type->name && strcmp(lpDisk->type->name, "loop") == 0) {
+                device.m_diskType = lpDisk->type->name; //赋值
+                device.m_maxPrims = 1; //赋值
 
                 // Create virtual partition covering the whole disk device
                 // with unknown contents.
@@ -399,7 +399,7 @@ void PartedCore::destroyDeviceAndDisk(PedDevice *&lpDevice, PedDisk *&lpDisk)
     lpDevice = nullptr;
 }
 
-bool PartedCore::infoBelongToPartition(const Partition &partition, const PartitionInfo info)
+bool PartedCore::infoBelongToPartition(const Partition &partition, const PartitionInfo &info)
 {
     bool belong = false;
     if (info.m_sectorEnd == partition.m_sectorEnd && info.m_sectorStart == partition.m_sectorStart)
@@ -420,9 +420,9 @@ bool PartedCore::commit(PedDisk *lpDisk)
 {
     bool opened = ped_device_open(lpDisk->dev);
 
-    bool succes = ped_disk_commit_to_dev(lpDisk);
+    bool succeed = ped_disk_commit_to_dev(lpDisk);
 
-    succes = commitToOs(lpDisk) && succes;
+    succeed = commitToOs(lpDisk) && succeed;
 
     if (opened) {
         ped_device_close(lpDisk->dev);
@@ -433,19 +433,19 @@ bool PartedCore::commit(PedDisk *lpDisk)
         Utils::executCmd(QString("udevadm settle --timeout=%1").arg(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS), out, err);
     }
 
-    return succes;
+    return succeed;
 }
 
 PedPartition *PartedCore::getLpPartition(const PedDisk *lpDisk, const Partition &partition)
 {
-    if (partition.m_type == TYPE_EXTENDED)
+    if (partition.m_type == PartitionType::TYPE_EXTENDED)
         return ped_disk_extended_partition(lpDisk);
     return ped_disk_get_partition_by_sector(lpDisk, partition.getSector());
 }
 
 void PartedCore::setDeviceSerialNumber(Device &device)
 {
-    if (!hdparm_found)
+    if (!hdparmFound)
         // Serial number left blank when the hdparm command is not installed.
         return;
 
@@ -479,12 +479,13 @@ void PartedCore::setDeviceOnePartition(Device &device, PedDevice *lpDevice, FSTy
     bool partitionIsBusy = isBusy(fstype, path);
 
     Partition *partitionTemp = nullptr;
-    if (fstype == FS_LUKS) {
+    if (fstype == FSType::FS_LUKS) {
         partitionTemp = nullptr; //= new PartitionLUKS();
+        return;
     } else
         partitionTemp = new Partition();
-    if (nullptr == partitionTemp)
-        return;
+//    if (nullptr == partitionTemp)
+//        return;
     partitionTemp->setUnpartitioned(device.m_path,
                                       path,
                                       fstype,
@@ -1881,7 +1882,7 @@ DeviceInfoMap PartedCore::getAllDeviceinfo()
 void PartedCore::setCurSelect(const PartitionInfo &info)
 {
     bool bfind = false;
-    for (auto it = m_devicemap.begin(); it != m_devicemap.end() && !bfind; it++) {
+    for (auto it = m_deviceMap.begin(); it != m_deviceMap.end() && !bfind; it++) {
         if (it.key() == info.m_devicePath) {
             Device dev = it.value();
             for (auto itpart = dev.m_partitions.begin(); itpart != dev.m_partitions.end() && !bfind; itpart++) {

@@ -33,11 +33,11 @@ namespace DiskManager
 {
 
 /**
- * @class ntfs
+ * @class NTFS
  * @brief 文件格式ntfs操作类
  */
 
-class ntfs : public FileSystem
+class NTFS : public FileSystem
 {
 public:
     /**

@@ -34,14 +34,14 @@ namespace DiskManager {
 
 
 /**
- * @class workthread
+ * @class WorkThread
  * @brief 坏道检测类
  */
-class workthread :public QObject
+class WorkThread :public QObject
 {
      Q_OBJECT
 public:
-    workthread(QObject *parent = nullptr);
+    WorkThread(QObject *parent = nullptr);
 
     /**
      * @brief 设置检测次数信息
@@ -124,11 +124,11 @@ private:
  * @class fixthread
  * @brief 坏道修复类
  */
-class fixthread :public QObject
+class FixThread :public QObject
 {
     Q_OBJECT
 public:
-    fixthread(QObject *parent = nullptr);
+    FixThread(QObject *parent = nullptr);
 
     /**
      * @brief 设置停止状态

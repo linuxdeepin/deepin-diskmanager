@@ -34,7 +34,7 @@
 
 namespace DiskManager {
 
-workthread::workthread(QObject *parent)
+WorkThread::WorkThread(QObject *parent)
 {
     Q_UNUSED(parent);
     m_stopFlag = 0;
@@ -44,12 +44,12 @@ workthread::workthread(QObject *parent)
     m_checkSize = 0;
 }
 
-void workthread::setStopFlag(int flag)
+void WorkThread::setStopFlag(int flag)
 {
     m_stopFlag = flag;
 }
 
-void workthread::setConutInfo(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize)
+void WorkThread::setConutInfo(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize)
 {
     m_devicePath = devicePath;
     m_blockStart = blockStart;
@@ -58,7 +58,7 @@ void workthread::setConutInfo(const QString &devicePath, int blockStart, int blo
     m_checkSize = checkSize;
 }
 
-void workthread::setTimeInfo(const QString &devicePath, int blockStart, int blockEnd, QString checkTime, int checkSize)
+void WorkThread::setTimeInfo(const QString &devicePath, int blockStart, int blockEnd, QString checkTime, int checkSize)
 {
     m_devicePath = devicePath;
     m_blockStart = blockStart;
@@ -67,7 +67,7 @@ void workthread::setTimeInfo(const QString &devicePath, int blockStart, int bloc
     m_checkSize = checkSize;
 }
 
-void workthread::runCount()
+void WorkThread::runCount()
 {
 //    qDebug() << QThread::currentThreadId() << endl;
     Sector i = m_blockStart;
@@ -107,13 +107,13 @@ void workthread::runCount()
     }
 
     if (m_stopFlag != 2) {
-        emit checkBadBlocksFinished();
+        emit checkBadBlocksFinished(); //检测完成正常退出,发送给页面的正常结束信号
     }
 
-    emit checkBadBlocksDeviceStatusFinished();
+    emit checkBadBlocksDeviceStatusFinished(); //此线程正常结束,后台回收销毁线程信号
 }
 
-void workthread::runTime()
+void WorkThread::runTime()
 {
 
     Sector i = m_blockStart;
@@ -165,19 +165,19 @@ void workthread::runTime()
     emit checkBadBlocksDeviceStatusFinished();
 }
 
-fixthread::fixthread(QObject *parent)
+FixThread::FixThread(QObject *parent)
 {
     Q_UNUSED(parent);
     m_stopFlag = 0;
     m_checkSize = 0;
 }
 
-void fixthread::setStopFlag(int flag)
+void FixThread::setStopFlag(int flag)
 {
     m_stopFlag = flag;
 }
 
-void fixthread::runFix()
+void FixThread::runFix()
 {
 //    qDebug() << m_list << endl;
     int i = 0;
@@ -219,7 +219,7 @@ void fixthread::runFix()
     emit checkBadBlocksDeviceStatusFinished();
 }
 
-void fixthread::setFixBadBlocksInfo(const QString &devicePath, QStringList list, int checkSize)
+void FixThread::setFixBadBlocksInfo(const QString &devicePath, QStringList list, int checkSize)
 {
     m_devicePath = devicePath;
     m_list = list;

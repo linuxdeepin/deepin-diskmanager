@@ -33,7 +33,7 @@
 namespace DiskManager
 {
 
-FS ntfs::getFilesystemSupport()
+FS NTFS::getFilesystemSupport()
 {
     FS fs(FS_NTFS);
 
@@ -77,7 +77,7 @@ FS ntfs::getFilesystemSupport()
     return fs;
 }
 
-void ntfs::setUsedSectors( Partition & partition )
+void NTFS::setUsedSectors( Partition & partition )
 {
     QString output, error, strmatch;
 
@@ -118,7 +118,7 @@ void ntfs::setUsedSectors( Partition & partition )
 
 }
 
-void ntfs::readLabel( Partition & partition )
+void NTFS::readLabel( Partition & partition )
 {
     QString output, error;
     if (!Utils::executCmd(QString("ntfslabel --force").arg(partition.getPath()), output, error)) {
@@ -126,7 +126,7 @@ void ntfs::readLabel( Partition & partition )
     }
 }
 
-bool ntfs::writeLabel( const Partition & partition)
+bool NTFS::writeLabel( const Partition & partition)
 {
     QString output, error;
     int exitcode = Utils::executCmd(QString("ntfslabel --force %1 %2").arg(partition.getPath()).arg(partition.getFileSystemLabel()), output, error);
@@ -134,18 +134,18 @@ bool ntfs::writeLabel( const Partition & partition)
     return exitcode == 0;
 }
 
-void ntfs::readUuid(Partition & partition)
+void NTFS::readUuid(Partition & partition)
 {
 }
 
-bool ntfs::writeUuid( const Partition & partition)
+bool NTFS::writeUuid( const Partition & partition)
 {
     QString output, error;
     int exitcode = Utils::executCmd(QString("ntfslabel --new-serial ").arg(partition.getPath()), output, error);
     return exitcode == 0 || error.compare("Unknown error") == 0;
 }
 
-bool ntfs::create(const Partition & newPartition)
+bool NTFS::create(const Partition & newPartition)
 {
     QString output, error;
     int exitcode = -1;
@@ -157,7 +157,7 @@ bool ntfs::create(const Partition & newPartition)
     return exitcode == 0 && error.compare("Unknown error") == 0;
 }
 
-bool ntfs::resize(const Partition & partitionNew, bool fillPartition )
+bool NTFS::resize(const Partition & partitionNew, bool fillPartition )
 {
 //	bool success;
     QString output, error;
@@ -182,7 +182,7 @@ bool ntfs::resize(const Partition & partitionNew, bool fillPartition )
 //		                  static_cast<StreamSlot>( sigc::mem_fun( *this, &ntfs::clone_progress ) ) );
 //}
 
-bool ntfs::checkRepair( const Partition & partition)
+bool NTFS::checkRepair( const Partition & partition)
 {
     QString output, error;
     int exitcode = Utils::executCmd(QString("ntfsresize -i -f -v %1").arg(partition.getPath()), output, error);

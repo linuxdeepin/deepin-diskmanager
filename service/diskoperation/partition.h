@@ -191,7 +191,7 @@ public:
      * @brief 获取分区信息
      * @return 分区信息
      */
-    PartitionInfo getPartitionInfo();
+    PartitionInfo getPartitionInfo() const;
 
     QString m_devicePath;         //设备路径
     int m_partitionNumber;        //分区编号

@@ -47,7 +47,7 @@ SupportedFileSystems::SupportedFileSystems()
     m_fsObjects[FS_EXT4] = new EXT2(FS_EXT4);
     //    m_fs_objects[FS_F2FS]            = new f2fs();
     //    m_fs_objects[FS_FAT16]           = new fat16(FS_FAT16);
-    m_fsObjects[FS_FAT32]           = new fat16(FS_FAT32);
+    m_fsObjects[FS_FAT32]           = new FAT16(FS_FAT32);
     //    m_fs_objects[FS_HFS]             = new hfs();
     //    m_fs_objects[FS_HFSPLUS]         = new hfsplus();
     //    m_fs_objects[FS_JFS]             = new jfs();
@@ -56,7 +56,7 @@ SupportedFileSystems::SupportedFileSystems()
     //    m_fs_objects[FS_LUKS]            = new luks();
     //    m_fs_objects[FS_MINIX]           = new minix();
     //    m_fs_objects[FS_NILFS2]          = new nilfs2();
-    m_fsObjects[FS_NTFS]            = new ntfs();
+    m_fsObjects[FS_NTFS]            = new NTFS();
     //    m_fs_objects[FS_REISER4]         = new reiser4();
     //    m_fs_objects[FS_REISERFS]        = new reiserfs();
     //    m_fs_objects[FS_UDF]             = new udf();

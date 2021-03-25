@@ -37,12 +37,12 @@ namespace DiskManager
  * @brief 文件格式fat32操作类
  */
 
-class fat16 : public FileSystem
+class FAT16 : public FileSystem
 {
     const enum FSType specificType;
 
 public:
-    fat16( enum FSType type ) : specificType( type ) {}
+    FAT16( enum FSType type ) : specificType( type ) {}
 
     /**
      * @brief 获取文件系统支持

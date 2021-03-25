@@ -378,7 +378,7 @@ private:
      * @param info：分区详细信息
      * @return true成功false失败
      */
-    bool infoBelongToPartition(const Partition &partition, const PartitionInfo info);
+    bool infoBelongToPartition(const Partition &partition, const PartitionInfo &info);
 
     /**
      * @brief 获取磁盘和设备信息
@@ -720,14 +720,14 @@ public slots:
 
 private:
     QVector<PedPartitionFlag> m_flags;    //分区标志hidden boot efi等
-    QMap<QString, Device> m_devicemap;    //设备对应信息表
+    QMap<QString, Device> m_deviceMap;    //设备对应信息表
     DeviceInfoMap m_inforesult;           //全部设备分区信息
     Partition m_curpartition;             //当前选中分区信息
     static SupportedFileSystems *m_supportedFileSystems; //支持的文件系统
     QByteArray m_hiddenPartition;         //隐藏分区（规则文件中的隐藏分区）
     QThread *m_workerThread;
-    workthread m_checkThread;
-    fixthread m_fixthread;
+    WorkThread m_checkThread;
+    FixThread m_fixthread;
 };
 
 } // namespace DiskManager

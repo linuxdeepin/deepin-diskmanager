@@ -244,7 +244,7 @@ QString Partition::getFileSystemLabel() const
     return "";
 }
 
-PartitionInfo Partition::getPartitionInfo()
+PartitionInfo Partition::getPartitionInfo() const
 {
     PartitionInfo info;
     info.m_devicePath = m_devicePath;

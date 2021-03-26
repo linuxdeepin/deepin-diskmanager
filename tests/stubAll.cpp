@@ -228,6 +228,61 @@ DeviceInfoMap deviceInfo_mountPartition()
     return map;
 }
 
+DeviceInfoMap deviceInfo_noPartitionTable()
+{
+    DeviceInfoMap map;
+    DeviceInfo devinfo;
+    devinfo.m_path = "/dev/sde";
+    devinfo.length = 468862128;
+    devinfo.heads = 255;
+    devinfo.sectors = 63;
+    devinfo.cylinders = 29185;
+    devinfo.cylsize = 16065;
+    devinfo.model = "ATA CT240BX500SSD1";
+    devinfo.serial_number = "2002E3E11F2F";
+    devinfo.disktype = "unrecognized";
+    devinfo.sector_size = 512;
+    devinfo.max_prims = 1;
+    devinfo.highest_busy = 0;
+    devinfo.readonly = false;
+    devinfo.max_partition_name_length = 0;
+
+    PartitionVec partition;
+    PartitionInfo partitionInfo1;
+    partitionInfo1.m_devicePath = "/dev/sde";
+    partitionInfo1.m_partitionNumber = 1;
+    partitionInfo1.m_type = 4;
+    partitionInfo1.m_status = 0;
+    partitionInfo1.m_alignment = 2;
+    partitionInfo1.m_fileSystemType = 1;
+    partitionInfo1.m_flag = 0;
+    partitionInfo1.m_uuid = "";
+    partitionInfo1.m_name = "";
+    partitionInfo1.m_sectorStart = 0;
+    partitionInfo1.m_sectorEnd = 468862127;
+    partitionInfo1.m_sectorsUsed = -1;
+    partitionInfo1.m_sectorsUnused = -1;
+    partitionInfo1.m_sectorsUnallocated = 0;
+    partitionInfo1.m_significantThreshold = 1;
+    partitionInfo1.m_freeSpaceBefore = -1;
+    partitionInfo1.m_sectorSize = 512;
+    partitionInfo1.m_fileSystemBlockSize = -1;
+    partitionInfo1.m_path = "unallocated";
+    partitionInfo1.m_fileSystemLabel = "";
+    partitionInfo1.m_insideExtended = false;
+    partitionInfo1.m_busy = false;
+    partitionInfo1.m_fileSystemReadOnly = false;
+    partitionInfo1.m_mountPoints = QVector<QString>();
+
+    partition.append(partitionInfo1);
+
+    devinfo.partition = partition;
+
+    map.insert("/dev/sde", devinfo);
+
+    return map;
+}
+
 void setCurSelect()
 {
     QString devicePath = "/dev/sde";
@@ -441,6 +496,14 @@ HardDiskStatusInfoList deviceCheckHealthInfo()
     return HardDiskStatusInfoList;
 }
 
+HardDiskStatusInfoList emptyDeviceCheckHealthInfo()
+{
+    QList<HardDiskStatusInfo> HardDiskStatusInfoList;
+    HardDiskStatusInfoList.clear();
+
+    return HardDiskStatusInfoList;
+}
+
 void badSectorsCheck()
 {
     qDebug() << "badSectorsCheck";
@@ -454,5 +517,17 @@ void badSectorsRepair()
 void createPartitionTable()
 {
     qDebug() << "createPartitionTable";
+}
+
+bool partitionTableErrorCheck_normal()
+{
+    qDebug() << "partitionTableErrorCheck_normal";
+    return false;
+}
+
+bool partitionTableErrorCheck_error()
+{
+    qDebug() << "partitionTableErrorCheck_error";
+    return true;
 }
 

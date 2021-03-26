@@ -27,10 +27,8 @@
 #include "mainwindow.h"
 #include "centerwidget.h"
 #include "titlewidget.h"
-#include "customcontrol/bufferwin.h"
 #include "partedproxy/dmdbushandler.h"
 #include "common.h"
-#include "deviceinfoparser.h"
 
 #include <DTitlebar>
 #include <DWidgetUtil>

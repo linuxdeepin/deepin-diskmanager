@@ -17,6 +17,8 @@ void getDeviceInfo();
 
 DeviceInfoMap deviceInfo_mountPartition();
 
+DeviceInfoMap deviceInfo_noPartitionTable();
+
 void setCurSelect();
 
 void setCurSelectSecond();
@@ -61,10 +63,16 @@ QString unknownDeviceStatus();
 
 HardDiskStatusInfoList deviceCheckHealthInfo();
 
+HardDiskStatusInfoList emptyDeviceCheckHealthInfo();
+
 void badSectorsCheck();
 
 void badSectorsRepair();
 
 void createPartitionTable();
+
+bool partitionTableErrorCheck_normal();
+
+bool partitionTableErrorCheck_error();
 
 #endif // STUBALLTHREAD_H

@@ -24,7 +24,7 @@ lcov -d ../ -c -o ./coverage/coverage.info
 
 lcov --extract ./coverage/coverage.info '*/application/*' '*/basestruct/*' -o ./coverage/coverage.info
 
-lcov --remove ./coverage/coverage.info '*/tests/*' -o ./coverage/coverage.info
+lcov --remove ./coverage/coverage.info '*/tests/*' '*/application/partedproxy/*' -o ./coverage/coverage.info
 
 mkdir ../report
 genhtml -o ../report ./coverage/coverage.info

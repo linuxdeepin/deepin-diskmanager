@@ -27,7 +27,6 @@
 #include "centerwidget.h"
 #include "titlewidget.h"
 #include "mainsplitter.h"
-#include "customcontrol/bufferwin.h"
 #include "partedproxy/dmdbushandler.h"
 
 #include <DSpinner>

@@ -28,6 +28,8 @@
 #include "diskhealthdetectiondialog.h"
 #include "diskbadsectorsdialog.h"
 #include "createpartitiontabledialog.h"
+#include "partitiontableerrorsinfodialog.h"
+#include "cylinderinfowidget.h"
 
 class ut_application : public ::testing::Test
         , public QObject
@@ -77,7 +79,6 @@ TEST_F(ut_application, init)
     DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
     DmTreeview *view = deviceListWidget->findChild<DmTreeview *>();
     QTest::qWait(1000);
-
 
     view->setRefreshItem(0, 0);
     QTest::qWait(1000);
@@ -274,8 +275,6 @@ TEST_F(ut_application, formatPartition)
     formatDialog->m_fileNameEdit->setText("一二三四五");
 
     formatDialog->onButtonClicked(1, "");
-
-
 }
 
 TEST_F(ut_application, newPartition)
@@ -662,13 +661,319 @@ TEST_F(ut_application, diskBadSectorsRepair)
     diskBadSectorsDialog->onDoneButtonClicked();
 }
 
-TEST_F(ut_application, createPartitionTable)
+TEST_F(ut_application, cylinderInfoTest)
+{
+    CylinderInfoWidget *cylinderInfoWidget = new CylinderInfoWidget(291);
+
+    cylinderInfoWidget->againVerify(291);
+    cylinderInfoWidget->againVerify(750);
+    cylinderInfoWidget->reset(278);
+}
+
+TEST_F(ut_application, createPartitionTable_replace)
 {
     Stub stub;
     stub.set(ADDR(DMDbusHandler, createPartitionTable), createPartitionTable);
 
     CreatePartitionTableDialog *createPartitionTableDialog = new CreatePartitionTableDialog();
     createPartitionTableDialog->onButtonClicked(1, createPartitionTableDialog->m_curType);
+
+    DMDbusHandler::instance()->onCreatePartitionTable(true);
+
+    DMDbusHandler::instance()->onCreatePartitionTable(false);
 }
+
+TEST_F(ut_application, createPartitionTable_create)
+{
+    Stub stub;
+    stub.set(ADDR(DMDbusHandler, createPartitionTable), createPartitionTable);
+
+    CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
+    MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
+    DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
+
+    DeviceInfoMap oldInfo = DMDbusHandler::instance()->m_deviceMap;
+    DMDbusHandler::instance()->m_deviceMap = deviceInfo_noPartitionTable();
+
+    CreatePartitionTableDialog *createPartitionTableDialog = new CreatePartitionTableDialog();
+    createPartitionTableDialog->onButtonClicked(1, createPartitionTableDialog->m_curType);
+
+    DMDbusHandler::instance()->onCreatePartitionTable(true);
+
+    DMDbusHandler::instance()->onCreatePartitionTable(false);
+
+    DMDbusHandler::instance()->m_deviceMap = oldInfo;
+}
+
+TEST_F(ut_application, createPartitionTable)
+{
+    Stub stub;
+    stub.set(ADDR(DMDbusHandler, createPartitionTable), createPartitionTable);
+
+    typedef int (*fptr)(DeviceListWidget*);
+    fptr foo = (fptr)(&MessageBox::exec);
+    Stub stub2;
+    stub2.set(foo, MessageboxExec);
+
+    typedef int (*fptr)(DeviceListWidget*);
+    fptr foo2 = (fptr)(&CreatePartitionTableDialog::exec);
+    Stub stub3;
+    stub3.set(foo2, MessageboxExec);
+
+    CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
+    MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
+    DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
+
+    deviceListWidget->onCreatePartitionTableClicked();
+}
+
+TEST_F(ut_application, createPartitionTable_mount)
+{
+    typedef int (*fptr)(DeviceListWidget*);
+    fptr foo = (fptr)(&MessageBox::exec);
+    Stub stub2;
+    stub2.set(foo, MessageboxExec);
+
+    DeviceInfoMap oldInfo = DMDbusHandler::instance()->m_deviceMap;
+    DMDbusHandler::instance()->m_deviceMap = deviceInfo_mountPartition();
+
+    CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
+    MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
+    DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
+
+    deviceListWidget->onCreatePartitionTableClicked();
+
+    DMDbusHandler::instance()->m_deviceMap = oldInfo;
+}
+
+TEST_F(ut_application, partitionTableCheck_error)
+{
+    Stub stub;
+    stub.set(ADDR(DMDbusHandler, detectionPartitionTableError), partitionTableErrorCheck_error);
+
+    typedef int (*fptr)(DeviceListWidget*);
+    fptr foo = (fptr)(&PartitionTableErrorsInfoDialog::exec);
+    Stub stub2;
+    stub2.set(foo, MessageboxExec);
+
+    CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
+    MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
+    DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
+
+    deviceListWidget->onPartitionErrorCheckClicked();
+}
+
+TEST_F(ut_application, partitionTableCheck_normal)
+{
+    Stub stub;
+    stub.set(ADDR(DMDbusHandler, detectionPartitionTableError), partitionTableErrorCheck_normal);
+
+    CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
+    MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
+    DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
+
+    deviceListWidget->onPartitionErrorCheckClicked();
+}
+
+TEST_F(ut_application, partitionTableErrorCheck) // 模拟右键点击分区表错误检测，需要页面显示出来
+{
+    Stub stub;
+    stub.set(ADDR(DMDbusHandler, detectionPartitionTableError), partitionTableErrorCheck_error);
+
+    CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
+    MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
+    DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
+    DmTreeview *view = deviceListWidget->findChild<DmTreeview *>();
+    QTest::qWait(1000);
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, [=]() {
+        QWidgetList w = QApplication::topLevelWidgets();
+        for (int i = 0; i < w.count(); i++) {
+            if (w.at(i)->objectName() == "Health management") {
+                timer->stop();
+                QList<QAction*> lstAction = w.at(i)->actions();
+                for (int j = 0; j < lstAction.count(); j++) {
+                    QAction* action = lstAction.at(j);
+                    if (action->objectName() == "Check partition table error") {
+                        action->triggered(true);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+     });
+    timer->start(1000);
+
+    QTimer::singleShot(2000, this, [=]() {
+        QWidgetList w = QApplication::topLevelWidgets();
+        for (int i = 0; i < w.count(); i++) {
+            if (w.at(i)->objectName() == "partitionErrorCheck") {
+                w.at(i)->close();
+            }
+        }
+    });
+
+    QTest::mouseClick(view->viewport(), Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(100, 50));
+    view->customContextMenuRequested(QPoint(100, 50));
+}
+
+TEST_F(ut_application, diskInformationTest)
+{
+    Stub stub;
+    stub.set(ADDR(DMDbusHandler, getHardDiskInfo), getDiskInfo);
+
+    typedef int (*fptr)(DeviceListWidget*);
+    fptr foo = (fptr)(&DiskInfoDisplayDialog::exec);
+    Stub stub2;
+    stub2.set(foo, MessageboxExec);
+
+    CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
+    MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
+    DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
+
+    deviceListWidget->onDiskInfoClicked();
+}
+
+TEST_F(ut_application, diskBadSectorsTest)
+{
+    typedef int (*fptr)(DeviceListWidget*);
+    fptr foo = (fptr)(&DiskBadSectorsDialog::exec);
+    Stub stub2;
+    stub2.set(foo, MessageboxExec);
+
+    CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
+    MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
+    DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
+
+    deviceListWidget->onDiskBadSectorsClicked();
+}
+
+TEST_F(ut_application, diskCheckInformationEmpty)
+{
+    Stub stub;
+    stub.set(ADDR(DMDbusHandler, getDeviceHardStatusInfo), emptyDeviceCheckHealthInfo);
+
+    typedef int (*fptr)(DeviceListWidget*);
+    fptr foo = (fptr)(&MessageBox::exec);
+    Stub stub2;
+    stub2.set(foo, MessageboxExec);
+
+    CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
+    MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
+    DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
+
+    deviceListWidget->onDiskCheckHealthClicked();
+}
+
+TEST_F(ut_application, diskHealthCheck)
+{
+    Stub stub;
+    stub.set(ADDR(DMDbusHandler, getDeviceHardStatusInfo), deviceCheckHealthInfo);
+
+    Stub stub2;
+    stub2.set(ADDR(DMDbusHandler, getHardDiskInfo), getDiskInfo);
+
+    Stub stub3;
+    stub3.set(ADDR(DMDbusHandler, getDeviceHardStatus), failureDeviceStatus);
+
+    CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
+    MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
+    DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
+    DmTreeview *view = deviceListWidget->findChild<DmTreeview *>();
+    QTest::qWait(1000);
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, [=]() {
+        QWidgetList w = QApplication::topLevelWidgets();
+        for (int i = 0; i < w.count(); i++) {
+            if (w.at(i)->objectName() == "Health management") {
+                timer->stop();
+                QList<QAction*> lstAction = w.at(i)->actions();
+                for (int j = 0; j < lstAction.count(); j++) {
+                    QAction* action = lstAction.at(j);
+                    if (action->objectName() == "Check health") {
+                        action->triggered(true);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    });
+    timer->start(1000);
+
+    QTimer::singleShot(2000, this, [=]() {
+        QWidgetList w = QApplication::topLevelWidgets();
+        qDebug() << w;
+        for (int i = 0; i < w.count(); i++) {
+            if (w.at(i)->objectName() == "diskHealthDetectionDialog") {
+                w.at(i)->close();
+            }
+        }
+    });
+
+    QTest::mouseClick(view->viewport(), Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(100, 50));
+    view->customContextMenuRequested(QPoint(100, 50));
+}
+
+TEST_F(ut_application, treeNodeRightClicked)
+{
+    CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
+    MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
+    DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
+    DmTreeview *view = deviceListWidget->findChild<DmTreeview *>();
+    QTest::qWait(1000);
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, [=]() {
+        QWidgetList w = QApplication::topLevelWidgets();
+        for (int i = 0; i < w.count(); i++) {
+            if (w.at(i)->objectName() == "treeMenu") {
+                timer->stop();
+                w.at(i)->close();
+                break;
+            }
+        }
+     });
+    timer->start(1000);
+
+    QTest::mouseClick(view->viewport(), Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(100, 50));
+    view->customContextMenuRequested(QPoint(100, 50));
+}
+
+TEST_F(ut_application, treePartitionNodeRightClicked)
+{
+    Stub stub;
+    stub.set(ADDR(DMDbusHandler, onSetCurSelect), setCurSelect);
+
+    CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
+    MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
+    DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
+    DmTreeview *view = deviceListWidget->findChild<DmTreeview *>();
+    QTest::qWait(1000);
+
+    view->setRefreshItem(0, 0);
+    QTest::qWait(1000);
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, [=]() {
+        QWidgetList w = QApplication::topLevelWidgets();
+        for (int i = 0; i < w.count(); i++) {
+            if (w.at(i)->objectName() == "treeMenu") {
+                timer->stop();
+                w.at(i)->close();
+                break;
+            }
+        }
+     });
+    timer->start(1000);
+
+    QRect rect = view->visualRect(view->currentIndex());
+    QTest::mouseClick(view->viewport(), Qt::LeftButton, Qt::KeyboardModifiers(), rect.center());
+    view->customContextMenuRequested(rect.center());
+}
+
 
 

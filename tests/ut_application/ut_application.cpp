@@ -975,5 +975,80 @@ TEST_F(ut_application, treePartitionNodeRightClicked)
     view->customContextMenuRequested(rect.center());
 }
 
+TEST_F(ut_application, titleWidget_noPartitionTable)
+{
+    typedef int (*fptr)(TitleWidget*);
+    fptr foo = (fptr)(&PartitionDialog::exec);
+    Stub stub;
+    stub.set(foo, MessageboxExec);
+
+    DTitlebar *titlebar = MainWindow::instance()->findChild<DTitlebar *>();
+    QWidget *widget = titlebar->findChild<QWidget *>();
+    TitleWidget *titleWidget = widget->findChild<TitleWidget *>();
+
+    PartitionInfo oldInfo = DMDbusHandler::instance()->m_curPartitionInfo;
+    DMDbusHandler::instance()->m_curPartitionInfo = deviceInfo_noPartitionTable().first().partition.at(0);
+
+    titleWidget->showPartInfoWidget();
+
+    DMDbusHandler::instance()->m_curPartitionInfo = oldInfo;
+}
+
+TEST_F(ut_application, titleWidget_formate)
+{
+    typedef int (*fptr)(TitleWidget*);
+    fptr foo = (fptr)(&FormateDialog::exec);
+    Stub stub;
+    stub.set(foo, MessageboxExec);
+
+    DTitlebar *titlebar = MainWindow::instance()->findChild<DTitlebar *>();
+    QWidget *widget = titlebar->findChild<QWidget *>();
+    TitleWidget *titleWidget = widget->findChild<TitleWidget *>();
+
+    titleWidget->showFormateInfoWidget();
+}
+
+TEST_F(ut_application, titleWidget_mount)
+{
+    typedef int (*fptr)(TitleWidget*);
+    fptr foo = (fptr)(&MountDialog::exec);
+    Stub stub;
+    stub.set(foo, MessageboxExec);
+
+    DTitlebar *titlebar = MainWindow::instance()->findChild<DTitlebar *>();
+    QWidget *widget = titlebar->findChild<QWidget *>();
+    TitleWidget *titleWidget = widget->findChild<TitleWidget *>();
+
+    titleWidget->showMountInfoWidget();
+}
+
+TEST_F(ut_application, titleWidget_unmount)
+{
+    typedef int (*fptr)(TitleWidget*);
+    fptr foo = (fptr)(&UnmountDialog::exec);
+    Stub stub;
+    stub.set(foo, MessageboxExec);
+
+    DTitlebar *titlebar = MainWindow::instance()->findChild<DTitlebar *>();
+    QWidget *widget = titlebar->findChild<QWidget *>();
+    TitleWidget *titleWidget = widget->findChild<TitleWidget *>();
+
+    titleWidget->showUnmountInfoWidget();
+}
+
+TEST_F(ut_application, titleWidget_resize)
+{
+    typedef int (*fptr)(TitleWidget*);
+    fptr foo = (fptr)(&ResizeDialog::exec);
+    Stub stub;
+    stub.set(foo, MessageboxExec);
+
+    DTitlebar *titlebar = MainWindow::instance()->findChild<DTitlebar *>();
+    QWidget *widget = titlebar->findChild<QWidget *>();
+    TitleWidget *titleWidget = widget->findChild<TitleWidget *>();
+
+    titleWidget->showResizeInfoWidget();
+}
+
 
 

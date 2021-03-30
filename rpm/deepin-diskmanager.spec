@@ -1,7 +1,7 @@
 %global repo deepin-diskmanager
 
 Name:           deepin-diskmanager
-Version:        1.1.0.43
+Version:        1.2.9
 Release:        1%{?dist}
 Summary:        Disk Utility Is A Disk Management Tool For Disk
 License:        GPLv3+
@@ -24,7 +24,7 @@ Requires:       smartmontools
 Disk Utility Is A Disk Management Tool For Disk.
 
 %prep
-%autosetup -p1 -n %{repo}
+%autosetup -p1 -n %{repo}-%{version}
 
 %build
 # help find (and prefer) qt5 utilities, e.g. qmake, lrelease
@@ -42,8 +42,8 @@ export PATH=%{_qt5_bindir}:$PATH
 %{_datadir}/%{repo}/translations/*.qm
 %{_datadir}/applications/%{repo}.desktop
 %{_datadir}/icons/hicolor/scalable/apps/%{repo}.svg
-%{_bindir}/deepin-diskmanager-authenticateProxy
-%{_datadir}/polkit-1/actions/com.deepin.pkexec.deepin-diskmanager-authenticateProxy.policy
+%{_datadir}/deepin-manual/manual-assets/application/deepin-diskmanager/*
+%{_bindir}/deepin-disk-manager
 /usr/lib/libbasestruct.a
 /usr/lib/libddmlog.a
 /usr/lib/deepin-daemon/deepin-diskmanager-service
@@ -52,5 +52,7 @@ export PATH=%{_qt5_bindir}:$PATH
 %{_libexecdir}/openconnect/USBremove.sh
 %{_datadir}/dbus-1/system-services/com.deepin.diskmanager.service
 %{_datadir}/dbus-1/system.d/com.deepin.diskmanager.conf
+%{_datadir}/polkit-1/actions/com.deepin.diskmanager.policy
+%{_bindir}/deepin-diskmanager-authenticateProxy
 
 %changelog

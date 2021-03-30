@@ -1,7 +1,7 @@
 %global repo deepin-diskmanager
 
 Name:           deepin-diskmanager
-Version:        1.1.0.34
+Version:        1.1.0.43
 Release:        1%{?dist}
 Summary:        Disk Utility Is A Disk Management Tool For Disk
 License:        GPLv3+
@@ -52,6 +52,5 @@ export PATH=%{_qt5_bindir}:$PATH
 %{_libexecdir}/openconnect/USBremove.sh
 %{_datadir}/dbus-1/system-services/com.deepin.diskmanager.service
 %{_datadir}/dbus-1/system.d/com.deepin.diskmanager.conf
-%{_datadir}/polkit-1/actions/com.deepin.diskmanager.policy
 
 %changelog

@@ -1,3 +1,10 @@
+deepin-diskmanager (1.1.0.45) stable; urgency=low
+
+  * 1032维护分支第五次发版
+  * 修改rpm打包文件
+
+ -- yuandandan <yuandandan@uniontech.com>  Wed, 31 Mar 2021 10:31:16 +0800
+
 deepin-diskmanager (1.1.0.44) stable; urgency=low
 
   * 1032维护分支第四次发版

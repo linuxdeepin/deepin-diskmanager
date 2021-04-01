@@ -155,7 +155,7 @@ private slots:
     /**
      * @brief 检测完成响应的槽函数
      */
-    void onCheckCoomplete();
+    void onCheckComplete();
 
     /**
      * @brief 坏道修复实时信息
@@ -168,12 +168,17 @@ private slots:
     /**
      * @brief 修复完成响应的槽函数
      */
-    void onRepairCoomplete();
+    void onRepairComplete();
 
     /**
      * @brief 定时器超时信号响应的槽函数
      */
     void onTimeOut();
+
+    /**
+     * @brief 定时器超时信号响应的槽函数
+     */
+    void onCheckTimeOut();
 
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -247,6 +252,9 @@ private:
     QTimer m_timer;
     qint64 m_usedTime = 0;
     qint64 m_unusedTime = 0;
+    QTimer m_checkTimer;
+    int m_blockStart = 0;
+    int m_blockEnd = 0;
 };
 
 #endif // DISKBADSECTORSDIALOG_H

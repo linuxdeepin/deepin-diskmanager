@@ -34,6 +34,7 @@
 #include <QGridLayout>
 #include <QVBoxLayout>
 #include <QDebug>
+#include <QTime>
 
 CylinderInfoWidget::CylinderInfoWidget(int cylNumber, QWidget *parent)
     : DFrame(parent)
@@ -247,6 +248,11 @@ void CylinderInfoWidget::reset(int cylNumber)
 
 }
 
+void CylinderInfoWidget::setChecked(bool isCheck)
+{
+    m_isCheck = isCheck;
+}
+
 void CylinderInfoWidget::setCylinderNumber(int cylNumber)
 {
     m_cylNumber = cylNumber;
@@ -254,6 +260,8 @@ void CylinderInfoWidget::setCylinderNumber(int cylNumber)
     m_badSectorsCount = 0;
     m_scrollBar->hide();
     m_isChanged = false;
+    m_startCylinder = m_settings->value("SettingData/BlockStart").toInt();
+    m_endCylinder = m_settings->value("SettingData/BlockEnd").toInt();
 
     QList<QObject *> lstCylinderWidget = m_widget->children();
 
@@ -320,13 +328,23 @@ void CylinderInfoWidget::setCurCheckBadBlocksInfo(const QString &LBANumber, cons
         ++m_badSectorsCount;
     }
 
-    int startCylinder = m_settings->value("SettingData/BlockStart").toInt();
+    if (m_checkData.count() >= 360) {
+        m_checkData.removeFirst();
+        m_cylNumberData.removeFirst();
+    }
+    m_cylNumberData << cylinderNumber;
+    m_checkData << QString("%1,%2,%3,%4,%5,0").arg(LBANumber).arg(cylinderNumber).arg(cylinderTimeConsuming).arg(cylinderStatus).arg(cylinderErrorInfo);
+
+    if (m_isChanged) {
+        return;
+    }
+
+//    int startCylinder = m_settings->value("SettingData/BlockStart").toInt();
     if (m_cylNumber <= 360) {
-        updateCylinderInfo((cylinderNumber.toInt() - startCylinder) % 360, LBANumber, cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo, "0");
+        updateCylinderInfo((cylinderNumber.toInt() - m_startCylinder) % 360, LBANumber, cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo, "0");
     } else {
-        if(m_curCheckCount <= 360)
-        {
-            updateCylinderInfo((cylinderNumber.toInt() - startCylinder) % 360, LBANumber, cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo, "0");
+        if (m_curCheckCount <= 360) {
+            updateCylinderInfo((cylinderNumber.toInt() - m_startCylinder) % 360, LBANumber, cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo, "0");
         }else {
 
             int rowCount = m_curCheckCount / 24;
@@ -344,14 +362,14 @@ void CylinderInfoWidget::setCurCheckBadBlocksInfo(const QString &LBANumber, cons
                 }
 
                 QList<QObject *> lstCylinderWidget = m_widget->children();
-                int start = (rowCount - 15) * 24 + startCylinder;
+                int start = (rowCount - 15) * 24 + m_startCylinder;
                 for (int i = start; i < start + 360; i ++) {
-                    QString value = m_settings->value(QString("CheckData/%1").arg(i)).toString();
-                    if (!value.isEmpty()) {
+                    if (-1 != m_cylNumberData.indexOf(QString("%1").arg(i))) {
+                        QString value = m_checkData.at(m_cylNumberData.indexOf(QString("%1").arg(i)));
                         QStringList lst = value.split(",");
                         updateCylinderInfo((i - start) % 360, lst.at(0), lst.at(1), lst.at(2), lst.at(3), lst.at(4), lst.at(5));
                     } else {
-                        if (i > m_settings->value("SettingData/BlockEnd").toInt()) {
+                        if (i > m_endCylinder) {
                             CylinderWidget *cylinderWidget = m_widget->findChild<CylinderWidget *>(QString("%1").arg((i - start) % 360));
                             delete cylinderWidget;
                             cylinderWidget = nullptr;
@@ -478,14 +496,17 @@ void CylinderInfoWidget::onScrollBarValueChanged(int value)
         m_isChanged = false;
     }
 
+    if (m_isCheck && !m_isChanged) {
+        return;
+    }
+
     int startCylinder = m_settings->value("SettingData/BlockStart").toInt();
 
     QList<QObject *> lstCylinderWidget = m_widget->children();
     int start = value * 24 + startCylinder;
     for (int i = start; i < start + 360; i ++) {
         QString value = m_settings->value(QString("CheckData/%1").arg(i)).toString();
-        if (!value.isEmpty())
-        {
+        if (!value.isEmpty()) {
             if (((i - start) % 360 + 1) > (lstCylinderWidget.count() - 1)) {
                 CylinderWidget *cylinderWidget = new CylinderWidget;
                 cylinderWidget->setFixedSize(20, 20);

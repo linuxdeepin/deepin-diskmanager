@@ -563,13 +563,13 @@ TEST_F(ut_application, diskBadSectorsCheck)
     diskBadSectorsDialog->m_timeoutEdit->setText("300");
     ASSERT_TRUE(diskBadSectorsDialog->inputValueIsEffective());
     diskBadSectorsDialog->onStartVerifyButtonClicked();
-    diskBadSectorsDialog->onCheckCoomplete();
+    diskBadSectorsDialog->onCheckComplete();
     diskBadSectorsDialog->onAgainVerifyButtonClicked(); // 重新检测
     diskBadSectorsDialog->onExitButtonClicked();
 
     diskBadSectorsDialog->m_verifyComboBox->setCurrentIndex(2);
     diskBadSectorsDialog->onStartVerifyButtonClicked();
-    diskBadSectorsDialog->onCheckCoomplete();
+    diskBadSectorsDialog->onCheckComplete();
     diskBadSectorsDialog->onResetButtonClicked(); // 复位
 
     diskBadSectorsDialog->m_methodComboBox->setCurrentIndex(0);
@@ -590,7 +590,7 @@ TEST_F(ut_application, diskBadSectorsCheck)
     diskBadSectorsDialog->onCheckBadBlocksInfo("12", "75", "good", "");
     diskBadSectorsDialog->onCheckBadBlocksInfo("13", "456", "bad", "IO Read Error");
 
-    diskBadSectorsDialog->onCheckCoomplete(); // 检测完成
+    diskBadSectorsDialog->onCheckComplete(); // 检测完成
 
     diskBadSectorsDialog->onExitButtonClicked();
 }
@@ -636,7 +636,7 @@ TEST_F(ut_application, diskBadSectorsRepair)
     diskBadSectorsDialog->onCheckBadBlocksInfo("13", "387", "bad", "IO Read Error");
     diskBadSectorsDialog->onCheckBadBlocksInfo("14", "389", "bad", "IO Read Error");
     diskBadSectorsDialog->onCheckBadBlocksInfo("15", "380", "bad", "IO Read Error");
-    diskBadSectorsDialog->onCheckCoomplete();
+    diskBadSectorsDialog->onCheckComplete();
 
     diskBadSectorsDialog->onRepairButtonClicked();
     QTest::qWait(1000);
@@ -656,7 +656,7 @@ TEST_F(ut_application, diskBadSectorsRepair)
     QTest::qWait(1000);
     diskBadSectorsDialog->onRepairBadBlocksInfo("15", "good", "355");
     QTest::qWait(1000);
-    diskBadSectorsDialog->onRepairCoomplete(); // 修复完成
+    diskBadSectorsDialog->onRepairComplete(); // 修复完成
 
     diskBadSectorsDialog->onDoneButtonClicked();
 }
@@ -1000,6 +1000,9 @@ TEST_F(ut_application, titleWidget_formate)
     fptr foo = (fptr)(&FormateDialog::exec);
     Stub stub;
     stub.set(foo, MessageboxExec);
+
+    Stub stub2;
+    stub2.set(ADDR(DMDbusHandler, getAllSupportFileSystem), getAllSupportFileSystem);
 
     DTitlebar *titlebar = MainWindow::instance()->findChild<DTitlebar *>();
     QWidget *widget = titlebar->findChild<QWidget *>();

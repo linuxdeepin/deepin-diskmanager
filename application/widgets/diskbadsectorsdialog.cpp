@@ -414,9 +414,10 @@ void DiskBadSectorsDialog::initConnections()
     connect(m_doneButton, &DSuggestButton::clicked, this, &DiskBadSectorsDialog::onDoneButtonClicked);
     connect(DMDbusHandler::instance(), &DMDbusHandler::checkBadBlocksCountInfo, this, &DiskBadSectorsDialog::onCheckBadBlocksInfo);
     connect(DMDbusHandler::instance(), &DMDbusHandler::repairBadBlocksInfo, this, &DiskBadSectorsDialog::onRepairBadBlocksInfo);
-    connect(DMDbusHandler::instance(), &DMDbusHandler::checkBadBlocksFinished,  this, &DiskBadSectorsDialog::onCheckCoomplete);
-    connect(DMDbusHandler::instance(), &DMDbusHandler::fixBadBlocksFinished,  this, &DiskBadSectorsDialog::onRepairCoomplete);
+//    connect(DMDbusHandler::instance(), &DMDbusHandler::checkBadBlocksFinished,  this, &DiskBadSectorsDialog::onCheckComplete);
+    connect(DMDbusHandler::instance(), &DMDbusHandler::fixBadBlocksFinished,  this, &DiskBadSectorsDialog::onRepairComplete);
     connect(&m_timer, &QTimer::timeout, this, &DiskBadSectorsDialog::onTimeOut);
+    connect(&m_checkTimer, &QTimer::timeout, this, &DiskBadSectorsDialog::onCheckTimeOut);
 }
 
 void DiskBadSectorsDialog::onVerifyChanged(int index)
@@ -618,63 +619,67 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
 
     switch (m_verifyComboBox->currentIndex()) {
     case 0: {
-        int blockStart = m_startLineEdit->text().toInt();
-        int blockEnd = m_endLineEdit->text().toInt();
+        m_blockStart = m_startLineEdit->text().toInt();
+        m_blockEnd = m_endLineEdit->text().toInt();
         int checkSize = static_cast<int>(info.heads * info.sectors * info.sector_size);
 
-        m_totalCheckNumber = blockEnd - blockStart + 1;
-        m_cylinderInfoWidget->setCylinderNumber(m_totalCheckNumber);
-
         m_settings->beginGroup("SettingData");
-        m_settings->setValue("BlockStart", blockStart);
-        m_settings->setValue("BlockEnd", blockEnd);
+        m_settings->setValue("BlockStart", m_blockStart);
+        m_settings->setValue("BlockEnd", m_blockEnd);
         m_settings->setValue("CheckSize", checkSize);
         m_settings->setValue("CheckNumber", checkNumber);
         m_settings->endGroup();
 
-        DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart, blockEnd, checkNumber, checkSize, 1);
+        m_totalCheckNumber = m_blockEnd - m_blockStart + 1;
+        m_cylinderInfoWidget->setCylinderNumber(m_totalCheckNumber);
+        m_cylinderInfoWidget->setChecked(true);
+
+        DMDbusHandler::instance()->checkBadSectors(info.m_path, m_blockStart, m_blockEnd, checkNumber, checkSize, 1);
         break;
     }
     case 1: {
-        int blockStart = static_cast<int>(m_startLineEdit->text().toLongLong() / info.cylsize);
-        int blockEnd = static_cast<int>(m_endLineEdit->text().toLongLong() / info.cylsize);
+        m_blockStart = static_cast<int>(m_startLineEdit->text().toLongLong() / info.cylsize);
+        m_blockEnd = static_cast<int>(m_endLineEdit->text().toLongLong() / info.cylsize);
         int checkSize = static_cast<int>(info.heads * info.sectors * info.sector_size);
 
-        m_totalCheckNumber = blockEnd - blockStart + 1;
-        m_cylinderInfoWidget->setCylinderNumber(m_totalCheckNumber);
-
         m_settings->beginGroup("SettingData");
-        m_settings->setValue("BlockStart",blockStart);
-        m_settings->setValue("BlockEnd",blockEnd);
+        m_settings->setValue("BlockStart",m_blockStart);
+        m_settings->setValue("BlockEnd",m_blockEnd);
         m_settings->setValue("CheckSize",checkSize);
         m_settings->setValue("CheckNumber",checkNumber);
         m_settings->endGroup();
 
-        DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart, blockEnd, checkNumber, checkSize, 1);
+        m_totalCheckNumber = m_blockEnd - m_blockStart + 1;
+        m_cylinderInfoWidget->setCylinderNumber(m_totalCheckNumber);
+        m_cylinderInfoWidget->setChecked(true);
+
+        DMDbusHandler::instance()->checkBadSectors(info.m_path, m_blockStart, m_blockEnd, checkNumber, checkSize, 1);
         break;
     }
     case 2: {
         int checkSize = static_cast<int>(info.heads * info.sectors * info.sector_size);
-        int blockStart = static_cast<int>(m_startLineEdit->text().toLongLong() * 1024 * 1024 / checkSize);
-        int blockEnd = static_cast<int>(m_endLineEdit->text().toLongLong() * 1024 * 1024 / checkSize);
-
-        m_totalCheckNumber = blockEnd - blockStart + 1;
-        m_cylinderInfoWidget->setCylinderNumber(m_totalCheckNumber);
+        m_blockStart = static_cast<int>(m_startLineEdit->text().toLongLong() * 1024 * 1024 / checkSize);
+        m_blockEnd = static_cast<int>(m_endLineEdit->text().toLongLong() * 1024 * 1024 / checkSize);
 
         m_settings->beginGroup("SettingData");
-        m_settings->setValue("BlockStart",blockStart);
-        m_settings->setValue("BlockEnd",blockEnd);
+        m_settings->setValue("BlockStart",m_blockStart);
+        m_settings->setValue("BlockEnd",m_blockEnd);
         m_settings->setValue("CheckSize",checkSize);
         m_settings->setValue("CheckNumber",checkNumber);
         m_settings->endGroup();
 
-        DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart, blockEnd, checkNumber, checkSize, 1);
+        m_totalCheckNumber = m_blockEnd - m_blockStart + 1;
+        m_cylinderInfoWidget->setCylinderNumber(m_totalCheckNumber);
+        m_cylinderInfoWidget->setChecked(true);
+
+        DMDbusHandler::instance()->checkBadSectors(info.m_path, m_blockStart, m_blockEnd, checkNumber, checkSize, 1);
         break;
     }
     default:
         break;
     }
 
+    m_checkTimer.start(100);
 }
 
 void DiskBadSectorsDialog::mSecsToTime(qint64 msecs, qint64 &hour, qint64 &minute, qint64 &second)
@@ -686,39 +691,11 @@ void DiskBadSectorsDialog::mSecsToTime(qint64 msecs, qint64 &hour, qint64 &minut
 
 void DiskBadSectorsDialog::onCheckBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo)
 {
-    ++m_curCheckNumber;
-    m_curCheckTime += cylinderTimeConsuming.toLongLong();
     DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
     QString LBANumber = QString::number(cylinderNumber.toLongLong() * info.heads * info.sectors);
-    m_checkInfoLabel->setText(tr("Verifying cylinder: %1").arg(cylinderNumber)); // 正在检测xxx柱面
-
-    qint64 totalTime = m_curCheckTime / m_curCheckNumber * m_totalCheckNumber;
-    int value = QString::number((float)m_curCheckTime / totalTime,'f', 2).toFloat() * 100;
-    value > 99 ? value = 99 : value;
-
-    m_progressBar->setValue(value);
-    qint64 remainingTime = totalTime - m_curCheckTime;
-    remainingTime < 1000 ? remainingTime = 1000 : remainingTime;
-
-    qint64 usedHour = 0;
-    qint64 usedMinute = 0;
-    qint64 usedSecond = 0;
-    mSecsToTime(m_curCheckTime, usedHour, usedMinute, usedSecond);
-    m_usedTimeLabel->setText(tr("Time elapsed:") + QString("%1:%2:%3").arg(usedHour, 2, 10, QLatin1Char('0')).arg(usedMinute, 2, 10, QLatin1Char('0')).arg(usedSecond, 2, 10, QLatin1Char('0'))); // 时、分、秒为一位数时，十位自动补0
-
-    qint64 remainingHour = 0;
-    qint64 remainingMinute = 0;
-    qint64 remainingSecond = 0;
-    mSecsToTime(remainingTime, remainingHour, remainingMinute, remainingSecond);
-    m_unusedTimeLabel->setText(tr("Time left:") + QString("%1:%2:%3").arg(remainingHour, 2, 10, QLatin1Char('0')).arg(remainingMinute, 2, 10, QLatin1Char('0')).arg(remainingSecond, 2, 10, QLatin1Char('0')));
-//    qDebug() << "111111111" << cylinderTimeConsuming << m_curCheckTime << value << m_usedTimeLabel->text() << remainingTime << QTime::fromMSecsSinceStartOfDay(remainingTime).toString("hh:mm:ss");
 
     m_settings->beginGroup("CheckData");
     m_settings->setValue(cylinderNumber, QString("%1,%2,%3,%4,%5,0").arg(LBANumber).arg(cylinderNumber).arg(cylinderTimeConsuming).arg(cylinderStatus).arg(cylinderErrorInfo));
-    m_settings->endGroup();
-
-    m_settings->beginGroup("SettingData");
-    m_settings->setValue("CurCylinder",cylinderNumber);
     m_settings->endGroup();
 
     if (cylinderStatus == "bad") {
@@ -731,18 +708,65 @@ void DiskBadSectorsDialog::onCheckBadBlocksInfo(const QString &cylinderNumber, c
 
         m_settings->setValue("BadSectorsData/BadSectors", value);
     }
-
-    m_cylinderInfoWidget->setCurCheckBadBlocksInfo(LBANumber, cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
 }
 
-void DiskBadSectorsDialog::onCheckCoomplete()
+void DiskBadSectorsDialog::onCheckTimeOut()
 {
+    if (m_blockStart > m_blockEnd) {
+        onCheckComplete();
+        return;
+    }
+
+    QString value = m_settings->value(QString("CheckData/%1").arg(m_blockStart)).toString();
+    if (!value.isEmpty()) {
+        QStringList lst = value.split(",");
+
+        ++m_curCheckNumber;
+        qint64 cylinderTime = lst.at(2).toLongLong();
+        cylinderTime < 100 ? cylinderTime = 100 : cylinderTime;
+        m_curCheckTime += cylinderTime;
+        m_checkInfoLabel->setText(tr("Verifying cylinder: %1").arg(lst.at(1))); // 正在检测xxx柱面
+
+        m_settings->beginGroup("SettingData");
+        m_settings->setValue("CurCylinder",lst.at(1));
+        m_settings->endGroup();
+
+        qint64 totalTime = m_curCheckTime / m_curCheckNumber * m_totalCheckNumber;
+        int value = QString::number((float)m_curCheckTime / totalTime,'f', 2).toFloat() * 100;
+        value > 99 ? value = 99 : value;
+
+        m_progressBar->setValue(value);
+        qint64 remainingTime = totalTime - m_curCheckTime;
+        remainingTime < 1000 ? remainingTime = 1000 : remainingTime;
+
+        qint64 usedHour = 0;
+        qint64 usedMinute = 0;
+        qint64 usedSecond = 0;
+        mSecsToTime(m_curCheckTime, usedHour, usedMinute, usedSecond);
+        m_usedTimeLabel->setText(tr("Time elapsed:") + QString("%1:%2:%3").arg(usedHour, 2, 10, QLatin1Char('0')).arg(usedMinute, 2, 10, QLatin1Char('0')).arg(usedSecond, 2, 10, QLatin1Char('0'))); // 时、分、秒为一位数时，十位自动补0
+
+        qint64 remainingHour = 0;
+        qint64 remainingMinute = 0;
+        qint64 remainingSecond = 0;
+        mSecsToTime(remainingTime, remainingHour, remainingMinute, remainingSecond);
+        m_unusedTimeLabel->setText(tr("Time left:") + QString("%1:%2:%3").arg(remainingHour, 2, 10, QLatin1Char('0')).arg(remainingMinute, 2, 10, QLatin1Char('0')).arg(remainingSecond, 2, 10, QLatin1Char('0')));
+
+        m_cylinderInfoWidget->setCurCheckBadBlocksInfo(lst.at(0), lst.at(1), lst.at(2), lst.at(3), lst.at(4));
+
+        m_blockStart++;
+    }  
+}
+
+void DiskBadSectorsDialog::onCheckComplete()
+{
+    m_checkTimer.stop();
     m_progressBar->setValue(100);
     m_unusedTimeLabel->setText(tr("Time left:") + "00:00:00");
     m_buttonStackedWidget->setCurrentIndex(3);
     m_checkInfoLabel->setText(tr("Verify completed")); // 检测完成
     m_curType = StatusType::Normal;
     m_resetButton->setDisabled(false);
+    m_cylinderInfoWidget->setChecked(false);
 
     int badSectorsCount = 0;
     QString value = m_settings->value("BadSectorsData/BadSectors").toString();
@@ -771,6 +795,7 @@ void DiskBadSectorsDialog::onStopButtonClicked()
         m_buttonStackedWidget->setCurrentIndex(2);
         m_resetButton->setDisabled(false);
         m_curType = StatusType::StopCheck;
+        m_cylinderInfoWidget->setChecked(false);
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
 
         int checkSize = m_settings->value("SettingData/CheckSize").toInt();
@@ -779,6 +804,7 @@ void DiskBadSectorsDialog::onStopButtonClicked()
         int checkNumber = m_settings->value("SettingData/CheckNumber").toInt();
 
         DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart, blockEnd, checkNumber, checkSize, 2);
+        m_checkTimer.stop();
         break;
     }
     case StatusType::Repair:{
@@ -806,6 +832,7 @@ void DiskBadSectorsDialog::onContinueButtonClicked()
         m_buttonStackedWidget->setCurrentIndex(1);
         m_resetButton->setDisabled(true);
         m_curType = StatusType::Check;
+        m_cylinderInfoWidget->setChecked(true);
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
 
         int checkSize = m_settings->value("SettingData/CheckSize").toInt();
@@ -814,6 +841,7 @@ void DiskBadSectorsDialog::onContinueButtonClicked()
         int checkNumber = m_settings->value("SettingData/CheckNumber").toInt();
 
         DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart + 1, blockEnd, checkNumber, checkSize, 3);
+        m_checkTimer.start(100);
         break;
     }
     case StatusType::StopRepair:{
@@ -841,6 +869,7 @@ void DiskBadSectorsDialog::onAgainVerifyButtonClicked()
     m_unusedTimeLabel->setText(tr("Time left:") + "00:00:00");
     m_checkInfoLabel->setText("");
     m_curType = StatusType::Check;
+    m_cylinderInfoWidget->setChecked(true);
     m_buttonStackedWidget->setCurrentIndex(1);
     m_resetButton->setDisabled(true);
     m_repairButton->setDisabled(true);
@@ -897,6 +926,7 @@ void DiskBadSectorsDialog::onResetButtonClicked()
     m_totalRepairNumber = 0;
     m_curRepairNumber = 0;
     m_curRepairTime = 0;
+    m_cylinderInfoWidget->setChecked(false);
 
     DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
     m_verifyComboBox->setCurrentIndex(0);
@@ -1038,7 +1068,7 @@ void DiskBadSectorsDialog::onRepairBadBlocksInfo(const QString &cylinderNumber, 
     }
 }
 
-void DiskBadSectorsDialog::onRepairCoomplete()
+void DiskBadSectorsDialog::onRepairComplete()
 {
     m_timer.stop();
     m_progressBar->setValue(100);
@@ -1107,6 +1137,7 @@ void DiskBadSectorsDialog::closeEvent(QCloseEvent *event)
             int checkNumber = m_settings->value("SettingData/CheckNumber").toInt();
 
             DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart, blockEnd, checkNumber, checkSize, 2);
+            m_checkTimer.stop();
 
             QFile file("/tmp/CheckData.conf");
             if (file.exists()) {

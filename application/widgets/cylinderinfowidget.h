@@ -84,6 +84,12 @@ public:
      */
     void setCurRepairBadBlocksInfo(const QString &cylinderNumber);
 
+    /**
+     * @brief 设置检测状态
+     * @param isCheck 是否正在检测
+     */
+    void setChecked(bool isCheck);
+
 signals:
     /**
      * @brief 检测完成信号
@@ -158,6 +164,11 @@ private:
     int m_badSectorsCount;
     QSettings *m_settings;
     bool m_isChanged = false;
+    bool m_isCheck = false;
+    QStringList m_checkData;
+    QStringList m_cylNumberData;
+    int m_startCylinder;
+    int m_endCylinder;
 };
 
 #endif // CYLINDERINFOWIDGET_H

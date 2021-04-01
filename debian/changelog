@@ -1,3 +1,12 @@
+deepin-diskmanager (1.2.10) stable; urgency=low
+
+  * 1040第十次发版(第九次发版送测产生的bug)
+  * 修改rpm文件
+  * 69701 新建分区时先填写分区名称为4个中文后切换fat32格式，创建成功后，分区名称显示乱码
+  * 66865 /dev/nvme0n1硬盘坏道检测中停止退出，页面卡顿
+
+ -- yuandandan <yuandandan@uniontech.com>  Thu, 1 Apr 2021 17:35:16 +0800
+
 deepin-diskmanager (1.2.9) stable; urgency=low
 
   * 1040第九次发版(第八次发版送测产生的bug以及UI走查反馈的问题)

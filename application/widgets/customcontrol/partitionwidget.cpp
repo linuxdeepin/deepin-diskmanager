@@ -406,6 +406,7 @@ void PartitionWidget::initConnection()
 //    connect(m_partComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onComboxCurTextChange(int)));
     connect(m_partComboBox, static_cast<void (DComboBox:: *)(const int)>(&DComboBox::currentIndexChanged),
             this, &PartitionWidget::onComboxCurTextChange);
+    connect(m_partFormateCombox, &DComboBox::currentTextChanged, this, &PartitionWidget::onComboxFormatTextChange);
     connect(m_partChartWidget, &PartChartShowing::sendMoveFlag, this, &PartitionWidget::onShowTip);
     connect(m_partChartWidget, &PartChartShowing::sendFlag, this, &PartitionWidget::onShowSelectPathInfo);
     connect(m_partChartWidget, &PartChartShowing::judgeLastPartition, this, &PartitionWidget::onJudgeLastPartition);
@@ -634,6 +635,32 @@ void PartitionWidget::onComboxCurTextChange(int index)
 //        qDebug() << m;
     }
 
+}
+
+void PartitionWidget::onComboxFormatTextChange(const QString &text)
+{
+    QByteArray byteArray = m_partNameEdit->text().toUtf8();
+    if (text == "fat32") {
+        if (byteArray.size() > 11) {
+            m_partNameEdit->setAlert(true);
+            m_partNameEdit->showAlertMessage(tr("The length exceeds the limit"), -1);
+            m_addButton->setEnabled(false);
+        } else {
+            m_partNameEdit->setAlert(false);
+            m_partNameEdit->hideAlertMessage();
+            m_addButton->setEnabled(true);
+        }
+    } else {
+        if (byteArray.size() > 16) {
+            m_partNameEdit->setAlert(true);
+            m_partNameEdit->showAlertMessage(tr("The length exceeds the limit"), -1);
+            m_addButton->setEnabled(false);
+        } else {
+            m_partNameEdit->setAlert(false);
+            m_partNameEdit->hideAlertMessage();
+            m_addButton->setEnabled(true);
+        }
+    }
 }
 
 void PartitionWidget::onJudgeLastPartition()

@@ -242,6 +242,12 @@ private slots:
      */
     void onJudgeLastPartition();
 
+    /**
+     * @brief 下拉框分区格式切换
+     * @param text 当前选择文本
+     */
+    void onComboxFormatTextChange(const QString &text); //下拉框分区格式切换
+
 protected:
     /**
      * @brief event:事件变化

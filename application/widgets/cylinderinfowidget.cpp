@@ -174,6 +174,8 @@ void CylinderInfoWidget::againVerify(int cylNumber)
     m_badSectorsCount = 0;
     m_scrollBar->hide();
     m_isChanged = false;
+    m_startCylinder = m_settings->value("SettingData/BlockStart").toInt();
+    m_endCylinder = m_settings->value("SettingData/BlockEnd").toInt();
 
     QList<QObject *> lstCylinderWidget = m_widget->children();
 

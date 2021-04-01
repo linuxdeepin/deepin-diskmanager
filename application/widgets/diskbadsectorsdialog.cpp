@@ -879,8 +879,8 @@ void DiskBadSectorsDialog::onAgainVerifyButtonClicked()
     DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
 
     int checkSize = m_settings->value("SettingData/CheckSize").toInt();
-    int blockStart = m_settings->value("SettingData/BlockStart").toInt();
-    int blockEnd = m_settings->value("SettingData/BlockEnd").toInt();
+    m_blockStart = m_settings->value("SettingData/BlockStart").toInt();
+    m_blockEnd = m_settings->value("SettingData/BlockEnd").toInt();
     int checkNumber = m_settings->value("SettingData/CheckNumber").toInt();
 
     QFile file("/tmp/CheckData.conf");
@@ -895,16 +895,19 @@ void DiskBadSectorsDialog::onAgainVerifyButtonClicked()
 
 //    m_totalCheckNumber = blockEnd - blockStart + 1;
 //    m_cylinderInfoWidget->setCylinderNumber(m_totalCheckNumber);
-    m_cylinderInfoWidget->againVerify(blockEnd - blockStart + 1);
 
     m_settings->beginGroup("SettingData");
-    m_settings->setValue("BlockStart", blockStart);
-    m_settings->setValue("BlockEnd", blockEnd);
+    m_settings->setValue("BlockStart", m_blockStart);
+    m_settings->setValue("BlockEnd", m_blockEnd);
     m_settings->setValue("CheckSize", checkSize);
     m_settings->setValue("CheckNumber", checkNumber);
     m_settings->endGroup();
 
-    DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart, blockEnd, checkNumber, checkSize, 1);
+    m_cylinderInfoWidget->againVerify(m_blockEnd - m_blockStart + 1);
+    m_cylinderInfoWidget->setChecked(true);
+
+    DMDbusHandler::instance()->checkBadSectors(info.m_path, m_blockStart, m_blockEnd, checkNumber, checkSize, 1);
+    m_checkTimer.start(100);
 }
 
 void DiskBadSectorsDialog::onResetButtonClicked()
@@ -939,9 +942,9 @@ void DiskBadSectorsDialog::onResetButtonClicked()
     m_checkTimesEdit->setText("8");
     m_timeoutEdit->setText("3000");
 
-    int blockStart = m_startLineEdit->text().toInt();
-    int blockEnd = m_endLineEdit->text().toInt();
-    m_cylinderInfoWidget->reset(blockEnd - blockStart + 1);
+    m_blockStart = m_startLineEdit->text().toInt();
+    m_blockEnd = m_endLineEdit->text().toInt();
+    m_cylinderInfoWidget->reset(m_blockEnd - m_blockStart + 1);
 }
 
 bool DiskBadSectorsDialog::isExistMountPartition()

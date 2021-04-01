@@ -75,6 +75,12 @@ private slots:
      * @param text 当前文本
      */
     void onTextChanged(const QString &text);
+
+    /**
+     * @brief 下拉框分区格式切换
+     * @param text 当前选择文本
+     */
+    void onComboxFormatTextChange(const QString &text); //下拉框分区格式切换
 };
 
 #endif // FORMATEDIALOG_H

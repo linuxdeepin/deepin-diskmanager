@@ -110,6 +110,7 @@ void FormateDialog::initConnection()
 {
     connect(this, &FormateDialog::buttonClicked, this, &FormateDialog::onButtonClicked);
     connect(m_fileNameEdit, &DLineEdit::textChanged, this, &FormateDialog::onTextChanged);
+    connect(m_formatComboBox, &DComboBox::currentTextChanged, this, &FormateDialog::onComboxFormatTextChange);
 }
 
 void FormateDialog::onTextChanged(const QString &text)
@@ -148,10 +149,48 @@ void FormateDialog::onTextChanged(const QString &text)
     }
 }
 
+void FormateDialog::onComboxFormatTextChange(const QString &text)
+{
+    QByteArray byteArray = m_fileNameEdit->text().toUtf8();
+    if (text == "fat32") {
+        if (byteArray.size() > 11) {
+            m_fileNameEdit->setAlert(true);
+            m_fileNameEdit->showAlertMessage(tr("The length exceeds the limit"), -1);
+
+            QAbstractButton *button = getButton(m_okCode);
+            button->setEnabled(false);
+        } else {
+            m_fileNameEdit->setAlert(false);
+            m_fileNameEdit->hideAlertMessage();
+
+            QAbstractButton *button = getButton(m_okCode);
+            button->setEnabled(true);
+        }
+    } else {
+        if (byteArray.size() > 16) {
+            m_fileNameEdit->setAlert(true);
+            m_fileNameEdit->showAlertMessage(tr("The length exceeds the limit"), -1);
+
+            QAbstractButton *button = getButton(m_okCode);
+            button->setEnabled(false);
+        } else {
+            m_fileNameEdit->setAlert(false);
+            m_fileNameEdit->hideAlertMessage();
+
+            QAbstractButton *button = getButton(m_okCode);
+            button->setEnabled(true);
+        }
+    }
+}
+
 void FormateDialog::onButtonClicked(int index, const QString &text)
 {
     Q_UNUSED(text);
     if (index == m_okCode) {
-        DMDbusHandler::instance()->format(m_formatComboBox->currentText(), m_fileNameEdit->text());
+        if (m_fileNameEdit->text().isEmpty()) {
+            DMDbusHandler::instance()->format(m_formatComboBox->currentText(), " ");
+        } else {
+            DMDbusHandler::instance()->format(m_formatComboBox->currentText(), m_fileNameEdit->text());
+        }
     }
 }

@@ -235,8 +235,8 @@ bool DeviceListWidget::isExistMountPartition()
     bool isExist = false;
 
     DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
-    for (int i = 0; i < info.partition.size(); i++) {
-        PartitionInfo partitionInfo = info.partition.at(i);
+    for (int i = 0; i < info.m_partition.size(); i++) {
+        PartitionInfo partitionInfo = info.m_partition.at(i);
 
         QString mountpoints;
         for (int j = 0; j < partitionInfo.m_mountPoints.size(); j++) {
@@ -474,11 +474,11 @@ void DeviceListWidget::onUpdateDeviceInfo()
 
     for (auto it = infoMap.begin(); it != infoMap.end(); it++) {
         DeviceInfo info = it.value();
-        QString diskSize = Utils::formatSize(info.length, info.sector_size);
+        QString diskSize = Utils::formatSize(info.m_length, info.m_sectorSize);
         auto diskinfoBox = new DmDiskinfoBox(0, this, info.m_path, diskSize);
         int partitionCount = 0;
 
-        for (auto it = info.partition.begin(); it != info.partition.end(); it++) {
+        for (auto it = info.m_partition.begin(); it != info.m_partition.end(); it++) {
             QString partitionSize = Utils::formatSize(it->m_sectorEnd - it->m_sectorStart + 1, it->m_sectorSize);
             QString partitionPath = it->m_path.remove(0, 5);
             QString unused = Utils::formatSize(it->m_sectorsUsed, it->m_sectorSize);

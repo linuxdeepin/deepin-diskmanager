@@ -154,7 +154,7 @@ void ResizeDialog::onButtonClicked(int index, const QString &)
                 // from the end of the device, then reserve at least a mebibyte for the backup
                 // partition table.
                 DeviceInfo device = handler->getCurDeviceInfo();
-                if (device.disktype == "gpt" && device.length - newInfo.m_sectorEnd < 34)
+                if (device.m_disktype == "gpt" && device.m_length - newInfo.m_sectorEnd < 34)
                     newInfo.m_sectorEnd -= MEBIBYTE / newInfo.m_sectorSize;
             }
 

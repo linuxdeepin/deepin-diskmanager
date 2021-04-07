@@ -189,7 +189,7 @@ struct MountEntry {
     bool readonly; // Is the file system mounted read-only?
     QVector<QString> mountpoints; // File system mounted on ...
     MountEntry()
-        : readonly(false) {};
+        : readonly(false) {}
 };
 
 #endif // COMMONDEF_H

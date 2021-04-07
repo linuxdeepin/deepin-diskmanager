@@ -57,20 +57,20 @@ private:
     /**@brief:将属性设置到成员变量*/
     void setAttribute(const QMap<QString, QString> &mapInfo, const QString &key, QString &variable, bool overwrite = true);
 public:
-    QString               m_Model;              //<! 【型号】1
-    QString               m_Vendor;             //<! 【制造商】2 //有可能会没有
-    QString               m_MediaType;          //<! 【介质类型】3
-    QString               m_Size;               //<! 【大小】4
-    QString               m_RotationRate;       //<! 【转速】
-    QString               m_Interface;          //<! 【接口】6
-    QString               m_SerialNumber;       //<! 【序列号】7
-    QString               m_Version;            //<! 【版本】
-    QString               m_Capabilities;       //<! 【功能】
-    QString               m_Description;        //<! 【描述】
-    QString               m_PowerOnHours;       //<! 【通电时间】9
-    QString               m_PowerCycleCount;    //<! 【通电次数】10
-    QString               m_FirmwareVersion;    //<! 【固件版本】8
-    QString               m_Speed;              //<! 【速度】5
+    QString               m_model;              //<! 【型号】1
+    QString               m_vendor;             //<! 【制造商】2 //有可能会没有
+    QString               m_mediaType;          //<! 【介质类型】3
+    QString               m_size;               //<! 【大小】4
+    QString               m_rotationRate;       //<! 【转速】
+    QString               m_interface;          //<! 【接口】6
+    QString               m_serialNumber;       //<! 【序列号】7
+    QString               m_version;            //<! 【版本】
+    QString               m_capabilities;       //<! 【功能】
+    QString               m_description;        //<! 【描述】
+    QString               m_powerOnHours;       //<! 【通电时间】9
+    QString               m_powerCycleCount;    //<! 【通电次数】10
+    QString               m_firmwareVersion;    //<! 【固件版本】8
+    QString               m_speed;              //<! 【速度】5
 
     QString               m_DeviceFile;         //<   设备文件
     QString               m_KeyToLshw;          //<!  用于表示存储文件

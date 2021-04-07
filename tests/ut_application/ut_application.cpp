@@ -987,7 +987,7 @@ TEST_F(ut_application, titleWidget_noPartitionTable)
     TitleWidget *titleWidget = widget->findChild<TitleWidget *>();
 
     PartitionInfo oldInfo = DMDbusHandler::instance()->m_curPartitionInfo;
-    DMDbusHandler::instance()->m_curPartitionInfo = deviceInfo_noPartitionTable().first().partition.at(0);
+    DMDbusHandler::instance()->m_curPartitionInfo = deviceInfo_noPartitionTable().first().m_partition.at(0);
 
     titleWidget->showPartInfoWidget();
 

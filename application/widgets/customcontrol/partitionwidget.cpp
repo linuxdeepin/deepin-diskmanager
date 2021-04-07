@@ -368,7 +368,7 @@ void PartitionWidget::recPartitionInfo()
     auto it = DMDbusHandler::instance()->probDeviceInfo().find(DMDbusHandler::instance()->getCurPartititonInfo().m_devicePath);
 
     if (it != DMDbusHandler::instance()->probDeviceInfo().end()) {
-        diskSize = QString::number(Utils::sectorToUnit(it.value().length, it.value().sector_size, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GiB";
+        diskSize = QString::number(Utils::sectorToUnit(it.value().m_length, it.value().m_sectorSize, SIZE_UNIT::UNIT_GIB), 'f', 2) + "GiB";
         data = DMDbusHandler::instance()->getCurPartititonInfo();
     }
 
@@ -480,7 +480,7 @@ bool PartitionWidget::maxAmountPrimReached()
             primaryCount++;
     }
 
-    int maxprims = DMDbusHandler::instance()->getCurDeviceInfo().max_prims;
+    int maxprims = DMDbusHandler::instance()->getCurDeviceInfo().m_maxPrims;
     if (!info.m_insideExtended && primaryCount >= maxprims) {
         breachMax = true;
         //        qDebug() << QString("It is not possible to create more than %1 primary partition").arg(maxprims);
@@ -765,14 +765,14 @@ void PartitionWidget::onAddPartition()
     DeviceInfo device = DMDbusHandler::instance()->getCurDeviceInfo();
 
     int partitionCount = 0;
-    for (int i = 0; i < device.partition.size(); i ++) {
-        PartitionInfo info = device.partition.at(i);
+    for (int i = 0; i < device.m_partition.size(); i ++) {
+        PartitionInfo info = device.m_partition.at(i);
         if (info.m_path != "unallocated") {
             partitionCount++;
         }
     }
 
-    if (m_sizeInfo.size() >= 24 || maxAmountPrimReached() == true || (partitionCount + m_sizeInfo.size()) >= device.max_prims) {
+    if (m_sizeInfo.size() >= 24 || maxAmountPrimReached() == true || (partitionCount + m_sizeInfo.size()) >= device.m_maxPrims) {
         DMessageManager::instance()->sendMessage(this, QIcon(":/icons/deepin/builtin/warning.svg"), tr("The number of new partitions exceeds the limit"));
         return;
     }
@@ -867,7 +867,7 @@ void PartitionWidget::onApplyButton()
         newPart.m_busy = false;
         newPart.m_fileSystemReadOnly = false;
         newPart.m_devicePath = curInfo.m_devicePath;
-        if (device.disktype == "gpt") {
+        if (device.m_disktype == "gpt") {
             newPart.m_type = TYPE_PRIMARY;
         } else {
             //非逻辑分区外没有指明创建的分区类型主分区/扩展分区，默认主分区

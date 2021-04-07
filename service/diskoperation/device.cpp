@@ -71,19 +71,19 @@ bool Device::partitionNamingSupported() const
 DeviceInfo Device::getDeviceInfo()
 {
     DeviceInfo info;
-    info.length = m_length;
-    info.heads = m_heads;
+    info.m_length = m_length;
+    info.m_heads = m_heads;
     info.m_path = m_path;
-    info.sectors = m_sectors;
-    info.cylinders = m_cylinders;
-    info.cylsize = m_cylsize;
-    info.model = m_model;
-    info.serial_number = m_serialNumber;
-    info.disktype = m_diskType;
-    info.sector_size = m_sectorSize;
-    info.max_prims = m_maxPrims;
-    info.highest_busy = m_highestBusy;
-    info.max_partition_name_length = m_maxPartitionNameLength;
+    info.m_sectors = m_sectors;
+    info.m_cylinders = m_cylinders;
+    info.m_cylsize = m_cylsize;
+    info.m_model = m_model;
+    info.m_serialNumber = m_serialNumber;
+    info.m_disktype = m_diskType;
+    info.m_sectorSize = m_sectorSize;
+    info.m_maxPrims = m_maxPrims;
+    info.m_highestBusy = m_highestBusy;
+    info.m_maxPartitionNameLength = m_maxPartitionNameLength;
 //        qDebug() << __FUNCTION__ << info.m_path << info.length << info.heads << info.sectors
 //                 << info.cylinders << info.cylsize << info.model << info.serial_number << info.disktype
 //                 << info.sector_size << info.max_prims << info.highest_busy << info.readonly

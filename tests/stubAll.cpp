@@ -12,19 +12,19 @@ void getDeviceInfo()
     DeviceInfoMap map;
     DeviceInfo devinfo;
     devinfo.m_path = "/dev/sde";
-    devinfo.length = 468862128;
-    devinfo.heads = 255;
-    devinfo.sectors = 63;
-    devinfo.cylinders = 29185;
-    devinfo.cylsize = 16065;
-    devinfo.model = "ATA CT240BX500SSD1";
-    devinfo.serial_number = "2002E3E11F2F";
-    devinfo.disktype = "gpt";
-    devinfo.sector_size = 512;
-    devinfo.max_prims = 128;
-    devinfo.highest_busy = 7;
-    devinfo.readonly = false;
-    devinfo.max_partition_name_length = 36;
+    devinfo.m_length = 468862128;
+    devinfo.m_heads = 255;
+    devinfo.m_sectors = 63;
+    devinfo.m_cylinders = 29185;
+    devinfo.m_cylsize = 16065;
+    devinfo.m_model = "ATA CT240BX500SSD1";
+    devinfo.m_serialNumber = "2002E3E11F2F";
+    devinfo.m_disktype = "gpt";
+    devinfo.m_sectorSize = 512;
+    devinfo.m_maxPrims = 128;
+    devinfo.m_highestBusy = 7;
+    devinfo.m_readonly = false;
+    devinfo.m_maxPartitionNameLength = 36;
 
     PartitionVec partition;
     PartitionInfo partitionInfo1;
@@ -109,7 +109,7 @@ void getDeviceInfo()
     partition.append(partitionInfo2);
     partition.append(partitionInfo3);
 
-    devinfo.partition = partition;
+    devinfo.m_partition = partition;
 
     map.insert("/dev/sde", devinfo);
 
@@ -122,19 +122,19 @@ DeviceInfoMap deviceInfo_mountPartition()
     DeviceInfoMap map;
     DeviceInfo devinfo;
     devinfo.m_path = "/dev/sde";
-    devinfo.length = 468862128;
-    devinfo.heads = 255;
-    devinfo.sectors = 63;
-    devinfo.cylinders = 29185;
-    devinfo.cylsize = 16065;
-    devinfo.model = "ATA CT240BX500SSD1";
-    devinfo.serial_number = "2002E3E11F2F";
-    devinfo.disktype = "gpt";
-    devinfo.sector_size = 512;
-    devinfo.max_prims = 128;
-    devinfo.highest_busy = 7;
-    devinfo.readonly = false;
-    devinfo.max_partition_name_length = 36;
+    devinfo.m_length = 468862128;
+    devinfo.m_heads = 255;
+    devinfo.m_sectors = 63;
+    devinfo.m_cylinders = 29185;
+    devinfo.m_cylsize = 16065;
+    devinfo.m_model = "ATA CT240BX500SSD1";
+    devinfo.m_serialNumber = "2002E3E11F2F";
+    devinfo.m_disktype = "gpt";
+    devinfo.m_sectorSize = 512;
+    devinfo.m_maxPrims = 128;
+    devinfo.m_highestBusy = 7;
+    devinfo.m_readonly = false;
+    devinfo.m_maxPartitionNameLength = 36;
 
     PartitionVec partition;
     PartitionInfo partitionInfo1;
@@ -221,7 +221,7 @@ DeviceInfoMap deviceInfo_mountPartition()
     partition.append(partitionInfo2);
     partition.append(partitionInfo3);
 
-    devinfo.partition = partition;
+    devinfo.m_partition = partition;
 
     map.insert("/dev/sde", devinfo);
 
@@ -233,19 +233,19 @@ DeviceInfoMap deviceInfo_noPartitionTable()
     DeviceInfoMap map;
     DeviceInfo devinfo;
     devinfo.m_path = "/dev/sde";
-    devinfo.length = 468862128;
-    devinfo.heads = 255;
-    devinfo.sectors = 63;
-    devinfo.cylinders = 29185;
-    devinfo.cylsize = 16065;
-    devinfo.model = "ATA CT240BX500SSD1";
-    devinfo.serial_number = "2002E3E11F2F";
-    devinfo.disktype = "unrecognized";
-    devinfo.sector_size = 512;
-    devinfo.max_prims = 1;
-    devinfo.highest_busy = 0;
-    devinfo.readonly = false;
-    devinfo.max_partition_name_length = 0;
+    devinfo.m_length = 468862128;
+    devinfo.m_heads = 255;
+    devinfo.m_sectors = 63;
+    devinfo.m_cylinders = 29185;
+    devinfo.m_cylsize = 16065;
+    devinfo.m_model = "ATA CT240BX500SSD1";
+    devinfo.m_serialNumber = "2002E3E11F2F";
+    devinfo.m_disktype = "unrecognized";
+    devinfo.m_sectorSize = 512;
+    devinfo.m_maxPrims = 1;
+    devinfo.m_highestBusy = 0;
+    devinfo.m_readonly = false;
+    devinfo.m_maxPartitionNameLength = 0;
 
     PartitionVec partition;
     PartitionInfo partitionInfo1;
@@ -276,7 +276,7 @@ DeviceInfoMap deviceInfo_noPartitionTable()
 
     partition.append(partitionInfo1);
 
-    devinfo.partition = partition;
+    devinfo.m_partition = partition;
 
     map.insert("/dev/sde", devinfo);
 
@@ -293,7 +293,7 @@ void setCurSelect()
         DMDbusHandler::instance()->m_curDevicePath = devicePath;
         auto it = DMDbusHandler::instance()->m_deviceMap.find(devicePath);
         if (it != DMDbusHandler::instance()->m_deviceMap.end()) {
-            for (PartitionInfo info : it.value().partition) {
+            for (PartitionInfo info : it.value().m_partition) {
                 if (info.m_sectorStart == start && info.m_sectorEnd == end) {
                     qDebug() << info.m_partitionNumber << info.m_path << Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType));
                     DMDbusHandler::instance()->m_curPartitionInfo = info;
@@ -315,7 +315,7 @@ void setCurSelectSecond()
         DMDbusHandler::instance()->m_curDevicePath = devicePath;
         auto it = DMDbusHandler::instance()->m_deviceMap.find(devicePath);
         if (it != DMDbusHandler::instance()->m_deviceMap.end()) {
-            for (PartitionInfo info : it.value().partition) {
+            for (PartitionInfo info : it.value().m_partition) {
                 if (info.m_sectorStart == start && info.m_sectorEnd == end) {
                     qDebug() << info.m_partitionNumber << info.m_path << Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType));
                     DMDbusHandler::instance()->m_curPartitionInfo = info;
@@ -338,7 +338,7 @@ void setCurSelectOcated()
         DMDbusHandler::instance()->m_curDevicePath = devicePath;
         auto it = DMDbusHandler::instance()->m_deviceMap.find(devicePath);
         if (it != DMDbusHandler::instance()->m_deviceMap.end()) {
-            for (PartitionInfo info : it.value().partition) {
+            for (PartitionInfo info : it.value().m_partition) {
                 if (info.m_sectorStart == start && info.m_sectorEnd == end) {
                     qDebug() << info.m_partitionNumber << info.m_path << Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType));
                     DMDbusHandler::instance()->m_curPartitionInfo = info;
@@ -405,20 +405,20 @@ int MessageboxExec()
 HardDiskInfo getDiskInfo()
 {
     HardDiskInfo hardDiskInfo;
-    hardDiskInfo.m_Model = "Lenovo SSD SL700 240G";
-    hardDiskInfo.m_Vendor = "External";
-    hardDiskInfo.m_MediaType = "HDD";
-    hardDiskInfo.m_Size = "240 GB";
-    hardDiskInfo.m_RotationRate = "Solid State Device";
-    hardDiskInfo.m_Interface = "USB";
-    hardDiskInfo.m_SerialNumber = "LSL70240B073F01636";
-    hardDiskInfo.m_Version = "0204";
-    hardDiskInfo.m_Capabilities = "";
-    hardDiskInfo.m_Description = "disk";
-    hardDiskInfo.m_PowerOnHours = "1183";
-    hardDiskInfo.m_PowerCycleCount = "1350";
-    hardDiskInfo.m_FirmwareVersion = "SBFM61.3";
-    hardDiskInfo.m_Speed = "6.0 Gb/s (current: 6.0 Gb/s)";
+    hardDiskInfo.m_model = "Lenovo SSD SL700 240G";
+    hardDiskInfo.m_vendor = "External";
+    hardDiskInfo.m_mediaType = "HDD";
+    hardDiskInfo.m_size = "240 GB";
+    hardDiskInfo.m_rotationRate = "Solid State Device";
+    hardDiskInfo.m_interface = "USB";
+    hardDiskInfo.m_serialNumber = "LSL70240B073F01636";
+    hardDiskInfo.m_version = "0204";
+    hardDiskInfo.m_capabilities = "";
+    hardDiskInfo.m_description = "disk";
+    hardDiskInfo.m_powerOnHours = "1183";
+    hardDiskInfo.m_powerCycleCount = "1350";
+    hardDiskInfo.m_firmwareVersion = "SBFM61.3";
+    hardDiskInfo.m_speed = "6.0 Gb/s (current: 6.0 Gb/s)";
 
     return hardDiskInfo;
 }

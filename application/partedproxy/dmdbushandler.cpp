@@ -130,7 +130,7 @@ void DMDbusHandler::onSetCurSelect(const QString &devicePath, const QString &par
         m_curDevicePath = devicePath;
         auto it = m_deviceMap.find(devicePath);
         if (it != m_deviceMap.end()) {
-            for (PartitionInfo info : it.value().partition) {
+            for (PartitionInfo info : it.value().m_partition) {
                 if (info.m_sectorStart == start && info.m_sectorEnd == end) {
                     qDebug() << info.m_partitionNumber << info.m_path << Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType));
                     m_curPartitionInfo = info;
@@ -187,7 +187,7 @@ const DeviceInfoMap &DMDbusHandler::probDeviceInfo() const
 
 PartitionVec DMDbusHandler::getCurDevicePartitionArr()
 {
-    return m_deviceMap.find(m_curDevicePath).value().partition;
+    return m_deviceMap.find(m_curDevicePath).value().m_partition;
 }
 
 const PartitionInfo &DMDbusHandler::getCurPartititonInfo()
@@ -202,7 +202,7 @@ const DeviceInfo &DMDbusHandler::getCurDeviceInfo()
 
 const Sector &DMDbusHandler::getCurDeviceInfoLength()
 {
-    return m_deviceMap.find(m_curDevicePath).value().length;
+    return m_deviceMap.find(m_curDevicePath).value().m_length;
 }
 
 void DMDbusHandler::mount(const QString &mountPath)
@@ -285,7 +285,7 @@ void DMDbusHandler::onUpdateDeviceInfo(const DeviceInfoMap &infoMap)
 //                 << info.max_partition_name_length;
         m_deviceNameList << info.m_path;
         QString isExistUnallocated = "false";
-        for (auto it = info.partition.begin(); it != info.partition.end(); it++) {
+        for (auto it = info.m_partition.begin(); it != info.m_partition.end(); it++) {
             //            qDebug() << it->sector_end << it->sector_start << Utils::sector_to_unit(it->sector_size, it->sector_end - it->sector_start, SIZE_UNIT::UNIT_GIB);
             //        qDebug() << it->name << it->device_path << it->partition_number << it->sectors_used << it->sectors_unused << it->sector_start << it->sector_end;
            if (it->m_path == "unallocated") {

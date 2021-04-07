@@ -5,8 +5,8 @@ namespace DiskManager {
 
 
 DeviceStorage::DeviceStorage()
-    : m_Model(""), m_Vendor(""), m_MediaType(""), m_Size(""), m_RotationRate(""), m_Interface("")
-    , m_SerialNumber(""), m_Version(""), m_Capabilities(""), m_Description(""), m_KeyToLshw(""), m_KeyFromStorage("")
+    : m_model(""), m_vendor(""), m_mediaType(""), m_size(""), m_rotationRate(""), m_interface("")
+    , m_serialNumber(""), m_version(""), m_capabilities(""), m_description(""), m_KeyToLshw(""), m_KeyFromStorage("")
 {
 
 }
@@ -18,27 +18,27 @@ bool DeviceStorage::setHwinfoInfo(const QMap<QString, QString> &mapInfo)
     if (mapInfo.find("SysFS BusID") == mapInfo.end()) {
         return false;
     }
-    setAttribute(mapInfo, "Model", m_Model);
-    setAttribute(mapInfo, "Vendor", m_Vendor);
+    setAttribute(mapInfo, "Model", m_model);
+    setAttribute(mapInfo, "Vendor", m_vendor);
 
-    setAttribute(mapInfo, "Attached to", m_Interface);
+    setAttribute(mapInfo, "Attached to", m_interface);
     QRegExp re(".*\\((.*)\\).*");
-    if (re.exactMatch(m_Interface)) {
-        m_Interface = re.cap(1);
-        m_Interface.replace("Controller", "");
-        m_Interface.replace("controller", "");
+    if (re.exactMatch(m_interface)) {
+        m_interface = re.cap(1);
+        m_interface.replace("Controller", "");
+        m_interface.replace("controller", "");
     }
-    m_Interface = m_Interface.trimmed();
-    setAttribute(mapInfo, "Revision", m_Version);
-    setAttribute(mapInfo, "Hardware Class", m_Description);
-    setAttribute(mapInfo, "Capacity", m_Size);
+    m_interface = m_interface.trimmed();
+    setAttribute(mapInfo, "Revision", m_version);
+    setAttribute(mapInfo, "Hardware Class", m_description);
+    setAttribute(mapInfo, "Capacity", m_size);
     // hwinfo里面显示的内容是  14 GB (15376000000 bytes) 需要处理
-    m_Size.replace(QRegExp("\\(.*\\)"), "").replace(" ", "");
-    if (m_Size.startsWith("0") || m_Size == "") {
+    m_size.replace(QRegExp("\\(.*\\)"), "").replace(" ", "");
+    if (m_size.startsWith("0") || m_size == "") {
         return false;
     }
 
-    setAttribute(mapInfo, "Serial ID", m_SerialNumber);
+    setAttribute(mapInfo, "Serial ID", m_serialNumber);
     ///setDiskSerialID(mapInfo["Device Files"]);
     setAttribute(mapInfo, "SysFS BusID", m_KeyToLshw);
     setAttribute(mapInfo, "Device File", m_DeviceFile);
@@ -53,35 +53,35 @@ bool DeviceStorage::setKLUHwinfoInfo(const QMap<QString, QString> &mapInfo)
     if (mapInfo.find("SysFS BusID") == mapInfo.end()) {
         return false;
     }
-    setAttribute(mapInfo, "Model", m_Model);
-    setAttribute(mapInfo, "Vendor", m_Vendor);
+    setAttribute(mapInfo, "Model", m_model);
+    setAttribute(mapInfo, "Vendor", m_vendor);
 
-    setAttribute(mapInfo, "Attached to", m_Interface);
+    setAttribute(mapInfo, "Attached to", m_interface);
     QRegExp re(".*\\((.*)\\).*");
-    if (re.exactMatch(m_Interface)) {
-        m_Interface = re.cap(1);
-        m_Interface.replace("Controller", "");
-        m_Interface.replace("controller", "");
+    if (re.exactMatch(m_interface)) {
+        m_interface = re.cap(1);
+        m_interface.replace("Controller", "");
+        m_interface.replace("controller", "");
     }
-    m_Interface = m_Interface.trimmed();
-    setAttribute(mapInfo, "Revision", m_Version);
-    setAttribute(mapInfo, "Hardware Class", m_Description);
-    setAttribute(mapInfo, "Capacity", m_Size);
+    m_interface = m_interface.trimmed();
+    setAttribute(mapInfo, "Revision", m_version);
+    setAttribute(mapInfo, "Hardware Class", m_description);
+    setAttribute(mapInfo, "Capacity", m_size);
     // hwinfo里面显示的内容是  14 GB (15376000000 bytes) 需要处理
-    m_Size.replace(QRegExp("\\(.*\\)"), "").replace(" ", "");
-    if (m_Size.startsWith("0") || m_Size == "") {
+    m_size.replace(QRegExp("\\(.*\\)"), "").replace(" ", "");
+    if (m_size.startsWith("0") || m_size == "") {
         return false;
     }
 
 
-    setAttribute(mapInfo, "Serial ID", m_SerialNumber);
+    setAttribute(mapInfo, "Serial ID", m_serialNumber);
 //    setDiskSerialID(mapInfo["Device Files"]);
     setAttribute(mapInfo, "SysFS BusID", m_KeyToLshw);
     setAttribute(mapInfo, "Device File", m_DeviceFile);
 
     // KLU里面的介质类型的处理方式比较特殊
     if (mapInfo["Driver"].contains("usb-storage")) {
-        m_MediaType = "USB";
+        m_mediaType = "USB";
     }
 
 //    loadOtherDeviceInfo(mapInfo);
@@ -133,11 +133,11 @@ bool DeviceStorage::setMediaType(const QString &name, const QString &value)
     }
 
     if (QString("0") == value) {
-        m_MediaType = "SSD";
+        m_mediaType = "SSD";
     } else if (QString("1") == value) {
-        m_MediaType = "HDD";
+        m_mediaType = "HDD";
     } else {
-        m_MediaType = "UnKnow";
+        m_mediaType = "UnKnow";
     }
 
     return true;
@@ -149,16 +149,16 @@ bool DeviceStorage::setKLUMediaType(const QString &name, const QString &value)
         return false;
     }
 
-    if (m_MediaType == "USB") {
+    if (m_mediaType == "USB") {
         return true;
     }
 
     if (QString("0") == value) {
-        m_MediaType = "SSD";
+        m_mediaType = "SSD";
     } else if (QString("1") == value) {
-        m_MediaType = "HDD";
+        m_mediaType = "HDD";
     } else {
-        m_MediaType = "UnKnow";
+        m_mediaType = "UnKnow";
     }
 
     return true;
@@ -166,16 +166,16 @@ bool DeviceStorage::setKLUMediaType(const QString &name, const QString &value)
 
 void DeviceStorage::getInfoFromLshw(const QMap<QString, QString> &mapInfo)
 {
-    setAttribute(mapInfo, "capabilities", m_Capabilities);
-    setAttribute(mapInfo, "version", m_Version);
-    setAttribute(mapInfo, "serial", m_SerialNumber, false);
-    setAttribute(mapInfo, "product", m_Model);
-    setAttribute(mapInfo, "description", m_Description);
-    setAttribute(mapInfo, "size", m_Size);
+    setAttribute(mapInfo, "capabilities", m_capabilities);
+    setAttribute(mapInfo, "version", m_version);
+    setAttribute(mapInfo, "serial", m_serialNumber, false);
+    setAttribute(mapInfo, "product", m_model);
+    setAttribute(mapInfo, "description", m_description);
+    setAttribute(mapInfo, "size", m_size);
     // 223GiB (240GB)
     QRegExp re(".*\\((.*)\\)$");
-    if (re.exactMatch(m_Size)) {
-        m_Size = re.cap(1);
+    if (re.exactMatch(m_size)) {
+        m_size = re.cap(1);
     }
 }
 
@@ -183,27 +183,27 @@ void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
 {
 //    qDebug() << mapInfo << endl;
     // 固件版本
-    m_FirmwareVersion = mapInfo["Firmware Version"];
+    m_firmwareVersion = mapInfo["Firmware Version"];
 
     // 速度
     QString sataVersion = mapInfo["SATA Version"];
     QStringList strList = sataVersion.split(",");
     if (strList.size() == 2) {
-        m_Speed = strList[1].trimmed();
+        m_speed = strList[1].trimmed();
     }
 
-    setAttribute(mapInfo, "Rotation Rate", m_RotationRate);
+    setAttribute(mapInfo, "Rotation Rate", m_rotationRate);
 
     // 通电时间
-    m_PowerOnHours = mapInfo["Power_On_Hours"];
-    if (m_PowerOnHours == "") {
-        m_PowerOnHours = mapInfo["Power On Hours"];
+    m_powerOnHours = mapInfo["Power_On_Hours"];
+    if (m_powerOnHours == "") {
+        m_powerOnHours = mapInfo["Power On Hours"];
     }
 
     // 通电次数
-    m_PowerCycleCount = mapInfo["Power_Cycle_Count"];
-    if (m_PowerCycleCount == "") {
-        m_PowerCycleCount = mapInfo["Power Cycles"];
+    m_powerCycleCount = mapInfo["Power_Cycle_Count"];
+    if (m_powerCycleCount == "") {
+        m_powerCycleCount = mapInfo["Power Cycles"];
     }
 
     // 安装大小
@@ -215,21 +215,21 @@ void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
     if (capacity != "") {
         QRegExp reg(".*\\[(.*)\\]$");
         if (reg.exactMatch(capacity)) {
-            m_Size = reg.cap(1);
+            m_size = reg.cap(1);
         }
     }
 
     // 型号
     //SATA
     if (mapInfo["Device Model"].isEmpty() == false) {
-        m_Model = mapInfo["Device Model"];
+        m_model = mapInfo["Device Model"];
     }
     //NVME
     if (mapInfo["Model Number"].isEmpty() == false) {
-        m_Model = mapInfo["Model Number"];
+        m_model = mapInfo["Model Number"];
     }
 
-    setAttribute(mapInfo, "Serial Number", m_SerialNumber, true);
+    setAttribute(mapInfo, "Serial Number", m_serialNumber, true);
 }
 
 void DeviceStorage::setAttribute(const QMap<QString, QString> &mapInfo, const QString &key, QString &variable, bool overwrite)

@@ -69,13 +69,13 @@ void DiskInfoDisplayDialog::initUI()
                        << tr("Power Cycle Count:") << tr("Firmware Version:") << tr("Speed:");
 
     m_diskInfoValueList.clear();
-    m_diskInfoValueList << tr("%1").arg(hardDiskInfo.m_Model) << tr("%1").arg(hardDiskInfo.m_Vendor)
-                        << tr("%1").arg(hardDiskInfo.m_MediaType) << tr("%1").arg(hardDiskInfo.m_Size)
-                        << tr("%1").arg(hardDiskInfo.m_RotationRate) << tr("%1").arg(hardDiskInfo.m_Interface)
-                        << tr("%1").arg(hardDiskInfo.m_SerialNumber) << tr("%1").arg(hardDiskInfo.m_Version)
-                        << tr("%1").arg(hardDiskInfo.m_Capabilities) << tr("%1").arg(hardDiskInfo.m_Description)
-                        << tr("%1").arg(hardDiskInfo.m_PowerOnHours) << tr("%1").arg(hardDiskInfo.m_PowerCycleCount)
-                        << tr("%1").arg(hardDiskInfo.m_FirmwareVersion) << tr("%1").arg(hardDiskInfo.m_Speed);
+    m_diskInfoValueList << tr("%1").arg(hardDiskInfo.m_model) << tr("%1").arg(hardDiskInfo.m_vendor)
+                        << tr("%1").arg(hardDiskInfo.m_mediaType) << tr("%1").arg(hardDiskInfo.m_size)
+                        << tr("%1").arg(hardDiskInfo.m_rotationRate) << tr("%1").arg(hardDiskInfo.m_interface)
+                        << tr("%1").arg(hardDiskInfo.m_serialNumber) << tr("%1").arg(hardDiskInfo.m_version)
+                        << tr("%1").arg(hardDiskInfo.m_capabilities) << tr("%1").arg(hardDiskInfo.m_description)
+                        << tr("%1").arg(hardDiskInfo.m_powerOnHours) << tr("%1").arg(hardDiskInfo.m_powerCycleCount)
+                        << tr("%1").arg(hardDiskInfo.m_firmwareVersion) << tr("%1").arg(hardDiskInfo.m_speed);
 
     QVBoxLayout *infoLayout = new QVBoxLayout(infoWidget);
 

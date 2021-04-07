@@ -235,14 +235,14 @@ void PartedCore::probeDeviceInfo(const QString &)
 //            }
 
             if (pat.m_type == PartitionType::TYPE_EXTENDED) {
-                devinfo.partition.push_back(partinfo);
+                devinfo.m_partition.push_back(partinfo);
                 for (int k = 0; k < pat.m_logicals.size(); k++) {
                     const Partition &plogic = *(pat.m_logicals.at(k));
                     partinfo = plogic.getPartitionInfo();
-                    devinfo.partition.push_back(partinfo);
+                    devinfo.m_partition.push_back(partinfo);
                 }
             } else {
-                devinfo.partition.push_back(partinfo);
+                devinfo.m_partition.push_back(partinfo);
             }
         }
         m_inforesult.insert(devinfo.m_path, devinfo);
@@ -1849,20 +1849,20 @@ HardDiskInfo PartedCore::getDeviceHardInfo(const QString &devicepath)
 
     device.getDiskInfoFromSmartCtl(devicepath);
 
-    hdinfo.m_Model = device.m_Model;
-    hdinfo.m_Vendor = device.m_Vendor;
-    hdinfo.m_MediaType = device.m_MediaType;
-    hdinfo.m_Size = device.m_Size;
-    hdinfo.m_RotationRate = device.m_RotationRate;
-    hdinfo.m_Interface = device.m_Interface;
-    hdinfo.m_SerialNumber = device.m_SerialNumber;
-    hdinfo.m_Version = device.m_Version;
-    hdinfo.m_Capabilities = device.m_Capabilities;
-    hdinfo.m_Description = device.m_Description;
-    hdinfo.m_PowerOnHours = device.m_PowerOnHours;
-    hdinfo.m_PowerCycleCount = device.m_PowerCycleCount;
-    hdinfo.m_FirmwareVersion = device.m_FirmwareVersion;
-    hdinfo.m_Speed = device.m_Speed;
+    hdinfo.m_model = device.m_model;
+    hdinfo.m_vendor = device.m_vendor;
+    hdinfo.m_mediaType = device.m_mediaType;
+    hdinfo.m_size = device.m_size;
+    hdinfo.m_rotationRate = device.m_rotationRate;
+    hdinfo.m_interface = device.m_interface;
+    hdinfo.m_serialNumber = device.m_serialNumber;
+    hdinfo.m_version = device.m_version;
+    hdinfo.m_capabilities = device.m_capabilities;
+    hdinfo.m_description = device.m_description;
+    hdinfo.m_powerOnHours = device.m_powerOnHours;
+    hdinfo.m_powerCycleCount = device.m_powerCycleCount;
+    hdinfo.m_firmwareVersion = device.m_firmwareVersion;
+    hdinfo.m_speed = device.m_speed;
 
     qDebug() << __FUNCTION__ << "Get Device Hard Info end";
     return hdinfo;
@@ -2563,21 +2563,29 @@ int PartedCore::test()
 {
 //    QString str = "smartctl 6.6 2017-11-05 r4594 [x86_64-linux-4.19.0-6-amd64] (local build)\nCopyright (C) 2002-17, Bruce Allen, Christian Franke, www.smartmontools.org\n\n=== START OF SMART DATA SECTION ===\nSMART/Health Information (NVMe Log 0x02, NSID 0xffffffff)\nCritical Warning:                   0x00\nTemperature:                        25 Celsius\nAvailable Spare:                    100%\nAvailable Spare Threshold:          5%\nPercentage Used:                    1%\nData Units Read:                    3,196,293 [1.63 TB]\nData Units Written:                 3,708,861 [1.89 TB]\nHost Read Commands:                 47,399,157\nHost Write Commands:                65,181,192\nController Busy Time:               418\nPower Cycles:                       97\nPower On Hours:                     1,362\nUnsafe Shutdowns:                   44\nMedia and Data Integrity Errors:    0\nError Information Log Entries:      171\nWarning  Comp. Temperature Time:    0\nCritical Comp. Temperature Time:    0\n\n";
 //    QStringList list = str.split("\n");
-////    qDebug() << list;
+//    qDebug() << list;
 //    for (int i = 0; i < list.size(); i++) {
 //        if (list.at(i).contains(":")) {
 //            QStringList slist = list.at(i).split(":");
-////            qDebug() << slist;
+//            qDebug() << slist;
 //        }
 //    }
 
-    if(createPartitionTable("/dev/sdc","468862128", "512", "msdos"))
-    {
+//    if(createPartitionTable("/dev/sdc","468862128", "512", "msdos"))
+//    {
+//        return 0;
+//    }
+
+    QString cmd = "/n";
+    if (cmd.isEmpty()) {
+        return 1;
+
+    } else {
         return 0;
     }
 
 
-    return 1;
+//    return 1;
 }
 
 } // namespace DiskManager

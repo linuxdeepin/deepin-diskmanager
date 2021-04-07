@@ -4,21 +4,21 @@
 QDBusArgument &operator<<(QDBusArgument &argument, const DeviceInfo &info)
 {
     argument.beginStructure();
-    argument << info.length
-             << info.heads
+    argument << info.m_length
+             << info.m_heads
              << info.m_path
-             << info.sectors
-             << info.cylinders
-             << info.cylsize
-             << info.model
-             << info.serial_number
-             << info.disktype
-             << info.sector_size
-             << info.max_prims
-             << info.highest_busy
-             << info.readonly
-             << info.max_partition_name_length
-             << info.partition;
+             << info.m_sectors
+             << info.m_cylinders
+             << info.m_cylsize
+             << info.m_model
+             << info.m_serialNumber
+             << info.m_disktype
+             << info.m_sectorSize
+             << info.m_maxPrims
+             << info.m_highestBusy
+             << info.m_readonly
+             << info.m_maxPartitionNameLength
+             << info.m_partition;
     argument.endStructure();
 
     return argument;
@@ -27,21 +27,21 @@ QDBusArgument &operator<<(QDBusArgument &argument, const DeviceInfo &info)
 const QDBusArgument &operator>>(const QDBusArgument &argument, DeviceInfo &info)
 {
     argument.beginStructure();
-    argument >> info.length
-        >> info.heads
+    argument >> info.m_length
+        >> info.m_heads
         >> info.m_path
-        >> info.sectors
-        >> info.cylinders
-        >> info.cylsize
-        >> info.model
-        >> info.serial_number
-        >> info.disktype
-        >> info.sector_size
-        >> info.max_prims
-        >> info.highest_busy
-        >> info.readonly
-        >> info.max_partition_name_length
-        >> info.partition;
+        >> info.m_sectors
+        >> info.m_cylinders
+        >> info.m_cylsize
+        >> info.m_model
+        >> info.m_serialNumber
+        >> info.m_disktype
+        >> info.m_sectorSize
+        >> info.m_maxPrims
+        >> info.m_highestBusy
+        >> info.m_readonly
+        >> info.m_maxPartitionNameLength
+        >> info.m_partition;
     argument.endStructure();
     return argument;
 }
@@ -49,8 +49,8 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, DeviceInfo &info)
 QDBusArgument &operator<<(QDBusArgument &argument, const stCustest &stcus)
 {
     argument.beginStructure();
-    argument << stcus.length
-             << stcus.heads
+    argument << stcus.m_length
+             << stcus.m_heads
              << stcus.m_path;
     argument.endStructure();
     return argument;
@@ -59,8 +59,8 @@ QDBusArgument &operator<<(QDBusArgument &argument, const stCustest &stcus)
 const QDBusArgument &operator>>(const QDBusArgument &argument, stCustest &stcus)
 {
     argument.beginStructure();
-    argument >> stcus.length
-        >> stcus.heads
+    argument >> stcus.m_length
+        >> stcus.m_heads
         >> stcus.m_path;
 
     argument.endStructure();
@@ -69,20 +69,20 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, stCustest &stcus)
 QDBusArgument &operator<<(QDBusArgument &argument, const HardDiskInfo &inhdinfo)
 {
     argument.beginStructure();
-    argument << inhdinfo.m_Model
-             << inhdinfo.m_Vendor
-             << inhdinfo.m_MediaType
-             << inhdinfo.m_Size
-             << inhdinfo.m_RotationRate
-             << inhdinfo.m_Interface
-             << inhdinfo.m_SerialNumber
-             << inhdinfo.m_Version
-             << inhdinfo.m_Capabilities
-             << inhdinfo.m_Description
-             << inhdinfo.m_PowerOnHours
-             << inhdinfo.m_PowerCycleCount
-             << inhdinfo.m_FirmwareVersion
-             << inhdinfo.m_Speed;
+    argument << inhdinfo.m_model
+             << inhdinfo.m_vendor
+             << inhdinfo.m_mediaType
+             << inhdinfo.m_size
+             << inhdinfo.m_rotationRate
+             << inhdinfo.m_interface
+             << inhdinfo.m_serialNumber
+             << inhdinfo.m_version
+             << inhdinfo.m_capabilities
+             << inhdinfo.m_description
+             << inhdinfo.m_powerOnHours
+             << inhdinfo.m_powerCycleCount
+             << inhdinfo.m_firmwareVersion
+             << inhdinfo.m_speed;
     argument.endStructure();
     return argument;
 }
@@ -90,20 +90,20 @@ QDBusArgument &operator<<(QDBusArgument &argument, const HardDiskInfo &inhdinfo)
 const QDBusArgument &operator>>(const QDBusArgument &argument, HardDiskInfo &inhdinfo)
 {
     argument.beginStructure();
-    argument >> inhdinfo.m_Model
-            >> inhdinfo.m_Vendor
-            >> inhdinfo.m_MediaType
-            >> inhdinfo.m_Size
-            >> inhdinfo.m_RotationRate
-            >> inhdinfo.m_Interface
-            >> inhdinfo.m_SerialNumber
-            >> inhdinfo.m_Version
-            >> inhdinfo.m_Capabilities
-            >> inhdinfo.m_Description
-            >> inhdinfo.m_PowerOnHours
-            >> inhdinfo.m_PowerCycleCount
-            >> inhdinfo.m_FirmwareVersion
-            >> inhdinfo.m_Speed;
+    argument >> inhdinfo.m_model
+            >> inhdinfo.m_vendor
+            >> inhdinfo.m_mediaType
+            >> inhdinfo.m_size
+            >> inhdinfo.m_rotationRate
+            >> inhdinfo.m_interface
+            >> inhdinfo.m_serialNumber
+            >> inhdinfo.m_version
+            >> inhdinfo.m_capabilities
+            >> inhdinfo.m_description
+            >> inhdinfo.m_powerOnHours
+            >> inhdinfo.m_powerCycleCount
+            >> inhdinfo.m_firmwareVersion
+            >> inhdinfo.m_speed;
     argument.endStructure();
     return argument;
 }
@@ -142,9 +142,9 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, HardDiskStatusInf
 }
 
 DeviceInfo::DeviceInfo()
-    : readonly(false)
+    : m_readonly(false)
 {
-    length = heads = sectors = cylinders = cylsize = sector_size = max_prims = highest_busy = max_partition_name_length = 0;
-    m_path = model = serial_number = disktype = QString("");
-    partition.clear();
+    m_length = m_heads = m_sectors = m_cylinders = m_cylsize = m_sectorSize = m_maxPrims = m_highestBusy = m_maxPartitionNameLength = 0;
+    m_path = m_model = m_serialNumber = m_disktype = QString("");
+    m_partition.clear();
 }

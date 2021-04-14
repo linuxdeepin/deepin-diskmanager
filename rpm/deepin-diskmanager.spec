@@ -37,9 +37,6 @@ export PATH=%{_qt5_bindir}:$PATH
 
 %install
 %make_install INSTALL_ROOT=%{buildroot}
-chmod 755 %{buildroot}%{_libexecdir}/openconnect/USBadd.sh
-chmod 755 %{buildroot}%{_libexecdir}/openconnect/USBremove.sh
-chmod 755 %{buildroot}%{_bindir}/deepin-diskmanager-authenticateProxy
 
 %files
 %doc README.md

@@ -5,7 +5,7 @@ GenericName=Disk Utility
 Icon=deepin-diskmanager
 Name=Deepin Disk Utility
 StartupNotify=true
-TryExec=deepin-diskmanager
+TryExec=deepin-disk-manager
 Type=Application
 X-Deepin-Vendor=deepin
 

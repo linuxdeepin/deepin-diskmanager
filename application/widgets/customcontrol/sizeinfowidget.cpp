@@ -190,11 +190,14 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(textColor);
             option.setAlignment(Qt::AlignTop);
             width = roundRect.x() + roundRect.width() + 10;
-            rectText.moveTo(width, paintRect.bottomLeft().y() + 17);
-            painter.drawText(rectText, QString(tr("Used:") + " "), option);
-            // 获取已用空间字符串显示的宽度
+
             QFontMetrics fmUsed = painter.fontMetrics();
             int usedWidth = fmCapacity.width(QString(tr("Used:") + " "));
+
+//            rectText.moveTo(width, paintRect.bottomLeft().y() + 17);
+            rectText = QRect(width, paintRect.bottomLeft().y() + 17, usedWidth, 70);
+            painter.drawText(rectText, QString(tr("Used:") + " "), option);
+            // 获取已用空间字符串显示的宽度
             int usedNum = rectText.x() + usedWidth;
 
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
@@ -265,11 +268,13 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(textColor);
             option.setAlignment(Qt::AlignTop);
             width = roundRect.x() + roundRect.width() + 10;
-            rectText.moveTo(width, paintRect.bottomLeft().y() + 17);
-            painter.drawText(rectText, QString(tr("Used:") + " "), option);
-            // 获取已用空间字符串显示的宽度
+
             QFontMetrics fmUsed = painter.fontMetrics();
             int usedWidth = fmCapacity.width(QString(tr("Used:") + " "));
+//            rectText.moveTo(width, paintRect.bottomLeft().y() + 17);
+            rectText = QRect(width, paintRect.bottomLeft().y() + 17, usedWidth, 70);
+            painter.drawText(rectText, QString(tr("Used:") + " "), option);
+            // 获取已用空间字符串显示的宽度
             int usedNum = rectText.x() + usedWidth;
 
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);

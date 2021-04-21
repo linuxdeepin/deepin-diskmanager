@@ -26,6 +26,9 @@
  */
 #include "cylinderwidget.h"
 
+#include <QDebug>
+#include <QMouseEvent>
+
 CylinderWidget::CylinderWidget(QWidget *parent) : QLabel(parent)
 {
 
@@ -44,10 +47,15 @@ QVariant CylinderWidget::getUserData()
 void CylinderWidget::enterEvent(QEvent *event)
 {
     emit enter();
+
+    return QLabel::enterEvent(event);
 }
 
 void CylinderWidget::leaveEvent(QEvent *event)
 {
     emit leave();
+
+    return QLabel::leaveEvent(event);
 }
+
 

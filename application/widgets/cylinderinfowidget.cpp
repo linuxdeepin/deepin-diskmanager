@@ -30,6 +30,7 @@
 #include <DPalette>
 #include <DFontSizeManager>
 #include <DGuiApplicationHelper>
+#include <QApplication>
 
 #include <QGridLayout>
 #include <QVBoxLayout>
@@ -94,7 +95,7 @@ void CylinderInfoWidget::initUI()
     m_widget = new QWidget;
     m_widget->setLayout(cylLayout);
 
-    m_arrowRectangle = new DArrowRectangle(DArrowRectangle::ArrowTop);
+    m_arrowRectangle = new DArrowRectangle(DArrowRectangle::ArrowTop, this);
     QColor color("#D2D2D2");
     color.setAlphaF(0.3);
     m_arrowRectangle->setBackgroundColor(color);
@@ -481,12 +482,17 @@ void CylinderInfoWidget::enterSlot()
     }
 
     m_arrowRectangle->show(label->mapToGlobal(label->pos()).x() - label->pos().x() + (label->width() / 2),
-                           label->mapToGlobal(label->pos()).y() - label->pos().y() + label->height() - 5);
-
+                           label->mapToGlobal(label->pos()).y() - label->pos().y() + label->height() - 1);
 }
 
 void CylinderInfoWidget::leaveSlot()
 {
+    CylinderWidget *label = qobject_cast<CylinderWidget *>(sender());
+    QMap<QString, QVariant> mapInfo = label->getUserData().toMap();
+    if (mapInfo.isEmpty()) {
+        return;
+    }
+
     m_arrowRectangle->hide();
 }
 

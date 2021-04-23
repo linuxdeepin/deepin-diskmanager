@@ -169,7 +169,7 @@ void EXT2::setUsedSectors(Partition &partition)
             m_numOfFreeOrUsedBlocks = -1;
             if (!Utils::executCmd(QString("resize2fs -P %1").arg(partition.getPath()), output, error)) {
                 if (sscanf(output.toLatin1(), "Estimated minimum size of the filesystem: %lld", &m_numOfFreeOrUsedBlocks) == 1
-                        || sscanf(output.toLatin1(), "预计文件系统的最小尺寸：%lld", &m_numOfFreeOrUsedBlocks) == 1)
+                        || sscanf(output.toStdString().c_str(), "预计文件系统的最小尺寸：%lld", &m_numOfFreeOrUsedBlocks) == 1)
                     m_numOfFreeOrUsedBlocks = m_totalNumOfBlock - m_numOfFreeOrUsedBlocks;
             }
             // Resize2fs can fail reporting please run fsck first.  Fall back

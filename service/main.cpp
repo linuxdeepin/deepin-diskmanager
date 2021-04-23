@@ -52,23 +52,23 @@ int main(int argc, char *argv[])
     a.setOrganizationName("deepin");
     a.setApplicationName("deepin-diskmanager-service");
 
-//    QDir dirCheck;
-//    QString LogPath = QString("%1/%2/%3/Log/")
-//        .arg("/var/log")
-//        .arg(qApp->organizationName())
-//        .arg(qApp->applicationName());
-//    setLogDir(LogPath);
-//    if (!dirCheck.exists(LogPath))
-//    {
-//        dirCheck.mkpath(LogPath);
-//    }
-//    //检查日志是否过期
-//    CheckLogTime();
-//    //磁盘剩余空间小于阈值，清除早期日志
-//    CheckFreeDisk();
-//    //创建新日志
-//    CreateNewLog();
-//    qInstallMessageHandler(customLogMessageHandler);
+    QDir dirCheck;
+    QString LogPath = QString("%1/%2/%3/Log/")
+        .arg("/var/log")
+        .arg(qApp->organizationName())
+        .arg(qApp->applicationName());
+    setLogDir(LogPath);
+    if (!dirCheck.exists(LogPath))
+    {
+        dirCheck.mkpath(LogPath);
+    }
+    //检查日志是否过期
+    CheckLogTime();
+    //磁盘剩余空间小于阈值，清除早期日志
+    CheckFreeDisk();
+    //创建新日志
+    CreateNewLog();
+    qInstallMessageHandler(customLogMessageHandler);
 //    Dtk::Core::DLogManager::registerConsoleAppender();
 //    Dtk::Core::DLogManager::registerFileAppender();
 

@@ -84,7 +84,7 @@ void WorkThread::runCount()
 
         cmd = proc.readAllStandardError();
 
-        if (cmd.indexOf("(0/0/0 errors)") != -1) {
+        if (cmd.indexOf("0/0/0") != -1) {
 
             QString cylinderNumber = QString("%1").arg(i);
             QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
@@ -138,7 +138,7 @@ void WorkThread::runTime()
 
             emit checkBadBlocksInfo(cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
         } else {
-            if (cmd.indexOf("(0/0/0 errors)") != -1) {
+            if (cmd.indexOf("0/0/0") != -1) {
                 QString cylinderNumber = QString("%1").arg(i);
                 QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
                 QString cylinderStatus = "good";
@@ -194,7 +194,7 @@ void FixThread::runFix()
 
         cmd = proc.readAllStandardError();
 
-        if (cmd.indexOf("(0/0/0 errors)") != -1) {
+        if (cmd.indexOf("0/0/0") != -1) {
 
             QString cylinderNumber = QString("%1").arg(j);
             QString cylinderStatus = "good";

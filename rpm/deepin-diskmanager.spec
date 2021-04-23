@@ -1,7 +1,7 @@
 %global repo deepin-diskmanager
 
 Name:           deepin-diskmanager
-Version:        1.2.10test
+Version:        1.2.10test2
 Release:        1%{?dist}
 Summary:        Disk Utility Is A Disk Management Tool For Disk
 License:        GPLv3+

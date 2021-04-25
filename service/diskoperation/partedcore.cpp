@@ -585,15 +585,15 @@ void PartedCore::readUuid(Partition &partition)
 void PartedCore::setMountPoints(Partition &partition)
 {
     //DMRaid dmraid ; //Use cache of dmraid device information
-    if (partition.m_fstype == FS_LVM2_PV) {
+    if (partition.m_fstype == FSType::FS_LVM2_PV) {
         //        QString vgname = LVM2_PV_Info::get_vg_name(partition.getPath());
         //        if (! vgname.isEmpty())
         //            partition.addMountPoint(vgname);
-    } else if (partition.m_fstype == FS_LINUX_SWRAID) {
+    } else if (partition.m_fstype == FSType::FS_LINUX_SWRAID) {
         //        QString array_path = SWRaid_Info::get_array(partition.getPath());
         //        if (! array_path.isEmpty())
         //            partition.addMountPoint(array_path);
-    } else if (partition.m_fstype == FS_ATARAID) {
+    } else if (partition.m_fstype == FSType::FS_ATARAID) {
         //        QString array_path = SWRaid_Info::get_array(partition.getPath());
         //        if (! array_path.isEmpty()) {
         //            partition.addMountPoint(array_path);
@@ -602,13 +602,13 @@ void PartedCore::setMountPoints(Partition &partition)
         //            if (! array_path.isEmpty())
         //                partition.addMountPoint(array_path);
         //        }
-    } else if (partition.m_fstype == FS_LUKS) {
+    } else if (partition.m_fstype == FSType::FS_LUKS) {
         //        LUKS_Mapping mapping = LUKS_Info::get_cache_entry(partition.getPath());
         //        if (! mapping.name.isEmpty())
         //            partition.addMountPoint(DEV_MAPPER_PATH + mapping.name);
     }
     // Swap spaces don't have mount points so don't bother trying to add them.
-    else if (partition.m_fstype != FS_LINUX_SWAP) {
+    else if (partition.m_fstype != FSType::FS_LINUX_SWAP) {
         if (partition.m_busy) {
             // Normal device, not DMRaid device
             if (setMountPointsHelper(partition, partition.getPath()))
@@ -624,7 +624,7 @@ void PartedCore::setMountPoints(Partition &partition)
 bool PartedCore::setMountPointsHelper(Partition &partition, const QString &path)
 {
     QString searchPath;
-    if (partition.m_fstype == FS_BTRFS)
+    if (partition.m_fstype == FSType::FS_BTRFS)
         searchPath = path; //btrfs::get_mount_device( path ) ;
     else
         searchPath = path;
@@ -698,6 +698,7 @@ void PartedCore::setUsedSectors(Partition &partition, PedDisk *lpDisk)
             if (fs.check != FS::NONE && fs.grow != FS::NONE) {
                 temp.append("To grow the file system to fill the partition, select the partition and choose the menu item:\n");
                 temp.append("Partition --> Check.");
+                qDebug() << __FUNCTION__ << temp;
             }
         }
 
@@ -725,7 +726,7 @@ void PartedCore::mountedFileSystemSetUsedSectors(Partition &partition)
 
 void PartedCore::setDevicePartitions(Device &device, PedDevice *lpDevice, PedDisk *lpDisk)
 {
-    int EXTINDEX = -1;
+    int extindex = -1;
     device.m_partitions.clear();
 
     PedPartition *lpPartition = ped_disk_next_partition(lpDisk, nullptr);
@@ -783,7 +784,7 @@ void PartedCore::setDevicePartitions(Device &device, PedDevice *lpDevice, PedDis
 
             setFlags(*partitionTemp, lpPartition);
 
-            EXTINDEX = device.m_partitions.size();
+            extindex = device.m_partitions.size();
             break;
 
         default:
@@ -807,26 +808,26 @@ void PartedCore::setDevicePartitions(Device &device, PedDevice *lpDevice, PedDis
             if (!partitionTemp->m_insideExtended)
                 device.m_partitions.push_back(partitionTemp);
             else
-                device.m_partitions[EXTINDEX]->m_logicals.push_back(partitionTemp);
+                device.m_partitions[extindex]->m_logicals.push_back(partitionTemp);
         }
 
         //next partition (if any)
         lpPartition = ped_disk_next_partition(lpDisk, lpPartition);
     }
 
-    if (EXTINDEX > -1) {
+    if (extindex > -1) {
         insertUnallocated(device.m_path,
-                           device.m_partitions.at(EXTINDEX)->m_logicals,
-                           device.m_partitions.at(EXTINDEX)->m_sectorStart,
-                           device.m_partitions.at(EXTINDEX)->m_sectorEnd,
+                           device.m_partitions.at(extindex)->m_logicals,
+                           device.m_partitions.at(extindex)->m_sectorStart,
+                           device.m_partitions.at(extindex)->m_sectorEnd,
                            device.m_sectorSize,
                            true);
 
         //Set busy status of extended partition if and only if
         //  there is at least one busy logical partition.
-        for (int t = 0; t < device.m_partitions.at(EXTINDEX)->m_logicals.size(); t++) {
-            if (device.m_partitions.at(EXTINDEX)->m_logicals.at(t)->m_busy) {
-                device.m_partitions.at(EXTINDEX)->m_busy = true;
+        for (int t = 0; t < device.m_partitions.at(extindex)->m_logicals.size(); t++) {
+            if (device.m_partitions.at(extindex)->m_logicals.at(t)->m_busy) {
+                device.m_partitions.at(extindex)->m_busy = true;
                 break;
             }
         }
@@ -865,17 +866,17 @@ bool PartedCore::flushDevice(PedDevice *lpDevice)
 
 bool PartedCore::commitToOs(PedDisk *lpDisk)
 {
-    bool succes;
-    succes = ped_disk_commit_to_os(lpDisk);
+//    bool succes;
+//    succes = ped_disk_commit_to_os(lpDisk);
     // Wait for udev rules to complete and partition device nodes to settle from above
     // ped_disk_commit_to_os() initiated kernel update of the partitions.
     //settleDevice(timeout);
-    return succes;
+    return ped_disk_commit_to_os(lpDisk);
 }
 
 FSType PartedCore::detectFilesystem(PedDevice *lpDevice, PedPartition *lpPartition)
 {
-    QString fsname = "";
+    QString fileSystemName;
     QString path;
     // Will query whole disk device using methods: (Q1) RAID, (Q2) blkid,
     // (Q4) internal
@@ -884,45 +885,45 @@ FSType PartedCore::detectFilesystem(PedDevice *lpDevice, PedPartition *lpPartiti
     else
         path = lpDevice->path;
 
-    fsname = FsInfo::getFileSystemType(path);
-    FSType fstype = FS_UNKNOWN;
-    if (fsname.isEmpty() && lpPartition && lpPartition->fs_type)
-        fsname = lpPartition->fs_type->name;
-    if (!fsname.isEmpty()) {
-        fstype = Utils::stringToFileSystemType(fsname);
+    fileSystemName = FsInfo::getFileSystemType(path);
+    FSType fsType = FSType::FS_UNKNOWN;
+    if (fileSystemName.isEmpty() && lpPartition && lpPartition->fs_type)
+        fileSystemName = lpPartition->fs_type->name;
+    if (!fileSystemName.isEmpty()) {
+        fsType = Utils::stringToFileSystemType(fileSystemName);
 //        qDebug() << fstype;
-        if (fstype != FS_UNKNOWN)
-            return fstype;
+        if (fsType != FSType::FS_UNKNOWN)
+            return fsType;
     }
 
-    fstype = detectFilesystemInternal(path, lpDevice->sector_size);
-    if (fstype != FS_UNKNOWN)
-        return fstype;
+    fsType = detectFilesystemInternal(path, lpDevice->sector_size);
+    if (fsType != FSType::FS_UNKNOWN)
+        return fsType;
 
     //no file system found....
     QString temp("Unable to detect file system! Possible reasons are:\n- ");
-    temp.append("The file system is damaged \n- ");
-    temp.append("The file system is unknown to GParted \n-");
-    temp.append("There is no file system available (unformatted) \n- ");
-    temp.append(QString("The device entry %1 is missing").arg(path));
+    temp.append("The file system is damaged \n- ")
+            .append("The file system is unknown to GParted \n-")
+            .append("There is no file system available (unformatted) \n- ")
+            .append(QString("The device entry %1 is missing").arg(path));
     qDebug() << __FUNCTION__ << temp;
-    return FS_UNKNOWN;
+    return FSType::FS_UNKNOWN;
 }
 
 FSType PartedCore::detectFilesystemInternal(const QString &path, Byte_Value sectorSize)
 {
     char magic1[16]; // Big enough for largest signatures[].sig1 or sig2
     char magic2[16];
-    FSType fstype = FS_UNKNOWN;
+    FSType fsType = FSType::FS_UNKNOWN;
 
     char *buf = static_cast<char *>(malloc(sectorSize));
     if (!buf)
-        return FS_UNKNOWN;
+        return FSType::FS_UNKNOWN;
 
     int fd = open(path.toStdString().c_str(), O_RDONLY | O_NONBLOCK);
     if (fd == -1) {
         free(buf);
-        return FS_UNKNOWN;
+        return FSType::FS_UNKNOWN;
     }
 
     struct {
@@ -933,19 +934,19 @@ FSType PartedCore::detectFilesystemInternal(const QString &path, Byte_Value sect
         FSType fstype;
     } signatures[] = {
         //offset1, sig1              , offset2, sig2  , fstype
-        {0LL, "LUKS\xBA\xBE", 0LL, nullptr, FS_LUKS},
-        {3LL, "-FVE-FS-", 0LL, nullptr, FS_BITLOCKER},
-        {0LL, "\x52\x56\xBE\x1B", 0LL, nullptr, FS_GRUB2_CORE_IMG},
-        {0LL, "\x52\x56\xBE\x6F", 0LL, nullptr, FS_GRUB2_CORE_IMG},
-        {0LL, "\x52\xE8\x28\x01", 0LL, nullptr, FS_GRUB2_CORE_IMG},
-        {0LL, "\x52\xBF\xF4\x81", 0LL, nullptr, FS_GRUB2_CORE_IMG},
-        {0LL, "\x52\x56\xBE\x63", 0LL, nullptr, FS_GRUB2_CORE_IMG},
-        {0LL, "\x52\x56\xBE\x56", 0LL, nullptr, FS_GRUB2_CORE_IMG},
-        {24LL, "\x01\x00", 32LL, "NXSB", FS_APFS},
-        {512LL, "LABELONE", 536LL, "LVM2", FS_LVM2_PV},
-        {1030LL, "\x34\x34", 0LL, nullptr, FS_NILFS2},
-        {65536LL, "ReIsEr4", 0LL, nullptr, FS_REISER4},
-        {65600LL, "_BHRfS_M", 0LL, nullptr, FS_BTRFS}
+        {0LL, "LUKS\xBA\xBE", 0LL, nullptr, FSType::FS_LUKS},
+        {3LL, "-FVE-FS-", 0LL, nullptr, FSType::FS_BITLOCKER},
+        {0LL, "\x52\x56\xBE\x1B", 0LL, nullptr, FSType::FS_GRUB2_CORE_IMG},
+        {0LL, "\x52\x56\xBE\x6F", 0LL, nullptr, FSType::FS_GRUB2_CORE_IMG},
+        {0LL, "\x52\xE8\x28\x01", 0LL, nullptr, FSType::FS_GRUB2_CORE_IMG},
+        {0LL, "\x52\xBF\xF4\x81", 0LL, nullptr, FSType::FS_GRUB2_CORE_IMG},
+        {0LL, "\x52\x56\xBE\x63", 0LL, nullptr, FSType::FS_GRUB2_CORE_IMG},
+        {0LL, "\x52\x56\xBE\x56", 0LL, nullptr, FSType::FS_GRUB2_CORE_IMG},
+        {24LL, "\x01\x00", 32LL, "NXSB", FSType::FS_APFS},
+        {512LL, "LABELONE", 536LL, "LVM2", FSType::FS_LVM2_PV},
+        {1030LL, "\x34\x34", 0LL, nullptr, FSType::FS_NILFS2},
+        {65536LL, "ReIsEr4", 0LL, nullptr, FSType::FS_REISER4},
+        {65600LL, "_BHRfS_M", 0LL, nullptr, FSType::FS_BTRFS}
     };
     // For simple BitLocker recognition consider validation of BIOS Parameter block
     // fields unnecessary.
@@ -979,7 +980,7 @@ FSType PartedCore::detectFilesystemInternal(const QString &path, Byte_Value sect
         // NOTE: From this point onwards signatures[].sig1 and .sig2 are treated
         // as character buffers of known lengths len1 and len2, not NUL terminated
         // strings.
-        if (len1 == 0UL || (signatures[i].sig2 != nullptr && len2 == 0UL))
+        if ((len1 == 0UL) || (signatures[i].sig2 != nullptr && len2 == 0UL))
             continue; // Don't allow 0 length signatures to match
 
         Byte_Value readOffset = signatures[i].offset1 / sectorSize * sectorSize;
@@ -1002,7 +1003,7 @@ FSType PartedCore::detectFilesystemInternal(const QString &path, Byte_Value sect
             memcpy(magic2, buf + signatures[i].offset2 % sectorSize, len2);
 
         if (memcmp(magic1, signatures[i].sig1, len1) == 0 && (signatures[i].sig2 == nullptr || memcmp(magic2, signatures[i].sig2, len2) == 0)) {
-            fstype = signatures[i].fstype;
+            fsType = signatures[i].fstype;
             break;
         }
     }
@@ -1010,7 +1011,7 @@ FSType PartedCore::detectFilesystemInternal(const QString &path, Byte_Value sect
     close(fd);
     free(buf);
 
-    return fstype;
+    return fsType;
 }
 
 QString PartedCore::getPartitionPath(PedPartition *lpPartition)

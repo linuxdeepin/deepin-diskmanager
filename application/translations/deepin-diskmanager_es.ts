@@ -3,12 +3,12 @@
     <name>CreatePartitionTableDialog</name>
     <message>
         <source>The disk has a partition table already. Create a new one and replace it?</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">El disco ya tiene una tabla de particiones. ¿Crear una nueva y reemplazarla?</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="35"/>
         <source>No partition table in this disk. Create a new one?</source>
-        <translation type="unfinished"/>
+        <translation>No hay tabla de particiones en este disco. ¿Crear una nueva?</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="29"/>
@@ -18,17 +18,17 @@
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="36"/>
         <source>Create</source>
-        <translation type="unfinished"/>
+        <translation>Crear</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="40"/>
         <source>The disk has a partition table already. Replace it?</source>
-        <translation type="unfinished"/>
+        <translation>El disco ya tiene una tabla de particiones. ¿Reemplazarla?</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="41"/>
         <source>Replace</source>
-        <translation type="unfinished"/>
+        <translation>Remplazar</translation>
     </message>
 </context>
 <context>
@@ -41,7 +41,7 @@
     <message>
         <location filename="../widgets/cylinderinfowidget.cpp" line="442"/>
         <source>Cyl.: %1</source>
-        <translation type="unfinished"/>
+        <translation>Cil.: %1</translation>
     </message>
     <message>
         <location filename="../widgets/cylinderinfowidget.cpp" line="443"/>
@@ -51,7 +51,7 @@
     <message>
         <location filename="../widgets/cylinderinfowidget.cpp" line="444"/>
         <source>Cyl. elapsed time: %1</source>
-        <translation type="unfinished"/>
+        <translation>Tiempo pasado del cil.: %1</translation>
     </message>
     <message>
         <location filename="../widgets/cylinderinfowidget.cpp" line="444"/>
@@ -94,7 +94,7 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="135"/>
         <source>Create partition table</source>
-        <translation type="unfinished"/>
+        <translation>Crear tabla de partición</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="147"/>
@@ -121,17 +121,19 @@
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
-        <translation type="unfinished"/>
+        <translation>Todas las particiones de este disco se fusionarán y todos
+los datos se perderán al crear una nueva tabla de particiones,
+por favor, tómelo con cuidado</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="266"/>
         <source>Proceed</source>
-        <translation type="unfinished"/>
+        <translation>Proceder</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="288"/>
         <source>No errors found in the partition table</source>
-        <translation>Ningún error fué encontrado en la tabla de particiones</translation>
+        <translation>No se encontraron errores en la tabla de particiones</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="298"/>
@@ -154,17 +156,17 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="204"/>
         <source>Failed to get hardware information</source>
-        <translation type="unfinished"/>
+        <translation>Falló al obtener información del hardware</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="204"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Cerrar</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="257"/>
         <source>Please unmount all partitions in the disk first</source>
-        <translation type="unfinished"/>
+        <translation>Por favor, desmonte primero todas las particiones del disco</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="304"/>
@@ -239,32 +241,32 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="401"/>
         <source>Unmounting successful</source>
-        <translation type="unfinished"/>
+        <translation>Desmontado con éxito</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="406"/>
         <source>Unmounting failed</source>
-        <translation type="unfinished"/>
+        <translation>Desmontado fallido</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="417"/>
         <source>Creating partition table successful</source>
-        <translation type="unfinished"/>
+        <translation>La tabla de partición se creó con éxito</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="421"/>
         <source>Replacing partition table successful</source>
-        <translation type="unfinished"/>
+        <translation>Reemplazo de tabla de partición completado</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="429"/>
         <source>Creating partition table failed</source>
-        <translation type="unfinished"/>
+        <translation>Falló al crear tabla de partición</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="433"/>
         <source>Replacing partition table failed</source>
-        <translation type="unfinished"/>
+        <translation>Reemplazo de tabla de partición fallido</translation>
     </message>
 </context>
 <context>
@@ -282,7 +284,7 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="88"/>
         <source>Cylinders</source>
-        <translation type="unfinished"/>
+        <translation>Cilindros</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="89"/>
@@ -302,7 +304,7 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="137"/>
         <source>Verifying times</source>
-        <translation type="unfinished"/>
+        <translation>Verificando veces</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="138"/>
@@ -404,12 +406,12 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="684"/>
         <source>Verifying cylinder: %1</source>
-        <translation type="unfinished"/>
+        <translation>Verificando cilindro: %1</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="734"/>
         <source>Verify completed</source>
-        <translation type="unfinished"/>
+        <translation>Verificado completo</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="754"/>
@@ -425,12 +427,12 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="934"/>
         <source>The verifying disk contains mounted partitions, so you cannot repair it.</source>
-        <translation type="unfinished"/>
+        <translation>El disco de verificación no puede reparar particiones que aún están montadas.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="936"/>
         <source>Please unmount partitions and then repair the disk.</source>
-        <translation type="unfinished"/>
+        <translation>Por favor, desmonte las particiones y luego repare el disco.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="946"/>
@@ -440,17 +442,17 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="949"/>
         <source>Bad sector repairing cannot recover files,</source>
-        <translation type="unfinished"/>
+        <translation>La reparación de sectores defectuosos no puede recuperar archivos,</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="950"/>
         <source>but destroys data on and near bad sectors instead.</source>
-        <translation type="unfinished"/>
+        <translation>sino que destruirá datos en los sectores defectuosos cercanos.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="951"/>
         <source>Please back up all data before repair.</source>
-        <translation type="unfinished"/>
+        <translation>Por favor, respalde todos los datos antes de reparar.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="964"/>
@@ -467,12 +469,12 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1004"/>
         <source>Repairing cylinder: %1</source>
-        <translation type="unfinished"/>
+        <translation>Reparando cilindro: %1</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1041"/>
         <source>Repair completed. Cylinder: %1 repaired.</source>
-        <translation type="unfinished"/>
+        <translation>Reparación completada. Cilindro: %1 reparado.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1044"/>
@@ -487,7 +489,7 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1090"/>
         <source>The verified information will not be reserved</source>
-        <translation type="unfinished"/>
+        <translation>La información verificada no será reservada</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1115"/>
@@ -497,7 +499,7 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1115"/>
         <source>The repairing information will not be reserved</source>
-        <translation type="unfinished"/>
+        <translation>La información de reparación no será reservada</translation>
     </message>
 </context>
 <context>
@@ -646,7 +648,7 @@
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="65"/>
         <source>Media Type:</source>
-        <translation type="unfinished"/>
+        <translation>Tipo de medio:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="65"/>
@@ -686,12 +688,12 @@
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
         <source>Power On Hours:</source>
-        <translation type="unfinished"/>
+        <translation>Horas de encendido:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Power Cycle Count:</source>
-        <translation type="unfinished"/>
+        <translation>Ciclos de energía contados:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
@@ -1183,7 +1185,8 @@
         <location filename="../widgets/unmountdialog.cpp" line="82"/>
         <source>Unmounting system disk may result in system crash,
  please confirm before proceeding</source>
-        <translation type="unfinished"/>
+        <translation>Desmontar el disco del sistema provocaría fallos en el sistema,
+por favor, confirme antes de proceder</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="83"/>
@@ -1193,7 +1196,7 @@
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="87"/>
         <source>You will take subsequent risks if you continue to unmount the system disk</source>
-        <translation type="unfinished"/>
+        <translation>Correrá futuros riesgos si sigue desmontando el disco del sistema</translation>
     </message>
 </context>
 </TS>

@@ -18,7 +18,7 @@
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="36"/>
         <source>Create</source>
-        <translation type="unfinished"/>
+        <translation>Создать</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="40"/>
@@ -28,7 +28,7 @@
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="41"/>
         <source>Replace</source>
-        <translation type="unfinished"/>
+        <translation>Заменить</translation>
     </message>
 </context>
 <context>
@@ -159,7 +159,7 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="204"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="257"/>

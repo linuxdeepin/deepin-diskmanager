@@ -256,7 +256,7 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="421"/>
         <source>Replacing partition table successful</source>
-        <translation type="unfinished"/>
+        <translation>Zëvendësim i suksesshëm i tabelës së pjesëzimit</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="429"/>
@@ -266,7 +266,7 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="433"/>
         <source>Replacing partition table failed</source>
-        <translation type="unfinished"/>
+        <translation>Zëvendësimi i tabelës së pjesëzimit dështoi</translation>
     </message>
 </context>
 <context>

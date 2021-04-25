@@ -284,12 +284,12 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="88"/>
         <source>Cylinders</source>
-        <translation>Цилиндри</translation>
+        <translation>Цилиндрe</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="89"/>
         <source>Sectors</source>
-        <translation>Сектори</translation>
+        <translation>Секторe</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="90"/>
@@ -299,12 +299,12 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="131"/>
         <source>Method:</source>
-        <translation>Поатупак:</translation>
+        <translation>Поступак:</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="137"/>
         <source>Verifying times</source>
-        <translation>Проверено пута</translation>
+        <translation>Провери пута</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="138"/>
@@ -334,7 +334,7 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="244"/>
         <source>Unknown</source>
-        <translation>Непознат</translation>
+        <translation>Непознато</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="272"/>
@@ -411,7 +411,7 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="734"/>
         <source>Verify completed</source>
-        <translation>Проверавање је завршено</translation>
+        <translation>Провера је завршена</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="754"/>
@@ -442,12 +442,12 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="949"/>
         <source>Bad sector repairing cannot recover files,</source>
-        <translation>Поправљање лоших сектора не може повратити датотеке,</translation>
+        <translation>Поправљање лоших сектора не може повратити датотеке</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="950"/>
         <source>but destroys data on and near bad sectors instead.</source>
-        <translation>али уништава податке на лошим секторима и секторима у близини.</translation>
+        <translation>и уништава податке на лошим секторима и секторима у близини.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="951"/>

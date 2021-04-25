@@ -256,7 +256,7 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="421"/>
         <source>Replacing partition table successful</source>
-        <translation type="unfinished"/>
+        <translation>Tabela razdelkov je bila uspešno zamenjana</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="429"/>
@@ -266,7 +266,7 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="433"/>
         <source>Replacing partition table failed</source>
-        <translation type="unfinished"/>
+        <translation>Tabele razdelkov ni bilo mogoče zamenjati</translation>
     </message>
 </context>
 <context>

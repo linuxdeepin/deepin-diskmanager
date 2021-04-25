@@ -11,6 +11,7 @@ X-Deepin-Vendor=deepin
 
 # Translations:
 # Do not manually modify!
+GenericName[az]=Disk yardımçısı
 GenericName[bo]=སྡུད་སྡེར་དོ་དམ་ཆས།
 GenericName[ca]=Utilitat de disc
 GenericName[cs]=Nástroj pro správu disku
@@ -42,6 +43,7 @@ GenericName[uk]=Дисковий додаток
 GenericName[zh_CN]=磁盘管理器
 GenericName[zh_HK]=磁盤管理器
 GenericName[zh_TW]=磁碟管理器
+Name[az]=Deepin Disk Aləti
 Name[bo]=གཏིང་ཟབ་སྡུད་སྡེར་དོ་དམ་ཆས།
 Name[ca]=Utilitat de disc del Deepin
 Name[cs]=Nástroj pro správu disku

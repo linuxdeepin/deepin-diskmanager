@@ -2,7 +2,7 @@
 <!DOCTYPE policyconfig PUBLIC "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
 "http://www.freedesktop.org/standards/PolicyKit/1.0/policyconfig.dtd">
 <policyconfig>
-    <icon_name>deepin-diskmanager</icon_name>
+	<icon_name>deepin-diskmanager</icon_name>
 	<action id="com.deepin.diskmanager">
 		<description>Run Disk Manager Need Authentication</description>
 		<message>Authentication is required to read disk information</message>
@@ -11,10 +11,14 @@
 			<allow_inactive>auth_admin</allow_inactive>
 			<allow_active>auth_admin</allow_active>
 		</defaults>
+		<annotate key="org.freedesktop.policykit.exec.path">/usr/bin/deepin-diskmanager-authenticateProxy</annotate>
+		<annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
 		<description xml:lang="hu">Hitelesítés szükséges a Lemezkezelő futtatásához</description>
 		<message xml:lang="hu">Hitelesítés szükséges a lemezinformációk olvasásához</message>
 		<description xml:lang="id">Menjalankan manajer diska membutuhkan autentikasi</description>
 		<message xml:lang="id">Diperlukan autentikasi untuk membaca informasi diska</message>
+		<description xml:lang="az">Disk İdarəetməsini başlatmaq Kimlik Doğrulaması tələb edir</description>
+		<message xml:lang="az">Disk məlumatlarını oxumaq üçün kimlik doğrulaması tələb olunur</message>
 		<description xml:lang="ar">إن تشغيل مدير الأقرص يحتاج إلى مصادقة</description>
 		<message xml:lang="ar">المصادقة مطلوبة لقراءة معلومات القرص</message>
 		<description xml:lang="zh_TW">Run Disk Manager Need Authentication</description>
@@ -47,7 +51,7 @@
 		<message xml:lang="pt">É necessária a autenticação para ler as informações do disco</message>
 		<description xml:lang="ru">Для запуская диспетчера дисков требуется аутентификация</description>
 		<message xml:lang="ru">Аутентификация необходима для чтения информации с диска</message>
-		<description xml:lang="pt_BR">A autenticação é necessária para executar o Utilitário de Disco</description>
+		<description xml:lang="pt_BR">Run Disk Manager Need Authentication</description>
 		<message xml:lang="pt_BR">A autenticação é necessária para ler as informações do disco</message>
 		<description xml:lang="fi">Levynhallinta tarvitsee todennusta</description>
 		<message xml:lang="fi">Levyn tietojen lukeminen edellyttää todennusta</message>
@@ -61,7 +65,5 @@
 		<message xml:lang="sl">Za branje podatkov o disku je potrebna overitev</message>
 		<description xml:lang="cs">Spuštění Správy disků vyžaduje ověření se</description>
 		<message xml:lang="cs">Pro čtení informací o disku je zapotřebí ověření se</message>
-        <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/deepin-diskmanager-authenticateProxy</annotate>
-        <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>       
 	</action>
 </policyconfig>

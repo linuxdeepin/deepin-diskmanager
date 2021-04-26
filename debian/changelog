@@ -1,3 +1,12 @@
+deepin-diskmanager (1.2.11) stable; urgency=low
+
+  * 1040第十一次发版(第十次发版送测产生的bug)
+  * 75351 坏道检测停止后查看柱面信息时拔除外设硬盘，柱面信息停留在界面
+  * 73471 欧拉版安装磁盘管理器无法启动
+  * 70244 坏道检测时鼠标在柱面范围内上下移动，移动到下方时界面会暂停检测过程
+
+ -- yuandandan <yuandandan@uniontech.com>  Mon, 26 Apr 2021 15:35:16 +0800
+
 deepin-diskmanager (1.2.10) stable; urgency=low
 
   * 1040第十次发版(第九次发版送测产生的bug)

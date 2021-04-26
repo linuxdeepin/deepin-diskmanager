@@ -31,6 +31,11 @@
 
 磁碟管理器主介面顯示磁碟列表及其分區訊息，包括分區格式、分區總量、掛載點等詳細訊息。單擊重新整理![refresh](../common/refresh.svg)，可以重新整理目前頁面。還可以建立分區、分區空間調整、格式化、掛載及移除等操作。
 
+> ![attention](../common/attention.svg)  注意：
+>
+> - 在操作的過程中如果強制退出磁碟管理器，可能會導致磁碟管理器異常，請謹慎操作。                                
+> - 如果系統盤某分區為mbr擴展分區、邏輯分區或邏輯卷，請謹慎對此分區進行操作，以免引起系統崩潰。
+
 ![0|disk_main_interface](fig/disk_main_interface.png)
 
 ### 建立分區
@@ -43,11 +48,7 @@
 
 ![0|partition](fig/partition.png)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-> ![attention](../common/attention.svg) 注意：
->
-> - msdos分區最多只能建立4個；
-> - gpt分區最多一次性可建立24個，最多可建立128個分區。
-> - 新分區的空間不得小於52MB，否則無法建立。
+> ![attention](../common/attention.svg) 注意：msdos分區最多只能建立4個；gpt分區最多一次性可建立24個，最多可建立128個分區。新分區的空間不得小於52MB，否則無法建立。
 
 4. 建立完分區後，單擊 **確定** ，建立的分區會顯示在對應磁碟下。
 
@@ -67,7 +68,7 @@
 
 3. 擴容完成後，可查看總容量。
 
-   ![notes](../common/notes.svg)說明：只有與空閒分區相鄰的分區才可以擴容分區容量。
+   >  ![notes](../common/notes.svg) 說明：只有與空閒分區相鄰的分區才可以擴容分區容量。
 
 
 ## 磁碟資料管理
@@ -201,7 +202,7 @@
 ### 關於
 
 1. 在磁碟管理器介面，單擊 ![icon_menu](../common/icon_menu.svg)。
-2. 單擊 **關於**，查看關於磁碟管理器的版本和介紹。
+2. 單擊 **關於**，查看磁碟管理器的版本和介紹。
 
 ### 離開
 

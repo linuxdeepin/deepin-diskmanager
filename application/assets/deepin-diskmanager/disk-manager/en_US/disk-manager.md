@@ -11,7 +11,7 @@ You can run, close, and create shortcuts for Disk Utility in the following ways.
 ### Run Disk Utility
 
 1. Click ![launcher](../common/deepin_launcher.svg) in the Dock and enter the Launcher interface.
-2. Locate ![disk_manager](../common/disk_manager.svg) by scrolling the mouse wheel or searching "disk utility" in the Launcher interface and click it to run. An authentication box pops up. Enter password for authentication. 
+2. Locate ![disk_manager](../common/disk_manager.svg) by scrolling the mouse wheel or searching "disk utility" in the Launcher interface and click it to run. An authentication box pops up. Enter the password for authentication. 
 
    ![0|password](fig/password.png)
 
@@ -30,6 +30,13 @@ You can run, close, and create shortcuts for Disk Utility in the following ways.
 ## Disk Partitioning
 
 On the Disk Utility interface, a list of disk(s) and information about relevant partition(s) are displayed, including format, capacity, and mount points of partitions. You can create, resize, format, mount, and unmount a partition.  Click the ![refresh](../common/refresh.svg) icon to refresh the current interface.
+
+> ![attention](../common/attention.svg) Attention: 
+>
+> - Force quit during operation may cause abnormal performance of Disk Utility. Please proceed with caution.
+> - If a partition of the system disk is mbr extended partition, logical partition or logical volume, please proceed with caution to avoid system crashes.
+>
+> 
 
 ![0|disk_main_interface](fig/disk_main_interface.png)
 
@@ -60,7 +67,7 @@ You can resize a partition if the size is too small. Please note that you can on
 
 3. You can check the capacity of partition once it's resized.
 
->![attention](../common/attention.svg) Notes:  Only the partition adjacent to the idle partition can be resized and expanded.
+>![notes](../common/notes.svg) Notes:  Only the partition adjacent to the idle partition can be resized and expanded.
 
 
 ## Disk Data Administration
@@ -93,7 +100,7 @@ Notice that you can only format an unmounted partition which is not currently in
 
 If you want to change the mount point of a partition, you can unmount it first, and then mount it again.
 
-1. On the Disk Utility interface, select a partition and click Unmount ![uninstall](../common/uninstall.svg) icon on the top toolbar.
+1. On the Disk Utility interface, select a partition and click the Unmount ![uninstall](../common/uninstall.svg) icon on the top toolbar.
 
 2. A confirmation dialogue pops up. Click **Unmount** if you confirm that there are no programs running on the partition.
 
@@ -170,7 +177,7 @@ Please note that you need to unmount all the partitions in the disk before perfo
 1. On the Disk Utility interface, right-click a disk and select **Create partition table**.
 2. Select GPT or MSDOS partition and then click **Create**.
 
-![attention](../common/attention.svg) Attention: All partitions in this disk will be merged and all data will be lost in the process of creating a new partition table. Please backup your data first.
+>  ![attention](../common/attention.svg) Attention: All partitions in this disk will be merged and all data will be lost in the process of creating a new partition table. Please backup your data first.
 
 ## Main Menu
 

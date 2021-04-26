@@ -24,6 +24,7 @@ BuildRequires:  qt5-qtsvg-devel
 Requires:       smartmontools
 Requires:       mtools
 Requires:       dosfstools
+Requires:       ntfs-3g
 
 %description
 Disk Utility Is A Disk Management Tool For Disk.

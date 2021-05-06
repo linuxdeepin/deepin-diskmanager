@@ -39,7 +39,7 @@ set(LINK_LIBS
 #common resource names
 set(APP_RES_DIR "assets")
 set(APP_DESKTOP "${APP_RES_DIR}/deepin-diskmanager.desktop")
-set(APP_QRC "${APP_RES_DIR}/icons.qrc")
+set(APP_QRC "${APP_RES_DIR}/appicons.qrc")
 set(APP_ICONPATH "${APP_RES_DIR}/icons/deepin-diskmanager.svg")
 
 configure_file(${APP_RES_DIR}/environments.h.in environments.h @ONLY)

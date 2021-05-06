@@ -25,7 +25,7 @@ LIST(APPEND SRC_LIST ${UT_DISKOPERATION})
 
 file(GLOB ALL_HEADERS "../application/*.h" "../application/widgets/*.h" "../application/widgets/customcontrol/*.h" "../application/partedproxy/*.h")
 file(GLOB ALL_SOURCES "../application/*.cpp" "../application/widgets/*.cpp" "../application/widgets/customcontrol/*.cpp" "../application/partedproxy/*.cpp")
-file(GLOB ALL_QRCS "../application/assets/icons.qrc")
+file(GLOB ALL_QRCS "../application/assets/appicons.qrc")
 list(REMOVE_ITEM ALL_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../application/main.cpp)
 
 find_package(PkgConfig REQUIRED)

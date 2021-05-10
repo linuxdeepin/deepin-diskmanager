@@ -46,7 +46,7 @@ ADD_SUBDIRECTORY(service)
 if(DOTEST)
     if(DOAPP)
         # 添加gocv覆盖率文件的输出
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fprofile-arcs -ftest-coverage")
+#        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fprofile-arcs -ftest-coverage")
         # 设置测试模块
         set(QT Core Gui Widgets Network DBus Sql LinguistTools Svg Test)
         find_package(Qt5 COMPONENTS ${QT} REQUIRED)
@@ -54,7 +54,7 @@ if(DOTEST)
         add_subdirectory(tests)
     else()
     # 添加gocv覆盖率文件的输出
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fprofile-arcs -ftest-coverage")
+#    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fprofile-arcs -ftest-coverage")
     # 设置测试模块
     set(QT Core Gui Widgets Network DBus Sql LinguistTools Svg Multimedia Test)
     find_package(Qt5 COMPONENTS ${QT} REQUIRED)

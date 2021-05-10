@@ -1,32 +1,31 @@
 #!/bin/bash
-workspace=$1
-
-cd $workspace
 export DISPLAY=:0.0
-dpkg-buildpackage -b -d -uc -us
-#make test
-project_path=$(cd `dirname $0`; pwd)
-#获取工程名
-project_name="${project_path##*/}"
-echo $project_name
+utdir=build-ut
+rm -r $utdir
+echo "123456" | sudo -S rm -r ../$utdir
+mkdir ../$utdir
+cd ../$utdir
 
-#获取打包生成文件夹路径
-pathname=$(find . -name obj*)
+cmake -DCMAKE_SAFETYTEST_ARG="CMAKE_SAFETYTEST_ARG_ON" ..
+make -j4
 
-echo $pathname
+touch ./tests/utcase.log
+echo "123456" | sudo -S ./tests/deepin-diskmanager_app_test --gtest_output=xml:./report/report.xml | tee ./bin/utcase.log
 
-cd $pathname
-make test
-cd ./tests
-mkdir -p coverage
+workdir=$(cd ../$(dirname $0)/$utdir; pwd)
 
-lcov -d ../ -c -o ./coverage/coverage.info
+mkdir -p report
 
-lcov --extract ./coverage/coverage.info '*/application/*' '*/basestruct/*' -o ./coverage/coverage.info
+echo "123456" | sudo -S lcov -d $workdir -c -o ./report/coverage.info
 
-lcov --remove ./coverage/coverage.info '*/tests/*' '*/application/partedproxy/*' -o ./coverage/coverage.info
+echo "123456" | sudo -S lcov --extract ./report/coverage.info '*/application/*' '*/basestruct/*' -o ./report/coverage.info
 
-mkdir ../report
-genhtml -o ../report ./coverage/coverage.info
+echo "123456" | sudo -S lcov --remove ./report/coverage.info '*/tests/*' '*/application/partedproxy/*' -o ./report/coverage.info
+
+echo "123456" | sudo -S genhtml -o ./report ./report/coverage.info
+
+echo "123456" | sudo -S chmod 666 ./asan.log*
+
+echo "123456" | sudo -S chmod 666 ./report/index.html
 
 exit 0

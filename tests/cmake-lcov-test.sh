@@ -3,7 +3,7 @@ export DISPLAY=:0
 echo "Uos123!!" | sudo xhost +
 
 utdir=build-ut
-rm -r $utdir
+echo "Uos123!!" | sudo -S rm -r $utdir
 echo "Uos123!!" | sudo -S rm -r ../$utdir
 mkdir ../$utdir
 cd ../$utdir

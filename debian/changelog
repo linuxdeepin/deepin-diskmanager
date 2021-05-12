@@ -1,3 +1,10 @@
+deepin-diskmanager (1.2.12) stable; urgency=low
+
+  * 1040第十二次发版
+  * 单元测试增加内存检测
+
+ -- yuandandan <yuandandan@uniontech.com>  Wed, 12 May 2021 17:35:16 +0800
+
 deepin-diskmanager (1.2.11) stable; urgency=low
 
   * 1040第十一次发版(第十次发版送测产生的bug)

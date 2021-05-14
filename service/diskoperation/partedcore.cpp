@@ -34,6 +34,10 @@
 
 #include <QDebug>
 
+#include <linux/hdreg.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/ioctl.h>
 #include <unistd.h>
 #include <fcntl.h>
 
@@ -352,6 +356,22 @@ void PartedCore::setDeviceFromDisk(Device &device, const QString &devicePath)
 bool PartedCore::getDevice(const QString &devicePath, PedDevice *&lpDevice, bool flush)
 {
     lpDevice = ped_device_get(devicePath.toStdString().c_str());
+
+    int fd = open(devicePath.toStdString().c_str(), O_RDONLY);
+    struct hd_geo {
+        unsigned char heads;
+        unsigned char sectors;
+        unsigned short cylinders;
+        unsigned long start;
+    } geo;
+
+    int ret = ioctl(fd, HDIO_GETGEO, &geo);
+    if (ret == 0 && geo.sectors > lpDevice->bios_geom.sectors) {
+        lpDevice->bios_geom.sectors = geo.sectors;
+        lpDevice->bios_geom.cylinders = geo.cylinders;
+    }
+    close(fd);
+
     if (lpDevice) {
         if (flush)
             // Force cache coherency before going on to read the partition

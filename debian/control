@@ -11,3 +11,8 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, smartmontools
 Description: Disk Utility is a disk management tool for creating, reorganizing and formatting partitions.
  Disk Utility is a disk management tool for disk.
 
+Package: com.deepin.diskmanager
+Architecture: any
+Depends: deepin-diskmanager
+Description: Disk Utility is a disk management tool for creating, reorganizing and formatting partitions.
+ Disk Utility is a disk management tool for disk.

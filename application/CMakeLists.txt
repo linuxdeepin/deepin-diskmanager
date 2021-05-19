@@ -3,7 +3,7 @@ project(deepin-diskmanager)
 
 if (NOT DEFINED VERSION)
     message(WARNING "Not defined version ,about dialog version set 1.1.0.1")
-    set(VERSION 1.2.12)
+    set(VERSION 1.2.13)
 endif ()
 
 
@@ -92,7 +92,7 @@ install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 install(FILES ${DTNG_QM_FILES} DESTINATION share/${PROJECT_NAME}/translations)
 install(FILES ${APP_ICONPATH} DESTINATION share/icons/hicolor/scalable/apps)
 install(FILES ${APP_DESKTOP} DESTINATION share/applications)
-install(DIRECTORY ${APP_RES_DIR}/deepin-diskmanager DESTINATION /usr/share/deepin-manual/manual-assets/application/)
+install(DIRECTORY ${APP_RES_DIR}/deepin-diskmanager DESTINATION /usr/share/deepin-manual/manual-assets/application)
 
 
 

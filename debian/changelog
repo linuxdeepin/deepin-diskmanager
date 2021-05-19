@@ -1,3 +1,11 @@
+deepin-diskmanager (1.2.13) stable; urgency=low
+
+  * 1040第十三次发版
+  * 78540 欧拉版-坏道检测柱面信息获取与专业版不一致，导致检测时间变长
+  * 78047 欧拉版-打开磁盘管理器关于选项，缺少log标识
+
+ -- yuandandan <yuandandan@uniontech.com>  Wed, 19 May 2021 11:35:16 +0800
+
 deepin-diskmanager (1.2.12) stable; urgency=low
 
   * 1040第十二次发版

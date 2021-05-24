@@ -366,9 +366,9 @@ bool PartedCore::getDevice(const QString &devicePath, PedDevice *&lpDevice, bool
     } geo;
 
     int ret = ioctl(fd, HDIO_GETGEO, &geo);
-    if (ret == 0 && geo.sectors > lpDevice->bios_geom.sectors) {
+    if (0 == ret && geo.sectors > lpDevice->bios_geom.sectors) {
         lpDevice->bios_geom.sectors = geo.sectors;
-        lpDevice->bios_geom.cylinders = geo.cylinders;
+        lpDevice->bios_geom.cylinders = lpDevice->length / (geo.heads * geo.sectors);
     }
     close(fd);
 

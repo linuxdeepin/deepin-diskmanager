@@ -3,7 +3,7 @@ project(deepin-diskmanager)
 
 if (NOT DEFINED VERSION)
     message(WARNING "Not defined version ,about dialog version set 1.1.0.1")
-    set(VERSION 1.2.13)
+    set(VERSION 1.2.14)
 endif ()
 
 

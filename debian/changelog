@@ -1,3 +1,10 @@
+deepin-diskmanager (1.2.14) stable; urgency=low
+
+  * 1040第十四次发版
+  * 关闭ut内存检测
+
+ -- yuandandan <yuandandan@uniontech.com>  Fri, 28 May 2021 14:35:16 +0800
+
 deepin-diskmanager (1.2.13) stable; urgency=low
 
   * 1040第十三次发版

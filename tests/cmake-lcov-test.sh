@@ -8,7 +8,7 @@ echo "Uos123!!" | sudo -S rm -r ../$utdir
 mkdir ../$utdir
 cd ../$utdir
 
-cmake -DCMAKE_SAFETYTEST_ARG="CMAKE_SAFETYTEST_ARG_ON" ..
+cmake ..
 make -j4
 
 touch ./tests/utcase.log

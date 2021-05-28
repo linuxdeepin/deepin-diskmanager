@@ -56,6 +56,7 @@ void ResizeDialog::initUi()
     QRegExp regexp("^[0-9]*\\.[0-9]{1,2}");
     QRegExpValidator *pvalidaor = new QRegExpValidator(regexp, this);
     m_lineEdit->lineEdit()->setValidator(pvalidaor);
+    m_lineEdit->setAccessibleName("resizeSize");
 
     m_comboBox = new DComboBox(this);
     m_label = new DLabel(this);
@@ -68,6 +69,7 @@ void ResizeDialog::initUi()
     m_comboBox->addItems(stritems);
     m_comboBox->setCurrentIndex(0);
     m_comboBox->setFixedWidth(70);
+    m_comboBox->setAccessibleName("unit");
     hLayout->addWidget(m_label);
     hLayout->addWidget(m_lineEdit);
     hLayout->addWidget(m_comboBox);

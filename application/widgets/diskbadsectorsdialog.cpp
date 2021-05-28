@@ -89,6 +89,7 @@ void DiskBadSectorsDialog::initUI()
     m_verifyComboBox->addItem(tr("MB")); // 容量范围
     m_verifyComboBox->setFixedSize(155, 36);
     DFontSizeManager::instance()->bind(m_verifyComboBox, DFontSizeManager::T6, QFont::Medium);
+    m_verifyComboBox->setAccessibleName("chooseVerify");
 
     QRegExp reg("[0-9]+$"); // 只能输入数字正则表达式
     QRegExpValidator *validator = new QRegExpValidator(reg, this);
@@ -101,6 +102,7 @@ void DiskBadSectorsDialog::initUI()
     m_startLineEdit->lineEdit()->setPlaceholderText("0");
     m_startLineEdit->lineEdit()->setValidator(validator);
     DFontSizeManager::instance()->bind(m_startLineEdit, DFontSizeManager::T6, QFont::Medium);
+    m_startLineEdit->setAccessibleName("startValue");
 //    m_startLineEdit->lineEdit()->setValidator(intValidator);
 
     m_endLineEdit = new DLineEdit;
@@ -109,6 +111,7 @@ void DiskBadSectorsDialog::initUI()
     m_endLineEdit->lineEdit()->setPlaceholderText(QString("%1").arg(info.m_cylinders));
     m_endLineEdit->lineEdit()->setValidator(validator);
     DFontSizeManager::instance()->bind(m_endLineEdit, DFontSizeManager::T6, QFont::Medium);
+    m_endLineEdit->setAccessibleName("endValue");
 
     DLabel *lineLabel = new DLabel("—");
 
@@ -143,6 +146,7 @@ void DiskBadSectorsDialog::initUI()
     m_methodComboBox->addItem(tr("Timeout")); // 超时时间
     m_methodComboBox->setFixedSize(155, 36);
     DFontSizeManager::instance()->bind(m_methodComboBox, DFontSizeManager::T6, QFont::Medium);
+    m_methodComboBox->setAccessibleName("chooseMethod");
 
     m_slider = new DSlider(Qt::Horizontal);
     m_slider->setFixedWidth(90);
@@ -157,6 +161,7 @@ void DiskBadSectorsDialog::initUI()
     m_checkTimesEdit->setText("8");
     m_checkTimesEdit->setFixedSize(100, 36);
     m_checkTimesEdit->lineEdit()->setValidator(validatorCheckTimes);
+    m_checkTimesEdit->setAccessibleName("Verifying times");
 
     DLabel *checkTimesLabel = new DLabel("(1-16)");
     DFontSizeManager::instance()->bind(checkTimesLabel, DFontSizeManager::T8, QFont::Normal);
@@ -179,6 +184,7 @@ void DiskBadSectorsDialog::initUI()
     m_timeoutEdit->setText("3000");
     m_timeoutEdit->lineEdit()->setValidator(new QIntValidator(100, 3000, this));
     m_timeoutEdit->setFixedSize(144, 36);
+    m_timeoutEdit->setAccessibleName("Timeout");
     DLabel *timeoutLabel = new DLabel(tr("ms"));
     DLabel *timeoutRangeLabel = new DLabel("(100-3000)");
     DFontSizeManager::instance()->bind(timeoutRangeLabel, DFontSizeManager::T8, QFont::Normal);

@@ -3,19 +3,26 @@
 #include "common.h"
 #include "widgets/mainwindow.h"
 #include "partedproxy/dmdbushandler.h"
+#include "widgets/accessible/accessiblewidget.h"
+
 #include <DMainWindow>
 #include <DWidgetUtil>
 #include <DApplicationSettings>
 #include <DLog>
 #include <DMainWindow>
+
 #include <QPixmap>
 #include <QIcon>
 #include <QDebug>
 #include <QProcess>
+#include <QLabel>
+#include <QComboBox>
+#include <QAccessible>
+
 #include <signal.h>
-#include<stdio.h>
-#include<stdlib.h>
-#include<unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 DWIDGET_USE_NAMESPACE
 
@@ -23,6 +30,26 @@ DWIDGET_USE_NAMESPACE
 //{
 //    qDebug() << "kdsfjjjjjj------";
 //}
+
+// 接口工厂
+QAccessibleInterface *accessibleFactory(const QString &classname, QObject *object)
+{
+    QAccessibleInterface *interface = nullptr;
+
+    if (object && object->isWidgetType()) {
+        if (classname == "QLabel")
+            interface = new AccessibleLabel(qobject_cast<QLabel *>(object));
+
+        if (classname == "QPushButton")
+            interface = new AccessibleButton(qobject_cast<QPushButton *>(object));
+
+        if (classname == "QComboBox")
+            interface = new AccessibleComboBox(qobject_cast<QComboBox *>(object));
+    }
+
+    return interface;
+}
+
 int main(int argc, char *argv[])
 {
     // signal(SIGINT, SIG_IGN);
@@ -51,6 +78,10 @@ int main(int argc, char *argv[])
     DApplicationSettings savetheme;
     Dtk::Core::DLogManager::registerConsoleAppender();
     Dtk::Core::DLogManager::registerFileAppender();
+
+    // 安装工厂
+    QAccessible::installFactory(accessibleFactory);
+
     MainWindow w;
     if (a.setSingleInstance(appName)) {
         QObject::connect(&a, &DApplication::newInstanceStarted, &w, [&] {qDebug() << "======"; w.activateWindow(); });
@@ -75,3 +106,4 @@ int main(int argc, char *argv[])
 
     return a.exec();
 }
+

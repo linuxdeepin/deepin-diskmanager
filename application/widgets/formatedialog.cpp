@@ -56,6 +56,7 @@ void FormateDialog::initUi()
     DLabel *fileName = new DLabel(tr("Name:"), this);
 //    fileName->setMinimumWidth(76);
     m_fileNameEdit   = new DLineEdit(this);
+    m_fileNameEdit->setAccessibleName("partName");
     QRegExp re("^[\u4E00-\u9FA5A-Za-z0-9_]+$");
     QRegExpValidator *validator = new QRegExpValidator(re, this);
     m_fileNameEdit->lineEdit()->setValidator(validator );
@@ -64,7 +65,8 @@ void FormateDialog::initUi()
         m_fileNameEdit->lineEdit()->setPlaceholderText(tr("Name"));
 
     DLabel *formatName = new DLabel(tr("File system:"), this);
-    m_formatComboBox = new DComboBox(this);
+    m_formatComboBox = new QComboBox(this);
+    m_formatComboBox->setAccessibleName("File system");
     m_formatComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
     QStringList fslist = DMDbusHandler::instance()->getAllSupportFileSystem();

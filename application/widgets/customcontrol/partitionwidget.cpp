@@ -241,11 +241,14 @@ void PartitionWidget::botFrameSetting()
     //按钮
     m_applyBtn = new DPushButton(tr("Confirm"), m_botFrame);
     m_applyBtn->setObjectName("confirm");
+    m_applyBtn->setAccessibleName("confirm");
     //取消
     m_cancleBtn = new DPushButton(tr("Cancel"), m_botFrame);
+    m_cancleBtn->setAccessibleName("cancel");
     //复原
     m_reveBtn = new DPushButton(tr("Revert"), m_botFrame);
     m_reveBtn->setObjectName("revert");
+    m_reveBtn->setAccessibleName("revert");
     m_applyBtn->setEnabled(false);
     m_applyBtn->setMinimumWidth(170);
     m_cancleBtn->setMinimumWidth(170);
@@ -309,6 +312,7 @@ void PartitionWidget::partInfoShowing()
     m_partNameEdit = new DLineEdit(m_partWidget);
     m_partNameEdit->lineEdit()->setMaxLength(256);
     m_partNameEdit->setObjectName("partName");
+    m_partNameEdit->setAccessibleName("partName");
 
     line2Layout->addWidget(m_partDoLabel, 1);
     line2Layout->addSpacing(7);
@@ -327,6 +331,7 @@ void PartitionWidget::partInfoShowing()
     m_partFormateCombox = new DComboBox(m_partWidget);
     m_partFormateCombox->addItems(formateList);
     m_partFormateCombox->setCurrentIndex(2);
+    m_partFormateCombox->setAccessibleName("File system");
 
     DLabel *partSizeLabel = new DLabel(tr("Size:"), m_partWidget);
     DFontSizeManager::instance()->bind(partSizeLabel, DFontSizeManager::T8, QFont::Normal);
@@ -335,12 +340,15 @@ void PartitionWidget::partInfoShowing()
     m_slider = new DSlider(Qt::Horizontal);
     m_slider->setMaximum(100);
     m_slider->setValue(100);
+    m_slider->setAccessibleName("slider");
     m_partSizeEdit = new DLineEdit(m_partWidget);
     m_partSizeEdit->setObjectName("partSize");
+    m_partSizeEdit->setAccessibleName("partSize");
     m_partComboBox = new DComboBox(m_partWidget);
     m_partComboBox->addItem("GiB");
     m_partComboBox->addItem("MiB");
     m_partComboBox->setCurrentText("GiB");
+    m_partComboBox->setAccessibleName("unit");
 
     line3Layout->addWidget(partFormateLabel, 1);
     line3Layout->addWidget(m_partFormateCombox, 7);

@@ -158,11 +158,12 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         painter->setFont(font);
 
         // 获取文本宽度
-        QFontMetrics fmCapacity = painter->fontMetrics();
-        int textWidth = fmCapacity.width(text);
+//        QFontMetrics fmCapacity = painter->fontMetrics();
+//        int textWidth = fmCapacity.width(text);
 
-        textRect.setRect(paintRect.left() + 60, paintRect.top() + 5, textWidth + 1, 100);
-        painter->drawText(textRect, text);
+        textRect.setRect(paintRect.left() + 60, paintRect.top() + 5, 110, 100);
+        QString devName = painter->fontMetrics().elidedText(text, Qt::ElideMiddle, 108);
+        painter->drawText(textRect, devName);
         QColor text1color = m_parentPb.color(DPalette::Normal, DPalette::TextTips);
         painter->setPen(text1color);
         font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
@@ -201,7 +202,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             painter->setPen(textColor);
             painter->setFont(font);
             textRect.setRect(paintRect.left() + 65, paintRect.top() + 8, 106, 100);
-            QString text = painter->fontMetrics().elidedText(text2, Qt::ElideMiddle, textRect.width());
+            QString text = painter->fontMetrics().elidedText(text2, Qt::ElideMiddle, 104);
             painter->drawText(textRect, text);
             QColor text1Color = m_parentPb.color(DPalette::Normal, DPalette::HighlightedText);
             painter->setPen(text1Color);
@@ -214,7 +215,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             painter->setPen(textColor);
             painter->setFont(font);
             textRect.setRect(paintRect.left() + 65, paintRect.top() + 8, 106, 100);
-            QString text = painter->fontMetrics().elidedText(text2, Qt::ElideMiddle, textRect.width());
+            QString text = painter->fontMetrics().elidedText(text2, Qt::ElideMiddle, 104);
             painter->drawText(textRect, text);
             QColor text1Color = m_parentPb.color(DPalette::Normal, DPalette::TextTips);
             painter->setPen(text1Color);

@@ -1,3 +1,12 @@
+deepin-diskmanager (1.2.15) stable; urgency=low
+
+  * 1040第十五次发版
+  * 81963 专业版1030以上从应用商店首次安装未覆盖预装的磁盘管理器版本
+  * 81896 1020以上1030以下从应用商店安装磁盘管理器无法启动
+  * 81881 硬盘以及分区名称过长时字符重叠以及显示不全
+
+ -- yuandandan <yuandandan@uniontech.com>  Wed, 2 Jun 2021 15:35:16 +0800
+
 deepin-diskmanager (1.2.14) stable; urgency=low
 
   * 1040第十四次发版

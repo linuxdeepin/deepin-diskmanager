@@ -1629,7 +1629,7 @@ bool PartedCore::unmount()
     QString output, errstr;
     QVector<QString> mountpoints = m_curpartition.getMountPoints();
     for (QString path : mountpoints) {
-        QString cmd = QString("umount -v %1").arg(path);
+        QString cmd = QString("umount -v \"%1\"").arg(path);
         int exitcode = Utils::executCmd(cmd, output, errstr);
         if (0 != exitcode) {
             success = false;
@@ -2418,7 +2418,7 @@ void PartedCore::autoUmount()
         //qDebug() << pb << "qqqqqqqqqqqqqqqqqqqqqqqqqqq";
         QStringList dfList = dfBuf.split(" ");
         if (deviceList.indexOf(dfList.at(0).left(dfList.at(0).size()-1)) == -1 && dfList.at(0).contains("/dev/")) {
-            cmd = QString("umount -v %1").arg(dfList.last());
+            cmd = QString("umount -v \"%1\"").arg(dfList.last());
             QString output, errstr;
             int exitcode = Utils::executCmd(cmd, output, errstr);
             if (exitcode != 0) {

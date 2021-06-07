@@ -2487,7 +2487,7 @@ void PartedCore::autoUmount()
         QString dfBuf = pb;
         QStringList dfList = dfBuf.split(" ");
         if (deviceList.indexOf(dfList.at(0).left(dfList.at(0).size()-1)) == -1 && dfList.at(0).contains("/dev/")) {
-            cmd = QString("umount -v %1").arg(dfList.last());
+            cmd = QString("umount -v \"%1\"").arg(dfList.last());
             QString output, errstr;
             int exitcode = Utils::executCmd(cmd, output, errstr);
             if (exitcode != 0) {

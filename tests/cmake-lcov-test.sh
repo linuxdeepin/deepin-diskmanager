@@ -12,7 +12,7 @@ cmake ..
 make -j4
 
 touch ./tests/utcase.log
-echo "Uos123!!" | sudo -S ./tests/deepin-diskmanager_app_test --gtest_output=xml:./report/report.xml | tee ./bin/utcase.log
+echo "Uos123!!" | sudo -S ./tests/deepin-diskmanager_app_test --gtest_output=xml:./ut-report.txt
 
 workdir=$(cd ../$(dirname $0)/$utdir; pwd)
 
@@ -26,7 +26,7 @@ echo "Uos123!!" | sudo -S lcov --remove ./report/coverage.info '*/tests/*' '*/ap
 
 echo "Uos123!!" | sudo -S genhtml -o ./report ./report/coverage.info
 
-echo "Uos123!!" | sudo -S chmod 666 ./asan.log*
+echo "Uos123!!" | sudo -S chmod 666 ./ut-report.txt
 
 echo "Uos123!!" | sudo -S chmod 666 ./report/index.html
 

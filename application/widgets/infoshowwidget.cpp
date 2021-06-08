@@ -100,39 +100,45 @@ void InfoShowWidget::bottomFramSettings()
     QVBoxLayout *leftInfoLayout = new QVBoxLayout();
     QVBoxLayout *rightInfolayout = new QVBoxLayout();
 
-    DLabel *mountpointLabel = new DLabel(tr("Mount point:"));
-    mountpointLabel->setAlignment(Qt::AlignLeft);
-    mountpointLabel->setWordWrap(true);
-    mountpointLabel->adjustSize();
-    mountpointLabel->setFixedHeight(30);
-    DFontSizeManager::instance()->bind(mountpointLabel, DFontSizeManager::T6, QFont::Medium);
+    m_mountpointLabel = new DLabel(tr("Mount point:"));
+    m_mountpointLabel->setAlignment(Qt::AlignLeft);
+    m_mountpointLabel->setWordWrap(true);
+    m_mountpointLabel->adjustSize();
+    m_mountpointLabel->setFixedHeight(30);
+    DFontSizeManager::instance()->bind(m_mountpointLabel, DFontSizeManager::T6, QFont::Medium);
+    m_mountpointLabel->setAccessibleName("Mount point");
 
-    DLabel *freeLabel = new DLabel(tr("Free:"));
-    freeLabel->setWordWrap(true);
-    freeLabel->adjustSize();
-    freeLabel->setAlignment(Qt::AlignLeft);
-    DFontSizeManager::instance()->bind(freeLabel, DFontSizeManager::T6, QFont::Medium);
+    m_freeLabel = new DLabel(tr("Free:"));
+    m_freeLabel->setWordWrap(true);
+    m_freeLabel->adjustSize();
+    m_freeLabel->setAlignment(Qt::AlignLeft);
+    DFontSizeManager::instance()->bind(m_freeLabel, DFontSizeManager::T6, QFont::Medium);
+    m_freeLabel->setAccessibleName("Free");
 
-    DLabel *usedLabel = new DLabel(tr("Used:"));
-    usedLabel->setWordWrap(true);
-    usedLabel->adjustSize();
-    usedLabel->setAlignment(Qt::AlignLeft);
-    DFontSizeManager::instance()->bind(usedLabel, DFontSizeManager::T6, QFont::Medium);
+    m_usedLabel = new DLabel(tr("Used:"));
+    m_usedLabel->setWordWrap(true);
+    m_usedLabel->adjustSize();
+    m_usedLabel->setAlignment(Qt::AlignLeft);
+    DFontSizeManager::instance()->bind(m_usedLabel, DFontSizeManager::T6, QFont::Medium);
+    m_usedLabel->setAccessibleName("Used");
 
-    DLabel *typeLabel = new DLabel(tr("Type:"));
-    typeLabel->setWordWrap(true);
-    typeLabel->adjustSize();
-    DFontSizeManager::instance()->bind(typeLabel, DFontSizeManager::T6, QFont::Medium);
+    m_typeLabel = new DLabel(tr("Type:"));
+    m_typeLabel->setWordWrap(true);
+    m_typeLabel->adjustSize();
+    DFontSizeManager::instance()->bind(m_typeLabel, DFontSizeManager::T6, QFont::Medium);
+    m_typeLabel->setAccessibleName("Type");
 
-    DLabel *capacityLabel = new DLabel(tr("Capacity:"));
-    capacityLabel->setWordWrap(true);
-    capacityLabel->adjustSize();
-    DFontSizeManager::instance()->bind(capacityLabel, DFontSizeManager::T6, QFont::Medium);
+    m_capacityLabel = new DLabel(tr("Capacity:"));
+    m_capacityLabel->setWordWrap(true);
+    m_capacityLabel->adjustSize();
+    DFontSizeManager::instance()->bind(m_capacityLabel, DFontSizeManager::T6, QFont::Medium);
+    m_capacityLabel->setAccessibleName("Capacity");
 
-    DLabel *volumeLabel = new DLabel(tr("Volume label:"));
-    volumeLabel->setWordWrap(true);
-    volumeLabel->adjustSize();
-    DFontSizeManager::instance()->bind(volumeLabel, DFontSizeManager::T6, QFont::Medium);
+    m_volumeLabel = new DLabel(tr("Volume label:"));
+    m_volumeLabel->setWordWrap(true);
+    m_volumeLabel->adjustSize();
+    DFontSizeManager::instance()->bind(m_volumeLabel, DFontSizeManager::T6, QFont::Medium);
+    m_volumeLabel->setAccessibleName("Volume label");
 
     connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged,
     this, [ = ] {
@@ -142,48 +148,48 @@ void InfoShowWidget::bottomFramSettings()
             pa = palette();
             pa.setColor(DPalette::Text, QColor("#414d68"));
 
-            mountpointLabel->setPalette(pa);
-            freeLabel->setPalette(pa);
-            usedLabel->setPalette(pa);
-            typeLabel->setPalette(pa);
-            capacityLabel->setPalette(pa);
-            volumeLabel->setPalette(pa);
+            m_mountpointLabel->setPalette(pa);
+            m_freeLabel->setPalette(pa);
+            m_usedLabel->setPalette(pa);
+            m_typeLabel->setPalette(pa);
+            m_capacityLabel->setPalette(pa);
+            m_volumeLabel->setPalette(pa);
         } else if (themeType == DGuiApplicationHelper::DarkType) {
             pa = palette();
             pa.setColor(DPalette::Text, QColor("#c0c6d4"));
 
-            mountpointLabel->setPalette(pa);
-            freeLabel->setPalette(pa);
-            usedLabel->setPalette(pa);
-            typeLabel->setPalette(pa);
-            capacityLabel->setPalette(pa);
-            volumeLabel->setPalette(pa);
+            m_mountpointLabel->setPalette(pa);
+            m_freeLabel->setPalette(pa);
+            m_usedLabel->setPalette(pa);
+            m_typeLabel->setPalette(pa);
+            m_capacityLabel->setPalette(pa);
+            m_volumeLabel->setPalette(pa);
         }
     });
 
-    DPalette palette = DApplicationHelper::instance()->palette(mountpointLabel);
+    DPalette palette = DApplicationHelper::instance()->palette(m_mountpointLabel);
     palette.setBrush(DPalette::Text, palette.color(DPalette::Text));
-    DApplicationHelper::instance()->setPalette(mountpointLabel, palette);
-    DApplicationHelper::instance()->setPalette(freeLabel, palette);
-    DApplicationHelper::instance()->setPalette(usedLabel, palette);
-    DApplicationHelper::instance()->setPalette(typeLabel, palette);
-    DApplicationHelper::instance()->setPalette(capacityLabel, palette);
-    DApplicationHelper::instance()->setPalette(volumeLabel, palette);
+    DApplicationHelper::instance()->setPalette(m_mountpointLabel, palette);
+    DApplicationHelper::instance()->setPalette(m_freeLabel, palette);
+    DApplicationHelper::instance()->setPalette(m_usedLabel, palette);
+    DApplicationHelper::instance()->setPalette(m_typeLabel, palette);
+    DApplicationHelper::instance()->setPalette(m_capacityLabel, palette);
+    DApplicationHelper::instance()->setPalette(m_volumeLabel, palette);
 
     leftInfoLayout->addSpacing(1);
-    leftInfoLayout->addWidget(mountpointLabel);
+    leftInfoLayout->addWidget(m_mountpointLabel);
     leftInfoLayout->addSpacing(18);
-    leftInfoLayout->addWidget(freeLabel);
+    leftInfoLayout->addWidget(m_freeLabel);
     leftInfoLayout->addSpacing(22);
-    leftInfoLayout->addWidget(usedLabel);
+    leftInfoLayout->addWidget(m_usedLabel);
     leftInfoLayout->addStretch();
 
     rightInfolayout->addSpacing(1);
-    rightInfolayout->addWidget(typeLabel);
+    rightInfolayout->addWidget(m_typeLabel);
     rightInfolayout->addSpacing(25);
-    rightInfolayout->addWidget(capacityLabel);
+    rightInfolayout->addWidget(m_capacityLabel);
     rightInfolayout->addSpacing(23);
-    rightInfolayout->addWidget(volumeLabel);
+    rightInfolayout->addWidget(m_volumeLabel);
     rightInfolayout->addStretch();
 
     QHBoxLayout *mainlayout = new QHBoxLayout(m_frameBottom);
@@ -199,7 +205,27 @@ void InfoShowWidget::onCurSelectChanged()
     m_noused = Utils::sectorToUnit(DMDbusHandler::instance()->getCurPartititonInfo().m_sectorsUnused, DMDbusHandler::instance()->getCurPartititonInfo().m_sectorSize, SIZE_UNIT::UNIT_GIB);
     m_used = Utils::sectorToUnit(DMDbusHandler::instance()->getCurPartititonInfo().m_sectorsUsed, DMDbusHandler::instance()->getCurPartititonInfo().m_sectorSize, SIZE_UNIT::UNIT_GIB);
 
+    QString mountpoints;
+    for (QString point : DMDbusHandler::instance()->getCurPartititonInfo().m_mountPoints) {
+        mountpoints.append(point + " ");
+    }
+    m_mountpointLabel->setObjectName(QString("@==@%1").arg(mountpoints));
+    QString free = Utils::formatSize(DMDbusHandler::instance()->getCurPartititonInfo().m_sectorsUnused, DMDbusHandler::instance()->getCurPartititonInfo().m_sectorSize);
+    if (free.contains("-")){
+        free = "-";
+    }
+    m_freeLabel->setObjectName(QString("@==@%1").arg(free));
+    QString used = Utils::formatSize(DMDbusHandler::instance()->getCurPartititonInfo().m_sectorsUsed, DMDbusHandler::instance()->getCurPartititonInfo().m_sectorSize);
+    if (used.contains("-")){
+        used = "-";
+    }
+    m_usedLabel->setObjectName(QString("@==@%1").arg(used));
+    m_typeLabel->setObjectName(QString("@==@%1").arg(Utils::fileSystemTypeToString(static_cast<FSType>(DMDbusHandler::instance()->getCurPartititonInfo().m_fileSystemType))));
+    m_capacityLabel->setObjectName(QString("@==@%1").arg(Utils::formatSize(DMDbusHandler::instance()->getCurPartititonInfo().m_sectorEnd - DMDbusHandler::instance()->getCurPartititonInfo().m_sectorStart, DMDbusHandler::instance()->getCurPartititonInfo().m_sectorSize)));
+    m_volumeLabel->setObjectName(QString("@==@%1").arg(DMDbusHandler::instance()->getCurPartititonInfo().m_fileSystemLabel));
+
     DPalette palette;
+//    typeLabel->setText(typeLabel->objectName());
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
     if (themeType == DGuiApplicationHelper::LightType) {
         fillcolor = QColor("#0091ff");

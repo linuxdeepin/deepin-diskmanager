@@ -137,7 +137,11 @@ AccessibleLabel::~AccessibleLabel()
 QString AccessibleLabel::text(int startOffset, int endOffset) const
 {
     if (Q_NULLPTR != m_label)
-        return m_label->text();
+        if (m_label->objectName().contains("@==@")) {
+            return m_label->objectName().remove("@==@");
+        } else {
+            return m_label->text();
+        }
 
     return AccessibleWidget::text(startOffset, endOffset);
 }

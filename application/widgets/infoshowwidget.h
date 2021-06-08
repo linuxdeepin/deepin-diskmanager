@@ -95,6 +95,13 @@ private:
     DiskInfoData m_diskInfoData;
     QColor fillcolor;
     QColor fillcolor1;
+
+    DLabel *m_mountpointLabel;
+    DLabel *m_freeLabel;
+    DLabel *m_usedLabel;
+    DLabel *m_typeLabel;
+    DLabel *m_capacityLabel;
+    DLabel *m_volumeLabel;
 };
 
 #endif // INFOSHOWWIDGET_H

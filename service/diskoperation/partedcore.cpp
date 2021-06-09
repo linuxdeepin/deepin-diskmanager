@@ -86,6 +86,8 @@ PartedCore::~PartedCore()
 void PartedCore::initConnection()
 {
     connect(this, &PartedCore::refreshDeviceInfo, this, &PartedCore::onRefreshDeviceInfo);
+    connect(&m_probeThread, &ProbeThread::updateDeviceInfo, this, &PartedCore::syncDeviceInfo);
+    //connect(&m_probeThread, &ProbeThread::updateDeviceInfo, this, &PartedCore::updateDeviceInfo);
     connect(&m_checkThread, &WorkThread::checkBadBlocksInfo, this, &PartedCore::checkBadBlocksCountInfo);
     connect(&m_checkThread, &WorkThread::checkBadBlocksDeviceStatusFinished, this, &PartedCore::threadSafeRecycle);
     connect(&m_checkThread, &WorkThread::checkBadBlocksFinished, this, &PartedCore::checkBadBlocksFinished);
@@ -1559,8 +1561,17 @@ bool PartedCore::resizeMoveFileSystemUsingLibparted(const Partition &partitionOl
 
 void PartedCore::onRefreshDeviceInfo()
 {
-    probeDeviceInfo();
-    emit updateDeviceInfo(m_inforesult);
+    qDebug() << " will call probeThread in thread !";
+    if(m_workerThreadProbe == nullptr)
+    {
+        m_workerThreadProbe = new QThread();
+        qDebug() << "onRefresh Create thread: " << QThread::currentThreadId() << " ++++++++" << endl;
+    }
+
+    m_probeThread.moveToThread(m_workerThreadProbe);
+    connect(m_workerThreadProbe, SIGNAL(started()), &m_probeThread, SLOT(probeDeviceInfo()));
+    m_workerThreadProbe->start();
+    qDebug() << " called probeThread in thread !";
 }
 
 bool PartedCore::mountAndWriteFstab(const QString &mountpath)
@@ -2422,7 +2433,7 @@ bool PartedCore::updateUsb()
 {
     qDebug() << __FUNCTION__ << "USB add update start";
 
-    sleep(5);
+    //sleep(5);
     emit usbUpdated();
 
     autoMount();
@@ -2506,6 +2517,15 @@ void PartedCore::threadSafeRecycle()
     delete m_workerThread;
     m_workerThread = nullptr;
     qDebug() << "finished thread" << endl;
+}
+
+void PartedCore::syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const DeviceInfoMap inforesult)
+{
+    qDebug() << "syncDeviceInfo finally!";
+    //m_deviceMap = deviceMap;
+    m_inforesult = inforesult;
+    m_workerThreadProbe = nullptr;
+    emit updateDeviceInfo(m_inforesult);
 }
 
 bool PartedCore::createPartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel)

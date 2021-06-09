@@ -233,6 +233,20 @@ public:
      */
     int test();
 
+    /**
+     * @brief 确定是否是真正的设备
+     * @param lpDisk：设备信息
+     * @return true确定false不确定
+     */
+    static bool useableDevice(const PedDevice *lpDevice);
+
+    /**
+     * @brief 设置设备信息根据磁盘
+     * @param device：设备信息
+     * @param devicePath：设备路径
+     */
+    void setDeviceFromDisk(Device &device, const QString &devicePath);
+
 private:
 
     /**
@@ -345,7 +359,7 @@ private:
      * @param lpDisk：设备信息
      * @return true确定false不确定
      */
-    static bool useableDevice(const PedDevice *lpDevice);
+    //static bool useableDevice(const PedDevice *lpDevice);
 
     /**
      * @brief 获取设备
@@ -418,7 +432,7 @@ private:
      * @param device：设备信息
      * @param devicePath：设备路径
      */
-    void setDeviceFromDisk(Device &device, const QString &devicePath);
+    //void setDeviceFromDisk(Device &device, const QString &devicePath);
 
     /**
      * @brief 设置设备序列号
@@ -718,6 +732,11 @@ public slots:
      */
     void threadSafeRecycle();
 
+	/**
+	  * @brief 刷新硬件信息
+	  */
+    void syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const DeviceInfoMap inforesult);
+
 private:
     QVector<PedPartitionFlag> m_flags;    //分区标志hidden boot efi等
     QMap<QString, Device> m_deviceMap;    //设备对应信息表
@@ -726,8 +745,10 @@ private:
     static SupportedFileSystems *m_supportedFileSystems; //支持的文件系统
     QByteArray m_hiddenPartition;         //隐藏分区（规则文件中的隐藏分区）
     QThread *m_workerThread;
+    QThread *m_workerThreadProbe;         //硬件刷新专用
     WorkThread m_checkThread;
     FixThread m_fixthread;
+    ProbeThread m_probeThread;
 };
 
 } // namespace DiskManager

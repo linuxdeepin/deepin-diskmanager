@@ -27,11 +27,27 @@
 #ifndef THREAD_H
 #define THREAD_H
 
+#include "device.h"
+#include "deviceinfo.h"
 #include <QObject>
+#include <parted/parted.h>
+#include <parted/device.h>
 
 namespace DiskManager {
 
-
+class ProbeThread :public QObject
+{
+    Q_OBJECT
+public:
+    ProbeThread(QObject *parent = nullptr);
+public slots:
+    void probeDeviceInfo();
+signals:
+    void updateDeviceInfo(/*const QMap<QString, Device> m_deviceMap, */const DeviceInfoMap infomap);
+private:
+    QMap<QString, Device> m_deviceMap;
+    DeviceInfoMap m_inforesult;
+};
 
 /**
  * @class WorkThread

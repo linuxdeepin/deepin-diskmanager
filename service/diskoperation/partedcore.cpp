@@ -104,16 +104,31 @@ void PartedCore::findSupportedCore()
 
 bool PartedCore::supportedFileSystem(FSType fstype)
 {
+    if (nullptr == m_supportedFileSystems) {
+        m_supportedFileSystems = new SupportedFileSystems();
+        //Determine file system support capabilities for the first time
+        m_supportedFileSystems->findSupportedFilesystems();
+    }
     return m_supportedFileSystems->getFsObject(fstype) != nullptr;
 }
 
 const FS &PartedCore::getFileSystem(FSType fstype) const
 {
+    if (nullptr == m_supportedFileSystems) {
+        m_supportedFileSystems = new SupportedFileSystems();
+        //Determine file system support capabilities for the first time
+        m_supportedFileSystems->findSupportedFilesystems();
+    }
     return m_supportedFileSystems->getFsSupport(fstype);
 }
 
 FileSystem *PartedCore::getFileSystemObject(FSType fstype)
 {
+    if (nullptr == m_supportedFileSystems) {
+        m_supportedFileSystems = new SupportedFileSystems();
+        //Determine file system support capabilities for the first time
+        m_supportedFileSystems->findSupportedFilesystems();
+    }
     return m_supportedFileSystems->getFsObject(fstype);
 }
 
@@ -181,6 +196,11 @@ void PartedCore::setFlags(Partition &partition, PedPartition *lpPartition)
 
 FS_Limits PartedCore::getFileSystemLimits(FSType fstype, const Partition &partition)
 {
+    if (nullptr == m_supportedFileSystems) {
+        m_supportedFileSystems = new SupportedFileSystems();
+        //Determine file system support capabilities for the first time
+        m_supportedFileSystems->findSupportedFilesystems();
+    }
     FileSystem *pFileSystem = m_supportedFileSystems->getFsObject(fstype);
     FS_Limits fsLimits;
     if (pFileSystem != nullptr)
@@ -1861,6 +1881,11 @@ bool PartedCore::resize(const PartitionInfo &info)
 
 QStringList PartedCore::getallsupportfs()
 {
+    if (nullptr == m_supportedFileSystems) {
+        m_supportedFileSystems = new SupportedFileSystems();
+        //Determine file system support capabilities for the first time
+        m_supportedFileSystems->findSupportedFilesystems();
+    }
     return m_supportedFileSystems->getAllFsName();
 }
 
@@ -2434,7 +2459,7 @@ bool PartedCore::updateUsb()
     qDebug() << __FUNCTION__ << "USB add update start";
 
     //sleep(5);
-    emit usbUpdated();
+    //emit usbUpdated();
 
     autoMount();
 
@@ -2446,8 +2471,8 @@ bool PartedCore::updateUsbRemove()
 {
     qDebug() << __FUNCTION__ << "USB add update remove"; 
 
+    //emit usbUpdated();
     emit refreshDeviceInfo();
-    emit usbUpdated();
 
     autoUmount();
 
@@ -2523,9 +2548,15 @@ void PartedCore::syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const
 {
     qDebug() << "syncDeviceInfo finally!";
     //m_deviceMap = deviceMap;
-    m_inforesult = inforesult;
+    m_deviceMap = m_probeThread.get_deviceMap();
+    m_workerThreadProbe->quit();
+    m_workerThreadProbe->wait();
+    delete  m_workerThreadProbe;
     m_workerThreadProbe = nullptr;
+
+    m_inforesult = inforesult;
     emit updateDeviceInfo(m_inforesult);
+    emit usbUpdated();
 }
 
 bool PartedCore::createPartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel)

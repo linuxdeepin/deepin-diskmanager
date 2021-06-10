@@ -42,6 +42,7 @@ public:
     ProbeThread(QObject *parent = nullptr);
 public slots:
     void probeDeviceInfo();
+    QMap<QString, Device> get_deviceMap();
 signals:
     void updateDeviceInfo(/*const QMap<QString, Device> m_deviceMap, */const DeviceInfoMap infomap);
 private:

@@ -313,4 +313,9 @@ void ProbeThread::probeDeviceInfo()
     qDebug() << __FILE__ << ":" << __FUNCTION__ << "Someone call me in thread，working done!";
 }
 
+QMap<QString, Device> ProbeThread::get_deviceMap()
+{
+    return m_deviceMap;
+}
+
 }

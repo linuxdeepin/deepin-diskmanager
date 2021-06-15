@@ -787,7 +787,7 @@ void DiskBadSectorsDialog::onCheckComplete()
         m_repairButton->setDisabled(false);
     }
 
-    MessageBox messageBox;
+    MessageBox messageBox(this);
     messageBox.setObjectName("messageBox");
     // 磁盘检测完毕，共检查到xxx个坏道区域   确定
     messageBox.setWarings(tr("Disk verify completed. %1 bad blocks found.").arg(badSectorsCount), "", tr("OK"));
@@ -978,7 +978,7 @@ bool DiskBadSectorsDialog::isExistMountPartition()
 void DiskBadSectorsDialog::onRepairButtonClicked()
 {
     if (isExistMountPartition()) {
-        MessageBox warningBox;
+        MessageBox warningBox(this);
         QString title1 = tr("The verifying disk contains mounted partitions, so you cannot repair it."); // 当前检测磁盘存在已挂载分区，无法修复坏道，
 //        title1.replace("so", "so\n");
         QString title2 = tr("Please unmount partitions and then repair the disk."); // 若要修复请先卸载分区
@@ -989,7 +989,7 @@ void DiskBadSectorsDialog::onRepairButtonClicked()
         return;
     }
 
-    DDialog messageBox;
+    DDialog messageBox(this);
     messageBox.setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
     messageBox.setTitle(tr("Warning")); // 警告
     messageBox.addSpacing(10);
@@ -1128,11 +1128,47 @@ void DiskBadSectorsDialog::onDoneButtonClicked()
     close();
 }
 
+void DiskBadSectorsDialog::stopCheckRepair()
+{
+    switch (m_curType) {
+    case StatusType::Check: {
+        m_curType = StatusType::StopCheck;
+
+        DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
+
+        int checkSize = m_settings->value("SettingData/CheckSize").toInt();
+        int blockStart = m_settings->value("SettingData/BlockStart").toInt();
+        int blockEnd = m_settings->value("SettingData/BlockEnd").toInt();
+        int checkNumber = m_settings->value("SettingData/CheckNumber").toInt();
+        DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart, blockEnd, checkNumber, checkSize, 2);
+        m_checkTimer.stop();
+
+        break;
+    }
+    case StatusType::Repair:{
+        m_curType = StatusType::StopRepair;
+
+        DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
+        int repairSize = static_cast<int>(info.m_heads * info.m_sectors * info.m_sectorSize);
+
+        QString repairCylinder = m_settings->value("BadSectorsData/BadSectors").toString();
+        QStringList lstBadSectors = repairCylinder.split(",");
+
+        DMDbusHandler::instance()->repairBadBlocks(info.m_path, lstBadSectors, repairSize, 2);
+        m_timer.stop();
+
+        break;
+    }
+    default:
+        break;
+    }
+}
+
 void DiskBadSectorsDialog::closeEvent(QCloseEvent *event)
 {
     switch (m_curType) {
     case StatusType::Check: {
-        MessageBox messageBox;
+        MessageBox messageBox(this);
         messageBox.setObjectName("messageBox");
         // 正在检测中，是否退出窗口？  当前检测信息不会保留   退出   取消
         messageBox.setWarings(tr("Verifying for bad sectors, exit now?"), tr("The verified information will not be reserved"),
@@ -1152,13 +1188,15 @@ void DiskBadSectorsDialog::closeEvent(QCloseEvent *event)
             if (file.exists()) {
                 file.remove();
             }
+
+//            DMDbusHandler::instance()->refresh();
         } else {
             event->ignore();
         }
         break;
     }
     case StatusType::Repair:{
-        MessageBox messageBox;
+        MessageBox messageBox(this);
         messageBox.setObjectName("messageBox");
         // 正在修复中，是否退出窗口？  当前修复信息不会保留   退出   取消
         messageBox.setWarings(tr("Repairing bad sectors, exit now?"), tr("The repairing information will not be reserved"),
@@ -1178,6 +1216,8 @@ void DiskBadSectorsDialog::closeEvent(QCloseEvent *event)
             if (file.exists()) {
                 file.remove();
             }
+
+//            DMDbusHandler::instance()->refresh();
         } else {
             event->ignore();
         }
@@ -1188,6 +1228,8 @@ void DiskBadSectorsDialog::closeEvent(QCloseEvent *event)
         if (file.exists()) {
             file.remove();
         }
+
+//        DMDbusHandler::instance()->refresh();
         break;
     }
 }

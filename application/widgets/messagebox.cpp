@@ -29,7 +29,7 @@
 
 #include <DLabel>
 
-MessageBox::MessageBox(DDialog *parent) : DDialog(parent)
+MessageBox::MessageBox(QWidget *parent) : DDialog(parent)
 {
 
 }

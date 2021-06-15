@@ -66,6 +66,8 @@ public:
         StopRepair
     };
 
+    void stopCheckRepair();
+
 signals:
 
 public slots:

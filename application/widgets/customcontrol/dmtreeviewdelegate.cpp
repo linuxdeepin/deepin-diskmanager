@@ -203,7 +203,6 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             painter->setFont(font);
             textRect.setRect(paintRect.left() + 65, paintRect.top() + 8, 106, 100);
             QString text = painter->fontMetrics().elidedText(text2, Qt::ElideMiddle, 104);
-            qDebug() << text;
             painter->drawText(textRect, text);
             QColor text1Color = m_parentPb.color(DPalette::Normal, DPalette::HighlightedText);
             painter->setPen(text1Color);

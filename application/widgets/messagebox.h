@@ -42,7 +42,7 @@ class MessageBox : public DDialog
 {
     Q_OBJECT
 public:
-    explicit MessageBox(DDialog *parent = nullptr);
+    explicit MessageBox(QWidget *parent = nullptr);
 
     /**
      * @brief 设置警告窗口

@@ -191,7 +191,7 @@ void DeviceListWidget::onDiskInfoClicked()
 {
     m_curChooseDevicePath = m_curDiskInfoData.m_diskPath;
 
-    DiskInfoDisplayDialog diskInfoDisplayDialog(m_curDiskInfoData.m_diskPath);
+    DiskInfoDisplayDialog diskInfoDisplayDialog(m_curDiskInfoData.m_diskPath, this);
     diskInfoDisplayDialog.setObjectName("diskInfoDisplayDialog");
     diskInfoDisplayDialog.exec();
 
@@ -202,7 +202,7 @@ void DeviceListWidget::onDiskCheckHealthClicked()
 {
     HardDiskStatusInfoList hardDiskStatusInfoList = DMDbusHandler::instance()->getDeviceHardStatusInfo(m_curDiskInfoData.m_diskPath);
     if (hardDiskStatusInfoList.count() < 1) {
-        MessageBox warningBox;
+        MessageBox warningBox(this);
         // 获取不到硬件相应信息  关闭
         warningBox.setWarings(tr("Failed to get hardware information"), "", tr("Close"));
         warningBox.exec();
@@ -212,7 +212,7 @@ void DeviceListWidget::onDiskCheckHealthClicked()
 
     m_curChooseDevicePath = m_curDiskInfoData.m_diskPath;
 
-    DiskHealthDetectionDialog diskHealthDetectionDialog(m_curDiskInfoData.m_diskPath, hardDiskStatusInfoList);
+    DiskHealthDetectionDialog diskHealthDetectionDialog(m_curDiskInfoData.m_diskPath, hardDiskStatusInfoList, this);
     diskHealthDetectionDialog.setObjectName("diskHealthDetectionDialog");
     diskHealthDetectionDialog.exec();
 
@@ -223,7 +223,7 @@ void DeviceListWidget::onDiskBadSectorsClicked()
 {
     m_curChooseDevicePath = m_curDiskInfoData.m_diskPath;
 
-    DiskBadSectorsDialog diskBadSectorsDialog;
+    DiskBadSectorsDialog diskBadSectorsDialog(this);
     diskBadSectorsDialog.setObjectName("diskBadSectorsDialog");
     diskBadSectorsDialog.exec();
 
@@ -255,7 +255,7 @@ bool DeviceListWidget::isExistMountPartition()
 void DeviceListWidget::onCreatePartitionTableClicked()
 {
     if (isExistMountPartition()) {
-        MessageBox warningBox;
+        MessageBox warningBox(this);
         // 请先卸载当前磁盘中的所有分区  确定
         warningBox.setWarings(tr("Please unmount all partitions in the disk first"), "", tr("OK"));
         warningBox.exec();
@@ -263,12 +263,12 @@ void DeviceListWidget::onCreatePartitionTableClicked()
         return;
     }
 
-    MessageBox messageBox;
+    MessageBox messageBox(this);
     messageBox.setObjectName("messageBox");
     // 新建分区表之后将会合并当前磁盘所有分区，丢失所有数据，请谨慎使用  继续  取消
     messageBox.setWarings(tr("All partitions in this disk will be merged and all data\n will be lost if creating a new partition table,\n please take it carefully"), "", tr("Proceed"), tr("Cancel"));
     if (messageBox.exec() == DDialog::Accepted) {
-        CreatePartitionTableDialog createPartitionTableDialog;
+        CreatePartitionTableDialog createPartitionTableDialog(this);
         createPartitionTableDialog.setObjectName("createPartitionTable");
         createPartitionTableDialog.exec();
     }
@@ -281,7 +281,7 @@ void DeviceListWidget::onPartitionErrorCheckClicked()
         QString deviceInfo = QString("%1(%2)").arg(m_curDiskInfoData.m_diskPath).arg(m_curDiskInfoData.m_diskSize);
         m_curChooseDevicePath = m_curDiskInfoData.m_diskPath;
 
-        PartitionTableErrorsInfoDialog partitionTableErrorsInfoDialog(deviceInfo);
+        PartitionTableErrorsInfoDialog partitionTableErrorsInfoDialog(deviceInfo, this);
         partitionTableErrorsInfoDialog.setObjectName("partitionErrorCheck");
         partitionTableErrorsInfoDialog.exec();
 
@@ -295,7 +295,7 @@ void DeviceListWidget::onPartitionErrorCheckClicked()
 
 void DeviceListWidget::onHidePartitionClicked()
 {
-    MessageBox messageBox;
+    MessageBox messageBox(this);
     messageBox.setObjectName("messageBox");
     // 您是否要隐藏该分区？ 隐藏  取消
     messageBox.setWarings(tr("Do you want to hide this partition?"), "", tr("Hide"), tr("Cancel"));
@@ -321,7 +321,7 @@ void DeviceListWidget::onHidePartitionClicked()
 
 void DeviceListWidget::onShowPartitionClicked()
 {
-    MessageBox messageBox;
+    MessageBox messageBox(this);
     messageBox.setObjectName("showMessageBox");
     // 您是否要显示该隐藏分区？ 显示  取消
     messageBox.setWarings(tr("Do you want to unhide this partition?"), "", tr("Unhide"), tr("Cancel"));
@@ -332,7 +332,7 @@ void DeviceListWidget::onShowPartitionClicked()
 
 void DeviceListWidget::onDeletePartitionClicked()
 {
-    MessageBox messageBox;
+    MessageBox messageBox(this);
     // 您确定要删除该分区吗？ 该分区内所有文件将会丢失  删除  取消
     messageBox.setWarings(tr("Are you sure you want to delete this partition?"), tr("You will lose all data in it"), tr("Delete"), DDialog::ButtonWarning, tr("Cancel"));
     if (messageBox.exec() == DDialog::Accepted) {
@@ -441,6 +441,7 @@ void DeviceListWidget::onCreatePartitionTableMessage(const bool &flag)
 
 void DeviceListWidget::onUpdateUsb()
 {
+    qDebug() << "onUpdateUsb" << "111111111111111111111111";
     if (m_curChooseDevicePath == "")
         return;
 
@@ -451,11 +452,23 @@ void DeviceListWidget::onUpdateUsb()
     QWidgetList widgetList = QApplication::topLevelWidgets();
     for (int i = 0; i < widgetList.count(); i++) {
         QWidget *widget = widgetList.at(i);
-        if (widget->objectName() == "diskBadSectorsDialog" ||  widget->objectName() == "diskInfoDisplayDialog" ||
-                widget->objectName() == "diskHealthDetectionDialog" || widget->objectName() == "partitionErrorCheck") {
+//        if (widget->objectName() == "diskBadSectorsDialog" ||  widget->objectName() == "diskInfoDisplayDialog" ||
+//                widget->objectName() == "diskHealthDetectionDialog" || widget->objectName() == "partitionErrorCheck") {
+
+        if (widget->objectName() == "diskBadSectorsDialog") {
+            DiskBadSectorsDialog *diskBadSectorsDialog = static_cast<DiskBadSectorsDialog *>(widget);
+            diskBadSectorsDialog->stopCheckRepair();
+
+            diskBadSectorsDialog->close();
+            break;
+        } else if (widget->objectName() == "diskInfoDisplayDialog" || widget->objectName() == "diskHealthDetectionDialog" ||
+                   widget->objectName() == "partitionErrorCheck") {
             widget->close();
             break;
         }
+
+
+//        }
     }
 }
 
@@ -481,8 +494,11 @@ void DeviceListWidget::onUpdateDeviceInfo()
         for (auto it = info.m_partition.begin(); it != info.m_partition.end(); it++) {
             QString partitionSize = Utils::formatSize(it->m_sectorEnd - it->m_sectorStart + 1, it->m_sectorSize);
             QString partitionPath = it->m_path.remove(0, 5);
+
             QString unused = Utils::formatSize(it->m_sectorsUsed, it->m_sectorSize);
             QString used = Utils::formatSize(it->m_sectorsUnused, it->m_sectorSize);
+
+            qDebug() << it->m_fileSystemType << it->m_path << it->m_sectorsUsed << it->m_sectorsUnused << it->m_sectorSize << unused << used << "222222222";
             FSType fstype = static_cast<FSType>(it->m_fileSystemType);
             QString fstypeName = Utils::fileSystemTypeToString(fstype);
             QString mountpoint;

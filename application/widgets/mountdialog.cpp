@@ -111,7 +111,7 @@ void MountDialog::onButtonClicked(int index, const QString &text)
     if (index == m_okCode) {
         QDir dir(m_ComboBox->currentText());
         if (!dir.isEmpty()) {
-            MessageBox messageBox;
+            MessageBox messageBox(this);
             messageBox.setWarings(tr("The data under this mount point would be lost, please mount the directory to another location"), "", tr("OK"), tr("Cancel"));
             if (messageBox.exec() == 1) {
                 DMDbusHandler::instance()->mount(m_ComboBox->currentText());

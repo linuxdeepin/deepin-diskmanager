@@ -104,7 +104,7 @@ DPushButton *TitleWidget::createBtn(const QString &btnName, const QString &objNa
 void TitleWidget::showPartInfoWidget()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    PartitionDialog dlg;
+    PartitionDialog dlg(this);
     dlg.setObjectName("partitionDialog");
 
     if (dlg.exec() == 1) {
@@ -118,7 +118,7 @@ void TitleWidget::showPartInfoWidget()
             return;
         }
 
-        PartitionWidget partitionWidget;
+        PartitionWidget partitionWidget(this);
         partitionWidget.setObjectName("partitionWidget");
         partitionWidget.exec();
     }
@@ -126,28 +126,28 @@ void TitleWidget::showPartInfoWidget()
 
 void TitleWidget::showFormateInfoWidget()
 {
-    FormateDialog dlg;
+    FormateDialog dlg(this);
     dlg.setObjectName("formateDialog");
     dlg.exec();
 }
 
 void TitleWidget::showMountInfoWidget()
 {
-    MountDialog dlg;
+    MountDialog dlg(this);
     dlg.setObjectName("mountDialog");
     dlg.exec();
 }
 
 void TitleWidget::showUnmountInfoWidget()
 {
-    UnmountDialog dlg;
+    UnmountDialog dlg(this);
     dlg.setObjectName("unmountDialog");
     dlg.exec();
 }
 
 void TitleWidget::showResizeInfoWidget()
 {
-    ResizeDialog dlg;
+    ResizeDialog dlg(this);
     dlg.setObjectName("resizeDialog");
     dlg.exec();
 }

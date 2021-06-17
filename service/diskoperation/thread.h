@@ -27,6 +27,7 @@
 #ifndef THREAD_H
 #define THREAD_H
 
+#include "sigtype.h"
 #include "device.h"
 #include "deviceinfo.h"
 #include <QObject>
@@ -40,14 +41,23 @@ class ProbeThread :public QObject
     Q_OBJECT
 public:
     ProbeThread(QObject *parent = nullptr);
+    void setSignal(void *caller, int type = 0, bool arg1 = true, QString arg2 = "");
+    void sendsignals();
 public slots:
     void probeDeviceInfo();
     QMap<QString, Device> get_deviceMap();
 signals:
     void updateDeviceInfo(/*const QMap<QString, Device> m_deviceMap, */const DeviceInfoMap infomap);
+    void unmountPartition(const QString &m);
+    void deletePartitionMessage(const QString &m);
+    void showPartitionInfo(const QString &m);
+    void createTableMessage(const bool &flag);
 private:
     QMap<QString, Device> m_deviceMap;
     DeviceInfoMap m_inforesult;
+    int m_type;
+    bool m_arg1;
+    QString m_arg2;
 };
 
 /**

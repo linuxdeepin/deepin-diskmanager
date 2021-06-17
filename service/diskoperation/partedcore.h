@@ -27,6 +27,7 @@
 
 #ifndef PARTEDCORE_H
 #define PARTEDCORE_H
+#include "sigtype.h"
 #include "log.h"
 #include "device.h"
 #include "supportedfilesystems.h"
@@ -663,7 +664,7 @@ signals:
     /**
      * @brief 刷新信息信号
      */
-    void refreshDeviceInfo();
+    void refreshDeviceInfo(int type = 0, bool arg1 = true, QString arg2 = "");
 
     /**
      * @brief 卸载状态信号
@@ -725,7 +726,7 @@ public slots:
     /**
      * @brief 刷新信息槽函数
      */
-    void onRefreshDeviceInfo();
+    void onRefreshDeviceInfo(int type = 0, bool arg1 = true, QString arg2 = "");
 
     /**
      * @brief 线程安全回收函数

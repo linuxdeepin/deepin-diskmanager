@@ -87,6 +87,11 @@ void PartedCore::initConnection()
 {
     connect(this, &PartedCore::refreshDeviceInfo, this, &PartedCore::onRefreshDeviceInfo);
     connect(&m_probeThread, &ProbeThread::updateDeviceInfo, this, &PartedCore::syncDeviceInfo);
+    connect(&m_probeThread, &ProbeThread::unmountPartition, this, &PartedCore::unmountPartition);
+    connect(&m_probeThread, &ProbeThread::deletePartitionMessage, this, &PartedCore::deletePartitionMessage);
+    connect(&m_probeThread, &ProbeThread::showPartitionInfo, this, &PartedCore::showPartitionInfo);
+    connect(&m_probeThread, &ProbeThread::createTableMessage, this, &PartedCore::createTableMessage);
+
     //connect(&m_probeThread, &ProbeThread::updateDeviceInfo, this, &PartedCore::updateDeviceInfo);
     connect(&m_checkThread, &WorkThread::checkBadBlocksInfo, this, &PartedCore::checkBadBlocksCountInfo);
     connect(&m_checkThread, &WorkThread::checkBadBlocksDeviceStatusFinished, this, &PartedCore::threadSafeRecycle);
@@ -1579,16 +1584,22 @@ bool PartedCore::resizeMoveFileSystemUsingLibparted(const Partition &partitionOl
     return returnValue;
 }
 
-void PartedCore::onRefreshDeviceInfo()
+void PartedCore::onRefreshDeviceInfo(int type, bool arg1, QString arg2)
 {
     qDebug() << " will call probeThread in thread !";
-    if(m_workerThreadProbe == nullptr)
+    if (m_workerThreadProbe) {
+        m_workerThreadProbe->quit();
+        m_workerThreadProbe->wait();
+        delete  m_workerThreadProbe;
+    }
+    //if(m_workerThreadProbe == nullptr)
     {
         m_workerThreadProbe = new QThread();
         qDebug() << "onRefresh Create thread: " << QThread::currentThreadId() << " ++++++++" << endl;
     }
 
     m_probeThread.moveToThread(m_workerThreadProbe);
+    m_probeThread.setSignal(this, type, arg1, arg2);
     connect(m_workerThreadProbe, SIGNAL(started()), &m_probeThread, SLOT(probeDeviceInfo()));
     m_workerThreadProbe->start();
     qDebug() << " called probeThread in thread !";
@@ -1692,13 +1703,13 @@ bool PartedCore::unmount()
             QString outBuf = proc.readAllStandardOutput();
             if (outBuf.contains(m_curpartition.getPath())) {
                 success = false;
-                emit refreshDeviceInfo();
-                emit unmountPartition("0");
+                emit refreshDeviceInfo(DISK_SIGNAL_TYPE_UMNT, true, "0");
+                //emit unmountPartition("0");
                 return success;
             } else {
                 success = true;
-                emit refreshDeviceInfo();
-                emit unmountPartition("1");
+                emit refreshDeviceInfo(DISK_SIGNAL_TYPE_UMNT, true, "1");
+                //emit unmountPartition("1");
                 return success;
             }
         }
@@ -1740,8 +1751,8 @@ bool PartedCore::unmount()
             }
         }
     }
-    emit refreshDeviceInfo();
-    emit unmountPartition("1");
+    emit refreshDeviceInfo(DISK_SIGNAL_TYPE_UMNT, true, "1");
+    //emit unmountPartition("1");
     qDebug() << __FUNCTION__ << "Unmount end";
 
     return success;
@@ -2167,8 +2178,8 @@ bool PartedCore::deletePartition()
     if (!getDeviceAndDisk(devicePath, lpDevice, lpDisk)) {
         qDebug() << __FUNCTION__ << "Delete Partition get device and disk failed";
 
-        emit refreshDeviceInfo();
-        emit deletePartitionMessage("0:1");
+        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true, "0:1");
+        //emit deletePartitionMessage("0:1");
 
         return false;
     }
@@ -2189,8 +2200,8 @@ bool PartedCore::deletePartition()
     if (ped == nullptr) {
         qDebug() << __FUNCTION__ << "Delete Partition Get Partition failed";
 
-        emit refreshDeviceInfo();
-        emit deletePartitionMessage("0:2");
+        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true, "0:2");
+        //emit deletePartitionMessage("0:2");
 
         return false;
     }
@@ -2200,8 +2211,8 @@ bool PartedCore::deletePartition()
     if (i == 0) {
         qDebug() << __FUNCTION__ << "Delete Partition failed";
 
-        emit refreshDeviceInfo();
-        emit deletePartitionMessage("0:3");
+        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true, "0:3");
+        //emit deletePartitionMessage("0:3");
 
         return false;
     }
@@ -2209,16 +2220,16 @@ bool PartedCore::deletePartition()
     if (!commit(lpDisk)) {
         qDebug() << __FUNCTION__ << "Delete Partition commit failed";
 
-        emit refreshDeviceInfo();
-        emit deletePartitionMessage("0:4");
+        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true, "0:4");
+        //emit deletePartitionMessage("0:4");
 
         return false;
     }
 
     destroyDeviceAndDisk(lpDevice, lpDisk);
 
-    emit refreshDeviceInfo();
-    emit deletePartitionMessage("1:0");
+    emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true, "1:0");
+    //emit deletePartitionMessage("1:0");
 
     qDebug() << __FUNCTION__ << "Delete Partition end";
     return true;
@@ -2459,7 +2470,7 @@ bool PartedCore::updateUsb()
     qDebug() << __FUNCTION__ << "USB add update start";
 
     //sleep(5);
-    //emit usbUpdated();
+    emit usbUpdated();
 
     autoMount();
 
@@ -2471,7 +2482,7 @@ bool PartedCore::updateUsbRemove()
 {
     qDebug() << __FUNCTION__ << "USB add update remove"; 
 
-    //emit usbUpdated();
+    emit usbUpdated();
     emit refreshDeviceInfo();
 
     autoUmount();
@@ -2499,7 +2510,7 @@ void PartedCore::autoMount()
 //        qDebug() << __FUNCTION__ << output;
     }
 
-    emit refreshDeviceInfo();
+    emit refreshDeviceInfo(DISK_SIGNAL_TYPE_AUTOMNT);
 
     qDebug() << __FUNCTION__ << "solt automount end";
 }
@@ -2556,7 +2567,6 @@ void PartedCore::syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const
 
     m_inforesult = inforesult;
     emit updateDeviceInfo(m_inforesult);
-    emit usbUpdated();
 }
 
 bool PartedCore::createPartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel)
@@ -2581,7 +2591,7 @@ bool PartedCore::createPartitionTable(const QString &devicePath, const QString &
     // Ensure that any previous whole disk device file system can't be recognised by
     // libparted in preference to the "loop" partition table signature, or by blkid in
     // preference to any partition table about to be written.
-//	OperationDetail dummy_od;
+//    OperationDetail dummy_od;
     Sector deviceLength = length.toLongLong();
     Sector deviceSectorSize = sectorSize.toLong();
     Partition tempPartition;
@@ -2595,8 +2605,8 @@ bool PartedCore::createPartitionTable(const QString &devicePath, const QString &
 
     bool flag = newDiskLabel(devicePath, diskLabel);
 
-    emit refreshDeviceInfo();
-    emit createTableMessage(flag);
+    emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CREATE_TABLE, flag, "");
+    //emit createTableMessage(flag);
 
     return flag;
 }
@@ -2620,13 +2630,13 @@ bool PartedCore::newDiskLabel(const QString &devicePath, const QString &diskLabe
     }
 
 //#ifndef USE_LIBPARTED_DMRAID
-//	//delete and recreate disk entries if dmraid
-//	DMRaid dmraid ;
-//	if ( recreate_dmraid_devs && return_value && dmraid.is_dmraid_device( device_path ) )
-//	{
-//		dmraid .purge_dev_map_entries( device_path ) ;
-//		dmraid .create_dev_map_entries( device_path ) ;
-//	}
+//    //delete and recreate disk entries if dmraid
+//    DMRaid dmraid ;
+//    if ( recreate_dmraid_devs && return_value && dmraid.is_dmraid_device( device_path ) )
+//    {
+//        dmraid .purge_dev_map_entries( device_path ) ;
+//        dmraid .create_dev_map_entries( device_path ) ;
+//    }
 //#endif
 
     return returnValue;

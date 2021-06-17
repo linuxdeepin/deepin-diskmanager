@@ -1,0 +1,14 @@
+#ifndef __SIGNAL_TYPE__H__
+#define __SIGNAL_TYPE__H__
+
+
+#define DISK_SIGNAL_TYPE_UMNT 1
+#define DISK_SIGNAL_TYPE_DEL  2
+#define DISK_SIGNAL_TYPE_SHOW 3 
+#define DISK_SIGNAL_TYPE_CREATE_TABLE 4
+
+#define DISK_SIGNAL_TYPE_AUTOMNT 100
+
+
+
+#endif

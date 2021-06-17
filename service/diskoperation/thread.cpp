@@ -235,12 +235,49 @@ void FixThread::setFixBadBlocksInfo(const QString &devicePath, QStringList list,
 ProbeThread::ProbeThread(QObject *parent)
 {
     Q_UNUSED(parent);
+    m_type = 0;
+}
+
+void ProbeThread::setSignal(void *caller, int type, bool arg1, QString arg2)
+{
+    m_type = type;
+    m_arg1 = arg1;
+    m_arg2 = arg2;
+}
+
+void ProbeThread::sendsignals()
+{
+    qDebug() << __FILE__ << ":" << __FUNCTION__ << "AAAAAAAAAAAAAAAAAAAAAA m_type:" << m_type;
+    switch (m_type) {
+    case DISK_SIGNAL_TYPE_UMNT:
+        emit unmountPartition(m_arg2);
+        break;
+    case DISK_SIGNAL_TYPE_DEL:
+        emit deletePartitionMessage(m_arg2);
+        break;
+    case DISK_SIGNAL_TYPE_SHOW:
+        emit showPartitionInfo(m_arg2);
+        break;
+    case DISK_SIGNAL_TYPE_CREATE_TABLE:
+        emit createTableMessage(m_arg1);
+        break;
+    default:
+        break;
+    }
 }
 
 void ProbeThread::probeDeviceInfo()
 {
     qDebug() << __FILE__ << ":" << __FUNCTION__ << "Someone call me in thread!";
-    sleep (9);
+
+    if (DISK_SIGNAL_TYPE_AUTOMNT == m_type) {
+        //Only usb add need to sleep 5 seconds
+        qDebug() << __FUNCTION__ << "From auto Mount, So i will sleep 5 seconds! type:" << m_type;
+        sleep (5);
+    }/* else {
+        qDebug() << __FUNCTION__ << "Not From auto Mount, So i will not sleep 5 seconds! type:" << m_type;
+    }*/
+
     m_inforesult.clear();
     m_deviceMap.clear();
     QVector<QString> devicePaths;
@@ -310,6 +347,7 @@ void ProbeThread::probeDeviceInfo()
     qDebug() << __FUNCTION__ << "**10";
     emit updateDeviceInfo(/*m_deviceMap,*/ m_inforesult);
 
+    sendsignals();
     qDebug() << __FILE__ << ":" << __FUNCTION__ << "Someone call me in thread，working done!";
 }
 

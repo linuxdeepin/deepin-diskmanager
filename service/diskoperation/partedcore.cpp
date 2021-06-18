@@ -92,6 +92,7 @@ void PartedCore::initConnection()
     connect(&m_probeThread, &ProbeThread::showPartitionInfo, this, &PartedCore::showPartitionInfo);
     connect(&m_probeThread, &ProbeThread::createTableMessage, this, &PartedCore::createTableMessage);
     connect(&m_probeThread, &ProbeThread::usbUpdated, this, &PartedCore::usbUpdated);
+    connect(this, &PartedCore::probeAllInfo, &m_probeThread, &ProbeThread::probeDeviceInfo, Qt::UniqueConnection);
 
     //connect(&m_probeThread, &ProbeThread::updateDeviceInfo, this, &PartedCore::updateDeviceInfo);
     connect(&m_checkThread, &WorkThread::checkBadBlocksInfo, this, &PartedCore::checkBadBlocksCountInfo);
@@ -1598,7 +1599,7 @@ void PartedCore::onRefreshDeviceInfo(int type, bool arg1, QString arg2)
     qDebug() << "  ---------------------- 0 --------------------- :" << m_probeThread.thread();
     m_probeThread.moveToThread(m_workerThreadProbe);
     m_probeThread.setSignal(type, arg1, arg2);
-    connect(this, &PartedCore::probeAllInfo, &m_probeThread, &ProbeThread::probeDeviceInfo);
+    //connect(this, &PartedCore::probeAllInfo, &m_probeThread, &ProbeThread::probeDeviceInfo, Qt::UniqueConnection);
     m_workerThreadProbe->start();
     emit probeAllInfo();
     qDebug() << " called probeThread in thread !";

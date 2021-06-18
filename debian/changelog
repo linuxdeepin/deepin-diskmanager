@@ -1,3 +1,11 @@
+deepin-diskmanager (1.2.16) stable; urgency=low
+
+  * 1040第十六次发版
+  * 76576 外设硬盘坏道检测时，插入另一块外设硬盘，界面会停顿，停顿时退出重新检测，检测界面异常
+  * 83171 KLU-打开二级界面后点击一级界面，二级界面窗口移动到一级窗口界面后
+
+ -- yuandandan <yuandandan@uniontech.com>  Fri, 18 Jun 2021 16:35:16 +0800
+
 deepin-diskmanager (1.2.15) stable; urgency=low
 
   * 1040第十五次发版

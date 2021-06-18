@@ -79,6 +79,9 @@ void DiskBadSectorsDialog::initUI()
              << info.m_sectorSize << info.m_maxPrims << info.m_highestBusy << info.m_readonly
              << info.m_maxPartitionNameLength;
 
+    DMDbusHandler::instance()->repairBadBlocks(info.m_path, QStringList(), 8225280, 2);
+    DMDbusHandler::instance()->checkBadSectors(info.m_path, 0, 1, 1, 8225280, 2);
+
     m_verifyLabel = new DLabel(tr("Verify:")); // 检测范围
     DFontSizeManager::instance()->bind(m_verifyLabel, DFontSizeManager::T6, QFont::Normal);
     m_verifyLabel->setPalette(palette1);
@@ -224,6 +227,7 @@ void DiskBadSectorsDialog::initUI()
     m_checkInfoLabel = new DLabel;
     DFontSizeManager::instance()->bind(m_checkInfoLabel, DFontSizeManager::T7, QFont::Medium);
     m_checkInfoLabel->setPalette(palette3);
+    m_checkInfoLabel->hide();
 
     QHBoxLayout *resultLayout = new QHBoxLayout;
     resultLayout->addWidget(resultLabel);
@@ -685,6 +689,7 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
         break;
     }
 
+    m_checkInfoLabel->show();
     m_checkTimer.start(100);
 }
 
@@ -697,6 +702,11 @@ void DiskBadSectorsDialog::mSecsToTime(qint64 msecs, qint64 &hour, qint64 &minut
 
 void DiskBadSectorsDialog::onCheckBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo)
 {
+    if (m_totalCheckNumber == 0) {
+        m_checkTimer.stop();
+        return;
+    }
+
     DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
     QString LBANumber = QString::number(cylinderNumber.toLongLong() * info.m_heads * info.m_sectors);
 
@@ -1046,19 +1056,24 @@ void DiskBadSectorsDialog::onRepairButtonClicked()
 }
 
 void DiskBadSectorsDialog::onRepairBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus, const QString &cylinderTimeConsuming)
-{
+{qDebug() << "111111111111";
+    if (m_totalRepairNumber == 0) {
+        m_timer.stop();
+        return;
+    }
+
     ++m_curRepairNumber;
     m_curRepairTime += cylinderTimeConsuming.toLongLong();
     m_checkInfoLabel->setText(tr("Repairing cylinder: %1").arg(cylinderNumber)); // 正在修复xxx柱面
 
-    qint64 totalTime = m_curRepairTime / m_curRepairNumber * m_totalRepairNumber;
+    qint64 totalTime = m_curRepairTime / m_curRepairNumber * m_totalRepairNumber;qDebug() << "3333333333" << m_totalRepairNumber;
     m_usedTime = m_curRepairTime;
     m_unusedTime = totalTime - m_curRepairTime;
     m_unusedTime < 1000 ? m_unusedTime = 1000 : m_unusedTime;
-
+qDebug() << "444444444444" << totalTime;
     QString badSectors = m_settings->value("BadSectorsData/BadSectors").toString();
     QStringList lstBadSectors = badSectors.split(",");
-    lstBadSectors.removeOne(cylinderNumber);
+    lstBadSectors.removeOne(cylinderNumber);qDebug() << "555555555";
     if (lstBadSectors.count() > 0) {
         m_settings->setValue("BadSectorsData/BadSectors", lstBadSectors.join(","));
     } else {
@@ -1074,7 +1089,7 @@ void DiskBadSectorsDialog::onRepairBadBlocksInfo(const QString &cylinderNumber, 
         m_settings->setValue(QString("CheckData/%1").arg(cylinderNumber), lstCheckData.join(","));
 
         m_cylinderInfoWidget->setCurRepairBadBlocksInfo(cylinderNumber);
-    }
+    }qDebug() << "22222222222";
 }
 
 void DiskBadSectorsDialog::onRepairComplete()

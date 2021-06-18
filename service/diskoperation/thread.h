@@ -41,7 +41,7 @@ class ProbeThread :public QObject
     Q_OBJECT
 public:
     ProbeThread(QObject *parent = nullptr);
-    void setSignal(void *caller, int type = 0, bool arg1 = true, QString arg2 = "");
+    void setSignal(int type = 0, bool arg1 = true, QString arg2 = "");
     void sendsignals();
 public slots:
     void probeDeviceInfo();
@@ -52,6 +52,7 @@ signals:
     void deletePartitionMessage(const QString &m);
     void showPartitionInfo(const QString &m);
     void createTableMessage(const bool &flag);
+    void usbUpdated();
 private:
     QMap<QString, Device> m_deviceMap;
     DeviceInfoMap m_inforesult;

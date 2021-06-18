@@ -91,6 +91,7 @@ void PartedCore::initConnection()
     connect(&m_probeThread, &ProbeThread::deletePartitionMessage, this, &PartedCore::deletePartitionMessage);
     connect(&m_probeThread, &ProbeThread::showPartitionInfo, this, &PartedCore::showPartitionInfo);
     connect(&m_probeThread, &ProbeThread::createTableMessage, this, &PartedCore::createTableMessage);
+    connect(&m_probeThread, &ProbeThread::usbUpdated, this, &PartedCore::usbUpdated);
 
     //connect(&m_probeThread, &ProbeThread::updateDeviceInfo, this, &PartedCore::updateDeviceInfo);
     connect(&m_checkThread, &WorkThread::checkBadBlocksInfo, this, &PartedCore::checkBadBlocksCountInfo);
@@ -1587,21 +1588,19 @@ bool PartedCore::resizeMoveFileSystemUsingLibparted(const Partition &partitionOl
 void PartedCore::onRefreshDeviceInfo(int type, bool arg1, QString arg2)
 {
     qDebug() << " will call probeThread in thread !";
-    if (m_workerThreadProbe) {
-        m_workerThreadProbe->quit();
-        m_workerThreadProbe->wait();
-        delete  m_workerThreadProbe;
-    }
-    //if(m_workerThreadProbe == nullptr)
+    if(m_workerThreadProbe == nullptr)
     {
         m_workerThreadProbe = new QThread();
-        qDebug() << "onRefresh Create thread: " << QThread::currentThreadId() << " ++++++++" << endl;
+        qDebug() << "onRefresh Create thread: " << QThread::currentThreadId() << " ++++++++" << m_workerThreadProbe << endl;
     }
 
+
+    qDebug() << "  ---------------------- 0 --------------------- :" << m_probeThread.thread();
     m_probeThread.moveToThread(m_workerThreadProbe);
-    m_probeThread.setSignal(this, type, arg1, arg2);
-    connect(m_workerThreadProbe, SIGNAL(started()), &m_probeThread, SLOT(probeDeviceInfo()));
+    m_probeThread.setSignal(type, arg1, arg2);
+    connect(this, &PartedCore::probeAllInfo, &m_probeThread, &ProbeThread::probeDeviceInfo);
     m_workerThreadProbe->start();
+    emit probeAllInfo();
     qDebug() << " called probeThread in thread !";
 }
 
@@ -2482,8 +2481,8 @@ bool PartedCore::updateUsbRemove()
 {
     qDebug() << __FUNCTION__ << "USB add update remove"; 
 
-    emit usbUpdated();
-    emit refreshDeviceInfo();
+    //emit usbUpdated();
+    emit refreshDeviceInfo(DISK_SIGNAL_USBUPDATE);
 
     autoUmount();
 
@@ -2560,11 +2559,6 @@ void PartedCore::syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const
     qDebug() << "syncDeviceInfo finally!";
     //m_deviceMap = deviceMap;
     m_deviceMap = m_probeThread.get_deviceMap();
-    m_workerThreadProbe->quit();
-    m_workerThreadProbe->wait();
-    delete  m_workerThreadProbe;
-    m_workerThreadProbe = nullptr;
-
     m_inforesult = inforesult;
     emit updateDeviceInfo(m_inforesult);
 }

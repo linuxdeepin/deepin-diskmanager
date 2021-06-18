@@ -648,6 +648,7 @@ private:
      */
     bool createPartition(Partition &newPartition, Sector minSize = 0);
 signals:
+    void probeAllInfo();
 
     /**
      * @brief 创建分区表信号

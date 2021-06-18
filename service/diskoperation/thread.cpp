@@ -238,7 +238,7 @@ ProbeThread::ProbeThread(QObject *parent)
     m_type = 0;
 }
 
-void ProbeThread::setSignal(void *caller, int type, bool arg1, QString arg2)
+void ProbeThread::setSignal(int type, bool arg1, QString arg2)
 {
     m_type = type;
     m_arg1 = arg1;
@@ -247,7 +247,7 @@ void ProbeThread::setSignal(void *caller, int type, bool arg1, QString arg2)
 
 void ProbeThread::sendsignals()
 {
-    qDebug() << __FILE__ << ":" << __FUNCTION__ << "AAAAAAAAAAAAAAAAAAAAAA m_type:" << m_type;
+    qDebug() << __FILE__ << ":" << __FUNCTION__ << " m_type:" << m_type;
     switch (m_type) {
     case DISK_SIGNAL_TYPE_UMNT:
         emit unmountPartition(m_arg2);
@@ -261,9 +261,13 @@ void ProbeThread::sendsignals()
     case DISK_SIGNAL_TYPE_CREATE_TABLE:
         emit createTableMessage(m_arg1);
         break;
+    case DISK_SIGNAL_USBUPDATE:
+        emit usbUpdated();
+        break;
     default:
         break;
     }
+    m_type = 0;
 }
 
 void ProbeThread::probeDeviceInfo()
@@ -349,6 +353,7 @@ void ProbeThread::probeDeviceInfo()
 
     sendsignals();
     qDebug() << __FILE__ << ":" << __FUNCTION__ << "Someone call me in thread，working done!";
+    qDebug() << __FILE__ << "Now I am working on thread:" << QThread::currentThreadId();
 }
 
 QMap<QString, Device> ProbeThread::get_deviceMap()

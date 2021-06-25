@@ -65,6 +65,11 @@ if test "x`id -u`" != "x0"; then
 	pkexec --disable-internal-agent '/usr/bin/deepin-diskmanager-authenticateProxy' "$@"
 	status=$?
 
+    # If donot input passwd or just close auth-window, we kill deepin-disk-manager process manuelly
+	if [ $status -ne 0 ];then
+		killall -9 deepin-disk-manager
+	fi
+
 	#
 	# Revoke root access to the X11 display, only if we deepin-diskmanager it.
 	#

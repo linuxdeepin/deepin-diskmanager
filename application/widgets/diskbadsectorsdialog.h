@@ -27,6 +27,8 @@
 #ifndef DISKBADSECTORSDIALOG_H
 #define DISKBADSECTORSDIALOG_H
 
+#include "partedproxy/dmdbushandler.h"
+
 #include <DDialog>
 #include <DComboBox>
 #include <DLineEdit>
@@ -257,6 +259,7 @@ private:
     QTimer m_checkTimer;
     int m_blockStart = 0;
     int m_blockEnd = 0;
+    DeviceInfo m_deviceInfo;
 };
 
 #endif // DISKBADSECTORSDIALOG_H

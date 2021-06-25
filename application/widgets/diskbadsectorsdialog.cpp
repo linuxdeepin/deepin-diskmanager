@@ -28,7 +28,6 @@
 #include "common.h"
 #include "cylinderwidget.h"
 #include "cylinderinfowidget.h"
-#include "partedproxy/dmdbushandler.h"
 #include "messagebox.h"
 
 #include <DHorizontalLine>
@@ -73,14 +72,14 @@ void DiskBadSectorsDialog::initUI()
     color3.setAlphaF(0.85);
     palette3.setColor(DPalette::NoType, color3);
 
-    DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
-    qDebug() << __FUNCTION__ << info.m_path << info.m_length << info.m_heads << info.m_sectors
-             << info.m_cylinders << info.m_cylsize << info.m_model << info.m_serialNumber << info.m_disktype
-             << info.m_sectorSize << info.m_maxPrims << info.m_highestBusy << info.m_readonly
-             << info.m_maxPartitionNameLength;
+    m_deviceInfo = DMDbusHandler::instance()->getCurDeviceInfo();
+    qDebug() << __FUNCTION__ << m_deviceInfo.m_path << m_deviceInfo.m_length << m_deviceInfo.m_heads << m_deviceInfo.m_sectors
+             << m_deviceInfo.m_cylinders << m_deviceInfo.m_cylsize << m_deviceInfo.m_model << m_deviceInfo.m_serialNumber << m_deviceInfo.m_disktype
+             << m_deviceInfo.m_sectorSize << m_deviceInfo.m_maxPrims << m_deviceInfo.m_highestBusy << m_deviceInfo.m_readonly
+             << m_deviceInfo.m_maxPartitionNameLength;
 
-    DMDbusHandler::instance()->repairBadBlocks(info.m_path, QStringList(), 8225280, 2);
-    DMDbusHandler::instance()->checkBadSectors(info.m_path, 0, 1, 1, 8225280, 2);
+    DMDbusHandler::instance()->repairBadBlocks(m_deviceInfo.m_path, QStringList(), 8225280, 2);
+    DMDbusHandler::instance()->checkBadSectors(m_deviceInfo.m_path, 0, 1, 1, 8225280, 2);
 
     m_verifyLabel = new DLabel(tr("Verify:")); // 检测范围
     DFontSizeManager::instance()->bind(m_verifyLabel, DFontSizeManager::T6, QFont::Normal);
@@ -97,7 +96,7 @@ void DiskBadSectorsDialog::initUI()
     QRegExp reg("[0-9]+$"); // 只能输入数字正则表达式
     QRegExpValidator *validator = new QRegExpValidator(reg, this);
 
-//    QIntValidator *intValidator = new QIntValidator(0, QString("%1").arg(info.cylinders).toInt(), this);
+//    QIntValidator *intValidator = new QIntValidator(0, QString("%1").arg(m_deviceInfo.cylinders).toInt(), this);
 
     m_startLineEdit = new DLineEdit;
     m_startLineEdit->setFixedHeight(36);
@@ -110,8 +109,8 @@ void DiskBadSectorsDialog::initUI()
 
     m_endLineEdit = new DLineEdit;
     m_endLineEdit->setFixedHeight(36);
-    m_endLineEdit->setText(QString("%1").arg(info.m_cylinders));
-    m_endLineEdit->lineEdit()->setPlaceholderText(QString("%1").arg(info.m_cylinders));
+    m_endLineEdit->setText(QString("%1").arg(m_deviceInfo.m_cylinders));
+    m_endLineEdit->lineEdit()->setPlaceholderText(QString("%1").arg(m_deviceInfo.m_cylinders));
     m_endLineEdit->lineEdit()->setValidator(validator);
     DFontSizeManager::instance()->bind(m_endLineEdit, DFontSizeManager::T6, QFont::Medium);
     m_endLineEdit->setAccessibleName("endValue");
@@ -237,7 +236,7 @@ void DiskBadSectorsDialog::initUI()
     resultLayout->setContentsMargins(0, 0, 0, 0);
 
 //    DFrame *frame = new DFrame;
-    m_cylinderInfoWidget = new CylinderInfoWidget(QString("%1").arg(info.m_cylinders).toInt());
+    m_cylinderInfoWidget = new CylinderInfoWidget(QString("%1").arg(m_deviceInfo.m_cylinders).toInt());
     m_cylinderInfoWidget->setMinimumSize(615, 380);
 
     CylinderWidget *excellentWidget = new CylinderWidget;
@@ -432,25 +431,23 @@ void DiskBadSectorsDialog::initConnections()
 
 void DiskBadSectorsDialog::onVerifyChanged(int index)
 {
-    DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
-
     m_startLineEdit->setText("0");
     m_endLineEdit->setAlert(false);
     m_startLineEdit->setAlert(false);
 
     switch (index) {
     case 0: {
-        m_endLineEdit->lineEdit()->setPlaceholderText(QString("%1").arg(info.m_cylinders));
-        m_endLineEdit->setText(QString("%1").arg(info.m_cylinders));
+        m_endLineEdit->lineEdit()->setPlaceholderText(QString("%1").arg(m_deviceInfo.m_cylinders));
+        m_endLineEdit->setText(QString("%1").arg(m_deviceInfo.m_cylinders));
         break;
     }
     case 1: {
-        m_endLineEdit->lineEdit()->setPlaceholderText(QString("%1").arg(info.m_length));
-        m_endLineEdit->setText(QString("%1").arg(info.m_length));
+        m_endLineEdit->lineEdit()->setPlaceholderText(QString("%1").arg(m_deviceInfo.m_length));
+        m_endLineEdit->setText(QString("%1").arg(m_deviceInfo.m_length));
         break;
     }
     case 2: {
-        int value = info.m_length * info.m_sectorSize / 1024 / 1024;
+        int value = m_deviceInfo.m_length * m_deviceInfo.m_sectorSize / 1024 / 1024;
         m_endLineEdit->lineEdit()->setPlaceholderText(QString("%1").arg(value));
         m_endLineEdit->setText(QString("%1").arg(value));
         break;
@@ -611,8 +608,6 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
         file.close();
     }
 
-    DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
-
     int checkNumber = 8;
     switch (m_methodComboBox->currentIndex()) {
     case 0: {
@@ -631,7 +626,7 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
     case 0: {
         m_blockStart = m_startLineEdit->text().toInt();
         m_blockEnd = m_endLineEdit->text().toInt();
-        int checkSize = static_cast<int>(info.m_heads * info.m_sectors * info.m_sectorSize);
+        int checkSize = static_cast<int>(m_deviceInfo.m_heads * m_deviceInfo.m_sectors * m_deviceInfo.m_sectorSize);
 
         m_settings->beginGroup("SettingData");
         m_settings->setValue("BlockStart", m_blockStart);
@@ -644,13 +639,13 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
         m_cylinderInfoWidget->setCylinderNumber(m_totalCheckNumber);
         m_cylinderInfoWidget->setChecked(true);
 
-        DMDbusHandler::instance()->checkBadSectors(info.m_path, m_blockStart, m_blockEnd, checkNumber, checkSize, 1);
+        DMDbusHandler::instance()->checkBadSectors(m_deviceInfo.m_path, m_blockStart, m_blockEnd, checkNumber, checkSize, 1);
         break;
     }
     case 1: {
-        m_blockStart = static_cast<int>(m_startLineEdit->text().toLongLong() / info.m_cylsize);
-        m_blockEnd = static_cast<int>(m_endLineEdit->text().toLongLong() / info.m_cylsize);
-        int checkSize = static_cast<int>(info.m_heads * info.m_sectors * info.m_sectorSize);
+        m_blockStart = static_cast<int>(m_startLineEdit->text().toLongLong() / m_deviceInfo.m_cylsize);
+        m_blockEnd = static_cast<int>(m_endLineEdit->text().toLongLong() / m_deviceInfo.m_cylsize);
+        int checkSize = static_cast<int>(m_deviceInfo.m_heads * m_deviceInfo.m_sectors * m_deviceInfo.m_sectorSize);
 
         m_settings->beginGroup("SettingData");
         m_settings->setValue("BlockStart",m_blockStart);
@@ -663,11 +658,11 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
         m_cylinderInfoWidget->setCylinderNumber(m_totalCheckNumber);
         m_cylinderInfoWidget->setChecked(true);
 
-        DMDbusHandler::instance()->checkBadSectors(info.m_path, m_blockStart, m_blockEnd, checkNumber, checkSize, 1);
+        DMDbusHandler::instance()->checkBadSectors(m_deviceInfo.m_path, m_blockStart, m_blockEnd, checkNumber, checkSize, 1);
         break;
     }
     case 2: {
-        int checkSize = static_cast<int>(info.m_heads * info.m_sectors * info.m_sectorSize);
+        int checkSize = static_cast<int>(m_deviceInfo.m_heads * m_deviceInfo.m_sectors * m_deviceInfo.m_sectorSize);
         m_blockStart = static_cast<int>(m_startLineEdit->text().toLongLong() * 1024 * 1024 / checkSize);
         m_blockEnd = static_cast<int>(m_endLineEdit->text().toLongLong() * 1024 * 1024 / checkSize);
 
@@ -682,7 +677,7 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
         m_cylinderInfoWidget->setCylinderNumber(m_totalCheckNumber);
         m_cylinderInfoWidget->setChecked(true);
 
-        DMDbusHandler::instance()->checkBadSectors(info.m_path, m_blockStart, m_blockEnd, checkNumber, checkSize, 1);
+        DMDbusHandler::instance()->checkBadSectors(m_deviceInfo.m_path, m_blockStart, m_blockEnd, checkNumber, checkSize, 1);
         break;
     }
     default:
@@ -702,13 +697,12 @@ void DiskBadSectorsDialog::mSecsToTime(qint64 msecs, qint64 &hour, qint64 &minut
 
 void DiskBadSectorsDialog::onCheckBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo)
 {
-    if (m_totalCheckNumber == 0) {
+    if ((m_totalCheckNumber == 0) || (m_curType != StatusType::Check)) {
         m_checkTimer.stop();
         return;
     }
 
-    DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
-    QString LBANumber = QString::number(cylinderNumber.toLongLong() * info.m_heads * info.m_sectors);
+    QString LBANumber = QString::number(cylinderNumber.toLongLong() * m_deviceInfo.m_heads * m_deviceInfo.m_sectors);
 
     m_settings->beginGroup("CheckData");
     m_settings->setValue(cylinderNumber, QString("%1,%2,%3,%4,%5,0").arg(LBANumber).arg(cylinderNumber).arg(cylinderTimeConsuming).arg(cylinderStatus).arg(cylinderErrorInfo));
@@ -812,27 +806,25 @@ void DiskBadSectorsDialog::onStopButtonClicked()
         m_resetButton->setDisabled(false);
         m_curType = StatusType::StopCheck;
         m_cylinderInfoWidget->setChecked(false);
-        DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
 
         int checkSize = m_settings->value("SettingData/CheckSize").toInt();
         int blockStart = m_settings->value("SettingData/BlockStart").toInt();
         int blockEnd = m_settings->value("SettingData/BlockEnd").toInt();
         int checkNumber = m_settings->value("SettingData/CheckNumber").toInt();
 
-        DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart, blockEnd, checkNumber, checkSize, 2);
+        DMDbusHandler::instance()->checkBadSectors(m_deviceInfo.m_path, blockStart, blockEnd, checkNumber, checkSize, 2);
         m_checkTimer.stop();
         break;
     }
     case StatusType::Repair:{
         m_buttonStackedWidget->setCurrentIndex(2);
         m_curType = StatusType::StopRepair;
-        DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
-        int repairSize = static_cast<int>(info.m_heads * info.m_sectors * info.m_sectorSize);
+        int repairSize = static_cast<int>(m_deviceInfo.m_heads * m_deviceInfo.m_sectors * m_deviceInfo.m_sectorSize);
 
         QString repairCylinder = m_settings->value("BadSectorsData/BadSectors").toString();
         QStringList lstBadSectors = repairCylinder.split(",");
 
-        DMDbusHandler::instance()->repairBadBlocks(info.m_path, lstBadSectors, repairSize, 2);
+        DMDbusHandler::instance()->repairBadBlocks(m_deviceInfo.m_path, lstBadSectors, repairSize, 2);
         m_timer.stop();
         break;
     }
@@ -849,27 +841,25 @@ void DiskBadSectorsDialog::onContinueButtonClicked()
         m_resetButton->setDisabled(true);
         m_curType = StatusType::Check;
         m_cylinderInfoWidget->setChecked(true);
-        DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
 
         int checkSize = m_settings->value("SettingData/CheckSize").toInt();
         int blockStart = m_settings->value("SettingData/CurCylinder").toInt();
         int blockEnd = m_settings->value("SettingData/BlockEnd").toInt();
         int checkNumber = m_settings->value("SettingData/CheckNumber").toInt();
 
-        DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart + 1, blockEnd, checkNumber, checkSize, 3);
+        DMDbusHandler::instance()->checkBadSectors(m_deviceInfo.m_path, blockStart + 1, blockEnd, checkNumber, checkSize, 3);
         m_checkTimer.start(100);
         break;
     }
     case StatusType::StopRepair:{
         m_buttonStackedWidget->setCurrentIndex(1);
         m_curType = StatusType::Repair;
-        DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
-        int repairSize = static_cast<int>(info.m_heads * info.m_sectors * info.m_sectorSize);
+        int repairSize = static_cast<int>(m_deviceInfo.m_heads * m_deviceInfo.m_sectors * m_deviceInfo.m_sectorSize);
 
         QString repairCylinder = m_settings->value("BadSectorsData/BadSectors").toString();
         QStringList lstBadSectors = repairCylinder.split(",");
 
-        DMDbusHandler::instance()->repairBadBlocks(info.m_path, lstBadSectors, repairSize, 3);
+        DMDbusHandler::instance()->repairBadBlocks(m_deviceInfo.m_path, lstBadSectors, repairSize, 3);
         m_timer.start(200);
         break;
     }
@@ -891,8 +881,6 @@ void DiskBadSectorsDialog::onAgainVerifyButtonClicked()
     m_repairButton->setDisabled(true);
     m_curCheckNumber = 0;
     m_curCheckTime = 0;
-
-    DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
 
     int checkSize = m_settings->value("SettingData/CheckSize").toInt();
     m_blockStart = m_settings->value("SettingData/BlockStart").toInt();
@@ -922,7 +910,7 @@ void DiskBadSectorsDialog::onAgainVerifyButtonClicked()
     m_cylinderInfoWidget->againVerify(m_blockEnd - m_blockStart + 1);
     m_cylinderInfoWidget->setChecked(true);
 
-    DMDbusHandler::instance()->checkBadSectors(info.m_path, m_blockStart, m_blockEnd, checkNumber, checkSize, 1);
+    DMDbusHandler::instance()->checkBadSectors(m_deviceInfo.m_path, m_blockStart, m_blockEnd, checkNumber, checkSize, 1);
     m_checkTimer.start(100);
 }
 
@@ -947,12 +935,11 @@ void DiskBadSectorsDialog::onResetButtonClicked()
     m_curRepairTime = 0;
     m_cylinderInfoWidget->setChecked(false);
 
-    DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
     m_verifyComboBox->setCurrentIndex(0);
     m_startLineEdit->setText("0");
     m_startLineEdit->lineEdit()->setPlaceholderText("0");
-    m_endLineEdit->setText(QString("%1").arg(info.m_cylinders));
-    m_endLineEdit->lineEdit()->setPlaceholderText(QString("%1").arg(info.m_cylinders));
+    m_endLineEdit->setText(QString("%1").arg(m_deviceInfo.m_cylinders));
+    m_endLineEdit->lineEdit()->setPlaceholderText(QString("%1").arg(m_deviceInfo.m_cylinders));
 
     m_methodComboBox->setCurrentIndex(0);
     m_checkTimesEdit->setText("8");
@@ -967,9 +954,8 @@ bool DiskBadSectorsDialog::isExistMountPartition()
 {
     bool isExist = false;
 
-    DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
-    for (int i = 0; i < info.m_partition.size(); i++) {
-        PartitionInfo partitionInfo = info.m_partition.at(i);
+    for (int i = 0; i < m_deviceInfo.m_partition.size(); i++) {
+        PartitionInfo partitionInfo = m_deviceInfo.m_partition.at(i);
 
         QString mountpoints;
         for (int j = 0; j < partitionInfo.m_mountPoints.size(); j++) {
@@ -1034,8 +1020,7 @@ void DiskBadSectorsDialog::onRepairButtonClicked()
         m_curRepairNumber = 0;
         m_curRepairTime = 0;
 
-        DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
-        int repairSize = static_cast<int>(info.m_heads * info.m_sectors * info.m_sectorSize);
+        int repairSize = static_cast<int>(m_deviceInfo.m_heads * m_deviceInfo.m_sectors * m_deviceInfo.m_sectorSize);
 
         QString repairCylinder = m_settings->value("BadSectorsData/BadSectors").toString();
         QStringList lstBadSectors = repairCylinder.split(",");
@@ -1050,14 +1035,14 @@ void DiskBadSectorsDialog::onRepairButtonClicked()
         mSecsToTime(m_unusedTime, remainingHour, remainingMinute, remainingSecond);
         m_unusedTimeLabel->setText(tr("Time left:") + QString("%1:%2:%3").arg(remainingHour, 2, 10, QLatin1Char('0')).arg(remainingMinute, 2, 10, QLatin1Char('0')).arg(remainingSecond, 2, 10, QLatin1Char('0')));
 
-        DMDbusHandler::instance()->repairBadBlocks(info.m_path, lstBadSectors, repairSize, 1);
+        DMDbusHandler::instance()->repairBadBlocks(m_deviceInfo.m_path, lstBadSectors, repairSize, 1);
         m_timer.start(200);
     }
 }
 
 void DiskBadSectorsDialog::onRepairBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus, const QString &cylinderTimeConsuming)
-{qDebug() << "111111111111";
-    if (m_totalRepairNumber == 0) {
+{
+    if ((m_totalRepairNumber == 0) || (m_curType != StatusType::Repair)) {
         m_timer.stop();
         return;
     }
@@ -1070,10 +1055,10 @@ void DiskBadSectorsDialog::onRepairBadBlocksInfo(const QString &cylinderNumber, 
     m_usedTime = m_curRepairTime;
     m_unusedTime = totalTime - m_curRepairTime;
     m_unusedTime < 1000 ? m_unusedTime = 1000 : m_unusedTime;
-qDebug() << "444444444444" << totalTime;
+
     QString badSectors = m_settings->value("BadSectorsData/BadSectors").toString();
     QStringList lstBadSectors = badSectors.split(",");
-    lstBadSectors.removeOne(cylinderNumber);qDebug() << "555555555";
+
     if (lstBadSectors.count() > 0) {
         m_settings->setValue("BadSectorsData/BadSectors", lstBadSectors.join(","));
     } else {
@@ -1089,7 +1074,7 @@ qDebug() << "444444444444" << totalTime;
         m_settings->setValue(QString("CheckData/%1").arg(cylinderNumber), lstCheckData.join(","));
 
         m_cylinderInfoWidget->setCurRepairBadBlocksInfo(cylinderNumber);
-    }qDebug() << "22222222222";
+    }
 }
 
 void DiskBadSectorsDialog::onRepairComplete()
@@ -1148,29 +1133,17 @@ void DiskBadSectorsDialog::stopCheckRepair()
     switch (m_curType) {
     case StatusType::Check: {
         m_curType = StatusType::StopCheck;
-
-        DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
-
-        int checkSize = m_settings->value("SettingData/CheckSize").toInt();
-        int blockStart = m_settings->value("SettingData/BlockStart").toInt();
-        int blockEnd = m_settings->value("SettingData/BlockEnd").toInt();
-        int checkNumber = m_settings->value("SettingData/CheckNumber").toInt();
-        DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart, blockEnd, checkNumber, checkSize, 2);
+        disconnect(DMDbusHandler::instance(), &DMDbusHandler::checkBadBlocksCountInfo, this, &DiskBadSectorsDialog::onCheckBadBlocksInfo);
         m_checkTimer.stop();
+        DMDbusHandler::instance()->checkBadSectors("/dev/sdb", 0, 1, 2, 8225280, 2);
 
         break;
     }
     case StatusType::Repair:{
         m_curType = StatusType::StopRepair;
-
-        DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
-        int repairSize = static_cast<int>(info.m_heads * info.m_sectors * info.m_sectorSize);
-
-        QString repairCylinder = m_settings->value("BadSectorsData/BadSectors").toString();
-        QStringList lstBadSectors = repairCylinder.split(",");
-
-        DMDbusHandler::instance()->repairBadBlocks(info.m_path, lstBadSectors, repairSize, 2);
+        disconnect(DMDbusHandler::instance(), &DMDbusHandler::repairBadBlocksInfo, this, &DiskBadSectorsDialog::onRepairBadBlocksInfo);
         m_timer.stop();
+        DMDbusHandler::instance()->repairBadBlocks("/dev/sdb", QStringList(), 8225280, 2);
 
         break;
     }
@@ -1189,14 +1162,12 @@ void DiskBadSectorsDialog::closeEvent(QCloseEvent *event)
         messageBox.setWarings(tr("Verifying for bad sectors, exit now?"), tr("The verified information will not be reserved"),
                               tr("Exit"), DDialog::ButtonWarning, tr("Cancel"));
         if (messageBox.exec() == DDialog::Accepted) {
-            DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
-
             int checkSize = m_settings->value("SettingData/CheckSize").toInt();
             int blockStart = m_settings->value("SettingData/BlockStart").toInt();
             int blockEnd = m_settings->value("SettingData/BlockEnd").toInt();
             int checkNumber = m_settings->value("SettingData/CheckNumber").toInt();
 
-            DMDbusHandler::instance()->checkBadSectors(info.m_path, blockStart, blockEnd, checkNumber, checkSize, 2);
+            DMDbusHandler::instance()->checkBadSectors(m_deviceInfo.m_path, blockStart, blockEnd, checkNumber, checkSize, 2);
             m_checkTimer.stop();
 
             QFile file("/tmp/CheckData.conf");
@@ -1217,14 +1188,12 @@ void DiskBadSectorsDialog::closeEvent(QCloseEvent *event)
         messageBox.setWarings(tr("Repairing bad sectors, exit now?"), tr("The repairing information will not be reserved"),
                               tr("Exit"), DDialog::ButtonWarning, tr("Cancel"));
         if (messageBox.exec() == DDialog::Accepted) {
-
-            DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
-            int repairSize = static_cast<int>(info.m_heads * info.m_sectors * info.m_sectorSize);
+            int repairSize = static_cast<int>(m_deviceInfo.m_heads * m_deviceInfo.m_sectors * m_deviceInfo.m_sectorSize);
 
             QString repairCylinder = m_settings->value("BadSectorsData/BadSectors").toString();
             QStringList lstBadSectors = repairCylinder.split(",");
 
-            DMDbusHandler::instance()->repairBadBlocks(info.m_path, lstBadSectors, repairSize, 2);
+            DMDbusHandler::instance()->repairBadBlocks(m_deviceInfo.m_path, lstBadSectors, repairSize, 2);
             m_timer.stop();
 
             QFile file("/tmp/CheckData.conf");

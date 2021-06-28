@@ -1,3 +1,10 @@
+deepin-diskmanager (1.1.0.46) stable; urgency=low
+
+  * 1032维护分支第六次发版
+  * 81881 硬盘以及分区名称过长时字符重叠以及显示不全
+
+ -- yuandandan <yuandandan@uniontech.com>  Mon, 28 Jun 2021 15:31:16 +0800
+
 deepin-diskmanager (1.1.0.45) stable; urgency=low
 
   * 1032维护分支第五次发版

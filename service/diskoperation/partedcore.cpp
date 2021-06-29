@@ -104,7 +104,7 @@ void PartedCore::initConnection()
     connect(&m_probeThread, &ProbeThread::showPartitionInfo, this, &PartedCore::showPartitionInfo);
     connect(&m_probeThread, &ProbeThread::createTableMessage, this, &PartedCore::createTableMessage);
     connect(&m_probeThread, &ProbeThread::usbUpdated, this, &PartedCore::usbUpdated);
-    connect(this, &PartedCore::probeAllInfo, &m_probeThread, &ProbeThread::probeDeviceInfo, Qt::UniqueConnection);
+    connect(this, &PartedCore::probeAllInfo, &m_probeThread, &ProbeThread::probeDeviceInfo);
 
     //connect(&m_probeThread, &ProbeThread::updateDeviceInfo, this, &PartedCore::updateDeviceInfo);
     connect(&m_checkThread, &WorkThread::checkBadBlocksInfo, this, &PartedCore::checkBadBlocksCountInfo);
@@ -232,19 +232,19 @@ void PartedCore::probeDeviceInfo(const QString &)
     m_inforesult.clear();
     m_deviceMap.clear();
     QVector<QString> devicePaths;
-    qDebug() << __FUNCTION__ << "**1";
+    //qDebug() << __FUNCTION__ << "**1";
     devicePaths.clear();
     BlockSpecial::clearCache();
-    qDebug() << __FUNCTION__ << "**2";
+    //qDebug() << __FUNCTION__ << "**2";
     ProcPartitionsInfo::loadCache();
-    qDebug() << __FUNCTION__ << "**3";
+    //qDebug() << __FUNCTION__ << "**3";
     FsInfo::loadCache();
-    qDebug() << __FUNCTION__ << "**4";
-    qDebug() << __FUNCTION__ << "**5";
+    //qDebug() << __FUNCTION__ << "**4";
+    //qDebug() << __FUNCTION__ << "**5";
     MountInfo::loadCache();
-    qDebug() << __FUNCTION__ << "**6";
+    //qDebug() << __FUNCTION__ << "**6";
     ped_device_probe_all();
-    qDebug() << __FUNCTION__ << "**7";
+    //qDebug() << __FUNCTION__ << "**7";
     PedDevice *lpDevice = ped_device_get_next(nullptr);
     while (lpDevice) {
         /* TO TRANSLATORS: looks like   Confirming /dev/sda */
@@ -258,14 +258,14 @@ void PartedCore::probeDeviceInfo(const QString &)
     }
 //    qDebug() << __FUNCTION__ << "devicepaths size=" << devicepaths.size();
     std::sort(devicePaths.begin(), devicePaths.end());
-    qDebug() << __FUNCTION__ << "**8";
+    //qDebug() << __FUNCTION__ << "**8";
     for (int t = 0; t < devicePaths.size(); t++) {
         /*TO TRANSLATORS: looks like Searching /dev/sda partitions */
         Device tempDevice;
         setDeviceFromDisk(tempDevice, devicePaths[t]);
         m_deviceMap.insert(devicePaths.at(t), tempDevice);
     }
-    qDebug() << __FUNCTION__ << "**9";
+    //qDebug() << __FUNCTION__ << "**9";
 //    getPartitionHiddenFlag();
     for (auto it = m_deviceMap.begin(); it != m_deviceMap.end(); it++) {
         DeviceInfo devinfo = it.value().getDeviceInfo();
@@ -293,7 +293,7 @@ void PartedCore::probeDeviceInfo(const QString &)
         m_inforesult.insert(devinfo.m_path, devinfo);
     }
 //    qDebug() << __FUNCTION__ << m_inforesult.count();
-    qDebug() << __FUNCTION__ << "**10";
+    //qDebug() << __FUNCTION__ << "**10";
 }
 
 bool PartedCore::useableDevice(const PedDevice *lpDevice)
@@ -2362,7 +2362,7 @@ bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int b
     case 1: {
         m_checkThread.moveToThread(m_workerThread);
         m_checkThread.setStopFlag(flag);
-        m_checkThread.setConutInfo(devicePath, blockStart, blockEnd, checkConut, checkSize);
+        m_checkThread.setCountInfo(devicePath, blockStart, blockEnd, checkConut, checkSize);
         connect(m_workerThread, SIGNAL(started()), &m_checkThread, SLOT(runCount()));
         m_workerThread->start();
     }
@@ -2373,7 +2373,7 @@ bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int b
     case 3: {
         m_checkThread.moveToThread(m_workerThread);
         m_checkThread.setStopFlag(flag);
-        m_checkThread.setConutInfo(devicePath, blockStart, blockEnd, checkConut, checkSize);
+        m_checkThread.setCountInfo(devicePath, blockStart, blockEnd, checkConut, checkSize);
         connect(m_workerThread, SIGNAL(started()), &m_checkThread, SLOT(runCount()));
         m_workerThread->start();
     }
@@ -2571,7 +2571,7 @@ void PartedCore::syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const
 {
     qDebug() << "syncDeviceInfo finally!";
     //m_deviceMap = deviceMap;
-    m_deviceMap = m_probeThread.get_deviceMap();
+    m_deviceMap = m_probeThread.getDeviceMap();
     m_inforesult = inforesult;
     emit updateDeviceInfo(m_inforesult);
 }

@@ -55,7 +55,7 @@ void WorkThread::setStopFlag(int flag)
     m_stopFlag = flag;
 }
 
-void WorkThread::setConutInfo(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize)
+void WorkThread::setCountInfo(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize)
 {
     m_devicePath = devicePath;
     m_blockStart = blockStart;
@@ -278,26 +278,17 @@ void ProbeThread::probeDeviceInfo()
         //Only usb add need to sleep 5 seconds
         qDebug() << __FUNCTION__ << "From auto Mount, So i will sleep 5 seconds! type:" << m_type;
         sleep (5);
-    }/* else {
-        qDebug() << __FUNCTION__ << "Not From auto Mount, So i will not sleep 5 seconds! type:" << m_type;
-    }*/
+    }
 
     m_inforesult.clear();
     m_deviceMap.clear();
     QVector<QString> devicePaths;
-    qDebug() << __FUNCTION__ << "**1";
     devicePaths.clear();
     BlockSpecial::clearCache();
-    qDebug() << __FUNCTION__ << "**2";
     ProcPartitionsInfo::loadCache();
-    qDebug() << __FUNCTION__ << "**3";
     FsInfo::loadCache();
-    qDebug() << __FUNCTION__ << "**4";
-    qDebug() << __FUNCTION__ << "**5";
     MountInfo::loadCache();
-    qDebug() << __FUNCTION__ << "**6";
     ped_device_probe_all();
-    qDebug() << __FUNCTION__ << "**7";
     PedDevice *lpDevice = ped_device_get_next(nullptr);
     while (lpDevice) {
         /* TO TRANSLATORS: looks like   Confirming /dev/sda */
@@ -312,7 +303,7 @@ void ProbeThread::probeDeviceInfo()
     }
 //    qDebug() << __FUNCTION__ << "devicepaths size=" << devicepaths.size();
     std::sort(devicePaths.begin(), devicePaths.end());
-    qDebug() << __FUNCTION__ << "**8";
+//    qDebug() << __FUNCTION__ << "**8";
     for (int t = 0; t < devicePaths.size(); t++) {
         /*TO TRANSLATORS: looks like Searching /dev/sda partitions */
         Device tempDevice;
@@ -320,14 +311,15 @@ void ProbeThread::probeDeviceInfo()
         pcl.setDeviceFromDisk(tempDevice, devicePaths[t]);
         m_deviceMap.insert(devicePaths.at(t), tempDevice);
     }
-    qDebug() << __FUNCTION__ << "**9";
+//    qDebug() << __FUNCTION__ << "**9";
+    //这里的代码有可能会恢复，与文管对移动设备的处理相关
 //    getPartitionHiddenFlag();
     for (auto it = m_deviceMap.begin(); it != m_deviceMap.end(); it++) {
         DeviceInfo devinfo = it.value().getDeviceInfo();
         for (int i = 0; i < it.value().m_partitions.size(); i++) {
             const Partition &pat = *(it.value().m_partitions.at(i)); //拷贝构造速度提升 const 引用
             PartitionInfo partinfo = pat.getPartitionInfo();
-
+              //这里的代码有可能会恢复，与文管对移动设备的处理相关
 //            if(m_hiddenPartition.indexOf(partinfo.m_uuid) != -1 && !partinfo.m_uuid.isEmpty()) {
 //                partinfo.m_flag = 1;
 //            } else {
@@ -348,7 +340,7 @@ void ProbeThread::probeDeviceInfo()
         m_inforesult.insert(devinfo.m_path, devinfo);
     }
 //    qDebug() << __FUNCTION__ << m_inforesult.count();
-    qDebug() << __FUNCTION__ << "**10";
+//    qDebug() << __FUNCTION__ << "**10";
     emit updateDeviceInfo(/*m_deviceMap,*/ m_inforesult);
 
     sendsignals();
@@ -356,7 +348,7 @@ void ProbeThread::probeDeviceInfo()
     qDebug() << __FILE__ << "Now I am working on thread:" << QThread::currentThreadId();
 }
 
-QMap<QString, Device> ProbeThread::get_deviceMap()
+QMap<QString, Device> ProbeThread::getDeviceMap()
 {
     return m_deviceMap;
 }

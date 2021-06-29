@@ -36,29 +36,79 @@
 
 namespace DiskManager {
 
+/**
+ * @class ProbeThread
+ * @brief 硬件信息刷新类
+ */
 class ProbeThread :public QObject
 {
     Q_OBJECT
 public:
     ProbeThread(QObject *parent = nullptr);
+
+    /**
+     * @brief 设置要发送的信号标识及相应的信号参数
+     * @param type：信号标识，表示将发送哪种信号给主线程
+     * @param arg1：信号可能需要的bool型参数
+     * @param arg2：信号可能需要的QString型参数
+     */
     void setSignal(int type = 0, bool arg1 = true, QString arg2 = "");
+
+    /**
+     * @brief 根据setSignal设置的信息发送相应的信号
+     */
     void sendsignals();
 public slots:
+    /**
+     * @brief 刷新硬件信息
+     */
     void probeDeviceInfo();
-    QMap<QString, Device> get_deviceMap();
+
+    /**
+     * @brief 返回硬件信息
+     */
+    QMap<QString, Device> getDeviceMap();
 signals:
+    /**
+     * @brief 更新硬件信息信号
+     * @param 要同步的硬件信息
+     */
     void updateDeviceInfo(/*const QMap<QString, Device> m_deviceMap, */const DeviceInfoMap infomap);
+
+    /**
+     * @brief 发送卸载分区信号
+     * @param 卸载信息
+     */
     void unmountPartition(const QString &m);
+
+    /**
+     * @brief 发送删除分区信号
+     * @param 删除结果
+     */
     void deletePartitionMessage(const QString &m);
+
+    /**
+     * @brief 显示分区信号
+     * @param 分区信息
+     */
     void showPartitionInfo(const QString &m);
+
+    /**
+     * @brief 创建分区表信
+     * @param 创建结果
+     */
     void createTableMessage(const bool &flag);
+
+    /**
+     * @brief USB设备刷新信号
+     */
     void usbUpdated();
 private:
-    QMap<QString, Device> m_deviceMap;
-    DeviceInfoMap m_inforesult;
-    int m_type;
-    bool m_arg1;
-    QString m_arg2;
+    QMap<QString, Device> m_deviceMap; //设备对应信息表
+    DeviceInfoMap m_inforesult;        //全部设备分区信息
+    int m_type;                        //刷新结束后需要发送的信号类型
+    bool m_arg1;                       //需要发送的信号bool类型参数
+    QString m_arg2;                    //需要发送的信号QString类型参数
 };
 
 /**
@@ -79,7 +129,7 @@ public:
      * @param checkConut：检测次数
      * @param checkSize：检测柱面范围大小
      */
-    void setConutInfo(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize);
+    void setCountInfo(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize);
 
     /**
      * @brief 设置检测超时时间信息

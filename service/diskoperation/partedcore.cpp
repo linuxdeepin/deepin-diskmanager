@@ -72,6 +72,8 @@ PartedCore::PartedCore(QObject *parent)
 
     qDebug() << __FUNCTION__ << "^^4";
 
+    m_workerThreadProbe = nullptr;
+    m_workerThread = nullptr;
     probeDeviceInfo();
 
     qDebug() << __FUNCTION__ << "^^5";
@@ -81,6 +83,16 @@ PartedCore::~PartedCore()
 {
     delete m_supportedFileSystems;
     m_supportedFileSystems = nullptr;
+
+    if (m_workerThread) {
+        delete m_workerThread;
+        m_workerThread = nullptr;
+    }
+
+    if (m_workerThreadProbe) {
+        delete m_workerThreadProbe;
+        m_workerThreadProbe = nullptr;
+    }
 }
 
 void PartedCore::initConnection()
@@ -1596,7 +1608,7 @@ void PartedCore::onRefreshDeviceInfo(int type, bool arg1, QString arg2)
     }
 
 
-    qDebug() << "  ---------------------- 0 --------------------- :" << m_probeThread.thread();
+    qDebug() << "  ----------------------! 0 !--------------------- :" << m_probeThread.thread();
     m_probeThread.moveToThread(m_workerThreadProbe);
     m_probeThread.setSignal(type, arg1, arg2);
     //connect(this, &PartedCore::probeAllInfo, &m_probeThread, &ProbeThread::probeDeviceInfo, Qt::UniqueConnection);

@@ -531,3 +531,8 @@ bool partitionTableErrorCheck_error()
     return true;
 }
 
+void updateCylinderInfo()
+{
+//    qDebug() << "updateCylinderInfo";
+}
+

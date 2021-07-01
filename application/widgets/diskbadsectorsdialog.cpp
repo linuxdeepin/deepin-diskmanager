@@ -238,6 +238,7 @@ void DiskBadSectorsDialog::initUI()
 //    DFrame *frame = new DFrame;
     m_cylinderInfoWidget = new CylinderInfoWidget(QString("%1").arg(m_deviceInfo.m_cylinders).toInt());
     m_cylinderInfoWidget->setMinimumSize(615, 380);
+    m_cylinderInfoWidget->setObjectName("cylinderInfoWidget");
 
     CylinderWidget *excellentWidget = new CylinderWidget;
     excellentWidget->setFixedSize(20, 20);
@@ -1051,7 +1052,7 @@ void DiskBadSectorsDialog::onRepairBadBlocksInfo(const QString &cylinderNumber, 
     m_curRepairTime += cylinderTimeConsuming.toLongLong();
     m_checkInfoLabel->setText(tr("Repairing cylinder: %1").arg(cylinderNumber)); // 正在修复xxx柱面
 
-    qint64 totalTime = m_curRepairTime / m_curRepairNumber * m_totalRepairNumber;qDebug() << "3333333333" << m_totalRepairNumber;
+    qint64 totalTime = m_curRepairTime / m_curRepairNumber * m_totalRepairNumber;
     m_usedTime = m_curRepairTime;
     m_unusedTime = totalTime - m_curRepairTime;
     m_unusedTime < 1000 ? m_unusedTime = 1000 : m_unusedTime;

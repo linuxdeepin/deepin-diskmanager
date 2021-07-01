@@ -394,6 +394,10 @@ void CylinderInfoWidget::updateCylinderInfo(int number, const QString &LBANumber
 {
     CylinderWidget *cylinderWidget = m_widget->findChild<CylinderWidget *>(QString("%1").arg(number));
 
+    if(cylinderWidget == nullptr) {
+        return;
+    }
+
     if (LBANumber.isEmpty()) {
         cylinderWidget->setStyleSheet(QString("background:%1;border:0px").arg(m_initColor));
         cylinderWidget->setUserData("");
@@ -422,6 +426,10 @@ void CylinderInfoWidget::updateCylinderInfo(int number, const QString &LBANumber
 void CylinderInfoWidget::setCurRepairBadBlocksInfo(const QString &cylinderNumber)
 {
     QList<QObject *> lstCylinderWidget = m_widget->children();
+
+    if (lstCylinderWidget.count() < 2) {
+        return;
+    }
 
     CylinderWidget *firstWidget = static_cast<CylinderWidget *>(lstCylinderWidget.at(1));
     QMap<QString, QVariant> firstValue = firstWidget->getUserData().toMap();

@@ -473,40 +473,39 @@ TEST_F(ut_application, diskInfo)
     DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
 
     DiskInfoDisplayDialog *diskInfoDisplayDialog = new DiskInfoDisplayDialog(deviceListWidget->m_curDiskInfoData.m_diskPath);
-//qDebug() << "11111111111111" << deviceListWidget->m_curDiskInfoData.m_diskPath;
-//    typedef int (*fptr)(DiskInfoDisplayDialog*);
-//    fptr foo = (fptr)(&QFileDialog::getSaveFileName);
-//    Stub stub2;
-//    stub2.set(foo, emptyFilePath);
 
-//    diskInfoDisplayDialog->onExportButtonClicked();
-//qDebug() << "2222222222222222222";
-//    typedef int (*fptr)(DiskInfoDisplayDialog*);
-//    fptr foo2 = (fptr)(&QFileDialog::getSaveFileName);
-//    Stub stub3;
-//    stub3.set(foo2, errorFilePath);
+    typedef int (*fptr)(DiskInfoDisplayDialog*);
+    fptr foo = (fptr)(&QFileDialog::getSaveFileName);
+    Stub stub2;
+    stub2.set(foo, emptyFilePath);
 
-//    diskInfoDisplayDialog->onExportButtonClicked();
-//qDebug() << "33333333333333333";
-//    typedef int (*fptr)(DiskInfoDisplayDialog*);
-//    fptr foo3 = (fptr)(&QFileDialog::getSaveFileName);
-//    Stub stub4;
-//    stub4.set(foo3, noPermissionFilePath);
+    diskInfoDisplayDialog->onExportButtonClicked();
 
-//    diskInfoDisplayDialog->onExportButtonClicked();
-//qDebug() << "4444444444444444";
-//    typedef int (*fptr)(DiskInfoDisplayDialog*);
-//    fptr foo4 = (fptr)(&QFileDialog::getSaveFileName);
-//    Stub stub5;
-//    stub5.set(foo4, filePath);
+    typedef int (*fptr)(DiskInfoDisplayDialog*);
+    fptr foo2 = (fptr)(&QFileDialog::getSaveFileName);
+    Stub stub3;
+    stub3.set(foo2, errorFilePath);
 
-//    diskInfoDisplayDialog->onExportButtonClicked();
+    diskInfoDisplayDialog->onExportButtonClicked();
 
-//    QFile file("/mnt/DiskInfo.txt");
-//    if (file.exists()) {
-//        file.remove();
-//    }
-//    qDebug() << "5555555555555555";
+    typedef int (*fptr)(DiskInfoDisplayDialog*);
+    fptr foo3 = (fptr)(&QFileDialog::getSaveFileName);
+    Stub stub4;
+    stub4.set(foo3, noPermissionFilePath);
+
+    diskInfoDisplayDialog->onExportButtonClicked();
+
+    typedef int (*fptr)(DiskInfoDisplayDialog*);
+    fptr foo4 = (fptr)(&QFileDialog::getSaveFileName);
+    Stub stub5;
+    stub5.set(foo4, filePath);
+
+    diskInfoDisplayDialog->onExportButtonClicked();
+
+    QFile file("/mnt/DiskInfo.txt");
+    if (file.exists()) {
+        file.remove();
+    }
 }
 
 TEST_F(ut_application, diskHealth)
@@ -521,7 +520,42 @@ TEST_F(ut_application, diskHealth)
     MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
     DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
 
-    DiskHealthDetectionDialog diskHealthDetectionDialog(deviceListWidget->m_curDiskInfoData.m_diskPath, deviceCheckHealthInfo());
+//    DiskHealthDetectionDialog diskHealthDetectionDialog(deviceListWidget->m_curDiskInfoData.m_diskPath, deviceCheckHealthInfo());
+
+    DiskHealthDetectionDialog *diskHealthDetectionDialog = new DiskHealthDetectionDialog(deviceListWidget->m_curDiskInfoData.m_diskPath, deviceCheckHealthInfo());
+
+    typedef int (*fptr)(DiskHealthDetectionDialog*);
+    fptr foo = (fptr)(&QFileDialog::getSaveFileName);
+    Stub stub3;
+    stub3.set(foo, emptyFilePath);
+
+    diskHealthDetectionDialog->onExportButtonClicked();
+
+    typedef int (*fptr)(DiskHealthDetectionDialog*);
+    fptr foo2 = (fptr)(&QFileDialog::getSaveFileName);
+    Stub stub4;
+    stub4.set(foo2, errorFilePath);
+
+    diskHealthDetectionDialog->onExportButtonClicked();
+
+    typedef int (*fptr)(DiskHealthDetectionDialog*);
+    fptr foo3 = (fptr)(&QFileDialog::getSaveFileName);
+    Stub stub5;
+    stub5.set(foo3, noPermissionFilePath);
+
+    diskHealthDetectionDialog->onExportButtonClicked();
+
+    typedef int (*fptr)(DiskHealthDetectionDialog*);
+    fptr foo4 = (fptr)(&QFileDialog::getSaveFileName);
+    Stub stub6;
+    stub6.set(foo4, filePath);
+
+    diskHealthDetectionDialog->onExportButtonClicked();
+
+    QFile file("/mnt/DiskInfo.txt");
+    if (file.exists()) {
+        file.remove();
+    }
 }
 
 TEST_F(ut_application, diskBadSectorsCheck)
@@ -661,6 +695,74 @@ TEST_F(ut_application, diskBadSectorsRepair)
     diskBadSectorsDialog->onDoneButtonClicked();
 }
 
+TEST_F(ut_application, diskCheckRepair)
+{
+    Stub stub;
+    stub.set(ADDR(DMDbusHandler, checkBadSectors), badSectorsCheck);
+
+    Stub stub2;
+    stub2.set(ADDR(DMDbusHandler, repairBadBlocks), badSectorsRepair);
+
+    typedef int (*fptr)(DiskBadSectorsDialog*);
+    fptr foo = (fptr)(&MessageBox::exec);
+    Stub stub3;
+    stub3.set(foo, MessageboxExec);
+
+    typedef int (*fptr)(DiskBadSectorsDialog*);
+    fptr foo2 = (fptr)(&DDialog::exec);
+    Stub stub4;
+    stub4.set(foo2, MessageboxExec);
+
+    DeviceInfoMap oldInfo = DMDbusHandler::instance()->m_deviceMap;
+
+    DiskBadSectorsDialog *diskBadSectorsDialog = new DiskBadSectorsDialog;
+    diskBadSectorsDialog->show();
+    diskBadSectorsDialog->m_startLineEdit->setText("0");
+    diskBadSectorsDialog->m_endLineEdit->setText("560");
+
+    DPushButton *startButton = diskBadSectorsDialog->findChild<DPushButton *>("start");
+    QTest::mouseClick(startButton, Qt::LeftButton);
+    QTest::qWait(1000);
+//    diskBadSectorsDialog->onStartVerifyButtonClicked();
+
+    QStringList lstCylinder;
+    for (int i = 0; i < 561; i++) {
+        QString cylinderNumber = QString::number(i);
+        QString cylinderTimeConsuming = "254";
+        QString cylinderStatus = "good";
+        QString cylinderErrorInfo = "";
+
+        if (i % 30 == 0) {
+            cylinderStatus = "bad";
+            cylinderErrorInfo = "IO Read Error";
+
+            lstCylinder << cylinderNumber;
+        }
+
+        diskBadSectorsDialog->onCheckBadBlocksInfo(cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
+
+        QTest::qWait(200);
+    }
+    diskBadSectorsDialog->onCheckComplete();
+
+    QTest::qWait(1000);
+    DPushButton *repairButton = diskBadSectorsDialog->findChild<DPushButton *>("repair");
+    QTest::mouseClick(repairButton, Qt::LeftButton);
+    QTest::qWait(1000);
+//    diskBadSectorsDialog->onRepairButtonClicked();
+
+    for (int i = 0; i < lstCylinder.count(); i++) {
+        diskBadSectorsDialog->onRepairBadBlocksInfo(lstCylinder.at(i), "good", "2000");
+
+        QTest::qWait(2000);
+    }
+
+    QTest::qWait(1000);
+    diskBadSectorsDialog->onRepairComplete(); // 修复完成
+
+    diskBadSectorsDialog->onDoneButtonClicked();
+}
+
 TEST_F(ut_application, cylinderInfoTest)
 {
     CylinderInfoWidget *cylinderInfoWidget = new CylinderInfoWidget(291);
@@ -668,6 +770,40 @@ TEST_F(ut_application, cylinderInfoTest)
     cylinderInfoWidget->againVerify(291);
     cylinderInfoWidget->againVerify(750);
     cylinderInfoWidget->reset(278);
+
+    cylinderInfoWidget->updateCylinderInfo(0, QString::number(0 * 16065), "0", "200", "good", "", "0");
+    cylinderInfoWidget->updateCylinderInfo(1, QString::number(1 * 16065), "0", "200", "bad", "IO Read Error", "0");
+    cylinderInfoWidget->updateCylinderInfo(2, QString::number(2 * 16065), "0", "200", "", "", "0");
+    cylinderInfoWidget->updateCylinderInfo(3, "", "0", "200", "", "", "0");
+    cylinderInfoWidget->updateCylinderInfo(361, "", "0", "200", "", "", "0");
+}
+
+TEST_F(ut_application, cylinderInfoTest2)
+{
+    Stub stub;
+    stub.set(ADDR(CylinderInfoWidget, updateCylinderInfo), updateCylinderInfo);
+
+    CylinderInfoWidget *cylinderInfoWidget = new CylinderInfoWidget(291);
+
+    cylinderInfoWidget->setCylinderNumber(300);
+    cylinderInfoWidget->setCylinderNumber(560);
+    cylinderInfoWidget->m_startCylinder = 0;
+    cylinderInfoWidget->m_endCylinder = 560;
+
+    for (int i = 0; i < 561; i++) {
+        QString strLBANumber = QString::number(i * 16065);
+        QString cylinderNumber = QString::number(i);
+        QString cylinderTimeConsuming = "254";
+        QString cylinderStatus = "good";
+        QString cylinderErrorInfo = "";
+
+        if (i % 30 == 0) {
+            cylinderStatus = "bad";
+            cylinderErrorInfo = "IO Read Error";
+        }
+
+        cylinderInfoWidget->setCurCheckBadBlocksInfo(strLBANumber, cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
+    }
 }
 
 TEST_F(ut_application, createPartitionTable_replace)
@@ -838,10 +974,16 @@ TEST_F(ut_application, diskInformationTest)
 
 TEST_F(ut_application, diskBadSectorsTest)
 {
+    Stub stub;
+    stub.set(ADDR(DMDbusHandler, checkBadSectors), badSectorsCheck);
+
+    Stub stub2;
+    stub2.set(ADDR(DMDbusHandler, repairBadBlocks), badSectorsRepair);
+
     typedef int (*fptr)(DeviceListWidget*);
     fptr foo = (fptr)(&DiskBadSectorsDialog::exec);
-    Stub stub2;
-    stub2.set(foo, MessageboxExec);
+    Stub stub3;
+    stub3.set(foo, MessageboxExec);
 
     CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
     MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();

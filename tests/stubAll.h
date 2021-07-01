@@ -75,4 +75,6 @@ bool partitionTableErrorCheck_normal();
 
 bool partitionTableErrorCheck_error();
 
+void updateCylinderInfo();
+
 #endif // STUBALLTHREAD_H

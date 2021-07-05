@@ -22,6 +22,7 @@ void CreatePartitionTableDialog::initUi()
     m_ComboBox = new DComboBox;
     m_ComboBox->addItem("GPT");
     m_ComboBox->addItem("MSDOS");
+    m_ComboBox->setAccessibleName("choosePartitionTable");
 
     QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
     mainLayout->addWidget(m_ComboBox);

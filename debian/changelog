@@ -1,3 +1,10 @@
+deepin-diskmanager (1.2.17) stable; urgency=low
+
+  * 1040第十七次发版
+  * 84939 外设硬盘坏道检测中拔除后，坏道检测界面没有退出，klu偶现闪退
+
+ -- yuandandan <yuandandan@uniontech.com>  Mon, 5 Jul 2021 16:35:16 +0800
+
 deepin-diskmanager (1.2.16) stable; urgency=low
 
   * 1040第十六次发版

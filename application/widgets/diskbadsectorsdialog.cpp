@@ -794,8 +794,9 @@ void DiskBadSectorsDialog::onCheckComplete()
 
     MessageBox messageBox(this);
     messageBox.setObjectName("messageBox");
+    messageBox.setAccessibleName("messageBox");
     // 磁盘检测完毕，共检查到xxx个坏道区域   确定
-    messageBox.setWarings(tr("Disk verify completed. %1 bad blocks found.").arg(badSectorsCount), "", tr("OK"));
+    messageBox.setWarings(tr("Disk verify completed. %1 bad blocks found.").arg(badSectorsCount), "", tr("OK"), "ok");
     messageBox.exec();
 }
 
@@ -976,11 +977,12 @@ void DiskBadSectorsDialog::onRepairButtonClicked()
 {
     if (isExistMountPartition()) {
         MessageBox warningBox(this);
+        warningBox.setAccessibleName("messageBox");
         QString title1 = tr("The verifying disk contains mounted partitions, so you cannot repair it."); // 当前检测磁盘存在已挂载分区，无法修复坏道，
 //        title1.replace("so", "so\n");
         QString title2 = tr("Please unmount partitions and then repair the disk."); // 若要修复请先卸载分区
 
-        warningBox.setWarings(title1 + "\n" + title2, "", tr("OK"));
+        warningBox.setWarings(title1 + "\n" + title2, "", tr("OK"), "ok");
         warningBox.exec();
 
         return;
@@ -1159,9 +1161,10 @@ void DiskBadSectorsDialog::closeEvent(QCloseEvent *event)
     case StatusType::Check: {
         MessageBox messageBox(this);
         messageBox.setObjectName("messageBox");
+        messageBox.setAccessibleName("messageBox");
         // 正在检测中，是否退出窗口？  当前检测信息不会保留   退出   取消
         messageBox.setWarings(tr("Verifying for bad sectors, exit now?"), tr("The verified information will not be reserved"),
-                              tr("Exit"), DDialog::ButtonWarning, tr("Cancel"));
+                              tr("Exit"), DDialog::ButtonWarning, "exit", tr("Cancel"), "cancel");
         if (messageBox.exec() == DDialog::Accepted) {
             int checkSize = m_settings->value("SettingData/CheckSize").toInt();
             int blockStart = m_settings->value("SettingData/BlockStart").toInt();
@@ -1185,9 +1188,10 @@ void DiskBadSectorsDialog::closeEvent(QCloseEvent *event)
     case StatusType::Repair:{
         MessageBox messageBox(this);
         messageBox.setObjectName("messageBox");
+        messageBox.setAccessibleName("messageBox");
         // 正在修复中，是否退出窗口？  当前修复信息不会保留   退出   取消
         messageBox.setWarings(tr("Repairing bad sectors, exit now?"), tr("The repairing information will not be reserved"),
-                              tr("Exit"), DDialog::ButtonWarning, tr("Cancel"));
+                              tr("Exit"), DDialog::ButtonWarning, "exit", tr("Cancel"), "cancel");
         if (messageBox.exec() == DDialog::Accepted) {
             int repairSize = static_cast<int>(m_deviceInfo.m_heads * m_deviceInfo.m_sectors * m_deviceInfo.m_sectorSize);
 

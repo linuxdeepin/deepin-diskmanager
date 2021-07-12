@@ -106,6 +106,7 @@ void TitleWidget::showPartInfoWidget()
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
     PartitionDialog dlg(this);
     dlg.setObjectName("partitionDialog");
+    dlg.setAccessibleName("partitionDialog");
 
     if (dlg.exec() == 1) {
         if (TYPE_UNPARTITIONED == info.m_type && FS_UNALLOCATED == info.m_fileSystemType) {
@@ -120,6 +121,7 @@ void TitleWidget::showPartInfoWidget()
 
         PartitionWidget partitionWidget(this);
         partitionWidget.setObjectName("partitionWidget");
+        partitionWidget.setAccessibleName("partitionWidget");
         partitionWidget.exec();
     }
 }
@@ -128,6 +130,7 @@ void TitleWidget::showFormateInfoWidget()
 {
     FormateDialog dlg(this);
     dlg.setObjectName("formateDialog");
+    dlg.setAccessibleName("formateDialog");
     dlg.exec();
 }
 
@@ -135,6 +138,7 @@ void TitleWidget::showMountInfoWidget()
 {
     MountDialog dlg(this);
     dlg.setObjectName("mountDialog");
+    dlg.setAccessibleName("mountDialog");
     dlg.exec();
 }
 
@@ -142,6 +146,7 @@ void TitleWidget::showUnmountInfoWidget()
 {
     UnmountDialog dlg(this);
     dlg.setObjectName("unmountDialog");
+    dlg.setAccessibleName("unmountDialog");
     dlg.exec();
 }
 
@@ -149,6 +154,7 @@ void TitleWidget::showResizeInfoWidget()
 {
     ResizeDialog dlg(this);
     dlg.setObjectName("resizeDialog");
+    dlg.setAccessibleName("resizeDialog");
     dlg.exec();
 }
 

@@ -77,8 +77,11 @@ void ResizeDialog::initUi()
     mainLayout->addWidget(tipLabel);
     mainLayout->addLayout(hLayout);
 
-    addButton(tr("Cancel"), false, ButtonNormal);
+    int index = addButton(tr("Cancel"), false, ButtonNormal);
     m_okCode = addButton(tr("Confirm"), true, ButtonRecommend);
+
+    getButton(index)->setAccessibleName("cancel");
+    getButton(m_okCode)->setAccessibleName("confirm");
 }
 
 void ResizeDialog::initConnection()

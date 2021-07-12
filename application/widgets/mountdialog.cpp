@@ -77,10 +77,13 @@ void MountDialog::initUi()
     mainLayout->addWidget(mountLabel);
     mainLayout->addWidget(m_ComboBox);
 
-    addButton(tr("Cancel"), true, ButtonNormal);
+    int index = addButton(tr("Cancel"), true, ButtonNormal);
     m_okCode = addButton(tr("Mount"), false, ButtonRecommend);
 //    getButton(okcode)->setDisabled(true);
     setOnButtonClickedClose(false);
+
+    getButton(index)->setAccessibleName("cancel");
+    getButton(m_okCode)->setAccessibleName("mount");
 }
 
 void MountDialog::initConnection()
@@ -112,7 +115,8 @@ void MountDialog::onButtonClicked(int index, const QString &text)
         QDir dir(m_ComboBox->currentText());
         if (!dir.isEmpty()) {
             MessageBox messageBox(this);
-            messageBox.setWarings(tr("The data under this mount point would be lost, please mount the directory to another location"), "", tr("OK"), tr("Cancel"));
+            messageBox.setAccessibleName("messageBox");
+            messageBox.setWarings(tr("The data under this mount point would be lost, please mount the directory to another location"), "", tr("OK"), "ok", tr("Cancel"), "cancelBtn");
             if (messageBox.exec() == 1) {
                 DMDbusHandler::instance()->mount(m_ComboBox->currentText());
                 close();

@@ -104,8 +104,11 @@ void FormateDialog::initUi()
     mainLayout->addLayout(layout);
     mainLayout->setContentsMargins(0, 0, 0, 0);
 
-    addButton(tr("Cancel"), true, ButtonNormal);
+    int index = addButton(tr("Cancel"), true, ButtonNormal);
     m_okCode = addButton(tr("Format"), false, ButtonWarning);
+
+    getButton(index)->setAccessibleName("cancel");
+    getButton(m_okCode)->setAccessibleName("format");
 }
 
 void FormateDialog::initConnection()

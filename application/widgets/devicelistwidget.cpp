@@ -193,6 +193,7 @@ void DeviceListWidget::onDiskInfoClicked()
 
     DiskInfoDisplayDialog diskInfoDisplayDialog(m_curDiskInfoData.m_diskPath, this);
     diskInfoDisplayDialog.setObjectName("diskInfoDisplayDialog");
+    diskInfoDisplayDialog.setAccessibleName("diskInfoDialog");
     diskInfoDisplayDialog.exec();
 
     m_curChooseDevicePath = "";
@@ -203,8 +204,9 @@ void DeviceListWidget::onDiskCheckHealthClicked()
     HardDiskStatusInfoList hardDiskStatusInfoList = DMDbusHandler::instance()->getDeviceHardStatusInfo(m_curDiskInfoData.m_diskPath);
     if (hardDiskStatusInfoList.count() < 1) {
         MessageBox warningBox(this);
+        warningBox.setAccessibleName("warningMessageBox");
         // 获取不到硬件相应信息  关闭
-        warningBox.setWarings(tr("Failed to get hardware information"), "", tr("Close"));
+        warningBox.setWarings(tr("Failed to get hardware information"), "", tr("Close"), "close");
         warningBox.exec();
 
         return;
@@ -214,6 +216,7 @@ void DeviceListWidget::onDiskCheckHealthClicked()
 
     DiskHealthDetectionDialog diskHealthDetectionDialog(m_curDiskInfoData.m_diskPath, hardDiskStatusInfoList, this);
     diskHealthDetectionDialog.setObjectName("diskHealthDetectionDialog");
+    diskHealthDetectionDialog.setAccessibleName("diskHealthInfoDialog");
     diskHealthDetectionDialog.exec();
 
     m_curChooseDevicePath = "";
@@ -225,6 +228,7 @@ void DeviceListWidget::onDiskBadSectorsClicked()
 
     DiskBadSectorsDialog diskBadSectorsDialog(this);
     diskBadSectorsDialog.setObjectName("diskBadSectorsDialog");
+    diskBadSectorsDialog.setAccessibleName("diskBadSectorsDialog");
     diskBadSectorsDialog.exec();
 
     m_curChooseDevicePath = "";
@@ -256,8 +260,9 @@ void DeviceListWidget::onCreatePartitionTableClicked()
 {
     if (isExistMountPartition()) {
         MessageBox warningBox(this);
+        warningBox.setAccessibleName("messageBox");
         // 请先卸载当前磁盘中的所有分区  确定
-        warningBox.setWarings(tr("Please unmount all partitions in the disk first"), "", tr("OK"));
+        warningBox.setWarings(tr("Please unmount all partitions in the disk first"), "", tr("OK"), "ok");
         warningBox.exec();
         
         return;
@@ -265,11 +270,13 @@ void DeviceListWidget::onCreatePartitionTableClicked()
 
     MessageBox messageBox(this);
     messageBox.setObjectName("messageBox");
+    messageBox.setAccessibleName("messageBox");
     // 新建分区表之后将会合并当前磁盘所有分区，丢失所有数据，请谨慎使用  继续  取消
-    messageBox.setWarings(tr("All partitions in this disk will be merged and all data\n will be lost if creating a new partition table,\n please take it carefully"), "", tr("Proceed"), tr("Cancel"));
+    messageBox.setWarings(tr("All partitions in this disk will be merged and all data\n will be lost if creating a new partition table,\n please take it carefully"), "", tr("Proceed"), "Proceed", tr("Cancel"), "cancelBtn");
     if (messageBox.exec() == DDialog::Accepted) {
         CreatePartitionTableDialog createPartitionTableDialog(this);
         createPartitionTableDialog.setObjectName("createPartitionTable");
+        createPartitionTableDialog.setAccessibleName("createPartitionTableDialog");
         createPartitionTableDialog.exec();
     }
 }
@@ -283,6 +290,7 @@ void DeviceListWidget::onPartitionErrorCheckClicked()
 
         PartitionTableErrorsInfoDialog partitionTableErrorsInfoDialog(deviceInfo, this);
         partitionTableErrorsInfoDialog.setObjectName("partitionErrorCheck");
+        partitionTableErrorsInfoDialog.setAccessibleName("partitionErrorCheckDialog");
         partitionTableErrorsInfoDialog.exec();
 
         m_curChooseDevicePath = "";
@@ -297,8 +305,9 @@ void DeviceListWidget::onHidePartitionClicked()
 {
     MessageBox messageBox(this);
     messageBox.setObjectName("messageBox");
+    messageBox.setAccessibleName("hideMessageBox");
     // 您是否要隐藏该分区？ 隐藏  取消
-    messageBox.setWarings(tr("Do you want to hide this partition?"), "", tr("Hide"), tr("Cancel"));
+    messageBox.setWarings(tr("Do you want to hide this partition?"), "", tr("Hide"), "hide", tr("Cancel"), "cancel");
     if (messageBox.exec() == DDialog::Accepted) {
         if (m_curDiskInfoData.m_mountpoints == "/boot/efi" || m_curDiskInfoData.m_mountpoints == "/boot"
                 || m_curDiskInfoData.m_mountpoints == "/" || m_curDiskInfoData.m_mountpoints.contains("/data")) {
@@ -323,8 +332,9 @@ void DeviceListWidget::onShowPartitionClicked()
 {
     MessageBox messageBox(this);
     messageBox.setObjectName("showMessageBox");
+    messageBox.setAccessibleName("unhideMessageBox");
     // 您是否要显示该隐藏分区？ 显示  取消
-    messageBox.setWarings(tr("Do you want to unhide this partition?"), "", tr("Unhide"), tr("Cancel"));
+    messageBox.setWarings(tr("Do you want to unhide this partition?"), "", tr("Unhide"), "unhide", tr("Cancel"), "cancel");
     if (messageBox.exec() == DDialog::Accepted) {
         DMDbusHandler::instance()->unhidePartition();
     }
@@ -333,8 +343,9 @@ void DeviceListWidget::onShowPartitionClicked()
 void DeviceListWidget::onDeletePartitionClicked()
 {
     MessageBox messageBox(this);
+    messageBox.setAccessibleName("deleteMessageBox");
     // 您确定要删除该分区吗？ 该分区内所有文件将会丢失  删除  取消
-    messageBox.setWarings(tr("Are you sure you want to delete this partition?"), tr("You will lose all data in it"), tr("Delete"), DDialog::ButtonWarning, tr("Cancel"));
+    messageBox.setWarings(tr("Are you sure you want to delete this partition?"), tr("You will lose all data in it"), tr("Delete"), DDialog::ButtonWarning, "delete", tr("Cancel"), "cancel");
     if (messageBox.exec() == DDialog::Accepted) {
         if (m_curDiskInfoData.m_mountpoints == "/boot/efi" || m_curDiskInfoData.m_mountpoints == "/boot"
                 || m_curDiskInfoData.m_mountpoints == "/" || m_curDiskInfoData.m_mountpoints.contains("/data")

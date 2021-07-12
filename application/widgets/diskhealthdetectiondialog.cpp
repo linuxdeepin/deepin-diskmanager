@@ -343,6 +343,7 @@ void DiskHealthDetectionDialog::initUI()
     m_linkButton = new DCommandLinkButton(tr("Export")); // 导出
     DFontSizeManager::instance()->bind(m_linkButton, DFontSizeManager::T8, QFont::Medium);
     m_linkButton->setFixedWidth(m_linkButton->fontMetrics().width(QString(tr("Export"))));
+    m_linkButton->setAccessibleName("export");
 
 //    QWidget *bottomWidget = new QWidget;
     QHBoxLayout *bottomLayout = new QHBoxLayout/*(bottomWidget)*/;

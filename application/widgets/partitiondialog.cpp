@@ -54,6 +54,9 @@ void PartitionDialog::initUi()
 
     mainLayout->addWidget(tipLabel);
 
-    addButton(tr("Cancel"), false, ButtonNormal);
+    int index = addButton(tr("Cancel"), false, ButtonNormal);
     m_okCode = addButton(tr("Confirm"), true, ButtonRecommend);
+
+    getButton(index)->setAccessibleName("cancelBtn");
+    getButton(m_okCode)->setAccessibleName("confirmBtn");
 }

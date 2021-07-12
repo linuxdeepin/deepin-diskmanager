@@ -130,6 +130,7 @@ void PartitionTableErrorsInfoDialog::initUI()
     pushButton = new DPushButton;
     pushButton->setText(tr("OK")); // 确定
     pushButton->setFixedSize(220, 36);
+    pushButton->setAccessibleName("ok");
 
     DWidget *buttonWidget = new DWidget;
     QHBoxLayout *buttonLayout = new QHBoxLayout(buttonWidget);

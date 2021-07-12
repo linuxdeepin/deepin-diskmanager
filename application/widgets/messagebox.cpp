@@ -29,12 +29,14 @@
 
 #include <DLabel>
 
+#include <QAbstractButton>
+
 MessageBox::MessageBox(QWidget *parent) : DDialog(parent)
 {
 
 }
 
-void MessageBox::setWarings(const QString &title, const QString &warningMsg, const QString &sureBtnText, const QString &cancalBtnText)
+void MessageBox::setWarings(const QString &title, const QString &warningMsg, const QString &sureBtnText, const QString &sureAccessibleName, const QString &cancalBtnText, const QString &cancelAccessibleName)
 {
     setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
 
@@ -49,15 +51,18 @@ void MessageBox::setWarings(const QString &title, const QString &warningMsg, con
     }
 
     if (!cancalBtnText.isEmpty()) {
-        addButton(cancalBtnText);
+        int index = addButton(cancalBtnText);
+        getButton(index)->setAccessibleName(cancelAccessibleName);
     }
 
-    addButton(sureBtnText);
+    int index = addButton(sureBtnText);
+    getButton(index)->setAccessibleName(sureAccessibleName);
     connect(this, &MessageBox::buttonClicked, this, [=]() {
         close();
     });
 }
-void MessageBox::setWarings(const QString &title, const QString &warningMsg, const QString &sureBtnText, ButtonType sureBtnType, const QString &cancalBtnText)
+
+void MessageBox::setWarings(const QString &title, const QString &warningMsg, const QString &sureBtnText, ButtonType sureBtnType, const QString &sureAccessibleName, const QString &cancalBtnText, const QString &cancelAccessibleName)
 {
     setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
 
@@ -72,10 +77,12 @@ void MessageBox::setWarings(const QString &title, const QString &warningMsg, con
     }
 
     if (!cancalBtnText.isEmpty()) {
-        addButton(cancalBtnText);
+        int index = addButton(cancalBtnText);
+        getButton(index)->setAccessibleName(cancelAccessibleName);
     }
 
-    addButton(sureBtnText, false, sureBtnType);
+    int index = addButton(sureBtnText, false, sureBtnType);
+    getButton(index)->setAccessibleName(sureAccessibleName);
     connect(this, &MessageBox::buttonClicked, this, [=]() {
         close();
     });

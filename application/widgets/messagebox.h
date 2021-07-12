@@ -49,9 +49,11 @@ public:
      * @param title 标题，没有标题写空字符串
      * @param warningMsg 文本内容
      * @param sureBtnText 确定按钮
+     * @param sureAccessibleName 确定按钮属性名称，可不填
      * @param cancalBtnText="" 取消按钮，可不填
+     * @param cancelAccessibleName 取消按钮属性名称，可不填
     */
-    void setWarings(const QString &title, const QString &warningMsg, const QString &sureBtnText, const QString &cancalBtnText = "");
+    void setWarings(const QString &title, const QString &warningMsg, const QString &sureBtnText, const QString &sureAccessibleName = "", const QString &cancalBtnText = "", const QString &cancelAccessibleName = "");
 
     /**
      * @brief 设置警告窗口
@@ -59,9 +61,11 @@ public:
      * @param warningMsg 文本内容
      * @param sureBtnText 确定按钮
      * @param sureBtnType=ButtonNormal 确定按钮类型
+     * @param sureAccessibleName 确定按钮属性名称，可不填
      * @param cancalBtnText="" 取消按钮，可不填
+     * @param cancelAccessibleName 取消按钮属性名称，可不填
     */
-    void setWarings(const QString &title, const QString &warningMsg, const QString &sureBtnText, ButtonType sureBtnType, const QString &cancalBtnText = "");
+    void setWarings(const QString &title, const QString &warningMsg, const QString &sureBtnText, ButtonType sureBtnType, const QString &sureAccessibleName = "", const QString &cancalBtnText = "", const QString &cancelAccessibleName = "");
 
     /**
      * @brief 设置进度窗口

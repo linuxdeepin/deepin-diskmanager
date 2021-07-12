@@ -27,7 +27,8 @@ void CreatePartitionTableDialog::initUi()
     QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
     mainLayout->addWidget(m_ComboBox);
 
-    addButton(tr("Cancel"), true, ButtonNormal);
+    int index = addButton(tr("Cancel"), true, ButtonNormal);
+    getButton(index)->setAccessibleName("cancel");
 
     DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
     if (info.m_disktype == "unrecognized") {
@@ -35,11 +36,13 @@ void CreatePartitionTableDialog::initUi()
         // 当前磁盘无分区表，是否新建分区表?
         setTitle(tr("No partition table in this disk. Create a new one?"));
         m_okCode = addButton(tr("Create"), false, ButtonRecommend);
+        getButton(m_okCode)->setAccessibleName("create");
     } else {
         m_curType = "replace";
         // 当前磁盘已有分区表，是否替换此分区表?
         setTitle(tr("The disk has a partition table already. Replace it?"));
         m_okCode = addButton(tr("Replace"), false, ButtonRecommend);
+        getButton(m_okCode)->setAccessibleName("replace");
     }
 
 }

@@ -169,7 +169,6 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(text1Color);
             QTextOption option1;
             option.setAlignment(Qt::AlignLeft);
-            qDebug() << m_totalSpaceSize << painter.fontMetrics().width(m_totalSpaceSize);
             QRect rectSizeNum = QRect(paintRect.bottomLeft().x() + capacityNum, paintRect.bottomLeft().y() + 20, painter.fontMetrics().width(m_totalSpaceSize) + 20, 30);
 
             int height2 = 21 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);

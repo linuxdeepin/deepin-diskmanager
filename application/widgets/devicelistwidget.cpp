@@ -545,11 +545,21 @@ void DeviceListWidget::onUpdateDeviceInfo()
     m_addItem = 1;
 
     if (m_flag == 0) {
-        m_treeView->setDefaultdmItem();
+        for (int i = 0; i < deviceNameList.count(); i++) {
+            if (countMap.value(i) != 0) {
+                m_treeView->setRefreshItem(i, 0);
+                break;
+            }
+        }
+//        m_treeView->setDefaultdmItem();
     } else {
         int index = m_treeView->getCurrentNum();
         if (countMap.value(m_deviceNum) == index) {
             index = m_treeView->getCurrentNum() - 1;
+        }
+
+        if (countMap.value(m_deviceNum) < index) {
+            index = countMap.value(m_deviceNum) - 1;
         }
 
         m_treeView->setRefreshItem(m_deviceNum, index);

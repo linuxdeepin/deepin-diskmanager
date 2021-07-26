@@ -394,6 +394,10 @@ void DeviceListWidget::onDeletePartition(const QString &deleteMessage)
 {
     QStringList infoList = deleteMessage.split(":");
 
+    if (infoList.count() <= 1) {
+        return;
+    }
+
     if ("1" == infoList.at(0)) {
         // 删除分区成功
         isDeleteSuccess = true;

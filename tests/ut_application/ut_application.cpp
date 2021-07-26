@@ -30,6 +30,7 @@
 #include "createpartitiontabledialog.h"
 #include "partitiontableerrorsinfodialog.h"
 #include "cylinderinfowidget.h"
+#include "sizeinfowidget.h"
 
 class ut_application : public ::testing::Test
         , public QObject
@@ -62,6 +63,12 @@ TEST_F(ut_application, init)
     Stub stub2;
     stub2.set(ADDR(DMDbusHandler, startService), start);
 
+    typedef int (*fptr)(SizeInfoWidget*);
+    fptr foo = (fptr)(&DGuiApplicationHelper::themeType);
+    Stub stub4;
+    stub4.set(foo, currentThemeType);
+
+
     qDebug() << MainWindow::instance()->isHidden();
     qDebug() << MainWindow::instance()->children();
 //    qDebug() << DMDbusHandler::instance()->getDeviceNameList();
@@ -89,7 +96,7 @@ TEST_F(ut_application, init)
     QTest::mouseClick(view->viewport(), Qt::LeftButton, Qt::KeyboardModifiers(), rect.center());
 }
 
-TEST_F(ut_application, hide)
+TEST_F(ut_application, hideSuccess)
 {
     Stub stub;
     stub.set(ADDR(DMDbusHandler, hidePartition), hide);
@@ -108,6 +115,24 @@ TEST_F(ut_application, hide)
 
     DMDbusHandler::instance()->onHidePartition("1");
     ASSERT_TRUE(deviceListWidget->isHideSuccess);
+}
+
+TEST_F(ut_application, hideFailed)
+{
+    Stub stub;
+    stub.set(ADDR(DMDbusHandler, hidePartition), hide);
+
+    typedef int (*fptr)(DeviceListWidget*);
+    fptr foo = (fptr)(&MessageBox::exec);
+    Stub stub2;
+    stub2.set(foo, MessageboxExec);
+
+    CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
+    MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
+    DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
+
+    deviceListWidget->m_curDiskInfoData = deviceListWidget->m_treeView->getCurItem()->data().value<DiskInfoData>();
+    deviceListWidget->onHidePartitionClicked();
 
     DMDbusHandler::instance()->onHidePartition("0");
     ASSERT_FALSE(deviceListWidget->isHideSuccess);
@@ -142,7 +167,7 @@ TEST_F(ut_application, hide_mount)
     deviceListWidget->m_curDiskInfoData = oldData;
 }
 
-TEST_F(ut_application, show)
+TEST_F(ut_application, showSuccess)
 {
     Stub stub;
     stub.set(ADDR(DMDbusHandler, unhidePartition), show);
@@ -160,12 +185,29 @@ TEST_F(ut_application, show)
 
     DMDbusHandler::instance()->onShowPartition("1");
     ASSERT_TRUE(deviceListWidget->isShowSuccess);
+}
+
+TEST_F(ut_application, showFailed)
+{
+    Stub stub;
+    stub.set(ADDR(DMDbusHandler, unhidePartition), show);
+
+    typedef int (*fptr)(DeviceListWidget*);
+    fptr foo = (fptr)(&MessageBox::exec);
+    Stub stub2;
+    stub2.set(foo, MessageboxExec);
+
+    CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
+    MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
+    DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
+
+    deviceListWidget->onShowPartitionClicked();
 
     DMDbusHandler::instance()->onShowPartition("0");
     ASSERT_FALSE(deviceListWidget->isShowSuccess);
 }
 
-TEST_F(ut_application, deletePartition)
+TEST_F(ut_application, deleteMountPartition)
 {
     Stub stub;
     stub.set(ADDR(DMDbusHandler, deletePartition), deletePartition);
@@ -189,14 +231,48 @@ TEST_F(ut_application, deletePartition)
     ASSERT_FALSE(deviceListWidget->isDeleteSuccess);
 
     deviceListWidget->m_curDiskInfoData = oldData;
+}
+
+TEST_F(ut_application, deletePartitionSuccess)
+{
+    Stub stub;
+    stub.set(ADDR(DMDbusHandler, deletePartition), deletePartition);
+
+    typedef int (*fptr)(DeviceListWidget*);
+    fptr foo = (fptr)(&MessageBox::exec);
+    Stub stub2;
+    stub2.set(foo, MessageboxExec);
+
+    CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
+    MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
+    DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
 
     deviceListWidget->onDeletePartitionClicked();
 
     DMDbusHandler::instance()->onDeletePartition("1:0");
     ASSERT_TRUE(deviceListWidget->isDeleteSuccess);
+}
+
+TEST_F(ut_application, deletePartitionFailed)
+{
+    Stub stub;
+    stub.set(ADDR(DMDbusHandler, deletePartition), deletePartition);
+
+    typedef int (*fptr)(DeviceListWidget*);
+    fptr foo = (fptr)(&MessageBox::exec);
+    Stub stub2;
+    stub2.set(foo, MessageboxExec);
+
+    CenterWidget *centerWidget = MainWindow::instance()->findChild<CenterWidget *>();
+    MainSplitter *mainSplitter = centerWidget->findChild<MainSplitter *>();
+    DeviceListWidget *deviceListWidget = mainSplitter->findChild<DeviceListWidget *>();
+
+    deviceListWidget->onDeletePartitionClicked();
 
     DMDbusHandler::instance()->onDeletePartition("0:0");
     ASSERT_FALSE(deviceListWidget->isDeleteSuccess);
+
+    DMDbusHandler::instance()->onDeletePartition("");
 }
 
 TEST_F(ut_application, unmountPartition)

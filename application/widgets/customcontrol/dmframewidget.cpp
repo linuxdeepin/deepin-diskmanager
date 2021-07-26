@@ -280,27 +280,27 @@ void DmFrameWidget::onHandleChangeTheme()
     m_parentPb = Dtk::Gui::DGuiApplicationHelper::instance()->applicationPalette();
 }
 
-QString DmFrameWidget::diffMountpoints(int width, QString mountpoints)
-{
-    //区分过长的挂载点，中间做...显示
-    QString previoustr;
-    QString laststr;
+//QString DmFrameWidget::diffMountpoints(int width, QString mountpoints)
+//{
+//    //区分过长的挂载点，中间做...显示
+//    QString previoustr;
+//    QString laststr;
 
-    if (mountpoints.size() > 21) {
-        if (width < 1000) {
-            for (int i = 0; i < 9; i++) {
-                previoustr += mountpoints.at(i);
-            }
-            previoustr += "...";
-            for (int p = mountpoints.size() - 9; p < mountpoints.size(); p++) {
-                laststr += mountpoints.at(p);
-            }
-            mountpoints = previoustr + laststr;
-            return mountpoints;
-        } else {
-            return mountpoints;
-        }
-    } else {
-        return mountpoints;
-    }
-}
+//    if (mountpoints.size() > 21) {
+//        if (width < 1000) {
+//            for (int i = 0; i < 9; i++) {
+//                previoustr += mountpoints.at(i);
+//            }
+//            previoustr += "...";
+//            for (int p = mountpoints.size() - 9; p < mountpoints.size(); p++) {
+//                laststr += mountpoints.at(p);
+//            }
+//            mountpoints = previoustr + laststr;
+//            return mountpoints;
+//        } else {
+//            return mountpoints;
+//        }
+//    } else {
+//        return mountpoints;
+//    }
+//}

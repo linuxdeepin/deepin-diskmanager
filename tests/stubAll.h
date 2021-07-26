@@ -77,4 +77,6 @@ bool partitionTableErrorCheck_error();
 
 void updateCylinderInfo();
 
+int currentThemeType();
+
 #endif // STUBALLTHREAD_H

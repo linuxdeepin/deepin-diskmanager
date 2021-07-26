@@ -536,3 +536,8 @@ void updateCylinderInfo()
 //    qDebug() << "updateCylinderInfo";
 }
 
+int currentThemeType()
+{
+    return 2;
+}
+

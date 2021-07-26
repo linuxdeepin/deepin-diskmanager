@@ -80,7 +80,7 @@ private slots:
      * @param width 宽
      * @param mountpoints 挂载点
      */
-    QString diffMountpoints(int width, QString mountpoints);
+//    QString diffMountpoints(int width, QString mountpoints);
 
 protected:
     /**

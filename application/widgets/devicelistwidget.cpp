@@ -500,8 +500,8 @@ void DeviceListWidget::onUpdateDeviceInfo()
     QMap<int, int> countMap;
     int deviceCount = 0;
 
-    for (auto it = infoMap.begin(); it != infoMap.end(); it++) {
-        DeviceInfo info = it.value();
+    for (auto devInfo = infoMap.begin(); devInfo != infoMap.end(); devInfo++) {
+        DeviceInfo info = devInfo.value();
         QString diskSize = Utils::formatSize(info.m_length, info.m_sectorSize);
         auto diskinfoBox = new DmDiskinfoBox(0, this, info.m_path, diskSize);
         int partitionCount = 0;
@@ -513,20 +513,18 @@ void DeviceListWidget::onUpdateDeviceInfo()
             QString unused = Utils::formatSize(it->m_sectorsUsed, it->m_sectorSize);
             QString used = Utils::formatSize(it->m_sectorsUnused, it->m_sectorSize);
 
-            qDebug() << it->m_fileSystemType << it->m_path << it->m_sectorsUsed << it->m_sectorsUnused << it->m_sectorSize << unused << used << "222222222";
             FSType fstype = static_cast<FSType>(it->m_fileSystemType);
             QString fstypeName = Utils::fileSystemTypeToString(fstype);
-            QString mountpoint;
             QString mountpoints;
 
             for (int i = 0; i < it->m_mountPoints.size(); i++) {
-                mountpoint = it->m_mountPoints[i];
                 mountpoints += it->m_mountPoints[i];
             }
 
             QString fileSystemLabel = it->m_fileSystemLabel;
-            auto childDiskinfoBox = new DmDiskinfoBox(1, this, it->m_devicePath, "", partitionPath, partitionSize, used, unused, it->m_sectorsUnallocated,
-                                                it->m_sectorStart, it->m_sectorEnd, fstypeName, mountpoints, fileSystemLabel, it->m_flag);
+            auto childDiskinfoBox = new DmDiskinfoBox(1, this, it->m_devicePath, "", partitionPath, partitionSize, used, unused,
+                                                      it->m_sectorsUnallocated, it->m_sectorStart, it->m_sectorEnd, fstypeName,
+                                                      mountpoints, fileSystemLabel, it->m_flag);
             diskinfoBox->m_childs.append(childDiskinfoBox);
 
             partitionCount ++;

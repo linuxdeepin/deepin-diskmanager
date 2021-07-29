@@ -85,7 +85,13 @@ int main()
         cmd = QString("pidof deepin-diskmanager-service");
 
         if (!executCmd(cmd, outPut, error)) {
-            proc.startDetached("deepin-diskmanager");
+            auto e = QProcessEnvironment::systemEnvironment();
+            QString XDG_SESSION_TYPE = e.value(QStringLiteral("XDG_SESSION_TYPE"));
+            if (XDG_SESSION_TYPE == QLatin1String("x11")) {
+                proc.startDetached("deepin-diskmanager");
+            } else {
+                proc.execute("deepin-diskmanager");
+            }
             break;
         }
         QThread::msleep(300);

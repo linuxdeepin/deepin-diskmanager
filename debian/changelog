@@ -1,3 +1,12 @@
+deepin-diskmanager (1.2.18) stable; urgency=low
+
+  * 1040第十八次发版
+  * 88771 【CPM2021072100111】【4.19】【PanguW-WBX0A 6.7.0.7(C233) + BIOS0.13+EC 0.13 】
+    【HUAWEI】【UOS】【L0】【V3整机】【整机KK】部分正在运行的应用程序不在系统监视器的应用程序列表中。
+  * 86389 KLU-主菜单界面信息显示为外设硬盘分区信息时，拔出硬盘分区信息依然显示为外设硬盘的信息
+
+ -- yuandandan <yuandandan@uniontech.com>  Mon, 2 Aug 2021 14:35:16 +0800
+
 deepin-diskmanager (1.2.17) stable; urgency=low
 
   * 1040第十七次发版

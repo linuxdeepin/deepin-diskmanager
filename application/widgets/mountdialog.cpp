@@ -83,7 +83,7 @@ void MountDialog::initUi()
     setOnButtonClickedClose(false);
 
     getButton(index)->setAccessibleName("cancel");
-    getButton(m_okCode)->setAccessibleName("mount");
+    getButton(m_okCode)->setAccessibleName("mountButton");
 }
 
 void MountDialog::initConnection()

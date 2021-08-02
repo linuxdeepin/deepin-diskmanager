@@ -59,7 +59,7 @@ void UnmountDialog::initUi()
     m_okCode = addButton(tr("Unmount"), false, ButtonWarning);
 
     getButton(index)->setAccessibleName("cancel");
-    getButton(m_okCode)->setAccessibleName("unmount");
+    getButton(m_okCode)->setAccessibleName("unmountButton");
 }
 
 void UnmountDialog::initConnection()

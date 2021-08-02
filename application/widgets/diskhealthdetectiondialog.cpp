@@ -131,6 +131,7 @@ void DiskHealthDetectionDialog::initUI()
     DLabel *iconHealthLabel = new DLabel;
     m_healthStateValue = new DLabel;
     DFontSizeManager::instance()->bind(m_healthStateValue, DFontSizeManager::T2, QFont::Medium);
+    m_healthStateValue->setAccessibleName("healthState");
 
     // 状态颜色
     DPalette paletteStateColor;
@@ -176,6 +177,7 @@ void DiskHealthDetectionDialog::initUI()
     m_temperatureValue = new DLabel("-°C");
     DFontSizeManager::instance()->bind(m_temperatureValue, DFontSizeManager::T2, QFont::Medium);
     m_temperatureValue->setPalette(palette2);
+    m_temperatureValue->setAccessibleName("temperature");
 
     QVBoxLayout *temperatureLayout = new QVBoxLayout;
     temperatureLayout->addSpacing(5);

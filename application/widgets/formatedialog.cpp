@@ -108,7 +108,7 @@ void FormateDialog::initUi()
     m_okCode = addButton(tr("Format"), false, ButtonWarning);
 
     getButton(index)->setAccessibleName("cancel");
-    getButton(m_okCode)->setAccessibleName("format");
+    getButton(m_okCode)->setAccessibleName("formatButton");
 }
 
 void FormateDialog::initConnection()

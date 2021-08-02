@@ -227,6 +227,7 @@ void DiskBadSectorsDialog::initUI()
     DFontSizeManager::instance()->bind(m_checkInfoLabel, DFontSizeManager::T7, QFont::Medium);
     m_checkInfoLabel->setPalette(palette3);
     m_checkInfoLabel->hide();
+    m_checkInfoLabel->setAccessibleName("result");
 
     QHBoxLayout *resultLayout = new QHBoxLayout;
     resultLayout->addWidget(resultLabel);
@@ -356,10 +357,12 @@ void DiskBadSectorsDialog::initUI()
     m_usedTimeLabel = new DLabel(tr("Time elapsed:") + "00:00:12");
     DFontSizeManager::instance()->bind(m_usedTimeLabel, DFontSizeManager::T8, QFont::Normal);
     m_usedTimeLabel->setPalette(palette3);
+    m_usedTimeLabel->setAccessibleName("usedTime");
 
     m_unusedTimeLabel = new DLabel(tr("Time left:") + "00:00:12");
     DFontSizeManager::instance()->bind(m_unusedTimeLabel, DFontSizeManager::T8, QFont::Normal);
     m_unusedTimeLabel->setPalette(palette3);
+    m_unusedTimeLabel->setAccessibleName("unusedTime");
 
     QHBoxLayout *timeLayout = new QHBoxLayout;
     timeLayout->addWidget(m_usedTimeLabel);
@@ -992,6 +995,7 @@ void DiskBadSectorsDialog::onRepairButtonClicked()
     messageBox.setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
     messageBox.setTitle(tr("Warning")); // 警告
     messageBox.addSpacing(10);
+    messageBox.setAccessibleName("messageBox");
 
     DLabel *label1 = new DLabel(tr("Bad sector repairing cannot recover files,")); // 修复坏磁道不是数据恢复的手段，
     DLabel *label2 = new DLabel(tr("but destroys data on and near bad sectors instead.")); // 修复坏磁道会破坏坏磁道及其附近磁道上的文件数据。
@@ -1004,12 +1008,16 @@ void DiskBadSectorsDialog::onRepairButtonClicked()
     Layout->setContentsMargins(0, 0, 0, 0);
 
     QWidget *widget = new QWidget;
+    widget->setAccessibleName("warningInfo");
     widget->setLayout(Layout);
     messageBox.addContent(widget, Qt::AlignCenter);
     messageBox.addSpacing(10);
 
-    messageBox.addButton(tr("Cancel")); // 取消
-    messageBox.addButton(tr("Start Repair")); // 开始修复
+    int cancelIndex = messageBox.addButton(tr("Cancel")); // 取消
+    int repairIndex = messageBox.addButton(tr("Start Repair")); // 开始修复
+
+    messageBox.getButton(cancelIndex)->setAccessibleName("cancelButton");
+    messageBox.getButton(repairIndex)->setAccessibleName("startRepair");
     if (messageBox.exec() == DDialog::Accepted) {
         m_curType = StatusType::Repair;
         m_repairButton->setDisabled(true);

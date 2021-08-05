@@ -277,6 +277,7 @@ void ProbeThread::probeDeviceInfo()
     if (DISK_SIGNAL_TYPE_AUTOMNT == m_type) {
         //Only usb add need to sleep 5 seconds
         qDebug() << __FUNCTION__ << "From auto Mount, So i will sleep 5 seconds! type:" << m_type;
+        //相传有一块移动硬盘，需要先 sleep 一下才能正确读取。
         sleep (5);
     }
 

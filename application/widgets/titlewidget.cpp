@@ -33,6 +33,7 @@
 
 #include <QMouseEvent>
 #include <QHBoxLayout>
+#include <QApplication>
 
 TitleWidget::TitleWidget(DWidget *parent)
     : DWidget(parent)
@@ -78,6 +79,7 @@ void TitleWidget::initConnection()
     connect(m_btnMount, &DPushButton::clicked, this, &TitleWidget::showMountInfoWidget);
     connect(m_btnUnmount, &DPushButton::clicked, this, &TitleWidget::showUnmountInfoWidget);
     connect(m_btnResize, &DPushButton::clicked, this, &TitleWidget::showResizeInfoWidget);
+    connect(DMDbusHandler::instance(), &DMDbusHandler::updateUsb, this, &TitleWidget::onUpdateUsb);
 }
 
 DPushButton *TitleWidget::createBtn(const QString &btnName, const QString &objName, bool bCheckable)
@@ -108,13 +110,18 @@ void TitleWidget::showPartInfoWidget()
     dlg.setObjectName("partitionDialog");
     dlg.setAccessibleName("partitionDialog");
 
+    m_curChooseDevicePath = info.m_devicePath;
+
     if (dlg.exec() == 1) {
         if (TYPE_UNPARTITIONED == info.m_type && FS_UNALLOCATED == info.m_fileSystemType) {
+            m_curChooseDevicePath = "";
             qDebug() << QString("No partition table found on device %1").arg(info.m_devicePath);
             qDebug() << "A partition table is required before partitions can be added";
             //ToDo:empty device create partition table
             // 无法识别当前设备分区表
-            DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Cannot recognize its partition table"));
+            DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget()->parentWidget(),
+                                                     QIcon::fromTheme("://icons/deepin/builtin/warning.svg"),
+                                                     tr("Cannot recognize its partition table"));
             DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
             return;
         }
@@ -123,39 +130,61 @@ void TitleWidget::showPartInfoWidget()
         partitionWidget.setObjectName("partitionWidget");
         partitionWidget.setAccessibleName("partitionWidget");
         partitionWidget.exec();
+
+        m_curChooseDevicePath = "";
     }
 }
 
 void TitleWidget::showFormateInfoWidget()
 {
+    PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+    m_curChooseDevicePath = info.m_devicePath;
+
     FormateDialog dlg(this);
     dlg.setObjectName("formateDialog");
     dlg.setAccessibleName("formateDialog");
     dlg.exec();
+
+    m_curChooseDevicePath = "";
 }
 
 void TitleWidget::showMountInfoWidget()
 {
+    PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+    m_curChooseDevicePath = info.m_devicePath;
+
     MountDialog dlg(this);
     dlg.setObjectName("mountDialog");
     dlg.setAccessibleName("mountDialog");
     dlg.exec();
+
+    m_curChooseDevicePath = "";
 }
 
 void TitleWidget::showUnmountInfoWidget()
 {
+    PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+    m_curChooseDevicePath = info.m_devicePath;
+
     UnmountDialog dlg(this);
     dlg.setObjectName("unmountDialog");
     dlg.setAccessibleName("unmountDialog");
     dlg.exec();
+
+    m_curChooseDevicePath = "";
 }
 
 void TitleWidget::showResizeInfoWidget()
 {
+    PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+    m_curChooseDevicePath = info.m_devicePath;
+
     ResizeDialog dlg(this);
     dlg.setObjectName("resizeDialog");
     dlg.setAccessibleName("resizeDialog");
     dlg.exec();
+
+    m_curChooseDevicePath = "";
 }
 
 void TitleWidget::updateBtnStatus()
@@ -230,6 +259,34 @@ void TitleWidget::onCurSelectChanged()
 {
     updateBtnStatus();
     qDebug() << __FUNCTION__ << "-1--1-";
+}
+
+void TitleWidget::onUpdateUsb()
+{
+    if (m_curChooseDevicePath == "") {
+        return;
+    }
+
+    QStringList deviceNameList = DMDbusHandler::instance()->getDeviceNameList();
+    if (deviceNameList.indexOf(m_curChooseDevicePath) != -1)
+        return;
+
+    QWidgetList widgetList = QApplication::topLevelWidgets();
+    for (int i = 0; i < widgetList.count(); i++) {
+        QWidget *widget = widgetList.at(i);
+
+        if (widget->objectName() == "partitionDialog" || widget->objectName() == "partitionWidget" ||
+                widget->objectName() == "formateDialog" || widget->objectName() == "mountDialog" ||
+                widget->objectName() == "unmountDialog" || widget->objectName() == "resizeDialog" ||
+                widget->objectName() == "mountMessageBox" || widget->objectName() == "firstWarning" ||
+                widget->objectName() == "secondWarning") {
+
+            widget->close();
+//            break;
+        }
+    }
+
+    m_curChooseDevicePath = "";
 }
 
 void TitleWidget::mousePressEvent(QMouseEvent *event)

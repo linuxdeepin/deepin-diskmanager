@@ -108,6 +108,11 @@ private slots:
      */
     void showResizeInfoWidget();
 
+    /**
+     * @brief usb热插拔信号响应的槽函数
+     */
+    void onUpdateUsb();
+
 protected:
 
     /**
@@ -121,6 +126,7 @@ private:
     DPushButton *m_btnMount; // 挂载按钮
     DPushButton *m_btnUnmount; // 卸载按钮
     DPushButton *m_btnResize; // 空间调整按钮
+    QString m_curChooseDevicePath; // 当前操作磁盘
 };
 
 #endif // TITLEWIDGET_H

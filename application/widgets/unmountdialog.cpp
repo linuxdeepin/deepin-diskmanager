@@ -81,12 +81,14 @@ void UnmountDialog::onButtonClicked(int index, const QString &text)
         if (mountpoints == "/boot/efi" || mountpoints == "/boot" || mountpoints == "/"
                 || mountpoints == "/data/home/opt/root/var" || mountpoints == "/recovery") {
             MessageBox firstWarning(this);
+            firstWarning.setObjectName("firstWarning");
             firstWarning.setAccessibleName("firstWarning");
             // 卸载该系统盘可能会引起系统崩溃，请确认是否继续操作  继续  取消
             QString title = tr("Unmounting system disk may result in system crash,\n please confirm before proceeding");
             firstWarning.setWarings(title, "", tr("Continue"), DDialog::ButtonWarning, "continueBtn", tr("Cancel"), "cancelButton");
             if (firstWarning.exec() == 1) {
                 MessageBox secondWarning(this);
+                secondWarning.setObjectName("secondWarning");
                 secondWarning.setAccessibleName("secondWarning");
                 // 继续执行卸载操作，后续引发的风险将由您自行承担  卸载  取消
                 QString title = tr("You will take subsequent risks if you continue to unmount the system disk");

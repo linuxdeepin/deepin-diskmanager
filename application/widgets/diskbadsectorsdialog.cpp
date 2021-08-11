@@ -980,6 +980,7 @@ void DiskBadSectorsDialog::onRepairButtonClicked()
 {
     if (isExistMountPartition()) {
         MessageBox warningBox(this);
+        warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("messageBox");
         QString title1 = tr("The verifying disk contains mounted partitions, so you cannot repair it."); // 当前检测磁盘存在已挂载分区，无法修复坏道，
 //        title1.replace("so", "so\n");
@@ -995,6 +996,7 @@ void DiskBadSectorsDialog::onRepairButtonClicked()
     messageBox.setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
     messageBox.setTitle(tr("Warning")); // 警告
     messageBox.addSpacing(10);
+    messageBox.setObjectName("messageBox");
     messageBox.setAccessibleName("messageBox");
 
     DLabel *label1 = new DLabel(tr("Bad sector repairing cannot recover files,")); // 修复坏磁道不是数据恢复的手段，
@@ -1168,7 +1170,7 @@ void DiskBadSectorsDialog::closeEvent(QCloseEvent *event)
     switch (m_curType) {
     case StatusType::Check: {
         MessageBox messageBox(this);
-        messageBox.setObjectName("messageBox");
+        messageBox.setObjectName("exitMessageBox");
         messageBox.setAccessibleName("messageBox");
         // 正在检测中，是否退出窗口？  当前检测信息不会保留   退出   取消
         messageBox.setWarings(tr("Verifying for bad sectors, exit now?"), tr("The verified information will not be reserved"),
@@ -1195,7 +1197,7 @@ void DiskBadSectorsDialog::closeEvent(QCloseEvent *event)
     }
     case StatusType::Repair:{
         MessageBox messageBox(this);
-        messageBox.setObjectName("messageBox");
+        messageBox.setObjectName("exitMessageBox");
         messageBox.setAccessibleName("messageBox");
         // 正在修复中，是否退出窗口？  当前修复信息不会保留   退出   取消
         messageBox.setWarings(tr("Repairing bad sectors, exit now?"), tr("The repairing information will not be reserved"),

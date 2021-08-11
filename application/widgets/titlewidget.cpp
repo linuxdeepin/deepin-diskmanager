@@ -110,11 +110,11 @@ void TitleWidget::showPartInfoWidget()
     dlg.setObjectName("partitionDialog");
     dlg.setAccessibleName("partitionDialog");
 
-    m_curChooseDevicePath = info.m_devicePath;
+    setCurDevicePath(info.m_devicePath);
 
     if (dlg.exec() == 1) {
         if (TYPE_UNPARTITIONED == info.m_type && FS_UNALLOCATED == info.m_fileSystemType) {
-            m_curChooseDevicePath = "";
+            setCurDevicePath("");
             qDebug() << QString("No partition table found on device %1").arg(info.m_devicePath);
             qDebug() << "A partition table is required before partitions can be added";
             //ToDo:empty device create partition table
@@ -131,60 +131,60 @@ void TitleWidget::showPartInfoWidget()
         partitionWidget.setAccessibleName("partitionWidget");
         partitionWidget.exec();
 
-        m_curChooseDevicePath = "";
+        setCurDevicePath("");
     }
 }
 
 void TitleWidget::showFormateInfoWidget()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    m_curChooseDevicePath = info.m_devicePath;
+    setCurDevicePath(info.m_devicePath);
 
     FormateDialog dlg(this);
     dlg.setObjectName("formateDialog");
     dlg.setAccessibleName("formateDialog");
     dlg.exec();
 
-    m_curChooseDevicePath = "";
+    setCurDevicePath("");
 }
 
 void TitleWidget::showMountInfoWidget()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    m_curChooseDevicePath = info.m_devicePath;
+    setCurDevicePath(info.m_devicePath);
 
     MountDialog dlg(this);
     dlg.setObjectName("mountDialog");
     dlg.setAccessibleName("mountDialog");
     dlg.exec();
 
-    m_curChooseDevicePath = "";
+    setCurDevicePath("");
 }
 
 void TitleWidget::showUnmountInfoWidget()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    m_curChooseDevicePath = info.m_devicePath;
+    setCurDevicePath(info.m_devicePath);
 
     UnmountDialog dlg(this);
     dlg.setObjectName("unmountDialog");
     dlg.setAccessibleName("unmountDialog");
     dlg.exec();
 
-    m_curChooseDevicePath = "";
+    setCurDevicePath("");
 }
 
 void TitleWidget::showResizeInfoWidget()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    m_curChooseDevicePath = info.m_devicePath;
+    setCurDevicePath(info.m_devicePath);
 
     ResizeDialog dlg(this);
     dlg.setObjectName("resizeDialog");
     dlg.setAccessibleName("resizeDialog");
     dlg.exec();
 
-    m_curChooseDevicePath = "";
+    setCurDevicePath("");
 }
 
 void TitleWidget::updateBtnStatus()
@@ -286,7 +286,12 @@ void TitleWidget::onUpdateUsb()
         }
     }
 
-    m_curChooseDevicePath = "";
+    setCurDevicePath("");
+}
+
+void TitleWidget::setCurDevicePath(const QString &devPath)
+{
+    m_curChooseDevicePath = devPath;
 }
 
 void TitleWidget::mousePressEvent(QMouseEvent *event)

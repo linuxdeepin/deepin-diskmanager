@@ -74,6 +74,11 @@ private:
      */
     void updateBtnStatus();
 
+    /**
+     * @brief 设置当前操作设备路径
+     */
+    void setCurDevicePath(const QString &devPath);
+
 signals:
 
 private slots:

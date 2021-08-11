@@ -189,49 +189,52 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
 
 void DeviceListWidget::onDiskInfoClicked()
 {
-    m_curChooseDevicePath = m_curDiskInfoData.m_diskPath;
+    setCurDevicePath(m_curDiskInfoData.m_diskPath);
 
     DiskInfoDisplayDialog diskInfoDisplayDialog(m_curDiskInfoData.m_diskPath, this);
     diskInfoDisplayDialog.setObjectName("diskInfoDisplayDialog");
     diskInfoDisplayDialog.setAccessibleName("diskInfoDialog");
     diskInfoDisplayDialog.exec();
 
-    m_curChooseDevicePath = "";
+    setCurDevicePath("");
 }
 
 void DeviceListWidget::onDiskCheckHealthClicked()
 {
+    setCurDevicePath(m_curDiskInfoData.m_diskPath);
+
     HardDiskStatusInfoList hardDiskStatusInfoList = DMDbusHandler::instance()->getDeviceHardStatusInfo(m_curDiskInfoData.m_diskPath);
     if (hardDiskStatusInfoList.count() < 1) {
         MessageBox warningBox(this);
+        warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("warningMessageBox");
         // 获取不到硬件相应信息  关闭
         warningBox.setWarings(tr("Failed to get hardware information"), "", tr("Close"), "close");
         warningBox.exec();
 
+        setCurDevicePath("");
+
         return;
     }
-
-    m_curChooseDevicePath = m_curDiskInfoData.m_diskPath;
 
     DiskHealthDetectionDialog diskHealthDetectionDialog(m_curDiskInfoData.m_diskPath, hardDiskStatusInfoList, this);
     diskHealthDetectionDialog.setObjectName("diskHealthDetectionDialog");
     diskHealthDetectionDialog.setAccessibleName("diskHealthInfoDialog");
     diskHealthDetectionDialog.exec();
 
-    m_curChooseDevicePath = "";
+    setCurDevicePath("");
 }
 
 void DeviceListWidget::onDiskBadSectorsClicked()
 {
-    m_curChooseDevicePath = m_curDiskInfoData.m_diskPath;
+    setCurDevicePath(m_curDiskInfoData.m_diskPath);
 
     DiskBadSectorsDialog diskBadSectorsDialog(this);
     diskBadSectorsDialog.setObjectName("diskBadSectorsDialog");
     diskBadSectorsDialog.setAccessibleName("diskBadSectorsDialog");
     diskBadSectorsDialog.exec();
 
-    m_curChooseDevicePath = "";
+    setCurDevicePath("");
 }
 
 bool DeviceListWidget::isExistMountPartition()
@@ -258,12 +261,17 @@ bool DeviceListWidget::isExistMountPartition()
 
 void DeviceListWidget::onCreatePartitionTableClicked()
 {
+    setCurDevicePath(m_curDiskInfoData.m_diskPath);
+
     if (isExistMountPartition()) {
         MessageBox warningBox(this);
+        warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("messageBox");
         // 请先卸载当前磁盘中的所有分区  确定
         warningBox.setWarings(tr("Please unmount all partitions in the disk first"), "", tr("OK"), "ok");
         warningBox.exec();
+
+        setCurDevicePath("");
         
         return;
     }
@@ -279,6 +287,8 @@ void DeviceListWidget::onCreatePartitionTableClicked()
         createPartitionTableDialog.setAccessibleName("createPartitionTableDialog");
         createPartitionTableDialog.exec();
     }
+
+    setCurDevicePath("");
 }
 
 void DeviceListWidget::onPartitionErrorCheckClicked()
@@ -286,14 +296,14 @@ void DeviceListWidget::onPartitionErrorCheckClicked()
     bool result = DMDbusHandler::instance()->detectionPartitionTableError(m_curDiskInfoData.m_diskPath);
     if (result) {
         QString deviceInfo = QString("%1(%2)").arg(m_curDiskInfoData.m_diskPath).arg(m_curDiskInfoData.m_diskSize);
-        m_curChooseDevicePath = m_curDiskInfoData.m_diskPath;
+        setCurDevicePath(m_curDiskInfoData.m_diskPath);
 
         PartitionTableErrorsInfoDialog partitionTableErrorsInfoDialog(deviceInfo, this);
         partitionTableErrorsInfoDialog.setObjectName("partitionErrorCheck");
         partitionTableErrorsInfoDialog.setAccessibleName("partitionErrorCheckDialog");
         partitionTableErrorsInfoDialog.exec();
 
-        m_curChooseDevicePath = "";
+        setCurDevicePath("");
     } else {
         // 分区表检测正常
         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("No errors found in the partition table"));
@@ -303,6 +313,8 @@ void DeviceListWidget::onPartitionErrorCheckClicked()
 
 void DeviceListWidget::onHidePartitionClicked()
 {
+    setCurDevicePath(m_curDiskInfoData.m_diskPath);
+
     MessageBox messageBox(this);
     messageBox.setObjectName("messageBox");
     messageBox.setAccessibleName("hideMessageBox");
@@ -326,23 +338,32 @@ void DeviceListWidget::onHidePartitionClicked()
             }
         }
     }
+
+    setCurDevicePath("");
 }
 
 void DeviceListWidget::onShowPartitionClicked()
 {
+    setCurDevicePath(m_curDiskInfoData.m_diskPath);
+
     MessageBox messageBox(this);
-    messageBox.setObjectName("showMessageBox");
+    messageBox.setObjectName("messageBox");
     messageBox.setAccessibleName("unhideMessageBox");
     // 您是否要显示该隐藏分区？ 显示  取消
     messageBox.setWarings(tr("Do you want to unhide this partition?"), "", tr("Unhide"), "unhide", tr("Cancel"), "cancel");
     if (messageBox.exec() == DDialog::Accepted) {
         DMDbusHandler::instance()->unhidePartition();
     }
+
+    setCurDevicePath("");
 }
 
 void DeviceListWidget::onDeletePartitionClicked()
 {
+    setCurDevicePath(m_curDiskInfoData.m_diskPath);
+
     MessageBox messageBox(this);
+    messageBox.setObjectName("messageBox");
     messageBox.setAccessibleName("deleteMessageBox");
     // 您确定要删除该分区吗？ 该分区内所有文件将会丢失  删除  取消
     messageBox.setWarings(tr("Are you sure you want to delete this partition?"), tr("You will lose all data in it"), tr("Delete"), DDialog::ButtonWarning, "delete", tr("Cancel"), "cancel");
@@ -358,6 +379,8 @@ void DeviceListWidget::onDeletePartitionClicked()
             DMDbusHandler::instance()->deletePartition();
         }
     }
+
+    setCurDevicePath("");
 }
 
 void DeviceListWidget::onHidePartition(const QString &hideMessage)
@@ -456,7 +479,6 @@ void DeviceListWidget::onCreatePartitionTableMessage(const bool &flag)
 
 void DeviceListWidget::onUpdateUsb()
 {
-    qDebug() << "onUpdateUsb" << "111111111111111111111111";
     if (m_curChooseDevicePath == "")
         return;
 
@@ -467,24 +489,28 @@ void DeviceListWidget::onUpdateUsb()
     QWidgetList widgetList = QApplication::topLevelWidgets();
     for (int i = 0; i < widgetList.count(); i++) {
         QWidget *widget = widgetList.at(i);
-//        if (widget->objectName() == "diskBadSectorsDialog" ||  widget->objectName() == "diskInfoDisplayDialog" ||
-//                widget->objectName() == "diskHealthDetectionDialog" || widget->objectName() == "partitionErrorCheck") {
-
         if (widget->objectName() == "diskBadSectorsDialog") {
             DiskBadSectorsDialog *diskBadSectorsDialog = static_cast<DiskBadSectorsDialog *>(widget);
             diskBadSectorsDialog->stopCheckRepair();
 
             diskBadSectorsDialog->close();
-            break;
         } else if (widget->objectName() == "diskInfoDisplayDialog" || widget->objectName() == "diskHealthDetectionDialog" ||
-                   widget->objectName() == "partitionErrorCheck") {
+                   widget->objectName() == "partitionErrorCheck" || widget->objectName() == "createPartitionTable" ||
+                   widget->objectName() == "messageBox") {
             widget->close();
+        } else if (widget->objectName() == "exitMessageBox") {
+            MessageBox *messageBox = static_cast<MessageBox *>(widget);
+            messageBox->accept();
             break;
         }
-
-
-//        }
     }
+
+    setCurDevicePath("");
+}
+
+void DeviceListWidget::setCurDevicePath(const QString &devPath)
+{
+    m_curChooseDevicePath = devPath;
 }
 
 void DeviceListWidget::onUpdateDeviceInfo()

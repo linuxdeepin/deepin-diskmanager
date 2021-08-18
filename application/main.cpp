@@ -54,6 +54,11 @@ int main(int argc, char *argv[])
 {
     // signal(SIGINT, SIG_IGN);
     // signal(SIGKILL, SIG_IGN);
+
+    if (qEnvironmentVariableIsEmpty("XDG_CURRENT_DESKTOP")){
+        qputenv("XDG_CURRENT_DESKTOP", "Deepin");
+    }
+
     auto e = QProcessEnvironment::systemEnvironment();
     QString XDG_SESSION_TYPE = e.value(QStringLiteral("XDG_SESSION_TYPE"));
     if (XDG_SESSION_TYPE == QLatin1String("x11")) {

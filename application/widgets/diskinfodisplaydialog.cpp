@@ -115,10 +115,10 @@ void DiskInfoDisplayDialog::initUI()
         infoLayout->addLayout(labelLayout);
     }
 
-    m_linkButton = new DCommandLinkButton(tr("Export")); // 导出
+    m_linkButton = new DCommandLinkButton(tr("Export", "button")); // 导出
     DFontSizeManager::instance()->bind(m_linkButton, DFontSizeManager::T8, QFont::Medium);
     QFontMetrics fmCapacity = m_linkButton->fontMetrics();
-    int width = fmCapacity.width(QString(tr("Export")));
+    int width = fmCapacity.width(QString(tr("Export", "button")));
     m_linkButton->setFixedWidth(width);
     m_linkButton->setAccessibleName("export");
 
@@ -207,7 +207,7 @@ bool DiskInfoDisplayDialog::event(QEvent *event)
 {
     // 字体大小改变
     if (QEvent::ApplicationFontChange == event->type()) {
-        m_linkButton->setFixedWidth(m_linkButton->fontMetrics().width(QString(tr("Export"))));
+        m_linkButton->setFixedWidth(m_linkButton->fontMetrics().width(QString(tr("Export", "button"))));
         DDialog::event(event);
     }
 

@@ -128,7 +128,7 @@ void PartitionTableErrorsInfoDialog::initUI()
     tableLayout->setContentsMargins(0, 0, 0, 10);
 
     pushButton = new DPushButton;
-    pushButton->setText(tr("OK")); // 确定
+    pushButton->setText(tr("OK", "button")); // 确定
     pushButton->setFixedSize(220, 36);
     pushButton->setAccessibleName("ok");
 

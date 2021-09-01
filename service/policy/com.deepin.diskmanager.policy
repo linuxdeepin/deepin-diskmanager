@@ -59,6 +59,8 @@
 		<message xml:lang="bo">སྡུད་སྡེར་གྱི་ཆ་འཕྲིན་ཀློག་ལེན་བྱེད་པར་དཔང་དཔྱད་བྱེད་དགོས།</message>
 		<description xml:lang="zh_CN">Run Disk Manager Need Authentication</description>
 		<message xml:lang="zh_CN">读取磁盘信息需要认证</message>
+		<description xml:lang="pl">Uruchomienie menadżera dysku wymaga uwierzytelnienia</description>
+		<message xml:lang="pl">Uwierzytelnienie jest wymagane aby odczytywać informacje z dysku</message>
 		<description xml:lang="ca">Per executar el gestor de discs cal autenticació</description>
 		<message xml:lang="ca">Cal autenticació per llegir la informació del disc</message>
 		<description xml:lang="sl">Zagon upravljalca diskov zahteva overitev</description>

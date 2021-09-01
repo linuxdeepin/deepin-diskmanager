@@ -286,12 +286,12 @@ void DiskBadSectorsDialog::initUI()
     cylinderLayout->addWidget(unknownLabel);
     cylinderLayout->setContentsMargins(10, 10, 10, 14);
 
-    m_exitButton = new DPushButton(tr("Exit")); // 退出
+    m_exitButton = new DPushButton(tr("Exit", "button")); // 退出
     m_exitButton->setFixedSize(147, 36);
     m_exitButton->setObjectName("exit");
     m_exitButton->setAccessibleName("exit");
 
-    m_resetButton = new DPushButton(tr("Reset")); // 复位
+    m_resetButton = new DPushButton(tr("Reset", "button")); // 复位
     m_resetButton->setFixedSize(147, 36);
     m_resetButton->setDisabled(true);
     m_resetButton->setObjectName("reset");
@@ -308,12 +308,12 @@ void DiskBadSectorsDialog::initUI()
     m_startButton->setObjectName("start");
     m_startButton->setAccessibleName("start");
 
-    m_stopButton = new DPushButton(tr("Stop")); // 停止
+    m_stopButton = new DPushButton(tr("Stop", "button")); // 停止
     m_stopButton->setFixedSize(147, 36);
     m_stopButton->setObjectName("stop");
     m_stopButton->setAccessibleName("stop");
 
-    m_continueButton = new DPushButton(tr("Continue")); // 继续
+    m_continueButton = new DPushButton(tr("Continue", "button")); // 继续
     m_continueButton->setFixedSize(147, 36);
     m_continueButton->setObjectName("continue");
     m_continueButton->setAccessibleName("continue");
@@ -323,7 +323,7 @@ void DiskBadSectorsDialog::initUI()
     m_againButton->setObjectName("again");
     m_againButton->setAccessibleName("again");
 
-    m_doneButton = new DSuggestButton(tr("Done"));  // 完成
+    m_doneButton = new DSuggestButton(tr("Done", "button"));  // 完成
     m_doneButton->setFixedSize(147, 36);
     m_doneButton->setObjectName("done");
     m_doneButton->setAccessibleName("done");

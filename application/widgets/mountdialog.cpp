@@ -71,7 +71,7 @@ void MountDialog::initUi()
     m_ComboBox->addItem("/usr");
     m_ComboBox->addItem("/local");
     m_ComboBox->addItem("/media");
-    m_ComboBox->setAccessibleName("Mount point");
+    m_ComboBox->setAccessibleName("mountPointComboBox");
 
     mainLayout->addWidget(tipLabel);
     mainLayout->addWidget(mountLabel);

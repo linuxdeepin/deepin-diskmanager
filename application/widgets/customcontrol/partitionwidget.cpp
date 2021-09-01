@@ -239,14 +239,14 @@ void PartitionWidget::botFrameSetting()
     partInfoShowing();
     vLayout->addWidget(m_partWidget, 5);
     //按钮
-    m_applyBtn = new DPushButton(tr("Confirm"), m_botFrame);
+    m_applyBtn = new DPushButton(tr("Confirm", "button"), m_botFrame);
     m_applyBtn->setObjectName("confirm");
     m_applyBtn->setAccessibleName("confirm");
     //取消
-    m_cancleBtn = new DPushButton(tr("Cancel"), m_botFrame);
+    m_cancleBtn = new DPushButton(tr("Cancel", "button"), m_botFrame);
     m_cancleBtn->setAccessibleName("cancel");
     //复原
-    m_reveBtn = new DPushButton(tr("Revert"), m_botFrame);
+    m_reveBtn = new DPushButton(tr("Revert", "button"), m_botFrame);
     m_reveBtn->setObjectName("revert");
     m_reveBtn->setAccessibleName("revert");
     m_applyBtn->setEnabled(false);

@@ -102,6 +102,7 @@ void DiskHealthDetectionDialog::initUI()
     m_serialNumberValue->setText(hardDiskInfo.m_serialNumber);
     DFontSizeManager::instance()->bind(m_serialNumberValue, DFontSizeManager::T6, QFont::Medium);
     m_serialNumberValue->setPalette(palette2);
+    m_serialNumberValue->setAccessibleName("Serial number");
 
     DLabel *userCapacityNameLabel = new DLabel(tr("Storage")); // 用户容量
     DFontSizeManager::instance()->bind(userCapacityNameLabel, DFontSizeManager::T10, QFont::Medium);
@@ -111,6 +112,7 @@ void DiskHealthDetectionDialog::initUI()
     m_userCapacityValue->setText(hardDiskInfo.m_size);
     DFontSizeManager::instance()->bind(m_userCapacityValue, DFontSizeManager::T10, QFont::Normal);
     m_userCapacityValue->setPalette(palette2);
+    m_userCapacityValue->setAccessibleName("Storage");
 
     QVBoxLayout *diskInfoLayout = new QVBoxLayout;
     diskInfoLayout->addSpacing(7);
@@ -342,9 +344,9 @@ void DiskHealthDetectionDialog::initUI()
     DFontSizeManager::instance()->bind(stateTipsLabel, DFontSizeManager::T8, QFont::Normal);
     stateTipsLabel->setPalette(palette4);
 
-    m_linkButton = new DCommandLinkButton(tr("Export")); // 导出
+    m_linkButton = new DCommandLinkButton(tr("Export", "button")); // 导出
     DFontSizeManager::instance()->bind(m_linkButton, DFontSizeManager::T8, QFont::Medium);
-    m_linkButton->setFixedWidth(m_linkButton->fontMetrics().width(QString(tr("Export"))));
+    m_linkButton->setFixedWidth(m_linkButton->fontMetrics().width(QString(tr("Export", "button"))));
     m_linkButton->setAccessibleName("export");
 
 //    QWidget *bottomWidget = new QWidget;
@@ -448,7 +450,7 @@ bool DiskHealthDetectionDialog::event(QEvent *event)
 {
     // 字体大小改变
     if (QEvent::ApplicationFontChange == event->type()) {
-        m_linkButton->setFixedWidth(m_linkButton->fontMetrics().width(QString(tr("Export"))));
+        m_linkButton->setFixedWidth(m_linkButton->fontMetrics().width(QString(tr("Export", "button"))));
 
         if (QApplication::font().pointSizeF() / 0.75 >= 18 ) {
             setFixedSize(726, 705);

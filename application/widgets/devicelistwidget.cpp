@@ -322,7 +322,8 @@ void DeviceListWidget::onHidePartitionClicked()
     messageBox.setWarings(tr("Do you want to hide this partition?"), "", tr("Hide"), "hide", tr("Cancel"), "cancel");
     if (messageBox.exec() == DDialog::Accepted) {
         if (m_curDiskInfoData.m_mountpoints == "/boot/efi" || m_curDiskInfoData.m_mountpoints == "/boot"
-                || m_curDiskInfoData.m_mountpoints == "/" || m_curDiskInfoData.m_mountpoints.contains("/data")) {
+                || m_curDiskInfoData.m_mountpoints == "/" || m_curDiskInfoData.m_mountpoints == "/data/home/opt/root/var"
+                || m_curDiskInfoData.m_mountpoints == "/deepin/userdata/home/opt/root/var") {
             isHideSuccess = false;
             // 隐藏分区失败！无法锁定该分区
             DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Failed to hide the partition: unable to lock it"));
@@ -369,8 +370,8 @@ void DeviceListWidget::onDeletePartitionClicked()
     messageBox.setWarings(tr("Are you sure you want to delete this partition?"), tr("You will lose all data in it"), tr("Delete"), DDialog::ButtonWarning, "delete", tr("Cancel"), "cancel");
     if (messageBox.exec() == DDialog::Accepted) {
         if (m_curDiskInfoData.m_mountpoints == "/boot/efi" || m_curDiskInfoData.m_mountpoints == "/boot"
-                || m_curDiskInfoData.m_mountpoints == "/" || m_curDiskInfoData.m_mountpoints.contains("/data")
-                || m_curDiskInfoData.m_fstype == "linux-swap") {
+                || m_curDiskInfoData.m_mountpoints == "/" || m_curDiskInfoData.m_mountpoints == "/data/home/opt/root/var"
+                || m_curDiskInfoData.m_fstype == "linux-swap" || m_curDiskInfoData.m_mountpoints == "/deepin/userdata/home/opt/root/var") {
             isDeleteSuccess = false;
             // 删除分区失败！无法锁定该分区
             DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Failed to delete the partition: unable to lock it"));

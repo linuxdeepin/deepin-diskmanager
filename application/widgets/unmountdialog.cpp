@@ -79,7 +79,8 @@ void UnmountDialog::onButtonClicked(int index, const QString &text)
         }
 
         if (mountpoints == "/boot/efi" || mountpoints == "/boot" || mountpoints == "/"
-                || mountpoints == "/data/home/opt/root/var" || mountpoints == "/recovery") {
+                || mountpoints == "/data/home/opt/root/var" || mountpoints == "/recovery"
+                || mountpoints == "/deepin/userdata/home/opt/root/var") {
             MessageBox firstWarning(this);
             firstWarning.setObjectName("firstWarning");
             firstWarning.setAccessibleName("firstWarning");

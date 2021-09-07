@@ -1,3 +1,10 @@
+deepin-diskmanager (1.2.20) stable; urgency=low
+
+  * 1040第二十次发版
+  * 两个中文字符的按钮，字符中间添加空格
+
+ -- yuandandan <yuandandan@uniontech.com>  Tue, 7 Sep 2021 15:35:16 +0800
+
 deepin-diskmanager (1.2.19) stable; urgency=low
 
   * 1040第十九次发版

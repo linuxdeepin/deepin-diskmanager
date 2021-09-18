@@ -1721,10 +1721,34 @@ bool PartedCore::create(Partition &newPartition)
 
 bool PartedCore::createPartition(Partition &newPartition, Sector minSize)
 {
-    qDebug() << __FUNCTION__ << "create empty partition";
+    qDebug() << __FUNCTION__ << "create empty partition from:" << newPartition.m_devicePath;
     newPartition.m_partitionNumber = 0;
     PedDevice *lpDevice = nullptr;
     PedDisk *lpDisk = nullptr;
+
+    //对应 Bug 95232, 如果检测到虚拟磁盘扩容的话，重新写一下分区表，就可以修正分区表数据.
+    QString cmd = QString("fdisk -l %1 2>&1").arg(newPartition.m_devicePath);
+    FILE *fd = nullptr;
+    fd = popen(cmd.toStdString().data(), "r");
+    char pb[1024];
+    memset(pb, 0, 1024);
+
+    if (fd) {
+        while (fgets(pb, 1024, fd) != nullptr) {
+            if (strstr(pb, "will be corrected by write")) {
+                QString cmd_fix = QString("echo w | fdisk %1").arg(newPartition.m_devicePath);
+
+                FILE *fixfd = popen(cmd_fix.toStdString().data(), "r");
+                if (fixfd) {
+                    fclose(fixfd);
+                }
+                qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
+            }
+        }
+
+        fclose(fd);
+    }
+
     if (getDeviceAndDisk(newPartition.m_devicePath, lpDevice, lpDisk)) {
         PedPartitionType type;
         PedConstraint *constraint = nullptr;
@@ -2328,7 +2352,7 @@ int PartedCore::getPartitionHiddenFlag(const QString &devicePath, const QString 
 bool PartedCore::detectionPartitionTableError(const QString &devicePath)
 {
     qDebug() << __FUNCTION__ << "Detection Partition Table Error start";
-    QString cmd = QString("fdisk -l %1").arg(devicePath);
+    QString cmd = QString("fdisk -l %1 2>&1").arg(devicePath);
     FILE *fd = nullptr;
     fd = popen(cmd.toStdString().data(), "r");
     char pb[1024];
@@ -2343,8 +2367,20 @@ bool PartedCore::detectionPartitionTableError(const QString &devicePath)
         if (strstr(pb, "Partition table entries are not in disk order") != nullptr) {
             return true;
         }
+
+        if (nullptr != strstr(pb, "will be corrected by write")) {
+            QString cmd_fix = QString("echo w | fdisk %1").arg(devicePath);
+
+            FILE *fixfd = popen(cmd_fix.toStdString().data(), "r");
+            qDebug() << __FUNCTION__ << "Detection Partition Table Rewrite Done";
+            if (fixfd) {
+                fclose(fixfd);
+            }
+            return true;
+        }
     }
 
+    fclose(fd);
     qDebug() << __FUNCTION__ << "Detection Partition Table Error end";
     return false;
 }

@@ -50,6 +50,27 @@ QAccessibleInterface *accessibleFactory(const QString &classname, QObject *objec
     return interface;
 }
 
+/**
+ * @brief 执行外部命令
+ * @param strCmd:外部命令字符串
+ * @param outPut:命令控制台输出
+ * @param error:错误信息
+ * @return exitcode:退出码
+ */
+int executCmd(const QString &strCmd, QString &outPut, QString &error)
+{
+    QProcess proc;
+    proc.start(strCmd);
+    proc.waitForFinished(-1);
+    outPut = proc.readAllStandardOutput();
+    error = proc.readAllStandardError();
+    error = proc.errorString();
+    int exitcode = proc.exitCode();
+    proc.close();
+    return exitcode;
+
+}
+
 int main(int argc, char *argv[])
 {
     // signal(SIGINT, SIG_IGN);
@@ -87,12 +108,42 @@ int main(int argc, char *argv[])
     // 安装工厂
     QAccessible::installFactory(accessibleFactory);
 
-    MainWindow w;
+//    MainWindow w;
+//    if (a.setSingleInstance(appName)) {
+//        QObject::connect(&a, &DApplication::newInstanceStarted, &w, [&] {qDebug() << "======"; w.activateWindow(); });
+//    } else {
+//        exit(0);
+//    }
     if (a.setSingleInstance(appName)) {
-        QObject::connect(&a, &DApplication::newInstanceStarted, &w, [&] {qDebug() << "======"; w.activateWindow(); });
+        QProcess proc;
+        QString cmd, outPut, error;
+        //先判断后台服务进程是否存在,如果存在可能是强制退出导致,应先退出后台程序再重新启动磁盘管理器
+        cmd = QString("pidof deepin-diskmanager-service");
+
+        if (!executCmd(cmd, outPut, error)) {
+            proc.startDetached("/usr/bin/dbus-send --system --type=method_call --dest=com.deepin.diskmanager /com/deepin/diskmanager com.deepin.diskmanager.Quit");
+        }
+
+        proc.startDetached("/usr/bin/deepin-diskmanager-authenticateProxy");
+
+        //正常启动程序后,循环查询后台服务是否已经启动,如果后台服务启动说明鉴权成功,启动前端界面
+        while (1) {
+            cmd = QString("pidof deepin-diskmanager-service");
+
+            if (!executCmd(cmd, outPut, error)) {
+                break;
+            }
+            QThread::msleep(300);
+        }
+
+        proc.close();
+
     } else {
         exit(0);
     }
+
+    MainWindow w;
+    QObject::connect(&a, &DApplication::newInstanceStarted, &w, [&] {qDebug() << "======"; w.activateWindow(); });
     QObject::connect(&a, &CusApplication::handleQuitActionChanged, &w, &MainWindow::onHandleQuitAction);
 
 //    DMDbusHandler::instance()->startService(static_cast<qint64>(getpid()));

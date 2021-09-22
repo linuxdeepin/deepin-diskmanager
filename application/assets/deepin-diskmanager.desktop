@@ -1,11 +1,11 @@
 [Desktop Entry]
 Categories=Utility;System;
-Exec=deepin-disk-manager
+Exec=deepin-diskmanager
 GenericName=Disk Utility
 Icon=deepin-diskmanager
 Name=Deepin Disk Utility
 StartupNotify=true
-TryExec=deepin-disk-manager
+TryExec=deepin-diskmanager
 Type=Application
 X-Deepin-Vendor=deepin
 

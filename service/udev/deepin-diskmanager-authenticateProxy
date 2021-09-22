@@ -65,9 +65,9 @@ if test "x`id -u`" != "x0"; then
 	pkexec --disable-internal-agent '/usr/bin/deepin-diskmanager-authenticateProxy' "$@"
 	status=$?
 
-    # If donot input passwd or just close auth-window, we kill deepin-disk-manager process manuelly
+    # If donot input passwd or just close auth-window, we kill deepin-diskmanager process manuelly
 	if [ $status -ne 0 ];then
-		killall -9 deepin-disk-manager
+		killall -9 deepin-diskmanager
 	fi
 
 	#

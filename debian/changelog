@@ -1,3 +1,11 @@
+deepin-diskmanager (1.2.21) stable; urgency=low
+
+  * 1040第二十一次发版
+  * 95600 通过命令打开磁盘管理器，不需要登录就能进入应用界面
+  * 89885 KLU-启动磁盘管理器查看系统监视器磁盘，cpu/内存均无浮动情况
+
+ -- yuandandan <yuandandan@uniontech.com>  Thu, 23 Sep 2021 11:35:16 +0800
+
 deepin-diskmanager (1.2.20) stable; urgency=low
 
   * 1040第二十次发版

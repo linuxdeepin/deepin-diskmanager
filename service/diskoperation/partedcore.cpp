@@ -1820,7 +1820,31 @@ bool PartedCore::format(const QString &fstype, const QString &name)
 
 bool PartedCore::resize(const PartitionInfo &info)
 {
-    qDebug() << __FUNCTION__ << "Resize Patitione start";
+    qDebug() << __FUNCTION__ << "Resize Partitione start: " << info.m_devicePath;
+
+    //对应 Bug 95232, 如果检测到虚拟磁盘扩容的话，重新写一下分区表，就可以修正分区表数据.
+    QString cmd = QString("fdisk -l %1 2>&1").arg(info.m_devicePath);
+    FILE *fd = nullptr;
+    fd = popen(cmd.toStdString().data(), "r");
+    char pb[1024];
+    memset(pb, 0, 1024);
+
+    if (fd) {
+        while (fgets(pb, 1024, fd) != nullptr) {
+            if (strstr(pb, "will be corrected by write")) {
+                QString cmd_fix = QString("echo w | fdisk %1").arg(info.m_devicePath);
+
+                FILE *fixfd = popen(cmd_fix.toStdString().data(), "r");
+                if (fixfd) {
+                    fclose(fixfd);
+                }
+                qDebug() << __FUNCTION__ << "Resize Partitione Rewrite Done";
+            }
+        }
+
+        fclose(fd);
+    }
+
     Partition newPartition = m_curpartition;
     newPartition.reset(info);
     bool success = resize(newPartition);

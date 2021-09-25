@@ -1,3 +1,10 @@
+deepin-diskmanager (1.1.0.48) stable; urgency=low
+
+  * 1032维护分支第八次发版
+  * 磁盘扩容后，磁盘管理器空间调整失败
+
+ -- yuandandan <yuandandan@uniontech.com>  Sat, 25 Sep 2021 10:46:16 +0800
+
 deepin-diskmanager (1.1.0.47) stable; urgency=low
 
   * 1032维护分支第七次发版

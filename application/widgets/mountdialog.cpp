@@ -108,12 +108,50 @@ void MountDialog::onEditContentChanged(const QString &content)
     }
 }
 
+bool MountDialog::isExistMountPoint(const QString &mountPoint)
+{
+    bool isExist = false;
+    DeviceInfoMap infoMap = DMDbusHandler::instance()->probDeviceInfo();
+
+    for (auto devInfo = infoMap.begin(); devInfo != infoMap.end(); devInfo++) {
+        DeviceInfo info = devInfo.value();
+        for (auto it = info.m_partition.begin(); it != info.m_partition.end(); it++) {
+            QString mountpoints;
+            for (int i = 0; i < it->m_mountPoints.size(); i++) {
+                mountpoints += it->m_mountPoints[i];
+            }
+
+            if (mountPoint == mountpoints) {
+                isExist = true;
+            }
+        }
+    }
+
+    return isExist;
+}
+
+bool MountDialog::isSystemDirectory(const QString &directory)
+{
+    bool isSysDir = false;
+
+    QStringList lst;
+    lst << "/bin" << "/boot" << "/dev" << "/etc" << "/home" << "/root"
+        << "/run" << "/sbin" << "/tmp" << "/usr" << "/var";
+
+    if (-1 != lst.indexOf(directory)) {
+        isSysDir = true;
+    }
+
+    return isSysDir;
+}
+
 void MountDialog::onButtonClicked(int index, const QString &text)
 {
     Q_UNUSED(text);
     if (index == m_okCode) {
-        QDir dir(m_ComboBox->currentText());
-        if (!dir.isEmpty()) {
+        QString mountPath = m_ComboBox->currentText();
+        QDir dir(mountPath);
+        if (!dir.isEmpty() || isSystemDirectory(mountPath) || isExistMountPoint(mountPath)) {
             MessageBox messageBox(this);
             messageBox.setObjectName("mountMessageBox");
             messageBox.setAccessibleName("messageBox");

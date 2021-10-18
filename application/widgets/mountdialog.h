@@ -55,6 +55,18 @@ private:
      */
     void initConnection();
 
+    /**
+     * @brief 判断挂载点是否存在
+     * @return 存在返回true，否则返回false
+     */
+    bool isExistMountPoint(const QString &mountPoint);
+
+    /**
+     * @brief 判断是否是系统目录
+     * @return 是返回true，否则返回false
+     */
+    bool isSystemDirectory(const QString &directory);
+
 private slots:
     /**
      * @brief 挂载点输入框改变信号响应的槽函数

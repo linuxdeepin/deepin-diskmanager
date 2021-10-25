@@ -2620,10 +2620,12 @@ void PartedCore::autoUmount()
 
 void PartedCore::threadSafeRecycle()
 {
+	/*
     m_workerThread->quit();
     m_workerThread->wait();
     delete m_workerThread;
     m_workerThread = nullptr;
+	*/
     qDebug() << "finished thread" << endl;
 }
 

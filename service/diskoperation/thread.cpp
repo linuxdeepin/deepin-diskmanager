@@ -115,8 +115,6 @@ void WorkThread::runCount()
     if (m_stopFlag != 2) {
         emit checkBadBlocksFinished(); //检测完成正常退出,发送给页面的正常结束信号
     }
-
-    emit checkBadBlocksDeviceStatusFinished(); //此线程正常结束,后台回收销毁线程信号
 }
 
 void WorkThread::runTime()
@@ -167,8 +165,6 @@ void WorkThread::runTime()
     if (m_stopFlag != 2) {
         emit checkBadBlocksFinished();
     }
-
-    emit checkBadBlocksDeviceStatusFinished();
 }
 
 FixThread::FixThread(QObject *parent)
@@ -221,8 +217,6 @@ void FixThread::runFix()
     if (m_stopFlag != 2) {
         emit fixBadBlocksFinished();
     }
-
-    emit checkBadBlocksDeviceStatusFinished();
 }
 
 void FixThread::setFixBadBlocksInfo(const QString &devicePath, QStringList list, int checkSize)

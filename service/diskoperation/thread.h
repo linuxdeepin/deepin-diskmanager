@@ -183,11 +183,6 @@ signals:
      */
     void checkBadBlocksFinished();
 
-    /**
-     * @brief 坏道检测线程回收信号
-     */
-    void checkBadBlocksDeviceStatusFinished();
-
 private:
     QString m_devicePath;   //设备路径
     int m_blockStart;       //开始检测柱面号
@@ -237,10 +232,6 @@ signals:
      */
     void fixBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus, const QString &cylinderTimeConsuming);
 
-    /**
-     * @brief 坏道检测线程回收信号
-     */
-    void checkBadBlocksDeviceStatusFinished();
 
     /**
      * @brief 坏道修复完成信号

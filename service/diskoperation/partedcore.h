@@ -722,6 +722,21 @@ signals:
      */
     void fixBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus, const QString &cylinderTimeConsuming);
 
+    /**
+     * @brief 坏道检查线程启动信号(次数)
+     */
+    void checkBadBlocksRunCountStart();
+
+    /**
+     * @brief 坏道检查线程启动信号(时间)
+     */
+    void checkBadBlocksRunTimeStart();
+
+    /**
+     * @brief 坏道修复线程启动信号
+     */
+    void fixBadBlocksStart();
+
 public slots:
 
     /**
@@ -729,10 +744,6 @@ public slots:
      */
     void onRefreshDeviceInfo(int type = 0, bool arg1 = true, QString arg2 = "");
 
-    /**
-     * @brief 线程安全回收函数
-     */
-    void threadSafeRecycle();
 
 	/**
 	  * @brief 刷新硬件信息
@@ -746,7 +757,8 @@ private:
     Partition m_curpartition;             //当前选中分区信息
     static SupportedFileSystems *m_supportedFileSystems; //支持的文件系统
     QByteArray m_hiddenPartition;         //隐藏分区（规则文件中的隐藏分区）
-    QThread *m_workerThread;
+    QThread *m_workerCheckThread;         //坏道检查线程对象
+    QThread *m_workerFixThread;           //坏道修复线程对象
     QThread *m_workerThreadProbe;         //硬件刷新专用
     WorkThread m_checkThread;
     FixThread m_fixthread;

@@ -33,6 +33,6 @@ CusApplication::CusApplication(int &argc, char **argv)
 
 void CusApplication::handleQuitAction()
 {
+    emit handleQuitActionChanged();
     DApplication::handleQuitAction();
-    //emit handleQuitActionChanged();
 }

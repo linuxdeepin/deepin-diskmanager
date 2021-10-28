@@ -151,6 +151,10 @@ void MainWindow::onHandleQuitAction()
 {
     //ToDo judge exit or no
     qDebug() << __FUNCTION__;
+
+    QProcess proc;
+    proc.startDetached("/usr/bin/dbus-send --system --type=method_call --dest=com.deepin.diskmanager /com/deepin/diskmanager com.deepin.diskmanager.Quit");
+
 }
 
 QString MainWindow::getRootLoginResult()

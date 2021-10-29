@@ -848,11 +848,16 @@ void DiskBadSectorsDialog::onContinueButtonClicked()
         m_cylinderInfoWidget->setChecked(true);
 
         int checkSize = m_settings->value("SettingData/CheckSize").toInt();
-        int blockStart = m_settings->value("SettingData/CurCylinder").toInt();
         int blockEnd = m_settings->value("SettingData/BlockEnd").toInt();
         int checkNumber = m_settings->value("SettingData/CheckNumber").toInt();
 
-        DMDbusHandler::instance()->checkBadSectors(m_deviceInfo.m_path, blockStart + 1, blockEnd, checkNumber, checkSize, 3);
+        QString lockStart = m_settings->value("SettingData/CurCylinder").toString();
+        int blockStart = 0;
+        if (!lockStart.isEmpty()) {
+            blockStart = lockStart.toInt() + 1;
+        }
+
+        DMDbusHandler::instance()->checkBadSectors(m_deviceInfo.m_path, blockStart, blockEnd, checkNumber, checkSize, 3);
         m_checkTimer.start(100);
         break;
     }

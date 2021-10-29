@@ -275,6 +275,7 @@ void ProbeThread::probeDeviceInfo()
         sleep (5);
     }
 
+    QString rootFsName;
     m_inforesult.clear();
     m_deviceMap.clear();
     QVector<QString> devicePaths;
@@ -282,7 +283,7 @@ void ProbeThread::probeDeviceInfo()
     BlockSpecial::clearCache();
     ProcPartitionsInfo::loadCache();
     FsInfo::loadCache();
-    MountInfo::loadCache();
+    MountInfo::loadCache(rootFsName);
     ped_device_probe_all();
     PedDevice *lpDevice = ped_device_get_next(nullptr);
     while (lpDevice) {
@@ -321,11 +322,22 @@ void ProbeThread::probeDeviceInfo()
 //                partinfo.m_flag = 0;
 //            }
 
+            partinfo = pat.getPartitionInfo();
+            if (rootFsName == pat.m_name) {
+                partinfo.m_flag = 4;
+                qDebug() << __FUNCTION__ << "Set systemfs Flags3 !! " << pat.m_devicePath << " " << pat.m_name << " " << pat.m_uuid;
+            }
+
             if (pat.m_type == PartitionType::TYPE_EXTENDED) {
                 devinfo.m_partition.push_back(partinfo);
                 for (int k = 0; k < pat.m_logicals.size(); k++) {
                     const Partition &plogic = *(pat.m_logicals.at(k));
                     partinfo = plogic.getPartitionInfo();
+                    if (rootFsName == plogic.m_name) {
+                        partinfo.m_flag = 4;
+                        qDebug() << __FUNCTION__ << "Set systemfs Flags4 !! " << plogic.m_devicePath << " " << plogic.m_name << " " << plogic.m_uuid;
+                    }
+                    qDebug() << __FUNCTION__ << plogic.m_devicePath << " " << plogic.m_name << " " << plogic.m_uuid;
                     devinfo.m_partition.push_back(partinfo);
                 }
             } else {

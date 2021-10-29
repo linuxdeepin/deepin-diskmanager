@@ -41,12 +41,12 @@ namespace DiskManager {
 static MountInfo::MountMapping mountInfo;
 static MountInfo::MountMapping fstabInfo;
 
-void MountInfo::loadCache()
+void MountInfo::loadCache(QString &rootFs)
 {
     mountInfo.clear();
     fstabInfo.clear();
 
-    readMountpointsFromFile("/proc/mounts", mountInfo);
+    readMountpointsFromFile("/proc/mounts", mountInfo, rootFs);
     readMountpointsFromFileSwaps("/proc/swaps", mountInfo);
 
     if (!haveRootfsDev(mountInfo))
@@ -62,7 +62,7 @@ void MountInfo::loadCache()
         // but only when required.
         readMountpointsFromMountCommand(mountInfo);
 
-    readMountpointsFromFile("/etc/fstab", fstabInfo);
+    readMountpointsFromFile("/etc/fstab", fstabInfo, rootFs);
 
     // Sort the mount points and remove duplicates ... (no need to do this for fstab_info)
     MountMapping::iterator iterMp;
@@ -110,7 +110,7 @@ const QVector<QString> &MountInfo::getFileSystemTableMountpoints(const QString &
     return find(fstabInfo, path).mountpoints;
 }
 
-void MountInfo::readMountpointsFromFile(const QString &fileName, MountInfo::MountMapping &map)
+void MountInfo::readMountpointsFromFile(const QString &fileName, MountInfo::MountMapping &map, QString &rootFs)
 {
     FILE *fp = setmntent(fileName.toStdString().c_str(), "r");
     if (fp == nullptr) {
@@ -120,6 +120,15 @@ void MountInfo::readMountpointsFromFile(const QString &fileName, MountInfo::Moun
     while ((p = getmntent(fp)) != nullptr) {
         QString node = p->mnt_fsname;
         QString mountpoint = p->mnt_dir;
+        qDebug() << __FUNCTION__ << p->mnt_dir << " FsName: " << p->mnt_fsname;
+        if (0 == rootFs.length() &&
+                (0 == strcmp(p->mnt_dir, "/root")
+                 || 0 == strcmp(p->mnt_dir, "/home")
+                 || 0 == strcmp(p->mnt_dir, "/opt")
+                 || 0 == strcmp(p->mnt_dir, "/var"))) {
+            rootFs = p->mnt_fsname;
+            qDebug() <<"Set RootFS:" << rootFs;
+        }
 
         QString uuid = Utils::regexpLabel(node, "(?<=UUID\\=).*");
         if (!uuid.isEmpty()) {

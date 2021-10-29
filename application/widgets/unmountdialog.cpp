@@ -78,9 +78,10 @@ void UnmountDialog::onButtonClicked(int index, const QString &text)
             mountpoints += info.m_mountPoints[i];
         }
 
+        qDebug() << __FUNCTION__;
         if (mountpoints == "/boot/efi" || mountpoints == "/boot" || mountpoints == "/"
-                || mountpoints == "/data/home/opt/root/var" || mountpoints == "/recovery"
-                || mountpoints == "/deepin/userdata/home/opt/root/var") {
+                || mountpoints == "/recovery"
+                || info.m_flag == 4) {
             MessageBox firstWarning(this);
             firstWarning.setObjectName("firstWarning");
             firstWarning.setAccessibleName("firstWarning");

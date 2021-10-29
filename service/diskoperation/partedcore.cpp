@@ -246,6 +246,7 @@ void PartedCore::probeDeviceInfo(const QString &)
 {
     m_inforesult.clear();
     m_deviceMap.clear();
+    QString rootFsName;
     QVector<QString> devicePaths;
     //qDebug() << __FUNCTION__ << "**1";
     devicePaths.clear();
@@ -256,7 +257,7 @@ void PartedCore::probeDeviceInfo(const QString &)
     FsInfo::loadCache();
     //qDebug() << __FUNCTION__ << "**4";
     //qDebug() << __FUNCTION__ << "**5";
-    MountInfo::loadCache();
+    MountInfo::loadCache(rootFsName);
     //qDebug() << __FUNCTION__ << "**6";
     ped_device_probe_all();
     //qDebug() << __FUNCTION__ << "**7";
@@ -294,11 +295,24 @@ void PartedCore::probeDeviceInfo(const QString &)
 //                partinfo.m_flag = 0;
 //            }
 
+
+            partinfo = pat.getPartitionInfo();
+            if (rootFsName == pat.m_name) {
+                partinfo.m_flag = 4;
+                qDebug() << __FUNCTION__ << "Set systemfs Flags 1 !! " << pat.m_devicePath << " " << pat.m_name << " " << pat.m_uuid;
+            }
+
+            qDebug() << __FUNCTION__ << " EXTEND is " << PartitionType::TYPE_EXTENDED << " and I am " << pat.m_type;
             if (pat.m_type == PartitionType::TYPE_EXTENDED) {
                 devinfo.m_partition.push_back(partinfo);
                 for (int k = 0; k < pat.m_logicals.size(); k++) {
                     const Partition &plogic = *(pat.m_logicals.at(k));
                     partinfo = plogic.getPartitionInfo();
+                    if (rootFsName == plogic.m_name) {
+                        partinfo.m_flag = 4;
+                        qDebug() << __FUNCTION__ << "Set systemfs Flags2 !! " << plogic.m_devicePath << " " << plogic.m_name << " " << plogic.m_uuid;
+                    }
+                    qDebug() << __FUNCTION__ << plogic.m_devicePath << " " << plogic.m_name << " " << plogic.m_uuid;
                     devinfo.m_partition.push_back(partinfo);
                 }
             } else {
@@ -595,6 +609,7 @@ void PartedCore::setPartitionLabelAndUuid(Partition &partition)
     // Retrieve file system UUID.  Use cached method first in an effort to speed up
     // device scanning.
     partition.m_uuid = FsInfo::getUuid(partitionPath);
+    partition.m_name = partitionPath;
     if (partition.m_uuid.isEmpty()) {
         readUuid(partition);
     }
@@ -1957,6 +1972,7 @@ bool PartedCore::resize(const PartitionInfo &info)
         fclose(fd);
     }
 
+    qDebug() << __FUNCTION__ << "Resize Partitione start";
     Partition newPartition = m_curpartition;
     newPartition.reset(info);
     bool success = resize(newPartition);
@@ -2429,7 +2445,7 @@ bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int b
         emit checkBadBlocksRunCountStart();
     }
 
-   return true;
+    return true;
 }
 
 bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int blockEnd, QString checkTime, int checkSize, int flag)
@@ -2493,8 +2509,8 @@ bool PartedCore::detectionPartitionTableError(const QString &devicePath)
         if (strstr(pb, "Partition table entries are not in disk order") != nullptr) {
             return true;
         }
-
         if (nullptr != strstr(pb, "will be corrected by write")) {
+            //QString output, errstr;
             QString cmd_fix = QString("echo w | fdisk %1").arg(devicePath);
 
             FILE *fixfd = popen(cmd_fix.toStdString().data(), "r");
@@ -2502,6 +2518,7 @@ bool PartedCore::detectionPartitionTableError(const QString &devicePath)
             if (fixfd) {
                 fclose(fixfd);
             }
+
             return true;
         }
     }
@@ -2591,6 +2608,7 @@ void PartedCore::autoUmount()
 
     qDebug() << __FUNCTION__ << "autoUmount end";
 }
+
 
 
 void PartedCore::syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const DeviceInfoMap inforesult)

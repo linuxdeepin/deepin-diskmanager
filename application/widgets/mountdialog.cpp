@@ -142,7 +142,7 @@ bool MountDialog::isSystemDirectory(const QString &directory)
         isSysDir = true;
     }
 
-    qDebug() << "CHEN " << directory << " " << lst.indexOf(directory) << " And " << isSysDir;
+    qDebug() << __FUNCTION__ << directory << " " << lst.indexOf(directory) << " And " << isSysDir;
     return isSysDir;
 }
 

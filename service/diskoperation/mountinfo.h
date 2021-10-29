@@ -48,7 +48,7 @@ public:
     /**
      * @brief 加载缓存
      */
-    static void loadCache();
+    static void loadCache(QString &rootfs);
 
     /**
      * @brief 是否设备挂载点
@@ -98,7 +98,7 @@ private:
      * @param filename：文件名
      * @param map：挂载点信息
      */
-    static void readMountpointsFromFile(const QString &fileName, MountMapping &map);
+    static void readMountpointsFromFile(const QString &fileName, MountMapping &map, QString &rootFs);
 
     /**
      * @brief 添加挂载点入口

@@ -323,7 +323,7 @@ void ProbeThread::probeDeviceInfo()
 //            }
 
             partinfo = pat.getPartitionInfo();
-            if (rootFsName == pat.m_name) {
+            if (rootFsName == pat.getPath()) {
                 partinfo.m_flag = 4;
                 qDebug() << __FUNCTION__ << "Set systemfs Flags3 !! " << pat.m_devicePath << " " << pat.m_name << " " << pat.m_uuid;
             }

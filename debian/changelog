@@ -1,3 +1,10 @@
+deepin-diskmanager (1.2.22) stable; urgency=low
+
+  * 1040第二十二次发版
+  * 89409 【服务器企业版1040】【x86_64】磁盘管理器点击卸载HDD失败，重启后进不了系统
+
+ -- yuandandan <yuandandan@uniontech.com>  Mon, 1 Nov 2021 13:35:16 +0800
+
 deepin-diskmanager (1.2.21) stable; urgency=low
 
   * 1040第二十一次发版

@@ -157,8 +157,8 @@ int main(int argc, char *argv[])
 //        }
 //    });
 
-    w.show();
     Dtk::Widget::moveToCenter(&w);
+    w.show();
 
     return a.exec();
 }

@@ -119,6 +119,11 @@ bool MountDialog::isExistMountPoint(const QString &mountPoint)
             QString mountpoints;
             for (int i = 0; i < it->m_mountPoints.size(); i++) {
                 mountpoints += it->m_mountPoints[i];
+
+                if (it->m_mountPoints.size() > 1 && mountPoint == it->m_mountPoints[i]) {
+                    isExist = true;
+                    break;
+                }
             }
 
             if (mountPoint == mountpoints) {
@@ -151,6 +156,10 @@ void MountDialog::onButtonClicked(int index, const QString &text)
     Q_UNUSED(text);
     if (index == m_okCode) {
         QString mountPath = m_ComboBox->currentText();
+        if (mountPath.endsWith("/")) {
+            mountPath.chop(1);
+        }
+
         QDir dir(mountPath);
         if (!dir.isEmpty() || isSystemDirectory(mountPath) || isExistMountPoint(mountPath)) {
             MessageBox messageBox(this);

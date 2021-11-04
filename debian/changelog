@@ -1,3 +1,12 @@
+deepin-diskmanager (1.2.23) stable; urgency=low
+
+  * 1040第二十三次发版
+  * 101121 挂载主目录路径下无文件时，重复挂载该挂载点，无弹窗提示
+  * 100208 龙芯5000-启动磁盘管理器，输入认证之后，出现明显卡顿
+  * 99212 磁盘标题栏退出后查看进程未退出
+
+ -- yuandandan <yuandandan@uniontech.com>  Thu, 4 Nov 2021 15:35:16 +0800
+
 deepin-diskmanager (1.2.22) stable; urgency=low
 
   * 1040第二十二次发版

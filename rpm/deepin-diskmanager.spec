@@ -49,7 +49,6 @@ export PATH=%{_qt5_bindir}:$PATH
 %{_datadir}/applications/%{repo}.desktop
 %{_datadir}/icons/hicolor/scalable/apps/%{repo}.svg
 %{_datadir}/deepin-manual/manual-assets/application/deepin-diskmanager/*
-%{_bindir}/deepin-disk-manager
 /usr/lib/libbasestruct.a
 /usr/lib/libddmlog.a
 /usr/lib/deepin-daemon/deepin-diskmanager-service

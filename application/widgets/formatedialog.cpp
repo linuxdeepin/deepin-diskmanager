@@ -65,7 +65,7 @@ void FormateDialog::initUi()
         m_fileNameEdit->lineEdit()->setPlaceholderText(tr("Name"));
 
     DLabel *formatName = new DLabel(tr("File system:"), this);
-    m_formatComboBox = new QComboBox(this);
+    m_formatComboBox = new DComboBox(this);
     m_formatComboBox->setAccessibleName("File system");
     m_formatComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 

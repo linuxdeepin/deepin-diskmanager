@@ -35,6 +35,8 @@ endif()
 #set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -g -fsanitize=address -O2")
 #set(CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS_MINSIZEREL} -g -fsanitize=address -O2")
 #set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO}  -g -fsanitize=address -O2")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstack-protector-all -z relro -z now -z noexecstack -pie")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-protector-all -z relro -z now -z noexecstack -pie")
 
 ADD_SUBDIRECTORY(basestruct)
 ADD_SUBDIRECTORY(log)

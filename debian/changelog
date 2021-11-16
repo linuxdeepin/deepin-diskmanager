@@ -1,3 +1,10 @@
+deepin-diskmanager (1.2.25) stable; urgency=low
+
+  * 1040第二十五次发版
+  * 添加安全加固编译参数
+
+ -- yuandandan <yuandandan@uniontech.com>  Tue, 16 Nov 2021 17:35:16 +0800
+
 deepin-diskmanager (1.2.24) stable; urgency=low
 
   * 1040第二十四次发版

@@ -535,7 +535,10 @@ void DeviceListWidget::onUpdateDeviceInfo()
 
         for (auto it = info.m_partition.begin(); it != info.m_partition.end(); it++) {
             QString partitionSize = Utils::formatSize(it->m_sectorEnd - it->m_sectorStart + 1, it->m_sectorSize);
-            QString partitionPath = it->m_path.remove(0, 5);
+            QString partitionPath = it->m_path;
+            if ("unallocated" != partitionPath) {
+                partitionPath = partitionPath.remove(0, 5);
+            }
 
             QString unused = Utils::formatSize(it->m_sectorsUsed, it->m_sectorSize);
             QString used = Utils::formatSize(it->m_sectorsUnused, it->m_sectorSize);

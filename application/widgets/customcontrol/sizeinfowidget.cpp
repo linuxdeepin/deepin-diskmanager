@@ -60,7 +60,10 @@ void SizeInfoWidget::setData(PartitionInfo info, QVector<QColor> color, QVector<
     m_totalSpaceSize = Utils::formatSize(info.m_sectorEnd - info.m_sectorStart, info.m_sectorSize);
     m_usedSize = Utils::formatSize(info.m_sectorsUsed, info.m_sectorSize);
     m_totalSize = m_noused + m_used;
-    m_partitionPath = info.m_path.remove(0, 5);
+    m_partitionPath = info.m_path;
+    if ("unallocated" != m_partitionPath) {
+        m_partitionPath = m_partitionPath.remove(0, 5);
+    }
     if (size.at(0) < 0.00 || size.at(1) < 0.00) {
         m_sizeInfo = QVector<double> {0.00, 0.00};
     }

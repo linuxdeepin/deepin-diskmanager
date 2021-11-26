@@ -896,6 +896,7 @@ void PartitionWidget::onApplyButton()
             newPart.m_sectorEnd += MEBIBYTE / newPart.m_sectorSize;
         }
 
+        newPart.m_sectorEnd -= 1;
         beforend = newPart.m_sectorEnd + 1;
 
         if (beforend > curInfo.m_sectorEnd && i < m_patrinfo.size() - 1) {

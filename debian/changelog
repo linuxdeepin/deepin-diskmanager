@@ -1,3 +1,13 @@
+deepin-diskmanager (1.2.26) stable; urgency=low
+
+  * 1040第二十六次发版
+  * 101889 【CPM2021110900040】【KelvinV-W5851 5.7.0.6(C233) + BIOS 1.00.30+ EC 1.30】
+    【HUAWEI】【UOS】【L2】【存储】【VN2】将sdd4删除并创建一个ntfs 15G的文件分区，
+    向内复制10G文件，将文件彻底删除后再往内复制10G文件提示分区已满，
+    再次尝试删除文件，提示文件非空。（一般+必现+常用功能）
+
+ -- yuandandan <yuandandan@uniontech.com>  Fri, 26 Nov 2021 16:35:16 +0800
+
 deepin-diskmanager (1.2.25) stable; urgency=low
 
   * 1040第二十五次发版

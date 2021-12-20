@@ -1,3 +1,10 @@
+deepin-diskmanager (1.3.1) stable; urgency=low
+
+  * 新功能第一次发版
+  * 新增擦除功能
+
+ -- yuandandan <yuandandan@uniontech.com>  Mon, 20 Dec 2021 14:35:16 +0800
+
 deepin-diskmanager (1.2.26) stable; urgency=low
 
   * 1040第二十六次发版

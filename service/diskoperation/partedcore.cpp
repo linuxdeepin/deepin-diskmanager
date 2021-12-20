@@ -76,6 +76,7 @@ PartedCore::PartedCore(QObject *parent)
     m_workerCheckThread = nullptr;
     m_workerFixThread = nullptr;
     probeDeviceInfo();
+    delTempMountFile();
 
     qDebug() << __FUNCTION__ << "^^5";
 }
@@ -104,6 +105,7 @@ PartedCore::~PartedCore()
         delete m_workerThreadProbe;
         m_workerThreadProbe = nullptr;
     }
+    delTempMountFile();
 }
 
 void PartedCore::initConnection()
@@ -115,6 +117,7 @@ void PartedCore::initConnection()
     connect(&m_probeThread, &ProbeThread::showPartitionInfo, this, &PartedCore::showPartitionInfo);
     connect(&m_probeThread, &ProbeThread::createTableMessage, this, &PartedCore::createTableMessage);
     connect(&m_probeThread, &ProbeThread::usbUpdated, this, &PartedCore::usbUpdated);
+    connect(&m_probeThread, &ProbeThread::clearPartitionMessage, this, &PartedCore::clearMessage);
     connect(this, &PartedCore::probeAllInfo, &m_probeThread, &ProbeThread::probeDeviceInfo);
 
     //connect(&m_probeThread, &ProbeThread::updateDeviceInfo, this, &PartedCore::updateDeviceInfo);
@@ -242,6 +245,32 @@ FS_Limits PartedCore::getFileSystemLimits(FSType fstype, const Partition &partit
     return fsLimits;
 }
 
+bool PartedCore::secuClear(const QString &path, const Sector &start, const Sector &end, const Byte_Value &size,const QString &fstype, const QString &name, const int &count)
+{
+
+    for (int i = 0; i < count; ++i) {
+        QString readPath = "/dev/zero";
+        int seek = 0;
+        QProcess proc;
+        bool flag = true;;
+        Sector tempEnd = end / 100;
+        while (seek < tempEnd) {
+            flag ? (readPath = "/dev/zero") : (readPath = "/dev/urandom");
+            QString cmd = QString("dd if=%1 of=%2 bs=%3 count=1000 seek=%4").arg(readPath).arg(path).arg(QString::number(qlonglong(size)*100)).arg(seek);
+            seek += 1000;
+            if(seek > tempEnd){
+                seek = int(tempEnd - (seek - 1000));
+            }
+            proc.start(cmd);
+            proc.waitForFinished(-1);
+            flag = !flag;
+        }
+         qDebug() << __FUNCTION__ << "secuClear current conut:  " << count;
+    }
+
+    return true;
+}
+
 void PartedCore::probeDeviceInfo(const QString &)
 {
     m_inforesult.clear();
@@ -279,6 +308,17 @@ void PartedCore::probeDeviceInfo(const QString &)
         /*TO TRANSLATORS: looks like Searching /dev/sda partitions */
         Device tempDevice;
         setDeviceFromDisk(tempDevice, devicePaths[t]);
+        DeviceStorage device;
+        device.getDiskInfoFromHwinfo(devicePaths[t]);
+
+        device.getDiskInfoFromLshw(devicePaths[t]);
+
+        device.getDiskInfoFromLsblk(devicePaths[t]);
+
+        device.getDiskInfoFromSmartCtl(devicePaths[t]);
+        tempDevice.m_model = device.m_model;
+        tempDevice.m_mediaType = device.m_mediaType;
+        tempDevice.m_interface = device.m_interface;
         m_deviceMap.insert(devicePaths.at(t), tempDevice);
     }
     //qDebug() << __FUNCTION__ << "**9";
@@ -426,6 +466,7 @@ void PartedCore::setDeviceFromDisk(Device &device, const QString &devicePath)
 bool PartedCore::getDevice(const QString &devicePath, PedDevice *&lpDevice, bool flush)
 {
     lpDevice = ped_device_get(devicePath.toStdString().c_str());
+
 
     int fd = open(devicePath.toStdString().c_str(), O_RDONLY);
     struct hd_geo {
@@ -1726,6 +1767,32 @@ bool PartedCore::mountAndWriteFstab(const QString &mountpath)
     return success;
 }
 
+bool PartedCore::mountTemp(const QString &mountpath)
+{
+    qDebug() << __FUNCTION__ << "Mount start";
+    bool success = true;
+    QString output, errstr;
+    QString cmd ;
+    QString type = Utils::fileSystemTypeToString(m_curpartition.m_fstype);
+    QString partitionPath = m_curpartition.getPath();
+
+    if (type == FS_FAT32 || type == FS_FAT16) {
+        cmd = QString("mount -v %1 %2 -o -o dmask=000,fmask=111").arg(partitionPath).arg(mountpath);
+    } else if (type == FS_HFS) {
+        cmd = QString("mount -v %1 %2 -o -o dir_umask=000,file_umask=111").arg(partitionPath).arg(mountpath);
+    } else {
+        cmd = QString("mount -v %1 %2").arg(partitionPath).arg(mountpath);
+    }
+
+//    qDebug() << cmd << endl;
+    int exitcode = Utils::executCmd(cmd, output, errstr);
+    if (exitcode != 0) {
+        success = false;
+    }
+
+    return success;
+}
+
 bool PartedCore::unmount()
 {
     qDebug() << __FUNCTION__ << "Unmount start";
@@ -1813,7 +1880,11 @@ bool PartedCore::create(const PartitionVec &infovec)
             break;
         }
     }
-    emit refreshDeviceInfo();
+    if(!m_isClear){
+        emit refreshDeviceInfo();
+    }
+
+
     qDebug() << __FUNCTION__ << "Create end";
     return success;
 }
@@ -1933,6 +2004,37 @@ bool PartedCore::createPartition(Partition &newPartition, Sector minSize)
     return bsucces;
 }
 
+bool PartedCore::delTempMountFile()
+{
+    QDir dir("/media");
+    QDir userPath;
+    if(!dir.exists()){
+        return false;
+    }
+    QStringList mountPath;
+    for (int i = 2 ; i < dir.count(); i++) {
+        userPath.setPath(QString("/media/%1").arg(dir[i]));
+        for (int j = 2; j < userPath.count(); j++) {
+            mountPath.append(QString("/media/%1/%2").arg(dir[i]).arg(userPath[j]));
+        }
+    }
+    QMap<QString, Device>::iterator it = m_deviceMap.begin();
+    for (; it != m_deviceMap.end() ; it++) {
+        for (int i = 0; i < it->m_partitions.size(); i++) {
+            if(mountPath.contains(it->m_partitions[i]->getMountPoint())){
+                mountPath.removeOne(it->m_partitions[i]->getMountPoint());
+            }
+        }
+    }
+
+    QDir d;
+    for (int i = 0; i < mountPath.size(); i++) {
+       // d.rmpath(mountPath[i]);
+        d.rmdir(mountPath[i]);
+    }
+    return true;
+}
+
 bool PartedCore::format(const QString &fstype, const QString &name)
 {
     qDebug() << __FUNCTION__ << "Format Partitione start";
@@ -1940,8 +2042,214 @@ bool PartedCore::format(const QString &fstype, const QString &name)
     part.m_fstype = Utils::stringToFileSystemType(fstype);
     part.setFilesystemLabel(name);
     bool success = formatPartition(part);
-    emit refreshDeviceInfo();
     qDebug() << __FUNCTION__ << "Format Partitione end";
+    return success;
+}
+
+bool PartedCore::clear(const QString &fstype, const QString &path, const QString &name,const QString &user,const int &diskType , const int &clearType)
+{
+    m_isClear = true;
+    qDebug() << __FUNCTION__ << QString("Clear Partitione start, path: %1").arg(path) ;
+    bool success;
+    PartitionInfo pInfo;
+    QString curDiskType;
+    QString curDevicePath;
+    if(diskType == 1){
+        curDevicePath = m_curpartition.m_devicePath;
+        curDiskType = m_deviceMap.value(curDevicePath).m_diskType;
+
+        if (curDiskType == "unrecognized") {
+            curDiskType = "gpt";
+
+            Device d = m_deviceMap.value(curDevicePath);
+            success = createPartitionTable(d.m_path,QString("%1").arg(d.m_length), QString("%1").arg(d.m_sectorSize),curDiskType);
+            probeDeviceInfo();
+        }
+
+        pInfo.m_fileSystemType = Utils::stringToFileSystemType(fstype);
+        pInfo.m_fileSystemLabel = name;
+        pInfo.m_devicePath = m_curpartition.m_devicePath;
+        pInfo.m_sectorSize = m_curpartition.m_sectorSize;
+        pInfo.m_sectorStart = m_curpartition.m_sectorStart;
+        pInfo.m_fileSystemReadOnly = false;
+        if ("unallocated" == path) {
+            pInfo.m_insideExtended = false;
+            pInfo.m_busy = false;
+            pInfo.m_fileSystemReadOnly = false;
+            pInfo.m_alignment = ALIGN_MEBIBYTE;
+            pInfo.m_type = TYPE_PRIMARY;
+            if (0 == pInfo.m_sectorStart) {
+                pInfo.m_sectorStart = 2048;
+            }
+            if(curDiskType == "gpt"){
+                pInfo.m_sectorEnd = m_curpartition.m_sectorEnd - 33;
+            } else {
+                pInfo.m_sectorEnd = m_curpartition.m_sectorEnd;
+            }
+            PartitionVec pVec;
+            pVec.push_back(pInfo);
+            success = create(pVec);
+            probeDeviceInfo();
+
+            Device d = m_deviceMap.value(curDevicePath);
+            for (int i = 0 ; i < d.m_partitions.size(); i++) {
+                Partition *info = d.m_partitions.at(i);
+                if (info->m_sectorStart == pInfo.m_sectorStart && info->m_sectorEnd == pInfo.m_sectorEnd) {
+                    m_curpartition = *info;
+                    break;
+                }
+            }
+        } else {
+            pInfo.m_alignment = m_curpartition.m_alignment;
+            pInfo.m_type = m_curpartition.m_type;
+            pInfo.m_insideExtended = m_curpartition.m_insideExtended;
+            pInfo.m_busy = m_curpartition.m_busy;
+            pInfo.m_sectorEnd = m_curpartition.m_sectorEnd;
+        }
+    } else if (diskType == 0) {
+            Device d = m_deviceMap.value(path);
+            curDevicePath = path;
+            qDebug() << __FUNCTION__ << "Clear:  createPartitionTable start : "<< d.m_path;
+            curDiskType = d.m_diskType;
+            if (curDiskType == "unrecognized") {
+                curDiskType = "gpt";
+            }
+            success = createPartitionTable(d.m_path,QString("%1").arg(d.m_length), QString("%1").arg(d.m_sectorSize),curDiskType);
+            probeDeviceInfo();
+
+            PartitionVec pVec;
+            pInfo.m_fileSystemType = Utils::stringToFileSystemType(fstype);;
+            pInfo.m_fileSystemLabel = name;
+            pInfo.m_alignment = ALIGN_MEBIBYTE;
+            pInfo.m_sectorSize = d.m_sectorSize;
+            pInfo.m_insideExtended = false;
+            pInfo.m_busy = false;
+            pInfo.m_fileSystemReadOnly = false;
+            pInfo.m_devicePath = path;
+            pInfo.m_type = TYPE_PRIMARY;
+            pInfo.m_sectorStart = 2048;
+
+            if(curDiskType == "gpt"){
+                pInfo.m_sectorEnd = d.m_length - 34;
+            } else {
+                pInfo.m_sectorEnd = d.m_length - 1;
+            }
+
+            pVec.push_back(pInfo);
+            qDebug() << __FUNCTION__ << "Clear:  createPartition  start : "<< pInfo.m_path;
+            success = create(pVec);
+            probeDeviceInfo();
+
+            Device dev = m_deviceMap.value(path);
+            m_curpartition = *(dev.m_partitions[0]);
+    }
+
+    //清除
+    switch (clearType) {
+    case 1:
+        qDebug() << __FUNCTION__ << "Clear:  format  start";
+        success = format(fstype, name);
+        if(!success){
+            qDebug() << __FUNCTION__ << "format error";
+            blockSignals(false);
+            emit clearMessage("0:3");
+            m_isClear = false;
+            return success;
+        }
+        break;
+    case 2:
+        qDebug() << __FUNCTION__ << "Clear:  secuClear  start";
+        success = secuClear(path,m_curpartition.m_sectorStart,m_curpartition.m_sectorEnd,m_curpartition.m_sectorSize,fstype,name,1);
+
+        break;
+    case 3:
+        qDebug() << __FUNCTION__ << "Clear:  secuClear  start";
+        success = secuClear(path,m_curpartition.m_sectorStart,m_curpartition.m_sectorEnd,m_curpartition.m_sectorSize,fstype,name,7);
+
+        break;
+    case 4:
+        qDebug() << __FUNCTION__ << "Clear:  secuClear  start";
+        success = secuClear(path,m_curpartition.m_sectorStart,m_curpartition.m_sectorEnd,m_curpartition.m_sectorSize,fstype,name,35);
+
+        break;
+    default:
+        break;
+    }
+    //新建分区表
+    if(diskType == 0){
+        Device d = m_deviceMap.value(path);
+        qDebug() << __FUNCTION__ << "Clear after:  createPartitionTable  start";
+        success = createPartitionTable(d.m_path,QString("%1").arg(d.m_length), QString("%1").arg(d.m_sectorSize),curDiskType);
+        probeDeviceInfo();
+
+        //新建分区
+        PartitionVec pVec;
+        qDebug() << "pInfo end :   "<< pInfo.m_sectorEnd;
+        pVec.push_back(pInfo);
+        qDebug() << __FUNCTION__ << "Clear after:  create Partition  start";
+        create(pVec);
+        probeDeviceInfo();
+    }
+
+    if(diskType == 0){
+        Device d = m_deviceMap.value(path);
+        m_curpartition = *(d.m_partitions[0]);
+    } else {
+        Device d = m_deviceMap.value(curDevicePath);
+        for (int i = 0 ; i < d.m_partitions.size(); i++) {
+            Partition *info = d.m_partitions.at(i);
+            if (info->getPath() == path) {
+                m_curpartition = *info;
+                break;
+            }
+        }
+    }
+
+    //自动挂载
+    QString cmd;
+    QString output, errstr;
+    QFileInfo f;
+    int exitcode;
+    QString mountPath = QString("/media/%1/%2").arg(user).arg(name);
+    if(name.trimmed().isEmpty()){
+        mountPath = QString("/media/%1/%2").arg(user).arg(FsInfo::getUuid(m_curpartition.getPath()));
+    }else {
+        f.setFile(mountPath);
+        if(f.exists()){
+            mountPath = QString("/media/%1/%2").arg(user).arg(FsInfo::getUuid(m_curpartition.getPath()));
+        }
+    }
+
+    f.setFile(mountPath);
+    if(!f.exists()){
+        cmd = QString("mkdir %1").arg(mountPath);
+        exitcode = Utils::executCmd(cmd, output, errstr);
+        if (exitcode != 0) {
+            success = false;
+            m_isClear = false;
+            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, "0:4");
+            return success;
+        }
+    }
+
+    cmd = QString("chmod 731 %1").arg(mountPath);
+    exitcode = Utils::executCmd(cmd, output, errstr);
+    if (exitcode != 0) {
+        success = false;
+        m_isClear = false;
+        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, "0:4");
+        return success;
+    }
+    qDebug() << __FUNCTION__ << "Clear after:  mountTemp  start";
+    success = mountTemp(mountPath);
+    if(!success){
+        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, "0:4");
+        m_isClear = false;
+        return success;
+    }
+    qDebug() << __FUNCTION__ << "clear end";
+    m_isClear = false;
+    emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, "1:0");
     return success;
 }
 
@@ -2269,7 +2577,13 @@ bool PartedCore::deletePartition()
     if (!getDeviceAndDisk(devicePath, lpDevice, lpDisk)) {
         qDebug() << __FUNCTION__ << "Delete Partition get device and disk failed";
 
-        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true, "0:1");
+        if(!m_isClear){
+            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true, "0:1");
+        }else {
+            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, "0:1");
+        }
+
+
         //emit deletePartitionMessage("0:1");
 
         return false;
@@ -2291,8 +2605,12 @@ bool PartedCore::deletePartition()
     if (ped == nullptr) {
         qDebug() << __FUNCTION__ << "Delete Partition Get Partition failed";
 
-        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true, "0:2");
-        //emit deletePartitionMessage("0:2");
+        if(!m_isClear){
+            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true, "0:2");
+        }else {
+            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, "0:2");
+        }
+
 
         return false;
     }
@@ -2302,8 +2620,12 @@ bool PartedCore::deletePartition()
     if (i == 0) {
         qDebug() << __FUNCTION__ << "Delete Partition failed";
 
-        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true, "0:3");
-        //emit deletePartitionMessage("0:3");
+        if(!m_isClear){
+            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true, "0:3");
+        }else {
+            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, "0:3");
+        }
+
 
         return false;
     }
@@ -2311,15 +2633,23 @@ bool PartedCore::deletePartition()
     if (!commit(lpDisk)) {
         qDebug() << __FUNCTION__ << "Delete Partition commit failed";
 
-        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true, "0:4");
-        //emit deletePartitionMessage("0:4");
+        if(!m_isClear){
+            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true, "0:4");
+        }else {
+            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, "0:4");
+        }
 
         return false;
     }
 
     destroyDeviceAndDisk(lpDevice, lpDisk);
 
-    emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true, "1:0");
+//    if(!m_isClear){
+        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true, "1:0");
+//    }else {
+//        emit refreshDeviceInfo();
+//    }
+
     //emit deletePartitionMessage("1:0");
 
     qDebug() << __FUNCTION__ << "Delete Partition end";
@@ -2656,7 +2986,10 @@ bool PartedCore::createPartitionTable(const QString &devicePath, const QString &
 
     bool flag = newDiskLabel(devicePath, diskLabel);
 
-    emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CREATE_TABLE, flag, "");
+    if(!m_isClear){
+        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CREATE_TABLE, flag, "");
+    }
+
     //emit createTableMessage(flag);
 
     return flag;

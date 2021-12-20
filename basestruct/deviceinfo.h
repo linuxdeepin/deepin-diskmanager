@@ -116,6 +116,8 @@ public:
     QString m_model;
     QString m_serialNumber;
     QString m_disktype;
+    QString m_mediaType;        //介质类型
+    QString m_interface;                //接口
     int m_sectorSize;
     int m_maxPrims;
     int m_highestBusy;

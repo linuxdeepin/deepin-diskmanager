@@ -82,6 +82,13 @@ public:
     bool mountAndWriteFstab(const QString &mountpath);
 
     /**
+     * @brief 临时挂载分区
+     * @param mountpath：挂载路径
+     * @return true成功false失败
+     */
+    bool mountTemp(const QString &mountpath);
+
+    /**
      * @brief 卸载分区
      * @return true成功false失败
      */
@@ -101,6 +108,17 @@ public:
      * @return true成功false失败
      */
     bool format(const QString &fstype, const QString &name);
+
+    /**
+     * @brief 清除磁盘
+     * @param fstype：格式化格式
+     * @param path：分区别名
+     * @param name: 劵标名
+     * @param diskType : 0为分区，1为磁盘，2为空闲
+     * @param clearType: 清除标准， 0为快速，1为安全（NIST），2为DoD标准， 3为古德曼标准
+     * @return true成功false失败
+     */
+    bool clear(const QString &fstype, const QString &path,const QString &name,const QString &user ,const int &diskType , const int &clearType);
 
     /**
      * @brief 扩容分区
@@ -248,6 +266,11 @@ public:
      */
     void setDeviceFromDisk(Device &device, const QString &devicePath);
 
+    /**
+     * @brief 删除临时挂载文件
+     */
+    bool delTempMountFile();
+
 private:
 
     /**
@@ -318,6 +341,18 @@ private:
      * @return 最小和最大文件系统大小限制结构体
      */
     static FS_Limits getFileSystemLimits(FSType fstype, const Partition &partition);
+
+    /**
+     * @brief 安全擦除算法
+     * @param start: 启始地址
+     * @param end: 结束地址
+     * @param size: 扇区大小
+     * @param fstype: 文件类型
+     * @param name : 劵标名
+     * @param count: 循环次数
+     * @return : 执行结果
+     */
+    bool secuClear(const QString &path, const Sector &start, const Sector &end, const Byte_Value &size, const QString &fstype,const QString &name=" ", const int &count=1);
 
 private:
     //general..
@@ -647,6 +682,8 @@ private:
      * @return true成功false失败
      */
     bool createPartition(Partition &newPartition, Sector minSize = 0);
+
+
 signals:
     void probeAllInfo();
 
@@ -736,6 +773,13 @@ signals:
      * @brief 坏道修复线程启动信号
      */
     void fixBadBlocksStart();
+    /**
+     * @brief 清除信号
+     * @param clearMessage：清除结果
+     */
+    void clearMessage(const QString &clearMessage);
+
+
 
 public slots:
 
@@ -763,6 +807,7 @@ private:
     WorkThread m_checkThread;
     FixThread m_fixthread;
     ProbeThread m_probeThread;
+    bool m_isClear;
 };
 
 } // namespace DiskManager

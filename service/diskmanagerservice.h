@@ -130,6 +130,12 @@ Q_SIGNALS:
      */
     Q_SCRIPTABLE void fixBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus, const QString &cylinderTimeConsuming);
 
+    /**
+     * @brief 清除信号
+     * @param clearMessage：清除信息
+     */
+    Q_SCRIPTABLE void clearMessage(const QString &clearMessage);
+
 public Q_SLOTS:
     /**
      * @brief 退出服务
@@ -188,6 +194,17 @@ public Q_SLOTS:
      * @return true成功false失败
      */
     Q_SCRIPTABLE bool format(const QString &fstype, const QString &name = QString());
+
+    /**
+     * @brief 擦除磁盘
+     * @param fstype：格式化格式
+     * @param path：分区别名
+     * @param name: 劵标名
+     * @param diskType : 0为分区，1为磁盘，2为空闲
+     * @param clearType: 擦除标准， 0为快速，1为安全（NIST），2为DoD标准， 3为古德曼标准
+     * @return true成功false失败
+     */
+    Q_SCRIPTABLE bool clear(const QString &fstype, const QString &path, const QString &name,const QString &user, const int &diskType, const int &clearType);
 
     /**
      * @brief 扩容分区

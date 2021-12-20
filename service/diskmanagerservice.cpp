@@ -44,6 +44,7 @@ DiskManagerService::DiskManagerService(QObject *parent)
 void DiskManagerService::Quit()
 {
     qDebug() << "DiskManagerService::Quit called";
+    m_partedcore->delTempMountFile();
     QCoreApplication::exit(0);
 }
 
@@ -112,6 +113,11 @@ bool DiskManagerService::format(const QString &fstype, const QString &name)
     return m_partedcore->format(fstype, name);
 }
 
+bool DiskManagerService::clear(const QString &fstype, const QString &path, const QString &name, const QString &user,const int &diskType, const int &clearType)
+{
+    return m_partedcore->clear(fstype, path, name, user, diskType, clearType);
+}
+
 bool DiskManagerService::resize(const PartitionInfo &info)
 {
     return m_partedcore->resize(info);
@@ -136,6 +142,7 @@ void DiskManagerService::initConnection()
     connect(m_partedcore, &PartedCore::unmountPartition, this, &DiskManagerService::unmountPartition);
     connect(m_partedcore, &PartedCore::createTableMessage, this, &DiskManagerService::createTableMessage);
     connect(this, &DiskManagerService::getAllDeviceInfomation, this, &DiskManagerService::onGetAllDeviceInfomation);
+    connect(m_partedcore, &PartedCore::clearMessage, this, &DiskManagerService::clearMessage);
 }
 
 HardDiskInfo DiskManagerService::onGetDeviceHardInfo(const QString &devicepath)

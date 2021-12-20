@@ -80,6 +80,8 @@ public:
     QString m_model;          //模型
     QString m_serialNumber;  //序列号
     QString m_diskType;       //磁盘类型
+    QString m_mediaType;        //介质类型
+    QString m_interface;                //接口
     int m_sectorSize;        //扇区大小
     int m_maxPrims;          //最大分区个数
     int m_highestBusy;       //挂载

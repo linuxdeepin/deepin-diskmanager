@@ -18,7 +18,9 @@ QDBusArgument &operator<<(QDBusArgument &argument, const DeviceInfo &info)
              << info.m_highestBusy
              << info.m_readonly
              << info.m_maxPartitionNameLength
-             << info.m_partition;
+             << info.m_partition
+             << info.m_mediaType
+             << info.m_interface;
     argument.endStructure();
 
     return argument;
@@ -41,7 +43,9 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, DeviceInfo &info)
         >> info.m_highestBusy
         >> info.m_readonly
         >> info.m_maxPartitionNameLength
-        >> info.m_partition;
+        >> info.m_partition
+        >> info.m_mediaType
+        >> info.m_interface;
     argument.endStructure();
     return argument;
 }
@@ -145,6 +149,6 @@ DeviceInfo::DeviceInfo()
     : m_readonly(false)
 {
     m_length = m_heads = m_sectors = m_cylinders = m_cylsize = m_sectorSize = m_maxPrims = m_highestBusy = m_maxPartitionNameLength = 0;
-    m_path = m_model = m_serialNumber = m_disktype = QString("");
+    m_path = m_model = m_serialNumber = m_disktype = m_mediaType = m_interface = QString("");
     m_partition.clear();
 }

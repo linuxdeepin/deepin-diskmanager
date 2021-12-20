@@ -258,6 +258,9 @@ void ProbeThread::sendsignals()
     case DISK_SIGNAL_USBUPDATE:
         emit usbUpdated();
         break;
+    case DISK_SIGNAL_TYPE_CLEAR:
+        emit clearPartitionMessage(m_arg2);
+        break;
     default:
         break;
     }
@@ -305,6 +308,17 @@ void ProbeThread::probeDeviceInfo()
         Device tempDevice;
         PartedCore pcl;
         pcl.setDeviceFromDisk(tempDevice, devicePaths[t]);
+        DeviceStorage device;
+        device.getDiskInfoFromHwinfo(devicePaths[t]);
+
+        device.getDiskInfoFromLshw(devicePaths[t]);
+
+        device.getDiskInfoFromLsblk(devicePaths[t]);
+
+        device.getDiskInfoFromSmartCtl(devicePaths[t]);
+        tempDevice.m_model = device.m_model;
+        tempDevice.m_mediaType = device.m_mediaType;
+        tempDevice.m_interface = device.m_interface;
         m_deviceMap.insert(devicePaths.at(t), tempDevice);
     }
 //    qDebug() << __FUNCTION__ << "**9";

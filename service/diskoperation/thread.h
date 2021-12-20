@@ -58,6 +58,8 @@ public:
      * @brief 根据setSignal设置的信息发送相应的信号
      */
     void sendsignals();
+
+
 public slots:
     /**
      * @brief 刷新硬件信息
@@ -86,6 +88,12 @@ signals:
      * @param 删除结果
      */
     void deletePartitionMessage(const QString &m);
+
+    /**
+     * @brief 发送删除分区信号
+     * @param 删除结果
+     */
+    void clearPartitionMessage(const QString &m);
 
     /**
      * @brief 显示分区信号

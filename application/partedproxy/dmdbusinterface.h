@@ -175,6 +175,22 @@ public Q_SLOTS: // METHODS
     }
 
     /**
+    * @brief 擦除
+    * @param type 分区类型
+    * @param path 磁盘或分区路径
+    * @param name 劵标名
+    * @param user 当前用户名
+    * @param diskType 磁盘或者分区类型 0是分区 1是磁盘
+    * @param clearType 擦除标准 1为快速 2安全 3为安全擦除7次 4为安全擦除35次
+    */
+    inline QDBusPendingReply<bool> clear(const QString &fstype, const QString &path, const QString &name,const QString &user, const int &diskType, const int &clearType)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(fstype) << QVariant::fromValue(path) << QVariant::fromValue(name) << QVariant::fromValue(user) << QVariant::fromValue(diskType) << QVariant::fromValue(clearType);
+        return asyncCallWithArgumentList(QStringLiteral("clear"), argumentList);
+    }
+
+    /**
      * @brief 空间调整
      * @param info 分区信息
      */
@@ -343,6 +359,7 @@ Q_SIGNALS: // SIGNALS
 //    Q_SCRIPTABLE void rootLogin(const QString &loginMessage);
     Q_SCRIPTABLE void unmountPartition(const QString &unmountMessage);
     Q_SCRIPTABLE void createTableMessage(const bool &flag);
+    Q_SCRIPTABLE void clearMessage(const QString &clearMessage);
 };
 
 namespace com {

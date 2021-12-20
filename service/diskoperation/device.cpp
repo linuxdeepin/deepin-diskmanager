@@ -84,6 +84,8 @@ DeviceInfo Device::getDeviceInfo()
     info.m_maxPrims = m_maxPrims;
     info.m_highestBusy = m_highestBusy;
     info.m_maxPartitionNameLength = m_maxPartitionNameLength;
+    info.m_interface = m_interface;
+    info.m_mediaType = m_mediaType;
 //        qDebug() << __FUNCTION__ << info.m_path << info.length << info.heads << info.sectors
 //                 << info.cylinders << info.cylsize << info.model << info.serial_number << info.disktype
 //                 << info.sector_size << info.max_prims << info.highest_busy << info.readonly

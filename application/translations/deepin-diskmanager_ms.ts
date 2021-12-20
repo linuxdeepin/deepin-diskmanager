@@ -1,34 +1,34 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="uk">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ms">
 <context>
     <name>CreatePartitionTableDialog</name>
     <message>
         <source>The disk has a partition table already. Create a new one and replace it?</source>
-        <translation type="vanished">На диску вже є таблиця розділів. Створити нову і замінити нею поточну?</translation>
+        <translation type="vanished">Cakera sudah mempunyai jadual sekatan. Mahu cipta yang baharu atau ganti sahaja?</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="37"/>
         <source>No partition table in this disk. Create a new one?</source>
-        <translation>На цьому диску немає таблиці розділів. Створити?</translation>
+        <translation>Tiada jadual sekatan dalam cakera ini. Cipta yang baharu?</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="30"/>
         <source>Cancel</source>
-        <translation>Скасувати</translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
         <source>Create</source>
-        <translation>Створити</translation>
+        <translation>Cipta</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="43"/>
         <source>The disk has a partition table already. Replace it?</source>
-        <translation>На диску вже є таблиця розділів. Замінити її?</translation>
+        <translation>Cakera sudah mempunyai jadual sekatan. Ganti sahaja?</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="44"/>
         <source>Replace</source>
-        <translation>Замінити</translation>
+        <translation>Ganti</translation>
     </message>
 </context>
 <context>
@@ -41,27 +41,27 @@
     <message>
         <location filename="../widgets/cylinderinfowidget.cpp" line="471"/>
         <source>Cyl.: %1</source>
-        <translation>Цил.: %1</translation>
+        <translation>Sil.: %1</translation>
     </message>
     <message>
         <location filename="../widgets/cylinderinfowidget.cpp" line="472"/>
         <source>Error: %1</source>
-        <translation>Помилка: %1</translation>
+        <translation>Ralat: %1</translation>
     </message>
     <message>
         <location filename="../widgets/cylinderinfowidget.cpp" line="473"/>
         <source>Cyl. elapsed time: %1</source>
-        <translation>Час, витр. на цил.: %1</translation>
+        <translation>Masa berlalu sil.: %1</translation>
     </message>
     <message>
         <location filename="../widgets/cylinderinfowidget.cpp" line="473"/>
         <source>ms</source>
-        <translation>мс</translation>
+        <translation>ms</translation>
     </message>
     <message>
         <location filename="../widgets/cylinderinfowidget.cpp" line="474"/>
         <source>Status: Repaired</source>
-        <translation>Стан: відновлено</translation>
+        <translation>Status: Dibaiki</translation>
     </message>
 </context>
 <context>
@@ -117,79 +117,79 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="105"/>
         <source>Disk info</source>
-        <translation>Дані щодо диска</translation>
+        <translation>Maklumat cakera</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="112"/>
         <source>Health management</source>
-        <translation>Керування станом справності</translation>
+        <translation>Pengurusan kesihatan</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="118"/>
         <source>Check health</source>
-        <translation>Перевірити стан справності</translation>
+        <translation>Periksa kesihatan</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="124"/>
         <source>Check partition table error</source>
-        <translation>Не пройдено перевірку таблиці розділів</translation>
+        <translation>Semak ralat jadual sekatan</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="130"/>
         <source>Verify or repair bad sectors</source>
-        <translation>Знайти або відновити пошкоджені сектори</translation>
+        <translation>Sah atau baiki sektor rosak</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="136"/>
         <source>Create partition table</source>
-        <translation>Створити таблицю розділів</translation>
+        <translation>Cipta jadual sekatan</translation>
     </message>
     <message>
         <source>Hide partition</source>
-        <translation type="vanished">Приховати розділ</translation>
+        <translation type="vanished">Sembunyi sekatan</translation>
     </message>
     <message>
         <source>Unhide partition</source>
-        <translation type="vanished">Показати розділ</translation>
+        <translation type="vanished">Nyahsembunyi sekatan</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="162"/>
         <source>Delete partition</source>
-        <translation>Вилучити розділ</translation>
+        <translation>Padam sekatan</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="271"/>
         <source>OK</source>
-        <translation>Гаразд</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="283"/>
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
-        <translation>Якщо буде створено нову таблицю розділів,
-усі розділи на цьому диску буде об&apos;єднано, а
-усі дані — втрачено. Будь ласка, будьте обережні.</translation>
+        <translation>Semua sekata dalam cakera ini akan digabungkan dan
+semua data di dalamnya akan hilang jika jadual sekatan
+baharu dicipta, jadi hati-hati</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="283"/>
         <source>Proceed</source>
-        <translation>Продовжити</translation>
+        <translation>Teruskan</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="309"/>
         <source>No errors found in the partition table</source>
-        <translation>У таблиці розділів не знайдено помилок</translation>
+        <translation>Tiada ralat ditemui dalam jadual sekatan</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="322"/>
         <source>Do you want to hide this partition?</source>
-        <translation>Хочете приховати цей розділ?</translation>
+        <translation>Anda pasti mahu menyembunyikan sekatan ini?</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="322"/>
         <source>Hide</source>
-        <translation>Приховати</translation>
+        <translation>Sembunyi</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="283"/>
@@ -197,87 +197,87 @@
         <location filename="../widgets/devicelistwidget.cpp" line="354"/>
         <location filename="../widgets/devicelistwidget.cpp" line="370"/>
         <source>Cancel</source>
-        <translation>Скасувати</translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="212"/>
         <source>Failed to get hardware information</source>
-        <translation>Не вдалося отримати відомості щодо обладнання</translation>
+        <translation>Gagal mendapatkan maklumat perkakasan</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="212"/>
         <source>Close</source>
-        <translation>Закрити</translation>
+        <translation>Tutup</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="271"/>
         <source>Please unmount all partitions in the disk first</source>
-        <translation>Будь ласка, спочатку демонтуйте усі розділи на диску</translation>
+        <translation>Sila nyahlekap semua sekatan dalam cakera dahulu</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="329"/>
         <source>Failed to hide the partition: unable to lock it</source>
-        <translation>Не вдалося приховати розділ: не вдалося заблокувати його</translation>
+        <translation>Gagal menyembunyikan sekatan: tidak boleh menguncinya</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="337"/>
         <source>You can only hide the unmounted partition</source>
-        <translation>Приховати можна лише демонтований розділ</translation>
+        <translation>Anda hanya boleh menyembunyikan sekatan belum dilekap</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="354"/>
         <source>Do you want to unhide this partition?</source>
-        <translation>Хочете, щоб цей розділ було показано?</translation>
+        <translation>Anda pasti mahu menyahsembunyi sekatan ini?</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="354"/>
         <source>Unhide</source>
-        <translation>Скасувати приховування</translation>
+        <translation>Nyahsembunyi</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="370"/>
         <source>Are you sure you want to delete this partition?</source>
-        <translation>Ви справді хочете вилучити цей розділ?</translation>
+        <translation>Anda pasti mahu memadam sekatan ini?</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="370"/>
         <source>You will lose all data in it</source>
-        <translation>Ви втратите усі дані на ньому</translation>
+        <translation>Anda akan kehilangan semua data di dalamnya</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="370"/>
         <source>Delete</source>
-        <translation>Вилучити</translation>
+        <translation>Padam</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="377"/>
         <source>Failed to delete the partition: unable to lock it</source>
-        <translation>Не вдалося вилучити розділ: не вдалося заблокувати його</translation>
+        <translation>Gagal memadam sekatan: tidak boleh menguncinya</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="392"/>
         <source>Hide the partition successfully</source>
-        <translation>Розділ успішно приховано</translation>
+        <translation>Berjaya menyembunyikan sekatan</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="397"/>
         <source>Failed to hide the partition</source>
-        <translation>Не вдалося приховати розділ</translation>
+        <translation>Gagal menyembunyikan sekatan </translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="407"/>
         <source>Unhide the partition successfully</source>
-        <translation>Показ розділу успішно відновлено</translation>
+        <translation>Berjaya menyahsembunyikan sekatan</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="412"/>
         <source>Failed to unhide the partition</source>
-        <translation>Не вдалося відновити показ розділу</translation>
+        <translation>Gagal menyahsembunyikan sekatan </translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="428"/>
         <source>Delete the partition successfully</source>
-        <translation>Розділ успішно вилучено</translation>
+        <translation>Berjaya memadam sekatan</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="436"/>
@@ -302,37 +302,37 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="455"/>
         <source>Failed to delete the partition: %1</source>
-        <translation>Не вдалося вилучити розділ: %1</translation>
+        <translation>Gagal memadam sekatan : %1</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="465"/>
         <source>Unmounting successful</source>
-        <translation>Успішне демонтування</translation>
+        <translation>Berjaya dinyahlekap</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="470"/>
         <source>Unmounting failed</source>
-        <translation>Не вдалося демонтувати</translation>
+        <translation>Gagal dinyahlekap</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="481"/>
         <source>Creating partition table successful</source>
-        <translation>Успішне створення таблиці розділів</translation>
+        <translation>Berjaya mencipta jadual sekatan</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="485"/>
         <source>Replacing partition table successful</source>
-        <translation>Таблицю розділів успішно замінено</translation>
+        <translation>Berjaya menggantikan jadual sekatan</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="493"/>
         <source>Creating partition table failed</source>
-        <translation>Не вдалося створити таблицю розділів</translation>
+        <translation>Gagal mencipta jadual sekatan</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="497"/>
         <source>Replacing partition table failed</source>
-        <translation>Не вдалося замінити таблицю розділів</translation>
+        <translation>Gagal menggantikan jadual sekatan</translation>
     </message>
 </context>
 <context>
@@ -340,138 +340,138 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="56"/>
         <source>Verify or repair bad sectors</source>
-        <translation>Знайти або відновити пошкоджені сектори</translation>
+        <translation>Sah atau baiki sektor rosak</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="84"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="136"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1245"/>
         <source>Verify:</source>
-        <translation>Перевірка:</translation>
+        <translation>Sah:</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="89"/>
         <source>Cylinders</source>
-        <translation>Циліндри</translation>
+        <translation>Silinder</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="90"/>
         <source>Sectors</source>
-        <translation>Сектори</translation>
+        <translation>Sektor</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="91"/>
         <source>MB</source>
-        <translation>МБ</translation>
+        <translation>MB</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="132"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="137"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1246"/>
         <source>Method:</source>
-        <translation>Спосіб:</translation>
+        <translation>Kaedah:</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="147"/>
         <source>Verifying times</source>
-        <translation>Кратність перевірки</translation>
+        <translation>Mengesahkan masa</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="148"/>
         <source>Timeout</source>
-        <translation>Час очікування</translation>
+        <translation>Had masa tamat</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="190"/>
         <source>ms</source>
-        <translation>мс</translation>
+        <translation>ms</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="223"/>
         <source>Result:</source>
-        <translation>Результат:</translation>
+        <translation>Keputusan:</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="247"/>
         <source>Excellent</source>
-        <translation>Чудово</translation>
+        <translation>Terbaik</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="254"/>
         <source>Damaged</source>
-        <translation>Пошкоджено</translation>
+        <translation>Rosak</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="261"/>
         <source>Unknown</source>
-        <translation>Невідомо</translation>
+        <translation>Tidak Diketahui</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="289"/>
         <source>Exit</source>
         <comment>button</comment>
-        <translation>Вийти</translation>
+        <translation>Keluar</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="294"/>
         <source>Reset</source>
         <comment>button</comment>
-        <translation>Скинути</translation>
+        <translation>Tetap Semula</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="311"/>
         <source>Stop</source>
         <comment>button</comment>
-        <translation>Зупинити</translation>
+        <translation>Henti</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="316"/>
         <source>Continue</source>
         <comment>button</comment>
-        <translation>Продовжити</translation>
+        <translation>Teruskan</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="326"/>
         <source>Done</source>
         <comment>button</comment>
-        <translation>Виконано</translation>
+        <translation>Selesai</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
         <source>Exit</source>
-        <translation>Вийти</translation>
+        <translation>Keluar</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="vanished">Скинути</translation>
+        <translation type="vanished">Tetap Semula</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="300"/>
         <source>Repair</source>
-        <translation>Відновити</translation>
+        <translation>Baiki</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="306"/>
         <source>Start Verify</source>
-        <translation>Почати перевірку</translation>
+        <translation>Mula Mengesah</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation type="vanished">Зупинити</translation>
+        <translation type="vanished">Henti</translation>
     </message>
     <message>
         <source>Continue</source>
-        <translation type="vanished">Продовжити</translation>
+        <translation type="vanished">Teruskan</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="321"/>
         <source>Verify Again</source>
-        <translation>Перевірити ще раз</translation>
+        <translation>Sah Sekali Lagi</translation>
     </message>
     <message>
         <source>Done</source>
-        <translation type="vanished">Виконано</translation>
+        <translation type="vanished">Selesai</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="357"/>
@@ -482,7 +482,7 @@
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1034"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1129"/>
         <source>Time elapsed:</source>
-        <translation>Витрачено часу:</translation>
+        <translation>Masa berlalu:</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="362"/>
@@ -496,105 +496,105 @@
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1102"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1135"/>
         <source>Time left:</source>
-        <translation>Лишилося часу:</translation>
+        <translation>Masa berbaki:</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="742"/>
         <source>Verifying cylinder: %1</source>
-        <translation>Перевіряємо циліндр: %1</translation>
+        <translation>Mengesahkan silinder: %1</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="780"/>
         <source>Verify completed</source>
-        <translation>Перевірку завершено</translation>
+        <translation>Pengesahan selesai</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="802"/>
         <source>Disk verify completed. %1 bad blocks found.</source>
-        <translation>Перевірку диска завершено. Виявлено %1 пошкоджених блоків.</translation>
+        <translation>Pengesahan cakera selesai. %1 blok rosak ditemui.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="802"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="994"/>
         <source>OK</source>
-        <translation>Гаразд</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="990"/>
         <source>The verifying disk contains mounted partitions, so you cannot repair it.</source>
-        <translation>На диску, який ви маєте намір перевірити, є змонтовані розділи, тому його не можна виправляти.</translation>
+        <translation>Pengesahan cakera mengandungi sekatan terlekap, jadi anda tidak boleh membaikinya.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="992"/>
         <source>Please unmount partitions and then repair the disk.</source>
-        <translation>Будь ласка, демонтуйте розділи, а потім вже виконуйте виправлення диска.</translation>
+        <translation>Sila nyahlekap sekatan dan kemudian baiki cakera tersebut.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
         <source>Warning</source>
-        <translation>Попередження</translation>
+        <translation>Amaran</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1007"/>
         <source>Bad sector repairing cannot recover files,</source>
-        <translation>Засіб відновлення пошкоджених секторів не відновлює файли,</translation>
+        <translation>Pembaikan sektor rosak tidak dapat memulihkan fail di dalamnya,</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1008"/>
         <source>but destroys data on and near bad sectors instead.</source>
-        <translation>а перезаписує їхні дані і дані у сусідніх секторах.</translation>
+        <translation>tetapi musnah data di dalam atau berhampiran sektor rosak tersebut.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1009"/>
         <source>Please back up all data before repair.</source>
-        <translation>Будь ласка, створіть резервну копію усіх даних, перш ніж виконувати спробу відновлення.</translation>
+        <translation>Sila sandar semua data sebelum membaiki</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1023"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
         <source>Cancel</source>
-        <translation>Скасувати</translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1024"/>
         <source>Start Repair</source>
-        <translation>Почати відновлення</translation>
+        <translation>Mula Baiki</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1070"/>
         <source>Repairing cylinder: %1</source>
-        <translation>Відновлюємо циліндр: %1</translation>
+        <translation>Membaiki silinder: %1</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1107"/>
         <source>Repair completed. Cylinder: %1 repaired.</source>
-        <translation>Відновлення завершено. Циліндр %1 відновлено.</translation>
+        <translation>Pembaikan selesai. Silinder: %1 dibaiki.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1110"/>
         <source>Disk repair completed. %1 bad blocks repaired.</source>
-        <translation>Відновлення диска завершено. Відновлено %1 пошкоджених блоків.</translation>
+        <translation>Pembaikan cakera selesai. %1 blok rosak dibaiki.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1181"/>
         <source>Verifying for bad sectors, exit now?</source>
-        <translation>Виконуємо перевірку на пошкоджені сектори. Вийти зараз?</translation>
+        <translation>Mengesahkan sektor rosak, keluar sekarang?</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1181"/>
         <source>The verified information will not be reserved</source>
-        <translation>Відомості щодо перевірки не буде збережено</translation>
+        <translation>Maklumat yang disahkan tidak dapat disimpan</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1208"/>
         <source>Repairing bad sectors, exit now?</source>
-        <translation>Виконуємо відновлення пошкоджених секторів. Вийти зараз?</translation>
+        <translation>Membaiki sektor rosak, keluar sekarang?</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1208"/>
         <source>The repairing information will not be reserved</source>
-        <translation>Відомості щодо відновлення не буде збережено</translation>
+        <translation>Maklumat yang dibaiki tidak dapat disimpan</translation>
     </message>
 </context>
 <context>
@@ -602,89 +602,89 @@
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="65"/>
         <source>Check Health</source>
-        <translation>Перевірити стан справності</translation>
+        <translation>Periksa Kesihatan</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="97"/>
         <source>Serial number</source>
-        <translation>Серійний номер</translation>
+        <translation>Nombor siri</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="107"/>
         <source>Storage</source>
-        <translation>Сховище даних</translation>
+        <translation>Storan</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="129"/>
         <source>Health Status</source>
-        <translation>Стан справності</translation>
+        <translation>Status Kesihatan</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="144"/>
         <source>Good</source>
-        <translation>Добрий</translation>
+        <translation>Baik</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="150"/>
         <source>Damaged</source>
-        <translation>Пошкоджено</translation>
+        <translation>Rosak</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="156"/>
         <source>Unknown</source>
-        <translation>Невідомо</translation>
+        <translation>Tidak Diketahui</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="175"/>
         <source>Temperature</source>
-        <translation>Температура</translation>
+        <translation>Suhu</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="240"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="421"/>
         <source>ID</source>
-        <translation>Ід.</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="241"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="421"/>
         <source>Status</source>
-        <translation>Стан</translation>
+        <translation>Status</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="242"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="421"/>
         <source>Current</source>
-        <translation>Поточний</translation>
+        <translation>Semasa</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="243"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="421"/>
         <source>Worst</source>
-        <translation>Найгірше значення</translation>
+        <translation>Teruk</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="244"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="422"/>
         <source>Threshold</source>
-        <translation>Порогове значення</translation>
+        <translation>Ambang</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="245"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="422"/>
         <source>Raw Value</source>
-        <translation>Необроблене значення</translation>
+        <translation>Nilai Mentah</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="246"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="422"/>
         <source>Attribute name</source>
-        <translation>Назва атрибута</translation>
+        <translation>Nama atribut</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="343"/>
         <source>Status: (G: Good | W: Warning | D: Damaged | U: Unknown)</source>
-        <translation>Стан: (G: добрий | W: попередження | D: пошкоджено | U: невідомий)</translation>
+        <translation>Status: (G: Baik | W: Amaran | D: Rosak | U: Tidak Diketahui)</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="347"/>
@@ -692,41 +692,41 @@
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="453"/>
         <source>Export</source>
         <comment>button</comment>
-        <translation>Експорт</translation>
+        <translation>Eksport</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation type="vanished">Експортувати</translation>
+        <translation type="vanished">Eksport</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="388"/>
         <source>Save File</source>
-        <translation>Збереження файла</translation>
+        <translation>Simpan Fail</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="388"/>
         <source>Text files (*.txt)</source>
-        <translation>текстові файли (*.txt)</translation>
+        <translation>Fail teks (*.txt)</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="402"/>
         <source>Wrong path</source>
-        <translation>Помилковий шлях</translation>
+        <translation>Laluan salah</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="410"/>
         <source>You do not have permission to access this path</source>
-        <translation>У вас немає дозволу на доступ до цього шляху</translation>
+        <translation>Anda tidak mempunyai keizinan untuk mencapai laluan ini</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="440"/>
         <source>Export successful</source>
-        <translation>Експорт успішний</translation>
+        <translation>Berjaya dieksport</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="443"/>
         <source>Export failed</source>
-        <translation>Не вдалося експортувати</translation>
+        <translation>Eksport gagal</translation>
     </message>
 </context>
 <context>
@@ -734,77 +734,77 @@
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="55"/>
         <source>Disk Info</source>
-        <translation>Дані щодо диска</translation>
+        <translation>Maklumat Cakera</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="66"/>
         <source>Model:</source>
-        <translation>Модель:</translation>
+        <translation>Model:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="66"/>
         <source>Vendor:</source>
-        <translation>Виробник:</translation>
+        <translation>Pembekal:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="66"/>
         <source>Media Type:</source>
-        <translation>Тип носія:</translation>
+        <translation>Jenis Media:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="66"/>
         <source>Size:</source>
-        <translation>Розмір:</translation>
+        <translation>Saiz:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
         <source>Rotation Rate:</source>
-        <translation>Частота обертання:</translation>
+        <translation>Kadar Putaran:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
         <source>Interface:</source>
-        <translation>Інтерфейс:</translation>
+        <translation>Antara Muka:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
         <source>Serial Number:</source>
-        <translation>Серійний номер:</translation>
+        <translation>Nombor Siri:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
         <source>Version:</source>
-        <translation>Версія:</translation>
+        <translation>Versi:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Capabilities:</source>
-        <translation>Можливості:</translation>
+        <translation>Keupayaan:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Description:</source>
-        <translation>Опис:</translation>
+        <translation>Keterangan:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Power On Hours:</source>
-        <translation>Тривалість роботи (у год.):</translation>
+        <translation>Jam Hidup:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Power Cycle Count:</source>
-        <translation>К-ть циклів вмик.-вимик.:</translation>
+        <translation>Kiraan Kitar Kuasa:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Firmware Version:</source>
-        <translation>Версія мікропрограми:</translation>
+        <translation>Versi Perisian Tegar:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Speed:</source>
-        <translation>Швидкість:</translation>
+        <translation>Kelajuan:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="72"/>
@@ -823,52 +823,52 @@
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="210"/>
         <source>Export</source>
         <comment>button</comment>
-        <translation>Експорт</translation>
+        <translation>Eksport</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation type="vanished">Експорт</translation>
+        <translation type="vanished">Eksport</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="149"/>
         <source>Save File</source>
-        <translation>Збереження файла</translation>
+        <translation>Simpan Fail</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="149"/>
         <source>Text files (*.txt)</source>
-        <translation>текстові файли (*.txt)</translation>
+        <translation>Fail teks (*.txt)</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="164"/>
         <source>Wrong path</source>
-        <translation>Помилковий шлях</translation>
+        <translation>Laluan salah</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="172"/>
         <source>You do not have permission to access this path</source>
-        <translation>У вас немає дозволу на доступ до цього шляху</translation>
+        <translation>Anda tidak mempunyai keizinan untuk mencapai laluan ini</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="197"/>
         <source>Export successful</source>
-        <translation>Експорт успішний</translation>
+        <translation>Berjaya dieksport</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="200"/>
         <source>Export failed</source>
-        <translation>Не вдалося експортувати</translation>
+        <translation>Eksport gagal</translation>
     </message>
 </context>
 <context>
     <name>FormateDialog</name>
     <message>
         <source>Format %1</source>
-        <translation type="vanished">Форматувати %1</translation>
+        <translation type="vanished">Format %1</translation>
     </message>
     <message>
         <source>Formatting will erase all data on the disk, which cannot be undone</source>
-        <translation type="vanished">У результаті форматування усі дані з диска буде витерто. Відновити їх буде дуже важко.</translation>
+        <translation type="vanished">Pemformatan akan memadam semua data di dalam cakera, yang mana tidak boleh dikembalikan</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="66"/>
@@ -883,17 +883,17 @@
     <message>
         <location filename="../widgets/formatedialog.cpp" line="73"/>
         <source>Name:</source>
-        <translation>Назва:</translation>
+        <translation>Nama:</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="82"/>
         <source>Name</source>
-        <translation>Назва</translation>
+        <translation>Nama</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="84"/>
         <source>File system:</source>
-        <translation>Файлова система:</translation>
+        <translation>Sistem fail:</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="100"/>
@@ -942,7 +942,7 @@
         <location filename="../widgets/formatedialog.cpp" line="191"/>
         <source>Cancel</source>
         <comment>button</comment>
-        <translation>Скасувати</translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="195"/>
@@ -998,11 +998,11 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="vanished">Скасувати</translation>
+        <translation type="vanished">Batal</translation>
     </message>
     <message>
         <source>Format</source>
-        <translation type="vanished">Форматувати</translation>
+        <translation type="vanished">Format</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="290"/>
@@ -1010,7 +1010,7 @@
         <location filename="../widgets/formatedialog.cpp" line="321"/>
         <location filename="../widgets/formatedialog.cpp" line="333"/>
         <source>The length exceeds the limit</source>
-        <translation>Перевищено обмеження на довжину</translation>
+        <translation>Tempoh melebihi had</translation>
     </message>
 </context>
 <context>
@@ -1019,34 +1019,34 @@
         <location filename="../widgets/infoshowwidget.cpp" line="130"/>
         <location filename="../widgets/infoshowwidget.cpp" line="235"/>
         <source>Mount point:</source>
-        <translation>Точка монтування:</translation>
+        <translation>Titik lekap:</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="138"/>
         <source>Free:</source>
-        <translation>Вільно:</translation>
+        <translation>Bebas:</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="145"/>
         <source>Used:</source>
-        <translation>Використано:</translation>
+        <translation>Digunakan:</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="152"/>
         <location filename="../widgets/infoshowwidget.cpp" line="236"/>
         <source>Type:</source>
-        <translation>Тип:</translation>
+        <translation>Jenis:</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="158"/>
         <source>Capacity:</source>
-        <translation>Місткість:</translation>
+        <translation>Kapasiti:</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="164"/>
         <location filename="../widgets/infoshowwidget.cpp" line="237"/>
         <source>Volume label:</source>
-        <translation>Мітка тому:</translation>
+        <translation>Label volum:</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="297"/>
@@ -1061,7 +1061,7 @@
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="299"/>
         <source>Interface:</source>
-        <translation>Інтерфейс:</translation>
+        <translation>Antara Muka:</translation>
     </message>
 </context>
 <context>
@@ -1069,12 +1069,12 @@
     <message>
         <location filename="../widgets/customcontrol/infotopframe.cpp" line="64"/>
         <source>Capacity</source>
-        <translation>Місткість</translation>
+        <translation>Kapasiti</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/infotopframe.cpp" line="131"/>
         <source>File system</source>
-        <translation>Файлова система</translation>
+        <translation>Sistem fail</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/infotopframe.cpp" line="149"/>
@@ -1087,7 +1087,7 @@
     <message>
         <location filename="../widgets/mainwindow.cpp" line="121"/>
         <source>Refresh</source>
-        <translation>Освіжити</translation>
+        <translation>Segar semula</translation>
     </message>
 </context>
 <context>
@@ -1095,38 +1095,38 @@
     <message>
         <location filename="../widgets/mountdialog.cpp" line="49"/>
         <source>Mount %1</source>
-        <translation>Змонтувати %1</translation>
+        <translation>Lekap %1</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="52"/>
         <source>Choose a mount point please</source>
-        <translation>Виберіть, будь ласка, точку монтування</translation>
+        <translation>Sila pilih satu titik lekap</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="55"/>
         <source>Mount point:</source>
-        <translation>Точка монтування:</translation>
+        <translation>Titik lekap:</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="80"/>
         <location filename="../widgets/mountdialog.cpp" line="168"/>
         <source>Cancel</source>
-        <translation>Скасувати</translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="81"/>
         <source>Mount</source>
-        <translation>Змонтувати</translation>
+        <translation>Lekap</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="168"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
-        <translation>Дані з цією точкою монтування може бути втрачено. Будь ласка, змонтуйте каталог до іншої теки.</translation>
+        <translation>Data di bawah titik lekap ini akan hilang, sila lekap direktori ke lokasi lain</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="168"/>
         <source>OK</source>
-        <translation>Гаразд</translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -1134,7 +1134,7 @@
     <message>
         <location filename="../widgets/customcontrol/partchartshowing.cpp" line="122"/>
         <source>Unallocated</source>
-        <translation>Нерозподілено</translation>
+        <translation>Tidak diperuntuk</translation>
     </message>
 </context>
 <context>
@@ -1142,22 +1142,22 @@
     <message>
         <location filename="../widgets/partitiondialog.cpp" line="48"/>
         <source>Partition %1</source>
-        <translation>Розділ %1</translation>
+        <translation>Sekatan %1</translation>
     </message>
     <message>
         <location filename="../widgets/partitiondialog.cpp" line="50"/>
         <source>It will increase the number of partitions on the disk</source>
-        <translation>Це збільшить кількість розділів на диску</translation>
+        <translation>Ia akan meningkatkan bilangan sekatan di dalam cakera</translation>
     </message>
     <message>
         <location filename="../widgets/partitiondialog.cpp" line="57"/>
         <source>Cancel</source>
-        <translation>Скасувати</translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <location filename="../widgets/partitiondialog.cpp" line="58"/>
         <source>Confirm</source>
-        <translation>Підтвердити</translation>
+        <translation>Sahkan</translation>
     </message>
 </context>
 <context>
@@ -1165,7 +1165,7 @@
     <message>
         <location filename="../widgets/customcontrol/partitioninfowidget.cpp" line="212"/>
         <source>Unallocated</source>
-        <translation>Нерозподілено</translation>
+        <translation>Tidak diperuntuk</translation>
     </message>
 </context>
 <context>
@@ -1173,32 +1173,32 @@
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="58"/>
         <source>Errors in Partition Table</source>
-        <translation>Помилки у таблиці розділів</translation>
+        <translation>Ralat dalam Jadual Sekatan</translation>
     </message>
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="73"/>
         <source>The partition table of disk %1 has below errors:</source>
-        <translation>У таблиці розділів диска %1 виявлено такі помилки:</translation>
+        <translation>Jadual sekatan cakera %1 mempunyai ralat berikut:</translation>
     </message>
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="110"/>
         <source>Error</source>
-        <translation>Помилка</translation>
+        <translation>Ralat</translation>
     </message>
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="119"/>
         <source>Partition table entries are not in disk order</source>
-        <translation>Записи таблиці розділів не у тому порядку, як на диску.</translation>
+        <translation>Masukan jadual sekatan tidak berada dalam tertib cakera</translation>
     </message>
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="131"/>
         <source>OK</source>
         <comment>button</comment>
-        <translation>Гаразд</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="vanished">Гаразд</translation>
+        <translation type="vanished">OK</translation>
     </message>
 </context>
 <context>
@@ -1206,111 +1206,111 @@
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="55"/>
         <source>Partitioning %1</source>
-        <translation>Поділ на розділи %1</translation>
+        <translation>Menyekatkan %1</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="57"/>
         <source>Click ‘+’ to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation>Натисніть «+», щоб збільшити кількість розділів. Клацніть на будь-якому розділі, щоб змінити його назву і файлову систему.</translation>
+        <translation>Klik &apos;+&apos; untuk meningkatkan bilangan sekatan. Klik pada setiap sekatan untuk mengubah nama dan sistem failnya.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="124"/>
         <source>Disk Information</source>
-        <translation>Дані щодо диска</translation>
+        <translation>Maklumat Cakera</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="138"/>
         <source>Capacity:</source>
-        <translation>Місткість:</translation>
+        <translation>Kapasiti:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="148"/>
         <source>Partition selected:</source>
-        <translation>Вибраний розділ:</translation>
+        <translation>Sekatan terpilih:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="157"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="161"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="963"/>
         <source>Disk:</source>
-        <translation>Диск:</translation>
+        <translation>Cakera:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="169"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="327"/>
         <source>File system:</source>
-        <translation>Файлова система:</translation>
+        <translation>Sistem fail:</translation>
     </message>
     <message>
         <source>Confirm</source>
-        <translation type="vanished">Підтвердити</translation>
+        <translation type="vanished">Sahkan</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="vanished">Скасувати</translation>
+        <translation type="vanished">Batal</translation>
     </message>
     <message>
         <source>Revert</source>
-        <translation type="vanished">Повернути</translation>
+        <translation type="vanished">Kembali</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="242"/>
         <source>Confirm</source>
         <comment>button</comment>
-        <translation>Підтвердити</translation>
+        <translation>Sahkan</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="246"/>
         <source>Cancel</source>
         <comment>button</comment>
-        <translation>Скасувати</translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="249"/>
         <source>Revert</source>
         <comment>button</comment>
-        <translation>Повернути</translation>
+        <translation>Kembali</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="275"/>
         <source>Partition Information</source>
-        <translation>Відомості щодо розділу</translation>
+        <translation>Maklumat Sekatan</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="287"/>
         <source>Number of partitions:</source>
-        <translation>Кількість розділів:</translation>
+        <translation>Bilangan sekatan:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="298"/>
         <source>Delete last partition</source>
-        <translation>Вилучити останній розділ</translation>
+        <translation>Padam sekatan terakhir</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="308"/>
         <source>Name:</source>
-        <translation>Назва:</translation>
+        <translation>Nama:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="336"/>
         <source>Size:</source>
-        <translation>Розмір:</translation>
+        <translation>Saiz:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="438"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="551"/>
         <source>Unallocated</source>
-        <translation>Нерозподілено</translation>
+        <translation>Tidak diperuntuk</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="461"/>
         <source>Name</source>
-        <translation>Назва</translation>
+        <translation>Nama</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="462"/>
         <source>Size</source>
-        <translation>Розмір</translation>
+        <translation>Saiz</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="654"/>
@@ -1318,17 +1318,17 @@
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="742"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="752"/>
         <source>The length exceeds the limit</source>
-        <translation>Перевищено обмеження на довжину</translation>
+        <translation>Kapasiti melebihi had</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="784"/>
         <source>The number of new partitions exceeds the limit</source>
-        <translation>Кількість нових розділів перевищує максимальну можливу</translation>
+        <translation>Bilangan sekatan baharu melebihi had</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="804"/>
         <source>To create a partition, you need at least 52 MB</source>
-        <translation>Щоб створити розділ, вам потрібно принаймні 52 МБ</translation>
+        <translation>Untuk mencipta sekatan, anda perlu sekurang-kurangnya 52 MB</translation>
     </message>
 </context>
 <context>
@@ -1336,12 +1336,12 @@
     <message>
         <location filename="../main.cpp" line="95"/>
         <source>Disk Utility</source>
-        <translation>Дисковий додаток</translation>
+        <translation>Utiliti Cakera</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="103"/>
         <source>Disk Utility is a disk management tool for creating, reorganizing and formatting partitions.</source>
-        <translation>«Дисковий додаток» — програма для керування дисками, яку призначено для створення, переупорядковування та форматування розділів.</translation>
+        <translation>Utiliti Cakera ialah sebuah alat pengurusan cakera untuk mencipta, menyusun semula dan memformat sekatan.</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1353,32 +1353,32 @@
     <message>
         <location filename="../widgets/resizedialog.cpp" line="48"/>
         <source>Resize %1</source>
-        <translation>Змінити розмір %1</translation>
+        <translation>Saiz semula %1</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="49"/>
         <source>It will resize the partitions on the disk</source>
-        <translation>Змінить розміри розділів на диску</translation>
+        <translation>Ia akan mensaizkan semula sekatan dalam cakera</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="63"/>
         <source>Reserved size:</source>
-        <translation>Зарезервований розмір:</translation>
+        <translation>Saiz simpanan:</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="80"/>
         <source>Cancel</source>
-        <translation>Скасувати</translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="81"/>
         <source>Confirm</source>
-        <translation>Підтвердити</translation>
+        <translation>Sahkan</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="142"/>
         <source>Space limit exceeded</source>
-        <translation>Перевищено обмеження на розмір</translation>
+        <translation>Had ruang dilangkaui</translation>
     </message>
 </context>
 <context>
@@ -1387,7 +1387,7 @@
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="163"/>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="247"/>
         <source> Capacity:</source>
-        <translation>Місткість:</translation>
+        <translation>Kapasiti:</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="203"/>
@@ -1395,7 +1395,7 @@
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="287"/>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="290"/>
         <source>Used:</source>
-        <translation>Використано:</translation>
+        <translation>Digunakan:</translation>
     </message>
 </context>
 <context>
@@ -1403,11 +1403,11 @@
     <message>
         <location filename="../widgets/titlewidget.cpp" line="49"/>
         <source>Partition</source>
-        <translation>Розділ</translation>
+        <translation>Sekatan</translation>
     </message>
     <message>
         <source>Format to</source>
-        <translation type="vanished">Форматувати у</translation>
+        <translation type="vanished">Format ke</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="50"/>
@@ -1417,22 +1417,22 @@
     <message>
         <location filename="../widgets/titlewidget.cpp" line="51"/>
         <source>Mount</source>
-        <translation>Змонтувати</translation>
+        <translation>Lekap</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="52"/>
         <source>Unmount</source>
-        <translation>Демонтувати</translation>
+        <translation>Tanggal</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="53"/>
         <source>Resize</source>
-        <translation>Змінити розмір</translation>
+        <translation>Saiz semula</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="124"/>
         <source>Cannot recognize its partition table</source>
-        <translation>Не вдалося визначити таблицю розділів</translation>
+        <translation>Tidak dapat mengenal pasti jadual sekatannya</translation>
     </message>
 </context>
 <context>
@@ -1440,42 +1440,42 @@
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="48"/>
         <source>Unmount %1</source>
-        <translation>Демонтувати %1</translation>
+        <translation>Tanggal %1</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="51"/>
         <source>Make sure there are no programs running on the disk</source>
-        <translation>Переконайтеся, що з диском не працює жодна інша програма</translation>
+        <translation>Pastikan tiada program masih berjalan</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="58"/>
         <location filename="../widgets/unmountdialog.cpp" line="90"/>
         <location filename="../widgets/unmountdialog.cpp" line="97"/>
         <source>Cancel</source>
-        <translation>Скасувати</translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="59"/>
         <location filename="../widgets/unmountdialog.cpp" line="97"/>
         <source>Unmount</source>
-        <translation>Демонтувати</translation>
+        <translation>Tanggal</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="89"/>
         <source>Unmounting system disk may result in system crash,
  please confirm before proceeding</source>
-        <translation>Демонтування диска з системою може призвести до аварійного завершення роботи.
-Будь ласка, підтвердьте цю дію.</translation>
+        <translation>Menyahlekap cakera sistem boleh mengakibatkan
+kerosakan sistem, sila sahkan sebelum diteruskan</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="90"/>
         <source>Continue</source>
-        <translation>Продовжити</translation>
+        <translation>Teruskan</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="96"/>
         <source>You will take subsequent risks if you continue to unmount the system disk</source>
-        <translation>Відповідальність за наслідки демонтування диска із системою несете лише ви</translation>
+        <translation>Anda akan menghadapi risiko berikut jika anda terus menyahlekap cakera sistem</translation>
     </message>
 </context>
 </TS>

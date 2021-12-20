@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="bo" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="bo">
 <context>
     <name>CreatePartitionTableDialog</name>
     <message>
@@ -62,6 +62,54 @@
         <location filename="../widgets/cylinderinfowidget.cpp" line="474"/>
         <source>Status: Repaired</source>
         <translation>སླར་གསོ་བྱས་ཚུལ། སླར་གསོ་བྱས་ཟིན། </translation>
+    </message>
+</context>
+<context>
+    <name>DMDbusHandler</name>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="161"/>
+        <source>Refreshing data...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="180"/>
+        <source>Initializing data...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="213"/>
+        <source>Mounting %1 ...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="220"/>
+        <source>Unmounting %1 ...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="259"/>
+        <source>Resizing %1 ...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="266"/>
+        <source>Creating a new partition...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="365"/>
+        <source>Deleting %1 ...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="417"/>
+        <source>Creating a partition table of %1 ...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="419"/>
+        <source>Replacing the partition table of %1 ...</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -231,37 +279,57 @@
         <translation>ཁུལ་ཚན་སུབ་ཐུབ་པ།</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="433"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="436"/>
+        <source>Failed to find the disk</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="440"/>
+        <source>Failed to get the partition info</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="444"/>
+        <source>Failed to delete the partition</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
+        <source>Failed to submit the request to the kernel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="455"/>
         <source>Failed to delete the partition: %1</source>
         <translation>ཁུལ་ཚན་སུབ་མི་ཐུབ། %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="443"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="465"/>
         <source>Unmounting successful</source>
         <translation>བཤིག་འདོན་ཐུབ་པ།</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="470"/>
         <source>Unmounting failed</source>
         <translation>བཤིག་འདོན་མི་ཐུབ།</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="459"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="481"/>
         <source>Creating partition table successful</source>
         <translation>ཁག་བགོའི་རེའུ་མིག་གསར་བཟོ་ཐུབ་པ།</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="463"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="485"/>
         <source>Replacing partition table successful</source>
         <translation>ཁག་བགོའི་རེའུ་མིག་བརྗེ་ཐུབ་པ།</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="471"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="493"/>
         <source>Creating partition table failed</source>
         <translation>ཁག་བགོའི་རེའུ་མིག་གསར་བཟོ་མི་ཐུབ་པ།</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="475"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="497"/>
         <source>Replacing partition table failed</source>
         <translation>ཁག་བགོའི་རེའུ་མིག་བརྗེ་མི་ཐུབ།</translation>
     </message>
@@ -276,7 +344,7 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="84"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="136"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1240"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1245"/>
         <source>Verify:</source>
         <translation>དཔྱད་འཇལ་ཁྱབ་ཁོངས།</translation>
     </message>
@@ -298,7 +366,7 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="132"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="137"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1241"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1246"/>
         <source>Method:</source>
         <translation>དཔྱད་འཇལ་བྱེད་སྟངས།</translation>
     </message>
@@ -368,8 +436,8 @@
         <translation>ལེགས་གྲུབ།</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1177"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1204"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
         <source>Exit</source>
         <translation>ཕྱིར་འཐོན།</translation>
     </message>
@@ -408,10 +476,10 @@
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="357"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="602"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="760"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="879"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="925"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1029"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1124"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="884"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="930"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1034"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1129"/>
         <source>Time elapsed:</source>
         <translation>བེད་སྤྱོད་བྱས་པའི་དུས་ཚོད།</translation>
     </message>
@@ -420,12 +488,12 @@
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="603"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="766"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="778"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="880"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="926"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1030"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1049"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1097"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1130"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="885"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="931"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1035"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1054"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1102"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1135"/>
         <source>Time left:</source>
         <translation>དུས་ཚོད་ལྷག་མ།</translation>
     </message>
@@ -446,84 +514,84 @@
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="802"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="989"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="994"/>
         <source>OK</source>
         <translation>ཆོག</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="985"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="990"/>
         <source>The verifying disk contains mounted partitions, so you cannot repair it.</source>
         <translation>མིག་སྔར་སྡུད་སྡེར་ལ་དཔྱད་འཇལ་བྱེད་པ་འགེལ་ཁུལ་དུ་ཡོད་པས། འཕྲོ་བརླག་ཐེབས་ས་སླར་གསོ་བྱ་ཐབས་བྲལ།</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="987"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="992"/>
         <source>Please unmount partitions and then repair the disk.</source>
         <translation>སླར་གསོ་བྱ་དགོས་ཚེ་སྔོན་ལ་དབྱེ་ཁུལ་བཤིག་འདོན་བྱོས།</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="997"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
         <source>Warning</source>
         <translation>ཐ་ཚིག</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1007"/>
         <source>Bad sector repairing cannot recover files,</source>
         <translation>འཕྲོ་བརླག་ཤོར་བའི་སྡེར་ལམ་སླར་གསོ་བྱེད་པ་དེ་གཞི་གྲངས་སོར་ཆུད་ཀྱི་བྱ་ཐབས་མིན།</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1003"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1008"/>
         <source>but destroys data on and near bad sectors instead.</source>
         <translation>འཕྲོ་བརླག་ཤོར་བའི་སྡེར་ལམ་སླར་གསོ་བྱེད་པ་འདིས་འཕྲོ་བརླག་ཤོར་བའི་སྡེར་ལམ་དང་དེའི་ཉེ་འཁོར་གྱི་སྡེར་ལམ་ཐོག་གི་ཡིག་ཆའི་གཞི་གྲངས་འཕྲོ་བརླག་གཏོང་སྲིད།</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1004"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1009"/>
         <source>Please back up all data before repair.</source>
         <translation>སྔོན་ལ་གཞི་གྲངས་གྲབས་ཉར་ཡག་པོ་བྱོས། </translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1018"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1177"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1204"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1023"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
         <source>Cancel</source>
         <translation>འདོར་བ།</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1019"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1024"/>
         <source>Start Repair</source>
         <translation>སླར་གསོ་བྱེད་འགོ་ཚུགས།</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1065"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1070"/>
         <source>Repairing cylinder: %1</source>
         <translation>ཀ་ངོས་%1སླར་གསོ་བྱེད་བཞིན་པ།</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1102"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1107"/>
         <source>Repair completed. Cylinder: %1 repaired.</source>
         <translation>སླར་གསོ་བྱས་ཟིན། ཀ་ངོས་%1སླར་གསོ་བྱས་ཟིན།</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1105"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1110"/>
         <source>Disk repair completed. %1 bad blocks repaired.</source>
         <translation>སྡུད་སྡེར་སླར་གསོ་བྱས་ཟིན། ཁྱོན་འཕྲོ་བརླག་ཐེབས་ཁུལ་%1སླར་གསོ་བྱས་པ།</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1176"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1181"/>
         <source>Verifying for bad sectors, exit now?</source>
         <translation>དཔྱད་འཇལ་བྱེད་བཞིན་ཡོད་པས། སྒེའུ་ཁུང་ལས་ཕྱིར་འཐོན་ནམ།</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1176"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1181"/>
         <source>The verified information will not be reserved</source>
         <translation>མིག་སྔའི་དཔྱད་འཇལ་ཆ་འཕྲིན་ཉར་མི་སྲིད།</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1203"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1208"/>
         <source>Repairing bad sectors, exit now?</source>
         <translation>སླར་གསོ་བྱེད་བཞིན་ཡོད་པས། སྒེའུ་ཁུང་ལས་ཕྱིར་འཐོན་ནམ།</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1203"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1208"/>
         <source>The repairing information will not be reserved</source>
         <translation>མིག་སྔའི་སླར་གསོའི་ཆ་འཕྲིན་ཉར་མི་སྲིད།</translation>
     </message>
@@ -794,45 +862,152 @@
 <context>
     <name>FormateDialog</name>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="48"/>
         <source>Format %1</source>
-        <translation>%1ལ་རྣམ་གཞག་ཏུ་སྒྱུར་བ།</translation>
+        <translation type="vanished">%1ལ་རྣམ་གཞག་ཏུ་སྒྱུར་བ།</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="49"/>
         <source>Formatting will erase all data on the disk, which cannot be undone</source>
-        <translation>ཁུལ་ཚན་རྣམ་གཞག་ཏུ་སྒྱུར་ཚེ། སྡུད་སྡེར་ནང་དུ་ཉར་བའི་གཞི་གྲངས་ཚང་མ་སུབ་པ་མ་ཟད། ཕྱིར་འཐེན་བྱེད་ཐབས་མེད།</translation>
+        <translation type="vanished">ཁུལ་ཚན་རྣམ་གཞག་ཏུ་སྒྱུར་ཚེ། སྡུད་སྡེར་ནང་དུ་ཉར་བའི་གཞི་གྲངས་ཚང་མ་སུབ་པ་མ་ཟད། ཕྱིར་འཐེན་བྱེད་ཐབས་མེད།</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="56"/>
+        <location filename="../widgets/formatedialog.cpp" line="66"/>
+        <source>Wipe %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="67"/>
+        <source>It will erase all data on this disk, which will not be recovered</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="73"/>
         <source>Name:</source>
         <translation>ཁུལ་ཚན་གྱི་མིང་།</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="65"/>
+        <location filename="../widgets/formatedialog.cpp" line="82"/>
         <source>Name</source>
         <translation>ཁུལ་ཚན་གྱི་མིང་།</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="67"/>
+        <location filename="../widgets/formatedialog.cpp" line="84"/>
         <source>File system:</source>
         <translation>ཁུལ་ཚན་གྱི་རྣམ་གཞག</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="107"/>
+        <location filename="../widgets/formatedialog.cpp" line="100"/>
+        <source>Security:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="109"/>
+        <location filename="../widgets/formatedialog.cpp" line="113"/>
+        <source>Fast</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="109"/>
+        <location filename="../widgets/formatedialog.cpp" line="113"/>
+        <source>Secure</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="113"/>
+        <source>Advanced</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="127"/>
+        <location filename="../widgets/formatedialog.cpp" line="353"/>
+        <source>It only deletes the partition info without erasing the files on the disk. Disk recovery tools may recover the files at a certain probability.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="130"/>
+        <source>Wiping method:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="144"/>
+        <source>DoD 5220.22-M, 7 passes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="144"/>
+        <source>Gutmann, 35 passes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="191"/>
         <source>Cancel</source>
+        <comment>button</comment>
         <translation>འདོར་བ།</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="108"/>
-        <source>Format</source>
-        <translation>རྣམ་གཞག་ཅན།</translation>
+        <location filename="../widgets/formatedialog.cpp" line="195"/>
+        <source>Wipe</source>
+        <comment>button</comment>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="128"/>
-        <location filename="../widgets/formatedialog.cpp" line="142"/>
-        <location filename="../widgets/formatedialog.cpp" line="163"/>
-        <location filename="../widgets/formatedialog.cpp" line="177"/>
+        <location filename="../widgets/formatedialog.cpp" line="238"/>
+        <location filename="../widgets/formatedialog.cpp" line="450"/>
+        <source>Failed to find the disk</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="362"/>
+        <source>It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, and random data to the entire disk once. You will not be able to recover files, and the process will be slow.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="373"/>
+        <source>It writes 0, 1, and random data to the entire disk several times. You can set the number of times to erase disks and overwrite data, but the process will be very slow.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="416"/>
+        <source>Wiping %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="435"/>
+        <source>&quot;%1&quot; wiped</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="441"/>
+        <source>Failed to wipe %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="454"/>
+        <source>Failed to get the partition info</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="458"/>
+        <source>Failed to delete the partition</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="462"/>
+        <source>Failed to submit the request to the kernel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="vanished">འདོར་བ།</translation>
+    </message>
+    <message>
+        <source>Format</source>
+        <translation type="vanished">རྣམ་གཞག་ཅན།</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="290"/>
+        <location filename="../widgets/formatedialog.cpp" line="302"/>
+        <location filename="../widgets/formatedialog.cpp" line="321"/>
+        <location filename="../widgets/formatedialog.cpp" line="333"/>
         <source>The length exceeds the limit</source>
         <translation>ཡིག་རྟགས་ཀྱི་རིང་ཐུང་ཚད་ལས་བརྒལ་འདུག</translation>
     </message>
@@ -840,53 +1015,76 @@
 <context>
     <name>InfoShowWidget</name>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="103"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="130"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="235"/>
         <source>Mount point:</source>
         <translation>ཐེག་འཇུག་གནས།</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="111"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="138"/>
         <source>Free:</source>
         <translation>སྤྱོད་རུང་བ།</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="118"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="145"/>
         <source>Used:</source>
         <translation>སྤྱོད་ཟིན་པ།</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="125"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="152"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="236"/>
         <source>Type:</source>
         <translation>རིགས་གྲས།</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="131"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="158"/>
         <source>Capacity:</source>
         <translation>སྤྱིའི་ཤོང་ཚད།</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="137"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="164"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="237"/>
         <source>Volume label:</source>
         <translation>བམ་པོའི་མཚོན་རྟགས།</translation>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="297"/>
+        <source>Path:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="298"/>
+        <source>Disk type:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="299"/>
+        <source>Interface:</source>
+        <translation>མཐུད་ཁ།</translation>
     </message>
 </context>
 <context>
     <name>InfoTopFrame</name>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="59"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="64"/>
         <source>Capacity</source>
         <translation>སྤྱིའི་ཤོང་ཚད།</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="116"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="131"/>
         <source>File system</source>
         <translation>རྣམ་གཞག</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="149"/>
+        <source>%1 partition table</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../widgets/mainwindow.cpp" line="123"/>
+        <location filename="../widgets/mainwindow.cpp" line="121"/>
         <source>Refresh</source>
         <translation>གསར་འདོན།</translation>
     </message>
@@ -910,7 +1108,7 @@
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="80"/>
-        <location filename="../widgets/mountdialog.cpp" line="120"/>
+        <location filename="../widgets/mountdialog.cpp" line="168"/>
         <source>Cancel</source>
         <translation>འདོར་བ།</translation>
     </message>
@@ -920,12 +1118,12 @@
         <translation>ཐེག་འཇུག</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="120"/>
+        <location filename="../widgets/mountdialog.cpp" line="168"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>ཐེག་འཇུག་གནས་འདིའི་གཞི་གྲངས་བོར་སྲིད་པས། དཀར་ཆག་དེ་གནས་གཞན་ལ་ཐེག་འཇུག་བྱས་ན་ལེགས།</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="120"/>
+        <location filename="../widgets/mountdialog.cpp" line="168"/>
         <source>OK</source>
         <translation>ཆོག</translation>
     </message>
@@ -959,6 +1157,14 @@
         <location filename="../widgets/partitiondialog.cpp" line="58"/>
         <source>Confirm</source>
         <translation>ཆོག</translation>
+    </message>
+</context>
+<context>
+    <name>PartitionInfoWidget</name>
+    <message>
+        <location filename="../widgets/customcontrol/partitioninfowidget.cpp" line="212"/>
+        <source>Unallocated</source>
+        <translation>ལས་མེད་བར་སྣང་།</translation>
     </message>
 </context>
 <context>
@@ -1024,7 +1230,7 @@
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="157"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="161"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="962"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="963"/>
         <source>Disk:</source>
         <translation>སྡུད་སྡེར།</translation>
     </message>
@@ -1127,14 +1333,18 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="74"/>
+        <location filename="../main.cpp" line="95"/>
         <source>Disk Utility</source>
         <translation>སྡུད་སྡེར་དོ་དམ་ཆས།</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="82"/>
+        <location filename="../main.cpp" line="103"/>
         <source>Disk Utility is a disk management tool for creating, reorganizing and formatting partitions.</source>
         <translation>སྡུད་སྡེར་དོ་དམ་ཆས་ཀྱིས་སྤྱོད་མཁན་གྱིས་སྡུད་སྡེར་ཁུལ་དབྱེ་དང་། བར་སྣང་སྙོམས་སྒྲིག རྣམ་གཞག་ཏུ་སྒྱུར་བ་སོགས་བཀོལ་སྤྱོད་བྱེད་སྐབས་རོགས་རམ་བྱེད་ཆོག</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1173,18 +1383,16 @@
 <context>
     <name>SizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="160"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="162"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="238"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="240"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="163"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="247"/>
         <source> Capacity:</source>
         <translation>སྤྱིའི་ཤོང་ཚད།</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="194"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="198"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="272"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="275"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="203"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="207"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="287"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="290"/>
         <source>Used:</source>
         <translation>སྤྱོད་ཟིན་པ།</translation>
     </message>
@@ -1197,9 +1405,13 @@
         <translation>ཁུལ་ཚན།</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="50"/>
         <source>Format to</source>
-        <translation>རྣམ་གཞག་ཅན།</translation>
+        <translation type="vanished">རྣམ་གཞག་ཅན།</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="50"/>
+        <source>Wipe</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="51"/>
@@ -1236,30 +1448,30 @@
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="58"/>
-        <location filename="../widgets/unmountdialog.cpp" line="89"/>
-        <location filename="../widgets/unmountdialog.cpp" line="96"/>
+        <location filename="../widgets/unmountdialog.cpp" line="90"/>
+        <location filename="../widgets/unmountdialog.cpp" line="97"/>
         <source>Cancel</source>
         <translation>འདོར་བ།</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="59"/>
-        <location filename="../widgets/unmountdialog.cpp" line="96"/>
+        <location filename="../widgets/unmountdialog.cpp" line="97"/>
         <source>Unmount</source>
         <translation>བཤིག་འདོན།</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="88"/>
+        <location filename="../widgets/unmountdialog.cpp" line="89"/>
         <source>Unmounting system disk may result in system crash,
  please confirm before proceeding</source>
         <translation>རྒྱུད་ཁོངས་ཀྱི་སྡེར་འདི་བཤིག་ཚེ་རྒྱུད་ཁོངས་ཐོར་སྲིད་པས། མུ་མཐུད་བཀོལ་སྤྱོད་བྱེད་རྒྱུ་གཏན་ཁེལ་ལམ།</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="89"/>
+        <location filename="../widgets/unmountdialog.cpp" line="90"/>
         <source>Continue</source>
         <translation>མུ་མཐུད།</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="95"/>
+        <location filename="../widgets/unmountdialog.cpp" line="96"/>
         <source>You will take subsequent risks if you continue to unmount the system disk</source>
         <translation>མུ་མཐུད་བཤིག་ཚེ། སླད་ཕྱིན་བྱུང་བའི་ཉེན་ཁ་དག་ཁྱོད་ཀྱིས་འགན་འཁུར་དགོས།</translation>
     </message>

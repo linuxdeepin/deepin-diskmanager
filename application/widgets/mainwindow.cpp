@@ -32,6 +32,7 @@
 
 #include <DTitlebar>
 #include <DWidgetUtil>
+#include <DWindowCloseButton>
 
 #include <QTimer>
 #include <QApplication>
@@ -105,12 +106,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::initUi()
 {
-//    m_bufferWin = new BufferWin;
-    m_spinner = new DSpinner(this);
-    m_spinner->setWindowFlags(Qt::SplashScreen);
-    m_spinner->setWindowModality(Qt::ApplicationModal);
-    m_spinner->setAttribute(Qt::WA_TranslucentBackground, true);
-    m_spinner->setGeometry(100, 100, 100, 100);
+    m_dialog = new AnimationDialog(this);
+    m_dialog->setWindowModality(Qt::ApplicationModal);
+    m_dialog->hide();
 
     m_central = new CenterWidget(this);
     setCentralWidget(m_central);
@@ -172,18 +170,15 @@ void MainWindow::onRefreshButtonClicked()
     m_handler->refresh();
 }
 
-void MainWindow::onShowSpinerWindow(bool isShow)
+void MainWindow::onShowSpinerWindow(bool isShow, const QString &title)
 {
     if (isShow) {
-        // m_bufferWin->Start();
-        m_spinner->start();
-
-        Dtk::Widget::moveToCenter(m_spinner);
-        m_spinner->show();
+        Dtk::Widget::moveToCenter(m_dialog);
+        m_dialog->setShowSpinner(isShow, title);
+        m_dialog->show();
     } else {
-        // m_bufferWin->Stop();
-        m_spinner->stop();
-        m_spinner->hide();
+        m_dialog->setShowSpinner(isShow, "");
+        m_dialog->hide();
 
         raise();
         activateWindow();

@@ -52,6 +52,12 @@ public:
      */
     void setShowDiskInfo();
 
+protected:
+    /**
+     * @brief 字号变更事件
+     */
+    void resizeEvent(QResizeEvent *event);
+
 private:
     /**
      * @brief 初始化左侧信息

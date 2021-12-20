@@ -44,7 +44,7 @@ struct DiskInfoData {
     QString m_diskPath;
     QString m_diskSize;
     QImage m_iconImage;
-    QString m_partitonPath;
+    QString m_partitionPath;
     QString m_partitionSize;
     QString m_used;
     QString m_unused;

@@ -149,7 +149,7 @@ public:
 
 signals:
     void selectItem(const QModelIndex &index);
-    void curSelectChanged(const QString &devicepath, const QString &partitionpath, Sector start, Sector end);
+    void curSelectChanged(const QString &devicepath, const QString &partitionpath, Sector start, Sector end, int level);
     //    void sigSendInfo(const QString &devicepath, const QString &disksize, const QString &partitionpath, const QString &partsize, const QString &style, Sector start, Sector end);
 
 public slots:

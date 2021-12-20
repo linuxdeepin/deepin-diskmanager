@@ -228,6 +228,29 @@ public:
      */
     QString getCurCreatePartitionTableType();
 
+    /**
+     * @brief 获取当前选择节点的类型
+     * @return 返回当前选择节点的类型（0：磁盘，1：分区）
+     */
+    int getCurLevel();
+
+    /**
+     * @brief 获取当前选择磁盘路径
+     * @return 返回磁盘路径
+     */
+    QString getCurDevicePath();
+
+    /**
+     * @brief 擦除
+     * @param type 分区类型
+     * @param path 磁盘或分区路径
+     * @param name 劵标名
+     * @param user 当前用户名
+     * @param diskType 磁盘或者分区类型 0是分区 1是磁盘
+     * @param clearType 擦除标准 1为快速 2安全 3为安全擦除7次 4为安全擦除35次
+     */
+    void clear(const QString &fstype, const QString &path, const QString &name,const QString &user, const int &diskType, const int &clearType);
+
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
 
@@ -237,7 +260,7 @@ private:
     void initConnection();
 
 signals:
-    void showSpinerWindow(bool);
+    void showSpinerWindow(bool, const QString &title = "");
     void updateDeviceInfo();
     void curSelectChanged();
     void deletePartitionMessage(const QString &deleteMessage);
@@ -252,16 +275,18 @@ signals:
     void checkBadBlocksFinished();
     void fixBadBlocksFinished();
     void rootLogin();
+    void wipeMessage(const QString &clearMessage);
 
 public slots:
     /**
-     * @brief 树结构当前选择分区节点信号响应的槽函数
+     * @brief 树结构当前选择节点信号响应的槽函数
      * @param devicePath 磁盘路径
      * @param partitionPath 分区路径
      * @param start 分区扇区开始位置
      * @param end 分区扇区结束位置
+     * @param level 节点类型
      */
-    void onSetCurSelect(const QString &devicePath, const QString &partitionPath, Sector start, Sector end);
+    void onSetCurSelect(const QString &devicePath, const QString &partitionPath, Sector start, Sector end, int level);
 
 private slots:
 
@@ -329,6 +354,7 @@ private:
     QStringList m_deviceNameList;
     QString m_loginMessage;
     QString m_curCreateType;
+    int m_curLevel = 1;
 };
 
 #endif // DMDBUSHANDLER_H

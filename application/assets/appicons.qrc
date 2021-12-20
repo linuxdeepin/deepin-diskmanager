@@ -47,5 +47,12 @@
         <file>icons/deepin/builtin/light/texts/dm_Warning_30px.svg</file>
         <file>icons/deepin/builtin/dark/texts/dm_refresh_36px.svg</file>
         <file>icons/deepin/builtin/light/texts/dm_refresh_36px.svg</file>
+        <file>icons/deepin/builtin/dark/texts/dm_erase_36px.svg</file>
+        <file>icons/deepin/builtin/light/texts/dm_erase_36px.svg</file>
+        <file>icons/deepin/builtin/fail.svg</file>
+        <file>icons/deepin/builtin/light/texts/dm_arrow_right_check_15px.svg.svg</file>
+        <file>icons/deepin/builtin/light/texts/dm_arrow_check_15px.svg</file>
+        <file>icons/deepin/builtin/dark/texts/dm_arrow_check_15px.svg</file>
+        <file>icons/deepin/builtin/dark/texts/dm_arrow_right_check_15px.svg.svg</file>
     </qresource>
 </RCC>

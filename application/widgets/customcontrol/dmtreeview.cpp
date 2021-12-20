@@ -53,7 +53,7 @@ void DmTreeview::initUI()
 void DmTreeview::addItem(QStandardItem *item, const DiskInfoData &data, int flag)
 {
     QStandardItem *standardItem = new QStandardItem(data.m_diskPath);
-    standardItem->setAccessibleDescription(data.m_partitonPath);
+    standardItem->setAccessibleDescription(data.m_partitionPath);
     standardItem->setData(QVariant::fromValue((data)), Qt::UserRole + 1);
     item->appendRow(standardItem);
     if (flag == 0) {
@@ -105,16 +105,15 @@ void DmTreeview::currentChanged(const QModelIndex &current, const QModelIndex &p
 {
     Q_UNUSED(previous);
     DiskInfoData data = current.data(Qt::UserRole + 1).value<DiskInfoData>();
-    qDebug() << data.m_diskPath << data.m_diskSize << data.m_partitionSize << data.m_partitonPath << data.m_level << data.m_used << data.m_unused << data.m_start << data.m_end << data.m_fstype << data.m_mountpoints << data.m_sysLabel;
+    qDebug() << data.m_diskPath << data.m_diskSize << data.m_partitionSize << data.m_partitionPath << data.m_level << data.m_used << data.m_unused << data.m_start << data.m_end << data.m_fstype << data.m_mountpoints << data.m_sysLabel;
 
     m_curNum = current.row();
     m_diskNum = current.parent().row();
 
     emit selectItem(current);
-    emit curSelectChanged(data.m_diskPath, data.m_partitonPath, data.m_start, data.m_end);
+    emit curSelectChanged(data.m_diskPath, data.m_partitionPath, data.m_start, data.m_end, data.m_level);
 
     m_diskSize = data.m_diskSize;
-
 }
 
 void DmTreeview::mousePressEvent(QMouseEvent *event)
@@ -136,7 +135,7 @@ void DmTreeview::addItem(DmDiskinfoBox *infoBox, int flag, QStandardItem *purIte
     data.m_diskSize = infoBox->m_diskSize;
     data.m_diskPath = infoBox->m_diskPath;
     data.m_partitionSize = infoBox->m_partitionSize;
-    data.m_partitonPath = infoBox->m_partitionPath;
+    data.m_partitionPath = infoBox->m_partitionPath;
     data.m_used = infoBox->m_used;
     data.m_unused = infoBox->m_unused;
     data.m_start = infoBox->m_start;
@@ -197,8 +196,14 @@ QModelIndex DmTreeview::setDefaultdmItem()//设置默认选中节点
 
 void DmTreeview::setRefreshItem(int devicenum, int num)//设置刷新后默认选择操作分区
 {
-    setCurrentIndex(model()->index(devicenum, 0).child(num, 0));
-    setExpanded(model()->index(devicenum, 0), true);
+    if (-1 == devicenum) {
+        setCurrentIndex(m_model->item(num)->index());
+        setExpanded(m_model->item(num)->index(), true);
+    } else {
+        setCurrentIndex(model()->index(devicenum, 0).child(num, 0));
+        setExpanded(model()->index(devicenum, 0), true);
+    }
+
 }
 
 int DmTreeview::getCurrentNum()//返回当前选中分区

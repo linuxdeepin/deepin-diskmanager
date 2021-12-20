@@ -43,7 +43,12 @@ InfoTopFrame::InfoTopFrame(DWidget *parent)
     setLayout(m_mainLayout);
 
     m_pictureLabel = new DLabel(this);
-    m_pictureLabel->setPixmap(Common::getIcon("labeldisk").pixmap(85, 85));
+    if (1 == DMDbusHandler::instance()->getCurLevel()) {
+        m_pictureLabel->setPixmap(Common::getIcon("labeldisk").pixmap(85, 85));
+    } else {
+        m_pictureLabel->setPixmap(Common::getIcon("disk").pixmap(85, 85));
+    }
+
     m_pictureLabel->setMinimumSize(85, 85);
     m_mainLayout->addWidget(m_pictureLabel);
 
@@ -101,17 +106,64 @@ void InfoTopFrame::initLeftInfo()
 
 void InfoTopFrame::setShowDiskInfo()
 {
-    auto info = DMDbusHandler::instance()->getCurPartititonInfo();
+    if (1 == DMDbusHandler::instance()->getCurLevel()) {
+        m_pictureLabel->setPixmap(Common::getIcon("labeldisk").pixmap(85, 85));
 
-    m_nameLabel->setText(info.m_path);
-//    if ("unallocated" == info.m_path) {
-//        m_nameLabel->setText("ocated");
-//    }
+        auto info = DMDbusHandler::instance()->getCurPartititonInfo();
 
-    QString diskSize = Utils::formatSize(info.m_sectorEnd - info.m_sectorStart,
-                                            info.m_sectorSize);
-    m_allMemoryLabel->setText(diskSize);
+        QFontMetrics fmDevpath = m_nameLabel->fontMetrics();
+        QString textDevpath = info.m_path;
+        int devpathWidth = fmDevpath.width(textDevpath);
+        if (devpathWidth > width() / 2) {
+            devpathWidth = width() / 2;
+            textDevpath = m_nameLabel->fontMetrics().elidedText(textDevpath, Qt::ElideMiddle, devpathWidth);
+        }
+        m_nameLabel->setText(textDevpath);
+    //    if ("unallocated" == info.m_path) {
+    //        m_nameLabel->setText("ocated");
+    //    }
 
-    QString diskType = Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType));
-    m_typeLabel->setText(tr("File system") + ": " + diskType);
+        QString diskSize = Utils::formatSize(info.m_sectorEnd - info.m_sectorStart,
+                                                info.m_sectorSize);
+        m_allMemoryLabel->setText(diskSize);
+
+        QString diskType = Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType));
+        m_typeLabel->setText(tr("File system") + ": " + diskType);
+    } else {
+        m_pictureLabel->setPixmap(Common::getIcon("disk").pixmap(85, 85));
+
+        DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
+        m_nameLabel->setText(info.m_model);
+
+        QString diskSize = Utils::formatSize(info.m_length, info.m_sectorSize);
+        m_allMemoryLabel->setText(diskSize);
+
+        QString partitionTable;
+        if (info.m_disktype == "gpt") {
+            partitionTable = "GPT";
+        } else if (info.m_disktype == "msdos") {
+            partitionTable = "MBR";
+        } else {
+            partitionTable = info.m_disktype;
+        }
+        m_typeLabel->setText(tr("%1 partition table").arg(partitionTable));
+    }
+}
+
+void InfoTopFrame::resizeEvent(QResizeEvent *event)
+{
+    if (1 == DMDbusHandler::instance()->getCurLevel()) {
+        auto info = DMDbusHandler::instance()->getCurPartititonInfo();
+
+        QFontMetrics fmDevpath = m_nameLabel->fontMetrics();
+        QString textDevpath = info.m_path;
+        int devpathWidth = fmDevpath.width(textDevpath);
+        if (devpathWidth > width() / 2) {
+            devpathWidth = width() / 2;
+            textDevpath = m_nameLabel->fontMetrics().elidedText(textDevpath, Qt::ElideMiddle, devpathWidth);
+        }
+        m_nameLabel->setText(textDevpath);
+    }
+
+    DFrame::resizeEvent(event);
 }

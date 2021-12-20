@@ -61,6 +61,12 @@ public:
      */
     void setFrameData();
 
+    /**
+     * @brief 设置磁盘信息，更新界面显示
+     */
+    void setDiskFrameData(const QString &path, const QString &diskType, const QString &used,
+                          const QString &unused, const QString &capacity, const QString &interface);
+
 signals:
 private:
     /**

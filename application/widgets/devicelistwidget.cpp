@@ -429,8 +429,30 @@ void DeviceListWidget::onDeletePartition(const QString &deleteMessage)
         DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
     } else {
         isDeleteSuccess = false;
+
+        QString reason;
+        switch (infoList.at(1).toInt()) {
+        case 1: {
+            reason = tr("Failed to find the disk");
+            break;
+        }
+        case 2: {
+            reason = tr("Failed to get the partition info");
+            break;
+        }
+        case 3: {
+            reason = tr("Failed to delete the partition");
+            break;
+        }
+        case 4: {
+            reason = tr("Failed to submit the request to the kernel");
+            break;
+        }
+        default:
+            break;
+        }
         // 删除分区失败
-        DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Failed to delete the partition: %1").arg(infoList.at(1)));
+        DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Failed to delete the partition: %1").arg(reason));
         DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
     }
 }
@@ -540,8 +562,8 @@ void DeviceListWidget::onUpdateDeviceInfo()
                 partitionPath = partitionPath.remove(0, 5);
             }
 
-            QString unused = Utils::formatSize(it->m_sectorsUsed, it->m_sectorSize);
-            QString used = Utils::formatSize(it->m_sectorsUnused, it->m_sectorSize);
+            QString used = Utils::formatSize(it->m_sectorsUsed, it->m_sectorSize);
+            QString unused = Utils::formatSize(it->m_sectorsUnused, it->m_sectorSize);
 
             FSType fstype = static_cast<FSType>(it->m_fileSystemType);
             QString fstypeName = Utils::fileSystemTypeToString(fstype);
@@ -594,7 +616,16 @@ void DeviceListWidget::onUpdateDeviceInfo()
             index = countMap.value(m_deviceNum) - 1;
         }
 
-        m_treeView->setRefreshItem(m_deviceNum, index);
+        if (m_treeView->getCurrentTopNum() == -1) {
+            if (deviceNameList.indexOf(DMDbusHandler::instance()->getCurDevicePath()) == -1) {
+                m_treeView->setDefaultdmItem();
+            } else {
+                m_treeView->setRefreshItem(m_treeView->getCurrentTopNum(), deviceNameList.indexOf(DMDbusHandler::instance()->getCurDevicePath()));
+            }
+
+        } else {
+            m_treeView->setRefreshItem(m_deviceNum, index);
+        }
     }
 
     m_flag += 1;

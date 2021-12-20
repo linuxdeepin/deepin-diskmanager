@@ -27,9 +27,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "animationdialog.h"
+
 #include <DMainWindow>
 #include <DSpinner>
 #include <DPushButton>
+#include <DDialog>
 
 DWIDGET_USE_NAMESPACE
 
@@ -101,14 +104,13 @@ public slots:
      * @brief 接收是否显示动画的槽函数
      * @param isShow ture显示，false不显示
      */
-    void onShowSpinerWindow(bool isShow = false);
+    void onShowSpinerWindow(bool isShow = false, const QString &title = "");
 
 private:
     CenterWidget *m_central;
-//    BufferWin *m_bufferWin;
     DMDbusHandler *m_handler;
-    DSpinner *m_spinner;
     DPushButton *m_btnRefresh; // 刷新按钮
+    AnimationDialog *m_dialog;
 };
 
 #endif // MAINWINDOW_H

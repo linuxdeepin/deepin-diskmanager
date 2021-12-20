@@ -79,6 +79,12 @@ private:
      */
     void setCurDevicePath(const QString &devPath);
 
+    /**
+     * @brief 判断当前磁盘是否存在已被挂载分区
+     * @return 存在返回true，否则返回false
+     */
+    bool isExistMountPartition();
+
 signals:
 
 private slots:

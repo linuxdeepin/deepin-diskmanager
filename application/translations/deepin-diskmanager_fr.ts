@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="fr" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="fr">
 <context>
     <name>CreatePartitionTableDialog</name>
     <message>
@@ -62,6 +62,54 @@
         <location filename="../widgets/cylinderinfowidget.cpp" line="474"/>
         <source>Status: Repaired</source>
         <translation>Statut : Réparé</translation>
+    </message>
+</context>
+<context>
+    <name>DMDbusHandler</name>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="161"/>
+        <source>Refreshing data...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="180"/>
+        <source>Initializing data...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="213"/>
+        <source>Mounting %1 ...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="220"/>
+        <source>Unmounting %1 ...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="259"/>
+        <source>Resizing %1 ...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="266"/>
+        <source>Creating a new partition...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="365"/>
+        <source>Deleting %1 ...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="417"/>
+        <source>Creating a partition table of %1 ...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="419"/>
+        <source>Replacing the partition table of %1 ...</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -232,37 +280,57 @@ veillez à prendre toutes les précautions</translation>
         <translation>Supprimer la partition avec succès</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="433"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="436"/>
+        <source>Failed to find the disk</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="440"/>
+        <source>Failed to get the partition info</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="444"/>
+        <source>Failed to delete the partition</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
+        <source>Failed to submit the request to the kernel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="455"/>
         <source>Failed to delete the partition: %1</source>
         <translation>Échec de la suppression de la partition : %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="443"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="465"/>
         <source>Unmounting successful</source>
         <translation>Démontage réussi</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="470"/>
         <source>Unmounting failed</source>
         <translation>Le démontage a échoué</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="459"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="481"/>
         <source>Creating partition table successful</source>
         <translation>Création de la table de partition réussie</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="463"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="485"/>
         <source>Replacing partition table successful</source>
         <translation>Remplacement de la table de partition réussi</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="471"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="493"/>
         <source>Creating partition table failed</source>
         <translation>La création de la table de partition a échoué</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="475"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="497"/>
         <source>Replacing partition table failed</source>
         <translation>Le remplacement de la table de partition a échoué</translation>
     </message>
@@ -277,7 +345,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="84"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="136"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1240"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1245"/>
         <source>Verify:</source>
         <translation>Vérifier :</translation>
     </message>
@@ -299,7 +367,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="132"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="137"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1241"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1246"/>
         <source>Method:</source>
         <translation>Méthode :</translation>
     </message>
@@ -342,7 +410,7 @@ veillez à prendre toutes les précautions</translation>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="289"/>
         <source>Exit</source>
         <comment>button</comment>
-        <translation>Sortie</translation>
+        <translation>Quitter</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="294"/>
@@ -369,10 +437,10 @@ veillez à prendre toutes les précautions</translation>
         <translation>Terminé</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1177"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1204"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
         <source>Exit</source>
-        <translation>Sortie</translation>
+        <translation>Quitter</translation>
     </message>
     <message>
         <source>Reset</source>
@@ -409,10 +477,10 @@ veillez à prendre toutes les précautions</translation>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="357"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="602"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="760"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="879"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="925"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1029"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1124"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="884"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="930"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1034"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1129"/>
         <source>Time elapsed:</source>
         <translation>Temps écoulé :</translation>
     </message>
@@ -421,12 +489,12 @@ veillez à prendre toutes les précautions</translation>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="603"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="766"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="778"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="880"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="926"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1030"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1049"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1097"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1130"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="885"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="931"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1035"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1054"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1102"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1135"/>
         <source>Time left:</source>
         <translation>Temps restant :</translation>
     </message>
@@ -447,84 +515,84 @@ veillez à prendre toutes les précautions</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="802"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="989"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="994"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="985"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="990"/>
         <source>The verifying disk contains mounted partitions, so you cannot repair it.</source>
         <translation>Le disque vérifié contient des partitions montées, vous ne pouvez donc pas le réparer.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="987"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="992"/>
         <source>Please unmount partitions and then repair the disk.</source>
         <translation>Veuillez démonter les partitions, puis réparer le disque.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="997"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
         <source>Warning</source>
         <translation>Attention</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1007"/>
         <source>Bad sector repairing cannot recover files,</source>
         <translation>La réparation d&apos;un secteur défectueux ne peut pas récupérer les fichiers,</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1003"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1008"/>
         <source>but destroys data on and near bad sectors instead.</source>
         <translation>mais à la place détruit les données sur et près des secteurs défectueux.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1004"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1009"/>
         <source>Please back up all data before repair.</source>
         <translation>Veuillez sauvegarder toutes les données avant la réparation.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1018"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1177"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1204"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1023"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1019"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1024"/>
         <source>Start Repair</source>
         <translation>Commencer la réparation</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1065"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1070"/>
         <source>Repairing cylinder: %1</source>
         <translation>Réparation du cylindre : %1</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1102"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1107"/>
         <source>Repair completed. Cylinder: %1 repaired.</source>
         <translation>Réparation terminée. Cylindre : %1 réparé.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1105"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1110"/>
         <source>Disk repair completed. %1 bad blocks repaired.</source>
         <translation>Réparation du disque terminée. %1 blocs défectueux réparés.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1176"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1181"/>
         <source>Verifying for bad sectors, exit now?</source>
         <translation>Vérification des secteurs défectueux, quitter maintenant ?</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1176"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1181"/>
         <source>The verified information will not be reserved</source>
         <translation>Les informations vérifiées ne seront pas réservées</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1203"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1208"/>
         <source>Repairing bad sectors, exit now?</source>
         <translation>Réparation les secteurs défectueux, quitter maintenant ?</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1203"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1208"/>
         <source>The repairing information will not be reserved</source>
         <translation>Les informations de réparation ne seront pas réservées</translation>
     </message>
@@ -795,45 +863,152 @@ veillez à prendre toutes les précautions</translation>
 <context>
     <name>FormateDialog</name>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="48"/>
         <source>Format %1</source>
-        <translation>Format %1</translation>
+        <translation type="vanished">Format %1</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="49"/>
         <source>Formatting will erase all data on the disk, which cannot be undone</source>
-        <translation>Le formatage effacera toutes les données du disque et ne peut pas être annulé</translation>
+        <translation type="vanished">Le formatage effacera toutes les données du disque et ne peut pas être annulé</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="56"/>
+        <location filename="../widgets/formatedialog.cpp" line="66"/>
+        <source>Wipe %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="67"/>
+        <source>It will erase all data on this disk, which will not be recovered</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="73"/>
         <source>Name:</source>
         <translation>Nom :</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="65"/>
+        <location filename="../widgets/formatedialog.cpp" line="82"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="67"/>
+        <location filename="../widgets/formatedialog.cpp" line="84"/>
         <source>File system:</source>
         <translation>Système de fichier :</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="107"/>
+        <location filename="../widgets/formatedialog.cpp" line="100"/>
+        <source>Security:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="109"/>
+        <location filename="../widgets/formatedialog.cpp" line="113"/>
+        <source>Fast</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="109"/>
+        <location filename="../widgets/formatedialog.cpp" line="113"/>
+        <source>Secure</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="113"/>
+        <source>Advanced</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="127"/>
+        <location filename="../widgets/formatedialog.cpp" line="353"/>
+        <source>It only deletes the partition info without erasing the files on the disk. Disk recovery tools may recover the files at a certain probability.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="130"/>
+        <source>Wiping method:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="144"/>
+        <source>DoD 5220.22-M, 7 passes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="144"/>
+        <source>Gutmann, 35 passes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="191"/>
         <source>Cancel</source>
+        <comment>button</comment>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="108"/>
-        <source>Format</source>
-        <translation>Format</translation>
+        <location filename="../widgets/formatedialog.cpp" line="195"/>
+        <source>Wipe</source>
+        <comment>button</comment>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="128"/>
-        <location filename="../widgets/formatedialog.cpp" line="142"/>
-        <location filename="../widgets/formatedialog.cpp" line="163"/>
-        <location filename="../widgets/formatedialog.cpp" line="177"/>
+        <location filename="../widgets/formatedialog.cpp" line="238"/>
+        <location filename="../widgets/formatedialog.cpp" line="450"/>
+        <source>Failed to find the disk</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="362"/>
+        <source>It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, and random data to the entire disk once. You will not be able to recover files, and the process will be slow.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="373"/>
+        <source>It writes 0, 1, and random data to the entire disk several times. You can set the number of times to erase disks and overwrite data, but the process will be very slow.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="416"/>
+        <source>Wiping %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="435"/>
+        <source>&quot;%1&quot; wiped</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="441"/>
+        <source>Failed to wipe %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="454"/>
+        <source>Failed to get the partition info</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="458"/>
+        <source>Failed to delete the partition</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="462"/>
+        <source>Failed to submit the request to the kernel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="vanished">Annuler</translation>
+    </message>
+    <message>
+        <source>Format</source>
+        <translation type="vanished">Format</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="290"/>
+        <location filename="../widgets/formatedialog.cpp" line="302"/>
+        <location filename="../widgets/formatedialog.cpp" line="321"/>
+        <location filename="../widgets/formatedialog.cpp" line="333"/>
         <source>The length exceeds the limit</source>
         <translation>La longueur dépasse la limite</translation>
     </message>
@@ -841,53 +1016,76 @@ veillez à prendre toutes les précautions</translation>
 <context>
     <name>InfoShowWidget</name>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="103"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="130"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="235"/>
         <source>Mount point:</source>
         <translation>Point de montage :</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="111"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="138"/>
         <source>Free:</source>
         <translation>Libre :</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="118"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="145"/>
         <source>Used:</source>
         <translation>Utilisé :</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="125"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="152"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="236"/>
         <source>Type:</source>
         <translation>Type :</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="131"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="158"/>
         <source>Capacity:</source>
         <translation>Capacité :</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="137"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="164"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="237"/>
         <source>Volume label:</source>
         <translation>Nom du disque :</translation>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="297"/>
+        <source>Path:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="298"/>
+        <source>Disk type:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="299"/>
+        <source>Interface:</source>
+        <translation>Interface :</translation>
     </message>
 </context>
 <context>
     <name>InfoTopFrame</name>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="59"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="64"/>
         <source>Capacity</source>
         <translation>Capacité</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="116"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="131"/>
         <source>File system</source>
         <translation>Système de fichier</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="149"/>
+        <source>%1 partition table</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../widgets/mainwindow.cpp" line="123"/>
+        <location filename="../widgets/mainwindow.cpp" line="121"/>
         <source>Refresh</source>
         <translation>Rafraîchir</translation>
     </message>
@@ -911,7 +1109,7 @@ veillez à prendre toutes les précautions</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="80"/>
-        <location filename="../widgets/mountdialog.cpp" line="120"/>
+        <location filename="../widgets/mountdialog.cpp" line="168"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
@@ -921,12 +1119,12 @@ veillez à prendre toutes les précautions</translation>
         <translation>Monter</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="120"/>
+        <location filename="../widgets/mountdialog.cpp" line="168"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>Les données sous ce point de montage seraient perdues, veuillez monter le répertoire à un autre endroit</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="120"/>
+        <location filename="../widgets/mountdialog.cpp" line="168"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -960,6 +1158,14 @@ veillez à prendre toutes les précautions</translation>
         <location filename="../widgets/partitiondialog.cpp" line="58"/>
         <source>Confirm</source>
         <translation>Confirmer</translation>
+    </message>
+</context>
+<context>
+    <name>PartitionInfoWidget</name>
+    <message>
+        <location filename="../widgets/customcontrol/partitioninfowidget.cpp" line="212"/>
+        <source>Unallocated</source>
+        <translation>Non alloué</translation>
     </message>
 </context>
 <context>
@@ -1025,7 +1231,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="157"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="161"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="962"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="963"/>
         <source>Disk:</source>
         <translation>Disque :</translation>
     </message>
@@ -1128,14 +1334,18 @@ veillez à prendre toutes les précautions</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="74"/>
+        <location filename="../main.cpp" line="95"/>
         <source>Disk Utility</source>
         <translation>Utilitaire de disque</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="82"/>
+        <location filename="../main.cpp" line="103"/>
         <source>Disk Utility is a disk management tool for creating, reorganizing and formatting partitions.</source>
         <translation>L&apos;utilitaire de disque est un outil de gestion de disque pour créer, réorganiser et formater des partitions.</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1174,18 +1384,16 @@ veillez à prendre toutes les précautions</translation>
 <context>
     <name>SizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="160"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="162"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="238"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="240"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="163"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="247"/>
         <source> Capacity:</source>
         <translation>Capacité :</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="194"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="198"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="272"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="275"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="203"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="207"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="287"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="290"/>
         <source>Used:</source>
         <translation>Utilisé :</translation>
     </message>
@@ -1198,9 +1406,13 @@ veillez à prendre toutes les précautions</translation>
         <translation>Partition</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="50"/>
         <source>Format to</source>
-        <translation>Formater en</translation>
+        <translation type="vanished">Formater en</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="50"/>
+        <source>Wipe</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="51"/>
@@ -1237,31 +1449,31 @@ veillez à prendre toutes les précautions</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="58"/>
-        <location filename="../widgets/unmountdialog.cpp" line="89"/>
-        <location filename="../widgets/unmountdialog.cpp" line="96"/>
+        <location filename="../widgets/unmountdialog.cpp" line="90"/>
+        <location filename="../widgets/unmountdialog.cpp" line="97"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="59"/>
-        <location filename="../widgets/unmountdialog.cpp" line="96"/>
+        <location filename="../widgets/unmountdialog.cpp" line="97"/>
         <source>Unmount</source>
         <translation>Démonter</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="88"/>
+        <location filename="../widgets/unmountdialog.cpp" line="89"/>
         <source>Unmounting system disk may result in system crash,
  please confirm before proceeding</source>
         <translation>Le démontage du disque système peut entraîner une panne du système,
  veuillez confirmer avant de continuer</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="89"/>
+        <location filename="../widgets/unmountdialog.cpp" line="90"/>
         <source>Continue</source>
         <translation>Continuer</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="95"/>
+        <location filename="../widgets/unmountdialog.cpp" line="96"/>
         <source>You will take subsequent risks if you continue to unmount the system disk</source>
         <translation>Vous prendrez des risques ultérieurs si vous continuez à démonter le disque système</translation>
     </message>

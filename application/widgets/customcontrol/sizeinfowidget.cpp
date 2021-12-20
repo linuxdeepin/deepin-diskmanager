@@ -160,9 +160,15 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             option.setAlignment(Qt::AlignTop);
 
             QFontMetrics fmCapacity = painter.fontMetrics();
-            int capacityWidth = fmCapacity.width(QString(m_partitionPath + tr(" Capacity:") + " "));
+            QString textCapacity = QString(m_partitionPath + tr(" Capacity:") + " ");
+            int capacityWidth = fmCapacity.width(textCapacity);
+            if (capacityWidth > rect.width() / 2) {
+                capacityWidth = rect.width() / 2;
+                textCapacity = painter.fontMetrics().elidedText(textCapacity, Qt::ElideMiddle, capacityWidth);
+                capacityWidth = fmCapacity.width(textCapacity);
+            }
             QRect rectText = QRect(paintRect.bottomLeft().x() + 28, paintRect.bottomLeft().y() + 17, capacityWidth, 70);
-            painter.drawText(rectText, QString(m_partitionPath + tr(" Capacity:") + " "), option);
+            painter.drawText(rectText, textCapacity, option);
             // 获取总容量字符串显示的宽度
             int capacityNum = rectText.x() + capacityWidth;
 
@@ -238,9 +244,15 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             option.setAlignment(Qt::AlignTop);
 
             QFontMetrics fmCapacity = painter.fontMetrics();
-            int capacityWidth = fmCapacity.width(QString(m_partitionPath + tr(" Capacity:") + " "));
+            QString textCapacity = QString(m_partitionPath + tr(" Capacity:") + " ");
+            int capacityWidth = fmCapacity.width(textCapacity);
+            if (capacityWidth > rect.width() / 2) {
+                capacityWidth = rect.width() / 2;
+                textCapacity = painter.fontMetrics().elidedText(textCapacity, Qt::ElideMiddle, capacityWidth);
+                capacityWidth = fmCapacity.width(textCapacity);
+            }
             QRect rectText = QRect(paintRect.bottomLeft().x() + 28, paintRect.bottomLeft().y() + 17, capacityWidth, 70);
-            painter.drawText(rectText, QString(m_partitionPath + tr(" Capacity:") + " "), option);
+            painter.drawText(rectText, textCapacity, option);
             // 获取总容量字符串显示的宽度
             int capacityNum = rectText.x() + capacityWidth;
 

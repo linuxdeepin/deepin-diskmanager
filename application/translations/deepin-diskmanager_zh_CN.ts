@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="zh_CN">
 <context>
     <name>CreatePartitionTableDialog</name>
     <message>
@@ -62,6 +62,54 @@
         <location filename="../widgets/cylinderinfowidget.cpp" line="474"/>
         <source>Status: Repaired</source>
         <translation>修复情况：已修复</translation>
+    </message>
+</context>
+<context>
+    <name>DMDbusHandler</name>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="161"/>
+        <source>Refreshing data...</source>
+        <translation>正在刷新数据...</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="180"/>
+        <source>Initializing data...</source>
+        <translation>正在初始化数据...</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="213"/>
+        <source>Mounting %1 ...</source>
+        <translation>正在对%1进行挂载...</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="220"/>
+        <source>Unmounting %1 ...</source>
+        <translation>正在对%1进行卸载...</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="259"/>
+        <source>Resizing %1 ...</source>
+        <translation>正在对%1进行空间调整...</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="266"/>
+        <source>Creating a new partition...</source>
+        <translation>正在新建分区...</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="365"/>
+        <source>Deleting %1 ...</source>
+        <translation>正在对%1进行删除...</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="417"/>
+        <source>Creating a partition table of %1 ...</source>
+        <translation>正在对%1进行分区表创建...</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="419"/>
+        <source>Replacing the partition table of %1 ...</source>
+        <translation>正在对%1进行分区表替换...</translation>
     </message>
 </context>
 <context>
@@ -231,37 +279,57 @@
         <translation>删除分区成功</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="433"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="436"/>
+        <source>Failed to find the disk</source>
+        <translation>获取磁盘设备失败</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="440"/>
+        <source>Failed to get the partition info</source>
+        <translation>获取分区信息失败</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="444"/>
+        <source>Failed to delete the partition</source>
+        <translation>删除操作失败</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
+        <source>Failed to submit the request to the kernel</source>
+        <translation>提交内核失败</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="455"/>
         <source>Failed to delete the partition: %1</source>
         <translation>删除分区失败，%1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="443"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="465"/>
         <source>Unmounting successful</source>
         <translation>卸载成功</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="470"/>
         <source>Unmounting failed</source>
         <translation>卸载失败</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="459"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="481"/>
         <source>Creating partition table successful</source>
         <translation>新建分区表成功</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="463"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="485"/>
         <source>Replacing partition table successful</source>
         <translation>替换分区表成功</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="471"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="493"/>
         <source>Creating partition table failed</source>
         <translation>新建分区表失败</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="475"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="497"/>
         <source>Replacing partition table failed</source>
         <translation>替换分区表失败</translation>
     </message>
@@ -276,7 +344,7 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="84"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="136"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1240"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1245"/>
         <source>Verify:</source>
         <translation>检测范围：</translation>
     </message>
@@ -298,7 +366,7 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="132"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="137"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1241"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1246"/>
         <source>Method:</source>
         <translation>检测方式：</translation>
     </message>
@@ -368,8 +436,8 @@
         <translation>完 成</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1177"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1204"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
@@ -408,10 +476,10 @@
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="357"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="602"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="760"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="879"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="925"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1029"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1124"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="884"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="930"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1034"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1129"/>
         <source>Time elapsed:</source>
         <translation>已用时间：</translation>
     </message>
@@ -420,12 +488,12 @@
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="603"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="766"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="778"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="880"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="926"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1030"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1049"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1097"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1130"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="885"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="931"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1035"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1054"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1102"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1135"/>
         <source>Time left:</source>
         <translation>剩余时间：</translation>
     </message>
@@ -446,84 +514,84 @@
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="802"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="989"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="994"/>
         <source>OK</source>
         <translation>确定</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="985"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="990"/>
         <source>The verifying disk contains mounted partitions, so you cannot repair it.</source>
         <translation>当前检测磁盘存在已挂载分区，无法修复坏道</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="987"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="992"/>
         <source>Please unmount partitions and then repair the disk.</source>
         <translation>若要修复请先卸载分区</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="997"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1007"/>
         <source>Bad sector repairing cannot recover files,</source>
         <translation>修复坏磁道不是数据恢复的手段，</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1003"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1008"/>
         <source>but destroys data on and near bad sectors instead.</source>
         <translation>修复坏磁道会破坏坏磁道及其附近磁道上的文件数据。</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1004"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1009"/>
         <source>Please back up all data before repair.</source>
         <translation>请先做好数据备份。</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1018"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1177"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1204"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1023"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1019"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1024"/>
         <source>Start Repair</source>
         <translation>开始修复</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1065"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1070"/>
         <source>Repairing cylinder: %1</source>
         <translation>正在修复%1柱面</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1102"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1107"/>
         <source>Repair completed. Cylinder: %1 repaired.</source>
         <translation>修复完成，已修复%1柱面</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1105"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1110"/>
         <source>Disk repair completed. %1 bad blocks repaired.</source>
         <translation>磁盘修复完毕，共修复%1个坏道区域</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1176"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1181"/>
         <source>Verifying for bad sectors, exit now?</source>
         <translation>正在检测中，是否退出窗口？</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1176"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1181"/>
         <source>The verified information will not be reserved</source>
         <translation>当前检测信息不会保留</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1203"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1208"/>
         <source>Repairing bad sectors, exit now?</source>
         <translation>正在修复中，是否退出窗口？</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1203"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1208"/>
         <source>The repairing information will not be reserved</source>
         <translation>当前修复信息不会保留</translation>
     </message>
@@ -794,45 +862,152 @@
 <context>
     <name>FormateDialog</name>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="48"/>
         <source>Format %1</source>
-        <translation>将对%1进行格式化</translation>
+        <translation type="vanished">将对%1进行格式化</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="49"/>
         <source>Formatting will erase all data on the disk, which cannot be undone</source>
-        <translation>格式化分区将会删除储存在磁盘上的所有数据，且无法撤销</translation>
+        <translation type="vanished">格式化分区将会删除储存在磁盘上的所有数据，且无法撤销</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="56"/>
+        <location filename="../widgets/formatedialog.cpp" line="66"/>
+        <source>Wipe %1</source>
+        <translation>将对%1进行擦除</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="67"/>
+        <source>It will erase all data on this disk, which will not be recovered</source>
+        <translation>擦除分区将会删除存储在此磁盘上的所有数据，该操作无法撤销，请谨慎操作</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="73"/>
         <source>Name:</source>
         <translation>分区名称：</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="65"/>
+        <location filename="../widgets/formatedialog.cpp" line="82"/>
         <source>Name</source>
         <translation>分区名称</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="67"/>
+        <location filename="../widgets/formatedialog.cpp" line="84"/>
         <source>File system:</source>
         <translation>分区格式：</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="107"/>
+        <location filename="../widgets/formatedialog.cpp" line="100"/>
+        <source>Security:</source>
+        <translation>安全选择：</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="109"/>
+        <location filename="../widgets/formatedialog.cpp" line="113"/>
+        <source>Fast</source>
+        <translation>快速</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="109"/>
+        <location filename="../widgets/formatedialog.cpp" line="113"/>
+        <source>Secure</source>
+        <translation>安全</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="113"/>
+        <source>Advanced</source>
+        <translation>高级</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="127"/>
+        <location filename="../widgets/formatedialog.cpp" line="353"/>
+        <source>It only deletes the partition info without erasing the files on the disk. Disk recovery tools may recover the files at a certain probability.</source>
+        <translation>此选项仅删除磁盘分区信息，不会抹除磁盘上的文件。磁盘恢复程序有一定概率能够恢复这些文件。</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="130"/>
+        <source>Wiping method:</source>
+        <translation>覆写次数：</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="144"/>
+        <source>DoD 5220.22-M, 7 passes</source>
+        <translation>符合DoD 5220.22-M标准，覆写7次</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="144"/>
+        <source>Gutmann, 35 passes</source>
+        <translation>符合Gutmann标准，覆写35次</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="191"/>
         <source>Cancel</source>
-        <translation>取消</translation>
+        <comment>button</comment>
+        <translation>取 消</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="108"/>
+        <location filename="../widgets/formatedialog.cpp" line="195"/>
+        <source>Wipe</source>
+        <comment>button</comment>
+        <translation>擦 除</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="238"/>
+        <location filename="../widgets/formatedialog.cpp" line="450"/>
+        <source>Failed to find the disk</source>
+        <translation>获取磁盘设备失败</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="362"/>
+        <source>It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, and random data to the entire disk once. You will not be able to recover files, and the process will be slow.</source>
+        <translation>此选项是符合 NIST 800-88 的1次安全擦除。它会在整个磁盘中写入0、1和随机数据一次。擦除后将无法恢复磁盘上的文件，且处理过程较慢。</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="373"/>
+        <source>It writes 0, 1, and random data to the entire disk several times. You can set the number of times to erase disks and overwrite data, but the process will be very slow.</source>
+        <translation>此选项会多次将0、1和随机数据写到整个磁盘。您可以定义擦除磁盘并改写数据的次数，处理过程会非常缓慢。</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="416"/>
+        <source>Wiping %1</source>
+        <translation>正在对%1进行擦除</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="435"/>
+        <source>&quot;%1&quot; wiped</source>
+        <translation>擦除%1成功</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="441"/>
+        <source>Failed to wipe %1</source>
+        <translation>对%1进行擦除失败</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="454"/>
+        <source>Failed to get the partition info</source>
+        <translation>获取分区信息失败</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="458"/>
+        <source>Failed to delete the partition</source>
+        <translation>删除操作失败</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="462"/>
+        <source>Failed to submit the request to the kernel</source>
+        <translation>提交内核失败</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="vanished">取消</translation>
+    </message>
+    <message>
         <source>Format</source>
-        <translation>格式化</translation>
+        <translation type="vanished">格式化</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="128"/>
-        <location filename="../widgets/formatedialog.cpp" line="142"/>
-        <location filename="../widgets/formatedialog.cpp" line="163"/>
-        <location filename="../widgets/formatedialog.cpp" line="177"/>
+        <location filename="../widgets/formatedialog.cpp" line="290"/>
+        <location filename="../widgets/formatedialog.cpp" line="302"/>
+        <location filename="../widgets/formatedialog.cpp" line="321"/>
+        <location filename="../widgets/formatedialog.cpp" line="333"/>
         <source>The length exceeds the limit</source>
         <translation>字符长度超过范围</translation>
     </message>
@@ -840,53 +1015,76 @@
 <context>
     <name>InfoShowWidget</name>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="103"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="130"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="235"/>
         <source>Mount point:</source>
         <translation>挂载点：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="111"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="138"/>
         <source>Free:</source>
         <translation>可用空间：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="118"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="145"/>
         <source>Used:</source>
         <translation>已用空间：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="125"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="152"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="236"/>
         <source>Type:</source>
         <translation>类型：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="131"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="158"/>
         <source>Capacity:</source>
         <translation>总容量：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="137"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="164"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="237"/>
         <source>Volume label:</source>
         <translation>分卷卷标：</translation>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="297"/>
+        <source>Path:</source>
+        <translation>路径：</translation>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="298"/>
+        <source>Disk type:</source>
+        <translation>介质类型：</translation>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="299"/>
+        <source>Interface:</source>
+        <translation>接口：</translation>
     </message>
 </context>
 <context>
     <name>InfoTopFrame</name>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="59"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="64"/>
         <source>Capacity</source>
         <translation>总容量</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="116"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="131"/>
         <source>File system</source>
         <translation>格式</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="149"/>
+        <source>%1 partition table</source>
+        <translation>%1分区表</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../widgets/mainwindow.cpp" line="123"/>
+        <location filename="../widgets/mainwindow.cpp" line="121"/>
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
@@ -910,7 +1108,7 @@
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="80"/>
-        <location filename="../widgets/mountdialog.cpp" line="120"/>
+        <location filename="../widgets/mountdialog.cpp" line="168"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -920,12 +1118,12 @@
         <translation>挂载</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="120"/>
+        <location filename="../widgets/mountdialog.cpp" line="168"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>此挂载点的数据可能会丢失，建议将目录挂载到其他位置</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="120"/>
+        <location filename="../widgets/mountdialog.cpp" line="168"/>
         <source>OK</source>
         <translation>确定</translation>
     </message>
@@ -959,6 +1157,14 @@
         <location filename="../widgets/partitiondialog.cpp" line="58"/>
         <source>Confirm</source>
         <translation>确定</translation>
+    </message>
+</context>
+<context>
+    <name>PartitionInfoWidget</name>
+    <message>
+        <location filename="../widgets/customcontrol/partitioninfowidget.cpp" line="212"/>
+        <source>Unallocated</source>
+        <translation>空闲空间</translation>
     </message>
 </context>
 <context>
@@ -1024,7 +1230,7 @@
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="157"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="161"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="962"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="963"/>
         <source>Disk:</source>
         <translation>磁盘：</translation>
     </message>
@@ -1127,14 +1333,18 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="74"/>
+        <location filename="../main.cpp" line="95"/>
         <source>Disk Utility</source>
         <translation>磁盘管理器</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="82"/>
+        <location filename="../main.cpp" line="103"/>
         <source>Disk Utility is a disk management tool for creating, reorganizing and formatting partitions.</source>
         <translation>磁盘管理器可帮助用户进行磁盘分区、空间调整、格式化等操作。</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1173,18 +1383,16 @@
 <context>
     <name>SizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="160"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="162"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="238"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="240"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="163"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="247"/>
         <source> Capacity:</source>
         <translation>总容量：</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="194"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="198"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="272"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="275"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="203"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="207"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="287"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="290"/>
         <source>Used:</source>
         <translation>已用空间：</translation>
     </message>
@@ -1197,9 +1405,13 @@
         <translation>分区</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="50"/>
         <source>Format to</source>
-        <translation>格式化</translation>
+        <translation type="vanished">格式化</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="50"/>
+        <source>Wipe</source>
+        <translation>擦除</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="51"/>
@@ -1236,31 +1448,31 @@
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="58"/>
-        <location filename="../widgets/unmountdialog.cpp" line="89"/>
-        <location filename="../widgets/unmountdialog.cpp" line="96"/>
+        <location filename="../widgets/unmountdialog.cpp" line="90"/>
+        <location filename="../widgets/unmountdialog.cpp" line="97"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="59"/>
-        <location filename="../widgets/unmountdialog.cpp" line="96"/>
+        <location filename="../widgets/unmountdialog.cpp" line="97"/>
         <source>Unmount</source>
         <translation>卸载</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="88"/>
+        <location filename="../widgets/unmountdialog.cpp" line="89"/>
         <source>Unmounting system disk may result in system crash,
  please confirm before proceeding</source>
         <translation>卸载该系统盘可能会引起系统崩溃，
 请确认是否继续操作</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="89"/>
+        <location filename="../widgets/unmountdialog.cpp" line="90"/>
         <source>Continue</source>
         <translation>继续</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="95"/>
+        <location filename="../widgets/unmountdialog.cpp" line="96"/>
         <source>You will take subsequent risks if you continue to unmount the system disk</source>
         <translation>继续执行卸载操作，
 后续引发的风险将由您自行承担</translation>

@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ug" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ug">
 <context>
     <name>CreatePartitionTableDialog</name>
     <message>
@@ -62,6 +62,54 @@
         <location filename="../widgets/cylinderinfowidget.cpp" line="474"/>
         <source>Status: Repaired</source>
         <translation>رېمونتلاش ئەھۋالى: رېمونتلاندى</translation>
+    </message>
+</context>
+<context>
+    <name>DMDbusHandler</name>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="161"/>
+        <source>Refreshing data...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="180"/>
+        <source>Initializing data...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="213"/>
+        <source>Mounting %1 ...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="220"/>
+        <source>Unmounting %1 ...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="259"/>
+        <source>Resizing %1 ...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="266"/>
+        <source>Creating a new partition...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="365"/>
+        <source>Deleting %1 ...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="417"/>
+        <source>Creating a partition table of %1 ...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="419"/>
+        <source>Replacing the partition table of %1 ...</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -231,37 +279,57 @@
         <translation>رايون ئۆچۈرۈلدى</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="433"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="436"/>
+        <source>Failed to find the disk</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="440"/>
+        <source>Failed to get the partition info</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="444"/>
+        <source>Failed to delete the partition</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
+        <source>Failed to submit the request to the kernel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="455"/>
         <source>Failed to delete the partition: %1</source>
         <translation>رايون ئۆچۈرۈلمىدى، %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="443"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="465"/>
         <source>Unmounting successful</source>
         <translation>ئۆچۈرۈلدى</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="470"/>
         <source>Unmounting failed</source>
         <translation>ئۆچۈرەلمىدى</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="459"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="481"/>
         <source>Creating partition table successful</source>
         <translation>رايون جەدۋىلى قۇرۇلدى</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="463"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="485"/>
         <source>Replacing partition table successful</source>
         <translation>رايونغا ئايرىش جەدۋىلى ئالماشتۇرۇلدى</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="471"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="493"/>
         <source>Creating partition table failed</source>
         <translation>رايون جەدۋىلى قۇرالمىدى</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="475"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="497"/>
         <source>Replacing partition table failed</source>
         <translation>رايونغا ئايرىش جەدۋىلى ئالماشتۇرالمىدى</translation>
     </message>
@@ -276,7 +344,7 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="84"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="136"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1240"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1245"/>
         <source>Verify:</source>
         <translation>تەكشۈرۈش دائىرىسى</translation>
     </message>
@@ -298,7 +366,7 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="132"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="137"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1241"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1246"/>
         <source>Method:</source>
         <translation>تەكشۈرۈش ئۇسۇلى:</translation>
     </message>
@@ -368,8 +436,8 @@
         <translation>تاماملاندى</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1177"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1204"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
         <source>Exit</source>
         <translation>چېكىنىش</translation>
     </message>
@@ -408,10 +476,10 @@
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="357"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="602"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="760"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="879"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="925"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1029"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1124"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="884"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="930"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1034"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1129"/>
         <source>Time elapsed:</source>
         <translation>كەتكەن ۋاقىت:</translation>
     </message>
@@ -420,12 +488,12 @@
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="603"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="766"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="778"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="880"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="926"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1030"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1049"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1097"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1130"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="885"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="931"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1035"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1054"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1102"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1135"/>
         <source>Time left:</source>
         <translation>قالغان ۋاقىت:</translation>
     </message>
@@ -446,84 +514,84 @@
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="802"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="989"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="994"/>
         <source>OK</source>
         <translation>تامام</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="985"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="990"/>
         <source>The verifying disk contains mounted partitions, so you cannot repair it.</source>
         <translation>تەكشۈرۈلگەن دىسكىدا ئايرىلغان رايون بار، رېمونتلاشقا ئامالسىز</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="987"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="992"/>
         <source>Please unmount partitions and then repair the disk.</source>
         <translation>رېمونتلىماقچى بولسىڭىز ئاۋۋال رايوننى ئۆچۈرۈۋېتىڭ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="997"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
         <source>Warning</source>
         <translation>خەتەرلىك</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1007"/>
         <source>Bad sector repairing cannot recover files,</source>
         <translation>دىسكا رېمونتلاش سانلىق مەلۇماتلىرىڭىزنى ئەسلىگە كەلتۈرۈشتىكى ۋاسىتە بولالمايدۇ،</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1003"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1008"/>
         <source>but destroys data on and near bad sectors instead.</source>
         <translation>بۇزۇلغان دىسكا يوللىرىنى رېمونتلاش دىسكا يوللىرىنى ۋە ئەتراپىدىكى دىسكا يوللىرىدىكى سانلىق مەلۇماتلارنى زىيانغا ئۇچرىتىدۇ.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1004"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1009"/>
         <source>Please back up all data before repair.</source>
         <translation>سانلىق مەلۇماتلىرىڭىزنى ئالدىن زاپاسلاڭ.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1018"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1177"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1204"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1023"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
         <source>Cancel</source>
         <translation>بىكار قىلىش</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1019"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1024"/>
         <source>Start Repair</source>
         <translation>ياماش باشلاندى</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1065"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1070"/>
         <source>Repairing cylinder: %1</source>
         <translation>%1 سىلىندىر تەكشۈرۈلۈۋاتىدۇ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1102"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1107"/>
         <source>Repair completed. Cylinder: %1 repaired.</source>
         <translation>رېمونتلاش تاماملاندى، %1 سىلىندىر تەكشۈرۈلدى</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1105"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1110"/>
         <source>Disk repair completed. %1 bad blocks repaired.</source>
         <translation>دىسكا تەكشۈرۈش تاماملاندى، جەمئىي %1 مەسىلە بايقالدى</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1176"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1181"/>
         <source>Verifying for bad sectors, exit now?</source>
         <translation>تەكشۈرۈلۈۋاتىدۇ، كۆزنەكتىن چېكىنەمسىز؟</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1176"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1181"/>
         <source>The verified information will not be reserved</source>
         <translation>تەكشۈرۈش ئۇچۇرى ساقلاپ قېلىنمايدۇ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1203"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1208"/>
         <source>Repairing bad sectors, exit now?</source>
         <translation>رېمونتلاۋاتىدۇ، كۆزنەكتىن چېكىنەمسىز؟</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1203"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1208"/>
         <source>The repairing information will not be reserved</source>
         <translation>تەكشۈرۈش ئۇچۇرى ساقلاپ قېلىنمايدۇ</translation>
     </message>
@@ -794,45 +862,152 @@
 <context>
     <name>FormateDialog</name>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="48"/>
         <source>Format %1</source>
-        <translation>%1نى فورماتلىماقچى</translation>
+        <translation type="vanished">%1نى فورماتلىماقچى</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="49"/>
         <source>Formatting will erase all data on the disk, which cannot be undone</source>
-        <translation>رايوننى فورماتلاش دىسكىدا ساقلانغان بارلىق سانلىق مەلۇماتلارنى ئۆچۈرۈۋېتىدۇ ۋە ئەمەلدىن قالدۇرغىلى بولمايدۇ</translation>
+        <translation type="vanished">رايوننى فورماتلاش دىسكىدا ساقلانغان بارلىق سانلىق مەلۇماتلارنى ئۆچۈرۈۋېتىدۇ ۋە ئەمەلدىن قالدۇرغىلى بولمايدۇ</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="56"/>
+        <location filename="../widgets/formatedialog.cpp" line="66"/>
+        <source>Wipe %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="67"/>
+        <source>It will erase all data on this disk, which will not be recovered</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="73"/>
         <source>Name:</source>
         <translation>رايون نامى:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="65"/>
+        <location filename="../widgets/formatedialog.cpp" line="82"/>
         <source>Name</source>
         <translation>رايون نامى</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="67"/>
+        <location filename="../widgets/formatedialog.cpp" line="84"/>
         <source>File system:</source>
         <translation>رايون فورماتى:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="107"/>
+        <location filename="../widgets/formatedialog.cpp" line="100"/>
+        <source>Security:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="109"/>
+        <location filename="../widgets/formatedialog.cpp" line="113"/>
+        <source>Fast</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="109"/>
+        <location filename="../widgets/formatedialog.cpp" line="113"/>
+        <source>Secure</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="113"/>
+        <source>Advanced</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="127"/>
+        <location filename="../widgets/formatedialog.cpp" line="353"/>
+        <source>It only deletes the partition info without erasing the files on the disk. Disk recovery tools may recover the files at a certain probability.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="130"/>
+        <source>Wiping method:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="144"/>
+        <source>DoD 5220.22-M, 7 passes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="144"/>
+        <source>Gutmann, 35 passes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="191"/>
         <source>Cancel</source>
+        <comment>button</comment>
         <translation>بىكار قىلىش</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="108"/>
-        <source>Format</source>
-        <translation>فورماتلاش</translation>
+        <location filename="../widgets/formatedialog.cpp" line="195"/>
+        <source>Wipe</source>
+        <comment>button</comment>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="128"/>
-        <location filename="../widgets/formatedialog.cpp" line="142"/>
-        <location filename="../widgets/formatedialog.cpp" line="163"/>
-        <location filename="../widgets/formatedialog.cpp" line="177"/>
+        <location filename="../widgets/formatedialog.cpp" line="238"/>
+        <location filename="../widgets/formatedialog.cpp" line="450"/>
+        <source>Failed to find the disk</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="362"/>
+        <source>It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, and random data to the entire disk once. You will not be able to recover files, and the process will be slow.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="373"/>
+        <source>It writes 0, 1, and random data to the entire disk several times. You can set the number of times to erase disks and overwrite data, but the process will be very slow.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="416"/>
+        <source>Wiping %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="435"/>
+        <source>&quot;%1&quot; wiped</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="441"/>
+        <source>Failed to wipe %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="454"/>
+        <source>Failed to get the partition info</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="458"/>
+        <source>Failed to delete the partition</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="462"/>
+        <source>Failed to submit the request to the kernel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="vanished">بىكار قىلىش</translation>
+    </message>
+    <message>
+        <source>Format</source>
+        <translation type="vanished">فورماتلاش</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="290"/>
+        <location filename="../widgets/formatedialog.cpp" line="302"/>
+        <location filename="../widgets/formatedialog.cpp" line="321"/>
+        <location filename="../widgets/formatedialog.cpp" line="333"/>
         <source>The length exceeds the limit</source>
         <translation>ھەرپنىڭ ئۇزۇنلۇقى چەكتىن ئېشىپ كېتىدۇ</translation>
     </message>
@@ -840,53 +1015,76 @@
 <context>
     <name>InfoShowWidget</name>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="103"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="130"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="235"/>
         <source>Mount point:</source>
         <translation>ئېسىش نۇقتىسى:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="111"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="138"/>
         <source>Free:</source>
         <translation>ئىشلەتكىلى بولىدىغان بوشلۇق:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="118"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="145"/>
         <source>Used:</source>
         <translation>ئىشلىتىلگەن بوشلۇق:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="125"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="152"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="236"/>
         <source>Type:</source>
         <translation>تۈرى:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="131"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="158"/>
         <source>Capacity:</source>
         <translation>ئومۇمىي سىغىمى:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="137"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="164"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="237"/>
         <source>Volume label:</source>
         <translation>دىسكىغا ئايرىش بەلگىسى:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="297"/>
+        <source>Path:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="298"/>
+        <source>Disk type:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="299"/>
+        <source>Interface:</source>
+        <translation>ئۇلاش ئېغىزى:</translation>
     </message>
 </context>
 <context>
     <name>InfoTopFrame</name>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="59"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="64"/>
         <source>Capacity</source>
         <translation>ئومۇمىي سىغىمى:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="116"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="131"/>
         <source>File system</source>
         <translation>فورماتى</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="149"/>
+        <source>%1 partition table</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../widgets/mainwindow.cpp" line="123"/>
+        <location filename="../widgets/mainwindow.cpp" line="121"/>
         <source>Refresh</source>
         <translation>يېڭىلاش</translation>
     </message>
@@ -910,7 +1108,7 @@
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="80"/>
-        <location filename="../widgets/mountdialog.cpp" line="120"/>
+        <location filename="../widgets/mountdialog.cpp" line="168"/>
         <source>Cancel</source>
         <translation>بىكار قىلىش</translation>
     </message>
@@ -920,12 +1118,12 @@
         <translation>ئېسىش</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="120"/>
+        <location filename="../widgets/mountdialog.cpp" line="168"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>بۇ قاچىلاش نۇقتىسىدىكى سانلىق مەلۇماتلار يوقاپ كېتىشى مۇمكىن، مۇندەرىجىنى باشقا ئورۇنغا ئورنىتىش تەۋسىيە قىلىنىدۇ</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="120"/>
+        <location filename="../widgets/mountdialog.cpp" line="168"/>
         <source>OK</source>
         <translation>تامام</translation>
     </message>
@@ -959,6 +1157,14 @@
         <location filename="../widgets/partitiondialog.cpp" line="58"/>
         <source>Confirm</source>
         <translation>جەزملەش</translation>
+    </message>
+</context>
+<context>
+    <name>PartitionInfoWidget</name>
+    <message>
+        <location filename="../widgets/customcontrol/partitioninfowidget.cpp" line="212"/>
+        <source>Unallocated</source>
+        <translation>بىكار بوشلۇق</translation>
     </message>
 </context>
 <context>
@@ -1024,7 +1230,7 @@
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="157"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="161"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="962"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="963"/>
         <source>Disk:</source>
         <translation>دىسكا:</translation>
     </message>
@@ -1127,14 +1333,18 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="74"/>
+        <location filename="../main.cpp" line="95"/>
         <source>Disk Utility</source>
         <translation>دىسكا باشقۇرغۇچىسى</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="82"/>
+        <location filename="../main.cpp" line="103"/>
         <source>Disk Utility is a disk management tool for creating, reorganizing and formatting partitions.</source>
         <translation>دىسكا باشقۇرغۇچى ئىشلەتكۈچىلەرنىڭ دىسكا بۆلۈش، بوشلۇق تەڭشەش ۋە فورماتلاش قاتارلىق مەشغۇلاتلارنى قىلىشىغا ياردەم بېرەلەيدۇ.</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1173,18 +1383,16 @@
 <context>
     <name>SizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="160"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="162"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="238"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="240"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="163"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="247"/>
         <source> Capacity:</source>
         <translation>ئومۇمىي سىغىمى:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="194"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="198"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="272"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="275"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="203"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="207"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="287"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="290"/>
         <source>Used:</source>
         <translation>ئىشلىتىلگەن بوشلۇق:</translation>
     </message>
@@ -1197,9 +1405,13 @@
         <translation>رايون</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="50"/>
         <source>Format to</source>
-        <translation>فورماتلاش</translation>
+        <translation type="vanished">فورماتلاش</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="50"/>
+        <source>Wipe</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="51"/>
@@ -1236,31 +1448,31 @@
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="58"/>
-        <location filename="../widgets/unmountdialog.cpp" line="89"/>
-        <location filename="../widgets/unmountdialog.cpp" line="96"/>
+        <location filename="../widgets/unmountdialog.cpp" line="90"/>
+        <location filename="../widgets/unmountdialog.cpp" line="97"/>
         <source>Cancel</source>
         <translation>بىكار قىلىش</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="59"/>
-        <location filename="../widgets/unmountdialog.cpp" line="96"/>
+        <location filename="../widgets/unmountdialog.cpp" line="97"/>
         <source>Unmount</source>
         <translation>ئۆچۈرۈش</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="88"/>
+        <location filename="../widgets/unmountdialog.cpp" line="89"/>
         <source>Unmounting system disk may result in system crash,
  please confirm before proceeding</source>
         <translation>بۇ سىستېما دىسكىسىنى ئۆچۈرۈۋەتسىڭىز سىستېما ئېچىلمايدۇ،
 جەزملەشتۈرگەندىن كېيىن داۋاملاشتۇرۇڭ</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="89"/>
+        <location filename="../widgets/unmountdialog.cpp" line="90"/>
         <source>Continue</source>
         <translation>داۋاملاشتۇرۇش</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="95"/>
+        <location filename="../widgets/unmountdialog.cpp" line="96"/>
         <source>You will take subsequent risks if you continue to unmount the system disk</source>
         <translation>ئۆچۈرۈش مەشغۇلاتىنى داۋاملاشتۇرسىڭىز
 كېلىپ چىقىدىغان ئاقىۋەتنى ئۆزىڭىز ئۈستىڭىزگە ئالىسىز</translation>

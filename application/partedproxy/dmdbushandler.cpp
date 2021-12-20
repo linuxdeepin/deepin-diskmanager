@@ -86,6 +86,7 @@ void DMDbusHandler::initConnection()
     connect(m_dbus, &DMDBusInterface::fixBadBlocksInfo, this, &DMDbusHandler::repairBadBlocksInfo);
     connect(m_dbus, &DMDBusInterface::checkBadBlocksFinished, this, &DMDbusHandler::checkBadBlocksFinished);
     connect(m_dbus, &DMDBusInterface::fixBadBlocksFinished, this, &DMDbusHandler::fixBadBlocksFinished);
+    connect(m_dbus, &DMDBusInterface::clearMessage, this, &DMDbusHandler::wipeMessage);
 //    connect(m_dbus, &DMDBusInterface::rootLogin, this, &DMDbusHandler::onRootLogin);
 }
 
@@ -123,16 +124,18 @@ void DMDbusHandler::onUpdateUsb()
     emit updateUsb();
 }
 
-void DMDbusHandler::onSetCurSelect(const QString &devicePath, const QString &partitionPath, Sector start, Sector end)
+void DMDbusHandler::onSetCurSelect(const QString &devicePath, const QString &partitionPath, Sector start, Sector end, int level)
 {
     //点击切换才触发
-    if (((devicePath != m_curDevicePath) || (partitionPath != m_curPartitionPath)) && m_deviceMap.size() > 0) {
+    if (((level != m_curLevel) || (devicePath != m_curDevicePath) || (partitionPath != m_curPartitionPath)) && m_deviceMap.size() > 0) {
         m_curDevicePath = devicePath;
+        m_curLevel = level;
         auto it = m_deviceMap.find(devicePath);
         if (it != m_deviceMap.end()) {
             for (PartitionInfo info : it.value().m_partition) {
                 if (info.m_sectorStart == start && info.m_sectorEnd == end) {
-                    qDebug() << info.m_partitionNumber << info.m_path << Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType));
+                    qDebug() << info.m_partitionNumber << info.m_path << Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType))
+                             << info.m_sectorStart << info.m_sectorEnd << info.m_sectorSize << info.m_devicePath;
                     m_curPartitionInfo = info;
                     break;
                 }
@@ -155,7 +158,7 @@ void DMDbusHandler::Quit()
 
 void DMDbusHandler::refresh()
 {
-    emit showSpinerWindow(true);
+    emit showSpinerWindow(true, tr("Refreshing data..."));
 
     m_dbus->refreshFunc();
 }
@@ -174,7 +177,7 @@ QString DMDbusHandler::getRootLoginResult()
 
 void DMDbusHandler::getDeviceInfo()
 {
-    emit showSpinerWindow(true);
+    emit showSpinerWindow(true, tr("Initializing data..."));
 
     m_dbus->getalldevice();
     qDebug() << __FUNCTION__ << "-------";
@@ -207,14 +210,14 @@ const Sector &DMDbusHandler::getCurDeviceInfoLength()
 
 void DMDbusHandler::mount(const QString &mountPath)
 {
-    emit showSpinerWindow(true);
+    emit showSpinerWindow(true, tr("Mounting %1 ...").arg(m_curPartitionInfo.m_path));
 
     m_dbus->mount(mountPath);
 }
 
 void DMDbusHandler::unmount()
 {
-    emit showSpinerWindow(true);
+    emit showSpinerWindow(true, tr("Unmounting %1 ...").arg(m_curPartitionInfo.m_path));
 
     m_dbus->unmount();
 }
@@ -253,14 +256,14 @@ void DMDbusHandler::format(const QString &fstype, const QString &name)
 
 void DMDbusHandler::resize(const PartitionInfo &info)
 {
-    emit showSpinerWindow(true);
+    emit showSpinerWindow(true, tr("Resizing %1 ...").arg(m_curPartitionInfo.m_path));
 
     m_dbus->resize(info);
 }
 
 void DMDbusHandler::create(const PartitionVec &infovec)
 {
-    emit showSpinerWindow(true);
+    emit showSpinerWindow(true, tr("Creating a new partition..."));
 
     m_dbus->create(infovec);
 }
@@ -279,15 +282,15 @@ void DMDbusHandler::onUpdateDeviceInfo(const DeviceInfoMap &infoMap)
     for (auto it = infoMap.begin(); it != infoMap.end(); it++) {
         DeviceInfo info = it.value();
 //        qDebug() << info.sector_size;
-//        qDebug() << __FUNCTION__ << info.m_path << info.length << info.heads << info.sectors
-//                 << info.cylinders << info.cylsize << info.model << info.serial_number << info.disktype
-//                 << info.sector_size << info.max_prims << info.highest_busy << info.readonly
-//                 << info.max_partition_name_length;
+//        qDebug() << __FUNCTION__ << info.m_path << info.m_length << info.m_heads << info.m_sectors
+//                 << info.m_cylinders << info.m_cylsize << info.m_model << info.m_serialNumber << info.m_disktype
+//                 << info.m_sectorSize << info.m_maxPrims << info.m_highestBusy << info.m_readonly
+//                 << info.m_maxPartitionNameLength << info.m_mediaType << info.m_interface;
         m_deviceNameList << info.m_path;
         QString isExistUnallocated = "false";
         for (auto it = info.m_partition.begin(); it != info.m_partition.end(); it++) {
             //            qDebug() << it->sector_end << it->sector_start << Utils::sector_to_unit(it->sector_size, it->sector_end - it->sector_start, SIZE_UNIT::UNIT_GIB);
-            //        qDebug() << it->name << it->device_path << it->partition_number << it->sectors_used << it->sectors_unused << it->sector_start << it->sector_end;
+//                    qDebug() << it->m_path << it->m_devicePath << it->m_partitionNumber << it->m_sectorsUsed << it->m_sectorsUnused << it->m_sectorStart << it->m_sectorEnd;
            if (it->m_path == "unallocated") {
                isExistUnallocated = "true";
            }
@@ -298,7 +301,7 @@ void DMDbusHandler::onUpdateDeviceInfo(const DeviceInfoMap &infoMap)
     //    qDebug() << getCurDeviceInfo().serial_number << getCurPartititonInfo().partition_number;
 
     emit updateDeviceInfo();
-    emit showSpinerWindow(false);
+    emit showSpinerWindow(false, "");
 }
 
 QMap<QString, QString> DMDbusHandler::getIsExistUnallocated()
@@ -358,7 +361,7 @@ HardDiskStatusInfoList DMDbusHandler::getDeviceHardStatusInfo(const QString &dev
 
 void DMDbusHandler::deletePartition()
 {
-    emit showSpinerWindow(true);
+    emit showSpinerWindow(true, tr("Deleting %1 ...").arg(m_curPartitionInfo.m_path));
 
     m_dbus->onDeletePartition();
 }
@@ -409,7 +412,11 @@ void DMDbusHandler::repairBadBlocks(const QString &devicePath, QStringList badBl
 
 void DMDbusHandler::createPartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel, const QString &curType)
 {
-    emit showSpinerWindow(true);
+    if (curType == "create") {
+        emit showSpinerWindow(true, tr("Creating a partition table of %1 ...").arg(devicePath));
+    } else {
+        emit showSpinerWindow(true, tr("Replacing the partition table of %1 ...").arg(devicePath));
+    }
     m_curCreateType = curType;
 
     m_dbus->onCreatePartitionTable(devicePath, length, sectorSize, diskLabel);
@@ -418,5 +425,20 @@ void DMDbusHandler::createPartitionTable(const QString &devicePath, const QStrin
 QString DMDbusHandler::getCurCreatePartitionTableType()
 {
     return m_curCreateType;
+}
+
+int DMDbusHandler::getCurLevel()
+{
+    return m_curLevel;
+}
+
+QString DMDbusHandler::getCurDevicePath()
+{
+    return m_curDevicePath;
+}
+
+void DMDbusHandler::clear(const QString &fstype, const QString &path , const QString &name, const QString &user, const int &diskType , const int &clearType)
+{
+    m_dbus->clear(fstype, path, name, user, diskType, clearType);
 }
 

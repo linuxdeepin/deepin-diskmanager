@@ -83,6 +83,19 @@ void DmFrameWidget::setFrameData()
     update();
 }
 
+void DmFrameWidget::setDiskFrameData(const QString &path, const QString &diskType, const QString &used,
+                      const QString &unused, const QString &capacity, const QString &interface)
+{
+    m_infoData.m_mountpoints = path;
+    m_infoData.m_unused = unused;
+    m_infoData.m_used = used;
+    m_infoData.m_fstype = diskType;
+    m_infoData.m_partitionSize = capacity;
+    m_infoData.m_sysLabel = interface;
+
+    update();
+}
+
 QString DmFrameWidget::diskVolumn(QString partitionPath)
 {
     DMDbusHandler *handler = DMDbusHandler::instance();

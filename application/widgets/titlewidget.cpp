@@ -47,16 +47,16 @@ void TitleWidget::initUi()
     QHBoxLayout *layout = new QHBoxLayout(this);
 
     m_btnParted = createBtn(tr("Partition"), "partition");
-    m_btnFormat = createBtn(tr("Format to"), "format");
+    m_btnFormat = createBtn(tr("Wipe"), "erase");
     m_btnMount = createBtn(tr("Mount"), "mount");
     m_btnUnmount = createBtn(tr("Unmount"), "unmount");
     m_btnResize = createBtn(tr("Resize"), "resize");
 
     m_btnParted->setIconSize(QSize(16, 16));
-    m_btnFormat->setIconSize(QSize(18, 18));
+    m_btnFormat->setIconSize(QSize(16, 16));
     m_btnMount->setIconSize(QSize(14, 17));
     m_btnUnmount->setIconSize(QSize(14, 15));
-    m_btnResize->setIconSize(QSize(14, 20));
+    m_btnResize->setIconSize(QSize(16, 16));
 
     m_btnParted->setDisabled(true);
     m_btnFormat->setDisabled(true);
@@ -141,8 +141,8 @@ void TitleWidget::showFormateInfoWidget()
     setCurDevicePath(info.m_devicePath);
 
     FormateDialog dlg(this);
-    dlg.setObjectName("formateDialog");
-    dlg.setAccessibleName("formateDialog");
+    dlg.setObjectName("wipeDialog");
+    dlg.setAccessibleName("wipeDialog");
     dlg.exec();
 
     setCurDevicePath("");
@@ -187,71 +187,108 @@ void TitleWidget::showResizeInfoWidget()
     setCurDevicePath("");
 }
 
+bool TitleWidget::isExistMountPartition()
+{
+    bool isExist = false;
+
+    DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
+    for (int i = 0; i < info.m_partition.size(); i++) {
+        PartitionInfo partitionInfo = info.m_partition.at(i);
+
+        QString mountpoints;
+        for (int j = 0; j < partitionInfo.m_mountPoints.size(); j++) {
+            mountpoints += partitionInfo.m_mountPoints[j];
+        }
+
+        if (!mountpoints.isEmpty()) {
+            isExist = true;
+            break;
+        }
+    }
+
+    return isExist;
+}
+
 void TitleWidget::updateBtnStatus()
 {
-    PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-
-    //已挂载
-    if (info.m_mountPoints.size() > 0 && info.m_busy) {
-        m_btnParted->setDisabled(true);
-        m_btnFormat->setDisabled(true);
-        m_btnMount->setDisabled(true);
-        m_btnUnmount->setDisabled(false);
-        m_btnResize->setDisabled(true);
-
-        if (1 == info.m_flag) {
-            m_btnUnmount->setDisabled(true);
-        }
-    } else {
-        int result = info.m_flag;
-        if (1 == result) {
+    if (DMDbusHandler::instance()->getCurLevel() == 1) {
+        PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+        //已挂载
+        if (info.m_mountPoints.size() > 0 && info.m_busy) {
             m_btnParted->setDisabled(true);
             m_btnFormat->setDisabled(true);
             m_btnMount->setDisabled(true);
-            m_btnUnmount->setDisabled(true);
+            m_btnUnmount->setDisabled(false);
             m_btnResize->setDisabled(true);
+
+            if (1 == info.m_flag) {
+                m_btnUnmount->setDisabled(true);
+            }
         } else {
-            //需判断扩展分区上是否无分区，否则认为不可操作，此处省略操作
-            if (FS_EXTENDED == info.m_fileSystemType) {
+            int result = info.m_flag;
+            if (1 == result) {
                 m_btnParted->setDisabled(true);
                 m_btnFormat->setDisabled(true);
                 m_btnMount->setDisabled(true);
                 m_btnUnmount->setDisabled(true);
                 m_btnResize->setDisabled(true);
             } else {
-                m_btnUnmount->setDisabled(true);
-                if (info.m_fileSystemType == FS_UNALLOCATED) {
-                    m_btnParted->setDisabled(false);
+                //需判断扩展分区上是否无分区，否则认为不可操作，此处省略操作
+                if (FS_EXTENDED == info.m_fileSystemType) {
+                    m_btnParted->setDisabled(true);
                     m_btnFormat->setDisabled(true);
                     m_btnMount->setDisabled(true);
-                    m_btnResize->setDisabled(true);
-                } else if (info.m_fileSystemType == FS_UNKNOWN) {
-                    m_btnParted->setDisabled(true);
-                    m_btnFormat->setDisabled(false);
-                    m_btnMount->setDisabled(true);
+                    m_btnUnmount->setDisabled(true);
                     m_btnResize->setDisabled(true);
                 } else {
-                    m_btnParted->setDisabled(true);
-                    m_btnFormat->setDisabled(false);
-                    m_btnMount->setDisabled(false);
-                    m_btnResize->setDisabled(false);
+                    m_btnUnmount->setDisabled(true);
+                    if (info.m_fileSystemType == FS_UNALLOCATED) {
+                        m_btnParted->setDisabled(false);
+                        m_btnFormat->setDisabled(false);
+                        m_btnMount->setDisabled(true);
+                        m_btnResize->setDisabled(true);
+                    } else if (info.m_fileSystemType == FS_UNKNOWN) {
+                        m_btnParted->setDisabled(true);
+                        m_btnFormat->setDisabled(false);
+                        m_btnMount->setDisabled(true);
+                        m_btnResize->setDisabled(true);
+                    } else {
+                        m_btnParted->setDisabled(true);
+                        m_btnFormat->setDisabled(false);
+                        m_btnMount->setDisabled(false);
+                        m_btnResize->setDisabled(false);
+                    }
                 }
             }
         }
-    }
 
-    qDebug() << info.m_type << info.m_fileSystemType;
-    if (info.m_fileSystemType == FSType::FS_LINUX_SWAP) {
-        m_btnParted->setDisabled(true);
-        m_btnFormat->setDisabled(true);
-        m_btnMount->setDisabled(true);
-        m_btnUnmount->setDisabled(true);
-        m_btnResize->setDisabled(true);
-    }
+        qDebug() << info.m_type << info.m_fileSystemType;
+        if (info.m_fileSystemType == FSType::FS_LINUX_SWAP) {
+            m_btnParted->setDisabled(true);
+            m_btnFormat->setDisabled(true);
+            m_btnMount->setDisabled(true);
+            m_btnUnmount->setDisabled(true);
+            m_btnResize->setDisabled(true);
+        }
 
-    QMap<QString, QString> isExistUnallocated = DMDbusHandler::instance()->getIsExistUnallocated();
-    if (isExistUnallocated.value(info.m_devicePath) == "false") {
-        m_btnResize->setDisabled(true);
+        QMap<QString, QString> isExistUnallocated = DMDbusHandler::instance()->getIsExistUnallocated();
+        if (isExistUnallocated.value(info.m_devicePath) == "false") {
+            m_btnResize->setDisabled(true);
+        }
+    } else {
+        if (isExistMountPartition()) {
+            m_btnParted->setDisabled(true);
+            m_btnFormat->setDisabled(true);
+            m_btnMount->setDisabled(true);
+            m_btnUnmount->setDisabled(true);
+            m_btnResize->setDisabled(true);
+        } else {
+            m_btnParted->setDisabled(true);
+            m_btnFormat->setDisabled(false);
+            m_btnMount->setDisabled(true);
+            m_btnUnmount->setDisabled(true);
+            m_btnResize->setDisabled(true);
+        }
     }
 }
 

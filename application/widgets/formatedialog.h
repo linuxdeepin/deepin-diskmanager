@@ -31,6 +31,11 @@
 
 #include <DComboBox>
 #include <DLineEdit>
+#include <DLabel>
+#include <DPushButton>
+#include <DWarningButton>
+#include <DSpinner>
+#include <DStackedWidget>
 
 DWIDGET_USE_NAMESPACE
 
@@ -44,6 +49,13 @@ class FormateDialog : public DDBase
     Q_OBJECT
 public:
     explicit FormateDialog(QWidget *parent = nullptr);
+
+    enum WipeType {
+        Fast = 1,
+        Secure,
+        DoD,
+        Gutmann
+    };
 
 private:
 
@@ -59,16 +71,32 @@ private:
 
     DComboBox *m_formatComboBox = nullptr;
     DLineEdit *m_fileNameEdit = nullptr;
+    DComboBox *m_securityComboBox = nullptr;
+    DComboBox *m_wipingMethodComboBox = nullptr;
+    DLabel *m_describeInfo;
+    QWidget *m_wipingMethodWidget;
+    DLabel *m_label;
+    DPushButton *m_pushButton;
+    DWarningButton *m_warningButton;
+    DStackedWidget *m_stackedWidget;
+    DSpinner *m_spinner;
+    DLabel *m_failLabel;
+    QString m_pathInfo;
+    int m_curWipeMethod;
+    QString m_curDiskMediaType;
 signals:
 
 private slots:
 
     /**
-     * @brief 初始化连接
-     * @param index 所点击按钮标志
-     * @param text 所点击按钮文本
+     * @brief 取消按钮点击槽函数
      */
-    void onButtonClicked(int index, const QString &text);
+    void onCancelButtonClicked();
+
+    /**
+     * @brief 擦除按钮点击槽函数
+     */
+    void onWipeButtonClicked();
 
     /**
      * @brief 当前文本改变
@@ -81,6 +109,24 @@ private slots:
      * @param text 当前选择文本
      */
     void onComboxFormatTextChange(const QString &text); //下拉框分区格式切换
+
+    /**
+     * @brief 下拉框安全选择切换
+     * @param index 当前选择下标
+     */
+    void onSecurityCurrentIndexChanged(int index);
+
+    /**
+     * @brief 下拉框覆盖次数切换
+     * @param index 当前选择下标
+     */
+    void onWipingMethodCurrentIndexChanged(int index);
+
+    /**
+     * @brief 擦除结果显示
+     * @param info 擦除结果信息
+     */
+    void onWipeResult(const QString &info);
 };
 
 #endif // FORMATEDIALOG_H

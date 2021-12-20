@@ -33,10 +33,12 @@
 #include <DLabel>
 #include <DFrame>
 #include <DProgressBar>
+#include <DArrowRectangle>
 
 class DmFrameWidget;
 class SizeInfoWidget;
 class InfoTopFrame;
+class PartitionInfoWidget;
 
 DWIDGET_USE_NAMESPACE
 
@@ -84,6 +86,18 @@ private slots:
      */
     void onHandleChangeTheme();
 
+    /**
+     * @brief 首页磁盘分区图示进入响应的槽函数
+     * @param rect 分区图示坐标
+     * @param path 分区路径
+     */
+    void onEnterWidget(QRectF rect, QString path);
+
+    /**
+     * @brief 首页磁盘分区图示离开响应的槽函数
+     */
+    void onLeaveWidget();
+
 private:
     InfoTopFrame *m_infoTopFrame = nullptr;
     DFrame *m_frame = nullptr;
@@ -102,6 +116,10 @@ private:
     DLabel *m_typeLabel;
     DLabel *m_capacityLabel;
     DLabel *m_volumeLabel;
+
+    PartitionInfoWidget *m_partitionInfoWidget;
+    DArrowRectangle *m_arrowRectangle;
+    DLabel *m_pathLabel;
 };
 
 #endif // INFOSHOWWIDGET_H

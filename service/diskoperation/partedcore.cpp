@@ -37,6 +37,7 @@
 #include <linux/hdreg.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/xattr.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -51,7 +52,7 @@ const std::time_t SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS = 1;
 SupportedFileSystems *PartedCore::m_supportedFileSystems = nullptr;
 
 PartedCore::PartedCore(QObject *parent)
-    : QObject(parent)
+    : QObject(parent), m_isClear(false)
 {
     initConnection();
     qDebug() << __FUNCTION__ << "^^1";
@@ -77,6 +78,7 @@ PartedCore::PartedCore(QObject *parent)
     m_workerFixThread = nullptr;
     probeDeviceInfo();
     delTempMountFile();
+
 
     qDebug() << __FUNCTION__ << "^^5";
 }
@@ -247,25 +249,34 @@ FS_Limits PartedCore::getFileSystemLimits(FSType fstype, const Partition &partit
 
 bool PartedCore::secuClear(const QString &path, const Sector &start, const Sector &end, const Byte_Value &size,const QString &fstype, const QString &name, const int &count)
 {
+    QProcess proc;
+    QString cmd;
+    int tempEnd = end * size / 1024 /1024 / size;
 
     for (int i = 0; i < count; ++i) {
-        QString readPath = "/dev/zero";
-        int seek = 0;
-        QProcess proc;
-        bool flag = true;;
-        Sector tempEnd = end / 100;
-        while (seek < tempEnd) {
-            flag ? (readPath = "/dev/zero") : (readPath = "/dev/urandom");
-            QString cmd = QString("dd if=%1 of=%2 bs=%3 count=1000 seek=%4").arg(readPath).arg(path).arg(QString::number(qlonglong(size)*100)).arg(seek);
-            seek += 1000;
-            if(seek > tempEnd){
-                seek = int(tempEnd - (seek - 1000));
-            }
+        for (int j = 0; j < tempEnd; ++++j) {
+            // cmd = QString("dd if=/dev/urandom of=%1 bs=512M count=1 seek=%2;dd if=/dev/urandom of=%3 bs=512M count=1 seek=%4").
+            cmd = QString("dd if=/dev/zero of=%1 bs=512M count=1 seek=%2").
+                    arg(path).arg(j);
             proc.start(cmd);
             proc.waitForFinished(-1);
-            flag = !flag;
+            if(proc.exitCode() != 0 && j < tempEnd){
+                return false;
+            }
+            qDebug() << __FUNCTION__ << QString("count size:%1M      current size:%2M").arg(end * size/1024/1024).arg((j+1) * size);
+            qDebug() << __FUNCTION__ << QString("count num:%1       current num:%2").arg(tempEnd).arg(j);
+
+            cmd = QString("dd if=/dev/urandom of=%1 bs=512M count=1 seek=%2").
+                    arg(path).arg(j+1);
+            proc.start(cmd);
+            proc.waitForFinished(-1);
+            if(proc.exitCode() != 0 && j+1 < tempEnd){
+                return false;
+            }
+            qDebug() << __FUNCTION__ << QString("count size:%1M      current size:%2M").arg(end * size/1024/1024).arg((j+2) * size);
+            qDebug() << __FUNCTION__ << QString("count num:%1       current num:%2").arg(tempEnd).arg(j+1);
         }
-         qDebug() << __FUNCTION__ << "secuClear current conut:  " << count;
+        qDebug() << __FUNCTION__ << QString("count loop:%1      current loop:%2 ").arg(count).arg(i);
     }
 
     return true;
@@ -309,16 +320,10 @@ void PartedCore::probeDeviceInfo(const QString &)
         Device tempDevice;
         setDeviceFromDisk(tempDevice, devicePaths[t]);
         DeviceStorage device;
-        device.getDiskInfoFromHwinfo(devicePaths[t]);
+        tempDevice.m_mediaType = device.getDiskInfoMediaType(devicePaths[t]);
+        device.getDiskInfoModel(devicePaths[t], tempDevice.m_model);
+        device.getDiskInfoInterface(devicePaths[t],tempDevice.m_interface, tempDevice.m_model);
 
-        device.getDiskInfoFromLshw(devicePaths[t]);
-
-        device.getDiskInfoFromLsblk(devicePaths[t]);
-
-        device.getDiskInfoFromSmartCtl(devicePaths[t]);
-        tempDevice.m_model = device.m_model;
-        tempDevice.m_mediaType = device.m_mediaType;
-        tempDevice.m_interface = device.m_interface;
         m_deviceMap.insert(devicePaths.at(t), tempDevice);
     }
     //qDebug() << __FUNCTION__ << "**9";
@@ -2028,9 +2033,12 @@ bool PartedCore::delTempMountFile()
     }
 
     QDir d;
+    char value[1024]={0};
     for (int i = 0; i < mountPath.size(); i++) {
-       // d.rmpath(mountPath[i]);
-        d.rmdir(mountPath[i]);
+        getxattr(mountPath[i].toStdString().c_str(), "user.deepin-diskmanager", value,1024);
+        if(QString(value) == "deepin-diskmanager"){
+            d.rmdir(mountPath[i]);
+        }
     }
     return true;
 }
@@ -2175,7 +2183,7 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
     default:
         break;
     }
-    //新建分区表
+    // 如果是清理是磁盘时，需要新建分区表，并且新建分区
     if(diskType == 0){
         Device d = m_deviceMap.value(path);
         qDebug() << __FUNCTION__ << "Clear after:  createPartitionTable  start";
@@ -2189,8 +2197,23 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
         qDebug() << __FUNCTION__ << "Clear after:  create Partition  start";
         create(pVec);
         probeDeviceInfo();
+
     }
 
+    //如果清理是分区，并且清除模式不是快速清除时，执行格式化分区
+    if(clearType != 1 && diskType == 1){
+        //新建分区
+        success = format(fstype, name);
+        if(!success){
+            qDebug() << __FUNCTION__ << "format error";
+            blockSignals(false);
+            emit clearMessage("0:3");
+            m_isClear = false;
+            return success;
+        }
+    }
+
+    //创建完分区后，将当前创建的分区设置为当前选中分区
     if(diskType == 0){
         Device d = m_deviceMap.value(path);
         m_curpartition = *(d.m_partitions[0]);
@@ -2210,6 +2233,7 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
     QString output, errstr;
     QFileInfo f;
     int exitcode;
+    //获取挂载文件夹名字，若名字不存在，使用uuid作为名字挂载
     QString mountPath = QString("/media/%1/%2").arg(user).arg(name);
     if(name.trimmed().isEmpty()){
         mountPath = QString("/media/%1/%2").arg(user).arg(FsInfo::getUuid(m_curpartition.getPath()));
@@ -2232,7 +2256,12 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
         }
     }
 
-    cmd = QString("chmod 731 %1").arg(mountPath);
+    //设置文件属性，删除时，按照文件属性删除
+    char *v = "deepin-diskmanager";
+    setxattr(mountPath.toStdString().c_str(), "user.deepin-diskmanager", v, strlen(v), 0);
+
+    //由于使用root用户创建文件夹，需要改变文件权限
+    cmd = QString("chmod 777 %1").arg(mountPath);
     exitcode = Utils::executCmd(cmd, output, errstr);
     if (exitcode != 0) {
         success = false;
@@ -2240,6 +2269,7 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
         emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, "0:4");
         return success;
     }
+
     qDebug() << __FUNCTION__ << "Clear after:  mountTemp  start";
     success = mountTemp(mountPath);
     if(!success){

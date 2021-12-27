@@ -309,16 +309,9 @@ void ProbeThread::probeDeviceInfo()
         PartedCore pcl;
         pcl.setDeviceFromDisk(tempDevice, devicePaths[t]);
         DeviceStorage device;
-        device.getDiskInfoFromHwinfo(devicePaths[t]);
-
-        device.getDiskInfoFromLshw(devicePaths[t]);
-
-        device.getDiskInfoFromLsblk(devicePaths[t]);
-
-        device.getDiskInfoFromSmartCtl(devicePaths[t]);
-        tempDevice.m_model = device.m_model;
-        tempDevice.m_mediaType = device.m_mediaType;
-        tempDevice.m_interface = device.m_interface;
+        tempDevice.m_mediaType = device.getDiskInfoMediaType(devicePaths[t]);
+        device.getDiskInfoModel(devicePaths[t], tempDevice.m_model);
+        device.getDiskInfoInterface(devicePaths[t],tempDevice.m_interface, tempDevice.m_model);
         m_deviceMap.insert(devicePaths.at(t), tempDevice);
     }
 //    qDebug() << __FUNCTION__ << "**9";

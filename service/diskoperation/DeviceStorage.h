@@ -21,6 +21,15 @@ public:
     /**@brief:添加smartctl中获取到的信息*/
     bool getDiskInfoFromSmartCtl(const QString &devicePath);
 
+    /**@brief:获取当前磁盘model信息*/
+    void getDiskInfoModel(const QString &devicePath, QString &model);
+
+    /**@brief:获取当前磁盘介质信息*/
+    QString getDiskInfoMediaType(const QString &devicePath);
+
+    /**@brief:获取当前磁盘接口信息*/
+    void getDiskInfoInterface(const QString &devicePath, QString &interface, QString &model);
+
 
 private:
     void getMapInfoFromInput(const QString &info, QMap<QString, QString> &mapInfo);

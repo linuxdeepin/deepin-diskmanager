@@ -66,7 +66,7 @@ void Watcher::run()
         ret = outPut.length();
         if (ret) {
             //这里表示前端在运行当中
-            qDebug() << "Set to true!!!!!";
+           // qDebug() << "Set to true!!!!!";
             isrun = true;
         } else {
             //这里表示，前端启动过，但是现在已经关闭了
@@ -75,7 +75,7 @@ void Watcher::run()
                 kill(0, 9);
             }
         }
-        qDebug() << "Sleep !!!  == " << ret << " " << outPut << " " << outPut.length() << " "<< error;
+    //    qDebug() << "Sleep !!!  == " << ret << " " << outPut << " " << outPut.length() << " "<< error;
     }
 }
 

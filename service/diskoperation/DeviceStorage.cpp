@@ -397,6 +397,8 @@ bool DeviceStorage::getDiskInfoFromLsblk(const QString &devicePath)
 
     loadLsblkInfo(outPut, mapInfo);
 
+
+
     if (mapInfo.size() == 1) {
         setMediaType(mapInfo.firstKey(),mapInfo.value(mapInfo.firstKey()));
     } else {
@@ -442,6 +444,107 @@ bool DeviceStorage::getDiskInfoFromSmartCtl(const QString &devicePath)
     addInfoFromSmartctl(mapInfo);
 
     return true;
+}
+
+void DeviceStorage::getDiskInfoModel(const QString &devicePath, QString &model)
+{
+    QString cmd = QString("smartctl --all %1").arg(devicePath);
+    QProcess proc;
+    proc.start(cmd);
+    proc.waitForFinished(-1);
+    QString outPut  = proc.readAllStandardOutput();
+
+    if (outPut.contains("Please specify device type with the -d option")) {
+        QString cmd = QString("smartctl --all -d sat %1").arg(devicePath);
+        QProcess proc;
+        proc.start(cmd);
+        proc.waitForFinished(-1);
+        outPut = proc.readAllStandardOutput();
+    }
+    QStringList infoList = outPut.split("\n");
+    for (int i = 0; i < infoList.size(); i++) {
+        if(infoList[i].contains("Device Model:")){
+            QStringList tempList = infoList[i].split(":");
+            model = tempList[tempList.size()-1].trimmed();
+            return;
+        }
+    }
+
+    proc.start("sudo lshw -C disk");
+    proc.waitForFinished(-1);
+    outPut  = proc.readAllStandardOutput();
+
+    QStringList tempList = outPut.split("*-disk\n");
+
+    outPut.clear();
+    for (int i =0;i<tempList.count();i++) {
+        if(tempList.at(i).contains(devicePath)) {
+            outPut = tempList.at(i);
+            QStringList infoList = outPut.split("\n");
+            for (int j = 0; j < infoList.size(); j++) {
+                if(infoList[j].contains("product:")){
+                    QStringList productList = infoList[j].split(":");
+                    model = productList[productList.size()-1].trimmed();
+                    return;
+                }
+            }
+            break;
+        }
+    }
+    return;
+}
+
+QString DeviceStorage::getDiskInfoMediaType(const QString &devicePath)
+{
+    QStringList deviceList = devicePath.split("/");
+    QString device = deviceList[deviceList.size()-1];
+    QString value;
+    QString cmd = QString("cat /sys/block/%1/queue/rotational").arg(device);
+    QProcess proc;
+    proc.start(cmd);
+    proc.waitForFinished(-1);
+    QString outPut = proc.readAllStandardOutput().trimmed();
+    value = outPut;
+
+    if("1" == value){
+        cmd = QString("smartctl -i %1").arg(devicePath);
+        proc.start(cmd);
+        proc.waitForFinished(-1);
+        outPut = proc.readAllStandardOutput();
+        if(outPut.contains("Solid State Device")){
+            value = "0";
+        }
+    }
+    if (QString("0") == value) {
+        return  "SSD";
+    } else if (QString("1") == value) {
+        return "HDD";
+    } else {
+        return "UnKnow";
+    }
+}
+
+void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &interface, QString &model)
+{
+    QString cmd = QString("hwinfo --disk --only %1").arg(devicePath);
+    QProcess proc;
+    proc.start(cmd);
+    proc.waitForFinished(-1);
+    QString outPut = proc.readAllStandardOutput().trimmed();
+    QStringList outPutList = outPut.split("(");
+    interface = outPutList[outPutList.size() - 1].split(" ")[0];
+    outPutList = outPut.split("\n");
+
+    if(!model.isNull()){
+        return;
+    }
+    for (int i = 0; i < outPutList.size(); ++i) {
+        if(outPutList[i].contains("Model:")){
+            QStringList tempList = outPutList[i].split(":");
+            model = tempList[tempList.size() -1].trimmed();
+        }
+    }
+    return;
 }
 
 void DeviceStorage::getMapInfoFromSmartctl(QMap<QString, QString> &mapInfo, const QString &info, const QString &ch)

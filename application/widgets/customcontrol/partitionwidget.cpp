@@ -896,7 +896,6 @@ void PartitionWidget::onApplyButton()
             newPart.m_sectorEnd += MEBIBYTE / newPart.m_sectorSize;
         }
 
-        newPart.m_sectorEnd -= 1;
         beforend = newPart.m_sectorEnd + 1;
 
         if (beforend > curInfo.m_sectorEnd && i < m_patrinfo.size() - 1) {
@@ -907,15 +906,23 @@ void PartitionWidget::onApplyButton()
             if (newPart.m_sectorEnd > curInfo.m_sectorEnd)
                 newPart.m_sectorEnd = curInfo.m_sectorEnd;
 
+            bool isEndPartition = false;
             if (deviceLength == curInfo.m_sectorEnd + 1) {
-                if ((newPart.m_sectorEnd == curInfo.m_sectorEnd - 1) || (newPart.m_sectorEnd == curInfo.m_sectorEnd))
+                if ((newPart.m_sectorEnd == curInfo.m_sectorEnd - 1) || (newPart.m_sectorEnd == curInfo.m_sectorEnd)) {
                     newPart.m_sectorEnd = curInfo.m_sectorEnd - 33;
+                    isEndPartition = true;
+                }
             }
 
-//            Sector diff = 0;
-//            diff = (newpart.sector_end + 1) % (MEBIBYTE / newpart.sector_size);
-//            if (diff)
-//                newpart.sector_end -= diff;
+            if (!isEndPartition) {
+                Sector diff = 0;
+                diff = (newPart.m_sectorEnd + 1) % (MEBIBYTE / newPart.m_sectorSize);
+                if (diff)
+                    newPart.m_sectorEnd -= diff;
+            }
+
+            beforend = newPart.m_sectorEnd + 1;
+
             partVector.push_back(newPart);
         }
     }

@@ -69,21 +69,24 @@ private:
      */
     void initConnection();
 
-    DComboBox *m_formatComboBox = nullptr;
-    DLineEdit *m_fileNameEdit = nullptr;
-    DComboBox *m_securityComboBox = nullptr;
-    DComboBox *m_wipingMethodComboBox = nullptr;
+    DComboBox *m_formatComboBox;
+    DLineEdit *m_fileNameEdit;
+    DComboBox *m_securityComboBox;
+    DComboBox *m_wipingMethodComboBox;
     DLabel *m_describeInfo;
     QWidget *m_wipingMethodWidget;
+    DLabel *m_labelTmp;
     DLabel *m_label;
     DPushButton *m_pushButton;
     DWarningButton *m_warningButton;
     DStackedWidget *m_stackedWidget;
     DSpinner *m_spinner;
     DLabel *m_failLabel;
+    DLabel *m_titleLabel;
     QString m_pathInfo;
     int m_curWipeMethod;
     QString m_curDiskMediaType;
+    QHBoxLayout *m_buttonLayout;
 signals:
 
 private slots:

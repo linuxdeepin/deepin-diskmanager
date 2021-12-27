@@ -94,6 +94,20 @@ void PartitionInfoWidget::paintEvent(QPaintEvent *event)
     rect.setHeight(height());
     QRect paintRect = QRect(0, 60, rect.width() + 1, rect.height() - 170);
 
+    // 解决分区占比很小时，分区不显示的问题
+    double smallSum = 0.0;
+    int bigCount = 0;
+    int smallCount = 0;
+    for (int i = 0; i < m_sizeInfo.size(); i++) {
+        if (m_sizeInfo[i] / m_totalSize < 0.01 || (m_sizeInfo[i] / m_totalSize) * (paintRect.width() - 8) < 8) {
+            smallCount++;
+            smallSum += (m_sizeInfo[i] / m_totalSize) * (paintRect.width() - 8);
+        } else {
+            bigCount++;
+        }
+    }
+    double space = (smallCount * 8 - smallSum) / bigCount;
+
     m_reectInfo.clear();
     int radius = 8;
     if (1 == m_sizeInfo.size()) {
@@ -124,14 +138,20 @@ void PartitionInfoWidget::paintEvent(QPaintEvent *event)
     } else {
         //根据color和size数据遍历绘制矩形
         for (int i = 0; i < m_sizeInfo.size(); i++) {
+            double widths = (m_sizeInfo[i] / m_totalSize) * (paintRect.width() - radius);
+            double width1 = 0.00;
+            widths = widths - space;
+            if (m_sizeInfo[i] / m_totalSize < 0.01 || widths < radius) {
+                widths = 8;
+            }
             if (i == 0) {
                 path[0].moveTo(paintRect.topLeft() + QPoint(radius, 0));
                 path[0].arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
                 path[0].lineTo(paintRect.bottomLeft() - QPoint(0, radius));
                 path[0].arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, radius * 2)),
                                     QSize(radius * 2, radius * 2)), 180, 90);
-                path[0].lineTo(paintRect.bottomLeft() + QPoint(static_cast<int>((m_sizeInfo[0] / m_totalSize) * paintRect.width() + radius), 0));
-                path[0].lineTo(paintRect.topLeft() + QPoint(static_cast<int>((m_sizeInfo[0] / m_totalSize) * paintRect.width() + radius), 0));
+                path[0].lineTo(paintRect.bottomLeft() + QPoint(static_cast<int>(widths + radius), 0));
+                path[0].lineTo(paintRect.topLeft() + QPoint(static_cast<int>(widths + radius), 0));
                 path[0].lineTo(paintRect.topLeft() + QPoint(radius, 0));
                 if (m_pathInfo.at(0) == "unallocated") {
                     painter.setBrush(QBrush(color));
@@ -145,11 +165,17 @@ void PartitionInfoWidget::paintEvent(QPaintEvent *event)
 
                 m_reectInfo.append(path[0].controlPointRect());
             } else if (i > 0 && i < m_sizeInfo.size() - 1) {
-                path[i].moveTo(path[i - 1].currentPosition() + QPoint(static_cast<int>((m_sizeInfo[i - 1] / m_totalSize) * paintRect.width()), 0));
-                path[i].lineTo(path[i - 1].currentPosition() + QPoint(static_cast<int>((m_sizeInfo[i - 1] / m_totalSize) * paintRect.width() + (m_sizeInfo[i] / m_totalSize) * paintRect.width()), 0));
-                path[i].lineTo(path[i - 1].currentPosition() + QPoint(static_cast<int>((m_sizeInfo[i - 1] / m_totalSize) * paintRect.width() + (m_sizeInfo[i] / m_totalSize) * paintRect.width()), paintRect.height() - 1));
-                path[i].lineTo(path[i - 1].currentPosition() + QPoint(static_cast<int>((m_sizeInfo[i - 1] / m_totalSize) * paintRect.width()), paintRect.height() - 1));
-                path[i].lineTo(path[i - 1].currentPosition() + QPoint(static_cast<int>((m_sizeInfo[i - 1] / m_totalSize) * paintRect.width()), 0));
+                width1 = (m_sizeInfo[i - 1] / m_totalSize) * (paintRect.width() - radius);
+                width1 = width1 - space;
+                if (width1 < 8 || m_sizeInfo[i - 1] / m_totalSize < 0.01) {
+                    width1 = 8;
+                }
+
+                path[i].moveTo(path[i - 1].currentPosition() + QPoint(static_cast<int>(width1), 0));
+                path[i].lineTo(path[i - 1].currentPosition() + QPoint(static_cast<int>(width1 + widths), 0));
+                path[i].lineTo(path[i - 1].currentPosition() + QPoint(static_cast<int>(width1 + widths), paintRect.height() - 1));
+                path[i].lineTo(path[i - 1].currentPosition() + QPoint(static_cast<int>(width1), paintRect.height() - 1));
+                path[i].lineTo(path[i - 1].currentPosition() + QPoint(static_cast<int>(width1), 0));
 
                 if (m_pathInfo.at(i) == "unallocated") {
                     painter.setBrush(QBrush(color));
@@ -163,13 +189,18 @@ void PartitionInfoWidget::paintEvent(QPaintEvent *event)
 
                 m_reectInfo.append(path[i].controlPointRect());
             } else if (i == m_sizeInfo.size() - 1) {
+                double width = ((m_sizeInfo[m_sizeInfo.size() - 2] / m_totalSize)) * (paintRect.width() - radius) - space;
+                if (m_sizeInfo[m_sizeInfo.size() - 2] / m_totalSize < 0.01) {
+                    width = 8;
+                }
+
                 path[m_sizeInfo.size() - 1].moveTo(paintRect.bottomRight() - QPoint(0, radius));
                 path[m_sizeInfo.size() - 1].lineTo(paintRect.topRight() + QPoint(0, radius));
                 path[m_sizeInfo.size() - 1].arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
                                                         QSize(radius * 2, radius * 2)),
                                                   0, 90);
-                path[m_sizeInfo.size() - 1].lineTo(path[m_sizeInfo.size() - 2].currentPosition() + QPoint(static_cast<int>((m_sizeInfo[m_sizeInfo.size() - 2] / m_totalSize) * paintRect.width()), 0));
-                path[m_sizeInfo.size() - 1].lineTo(path[m_sizeInfo.size() - 2].currentPosition() + QPoint(static_cast<int>((m_sizeInfo[m_sizeInfo.size() - 2] / m_totalSize) * paintRect.width()), paintRect.height() - 1));
+                path[m_sizeInfo.size() - 1].lineTo(path[m_sizeInfo.size() - 2].currentPosition() + QPoint(static_cast<int>(width), 0));
+                path[m_sizeInfo.size() - 1].lineTo(path[m_sizeInfo.size() - 2].currentPosition() + QPoint(static_cast<int>(width), paintRect.height() - 1));
                 path[m_sizeInfo.size() - 1].lineTo(paintRect.bottomRight() - QPoint(radius, 0));
                 path[m_sizeInfo.size() - 1].arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
                                                         QSize(radius * 2, radius * 2)),
@@ -242,4 +273,10 @@ void PartitionInfoWidget::mouseMoveEvent(QMouseEvent *event)
 void PartitionInfoWidget::onHandleChangeTheme()
 {
     m_parentPb = Dtk::Gui::DGuiApplicationHelper::instance()->applicationPalette();
+}
+
+void PartitionInfoWidget::leaveEvent(QEvent *event)
+{
+    Q_UNUSED(event);
+    emit leaveWidget();
 }

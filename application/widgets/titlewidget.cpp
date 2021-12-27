@@ -313,7 +313,7 @@ void TitleWidget::onUpdateUsb()
         QWidget *widget = widgetList.at(i);
 
         if (widget->objectName() == "partitionDialog" || widget->objectName() == "partitionWidget" ||
-                widget->objectName() == "formateDialog" || widget->objectName() == "mountDialog" ||
+                widget->objectName() == "wipeDialog" || widget->objectName() == "mountDialog" ||
                 widget->objectName() == "unmountDialog" || widget->objectName() == "resizeDialog" ||
                 widget->objectName() == "mountMessageBox" || widget->objectName() == "firstWarning" ||
                 widget->objectName() == "secondWarning") {

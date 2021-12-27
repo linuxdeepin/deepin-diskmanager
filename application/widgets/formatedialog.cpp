@@ -45,7 +45,7 @@ FormateDialog::FormateDialog(QWidget *parent)
 
 void FormateDialog::initUi()
 {
-    setFixedSize(450, 365);
+    setFixedSize(450, 355);
 
     m_curWipeMethod = WipeType::Fast;
     int fileSystemType = 11;
@@ -62,16 +62,42 @@ void FormateDialog::initUi()
         m_curDiskMediaType = info.m_mediaType;
     }
 
+    DPalette palette1;
+    QColor color("#000000");
+    color.setAlphaF(0.7);
+    palette1.setColor(DPalette::Text, color);
+
+    DPalette palette2;
+    palette2.setColor(DPalette::Text, QColor("#526a7f"));
+
+    DPalette palette3;
+    palette3.setColor(DPalette::Text, QColor("#001a2e"));
+
+    DPalette palette4;
+    QColor color4("#000000");
+    color4.setAlphaF(0.9);
+    palette4.setColor(DPalette::Text, color4);
+
     QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
-    setTitle(tr("Wipe %1").arg(m_pathInfo));
+    m_titleLabel = new DLabel(tr("Wipe %1").arg(m_pathInfo), this);
+    QFont fontTitle = DFontSizeManager::instance()->get(DFontSizeManager::T6);
+    fontTitle.setWeight(QFont::Medium);
+    m_titleLabel->setFont(fontTitle);
+    m_titleLabel->setPalette(palette4);
+    mainLayout->addWidget(m_titleLabel, 0, Qt::AlignCenter);
     DLabel *tipLabel = new DLabel(tr("It will erase all data on this disk, which will not be recovered"), this);
     tipLabel->setWordWrap(true);
     tipLabel->setFixedHeight(50);
     tipLabel->setAlignment(Qt::AlignCenter);
-    DFontSizeManager::instance()->bind(tipLabel, DFontSizeManager::T6);
+    QFont fontTip = DFontSizeManager::instance()->get(DFontSizeManager::T8);
+    fontTip.setWeight(QFont::Normal);
+    tipLabel->setFont(fontTip);
+    tipLabel->setPalette(palette1);
 
     DLabel *fileName = new DLabel(tr("Name:"), this);
-//    fileName->setMinimumWidth(76);
+    fileName->setFont(fontTip);
+    fileName->setPalette(palette3);
+    fileName->setFixedHeight(36);
     m_fileNameEdit = new DLineEdit(this);
     m_fileNameEdit->setAccessibleName("partName");
     QRegExp re("^[\u4E00-\u9FA5A-Za-z0-9_]+$");
@@ -82,6 +108,9 @@ void FormateDialog::initUi()
         m_fileNameEdit->lineEdit()->setPlaceholderText(tr("Name"));
 
     DLabel *formatName = new DLabel(tr("File system:"), this);
+    formatName->setFont(fontTip);
+    formatName->setPalette(palette3);
+    formatName->setFixedHeight(36);
     m_formatComboBox = new DComboBox(this);
     m_formatComboBox->setAccessibleName("File system");
     m_formatComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -98,8 +127,12 @@ void FormateDialog::initUi()
     }
 
     DLabel *securityLabel = new DLabel(tr("Security:"), this);
-    DLabel *label = new DLabel(this);
+    securityLabel->setFont(fontTip);
+    securityLabel->setPalette(palette3);
+    securityLabel->setFixedHeight(36);
+    m_labelTmp = new DLabel(this);
     m_label = new DLabel(this);
+    m_label->setFixedHeight(36);
     m_securityComboBox = new DComboBox(this);
     m_securityComboBox->setAccessibleName("Security");
     m_securityComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -119,23 +152,19 @@ void FormateDialog::initUi()
     QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T10);
     font.setWeight(QFont::Normal);
     m_describeInfo->setFont(font);
-    DPalette palette;
-    palette.setColor(DPalette::WindowText, QColor("#526a7f"));
-    m_describeInfo->setPalette(palette);
+    m_describeInfo->setPalette(palette2);
     m_describeInfo->adjustSize();
     m_describeInfo->setWordWrap(true);
     m_describeInfo->setText(tr("It only deletes the partition info without erasing the files on the disk. "
                                "Disk recovery tools may recover the files at a certain probability."));
+    m_describeInfo->setFixedHeight(30);
+    m_labelTmp->setFixedHeight(29);
 
     DLabel *wipingLabel = new DLabel(tr("Wiping method:"), this);
     QFont fontWipingMethod = DFontSizeManager::instance()->get(DFontSizeManager::T8);
     fontWipingMethod.setWeight(QFont::Normal);
     wipingLabel->setFont(fontWipingMethod);
-    DPalette paletteWiping;
-    QColor color("#000000");
-    color.setAlphaF(0.7);
-    paletteWiping.setColor(DPalette::WindowText, color);
-    wipingLabel->setPalette(paletteWiping);
+    wipingLabel->setPalette(palette1);
 
     m_wipingMethodComboBox = new DComboBox(this);
     m_wipingMethodComboBox->setAccessibleName("Wiping method");
@@ -164,11 +193,11 @@ void FormateDialog::initUi()
     layoutName->addSpacing(10);
     layoutName->addWidget(securityLabel);
     layoutName->addSpacing(5);
-    layoutName->addWidget(label);
+    layoutName->addWidget(m_labelTmp);
     layoutName->addSpacing(5);
     layoutName->addWidget(m_label);
     layoutName->setSpacing(0);
-    layoutName->setContentsMargins(0, 0, 0, 0);
+    layoutName->setContentsMargins(10, 0, 0, 0);
 
     QVBoxLayout *layoutFormat = new QVBoxLayout;
     layoutFormat->addWidget(m_fileNameEdit);
@@ -178,10 +207,9 @@ void FormateDialog::initUi()
     layoutFormat->addWidget(m_securityComboBox);
     layoutFormat->addSpacing(5);
     layoutFormat->addWidget(m_describeInfo);
-//    layoutFormat->addSpacing(5);
     layoutFormat->addWidget(m_wipingMethodWidget);
     layoutFormat->setSpacing(0);
-    layoutFormat->setContentsMargins(0, 0, 0, 0);
+    layoutFormat->setContentsMargins(0, 0, 10, 0);
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->addLayout(layoutName);
@@ -196,17 +224,23 @@ void FormateDialog::initUi()
     m_warningButton->setAccessibleName("wipeButton");
     m_warningButton->setFixedHeight(36);
 
-    QHBoxLayout *buttonLayout = new QHBoxLayout;
-    buttonLayout->addWidget(m_pushButton);
-    buttonLayout->addSpacing(10);
-    buttonLayout->addWidget(m_warningButton);
-    buttonLayout->setSpacing(0);
+    m_buttonLayout = new QHBoxLayout;
+    m_buttonLayout->addWidget(m_pushButton);
+    m_buttonLayout->addSpacing(10);
+    m_buttonLayout->addWidget(m_warningButton);
+    m_buttonLayout->setSpacing(0);
+    m_buttonLayout->setContentsMargins(0, 0, 0, 0);
+
+    QHBoxLayout *tipLayout = new QHBoxLayout;
+    tipLayout->addSpacing(50);
+    tipLayout->addWidget(tipLabel);
+    tipLayout->addSpacing(50);
+    tipLayout->setContentsMargins(0, 0, 0, 0);
 
     QVBoxLayout *wipeLayout = new QVBoxLayout;
-    wipeLayout->addWidget(tipLabel);
+    wipeLayout->addLayout(tipLayout);
     wipeLayout->addLayout(layout);
-    wipeLayout->addSpacing(10);
-    wipeLayout->addLayout(buttonLayout);
+    wipeLayout->addLayout(m_buttonLayout);
     wipeLayout->setContentsMargins(0, 0, 0, 0);
     QWidget *wipeWidget = new QWidget(this);
     wipeWidget->setLayout(wipeLayout);
@@ -232,9 +266,7 @@ void FormateDialog::initUi()
     QFont failFont = DFontSizeManager::instance()->get(DFontSizeManager::T8);
     font.setWeight(QFont::Normal);
     m_failLabel->setFont(failFont);
-    DPalette failPalette;
-    failPalette.setColor(DPalette::WindowText, QColor("#001a2e"));
-    m_failLabel->setPalette(failPalette);
+    m_failLabel->setPalette(palette3);
     m_failLabel->setText(tr("Failed to find the disk"));
 
     QVBoxLayout *failLayout = new QVBoxLayout;
@@ -254,17 +286,7 @@ void FormateDialog::initUi()
     m_stackedWidget->addWidget(failWidget);
 
     mainLayout->addWidget(m_stackedWidget);
-//    mainLayout->addSpacing(60);
-//    mainLayout->addLayout(layout);
-//    mainLayout->addSpacing(10);
-//    mainLayout->addLayout(buttonLayout);
     mainLayout->setContentsMargins(0, 0, 0, 0);
-
-//    int index = addButton(tr("Cancel"), true, ButtonNormal);
-//    m_okCode = addButton(tr("Wipe"), false, ButtonWarning);
-
-//    getButton(index)->setAccessibleName("cancel");
-//    getButton(m_okCode)->setAccessibleName("wipeButton");
 }
 
 void FormateDialog::initConnection()
@@ -346,7 +368,10 @@ void FormateDialog::onSecurityCurrentIndexChanged(int index)
 {
     switch (index) {
     case 0: {
-        setFixedSize(450, 365);
+        setFixedSize(450, 355);
+        m_describeInfo->setFixedHeight(30);
+        m_labelTmp->setFixedHeight(29);
+        m_buttonLayout->setContentsMargins(0, 0, 0, 0);
         m_label->hide();
         m_wipingMethodWidget->hide();
         m_curWipeMethod = WipeType::Fast;
@@ -355,7 +380,10 @@ void FormateDialog::onSecurityCurrentIndexChanged(int index)
         break;
     }
     case 1: {
-        setFixedSize(450, 375);
+        setFixedSize(450, 365);
+        m_describeInfo->setFixedHeight(40);
+        m_labelTmp->setFixedHeight(40);
+        m_buttonLayout->setContentsMargins(0, 0, 0, 0);
         m_label->hide();
         m_wipingMethodWidget->hide();
         m_curWipeMethod = WipeType::Secure;
@@ -366,6 +394,9 @@ void FormateDialog::onSecurityCurrentIndexChanged(int index)
     }
     case 2: {
         setFixedSize(450, 412);
+        m_describeInfo->setFixedHeight(40);
+        m_labelTmp->setFixedHeight(40);
+        m_buttonLayout->setContentsMargins(0, 10, 0, 0);
         m_label->show();
         m_wipingMethodWidget->show();
         m_wipingMethodComboBox->setCurrentIndex(0);
@@ -414,10 +445,11 @@ void FormateDialog::onWipeButtonClicked()
     }
 
     // 擦除等待动画
-    setTitle(tr("Wiping %1").arg(m_pathInfo) + "...");
+    m_titleLabel->setText(tr("Wiping %1").arg(m_pathInfo) + "...");
     m_stackedWidget->setCurrentIndex(1);
     DWindowCloseButton *button = findChild<DWindowCloseButton *>("DTitlebarDWindowCloseButton");
     button->setDisabled(true);
+    button->hide();
     m_spinner->show();
 }
 
@@ -439,7 +471,7 @@ void FormateDialog::onWipeResult(const QString &info)
 
         close();
     } else {
-        setTitle(tr("Failed to wipe %1").arg(m_pathInfo));
+        m_titleLabel->setText(tr("Failed to wipe %1").arg(m_pathInfo));
         m_stackedWidget->setCurrentIndex(2);
 
         DWindowCloseButton *button = findChild<DWindowCloseButton *>("DTitlebarDWindowCloseButton");
@@ -468,3 +500,4 @@ void FormateDialog::onWipeResult(const QString &info)
         }
     }
 }
+

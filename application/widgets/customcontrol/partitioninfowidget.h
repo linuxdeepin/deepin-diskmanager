@@ -77,6 +77,11 @@ protected:
      */
     virtual void mouseMoveEvent(QMouseEvent *event) override;
 
+    /**
+     * @brief 离开事件
+     */
+    virtual void leaveEvent(QEvent *event) override;
+
 private slots:
     /**
      * @brief 主题切换信号响应的槽函数

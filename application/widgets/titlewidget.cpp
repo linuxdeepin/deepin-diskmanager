@@ -137,8 +137,7 @@ void TitleWidget::showPartInfoWidget()
 
 void TitleWidget::showFormateInfoWidget()
 {
-    PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    setCurDevicePath(info.m_devicePath);
+    setCurDevicePath(DMDbusHandler::instance()->getCurDevicePath());
 
     FormateDialog dlg(this);
     dlg.setObjectName("wipeDialog");

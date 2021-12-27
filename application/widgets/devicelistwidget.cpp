@@ -551,6 +551,11 @@ void DeviceListWidget::onUpdateDeviceInfo()
 
     for (auto devInfo = infoMap.begin(); devInfo != infoMap.end(); devInfo++) {
         DeviceInfo info = devInfo.value();
+
+        if (info.m_path.isEmpty()) {
+            continue;
+        }
+
         QString diskSize = Utils::formatSize(info.m_length, info.m_sectorSize);
         auto diskinfoBox = new DmDiskinfoBox(0, this, info.m_path, diskSize);
         int partitionCount = 0;

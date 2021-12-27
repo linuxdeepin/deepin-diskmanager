@@ -286,6 +286,10 @@ void DMDbusHandler::onUpdateDeviceInfo(const DeviceInfoMap &infoMap)
 //                 << info.m_cylinders << info.m_cylsize << info.m_model << info.m_serialNumber << info.m_disktype
 //                 << info.m_sectorSize << info.m_maxPrims << info.m_highestBusy << info.m_readonly
 //                 << info.m_maxPartitionNameLength << info.m_mediaType << info.m_interface;
+        if (info.m_path.isEmpty()) {
+            continue;
+        }
+
         m_deviceNameList << info.m_path;
         QString isExistUnallocated = "false";
         for (auto it = info.m_partition.begin(); it != info.m_partition.end(); it++) {

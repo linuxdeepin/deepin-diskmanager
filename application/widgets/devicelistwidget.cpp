@@ -595,10 +595,10 @@ void DeviceListWidget::onUpdateDeviceInfo()
 
     QStringList deviceNameList = DMDbusHandler::instance()->getDeviceNameList();
 
-    if (deviceNameList.indexOf(DMDbusHandler::instance()->getCurPartititonInfo().m_devicePath) == -1) {
+    if (deviceNameList.indexOf(DMDbusHandler::instance()->getCurDevicePath()) == -1) {
         m_flag = 0;
     } else {
-        m_deviceNum = deviceNameList.indexOf(DMDbusHandler::instance()->getCurPartititonInfo().m_devicePath);
+        m_deviceNum = deviceNameList.indexOf(DMDbusHandler::instance()->getCurDevicePath());
     }
 
     m_addItem = 1;

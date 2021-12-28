@@ -52,14 +52,19 @@ void PartitionInfoWidget::setData(DeviceInfo info)
 {
     m_sizeInfo.clear();
     m_pathInfo.clear();
+    m_totalSize = 0.00;
     for (int i = 0; i < info.m_partition.size(); i++) {
         PartitionInfo partitionInfo = info.m_partition.at(i);
         double partitionSize = Utils::sectorToUnit(partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1, partitionInfo.m_sectorSize, SIZE_UNIT::UNIT_GIB);
         m_sizeInfo.append(partitionSize);
         m_pathInfo.append(partitionInfo.m_path);
+
+        if (FSType::FS_EXTENDED == static_cast<FSType>(partitionInfo.m_fileSystemType)) {
+            m_totalSize = partitionSize;
+        }
     }
 
-    m_totalSize = Utils::sectorToUnit(info.m_length, info.m_sectorSize, SIZE_UNIT::UNIT_GIB);
+    m_totalSize += Utils::sectorToUnit(info.m_length, info.m_sectorSize, SIZE_UNIT::UNIT_GIB);
 
     update();
 }

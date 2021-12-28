@@ -41,6 +41,9 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <pwd.h>
+#include <errno.h>
+#include <string.h>
 
 namespace DiskManager {
 //hdparm可检测，显示与设定IDE或SCSI硬盘的参数。
@@ -251,17 +254,26 @@ bool PartedCore::secuClear(const QString &path, const Sector &start, const Secto
 {
     QProcess proc;
     QString cmd;
-    int tempEnd = end * size / 1024 /1024 / size;
-
+    int tempEnd = (end - start) * size / 1024 /1024 / size;
+    struct stat fileStat;
     for (int i = 0; i < count; ++i) {
         for (int j = 0; j < tempEnd; ++++j) {
-            // cmd = QString("dd if=/dev/urandom of=%1 bs=512M count=1 seek=%2;dd if=/dev/urandom of=%3 bs=512M count=1 seek=%4").
+            stat(path.toStdString().c_str(), &fileStat);
+            if(!S_ISBLK(fileStat.st_mode)){
+                qDebug() << __FUNCTION__ << QString("%1 file not exit").arg(path);
+                return false;
+            }
             cmd = QString("dd if=/dev/zero of=%1 bs=512M count=1 seek=%2").
                     arg(path).arg(j);
             proc.start(cmd);
             proc.waitForFinished(-1);
-            if(proc.exitCode() != 0 && j < tempEnd){
+            if(proc.exitCode() != 0){
+                qDebug() << __FUNCTION__ << QString("errorCode: %1,   error: ").arg(proc.exitCode()).arg(proc.errorString());
                 return false;
+            }
+            if(j > tempEnd){
+                qDebug() << __FUNCTION__ << " secuClear end ";
+                return true;
             }
             qDebug() << __FUNCTION__ << QString("count size:%1M      current size:%2M").arg(end * size/1024/1024).arg((j+1) * size);
             qDebug() << __FUNCTION__ << QString("count num:%1       current num:%2").arg(tempEnd).arg(j);
@@ -271,7 +283,12 @@ bool PartedCore::secuClear(const QString &path, const Sector &start, const Secto
             proc.start(cmd);
             proc.waitForFinished(-1);
             if(proc.exitCode() != 0 && j+1 < tempEnd){
+                qDebug() << __FUNCTION__ << QString("errorCode: %1,   error: ").arg(proc.exitCode()).arg(proc.errorString());
                 return false;
+            }
+            if(j+1 > tempEnd){
+                qDebug() << __FUNCTION__ << " secuClear end ";
+                return true;
             }
             qDebug() << __FUNCTION__ << QString("count size:%1M      current size:%2M").arg(end * size/1024/1024).arg((j+2) * size);
             qDebug() << __FUNCTION__ << QString("count num:%1       current num:%2").arg(tempEnd).arg(j+1);
@@ -1702,10 +1719,10 @@ bool PartedCore::mountAndWriteFstab(const QString &mountpath)
     QString type = Utils::fileSystemTypeToString(m_curpartition.m_fstype);
     QString partitionPath = m_curpartition.getPath();
 
-    if (type == FS_FAT32 || type == FS_FAT16) {
-        cmd = QString("mount -v %1 %2 -o -o dmask=000,fmask=111").arg(partitionPath).arg(mountpath);
-    } else if (type == FS_HFS) {
-        cmd = QString("mount -v %1 %2 -o -o dir_umask=000,file_umask=111").arg(partitionPath).arg(mountpath);
+    if (m_curpartition.m_fstype == FSType::FS_FAT32 || m_curpartition.m_fstype == FSType::FS_FAT16) {
+        cmd = QString("mount -v %1 %2 -o dmask=000,fmask=111").arg(partitionPath).arg(mountpath);
+    } else if (m_curpartition.m_fstype == FSType::FS_HFS) {
+        cmd = QString("mount -v %1 %2 -o dir_umask=000,file_umask=111").arg(partitionPath).arg(mountpath);
     } else {
         cmd = QString("mount -v %1 %2").arg(partitionPath).arg(mountpath);
     }
@@ -1778,13 +1795,13 @@ bool PartedCore::mountTemp(const QString &mountpath)
     bool success = true;
     QString output, errstr;
     QString cmd ;
-    QString type = Utils::fileSystemTypeToString(m_curpartition.m_fstype);
+   // QString type = Utils::fileSystemTypeToString(m_curpartition.m_fstype);
     QString partitionPath = m_curpartition.getPath();
 
-    if (type == FS_FAT32 || type == FS_FAT16) {
-        cmd = QString("mount -v %1 %2 -o -o dmask=000,fmask=111").arg(partitionPath).arg(mountpath);
-    } else if (type == FS_HFS) {
-        cmd = QString("mount -v %1 %2 -o -o dir_umask=000,file_umask=111").arg(partitionPath).arg(mountpath);
+    if (m_curpartition.m_fstype == FSType::FS_FAT32 || m_curpartition.m_fstype == FSType::FS_FAT16) {
+        cmd = QString("mount -v %1 %2 -o dmask=000,fmask=111").arg(partitionPath).arg(mountpath);
+    } else if (m_curpartition.m_fstype == FSType::FS_HFS) {
+        cmd = QString("mount -v %1 %2 -o dir_umask=000,file_umask=111").arg(partitionPath).arg(mountpath);
     } else {
         cmd = QString("mount -v %1 %2").arg(partitionPath).arg(mountpath);
     }
@@ -2062,6 +2079,8 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
     PartitionInfo pInfo;
     QString curDiskType;
     QString curDevicePath;
+    QString cmd;
+    QString output, errstr;
     if(diskType == 1){
         curDevicePath = m_curpartition.m_devicePath;
         curDiskType = m_deviceMap.value(curDevicePath).m_diskType;
@@ -2168,16 +2187,53 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
     case 2:
         qDebug() << __FUNCTION__ << "Clear:  secuClear  start";
         success = secuClear(path,m_curpartition.m_sectorStart,m_curpartition.m_sectorEnd,m_curpartition.m_sectorSize,fstype,name,1);
-
+        if(!success){
+            qDebug() << __FUNCTION__ << "secuClear error";
+            struct stat fileStat;
+            stat(path.toStdString().c_str(), &fileStat);
+            if(!S_ISBLK(fileStat.st_mode)){
+                cmd = QString("rm -rf %1").arg(path);
+                Utils::executCmd(cmd, output, errstr);
+            } else {
+                emit clearMessage("0:4");
+            }
+            m_isClear = false;
+            return success;
+        }
         break;
     case 3:
         qDebug() << __FUNCTION__ << "Clear:  secuClear  start";
         success = secuClear(path,m_curpartition.m_sectorStart,m_curpartition.m_sectorEnd,m_curpartition.m_sectorSize,fstype,name,7);
-
+        if(!success){
+            qDebug() << __FUNCTION__ << "secuClear error";
+            struct stat fileStat;
+            stat(path.toStdString().c_str(), &fileStat);
+            if(!S_ISBLK(fileStat.st_mode)){
+                cmd = QString("rm -rf %1").arg(path);
+                Utils::executCmd(cmd, output, errstr);
+            } else {
+                emit clearMessage("0:4");
+            }
+            m_isClear = false;
+            return success;
+        }
         break;
     case 4:
         qDebug() << __FUNCTION__ << "Clear:  secuClear  start";
         success = secuClear(path,m_curpartition.m_sectorStart,m_curpartition.m_sectorEnd,m_curpartition.m_sectorSize,fstype,name,35);
+        if(!success){
+            qDebug() << __FUNCTION__ << "secuClear error";
+            struct stat fileStat;
+            stat(path.toStdString().c_str(), &fileStat);
+            if(!S_ISBLK(fileStat.st_mode)){
+                cmd = QString("rm -rf %1").arg(path);
+                Utils::executCmd(cmd, output, errstr);
+            } else {
+                emit clearMessage("0:4");
+            }
+            m_isClear = false;
+            return success;
+        }
 
         break;
     default:
@@ -2229,8 +2285,7 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
     }
 
     //自动挂载
-    QString cmd;
-    QString output, errstr;
+
     QFileInfo f;
     int exitcode;
     //获取挂载文件夹名字，若名字不存在，使用uuid作为名字挂载
@@ -2255,20 +2310,10 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
             return success;
         }
     }
-
     //设置文件属性，删除时，按照文件属性删除
     char *v = "deepin-diskmanager";
     setxattr(mountPath.toStdString().c_str(), "user.deepin-diskmanager", v, strlen(v), 0);
-
-    //由于使用root用户创建文件夹，需要改变文件权限
-    cmd = QString("chmod 777 %1").arg(mountPath);
-    exitcode = Utils::executCmd(cmd, output, errstr);
-    if (exitcode != 0) {
-        success = false;
-        m_isClear = false;
-        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, "0:4");
-        return success;
-    }
+    qDebug()<< "clear setxattr :  "<<strerror(errno);
 
     qDebug() << __FUNCTION__ << "Clear after:  mountTemp  start";
     success = mountTemp(mountPath);
@@ -2278,6 +2323,14 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
         return success;
     }
     qDebug() << __FUNCTION__ << "clear end";
+
+    //更改属主
+    struct passwd *psInfo;
+    psInfo = getpwnam(user.toStdString().c_str());
+    chown(mountPath.toStdString().c_str(),psInfo->pw_uid,psInfo->pw_gid);
+
+    qDebug()<< "clear chown :  "<<strerror(errno);
+
     m_isClear = false;
     emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, "1:0");
     return success;

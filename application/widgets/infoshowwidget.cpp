@@ -102,41 +102,41 @@ void InfoShowWidget::bottomFramSettings()
 
     m_mountpointLabel = new DLabel(tr("Mount point:"));
     m_mountpointLabel->setAlignment(Qt::AlignLeft);
-    m_mountpointLabel->setWordWrap(true);
-    m_mountpointLabel->adjustSize();
+//    m_mountpointLabel->setWordWrap(true);
+//    m_mountpointLabel->adjustSize();
     m_mountpointLabel->setFixedHeight(30);
     DFontSizeManager::instance()->bind(m_mountpointLabel, DFontSizeManager::T6, QFont::Medium);
     m_mountpointLabel->setAccessibleName("Mount point");
 
     m_freeLabel = new DLabel(tr("Free:"));
-    m_freeLabel->setWordWrap(true);
-    m_freeLabel->adjustSize();
+//    m_freeLabel->setWordWrap(true);
+//    m_freeLabel->adjustSize();
     m_freeLabel->setAlignment(Qt::AlignLeft);
     DFontSizeManager::instance()->bind(m_freeLabel, DFontSizeManager::T6, QFont::Medium);
     m_freeLabel->setAccessibleName("Free");
 
     m_usedLabel = new DLabel(tr("Used:"));
-    m_usedLabel->setWordWrap(true);
-    m_usedLabel->adjustSize();
+//    m_usedLabel->setWordWrap(true);
+//    m_usedLabel->adjustSize();
     m_usedLabel->setAlignment(Qt::AlignLeft);
     DFontSizeManager::instance()->bind(m_usedLabel, DFontSizeManager::T6, QFont::Medium);
     m_usedLabel->setAccessibleName("Used");
 
     m_typeLabel = new DLabel(tr("Type:"));
-    m_typeLabel->setWordWrap(true);
-    m_typeLabel->adjustSize();
+//    m_typeLabel->setWordWrap(true);
+//    m_typeLabel->adjustSize();
     DFontSizeManager::instance()->bind(m_typeLabel, DFontSizeManager::T6, QFont::Medium);
     m_typeLabel->setAccessibleName("Type");
 
     m_capacityLabel = new DLabel(tr("Capacity:"));
-    m_capacityLabel->setWordWrap(true);
-    m_capacityLabel->adjustSize();
+//    m_capacityLabel->setWordWrap(true);
+//    m_capacityLabel->adjustSize();
     DFontSizeManager::instance()->bind(m_capacityLabel, DFontSizeManager::T6, QFont::Medium);
     m_capacityLabel->setAccessibleName("Capacity");
 
     m_volumeLabel = new DLabel(tr("Volume label:"));
-    m_volumeLabel->setWordWrap(true);
-    m_volumeLabel->adjustSize();
+//    m_volumeLabel->setWordWrap(true);
+//    m_volumeLabel->adjustSize();
     DFontSizeManager::instance()->bind(m_volumeLabel, DFontSizeManager::T6, QFont::Medium);
     m_volumeLabel->setAccessibleName("Volume label");
 
@@ -177,19 +177,19 @@ void InfoShowWidget::bottomFramSettings()
     DApplicationHelper::instance()->setPalette(m_volumeLabel, palette);
 
     leftInfoLayout->addSpacing(1);
-    leftInfoLayout->addWidget(m_mountpointLabel);
+    leftInfoLayout->addWidget(m_mountpointLabel, 0, Qt::AlignLeft);
     leftInfoLayout->addSpacing(18);
-    leftInfoLayout->addWidget(m_freeLabel);
+    leftInfoLayout->addWidget(m_freeLabel, 0, Qt::AlignLeft);
     leftInfoLayout->addSpacing(22);
-    leftInfoLayout->addWidget(m_usedLabel);
+    leftInfoLayout->addWidget(m_usedLabel, 0, Qt::AlignLeft);
     leftInfoLayout->addStretch();
 
     rightInfolayout->addSpacing(1);
-    rightInfolayout->addWidget(m_typeLabel);
+    rightInfolayout->addWidget(m_typeLabel, 0, Qt::AlignLeft);
     rightInfolayout->addSpacing(25);
-    rightInfolayout->addWidget(m_capacityLabel);
+    rightInfolayout->addWidget(m_capacityLabel, 0, Qt::AlignLeft);
     rightInfolayout->addSpacing(23);
-    rightInfolayout->addWidget(m_volumeLabel);
+    rightInfolayout->addWidget(m_volumeLabel, 0, Qt::AlignLeft);
     rightInfolayout->addStretch();
 
     QHBoxLayout *mainlayout = new QHBoxLayout(m_frameBottom);

@@ -683,6 +683,12 @@ private:
      */
     bool createPartition(Partition &newPartition, Sector minSize = 0);
 
+    /**
+     * @brief 重写分区表
+     * @param devicePath：设备名称
+     */
+    void reWritePartition(const QString &devicePath);
+
 
 signals:
     void probeAllInfo();

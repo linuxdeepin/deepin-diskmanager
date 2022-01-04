@@ -72,20 +72,30 @@ int Utils::executeCmdWithArtList(const QString &strCmd, const QStringList &strAr
 int Utils::executCmd(const QString &strCmd, QString &outPut, QString &error)
 {
     qDebug() << "Utils::executCmd*******--------" << strCmd;
-    QProcess proc;
-    // proc.open(QIODevice::ReadWrite);
-    proc.start(strCmd);
-    proc.waitForFinished(-1);
-    outPut = proc.readAllStandardOutput();
-    QString stderror = proc.readAllStandardError();
-    error = proc.errorString();
-    int exitcode = proc.exitCode();
-    // qDebug()<<output<<error<<stderror;
-    //mkfs.ext4 -V have no output,stderror include useful info
-    if (outPut.isEmpty() && !stderror.isEmpty()) {
-        outPut = stderror;
+
+//    qDebug() << "Utils::executCmd*******--------" << strCmd;
+//    QProcess proc;
+//    // proc.open(QIODevice::ReadWrite);
+//    proc.start(strCmd);
+//    proc.waitForFinished(-1);
+//    outPut = proc.readAllStandardOutput();
+//    QString stderror = proc.readAllStandardError();
+//    error = proc.errorString();
+//    int exitcode = proc.exitCode();
+//    // qDebug()<<output<<error<<stderror;
+//    //mkfs.ext4 -V have no output,stderror include useful info
+//    if (outPut.isEmpty() && !stderror.isEmpty()) {
+//        outPut = stderror;
+//    }
+//    proc.close();
+
+    QStringList cmdList = strCmd.split(" ");
+    QStringList argList;
+    for (int i = 1; i < cmdList.size(); i++) {
+        argList.append(cmdList[i]);
     }
-    proc.close();
+    int exitcode = executeCmdWithArtList(cmdList[0],argList, outPut, error);
+
     return exitcode;
 }
 

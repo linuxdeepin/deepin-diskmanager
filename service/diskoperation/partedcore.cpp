@@ -485,6 +485,7 @@ void PartedCore::setDeviceFromDisk(Device &device, const QString &devicePath)
     }
 }
 
+
 bool PartedCore::getDevice(const QString &devicePath, PedDevice *&lpDevice, bool flush)
 {
     lpDevice = ped_device_get(devicePath.toStdString().c_str());
@@ -1824,9 +1825,9 @@ bool PartedCore::unmount()
     QString output, errstr;
     QVector<QString> mountpoints = m_curpartition.getMountPoints();
     for (QString path : mountpoints) {
-        QString cmd = QString("umount -v %1").arg(path);
-
-        int exitcode = Utils::executCmd(cmd, output, errstr);
+        QStringList arg;
+        arg << "-v" << path;
+        int exitcode = Utils::executeCmdWithArtList("umount", arg, output, errstr);
         if (0 != exitcode) {
             QProcess proc;
             proc.start("df");
@@ -3055,9 +3056,10 @@ void PartedCore::autoUmount()
     for (int i = 0; i < outPutList.size(); i++) {
         QStringList dfList = outPutList[i].split(" ");
         if(deviceList.indexOf(dfList.at(0).left(dfList.at(0).size()-1)) == -1 && dfList.at(0).contains("/dev/")){
-            cmd = QString("umount -v %1").arg(dfList.last());
+            QStringList arg;
+            arg << "-v" << dfList.last();
             QString output, errstr;
-            int exitcode = Utils::executCmd(cmd, output, errstr);
+            int exitcode = Utils::executeCmdWithArtList("umount", arg, output, errstr);
             if (exitcode != 0) {
                 qDebug() << __FUNCTION__ << "卸载挂载点失败";
             }

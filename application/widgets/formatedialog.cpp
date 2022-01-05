@@ -65,23 +65,25 @@ void FormateDialog::initUi()
     DPalette palette1;
     QColor color("#000000");
     color.setAlphaF(0.7);
-    palette1.setColor(DPalette::Text, color);
+    palette1.setColor(DPalette::ToolTipText, color);
 
     DPalette palette2;
     palette2.setColor(DPalette::Text, QColor("#526a7f"));
 
     DPalette palette3;
-    palette3.setColor(DPalette::Text, QColor("#001a2e"));
+    palette3.setColor(DPalette::TextTitle, QColor("#001a2e"));
 
     DPalette palette4;
     QColor color4("#000000");
     color4.setAlphaF(0.9);
-    palette4.setColor(DPalette::Text, color4);
+    palette4.setColor(DPalette::ToolTipText, color4);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
     m_titleLabel = new DLabel(tr("Wipe %1").arg(m_pathInfo), this);
-    QFont fontTitle = DFontSizeManager::instance()->get(DFontSizeManager::T6);
+    QFont fontTitle/* = DFontSizeManager::instance()->get(DFontSizeManager::T6)*/;
     fontTitle.setWeight(QFont::Medium);
+    fontTitle.setFamily("Source Han Sans");
+    fontTitle.setPixelSize(14);
     m_titleLabel->setFont(fontTitle);
     m_titleLabel->setPalette(palette4);
     mainLayout->addWidget(m_titleLabel, 0, Qt::AlignCenter);
@@ -89,8 +91,10 @@ void FormateDialog::initUi()
     tipLabel->setWordWrap(true);
     tipLabel->setFixedHeight(50);
     tipLabel->setAlignment(Qt::AlignCenter);
-    QFont fontTip = DFontSizeManager::instance()->get(DFontSizeManager::T8);
+    QFont fontTip/* = DFontSizeManager::instance()->get(DFontSizeManager::T8)*/;
     fontTip.setWeight(QFont::Normal);
+    fontTip.setFamily("Source Han Sans");
+    fontTip.setPixelSize(12);
     tipLabel->setFont(fontTip);
     tipLabel->setPalette(palette1);
 
@@ -149,8 +153,10 @@ void FormateDialog::initUi()
     m_securityComboBox->setFixedHeight(36);
 
     m_describeInfo = new DLabel(this);
-    QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T10);
+    QFont font/* = DFontSizeManager::instance()->get(DFontSizeManager::T10)*/;
     font.setWeight(QFont::Normal);
+    font.setFamily("Source Han Sans");
+    font.setPixelSize(10);
     m_describeInfo->setFont(font);
     m_describeInfo->setPalette(palette2);
     m_describeInfo->adjustSize();
@@ -161,8 +167,10 @@ void FormateDialog::initUi()
     m_labelTmp->setFixedHeight(29);
 
     DLabel *wipingLabel = new DLabel(tr("Wiping method:"), this);
-    QFont fontWipingMethod = DFontSizeManager::instance()->get(DFontSizeManager::T8);
+    QFont fontWipingMethod/* = DFontSizeManager::instance()->get(DFontSizeManager::T8)*/;
     fontWipingMethod.setWeight(QFont::Normal);
+    fontWipingMethod.setFamily("Source Han Sans");
+    fontWipingMethod.setPixelSize(12);
     wipingLabel->setFont(fontWipingMethod);
     wipingLabel->setPalette(palette1);
 
@@ -263,8 +271,10 @@ void FormateDialog::initUi()
 
     m_failLabel = new DLabel(this);
     m_failLabel->setObjectName("failreason");
-    QFont failFont = DFontSizeManager::instance()->get(DFontSizeManager::T8);
-    font.setWeight(QFont::Normal);
+    QFont failFont/* = DFontSizeManager::instance()->get(DFontSizeManager::T8)*/;
+    failFont.setWeight(QFont::Normal);
+    failFont.setFamily("Source Han Sans");
+    failFont.setPixelSize(12);
     m_failLabel->setFont(failFont);
     m_failLabel->setPalette(palette3);
     m_failLabel->setText(tr("Failed to find the disk"));

@@ -108,6 +108,7 @@ void DiskInfoDisplayDialog::initUI()
 
         QHBoxLayout *labelLayout = new QHBoxLayout;
         labelLayout->addWidget(nameLabel);
+        labelLayout->addSpacing(10);
         labelLayout->addWidget(valueLabel);
         labelLayout->setSpacing(0);
         labelLayout->setContentsMargins(0, 0, 0, 0);

@@ -129,41 +129,41 @@ void InfoShowWidget::bottomFramSettings()
 
     m_mountpointLabel = new DLabel(tr("Mount point:"));
     m_mountpointLabel->setAlignment(Qt::AlignLeft);
-    m_mountpointLabel->setWordWrap(true);
-    m_mountpointLabel->adjustSize();
+//    m_mountpointLabel->setWordWrap(true);
+//    m_mountpointLabel->adjustSize();
     m_mountpointLabel->setFixedHeight(30);
     DFontSizeManager::instance()->bind(m_mountpointLabel, DFontSizeManager::T6, QFont::Medium);
     m_mountpointLabel->setAccessibleName("Mount point");
 
     m_freeLabel = new DLabel(tr("Free:"));
-    m_freeLabel->setWordWrap(true);
-    m_freeLabel->adjustSize();
+//    m_freeLabel->setWordWrap(true);
+//    m_freeLabel->adjustSize();
     m_freeLabel->setAlignment(Qt::AlignLeft);
     DFontSizeManager::instance()->bind(m_freeLabel, DFontSizeManager::T6, QFont::Medium);
     m_freeLabel->setAccessibleName("Free");
 
     m_usedLabel = new DLabel(tr("Used:"));
-    m_usedLabel->setWordWrap(true);
-    m_usedLabel->adjustSize();
+//    m_usedLabel->setWordWrap(true);
+//    m_usedLabel->adjustSize();
     m_usedLabel->setAlignment(Qt::AlignLeft);
     DFontSizeManager::instance()->bind(m_usedLabel, DFontSizeManager::T6, QFont::Medium);
     m_usedLabel->setAccessibleName("Used");
 
     m_typeLabel = new DLabel(tr("Type:"));
-    m_typeLabel->setWordWrap(true);
-    m_typeLabel->adjustSize();
+//    m_typeLabel->setWordWrap(true);
+//    m_typeLabel->adjustSize();
     DFontSizeManager::instance()->bind(m_typeLabel, DFontSizeManager::T6, QFont::Medium);
     m_typeLabel->setAccessibleName("Type");
 
     m_capacityLabel = new DLabel(tr("Capacity:"));
-    m_capacityLabel->setWordWrap(true);
-    m_capacityLabel->adjustSize();
+//    m_capacityLabel->setWordWrap(true);
+//    m_capacityLabel->adjustSize();
     DFontSizeManager::instance()->bind(m_capacityLabel, DFontSizeManager::T6, QFont::Medium);
     m_capacityLabel->setAccessibleName("Capacity");
 
     m_volumeLabel = new DLabel(tr("Volume label:"));
-    m_volumeLabel->setWordWrap(true);
-    m_volumeLabel->adjustSize();
+//    m_volumeLabel->setWordWrap(true);
+//    m_volumeLabel->adjustSize();
     DFontSizeManager::instance()->bind(m_volumeLabel, DFontSizeManager::T6, QFont::Medium);
     m_volumeLabel->setAccessibleName("Volume label");
 
@@ -293,6 +293,14 @@ void InfoShowWidget::onCurSelectChanged()
         QString diskSize = Utils::formatSize(info.m_length, info.m_sectorSize);
         QString used = Utils::formatSize(usedSector, info.m_sectorSize);
         QString unused = Utils::formatSize(unusedSector, info.m_sectorSize);
+
+        if (used.contains("-")) {
+            used = "-";
+        }
+
+        if (unused.contains("-")) {
+            unused = "-";
+        }
 
         m_mountpointLabel->setText(tr("Path:"));
         m_typeLabel->setText(tr("Disk type:"));

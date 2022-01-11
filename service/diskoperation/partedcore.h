@@ -248,6 +248,7 @@ public:
      */
     void setDeviceFromDisk(Device &device, const QString &devicePath);
 
+
 private:
 
     /**
@@ -318,6 +319,12 @@ private:
      * @return 最小和最大文件系统大小限制结构体
      */
     static FS_Limits getFileSystemLimits(FSType fstype, const Partition &partition);
+
+    /**
+     * @brief 重写分区表
+     * @param devicePath：设备名称
+     */
+    void reWritePartition(const QString &devicePath);
 
 private:
     //general..

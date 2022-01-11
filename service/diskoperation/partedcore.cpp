@@ -242,6 +242,22 @@ FS_Limits PartedCore::getFileSystemLimits(FSType fstype, const Partition &partit
     return fsLimits;
 }
 
+void PartedCore::reWritePartition(const QString &devicePath)
+{
+    QString outPut,error;
+    QString cmd = QString("fdisk -l %1 2>&1").arg(devicePath);
+    Utils::executCmd(cmd, outPut, error);
+    QStringList outPulList = outPut.split("\n");
+    for (int i = 0; i < outPulList.size(); i++) {
+        if(strstr(outPulList[i].toStdString().c_str(), "will be corrected by write")){
+            QString outPutFix,errorFix;
+            QString cmdFix = QString("echo w | fdisk %1").arg(devicePath);
+            Utils::executCmd(cmd, outPutFix, errorFix);
+             qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
+        }
+    }
+}
+
 void PartedCore::probeDeviceInfo(const QString &)
 {
     m_inforesult.clear();
@@ -1735,9 +1751,9 @@ bool PartedCore::unmount()
     QString output, errstr;
     QVector<QString> mountpoints = m_curpartition.getMountPoints();
     for (QString path : mountpoints) {
-        QString cmd = QString("umount -v \"%1\"").arg(path);
-
-        int exitcode = Utils::executCmd(cmd, output, errstr);
+        QStringList arg;
+        arg << "-v" << path;
+        int exitcode = Utils::executeCmdWithArtList("umount", arg, output, errstr);
         if (0 != exitcode) {
             QProcess proc;
             proc.start("df");
@@ -1854,27 +1870,7 @@ bool PartedCore::createPartition(Partition &newPartition, Sector minSize)
     PedDisk *lpDisk = nullptr;
 
     //对应 Bug 95232, 如果检测到虚拟磁盘扩容的话，重新写一下分区表，就可以修正分区表数据.
-    QString cmd = QString("fdisk -l %1 2>&1").arg(newPartition.m_devicePath);
-    FILE *fd = nullptr;
-    fd = popen(cmd.toStdString().data(), "r");
-    char pb[1024];
-    memset(pb, 0, 1024);
-
-    if (fd) {
-        while (fgets(pb, 1024, fd) != nullptr) {
-            if (strstr(pb, "will be corrected by write")) {
-                QString cmd_fix = QString("echo w | fdisk %1").arg(newPartition.m_devicePath);
-
-                FILE *fixfd = popen(cmd_fix.toStdString().data(), "r");
-                if (fixfd) {
-                    fclose(fixfd);
-                }
-                qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
-            }
-        }
-
-        fclose(fd);
-    }
+    reWritePartition(newPartition.m_devicePath);
 
     if (getDeviceAndDisk(newPartition.m_devicePath, lpDevice, lpDisk)) {
         PedPartitionType type;
@@ -1950,27 +1946,7 @@ bool PartedCore::resize(const PartitionInfo &info)
     qDebug() << __FUNCTION__ << "Resize Partitione start: " << info.m_devicePath;
 
     //对应 Bug 95232, 如果检测到虚拟磁盘扩容的话，重新写一下分区表，就可以修正分区表数据.
-    QString cmd = QString("fdisk -l %1 2>&1").arg(info.m_devicePath);
-    FILE *fd = nullptr;
-    fd = popen(cmd.toStdString().data(), "r");
-    char pb[1024];
-    memset(pb, 0, 1024);
-
-    if (fd) {
-        while (fgets(pb, 1024, fd) != nullptr) {
-            if (strstr(pb, "will be corrected by write")) {
-                QString cmd_fix = QString("echo w | fdisk %1").arg(info.m_devicePath);
-
-                FILE *fixfd = popen(cmd_fix.toStdString().data(), "r");
-                if (fixfd) {
-                    fclose(fixfd);
-                }
-                qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
-            }
-        }
-
-        fclose(fd);
-    }
+    reWritePartition(info.m_devicePath);
 
     qDebug() << __FUNCTION__ << "Resize Partitione start";
     Partition newPartition = m_curpartition;
@@ -2494,36 +2470,28 @@ bool PartedCore::fixBadBlocks(const QString &devicePath, QStringList badBlocksLi
 bool PartedCore::detectionPartitionTableError(const QString &devicePath)
 {
     qDebug() << __FUNCTION__ << "Detection Partition Table Error start";
-    QString cmd = QString("fdisk -l %1 2>&1").arg(devicePath);
-    FILE *fd = nullptr;
-    fd = popen(cmd.toStdString().data(), "r");
-    char pb[1024];
-    memset(pb, 0, 1024);
 
-    if (fd == nullptr) {
+    QString outPut,error;
+    QString cmd = QString("fdisk -l %1 2>&1").arg(devicePath);
+    int ret = Utils::executCmd(cmd, outPut, error);
+    if(ret != 0){
         qDebug() << __FUNCTION__ << "Detection Partition Table Error order error";
         return false;
     }
 
-    while (fgets(pb, 1024, fd) != nullptr) {
-        if (strstr(pb, "Partition table entries are not in disk order") != nullptr) {
+    QStringList outPulList = outPut.split("\n");
+    for (int i = 0; i < outPulList.size(); i++) {
+        if(strstr(outPulList[i].toStdString().c_str(),"Partition table entries are not in disk order") != nullptr){
             return true;
         }
-        if (nullptr != strstr(pb, "will be corrected by write")) {
-            //QString output, errstr;
-            QString cmd_fix = QString("echo w | fdisk %1").arg(devicePath);
-
-            FILE *fixfd = popen(cmd_fix.toStdString().data(), "r");
-            qDebug() << __FUNCTION__ << "Detection Partition Table Rewrite Done";
-            if (fixfd) {
-                fclose(fixfd);
-            }
-
+        if(strstr(outPulList[i].toStdString().c_str(), "will be corrected by write")){
+            QString outPutFix,errorFix;
+            QString cmdFix = QString("echo w | fdisk %1").arg(devicePath);
+            Utils::executCmd(cmd, outPutFix, errorFix);
+            qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
             return true;
         }
     }
-
-    fclose(fd);
     qDebug() << __FUNCTION__ << "Detection Partition Table Error end";
     return false;
 }
@@ -2586,26 +2554,26 @@ void PartedCore::autoUmount()
     for (auto it = m_inforesult.begin();it != m_inforesult.end(); it++) {
         deviceList << it.key();
     }
-
+    QString outPut,error;
     QString cmd = QString("df");
-    FILE *fd = nullptr;
-    fd = popen(cmd.toStdString().data(), "r");
-    char pb[1024];
-    memset(pb, 0, 1024);
-
-    while (fgets(pb, 1024, fd) != nullptr) {
-        QString dfBuf = pb;
-        QStringList dfList = dfBuf.split(" ");
-        if (deviceList.indexOf(dfList.at(0).left(dfList.at(0).size()-1)) == -1 && dfList.at(0).contains("/dev/")) {
-            cmd = QString("umount -v \"%1\"").arg(dfList.last());
+    int ret = Utils::executCmd(cmd, outPut, error);
+    if(ret != 0){
+        qDebug() << __FUNCTION__ << "Detection Partition Table Error order error";
+        return;
+    }
+    QStringList outPutList = outPut.split("\n");
+    for (int i = 0; i < outPutList.size(); i++) {
+        QStringList dfList = outPutList[i].split(" ");
+        if(deviceList.indexOf(dfList.at(0).left(dfList.at(0).size()-1)) == -1 && dfList.at(0).contains("/dev/")){
+            QStringList arg;
+            arg << "-v" << dfList.last();
             QString output, errstr;
-            int exitcode = Utils::executCmd(cmd, output, errstr);
+            int exitcode = Utils::executeCmdWithArtList("umount", arg, output, errstr);
             if (exitcode != 0) {
                 qDebug() << __FUNCTION__ << "卸载挂载点失败";
             }
         }
     }
-
     qDebug() << __FUNCTION__ << "autoUmount end";
 }
 

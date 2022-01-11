@@ -1,3 +1,10 @@
+deepin-diskmanager (1.2.27) stable; urgency=low
+
+  * 1040第二十七次发版
+  * 修改安全问题
+
+ -- yuandandan <yuandandan@uniontech.com>  Tue, 11 Jan 2022 16:35:16 +0800
+
 deepin-diskmanager (1.2.26) stable; urgency=low
 
   * 1040第二十六次发版

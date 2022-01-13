@@ -2296,7 +2296,7 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
         Device d = m_deviceMap.value(curDevicePath);
         for (int i = 0 ; i < d.m_partitions.size(); i++) {
             Partition *info = d.m_partitions.at(i);
-            if (info->getPath() == path) {
+            if (pInfo.m_sectorStart == info->m_sectorStart && pInfo.m_sectorEnd == info->m_sectorEnd) {
                 m_curpartition = *info;
                 break;
             }

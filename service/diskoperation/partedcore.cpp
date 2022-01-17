@@ -1672,7 +1672,7 @@ bool PartedCore::mountAndWriteFstab(const QString &mountpath)
     QString type = Utils::fileSystemTypeToString(m_curpartition.m_fstype);
     QString partitionPath = m_curpartition.getPath();
 
-    if (type == FS_FAT32 || type == FS_FAT16) {
+    if (m_curpartition.m_fstype == FSType::FS_FAT32 || m_curpartition.m_fstype == FSType::FS_FAT16) {
         cmd = QString("mount -v %1 %2 -o -o dmask=000,fmask=111").arg(partitionPath).arg(mountpath);
     } else if (type == FS_HFS) {
         cmd = QString("mount -v %1 %2 -o -o dir_umask=000,file_umask=111").arg(partitionPath).arg(mountpath);

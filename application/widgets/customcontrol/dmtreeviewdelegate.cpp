@@ -168,8 +168,9 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         painter->setPen(text1color);
         font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
         painter->setFont(font);
-        textRect1.setRect(paintRect.left() + 60, paintRect.top() + 25, 100, 100);
-        painter->drawText(textRect1, text1);
+        textRect1.setRect(paintRect.left() + 60, paintRect.top() + 25, 110, 100);
+        QString textSize = painter->fontMetrics().elidedText(text1, Qt::ElideMiddle, 108);
+        painter->drawText(textRect1, textSize);
     } else {
         lefticon1Rect.setRect(paintRect.left() + 25, paintRect.top() + 10, 30, 30);
         QIcon icon = Common::getIcon("harddisk");
@@ -208,8 +209,9 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             painter->setPen(text1Color);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
             painter->setFont(font);
-            textRect1.setRect(paintRect.left() + 65, paintRect.top() + 28, 100, 100);
-            painter->drawText(textRect1, text3);
+            textRect1.setRect(paintRect.left() + 65, paintRect.top() + 28, 106, 100);
+            QString textSize = painter->fontMetrics().elidedText(text3, Qt::ElideMiddle, 104);
+            painter->drawText(textRect1, textSize);
         } else {
             QColor textColor = m_parentPb.color(DPalette::Normal, DPalette::Text);
             painter->setPen(textColor);
@@ -221,8 +223,9 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             painter->setPen(text1Color);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
             painter->setFont(font);
-            textRect1.setRect(paintRect.left() + 65, paintRect.top() + 28, 100, 100);
-            painter->drawText(textRect1, text3);
+            textRect1.setRect(paintRect.left() + 65, paintRect.top() + 28, 106, 100);
+            QString textSize = painter->fontMetrics().elidedText(text3, Qt::ElideMiddle, 104);
+            painter->drawText(textRect1, textSize);
         }
     }
 

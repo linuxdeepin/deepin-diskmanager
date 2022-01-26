@@ -105,7 +105,7 @@ int Utils::executWithPipeCmd(const QString &strCmd, QString &outPut, QString &er
     QStringList argList;
     argList<< "-c" << strCmd;
 
-    executeCmdWithArtList("/bin/bash", argList,outPut, error);
+    return executeCmdWithArtList("/bin/bash", argList,outPut, error);
 }
 
 int Utils::executWithErrorCmd(const QString &strCmd, const QStringList &strArg ,QString &outPut, QString &outPutError, QString &error)

@@ -2043,7 +2043,7 @@ void PartedCore::reWritePartition(const QString &devicePath)
     QString outPut,error, outPutError;
     QStringList argList;
     argList << "-l" << devicePath << "2>&1";
-    Utils::executWithErrorCmd("fdisk", argList, outPut, error, outPutError);
+    Utils::executWithErrorCmd("fdisk", argList, outPut, outPutError, error);
     QStringList outPulList = outPutError.split("\n");
     for (int i = 0; i < outPulList.size(); i++) {
         if(strstr(outPulList[i].toStdString().c_str(), "will be corrected by write")){
@@ -2948,7 +2948,7 @@ bool PartedCore::detectionPartitionTableError(const QString &devicePath)
     QString outPut,error, outPutError;
     QStringList argList;
     argList << "-l" << devicePath << "2>&1";
-    int ret = Utils::executWithErrorCmd("fdisk", argList ,outPut, error, outPutError);
+    int ret = Utils::executWithErrorCmd("fdisk", argList ,outPut, outPutError,error);
     if(ret != 0){
         qDebug() << __FUNCTION__ << "Detection Partition Table Error order error";
         return false;

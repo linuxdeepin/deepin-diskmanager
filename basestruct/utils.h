@@ -69,6 +69,26 @@ public:
     static int executCmd(const QString &strCmd, QString &outPut, QString &error);
 
     /**
+     * @brief 执行外部命令，使用 /bin/bash -c 执行管道命令
+     * @param strCmd：命令
+     * @param outPut：命令输出
+     * @param error：错误信息
+     * @return 非0失败
+     */
+    static int executWithPipeCmd(const QString &strCmd, QString &outPut, QString &error);
+
+    /**
+     * @brief 执行外部命令
+     * @param strCmd：命令
+     * @param strArg：参数
+     * @param outPut：命令输出
+     * @param outPutError: 命令错误输出
+     * @param error：错误信息
+     * @return 非0失败
+     */
+    static int executWithErrorCmd(const QString &strCmd, const QStringList &strArg, QString &outPut, QString &outPutError , QString &error);
+
+    /**
      * @brief 正则表达式截取字符串
      * @param strText：原字符串
      * @param strPatter：截取格式

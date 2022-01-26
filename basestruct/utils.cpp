@@ -52,20 +52,20 @@ QString Utils::findProgramInPath(const QString &proName)
 
 int Utils::executeCmdWithArtList(const QString &strCmd, const QStringList &strArg, QString &outPut, QString &error)
 {
-    //qDebug() << "Utils::executeCmdWithArtList----+=" << strcmd;
+    qDebug() << "Utils::executeCmdWithArtList cmd:  " << strCmd;
+    qDebug() << "Utils::executeCmdWithArtList argList:  " << strArg;
     QProcess proc;
     // proc.open(QIODevice::ReadWrite);
     //proc.start(strcmd, strarg);
     proc.setProgram(strCmd);
     proc.setArguments(strArg);
     proc.start(QIODevice::ReadWrite);
-
     proc.waitForFinished(-1);
     outPut = proc.readAllStandardOutput().data();
     error = proc.errorString();
     int exitcode = proc.exitCode();
-    //qDebug() << "Utils::executeCmdWithArtList----" << output << error;
     proc.close();
+    qDebug() << "Utils::executeCmdWithArtList----outPut: " << outPut;
     return exitcode;
 }
 
@@ -78,6 +78,33 @@ int Utils::executCmd(const QString &strCmd, QString &outPut, QString &error)
         argList.append(cmdList[i]);
     }
     int exitcode = executeCmdWithArtList(cmdList[0],argList, outPut, error);
+    return exitcode;
+}
+
+int Utils::executWithPipeCmd(const QString &strCmd, QString &outPut, QString &error)
+{
+    QStringList argList;
+    argList<< "-c" << strCmd;
+
+    return executeCmdWithArtList("/bin/bash", argList,outPut, error);
+}
+
+int Utils::executWithErrorCmd(const QString &strCmd, const QStringList &strArg ,QString &outPut, QString &outPutError, QString &error)
+{
+    qDebug() << "Utils::executWithErrorCmd cmd:  " << strCmd;
+    qDebug() << "Utils::executWithErrorCmd argList:  " << strArg;
+    QProcess proc;
+
+    proc.setProgram(strCmd);
+    proc.setArguments(strArg);
+    proc.start(QIODevice::ReadWrite);
+
+    proc.waitForFinished(-1);
+    outPut = proc.readAllStandardOutput().data();
+    outPutError = proc.readAllStandardError();
+    error = proc.errorString();
+    int exitcode = proc.exitCode();
+    proc.close();
     return exitcode;
 }
 

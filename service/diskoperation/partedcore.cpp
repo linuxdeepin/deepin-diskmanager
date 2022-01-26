@@ -244,16 +244,24 @@ FS_Limits PartedCore::getFileSystemLimits(FSType fstype, const Partition &partit
 
 void PartedCore::reWritePartition(const QString &devicePath)
 {
-    QString outPut,error;
-    QString cmd = QString("fdisk -l %1 2>&1").arg(devicePath);
-    Utils::executCmd(cmd, outPut, error);
-    QStringList outPulList = outPut.split("\n");
+    struct stat fileStat;
+    stat(devicePath.toStdString().c_str(), &fileStat);
+    if(!S_ISBLK(fileStat.st_mode)){
+        qDebug() << __FUNCTION__ << QString("%1 is not blk file").arg(devicePath);
+        return;
+    }
+
+    QString outPut,error, outPutError;
+    QStringList argList;
+    argList << "-l" << devicePath << "2>&1";
+    Utils::executWithErrorCmd("fdisk", argList, outPut, outPutError, error);
+    QStringList outPulList = outPutError.split("\n");
     for (int i = 0; i < outPulList.size(); i++) {
         if(strstr(outPulList[i].toStdString().c_str(), "will be corrected by write")){
             QString outPutFix,errorFix;
             QString cmdFix = QString("echo w | fdisk %1").arg(devicePath);
-            Utils::executCmd(cmd, outPutFix, errorFix);
-             qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
+            Utils::executWithPipeCmd(cmdFix, outPutFix, errorFix);
+            qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
         }
     }
 }
@@ -2471,9 +2479,17 @@ bool PartedCore::detectionPartitionTableError(const QString &devicePath)
 {
     qDebug() << __FUNCTION__ << "Detection Partition Table Error start";
 
-    QString outPut,error;
-    QString cmd = QString("fdisk -l %1 2>&1").arg(devicePath);
-    int ret = Utils::executCmd(cmd, outPut, error);
+    struct stat fileStat;
+    stat(devicePath.toStdString().c_str(), &fileStat);
+    if(!S_ISBLK(fileStat.st_mode)){
+        qDebug() << __FUNCTION__ << QString("%1 is not blk file").arg(devicePath);
+        return false;
+    }
+
+    QString outPut,error, outPutError;
+    QStringList argList;
+    argList << "-l" << devicePath << "2>&1";
+    int ret = Utils::executWithErrorCmd("fdisk", argList ,outPut, outPutError, error);
     if(ret != 0){
         qDebug() << __FUNCTION__ << "Detection Partition Table Error order error";
         return false;
@@ -2487,7 +2503,7 @@ bool PartedCore::detectionPartitionTableError(const QString &devicePath)
         if(strstr(outPulList[i].toStdString().c_str(), "will be corrected by write")){
             QString outPutFix,errorFix;
             QString cmdFix = QString("echo w | fdisk %1").arg(devicePath);
-            Utils::executCmd(cmd, outPutFix, errorFix);
+            Utils::executWithPipeCmd(cmdFix, outPutFix, errorFix);
             qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
             return true;
         }

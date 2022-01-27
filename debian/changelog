@@ -1,3 +1,10 @@
+deepin-diskmanager (1.2.28) stable; urgency=low
+
+  * 1040第二十八次发版
+  * 修复虚拟磁盘扩容失败的问题
+
+ -- yuandandan <yuandandan@uniontech.com>  Thu, 27 Jan 2022 13:35:16 +0800
+
 deepin-diskmanager (1.2.27) stable; urgency=low
 
   * 1040第二十七次发版

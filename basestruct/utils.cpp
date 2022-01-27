@@ -90,12 +90,13 @@ int Utils::executCmd(const QString &strCmd, QString &outPut, QString &error)
 //    }
 //    proc.close();
 
-    QStringList cmdList = strCmd.split(" ");
+    QStringList cmdList = strCmd.trimmed().split(" ");
+
     QStringList argList;
     for (int i = 1; i < cmdList.size(); i++) {
         argList.append(cmdList[i]);
     }
-    int exitcode = executeCmdWithArtList(cmdList[0],argList, outPut, error);
+    int exitcode = executeCmdWithArtList(cmdList[0], argList, outPut, error);
 
     return exitcode;
 }
@@ -533,3 +534,73 @@ QString Utils::createUuid()
     QUuid uuid;
     return uuid.createUuid().toString(QUuid::WithoutBraces);
 }
+
+Byte_Value Utils::getFsReduceMin(const QString &devPath, const FSType &fs)
+{
+    QString cmd;
+    Byte_Value min;
+    switch (fs) {
+    case FSType::FS_EXT2:
+        break;
+    case FSType::FS_EXT3:
+        break;
+    case FSType::FS_EXT4:
+        break;
+    case FSType::FS_NTFS:
+        break;
+    default:
+        return -1;
+    }
+
+    return min;
+}
+
+QString Utils::LVMFormatSize(long long lvmSize)
+{
+    QString res;
+    if (lvmSize  < KIBIBYTE) {
+        res = res.setNum(LVMSizeToUnit(lvmSize, UNIT_BYTE), 'f', 2);
+        res.append(" B");
+    } else if (lvmSize < MEBIBYTE) {
+        res = res.setNum(LVMSizeToUnit(lvmSize, UNIT_KIB), 'f', 2);
+        res.append(" KiB");
+    } else if (lvmSize < GIBIBYTE) {
+        res = res.setNum(LVMSizeToUnit(lvmSize, UNIT_MIB), 'f', 2);
+        res.append(" MiB");
+    } else if (lvmSize < TEBIBYTE) {
+        res = res.setNum(LVMSizeToUnit(lvmSize, UNIT_GIB), 'f', 2);
+        res.append(" GiB");
+    } else {
+        res = res.setNum(LVMSizeToUnit(lvmSize, UNIT_TIB), 'f', 2);
+        res.append(" TiB");
+    }
+    return res;
+
+
+}
+
+double Utils::LVMSizeToUnit(long long lvmSize, SIZE_UNIT sizeUnit)
+{
+    double res = 0.0;
+    switch (sizeUnit) {
+    case UNIT_BYTE:
+        res = lvmSize ;
+        break;
+    case UNIT_KIB:
+        res = lvmSize / static_cast<double>(KIBIBYTE) ;
+        break;
+    case UNIT_MIB:
+        res = lvmSize / static_cast<double>(MEBIBYTE);
+        break;
+    case UNIT_GIB:
+        res = lvmSize / static_cast<double>(GIBIBYTE);
+        break;
+    case UNIT_TIB:
+        res = lvmSize / static_cast<double>(TEBIBYTE);
+        break;
+    default:
+        res = lvmSize;
+    }
+    return res;
+}
+

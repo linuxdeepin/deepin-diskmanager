@@ -179,6 +179,32 @@ public:
      */
     static QString createUuid();
 
+
+    /**
+     * @brief 获取文件系统缩小最小值
+     * @return 文件系统缩小最小值
+     */
+    static Byte_Value getFsReduceMin(const QString &devPath, const FSType &fs);
+
+
+    /**
+     * @brief 格式化大小
+     * @param lvmSize:lvm 属性大小
+     * @return 大小字符串
+     */
+    static QString LVMFormatSize(long long lvmSize);
+
+
+
+    /**
+     * @brief lvm转换函数
+     * @param lvmSize:lvm 属性大小
+     * @param sizeUnit:转换大小
+     * @return 大小字符串
+     */
+    static double LVMSizeToUnit(long long lvmSize, SIZE_UNIT sizeUnit);
+
+
 };
 
 #endif // UTILS_H

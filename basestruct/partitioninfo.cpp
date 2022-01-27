@@ -89,7 +89,9 @@ QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info)
              << info.m_busy
              << info.m_fileSystemReadOnly
              << info.m_flag
-             << info.m_mountPoints;
+             << info.m_mountPoints
+             << info.m_vgFlag
+             << info.m_vgData;
     argument.endStructure();
 
     return argument;
@@ -100,29 +102,31 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PartitionInfo &in
     argument.beginStructure();
 
     argument >> info.m_devicePath
-        >> info.m_partitionNumber
-        >> info.m_type
-        >> info.m_status
-        >> info.m_alignment
-        >> info.m_fileSystemType
-        >> info.m_uuid
-        >> info.m_name
-        >> info.m_sectorStart
-        >> info.m_sectorEnd
-        >> info.m_sectorsUsed
-        >> info.m_sectorsUnused
-        >> info.m_sectorsUnallocated
-        >> info.m_significantThreshold
-        >> info.m_freeSpaceBefore
-        >> info.m_sectorSize
-        >> info.m_fileSystemBlockSize
-        >> info.m_path
-        >> info.m_fileSystemLabel
-        >> info.m_insideExtended
-        >> info.m_busy
-        >> info.m_fileSystemReadOnly
-        >> info.m_flag
-        >> info.m_mountPoints;
+             >> info.m_partitionNumber
+             >> info.m_type
+             >> info.m_status
+             >> info.m_alignment
+             >> info.m_fileSystemType
+             >> info.m_uuid
+             >> info.m_name
+             >> info.m_sectorStart
+             >> info.m_sectorEnd
+             >> info.m_sectorsUsed
+             >> info.m_sectorsUnused
+             >> info.m_sectorsUnallocated
+             >> info.m_significantThreshold
+             >> info.m_freeSpaceBefore
+             >> info.m_sectorSize
+             >> info.m_fileSystemBlockSize
+             >> info.m_path
+             >> info.m_fileSystemLabel
+             >> info.m_insideExtended
+             >> info.m_busy
+             >> info.m_fileSystemReadOnly
+             >> info.m_flag
+             >> info.m_mountPoints
+             >> info.m_vgFlag
+             >> info.m_vgData;
     argument.endStructure();
 
     return argument;

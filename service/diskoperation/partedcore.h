@@ -33,6 +33,7 @@
 #include "supportedfilesystems.h"
 #include "thread.h"
 #include "DeviceStorage.h"
+#include "lvmoperator/lvmoperator.h"
 
 #include <QObject>
 #include <QVector>
@@ -66,6 +67,13 @@ public:
      * @return 返回所有设备信息
      */
     DeviceInfoMap getAllDeviceinfo();
+
+
+    /**
+     * @brief 获取LVM设备信息
+     * @return 返回LVM设备信息
+     */
+    LVMInfo getAllLVMinfo();
 
     /**
      * @brief 获取当前页面选择分区信息
@@ -703,7 +711,7 @@ signals:
      * @brief 更新信息信号
      * @param infomap：硬盘信息
      */
-    void updateDeviceInfo(const DeviceInfoMap &infomap);
+    void updateDeviceInfo(const DeviceInfoMap &infomap, const LVMInfo &lvmInfo);
 
     /**
      * @brief 刷新信息信号
@@ -795,10 +803,10 @@ public slots:
     void onRefreshDeviceInfo(int type = 0, bool arg1 = true, QString arg2 = "");
 
 
-	/**
-	  * @brief 刷新硬件信息
-	  */
-    void syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const DeviceInfoMap inforesult);
+    /**
+      * @brief 刷新硬件信息
+      */
+    void syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const DeviceInfoMap inforesult, const LVMInfo lvmInfo);
 
 private:
     QVector<PedPartitionFlag> m_flags;    //分区标志hidden boot efi等
@@ -814,6 +822,9 @@ private:
     FixThread m_fixthread;
     ProbeThread m_probeThread;
     bool m_isClear;
+
+    LVMInfo m_lvmInfo;
+
 };
 
 } // namespace DiskManager

@@ -300,7 +300,7 @@ private slots:
      * @brief 数据更新信号响应的槽函数
      * @param infoMap 设备信息
      */
-    void onUpdateDeviceInfo(const DeviceInfoMap &infoMap);
+    void onUpdateDeviceInfo(const DeviceInfoMap &infoMap, const LVMInfo &lvmInfo);
 
     /**
      * @brief 接收卸载分区返回执行结果的槽函数

@@ -29,7 +29,7 @@
 
 #include "utils.h"
 #include "partitioninfo.h"
-
+#include "lvmstruct.h"
 #include <QVector>
 
 //dubs使用自定义数据结构中的成员变量建议初始化，在测试中发现数据结构中包含的bool类型变量未赋值，该数据结构作为槽函数返回值通过dbus调用可能导致应用崩溃退出
@@ -124,6 +124,8 @@ public:
     bool m_readonly;
     int m_maxPartitionNameLength;
     PartitionVec m_partition;
+    QVector<VGData>m_vglist;
+    int m_vgFlag; //加入vg标志位
 };
 Q_DECLARE_METATYPE(DeviceInfo)
 

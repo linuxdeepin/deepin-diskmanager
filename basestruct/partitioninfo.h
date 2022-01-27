@@ -28,7 +28,7 @@
 #ifndef PARTITIONINFO_H
 #define PARTITIONINFO_H
 #include "commondef.h"
-
+#include "lvmstruct.h"
 #include <QString>
 
 /**
@@ -83,6 +83,8 @@ public:
     bool m_busy;
     bool m_fileSystemReadOnly;
     QVector<QString> m_mountPoints;
+    int m_vgFlag; //lv是否加入标志位　0未加入　１加入
+    VGData m_vgData;//vg数据 lv信息可从vg中读取
 };
 Q_DECLARE_METATYPE(PartitionInfo)
 QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info);

@@ -113,7 +113,9 @@ void getDeviceInfo()
 
     map.insert("/dev/sde", devinfo);
 
-    DMDbusHandler::instance()->onUpdateDeviceInfo(map);
+    LVMInfo lvmInfo;
+
+    DMDbusHandler::instance()->onUpdateDeviceInfo(map, lvmInfo);
     qDebug() << "getDeviceInfo";
 }
 

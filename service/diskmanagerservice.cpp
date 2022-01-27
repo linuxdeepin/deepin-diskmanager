@@ -85,7 +85,8 @@ void DiskManagerService::getalldevice()
 void DiskManagerService::onGetAllDeviceInfomation()
 {
     DeviceInfoMap infores = m_partedcore->getAllDeviceinfo();
-    Q_EMIT updateDeviceInfo(infores);
+    LVMInfo lvmInfo = m_partedcore->getAllLVMinfo();
+    Q_EMIT updateDeviceInfo(infores,lvmInfo);
 }
 
 void DiskManagerService::setCurSelect(const PartitionInfo &info)

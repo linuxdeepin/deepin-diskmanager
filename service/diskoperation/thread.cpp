@@ -355,7 +355,10 @@ void ProbeThread::probeDeviceInfo()
     }
 //    qDebug() << __FUNCTION__ << m_inforesult.count();
 //    qDebug() << __FUNCTION__ << "**10";
-    emit updateDeviceInfo(/*m_deviceMap,*/ m_inforesult);
+
+    //todo 2022.1.26 获取m_lvminfo
+    LVMOperator::getDeviceDataAndLVMInfo(m_inforesult, m_lvmInfo);
+    emit updateDeviceInfo(/*m_deviceMap,*/ m_inforesult, m_lvmInfo);
 
     sendsignals();
     qDebug() << __FILE__ << ":" << __FUNCTION__ << "Someone call me in thread，working done!";

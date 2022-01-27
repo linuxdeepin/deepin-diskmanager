@@ -273,7 +273,7 @@ void DMDbusHandler::onMessageReport(const QString &msg)
     qDebug() << "MessageReport:" << msg;
 }
 
-void DMDbusHandler::onUpdateDeviceInfo(const DeviceInfoMap &infoMap)
+void DMDbusHandler::onUpdateDeviceInfo(const DeviceInfoMap &infoMap, const LVMInfo &lvmInfo)
 {
     m_deviceMap = infoMap;
     m_isExistUnallocated.clear();

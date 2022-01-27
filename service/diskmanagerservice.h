@@ -73,7 +73,7 @@ Q_SIGNALS:
      * @brief 刷新设备信息信号
      * @param infomap：所有设备分区信息
      */
-    Q_SCRIPTABLE void updateDeviceInfo(const DeviceInfoMap &infomap);
+    Q_SCRIPTABLE void updateDeviceInfo(const DeviceInfoMap &infomap, const LVMInfo &lvmInfo);
 
     /**
      * @brief 卸载状态信号

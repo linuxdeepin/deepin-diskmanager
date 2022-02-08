@@ -54,5 +54,25 @@
         <file>icons/deepin/builtin/light/texts/dm_arrow_check_15px.svg</file>
         <file>icons/deepin/builtin/dark/texts/dm_arrow_check_15px.svg</file>
         <file>icons/deepin/builtin/dark/texts/dm_arrow_right_check_15px.svg.svg</file>
+        <file>icons/deepin/builtin/light/texts/dm_vg_85px.svg</file>
+        <file>icons/deepin/builtin/light/texts/dm_treevg_38px.svg</file>
+        <file>icons/deepin/builtin/light/texts/dm_treelv_28px.svg</file>
+        <file>icons/deepin/builtin/light/texts/dm_lv_85px.svg</file>
+        <file>icons/deepin/builtin/dark/texts/dm_lv_85px.svg</file>
+        <file>icons/deepin/builtin/dark/texts/dm_treelv_28px.svg</file>
+        <file>icons/deepin/builtin/dark/texts/dm_treevg_38px.svg</file>
+        <file>icons/deepin/builtin/dark/texts/dm_vg_85px.svg</file>
+        <file>icons/deepin/builtin/light/texts/dm_smallarrow_15px.svg</file>
+        <file>icons/deepin/builtin/light/texts/dm_smallarrow_right_15px.svg</file>
+        <file>icons/deepin/builtin/dark/texts/dm_smallarrow_15px.svg</file>
+        <file>icons/deepin/builtin/dark/texts/dm_smallarrow_right_15px.svg</file>
+        <file>icons/deepin/builtin/light/texts/dm_add_36px.svg</file>
+        <file>icons/deepin/builtin/light/texts/dm_reduce_36px.svg</file>
+        <file>icons/deepin/builtin/dark/texts/dm_add_36px.svg</file>
+        <file>icons/deepin/builtin/dark/texts/dm_reduce_36px.svg</file>
+        <file>icons/deepin/builtin/light/texts/dm_nodisk_136px.svg</file>
+        <file>icons/deepin/builtin/light/texts/dm_nopartition_90px.svg</file>
+        <file>icons/deepin/builtin/dark/texts/dm_nodisk_136px.svg</file>
+        <file>icons/deepin/builtin/dark/texts/dm_nopartition_90px.svg</file>
     </qresource>
 </RCC>

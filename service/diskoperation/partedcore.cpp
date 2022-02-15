@@ -25,6 +25,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "gpt_header.h"
 #include "partedcore.h"
 #include "fsinfo.h"
 #include "mountinfo.h"
@@ -251,18 +252,13 @@ void PartedCore::reWritePartition(const QString &devicePath)
         return;
     }
 
-    QString outPut,error, outPutError;
-    QStringList argList;
-    argList << "-l" << devicePath << "2>&1";
-    Utils::executWithErrorCmd("fdisk", argList, outPut, outPutError, error);
-    QStringList outPulList = outPutError.split("\n");
-    for (int i = 0; i < outPulList.size(); i++) {
-        if(strstr(outPulList[i].toStdString().c_str(), "will be corrected by write")){
-            QString outPutFix,errorFix;
-            QString cmdFix = QString("echo w | fdisk %1").arg(devicePath);
-            Utils::executWithPipeCmd(cmdFix, outPutFix, errorFix);
-            qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
-        }
+    bool needRewrite = gptIsExpanded(devicePath);
+    if(needRewrite){
+        QString outPutFix,errorFix;
+        QString cmdFix = QString("echo w | fdisk %1").arg(devicePath);
+        Utils::executWithPipeCmd(cmdFix, outPutFix, errorFix);
+        qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
+        return;
     }
 }
 
@@ -2486,25 +2482,30 @@ bool PartedCore::detectionPartitionTableError(const QString &devicePath)
         return false;
     }
 
+    bool needRewrite = gptIsExpanded(devicePath);
+    if(needRewrite){
+        QString outPutFix,errorFix;
+        QString cmdFix = QString("echo w | fdisk %1").arg(devicePath);
+        Utils::executWithPipeCmd(cmdFix, outPutFix, errorFix);
+        qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
+        return true;
+    }
+
     QString outPut,error, outPutError;
     QStringList argList;
     argList << "-l" << devicePath << "2>&1";
     int ret = Utils::executWithErrorCmd("fdisk", argList ,outPut, outPutError, error);
     if(ret != 0){
-        qDebug() << __FUNCTION__ << "Detection Partition Table Error order error";
+        qDebug() << __FUNCTION__ << "Detection Partition Table Error order error, ret = " << ret;
+        qDebug() << __FUNCTION__ << " outPut:" << outPut ;
+        qDebug() << __FUNCTION__ << " outPutError:" << outPutError ;
+        qDebug() << __FUNCTION__ <<  " error:" << error;
         return false;
     }
 
     QStringList outPulList = outPut.split("\n");
     for (int i = 0; i < outPulList.size(); i++) {
         if(strstr(outPulList[i].toStdString().c_str(),"Partition table entries are not in disk order") != nullptr){
-            return true;
-        }
-        if(strstr(outPulList[i].toStdString().c_str(), "will be corrected by write")){
-            QString outPutFix,errorFix;
-            QString cmdFix = QString("echo w | fdisk %1").arg(devicePath);
-            Utils::executWithPipeCmd(cmdFix, outPutFix, errorFix);
-            qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
             return true;
         }
     }
@@ -2676,6 +2677,46 @@ bool PartedCore::newDiskLabel(const QString &devicePath, const QString &diskLabe
 
     return returnValue;
 }
+
+bool PartedCore::gptIsExpanded(const QString &devicePath)
+{
+    qDebug() << __FUNCTION__ << "gptIsExpanded called";
+
+    /* GPT 与 MBR 分区格式的介绍可以参考下面的链接：
+     * https://www.cnblogs.com/cwcheng/p/11270774.html
+     * 简单来说，如果MBR内容中，偏移量为0x1c2处的字节内容为 0xee,则表示当前磁盘采用GPT分区表。
+    */
+    int offset = 0x1c2;
+    uint8_t phdr[1024] = {0};
+
+    int fd = ::open(devicePath.toLatin1().data(), O_RDONLY);
+    if (fd < 0) {
+        return false;
+    }
+
+    int ret = ::read(fd, phdr, 1024);
+    ::close(fd);
+    if (ret < 0) {
+        return false;
+    }
+
+    if (0xee == phdr[offset]) {
+        gpt_header_t *gpt = (gpt_header_t *)(phdr+512);
+
+        for (auto it = m_deviceMap.begin(); it != m_deviceMap.end(); it++) {
+            if (it.key() == devicePath) {
+                Device dev = it.value();
+                qDebug() << __FUNCTION__ << " CHEN Enum device : \t " << dev.m_length << " " << dev.m_sectors << " " << dev.m_heads;
+                if (gpt->alternative_lba != (dev.m_length-1)) {
+                    return true;
+                }
+            }
+        }
+
+    }
+    return false;
+}
+
 
 int PartedCore::test()
 {

@@ -248,6 +248,13 @@ public:
      */
     void setDeviceFromDisk(Device &device, const QString &devicePath);
 
+     /**
+     * @brief 判断设备有否经历过gpt分区表扩容
+     * @param devicePath：设备路径
+     * @return true扩展后gpt分区表状态与实际不一致, false分区表状态正常
+     */
+    bool gptIsExpanded(const QString &devicePath);
+
 
 private:
 
@@ -752,9 +759,9 @@ public slots:
     void onRefreshDeviceInfo(int type = 0, bool arg1 = true, QString arg2 = "");
 
 
-	/**
-	  * @brief 刷新硬件信息
-	  */
+    /**
+     * @brief 刷新硬件信息
+     */
     void syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const DeviceInfoMap inforesult);
 
 private:

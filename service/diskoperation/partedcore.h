@@ -279,6 +279,13 @@ public:
      */
     bool delTempMountFile();
 
+     /**
+     * @brief 判断设备有否经历过gpt分区表扩容
+     * @param devicePath：设备路径
+     * @return true扩展后gpt分区表状态与实际不一致, false分区表状态正常
+     */
+    bool gptIsExpanded(const QString &devicePath);
+
 private:
 
     /**

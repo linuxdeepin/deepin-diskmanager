@@ -1,3 +1,12 @@
+deepin-diskmanager (1.2.29) stable; urgency=low
+
+  * 1040第二十九次发版
+  * 111152 新建fat32类型的分区使用磁盘挂载后无使用权限
+  * 95232 【版本发布】【桌面专业版】【华为云】【x86】【桌面云8.0.1】
+   【SP3-update02_X86_OEM_20210901】磁盘扩容后，磁盘管理器新建分区失败
+
+ -- yuandandan <yuandandan@uniontech.com>  Tue, 15 Feb 2022 18:04:16 +0800
+
 deepin-diskmanager (1.2.28) stable; urgency=low
 
   * 1040第二十八次发版

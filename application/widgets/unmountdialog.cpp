@@ -43,10 +43,6 @@ UnmountDialog::UnmountDialog(QWidget *parent)
 
 void UnmountDialog::initUi()
 {
-    PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-
-    setTitle(tr("Unmount %1").arg(info.m_path));
-
     QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
     DLabel *tipLabel = new DLabel(tr("Make sure there are no programs running on the disk"), this);
     tipLabel->setWordWrap(true);
@@ -54,6 +50,16 @@ void UnmountDialog::initUi()
     DFontSizeManager::instance()->bind(tipLabel, DFontSizeManager::T6);
 
     mainLayout->addWidget(tipLabel);
+
+    if (DMDbusHandler::Partition == DMDbusHandler::instance()->getCurLevel()) {
+        PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+        setTitle(tr("Unmount %1").arg(info.m_path));
+    } else if (DMDbusHandler::Partition == DMDbusHandler::instance()->getCurLevel()) {
+        LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+        setTitle(tr("Unmount %1").arg(lvInfo.m_lvName));
+
+        tipLabel->setText(tr("Make sure there are no programs running on the logical volume"));
+    }
 
     int index = addButton(tr("Cancel"), false, ButtonNormal);
     m_okCode = addButton(tr("Unmount"), false, ButtonWarning);
@@ -71,17 +77,26 @@ void UnmountDialog::onButtonClicked(int index, const QString &text)
 {
     Q_UNUSED(text);
     if (m_okCode == index) {
-        PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-        QString mountpoints;
+        QString m_mountPoints;
+        int flag = 0;
+        if (DMDbusHandler::Partition == DMDbusHandler::instance()->getCurLevel()) {
+            PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
 
-        for (int i = 0; i < info.m_mountPoints.size(); i++) {
-            mountpoints += info.m_mountPoints[i];
+            for (int i = 0; i < info.m_mountPoints.size(); i++) {
+                m_mountPoints += info.m_mountPoints[i];
+            }
+
+            flag = info.m_flag;
+        } else if (DMDbusHandler::Partition == DMDbusHandler::instance()->getCurLevel()) {
+            LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+            for (int i = 0; i < lvInfo.m_mountPoints.size(); i++) {
+                m_mountPoints += lvInfo.m_mountPoints[i];
+            }
         }
 
         qDebug() << __FUNCTION__;
-        if (mountpoints == "/boot/efi" || mountpoints == "/boot" || mountpoints == "/"
-                || mountpoints == "/recovery"
-                || info.m_flag == 4) {
+        if (m_mountPoints == "/boot/efi" || m_mountPoints == "/boot" || m_mountPoints == "/"
+                || m_mountPoints == "/recovery" || flag == 4) {
             MessageBox firstWarning(this);
             firstWarning.setObjectName("firstWarning");
             firstWarning.setAccessibleName("firstWarning");

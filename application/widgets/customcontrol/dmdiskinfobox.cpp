@@ -27,7 +27,7 @@
  */
 #include "dmdiskinfobox.h"
 
-DmDiskinfoBox::DmDiskinfoBox(int level, QObject *parent, QString diskPath, QString diskSize,
+DmDiskinfoBox::DmDiskinfoBox(int level, QObject *parent, QString diskPath, QString diskSize, int vgFlag,
                              QString partitionPath, QString partitionSize, QString used, QString unused,
                              Sector sectorsUnallocated, Sector start, Sector end, QString fstype,
                              QString mountpoints, QString systemLabel, int flag)
@@ -35,6 +35,7 @@ DmDiskinfoBox::DmDiskinfoBox(int level, QObject *parent, QString diskPath, QStri
     , m_level(level)
     , m_diskPath(diskPath)
     , m_diskSize(diskSize)
+    , m_vgFlag(vgFlag)
     , m_partitionPath(partitionPath)
     , m_partitionSize(partitionSize)
     , m_used(used)

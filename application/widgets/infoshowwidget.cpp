@@ -30,6 +30,8 @@
 #include "customcontrol/infotopframe.h"
 #include "customcontrol/dmframewidget.h"
 #include "customcontrol/partitioninfowidget.h"
+#include "customcontrol/vgsizeinfowidget.h"
+#include "vginfoshowwidget.h"
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -88,6 +90,7 @@ void InfoShowWidget::initConnection()
             &InfoShowWidget::onHandleChangeTheme);
     connect(m_partitionInfoWidget, &PartitionInfoWidget::enterWidget, this, &InfoShowWidget::onEnterWidget);
     connect(m_partitionInfoWidget, &PartitionInfoWidget::leaveWidget, this, &InfoShowWidget::onLeaveWidget);
+    connect(m_vgSizeInfoWidget, &VGSizeInfoWidget::enterWidget, this, &InfoShowWidget::onEnterVGInfoWidget);
 }
 
 void InfoShowWidget::midFramSettings()
@@ -95,11 +98,14 @@ void InfoShowWidget::midFramSettings()
     QVBoxLayout *mainLayout = new QVBoxLayout(m_frameMid);
     m_infoWidget = new SizeInfoWidget;
     m_partitionInfoWidget = new PartitionInfoWidget;
+    m_vgSizeInfoWidget = new VGSizeInfoWidget;
     mainLayout->addWidget(m_infoWidget);
     mainLayout->addWidget(m_partitionInfoWidget);
+    mainLayout->addWidget(m_vgSizeInfoWidget);
     mainLayout->setContentsMargins(0, 0, 0, 0);
 
     m_partitionInfoWidget->hide();
+    m_vgSizeInfoWidget->hide();
 
     m_arrowRectangle = new DArrowRectangle(DArrowRectangle::ArrowBottom, this);
     QColor color("#F8F8F8");
@@ -120,6 +126,9 @@ void InfoShowWidget::midFramSettings()
     m_pathLabel->setAlignment(Qt::AlignCenter);
     m_pathLabel->setFixedHeight(18);
     m_arrowRectangle->setContent(m_pathLabel);
+
+    m_vgInfoShowWidget = new VGInfoShowWidget;
+    m_vgInfoShowWidget->setObjectName("vgInfoShowWidget");
 }
 
 void InfoShowWidget::bottomFramSettings()
@@ -228,55 +237,65 @@ void InfoShowWidget::bottomFramSettings()
 void InfoShowWidget::onCurSelectChanged()
 {
     qDebug() << __FUNCTION__ << "-0--0-";
-    if (1 == DMDbusHandler::instance()->getCurLevel()) {
-        m_partitionInfoWidget->hide();
-        m_infoWidget->show();
+    if (DMDbusHandler::Partition == DMDbusHandler::instance()->getCurLevel()) {
         m_frameBottom->setFrameData();
         m_mountpointLabel->setText(tr("Mount point:"));
         m_typeLabel->setText(tr("Type:"));
         m_volumeLabel->setText(tr("Volume label:"));
-        m_noused = Utils::sectorToUnit(DMDbusHandler::instance()->getCurPartititonInfo().m_sectorsUnused, DMDbusHandler::instance()->getCurPartititonInfo().m_sectorSize, SIZE_UNIT::UNIT_GIB);
-        m_used = Utils::sectorToUnit(DMDbusHandler::instance()->getCurPartititonInfo().m_sectorsUsed, DMDbusHandler::instance()->getCurPartititonInfo().m_sectorSize, SIZE_UNIT::UNIT_GIB);
+
+        PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+        m_noused = Utils::sectorToUnit(info.m_sectorsUnused, info.m_sectorSize, SIZE_UNIT::UNIT_GIB);
+        m_used = Utils::sectorToUnit(info.m_sectorsUsed, info.m_sectorSize, SIZE_UNIT::UNIT_GIB);
 
         QString mountpoints;
-        for (QString point : DMDbusHandler::instance()->getCurPartititonInfo().m_mountPoints) {
+        for (QString point : info.m_mountPoints) {
             mountpoints.append(point + " ");
         }
         m_mountpointLabel->setObjectName(QString("@==@%1").arg(mountpoints));
-        QString free = Utils::formatSize(DMDbusHandler::instance()->getCurPartititonInfo().m_sectorsUnused, DMDbusHandler::instance()->getCurPartititonInfo().m_sectorSize);
+        QString free = Utils::formatSize(info.m_sectorsUnused, info.m_sectorSize);
         if (free.contains("-")){
             free = "-";
         }
         m_freeLabel->setObjectName(QString("@==@%1").arg(free));
-        QString used = Utils::formatSize(DMDbusHandler::instance()->getCurPartititonInfo().m_sectorsUsed, DMDbusHandler::instance()->getCurPartititonInfo().m_sectorSize);
+        QString used = Utils::formatSize(info.m_sectorsUsed, info.m_sectorSize);
         if (used.contains("-")){
             used = "-";
         }
         m_usedLabel->setObjectName(QString("@==@%1").arg(used));
-        m_typeLabel->setObjectName(QString("@==@%1").arg(Utils::fileSystemTypeToString(static_cast<FSType>(DMDbusHandler::instance()->getCurPartititonInfo().m_fileSystemType))));
-        m_capacityLabel->setObjectName(QString("@==@%1").arg(Utils::formatSize(DMDbusHandler::instance()->getCurPartititonInfo().m_sectorEnd - DMDbusHandler::instance()->getCurPartititonInfo().m_sectorStart, DMDbusHandler::instance()->getCurPartititonInfo().m_sectorSize)));
-        m_volumeLabel->setObjectName(QString("@==@%1").arg(DMDbusHandler::instance()->getCurPartititonInfo().m_fileSystemLabel));
-
-        DPalette palette;
-    //    typeLabel->setText(typeLabel->objectName());
-        DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
-        if (themeType == DGuiApplicationHelper::LightType) {
-            fillcolor = QColor("#0091ff");
-            fillcolor1 = palette.color(DPalette::Normal, DPalette::ToolTipText);
-            fillcolor1.setAlphaF(0.1);
-        } else if (themeType == DGuiApplicationHelper::DarkType) {
-            fillcolor = QColor("#0059D2");
-            fillcolor1 = palette.color(DPalette::Normal, DPalette::BrightText);
-            fillcolor1.setAlphaF(0.2);
-        }
-
-        QVector<QColor> color {fillcolor, fillcolor1};
-        QVector<double> size {m_used, m_noused};
-        m_infoWidget->setData(DMDbusHandler::instance()->getCurPartititonInfo(), color, size, 1);
+        m_typeLabel->setObjectName(QString("@==@%1").arg(Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType))));
+        m_capacityLabel->setObjectName(QString("@==@%1").arg(Utils::formatSize(info.m_sectorEnd - info.m_sectorStart, info.m_sectorSize)));
+        m_volumeLabel->setObjectName(QString("@==@%1").arg(info.m_fileSystemLabel));
         m_infoTopFrame->setShowDiskInfo();
-    } else {
-        m_partitionInfoWidget->show();
-        m_infoWidget->hide();
+
+        if (1 != info.m_vgFlag) {
+            m_partitionInfoWidget->hide();
+            m_vgSizeInfoWidget->hide();
+            m_infoWidget->show();
+
+            DPalette palette;
+            //    typeLabel->setText(typeLabel->objectName());
+            DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+            if (themeType == DGuiApplicationHelper::LightType) {
+                fillcolor = QColor("#0091ff");
+                fillcolor1 = palette.color(DPalette::Normal, DPalette::ToolTipText);
+                fillcolor1.setAlphaF(0.1);
+            } else if (themeType == DGuiApplicationHelper::DarkType) {
+                fillcolor = QColor("#0059D2");
+                fillcolor1 = palette.color(DPalette::Normal, DPalette::BrightText);
+                fillcolor1.setAlphaF(0.2);
+            }
+
+            QVector<QColor> color {fillcolor, fillcolor1};
+            QVector<double> size {m_used, m_noused};
+            m_infoWidget->setData(info, color, size, 1);
+        } else {
+            m_partitionInfoWidget->hide();
+            m_vgSizeInfoWidget->show();
+            m_infoWidget->hide();
+
+            m_vgSizeInfoWidget->setData(info.m_vgData);
+        }
+    } else if (DMDbusHandler::Disk == DMDbusHandler::instance()->getCurLevel()) {
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         Sector usedSector = 0;
         Sector unusedSector = 0;
@@ -313,8 +332,102 @@ void InfoShowWidget::onCurSelectChanged()
         m_volumeLabel->setObjectName(QString("@==@%1").arg(info.m_interface));
 
         m_frameBottom->setDiskFrameData(info.m_path, info.m_mediaType, used, unused, diskSize, info.m_interface);
-        m_partitionInfoWidget->setData(info);
         m_infoTopFrame->setShowDiskInfo();
+
+//        m_partitionInfoWidget->hide();
+//        m_infoWidget->hide();
+//        m_vgSizeInfoWidget->show();
+//        m_vgSizeInfoWidget->setData(info);
+
+        QMap<QString, QString> isJoinAllVG = DMDbusHandler::instance()->getIsJoinAllVG();
+        // 判断当前磁盘是否全部加入VG，是则显示磁盘下VG的分布情况，否则依然显示磁盘分区的分布情况
+        if (isJoinAllVG.value(info.m_path) == "false") {
+            m_partitionInfoWidget->show();
+            m_vgSizeInfoWidget->hide();
+            m_infoWidget->hide();
+
+            m_partitionInfoWidget->setData(info);
+        } else {
+            m_partitionInfoWidget->hide();
+            m_infoWidget->hide();
+            m_vgSizeInfoWidget->show();
+
+            QVector<VGData> vglist = info.m_vglist;
+            m_vgSizeInfoWidget->setData(vglist);
+        }
+    } else if (DMDbusHandler::VolumeGroup == DMDbusHandler::instance()->getCurLevel()) {
+        m_partitionInfoWidget->hide();
+        m_infoWidget->hide();
+        m_vgSizeInfoWidget->show();
+
+        VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
+
+        m_mountpointLabel->setText(tr("LV count:"));
+        m_typeLabel->setText(tr("Type:"));
+        m_volumeLabel->setText(tr("VG name:"));
+        m_mountpointLabel->setObjectName(QString("@==@%1").arg(vgInfo.m_curLV));
+        m_capacityLabel->setObjectName(QString("@==@%1").arg(vgInfo.m_vgSize));
+        m_freeLabel->setObjectName(QString("@==@%1").arg(vgInfo.m_vgUnused));
+        m_usedLabel->setObjectName(QString("@==@%1").arg(vgInfo.m_vgUsed));
+        m_typeLabel->setObjectName(QString("@==@%1").arg(tr("Volume group")));
+        m_volumeLabel->setObjectName(QString("@==@%1").arg(vgInfo.m_vgName));
+
+        m_frameBottom->setDiskFrameData(QString("%1").arg(vgInfo.m_curLV), tr("Volume group"), vgInfo.m_vgUsed,
+                                        vgInfo.m_vgUnused, vgInfo.m_vgSize, vgInfo.m_vgName);
+        m_infoTopFrame->setShowDiskInfo();
+        m_vgSizeInfoWidget->setData(vgInfo);
+    } else if (DMDbusHandler::LogicalVolume == DMDbusHandler::instance()->getCurLevel()) {
+        m_partitionInfoWidget->hide();
+        m_infoWidget->show();
+        m_vgSizeInfoWidget->hide();
+        LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+
+        QString mountPoint;
+        for (int i = 0; i < lvInfo.m_mountPoints.size(); i++) {
+            mountPoint += lvInfo.m_mountPoints[i];
+        }
+
+        QString used = Utils::LVMFormatSize(lvInfo.m_fsUsed);
+        QString unused = Utils::LVMFormatSize(lvInfo.m_fsUnused);
+        double usedSize = Utils::LVMSizeToUnit(lvInfo.m_fsUsed, SIZE_UNIT::UNIT_GIB);
+        double unusedSize = Utils::LVMSizeToUnit(lvInfo.m_fsUnused, SIZE_UNIT::UNIT_GIB);
+        QString lvName = lvInfo.m_lvName;
+
+        if (lvInfo.m_lvName.isEmpty() && lvInfo.m_lvUuid.isEmpty()) {
+            unused = Utils::LVMFormatSize(lvInfo.m_lvLECount * lvInfo.m_LESize);
+            unusedSize = Utils::LVMSizeToUnit(lvInfo.m_lvLECount * lvInfo.m_LESize, SIZE_UNIT::UNIT_GIB);
+            lvName = "unallocated";
+        }
+
+        m_mountpointLabel->setText(tr("Mount point:"));
+        m_typeLabel->setText(tr("Type:"));
+        m_volumeLabel->setText(tr("Volume name:"));
+        m_mountpointLabel->setObjectName(QString("@==@%1").arg(mountPoint));
+        m_capacityLabel->setObjectName(QString("@==@%1").arg(lvInfo.m_lvSize));
+        m_freeLabel->setObjectName(QString("@==@%1").arg(unused));
+        m_usedLabel->setObjectName(QString("@==@%1").arg(used));
+        m_typeLabel->setObjectName(QString("@==@%1").arg(tr("Logical volume")));
+        m_volumeLabel->setObjectName(QString("@==@%1").arg(lvName));
+
+        m_frameBottom->setDiskFrameData(mountPoint, tr("Logical volume"), used, unused, lvInfo.m_lvSize, lvName);
+        m_infoTopFrame->setShowDiskInfo();
+
+        DPalette palette;
+    //    typeLabel->setText(typeLabel->objectName());
+        DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+        if (themeType == DGuiApplicationHelper::LightType) {
+            fillcolor = QColor("#0091ff");
+            fillcolor1 = palette.color(DPalette::Normal, DPalette::ToolTipText);
+            fillcolor1.setAlphaF(0.1);
+        } else if (themeType == DGuiApplicationHelper::DarkType) {
+            fillcolor = QColor("#0059D2");
+            fillcolor1 = palette.color(DPalette::Normal, DPalette::BrightText);
+            fillcolor1.setAlphaF(0.2);
+        }
+
+        QVector<QColor> color {fillcolor, fillcolor1};
+        QVector<double> size {usedSize, unusedSize};
+        m_infoWidget->setData(lvInfo, color, size, 1);
     }
 }
 
@@ -360,3 +473,16 @@ void InfoShowWidget::onLeaveWidget()
 {
     m_arrowRectangle->hide();
 }
+
+void InfoShowWidget::onEnterVGInfoWidget(QRect rect, const QList<QMap<QString, QVariant> > &lstInfo)
+{
+    if (!m_vgInfoShowWidget->isHidden()) {
+        return;
+    }
+
+    m_vgInfoShowWidget->setData(lstInfo);
+    m_vgInfoShowWidget->setGeometry(m_vgSizeInfoWidget->mapToGlobal(m_vgSizeInfoWidget->pos()).x() + (rect.x()/* + rect.width() / 2*/),
+                                    m_vgSizeInfoWidget->mapToGlobal(m_vgSizeInfoWidget->pos()).y() + rect.y() + rect.height(), 100, 100);
+    m_vgInfoShowWidget->show();
+}
+

@@ -1,11 +1,11 @@
 /**
- * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ * @copyright 2020-2022 Uniontech Technology Co., Ltd.
  *
- * @file sizeinfowidget.h
+ * @file vgsizeinfowidget.h
  *
- * @brief 主界面右侧信息展示中间部分实现类
+ * @brief 逻辑卷组信息中间部分实现类
  *
- * @date 2020-09-17 14:35
+ * @date 2022-01-20 09:23
  *
  * Author: yuandandan  <yuandandan@uniontech.com>
  *
@@ -24,15 +24,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef SIZEINFOWIDGET_H
-#define SIZEINFOWIDGET_H
+#ifndef VGSIZEINFOWIDGET_H
+#define VGSIZEINFOWIDGET_H
 
 #include "partitioninfo.h"
-#include "utils.h"
+#include "deviceinfo.h"
 
-#include <DWidget>
-#include <DApplicationHelper>
 #include <DPalette>
+#include <DApplicationHelper>
 
 #include <QWidget>
 #include <QRect>
@@ -48,46 +47,58 @@
 DWIDGET_USE_NAMESPACE
 
 /**
- * @class SizeInfoWidget
- * @brief 分区信息中间部分实现类
+ * @class VGSizeInfoWidget
+ * @brief 逻辑卷组信息中间部分实现类
  */
 
-class SizeInfoWidget : public QWidget
+class VGSizeInfoWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit SizeInfoWidget(QWidget *parent = nullptr);
-
-    /**
-     * @brief 构造函数
-     * @param used 已用空间
-     * @param unused 未用空间
-     * @param flag 是否显示下方标注
-     */
-    SizeInfoWidget(double used, double unused, bool flag, QWidget *parent = nullptr);
+    explicit VGSizeInfoWidget(QWidget *parent = nullptr);
 
     /**
      * @brief 设置数据
-     * @param info 当前分区信息
-     * @param color 颜色列表
-     * @param flag 是否显示下方标注
+     * @param info 当前磁盘信息
      */
-    void setData(PartitionInfo info, QVector<QColor> color, QVector<double> size, bool flag);
+    void setData(const DeviceInfo &info);
 
     /**
      * @brief 设置数据
-     * @param info 当前逻辑卷信息
-     * @param color 颜色列表
-     * @param flag 是否显示下方标注
+     * @param info 当前逻辑卷组信息
      */
-    void setData(LVInfo info, QVector<QColor> color, QVector<double> size, bool flag);
+    void setData(const VGInfo &info);
+
+    /**
+     * @brief 设置数据
+     * @param info 当前磁盘下逻辑卷组信息
+     */
+    void setData(const QVector<VGData> &vglist);
+
+    /**
+     * @brief 设置数据
+     * @param info 当前分区下逻辑卷组信息
+     */
+    void setData(const VGData &vgData);
+
+signals:
+    void enterWidget(QRect rect, const QList< QMap<QString, QVariant> > &lstInfo);
 
 protected:
     /**
      * @brief 重写绘画事件
      */
     virtual void paintEvent(QPaintEvent *event) override;
-signals:
+
+    /**
+     * @brief 鼠标移动事件
+     */
+    virtual void mouseMoveEvent(QMouseEvent *event) override;
+
+    /**
+     * @brief 离开事件
+     */
+    virtual void leaveEvent(QEvent *event) override;
 
 private slots:
     /**
@@ -96,16 +107,18 @@ private slots:
     void onHandleChangeTheme();
 
 private:
-    double m_used = 0.00;
-    double m_noused = 0.00;
     double m_totalSize = 0.00;
-    bool m_flag = false;
     QVector<QColor> m_colorInfo;
     QVector<double> m_sizeInfo;
+    QVector<QString> m_pathInfo;
+    QVector<QRectF> m_reectInfo;
     DPalette m_parentPb;
-    QString m_totalSpaceSize;
-    QString m_usedSize;
-    QString m_partitionPath;
+    QVector<QString> m_pathList;
+    QVector<QString> m_pathSizeInfo;
+    QVector<QColor> m_pathColorInfo;
+    QRect m_rectEllipsis;
+    bool m_isEllipsis = false;
+    int m_showNumber = 0;
 };
 
-#endif // SIZEINFOWIDGET_H
+#endif // VGSIZEINFOWIDGET_H

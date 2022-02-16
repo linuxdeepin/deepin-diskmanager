@@ -32,6 +32,8 @@
 #include "partitiontableerrorsinfodialog.h"
 #include "diskbadsectorsdialog.h"
 #include "createpartitiontabledialog.h"
+#include "createlvwidget.h"
+#include "partitiondialog.h"
 
 #include <DPalette>
 #include <DMenu>
@@ -96,7 +98,7 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
     }
 
     m_curDiskInfoData = m_treeView->getCurItem()->data().value<DiskInfoData>();
-    if (m_curDiskInfoData.m_level == 0) {
+    if (m_curDiskInfoData.m_level == DMDbusHandler::Disk) {
         QMenu *menu = new QMenu(this);
         menu->setObjectName("treeMenu");
         menu->setAccessibleName("menu");
@@ -138,9 +140,14 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
         menu->addAction(createPartitionTable);
         connect(createPartitionTable, &QAction::triggered, this, &DeviceListWidget::onCreatePartitionTableClicked);
 
+        DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
+        if (1 == info.m_vgFlag) {
+            createPartitionTable->setDisabled(true);
+        }
+
         menu->exec(QCursor::pos());  //显示菜单
         delete menu;
-    } else {
+    } else if (m_curDiskInfoData.m_level == DMDbusHandler::Partition) {
         QMenu *menu = new QMenu(this);
         menu->setObjectName("treeMenu");
         menu->setAccessibleName("menu");
@@ -168,7 +175,8 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
             actionDelete->setDisabled(true);
         }
 
-        if (m_curDiskInfoData.m_fstype == "unallocated" || m_curDiskInfoData.m_fstype == "linux-swap") {
+        PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+        if (m_curDiskInfoData.m_fstype == "unallocated" || m_curDiskInfoData.m_fstype == "linux-swap" || 1 == info.m_vgFlag) {
 //            actionHidePartition->setDisabled(true);
 //            actionShowPartition->setDisabled(true);
             actionDelete->setDisabled(true);
@@ -181,6 +189,43 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
                 actionShowPartition->setDisabled(true);
             }
         }*/
+
+        menu->exec(QCursor::pos());  //显示菜单
+        delete menu;
+    } else if (m_curDiskInfoData.m_level == DMDbusHandler::VolumeGroup) {
+        QMenu *menu = new QMenu(this);
+        menu->setObjectName("treeMenu");
+        menu->setAccessibleName("menu");
+
+        QAction *actionDelete = new QAction(this);
+        actionDelete->setText(tr("Delete volume group")); // 删除逻辑卷组
+        actionDelete->setObjectName("Delete volume group");
+        menu->addAction(actionDelete);
+        connect(actionDelete, &QAction::triggered, this, &DeviceListWidget::onDeleteVGClicked);
+
+        QAction *actionCreate = new QAction(this);
+        actionCreate->setText(tr("Create logical volume")); // 创建逻辑卷
+        actionCreate->setObjectName("Create logical volume");
+        menu->addAction(actionCreate);
+        connect(actionCreate, &QAction::triggered, this, &DeviceListWidget::onCreateLVClicked);
+
+        QMap<QString, QString> isExistUnallocated = DMDbusHandler::instance()->getIsExistUnallocated();
+        if (isExistUnallocated.value(m_curDiskInfoData.m_diskPath) == "false") {
+            actionCreate->setDisabled(true);
+        }
+
+        menu->exec(QCursor::pos());  //显示菜单
+        delete menu;
+    } else if (m_curDiskInfoData.m_level == DMDbusHandler::LogicalVolume) {
+        QMenu *menu = new QMenu(this);
+        menu->setObjectName("treeMenu");
+        menu->setAccessibleName("menu");
+
+        QAction *actionDelete = new QAction(this);
+        actionDelete->setText(tr("Delete logical volume")); // 删除逻辑卷
+        actionDelete->setObjectName("Delete logical volume");
+        menu->addAction(actionDelete);
+        connect(actionDelete, &QAction::triggered, this, &DeviceListWidget::onDeleteLVClicked);
 
         menu->exec(QCursor::pos());  //显示菜单
         delete menu;
@@ -500,6 +545,81 @@ void DeviceListWidget::onCreatePartitionTableMessage(const bool &flag)
     }
 }
 
+void DeviceListWidget::onDeleteVGClicked()
+{
+    VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
+    if (DMDbusHandler::instance()->isExistMountLV()){
+        MessageBox warningBox(this);
+        warningBox.setObjectName("messageBox");
+        warningBox.setAccessibleName("messageBox");
+        // 请先手动卸载XXX（逻辑卷组名称）  确定
+        warningBox.setWarings(tr("Unmount %1 first").arg(vgInfo.m_vgName), "", tr("OK"), "ok");
+        warningBox.exec();
+
+        return;
+    }
+
+    MessageBox messageBox(this);
+    messageBox.setObjectName("messageBox");
+    messageBox.setAccessibleName("deleteVGMessageBox");
+    // 删除后数据将无法恢复，请确认  删除  取消
+    messageBox.setWarings(tr("Data cannot be recovered if deleted, please confirm before proceeding"), "",
+                          tr("Delete"), DDialog::ButtonWarning, "delete", tr("Cancel"), "cancel");
+    if (messageBox.exec() == DDialog::Accepted) {
+        QStringList vgNameList;
+        vgNameList << vgInfo.m_vgName;
+
+        DMDbusHandler::instance()->deleteVG(vgNameList);
+    }
+}
+
+void DeviceListWidget::onCreateLVClicked()
+{
+    PartitionDialog dlg(this);
+    dlg.setTitleText(tr("Create logical volume"), tr("The disks will be formatted if you create a logical volume"));
+    dlg.setObjectName("createLVDialog");
+    dlg.setAccessibleName("createLVDialog");
+
+    if (dlg.exec() == 1) {
+        CreateLVWidget createLVWidget(this);
+        createLVWidget.setObjectName("createLVWidget");
+        createLVWidget.setAccessibleName("createLVWidget");
+        createLVWidget.exec();
+    }
+}
+
+void DeviceListWidget::onDeleteLVClicked()
+{
+    LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+    QString mountPoint = "";
+    for (int i = 0; i < lvInfo.m_mountPoints.size(); i++) {
+        mountPoint += lvInfo.m_mountPoints[i];
+    }
+    if (!mountPoint.isEmpty()){
+        MessageBox warningBox(this);
+        warningBox.setObjectName("messageBox");
+        warningBox.setAccessibleName("messageBox");
+        // 请先手动卸载XXX（逻辑卷名称）  确定
+        warningBox.setWarings(tr("Unmount %1 first").arg(lvInfo.m_lvName), "", tr("OK"), "ok");
+        warningBox.exec();
+
+        return;
+    }
+
+    MessageBox messageBox(this);
+    messageBox.setObjectName("messageBox");
+    messageBox.setAccessibleName("deleteLVMessageBox");
+    // 删除后数据将无法恢复，请确认  删除  取消
+    messageBox.setWarings(tr("Data cannot be recovered if deleted, please confirm before proceeding"), "",
+                          tr("Delete"), DDialog::ButtonWarning, "delete", tr("Cancel"), "cancel");
+    if (messageBox.exec() == DDialog::Accepted) {
+        QStringList lvNameList;
+        lvNameList << lvInfo.m_lvPath;
+
+        DMDbusHandler::instance()->deleteLV(lvNameList);
+    }
+}
+
 void DeviceListWidget::onUpdateUsb()
 {
     if (m_curChooseDevicePath == "")
@@ -540,98 +660,247 @@ void DeviceListWidget::onUpdateDeviceInfo()
 {
     //更新DmTreeview  lx
     //设置当前选项
+
     auto handler = DMDbusHandler::instance();
     m_num = handler->getCurPartititonInfo().m_partitionNumber;
     m_deviceNum = m_treeView->getCurrentTopNum();
     m_devicePath = handler->getCurPartititonInfo().m_devicePath;
     m_treeView->m_model->clear();
+    m_treeView->clearData();
     DeviceInfoMap infoMap = DMDbusHandler::instance()->probDeviceInfo();
     QMap<int, int> countMap;
     int deviceCount = 0;
 
-    for (auto devInfo = infoMap.begin(); devInfo != infoMap.end(); devInfo++) {
-        DeviceInfo info = devInfo.value();
+    LVMInfo lvmInfo = DMDbusHandler::instance()->probLVMInfo();
+    QMap<QString, VGInfo> mapVGInfo = lvmInfo.m_vgInfo;
+    QMap<int, int> countVGMap;
+    int vgCount = 0;
 
-        if (info.m_path.isEmpty()) {
-            continue;
-        }
+    if (0 != mapVGInfo.count()) {
+        auto lvmInfoBox = new DmDiskinfoBox(DMDbusHandler::Other, this, tr("Volume Groups"), "");
+        for (auto vgInfo = mapVGInfo.begin(); vgInfo != mapVGInfo.end(); vgInfo++) {
+            VGInfo vgInformation = vgInfo.value();
 
-        QString diskSize = Utils::formatSize(info.m_length, info.m_sectorSize);
-        auto diskinfoBox = new DmDiskinfoBox(0, this, info.m_path, diskSize);
-        int partitionCount = 0;
-
-        for (auto it = info.m_partition.begin(); it != info.m_partition.end(); it++) {
-            QString partitionSize = Utils::formatSize(it->m_sectorEnd - it->m_sectorStart + 1, it->m_sectorSize);
-            QString partitionPath = it->m_path;
-            if ("unallocated" != partitionPath) {
-                partitionPath = partitionPath.remove(0, 5);
+            if (vgInformation.m_vgName.isEmpty()) {
+                continue;
             }
 
-            QString used = Utils::formatSize(it->m_sectorsUsed, it->m_sectorSize);
-            QString unused = Utils::formatSize(it->m_sectorsUnused, it->m_sectorSize);
+            auto vgInfoBox = new DmDiskinfoBox(DMDbusHandler::VolumeGroup, this, vgInformation.m_vgName, vgInformation.m_vgSize);
+            int lvCount = 0;
 
-            FSType fstype = static_cast<FSType>(it->m_fileSystemType);
-            QString fstypeName = Utils::fileSystemTypeToString(fstype);
-            QString mountpoints;
+            for (auto lvInfo = vgInformation.m_lvlist.begin(); lvInfo != vgInformation.m_lvlist.end(); lvInfo++) {
+                QString used = Utils::LVMFormatSize(lvInfo->m_fsUsed);
+                QString unused = Utils::LVMFormatSize(lvInfo->m_fsUnused);
+                if (lvInfo->m_lvName.isEmpty() && lvInfo->m_lvUuid.isEmpty()) {
+                    unused = Utils::LVMFormatSize(lvInfo->m_lvLECount * lvInfo->m_LESize);
+                    lvInfo->m_lvName = "unallocated";
+                }
 
-            for (int i = 0; i < it->m_mountPoints.size(); i++) {
-                mountpoints += it->m_mountPoints[i];
+                FSType fstype = static_cast<FSType>(lvInfo->m_lvFsType);
+                QString fstypeName = Utils::fileSystemTypeToString(fstype);
+
+                QString mountPoints;
+                for (int i = 0; i < lvInfo->m_mountPoints.size(); i++) {
+                    mountPoints += lvInfo->m_mountPoints[i];
+                }
+
+                auto lvInfoBox = new DmDiskinfoBox(DMDbusHandler::LogicalVolume, this, lvInfo->m_vgName, "", 0, lvInfo->m_lvPath, lvInfo->m_lvSize, used, unused,
+                                                          0, 0, 0, fstypeName, mountPoints, lvInfo->m_lvName, 0);
+
+                vgInfoBox->m_childs.append(lvInfoBox);
+
+                lvCount ++;
+            }
+            lvmInfoBox->m_childs.append(vgInfoBox);
+
+            countVGMap[vgCount] = lvCount;
+            vgCount ++;
+        }
+
+        auto infoBox = new DmDiskinfoBox(DMDbusHandler::Other, this, tr("Disks"), "");
+        for (auto devInfo = infoMap.begin(); devInfo != infoMap.end(); devInfo++) {
+            DeviceInfo info = devInfo.value();
+
+            if (info.m_path.isEmpty() || info.m_path.contains("/dev/mapper")) {
+                continue;
             }
 
-            QString fileSystemLabel = it->m_fileSystemLabel;
-            auto childDiskinfoBox = new DmDiskinfoBox(1, this, it->m_devicePath, "", partitionPath, partitionSize, used, unused,
-                                                      it->m_sectorsUnallocated, it->m_sectorStart, it->m_sectorEnd, fstypeName,
-                                                      mountpoints, fileSystemLabel, it->m_flag);
-            diskinfoBox->m_childs.append(childDiskinfoBox);
+            QString diskSize = Utils::formatSize(info.m_length, info.m_sectorSize);
+            auto diskinfoBox = new DmDiskinfoBox(DMDbusHandler::Disk, this, info.m_path, diskSize);
+            int partitionCount = 0;
 
-            partitionCount ++;
-        }
+            for (auto it = info.m_partition.begin(); it != info.m_partition.end(); it++) {
+                QString partitionSize = Utils::formatSize(it->m_sectorEnd - it->m_sectorStart + 1, it->m_sectorSize);
+                QString partitionPath = it->m_path;
+                if ("unallocated" != partitionPath) {
+                    partitionPath = partitionPath.remove(0, 5);
+                }
 
-        m_treeView->addTopItem(diskinfoBox, m_addItem);
+                QString used = Utils::formatSize(it->m_sectorsUsed, it->m_sectorSize);
+                QString unused = Utils::formatSize(it->m_sectorsUnused, it->m_sectorSize);
 
-        countMap[deviceCount] = partitionCount;
-        deviceCount ++;
-    }
+                FSType fstype = static_cast<FSType>(it->m_fileSystemType);
+                QString fstypeName = Utils::fileSystemTypeToString(fstype);
+                QString mountpoints;
 
-    QStringList deviceNameList = DMDbusHandler::instance()->getDeviceNameList();
+                for (int i = 0; i < it->m_mountPoints.size(); i++) {
+                    mountpoints += it->m_mountPoints[i];
+                }
 
-    if (deviceNameList.indexOf(DMDbusHandler::instance()->getCurDevicePath()) == -1) {
-        m_flag = 0;
-    } else {
-        m_deviceNum = deviceNameList.indexOf(DMDbusHandler::instance()->getCurDevicePath());
-    }
+                QString fileSystemLabel = it->m_fileSystemLabel;
+                auto childDiskinfoBox = new DmDiskinfoBox(DMDbusHandler::Partition, this, it->m_devicePath, "", it->m_vgFlag, partitionPath, partitionSize, used, unused,
+                                                          it->m_sectorsUnallocated, it->m_sectorStart, it->m_sectorEnd, fstypeName,
+                                                          mountpoints, fileSystemLabel, it->m_flag);
+                diskinfoBox->m_childs.append(childDiskinfoBox);
 
-    m_addItem = 1;
-
-    if (m_flag == 0) {
-        for (int i = 0; i < deviceNameList.count(); i++) {
-            if (countMap.value(i) != 0) {
-                m_treeView->setRefreshItem(i, 0);
-                break;
+                partitionCount ++;
             }
-        }
-//        m_treeView->setDefaultdmItem();
-    } else {
-        int index = m_treeView->getCurrentNum();
-        if (countMap.value(m_deviceNum) == index) {
-            index = m_treeView->getCurrentNum() - 1;
-        }
+            infoBox->m_childs.append(diskinfoBox);
 
-        if (countMap.value(m_deviceNum) < index) {
-            index = countMap.value(m_deviceNum) - 1;
+            countMap[deviceCount] = partitionCount;
+            deviceCount ++;
         }
+        m_treeView->addTopItem(lvmInfoBox, m_addItem);
+        m_treeView->addTopItem(infoBox, m_addItem);
 
-        if (m_treeView->getCurrentTopNum() == -1) {
+        QStringList deviceNameList = DMDbusHandler::instance()->getDeviceNameList();
+        if (DMDbusHandler::Disk == DMDbusHandler::instance()->getCurLevel() ||
+                DMDbusHandler::Partition == DMDbusHandler::instance()->getCurLevel()) {
             if (deviceNameList.indexOf(DMDbusHandler::instance()->getCurDevicePath()) == -1) {
-                m_treeView->setDefaultdmItem();
+                m_flag = 0;
             } else {
-                m_treeView->setRefreshItem(m_treeView->getCurrentTopNum(), deviceNameList.indexOf(DMDbusHandler::instance()->getCurDevicePath()));
+                m_deviceNum = deviceNameList.indexOf(DMDbusHandler::instance()->getCurDevicePath());
+            }
+        } else {
+            QStringList vgNameList = DMDbusHandler::instance()->getVGNameList();
+            if (vgNameList.indexOf(DMDbusHandler::instance()->getCurVGName()) == -1) {
+                m_flag = 0;
+            } else {
+                m_deviceNum = vgNameList.indexOf(DMDbusHandler::instance()->getCurVGName());
+            }
+        }
+
+        m_addItem = 1;
+
+        if (m_flag == 0) {
+            for (int i = 0; i < deviceNameList.count(); i++) {
+                if (countMap.value(i) != 0) {
+                    m_treeView->setRefreshItem(i, 0, 1);
+                    break;
+                }
+            }
+        } else {
+            int index = m_treeView->getCurrentNum();
+            if (-1 != m_treeView->getCurrentGroupNum()) {
+                if (DMDbusHandler::Disk == DMDbusHandler::instance()->getCurLevel() ||
+                        DMDbusHandler::Partition == DMDbusHandler::instance()->getCurLevel()) {
+                    if (countMap.value(m_deviceNum) == index) {
+                        index = m_treeView->getCurrentNum() - 1;
+                    }
+
+                    if (countMap.value(m_deviceNum) < index) {
+                        index = countMap.value(m_deviceNum) - 1;
+                    }
+                } else {
+                    if (countVGMap.value(m_deviceNum) == index) {
+                        index = m_treeView->getCurrentNum() - 1;
+                    }
+
+                    if (countVGMap.value(m_deviceNum) < index) {
+                        index = countVGMap.value(m_deviceNum) - 1;
+                    }
+                }
             }
 
-        } else {
-            m_treeView->setRefreshItem(m_deviceNum, index);
+            m_treeView->setRefreshItem(m_treeView->getCurrentTopNum(), index, m_treeView->getCurrentGroupNum());
         }
-    }
 
-    m_flag += 1;
+        m_flag += 1;
+    } else {
+        for (auto devInfo = infoMap.begin(); devInfo != infoMap.end(); devInfo++) {
+            DeviceInfo info = devInfo.value();
+
+            if (info.m_path.isEmpty() || info.m_path.contains("/dev/mapper")) {
+                continue;
+            }
+
+            QString diskSize = Utils::formatSize(info.m_length, info.m_sectorSize);
+            auto diskinfoBox = new DmDiskinfoBox(DMDbusHandler::Disk, this, info.m_path, diskSize);
+            int partitionCount = 0;
+
+            for (auto it = info.m_partition.begin(); it != info.m_partition.end(); it++) {
+                QString partitionSize = Utils::formatSize(it->m_sectorEnd - it->m_sectorStart + 1, it->m_sectorSize);
+                QString partitionPath = it->m_path;
+                if ("unallocated" != partitionPath) {
+                    partitionPath = partitionPath.remove(0, 5);
+                }
+
+                QString used = Utils::formatSize(it->m_sectorsUsed, it->m_sectorSize);
+                QString unused = Utils::formatSize(it->m_sectorsUnused, it->m_sectorSize);
+
+                FSType fstype = static_cast<FSType>(it->m_fileSystemType);
+                QString fstypeName = Utils::fileSystemTypeToString(fstype);
+                QString mountpoints;
+
+                for (int i = 0; i < it->m_mountPoints.size(); i++) {
+                    mountpoints += it->m_mountPoints[i];
+                }
+
+                QString fileSystemLabel = it->m_fileSystemLabel;
+                auto childDiskinfoBox = new DmDiskinfoBox(DMDbusHandler::Partition, this, it->m_devicePath, "", it->m_vgFlag, partitionPath, partitionSize, used, unused,
+                                                          it->m_sectorsUnallocated, it->m_sectorStart, it->m_sectorEnd, fstypeName,
+                                                          mountpoints, fileSystemLabel, it->m_flag);
+                diskinfoBox->m_childs.append(childDiskinfoBox);
+
+                partitionCount ++;
+            }
+
+            m_treeView->addTopItem(diskinfoBox, m_addItem);
+
+            countMap[deviceCount] = partitionCount;
+            deviceCount ++;
+        }
+
+        QStringList deviceNameList = DMDbusHandler::instance()->getDeviceNameList();
+
+        if (deviceNameList.indexOf(DMDbusHandler::instance()->getCurDevicePath()) == -1) {
+            m_flag = 0;
+        } else {
+            m_deviceNum = deviceNameList.indexOf(DMDbusHandler::instance()->getCurDevicePath());
+        }
+
+        m_addItem = 1;
+
+        if (m_flag == 0) {
+            for (int i = 0; i < deviceNameList.count(); i++) {
+                if (countMap.value(i) != 0) {
+                    m_treeView->setRefreshItem(i, 0);
+                    break;
+                }
+            }
+            //        m_treeView->setDefaultdmItem();
+        } else {
+            int index = m_treeView->getCurrentNum();
+            if (countMap.value(m_deviceNum) == index) {
+                index = m_treeView->getCurrentNum() - 1;
+            }
+
+            if (countMap.value(m_deviceNum) < index) {
+                index = countMap.value(m_deviceNum) - 1;
+            }
+
+            if (m_treeView->getCurrentTopNum() == -1) {
+                if (deviceNameList.indexOf(DMDbusHandler::instance()->getCurDevicePath()) == -1) {
+                    m_treeView->setDefaultdmItem();
+                } else {
+                    m_treeView->setRefreshItem(m_treeView->getCurrentTopNum(), deviceNameList.indexOf(DMDbusHandler::instance()->getCurDevicePath()));
+                }
+
+            } else {
+                m_treeView->setRefreshItem(m_deviceNum, index);
+            }
+        }
+
+        m_flag += 1;
+    }
 }

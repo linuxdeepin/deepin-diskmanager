@@ -160,7 +160,7 @@ private slots:
     void onDiskBadSectorsClicked();
 
     /**
-     * @brief 磁盘新建分区表按钮点击响应的槽函数
+     * @brief 判断当前检测磁盘是否存在被挂载的分区
      * @return 存在返回true，否则返回false
      */
     bool isExistMountPartition();
@@ -169,6 +169,21 @@ private slots:
      * @brief 磁盘新建分区表按钮点击响应的槽函数
      */
     void onCreatePartitionTableClicked();
+
+    /**
+     * @brief 删除逻辑卷组按钮点击响应的槽函数
+     */
+    void onDeleteVGClicked();
+
+    /**
+     * @brief 创建逻辑卷按钮点击响应的槽函数
+     */
+    void onCreateLVClicked();
+
+    /**
+     * @brief 删除逻辑卷按钮点击响应的槽函数
+     */
+    void onDeleteLVClicked();
 
 private:
     int m_flag = 0;

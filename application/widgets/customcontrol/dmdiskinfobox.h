@@ -59,7 +59,7 @@ public:
      * @param systemLabel 分区分卷卷标名
      * @param flag 分区隐藏标志
     */
-    DmDiskinfoBox(int level, QObject *parent = nullptr, QString diskPath = "", QString diskSize = "", QString partitionPath = "",
+    DmDiskinfoBox(int level, QObject *parent = nullptr, QString diskPath = "", QString diskSize = "", int vgFlag = 0, QString partitionPath = "",
                   QString partitionSize = "", QString used = "", QString unused = "",
                   Sector sectorsUnallocated = 0, Sector start = 0, Sector end = 0, QString fstype = "",
                   QString mountpoints = "", QString systemLabel = "", int flag = 0);
@@ -84,6 +84,7 @@ public:
     int m_level;
     QString m_diskPath;
     QString m_diskSize;
+    int m_vgFlag;
     QString m_partitionPath;
     QString m_partitionSize;
     QString m_used;

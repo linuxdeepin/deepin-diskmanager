@@ -48,8 +48,12 @@ QSize DmTreeviewDelegate::sizeHint(const QStyleOptionViewItem &option,
     Q_UNUSED(option);
 
     DiskInfoData infoData = index.data(Qt::UserRole + 1).value<DiskInfoData>();
-    if (infoData.m_level == 0) {
+    if (infoData.m_level == DMDbusHandler::Disk || infoData.m_level == DMDbusHandler::VolumeGroup) {
         return QSize(180, 72);
+    }
+
+    if (infoData.m_level == DMDbusHandler::Other) {
+        return QSize(180, 30);
     }
 
     return QSize(180, 55);
@@ -68,7 +72,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     DiskInfoData data = varData.value<DiskInfoData>();
     QRect rect;
     rect.setX(option.rect.x() + 10);
-    if (data.m_level == 0) {
+    if (data.m_level == DMDbusHandler::Disk || data.m_level == DMDbusHandler::Other || data.m_level == DMDbusHandler::VolumeGroup) {
         rect.setY(option.rect.y() + 10);
     } else {
         rect.setY(option.rect.y());
@@ -77,7 +81,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     rect.setWidth(option.rect.width());
 //    rect.setHeight(option.rect.height()); // 分区节点间有间隔
     // 去掉分区节点间隔
-    if (data.m_level == 0) {
+    if (data.m_level == DMDbusHandler::Disk || data.m_level == DMDbusHandler::VolumeGroup) {
         rect.setHeight(option.rect.height() - 9);
     } else {
         rect.setHeight(option.rect.height() + 1);
@@ -85,6 +89,9 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
 
     painter->setRenderHints(QPainter::SmoothPixmapTransform);
     QRect paintRect = QRect(rect.left(), rect.top(), rect.width() - 19, rect.height());
+    if (data.m_level == DMDbusHandler::Other) {
+        paintRect = QRect(rect.left(), rect.top(), rect.width() - 10, rect.height());
+    }
 
     QPainterPath path;
     const int radius = 8;
@@ -108,7 +115,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
 //    }
 
     // 设置分区选中时文本颜色
-    if ((option.state & QStyle::State_Selected)) {
+    if ((option.state & QStyle::State_Selected) && (data.m_level != DMDbusHandler::Other)) {
         QColor fillColor = m_parentPb.color(DPalette::Normal, DPalette::Highlight);
         painter->setBrush(QBrush(fillColor));
         painter->fillPath(path, painter->brush());
@@ -123,7 +130,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     int pixmapWidth = 8; // 伸缩按钮宽
     int pixmapHeight = 8; // 伸缩按钮高
     if (treeView->getItemByIndex(index) && treeView->getItemByIndex(index)->hasChildren()) {
-        if ((option.state & QStyle::State_Selected) && (data.m_level == 0)) {
+        if ((option.state & QStyle::State_Selected) && (data.m_level == DMDbusHandler::Disk || data.m_level == DMDbusHandler::VolumeGroup)) {
             if (treeView->isExpanded(index)) {
                 directionIcon = Common::getIcon("arrow_check");
                 pixmapWidth = 10;
@@ -132,6 +139,16 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
                 directionIcon = Common::getIcon("arrow_right_check");
                 pixmapWidth = 12;
                 pixmapHeight = 11;
+            }
+        } else if (data.m_level == DMDbusHandler::Other) {
+            if (treeView->isExpanded(index)) {
+                directionIcon = Common::getIcon("smallarrow");
+                pixmapWidth = 9;
+                pixmapHeight = 10;
+            } else {
+                directionIcon = Common::getIcon("smallarrow_right");
+                pixmapWidth = 8;
+                pixmapHeight = 10;
             }
         } else {
             if (treeView->isExpanded(index)) {
@@ -154,15 +171,52 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     QString text1 = data.m_diskSize;
     QString text2 = data.m_partitionPath;
     QString text3 = data.m_partitionSize;
-    if (data.m_level == 0) {
+
+    if (data.m_level == DMDbusHandler::LogicalVolume) {
+        text2 = data.m_sysLabel;
+    }
+
+    if (data.m_level == DMDbusHandler::Other) {
+        QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T8, QFont::Medium);
+        DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+        if (themeType == DGuiApplicationHelper::LightType) {
+            QColor color("#000000");
+            color.setAlphaF(0.5);
+            painter->setPen(color);
+        } else if (themeType == DGuiApplicationHelper::DarkType) {
+            QColor color("#ffffff");
+            color.setAlphaF(0.5);
+            painter->setPen(color);
+        }
+
+        painter->setFont(font);
+        textRect.setRect(paintRect.left() + 10, paintRect.top(), 130, 100);
+        painter->drawText(textRect, text);
+
+        lefticon1Rect.setRect(paintRect.left() + 160, paintRect.top() + 6, pixmapWidth, pixmapHeight);
+        painter->drawPixmap(lefticon1Rect, directionIcon.pixmap(17, 17));
+
+    } else if (data.m_level == DMDbusHandler::Disk || data.m_level == DMDbusHandler::VolumeGroup) {
         lefticon1Rect.setRect(paintRect.left() + 8, paintRect.top() + 24, pixmapWidth, pixmapHeight);
         painter->drawPixmap(lefticon1Rect, directionIcon.pixmap(17, 17));
         lefticonRect2.setRect(paintRect.left() + 20, paintRect.top() + 9, 40, 40);
-        QIcon icon = Common::getIcon("treedisk");
-        painter->drawPixmap(lefticonRect2, icon.pixmap(38, 38));
+
+        if (data.m_level == DMDbusHandler::Disk) {
+            QMap<QString, QString> isJoinAllVG = DMDbusHandler::instance()->getIsJoinAllVG();
+            if (isJoinAllVG.value(text) == "true") {
+                QIcon icon = Common::getIcon("treevg");
+                painter->drawPixmap(lefticonRect2, icon.pixmap(38, 38));
+            } else {
+                QIcon icon = Common::getIcon("treedisk");
+                painter->drawPixmap(lefticonRect2, icon.pixmap(38, 38));
+            }
+        } else if (data.m_level == DMDbusHandler::VolumeGroup) {
+            QIcon icon = Common::getIcon("treevg");
+            painter->drawPixmap(lefticonRect2, icon.pixmap(38, 38));
+        }
 //        QTextOption option;
         QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
-        if ((option.state & QStyle::State_Selected) && (data.m_level == 0)) {
+        if ((option.state & QStyle::State_Selected) && (data.m_level == DMDbusHandler::Disk || data.m_level == DMDbusHandler::VolumeGroup)) {
             QColor textcolor = m_parentPb.color(DPalette::Normal, DPalette::HighlightedText);
             painter->setPen(textcolor);
             painter->setFont(font);
@@ -193,12 +247,19 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         }
     } else {
         lefticon1Rect.setRect(paintRect.left() + 25, paintRect.top() + 10, 30, 30);
-        QIcon icon = Common::getIcon("harddisk");
+
+        if (data.m_level == DMDbusHandler::LogicalVolume || data.m_vgFlag == 1) {
+            QIcon icon = Common::getIcon("treelv");
+            painter->drawPixmap(lefticon1Rect, icon.pixmap(28, 28));
+        } else {
+            QIcon icon = Common::getIcon("harddisk");
+            painter->drawPixmap(lefticon1Rect, icon.pixmap(28, 28));
+        }
+
         QIcon icon1 = Common::getIcon("mounticon");
         QIcon icon2 = Common::getIcon("uninstallicon");
         QIcon icon3 = Common::getIcon("hidden");
-        painter->drawPixmap(lefticon1Rect, icon.pixmap(28, 28));
-        QRect mounticonRect = QRect(paintRect.left() + 45, paintRect.top() + 25, 10, 10);
+        QRect mounticonRect = QRect(paintRect.left() + 45, paintRect.top() + 28, 10, 10);
 
 //        // 获取分区是否隐藏
 //        int hide = 0;
@@ -218,7 +279,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         }
 
         QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
-        if ((option.state & QStyle::State_Selected) && (data.m_level == 1)) {
+        if ((option.state & QStyle::State_Selected) && (data.m_level == DMDbusHandler::Partition || data.m_level == DMDbusHandler::LogicalVolume)) {
             QColor textColor = m_parentPb.color(DPalette::Normal, DPalette::HighlightedText);
             painter->setPen(textColor);
             painter->setFont(font);

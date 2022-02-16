@@ -57,6 +57,7 @@ struct DiskInfoData {
 
     int m_level;
     int m_flag;
+    int m_vgFlag;
 };
 Q_DECLARE_METATYPE(DiskInfoData)
 

@@ -39,6 +39,8 @@ class DmFrameWidget;
 class SizeInfoWidget;
 class InfoTopFrame;
 class PartitionInfoWidget;
+class VGSizeInfoWidget;
+class VGInfoShowWidget;
 
 DWIDGET_USE_NAMESPACE
 
@@ -98,6 +100,11 @@ private slots:
      */
     void onLeaveWidget();
 
+    /**
+     * @brief 首页VG信息图示进入响应的槽函数
+     */
+    void onEnterVGInfoWidget(QRect rect, const QList< QMap<QString, QVariant> > &lstInfo);
+
 private:
     InfoTopFrame *m_infoTopFrame = nullptr;
     DFrame *m_frame = nullptr;
@@ -120,6 +127,9 @@ private:
     PartitionInfoWidget *m_partitionInfoWidget;
     DArrowRectangle *m_arrowRectangle;
     DLabel *m_pathLabel;
+
+    VGSizeInfoWidget *m_vgSizeInfoWidget;
+    VGInfoShowWidget *m_vgInfoShowWidget;
 };
 
 #endif // INFOSHOWWIDGET_H

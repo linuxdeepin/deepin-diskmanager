@@ -70,6 +70,29 @@ void SizeInfoWidget::setData(PartitionInfo info, QVector<QColor> color, QVector<
     update();
 }
 
+void SizeInfoWidget::setData(LVInfo info, QVector<QColor> color, QVector<double> size, bool flag)
+{
+    m_sizeInfo = size;
+    m_colorInfo = color;
+    m_flag = flag;
+    m_partitionPath = info.m_lvName;
+    m_totalSpaceSize = info.m_lvSize;
+
+    m_used = Utils::LVMSizeToUnit(info.m_fsUsed, SIZE_UNIT::UNIT_GIB);
+    m_noused = Utils::LVMSizeToUnit(info.m_fsUnused, SIZE_UNIT::UNIT_GIB);
+    if (info.m_lvName.isEmpty() && info.m_lvUuid.isEmpty()) {
+        m_noused = Utils::LVMSizeToUnit(info.m_lvLECount * info.m_LESize, SIZE_UNIT::UNIT_GIB);
+    }
+
+    m_totalSize = m_noused + m_used;
+    m_usedSize = Utils::LVMFormatSize(info.m_fsUsed);
+
+    if (size.at(0) < 0.00 || size.at(1) < 0.00) {
+        m_sizeInfo = QVector<double> {0.00, 0.00};
+    }
+    update();
+}
+
 void SizeInfoWidget::paintEvent(QPaintEvent *event)
 {
     QWidget::paintEvent(event);

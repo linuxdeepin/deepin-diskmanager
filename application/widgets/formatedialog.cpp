@@ -49,7 +49,7 @@ void FormateDialog::initUi()
 
     m_curWipeMethod = WipeType::Fast;
     int fileSystemType = 11;
-    if (DMDbusHandler::instance()->getCurLevel() == 1) {
+    if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::Partition) {
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         m_pathInfo = info.m_path;
         fileSystemType = info.m_fileSystemType;

@@ -28,7 +28,7 @@
 #include "partedproxy/dmdbushandler.h"
 #include "partitioninfo.h"
 
-#include <DLabel>
+
 #include <DFrame>
 #include <DFontSizeManager>
 
@@ -47,16 +47,22 @@ void PartitionDialog::initUi()
 
     setTitle(tr("Partition %1").arg(info.m_path));
     QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
-    DLabel *tipLabel = new DLabel(tr("It will increase the number of partitions on the disk"), this);
-    tipLabel->setWordWrap(true);
-    tipLabel->setAlignment(Qt::AlignCenter);
-    DFontSizeManager::instance()->bind(tipLabel, DFontSizeManager::T6);
+    m_tipLabel = new DLabel(tr("It will increase the number of partitions on the disk"), this);
+    m_tipLabel->setWordWrap(true);
+    m_tipLabel->setAlignment(Qt::AlignCenter);
+    DFontSizeManager::instance()->bind(m_tipLabel, DFontSizeManager::T6);
 
-    mainLayout->addWidget(tipLabel);
+    mainLayout->addWidget(m_tipLabel);
 
     int index = addButton(tr("Cancel"), false, ButtonNormal);
     m_okCode = addButton(tr("Confirm"), true, ButtonRecommend);
 
     getButton(index)->setAccessibleName("cancelBtn");
     getButton(m_okCode)->setAccessibleName("confirmBtn");
+}
+
+void PartitionDialog::setTitleText(const QString &title, const QString &subTitle)
+{
+    setTitle(title);
+    m_tipLabel->setText(subTitle);
 }

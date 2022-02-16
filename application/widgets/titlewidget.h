@@ -124,6 +124,42 @@ private slots:
      */
     void onUpdateUsb();
 
+    /**
+     * @brief 创建逻辑卷按钮点击响应的槽函数
+     */
+    void onCreateLVClicked();
+
+    /**
+     * @brief 删除逻辑卷按钮点击响应的槽函数
+     */
+    void onDeleteLVClicked();
+
+    /**
+     * @brief 逻辑卷空间调整按钮点击响应的槽函数
+     */
+    void onResizeLVClicked();
+
+    /**
+     * @brief 创建逻辑卷组按钮点击响应的槽函数
+     */
+    void onCreateVGClicked();
+
+    /**
+     * @brief 删除逻辑卷组按钮点击响应的槽函数
+     */
+    void onDeleteVGClicked();
+
+    /**
+     * @brief 逻辑卷组空间调整按钮点击响应的槽函数
+     */
+    void onResizeVGClicked();
+
+    /**
+     * @brief 删除物理卷按钮点击响应的槽函数
+     */
+    void onDeletePVClicked();
+
+
 protected:
 
     /**
@@ -137,6 +173,13 @@ private:
     DPushButton *m_btnMount; // 挂载按钮
     DPushButton *m_btnUnmount; // 卸载按钮
     DPushButton *m_btnResize; // 空间调整按钮
+    DPushButton *m_btnCreateVG; // 创建逻辑卷组按钮
+    DPushButton *m_btnDeleteVG; // 删除逻辑卷组按钮
+    DPushButton *m_btnDeleteLV; // 删除逻辑卷按钮
+    DPushButton *m_btnDeletePV; // 删除物理卷按钮
+    DPushButton *m_btnCreateLV; // 创建逻辑卷按钮
+    DPushButton *m_btnResizeVG; // 逻辑卷组空间调整按钮
+    DPushButton *m_btnResizeLV; // 逻辑卷空间调整按钮
     QString m_curChooseDevicePath; // 当前操作磁盘
 };
 

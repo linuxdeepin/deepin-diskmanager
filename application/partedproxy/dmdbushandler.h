@@ -45,6 +45,14 @@ public:
     static DMDbusHandler *instance(QObject *parent = nullptr);
     ~DMDbusHandler();
 
+    enum DeviceType {
+        Disk = 0,
+        Partition,
+        VolumeGroup,
+        LogicalVolume,
+        Other
+    };
+
     /**
      * @brief 开启服务
      */
@@ -251,6 +259,87 @@ public:
      */
     void clear(const QString &fstype, const QString &path, const QString &name,const QString &user, const int &diskType, const int &clearType);
 
+    /**
+     * @brief 获取所有逻辑卷信息
+     */
+    const LVMInfo &probLVMInfo() const;
+
+    /**
+     * @brief 获取当前逻辑卷组信息
+     */
+    const VGInfo &getCurVGInfo();
+
+    /**
+     * @brief 获取当前逻辑卷信息
+     */
+    const LVInfo &getCurLVInfo();
+
+    /**
+     * @brief 获取所有的逻辑卷组名称
+     * @return 返回逻辑卷组名称列表
+     */
+    QStringList getVGNameList();
+
+    /**
+     * @brief 获取当前选择逻辑卷组名称
+     * @return 返回逻辑卷组名称
+     */
+    QString getCurVGName();
+
+    /**
+     * @brief 获取磁盘是否全部加入VG
+     * @return 返回磁盘是否全部加入VG
+     */
+    QMap<QString, QString> getIsJoinAllVG();
+
+    /**
+     * @brief 判断逻辑卷组下是否存在已被挂载的逻辑卷
+     * @return 存在返回true，否则返回false
+     */
+    bool isExistMountLV();
+
+    /**
+     * @brief 创建vg
+     * @param vgName:待创建vg名称
+     * @param devList: pv设备集合
+     * @param size:vg总大小
+     */
+    void createVG(const QString &vgName, const QList<PVData> &devList, const long long &size);
+
+    /**
+     * @brief 创建lv
+     * @param vgName:vg名称
+     * @param lvList: 待创建lv列表
+     */
+    void createLV(const QString &vgName, const QList<CreateLVInfo> &lvList);
+
+    /**
+     * @brief 删除lv
+     * @param lvlist: 待删除lv列表
+     */
+    void deleteLV(const QStringList &lvlist);
+
+    /**
+     * @brief 删除vg
+     * @param vglist: 待删除vg列表
+     */
+    void deleteVG(const QStringList &vglist);
+
+    /**
+     * @brief vg空间调整
+     * @param vgName:vg名称
+     * @param devList: pv设备集合
+     * @param size:调整后vg总大小
+     */
+    void resizeVG(const QString &vgName, const QList<PVData> &devList, const long long &size);
+
+    /**
+     * @brief lv空间调整
+     * @param lvPath:lv路径
+     * @param size: 调整后lv总大小
+     */
+    void resizeLV(const QString &lvPath, const QString &size);
+
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
 
@@ -354,7 +443,13 @@ private:
     QStringList m_deviceNameList;
     QString m_loginMessage;
     QString m_curCreateType;
-    int m_curLevel = 1;
+    int m_curLevel = DeviceType::Partition;
+    LVMInfo m_lvmInfo;
+    QStringList m_vgNameList;
+    QString m_curVGName;
+    LVInfo m_curLVInfo;
+    VGInfo m_curVGInfo;
+    QMap<QString, QString> m_isJoinAllVG;
 };
 
 #endif // DMDBUSHANDLER_H

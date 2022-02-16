@@ -63,7 +63,7 @@ public:
      * @param data 节点数据
      * @param flag 是否展开根节点标志
     */
-    void addItem(QStandardItem *item, const DiskInfoData &data, int flag);
+    QStandardItem * addItem(QStandardItem *item, const DiskInfoData &data, int flag);
 
     /**
      * @brief 获取指向与给定索引关联的QStandardItem的指针
@@ -111,6 +111,14 @@ public:
     void setRefreshItem(int devicenum, int num);
 
     /**
+     * @brief 设置刷新后默认选择操作分区
+     * @param devicenum 设备树索引
+     * @param num 设备树子节点索引
+     * @param groupNum 组索引（设备组或逻辑卷组）
+    */
+    void setRefreshItem(int devicenum, int num, int groupNum);
+
+    /**
      * @brief 获取当前选中分区索引值
      * @return 当前选中分区索引值
     */
@@ -121,6 +129,12 @@ public:
      * @return 当前选中分区父节点索引值
     */
     int getCurrentTopNum();
+
+    /**
+     * @brief 获取当前选中分区的组节点索引值
+     * @return 当前选中分区组节点索引值
+    */
+    int getCurrentGroupNum();
 
     /**
      * @brief 添加子节点
@@ -144,6 +158,11 @@ public:
      * @param flag 是否展开根节点标志
     */
     void addSubItem(DmDiskinfoBox *mailBox, QStandardItem *curItem, int flag);
+
+    /**
+     * @brief 清除根节点数据
+    */
+    void clearData();
 
     QStandardItemModel *m_model {nullptr};
 
@@ -176,6 +195,9 @@ private:
     QString m_diskSize;
     int m_curNum = 0;
     int m_diskNum = 0;
+    int m_groupNum = 0;
+    bool isGroup = false;
+    QList<QStandardItem *> m_lstStandardItem;
 
 protected:
 

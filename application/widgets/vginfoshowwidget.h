@@ -1,11 +1,11 @@
 /**
- * @copyright 2020-2020 Uniontech Technology Co., Ltd.
+ * @copyright 2020-2022 Uniontech Technology Co., Ltd.
  *
- * @file partitiondialog.h
+ * @file vginfoshowwidget.h
  *
- * @brief 是否创建分区选择窗口
+ * @brief 逻辑卷组下的逻辑卷信息展示类
  *
- * @date 2020-09-08 14:56
+ * @date 2022-01-24 13:33
  *
  * Author: yuandandan  <yuandandan@uniontech.com>
  *
@@ -24,46 +24,45 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef PARTITIONDIALOG_H
-#define PARTITIONDIALOG_H
-
-#include "customcontrol/ddbase.h"
+#ifndef VGINFOSHOWWIDGET_H
+#define VGINFOSHOWWIDGET_H
 
 #include <QWidget>
-#include <DLabel>
+
+#include <DFrame>
+#include <DScrollArea>
 
 DWIDGET_USE_NAMESPACE
 
 /**
- * @class PartitionDialog
- * @brief 是否进行分区确认窗口类
+ * @class VGInfoShowWidget
+ * @brief 逻辑卷组下的逻辑卷信息展示类，主界面图示区域“…”鼠标悬浮窗口
  */
 
-class PartitionDialog : public DDBase
+class QGridLayout;
+
+class VGInfoShowWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit PartitionDialog(QWidget *parent = nullptr);
+    explicit VGInfoShowWidget(QWidget *parent = nullptr);
 
-    /**
-     * @brief 设置标题内容
-     * @param title 标题内容
-     * @param subTitle 副标题内容
-     */
-    void setTitleText(const QString &title, const QString &subTitle = "");
+    void setData(const QList< QMap<QString, QVariant> > &lstInfo);
+
+signals:
+
+public slots:
 
 private:
     /**
      * @brief 初始化界面
      */
     void initUi();
-    //    void initConnection();
-signals:
-    //    void showPartWidget();
-public slots:
-    //    void sendSignal(int index);
-private:
-    DLabel *m_tipLabel;
+
+    /**
+     * @brief 初始化连接
+     */
+    void initConnection();
 };
 
-#endif // PARTITIONDIALOG_H
+#endif // VGINFOSHOWWIDGET_H

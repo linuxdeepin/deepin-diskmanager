@@ -43,10 +43,14 @@ InfoTopFrame::InfoTopFrame(DWidget *parent)
     setLayout(m_mainLayout);
 
     m_pictureLabel = new DLabel(this);
-    if (1 == DMDbusHandler::instance()->getCurLevel()) {
+    if (DMDbusHandler::Partition == DMDbusHandler::instance()->getCurLevel()) {
         m_pictureLabel->setPixmap(Common::getIcon("labeldisk").pixmap(85, 85));
-    } else {
+    } else if (DMDbusHandler::Disk == DMDbusHandler::instance()->getCurLevel()) {
         m_pictureLabel->setPixmap(Common::getIcon("disk").pixmap(85, 85));
+    } else if (DMDbusHandler::VolumeGroup == DMDbusHandler::instance()->getCurLevel()) {
+        m_pictureLabel->setPixmap(Common::getIcon("disk").pixmap(85, 85));
+    } else if (DMDbusHandler::LogicalVolume == DMDbusHandler::instance()->getCurLevel()) {
+        m_pictureLabel->setPixmap(Common::getIcon("labeldisk").pixmap(85, 85));
     }
 
     m_pictureLabel->setMinimumSize(85, 85);
@@ -106,10 +110,14 @@ void InfoTopFrame::initLeftInfo()
 
 void InfoTopFrame::setShowDiskInfo()
 {
-    if (1 == DMDbusHandler::instance()->getCurLevel()) {
-        m_pictureLabel->setPixmap(Common::getIcon("labeldisk").pixmap(85, 85));
-
+    if (DMDbusHandler::Partition == DMDbusHandler::instance()->getCurLevel()) {
         auto info = DMDbusHandler::instance()->getCurPartititonInfo();
+
+        if (1 == info.m_vgFlag) {
+            m_pictureLabel->setPixmap(Common::getIcon("lv").pixmap(85, 85));
+        } else {
+            m_pictureLabel->setPixmap(Common::getIcon("labeldisk").pixmap(85, 85));
+        }
 
         QFontMetrics fmDevpath = m_nameLabel->fontMetrics();
         QString textDevpath = info.m_path;
@@ -129,12 +137,16 @@ void InfoTopFrame::setShowDiskInfo()
 
         QString diskType = Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType));
         m_typeLabel->setText(tr("File system") + ": " + diskType);
-    } else {
-        m_pictureLabel->setPixmap(Common::getIcon("disk").pixmap(85, 85));
-
+    } else if (DMDbusHandler::Disk == DMDbusHandler::instance()->getCurLevel()) {
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
-        m_nameLabel->setText(info.m_model);
+        QMap<QString, QString> isJoinAllVG = DMDbusHandler::instance()->getIsJoinAllVG();
+        if (isJoinAllVG.value(info.m_path) == "true") {
+            m_pictureLabel->setPixmap(Common::getIcon("vg").pixmap(85, 85));
+        } else {
+            m_pictureLabel->setPixmap(Common::getIcon("disk").pixmap(85, 85));
+        }
 
+        m_nameLabel->setText(info.m_model);
         QString diskSize = Utils::formatSize(info.m_length, info.m_sectorSize);
         m_allMemoryLabel->setText(diskSize);
 
@@ -147,12 +159,30 @@ void InfoTopFrame::setShowDiskInfo()
             partitionTable = info.m_disktype;
         }
         m_typeLabel->setText(tr("%1 partition table").arg(partitionTable));
+    } else if (DMDbusHandler::VolumeGroup == DMDbusHandler::instance()->getCurLevel()) {
+        m_pictureLabel->setPixmap(Common::getIcon("vg").pixmap(85, 85));
+
+        VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
+        m_nameLabel->setText(vgInfo.m_vgName);
+        m_allMemoryLabel->setText(vgInfo.m_vgSize);
+
+        m_typeLabel->setText(tr("Volume group"));
+    } else if (DMDbusHandler::LogicalVolume == DMDbusHandler::instance()->getCurLevel()) {
+        m_pictureLabel->setPixmap(Common::getIcon("lv").pixmap(85, 85));
+
+        LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+        m_nameLabel->setText(lvInfo.m_lvPath);
+        m_allMemoryLabel->setText(lvInfo.m_lvSize);
+
+        FSType fstype = static_cast<FSType>(lvInfo.m_lvFsType);
+        QString fstypeName = Utils::fileSystemTypeToString(fstype);
+        m_typeLabel->setText(tr("File system") + ": " + fstypeName);
     }
 }
 
 void InfoTopFrame::resizeEvent(QResizeEvent *event)
 {
-    if (1 == DMDbusHandler::instance()->getCurLevel()) {
+    if (DMDbusHandler::Partition == DMDbusHandler::instance()->getCurLevel()) {
         auto info = DMDbusHandler::instance()->getCurPartititonInfo();
 
         QFontMetrics fmDevpath = m_nameLabel->fontMetrics();

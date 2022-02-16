@@ -181,13 +181,6 @@ public:
 
 
     /**
-     * @brief 获取文件系统缩小最小值
-     * @return 文件系统缩小最小值
-     */
-    static Byte_Value getFsReduceMin(const QString &devPath, const FSType &fs);
-
-
-    /**
      * @brief 格式化大小
      * @param lvmSize:lvm 属性大小
      * @return 大小字符串

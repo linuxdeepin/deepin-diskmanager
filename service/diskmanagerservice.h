@@ -316,6 +316,55 @@ public Q_SLOTS:
      */
     Q_SCRIPTABLE bool onFixBadBlocks(const QString &devicePath, QStringList badBlocksList, int checkSize, int flag);
 
+
+
+    /**
+     * @brief 创建vg
+     * @param vgName:待创建vg名称
+     * @param devList: pv设备集合
+     * @param size:vg总大小
+     * @return true 成功 false 失败
+     */
+    Q_SCRIPTABLE bool onCreateVG(QString vgName,QList<PVData>devList,long long size);
+
+    /**
+     * @brief 创建lv
+     * @param vgName:vg名称
+     * @param lvList: 待创建lv列表
+     * @return true 成功 false 失败
+     */
+    Q_SCRIPTABLE bool onCreateLV(QString vgName,QList<CreateLVInfo>lvList);
+
+    /**
+     * @brief 删除vg
+     * @param vglist: 待删除vg列表
+     * @return true 成功 false 失败
+     */
+    Q_SCRIPTABLE bool onDeleteVG(QStringList vglist);
+
+    /**
+     * @brief 删除lv
+     * @param lvlist: 待删除lv列表
+     * @return true 成功 false 失败
+     */
+    Q_SCRIPTABLE bool onDeleteLV(QStringList lvlist);
+
+    /**
+     * @brief vg空间调整
+     * @param vgName:vg名称
+     * @param devList: pv设备集合
+     * @param size:调整后vg总大小
+     * @return true 成功 false 失败
+     */
+    Q_SCRIPTABLE bool onResizeVG(QString vgName,QList<PVData>devList,long long size);
+
+    /**
+     * @brief lv空间调整
+     * @param lvPath:lv路径
+     * @param size: 调整后lv总大小
+     * @return true 成功 false 失败
+     */
+    Q_SCRIPTABLE bool onResizeLV(QString lvPath,QString size);
     /**
      * @brief USB插入
      */

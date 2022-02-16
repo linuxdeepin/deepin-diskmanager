@@ -54,6 +54,20 @@ typedef struct PVData {
 } PVData;
 LVMStructEnd(PVData)
 
+//new by liuwh 2022/2/15
+/**
+ * @class CreateLVInfo
+ * @brief 创建lv结构体 前后端通信用
+ */
+typedef struct CreateLVInfo {
+    CreateLVInfo();
+    QString m_vgName;       //vg名称
+    QString m_lvName;       //lv名称
+    QString m_lvSize;       //lv大小
+    long long m_lvByteSize; //lv大小 byte单位
+    FSType m_lvFs;          //文件系统类型
+} CreateLVInfo;
+LVMStructEnd(CreateLVInfo)
 
 
 //new by liuwh 2022/1/17
@@ -95,13 +109,13 @@ LVMStructEnd(VGData)
  */
 typedef struct PVRANGES {
     PVRANGES();
-    QString m_lvName;   //lvName
-    QString m_devPath;  //lv path
+    QString m_lvName;       //lvName
+    QString m_devPath;      //lv path
     QString m_vgName;
     QString m_vgUuid;
-    long long m_start;   //单位 pe
-    long long m_end;     //单位 pe
-    bool m_used;//是否使用  针对vg lv不使用该属性
+    long long m_start;      //单位 pe
+    long long m_end;        //单位 pe
+    bool m_used;            //是否使用  针对vg lv不使用该属性
 } PVRanges;
 LVMStructEnd(PVRanges)
 
@@ -133,11 +147,11 @@ public:
     bool isExported() {return m_pvStatus[1] == 'x';}
     bool isMissing() {return m_pvStatus[2] == 'm';}
 public:
-    QString m_pvFmt; //pv格式 lvm1 lvm2
-    QString m_vgName;//vgName
+    QString m_pvFmt;  //pv格式 lvm1 lvm2
+    QString m_vgName; //vgName
     QString m_pvPath; //pv路径 /dev/sdb1 ...
     QString m_pvUuid; //pv uuid 唯一名称
-    QString m_vgUuid;
+    QString m_vgUuid; //vg uuid 唯一名称
     long long m_pvMdaSize;//pv metadata size 单位byte
     long long m_pvMdaCount;//pv metadata 个数
     QString m_pvSize; //字符串类型 展示用
@@ -150,6 +164,8 @@ public:
     QMap<QString, QVector<LV_PV_Ranges>> m_lvRangesList; //lv pv分布情况 key：lvPath  value：lv集合
     QVector<VG_PV_Ranges> m_vgRangesList; //vg pv分布情况
     LVMDevType m_lvmDevType;    //lvm 设备类型
+    long long m_pvByteTotalSize;//pv总大小  单位byte
+    long long m_pvByteFreeSize;//pv未使用大小 单位byte
 
 };
 LVMStructEnd(PVInfo)
@@ -218,7 +234,7 @@ public:
     long long  m_fsUnused;//文件未使用大小 单位byte
     int m_LESize;  //单个pe大小 与所在vg的pe大小相同 单位byte
     bool m_busy; //挂载标志
-    QStringList m_mountpoints;//挂载点 可多次挂载
+    QVector<QString> m_mountPoints;//挂载点 可多次挂载
     QString m_lvStatus{"----------"};
     long long m_minReduceSize;//文件系统最小可缩小大小 单位byte
     LVMError m_lvError;//逻辑卷错误码
@@ -278,13 +294,17 @@ public:
 };
 LVMStructEnd(VGInfo)
 
-
+//new by liuwh 2022/1/17
+/**
+ * @class LVMInfo
+ * @brief lvm属性结构体
+ */
 class LVMInfo
 {
 public:
     LVMInfo();
 public:
-    QMap<QString, VGInfo> m_vgInfo;        //lvm设备信息 key:vguuid value vginfo
+    QMap<QString, VGInfo> m_vgInfo;        //lvm设备信息 key:vgName value vginfo
     QMap<QString, PVInfo> m_pvInfo;        //lvm pv信息 key:/dev/sdb1 value:pvinfo
     LVMError m_lvmErr;
 };

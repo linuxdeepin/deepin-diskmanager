@@ -183,7 +183,7 @@ public Q_SLOTS: // METHODS
     * @param diskType 磁盘或者分区类型 0是分区 1是磁盘
     * @param clearType 擦除标准 1为快速 2安全 3为安全擦除7次 4为安全擦除35次
     */
-    inline QDBusPendingReply<bool> clear(const QString &fstype, const QString &path, const QString &name,const QString &user, const int &diskType, const int &clearType)
+    inline QDBusPendingReply<bool> clear(const QString &fstype, const QString &path, const QString &name, const QString &user, const int &diskType, const int &clearType)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(fstype) << QVariant::fromValue(path) << QVariant::fromValue(name) << QVariant::fromValue(user) << QVariant::fromValue(diskType) << QVariant::fromValue(clearType);
@@ -294,7 +294,7 @@ public Q_SLOTS: // METHODS
     inline QDBusPendingReply<bool> onCreatePartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel)
     {
         QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(devicePath)<< QVariant::fromValue(length)<< QVariant::fromValue(sectorSize)<< QVariant::fromValue(diskLabel);
+        argumentList << QVariant::fromValue(devicePath) << QVariant::fromValue(length) << QVariant::fromValue(sectorSize) << QVariant::fromValue(diskLabel);
         return asyncCallWithArgumentList(QStringLiteral("onCreatePartitionTable"), argumentList);
     }
 
@@ -310,7 +310,7 @@ public Q_SLOTS: // METHODS
     inline QDBusPendingReply<bool> onCheckBadBlocksCount(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize, int flag)
     {
         QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(devicePath)<< QVariant::fromValue(blockStart)<< QVariant::fromValue(blockEnd)<< QVariant::fromValue(checkConut)<< QVariant::fromValue(checkSize)<< QVariant::fromValue(flag);
+        argumentList << QVariant::fromValue(devicePath) << QVariant::fromValue(blockStart) << QVariant::fromValue(blockEnd) << QVariant::fromValue(checkConut) << QVariant::fromValue(checkSize) << QVariant::fromValue(flag);
         return asyncCallWithArgumentList(QStringLiteral("onCheckBadBlocksCount"), argumentList);
     }
 
@@ -326,7 +326,7 @@ public Q_SLOTS: // METHODS
     inline QDBusPendingReply<bool> onCheckBadBlocksTime(const QString &devicePath, int blockStart, int blockEnd, const QString &checkTime, int checkSize, int flag)
     {
         QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(devicePath)<< QVariant::fromValue(blockStart)<< QVariant::fromValue(blockEnd)<< QVariant::fromValue(checkTime)<< QVariant::fromValue(checkSize)<< QVariant::fromValue(flag);
+        argumentList << QVariant::fromValue(devicePath) << QVariant::fromValue(blockStart) << QVariant::fromValue(blockEnd) << QVariant::fromValue(checkTime) << QVariant::fromValue(checkSize) << QVariant::fromValue(flag);
         return asyncCallWithArgumentList(QStringLiteral("onCheckBadBlocksTime"), argumentList);
     }
 
@@ -340,9 +340,84 @@ public Q_SLOTS: // METHODS
     inline QDBusPendingReply<bool> onFixBadBlocks(const QString &devicePath, QStringList badBlocksList, int checkSize, int flag)
     {
         QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(devicePath)<< QVariant::fromValue(badBlocksList)<< QVariant::fromValue(checkSize)<< QVariant::fromValue(flag);
+        argumentList << QVariant::fromValue(devicePath) << QVariant::fromValue(badBlocksList) << QVariant::fromValue(checkSize) << QVariant::fromValue(flag);
         return asyncCallWithArgumentList(QStringLiteral("onFixBadBlocks"), argumentList);
     }
+
+    /**
+     * @brief 创建vg
+     * @param vgName:待创建vg名称
+     * @param devList: pv设备集合
+     * @param size:vg总大小
+     */
+    inline QDBusPendingReply<bool> onCreateVG(QString vgName, QList<PVData>devList, long long size)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(vgName) << QVariant::fromValue(devList) << QVariant::fromValue(size);
+        return asyncCallWithArgumentList(QStringLiteral("onCreateVG"), argumentList);
+    }
+
+    /**
+     * @brief 创建lv
+     * @param vgName:vg名称
+     * @param lvList: 待创建lv列表
+     */
+    inline QDBusPendingReply<bool> onCreateLV(QString vgName, QList<CreateLVInfo>lvList)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(vgName) << QVariant::fromValue(lvList);
+        return asyncCallWithArgumentList(QStringLiteral("onCreateLV"), argumentList);
+    }
+
+    /**
+     * @brief 删除vg
+     * @param vglist: 待删除vg列表
+     */
+    inline QDBusPendingReply<bool> onDeleteVG(QStringList vglist)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(vglist) ;
+        return asyncCallWithArgumentList(QStringLiteral("onDeleteVG"), argumentList);
+    }
+
+    /**
+     * @brief 删除lv
+     * @param lvlist: 待删除lv列表
+
+     */
+    inline QDBusPendingReply<bool> onDeleteLV(QStringList lvlist)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(lvlist);
+        return asyncCallWithArgumentList(QStringLiteral("onDeleteLV"), argumentList);
+    }
+
+    /**
+     * @brief vg空间调整
+     * @param vgName:vg名称
+     * @param devList: pv设备集合
+     * @param size:调整后vg总大小
+     */
+    inline QDBusPendingReply<bool> onResizeVG(QString vgName, QList<PVData>devList, long long size)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(vgName) << QVariant::fromValue(devList) << QVariant::fromValue(size);
+        return asyncCallWithArgumentList(QStringLiteral("onResizeVG"), argumentList);
+    }
+
+
+    /**
+     * @brief lv空间调整
+     * @param lvPath:lv路径
+     * @param size: 调整后lv总大小
+     */
+    inline QDBusPendingReply<bool> onResizeLV(QString lvPath, QString size)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(lvPath) << QVariant::fromValue(size);
+        return asyncCallWithArgumentList(QStringLiteral("onResizeLV"), argumentList);
+    }
+
 
 Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void MessageReport(const QString &msg);

@@ -101,6 +101,14 @@ public:
      */
     bool checkRepair(const Partition &partition) override;
 
+
+    /**
+     * @brief 获取文件系统限制
+     * @param partition：分区信息
+     * @return 文件系统限制信息
+     */
+    virtual FS_Limits getFilesystemLimits(const Partition &partition) const override;
+
 private:
     Byte_Value m_fsBlockSize; // Holds file system block size for the copy_progress() callback
     bool m_forceAuto64bit;

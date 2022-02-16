@@ -155,6 +155,6 @@ DeviceInfo::DeviceInfo()
     m_length = m_heads = m_sectors = m_cylinders = m_cylsize = m_sectorSize = m_maxPrims = m_highestBusy = m_maxPartitionNameLength = 0;
     m_path = m_model = m_serialNumber = m_disktype = m_mediaType = m_interface = QString("");
     m_partition.clear();
-    m_vgFlag = false;
+    m_vgFlag = 0;
     m_vglist.clear();
 }

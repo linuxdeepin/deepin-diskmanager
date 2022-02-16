@@ -103,6 +103,13 @@ public:
      */
     bool checkRepair( const Partition & partition);
 
+    /**
+     * @brief 获取文件系统限制
+     * @param partition：分区信息
+     * @return 文件系统限制信息
+     */
+    virtual FS_Limits getFilesystemLimits(const Partition &partition) const override;
+
 };
 
 } //DiskManager

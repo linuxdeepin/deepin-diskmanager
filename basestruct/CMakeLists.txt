@@ -22,9 +22,9 @@ set(BASESTRUCT_SRCS
     utils.h
     utils.cpp
     commondef.h
-	lvmstruct.h
-	lvmstruct.cpp
-	lvmenum.h
+    lvmstruct.h
+    lvmstruct.cpp
+    lvmenum.h
     )
 
 add_library(${PROJECT_NAME} STATIC ${BASESTRUCT_SRCS})

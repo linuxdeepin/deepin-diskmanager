@@ -41,6 +41,22 @@ Device::Device()
     qDBusRegisterMetaType<HardDiskInfo>();
     qDBusRegisterMetaType<HardDiskStatusInfo>();
     qDBusRegisterMetaType<HardDiskStatusInfoList>();
+
+    //注册结构体 lvm dbus通信使用
+    qDBusRegisterMetaType<PVRanges>();
+    qDBusRegisterMetaType<CreateLVInfo>();
+    qDBusRegisterMetaType<QVector<PVRanges>>();
+    qDBusRegisterMetaType<VGDATA>();
+    qDBusRegisterMetaType<PVData>();
+    qDBusRegisterMetaType<LVDATA>();
+    qDBusRegisterMetaType<LVInfo>();
+    qDBusRegisterMetaType<VGInfo>();
+    qDBusRegisterMetaType<PVInfo>();
+    qDBusRegisterMetaType<LVMInfo>();
+    qDBusRegisterMetaType<QVector<QString>>();
+    qDBusRegisterMetaType<QList<PVData>>();
+    qDBusRegisterMetaType<QList<CreateLVInfo>>();
+
     m_sectorSize = 0;
     m_maxPrims = 0;
     m_highestBusy = 0;

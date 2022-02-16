@@ -1,10 +1,9 @@
 #include "lvmstruct.h"
-#include <QDebug>
 /*********************************** PVData *********************************************/
 PVData::PVData()
 {
-    m_pvAct = LVMAction::LVM_Act_Unknow;
-    m_type = LVMDevType::LVM_Dev_Unknow_Devices;
+    m_pvAct = LVMAction::LVM_ACT_UNkNOW;
+    m_type = LVMDevType::LVM_DEV_UNKNOW_DEVICES;
 }
 
 QDBusArgument &operator<<(QDBusArgument &argument, const PVData &data)
@@ -30,6 +29,45 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PVData &data)
              >> type;
     data.m_pvAct = static_cast<LVMAction>(pvAct);
     data.m_type = static_cast<LVMDevType>(type);
+    argument.endStructure();
+    return argument;
+}
+
+
+/*********************************** CreateLVInfo *********************************************/
+
+CreateLVInfo::CreateLVInfo()
+{
+    m_lvByteSize = 0; //lv大小 byte单位
+    m_lvFs = FS_UNKNOWN; //文件系统类型
+}
+
+QDBusArgument &operator<<(QDBusArgument &argument, const CreateLVInfo &data)
+{
+    argument.beginStructure();
+
+    argument << data.m_vgName
+             << data.m_lvName
+             << data.m_lvSize
+             << data.m_lvByteSize
+             << static_cast<int>(data.m_lvFs);
+    argument.endStructure();
+    return argument;
+}
+
+const QDBusArgument &operator>>(const QDBusArgument &argument, CreateLVInfo &data)
+{
+    argument.beginStructure();
+    int type;
+    argument >> data.m_vgName
+             >> data.m_lvName
+             >> data.m_lvSize
+             >> data.m_lvByteSize
+             >> type;
+    data.m_lvFs = static_cast<FSType>(type);
+    argument.endStructure();
+
+
     argument.endStructure();
     return argument;
 }
@@ -140,8 +178,10 @@ PVInfo::PVInfo()
     m_pvUsedPE = 0;
     m_pvUnusedPE = 0;
     m_PESize = 0;
-    m_pvError = LVMError::LVM_Err_Normal;
-    m_lvmDevType = LVMDevType::LVM_Dev_Unknow_Devices;
+    m_pvError = LVMError::LVM_ERR_NORMAL;
+    m_lvmDevType = LVMDevType::LVM_DEV_UNKNOW_DEVICES;
+    m_pvByteFreeSize =0;
+    m_pvByteTotalSize =0;
 }
 
 
@@ -164,7 +204,9 @@ QDBusArgument &operator<<(QDBusArgument &argument, const PVInfo &data)
              << static_cast<int>(data.m_pvError)
              << data.m_lvRangesList
              << data.m_vgRangesList
-             << static_cast<int>(data.m_lvmDevType);
+             << static_cast<int>(data.m_lvmDevType)
+             << data.m_pvByteTotalSize
+             << data.m_pvByteFreeSize;
     argument.endStructure();
     return argument;
 }
@@ -190,7 +232,9 @@ const QDBusArgument &operator>>(const QDBusArgument &argument,  PVInfo &data)
              >> err
              >> data.m_lvRangesList
              >> data.m_vgRangesList
-             >> devType;
+             >> devType
+             >> data.m_pvByteTotalSize
+             >> data.m_pvByteFreeSize;
     data.m_pvError = static_cast<LVMError>(err);
     data.m_lvmDevType = static_cast<LVMDevType>(devType);
     argument.endStructure();
@@ -208,7 +252,9 @@ LVInfo::LVInfo()
     m_LESize = 0;
     m_busy = false;
     m_minReduceSize = 0;
-    m_lvError = LVMError::LVM_Err_Normal;
+    m_fsUsed = 0;
+    m_fsUnused = 0;
+    m_lvError = LVMError::LVM_ERR_NORMAL;
 }
 QDBusArgument &operator<<(QDBusArgument &argument, const LVInfo &data)
 {
@@ -224,7 +270,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LVInfo &data)
              << data.m_fsUnused
              << data.m_LESize
              << data.m_busy
-             << data.m_mountpoints
+             << data.m_mountPoints
              << data.m_lvStatus
              << data.m_minReduceSize
              << static_cast<int>(data.m_lvError);
@@ -248,7 +294,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LVInfo &data)
              >> data.m_fsUnused
              >> data.m_LESize
              >> data.m_busy
-             >> data.m_mountpoints
+             >> data.m_mountPoints
              >> data.m_lvStatus
              >> data.m_minReduceSize
              >> err;
@@ -267,7 +313,7 @@ VGInfo::VGInfo()
     m_peUnused = 0;
     m_PESize = 0;
     m_curLV = 0;
-    m_vgError = LVMError::LVM_Err_Normal;
+    m_vgError = LVMError::LVM_ERR_NORMAL;
 
 }
 
@@ -324,7 +370,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument,  VGInfo &data)
 
 LVMInfo::LVMInfo()
 {
-    m_lvmErr = LVMError::LVM_Err_Normal;
+    m_lvmErr = LVMError::LVM_ERR_NORMAL;
 }
 
 
@@ -350,6 +396,5 @@ const QDBusArgument &operator>>(const QDBusArgument &argument,  LVMInfo &data)
     argument.endStructure();
     return argument;
 }
-
 
 

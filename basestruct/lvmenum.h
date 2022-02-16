@@ -30,10 +30,10 @@
  * @brief lvm 动作
  */
 enum LVMAction {
-    LVM_Act_Unknow,     //未知动作
-    LVM_Act_AddPV,      //添加PV
-    LVM_Act_DeletePV,   //删除PV
-    LVM_Act_PVMove      //移动PV 暂时未用
+    LVM_ACT_UNkNOW,     //未知动作
+    LVM_ACT_ADDPV,      //添加PV
+    LVM_ACT_DELETEPV,   //删除PV
+    LVM_ACT_PVMOVE      //移动PV 暂时未用
 };
 
 //new by liuwh 2022/1/17
@@ -42,19 +42,20 @@ enum LVMAction {
  * @brief lvm 设备类型
  */
 enum LVMDevType {
-    LVM_Dev_Unknow_Devices,         //未知设备
-    LVM_Dev_DISK,                   //磁盘
-    LVM_Dev_Unallocated_Partition,  //未分配的分区
-    LVM_Dev_Partition,              //分区
-    LVM_Dev_LOOP,                   // loop设备
-    LVM_Dev_Meta_Devices            //元数据设备 raid 加密磁盘映射等
+    LVM_DEV_UNKNOW_DEVICES,         //未知设备
+    LVM_DEV_DISK,                   //磁盘
+    LVM_DEV_UNALLOCATED_PARTITION,  //未分配的分区
+    LVM_DEV_PARTITION,              //分区
+    LVM_DEV_LOOP,                   // loop设备
+    LVM_DEV_META_DEVICES            //元数据设备 raid 加密磁盘映射等
 };
 
 enum LVMError {
-    LVM_Err_Normal,
-    LVM_Err_NO_CMD_Support,
-    LVM_Err_LV_Error,
-    LVM_Err_VG_Error
+    LVM_ERR_NORMAL,             //正常
+    LVM_ERR_NO_CMD_SUPPORT,     //外部命令不支持
+    LVM_ERR_LV,                 //lv 错误
+    LVM_ERR_VG,                 //vg 错误
+    LVM_ERR_VG_ALREADY_EXISTS   //VG重名
 };
 
 

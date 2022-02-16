@@ -190,4 +190,9 @@ bool NTFS::checkRepair( const Partition & partition)
     return exitcode == 0 || error.compare("Unknown error") == 0;
 }
 
+FS_Limits NTFS::getFilesystemLimits(const Partition &partition) const
+{
+    return FS_Limits();
+}
+
 } //DiskManager

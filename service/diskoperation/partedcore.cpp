@@ -2052,6 +2052,50 @@ void PartedCore::reWritePartition(const QString &devicePath)
      }
 }
 
+bool PartedCore::createVG(QString vgName, QList<PVData> devList, long long size)
+{
+    bool flag =  LVMOperator::createVG(m_lvmInfo, vgName, devList, size);
+    emit refreshDeviceInfo();
+    return flag;
+}
+
+bool PartedCore::createLV(QString vgName, QList<CreateLVInfo> lvList)
+{
+    bool flag = LVMOperator::createLV(m_lvmInfo, vgName, lvList);
+
+    emit refreshDeviceInfo();
+    return flag;
+}
+
+bool PartedCore::deleteVG(QStringList vglist)
+{
+    bool flag = LVMOperator::deleteVG(m_lvmInfo, vglist);
+
+    emit refreshDeviceInfo();
+    return flag;
+}
+
+bool PartedCore::deleteLV(QStringList lvlist)
+{
+    bool flag = LVMOperator::deleteLV(m_lvmInfo, lvlist);
+    emit refreshDeviceInfo();
+    return flag;
+}
+
+bool PartedCore::resizeVG(QString vgName, QList<PVData> devList, long long size)
+{
+    bool flag =  LVMOperator::resizeVG(m_lvmInfo, vgName, devList, size);
+    emit refreshDeviceInfo();
+    return flag;
+}
+
+bool PartedCore::resizeLV(QString lvPath, QString size)
+{
+    bool flag = LVMOperator::resizeLV(m_lvmInfo, lvPath, size);
+    emit refreshDeviceInfo();
+    return flag;
+}
+
 bool PartedCore::delTempMountFile()
 {
     QDir dir("/media");
@@ -3253,9 +3297,10 @@ int PartedCore::test()
 //    }
 
     static LVMInfo s_lvm_info;
-    LVMOperator::updateLVMInfo(s_lvm_info);
-    LVMOperator::getDeviceLVMData(m_inforesult, s_lvm_info);
+    LVMOperator::getDeviceDataAndLVMInfo(m_inforesult, s_lvm_info);
     LVMOperator::printLVMInfo(s_lvm_info);
+    LVMOperator::printDeviceLVMData(m_inforesult);
+    LVMOperator::printError(s_lvm_info.m_lvmErr);
     return 1;
 }
 

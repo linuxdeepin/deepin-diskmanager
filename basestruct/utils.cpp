@@ -94,7 +94,9 @@ int Utils::executCmd(const QString &strCmd, QString &outPut, QString &error)
 
     QStringList argList;
     for (int i = 1; i < cmdList.size(); i++) {
-        argList.append(cmdList[i]);
+        if (!cmdList[i].isEmpty()) {
+            argList.append(cmdList[i]);
+        }
     }
     int exitcode = executeCmdWithArtList(cmdList[0], argList, outPut, error);
 
@@ -104,12 +106,12 @@ int Utils::executCmd(const QString &strCmd, QString &outPut, QString &error)
 int Utils::executWithPipeCmd(const QString &strCmd, QString &outPut, QString &error)
 {
     QStringList argList;
-    argList<< "-c" << strCmd;
+    argList << "-c" << strCmd;
 
-    return executeCmdWithArtList("/bin/bash", argList,outPut, error);
+    return executeCmdWithArtList("/bin/bash", argList, outPut, error);
 }
 
-int Utils::executWithErrorCmd(const QString &strCmd, const QStringList &strArg ,QString &outPut, QString &outPutError, QString &error)
+int Utils::executWithErrorCmd(const QString &strCmd, const QStringList &strArg, QString &outPut, QString &outPutError, QString &error)
 {
     qDebug() << "Utils::executWithErrorCmd cmd:  " << strCmd;
     qDebug() << "Utils::executWithErrorCmd argList:  " << strArg;
@@ -535,25 +537,6 @@ QString Utils::createUuid()
     return uuid.createUuid().toString(QUuid::WithoutBraces);
 }
 
-Byte_Value Utils::getFsReduceMin(const QString &devPath, const FSType &fs)
-{
-    QString cmd;
-    Byte_Value min;
-    switch (fs) {
-    case FSType::FS_EXT2:
-        break;
-    case FSType::FS_EXT3:
-        break;
-    case FSType::FS_EXT4:
-        break;
-    case FSType::FS_NTFS:
-        break;
-    default:
-        return -1;
-    }
-
-    return min;
-}
 
 QString Utils::LVMFormatSize(long long lvmSize)
 {

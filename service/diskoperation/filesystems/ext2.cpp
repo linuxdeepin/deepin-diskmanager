@@ -276,4 +276,17 @@ bool EXT2::checkRepair(const Partition &partition)
     return exitcode == 0 || error.compare("Unknown error") == 0;
 }
 
+//todo 需要解析字符串
+FS_Limits EXT2::getFilesystemLimits(const Partition &partition) const
+{
+    QString output, error;
+    int exitcode = Utils::executCmd(QString("e2fsck -f %1").arg(partition.getPath()), output, error);
+    if(exitcode == 0 || error.compare("Unknown error") == 0){
+         QString str_temp = QString("resize2fs -P %1").arg(partition.getPath());
+         exitcode = Utils::executCmd(str_temp, output, error);
+    }
+
+    return FS_Limits();
+}
+
 } // namespace DiskManager

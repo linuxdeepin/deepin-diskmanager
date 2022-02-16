@@ -39,6 +39,7 @@ PartitionInfo::PartitionInfo()
     m_partitionNumber = m_type = m_status = m_alignment = m_fileSystemType = 0;
     m_sectorStart = m_sectorEnd = m_sectorsUsed = m_sectorsUnused = m_sectorsUnallocated = m_significantThreshold = m_freeSpaceBefore = 0;
     m_flag = m_sectorSize = m_fileSystemBlockSize = 0;
+    m_vgFlag = 0;
     // mountpoints.clear();
 }
 

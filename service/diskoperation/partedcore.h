@@ -286,6 +286,54 @@ public:
      */
     bool gptIsExpanded(const QString &devicePath);
 
+    /**
+     * @brief 创建vg
+     * @param vgName:待创建vg名称
+     * @param devList: pv设备集合
+     * @param size:vg总大小
+     * @return true 成功 false 失败
+     */
+    bool createVG(QString vgName, QList<PVData>devList, long long size);
+
+    /**
+     * @brief 创建lv
+     * @param vgName:vg名称
+     * @param lvList: 待创建lv列表
+     * @return true 成功 false 失败
+     */
+    bool createLV(QString vgName, QList<CreateLVInfo>lvList);
+
+    /**
+     * @brief 删除vg
+     * @param vglist: 待删除vg列表
+     * @return true 成功 false 失败
+     */
+    bool deleteVG(QStringList vglist);
+
+    /**
+     * @brief 删除lv
+     * @param lvlist: 待删除lv列表
+     * @return true 成功 false 失败
+     */
+    bool deleteLV(QStringList lvlist);
+
+    /**
+     * @brief vg空间调整
+     * @param vgName:vg名称
+     * @param devList: pv设备集合
+     * @param size:调整后vg总大小
+     * @return true 成功 false 失败
+     */
+    bool resizeVG(QString vgName, QList<PVData>devList, long long size);
+
+    /**
+     * @brief lv空间调整
+     * @param lvPath:lv路径
+     * @param size: 调整后lv总大小
+     * @return true 成功 false 失败
+     */
+    bool resizeLV(QString lvPath, QString size);
+
 private:
 
     /**
@@ -830,7 +878,7 @@ private:
     ProbeThread m_probeThread;
     bool m_isClear;
 
-    LVMInfo m_lvmInfo;
+    LVMInfo m_lvmInfo;                    //lvm 数据集合
 
 };
 

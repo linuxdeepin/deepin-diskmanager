@@ -271,5 +271,10 @@ bool FAT16::checkRepair(const Partition & partition)
     return exitcode == 0 || error.compare("Unknown error") == 0;
 }
 
+FS_Limits FAT16::getFilesystemLimits(const Partition &partition) const
+{
+    return FS_Limits();
+}
+
 
 } //DiskManager

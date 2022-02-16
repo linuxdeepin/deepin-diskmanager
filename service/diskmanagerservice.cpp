@@ -62,8 +62,8 @@ void DiskManagerService::Quit()
 //}
 void DiskManagerService::Start()
 {
-        QString msg = "DiskManagerService::Start called";
-        Q_EMIT MessageReport(msg);
+    QString msg = "DiskManagerService::Start called";
+    Q_EMIT MessageReport(msg);
 }
 
 DeviceInfo DiskManagerService::getDeviceinfo()
@@ -86,7 +86,7 @@ void DiskManagerService::onGetAllDeviceInfomation()
 {
     DeviceInfoMap infores = m_partedcore->getAllDeviceinfo();
     LVMInfo lvmInfo = m_partedcore->getAllLVMinfo();
-    Q_EMIT updateDeviceInfo(infores,lvmInfo);
+    Q_EMIT updateDeviceInfo(infores, lvmInfo);
 }
 
 void DiskManagerService::setCurSelect(const PartitionInfo &info)
@@ -114,7 +114,7 @@ bool DiskManagerService::format(const QString &fstype, const QString &name)
     return m_partedcore->format(fstype, name);
 }
 
-bool DiskManagerService::clear(const QString &fstype, const QString &path, const QString &name, const QString &user,const int &diskType, const int &clearType)
+bool DiskManagerService::clear(const QString &fstype, const QString &path, const QString &name, const QString &user, const int &diskType, const int &clearType)
 {
     return m_partedcore->clear(fstype, path, name, user, diskType, clearType);
 }
@@ -191,6 +191,36 @@ bool DiskManagerService::onCheckBadBlocksTime(const QString &devicePath, int blo
 bool DiskManagerService::onFixBadBlocks(const QString &devicePath, QStringList badBlocksList, int checkSize, int flag)
 {
     return m_partedcore->fixBadBlocks(devicePath, badBlocksList, checkSize, flag);
+}
+
+bool DiskManagerService::onCreateVG(QString vgName, QList<PVData> devList, long long size)
+{
+    return m_partedcore->createVG(vgName, devList, size);
+}
+
+bool DiskManagerService::onCreateLV(QString vgName, QList<CreateLVInfo> lvList)
+{
+    return m_partedcore->createLV(vgName, lvList);
+}
+
+bool DiskManagerService::onDeleteVG(QStringList vglist)
+{
+    return m_partedcore->deleteVG(vglist);
+}
+
+bool DiskManagerService::onDeleteLV(QStringList lvlist)
+{
+    return m_partedcore->deleteLV(lvlist);
+}
+
+bool DiskManagerService::onResizeVG(QString vgName, QList<PVData> devList, long long size)
+{
+    return m_partedcore->resizeVG(vgName, devList, size);
+}
+
+bool DiskManagerService::onResizeLV(QString lvPath, QString size)
+{
+    return m_partedcore->resizeLV(lvPath, size);
 }
 void DiskManagerService::updateUsb()
 {

@@ -51,10 +51,10 @@ public:
     explicit FormateDialog(QWidget *parent = nullptr);
 
     enum WipeType {
-        Fast = 1,
-        Secure,
-        DoD,
-        Gutmann
+        FAST = 1,
+        SECURE,
+        DOD,
+        GUTMANN
     };
 
 private:

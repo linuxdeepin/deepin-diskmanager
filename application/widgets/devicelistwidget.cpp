@@ -98,7 +98,7 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
     }
 
     m_curDiskInfoData = m_treeView->getCurItem()->data().value<DiskInfoData>();
-    if (m_curDiskInfoData.m_level == DMDbusHandler::Disk) {
+    if (m_curDiskInfoData.m_level == DMDbusHandler::DISK) {
         QMenu *menu = new QMenu(this);
         menu->setObjectName("treeMenu");
         menu->setAccessibleName("menu");
@@ -147,7 +147,7 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
 
         menu->exec(QCursor::pos());  //显示菜单
         delete menu;
-    } else if (m_curDiskInfoData.m_level == DMDbusHandler::Partition) {
+    } else if (m_curDiskInfoData.m_level == DMDbusHandler::PARTITION) {
         QMenu *menu = new QMenu(this);
         menu->setObjectName("treeMenu");
         menu->setAccessibleName("menu");
@@ -192,7 +192,7 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
 
         menu->exec(QCursor::pos());  //显示菜单
         delete menu;
-    } else if (m_curDiskInfoData.m_level == DMDbusHandler::VolumeGroup) {
+    } else if (m_curDiskInfoData.m_level == DMDbusHandler::VOLUMEGROUP) {
         QMenu *menu = new QMenu(this);
         menu->setObjectName("treeMenu");
         menu->setAccessibleName("menu");
@@ -216,7 +216,7 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
 
         menu->exec(QCursor::pos());  //显示菜单
         delete menu;
-    } else if (m_curDiskInfoData.m_level == DMDbusHandler::LogicalVolume) {
+    } else if (m_curDiskInfoData.m_level == DMDbusHandler::LOGICALVOLUME) {
         QMenu *menu = new QMenu(this);
         menu->setObjectName("treeMenu");
         menu->setAccessibleName("menu");
@@ -677,7 +677,7 @@ void DeviceListWidget::onUpdateDeviceInfo()
     int vgCount = 0;
 
     if (0 != mapVGInfo.count()) {
-        auto lvmInfoBox = new DmDiskinfoBox(DMDbusHandler::Other, this, tr("Volume Groups"), "");
+        auto lvmInfoBox = new DmDiskinfoBox(DMDbusHandler::OTHER, this, tr("Volume Groups"), "");
         for (auto vgInfo = mapVGInfo.begin(); vgInfo != mapVGInfo.end(); vgInfo++) {
             VGInfo vgInformation = vgInfo.value();
 
@@ -685,7 +685,7 @@ void DeviceListWidget::onUpdateDeviceInfo()
                 continue;
             }
 
-            auto vgInfoBox = new DmDiskinfoBox(DMDbusHandler::VolumeGroup, this, vgInformation.m_vgName, vgInformation.m_vgSize);
+            auto vgInfoBox = new DmDiskinfoBox(DMDbusHandler::VOLUMEGROUP, this, vgInformation.m_vgName, vgInformation.m_vgSize);
             int lvCount = 0;
 
             for (auto lvInfo = vgInformation.m_lvlist.begin(); lvInfo != vgInformation.m_lvlist.end(); lvInfo++) {
@@ -704,7 +704,7 @@ void DeviceListWidget::onUpdateDeviceInfo()
                     mountPoints += lvInfo->m_mountPoints[i];
                 }
 
-                auto lvInfoBox = new DmDiskinfoBox(DMDbusHandler::LogicalVolume, this, lvInfo->m_vgName, "", 0, lvInfo->m_lvPath, lvInfo->m_lvSize, used, unused,
+                auto lvInfoBox = new DmDiskinfoBox(DMDbusHandler::LOGICALVOLUME, this, lvInfo->m_vgName, "", 0, lvInfo->m_lvPath, lvInfo->m_lvSize, used, unused,
                                                           0, 0, 0, fstypeName, mountPoints, lvInfo->m_lvName, 0);
 
                 vgInfoBox->m_childs.append(lvInfoBox);
@@ -717,7 +717,7 @@ void DeviceListWidget::onUpdateDeviceInfo()
             vgCount ++;
         }
 
-        auto infoBox = new DmDiskinfoBox(DMDbusHandler::Other, this, tr("Disks"), "");
+        auto infoBox = new DmDiskinfoBox(DMDbusHandler::OTHER, this, tr("Disks"), "");
         for (auto devInfo = infoMap.begin(); devInfo != infoMap.end(); devInfo++) {
             DeviceInfo info = devInfo.value();
 
@@ -726,7 +726,7 @@ void DeviceListWidget::onUpdateDeviceInfo()
             }
 
             QString diskSize = Utils::formatSize(info.m_length, info.m_sectorSize);
-            auto diskinfoBox = new DmDiskinfoBox(DMDbusHandler::Disk, this, info.m_path, diskSize);
+            auto diskinfoBox = new DmDiskinfoBox(DMDbusHandler::DISK, this, info.m_path, diskSize);
             int partitionCount = 0;
 
             for (auto it = info.m_partition.begin(); it != info.m_partition.end(); it++) {
@@ -748,7 +748,7 @@ void DeviceListWidget::onUpdateDeviceInfo()
                 }
 
                 QString fileSystemLabel = it->m_fileSystemLabel;
-                auto childDiskinfoBox = new DmDiskinfoBox(DMDbusHandler::Partition, this, it->m_devicePath, "", it->m_vgFlag, partitionPath, partitionSize, used, unused,
+                auto childDiskinfoBox = new DmDiskinfoBox(DMDbusHandler::PARTITION, this, it->m_devicePath, "", it->m_vgFlag, partitionPath, partitionSize, used, unused,
                                                           it->m_sectorsUnallocated, it->m_sectorStart, it->m_sectorEnd, fstypeName,
                                                           mountpoints, fileSystemLabel, it->m_flag);
                 diskinfoBox->m_childs.append(childDiskinfoBox);
@@ -764,8 +764,8 @@ void DeviceListWidget::onUpdateDeviceInfo()
         m_treeView->addTopItem(infoBox, m_addItem);
 
         QStringList deviceNameList = DMDbusHandler::instance()->getDeviceNameList();
-        if (DMDbusHandler::Disk == DMDbusHandler::instance()->getCurLevel() ||
-                DMDbusHandler::Partition == DMDbusHandler::instance()->getCurLevel()) {
+        if (DMDbusHandler::DISK == DMDbusHandler::instance()->getCurLevel() ||
+                DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
             if (deviceNameList.indexOf(DMDbusHandler::instance()->getCurDevicePath()) == -1) {
                 m_flag = 0;
             } else {
@@ -792,8 +792,8 @@ void DeviceListWidget::onUpdateDeviceInfo()
         } else {
             int index = m_treeView->getCurrentNum();
             if (-1 != m_treeView->getCurrentGroupNum()) {
-                if (DMDbusHandler::Disk == DMDbusHandler::instance()->getCurLevel() ||
-                        DMDbusHandler::Partition == DMDbusHandler::instance()->getCurLevel()) {
+                if (DMDbusHandler::DISK == DMDbusHandler::instance()->getCurLevel() ||
+                        DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
                     if (countMap.value(m_deviceNum) == index) {
                         index = m_treeView->getCurrentNum() - 1;
                     }
@@ -825,7 +825,7 @@ void DeviceListWidget::onUpdateDeviceInfo()
             }
 
             QString diskSize = Utils::formatSize(info.m_length, info.m_sectorSize);
-            auto diskinfoBox = new DmDiskinfoBox(DMDbusHandler::Disk, this, info.m_path, diskSize);
+            auto diskinfoBox = new DmDiskinfoBox(DMDbusHandler::DISK, this, info.m_path, diskSize);
             int partitionCount = 0;
 
             for (auto it = info.m_partition.begin(); it != info.m_partition.end(); it++) {
@@ -847,7 +847,7 @@ void DeviceListWidget::onUpdateDeviceInfo()
                 }
 
                 QString fileSystemLabel = it->m_fileSystemLabel;
-                auto childDiskinfoBox = new DmDiskinfoBox(DMDbusHandler::Partition, this, it->m_devicePath, "", it->m_vgFlag, partitionPath, partitionSize, used, unused,
+                auto childDiskinfoBox = new DmDiskinfoBox(DMDbusHandler::PARTITION, this, it->m_devicePath, "", it->m_vgFlag, partitionPath, partitionSize, used, unused,
                                                           it->m_sectorsUnallocated, it->m_sectorStart, it->m_sectorEnd, fstypeName,
                                                           mountpoints, fileSystemLabel, it->m_flag);
                 diskinfoBox->m_childs.append(childDiskinfoBox);

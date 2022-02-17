@@ -237,7 +237,7 @@ void InfoShowWidget::bottomFramSettings()
 void InfoShowWidget::onCurSelectChanged()
 {
     qDebug() << __FUNCTION__ << "-0--0-";
-    if (DMDbusHandler::Partition == DMDbusHandler::instance()->getCurLevel()) {
+    if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
         m_frameBottom->setFrameData();
         m_mountpointLabel->setText(tr("Mount point:"));
         m_typeLabel->setText(tr("Type:"));
@@ -295,7 +295,7 @@ void InfoShowWidget::onCurSelectChanged()
 
             m_vgSizeInfoWidget->setData(info.m_vgData);
         }
-    } else if (DMDbusHandler::Disk == DMDbusHandler::instance()->getCurLevel()) {
+    } else if (DMDbusHandler::DISK == DMDbusHandler::instance()->getCurLevel()) {
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         Sector usedSector = 0;
         Sector unusedSector = 0;
@@ -355,7 +355,7 @@ void InfoShowWidget::onCurSelectChanged()
             QVector<VGData> vglist = info.m_vglist;
             m_vgSizeInfoWidget->setData(vglist);
         }
-    } else if (DMDbusHandler::VolumeGroup == DMDbusHandler::instance()->getCurLevel()) {
+    } else if (DMDbusHandler::VOLUMEGROUP == DMDbusHandler::instance()->getCurLevel()) {
         m_partitionInfoWidget->hide();
         m_infoWidget->hide();
         m_vgSizeInfoWidget->show();
@@ -376,7 +376,7 @@ void InfoShowWidget::onCurSelectChanged()
                                         vgInfo.m_vgUnused, vgInfo.m_vgSize, vgInfo.m_vgName);
         m_infoTopFrame->setShowDiskInfo();
         m_vgSizeInfoWidget->setData(vgInfo);
-    } else if (DMDbusHandler::LogicalVolume == DMDbusHandler::instance()->getCurLevel()) {
+    } else if (DMDbusHandler::LOGICALVOLUME == DMDbusHandler::instance()->getCurLevel()) {
         m_partitionInfoWidget->hide();
         m_infoWidget->show();
         m_vgSizeInfoWidget->hide();

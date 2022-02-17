@@ -52,7 +52,7 @@ void DmTreeview::initUI()
 
 QStandardItem * DmTreeview::addItem(QStandardItem *item, const DiskInfoData &data, int flag)
 {
-    if (data.m_level == DMDbusHandler::Disk || data.m_level == DMDbusHandler::VolumeGroup) {
+    if (data.m_level == DMDbusHandler::DISK || data.m_level == DMDbusHandler::VOLUMEGROUP) {
         QStandardItem *standardItem = new QStandardItem();
         standardItem->setAccessibleDescription(data.m_diskPath);
         standardItem->setData(QVariant::fromValue(data), Qt::UserRole + 1);
@@ -117,7 +117,7 @@ void DmTreeview::currentChanged(const QModelIndex &current, const QModelIndex &p
     DiskInfoData data = current.data(Qt::UserRole + 1).value<DiskInfoData>();
     qDebug() << data.m_diskPath << data.m_diskSize << data.m_partitionSize << data.m_partitionPath << data.m_level << data.m_used << data.m_unused << data.m_start << data.m_end << data.m_fstype << data.m_mountpoints << data.m_sysLabel;
 
-    if (data.m_level == DMDbusHandler::Other) {
+    if (data.m_level == DMDbusHandler::OTHER) {
         return;
     }
 
@@ -163,13 +163,13 @@ void DmTreeview::addItem(DmDiskinfoBox *infoBox, int flag, QStandardItem *purIte
     data.m_vgFlag = infoBox->m_vgFlag;
 
     if ((infoBox->m_level <= 0) && !isGroup) {
-        data.m_level = DMDbusHandler::Disk;
+        data.m_level = DMDbusHandler::DISK;
         item = addTopItem(data);
         foreach (auto sub, infoBox->m_childs) {
             addSubItem(sub, item, flag);
         }
-    } else if(infoBox->m_level == DMDbusHandler::Other) {
-        data.m_level = DMDbusHandler::Other;
+    } else if(infoBox->m_level == DMDbusHandler::OTHER) {
+        data.m_level = DMDbusHandler::OTHER;
         item = addTopItem(data);
         m_lstStandardItem << item;
         foreach (auto sub, infoBox->m_childs) {
@@ -188,16 +188,16 @@ void DmTreeview::addItem(DmDiskinfoBox *infoBox, int flag, QStandardItem *purIte
 
             QVariant var = purItem->index().data(Qt::UserRole + 1);
             DiskInfoData parent_data = var.value<DiskInfoData>();
-            data.m_level = DMDbusHandler::Disk;
+            data.m_level = DMDbusHandler::DISK;
 
             item = addItem(purItem, data, flag);
             foreach (auto sub, infoBox->m_childs) {
                 addSubItem(sub, item, flag);
             }
-        } else if (infoBox->m_level == DMDbusHandler::VolumeGroup) {
+        } else if (infoBox->m_level == DMDbusHandler::VOLUMEGROUP) {
             QVariant var = purItem->index().data(Qt::UserRole + 1);
             DiskInfoData parent_data = var.value<DiskInfoData>();
-            data.m_level = DMDbusHandler::VolumeGroup;
+            data.m_level = DMDbusHandler::VOLUMEGROUP;
 
             item = addItem(purItem, data, flag);
             foreach (auto sub, infoBox->m_childs) {
@@ -219,7 +219,7 @@ void DmTreeview::clearData()
 
 void DmTreeview::addTopItem(DmDiskinfoBox *mailBox, int flag)
 {
-    if (mailBox->m_level == DMDbusHandler::Other) {
+    if (mailBox->m_level == DMDbusHandler::OTHER) {
         isGroup = true;
         addItem(mailBox, flag);
     } else {

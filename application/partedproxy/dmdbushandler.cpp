@@ -138,7 +138,7 @@ void DMDbusHandler::onUpdateUsb()
 void DMDbusHandler::onSetCurSelect(const QString &devicePath, const QString &partitionPath, Sector start, Sector end, int level)
 {
     //点击切换才触发
-    if (DeviceType::Partition == level || DeviceType::Disk == level) {
+    if (DeviceType::PARTITION == level || DeviceType::DISK == level) {
         if (((level != m_curLevel) || (devicePath != m_curDevicePath) || (partitionPath != m_curPartitionPath)) && m_deviceMap.size() > 0) {
             m_curDevicePath = devicePath;
             m_curLevel = level;
@@ -156,13 +156,13 @@ void DMDbusHandler::onSetCurSelect(const QString &devicePath, const QString &par
             m_dbus->setCurSelect(m_curPartitionInfo);
             emit curSelectChanged();
         }
-    } else if (DeviceType::VolumeGroup == level || DeviceType::LogicalVolume == level) {
+    } else if (DeviceType::VOLUMEGROUP == level || DeviceType::LOGICALVOLUME == level) {
         QMap<QString, VGInfo> mapVGInfo = m_lvmInfo.m_vgInfo;
         if (((level != m_curLevel) || (devicePath != m_curVGName) || (partitionPath != m_curPartitionPath)) && mapVGInfo.size() > 0) {
             m_curLevel = level;
             m_curVGName = devicePath;
             m_curVGInfo = mapVGInfo.value(devicePath);
-            if (DeviceType::LogicalVolume == level) {
+            if (DeviceType::LOGICALVOLUME == level) {
                 for (int i = 0; i < m_curVGInfo.m_lvlist.count(); i++) {
                     LVInfo info = m_curVGInfo.m_lvlist.at(i);
                     if (partitionPath == info.m_lvPath) {

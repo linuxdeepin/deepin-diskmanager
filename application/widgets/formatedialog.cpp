@@ -47,9 +47,9 @@ void FormateDialog::initUi()
 {
     setFixedSize(450, 355);
 
-    m_curWipeMethod = WipeType::Fast;
+    m_curWipeMethod = WipeType::FAST;
     int fileSystemType = 11;
-    if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::Partition) {
+    if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         m_pathInfo = info.m_path;
         fileSystemType = info.m_fileSystemType;
@@ -384,7 +384,7 @@ void FormateDialog::onSecurityCurrentIndexChanged(int index)
         m_buttonLayout->setContentsMargins(0, 0, 0, 0);
         m_label->hide();
         m_wipingMethodWidget->hide();
-        m_curWipeMethod = WipeType::Fast;
+        m_curWipeMethod = WipeType::FAST;
         m_describeInfo->setText(tr("It only deletes the partition info without erasing the files on the disk. "
                                    "Disk recovery tools may recover the files at a certain probability."));
         break;
@@ -396,7 +396,7 @@ void FormateDialog::onSecurityCurrentIndexChanged(int index)
         m_buttonLayout->setContentsMargins(0, 0, 0, 0);
         m_label->hide();
         m_wipingMethodWidget->hide();
-        m_curWipeMethod = WipeType::Secure;
+        m_curWipeMethod = WipeType::SECURE;
         m_describeInfo->setText(tr("It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, "
                                    "and random data to the entire disk once. You will not be able to recover files, "
                                    "and the process will be slow."));
@@ -410,7 +410,7 @@ void FormateDialog::onSecurityCurrentIndexChanged(int index)
         m_label->show();
         m_wipingMethodWidget->show();
         m_wipingMethodComboBox->setCurrentIndex(0);
-        m_curWipeMethod = WipeType::DoD;
+        m_curWipeMethod = WipeType::DOD;
         m_describeInfo->setText(tr("It writes 0, 1, and random data to the entire disk several times. You can set the "
                                    "number of times to erase disks and overwrite data, but the process will be very slow."));
         break;
@@ -424,11 +424,11 @@ void FormateDialog::onWipingMethodCurrentIndexChanged(int index)
 {
     switch (index) {
     case 0: {
-        m_curWipeMethod = WipeType::DoD;
+        m_curWipeMethod = WipeType::DOD;
         break;
     }
     case 1: {
-        m_curWipeMethod = WipeType::Gutmann;
+        m_curWipeMethod = WipeType::GUTMANN;
         break;
     }
     default:

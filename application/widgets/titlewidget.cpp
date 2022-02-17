@@ -387,7 +387,7 @@ bool TitleWidget::isExistMountPartition()
 
 void TitleWidget::updateBtnStatus()
 {
-    if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::Partition) {
+    if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
         m_btnDeletePV->show();
         m_btnResize->show();
         m_btnDeleteVG->hide();
@@ -475,7 +475,7 @@ void TitleWidget::updateBtnStatus()
             }
         }
 
-    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::Disk) {
+    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
         m_btnParted->show();
         m_btnDeletePV->show();
         m_btnResize->show();
@@ -515,7 +515,7 @@ void TitleWidget::updateBtnStatus()
                 m_btnResize->setDisabled(true);
             }
         }
-    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::VolumeGroup) {
+    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::VOLUMEGROUP) {
         m_btnParted->hide();
         m_btnDeleteLV->hide();
         m_btnDeletePV->hide();
@@ -537,7 +537,7 @@ void TitleWidget::updateBtnStatus()
             m_btnCreateLV->setDisabled(true);
         }
 
-    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LogicalVolume) {
+    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
         m_btnParted->hide();
         m_btnDeleteVG->hide();
         m_btnDeletePV->hide();

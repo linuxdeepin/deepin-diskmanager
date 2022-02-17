@@ -51,10 +51,10 @@ void UnmountDialog::initUi()
 
     mainLayout->addWidget(tipLabel);
 
-    if (DMDbusHandler::Partition == DMDbusHandler::instance()->getCurLevel()) {
+    if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         setTitle(tr("Unmount %1").arg(info.m_path));
-    } else if (DMDbusHandler::Partition == DMDbusHandler::instance()->getCurLevel()) {
+    } else if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
         setTitle(tr("Unmount %1").arg(lvInfo.m_lvName));
 
@@ -79,7 +79,7 @@ void UnmountDialog::onButtonClicked(int index, const QString &text)
     if (m_okCode == index) {
         QString m_mountPoints;
         int flag = 0;
-        if (DMDbusHandler::Partition == DMDbusHandler::instance()->getCurLevel()) {
+        if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
             PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
 
             for (int i = 0; i < info.m_mountPoints.size(); i++) {
@@ -87,7 +87,7 @@ void UnmountDialog::onButtonClicked(int index, const QString &text)
             }
 
             flag = info.m_flag;
-        } else if (DMDbusHandler::Partition == DMDbusHandler::instance()->getCurLevel()) {
+        } else if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
             LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
             for (int i = 0; i < lvInfo.m_mountPoints.size(); i++) {
                 m_mountPoints += lvInfo.m_mountPoints[i];

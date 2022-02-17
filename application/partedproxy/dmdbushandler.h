@@ -46,11 +46,11 @@ public:
     ~DMDbusHandler();
 
     enum DeviceType {
-        Disk = 0,
-        Partition,
-        VolumeGroup,
-        LogicalVolume,
-        Other
+        DISK = 0,
+        PARTITION,
+        VOLUMEGROUP,
+        LOGICALVOLUME,
+        OTHER
     };
 
     /**
@@ -443,7 +443,7 @@ private:
     QStringList m_deviceNameList;
     QString m_loginMessage;
     QString m_curCreateType;
-    int m_curLevel = DeviceType::Partition;
+    int m_curLevel = DeviceType::PARTITION;
     LVMInfo m_lvmInfo;
     QStringList m_vgNameList;
     QString m_curVGName;

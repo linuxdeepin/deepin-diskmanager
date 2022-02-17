@@ -43,13 +43,13 @@ InfoTopFrame::InfoTopFrame(DWidget *parent)
     setLayout(m_mainLayout);
 
     m_pictureLabel = new DLabel(this);
-    if (DMDbusHandler::Partition == DMDbusHandler::instance()->getCurLevel()) {
+    if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
         m_pictureLabel->setPixmap(Common::getIcon("labeldisk").pixmap(85, 85));
-    } else if (DMDbusHandler::Disk == DMDbusHandler::instance()->getCurLevel()) {
+    } else if (DMDbusHandler::DISK == DMDbusHandler::instance()->getCurLevel()) {
         m_pictureLabel->setPixmap(Common::getIcon("disk").pixmap(85, 85));
-    } else if (DMDbusHandler::VolumeGroup == DMDbusHandler::instance()->getCurLevel()) {
+    } else if (DMDbusHandler::VOLUMEGROUP == DMDbusHandler::instance()->getCurLevel()) {
         m_pictureLabel->setPixmap(Common::getIcon("disk").pixmap(85, 85));
-    } else if (DMDbusHandler::LogicalVolume == DMDbusHandler::instance()->getCurLevel()) {
+    } else if (DMDbusHandler::LOGICALVOLUME == DMDbusHandler::instance()->getCurLevel()) {
         m_pictureLabel->setPixmap(Common::getIcon("labeldisk").pixmap(85, 85));
     }
 
@@ -110,7 +110,7 @@ void InfoTopFrame::initLeftInfo()
 
 void InfoTopFrame::setShowDiskInfo()
 {
-    if (DMDbusHandler::Partition == DMDbusHandler::instance()->getCurLevel()) {
+    if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
         auto info = DMDbusHandler::instance()->getCurPartititonInfo();
 
         if (1 == info.m_vgFlag) {
@@ -137,7 +137,7 @@ void InfoTopFrame::setShowDiskInfo()
 
         QString diskType = Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType));
         m_typeLabel->setText(tr("File system") + ": " + diskType);
-    } else if (DMDbusHandler::Disk == DMDbusHandler::instance()->getCurLevel()) {
+    } else if (DMDbusHandler::DISK == DMDbusHandler::instance()->getCurLevel()) {
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         QMap<QString, QString> isJoinAllVG = DMDbusHandler::instance()->getIsJoinAllVG();
         if (isJoinAllVG.value(info.m_path) == "true") {
@@ -159,7 +159,7 @@ void InfoTopFrame::setShowDiskInfo()
             partitionTable = info.m_disktype;
         }
         m_typeLabel->setText(tr("%1 partition table").arg(partitionTable));
-    } else if (DMDbusHandler::VolumeGroup == DMDbusHandler::instance()->getCurLevel()) {
+    } else if (DMDbusHandler::VOLUMEGROUP == DMDbusHandler::instance()->getCurLevel()) {
         m_pictureLabel->setPixmap(Common::getIcon("vg").pixmap(85, 85));
 
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
@@ -167,7 +167,7 @@ void InfoTopFrame::setShowDiskInfo()
         m_allMemoryLabel->setText(vgInfo.m_vgSize);
 
         m_typeLabel->setText(tr("Volume group"));
-    } else if (DMDbusHandler::LogicalVolume == DMDbusHandler::instance()->getCurLevel()) {
+    } else if (DMDbusHandler::LOGICALVOLUME == DMDbusHandler::instance()->getCurLevel()) {
         m_pictureLabel->setPixmap(Common::getIcon("lv").pixmap(85, 85));
 
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
@@ -182,7 +182,7 @@ void InfoTopFrame::setShowDiskInfo()
 
 void InfoTopFrame::resizeEvent(QResizeEvent *event)
 {
-    if (DMDbusHandler::Partition == DMDbusHandler::instance()->getCurLevel()) {
+    if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
         auto info = DMDbusHandler::instance()->getCurPartititonInfo();
 
         QFontMetrics fmDevpath = m_nameLabel->fontMetrics();

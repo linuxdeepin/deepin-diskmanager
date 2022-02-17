@@ -369,7 +369,7 @@ void CreateLVWidget::recPartitionInfo()
 {
     //获取数据
     m_lstLVName.clear();
-    if (DMDbusHandler::VolumeGroup == DMDbusHandler::instance()->getCurLevel()) {
+    if (DMDbusHandler::VOLUMEGROUP == DMDbusHandler::instance()->getCurLevel()) {
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
 
         m_deviceName->setText(vgInfo.m_vgName);
@@ -394,7 +394,7 @@ void CreateLVWidget::recPartitionInfo()
         m_currentEditSize = QString::number(m_totalSize, 'f', 2);
         m_partComboBox->setEnabled(true);
         setSelectUnallocatesSpace();
-    } else if (DMDbusHandler::LogicalVolume == DMDbusHandler::instance()->getCurLevel()) {
+    } else if (DMDbusHandler::LOGICALVOLUME == DMDbusHandler::instance()->getCurLevel()) {
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
 
@@ -778,6 +778,9 @@ void CreateLVWidget::onApplyButton()
 {
     QList<CreateLVInfo> lstLVInfo;
     VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
+    QString userName = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    userName.remove(0, 6);
+
     for (int i = 0; i < m_patrinfo.size(); i++) {
         CreateLVInfo info;
         info.m_vgName = vgInfo.m_vgName;
@@ -785,6 +788,7 @@ void CreateLVWidget::onApplyButton()
         info.m_lvFs = Utils::stringToFileSystemType(m_patrinfo.at(i).m_fstype);
         info.m_lvSize = m_patrinfo.at(i).m_lvSize;
         info.m_lvByteSize = m_patrinfo.at(i).m_lvByteSize;
+        info.m_user = userName;
 
         lstLVInfo.append(info);
     }

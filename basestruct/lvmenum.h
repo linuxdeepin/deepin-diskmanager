@@ -55,7 +55,9 @@ enum LVMError {
     LVM_ERR_NO_CMD_SUPPORT,     //外部命令不支持
     LVM_ERR_LV,                 //lv 错误
     LVM_ERR_VG,                 //vg 错误
-    LVM_ERR_VG_ALREADY_EXISTS   //VG重名
+    LVM_ERR_VG_ALREADY_EXISTS,  //VG重名
+    LVM_ERR_VG_NO_EXISTS,        //vg不存在
+    LVM_ERR_LV_ARGUMENT         //lv 创建参数错误
 };
 
 

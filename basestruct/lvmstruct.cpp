@@ -50,7 +50,8 @@ QDBusArgument &operator<<(QDBusArgument &argument, const CreateLVInfo &data)
              << data.m_lvName
              << data.m_lvSize
              << data.m_lvByteSize
-             << static_cast<int>(data.m_lvFs);
+             << static_cast<int>(data.m_lvFs)
+             << data.m_user;
     argument.endStructure();
     return argument;
 }
@@ -63,7 +64,8 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, CreateLVInfo &dat
              >> data.m_lvName
              >> data.m_lvSize
              >> data.m_lvByteSize
-             >> type;
+             >> type
+             >> data.m_user;
     data.m_lvFs = static_cast<FSType>(type);
     argument.endStructure();
 
@@ -180,8 +182,8 @@ PVInfo::PVInfo()
     m_PESize = 0;
     m_pvError = LVMError::LVM_ERR_NORMAL;
     m_lvmDevType = LVMDevType::LVM_DEV_UNKNOW_DEVICES;
-    m_pvByteFreeSize =0;
-    m_pvByteTotalSize =0;
+    m_pvByteFreeSize = 0;
+    m_pvByteTotalSize = 0;
 }
 
 

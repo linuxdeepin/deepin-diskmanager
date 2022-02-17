@@ -66,6 +66,7 @@ typedef struct CreateLVInfo {
     QString m_lvSize;       //lv大小
     long long m_lvByteSize; //lv大小 byte单位
     FSType m_lvFs;          //文件系统类型
+    QString m_user;         //当前用户名称
 } CreateLVInfo;
 LVMStructEnd(CreateLVInfo)
 

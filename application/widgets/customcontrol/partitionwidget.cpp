@@ -795,7 +795,7 @@ void PartitionWidget::onAddPartition()
     m_partName.append(m_partNameEdit->text());
     //输入框内的值超过剩余空闲空间,以剩余空间新建
     currentSize = m_currentEditSize.toDouble();
-    if (currentSize >= (m_totalSize - sumValue())) {
+    if (currentSize >= QString::number((m_totalSize - sumValue()), 'f', 4).toDouble()) {
         currentSize = m_totalSize - sumValue();
         part.m_blast = true;
     }

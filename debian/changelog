@@ -1,3 +1,12 @@
+deepin-diskmanager (1.2.30) stable; urgency=low
+
+  * 1040第三十次发版
+  * 113545 【4.2.15】【全平台】【首页体检】重复多次开启取消立即体检系统崩溃
+  * 113408 有多个分区时，删除其中一个后并重新创建，多出一个1mib的空闲空间
+  * 113402 新建fat32类型的分区挂载/mnt挂载失败
+
+ -- yuandandan <yuandandan@uniontech.com>  Fri, 18 Feb 2022 17:48:16 +0800
+
 deepin-diskmanager (1.2.29) stable; urgency=low
 
   * 1040第二十九次发版

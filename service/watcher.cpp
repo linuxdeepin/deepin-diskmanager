@@ -57,7 +57,7 @@ void Watcher::run()
     bool isrun = false;
     QString cmd, outPut, error;
     //先判断后台服务进程是否存在,如果存在可能是强制退出导致,应先退出后台程序再重新启动磁盘管理器
-    cmd = QString("ps aux | grep -w deepin-diskmanager$");
+    cmd = QString("ps -eo pid,cmd |awk '{print $2}' |grep -w deepin-diskmanager$");
 
     while (1) {
         QThread::msleep(500);  //0.5 second

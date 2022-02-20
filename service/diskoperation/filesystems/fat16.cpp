@@ -273,7 +273,8 @@ bool FAT16::checkRepair(const Partition & partition)
 
 FS_Limits FAT16::getFilesystemLimits(const Partition &partition) const
 {
-    return FS_Limits();
+    FS_Limits tmp {-1, 0};
+    return tmp;
 }
 
 

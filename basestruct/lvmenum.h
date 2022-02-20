@@ -30,10 +30,10 @@
  * @brief lvm 动作
  */
 enum LVMAction {
-    LVM_ACT_UNkNOW,     //未知动作
-    LVM_ACT_ADDPV,      //添加PV
-    LVM_ACT_DELETEPV,   //删除PV
-    LVM_ACT_PVMOVE      //移动PV 暂时未用
+    LVM_ACT_UNkNOW,                 //未知动作
+    LVM_ACT_ADDPV,                  //添加PV
+    LVM_ACT_DELETEPV,               //删除PV
+    LVM_ACT_PVMOVE                  //移动PV 暂时未用
 };
 
 //new by liuwh 2022/1/17
@@ -46,18 +46,32 @@ enum LVMDevType {
     LVM_DEV_DISK,                   //磁盘
     LVM_DEV_UNALLOCATED_PARTITION,  //未分配的分区
     LVM_DEV_PARTITION,              //分区
-    LVM_DEV_LOOP,                   // loop设备
+    LVM_DEV_LOOP,                   //loop设备
     LVM_DEV_META_DEVICES            //元数据设备 raid 加密磁盘映射等
 };
 
 enum LVMError {
-    LVM_ERR_NORMAL,             //正常
-    LVM_ERR_NO_CMD_SUPPORT,     //外部命令不支持
-    LVM_ERR_LV,                 //lv 错误
-    LVM_ERR_VG,                 //vg 错误
-    LVM_ERR_VG_ALREADY_EXISTS,  //VG重名
-    LVM_ERR_VG_NO_EXISTS,        //vg不存在
-    LVM_ERR_LV_ARGUMENT         //lv 创建参数错误
+    LVM_ERR_NORMAL = 0,             //正常
+    LVM_ERR_NO_CMD_SUPPORT,         //外部命令不支持
+
+    LVM_ERR_PV = 100,
+    LVM_ERR_PV_CREATE_FAILED,       //pv 创建失败
+    LVM_ERR_PV_DELETE_FAILED,       //pv 删除失败
+
+    LVM_ERR_LV = 200,               //lv 错误
+    LVM_ERR_LV_CREATE_FAILED,       //lv 创建失败
+    LVM_ERR_LV_ARGUMENT,            //lv 创建参数错误
+    LVM_ERR_LV_NO_EXISTS,           //lv 不存在
+    LVM_ERR_LV_DELETE_FAILED,       //lv 删除失败
+    LVM_ERR_LV_CREATE_FS_FAILED,    //lv 文件系统创建失败
+
+    LVM_ERR_VG = 300,               //vg 错误
+    LVM_ERR_VG_CREATE_FAILED,       //vg 创建失败
+    LVM_ERR_VG_ARGUMENT,            //vg 创建参数错误
+    LVM_ERR_VG_NO_EXISTS,           //vg不存在
+    LVM_ERR_VG_ALREADY_EXISTS,      //VG重名
+    LVM_ERR_VG_DELETE_FAILED        //vg 删除失败
+
 };
 
 
@@ -113,7 +127,6 @@ struct LVM_CMD_Support {
     LVM_Support LVM_CMD_vgscan = NONE;
     LVM_Support LVM_CMD_vgsplit = NONE;
 };
-
 
 
 #endif // LVMENUM_H

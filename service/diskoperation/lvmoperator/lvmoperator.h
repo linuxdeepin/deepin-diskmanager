@@ -23,13 +23,13 @@
 
 #include "lvmstruct.h"
 #include "deviceinfo.h"
+#include "../supportedfilesystems.h"
 
 class LVMOperator
 {
 public:
     LVMOperator();
 
-    /***********************************数据更新及打印********************************************/
     /**
      * @brief 更新lvm信息
      * @param lvmInfo:lvm数据结构体
@@ -86,7 +86,7 @@ public:
      * @param size:vg总大小
      * @return true 成功 false 失败
      */
-    static bool createVG(const LVMInfo &lvmInfo, QString vgName, QList<PVData>devList, long long size);
+    static bool createVG(LVMInfo &lvmInfo, QString vgName, QList<PVData>devList, long long size);
 
     /**
      * @brief 创建lv
@@ -245,9 +245,26 @@ private:
     static bool p_deleteVG(const VGInfo &vgInfo);
 
 
+    /**
+     * @brief 设置lvm错误
+     * @param lvmInfo:lvm数据
+     * @param err:错误枚举
+     * @return true 成功 false 失败
+     */
+    static inline bool setLVMErr(LVMInfo &lvmInfo, const LVMError &err)
+    {
+        lvmInfo.m_lvmErr = err;
+        m_lvmErr = err;
+        printError(err);
+        return lvmInfo.m_lvmErr == LVMError::LVM_ERR_NORMAL;
+    }
+
 public:
     static LVM_CMD_Support m_lvmSupport; //lvm系统支持集合
     static bool m_initSupport;//初始化lvm系统支持标志位
+    static DeviceInfoMap  m_devInfo; //磁盘属性集合
+    static DiskManager::SupportedFileSystems m_supportFs; //文件系统支持集合
+    static LVMError m_lvmErr;
 
 };
 

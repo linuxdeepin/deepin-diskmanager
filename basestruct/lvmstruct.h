@@ -46,11 +46,15 @@
  */
 typedef struct PVData {
     PVData();
-    QString m_devicePath;  //pv路径
+    bool operator<(const PVData &tmp)const;
+    bool operator==(const PVData &tmp)const;
+    QString m_diskPath;    //磁盘路径
     Sector m_startSector;  //开始扇区
     Sector m_endSector;    //结束扇区
+    int m_sectorSize;      //扇区大小
     LVMAction m_pvAct;     //执行动作
     LVMDevType m_type;     //设备类型
+    QString m_devicePath;  //pv路径
 } PVData;
 LVMStructEnd(PVData)
 

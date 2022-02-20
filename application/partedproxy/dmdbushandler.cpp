@@ -58,6 +58,9 @@ DMDbusHandler::DMDbusHandler(QObject *parent)
     qDBusRegisterMetaType<HardDiskInfo>();
     qDBusRegisterMetaType<HardDiskStatusInfo>();
 
+
+
+    //注册结构体 lvm dbus通信使用
     qDBusRegisterMetaType<PVRanges>();
     qDBusRegisterMetaType<CreateLVInfo>();
     qDBusRegisterMetaType<QVector<PVRanges>>();
@@ -69,6 +72,8 @@ DMDbusHandler::DMDbusHandler(QObject *parent)
     qDBusRegisterMetaType<PVInfo>();
     qDBusRegisterMetaType<LVMInfo>();
     qDBusRegisterMetaType<QVector<QString>>();
+    qDBusRegisterMetaType<QList<PVData>>();
+    qDBusRegisterMetaType<QList<CreateLVInfo>>();
 
     m_dbus = new DMDBusInterface("com.deepin.diskmanager", "/com/deepin/diskmanager",
                                  QDBusConnection::systemBus(), this);

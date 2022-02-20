@@ -6,6 +6,29 @@ PVData::PVData()
     m_type = LVMDevType::LVM_DEV_UNKNOW_DEVICES;
 }
 
+bool PVData::operator<(const PVData &tmp) const
+{
+    if (m_type == LVMDevType::LVM_DEV_UNALLOCATED_PARTITION) {
+        return m_devicePath < tmp.m_devicePath
+               ||m_startSector < tmp.m_startSector
+               || m_endSector < tmp.m_endSector
+               || m_diskPath < tmp.m_diskPath
+               || m_sectorSize < tmp.m_sectorSize;
+    }
+    return m_devicePath < tmp.m_devicePath|| m_diskPath < tmp.m_diskPath;
+}
+
+bool PVData::operator==(const PVData &tmp) const
+{
+    return m_devicePath == tmp.m_devicePath
+           && m_startSector == tmp.m_startSector
+           && m_endSector == tmp.m_endSector
+           && m_type == tmp.m_type
+           && m_pvAct == tmp.m_pvAct
+           && m_diskPath == tmp.m_diskPath
+           && m_sectorSize == tmp.m_sectorSize;
+}
+
 QDBusArgument &operator<<(QDBusArgument &argument, const PVData &data)
 {
     argument.beginStructure();
@@ -13,7 +36,9 @@ QDBusArgument &operator<<(QDBusArgument &argument, const PVData &data)
              << data.m_startSector
              << data.m_endSector
              << static_cast<int>(data.m_pvAct)
-             << static_cast<int>(data.m_type);
+             << static_cast<int>(data.m_type)
+             << data.m_diskPath
+             << data.m_sectorSize;
     argument.endStructure();
     return argument;
 }
@@ -26,7 +51,9 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PVData &data)
              >> data.m_startSector
              >> data.m_endSector
              >> pvAct
-             >> type;
+             >> type
+             >> data.m_diskPath
+             >> data.m_sectorSize;
     data.m_pvAct = static_cast<LVMAction>(pvAct);
     data.m_type = static_cast<LVMDevType>(type);
     argument.endStructure();
@@ -45,7 +72,6 @@ CreateLVInfo::CreateLVInfo()
 QDBusArgument &operator<<(QDBusArgument &argument, const CreateLVInfo &data)
 {
     argument.beginStructure();
-
     argument << data.m_vgName
              << data.m_lvName
              << data.m_lvSize
@@ -68,9 +94,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, CreateLVInfo &dat
              >> data.m_user;
     data.m_lvFs = static_cast<FSType>(type);
     argument.endStructure();
-
-
-    argument.endStructure();
     return argument;
 }
 
@@ -88,7 +111,6 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LVData &data)
              << data.m_lvSize
              << data.m_lvByteSize;
     argument.endStructure();
-
     return argument;
 }
 
@@ -249,13 +271,13 @@ const QDBusArgument &operator>>(const QDBusArgument &argument,  PVInfo &data)
 
 LVInfo::LVInfo()
 {
-
     m_lvLECount = 0;
     m_LESize = 0;
     m_busy = false;
     m_minReduceSize = 0;
-    m_fsUsed = 0;
-    m_fsUnused = 0;
+    m_fsUsed = -1;
+    m_fsUnused = -1;
+    m_lvFsType = FS_UNKNOWN;
     m_lvError = LVMError::LVM_ERR_NORMAL;
 }
 QDBusArgument &operator<<(QDBusArgument &argument, const LVInfo &data)
@@ -316,7 +338,6 @@ VGInfo::VGInfo()
     m_PESize = 0;
     m_curLV = 0;
     m_vgError = LVMError::LVM_ERR_NORMAL;
-
 }
 
 

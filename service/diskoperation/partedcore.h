@@ -94,7 +94,7 @@ public:
      * @param mountpath：挂载路径
      * @return true成功false失败
      */
-    bool mountTemp(const QString &mountpath);
+    bool mountTemp(const QString &mountpath, const QString devPath = "",const FSType&fsType=FS_UNKNOWN);
 
     /**
      * @brief 卸载分区
@@ -751,6 +751,61 @@ private:
      * @param devicePath：设备名称
      */
     void reWritePartition(const QString &devicePath);
+
+    /**
+     * @brief 发送刷新信号并且返回bool值
+     * @param flag：设置的返回值
+     * @return true false 与flag相同
+     */
+    inline bool sendRefSigAndReturn(bool flag)
+    {
+        emit refreshDeviceInfo();
+        return flag;
+    }
+
+    /**
+     * @brief 获取创建VG的pvdata 列表
+     * @param devList: 设备列表
+     * @param size: 总大小
+     * @return true false 与flag相同
+     */
+    QList<PVData> getCreatePVList(const QList<PVData>& devList, const long long &totalSize);
+
+
+
+    /**
+     * @brief 获取创建PV的磁盘
+     * @param devPath: 磁盘路径
+     * @param dev: 磁盘设备 传入参数
+     * @return true 获取成功 false 获取失败
+     */
+    bool getPVDevice(const QString &devPath,Device&dev);
+
+
+    /**
+     * @brief 获取创建PV的磁盘
+     * @param pv: pv数据结构体
+     * @param flag: pv需要创建分区表 标志位
+     * @return 大于0为pv长度 单位byte  小于0 为错误
+     */
+    long long getPVSize(const PVData&pv,bool flag = false);
+
+
+    /**
+     * @brief 获取创建PV的分区结尾
+     * @param pv: pv数据结构体
+     * @param unallocaSize: 未分配空间
+     * @return true 获取成功 false 获取失败
+     */
+    bool getPVStartEndSector(PVData & pv, const long long & unallocaSize);
+
+
+    /**
+     * @brief 创建pv分区
+     * @param pv: pv数据结构体
+     * @return true 获取成功 false 获取失败
+     */
+    bool createPVPartition(PVData & pv);
 
 
 signals:

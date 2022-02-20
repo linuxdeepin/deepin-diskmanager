@@ -192,7 +192,27 @@ bool NTFS::checkRepair( const Partition & partition)
 
 FS_Limits NTFS::getFilesystemLimits(const Partition &partition) const
 {
-    return FS_Limits();
+    FS_Limits tmp {-1, 0};
+    QString cmd, output, error;
+    cmd = QString("ntfsresize -m -f %1").arg(partition.getPath());
+    if (Utils::executCmd(cmd, output, error) != 0 && error.compare("Unknown error") != 0) {
+        return tmp;
+    }
+
+    foreach (QString str, output.split("\n")) {
+       // qDebug()<<"getFilesystemLimits ntfs"<<str;
+        if (str.contains("Minsize (in MB):")) {
+            auto list = str.split(":");
+             //qDebug()<<"getFilesystemLimits ntfs list"<<list;
+            if (list.count() == 2) {
+                tmp.min_size = list[1].toLongLong() * MEBIBYTE; //转换为byte
+                //qDebug()<<"getFilesystemLimits ntfs min_size"<<tmp.min_size;
+                return tmp;
+            }
+        }
+    }
+
+    return tmp;
 }
 
 } //DiskManager

@@ -242,10 +242,9 @@ bool EXT2::create(const Partition &new_partition)
             features = " -O ^64bit";
     }
     QString strlabel = new_partition.getFileSystemLabel();
-    if(strlabel == " ") {
-      cmd = QString("%1%2%3%4%5").arg(m_mkfsCmd).arg(" -F").arg(features).arg(" ").arg(new_partition.getPath());
-    }
-    else {
+    if (strlabel == " ") {
+        cmd = QString("%1%2%3%4%5").arg(m_mkfsCmd).arg(" -F").arg(features).arg(" ").arg(new_partition.getPath());
+    } else {
         strlabel = strlabel.isEmpty() ? strlabel : QString(" -L %1").arg(strlabel);
         cmd = QString("%1%2%3%4%5%6").arg(m_mkfsCmd).arg(" -F").arg(features).arg(strlabel).arg(" ").arg(new_partition.getPath());
     }
@@ -279,14 +278,47 @@ bool EXT2::checkRepair(const Partition &partition)
 //todo 需要解析字符串
 FS_Limits EXT2::getFilesystemLimits(const Partition &partition) const
 {
+    FS_Limits tmp {-1, 0};
     QString output, error;
     int exitcode = Utils::executCmd(QString("e2fsck -f %1").arg(partition.getPath()), output, error);
-    if(exitcode == 0 || error.compare("Unknown error") == 0){
-         QString str_temp = QString("resize2fs -P %1").arg(partition.getPath());
-         exitcode = Utils::executCmd(str_temp, output, error);
+    if (exitcode != 0 && error.compare("Unknown error") != 0) {
+        return tmp;
     }
 
-    return FS_Limits();
+
+    auto getNumber = [ = ](QString cmd, QString split1, QString split2)->long long{
+        QString output, error;
+        int exitcode = Utils::executCmd(cmd, output, error);
+        if (exitcode != 0 && error.compare("Unknown error") != 0) {
+            return -1;
+        }
+
+        foreach (QString str, output.split("\n"))
+        {
+            if (str.contains(split1)) {
+                auto list = str.split(split2);
+                if (list.count() == 2) {
+                    return list[1].trimmed().toLongLong();
+                }
+            }
+        }
+        return -1;
+    };
+
+    long long blockSize = getNumber(QString("tune2fs -l %1").arg(partition.getPath()),"Block size:",":");
+
+    if (-1 == blockSize) {
+        return tmp;
+    }
+    long long blockCount = getNumber(QString("resize2fs -P %1").arg(partition.getPath()),"Estimated minimum size of the filesystem:",":");
+
+    if (-1 == blockCount) {
+        return tmp;
+    }
+
+    tmp.min_size =blockSize*blockCount;
+
+    return tmp;
 }
 
 } // namespace DiskManager

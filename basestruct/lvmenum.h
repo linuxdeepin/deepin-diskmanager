@@ -33,7 +33,9 @@ enum LVMAction {
     LVM_ACT_UNkNOW,                 //未知动作
     LVM_ACT_ADDPV,                  //添加PV
     LVM_ACT_DELETEPV,               //删除PV
-    LVM_ACT_PVMOVE                  //移动PV 暂时未用
+    LVM_ACT_PVMOVE,                 //移动PV 暂时未用
+    LVM_ACT_VG_EXTEND,              //lv 扩展
+    LCM_ACT_VG_REDUCE               //lv 缩小
 };
 
 //new by liuwh 2022/1/17

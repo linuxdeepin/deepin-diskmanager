@@ -10,12 +10,12 @@ bool PVData::operator<(const PVData &tmp) const
 {
     if (m_type == LVMDevType::LVM_DEV_UNALLOCATED_PARTITION) {
         return m_devicePath < tmp.m_devicePath
-               ||m_startSector < tmp.m_startSector
+               || m_startSector < tmp.m_startSector
                || m_endSector < tmp.m_endSector
                || m_diskPath < tmp.m_diskPath
                || m_sectorSize < tmp.m_sectorSize;
     }
-    return m_devicePath < tmp.m_devicePath|| m_diskPath < tmp.m_diskPath;
+    return m_devicePath < tmp.m_devicePath || m_diskPath < tmp.m_diskPath;
 }
 
 bool PVData::operator==(const PVData &tmp) const
@@ -63,13 +63,14 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PVData &data)
 
 /*********************************** CreateLVInfo *********************************************/
 
-CreateLVInfo::CreateLVInfo()
+LVAction::LVAction()
 {
     m_lvByteSize = 0; //lv大小 byte单位
     m_lvFs = FS_UNKNOWN; //文件系统类型
+    m_lvAct = LVM_ACT_UNkNOW;
 }
 
-QDBusArgument &operator<<(QDBusArgument &argument, const CreateLVInfo &data)
+QDBusArgument &operator<<(QDBusArgument &argument, const LVAction &data)
 {
     argument.beginStructure();
     argument << data.m_vgName
@@ -77,22 +78,25 @@ QDBusArgument &operator<<(QDBusArgument &argument, const CreateLVInfo &data)
              << data.m_lvSize
              << data.m_lvByteSize
              << static_cast<int>(data.m_lvFs)
-             << data.m_user;
+             << data.m_user
+             << static_cast<int>(data.m_lvAct);
     argument.endStructure();
     return argument;
 }
 
-const QDBusArgument &operator>>(const QDBusArgument &argument, CreateLVInfo &data)
+const QDBusArgument &operator>>(const QDBusArgument &argument, LVAction &data)
 {
     argument.beginStructure();
-    int type;
+    int type, act;
     argument >> data.m_vgName
              >> data.m_lvName
              >> data.m_lvSize
              >> data.m_lvByteSize
              >> type
-             >> data.m_user;
+             >> data.m_user
+             >> act;
     data.m_lvFs = static_cast<FSType>(type);
+    data.m_lvAct = static_cast<LVMAction>(act);
     argument.endStructure();
     return argument;
 }
@@ -419,5 +423,3 @@ const QDBusArgument &operator>>(const QDBusArgument &argument,  LVMInfo &data)
     argument.endStructure();
     return argument;
 }
-
-

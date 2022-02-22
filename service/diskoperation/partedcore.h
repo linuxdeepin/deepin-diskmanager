@@ -301,7 +301,7 @@ public:
      * @param lvList: 待创建lv列表
      * @return true 成功 false 失败
      */
-    bool createLV(QString vgName, QList<CreateLVInfo>lvList);
+    bool createLV(QString vgName, QList<LVAction>lvList);
 
     /**
      * @brief 删除vg
@@ -328,11 +328,10 @@ public:
 
     /**
      * @brief lv空间调整
-     * @param lvPath:lv路径
-     * @param size: 调整后lv总大小
+     * @param lvAction:lv操作结构体
      * @return true 成功 false 失败
      */
-    bool resizeLV(QString lvPath, QString size);
+    bool resizeLV( LVAction &lvAction);
 
 private:
 

@@ -95,7 +95,7 @@ public:
      * @param lvList: 待创建lv列表
      * @return true 成功 false 失败
      */
-    static bool createLV(LVMInfo &lvmInfo, QString vgName, QList<CreateLVInfo>lvList);
+    static bool createLV(LVMInfo &lvmInfo, QString vgName, QList<LVAction>lvList);
 
     /**
      * @brief 删除vg
@@ -130,7 +130,7 @@ public:
      * @param size: 调整后lv总大小
      * @return true 成功 false 失败
      */
-    static bool resizeLV(LVMInfo &lvmInfo, QString lvPath, QString size);
+    static bool resizeLV(LVMInfo &lvmInfo, LVAction &lvAction);
 private:
     /**
      * @brief 更新lvm PV信息

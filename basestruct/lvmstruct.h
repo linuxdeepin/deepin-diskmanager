@@ -63,16 +63,17 @@ LVMStructEnd(PVData)
  * @class CreateLVInfo
  * @brief 创建lv结构体 前后端通信用
  */
-typedef struct CreateLVInfo {
-    CreateLVInfo();
+typedef struct LVAction {
+    LVAction();
     QString m_vgName;       //vg名称
     QString m_lvName;       //lv名称
     QString m_lvSize;       //lv大小
     long long m_lvByteSize; //lv大小 byte单位
     FSType m_lvFs;          //文件系统类型
     QString m_user;         //当前用户名称
-} CreateLVInfo;
-LVMStructEnd(CreateLVInfo)
+    LVMAction m_lvAct;      //执行动作
+} LVAction;
+LVMStructEnd(LVAction)
 
 
 //new by liuwh 2022/1/17
@@ -171,7 +172,6 @@ public:
     LVMDevType m_lvmDevType;    //lvm 设备类型
     long long m_pvByteTotalSize;//pv总大小  单位byte
     long long m_pvByteFreeSize;//pv未使用大小 单位byte
-
 };
 LVMStructEnd(PVInfo)
 

@@ -311,7 +311,7 @@ public:
      * @param vgName:vg名称
      * @param lvList: 待创建lv列表
      */
-    void createLV(const QString &vgName, const QList<CreateLVInfo> &lvList);
+    void createLV(const QString &vgName, const QList<LVAction> &lvList);
 
     /**
      * @brief 删除lv
@@ -335,10 +335,9 @@ public:
 
     /**
      * @brief lv空间调整
-     * @param lvPath:lv路径
-     * @param size: 调整后lv总大小
+     * @param act:操作lv结构体
      */
-    void resizeLV(const QString &lvPath, const QString &size);
+    void resizeLV(LVAction act);
 
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);

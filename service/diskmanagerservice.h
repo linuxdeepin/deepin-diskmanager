@@ -333,7 +333,7 @@ public Q_SLOTS:
      * @param lvList: 待创建lv列表
      * @return true 成功 false 失败
      */
-    Q_SCRIPTABLE bool onCreateLV(QString vgName,QList<CreateLVInfo>lvList);
+    Q_SCRIPTABLE bool onCreateLV(QString vgName,QList<LVAction>lvList);
 
     /**
      * @brief 删除vg
@@ -360,11 +360,10 @@ public Q_SLOTS:
 
     /**
      * @brief lv空间调整
-     * @param lvPath:lv路径
-     * @param size: 调整后lv总大小
+     * @param lvAction:lv操作结构体
      * @return true 成功 false 失败
      */
-    Q_SCRIPTABLE bool onResizeLV(QString lvPath,QString size);
+    Q_SCRIPTABLE bool onResizeLV(LVAction lvAction);
     /**
      * @brief USB插入
      */

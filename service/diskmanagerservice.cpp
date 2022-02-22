@@ -198,7 +198,7 @@ bool DiskManagerService::onCreateVG(QString vgName, QList<PVData> devList, long 
     return m_partedcore->createVG(vgName, devList, size);
 }
 
-bool DiskManagerService::onCreateLV(QString vgName, QList<CreateLVInfo> lvList)
+bool DiskManagerService::onCreateLV(QString vgName, QList<LVAction> lvList)
 {
     return m_partedcore->createLV(vgName, lvList);
 }
@@ -218,9 +218,9 @@ bool DiskManagerService::onResizeVG(QString vgName, QList<PVData> devList, long 
     return m_partedcore->resizeVG(vgName, devList, size);
 }
 
-bool DiskManagerService::onResizeLV(QString lvPath, QString size)
+bool DiskManagerService::onResizeLV(LVAction lvAction)
 {
-    return m_partedcore->resizeLV(lvPath, size);
+    return m_partedcore->resizeLV(lvAction);
 }
 void DiskManagerService::updateUsb()
 {

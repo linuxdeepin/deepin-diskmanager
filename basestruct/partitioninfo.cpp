@@ -40,6 +40,7 @@ PartitionInfo::PartitionInfo()
     m_sectorStart = m_sectorEnd = m_sectorsUsed = m_sectorsUnused = m_sectorsUnallocated = m_significantThreshold = m_freeSpaceBefore = 0;
     m_flag = m_sectorSize = m_fileSystemBlockSize = 0;
     m_vgFlag = 0;
+    m_minReduceSize = -1;
     // mountpoints.clear();
 }
 
@@ -92,7 +93,8 @@ QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info)
              << info.m_flag
              << info.m_mountPoints
              << info.m_vgFlag
-             << info.m_vgData;
+             << info.m_vgData
+             << info.m_minReduceSize;
     argument.endStructure();
 
     return argument;
@@ -127,7 +129,8 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PartitionInfo &in
              >> info.m_flag
              >> info.m_mountPoints
              >> info.m_vgFlag
-             >> info.m_vgData;
+             >> info.m_vgData
+             >> info.m_minReduceSize;
     argument.endStructure();
 
     return argument;

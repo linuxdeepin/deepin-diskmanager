@@ -776,13 +776,13 @@ void CreateLVWidget::onRemovePartition()
 
 void CreateLVWidget::onApplyButton()
 {
-    QList<CreateLVInfo> lstLVInfo;
+    QList<LVAction> lstLVInfo;
     VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
     QString userName = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
     userName.remove(0, 6);
 
     for (int i = 0; i < m_patrinfo.size(); i++) {
-        CreateLVInfo info;
+        LVAction info;
         info.m_vgName = vgInfo.m_vgName;
         info.m_lvName = m_patrinfo.at(i).m_lvName;
         info.m_lvFs = Utils::stringToFileSystemType(m_patrinfo.at(i).m_fstype);

@@ -62,7 +62,7 @@ DMDbusHandler::DMDbusHandler(QObject *parent)
 
     //注册结构体 lvm dbus通信使用
     qDBusRegisterMetaType<PVRanges>();
-    qDBusRegisterMetaType<CreateLVInfo>();
+    qDBusRegisterMetaType<LVAction>();
     qDBusRegisterMetaType<QVector<PVRanges>>();
     qDBusRegisterMetaType<VGDATA>();
     qDBusRegisterMetaType<PVData>();
@@ -73,7 +73,7 @@ DMDbusHandler::DMDbusHandler(QObject *parent)
     qDBusRegisterMetaType<LVMInfo>();
     qDBusRegisterMetaType<QVector<QString>>();
     qDBusRegisterMetaType<QList<PVData>>();
-    qDBusRegisterMetaType<QList<CreateLVInfo>>();
+    qDBusRegisterMetaType<QList<LVAction>>();
 
     m_dbus = new DMDBusInterface("com.deepin.diskmanager", "/com/deepin/diskmanager",
                                  QDBusConnection::systemBus(), this);
@@ -569,7 +569,7 @@ void DMDbusHandler::createVG(const QString &vgName, const QList<PVData> &devList
     m_dbus->onCreateVG(vgName, devList, size);
 }
 
-void DMDbusHandler::createLV(const QString &vgName, const QList<CreateLVInfo> &lvList)
+void DMDbusHandler::createLV(const QString &vgName, const QList<LVAction> &lvList)
 {
     emit showSpinerWindow(true, tr("Creating..."));
 
@@ -597,10 +597,10 @@ void DMDbusHandler::resizeVG(const QString &vgName, const QList<PVData> &devList
     m_dbus->onResizeVG(vgName, devList, size);
 }
 
-void DMDbusHandler::resizeLV(const QString &lvPath, const QString &size)
+void DMDbusHandler::resizeLV(LVAction act)
 {
     emit showSpinerWindow(true, tr("Resizing space..."));
 
-    m_dbus->onResizeLV(lvPath, size);
+    m_dbus->onResizeLV(act);
 }
 

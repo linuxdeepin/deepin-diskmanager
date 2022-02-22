@@ -2382,7 +2382,7 @@ bool PartedCore::createVG(QString vgName, QList<PVData> devList, long long size)
     return sendRefSigAndReturn(LVMOperator::createVG(m_lvmInfo, vgName, pvlist, size));
 }
 
-bool PartedCore::createLV(QString vgName, QList<CreateLVInfo> lvList)
+bool PartedCore::createLV(QString vgName, QList<LVAction> lvList)
 {
     //创建lv 失败返回false
     if (!LVMOperator::createLV(m_lvmInfo, vgName, lvList)) {
@@ -2397,7 +2397,7 @@ bool PartedCore::createLV(QString vgName, QList<CreateLVInfo> lvList)
     //获取新创建lv列表
     QVector<LVInfo>lvVec;
     VGInfo vg = vgIt.value();
-    foreach (CreateLVInfo clv, lvList) {
+    foreach (LVAction clv, lvList) {
         auto lvIt = std::find_if(vg.m_lvlist.begin(), vg.m_lvlist.end(), [ = ](const LVInfo & lvInfo)->bool{
             return lvInfo.m_lvName == clv.m_lvName;
         });
@@ -2459,9 +2459,9 @@ bool PartedCore::resizeVG(QString vgName, QList<PVData> devList, long long size)
     return sendRefSigAndReturn(LVMOperator::resizeVG(m_lvmInfo, vgName, devList, size));
 }
 
-bool PartedCore::resizeLV(QString lvPath, QString size)
+bool PartedCore::resizeLV(LVAction &lvAction)
 {
-    return sendRefSigAndReturn(LVMOperator::resizeLV(m_lvmInfo, lvPath, size));
+    return sendRefSigAndReturn(LVMOperator::resizeLV(m_lvmInfo, lvAction));
 }
 
 bool PartedCore::delTempMountFile()

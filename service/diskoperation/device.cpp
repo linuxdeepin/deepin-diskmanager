@@ -44,7 +44,7 @@ Device::Device()
 
     //注册结构体 lvm dbus通信使用
     qDBusRegisterMetaType<PVRanges>();
-    qDBusRegisterMetaType<CreateLVInfo>();
+    qDBusRegisterMetaType<LVAction>();
     qDBusRegisterMetaType<QVector<PVRanges>>();
     qDBusRegisterMetaType<VGDATA>();
     qDBusRegisterMetaType<PVData>();
@@ -55,7 +55,7 @@ Device::Device()
     qDBusRegisterMetaType<LVMInfo>();
     qDBusRegisterMetaType<QVector<QString>>();
     qDBusRegisterMetaType<QList<PVData>>();
-    qDBusRegisterMetaType<QList<CreateLVInfo>>();
+    qDBusRegisterMetaType<QList<LVAction>>();
 
     m_sectorSize = 0;
     m_maxPrims = 0;

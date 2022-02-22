@@ -362,7 +362,7 @@ public Q_SLOTS: // METHODS
      * @param vgName:vg名称
      * @param lvList: 待创建lv列表
      */
-    inline QDBusPendingReply<bool> onCreateLV(QString vgName, QList<CreateLVInfo>lvList)
+    inline QDBusPendingReply<bool> onCreateLV(QString vgName, QList<LVAction>lvList)
     {
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(vgName) << QVariant::fromValue(lvList);
@@ -408,13 +408,12 @@ public Q_SLOTS: // METHODS
 
     /**
      * @brief lv空间调整
-     * @param lvPath:lv路径
-     * @param size: 调整后lv总大小
+     * @param act:操作lv结构体
      */
-    inline QDBusPendingReply<bool> onResizeLV(QString lvPath, QString size)
+    inline QDBusPendingReply<bool> onResizeLV(LVAction act)
     {
         QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(lvPath) << QVariant::fromValue(size);
+        argumentList << QVariant::fromValue(act);
         return asyncCallWithArgumentList(QStringLiteral("onResizeLV"), argumentList);
     }
 

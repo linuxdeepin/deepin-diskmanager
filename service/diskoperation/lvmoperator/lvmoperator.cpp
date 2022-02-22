@@ -360,8 +360,8 @@ bool LVMOperator::updateLVInfo(LVMInfo &lvmInfo, VGInfo &vg)
                 lv.m_fsUnused = part.m_sectorsUnused * devIt.value().m_sectorSize;
             }
             lv.m_minReduceSize = getFsReduceMin(lv.m_lvPath, lv.m_lvFsType);
-            if(-1 == lv.m_minReduceSize){
-                lv.m_minReduceSize = (lv.m_fsUsed+lv.m_fsUnused);
+            if (-1 == lv.m_minReduceSize) {
+                lv.m_minReduceSize = (lv.m_fsUsed + lv.m_fsUnused);
             }
 
         }
@@ -418,7 +418,7 @@ bool LVMOperator::createVG(LVMInfo &lvmInfo, QString vgName, QList<PVData> devLi
 
 }
 
-bool LVMOperator::createLV(LVMInfo &lvmInfo, QString vgName, QList<CreateLVInfo> lvList)
+bool LVMOperator::createLV(LVMInfo &lvmInfo, QString vgName, QList<LVAction> lvList)
 {
     if (m_lvmSupport.LVM_CMD_lvcreate == LVM_CMD_Support::NONE) {
         return setLVMErr(lvmInfo, LVMError::LVM_ERR_NO_CMD_SUPPORT);
@@ -438,7 +438,7 @@ bool LVMOperator::createLV(LVMInfo &lvmInfo, QString vgName, QList<CreateLVInfo>
     VGInfo &vg = vgIt.value();
     long long vgSize = vg.m_peUnused * vg.m_PESize;
     set<QString>s_tmp;
-    foreach (CreateLVInfo clv, lvList) {
+    foreach (LVAction clv, lvList) {
         vgSize -= clv.m_lvByteSize;
         if (vgSize < 0  || clv.m_user.isEmpty() || clv.m_vgName != vgName
                 || clv.m_lvName.isEmpty() || clv.m_lvName.count() >= 128 || clv.m_lvByteSize <= 0  // lv大小不超过vg未使用空间 文件系统支持 lv是否重复 用户名是否存在等条件
@@ -457,7 +457,7 @@ bool LVMOperator::createLV(LVMInfo &lvmInfo, QString vgName, QList<CreateLVInfo>
         }
     }
 
-    foreach (const CreateLVInfo &clv, lvList) {
+    foreach (const LVAction &clv, lvList) {
         //创建lv
         QString strout, strerror;
         if (Utils::executCmd(QString("lvcreate -L %1b -n %2 %3 -y").arg(clv.m_lvByteSize).arg(clv.m_lvName).arg(clv.m_vgName), strout, strerror) != 0) {
@@ -512,10 +512,11 @@ bool LVMOperator::resizeVG(LVMInfo &lvmInfo, QString vgName, QList<PVData> devLi
     return true;
 }
 
-bool LVMOperator::resizeLV(LVMInfo &lvmInfo, QString lvPath, QString size)
+bool LVMOperator::resizeLV(LVMInfo &lvmInfo,  LVAction &lvAction)
 {
-    qDebug() << __FUNCTION__;
-    return true;
+
+
+    return false;
 }
 
 Byte_Value LVMOperator::getFsReduceMin(const QString &devPath, const FSType &fs)

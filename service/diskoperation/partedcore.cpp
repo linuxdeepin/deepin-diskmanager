@@ -2081,7 +2081,7 @@ QList<PVData> PartedCore::getCreatePVList(const QList<PVData> &devList, const lo
                 return false;
             };
         } else  if (pv.m_type == LVM_DEV_DISK) {
-            if (createPartitionTable(dev.m_path, QString("%1").arg(dev.m_length), QString("%1").arg(dev.m_sectorSize), "gpt")) { //创建分区表
+            if (!createPartitionTable(dev.m_path, QString("%1").arg(dev.m_length), QString("%1").arg(dev.m_sectorSize), "gpt")) { //创建分区表
                 return false;
             }
             if (!createPVPartition(pv)) { //创建分区
@@ -2223,9 +2223,14 @@ long long PartedCore::getPVSize(const PVData &pv, bool flag)
     long long endSec = pv.m_endSector;
 
 
+    if(startSec == 0 && pv.m_type == LVM_DEV_UNALLOCATED_PARTITION){
+         startSec = UEFI_SECTOR;
+    }
+
     if (pv.m_type == LVM_DEV_UNALLOCATED_PARTITION && pv.m_endSector == (dev.m_length - 1) && dev.m_diskType.contains("gpt")) {
         endSec -= GPTBACKUP;
     }
+
 
     if (pv.m_type == LVM_DEV_DISK && flag) {
         startSec -= UEFI_SECTOR;
@@ -2247,7 +2252,7 @@ bool PartedCore::getPVStartEndSector(PVData &pv, const long long &unallocaSize)
     long long allSec = unallocaSize / dev.m_sectorSize + 1; //总共需要的扇区
     long long pvSize = getPVSize(pv);
 
-    if (pv.m_type == LVM_DEV_DISK) {  //如果是磁盘 要从2048扇区开始
+    if (pv.m_type == LVM_DEV_DISK||(pv.m_type ==LVM_DEV_UNALLOCATED_PARTITION&&pv.m_startSector == 0)) {  //如果是磁盘或者有分区表但是没有分区 要从2048扇区开始
         startSec = UEFI_SECTOR;
     }
 
@@ -2263,12 +2268,11 @@ bool PartedCore::getPVStartEndSector(PVData &pv, const long long &unallocaSize)
         if ((endSec - startSec + 1) < allSec) {
             return false;
         }
-
-        pv.m_endSector = startSec + allSec - 1;
-    } else { //需要的大小比当前未分配分区大 当前分区全部用完
-        pv.m_endSector = endSec;
-        pv.m_startSector = startSec;
+        endSec = startSec + allSec - 1;
     }
+
+    pv.m_startSector = startSec;
+    pv.m_endSector = endSec;
 
     return true;
 }

@@ -38,17 +38,17 @@ enum LVMAction {
     LVM_ACT_PVMOVE,                 //移动PV 暂时未用
 
     LVM_ACT_LV = 200,
-    LCM_ACT_LV_CREATE,              //lv 创建
+    LVM_ACT_LV_CREATE,              //lv 创建
     LVM_ACT_LV_DELETE,              //lv 删除
     LVM_ACT_LV_EXTEND,              //lv 扩展
-    LCM_ACT_LV_REDUCE,              //lv 缩小
+    LVM_ACT_LV_REDUCE,              //lv 缩小
 
 
     LVM_ACT_VG = 300,
-    LCM_ACT_VG_CREATE,              //vg 创建
+    LVM_ACT_VG_CREATE,              //vg 创建
     LVM_ACT_VG_DELETE,              //vg 删除
     LVM_ACT_VG_EXTEND,              //vg 扩展
-    LCM_ACT_VG_REDUCE               //vg 缩小
+    LVM_ACT_VG_REDUCE               //vg 缩小
 };
 
 //new by liuwh 2022/1/17

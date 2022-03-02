@@ -142,6 +142,7 @@ void DiskManagerService::initConnection()
     connect(m_partedcore, &PartedCore::fixBadBlocksFinished, this, &DiskManagerService::fixBadBlocksFinished);
     connect(m_partedcore, &PartedCore::unmountPartition, this, &DiskManagerService::unmountPartition);
     connect(m_partedcore, &PartedCore::createTableMessage, this, &DiskManagerService::createTableMessage);
+    connect(m_partedcore, &PartedCore::vgCreateMessage, this, &DiskManagerService::vgCreateMessage);
     connect(this, &DiskManagerService::getAllDeviceInfomation, this, &DiskManagerService::onGetAllDeviceInfomation);
     connect(m_partedcore, &PartedCore::clearMessage, this, &DiskManagerService::clearMessage);
 }
@@ -221,6 +222,21 @@ bool DiskManagerService::onResizeVG(QString vgName, QList<PVData> devList, long 
 bool DiskManagerService::onResizeLV(LVAction lvAction)
 {
     return m_partedcore->resizeLV(lvAction);
+}
+
+bool DiskManagerService::onMountLV(LVAction lvAction)
+{
+    return m_partedcore->mountLV(lvAction);
+}
+
+bool DiskManagerService::onUmountLV(LVAction lvAction)
+{
+    return m_partedcore->umountLV(lvAction);
+}
+
+bool DiskManagerService::onClearLV(LVAction lvAction)
+{
+    return m_partedcore->clearLV(lvAction);
 }
 void DiskManagerService::updateUsb()
 {

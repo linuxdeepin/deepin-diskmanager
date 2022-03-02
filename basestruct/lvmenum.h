@@ -42,6 +42,10 @@ enum LVMAction {
     LVM_ACT_LV_DELETE,              //lv 删除
     LVM_ACT_LV_EXTEND,              //lv 扩展
     LVM_ACT_LV_REDUCE,              //lv 缩小
+    LVM_ACT_LV_MOUNT,               //lv 挂载
+    LVM_ACT_LV_UMOUNT,              //lv 卸载
+    LVM_ACT_LV_FAST_CLEAR,          //lv 快速清除
+    LVM_ACT_LV_SECURE_CLEAR,        //lv 安全清除
 
 
     LVM_ACT_VG = 300,
@@ -76,9 +80,15 @@ enum LVMError {
     LVM_ERR_LV = 200,               //lv 错误
     LVM_ERR_LV_CREATE_FAILED,       //lv 创建失败
     LVM_ERR_LV_ARGUMENT,            //lv 创建参数错误
+    LVM_ERR_LV_ALREADY_EXISTS,      //lv 已经存在
     LVM_ERR_LV_NO_EXISTS,           //lv 不存在
     LVM_ERR_LV_DELETE_FAILED,       //lv 删除失败
     LVM_ERR_LV_CREATE_FS_FAILED,    //lv 文件系统创建失败
+    LVM_ERR_LV_EXTEND_FS_FAILED,    //lv 文件系统不支持扩大
+    LVM_ERR_LV_REDUCE_FS_FAILED,    //lv 文件系统不支持缩小
+    LVM_ERR_LV_RESIZE_FS_NO_SUPPORT,//lv 文件系统不支持调整
+    LVM_ERR_LV_EXTEND_FAILED,       //lv 扩展失败
+    LVM_ERR_LV_REDUCE_FAILED,       //lv 缩小失败
 
     LVM_ERR_VG = 300,               //vg 错误
     LVM_ERR_VG_CREATE_FAILED,       //vg 创建失败

@@ -36,7 +36,7 @@ LVMError LVMOperator::m_lvmErr = LVM_ERR_NORMAL;
 /******************************** 初始化操作 ******************************/
 LVMOperator::LVMOperator()
 {
-
+    initSuport();
 }
 
 void LVMOperator::resetLVMInfo(LVMInfo &lvmInfo)
@@ -104,6 +104,10 @@ bool LVMOperator::getDeviceLVMData(DeviceInfoMap &dev, const LVMInfo &lvmInfo)
         vg.m_vgByteSize = pv.m_pvByteTotalSize;
         vg.m_vgUuid = pv.m_vgUuid;
         for (QMap<QString, QVector<LV_PV_Ranges>>::ConstIterator lvIt = pv.m_lvRangesList.begin(); lvIt != pv.m_lvRangesList.end(); ++lvIt) {
+            if (lvIt->size() <= 0) {
+                continue;
+            }
+
             LVData lvData;
             lvData.m_lvName = lvIt->begin()->m_lvName;
             lvData.m_lvPath = lvIt.key();
@@ -119,10 +123,10 @@ bool LVMOperator::getDeviceLVMData(DeviceInfoMap &dev, const LVMInfo &lvmInfo)
     };
 
     for (QMap<QString, DeviceInfo>::iterator diskIter = dev.begin(); diskIter != dev.end(); ++diskIter) {
-        diskIter.value().m_vglist.clear();
+        diskIter->m_vglist.clear();
         diskIter->m_vgFlag = 0;
         QMap<QString, PVInfo>::ConstIterator pvIter = lvmInfo.m_pvInfo.find(diskIter->m_path);
-        if (pvIter != lvmInfo.m_pvInfo.end() && diskIter.value().m_disktype == "unrecognized") { //不存在分区表 磁盘加入
+        if (pvIter != lvmInfo.m_pvInfo.end() && QString("unrecognized") == diskIter.value().m_disktype) { //不存在分区表 磁盘加入
             diskIter->m_vgFlag = true;
             diskIter->m_vglist.push_back(pv2vg_func(pvIter.value()));
             continue;
@@ -130,7 +134,7 @@ bool LVMOperator::getDeviceLVMData(DeviceInfoMap &dev, const LVMInfo &lvmInfo)
 
         for (QVector<PartitionInfo>::iterator partIter = diskIter.value().m_partition.begin(); partIter != diskIter.value().m_partition.end(); ++partIter) {
             QMap<QString, PVInfo>::ConstIterator pvIter = lvmInfo.m_pvInfo.find(partIter->m_path);
-            if (pvIter != lvmInfo.m_pvInfo.end()) {
+            if (lvmInfo.m_pvInfo.end() != pvIter) {
                 const PVInfo &pv = pvIter.value();
                 diskIter->m_vgFlag = true;
                 partIter->m_vgFlag = true;
@@ -163,7 +167,7 @@ bool LVMOperator::updateLVMInfo(LVMInfo &lvmInfo)
 
 bool LVMOperator::updatePVInfo(LVMInfo &lvmInfo)
 {
-    if (Utils::findProgramInPath("lsblk").isEmpty() || m_lvmSupport.LVM_CMD_pvs == LVM_CMD_Support::NONE) {
+    if (Utils::findProgramInPath("lsblk").isEmpty() || LVM_CMD_Support::NONE == m_lvmSupport.LVM_CMD_pvs) {
         return setLVMErr(lvmInfo, LVMError::LVM_ERR_NO_CMD_SUPPORT);
     }
 
@@ -314,7 +318,7 @@ bool LVMOperator::updateVGInfo(LVMInfo &lvmInfo)
 
 bool LVMOperator::updateLVInfo(LVMInfo &lvmInfo, VGInfo &vg)
 {
-    if (m_lvmSupport.LVM_CMD_lvs == LVM_CMD_Support::NONE) {
+    if (LVM_CMD_Support::NONE == m_lvmSupport.LVM_CMD_lvs) {
         return setLVMErr(lvmInfo, LVMError::LVM_ERR_NO_CMD_SUPPORT);
     }
 
@@ -358,6 +362,7 @@ bool LVMOperator::updateLVInfo(LVMInfo &lvmInfo, VGInfo &vg)
                 lv.m_lvFsType = static_cast<FSType>(part.m_fileSystemType);
                 lv.m_fsUsed = part.m_sectorsUsed * devIt.value().m_sectorSize;
                 lv.m_fsUnused = part.m_sectorsUnused * devIt.value().m_sectorSize;
+                lv.m_mountUuid = part.m_uuid;
             }
             lv.m_minReduceSize = getFsReduceMin(lv.m_lvPath, lv.m_lvFsType);
             if (-1 == lv.m_minReduceSize) {
@@ -389,13 +394,16 @@ bool LVMOperator::updateLVInfo(LVMInfo &lvmInfo, VGInfo &vg)
 /******************************** lvm操作 ******************************/
 bool LVMOperator::createVG(LVMInfo &lvmInfo, QString vgName, QList<PVData> devList, long long size)
 {
-    if (m_lvmSupport.LVM_CMD_vgcreate == LVM_CMD_Support::NONE || m_lvmSupport.LVM_CMD_pvcreate == LVM_CMD_Support::NONE) {
+    if (LVM_CMD_Support::NONE == m_lvmSupport.LVM_CMD_vgcreate  || LVM_CMD_Support::NONE == m_lvmSupport.LVM_CMD_pvcreate) {
         return setLVMErr(lvmInfo, LVMError::LVM_ERR_NO_CMD_SUPPORT);
     }
 
+    if (vgName.isEmpty()  || vgName.count() >= 128 || devList.count() == 0 || size == 0) {
+        return setLVMErr(lvmInfo, LVMError::LVM_ERR_VG_ARGUMENT);
+    }
+
     //判断vg是否已经存在 存在退出
-    auto vgIt = lvmInfo.m_vgInfo.find(vgName);
-    if (vgIt != lvmInfo.m_vgInfo.end()) {
+    if (lvmInfo.vgExists(vgName)) {
         return setLVMErr(lvmInfo, LVMError::LVM_ERR_VG_ALREADY_EXISTS);
     }
     //创建pv
@@ -414,13 +422,13 @@ bool LVMOperator::createVG(LVMInfo &lvmInfo, QString vgName, QList<PVData> devLi
 
     //更新lvm数据
     updateLVMInfo(lvmInfo);
-    return setLVMErr(lvmInfo, lvmInfo.m_vgInfo.find(vgName) != lvmInfo.m_vgInfo.end() ? LVM_ERR_NORMAL : LVM_ERR_VG_CREATE_FAILED);
+    return setLVMErr(lvmInfo, lvmInfo.vgExists(vgName) ? LVM_ERR_NORMAL : LVM_ERR_VG_CREATE_FAILED);
 
 }
 
 bool LVMOperator::createLV(LVMInfo &lvmInfo, QString vgName, QList<LVAction> lvList)
 {
-    if (m_lvmSupport.LVM_CMD_lvcreate == LVM_CMD_Support::NONE) {
+    if (LVM_CMD_Support::NONE == m_lvmSupport.LVM_CMD_lvcreate) {
         return setLVMErr(lvmInfo, LVMError::LVM_ERR_NO_CMD_SUPPORT);
     }
 
@@ -448,45 +456,37 @@ bool LVMOperator::createLV(LVMInfo &lvmInfo, QString vgName, QList<LVAction> lvL
         }
 
         //查找vg中是否已经存在了lvName 存在报错退出
-        auto lvIt = std::find_if(vg.m_lvlist.begin(), vg.m_lvlist.end(), [ = ](const LVInfo & lvInfo)->bool{
-            return lvInfo.m_lvName == clv.m_lvName;
-        });
-
-        if (lvIt != vg.m_lvlist.end()) {
-            return setLVMErr(lvmInfo, LVMError::LVM_ERR_LV_ARGUMENT);
+        if (vg.lvInfoExists(clv.m_lvName)) {
+            return setLVMErr(lvmInfo, LVMError::LVM_ERR_LV_ALREADY_EXISTS);
         }
     }
 
+    //创建lv
     foreach (const LVAction &clv, lvList) {
-        //创建lv
         QString strout, strerror;
         if (Utils::executCmd(QString("lvcreate -L %1b -n %2 %3 -y").arg(clv.m_lvByteSize).arg(clv.m_lvName).arg(clv.m_vgName), strout, strerror) != 0) {
             return setLVMErr(lvmInfo, LVMError::LVM_ERR_LV_CREATE_FAILED);
         }
-
-        Partition p;
-        p.setPath(QString("/dev/%1/%2").arg(clv.m_vgName).arg(clv.m_lvName));
-        if (!m_supportFs.getFsObject(clv.m_lvFs)->create(p)) { //创建文件系统  上面已经判断过指针  不需要重复判断
-            return setLVMErr(lvmInfo, LVMError::LVM_ERR_LV_CREATE_FS_FAILED);
-        }
     }
+
+    //更新lv
     updateLVInfo(lvmInfo, vg);
     return setLVMErr(lvmInfo, LVMError::LVM_ERR_NORMAL);
 }
 
 bool LVMOperator::deleteVG(LVMInfo &lvmInfo, QStringList vglist)
 {
-    if (m_lvmSupport.LVM_CMD_pvremove == LVM_CMD_Support::NONE
-            || m_lvmSupport.LVM_CMD_vgremove == LVM_CMD_Support::NONE
-            || m_lvmSupport.LVM_CMD_lvremove == LVM_CMD_Support::NONE) {
+    if (LVM_CMD_Support::NONE == m_lvmSupport.LVM_CMD_pvremove
+            || LVM_CMD_Support::NONE == m_lvmSupport.LVM_CMD_vgremove
+            || LVM_CMD_Support::NONE == m_lvmSupport.LVM_CMD_lvremove) {
         return setLVMErr(lvmInfo, LVMError::LVM_ERR_NO_CMD_SUPPORT);
     }
     foreach (const QString &vgName, vglist) {
-        auto it = lvmInfo.m_vgInfo.find(vgName);
-        if (lvmInfo.m_vgInfo.end() == it) {  //vg 不存在 报错返回
+        if (!lvmInfo.vgExists(vgName)) { //vg 不存在 报错返回
             return setLVMErr(lvmInfo, LVMError::LVM_ERR_VG_NO_EXISTS);
         }
-        if (!p_deleteVG(*it)) { //vg删除失败 报错返回 需要修改错误枚举
+
+        if (!deleteVG(lvmInfo.getVG(vgName))) { //vg删除失败 报错返回 需要修改错误枚举
             return setLVMErr(lvmInfo, LVMError::LVM_ERR_VG_DELETE_FAILED);
         }
     }
@@ -495,11 +495,11 @@ bool LVMOperator::deleteVG(LVMInfo &lvmInfo, QStringList vglist)
 
 bool LVMOperator::deleteLV(LVMInfo &lvmInfo, QStringList lvlist)
 {
-    if (m_lvmSupport.LVM_CMD_lvremove == LVM_CMD_Support::NONE) {
+    if (LVM_CMD_Support::NONE == m_lvmSupport.LVM_CMD_lvremove) {
         return setLVMErr(lvmInfo, LVMError::LVM_ERR_NO_CMD_SUPPORT);
     }
     foreach (const QString &lvPath, lvlist) {
-        if (!p_deleteLV(lvPath)) {
+        if (!deleteLV(lvPath)) {
             return setLVMErr(lvmInfo, LVMError::LVM_ERR_LV_DELETE_FAILED);
         }
     }
@@ -512,30 +512,60 @@ bool LVMOperator::resizeVG(LVMInfo &lvmInfo, QString vgName, QList<PVData> devLi
     return true;
 }
 
-bool LVMOperator::resizeLV(LVMInfo &lvmInfo,  LVAction &lvAction)
+bool LVMOperator::resizeLV(LVMInfo &lvmInfo,  LVAction &lvAct, LVInfo &info)
 {
+    if ((LVM_ACT_LV_EXTEND == lvAct.m_lvAct && LVM_CMD_Support::NONE == m_lvmSupport.LVM_CMD_lvextend)
+            || (LVM_ACT_LV_REDUCE == lvAct.m_lvAct   && LVM_CMD_Support::NONE == m_lvmSupport.LVM_CMD_lvreduce)) {
+        return setLVMErr(lvmInfo, LVMError::LVM_ERR_NO_CMD_SUPPORT);
+    }
 
+    FileSystem *fs = m_supportFs.getFsObject(lvAct.m_lvFs);
+    if (fs == nullptr) {
+        return setLVMErr(lvmInfo, LVM_ERR_LV_RESIZE_FS_NO_SUPPORT);
+    }
+    Partition p;
+    if (lvAct.m_lvAct == LVM_ACT_LV_EXTEND) {
+        //放大lv
+        if (!resizeLV(info.m_lvPath, lvAct)) {
+            return setLVMErr(lvmInfo, LVMError::LVM_ERR_LV_EXTEND_FAILED);
+        }
 
-    return false;
+        //放大文件系统
+        if (!(fs->checkRepair(p) && fs->resize(p, true))) {
+            return setLVMErr(lvmInfo, LVMError::LVM_ERR_LV_EXTEND_FS_FAILED);
+        }
+
+    } else {
+        //缩小文件系统后
+        if (!(fs->checkRepair(p) && fs->resize(p, false))) {
+            return setLVMErr(lvmInfo, LVMError::LVM_ERR_LV_EXTEND_FS_FAILED);
+        }
+        //缩小lv
+        if (!resizeLV(info.m_lvPath, lvAct)) {
+            return setLVMErr(lvmInfo, LVMError::LVM_ERR_LV_EXTEND_FAILED);
+        }
+    }
+
+    return setLVMErr(lvmInfo, LVMError::LVM_ERR_NORMAL);
 }
 
 Byte_Value LVMOperator::getFsReduceMin(const QString &devPath, const FSType &fs)
 {
+    if (devPath.isEmpty())
+        return -1;
+
     Partition p;
     p.setPath(devPath);
-    //qDebug() << __FUNCTION__ << 1 <<__LINE__ << devPath<<fs;
     FileSystem *f = m_supportFs.getFsObject(fs);
     if (f) {
-        //qDebug() << __FUNCTION__ << 2 <<__LINE__ << devPath<<fs;
         return f->getFilesystemLimits(p).min_size;
     }
-    //qDebug() << __FUNCTION__ << 3 <<__LINE__ << devPath<<fs;
     return -1;
 }
 
-bool LVMOperator::vgRename(QString uuid, QString newName)
+bool LVMOperator::vgRename(const QString &uuid, const QString &newName)
 {
-    if (m_lvmSupport.LVM_CMD_vgrename == LVM_CMD_Support::NONE) {
+    if (m_lvmSupport.LVM_CMD_vgrename == LVM_CMD_Support::NONE || uuid.isEmpty() || newName.isEmpty()) {
         return false;
     }
     QString strout, strerror;
@@ -599,7 +629,7 @@ bool LVMOperator::checkVG()
     return true;
 }
 
-bool LVMOperator::p_deleteLV(const QString &lvPath)
+bool LVMOperator::deleteLV(const QString &lvPath)
 {
     if (DiskManager::MountInfo::getMountedMountpoints(lvPath).count() == 0) {
         QString strout, strerror;
@@ -608,16 +638,16 @@ bool LVMOperator::p_deleteLV(const QString &lvPath)
     return false;
 }
 
-bool LVMOperator::p_deletePV(const QString &devPath)
+bool LVMOperator::delevtPV(const QString &devPath)
 {
     QString strout, strerror;
     return Utils::executCmd(QString("pvremove %1 -y").arg(devPath), strout, strerror) == 0;
 }
 
-bool LVMOperator::p_deleteVG(const VGInfo &vgInfo)
+bool LVMOperator::deleteVG(const VGInfo &vgInfo)
 {
     for (int i = 0; i < vgInfo.m_lvlist.count() - 1; ++i) { //删除lv
-        if (!p_deleteLV(vgInfo.m_lvlist[i].m_lvPath)) { //最后一个lv不要删除 前端显示占位用
+        if (!deleteLV(vgInfo.m_lvlist[i].m_lvPath)) { //最后一个lv不要删除 前端显示占位用
             return false;
         }
     }
@@ -628,12 +658,26 @@ bool LVMOperator::p_deleteVG(const VGInfo &vgInfo)
     }
 
     foreach (const QString &devPath, vgInfo.m_pvList) { //删除pv
-        if (!p_deletePV(devPath)) {
+        if (!delevtPV(devPath)) {
             return false;
         }
     }
 
     return true;
+}
+
+bool LVMOperator::resizeLV(const QString &devPath, const LVAction &act)
+{
+    QString cmd, strout, strerr;
+    if (LVM_ACT_LV_EXTEND == act.m_lvAct) {
+        cmd = "lvextend" ;
+    } else if (LVM_ACT_LV_REDUCE == act.m_lvAct) {
+        cmd = "lvreduce" ;
+    } else {
+        return  false;
+    }
+    cmd += QString(" -f -y -L %1b %2").arg(act.m_lvByteSize).arg(devPath);
+    return  Utils::executCmd(cmd, strout, strerr) == 0;
 }
 
 /******************************** 打印输出 ******************************/
@@ -838,6 +882,7 @@ void LVMOperator::printLVInfo(const LVInfo &info)
     qDebug() << "lvStatus: " << QString(info.m_lvStatus);
     qDebug() << "minReduceSize: " << info.m_minReduceSize; //文件系统最小可缩小大小
     qDebug() << "lvError: " << info.m_lvError; //逻辑卷错误码
+    qDebug() << "mountUuid: " << info.m_mountUuid;//逻辑卷挂载uuid
     qDebug() << "LVInfo:====================================end";
 }
 

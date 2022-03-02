@@ -261,6 +261,9 @@ void ProbeThread::sendsignals()
     case DISK_SIGNAL_TYPE_CLEAR:
         emit clearPartitionMessage(m_arg2);
         break;
+    case DISK_SIGNAL_TYPE_VGCREATE:
+        emit vgCreateMessage(m_arg2);
+        break;
     default:
         break;
     }

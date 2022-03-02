@@ -30,8 +30,7 @@
 
 #include <QDebug>
 
-namespace DiskManager
-{
+namespace DiskManager {
 
 FS NTFS::getFilesystemSupport()
 {
@@ -40,38 +39,38 @@ FS NTFS::getFilesystemSupport()
     fs.busy = FS::GPARTED;
 
     if (!Utils::findProgramInPath("ntfsinfo").isEmpty())
-		fs.read = FS::EXTERNAL;
+        fs.read = FS::EXTERNAL;
 
     if (!Utils::findProgramInPath("ntfslabel").isEmpty()) {
-		fs .read_label = FS::EXTERNAL ;
-		fs .write_label = FS::EXTERNAL ;
-		fs.write_uuid = FS::EXTERNAL;
-	}
+        fs .read_label = FS::EXTERNAL ;
+        fs .write_label = FS::EXTERNAL ;
+        fs.write_uuid = FS::EXTERNAL;
+    }
 
-    if (!Utils::findProgramInPath( "mkntfs" ).isEmpty()) {
-		fs.create = FS::EXTERNAL;
-		fs.create_with_label = FS::EXTERNAL;
-	}
+    if (!Utils::findProgramInPath("mkntfs").isEmpty()) {
+        fs.create = FS::EXTERNAL;
+        fs.create_with_label = FS::EXTERNAL;
+    }
 
-	//resizing is a delicate process ...
+    //resizing is a delicate process ...
     if (!Utils::findProgramInPath("ntfsresize").isEmpty()) {
-		fs.check = FS::EXTERNAL;
-		fs.grow = FS::EXTERNAL;
+        fs.check = FS::EXTERNAL;
+        fs.grow = FS::EXTERNAL;
 
-        if (fs.read ) //needed to determine a min file system size..
-			fs.shrink = FS::EXTERNAL;
+        if (fs.read)  //needed to determine a min file system size..
+            fs.shrink = FS::EXTERNAL;
 
-		fs.move = FS::GPARTED;
-	}
+        fs.move = FS::GPARTED;
+    }
 
-    if (!Utils::findProgramInPath( "ntfsclone" ).isEmpty())
-		fs.copy = FS::EXTERNAL;
+    if (!Utils::findProgramInPath("ntfsclone").isEmpty())
+        fs.copy = FS::EXTERNAL;
 
     fs.online_read = FS::GPARTED;
 
-	//Minimum NTFS partition size = (Minimum NTFS volume size) + (backup NTFS boot sector)
-	//                            = (1 MiB) + (1 sector)
-	// For GParted this means 2 MiB because smallest GUI unit is MiB.
+    //Minimum NTFS partition size = (Minimum NTFS volume size) + (backup NTFS boot sector)
+    //                            = (1 MiB) + (1 sector)
+    // For GParted this means 2 MiB because smallest GUI unit is MiB.
     m_fsLimits.min_size = 2 * MEBIBYTE;
 
     return fs;
@@ -157,20 +156,25 @@ bool NTFS::create(const Partition & newPartition)
     return exitcode == 0 && error.compare("Unknown error") == 0;
 }
 
-bool NTFS::resize(const Partition & partitionNew, bool fillPartition )
+bool NTFS::resize(const Partition &partitionNew, bool fillPartition)
 {
-//	bool success;
-    QString output, error;
-    QString size;
-    if (!fillPartition) {
-        size = QString(" -s %1").arg(floor(Utils::sectorToUnit(partitionNew.getSectorLength(), partitionNew.m_sectorSize, UNIT_BYTE)));
-	}
-    QString cmd = "ntfsresize --force --force" + size ;
+    return  resize(partitionNew.getPath(),QString::number(Utils::sectorToUnit(partitionNew.getSectorLength(), partitionNew.m_sectorSize, UNIT_BYTE)),fillPartition);
+}
 
-	// Real resize
-    cmd = QString("%1 %2").arg(cmd).arg(partitionNew.getPath());
-//    success = !Utils::executCmd(cmd, output, error);
-    return !Utils::executCmd(cmd, output, error);
+bool NTFS::resize(const QString &path, const QString &sizeByte, bool fillPartition)
+{
+    //  bool success;
+        QString output, error;
+        QString size;
+        if (!fillPartition) {
+            size = QString(" -s %1").arg(sizeByte);
+        }
+        QString cmd = "ntfsresize --force --force" + size ;
+
+        // Real resize
+        cmd = QString("%1 %2").arg(cmd).arg(path);
+    //    success = !Utils::executCmd(cmd, output, error);
+        return !Utils::executCmd(cmd, output, error);
 }
 
 //bool ntfs::copy( const Partition & src_part, Partition & dest_part)
@@ -182,19 +186,29 @@ bool NTFS::resize(const Partition & partitionNew, bool fillPartition )
 //		                  static_cast<StreamSlot>( sigc::mem_fun( *this, &ntfs::clone_progress ) ) );
 //}
 
-bool NTFS::checkRepair( const Partition & partition)
+bool NTFS::checkRepair(const Partition &partition)
+{
+    return checkRepair(partition.getPath());
+}
+
+bool NTFS::checkRepair(const QString &devpath)
 {
     QString output, error;
-    int exitcode = Utils::executCmd(QString("ntfsresize -i -f -v %1").arg(partition.getPath()), output, error);
+    int exitcode = Utils::executCmd(QString("ntfsresize -i -f -v %1").arg(devpath), output, error);
 //    qDebug() << QString("NTFS::check_repair---%1----%2").arg(output).arg(error);
     return exitcode == 0 || error.compare("Unknown error") == 0;
 }
 
 FS_Limits NTFS::getFilesystemLimits(const Partition &partition) const
 {
+    return getFilesystemLimits(partition.getPath());
+}
+
+FS_Limits NTFS::getFilesystemLimits(const QString &path) const
+{
     FS_Limits tmp {-1, 0};
     QString cmd, output, error;
-    cmd = QString("ntfsresize -m -f %1").arg(partition.getPath());
+    cmd = QString("ntfsresize -m -f %1").arg(path);
     if (Utils::executCmd(cmd, output, error) != 0 && error.compare("Unknown error") != 0) {
         return tmp;
     }

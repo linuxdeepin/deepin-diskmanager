@@ -418,6 +418,46 @@ public Q_SLOTS: // METHODS
     }
 
 
+    /**
+     * @brief lv挂载
+     * @param act:操作lv结构体
+     */
+    inline QDBusPendingReply<bool> onMountLV(LVAction act)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(act);
+        return asyncCallWithArgumentList(QStringLiteral("onMountLV"), argumentList);
+    }
+
+
+
+    /**
+     * @brief lv卸载
+     * @param act:操作lv结构体
+     */
+    inline QDBusPendingReply<bool> onUmountLV(LVAction act)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(act);
+        return asyncCallWithArgumentList(QStringLiteral("onUmountLV"), argumentList);
+    }
+
+
+
+
+    /**
+     * @brief lv擦除
+     * @param act:操作lv结构体
+     */
+    inline QDBusPendingReply<bool> onClearLV(LVAction act)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(act);
+        return asyncCallWithArgumentList(QStringLiteral("onClearLV"), argumentList);
+    }
+
+
+
 Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void MessageReport(const QString &msg);
     Q_SCRIPTABLE void updateDeviceInfo(const DeviceInfoMap &infomap, const LVMInfo &lvmInfo);
@@ -434,6 +474,7 @@ Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void unmountPartition(const QString &unmountMessage);
     Q_SCRIPTABLE void createTableMessage(const bool &flag);
     Q_SCRIPTABLE void clearMessage(const QString &clearMessage);
+    Q_SCRIPTABLE void vgCreateMessage(const QString &vgMessage);
 };
 
 namespace com {

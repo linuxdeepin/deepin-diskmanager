@@ -256,10 +256,15 @@ bool EXT2::create(const Partition &new_partition)
 
 bool EXT2::resize(const Partition &partitionNew, bool fillPartition)
 {
-    QString str_temp = QString("resize2fs -p %1").arg(partitionNew.getPath());
+    return resize(partitionNew.getPath(),QString::number(Utils::sectorToUnit(partitionNew.getSectorLength(), partitionNew.m_sectorSize, UNIT_KIB)),fillPartition);
+}
+
+bool EXT2::resize(const QString &path, const QString &size, bool fillPartition)
+{
+    QString str_temp = QString("resize2fs -p %1").arg(path);
 
     if (!fillPartition) {
-        str_temp.append(qFloor(Utils::sectorToUnit(partitionNew.getSectorLength(), partitionNew.m_sectorSize, UNIT_KIB)));
+        str_temp.append(size);
         str_temp.append("K");
     }
     QString output, error;
@@ -269,18 +274,27 @@ bool EXT2::resize(const Partition &partitionNew, bool fillPartition)
 
 bool EXT2::checkRepair(const Partition &partition)
 {
+    return checkRepair(partition.getPath());
+}
+
+bool EXT2::checkRepair(const QString &devpath)
+{
     QString output, error;
-    int exitcode = Utils::executCmd(QString("e2fsck -f -y -v -C 0 %1").arg(partition.getPath()), output, error);
+    int exitcode = Utils::executCmd(QString("e2fsck -f -y -v -C 0 %1").arg(devpath), output, error);
 //    qDebug() << QString("EXT2::check_repair---%1----%2").arg(output).arg(error);
     return exitcode == 0 || error.compare("Unknown error") == 0;
 }
 
-//todo 需要解析字符串
 FS_Limits EXT2::getFilesystemLimits(const Partition &partition) const
+{
+    return getFilesystemLimits(partition.getPath());
+}
+
+FS_Limits EXT2::getFilesystemLimits(const QString &path) const
 {
     FS_Limits tmp {-1, 0};
     QString output, error;
-    int exitcode = Utils::executCmd(QString("e2fsck -f %1").arg(partition.getPath()), output, error);
+    int exitcode = Utils::executCmd(QString("e2fsck -f %1").arg(path), output, error);
     if (exitcode != 0 && error.compare("Unknown error") != 0) {
         return tmp;
     }
@@ -305,12 +319,12 @@ FS_Limits EXT2::getFilesystemLimits(const Partition &partition) const
         return -1;
     };
 
-    long long blockSize = getNumber(QString("tune2fs -l %1").arg(partition.getPath()),"Block size:",":");
+    long long blockSize = getNumber(QString("tune2fs -l %1").arg(path),"Block size:",":");
 
     if (-1 == blockSize) {
         return tmp;
     }
-    long long blockCount = getNumber(QString("resize2fs -P %1").arg(partition.getPath()),"Estimated minimum size of the filesystem:",":");
+    long long blockCount = getNumber(QString("resize2fs -P %1").arg(path),"Estimated minimum size of the filesystem:",":");
 
     if (-1 == blockCount) {
         return tmp;

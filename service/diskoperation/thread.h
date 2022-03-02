@@ -40,7 +40,7 @@ namespace DiskManager {
  * @class ProbeThread
  * @brief 硬件信息刷新类
  */
-class ProbeThread :public QObject
+class ProbeThread : public QObject
 {
     Q_OBJECT
 public:
@@ -107,6 +107,13 @@ signals:
      */
     void createTableMessage(const bool &flag);
 
+
+    /**
+     * @brief vg创建
+     * @param 创建结果
+     */
+    void vgCreateMessage(const QString &vgMessage);
+
     /**
      * @brief USB设备刷新信号
      */
@@ -124,9 +131,9 @@ private:
  * @class WorkThread
  * @brief 坏道检测类
  */
-class WorkThread :public QObject
+class WorkThread : public QObject
 {
-     Q_OBJECT
+    Q_OBJECT
 public:
     WorkThread(QObject *parent = nullptr);
 
@@ -206,7 +213,7 @@ private:
  * @class fixthread
  * @brief 坏道修复类
  */
-class FixThread :public QObject
+class FixThread : public QObject
 {
     Q_OBJECT
 public:

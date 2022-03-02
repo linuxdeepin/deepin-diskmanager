@@ -38,25 +38,24 @@
     const QDBusArgument &operator>>(const QDBusArgument &argument, className &data);
 
 
-
 //new by liuwh 2022/1/17
 /**
  * @class PVDATA
  * @brief pv设备信息数据结构体
  */
 typedef struct PVData {
-    PVData();
     bool operator<(const PVData &tmp)const;
     bool operator==(const PVData &tmp)const;
     QString m_diskPath;    //磁盘路径
-    Sector m_startSector;  //开始扇区
-    Sector m_endSector;    //结束扇区
-    int m_sectorSize;      //扇区大小
-    LVMAction m_pvAct;     //执行动作
-    LVMDevType m_type;     //设备类型
+    Sector m_startSector{0};  //开始扇区
+    Sector m_endSector{0};    //结束扇区
+    int m_sectorSize{0};      //扇区大小
+    LVMAction m_pvAct{LVMAction::LVM_ACT_UNkNOW};//执行动作
+    LVMDevType m_type{LVMDevType::LVM_DEV_UNKNOW_DEVICES};//设备类型
     QString m_devicePath;  //pv路径
 } PVData;
 LVMStructEnd(PVData)
+
 
 //new by liuwh 2022/2/15
 /**
@@ -64,14 +63,15 @@ LVMStructEnd(PVData)
  * @brief 创建lv结构体 前后端通信用
  */
 typedef struct LVAction {
-    LVAction();
     QString m_vgName;       //vg名称
     QString m_lvName;       //lv名称
     QString m_lvSize;       //lv大小
-    long long m_lvByteSize; //lv大小 byte单位
-    FSType m_lvFs;          //文件系统类型
+    long long m_lvByteSize{0}; //lv大小 byte单位
+    FSType m_lvFs{FSType::FS_UNKNOWN};//文件系统类型
     QString m_user;         //当前用户名称
-    LVMAction m_lvAct;      //执行动作
+    LVMAction m_lvAct{LVMAction::LVM_ACT_UNkNOW};//执行动作
+    QString m_mountPoint;   //挂载点
+    QString m_mountUuid;    //挂载Uuid
 } LVAction;
 LVMStructEnd(LVAction)
 
@@ -82,11 +82,10 @@ LVMStructEnd(LVAction)
  * @brief 逻辑卷信息数据结构体
  */
 typedef struct LVDATA {
-    LVDATA();
-    QString m_lvName;
-    QString m_lvPath;  //lv path
-    QString m_lvSize;
-    long long m_lvByteSize;
+    QString m_lvName;           //lv名称
+    QString m_lvPath;           //lv设备路径
+    QString m_lvSize;           //lv大小
+    long long m_lvByteSize{0};  //lv大小 byte单位
 } LVData;
 LVMStructEnd(LVData)
 
@@ -97,15 +96,13 @@ LVMStructEnd(LVData)
  * @brief 逻辑卷组信息数据结构体
  */
 typedef struct VGDATA {
-    VGDATA();
-    QString m_vgName;
-    QString m_vgSize;
-    QString m_vgUuid;
-    long long m_vgByteSize;
-    QVector <LVData>m_lvList;
+    QString m_vgName;           //vg名称
+    QString m_vgSize;           //vg大小 字符串显示
+    QString m_vgUuid;           //vg uuid 唯一标识
+    long long m_vgByteSize{0};  //vg大小 byte单位
+    QVector <LVData>m_lvList;   //lv数据集合
 } VGData;
 LVMStructEnd(VGData)
-
 
 
 //new by liuwh 2022/1/17
@@ -114,14 +111,13 @@ LVMStructEnd(VGData)
  * @brief pv设备 使用分布范围
  */
 typedef struct PVRANGES {
-    PVRANGES();
-    QString m_lvName;       //lvName
-    QString m_devPath;      //lv path
-    QString m_vgName;
-    QString m_vgUuid;
-    long long m_start;      //单位 pe
-    long long m_end;        //单位 pe
-    bool m_used;            //是否使用  针对vg lv不使用该属性
+    QString m_lvName;       //lv名称
+    QString m_devPath;      //lv设备路径
+    QString m_vgName;       //vg名称
+    QString m_vgUuid;       //vg uuid 唯一标识
+    long long m_start{0};   //单位 pe
+    long long m_end{0};     //单位 pe
+    bool m_used{false};     //是否使用  针对vg lv不使用该属性
 } PVRanges;
 LVMStructEnd(PVRanges)
 
@@ -146,7 +142,6 @@ typedef PVRanges VG_PV_Ranges;
 class PVInfo
 {
 public:
-    PVInfo();
     bool isDuplicate() {return m_pvStatus[0] == 'd';}
     bool isAllocatable() {return m_pvStatus[0] == 'a';}//已经使用并且分配
     bool isUsed() {return m_pvStatus[0] == 'u';} //已经加入vg 但是未分配
@@ -158,23 +153,22 @@ public:
     QString m_pvPath; //pv路径 /dev/sdb1 ...
     QString m_pvUuid; //pv uuid 唯一名称
     QString m_vgUuid; //vg uuid 唯一名称
-    long long m_pvMdaSize;//pv metadata size 单位byte
-    long long m_pvMdaCount;//pv metadata 个数
+    long long m_pvMdaSize{0};//pv metadata size 单位byte
+    long long m_pvMdaCount{0};//pv metadata 个数
     QString m_pvSize; //字符串类型 展示用
     QString m_pvFree; //字符串类型 展示用
-    long long m_pvUsedPE; //已经使用pe个数
-    long long m_pvUnusedPE;//未使用pe个数
-    int m_PESize;  //单个pe大小  单位byte
+    long long m_pvUsedPE{0}; //已经使用pe个数
+    long long m_pvUnusedPE{0};//未使用pe个数
+    int m_PESize{0};  //单个pe大小  单位byte
     QString m_pvStatus{"---"}; //状态
-    LVMError m_pvError;//物理卷错误码
+    LVMError m_pvError{LVMError::LVM_ERR_NORMAL};//物理卷错误码
     QMap<QString, QVector<LV_PV_Ranges>> m_lvRangesList; //lv pv分布情况 key：lvPath  value：lv集合
     QVector<VG_PV_Ranges> m_vgRangesList; //vg pv分布情况
-    LVMDevType m_lvmDevType;    //lvm 设备类型
-    long long m_pvByteTotalSize;//pv总大小  单位byte
-    long long m_pvByteFreeSize;//pv未使用大小 单位byte
+    LVMDevType m_lvmDevType{LVMDevType::LVM_DEV_UNKNOW_DEVICES};    //lvm 设备类型
+    long long m_pvByteTotalSize{0};//pv总大小  单位byte
+    long long m_pvByteFreeSize{0};//pv未使用大小 单位byte
 };
 LVMStructEnd(PVInfo)
-
 
 
 //new by liuwh 2022/1/17
@@ -223,7 +217,6 @@ lvs -o lv_attr
 class LVInfo
 {
 public:
-    LVInfo();
     //由于属性过多 之后补上 目前只需要激活及暂停状态。
     bool isActivve() {return m_lvStatus[4] == 'a';}
     bool isSuspended() {return m_lvStatus[4] == 's';}
@@ -232,17 +225,18 @@ public:
     QString m_lvPath; //lv路径
     QString m_lvUuid; //lv uuid 唯一名称
     QString m_lvName; //lv名称 lv0 lv1 ....
-    FSType  m_lvFsType; //文件系统类型
+    FSType  m_lvFsType{FSType::FS_UNKNOWN}; //文件系统类型
     QString m_lvSize; //字符串类型 展示用
-    long long m_lvLECount; //le个数
-    long long  m_fsUsed; //文件已经使用大小 单位byte
-    long long  m_fsUnused;//文件未使用大小 单位byte
-    int m_LESize;  //单个pe大小 与所在vg的pe大小相同 单位byte
-    bool m_busy; //挂载标志
+    long long m_lvLECount{0}; //le个数
+    long long  m_fsUsed{0}; //文件已经使用大小 单位byte
+    long long  m_fsUnused{0};//文件未使用大小 单位byte
+    int m_LESize{0};  //单个pe大小 与所在vg的pe大小相同 单位byte
+    bool m_busy{false}; //挂载标志
     QVector<QString> m_mountPoints;//挂载点 可多次挂载
     QString m_lvStatus{"----------"};
-    long long m_minReduceSize;//文件系统最小可缩小大小 单位byte
-    LVMError m_lvError;//逻辑卷错误码
+    long long m_minReduceSize{0};//文件系统最小可缩小大小 单位byte
+    LVMError m_lvError{LVMError::LVM_ERR_NORMAL};//逻辑卷错误码
+    QString m_mountUuid;//逻辑卷挂载uuid
 };
 LVMStructEnd(LVInfo)
 
@@ -258,17 +252,16 @@ vgs -o vg_attr
   Attr
   wz--n-
 The vg_attr bits are:
-      1  Permissions: (w)riteable, (r)ead-only
-      2  Resi(z)eable
-      3  E(x)ported
-      4  (p)artial: one or more physical volumes belonging to the volume group are missing from the system
-      5  Allocation policy: (c)ontiguous, c(l)ing, (n)ormal, (a)nywhere
-      6  (c)lustered, (s)hared
+      1  Permissions: (w)riteable, (r)ead-only 权限： 允许写入  只读
+      2  Resi(z)eable                          允许调整大小
+      3  E(x)ported                            已导出
+      4  (p)artial: one or more physical volumes belonging to the volume group are missing from the system  部分：系统中缺少属于卷组的一个或多个物理卷
+      5  Allocation policy: (c)ontiguous, c(l)ing, (n)ormal, (a)nywhere 分配政策：连续，紧贴，正常，任何地方
+      6  (c)lustered, (s)hared  集群，共享
 */
 class VGInfo
 {
 public:
-    VGInfo();
     bool isWriteable() {return m_vgStatus[0] == 'w';}
     bool isReadOnly() {return m_vgStatus[0] == 'r';}
     bool isResizeable() {return m_vgStatus[1] == 'z';}
@@ -280,20 +273,22 @@ public:
     bool isAnywhere() {return m_vgStatus[4] == 'a';}
     bool isClustered() {return m_vgStatus[5] == 'c';}
     bool isShared() {return m_vgStatus[5] == 's';}
+    LVInfo getLVinfo(const QString &lvName);
+    bool lvInfoExists(const QString &lvName);
 public:
     QString m_vgName; //vg名称 vg0, vg1 ....
     QString m_vgUuid; //vg唯一名称 uuid
     QString m_vgSize; //字符串类型 展示用  vg总大小
     QString m_vgUsed; //字符串类型 展示用  vg使用
     QString m_vgUnused; //字符串类型 展示用 vg已用
-    long long m_pvCount; //物理卷个数
-    long long m_peCount; //pe个数
-    long long m_peUsed;  //pe使用个数
-    long long m_peUnused;//pe未使用个数
-    int m_PESize;  //单个pe大小  单位byte
-    int m_curLV;//当前lv个数
+    long long m_pvCount{0}; //物理卷个数
+    long long m_peCount{0}; //pe个数
+    long long m_peUsed{0};  //pe使用个数
+    long long m_peUnused{0};//pe未使用个数
+    int m_PESize{0};  //单个pe大小  单位byte
+    int m_curLV{0};//当前lv个数
     QString m_vgStatus{"------"}; //状态
-    LVMError m_vgError;//逻辑卷组错误码
+    LVMError m_vgError{LVMError::LVM_ERR_NORMAL};//逻辑卷组错误码
     QVector<LVInfo>m_lvlist; //vg 下lv列表
     QStringList m_pvList;//pv列表
 };
@@ -307,11 +302,23 @@ LVMStructEnd(VGInfo)
 class LVMInfo
 {
 public:
-    LVMInfo();
+    LVInfo getLVInfo(const QString &vgName, const QString &lvName);
+    VGInfo getVG(const QString &vgName);
+    PVInfo getPV(const QString &pvPath);
+
+    bool lvInfoExists(const QString &vgName, const QString &lvName);
+    bool vgExists(const QString &vgName);
+    bool pvExists(const QString &pvPath);
+private:
+    template<class T>
+    T getItem(const QString &str, const QMap<QString, T> &containers);
+
+    template<class T>
+    bool itemExists(const QString &str, const QMap<QString, T> &containers);
 public:
     QMap<QString, VGInfo> m_vgInfo;        //lvm设备信息 key:vgName value vginfo
     QMap<QString, PVInfo> m_pvInfo;        //lvm pv信息 key:/dev/sdb1 value:pvinfo
-    LVMError m_lvmErr;
+    LVMError m_lvmErr{LVMError::LVM_ERR_NORMAL};
 };
 LVMStructEnd(LVMInfo)
 

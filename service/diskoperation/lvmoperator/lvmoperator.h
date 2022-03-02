@@ -38,14 +38,6 @@ public:
     static bool updateLVMInfo(LVMInfo &lvmInfo);
 
     /**
-     * @brief 获取设备上lvmData
-     * @param dev: 设备集合
-     * @param lvmInfo:lvm数据结构体
-     * @return true 成功 false 失败
-     */
-    static bool getDeviceLVMData(DeviceInfoMap &dev, const LVMInfo &lvmInfo);
-
-    /**
      * @brief 更新lvm信息 并且获取设备上lvmData
      * @param dev: 设备集合
      * @param lvmInfo:lvm数据结构体
@@ -130,8 +122,21 @@ public:
      * @param size: 调整后lv总大小
      * @return true 成功 false 失败
      */
-    static bool resizeLV(LVMInfo &lvmInfo, LVAction &lvAction);
+    static bool resizeLV(LVMInfo &lvmInfo, LVAction &lvAction, LVInfo &info);
+
+
+
+
 private:
+
+    /**
+     * @brief 获取设备上lvmData
+     * @param dev: 设备集合
+     * @param lvmInfo:lvm数据结构体
+     * @return true 成功 false 失败
+     */
+    static bool getDeviceLVMData(DeviceInfoMap &dev, const LVMInfo &lvmInfo);
+
     /**
      * @brief 更新lvm PV信息
      * @param lvmInfo:lvm数据结构体
@@ -192,7 +197,7 @@ private:
      * @param newName:vg新名称
      * @return true 成功 false 失败
      */
-    static bool vgRename(QString uuid, QString newName);
+    static bool vgRename(const QString &uuid, const QString &newName);
 
     /**
      * @brief 获取系统命令支持
@@ -228,21 +233,31 @@ private:
      * @param devPath:pv路径
      * @return true 成功 false 失败
      */
-    static bool p_deletePV(const QString &devPath);
+    static bool delevtPV(const QString &devPath);
 
     /**
      * @brief 删除lv
      * @param lvPath:lv路径
      * @return true 成功 false 失败
      */
-    static bool p_deleteLV(const QString &lvPath);
+    static bool deleteLV(const QString &lvPath);
 
     /**
      * @brief 删除vg
      * @param vgInfo:vg数据结构体
      * @return true 成功 false 失败
      */
-    static bool p_deleteVG(const VGInfo &vgInfo);
+    static bool deleteVG(const VGInfo &vgInfo);
+
+
+
+    /**
+     * @brief 调整lv
+     * @param devPath:lv设备路径
+     * @param act:lv 操作结构体
+     * @return true 成功 false 失败
+     */
+    static bool resizeLV(const QString &devPath, const LVAction &act);
 
 
     /**
@@ -260,11 +275,11 @@ private:
     }
 
 public:
-    static LVM_CMD_Support m_lvmSupport; //lvm系统支持集合
-    static bool m_initSupport;//初始化lvm系统支持标志位
-    static DeviceInfoMap  m_devInfo; //磁盘属性集合
+    static LVM_CMD_Support m_lvmSupport;    //lvm系统支持集合
+    static bool m_initSupport;              //初始化lvm系统支持标志位
+    static DeviceInfoMap  m_devInfo;        //磁盘属性集合
     static DiskManager::SupportedFileSystems m_supportFs; //文件系统支持集合
-    static LVMError m_lvmErr;
+    static LVMError m_lvmErr;               //lvm
 
 };
 

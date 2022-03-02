@@ -136,6 +136,15 @@ Q_SIGNALS:
      */
     Q_SCRIPTABLE void clearMessage(const QString &clearMessage);
 
+
+
+    /**
+     * @brief 创建vg
+     * @param vgMessage:创建结果
+     */
+    Q_SCRIPTABLE void vgCreateMessage(const QString &vgMessage);
+
+
 public Q_SLOTS:
     /**
      * @brief 退出服务
@@ -204,7 +213,7 @@ public Q_SLOTS:
      * @param clearType: 擦除标准， 0为快速，1为安全（NIST），2为DoD标准， 3为古德曼标准
      * @return true成功false失败
      */
-    Q_SCRIPTABLE bool clear(const QString &fstype, const QString &path, const QString &name,const QString &user, const int &diskType, const int &clearType);
+    Q_SCRIPTABLE bool clear(const QString &fstype, const QString &path, const QString &name, const QString &user, const int &diskType, const int &clearType);
 
     /**
      * @brief 扩容分区
@@ -292,7 +301,7 @@ public Q_SLOTS:
      * @param flag：暂停，检测，继续标志
      * @return true错误false正常
      */
-    Q_SCRIPTABLE bool onCheckBadBlocksCount(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize,int flag);
+    Q_SCRIPTABLE bool onCheckBadBlocksCount(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize, int flag);
 
     /**
      * @brief 坏道检测（检测时间）
@@ -304,7 +313,7 @@ public Q_SLOTS:
      * @param flag：暂停，检测，继续标志
      * @return true错误false正常
      */
-    Q_SCRIPTABLE bool onCheckBadBlocksTime(const QString &devicePath, int blockStart, int blockEnd,const QString &checkTime, int checkSize, int flag);
+    Q_SCRIPTABLE bool onCheckBadBlocksTime(const QString &devicePath, int blockStart, int blockEnd, const QString &checkTime, int checkSize, int flag);
 
     /**
      * @brief 坏道修复
@@ -325,7 +334,7 @@ public Q_SLOTS:
      * @param size:vg总大小
      * @return true 成功 false 失败
      */
-    Q_SCRIPTABLE bool onCreateVG(QString vgName,QList<PVData>devList,long long size);
+    Q_SCRIPTABLE bool onCreateVG(QString vgName, QList<PVData>devList, long long size);
 
     /**
      * @brief 创建lv
@@ -333,7 +342,7 @@ public Q_SLOTS:
      * @param lvList: 待创建lv列表
      * @return true 成功 false 失败
      */
-    Q_SCRIPTABLE bool onCreateLV(QString vgName,QList<LVAction>lvList);
+    Q_SCRIPTABLE bool onCreateLV(QString vgName, QList<LVAction>lvList);
 
     /**
      * @brief 删除vg
@@ -356,7 +365,7 @@ public Q_SLOTS:
      * @param size:调整后vg总大小
      * @return true 成功 false 失败
      */
-    Q_SCRIPTABLE bool onResizeVG(QString vgName,QList<PVData>devList,long long size);
+    Q_SCRIPTABLE bool onResizeVG(QString vgName, QList<PVData>devList, long long size);
 
     /**
      * @brief lv空间调整
@@ -364,6 +373,29 @@ public Q_SLOTS:
      * @return true 成功 false 失败
      */
     Q_SCRIPTABLE bool onResizeLV(LVAction lvAction);
+
+
+    /**
+     * @brief lv挂载
+     * @param lvAction:lv操作结构体
+     * @return true 成功 false 失败
+     */
+    Q_SCRIPTABLE bool onMountLV(LVAction lvAction);
+
+    /**
+     * @brief lv卸载
+     * @param lvAction:lv操作结构体
+     * @return true 成功 false 失败
+     */
+    Q_SCRIPTABLE bool onUmountLV(LVAction lvAction);
+
+    /**
+     * @brief lv擦除
+     * @param lvAction:lv操作结构体
+     * @return true 成功 false 失败
+     */
+    Q_SCRIPTABLE bool onClearLV(LVAction lvAction);
+
     /**
      * @brief USB插入
      */

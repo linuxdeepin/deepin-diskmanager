@@ -1,11 +1,5 @@
 #include "lvmstruct.h"
 /*********************************** PVData *********************************************/
-PVData::PVData()
-{
-    m_pvAct = LVMAction::LVM_ACT_UNkNOW;
-    m_type = LVMDevType::LVM_DEV_UNKNOW_DEVICES;
-}
-
 bool PVData::operator<(const PVData &tmp) const
 {
     if (m_type == LVMDevType::LVM_DEV_UNALLOCATED_PARTITION) {
@@ -62,14 +56,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PVData &data)
 
 
 /*********************************** CreateLVInfo *********************************************/
-
-LVAction::LVAction()
-{
-    m_lvByteSize = 0; //lv大小 byte单位
-    m_lvFs = FS_UNKNOWN; //文件系统类型
-    m_lvAct = LVM_ACT_UNkNOW;
-}
-
 QDBusArgument &operator<<(QDBusArgument &argument, const LVAction &data)
 {
     argument.beginStructure();
@@ -79,7 +65,9 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LVAction &data)
              << data.m_lvByteSize
              << static_cast<int>(data.m_lvFs)
              << data.m_user
-             << static_cast<int>(data.m_lvAct);
+             << static_cast<int>(data.m_lvAct)
+             << data.m_mountPoint
+             << data.m_mountUuid;
     argument.endStructure();
     return argument;
 }
@@ -94,7 +82,9 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LVAction &data)
              >> data.m_lvByteSize
              >> type
              >> data.m_user
-             >> act;
+             >> act
+             >> data.m_mountPoint
+             >> data.m_mountUuid;
     data.m_lvFs = static_cast<FSType>(type);
     data.m_lvAct = static_cast<LVMAction>(act);
     argument.endStructure();
@@ -102,11 +92,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LVAction &data)
 }
 
 /*********************************** LVDATA *********************************************/
-LVDATA::LVDATA()
-{
-    m_lvByteSize = 0;
-}
-
 QDBusArgument &operator<<(QDBusArgument &argument, const LVData &data)
 {
     argument.beginStructure();
@@ -130,11 +115,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LVData &data)
 }
 
 /*********************************** VGDATA *********************************************/
-VGDATA::VGDATA()
-{
-    m_vgByteSize = 0;
-}
-
 QDBusArgument &operator<<(QDBusArgument &argument, const VGData &data)
 {
     argument.beginStructure();
@@ -161,13 +141,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, VGData &data)
 }
 
 /*********************************** PVRANGES *********************************************/
-PVRANGES::PVRANGES()
-{
-    m_start = 0;
-    m_end = 0;
-    m_used = false;
-}
-
 QDBusArgument &operator<<(QDBusArgument &argument, const PVRanges &data)
 {
     argument.beginStructure();
@@ -199,20 +172,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PVRanges &data)
 
 
 /*********************************** PVInfo *********************************************/
-PVInfo::PVInfo()
-{
-    m_pvMdaSize = 0;
-    m_pvMdaCount = 0 ;
-    m_pvUsedPE = 0;
-    m_pvUnusedPE = 0;
-    m_PESize = 0;
-    m_pvError = LVMError::LVM_ERR_NORMAL;
-    m_lvmDevType = LVMDevType::LVM_DEV_UNKNOW_DEVICES;
-    m_pvByteFreeSize = 0;
-    m_pvByteTotalSize = 0;
-}
-
-
 QDBusArgument &operator<<(QDBusArgument &argument, const PVInfo &data)
 {
     argument.beginStructure();
@@ -272,18 +231,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument,  PVInfo &data)
 
 
 /*********************************** LVInfo *********************************************/
-
-LVInfo::LVInfo()
-{
-    m_lvLECount = 0;
-    m_LESize = 0;
-    m_busy = false;
-    m_minReduceSize = 0;
-    m_fsUsed = -1;
-    m_fsUnused = -1;
-    m_lvFsType = FS_UNKNOWN;
-    m_lvError = LVMError::LVM_ERR_NORMAL;
-}
 QDBusArgument &operator<<(QDBusArgument &argument, const LVInfo &data)
 {
     argument.beginStructure();
@@ -301,7 +248,8 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LVInfo &data)
              << data.m_mountPoints
              << data.m_lvStatus
              << data.m_minReduceSize
-             << static_cast<int>(data.m_lvError);
+             << static_cast<int>(data.m_lvError)
+             << data.m_mountUuid;
     argument.endStructure();
     return argument;
 }
@@ -325,7 +273,8 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LVInfo &data)
              >> data.m_mountPoints
              >> data.m_lvStatus
              >> data.m_minReduceSize
-             >> err;
+             >> err
+             >> data.m_mountUuid;
     data.m_lvFsType = static_cast<FSType>(type);
     data.m_lvError = static_cast<LVMError>(err);
 
@@ -333,15 +282,24 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LVInfo &data)
     return argument;
 }
 /*********************************** VGInfo *********************************************/
-VGInfo::VGInfo()
+LVInfo VGInfo::getLVinfo(const QString &lvName)
 {
-    m_pvCount = 0;
-    m_peCount = 0;
-    m_peUsed = 0;
-    m_peUnused = 0;
-    m_PESize = 0;
-    m_curLV = 0;
-    m_vgError = LVMError::LVM_ERR_NORMAL;
+    foreach (LVInfo info, m_lvlist) {
+        if (info.m_lvName == lvName) {
+            return info;
+        }
+    }
+    return  LVInfo();
+}
+
+bool VGInfo::lvInfoExists(const QString &lvName)
+{
+    foreach (LVInfo info, m_lvlist) {
+        if (info.m_lvName == lvName) {
+            return true;
+        }
+    }
+    return  false;
 }
 
 
@@ -394,10 +352,63 @@ const QDBusArgument &operator>>(const QDBusArgument &argument,  VGInfo &data)
 
 
 /*********************************** LVMInfo *********************************************/
-
-LVMInfo::LVMInfo()
+LVInfo LVMInfo::getLVInfo(const QString &vgName, const QString &lvName)
 {
-    m_lvmErr = LVMError::LVM_ERR_NORMAL;
+    //判断lv是否存在
+    auto it = m_vgInfo.find(vgName);
+    if (m_vgInfo.end() == it) {
+        return LVInfo();
+    }
+
+    return it.value().getLVinfo(lvName);
+}
+
+VGInfo LVMInfo::getVG(const QString &vgName)
+{
+    return getItem(vgName, m_vgInfo);
+}
+
+PVInfo LVMInfo::getPV(const QString &pvPath)
+{
+    return getItem(pvPath, m_pvInfo);
+}
+
+
+bool LVMInfo::lvInfoExists(const QString &vgName, const QString &lvName)
+{
+    //判断lv是否存在
+    auto it = m_vgInfo.find(vgName);
+    if (m_vgInfo.end() == it) {
+        return false;
+    }
+    return it.value().lvInfoExists(lvName);
+}
+
+bool LVMInfo::vgExists(const QString &vgName)
+{
+    return itemExists(vgName, m_vgInfo);
+}
+
+bool LVMInfo::pvExists(const QString &pvPath)
+{
+    return itemExists(pvPath, m_pvInfo);
+}
+
+template<class T>
+T LVMInfo:: getItem(const QString &str,  const QMap<QString, T>& containers)
+{
+    //判断lv是否存在
+    auto it = containers.find(str);
+    if (containers.end() == it) {
+        return T();
+    }
+    return *it;
+}
+
+template<class T>
+bool LVMInfo::itemExists(const QString& str,const QMap<QString, T>& containers)
+{
+    return containers.find(str) != containers.end();
 }
 
 
@@ -423,3 +434,4 @@ const QDBusArgument &operator>>(const QDBusArgument &argument,  LVMInfo &data)
     argument.endStructure();
     return argument;
 }
+

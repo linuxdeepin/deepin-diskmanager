@@ -265,17 +265,38 @@ bool FAT16::create(const Partition & new_partition)
 
 bool FAT16::checkRepair(const Partition & partition)
 {
+    return checkRepair(partition.getPath());
+}
+
+bool FAT16::checkRepair(const QString &devpath)
+{
     QString output, error;
-    int exitcode = Utils::executCmd(QString("fsck.fat -a -w -v %1").arg(partition.getPath()), output, error);
+    int exitcode = Utils::executCmd(QString("fsck.fat -a -w -v %1").arg(devpath), output, error);
 //    qDebug() << QString("EXT2::check_repair---%1----%2").arg(output).arg(error);
     return exitcode == 0 || error.compare("Unknown error") == 0;
 }
 
 FS_Limits FAT16::getFilesystemLimits(const Partition &partition) const
 {
+    return getFilesystemLimits(partition.getPath());
+}
+
+FS_Limits FAT16::getFilesystemLimits(const QString &path) const
+{
     FS_Limits tmp {-1, 0};
+
     //todo fatresize
     return tmp;
+}
+
+bool FAT16::resize(const Partition &partitionNew, bool fillPartition)
+{
+    return resize(partitionNew.getPath(),QString::number(Utils::sectorToUnit(partitionNew.getSectorLength(), partitionNew.m_sectorSize, UNIT_KIB)),fillPartition);
+}
+
+bool FAT16::resize(const QString &path, const QString &size, bool fillPartition)
+{
+
 }
 
 

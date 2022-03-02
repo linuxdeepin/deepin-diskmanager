@@ -87,12 +87,22 @@ public:
     bool create(const Partition &new_partition) override;
 
     /**
-     * @brief 扩容
+     * @brief 调整大小
      * @param partition：分区信息
      * @param fill_partition：标记位
      * @return true成功false失败
      */
     bool resize(const Partition &partitionNew, bool fillPartition) override;
+
+
+    /**
+     * @brief 调整大小
+     * @param path：设备路径
+     * @param size：调整后大小
+     * @param fill_partition：标记位
+     * @return true成功false失败
+     */
+    bool resize(const QString &path,const QString &size, bool fillPartition) override;
 
     /**
      * @brief 检查修补
@@ -100,6 +110,13 @@ public:
      * @return true成功false失败
      */
     bool checkRepair(const Partition &partition) override;
+
+    /**
+     * @brief 检查修补
+     * @param path：设备路径
+     * @return true成功false失败
+     */
+    bool checkRepair(const QString &devpath) override;
 
 
     /**
@@ -109,7 +126,17 @@ public:
      */
     virtual FS_Limits getFilesystemLimits(const Partition &partition) const override;
 
+
+    /**
+     * @brief 获取文件系统限制
+     * @param path：设备路径
+     * @return 文件系统限制信息
+     */
+    virtual FS_Limits getFilesystemLimits(const QString &path) const override;
+
 private:
+
+
     Byte_Value m_fsBlockSize; // Holds file system block size for the copy_progress() callback
     bool m_forceAuto64bit;
     const FSType m_specificType;

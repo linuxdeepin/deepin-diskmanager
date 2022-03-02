@@ -89,12 +89,6 @@ public:
      */
     bool mountAndWriteFstab(const QString &mountpath);
 
-    /**
-     * @brief 临时挂载分区
-     * @param mountpath：挂载路径
-     * @return true成功false失败
-     */
-    bool mountTemp(const QString &mountpath, const QString devPath = "",const FSType&fsType=FS_UNKNOWN);
 
     /**
      * @brief 卸载分区
@@ -122,11 +116,11 @@ public:
      * @param fstype：格式化格式
      * @param path：分区别名
      * @param name: 劵标名
-     * @param diskType : 0为分区，1为磁盘，2为空闲
-     * @param clearType: 清除标准， 0为快速，1为安全（NIST），2为DoD标准， 3为古德曼标准
+     * @param diskType : 0为磁盘，1为分区
+     * @param clearType: 清除标准， 1为快速，2为安全（NIST），3为DoD标准， 4为古德曼标准
      * @return true成功false失败
      */
-    bool clear(const QString &fstype, const QString &path,const QString &name,const QString &user ,const int &diskType , const int &clearType);
+    bool clear(const QString &fstype, const QString &path, const QString &name, const QString &user, const int &diskType, const int &clearType);
 
     /**
      * @brief 扩容分区
@@ -228,7 +222,7 @@ public:
      * @param checkSize：检测柱面大小
      * @return true错误false正常
      */
-    bool checkBadBlocks(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize,int flag);
+    bool checkBadBlocks(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize, int flag);
 
     /**
      * @brief 坏道检测（超时时间）
@@ -279,11 +273,11 @@ public:
      */
     bool delTempMountFile();
 
-     /**
-     * @brief 判断设备有否经历过gpt分区表扩容
-     * @param devicePath：设备路径
-     * @return true扩展后gpt分区表状态与实际不一致, false分区表状态正常
-     */
+    /**
+    * @brief 判断设备有否经历过gpt分区表扩容
+    * @param devicePath：设备路径
+    * @return true扩展后gpt分区表状态与实际不一致, false分区表状态正常
+    */
     bool gptIsExpanded(const QString &devicePath);
 
     /**
@@ -331,7 +325,28 @@ public:
      * @param lvAction:lv操作结构体
      * @return true 成功 false 失败
      */
-    bool resizeLV( LVAction &lvAction);
+    bool resizeLV(LVAction &lvAction);
+
+    /**
+     * @brief lv挂载
+     * @param lvAction:lv操作结构体
+     * @return true 成功 false 失败
+     */
+    bool mountLV(const LVAction &lvAction);
+
+    /**
+     * @brief lv卸载
+     * @param lvAction:lv操作结构体
+     * @return true 成功 false 失败
+     */
+    bool umountLV(const LVAction &lvAction);
+
+    /**
+     * @brief lv清除
+     * @param lvAction:lv操作结构体
+     * @return true 成功 false 失败
+     */
+    bool clearLV(const LVAction &lvAction);
 
 private:
 
@@ -383,11 +398,11 @@ private:
      * @param insideExtended：扩展分区标志
      */
     static void insertUnallocated(const QString &devicePath,
-                                   QVector<Partition *> &partitions,
-                                   Sector start,
-                                   Sector end,
-                                   Byte_Value sectorSize,
-                                   bool insideExtended);
+                                  QVector<Partition *> &partitions,
+                                  Sector start,
+                                  Sector end,
+                                  Byte_Value sectorSize,
+                                  bool insideExtended);
 
     /**
      * @brief 设置分区标志
@@ -414,7 +429,50 @@ private:
      * @param count: 循环次数
      * @return : 执行结果
      */
-    bool secuClear(const QString &path, const Sector &start, const Sector &end, const Byte_Value &size, const QString &fstype,const QString &name=" ", const int &count=1);
+    bool secuClear(const QString &path, const Sector &start, const Sector &end, const Byte_Value &size, const QString &fstype, const QString &name = " ", const int &count = 1);
+
+
+    /**
+     * @brief 挂载设备
+     * @param mountpath:挂载点
+     * @param devPath:设备路径
+     * @param fsType:文件系统类型
+     * @return true 挂载成功 false 挂载失败
+     */
+    bool mountDevice(const QString &mountpath, const QString devPath, const FSType &fsType);
+
+
+    /**
+     * @brief 卸载设备
+     * @param mountPoints:挂载点集合
+     * @return true 卸载成功 false 卸载失败
+     */
+    bool umontDevice(QVector<QString>mountPoints);
+
+    /**
+     * @brief 写fstab文件
+     * @param uuid:设备（磁盘分区，lvm lv）uuid
+     * @param mountpath:挂载点
+     * @param type:文件系统类型
+     * @param isMount:true 挂载 false 卸载
+     * @return true 写入成功 false 写入失败
+     */
+    bool writeFstab(const QString &uuid, const QString &mountpath, const QString &type, bool isMount = true);
+
+    /**
+     * @brief 创建临时挂载目录
+     * @param mountpath:挂载目录
+     * @return true 创建成功 false 创建失败
+     */
+    bool createTmpMountDir(const QString &mountPath);
+
+    /**
+     * @brief 修改文件属主
+     * @param user:用户名
+     * @param path:文件路径
+     * @return true 修改成功 false 修改失败
+     */
+    bool changeOwner(const QString &user, const QString &path);
 
 private:
     //general..
@@ -502,7 +560,7 @@ private:
      * @return true成功false失败
      */
     static bool getDeviceAndDisk(const QString &devicePath, PedDevice *&lpDevice,
-                                    PedDisk *&lpDisk, bool strict = true, bool flush = false);
+                                 PedDisk *&lpDisk, bool strict = true, bool flush = false);
 
     /**
      * @brief 更新到磁盘信息
@@ -756,9 +814,9 @@ private:
      * @param flag：设置的返回值
      * @return true false 与flag相同
      */
-    inline bool sendRefSigAndReturn(bool flag)
+    inline bool sendRefSigAndReturn(bool flag, int type = 0, bool arg1 = true, QString arg2 = "")
     {
-        emit refreshDeviceInfo();
+        emit refreshDeviceInfo(type, arg1, arg2);
         return flag;
     }
 
@@ -768,7 +826,7 @@ private:
      * @param size: 总大小
      * @return true false 与flag相同
      */
-    QList<PVData> getCreatePVList(const QList<PVData>& devList, const long long &totalSize);
+    QList<PVData> getCreatePVList(const QList<PVData> &devList, const long long &totalSize);
 
 
 
@@ -778,7 +836,7 @@ private:
      * @param dev: 磁盘设备 传入参数
      * @return true 获取成功 false 获取失败
      */
-    bool getPVDevice(const QString &devPath,Device&dev);
+    bool getPVDevice(const QString &devPath, Device &dev);
 
 
     /**
@@ -787,7 +845,7 @@ private:
      * @param flag: pv需要创建分区表 标志位
      * @return 大于0为pv长度 单位byte  小于0 为错误
      */
-    long long getPVSize(const PVData&pv,bool flag = false);
+    long long getPVSize(const PVData &pv, bool flag = false);
 
 
     /**
@@ -796,7 +854,7 @@ private:
      * @param unallocaSize: 未分配空间
      * @return true 获取成功 false 获取失败
      */
-    bool getPVStartEndSector(PVData & pv, const long long & unallocaSize);
+    bool getPVStartEndSector(PVData &pv, const long long &unallocaSize);
 
 
     /**
@@ -804,7 +862,7 @@ private:
      * @param pv: pv数据结构体
      * @return true 获取成功 false 获取失败
      */
-    bool createPVPartition(PVData & pv);
+    bool createPVPartition(PVData &pv);
 
 
 signals:
@@ -901,6 +959,12 @@ signals:
      * @param clearMessage：清除结果
      */
     void clearMessage(const QString &clearMessage);
+
+    /**
+     * @brief vg创建
+     * @param vgMessage:创建结果
+     */
+    void vgCreateMessage(const QString &vgMessage);
 
 
 

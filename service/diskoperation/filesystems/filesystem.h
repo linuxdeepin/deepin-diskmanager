@@ -97,6 +97,15 @@ public:
      */
     virtual FS_Limits getFilesystemLimits(const Partition &) const { return m_fsLimits; }
 
+
+
+    /**
+     * @brief 获取文件系统限制
+     * @param path：设备路径
+     * @return 文件系统限制信息
+     */
+    virtual FS_Limits getFilesystemLimits(const QString &) const { return m_fsLimits; }
+
     /**
      * @brief 创建
      * @param partition：分区信息
@@ -112,12 +121,31 @@ public:
      */
     virtual bool resize(const Partition &, bool) { return false; }
 
+
+
+    /**
+     * @brief 调整大小
+     * @param path：设备路径
+     * @param size：调整后大小
+     * @param fill_partition：标记位
+     * @return true成功false失败
+     */
+    virtual bool resize(const QString &, const QString &, bool)  { return false; }
+
+
     /**
      * @brief 检查修补
      * @param partition：分区信息
      * @return true成功false失败
      */
     virtual bool checkRepair(const Partition &) { return false; }
+
+    /**
+     * @brief 检查修补
+     * @param path：设备路径
+     * @return true成功false失败
+     */
+    virtual bool checkRepair(const QString &) { return false; }
 
     Sector m_totalNumOfBlock, m_numOfFreeOrUsedBlocks, m_blocksSize; //File system [T]otal num of blocks, [N]um of free (or used) blocks, block [S]ize
 public:

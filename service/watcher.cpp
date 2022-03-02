@@ -73,8 +73,8 @@ void Watcher::run()
             //这里表示，前端启动过，但是现在已经关闭了
             if (isrun) {
                 qDebug() << "Need to quit now";
-                pid_t pid = getpid();
-                kill(pid, 9);
+                QCoreApplication::exit(0);
+
             }
         }
     // qDebug() << "Sleep !!!  == " << ret << " " << outPut << " " << outPut.length() << " "<< error;

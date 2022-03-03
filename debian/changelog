@@ -1,3 +1,14 @@
+deepin-diskmanager (1.3.4) stable; urgency=low
+
+  * 磁盘管理器V1.3第四次发版
+  * 100278 创建逻辑卷（LV）功能开发
+  * 100321 创建逻辑卷组（VG）功能开发
+  * 100274 删除逻辑卷组（VG）功能实现
+  * 100273 删除逻辑卷（LV）功能开发
+  * 100324 后端实现逻辑卷组（VG）创建功能
+
+ -- yuandandan <yuandandan@uniontech.com>  Thu, 3 Mar 2022 14:30:16 +0800
+
 deepin-diskmanager (1.3.3) stable; urgency=low
 
   * 磁盘管理器V1.3第三次发版
@@ -9,7 +20,7 @@ deepin-diskmanager (1.3.3) stable; urgency=low
   * 108589 【桌面专业版1050】【预发布版本第一轮集成测试】
    【磁盘管理器】维语环境下，界面显示重叠
 
- -- yuandandan <yuandandan@uniontech.com>  Thu, 6 Jan 2021 9:50:16 +0800
+ -- yuandandan <yuandandan@uniontech.com>  Thu, 6 Jan 2022 9:50:16 +0800
 
 deepin-diskmanager (1.3.2) stable; urgency=low
 

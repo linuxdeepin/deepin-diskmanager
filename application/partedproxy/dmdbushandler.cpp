@@ -103,6 +103,7 @@ void DMDbusHandler::initConnection()
     connect(m_dbus, &DMDBusInterface::checkBadBlocksFinished, this, &DMDbusHandler::checkBadBlocksFinished);
     connect(m_dbus, &DMDBusInterface::fixBadBlocksFinished, this, &DMDbusHandler::fixBadBlocksFinished);
     connect(m_dbus, &DMDBusInterface::clearMessage, this, &DMDbusHandler::wipeMessage);
+    connect(m_dbus, &DMDBusInterface::vgCreateMessage, this, &DMDbusHandler::vgCreateMessage);
 //    connect(m_dbus, &DMDBusInterface::rootLogin, this, &DMDbusHandler::onRootLogin);
 }
 

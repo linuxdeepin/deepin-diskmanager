@@ -254,7 +254,7 @@ public:
      * @param path 磁盘或分区路径
      * @param name 劵标名
      * @param user 当前用户名
-     * @param diskType 磁盘或者分区类型 0是分区 1是磁盘
+     * @param diskType 磁盘或者分区类型 0是磁盘 1是分区
      * @param clearType 擦除标准 1为快速 2安全 3为安全擦除7次 4为安全擦除35次
      */
     void clear(const QString &fstype, const QString &path, const QString &name,const QString &user, const int &diskType, const int &clearType);
@@ -364,6 +364,7 @@ signals:
     void fixBadBlocksFinished();
     void rootLogin();
     void wipeMessage(const QString &clearMessage);
+    void vgCreateMessage(const QString &vgMessage);
 
 public slots:
     /**

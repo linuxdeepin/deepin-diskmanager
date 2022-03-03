@@ -32,6 +32,7 @@
 #include "createlvwidget.h"
 #include "common.h"
 #include "messagebox.h"
+#include "createvgwidget.h"
 
 #include <QMouseEvent>
 #include <QHBoxLayout>
@@ -313,7 +314,10 @@ void TitleWidget::onCreateVGClicked()
     dlg.setAccessibleName("createVGDialog");
 
     if (dlg.exec() == 1) {
-
+        CreateVGWidget createVGWidget(this);
+        createVGWidget.setObjectName("createVGWidget");
+        createVGWidget.setAccessibleName("createVGWidget");
+        createVGWidget.exec();
     }
 }
 

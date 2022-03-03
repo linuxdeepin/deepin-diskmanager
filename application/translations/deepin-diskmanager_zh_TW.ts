@@ -32,61 +32,61 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="51"/>
         <source>Creating logical volumes on %1</source>
-        <translation type="unfinished"/>
+        <translation>正在%1上建立邏輯卷</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="53"/>
         <source>Click ‘+’ to create a logical volume. </source>
-        <translation type="unfinished"/>
+        <translation>點擊“+”按鈕建立邏輯卷</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="120"/>
         <source>VG Information</source>
-        <translation type="unfinished"/>
+        <translation>卷組訊息</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="144"/>
         <location filename="../widgets/createlvwidget.cpp" line="304"/>
         <source>LV name:</source>
-        <translation type="unfinished"/>
+        <translation>邏輯卷名稱：</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="153"/>
         <location filename="../widgets/createlvwidget.cpp" line="157"/>
         <source>VG name:</source>
-        <translation type="unfinished"/>
+        <translation>卷組名稱：</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="165"/>
         <location filename="../widgets/createlvwidget.cpp" line="324"/>
         <source>LV file system:</source>
-        <translation type="unfinished"/>
+        <translation>邏輯卷格式：</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="271"/>
         <source>LV Information</source>
-        <translation type="unfinished"/>
+        <translation>邏輯卷訊息</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="283"/>
         <source>Create LV:</source>
-        <translation type="unfinished"/>
+        <translation>建立邏輯卷：</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="294"/>
         <source>Delete last logical volume</source>
-        <translation type="unfinished"/>
+        <translation>刪除最新邏輯卷</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="333"/>
         <source>LV capacity:</source>
-        <translation type="unfinished"/>
+        <translation>邏輯卷大小：</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="470"/>
         <location filename="../widgets/createlvwidget.cpp" line="560"/>
         <source>Unallocated</source>
-        <translation type="unfinished"/>
+        <translation>未分配</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="493"/>
@@ -136,12 +136,12 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="68"/>
         <source>Create volume group</source>
-        <translation type="unfinished"/>
+        <translation>建立邏輯卷組</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="92"/>
         <source>Select disks or partitions to create a volume group and set its capacity</source>
-        <translation type="unfinished"/>
+        <translation>選擇磁碟或分區，並為此邏輯卷組設定空間的大小</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="97"/>
@@ -154,22 +154,22 @@
         <location filename="../widgets/createvgwidget.cpp" line="1246"/>
         <location filename="../widgets/createvgwidget.cpp" line="1351"/>
         <source>Capacity selected: %1</source>
-        <translation type="unfinished"/>
+        <translation>已選空間：%1</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="102"/>
         <source>The selected disks will be converted to dynamic disks, and you will not be able to start installed operating systems from the disks.</source>
-        <translation type="unfinished"/>
+        <translation>選定的磁碟將轉換成動態磁碟，您將無法從這些磁碟啟動已經安裝的作業系統</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="158"/>
         <source>No partitions available</source>
-        <translation type="unfinished"/>
+        <translation>選定磁碟無可用分區</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="228"/>
         <source>No disks or partitions available</source>
-        <translation type="unfinished"/>
+        <translation>沒有磁碟或分區可供選擇</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="261"/>
@@ -181,27 +181,27 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="264"/>
         <source>Next</source>
-        <translation type="unfinished"/>
+        <translation>下一步</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="289"/>
         <source>Selected disks/partitions</source>
-        <translation type="unfinished"/>
+        <translation>所選磁碟和分區</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="329"/>
         <source>Set VG capacity</source>
-        <translation type="unfinished"/>
+        <translation>設定卷組空間</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="409"/>
         <source>Choose one disk or partition at least</source>
-        <translation type="unfinished"/>
+        <translation>請選擇至少一個磁碟或分區</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="445"/>
         <source>Previous</source>
-        <translation type="unfinished"/>
+        <translation>上一步</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="448"/>
@@ -212,23 +212,23 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="525"/>
         <source>Creating...</source>
-        <translation type="unfinished"/>
+        <translation>正在建立，請稍候...</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="579"/>
         <source>Selected disks and partitions:</source>
-        <translation type="unfinished"/>
+        <translation>所選磁碟和分區</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="618"/>
         <location filename="../widgets/createvgwidget.cpp" line="620"/>
         <source>VG capacity: %1</source>
-        <translation type="unfinished"/>
+        <translation>卷組大小：%1</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="625"/>
         <source>VG name: %1</source>
-        <translation type="unfinished"/>
+        <translation>卷組名稱：%1</translation>
     </message>
 </context>
 <context>
@@ -314,19 +314,19 @@
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="575"/>
         <source>Creating...</source>
-        <translation type="unfinished"/>
+        <translation>正在建立，請稍候...</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="582"/>
         <location filename="../partedproxy/dmdbushandler.cpp" line="589"/>
         <source>Deleting...</source>
-        <translation type="unfinished"/>
+        <translation>正在刪除，請稍候...</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="596"/>
         <location filename="../partedproxy/dmdbushandler.cpp" line="603"/>
         <source>Resizing space...</source>
-        <translation type="unfinished"/>
+        <translation>正在調整空間，請稍候...</translation>
     </message>
 </context>
 <context>
@@ -422,18 +422,18 @@
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="201"/>
         <source>Delete volume group</source>
-        <translation type="unfinished"/>
+        <translation>刪除邏輯卷組</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="207"/>
         <location filename="../widgets/devicelistwidget.cpp" line="579"/>
         <source>Create logical volume</source>
-        <translation type="unfinished"/>
+        <translation>建立邏輯卷</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="225"/>
         <source>Delete logical volume</source>
-        <translation type="unfinished"/>
+        <translation>刪除邏輯卷</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="257"/>
@@ -576,28 +576,28 @@
         <location filename="../widgets/devicelistwidget.cpp" line="556"/>
         <location filename="../widgets/devicelistwidget.cpp" line="603"/>
         <source>Unmount %1 first</source>
-        <translation type="unfinished"/>
+        <translation>請先手動移除%1</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="566"/>
         <location filename="../widgets/devicelistwidget.cpp" line="613"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation type="unfinished"/>
+        <translation>刪除後資料將無法復原，請確認</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="579"/>
         <source>The disks will be formatted if you create a logical volume</source>
-        <translation type="unfinished"/>
+        <translation>建立邏輯卷將格式化磁碟</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="680"/>
         <source>Volume Groups</source>
-        <translation type="unfinished"/>
+        <translation>邏輯卷組</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="720"/>
         <source>Disks</source>
-        <translation type="unfinished"/>
+        <translation>所有裝置</translation>
     </message>
 </context>
 <context>
@@ -1223,23 +1223,23 @@
     </message>
     <message>
         <source>The action cannot be undone, please proceed with caution</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">該操作無法復原，請謹慎操作</translation>
     </message>
     <message>
         <source>LV name:</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">邏輯卷名稱：</translation>
     </message>
     <message>
         <source>LV name</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">邏輯卷名稱</translation>
     </message>
     <message>
         <source>LV file system:</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">邏輯卷格式：</translation>
     </message>
     <message>
         <source>You may be able to recover files after the wipe.</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">若選擇此選項，文件有一定機率會被復原。</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="400"/>
@@ -1253,7 +1253,7 @@
     </message>
     <message>
         <source>You will not be able to recover files after the wipe, and the process will be slow.</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">若選擇此選項，文件將無法被復原，且處理過程較慢。</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="458"/>
@@ -1358,29 +1358,29 @@
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="365"/>
         <source>LV count:</source>
-        <translation type="unfinished"/>
+        <translation>邏輯卷數：</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="367"/>
         <source>VG name:</source>
-        <translation type="unfinished"/>
+        <translation>卷組名稱：</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="372"/>
         <location filename="../widgets/infoshowwidget.cpp" line="375"/>
         <source>Volume group</source>
-        <translation type="unfinished"/>
+        <translation>邏輯卷組</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="404"/>
         <source>Volume name:</source>
-        <translation type="unfinished"/>
+        <translation>卷名稱：</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="409"/>
         <location filename="../widgets/infoshowwidget.cpp" line="412"/>
         <source>Logical volume</source>
-        <translation type="unfinished"/>
+        <translation>邏輯卷</translation>
     </message>
 </context>
 <context>
@@ -1404,7 +1404,7 @@
     <message>
         <location filename="../widgets/customcontrol/infotopframe.cpp" line="169"/>
         <source>Volume group</source>
-        <translation type="unfinished"/>
+        <translation>邏輯卷組</translation>
     </message>
 </context>
 <context>
@@ -1688,11 +1688,11 @@
     </message>
     <message>
         <source>New capacity:</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">調整後的空間：</translation>
     </message>
     <message>
         <source>It will resize the logical volume space</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">即將對邏輯卷內的空間進行調整</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="80"/>
@@ -1711,7 +1711,7 @@
     </message>
     <message>
         <source>Not enough space, please clear data in it</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">剩餘空間不足，請先清理空間</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1719,7 +1719,7 @@
     </message>
     <message>
         <source>To prevent data loss, back up data in the logical volume before shrinking it</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">縮減邏輯卷前，請對其內的資料做好備份，以防資料遺失</translation>
     </message>
 </context>
 <context>
@@ -1776,18 +1776,18 @@
         <location filename="../widgets/titlewidget.cpp" line="57"/>
         <location filename="../widgets/titlewidget.cpp" line="312"/>
         <source>Create volume group</source>
-        <translation type="unfinished"/>
+        <translation>建立邏輯卷組</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="259"/>
         <source>The disks will be formatted if you create a logical volume</source>
-        <translation type="unfinished"/>
+        <translation>建立邏輯卷將格式化磁碟</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="284"/>
         <location filename="../widgets/titlewidget.cpp" line="332"/>
         <source>Unmount %1 first</source>
-        <translation type="unfinished"/>
+        <translation>請先手動移除%1</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="284"/>
@@ -1799,7 +1799,7 @@
         <location filename="../widgets/titlewidget.cpp" line="294"/>
         <location filename="../widgets/titlewidget.cpp" line="342"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation type="unfinished"/>
+        <translation>刪除後資料將無法復原，請確認</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="295"/>
@@ -1811,12 +1811,12 @@
     <message>
         <location filename="../widgets/titlewidget.cpp" line="312"/>
         <source>The disks will be formatted if you create a volume group</source>
-        <translation type="unfinished"/>
+        <translation>建立邏輯卷組將格式化磁碟</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="363"/>
         <source>Are you sure you want to delete the physical volume?</source>
-        <translation type="unfinished"/>
+        <translation>您確定要刪除該物理卷嗎？</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="363"/>
@@ -1834,22 +1834,22 @@
         <location filename="../widgets/titlewidget.cpp" line="73"/>
         <location filename="../widgets/titlewidget.cpp" line="259"/>
         <source>Create logical volume</source>
-        <translation type="unfinished"/>
+        <translation>建立邏輯卷</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="61"/>
         <source>Delete volume group</source>
-        <translation type="unfinished"/>
+        <translation>刪除邏輯卷組</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="65"/>
         <source>Delete logical volume</source>
-        <translation type="unfinished"/>
+        <translation>刪除邏輯卷</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="69"/>
         <source>Delete physical volume</source>
-        <translation type="unfinished"/>
+        <translation>刪除物理卷</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="191"/>
@@ -1873,7 +1873,7 @@
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="61"/>
         <source>Make sure there are no programs running on the logical volume</source>
-        <translation type="unfinished"/>
+        <translation>請確認該邏輯卷無正在執行的程式</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="64"/>
@@ -1913,7 +1913,7 @@
         <location filename="../widgets/customcontrol/vgsizeinfowidget.cpp" line="498"/>
         <location filename="../widgets/customcontrol/vgsizeinfowidget.cpp" line="567"/>
         <source>Unallocated</source>
-        <translation type="unfinished"/>
+        <translation>未分配</translation>
     </message>
 </context>
 </TS>

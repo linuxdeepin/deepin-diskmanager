@@ -32,55 +32,55 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="51"/>
         <source>Creating logical volumes on %1</source>
-        <translation type="unfinished"/>
+        <translation>Logikai kötetek létrehozása itt: %1 </translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="53"/>
         <source>Click ‘+’ to create a logical volume. </source>
-        <translation type="unfinished"/>
+        <translation>Kattintson a „+” gombra egy logikai kötet létrehozásához.</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="120"/>
         <source>VG Information</source>
-        <translation type="unfinished"/>
+        <translation>Kötetcsoport információi</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="144"/>
         <location filename="../widgets/createlvwidget.cpp" line="304"/>
         <source>LV name:</source>
-        <translation type="unfinished"/>
+        <translation>Logikai kötet neve:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="153"/>
         <location filename="../widgets/createlvwidget.cpp" line="157"/>
         <source>VG name:</source>
-        <translation type="unfinished"/>
+        <translation>Kötetcsoport neve:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="165"/>
         <location filename="../widgets/createlvwidget.cpp" line="324"/>
         <source>LV file system:</source>
-        <translation type="unfinished"/>
+        <translation>Logikai kötet fájlrendszere:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="271"/>
         <source>LV Information</source>
-        <translation type="unfinished"/>
+        <translation>Logikai kötet információi</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="283"/>
         <source>Create LV:</source>
-        <translation type="unfinished"/>
+        <translation>Logikai kötet létrehozása:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="294"/>
         <source>Delete last logical volume</source>
-        <translation type="unfinished"/>
+        <translation>Az utolsó logikai kötet törlése </translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="333"/>
         <source>LV capacity:</source>
-        <translation type="unfinished"/>
+        <translation>Logikai kötet kapacitása:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="470"/>
@@ -136,12 +136,12 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="68"/>
         <source>Create volume group</source>
-        <translation type="unfinished"/>
+        <translation>Kötetcsoport létrehozása</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="92"/>
         <source>Select disks or partitions to create a volume group and set its capacity</source>
-        <translation type="unfinished"/>
+        <translation>Válassza ki a lemezeket, vagy partíciókat egy kötetcsoport létrehozásához, és állítsa be a kapacitását </translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="97"/>
@@ -154,22 +154,22 @@
         <location filename="../widgets/createvgwidget.cpp" line="1246"/>
         <location filename="../widgets/createvgwidget.cpp" line="1351"/>
         <source>Capacity selected: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kiválasztott kapacitás: %1 </translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="102"/>
         <source>The selected disks will be converted to dynamic disks, and you will not be able to start installed operating systems from the disks.</source>
-        <translation type="unfinished"/>
+        <translation>A kiválasztott lemezek dinamikus lemezekké lesznek konvertálva, és a telepített operációs rendszereket nem tudja elindítani az érintett lemezekről. </translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="158"/>
         <source>No partitions available</source>
-        <translation type="unfinished"/>
+        <translation>Nincsenek elérhető partíciók</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="228"/>
         <source>No disks or partitions available</source>
-        <translation type="unfinished"/>
+        <translation>Nincsenek elérhető lemezek, vagy partíciók</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="261"/>
@@ -181,27 +181,27 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="264"/>
         <source>Next</source>
-        <translation type="unfinished"/>
+        <translation>Következő</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="289"/>
         <source>Selected disks/partitions</source>
-        <translation type="unfinished"/>
+        <translation>Kiválasztott lemezek / partíciók</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="329"/>
         <source>Set VG capacity</source>
-        <translation type="unfinished"/>
+        <translation>Kötetcsoport kapacitásának beállítása</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="409"/>
         <source>Choose one disk or partition at least</source>
-        <translation type="unfinished"/>
+        <translation>Válasszon legalább egy lemezt, vagy partíciót </translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="445"/>
         <source>Previous</source>
-        <translation type="unfinished"/>
+        <translation>Előző</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="448"/>
@@ -212,23 +212,23 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="525"/>
         <source>Creating...</source>
-        <translation type="unfinished"/>
+        <translation>Létrehozás...</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="579"/>
         <source>Selected disks and partitions:</source>
-        <translation type="unfinished"/>
+        <translation>Kiválasztott lemezek és partíciók:</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="618"/>
         <location filename="../widgets/createvgwidget.cpp" line="620"/>
         <source>VG capacity: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kötetcsoport kapacitása: %1</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="625"/>
         <source>VG name: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kötetcsoport neve: %1</translation>
     </message>
 </context>
 <context>
@@ -314,19 +314,19 @@
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="575"/>
         <source>Creating...</source>
-        <translation type="unfinished"/>
+        <translation>Létrehozás...</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="582"/>
         <location filename="../partedproxy/dmdbushandler.cpp" line="589"/>
         <source>Deleting...</source>
-        <translation type="unfinished"/>
+        <translation>Törlés...</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="596"/>
         <location filename="../partedproxy/dmdbushandler.cpp" line="603"/>
         <source>Resizing space...</source>
-        <translation type="unfinished"/>
+        <translation>Hely átméretezése...</translation>
     </message>
 </context>
 <context>
@@ -423,18 +423,18 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="201"/>
         <source>Delete volume group</source>
-        <translation type="unfinished"/>
+        <translation>Kötetcsoport törlése</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="207"/>
         <location filename="../widgets/devicelistwidget.cpp" line="579"/>
         <source>Create logical volume</source>
-        <translation type="unfinished"/>
+        <translation>Logikai kötet létrehozása</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="225"/>
         <source>Delete logical volume</source>
-        <translation type="unfinished"/>
+        <translation>Logikai kötet törlése</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="257"/>
@@ -577,28 +577,28 @@ kérjük legyen óvatos</translation>
         <location filename="../widgets/devicelistwidget.cpp" line="556"/>
         <location filename="../widgets/devicelistwidget.cpp" line="603"/>
         <source>Unmount %1 first</source>
-        <translation type="unfinished"/>
+        <translation>Először csatolja le a %1-et</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="566"/>
         <location filename="../widgets/devicelistwidget.cpp" line="613"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation type="unfinished"/>
+        <translation>Az adatok nem állíthatók vissza, ha törlésre kerülnek, kérjük erősítse meg a folytatás előtt </translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="579"/>
         <source>The disks will be formatted if you create a logical volume</source>
-        <translation type="unfinished"/>
+        <translation>A lemezek formázásra kerülnek, ha logikai kötetet hoz létre </translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="680"/>
         <source>Volume Groups</source>
-        <translation type="unfinished"/>
+        <translation>Kötetcsoportok</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="720"/>
         <source>Disks</source>
-        <translation type="unfinished"/>
+        <translation>Lemezek</translation>
     </message>
 </context>
 <context>
@@ -1224,23 +1224,23 @@ kérjük legyen óvatos</translation>
     </message>
     <message>
         <source>The action cannot be undone, please proceed with caution</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">A művelet nem vonható vissza, kérjük járjon el körültekintően </translation>
     </message>
     <message>
         <source>LV name:</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">Logikai kötet neve:</translation>
     </message>
     <message>
         <source>LV name</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">Logikai kötet neve</translation>
     </message>
     <message>
         <source>LV file system:</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">Logikai kötet fájlrendszere:</translation>
     </message>
     <message>
         <source>You may be able to recover files after the wipe.</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">Lehetséges, hogy a törlés után helyreállíthatja a fájlokat. </translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="400"/>
@@ -1254,7 +1254,7 @@ kérjük legyen óvatos</translation>
     </message>
     <message>
         <source>You will not be able to recover files after the wipe, and the process will be slow.</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">A törlés után nem tudja visszaállítani a fájlokat, és a választott folyamat lassú lesz. </translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="458"/>
@@ -1359,29 +1359,29 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="365"/>
         <source>LV count:</source>
-        <translation type="unfinished"/>
+        <translation>Logikai kötet szám:</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="367"/>
         <source>VG name:</source>
-        <translation type="unfinished"/>
+        <translation>Kötetcsoport neve:</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="372"/>
         <location filename="../widgets/infoshowwidget.cpp" line="375"/>
         <source>Volume group</source>
-        <translation type="unfinished"/>
+        <translation>Kötetcsoportok</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="404"/>
         <source>Volume name:</source>
-        <translation type="unfinished"/>
+        <translation>Kötet neve:  </translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="409"/>
         <location filename="../widgets/infoshowwidget.cpp" line="412"/>
         <source>Logical volume</source>
-        <translation type="unfinished"/>
+        <translation>Logikai kötet</translation>
     </message>
 </context>
 <context>
@@ -1405,7 +1405,7 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/customcontrol/infotopframe.cpp" line="169"/>
         <source>Volume group</source>
-        <translation type="unfinished"/>
+        <translation>Kötetcsoport</translation>
     </message>
 </context>
 <context>
@@ -1689,11 +1689,11 @@ kérjük legyen óvatos</translation>
     </message>
     <message>
         <source>New capacity:</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">Új kapacitás:</translation>
     </message>
     <message>
         <source>It will resize the logical volume space</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">A logikai kötet helyek átméretezésre kerülnek</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="80"/>
@@ -1712,7 +1712,7 @@ kérjük legyen óvatos</translation>
     </message>
     <message>
         <source>Not enough space, please clear data in it</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">Nincs elegendő hely, kérjük töröljön adatokat</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1720,7 +1720,7 @@ kérjük legyen óvatos</translation>
     </message>
     <message>
         <source>To prevent data loss, back up data in the logical volume before shrinking it</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">Az adatvesztés elkerülése érdekében készítsen biztonsági másolatot a logikai kötetben lévő adatokról, mielőtt csökkentené azok méretét</translation>
     </message>
 </context>
 <context>
@@ -1777,18 +1777,18 @@ kérjük legyen óvatos</translation>
         <location filename="../widgets/titlewidget.cpp" line="57"/>
         <location filename="../widgets/titlewidget.cpp" line="312"/>
         <source>Create volume group</source>
-        <translation type="unfinished"/>
+        <translation>Kötetcsoport létrehozása</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="259"/>
         <source>The disks will be formatted if you create a logical volume</source>
-        <translation type="unfinished"/>
+        <translation>A lemezek formázásra kerülnek, ha logikai kötetet hoz létre </translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="284"/>
         <location filename="../widgets/titlewidget.cpp" line="332"/>
         <source>Unmount %1 first</source>
-        <translation type="unfinished"/>
+        <translation>Először csatolja le a %1-et</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="284"/>
@@ -1800,7 +1800,7 @@ kérjük legyen óvatos</translation>
         <location filename="../widgets/titlewidget.cpp" line="294"/>
         <location filename="../widgets/titlewidget.cpp" line="342"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation type="unfinished"/>
+        <translation>Az adatok nem állíthatók vissza, ha törlésre kerülnek, kérjük erősítse meg a folytatás előtt </translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="295"/>
@@ -1812,12 +1812,12 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="312"/>
         <source>The disks will be formatted if you create a volume group</source>
-        <translation type="unfinished"/>
+        <translation>A lemezek formázásra kerülnek, ha logikai kötetetcsoportot hoz létre </translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="363"/>
         <source>Are you sure you want to delete the physical volume?</source>
-        <translation type="unfinished"/>
+        <translation>Valóban törölni akarja ezt a fizikai kötetet?</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="363"/>
@@ -1835,22 +1835,22 @@ kérjük legyen óvatos</translation>
         <location filename="../widgets/titlewidget.cpp" line="73"/>
         <location filename="../widgets/titlewidget.cpp" line="259"/>
         <source>Create logical volume</source>
-        <translation type="unfinished"/>
+        <translation>Logikai kötet létrehozása</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="61"/>
         <source>Delete volume group</source>
-        <translation type="unfinished"/>
+        <translation>Kötetcsoport törlése</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="65"/>
         <source>Delete logical volume</source>
-        <translation type="unfinished"/>
+        <translation>Logikai kötet törlése</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="69"/>
         <source>Delete physical volume</source>
-        <translation type="unfinished"/>
+        <translation>Fizikai kötet törlése</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="191"/>
@@ -1874,7 +1874,8 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="61"/>
         <source>Make sure there are no programs running on the logical volume</source>
-        <translation type="unfinished"/>
+        <translation>
+Győződjön meg arról, hogy nem futnak programok a logikai köteten</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="64"/>

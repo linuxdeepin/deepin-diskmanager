@@ -227,6 +227,11 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
         menu->addAction(actionDelete);
         connect(actionDelete, &QAction::triggered, this, &DeviceListWidget::onDeleteLVClicked);
 
+        LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+        if (lvInfo.m_lvName.isEmpty() && lvInfo.m_lvUuid.isEmpty()) {
+            actionDelete->setDisabled(true);
+        }
+
         menu->exec(QCursor::pos());  //显示菜单
         delete menu;
     }
@@ -685,7 +690,7 @@ void DeviceListWidget::onUpdateDeviceInfo()
                 continue;
             }
 
-            auto vgInfoBox = new DmDiskinfoBox(DMDbusHandler::VOLUMEGROUP, this, vgInformation.m_vgName, vgInformation.m_vgSize);
+            auto vgInfoBox = new DmDiskinfoBox(DMDbusHandler::VOLUMEGROUP, this, vgInformation.m_vgName, vgInformation.m_vgSize, 0, vgInformation.m_vgName);
             int lvCount = 0;
 
             for (auto lvInfo = vgInformation.m_lvlist.begin(); lvInfo != vgInformation.m_lvlist.end(); lvInfo++) {

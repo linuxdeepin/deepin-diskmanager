@@ -306,10 +306,11 @@ void ProbeThread::probeDeviceInfo()
 //    qDebug() << __FUNCTION__ << "devicepaths size=" << devicepaths.size();
     std::sort(devicePaths.begin(), devicePaths.end());
 //    qDebug() << __FUNCTION__ << "**8";
+    static PartedCore pcl;
     for (int t = 0; t < devicePaths.size(); t++) {
         /*TO TRANSLATORS: looks like Searching /dev/sda partitions */
         Device tempDevice;
-        PartedCore pcl;
+        //PartedCore pcl;
         pcl.setDeviceFromDisk(tempDevice, devicePaths[t]);
         DeviceStorage device;
         tempDevice.m_mediaType = device.getDiskInfoMediaType(devicePaths[t]);

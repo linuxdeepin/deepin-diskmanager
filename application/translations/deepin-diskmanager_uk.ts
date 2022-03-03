@@ -75,7 +75,7 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="294"/>
         <source>Delete last logical volume</source>
-        <translation type="unfinished"/>
+        <translation>Вилучити останній логічний том</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="333"/>
@@ -223,12 +223,12 @@
         <location filename="../widgets/createvgwidget.cpp" line="618"/>
         <location filename="../widgets/createvgwidget.cpp" line="620"/>
         <source>VG capacity: %1</source>
-        <translation type="unfinished"/>
+        <translation>Місткість ГТ: %1</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="625"/>
         <source>VG name: %1</source>
-        <translation type="unfinished"/>
+        <translation>Назва ГТ: %1</translation>
     </message>
 </context>
 <context>

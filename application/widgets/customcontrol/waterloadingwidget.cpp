@@ -65,11 +65,13 @@ void WaterLoadingWidget::onStartWaterProgress()
 void WaterLoadingWidget::setStartTime(int msec)
 {
     m_waterProgress->start();
+    m_waterProgress->setValue(1);
     m_time->start(msec);
 }
 
 void WaterLoadingWidget::stopTimer()
 {
+    m_waterProgress->setValue(100);
     m_waterProgress->stop();
     m_time->stop();
 }

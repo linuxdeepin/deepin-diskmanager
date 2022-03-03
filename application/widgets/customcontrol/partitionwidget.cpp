@@ -391,7 +391,7 @@ void PartitionWidget::recPartitionInfo()
     m_deviceName->setText(devicePath);
     m_allMemory->setText(deviceSize);
     m_deviceFormate->setText(partFstype);
-    m_total = Utils::sectorToUnit(data.m_sectorEnd - data.m_sectorStart, data.m_sectorSize, SIZE_UNIT::UNIT_GIB);
+    m_total = Utils::sectorToUnit(data.m_sectorEnd - data.m_sectorStart + 1, data.m_sectorSize, SIZE_UNIT::UNIT_GIB);
     m_totalSize = m_total * 1024;
 //    qDebug() << mTotal << total;
     //初始值,显示保留两位小数,真正使用保留4位小数
@@ -795,7 +795,7 @@ void PartitionWidget::onAddPartition()
     m_partName.append(m_partNameEdit->text());
     //输入框内的值超过剩余空闲空间,以剩余空间新建
     currentSize = m_currentEditSize.toDouble();
-    if (currentSize >= (m_totalSize - sumValue())) {
+    if (currentSize >= QString::number((m_totalSize - sumValue()), 'f', 4).toDouble()) {
         currentSize = m_totalSize - sumValue();
         part.m_blast = true;
     }

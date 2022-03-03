@@ -615,14 +615,14 @@ void CreateVGWidget::showLoadingWidget(const QString &vgName)
     vgSizeLabel->setPalette(palette2);
 
     if (m_selectSpaceStackedWidget->currentIndex() == 1) {
-        vgSizeLabel->setText(tr("VG capacity:%1").arg(QString::number(m_minSize, 'f', 2)) + m_selectSpaceComboBox->currentText());
+        vgSizeLabel->setText(tr("VG capacity: %1").arg(QString::number(m_minSize, 'f', 2)) + m_selectSpaceComboBox->currentText());
     } else {
-        vgSizeLabel->setText(tr("VG capacity:%1").arg(m_selectSpaceLineEdit->text() + m_selectSpaceComboBox->currentText()));
+        vgSizeLabel->setText(tr("VG capacity: %1").arg(m_selectSpaceLineEdit->text() + m_selectSpaceComboBox->currentText()));
     }
 
     QLabel *vgNameLabel = new QLabel(this);
     vgNameLabel->setAlignment(Qt::AlignCenter);
-    vgNameLabel->setText(tr("VG name:%1").arg(vgName));
+    vgNameLabel->setText(tr("VG name: %1").arg(vgName));
     vgNameLabel->setFont(font2);
     vgNameLabel->setPalette(palette2);
 

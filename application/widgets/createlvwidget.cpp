@@ -291,7 +291,7 @@ void CreateLVWidget::partInfoShowing()
     m_remButton = new DIconButton(DStyle::SP_DecreaseElement);
     m_remButton->setObjectName("removeButton");
     m_remButton->setAccessibleName("removeButton");
-    m_remButton->setToolTip(tr("Delete last partition"));
+    m_remButton->setToolTip(tr("Delete last logical volume"));
     DLabel *space = new DLabel(m_partWidget);
 
     //按钮初始状态

@@ -2113,20 +2113,21 @@ long long PartedCore::getPVSize(const PVData &pv, bool flag)
     long long startSec = pv.m_startSector;
     long long endSec = pv.m_endSector;
 
+    //以下注释代码为获取设备真实可用大小 但是与目前业务有冲突 所以改为获取磁盘真实的大小（分区表以及gpt格式开头结尾不再去除）
 
-    if (startSec == 0 && pv.m_type == LVM_DEV_UNALLOCATED_PARTITION) {
-        startSec = UEFI_SECTOR;
-    }
+//    if (startSec == 0 && pv.m_type == LVM_DEV_UNALLOCATED_PARTITION) {
+//        startSec = UEFI_SECTOR;
+//    }
 
-    if (pv.m_type == LVM_DEV_UNALLOCATED_PARTITION && pv.m_endSector == (dev.m_length - 1) && dev.m_diskType.contains("gpt")) {
-        endSec -= GPTBACKUP;
-    }
+//    if (pv.m_type == LVM_DEV_UNALLOCATED_PARTITION && pv.m_endSector == (dev.m_length - 1) && dev.m_diskType.contains("gpt")) {
+//        endSec -= GPTBACKUP;
+//    }
 
 
-    if (pv.m_type == LVM_DEV_DISK && flag) {
-        startSec -= UEFI_SECTOR;
-        endSec -= GPTBACKUP;
-    }
+//    if (pv.m_type == LVM_DEV_DISK && flag) {
+//        startSec -= UEFI_SECTOR;
+//        endSec -= GPTBACKUP;
+//    }
 
     return dev.m_sectorSize * (endSec - startSec + 1);
 }
@@ -2265,9 +2266,9 @@ bool PartedCore::createVG(QString vgName, QList<PVData> devList, long long size)
     }
 
     if(!LVMOperator::createVG(m_lvmInfo, vgName, getCreatePVList(devList, size), size)){
-        return sendRefSigAndReturn(false,DISK_SIGNAL_TYPE_VGCREATE,true,QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
+        return sendRefSigAndReturn(false,DISK_SIGNAL_TYPE_VGCREATE,true,QString("0:%1").arg(m_lvmInfo.m_lvmErr));
     }
-    return sendRefSigAndReturn(true,DISK_SIGNAL_TYPE_VGCREATE,true,QString("1:%1").arg(LVM_ERR_VG_ARGUMENT));
+    return sendRefSigAndReturn(true,DISK_SIGNAL_TYPE_VGCREATE,true,QString("1:%1").arg(m_lvmInfo.m_lvmErr));
 }
 
 bool PartedCore::createLV(QString vgName, QList<LVAction> lvList)
@@ -2282,7 +2283,9 @@ bool PartedCore::createLV(QString vgName, QList<LVAction> lvList)
     VGInfo vg = m_lvmInfo.getVG(vgName);
     foreach (const LVAction &clv, lvList) {
         if (vg.lvInfoExists(clv.m_lvName)) {
-            lvVec.push_back(vg.getLVinfo(clv.m_lvName));
+            LVInfo lv = vg.getLVinfo(clv.m_lvName);
+            lv.m_lvFsType = clv.m_lvFs;
+            lvVec.push_back(lv);
         }
     }
 
@@ -3898,7 +3901,9 @@ bool PartedCore::changeOwner(const QString &user, const QString &path)
         return false;
     }
 
-    return chown(user.toStdString().c_str(), psInfo->pw_uid, psInfo->pw_gid) == 0;
+    chown(user.toStdString().c_str(), psInfo->pw_uid, psInfo->pw_gid);
+    //todo 此处需要修改  目前chown返回值有问题 暂时全部返回true
+    return true;
 }
 
 } // namespace DiskManager

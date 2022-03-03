@@ -373,20 +373,26 @@ bool LVMOperator::updateLVInfo(LVMInfo &lvmInfo, VGInfo &vg)
         vg.m_lvlist.push_back(lv);
     }
 
-    LVInfo unallocLv;
-    unallocLv.m_lvPath = "Unallocated";
-    unallocLv.m_vgName = vg.m_vgName; //vg名称
-    unallocLv.m_LESize = vg.m_PESize;
     long long Size = vg.m_peUnused * vg.m_PESize;
-    unallocLv.m_lvSize = Utils::LVMFormatSize(Size); //字符串类型 展示用
-    unallocLv.m_lvLECount = Size / unallocLv.m_LESize;
-    unallocLv.m_fsUsed = -1;
-    unallocLv.m_fsUnused = -1;
-    unallocLv.m_lvFsType = FSType::FS_UNALLOCATED;
-    unallocLv.m_busy = false;
-    unallocLv.m_minReduceSize = 0;
+    if (Size) {
+        LVInfo unallocLv;
+        unallocLv.m_lvPath = "Unallocated";
+        unallocLv.m_vgName = vg.m_vgName; //vg名称
+        unallocLv.m_LESize = vg.m_PESize;
+        unallocLv.m_lvSize = Utils::LVMFormatSize(Size); //字符串类型 展示用
+        unallocLv.m_lvLECount = Size / unallocLv.m_LESize;
+        unallocLv.m_fsUsed = -1;
+        unallocLv.m_fsUnused = -1;
+        unallocLv.m_lvFsType = FSType::FS_UNALLOCATED;
+        unallocLv.m_busy = false;
+        unallocLv.m_minReduceSize = 0;
+        vg.m_lvlist.push_back(unallocLv);
+    }
 
-    vg.m_lvlist.push_back(unallocLv);
+
+
+
+
 
     return setLVMErr(lvmInfo, LVMError::LVM_ERR_NORMAL);
 }
@@ -409,14 +415,14 @@ bool LVMOperator::createVG(LVMInfo &lvmInfo, QString vgName, QList<PVData> devLi
     //创建pv
     QString vgPV, strout, strerror;
     foreach (PVData pv, devList) {
-        if (Utils::executCmd(QString("pvcreate %1").arg(pv.m_devicePath), strout, strerror) != 0) {
+        if (Utils::executCmd(QString("pvcreate %1 -y").arg(pv.m_devicePath), strout, strerror) != 0) {
             return setLVMErr(lvmInfo, LVMError::LVM_ERR_PV_CREATE_FAILED);
         }
         vgPV += (" " + pv.m_devicePath);
     }
 
     //创建vg
-    if (Utils::executCmd(QString("vgcreate %1 %2").arg(vgName).arg(vgPV), strout, strerror) != 0) {
+    if (Utils::executCmd(QString("vgcreate %1 %2 -y").arg(vgName).arg(vgPV), strout, strerror) != 0) {
         return setLVMErr(lvmInfo, LVMError::LVM_ERR_VG_CREATE_FAILED);
     }
 
@@ -569,7 +575,7 @@ bool LVMOperator::vgRename(const QString &uuid, const QString &newName)
         return false;
     }
     QString strout, strerror;
-    return Utils::executCmd(QString("vgrename %1 %2").arg(uuid).arg(newName), strout, strerror) == 0;
+    return Utils::executCmd(QString("vgrename %1 %2 -y").arg(uuid).arg(newName), strout, strerror) == 0;
 }
 
 bool LVMOperator::checkVG()

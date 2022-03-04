@@ -108,7 +108,7 @@ void InfoTopFrame::initLeftInfo()
     m_mainLayout->addLayout(layout);
 }
 
-void InfoTopFrame::setShowDiskInfo()
+void InfoTopFrame::updateDiskInfo()
 {
     if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
         auto info = DMDbusHandler::instance()->getCurPartititonInfo();
@@ -131,7 +131,7 @@ void InfoTopFrame::setShowDiskInfo()
     //        m_nameLabel->setText("ocated");
     //    }
 
-        QString diskSize = Utils::formatSize(info.m_sectorEnd - info.m_sectorStart,
+        QString diskSize = Utils::formatSize(info.m_sectorEnd - info.m_sectorStart + 1,
                                                 info.m_sectorSize);
         m_allMemoryLabel->setText(diskSize);
 

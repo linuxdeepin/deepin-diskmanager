@@ -169,7 +169,7 @@ void PartitionInfoWidget::paintEvent(QPaintEvent *event)
                 }
 
                 m_reectInfo.append(path[0].controlPointRect());
-            } else if (i > 0 && i < m_sizeInfo.size() - 1) {
+            } else if (i > 0 && i < (m_sizeInfo.size() - 1)) {
                 width1 = (m_sizeInfo[i - 1] / m_totalSize) * (paintRect.width() - radius);
                 width1 = width1 - space;
                 if (width1 < 8 || m_sizeInfo[i - 1] / m_totalSize < 0.01) {
@@ -193,7 +193,7 @@ void PartitionInfoWidget::paintEvent(QPaintEvent *event)
                 }
 
                 m_reectInfo.append(path[i].controlPointRect());
-            } else if (i == m_sizeInfo.size() - 1) {
+            } else if (i == (m_sizeInfo.size() - 1)) {
                 double width = ((m_sizeInfo[m_sizeInfo.size() - 2] / m_totalSize)) * (paintRect.width() - radius) - space;
                 if (m_sizeInfo[m_sizeInfo.size() - 2] / m_totalSize < 0.01) {
                     width = 8;

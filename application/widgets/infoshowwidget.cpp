@@ -263,9 +263,9 @@ void InfoShowWidget::onCurSelectChanged()
         }
         m_usedLabel->setObjectName(QString("@==@%1").arg(used));
         m_typeLabel->setObjectName(QString("@==@%1").arg(Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType))));
-        m_capacityLabel->setObjectName(QString("@==@%1").arg(Utils::formatSize(info.m_sectorEnd - info.m_sectorStart, info.m_sectorSize)));
+        m_capacityLabel->setObjectName(QString("@==@%1").arg(Utils::formatSize(info.m_sectorEnd - info.m_sectorStart + 1, info.m_sectorSize)));
         m_volumeLabel->setObjectName(QString("@==@%1").arg(info.m_fileSystemLabel));
-        m_infoTopFrame->setShowDiskInfo();
+        m_infoTopFrame->updateDiskInfo();
 
         if (1 != info.m_vgFlag) {
             m_partitionInfoWidget->hide();
@@ -332,7 +332,7 @@ void InfoShowWidget::onCurSelectChanged()
         m_volumeLabel->setObjectName(QString("@==@%1").arg(info.m_interface));
 
         m_frameBottom->setDiskFrameData(info.m_path, info.m_mediaType, used, unused, diskSize, info.m_interface);
-        m_infoTopFrame->setShowDiskInfo();
+        m_infoTopFrame->updateDiskInfo();
 
 //        m_partitionInfoWidget->hide();
 //        m_infoWidget->hide();
@@ -374,7 +374,7 @@ void InfoShowWidget::onCurSelectChanged()
 
         m_frameBottom->setDiskFrameData(QString("%1").arg(vgInfo.m_curLV), tr("Volume group"), vgInfo.m_vgUsed,
                                         vgInfo.m_vgUnused, vgInfo.m_vgSize, vgInfo.m_vgName);
-        m_infoTopFrame->setShowDiskInfo();
+        m_infoTopFrame->updateDiskInfo();
         m_vgSizeInfoWidget->setData(vgInfo);
     } else if (DMDbusHandler::LOGICALVOLUME == DMDbusHandler::instance()->getCurLevel()) {
         m_partitionInfoWidget->hide();
@@ -410,7 +410,7 @@ void InfoShowWidget::onCurSelectChanged()
         m_volumeLabel->setObjectName(QString("@==@%1").arg(lvName));
 
         m_frameBottom->setDiskFrameData(mountPoint, tr("Logical volume"), used, unused, lvInfo.m_lvSize, lvName);
-        m_infoTopFrame->setShowDiskInfo();
+        m_infoTopFrame->updateDiskInfo();
 
         DPalette palette;
     //    typeLabel->setText(typeLabel->objectName());

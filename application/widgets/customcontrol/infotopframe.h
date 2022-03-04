@@ -48,9 +48,9 @@ public:
 
 public:
     /**
-     * @brief 设置分区信息，更新界面显示
+     * @brief 更新界面显示
      */
-    void setShowDiskInfo();
+    void updateDiskInfo();
 
 protected:
     /**

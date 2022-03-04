@@ -177,7 +177,7 @@ void MainWindow::onShowSpinerWindow(bool isShow, const QString &title)
         m_dialog->setShowSpinner(isShow, title);
         m_dialog->show();
     } else {
-        m_dialog->setShowSpinner(isShow, "");
+        m_dialog->setShowSpinner(isShow, title);
         m_dialog->hide();
 
         raise();

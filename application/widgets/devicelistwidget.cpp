@@ -482,19 +482,19 @@ void DeviceListWidget::onDeletePartition(const QString &deleteMessage)
 
         QString reason;
         switch (infoList.at(1).toInt()) {
-        case 1: {
+        case DISK_ERROR::DISK_ERR_DISK_INFO: {
             reason = tr("Failed to find the disk");
             break;
         }
-        case 2: {
+        case DISK_ERROR::DISK_ERR_PART_INFO: {
             reason = tr("Failed to get the partition info");
             break;
         }
-        case 3: {
+        case DISK_ERROR::DISK_ERR_DELETE_PART_FAILED: {
             reason = tr("Failed to delete the partition");
             break;
         }
-        case 4: {
+        case DISK_ERROR::DISK_ERR_UPDATE_KERNEL_FAILED: {
             reason = tr("Failed to submit the request to the kernel");
             break;
         }

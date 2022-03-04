@@ -57,7 +57,7 @@ void SizeInfoWidget::setData(PartitionInfo info, QVector<QColor> color, QVector<
 
     m_noused = Utils::sectorToUnit(info.m_sectorsUnused, info.m_sectorSize, SIZE_UNIT::UNIT_GIB);
     m_used = Utils::sectorToUnit(info.m_sectorsUsed, info.m_sectorSize, SIZE_UNIT::UNIT_GIB);
-    m_totalSpaceSize = Utils::formatSize(info.m_sectorEnd - info.m_sectorStart, info.m_sectorSize);
+    m_totalSpaceSize = Utils::formatSize(info.m_sectorEnd - info.m_sectorStart + 1, info.m_sectorSize);
     m_usedSize = Utils::formatSize(info.m_sectorsUsed, info.m_sectorSize);
     m_totalSize = m_noused + m_used;
     m_partitionPath = info.m_path;

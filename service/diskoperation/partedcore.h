@@ -882,6 +882,9 @@ signals:
 
     /**
      * @brief 刷新信息信号
+     * @param type:信号类型 详细类型见sigtype.h
+     * @param arg1:根据信号类型确定该参数是否使用 true为成功 false为失败
+     * @param arg2:根据信号类型确定该参数是否使用 0:errCode or 1:errCode  key:value格式 key=0 失败 errCode:为错误码 key=1 成功
      */
     void refreshDeviceInfo(int type = 0, bool arg1 = true, QString arg2 = "");
 

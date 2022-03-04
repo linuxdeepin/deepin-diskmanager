@@ -93,7 +93,7 @@ enum PartitionAlignment {
     ALIGN_CYLINDER = 0, //Align to nearest cylinder
     ALIGN_MEBIBYTE = 1, //Align to nearest mebibyte
     ALIGN_STRICT = 2 //Strict alignment - no rounding
-    //  Indicator if start and end sectors must remain unchanged
+                   //  Indicator if start and end sectors must remain unchanged
 };
 
 enum CUSTOM_TEXT {
@@ -185,11 +185,28 @@ struct FS {
     }
 };
 
+
+
 struct MountEntry {
     bool readonly; // Is the file system mounted read-only?
     QVector<QString> mountpoints; // File system mounted on ...
     MountEntry()
         : readonly(false) {}
 };
+
+
+//new by liuwh 2022/3/4
+/**
+ * @enum DISK_ERROR
+ * @brief 磁盘 错误类型
+ */
+enum DISK_ERROR {
+    DISK_ERR_DBUS_ARGUMENT = 0,        //DBus参数错误
+    DISK_ERR_DISK_INFO = 1,            //磁盘信息错误
+    DISK_ERR_PART_INFO = 2,            //分区信息错
+    DISK_ERR_DELETE_PART_FAILED = 3,   //删除分区失败
+    DISK_ERR_UPDATE_KERNEL_FAILED = 4  //提交内核失败
+};
+
 
 #endif // COMMONDEF_H

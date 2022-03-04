@@ -2541,7 +2541,7 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
         success = (path.isEmpty() || user.isEmpty() || diskType < 0 || diskType > 1 || clearType < 0 || clearType > 4);
     }
     if (!success) {
-        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, "0:4");
+        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, false, QString("0:%1").arg(DISK_ERROR::DISK_ERR_DBUS_ARGUMENT));
         return false;
     }
 
@@ -2652,7 +2652,7 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
         success = format(fstype, name);
         if (!success) {
             qDebug() << __FUNCTION__ << "format error";
-            emit clearMessage("0:3");
+            emit clearMessage(QString("0:%1").arg(DISK_ERROR::DISK_ERR_DELETE_PART_FAILED));
             m_isClear = false;
             return success;
         }
@@ -2676,7 +2676,7 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
 
     if (!success) {
         qDebug() << __FUNCTION__ << "secuClear error";
-        emit clearMessage("0:4");
+        emit clearMessage(QString("0:%1").arg(DISK_ERROR::DISK_ERR_UPDATE_KERNEL_FAILED));
         m_isClear = false;
         return success;
     }
@@ -2705,7 +2705,7 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
         if (!success) {
             qDebug() << __FUNCTION__ << "format error";
             blockSignals(false);
-            emit clearMessage("0:3");
+            emit clearMessage(QString("0:%1").arg(DISK_ERROR::DISK_ERR_DELETE_PART_FAILED));
             m_isClear = false;
             return success;
         }
@@ -2749,7 +2749,7 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
     if (!createTmpMountDir(mountPath)) {
         success = false;
         m_isClear = false;
-        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, "0:4");
+        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true,  QString("0:%1").arg(DISK_ERROR::DISK_ERR_UPDATE_KERNEL_FAILED));
         return success;
     }
 
@@ -2757,7 +2757,7 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
     qDebug() << __FUNCTION__ << "Clear after:  mountTemp  start";
     success = mountDevice(mountPath, m_curpartition.getPath(), m_curpartition.m_fstype);
     if (!success) {
-        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, "0:4");
+        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, QString("0:%1").arg(DISK_ERROR::DISK_ERR_UPDATE_KERNEL_FAILED));
         m_isClear = false;
         return success;
     }
@@ -2767,7 +2767,7 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
 
     changeOwner(user, mountPath);
     m_isClear = false;
-    emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, "1:0");
+    emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true,  QString("0:%1").arg(DISK_ERROR::DISK_ERR_DISK_INFO));
     return success;
 }
 
@@ -3129,9 +3129,9 @@ bool PartedCore::deletePartition()
         qDebug() << __FUNCTION__ << "Delete Partition get device and disk failed";
 
         if (!m_isClear) {
-            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true, "0:1");
+            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true, QString("0:%1").arg(DISK_ERROR::DISK_ERR_DISK_INFO));
         } else {
-            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, "0:1");
+            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, QString("0:%1").arg(DISK_ERROR::DISK_ERR_DISK_INFO));
         }
 
 
@@ -3157,9 +3157,9 @@ bool PartedCore::deletePartition()
         qDebug() << __FUNCTION__ << "Delete Partition Get Partition failed";
 
         if (!m_isClear) {
-            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true, "0:2");
+            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true, QString("0:%1").arg(DISK_ERROR::DISK_ERR_PART_INFO));
         } else {
-            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, "0:2");
+            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, QString("0:%1").arg(DISK_ERROR::DISK_ERR_PART_INFO));
         }
 
 
@@ -3172,9 +3172,9 @@ bool PartedCore::deletePartition()
         qDebug() << __FUNCTION__ << "Delete Partition failed";
 
         if (!m_isClear) {
-            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true, "0:3");
+            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true,  QString("0:%1").arg(DISK_ERROR::DISK_ERR_DELETE_PART_FAILED));
         } else {
-            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, "0:3");
+            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, QString("0:%1").arg(DISK_ERROR::DISK_ERR_DELETE_PART_FAILED));
         }
 
 
@@ -3185,9 +3185,9 @@ bool PartedCore::deletePartition()
         qDebug() << __FUNCTION__ << "Delete Partition commit failed";
 
         if (!m_isClear) {
-            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true, "0:4");
+            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_DEL, true,  QString("0:%1").arg(DISK_ERROR::DISK_ERR_UPDATE_KERNEL_FAILED));
         } else {
-            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, "0:4");
+            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true,  QString("0:%1").arg(DISK_ERROR::DISK_ERR_UPDATE_KERNEL_FAILED));
         }
 
         return false;

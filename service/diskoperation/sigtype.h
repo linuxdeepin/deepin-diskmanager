@@ -28,15 +28,15 @@
 #define __SIGNAL_TYPE__H__
 
 
-#define DISK_SIGNAL_TYPE_UMNT 1
-#define DISK_SIGNAL_TYPE_DEL  2
-#define DISK_SIGNAL_TYPE_SHOW 3
-#define DISK_SIGNAL_TYPE_CREATE_TABLE 4
-#define DISK_SIGNAL_USBUPDATE     5
-#define DISK_SIGNAL_TYPE_CLEAR 6
-#define DISK_SIGNAL_TYPE_VGCREATE 7
+#define DISK_SIGNAL_TYPE_UMNT 1             //卸载信号
+#define DISK_SIGNAL_TYPE_DEL  2             //删除信号
+#define DISK_SIGNAL_TYPE_SHOW 3             //显示信号
+#define DISK_SIGNAL_TYPE_CREATE_TABLE 4     //清楚分区表信号
+#define DISK_SIGNAL_USBUPDATE     5         //usb刷新信号
+#define DISK_SIGNAL_TYPE_CLEAR 6            //磁盘或分区清除动作信号
+#define DISK_SIGNAL_TYPE_VGCREATE 7         //vg创建信号
 
-#define DISK_SIGNAL_TYPE_AUTOMNT 100
+#define DISK_SIGNAL_TYPE_AUTOMNT 100        //自动挂载
 
 
 

@@ -67,6 +67,11 @@ private:
      */
     bool isSystemDirectory(const QString &directory);
 
+    /**
+     * @brief 挂载当前选择的分区或者逻辑卷
+     */
+    void mountCurPath();
+
 private slots:
     /**
      * @brief 挂载点输入框改变信号响应的槽函数

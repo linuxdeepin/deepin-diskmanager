@@ -53,6 +53,11 @@ private:
      */
     void initConnection();
 
+    /**
+     * @brief 卸载当前选择的分区或者逻辑卷
+     */
+    void umountCurMountPoints();
+
 private slots:
     /**
      * @brief 按钮点击响应的槽函数

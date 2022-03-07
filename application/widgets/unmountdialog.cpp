@@ -51,10 +51,10 @@ void UnmountDialog::initUi()
 
     mainLayout->addWidget(tipLabel);
 
-    if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
+    if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         setTitle(tr("Unmount %1").arg(info.m_path));
-    } else if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
+    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
         setTitle(tr("Unmount %1").arg(lvInfo.m_lvName));
 
@@ -73,30 +73,49 @@ void UnmountDialog::initConnection()
     connect(this, &UnmountDialog::buttonClicked, this, &UnmountDialog::onButtonClicked);
 }
 
+void UnmountDialog::umountCurMountPoints()
+{
+    if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
+        DMDbusHandler::instance()->unmount();
+    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
+        LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+
+        LVAction lvAction;
+        lvAction.m_vgName = lvInfo.m_vgName;
+        lvAction.m_lvName = lvInfo.m_lvName;
+        lvAction.m_lvFs = lvInfo.m_lvFsType;
+        lvAction.m_lvSize = lvInfo.m_lvSize;
+        lvAction.m_lvByteSize = lvInfo.m_lvLECount * lvInfo.m_LESize;
+        lvAction.m_lvAct = LVMAction::LVM_ACT_LV_UMOUNT;
+
+        DMDbusHandler::instance()->onUmountLV(lvAction);
+    }
+}
+
 void UnmountDialog::onButtonClicked(int index, const QString &text)
 {
     Q_UNUSED(text);
     if (m_okCode == index) {
-        QString m_mountPoints;
+        QString mountPoints;
         int flag = 0;
-        if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
+        if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
             PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
 
             for (int i = 0; i < info.m_mountPoints.size(); i++) {
-                m_mountPoints += info.m_mountPoints[i];
+                mountPoints += info.m_mountPoints[i];
             }
 
             flag = info.m_flag;
-        } else if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
+        } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
             LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
             for (int i = 0; i < lvInfo.m_mountPoints.size(); i++) {
-                m_mountPoints += lvInfo.m_mountPoints[i];
+                mountPoints += lvInfo.m_mountPoints[i];
             }
         }
 
         qDebug() << __FUNCTION__;
-        if (m_mountPoints == "/boot/efi" || m_mountPoints == "/boot" || m_mountPoints == "/"
-                || m_mountPoints == "/recovery" || flag == 4) {
+        if (mountPoints == "/boot/efi" || mountPoints == "/boot" || mountPoints == "/"
+                || mountPoints == "/recovery" || flag == 4) {
             MessageBox firstWarning(this);
             firstWarning.setObjectName("firstWarning");
             firstWarning.setAccessibleName("firstWarning");
@@ -111,11 +130,11 @@ void UnmountDialog::onButtonClicked(int index, const QString &text)
                 QString title = tr("You will take subsequent risks if you continue to unmount the system disk");
                 secondWarning.setWarings(title, "", tr("Unmount"), DDialog::ButtonWarning, "unmountBtn", tr("Cancel"), "cancelBtn");
                 if (secondWarning.exec() == 1) {
-                    DMDbusHandler::instance()->unmount();
+                    umountCurMountPoints();
                 }
             }
         } else {
-            DMDbusHandler::instance()->unmount();
+            umountCurMountPoints();
         }
     }
 }

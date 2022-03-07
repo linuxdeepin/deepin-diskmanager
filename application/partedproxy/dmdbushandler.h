@@ -339,6 +339,24 @@ public:
      */
     void resizeLV(LVAction act);
 
+    /**
+     * @brief lv挂载
+     * @param act:操作lv结构体
+     */
+    void onMountLV(LVAction act);
+
+    /**
+     * @brief lv卸载
+     * @param act:操作lv结构体
+     */
+    void onUmountLV(LVAction act);
+
+    /**
+     * @brief lv擦除
+     * @param act:操作lv结构体
+     */
+    void onClearLV(LVAction act);
+
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
 

@@ -44,9 +44,13 @@ MountDialog::MountDialog(QWidget *parent)
 
 void MountDialog::initUi()
 {
-    PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-
-    setTitle(tr("Mount %1").arg(info.m_path));
+    if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
+        PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+        setTitle(tr("Mount %1").arg(info.m_path));
+    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
+        LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+        setTitle(tr("Mount %1").arg(lvInfo.m_lvPath));
+    }
 
     QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
     DLabel *tipLabel = new DLabel(tr("Choose a mount point please"), this);
@@ -111,23 +115,47 @@ void MountDialog::onEditContentChanged(const QString &content)
 bool MountDialog::isExistMountPoint(const QString &mountPoint)
 {
     bool isExist = false;
-    DeviceInfoMap infoMap = DMDbusHandler::instance()->probDeviceInfo();
 
+    // 判断是否有分区已经挂载在该路径
+    DeviceInfoMap infoMap = DMDbusHandler::instance()->probDeviceInfo();
     for (auto devInfo = infoMap.begin(); devInfo != infoMap.end(); devInfo++) {
         DeviceInfo info = devInfo.value();
         for (auto it = info.m_partition.begin(); it != info.m_partition.end(); it++) {
             QString mountpoints;
             for (int i = 0; i < it->m_mountPoints.size(); i++) {
                 mountpoints += it->m_mountPoints[i];
-
                 if (it->m_mountPoints.size() > 1 && mountPoint == it->m_mountPoints[i]) {
                     isExist = true;
-                    break;
+                    return isExist;
                 }
             }
 
             if (mountPoint == mountpoints) {
                 isExist = true;
+                return isExist;
+            }
+        }
+    }
+
+    // 判断是否有逻辑卷已经挂载在该路径
+    LVMInfo lvmInfo = DMDbusHandler::instance()->probLVMInfo();
+    QMap<QString, VGInfo> lstVGInfo = lvmInfo.m_vgInfo;
+    for (auto vgInfo = lstVGInfo.begin(); vgInfo != lstVGInfo.end(); vgInfo++) {
+        VGInfo vgInformation = vgInfo.value();
+        for (int i = 0; i < vgInformation.m_lvlist.count(); i++) {
+            LVInfo info = vgInformation.m_lvlist.at(i);
+            QString mountpoints;
+            for (int j = 0; j < info.m_mountPoints.size(); j++) {
+                mountpoints += info.m_mountPoints[j];
+                if (info.m_mountPoints.size() > 1 && mountPoint == info.m_mountPoints[j]) {
+                    isExist = true;
+                    return isExist;
+                }
+            }
+
+            if (mountPoint == mountpoints) {
+                isExist = true;
+                return isExist;
             }
         }
     }
@@ -151,6 +179,26 @@ bool MountDialog::isSystemDirectory(const QString &directory)
     return isSysDir;
 }
 
+void MountDialog::mountCurPath()
+{
+    if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
+        DMDbusHandler::instance()->mount(m_ComboBox->currentText());
+    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
+        LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+
+        LVAction lvAction;
+        lvAction.m_vgName = lvInfo.m_vgName;
+        lvAction.m_lvName = lvInfo.m_lvName;
+        lvAction.m_lvFs = lvInfo.m_lvFsType;
+        lvAction.m_lvSize = lvInfo.m_lvSize;
+        lvAction.m_lvByteSize = lvInfo.m_lvLECount * lvInfo.m_LESize;
+        lvAction.m_lvAct = LVMAction::LVM_ACT_LV_MOUNT;
+        lvAction.m_mountPoint = m_ComboBox->currentText();
+
+        DMDbusHandler::instance()->onMountLV(lvAction);
+    }
+}
+
 void MountDialog::onButtonClicked(int index, const QString &text)
 {
     Q_UNUSED(text);
@@ -167,11 +215,11 @@ void MountDialog::onButtonClicked(int index, const QString &text)
             messageBox.setAccessibleName("messageBox");
             messageBox.setWarings(tr("The data under this mount point would be lost, please mount the directory to another location"), "", tr("OK"), "ok", tr("Cancel"), "cancelBtn");
             if (messageBox.exec() == 1) {
-                DMDbusHandler::instance()->mount(m_ComboBox->currentText());
+                mountCurPath();
                 close();
             }
         } else {
-            DMDbusHandler::instance()->mount(m_ComboBox->currentText());
+            mountCurPath();
             close();
         }
     } else {

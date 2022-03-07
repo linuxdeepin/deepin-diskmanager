@@ -57,8 +57,7 @@ DMDbusHandler::DMDbusHandler(QObject *parent)
     qDBusRegisterMetaType<stCustest>();
     qDBusRegisterMetaType<HardDiskInfo>();
     qDBusRegisterMetaType<HardDiskStatusInfo>();
-
-
+    qDBusRegisterMetaType<HardDiskStatusInfoList>();
 
     //注册结构体 lvm dbus通信使用
     qDBusRegisterMetaType<PVRanges>();
@@ -603,5 +602,24 @@ void DMDbusHandler::resizeLV(LVAction act)
     emit showSpinerWindow(true, tr("Resizing space..."));
 
     m_dbus->onResizeLV(act);
+}
+
+void DMDbusHandler::onMountLV(LVAction act)
+{
+    emit showSpinerWindow(true, tr("Mounting %1 ...").arg(m_curLVInfo.m_lvName));
+
+    m_dbus->onMountLV(act);
+}
+
+void DMDbusHandler::onUmountLV(LVAction act)
+{
+    emit showSpinerWindow(true, tr("Unmounting %1 ...").arg(m_curLVInfo.m_lvName));
+
+    m_dbus->onUmountLV(act);
+}
+
+void DMDbusHandler::onClearLV(LVAction act)
+{
+    m_dbus->onClearLV(act);
 }
 

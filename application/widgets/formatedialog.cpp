@@ -56,10 +56,14 @@ void FormateDialog::initUi()
 
         DeviceInfo diskInfo = DMDbusHandler::instance()->getCurDeviceInfo();
         m_curDiskMediaType = diskInfo.m_mediaType;
-    } else {
+    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         m_pathInfo = info.m_path;
         m_curDiskMediaType = info.m_mediaType;
+    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
+        setFixedSize(450, 335);
+        LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+        m_pathInfo = lvInfo.m_lvPath;
     }
 
     DPalette palette1;
@@ -141,7 +145,7 @@ void FormateDialog::initUi()
     m_securityComboBox->setAccessibleName("Security");
     m_securityComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-    if ("SSD" == m_curDiskMediaType) {
+    if ("SSD" == m_curDiskMediaType || DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
         QStringList securitylist;
         securitylist << tr("Fast") << tr("Secure");
         m_securityComboBox->addItems(securitylist);
@@ -279,6 +283,21 @@ void FormateDialog::initUi()
     m_failLabel->setPalette(palette3);
     m_failLabel->setText(tr("Failed to find the disk"));
 
+    if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
+        tipLabel->setText(tr("The action cannot be undone, please proceed with caution"));
+        fileName->setText(tr("LV name:"));
+        m_fileNameEdit->setText(DMDbusHandler::instance()->getCurLVInfo().m_lvName);
+        m_fileNameEdit->lineEdit()->setReadOnly(true);
+        m_fileNameEdit->setAccessibleName("lvName");
+        m_fileNameEdit->lineEdit()->setPlaceholderText(tr("LV name"));
+        formatName->setText(tr("LV file system:"));
+        m_formatComboBox->setAccessibleName("LV file system");
+        m_describeInfo->setText(tr("You may be able to recover files after the wipe."));
+        m_describeInfo->setFixedHeight(10);
+        m_labelTmp->setFixedHeight(9);
+        m_failLabel->setText(tr("Failed to submit the request to the kernel"));
+    }
+
     QVBoxLayout *failLayout = new QVBoxLayout;
     failLayout->addWidget(failPicture, 0, Qt::AlignCenter);
     failLayout->addSpacing(10);
@@ -346,77 +365,110 @@ void FormateDialog::onTextChanged(const QString &text)
 
 void FormateDialog::onComboxFormatTextChange(const QString &text)
 {
-    QByteArray byteArray = m_fileNameEdit->text().toUtf8();
-    if (text == "fat32") {
-        if (byteArray.size() > 11) {
-            m_fileNameEdit->setAlert(true);
-            m_fileNameEdit->showAlertMessage(tr("The length exceeds the limit"), -1);
+    if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION ||
+            DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
+        QByteArray byteArray = m_fileNameEdit->text().toUtf8();
+        if (text == "fat32") {
+            if (byteArray.size() > 11) {
+                m_fileNameEdit->setAlert(true);
+                m_fileNameEdit->showAlertMessage(tr("The length exceeds the limit"), -1);
 
-            m_warningButton->setEnabled(false);
+                m_warningButton->setEnabled(false);
+            } else {
+                m_fileNameEdit->setAlert(false);
+                m_fileNameEdit->hideAlertMessage();
+
+                m_warningButton->setEnabled(true);
+            }
         } else {
-            m_fileNameEdit->setAlert(false);
-            m_fileNameEdit->hideAlertMessage();
+            if (byteArray.size() > 16) {
+                m_fileNameEdit->setAlert(true);
+                m_fileNameEdit->showAlertMessage(tr("The length exceeds the limit"), -1);
 
-            m_warningButton->setEnabled(true);
-        }
-    } else {
-        if (byteArray.size() > 16) {
-            m_fileNameEdit->setAlert(true);
-            m_fileNameEdit->showAlertMessage(tr("The length exceeds the limit"), -1);
+                m_warningButton->setEnabled(false);
+            } else {
+                m_fileNameEdit->setAlert(false);
+                m_fileNameEdit->hideAlertMessage();
 
-            m_warningButton->setEnabled(false);
-        } else {
-            m_fileNameEdit->setAlert(false);
-            m_fileNameEdit->hideAlertMessage();
-
-            m_warningButton->setEnabled(true);
+                m_warningButton->setEnabled(true);
+            }
         }
     }
 }
 
 void FormateDialog::onSecurityCurrentIndexChanged(int index)
 {
-    switch (index) {
-    case 0: {
-        setFixedSize(450, 355);
-        m_describeInfo->setFixedHeight(30);
-        m_labelTmp->setFixedHeight(29);
-        m_buttonLayout->setContentsMargins(0, 0, 0, 0);
-        m_label->hide();
-        m_wipingMethodWidget->hide();
-        m_curWipeMethod = WipeType::FAST;
-        m_describeInfo->setText(tr("It only deletes the partition info without erasing the files on the disk. "
-                                   "Disk recovery tools may recover the files at a certain probability."));
-        break;
-    }
-    case 1: {
-        setFixedSize(450, 365);
-        m_describeInfo->setFixedHeight(40);
-        m_labelTmp->setFixedHeight(40);
-        m_buttonLayout->setContentsMargins(0, 0, 0, 0);
-        m_label->hide();
-        m_wipingMethodWidget->hide();
-        m_curWipeMethod = WipeType::SECURE;
-        m_describeInfo->setText(tr("It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, "
-                                   "and random data to the entire disk once. You will not be able to recover files, "
-                                   "and the process will be slow."));
-        break;
-    }
-    case 2: {
-        setFixedSize(450, 412);
-        m_describeInfo->setFixedHeight(40);
-        m_labelTmp->setFixedHeight(40);
-        m_buttonLayout->setContentsMargins(0, 10, 0, 0);
-        m_label->show();
-        m_wipingMethodWidget->show();
-        m_wipingMethodComboBox->setCurrentIndex(0);
-        m_curWipeMethod = WipeType::DOD;
-        m_describeInfo->setText(tr("It writes 0, 1, and random data to the entire disk several times. You can set the "
-                                   "number of times to erase disks and overwrite data, but the process will be very slow."));
-        break;
-    }
-    default:
-        break;
+    if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION ||
+            DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
+        switch (index) {
+        case 0: {
+            setFixedSize(450, 355);
+            m_describeInfo->setFixedHeight(30);
+            m_labelTmp->setFixedHeight(29);
+            m_buttonLayout->setContentsMargins(0, 0, 0, 0);
+            m_label->hide();
+            m_wipingMethodWidget->hide();
+            m_curWipeMethod = WipeType::FAST;
+            m_describeInfo->setText(tr("It only deletes the partition info without erasing the files on the disk. "
+                                       "Disk recovery tools may recover the files at a certain probability."));
+            break;
+        }
+        case 1: {
+            setFixedSize(450, 365);
+            m_describeInfo->setFixedHeight(40);
+            m_labelTmp->setFixedHeight(40);
+            m_buttonLayout->setContentsMargins(0, 0, 0, 0);
+            m_label->hide();
+            m_wipingMethodWidget->hide();
+            m_curWipeMethod = WipeType::SECURE;
+            m_describeInfo->setText(tr("It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, "
+                                       "and random data to the entire disk once. You will not be able to recover files, "
+                                       "and the process will be slow."));
+            break;
+        }
+        case 2: {
+            setFixedSize(450, 412);
+            m_describeInfo->setFixedHeight(40);
+            m_labelTmp->setFixedHeight(40);
+            m_buttonLayout->setContentsMargins(0, 10, 0, 0);
+            m_label->show();
+            m_wipingMethodWidget->show();
+            m_wipingMethodComboBox->setCurrentIndex(0);
+            m_curWipeMethod = WipeType::DOD;
+            m_describeInfo->setText(tr("It writes 0, 1, and random data to the entire disk several times. You can set the "
+                                       "number of times to erase disks and overwrite data, but the process will be very slow."));
+            break;
+        }
+        default:
+            break;
+        }
+    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
+        switch (index) {
+        case 0: {
+            setFixedSize(450, 335);
+            m_describeInfo->setFixedHeight(10);
+            m_labelTmp->setFixedHeight(9);
+            m_buttonLayout->setContentsMargins(0, 0, 0, 0);
+            m_label->hide();
+            m_wipingMethodWidget->hide();
+            m_curWipeMethod = WipeType::FAST;
+            m_describeInfo->setText(tr("You may be able to recover files after the wipe."));
+            break;
+        }
+        case 1: {
+            setFixedSize(450, 355);
+            m_describeInfo->setFixedHeight(30);
+            m_labelTmp->setFixedHeight(29);
+            m_buttonLayout->setContentsMargins(0, 0, 0, 0);
+            m_label->hide();
+            m_wipingMethodWidget->hide();
+            m_curWipeMethod = WipeType::SECURE;
+            m_describeInfo->setText(tr("You will not be able to recover files after the wipe, and the process will be slow."));
+            break;
+        }
+        default:
+            break;
+        }
     }
 }
 
@@ -446,20 +498,39 @@ void FormateDialog::onWipeButtonClicked()
     QString userName = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
     userName.remove(0, 6);
 
-    if (m_fileNameEdit->text().isEmpty()) {
-        DMDbusHandler::instance()->clear(m_formatComboBox->currentText(), m_pathInfo, " ",
-                                         userName, DMDbusHandler::instance()->getCurLevel(), m_curWipeMethod);
-    } else {
-        DMDbusHandler::instance()->clear(m_formatComboBox->currentText(), m_pathInfo, m_fileNameEdit->text(),
-                                         userName, DMDbusHandler::instance()->getCurLevel(), m_curWipeMethod);
+    if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION ||
+            DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
+        if (m_fileNameEdit->text().isEmpty()) {
+            DMDbusHandler::instance()->clear(m_formatComboBox->currentText(), m_pathInfo, " ",
+                                             userName, DMDbusHandler::instance()->getCurLevel(), m_curWipeMethod);
+        } else {
+            DMDbusHandler::instance()->clear(m_formatComboBox->currentText(), m_pathInfo, m_fileNameEdit->text(),
+                                             userName, DMDbusHandler::instance()->getCurLevel(), m_curWipeMethod);
+        }
+    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
+        LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+
+        LVAction lvAction;
+        lvAction.m_vgName = lvInfo.m_vgName;
+        lvAction.m_lvName = lvInfo.m_lvName;
+        lvAction.m_lvFs = Utils::stringToFileSystemType(m_formatComboBox->currentText());
+        lvAction.m_user = userName;
+        lvAction.m_lvSize = lvInfo.m_lvSize;
+        lvAction.m_lvByteSize = lvInfo.m_lvLECount * lvInfo.m_LESize;
+        lvAction.m_lvAct = (m_curWipeMethod == WipeType::FAST) ? LVMAction::LVM_ACT_LV_FAST_CLEAR : LVMAction::LVM_ACT_LV_SECURE_CLEAR;
+
+        DMDbusHandler::instance()->onClearLV(lvAction);
     }
 
     // 擦除等待动画
     m_titleLabel->setText(tr("Wiping %1").arg(m_pathInfo) + "...");
     m_stackedWidget->setCurrentIndex(1);
     DWindowCloseButton *button = findChild<DWindowCloseButton *>("DTitlebarDWindowCloseButton");
-    button->setDisabled(true);
-    button->hide();
+    if (button != nullptr) {
+        button->setDisabled(true);
+        button->hide();
+    }
+
     m_spinner->show();
 }
 
@@ -489,19 +560,19 @@ void FormateDialog::onWipeResult(const QString &info)
         button->show();
 
         switch (infoList.at(1).toInt()) {
-        case 1: {
+        case DISK_ERROR::DISK_ERR_DISK_INFO: {
             m_failLabel->setText(tr("Failed to find the disk"));
             break;
         }
-        case 2: {
+        case DISK_ERROR::DISK_ERR_PART_INFO: {
             m_failLabel->setText(tr("Failed to get the partition info"));
             break;
         }
-        case 3: {
+        case DISK_ERROR::DISK_ERR_DELETE_PART_FAILED: {
             m_failLabel->setText(tr("Failed to delete the partition"));
             break;
         }
-        case 4: {
+        case DISK_ERROR::DISK_ERR_UPDATE_KERNEL_FAILED: {
             m_failLabel->setText(tr("Failed to submit the request to the kernel"));
             break;
         }

@@ -1,3 +1,10 @@
+deepin-diskmanager (1.2.31) stable; urgency=low
+
+  * 1040第三十一次发版
+  * 新增单元测试脚本
+
+ -- yuandandan <yuandandan@uniontech.com>  Tue, 8 Mar 2022 17:00:16 +0800
+
 deepin-diskmanager (1.2.30) stable; urgency=low
 
   * 1040第三十次发版

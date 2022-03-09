@@ -21,7 +21,7 @@ echo "Uos123!!" | sudo -S ./tests/deepin-diskmanager_app_test > asan_deepin-disk
 ######################
 cd -
 echo "Uos123!!" | sudo -S cp ./build/asan.log.* ./build-ut/asan_deepin-diskmanager.log
-echo "Uos123!!" | sudo -S chmod 744 ./build-ut/asan_deepin-diskmanager.log
+echo "Uos123!!" | sudo -S chmod 777 ./build-ut/asan_deepin-diskmanager.log
 
 # UT for index.html and ut-report.txt
 cd tests

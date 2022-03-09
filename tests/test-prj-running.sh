@@ -17,10 +17,10 @@ export XDG_CURRENT_DESKTOP=Deepin
 export QT_IM_MODULE=fcitx
 cmake -DCMAKE_SAFETYTEST_ARG="CMAKE_SAFETYTEST_ARG_ON" ..
 make -j4
-echo "Uos123!!" | sudo -S ./tests/deepin-diskmanager_app_test > asan_deepin-diskmanager.log 2>&1
+echo "Uos123!!" | sudo -S ./tests/deepin-diskmanager_app_test > interlog_deepin-diskmanager.log 2>&1
 ######################
 cd -
-echo "Uos123!!" | sudo -S cp ./build/asan.log.* ./build-ut/asan_deepin-diskmanager.log
+echo "Uos123!!" | sudo -S mv ./build/asan.log.* ./build-ut/asan_deepin-diskmanager.log
 echo "Uos123!!" | sudo -S chmod 777 ./build-ut/asan_deepin-diskmanager.log
 
 # UT for index.html and ut-report.txt

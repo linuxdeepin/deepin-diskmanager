@@ -98,8 +98,8 @@ enum LVMError {
     LVM_ERR_VG = 300,               //vg 错误
     LVM_ERR_VG_CREATE_FAILED,       //vg 创建失败
     LVM_ERR_VG_ARGUMENT,            //vg 创建参数错误
-    LVM_ERR_VG_NO_EXISTS,           //vg不存在
-    LVM_ERR_VG_ALREADY_EXISTS,      //VG重名
+    LVM_ERR_VG_NO_EXISTS,           //vg 不存在
+    LVM_ERR_VG_ALREADY_EXISTS,      //vg 重名
     LVM_ERR_VG_DELETE_FAILED        //vg 删除失败
 
 };

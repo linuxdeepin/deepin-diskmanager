@@ -156,25 +156,37 @@ bool NTFS::create(const Partition & newPartition)
     return exitcode == 0 && error.compare("Unknown error") == 0;
 }
 
+/*
+Ntfsresize can be used to shrink or enlarge any NTFS filesystem located on an unmounted DEVICE (usually a disk partition).
+The new filesystem will have SIZE bytes.
+The SIZE parameter may have one of the optional modifiers k, M, G, which means the SIZE parameter is given in kilo-,mega- or gigabytes respectively.
+Ntfsresize conforms to the SI, ATA, IEEE standards and the disk manufacturers by using k=10^3, M=10^6 and G=10^9.
+Ntfsresize可用于缩小或扩大位于未安装设备（通常是磁盘分区）上的任何NTFS文件系统。
+新的文件系统将具有SIZE字节。
+尺寸参数可以具有可选修饰符K、M、G中的一个，这意味着尺寸参数分别以千字节、兆字节或千兆字节给出。
+NTFSRESIZE使用K=10^3、M=10^6和G=10^9，符合Si、ATA、IEEE标准和磁盘制造商的要求。
+*/
+
 bool NTFS::resize(const Partition &partitionNew, bool fillPartition)
 {
-    return  resize(partitionNew.getPath(),QString::number(Utils::sectorToUnit(partitionNew.getSectorLength(), partitionNew.m_sectorSize, UNIT_BYTE)),fillPartition);
+    double d = Utils::sectorToUnit(partitionNew.getSectorLength(), partitionNew.m_sectorSize, UNIT_BYTE);
+    return  resize(partitionNew.getPath(), QString::number(((long long)d / 1000)), fillPartition);
 }
 
 bool NTFS::resize(const QString &path, const QString &sizeByte, bool fillPartition)
 {
     //  bool success;
-        QString output, error;
-        QString size;
-        if (!fillPartition) {
-            size = QString(" -s %1").arg(sizeByte);
-        }
-        QString cmd = "ntfsresize --force --force" + size ;
+    QString output, error;
+    QString size, cmd;
+    if (!fillPartition) {
+        size = QString(" -s %1k").arg(sizeByte);
+    }
 
-        // Real resize
-        cmd = QString("%1 %2").arg(cmd).arg(path);
+    cmd = "ntfsresize --force --force" + size ;
+    // Real resize
+    cmd = QString("%1 %2").arg(cmd).arg(path);
     //    success = !Utils::executCmd(cmd, output, error);
-        return !Utils::executCmd(cmd, output, error);
+    return !Utils::executCmd(cmd, output, error);
 }
 
 //bool ntfs::copy( const Partition & src_part, Partition & dest_part)
@@ -219,7 +231,7 @@ FS_Limits NTFS::getFilesystemLimits(const QString &path) const
             auto list = str.split(":");
              //qDebug()<<"getFilesystemLimits ntfs list"<<list;
             if (list.count() == 2) {
-                tmp.min_size = list[1].toLongLong() * MEBIBYTE; //转换为byte
+                tmp.min_size = list[1].toLongLong() * 1000 * 1000; //转换为byte
                 //qDebug()<<"getFilesystemLimits ntfs min_size"<<tmp.min_size;
                 return tmp;
             }

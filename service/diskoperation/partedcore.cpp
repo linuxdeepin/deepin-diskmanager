@@ -400,7 +400,7 @@ void PartedCore::probeDeviceInfo(const QString &)
 //            }
 
 
-            partinfo = pat.getPartitionInfo();
+            //partinfo = pat.getPartitionInfo();
             if (rootFsName == pat.getPath()) {
                 partinfo.m_flag = 4;
                 qDebug() << __FUNCTION__ << "Set systemfs Flags 1 !! " << pat.m_devicePath << " " << pat.m_name << " " << pat.m_uuid;
@@ -1519,6 +1519,11 @@ bool PartedCore::resize(const Partition &partitionNew)
         //        return    check_repair_filesystem(partition_new)
         //                  && shrink_filesystem(curpartition, partition_new)
         //                  && resizeMovePartition(curpartition, partition_new, false);
+
+        return checkRepairFileSystem(partitionNew)
+               && resizeFileSystemImplement(m_curpartition, partitionNew)
+               && resizeMovePartition(m_curpartition, partitionNew, true);
+
     } else if (delta > 0LL) { // grow
         return checkRepairFileSystem(partitionNew)
                && resizeMovePartition(m_curpartition, partitionNew, true)
@@ -1721,6 +1726,7 @@ bool PartedCore::resizeMoveFileSystemUsingLibparted(const Partition &partitionOl
                                           partitionNew.m_sectorStart,
                                           partitionNew.getSectorLength());
                 if (lpGeom) {
+                    returnValue = ped_file_system_resize(fs, lpGeom, NULL);
                     if (returnValue)
                         commit(lpDisk);
 
@@ -2215,16 +2221,16 @@ bool PartedCore::createVG(QString vgName, QList<PVData> devList, long long size)
     std::set<PVData>tmpDevList;
     foreach (PVData pv, devList) {
         if (!tmpDevList.insert(pv).second) { //插入失败说明有重复
-            return sendRefSigAndReturn(false,DISK_SIGNAL_TYPE_VGCREATE,true,QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
         }
 
         if (pv.m_pvAct != LVMAction::LVM_ACT_ADDPV || pv.m_type == LVMDevType::LVM_DEV_UNKNOW_DEVICES) {
-            return sendRefSigAndReturn(false,DISK_SIGNAL_TYPE_VGCREATE,true,QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
         }
 
         auto devIt = m_deviceMap.find(pv.m_diskPath);
         if (devIt == m_deviceMap.end()) {
-            return sendRefSigAndReturn(false,DISK_SIGNAL_TYPE_VGCREATE,true,QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
         }
 
         const QVector<Partition *> &part = devIt.value().m_partitions;
@@ -2240,19 +2246,19 @@ bool PartedCore::createVG(QString vgName, QList<PVData> devList, long long size)
         switch (pv.m_type) {
         case LVMDevType::LVM_DEV_DISK: { //验证是否存在分区表
             if (devIt.value().m_diskType != "unrecognized") {
-                return sendRefSigAndReturn(false,DISK_SIGNAL_TYPE_VGCREATE,true,QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
+                return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
             }
         }
         break;
         case LVMDevType::LVM_DEV_PARTITION: { //验证分区是否存在 是否被挂载
             if (part.end() == partIt || !(*partIt)->getMountPoint().isEmpty()) { //此处两个判断位置不可交换 交换会崩溃
-                return sendRefSigAndReturn(false,DISK_SIGNAL_TYPE_VGCREATE,true,QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
+                return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
             }
         }
         break;
         case LVMDevType::LVM_DEV_UNALLOCATED_PARTITION: { //验证未分配分区是否存在
             if (part.end() == partIt) {
-                return sendRefSigAndReturn(false,DISK_SIGNAL_TYPE_VGCREATE,true,QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
+                return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
             }
         }
         break;
@@ -2261,14 +2267,14 @@ bool PartedCore::createVG(QString vgName, QList<PVData> devList, long long size)
         case LVMDevType::LVM_DEV_META_DEVICES://暂时不做处理 以后支持时添加
             break;
         default:
-            return sendRefSigAndReturn(false,DISK_SIGNAL_TYPE_VGCREATE,true,QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
         }
     }
 
-    if(!LVMOperator::createVG(m_lvmInfo, vgName, getCreatePVList(devList, size), size)){
-        return sendRefSigAndReturn(false,DISK_SIGNAL_TYPE_VGCREATE,true,QString("0:%1").arg(m_lvmInfo.m_lvmErr));
+    if (!LVMOperator::createVG(m_lvmInfo, vgName, getCreatePVList(devList, size), size)) {
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(m_lvmInfo.m_lvmErr));
     }
-    return sendRefSigAndReturn(true,DISK_SIGNAL_TYPE_VGCREATE,true,QString("1:%1").arg(m_lvmInfo.m_lvmErr));
+    return sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_VGCREATE, true, QString("1:%1").arg(m_lvmInfo.m_lvmErr));
 }
 
 bool PartedCore::createLV(QString vgName, QList<LVAction> lvList)
@@ -2354,12 +2360,12 @@ bool PartedCore::resizeLV(LVAction &lvAct)
 
     //调整大小是否小于文件系统最小值 或者等于当前大小
     LVInfo info = m_lvmInfo.getLVInfo(lvAct.m_vgName, lvAct.m_lvName);
-    if (lvAct.m_lvByteSize < info.m_minReduceSize || lvAct.m_lvByteSize == (info.m_lvLECount * info.m_LESize)) {
+    if (lvAct.m_lvByteSize < info.m_fsLimits.min_size || lvAct.m_lvByteSize == (info.m_lvLECount * info.m_LESize)) {
         return sendRefSigAndReturn(false);
     }
 
-    //卸载
-    if (info.m_busy && !umontDevice(info.m_mountPoints)) {
+    //判断是否挂载 存在挂载点退出 不再执行卸载操作
+    if (info.m_busy || info.m_mountPoints.size() /*&& !umontDevice(info.m_mountPoints)*/) {
         return sendRefSigAndReturn(false);
     }
 
@@ -2368,7 +2374,7 @@ bool PartedCore::resizeLV(LVAction &lvAct)
         return sendRefSigAndReturn(false);
     }
 
-    //挂载
+   /* //挂载
     if (info.m_busy) {
         foreach (QString mountPoint, info.m_mountPoints) {
             if (!mountDevice(mountPoint, info.m_lvPath, info.m_lvFsType)) {
@@ -2376,7 +2382,7 @@ bool PartedCore::resizeLV(LVAction &lvAct)
             }
         }
     }
-
+   */
     return sendRefSigAndReturn(true);
 }
 
@@ -2435,7 +2441,7 @@ bool PartedCore::clearLV(const LVAction &lvAction)
     if (!(lvAction.m_lvAct == LVM_ACT_LV_FAST_CLEAR || lvAction.m_lvAct == LVM_ACT_LV_SECURE_CLEAR)
             || !m_lvmInfo.lvInfoExists(lvAction.m_vgName, lvAction.m_lvName)) {
         qDebug() << __FUNCTION__ << "clearLV LV error:lv not exists or lvact not  LVM_ACT_LV_FAST_CLEAR or LVM_ACT_LV_SECURE_CLEAR";
-        return sendRefSigAndReturn(false);
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, QString("0:%1").arg(DISK_ERROR::DISK_ERR_DBUS_ARGUMENT));
     }
 
     //判断需要创建的文件系统是否符合
@@ -2444,7 +2450,7 @@ bool PartedCore::clearLV(const LVAction &lvAction)
 
     LVInfo lv = m_lvmInfo.getLVInfo(lvAction.m_vgName, lvAction.m_lvName);
     if (lv.m_busy || !success) { //被挂载 or 文件系统不支持 退出
-        return sendRefSigAndReturn(false);
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, QString("0:%1").arg(DISK_ERROR::DISK_ERR_DBUS_ARGUMENT));
     }
 
     QString type = Utils::getFileSystemSoftWare(lvAction.m_lvFs);
@@ -2459,31 +2465,31 @@ bool PartedCore::clearLV(const LVAction &lvAction)
         p.m_busy = false;
         p.setPath(QString("/dev/%1/%2").arg(lvAction.m_vgName).arg(lvAction.m_lvName));
         if (!createFileSystem(p)) {
-            return sendRefSigAndReturn(false);
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, QString("0:%1").arg(DISK_ERROR::DISK_ERR_CREATE_FS_FAILED));
         }
         break;
     }
     default:
-        return sendRefSigAndReturn(false);
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, QString("0:%1").arg(DISK_ERROR::DISK_ERR_DBUS_ARGUMENT));
     }
 
     //自动挂载 获取挂载文件夹名字
     QString mountPath = QString("/media/%1/%2").arg(lvAction.m_user).arg(lv.m_lvUuid);
     if (!createTmpMountDir(mountPath)) {
-        return sendRefSigAndReturn(false);
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, QString("0:%1").arg(DISK_ERROR::DISK_ERR_CREATE_MOUNTDIR_FAILED));
     }
 
     //挂载
     if (!mountDevice(mountPath, lv.m_lvPath, lvAction.m_lvFs)) {
-        return sendRefSigAndReturn(false);
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, QString("0:%1").arg(DISK_ERROR::DISK_ERR_MOUNT_FAILED));
     }
     //更改属主
     if (!changeOwner(lvAction.m_user, mountPath)) {
-        return sendRefSigAndReturn(false);
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, QString("0:%1").arg(DISK_ERROR::DISK_ERR_CHOWN_FAILED));
     }
 
     qDebug() << __FUNCTION__ << "clearLV LV end";
-    return sendRefSigAndReturn(true);
+    return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, true, QString("1:0"));
 }
 
 bool PartedCore::delTempMountFile()
@@ -2538,14 +2544,26 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
     FSType fs = Utils::stringToFileSystemType(fstype);
     success = (fs == FS_NTFS || fs == FS_FAT16 || fs == FS_FAT32 || fs == FS_EXT2 || fs == FS_EXT3 || fs == FS_EXT4);
     if (success) {
-        success = (path.isEmpty() || user.isEmpty() || diskType < 0 || diskType > 1 || clearType < 0 || clearType > 4);
+        if (path.isEmpty() || user.isEmpty()) {
+            success = false;
+        }
+
+        if (diskType < 0 || diskType > 1) {
+            success = false;
+        }
+
+        if (clearType < 0 || clearType > 4) {
+            success = false;
+        }
     }
+
+
     if (!success) {
         emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, false, QString("0:%1").arg(DISK_ERROR::DISK_ERR_DBUS_ARGUMENT));
         return false;
     }
 
-    m_isClear = false;
+    m_isClear = true;
     PartitionInfo pInfo;
     QString curDiskType;
     QString curDevicePath;
@@ -2699,7 +2717,7 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
     }
 
     //如果清理是分区，并且清除模式不是快速清除时，执行格式化分区
-    if (SECURE_TYPE != clearType && PART_TYPE == diskType) {
+    if (FAST_TYPE != clearType && PART_TYPE == diskType) {
         //新建分区
         success = format(fstype, name);
         if (!success) {
@@ -2767,7 +2785,7 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
 
     changeOwner(user, mountPath);
     m_isClear = false;
-    emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true,  QString("0:%1").arg(DISK_ERROR::DISK_ERR_DISK_INFO));
+    emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true,  QString("1:0"));
     return success;
 }
 
@@ -2802,6 +2820,10 @@ bool PartedCore::resize(const PartitionInfo &info)
     qDebug() << __FUNCTION__ << "Resize Partitione start";
     Partition newPartition = m_curpartition;
     newPartition.reset(info);
+    if (newPartition.getByteLength() < m_curpartition.m_fsLimits.min_size) {
+        return sendRefSigAndReturn(false);
+    }
+
     bool success = resize(newPartition);
     emit refreshDeviceInfo();
     qDebug() << __FUNCTION__ << "Resize Partitione end";
@@ -3889,8 +3911,7 @@ bool PartedCore::createTmpMountDir(const  QString &mountPath)
 
     //设置文件属性，删除时，按照文件属性删除
     char *v = "deepin-diskmanager";
-    setxattr(mountPath.toStdString().c_str(), "user.deepin-diskmanager", v, strlen(v), 0);
-    return true;
+    return setxattr(mountPath.toStdString().c_str(), "user.deepin-diskmanager", v, strlen(v), 0) == 0;
 }
 
 bool PartedCore::changeOwner(const QString &user, const QString &path)

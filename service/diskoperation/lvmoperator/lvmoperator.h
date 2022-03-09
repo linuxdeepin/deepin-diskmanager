@@ -220,14 +220,6 @@ private:
         return (i >= 0 && list.size() > i) ? list[i] : QString();
     }
 
-
-    /**
-     * @brief 获取文件系统缩小最小值
-     * @return 文件系统缩小最小值
-     */
-    static Byte_Value getFsReduceMin(const QString &devPath, const FSType &fs);
-
-
     /**
      * @brief 删除pv
      * @param devPath:pv路径

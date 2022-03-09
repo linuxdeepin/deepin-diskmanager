@@ -85,7 +85,7 @@ public:
     QVector<QString> m_mountPoints;
     int m_vgFlag; //lv是否加入标志位　0未加入　１加入
     VGData m_vgData;//vg数据 lv信息可从vg中读取
-    long long m_minReduceSize;//文件系统最小可缩小大小 单位byte
+    FS_Limits m_fsLimits; //分区上文件系统限制 该属性在没有文件系统存在时无效
 };
 Q_DECLARE_METATYPE(PartitionInfo)
 QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info);

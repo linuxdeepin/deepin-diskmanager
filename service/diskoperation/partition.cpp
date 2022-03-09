@@ -27,6 +27,7 @@
 
 #include "partition.h"
 #include "utils.h"
+#include "supportedfilesystems.h"
 
 #include <QDebug>
 
@@ -51,8 +52,7 @@ Sector Partition::getSectorsUnallocated() const
 {
     if (m_sectorsUnallocated < m_significantThreshold) {
         return 0;
-    }
-    else {
+    } else {
         return m_sectorsUnallocated;
     }
 }
@@ -78,6 +78,7 @@ void Partition::reset()
     m_logicals.clear();
     m_flags.clear();
     m_mountpoints.clear();
+    m_fsLimits = FS_Limits();
 }
 
 void Partition::reset(const PartitionInfo &info)
@@ -97,6 +98,7 @@ void Partition::reset(const PartitionInfo &info)
     m_fsBlockSize = info.m_fileSystemBlockSize;
     m_devicePath = info.m_devicePath;
     setFilesystemLabel(info.m_fileSystemLabel);
+    m_fsLimits = info.m_fsLimits;
 }
 
 void Partition::set(const QString &devicePath, const QString &partition, int partitionNumber, PartitionType type, FSType fstype, Sector sectorStart, Sector sectorEnd, Byte_Value sectorSize, bool insideExtended, bool busy)
@@ -111,6 +113,14 @@ void Partition::set(const QString &devicePath, const QString &partition, int par
     m_sectorSize = sectorSize;
     m_insideExtended = insideExtended;
     m_busy = busy;
+
+    SupportedFileSystems s;
+    FileSystem *fs =  s.getFsObject(m_fstype);
+    if (fs) {
+        m_fsLimits = fs->getFilesystemLimits(*this);
+    }
+
+
 }
 
 void Partition::setUnpartitioned(const QString &devicePath, const QString &partitionPath, FSType fstype, Sector length, Byte_Value sectorSize, bool busy)
@@ -220,8 +230,7 @@ Byte_Value Partition::getByteLength() const
 {
     if (getSectorLength() >= 0) {
         return getSectorLength() * m_sectorSize;
-    }
-    else {
+    } else {
         return -1;
     }
 }
@@ -230,8 +239,7 @@ Sector Partition::getSectorLength() const
 {
     if (m_sectorStart >= 0 && m_sectorEnd >= 0) {
         return m_sectorEnd - m_sectorStart + 1;
-    }
-    else {
+    } else {
         return -1;
     }
 }
@@ -270,6 +278,7 @@ PartitionInfo Partition::getPartitionInfo() const
     info.m_busy = m_busy;
     info.m_fileSystemReadOnly = m_fsReadonly;
     info.m_mountPoints = m_mountpoints;
+    info.m_fsLimits = m_fsLimits;
 //        qDebug() << info.devicePath << info.partition_number << info.type << info.status << info.alignment << info.fstype << info.uuid
 //                 << info.name << info.sector_start << info.sector_end << info.sectors_used << info.sectors_unused
 //                 << info.sectors_unallocated << info.significant_threshold << info.free_space_before

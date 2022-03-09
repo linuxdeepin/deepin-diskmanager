@@ -363,10 +363,10 @@ bool LVMOperator::updateLVInfo(LVMInfo &lvmInfo, VGInfo &vg)
                 lv.m_fsUsed = part.m_sectorsUsed * devIt.value().m_sectorSize;
                 lv.m_fsUnused = part.m_sectorsUnused * devIt.value().m_sectorSize;
                 lv.m_mountUuid = part.m_uuid;
+                lv.m_fsLimits =part.m_fsLimits;
             }
-            lv.m_minReduceSize = getFsReduceMin(lv.m_lvPath, lv.m_lvFsType);
-            if (-1 == lv.m_minReduceSize) {
-                lv.m_minReduceSize = (lv.m_fsUsed + lv.m_fsUnused);
+            if (-1 == lv.m_fsLimits.min_size) {
+                lv.m_fsLimits.min_size = (lv.m_fsUsed + lv.m_fsUnused);
             }
 
         }
@@ -385,14 +385,8 @@ bool LVMOperator::updateLVInfo(LVMInfo &lvmInfo, VGInfo &vg)
         unallocLv.m_fsUnused = -1;
         unallocLv.m_lvFsType = FSType::FS_UNALLOCATED;
         unallocLv.m_busy = false;
-        unallocLv.m_minReduceSize = 0;
         vg.m_lvlist.push_back(unallocLv);
     }
-
-
-
-
-
 
     return setLVMErr(lvmInfo, LVMError::LVM_ERR_NORMAL);
 }
@@ -530,6 +524,10 @@ bool LVMOperator::resizeLV(LVMInfo &lvmInfo,  LVAction &lvAct, LVInfo &info)
         return setLVMErr(lvmInfo, LVM_ERR_LV_RESIZE_FS_NO_SUPPORT);
     }
     Partition p;
+    p.setPath(info.m_lvPath);
+    p.m_sectorStart =0;
+    p.m_sectorEnd=lvAct.m_lvByteSize/info.m_LESize-1;
+    p.m_sectorSize=info.m_LESize;
     if (lvAct.m_lvAct == LVM_ACT_LV_EXTEND) {
         //放大lv
         if (!resizeLV(info.m_lvPath, lvAct)) {
@@ -550,23 +548,14 @@ bool LVMOperator::resizeLV(LVMInfo &lvmInfo,  LVAction &lvAct, LVInfo &info)
         if (!resizeLV(info.m_lvPath, lvAct)) {
             return setLVMErr(lvmInfo, LVMError::LVM_ERR_LV_EXTEND_FAILED);
         }
+
+        //再次放大文件系统的原因是 进制单位不同 导致缩小后的文件系统跟设备大小不对等 所以再次扩大文件系统使得文件系统填充设备
+        if (!(fs->checkRepair(p) && fs->resize(p, true))) {
+            return setLVMErr(lvmInfo, LVMError::LVM_ERR_LV_EXTEND_FAILED);
+        }
     }
 
     return setLVMErr(lvmInfo, LVMError::LVM_ERR_NORMAL);
-}
-
-Byte_Value LVMOperator::getFsReduceMin(const QString &devPath, const FSType &fs)
-{
-    if (devPath.isEmpty())
-        return -1;
-
-    Partition p;
-    p.setPath(devPath);
-    FileSystem *f = m_supportFs.getFsObject(fs);
-    if (f) {
-        return f->getFilesystemLimits(p).min_size;
-    }
-    return -1;
 }
 
 bool LVMOperator::vgRename(const QString &uuid, const QString &newName)
@@ -886,9 +875,10 @@ void LVMOperator::printLVInfo(const LVInfo &info)
     qDebug() << "busy: " << info.m_busy; //挂载标志
     qDebug() << "mountpoints: " << info.m_mountPoints;
     qDebug() << "lvStatus: " << QString(info.m_lvStatus);
-    qDebug() << "minReduceSize: " << info.m_minReduceSize; //文件系统最小可缩小大小
     qDebug() << "lvError: " << info.m_lvError; //逻辑卷错误码
     qDebug() << "mountUuid: " << info.m_mountUuid;//逻辑卷挂载uuid
+    qDebug() << "fsLimits_min_size: " << info.m_fsLimits.min_size;
+    qDebug() << "fsLimits_max_size: " << info.m_fsLimits.max_size;
     qDebug() << "LVInfo:====================================end";
 }
 

@@ -31,8 +31,7 @@
 #include <QStringList>
 
 
-namespace DiskManager
-{
+namespace DiskManager {
 
 FS FAT16::getFilesystemSupport()
 {
@@ -87,6 +86,8 @@ FS FAT16::getFilesystemSupport()
         m_fsLimits.max_size = 2 * TEBIBYTE;
 	}
 
+    fs.grow = FS::LIBPARTED;
+    fs.shrink = FS::LIBPARTED;
     return fs;
 }
 
@@ -283,20 +284,85 @@ FS_Limits FAT16::getFilesystemLimits(const Partition &partition) const
 
 FS_Limits FAT16::getFilesystemLimits(const QString &path) const
 {
-    FS_Limits tmp {-1, 0};
+    FS_Limits tmp {-1, -1};
 
-    //todo fatresize
+    if (Utils::findProgramInPath("fatresize").isEmpty()) {
+        return tmp;
+    }
+
+
+    //通过fatresize获取文件系统类型以及最小文件系统
+    QString output, error;
+    int exitcode = Utils::executCmd(QString("fatresize %1 -i").arg(path), output, error);
+    if (exitcode != 0) {
+        return tmp;
+    }
+    long long minSize = 0, maxSize = 0;
+    FSType fs = FS_UNKNOWN;
+
+
+
+    foreach (QString str, output.split("\n")) {
+        if (str.contains("FAT")) {
+            if (str.contains("fat32")) {
+                fs = FS_FAT32;
+            } else if (str.contains("fat16")) {
+                fs = FS_FAT16;
+            }
+        }
+
+        if (str.contains("Min size:")) {
+            QStringList list = str.split(":");
+            minSize = list.size() == 2 ? list[1].trimmed().toLongLong() : static_cast<long long>(-1);
+        }
+
+        if (str.contains("Max size:")) {
+            QStringList list = str.split(":");
+            maxSize = list.size() == 2 ? list[1].trimmed().toLongLong() : static_cast<long long>(-1);
+        }
+    }
+
+
+    if (fs == FS_UNKNOWN) {
+        return tmp;
+    }
+
+    if (fs == FS_FAT16) {
+        if (maxSize > 64 * MEBIBYTE) {
+            maxSize = 64 * MEBIBYTE;
+        }
+    }
+
+
+    if (fs == FS_FAT32) {
+        if (minSize < 512 * MEBIBYTE) {
+            minSize = 512 * MEBIBYTE;
+        }
+    }
+
+    tmp.max_size = maxSize;
+    tmp.min_size = minSize;
     return tmp;
 }
 
+//fat格式需要操作分区表 lvm不支持fat格式的调整大小  fatresize命令也不是一个好的调整分区大小方式 相对来说libparted库更合适
 bool FAT16::resize(const Partition &partitionNew, bool fillPartition)
 {
-    return resize(partitionNew.getPath(),QString::number(Utils::sectorToUnit(partitionNew.getSectorLength(), partitionNew.m_sectorSize, UNIT_KIB)),fillPartition);
+    double d = Utils::sectorToUnit(partitionNew.getSectorLength(), partitionNew.m_sectorSize, UNIT_KIB);
+    return resize(partitionNew.getPath(), QString::number(((long long)d)), fillPartition);
 }
-
+/*
+fatresize
+-s --size
+    Resize volume to SIZE[k|M|G|ki|Mi|Gi]
+*/
 bool FAT16::resize(const QString &path, const QString &size, bool fillPartition)
 {
-
+    Q_UNUSED(fillPartition)
+    //通过fatresize获取文件系统类型以及最小文件系统
+    QString output, error;
+    int exitcode = Utils::executCmd(QString("fatresize %1 -s %2ki").arg(path).arg(size), output, error);
+    return  0 == exitcode || error.compare("Unknown error") == 0;
 }
 
 

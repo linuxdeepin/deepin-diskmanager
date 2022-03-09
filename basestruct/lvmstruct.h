@@ -234,9 +234,9 @@ public:
     bool m_busy{false}; //挂载标志
     QVector<QString> m_mountPoints;//挂载点 可多次挂载
     QString m_lvStatus{"----------"};
-    long long m_minReduceSize{0};//文件系统最小可缩小大小 单位byte
     LVMError m_lvError{LVMError::LVM_ERR_NORMAL};//逻辑卷错误码
     QString m_mountUuid;//逻辑卷挂载uuid
+    FS_Limits m_fsLimits;//文件系统限制 该属性在没有文件系统存在时无效
 };
 LVMStructEnd(LVInfo)
 

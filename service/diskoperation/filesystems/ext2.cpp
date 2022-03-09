@@ -254,9 +254,23 @@ bool EXT2::create(const Partition &new_partition)
     return exitcode == 0 || error.compare("Unknown error") == 0;
 }
 
+/*
+The size parameter specifies the requested new size of the filesystem.
+If no units are specified, the units of the size parameter shall be the filesystem blocksize of the filesystem.
+Optionally, the size parameter may be suffixed by one of the following the units designators: 's', 'K', 'M', or 'G', for 512 byte sectors, kilobytes, megabytes, or gigabytes, respectively.
+The size of the filesystem may never be larger than the size of the partition. If size parameter is not specified, it will default to the size of the partition.
+
+size参数指定所请求的文件系统的新大小。如果未指定单位，则size参数的单位应为文件系统的文件系统块大小。
+可选地，大小参数可以以下列单位指示符中的一个为后缀：“s”、“K”、“M”或“G”，分别表示512字节扇区、千字节、兆字节或千兆字节。
+文件系统的大小永远不会大于分区的大小。如果没有指定size参数，它将默认为分区的大小。
+K=1024
+M=1024*1024
+G=1024*1024*1024
+*/
 bool EXT2::resize(const Partition &partitionNew, bool fillPartition)
 {
-    return resize(partitionNew.getPath(),QString::number(Utils::sectorToUnit(partitionNew.getSectorLength(), partitionNew.m_sectorSize, UNIT_KIB)),fillPartition);
+    double d = Utils::sectorToUnit(partitionNew.getSectorLength(), partitionNew.m_sectorSize, UNIT_KIB);
+    return resize(partitionNew.getPath(), QString::number(((long long)d)), fillPartition);
 }
 
 bool EXT2::resize(const QString &path, const QString &size, bool fillPartition)
@@ -264,12 +278,11 @@ bool EXT2::resize(const QString &path, const QString &size, bool fillPartition)
     QString str_temp = QString("resize2fs -p %1").arg(path);
 
     if (!fillPartition) {
-        str_temp.append(size);
-        str_temp.append("K");
+        str_temp = QString("%1 %2K").arg(str_temp).arg(size);
     }
     QString output, error;
     int exitcode = Utils::executCmd(str_temp, output, error);
-    return exitcode == 0 || error.compare("Unknown error") == 0;
+    return  0 == exitcode || 0 == error.compare("Unknown error");
 }
 
 bool EXT2::checkRepair(const Partition &partition)
@@ -282,7 +295,7 @@ bool EXT2::checkRepair(const QString &devpath)
     QString output, error;
     int exitcode = Utils::executCmd(QString("e2fsck -f -y -v -C 0 %1").arg(devpath), output, error);
 //    qDebug() << QString("EXT2::check_repair---%1----%2").arg(output).arg(error);
-    return exitcode == 0 || error.compare("Unknown error") == 0;
+    return  0 == exitcode || 0 == error.compare("Unknown error");
 }
 
 FS_Limits EXT2::getFilesystemLimits(const Partition &partition) const
@@ -319,18 +332,18 @@ FS_Limits EXT2::getFilesystemLimits(const QString &path) const
         return -1;
     };
 
-    long long blockSize = getNumber(QString("tune2fs -l %1").arg(path),"Block size:",":");
+    long long blockSize = getNumber(QString("tune2fs -l %1").arg(path), "Block size:", ":");
 
     if (-1 == blockSize) {
         return tmp;
     }
-    long long blockCount = getNumber(QString("resize2fs -P %1").arg(path),"Estimated minimum size of the filesystem:",":");
+    long long blockCount = getNumber(QString("resize2fs -P %1").arg(path), "Estimated minimum size of the filesystem:", ":");
 
     if (-1 == blockCount) {
         return tmp;
     }
 
-    tmp.min_size =blockSize*blockCount;
+    tmp.min_size = blockSize * blockCount;
 
     return tmp;
 }

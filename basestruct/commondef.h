@@ -203,9 +203,13 @@ struct MountEntry {
 enum DISK_ERROR {
     DISK_ERR_DBUS_ARGUMENT = 0,        //DBus参数错误
     DISK_ERR_DISK_INFO = 1,            //磁盘信息错误
-    DISK_ERR_PART_INFO = 2,            //分区信息错
+    DISK_ERR_PART_INFO = 2,            //分区信息错误
     DISK_ERR_DELETE_PART_FAILED = 3,   //删除分区失败
-    DISK_ERR_UPDATE_KERNEL_FAILED = 4  //提交内核失败
+    DISK_ERR_UPDATE_KERNEL_FAILED = 4,  //提交内核失败
+    DISK_ERR_CREATE_FS_FAILED = 5,      //创建文件系统失败
+    DISK_ERR_MOUNT_FAILED = 6,          //挂载失败
+    DISK_ERR_CREATE_MOUNTDIR_FAILED = 7,     //创建挂载文件夹失败
+    DISK_ERR_CHOWN_FAILED = 8,          //修改属主失败
 };
 
 

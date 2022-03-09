@@ -247,9 +247,10 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LVInfo &data)
              << data.m_busy
              << data.m_mountPoints
              << data.m_lvStatus
-             << data.m_minReduceSize
              << static_cast<int>(data.m_lvError)
-             << data.m_mountUuid;
+             << data.m_mountUuid
+             << data.m_fsLimits.max_size
+             << data.m_fsLimits.min_size;
     argument.endStructure();
     return argument;
 }
@@ -272,9 +273,10 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LVInfo &data)
              >> data.m_busy
              >> data.m_mountPoints
              >> data.m_lvStatus
-             >> data.m_minReduceSize
              >> err
-             >> data.m_mountUuid;
+             >> data.m_mountUuid
+             >> data.m_fsLimits.max_size
+             >> data.m_fsLimits.min_size;
     data.m_lvFsType = static_cast<FSType>(type);
     data.m_lvError = static_cast<LVMError>(err);
 
@@ -284,7 +286,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LVInfo &data)
 /*********************************** VGInfo *********************************************/
 LVInfo VGInfo::getLVinfo(const QString &lvName)
 {
-    foreach (LVInfo info, m_lvlist) {
+    foreach (const LVInfo& info, m_lvlist) {
         if (info.m_lvName == lvName) {
             return info;
         }
@@ -294,7 +296,7 @@ LVInfo VGInfo::getLVinfo(const QString &lvName)
 
 bool VGInfo::lvInfoExists(const QString &lvName)
 {
-    foreach (LVInfo info, m_lvlist) {
+    foreach (const LVInfo& info, m_lvlist) {
         if (info.m_lvName == lvName) {
             return true;
         }

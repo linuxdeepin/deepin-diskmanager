@@ -220,7 +220,8 @@ public:
     Byte_Value m_sectorSize; //Sector size of the disk device needed for converting to/from sectors and bytes.
     Byte_Value m_fsBlockSize; // Block size of of the file system, or -1 when unknown.
 
-private: 
+    FS_Limits m_fsLimits; //分区上文件系统限制 该属性在没有文件系统存在时无效
+private:
     /**
      * @brief 计算重要未分配扇区
      * @return 重要未分配扇区

@@ -243,6 +243,17 @@ void TitleWidget::showUnmountInfoWidget()
 void TitleWidget::showResizeInfoWidget()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+    FS_Limits limits = info.m_fsLimits;
+    if (limits.min_size == -1 && limits.max_size == -1) {
+        MessageBox warningBox(this);
+        warningBox.setObjectName("messageBox");
+        warningBox.setAccessibleName("partNoSupportFSWidget");
+        // 该文件系统不支持调整空间  确定
+        warningBox.setWarings(tr("The file system does not support space adjustment"), "", tr("OK"), "ok");
+        warningBox.exec();
+
+        return;
+    }
     setCurDevicePath(info.m_devicePath);
 
     ResizeDialog dlg(this);
@@ -303,7 +314,39 @@ void TitleWidget::onDeleteLVClicked()
 
 void TitleWidget::onResizeLVClicked()
 {
+    LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+    QString mountPoint = "";
+    for (int i = 0; i < lvInfo.m_mountPoints.size(); i++) {
+        mountPoint += lvInfo.m_mountPoints[i];
+    }
 
+    if (!mountPoint.isEmpty()){
+        MessageBox warningBox(this);
+        warningBox.setObjectName("messageBox");
+        warningBox.setAccessibleName("messageBox");
+        // 请先手动卸载XXX（逻辑卷名称）  确定
+        warningBox.setWarings(tr("Unmount %1 first").arg(lvInfo.m_lvName), "", tr("OK"), "ok");
+        warningBox.exec();
+
+        return;
+    }
+
+    FS_Limits limits = lvInfo.m_fsLimits;
+    if (limits.min_size == -1 && limits.max_size == -1) {
+        MessageBox warningBox(this);
+        warningBox.setObjectName("messageBox");
+        warningBox.setAccessibleName("LVNoSupportFSWidget");
+        // 该文件系统不支持调整空间  确定
+        warningBox.setWarings(tr("The file system does not support space adjustment"), "", tr("OK"), "ok");
+        warningBox.exec();
+
+        return;
+    }
+
+    ResizeDialog dlg(this);
+    dlg.setObjectName("resizeLVDialog");
+    dlg.setAccessibleName("resizeLVDialog");
+    dlg.exec();
 }
 
 void TitleWidget::onCreateVGClicked()

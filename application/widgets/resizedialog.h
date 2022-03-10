@@ -57,6 +57,21 @@ private:
      */
     void initConnection();
 
+    /**
+     * @brief 分区空间调整
+     */
+    void partitionResize();
+
+    /**
+     * @brief 逻辑卷空间调整
+     */
+    void lvResize();
+
+    /**
+     * @brief 不支持文件系统调整提示窗口
+     */
+    void noSupportFSDailog();
+
     DLineEdit *m_lineEdit;
     DComboBox *m_comboBox;
     DLabel *m_label;

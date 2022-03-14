@@ -357,6 +357,12 @@ public:
      */
     void onClearLV(LVAction act);
 
+    /**
+     * @brief pv删除
+     * @param devList: 待删除pv设备集合
+     */
+    void onDeletePVList(QList<PVData>devList);
+
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
 
@@ -383,6 +389,7 @@ signals:
     void rootLogin();
     void wipeMessage(const QString &clearMessage);
     void vgCreateMessage(const QString &vgMessage);
+    void pvDeleteMessage(const QString &pvMessage);
 
 public slots:
     /**

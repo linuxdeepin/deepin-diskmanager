@@ -45,40 +45,42 @@ DmFrameWidget::DmFrameWidget(DiskInfoData data, QWidget *parent)
 
 void DmFrameWidget::setFrameData()
 {
-    //获取首页相关硬盘数据
-    PartitionInfo data = DMDbusHandler::instance()->getCurPartititonInfo();
+    if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
+        //获取首页相关硬盘数据
+        PartitionInfo data = DMDbusHandler::instance()->getCurPartititonInfo();
 
-    QString mountpoints;
-//    DiskInfoData temp;
-//    m_infoData = temp;
-    for (QString point : data.m_mountPoints) {
-        mountpoints.append(point + " ");
-    }
-    if (mountpoints.contains("�")) {
-        mountpoints.remove(mountpoints.mid(mountpoints.indexOf("�")));
-        mountpoints.append(m_str);
-    }
-//    m_infoData.m_mountpoints = diffMountpoints(m_width, mountpoints);
-     m_infoData.m_mountpoints = mountpoints;
-    m_infoData.m_unused = Utils::formatSize(data.m_sectorsUnused, data.m_sectorSize);
-    if (m_infoData.m_unused.contains("-")) {
-        m_infoData.m_unused = "-";
-    }
-    m_infoData.m_used = Utils::formatSize(data.m_sectorsUsed, data.m_sectorSize);
-    if (m_infoData.m_used.contains("-")) {
-        m_infoData.m_used = "-";
-    }
-    QString partitionPath = data.m_path.remove(0, 5); // 从下标0开始，删除5个字符
-    m_infoData.m_fstype = Utils::fileSystemTypeToString(static_cast<FSType>(data.m_fileSystemType));
-    m_infoData.m_partitionSize = Utils::formatSize(data.m_sectorEnd - data.m_sectorStart, data.m_sectorSize);
-    if (data.m_fileSystemLabel == "") {
-        m_infoData.m_sysLabel = "";
-    } else {
-        m_infoData.m_sysLabel = diskVolumn(partitionPath);
-        if (m_infoData.m_sysLabel.contains("�")) {           
-            QString sysLabel = m_infoData.m_sysLabel.split("�").at(0);
-            m_infoData.m_sysLabel = sysLabel;
-        }//==============gbk编码的中文到在应用下无名称格式化文件系统转换时中文乱码
+        QString mountpoints;
+        //    DiskInfoData temp;
+        //    m_infoData = temp;
+        for (QString point : data.m_mountPoints) {
+            mountpoints.append(point + " ");
+        }
+        if (mountpoints.contains("�")) {
+            mountpoints.remove(mountpoints.mid(mountpoints.indexOf("�")));
+            mountpoints.append(m_str);
+        }
+        //    m_infoData.m_mountpoints = diffMountpoints(m_width, mountpoints);
+        m_infoData.m_mountpoints = mountpoints;
+        m_infoData.m_unused = Utils::formatSize(data.m_sectorsUnused, data.m_sectorSize);
+        if (m_infoData.m_unused.contains("-")) {
+            m_infoData.m_unused = "-";
+        }
+        m_infoData.m_used = Utils::formatSize(data.m_sectorsUsed, data.m_sectorSize);
+        if (m_infoData.m_used.contains("-")) {
+            m_infoData.m_used = "-";
+        }
+        QString partitionPath = data.m_path.remove(0, 5); // 从下标0开始，删除5个字符
+        m_infoData.m_fstype = Utils::fileSystemTypeToString(static_cast<FSType>(data.m_fileSystemType));
+        m_infoData.m_partitionSize = Utils::formatSize(data.m_sectorEnd - data.m_sectorStart + 1, data.m_sectorSize);
+        if (data.m_fileSystemLabel == "") {
+            m_infoData.m_sysLabel = "";
+        } else {
+            m_infoData.m_sysLabel = diskVolumn(partitionPath);
+            if (m_infoData.m_sysLabel.contains("�")) {
+                QString sysLabel = m_infoData.m_sysLabel.split("�").at(0);
+                m_infoData.m_sysLabel = sysLabel;
+            }//==============gbk编码的中文到在应用下无名称格式化文件系统转换时中文乱码
+        }
     }
     update();
 }

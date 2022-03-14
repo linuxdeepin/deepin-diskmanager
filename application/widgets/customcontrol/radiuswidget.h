@@ -57,6 +57,7 @@ struct PVInfoData {
     int m_level;
     QString m_disktype;
     int m_selectStatus;
+    int m_lvmDevType;
 };
 Q_DECLARE_METATYPE(PVInfoData)
 

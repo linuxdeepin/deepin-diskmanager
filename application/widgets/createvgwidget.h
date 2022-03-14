@@ -45,6 +45,9 @@
 
 #include <QWidget>
 
+#include <set>
+using std::set;
+
 DWIDGET_USE_NAMESPACE
 
 /**
@@ -56,7 +59,12 @@ class CreateVGWidget : public DDBase
 {
     Q_OBJECT
 public:
-    explicit CreateVGWidget(QWidget *parent = nullptr);
+    explicit CreateVGWidget(int operationType, QWidget *parent = nullptr);
+
+    enum OperationType {
+        CREATE = 0,
+        RESIZE
+    };
 
 signals:
 
@@ -119,6 +127,11 @@ private slots:
      */
     void onVGCreateMessage(const QString &vgMessage);
 
+    /**
+     * @brief usb热插拔信号响应的槽函数
+     */
+    void onUpdateUsb();
+
 private:
     /**
      * @brief 初始化界面
@@ -144,7 +157,13 @@ private:
      * @brief 可创建VG的磁盘数据
      * @return 磁盘数据列表
      */
-    QList<DeviceInfo> availableDiskData();
+    QList<DeviceInfo> createAvailableDiskData();
+
+    /**
+     * @brief 可进行VG空间调整的磁盘数据
+     * @return 磁盘数据列表
+     */
+    QList<DeviceInfo> resizeAvailableDiskData();
 
     /**
      * @brief 更新分区数据
@@ -167,6 +186,46 @@ private:
      * @return 逻辑卷组名称
      */
     QString getVGName();
+
+    /**
+     * @brief 获取当前选择PV集合
+     * @return PV集合
+     */
+    set<PVData> getCurSelectPVData();
+
+    /**
+     * @brief 获取PV大小
+     * @param pv 物理卷数据
+     * @param flag 是否需要创建分区或者分区表
+     * @return PV大小
+     */
+    Byte_Value getPVSize(const PVData &pv, bool flag = true);
+
+    /**
+     * @brief 获取最大值
+     * @param vg VG信息数据
+     * @param pvlist 当前选择的PV列表
+     * @return 最大值
+     */
+    Byte_Value getMaxSize(const VGInfo &vg,const set<PVData> &pvlist);
+
+    /**
+     * @brief 获取最小值
+     * @param vg VG信息数据
+     * @param pvlist 当前选择的PV列表
+     * @return 最小值
+     */
+    Byte_Value getMinSize(const VGInfo &vg, const set<PVData> &pvlist);
+
+    /**
+     * @brief 获取是否涉及到PVMove
+     * @param vg VG信息数据
+     * @param pvlist 当前选择的PV列表
+     * @param bigDataMove PVMove的大小是否超过1G，true超过，false没超过
+     * @param realDelPvList 需要进行PVMove的PV列表
+     * @return true涉及到PVMove，反之则不涉及
+     */
+    bool adjudicationPVMove(const VGInfo &vg, const set<PVData> &pvlist, bool &bigDataMove, QStringList &realDelPvList);
 
 private:
    DStackedWidget *m_stackedWidget;
@@ -199,6 +258,10 @@ private:
    QWidget *m_loadingWidget;
    long long m_sumSize;
    WaterLoadingWidget *m_waterLoadingWidget;
+   int m_curOperationType;
+   QList<PVInfoData> m_oldSeclectData;
+   bool m_isResizeInit;
+   QStringList m_curDeviceNameList;
 };
 
 #endif // CREATEVGWIDGET_H

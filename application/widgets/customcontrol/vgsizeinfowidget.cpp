@@ -225,7 +225,7 @@ void VGSizeInfoWidget::setData(const QVector<VGData> &vglist)
                 }
 
                 Sector difference = totalVGSize - lvSizeSum;
-                if (difference >= 0) {
+                if (difference > 0) {
                     m_sizeInfo.append(difference);
                     m_pathInfo.append("unallocated");
                     m_pathList.insert(0, "unallocated");
@@ -260,7 +260,7 @@ void VGSizeInfoWidget::setData(const QVector<VGData> &vglist)
             }
 
             Sector difference = vgData.m_vgByteSize - lvSizeSum;
-            if (difference >= 0) {
+            if (difference > 0) {
                 m_sizeInfo.append(difference);
                 m_pathInfo.append("unallocated");
                 m_pathList.insert(0, "unallocated");
@@ -306,7 +306,7 @@ void VGSizeInfoWidget::setData(const VGData &vgData)
         }
 
         Sector difference = vgSize - lvSizeSum;
-        if (difference >= 0) {
+        if (difference > 0) {
             m_sizeInfo.append(difference);
             m_pathInfo.append("unallocated");
             m_pathList.insert(0, "unallocated");

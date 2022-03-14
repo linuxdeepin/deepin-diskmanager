@@ -80,6 +80,11 @@ private:
     void setCurDevicePath(const QString &devPath);
 
     /**
+     * @brief 设置当前操作VG名称
+     */
+    void setCurVGName(const QString &vgName);
+
+    /**
      * @brief 判断当前磁盘是否存在已被挂载分区
      * @return 存在返回true，否则返回false
      */
@@ -181,6 +186,7 @@ private:
     DPushButton *m_btnResizeVG; // 逻辑卷组空间调整按钮
     DPushButton *m_btnResizeLV; // 逻辑卷空间调整按钮
     QString m_curChooseDevicePath; // 当前操作磁盘
+    QString m_curChooseVGName; // 当前操作VG
 };
 
 #endif // TITLEWIDGET_H

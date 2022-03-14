@@ -26,15 +26,19 @@
  */
 #include "createvgwidget.h"
 #include "common.h"
+#include "messagebox.h"
 
 #include <DLabel>
 #include <DFontSizeManager>
 #include <DWindowCloseButton>
+#include <DMessageManager>
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
-CreateVGWidget::CreateVGWidget(QWidget *parent) : DDBase(parent)
+CreateVGWidget::CreateVGWidget(int operationType, QWidget *parent)
+    : DDBase(parent)
+    , m_curOperationType(operationType)
 {
     initUi();
     initConnection();
@@ -46,8 +50,11 @@ void CreateVGWidget::initUi()
     setFixedSize(800, 538);
 
     m_curSeclectData.clear();
+    m_oldSeclectData.clear();
     m_curDiskItemWidget = nullptr;
     m_waterLoadingWidget = nullptr;
+    m_isResizeInit = true;
+    m_curDeviceNameList = DMDbusHandler::instance()->getDeviceNameList();
 
     DPalette paletteTitle;
     QColor colorTitle("#000000");
@@ -73,6 +80,10 @@ void CreateVGWidget::initUi()
     titleLabel->setFont(fontTitle);
     titleLabel->setPalette(paletteTitle);
     titleLabel->setAlignment(Qt::AlignCenter);
+
+    if (m_curOperationType == OperationType::RESIZE) {
+        titleLabel->setText(tr("Resize"));
+    }
 
     QFont fontSubTitle;
     fontSubTitle.setWeight(QFont::Normal);
@@ -173,6 +184,7 @@ void CreateVGWidget::initUi()
     DFrame *noPartitionFrame = new DFrame(this);
 //    noPartitionFrame->setFixedSize(370, 305);
     noPartitionFrame->setBackgroundRole(DPalette::ItemBackground);
+    noPartitionFrame->setLineWidth(0);
     noPartitionFrame->setLayout(noPartitionLayout);
 
     QVBoxLayout *noPartitionMainLayout = new QVBoxLayout;
@@ -242,6 +254,7 @@ void CreateVGWidget::initUi()
 
     DFrame *noDiskFrame = new DFrame(this);
     noDiskFrame->setBackgroundRole(DPalette::ItemBackground);
+    noDiskFrame->setLineWidth(0);
     noDiskFrame->setLayout(noDiskLayout);
 
     QVBoxLayout *noDiskMainLayout = new QVBoxLayout;
@@ -343,6 +356,9 @@ void CreateVGWidget::initUi()
     m_selectSpaceLineEdit->lineEdit()->setPlaceholderText("1-100");
     m_selectSpaceLineEdit->setText("100");
 
+    QRegExp reg("^[0-9]+(.[0-9]{1,4})?$");
+    QRegExpValidator *validator = new QRegExpValidator(reg, this);
+    m_selectSpaceLineEdit->lineEdit()->setValidator(validator);
 
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
     if (themeType == DGuiApplicationHelper::LightType) {
@@ -423,6 +439,7 @@ void CreateVGWidget::initUi()
 
     DFrame *noInfoFrame = new DFrame(this);
     noInfoFrame->setBackgroundRole(DPalette::ItemBackground);
+    noInfoFrame->setLineWidth(0);
     noInfoFrame->setLayout(noInfoLayout);
 
     QVBoxLayout *noInfoMainLayout = new QVBoxLayout;
@@ -497,6 +514,7 @@ void CreateVGWidget::initConnection()
             this, &CreateVGWidget::onCurrentIndexChanged);
     connect(m_selectSpaceLineEdit, &DLineEdit::textChanged, this, &CreateVGWidget::onTextChanged);
     connect(DMDbusHandler::instance(), &DMDbusHandler::vgCreateMessage, this, &CreateVGWidget::onVGCreateMessage);
+    connect(DMDbusHandler::instance(), &DMDbusHandler::updateDeviceInfo, this, &CreateVGWidget::onUpdateUsb);
 }
 
 void CreateVGWidget::showLoadingWidget(const QString &vgName)
@@ -522,10 +540,15 @@ void CreateVGWidget::showLoadingWidget(const QString &vgName)
     m_waterLoadingWidget->setFixedSize(98, 98);
 
     QLabel *waitLable = new QLabel(this);
-    waitLable->setText(tr("Creating..."));
     waitLable->setAlignment(Qt::AlignCenter);
     waitLable->setFont(font1);
     waitLable->setPalette(palette1);
+
+    if (m_curOperationType == OperationType::RESIZE) {
+        waitLable->setText(tr("Resizing space..."));
+    } else {
+        waitLable->setText(tr("Creating..."));
+    }
 
     QVBoxLayout *layout = new QVBoxLayout;
     for (int i = 0; i < m_curSeclectData.count(); ++++i) {
@@ -667,6 +690,39 @@ QString CreateVGWidget::getVGName()
     return name;
 }
 
+set<PVData> CreateVGWidget::getCurSelectPVData()
+{
+    set<PVData> pvDataSet;
+    for (int i = 0; i < m_curSeclectData.count(); i++) {
+        PVInfoData infoData = m_curSeclectData.at(i);
+
+        PVData pvData;
+        pvData.m_diskPath = infoData.m_diskPath;
+        pvData.m_startSector = infoData.m_sectorStart;
+        pvData.m_endSector = infoData.m_sectorEnd;
+        pvData.m_sectorSize = static_cast<int>(infoData.m_sectorSize);
+        pvData.m_pvAct = LVMAction::LVM_ACT_PV;
+
+        if (infoData.m_disktype == "unrecognized") {
+            pvData.m_devicePath = infoData.m_diskPath;
+            pvData.m_type = LVMDevType::LVM_DEV_DISK;
+        } else {
+            if (infoData.m_partitionPath == "unallocated") {
+                pvData.m_devicePath = infoData.m_diskPath;
+                pvData.m_type = LVMDevType::LVM_DEV_UNALLOCATED_PARTITION;
+            } else {
+                pvData.m_devicePath = infoData.m_partitionPath;
+                pvData.m_type = LVMDevType::LVM_DEV_PARTITION;
+            }
+
+        }
+
+        pvDataSet.insert(pvData);
+    }
+
+    return pvDataSet;
+}
+
 void CreateVGWidget::onNextButtonClicked()
 {
     m_stackedWidget->setCurrentIndex(1);
@@ -681,12 +737,33 @@ void CreateVGWidget::onPreviousButtonClicked()
 
 void CreateVGWidget::onDoneButtonClicked()
 {
-    QString vgName = getVGName();
-    QList<PVData> pvDataList;
+    if (m_curOperationType == OperationType::RESIZE) {
+        VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
+        set<PVData> pvDataSet = getCurSelectPVData();
+        bool bigDataMove;
+        QStringList realDelPvList;
+        bool ret = adjudicationPVMove(vgInfo, pvDataSet, bigDataMove, realDelPvList);
+        if (ret) {
+            if (bigDataMove) {
+                MessageBox warningBox(this);
+                warningBox.setObjectName("messageBox");
+                warningBox.setAccessibleName("removeWarningWidget");
+                // XXX（磁盘名称）中存在大量数据，预计将耗费较长时间进行数据迁移，是否继续？  继续
+                QString text1 = tr("A lot of data exists on %1, ").arg(realDelPvList.join(','));
+                QString text2 = tr("which may take a long time to back it up.");
+                QString text3 = tr("Do you want to continue?");
+                warningBox.setWarings(text1 + "\n" + text2 + "\n" + text3, "", tr("Continue"), "continue",
+                                      tr("Cancel"), "messageBoxCancelButton");
+                if (warningBox.exec() == DDialog::Rejected) {
+                    return;
+                }
+            }
+        }
+    }
 
+    QList<PVData> pvDataList;
     for (int i = 0; i < m_curSeclectData.count(); i++) {
         PVInfoData infoData = m_curSeclectData.at(i);
-
         PVData pvData;
         pvData.m_diskPath = infoData.m_diskPath;
         pvData.m_startSector = infoData.m_sectorStart;
@@ -711,7 +788,16 @@ void CreateVGWidget::onDoneButtonClicked()
         pvDataList.append(pvData);
     }
 
-    DMDbusHandler::instance()->createVG(vgName, pvDataList, m_curSize);
+    QString vgName = getVGName();
+    if (m_curOperationType == OperationType::RESIZE) {
+        VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
+        vgName = vgInfo.m_vgName;
+
+        DMDbusHandler::instance()->resizeVG(vgName, pvDataList, m_curSize);
+    } else {
+        DMDbusHandler::instance()->createVG(vgName, pvDataList, m_curSize);
+    }
+
     showLoadingWidget(vgName);
 }
 
@@ -722,7 +808,15 @@ void CreateVGWidget::onCancelButtonClicked()
 
 void CreateVGWidget::updateData()
 {
-    QList<DeviceInfo> lstDeviceInfo = availableDiskData();
+    QList<DeviceInfo> lstDeviceInfo;
+    lstDeviceInfo.clear();
+
+    if (m_curOperationType == OperationType::RESIZE) {
+        lstDeviceInfo = resizeAvailableDiskData();
+    } else {
+        lstDeviceInfo = createAvailableDiskData();
+    }
+
     if (lstDeviceInfo.count() == 0) {
         m_firstCenterStackedWidget->setCurrentIndex(1);
         m_nextButton->setDisabled(true);
@@ -758,6 +852,7 @@ void CreateVGWidget::updateData()
             diskInfoData.m_sectorStart = 0;
             diskInfoData.m_sectorEnd = 0;
             diskInfoData.m_selectStatus = Qt::CheckState::Unchecked;
+            diskInfoData.m_lvmDevType = LVMDevType::LVM_DEV_DISK;
 
             QList<PVInfoData> lstPVInfoData;
             lstPVInfoData.clear();
@@ -780,6 +875,11 @@ void CreateVGWidget::updateData()
                     partInfoData.m_sectorStart = partitionInfo.m_sectorStart;
                     partInfoData.m_sectorEnd = partitionInfo.m_sectorEnd;
                     partInfoData.m_selectStatus = Qt::CheckState::Unchecked;
+                    if (partitionInfo.m_path == "unallocated") {
+                        partInfoData.m_lvmDevType = LVMDevType::LVM_DEV_UNALLOCATED_PARTITION;
+                    } else {
+                        partInfoData.m_lvmDevType = LVMDevType::LVM_DEV_PARTITION;
+                    }
 
                     for (int i = 0; i < m_curSeclectData.count(); i++) {
                         PVInfoData infoData = m_curSeclectData.at(i);
@@ -798,6 +898,7 @@ void CreateVGWidget::updateData()
 
                     for (int i = 0; i < m_curSeclectData.count(); i++) {
                         PVInfoData infoData = m_curSeclectData.at(i);
+
                         if (partitionInfo.m_devicePath == infoData.m_diskPath && partitionInfo.m_sectorStart == infoData.m_sectorStart &&
                                 partitionInfo.m_sectorEnd == infoData.m_sectorEnd) {
                                 diskInfoData.m_selectStatus = Qt::CheckState::Checked;
@@ -823,6 +924,11 @@ void CreateVGWidget::updateData()
                     partInfoData.m_sectorStart = partitionInfo.m_sectorStart;
                     partInfoData.m_sectorEnd = partitionInfo.m_sectorEnd;
                     partInfoData.m_selectStatus = Qt::CheckState::Unchecked;
+                    if (partitionInfo.m_path == "unallocated") {
+                        partInfoData.m_lvmDevType = LVMDevType::LVM_DEV_UNALLOCATED_PARTITION;
+                    } else {
+                        partInfoData.m_lvmDevType = LVMDevType::LVM_DEV_PARTITION;
+                    }
 
                     for (int j = 0; j < m_curSeclectData.count(); j++) {
                         PVInfoData infoData = m_curSeclectData.at(j);
@@ -861,6 +967,12 @@ void CreateVGWidget::updateData()
                 }
             }
 
+            if (i == 0) {
+                selectPVItemWidget->setChecked(true);
+                m_curDiskItemWidget = selectPVItemWidget;
+                updatePartitionData(lstPVInfoData);
+            }
+
             connect(selectPVItemWidget, &SelectPVItemWidget::selectItem, this, &CreateVGWidget::onDiskItemClicked);
             connect(selectPVItemWidget, &SelectPVItemWidget::checkBoxStateChange, this, &CreateVGWidget::onDiskCheckBoxStateChange);
 
@@ -876,10 +988,25 @@ void CreateVGWidget::updateData()
         widget->setFixedSize(370, lstDeviceInfo.count() * 37);
         widget->setLayout(diskLayout);
         m_diskScrollArea->setWidget(widget);
+
+        if (m_curSeclectData.count() == 0) {
+            m_seclectedLabel->setText(tr("Capacity selected: %1").arg("0GiB"));
+            m_nextButton->setDisabled(true);
+        } else {
+            double sumSize = 0;
+            for (int i = 0; i < m_curSeclectData.count(); i++) {
+                PVInfoData infoData = m_curSeclectData.at(i);
+                sumSize += Utils::sectorToUnit(infoData.m_sectorEnd - infoData.m_sectorStart + 1,
+                                               infoData.m_sectorSize, SIZE_UNIT::UNIT_GIB);
+            }
+
+            m_seclectedLabel->setText(tr("Capacity selected: %1").arg(QString::number(sumSize, 'f', 2)) + "GiB");
+            m_nextButton->setDisabled(false);
+        }
     }
 }
 
-QList<DeviceInfo> CreateVGWidget::availableDiskData()
+QList<DeviceInfo> CreateVGWidget::createAvailableDiskData()
 {
     QList<DeviceInfo> lstDeviceInfo;
     lstDeviceInfo.clear();
@@ -889,6 +1016,9 @@ QList<DeviceInfo> CreateVGWidget::availableDiskData()
 
     for (auto devInfo = deviceInfoMap.begin(); devInfo != deviceInfoMap.end(); devInfo++) {
         DeviceInfo info = devInfo.value();
+        if (info.m_path.isEmpty() || info.m_path.contains("/dev/mapper")) {
+            continue;
+        }
 
         // 排除已加入VG的磁盘以及分区表错误的磁盘
         if (isJoinAllVG.value(info.m_path) == "false") {//还需加上磁盘分区表是否错误的判断
@@ -907,7 +1037,7 @@ QList<DeviceInfo> CreateVGWidget::availableDiskData()
                 // 只有一个分区时，排除已加入VG的分区、被挂载的分区、分区大小小于100MiB的分区
                 double partitionSize = Utils::sectorToUnit(partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1,
                                                            partitionInfo.m_sectorSize, UNIT_MIB);
-                if ((1 != partitionInfo.m_vgFlag) && (mountpoints.isEmpty()) && (partitionSize > 100)) {
+                if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) && (mountpoints.isEmpty()) && (partitionSize > 100)) {
                     PartitionInfo newPartitionInfo = partitionInfo;
                     lstNewPartition.append(newPartitionInfo);
                 } else {
@@ -939,7 +1069,7 @@ QList<DeviceInfo> CreateVGWidget::availableDiskData()
                     // 排除已加入VG的分区、被挂载的分区、分区大小小于100MiB的分区
                     double partitionSize = Utils::sectorToUnit(partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1,
                                                                partitionInfo.m_sectorSize, UNIT_MIB);
-                    if ((1 != partitionInfo.m_vgFlag) && (mountpoints.isEmpty()) && (partitionSize > 100)) {
+                    if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) && (mountpoints.isEmpty()) && (partitionSize > 100)) {
                         // 排除不能创建新分区的磁盘空闲空间
                         if (partitionInfo.m_path == "unallocated") {
                             if (partitionCount >= info.m_maxPrims) {
@@ -963,6 +1093,197 @@ QList<DeviceInfo> CreateVGWidget::availableDiskData()
         }
     }
 
+    return lstDeviceInfo;
+}
+
+QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
+{
+    VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
+    QMap<QString, PVInfo> mapPvInfo = vgInfo.m_pvInfo;
+    QStringList pvList = mapPvInfo.keys();
+
+    if (m_isResizeInit) {
+        LVMInfo lvmInfo = DMDbusHandler::instance()->probLVMInfo();
+        for (int i = 0; i < pvList.count(); i++) {
+            if (lvmInfo.pvExists(pvList.at(i))) {
+                PVInfo pvInfo = lvmInfo.getPV(pvList.at(i));
+                PVInfoData pvInfoData;
+                pvInfoData.m_lvmDevType = pvInfo.m_lvmDevType;
+                pvInfoData.m_selectStatus = Qt::CheckState::Checked;
+                if (pvInfo.m_lvmDevType == LVMDevType::LVM_DEV_DISK) {
+                    pvInfoData.m_diskPath = pvInfo.m_pvPath;
+                } else if (pvInfo.m_lvmDevType == LVMDevType::LVM_DEV_PARTITION) {
+                    pvInfoData.m_partitionPath = pvInfo.m_pvPath;
+                }
+
+                m_oldSeclectData.append(pvInfoData);
+            }
+        }
+    }
+
+    QList<DeviceInfo> lstDeviceInfo;
+    lstDeviceInfo.clear();
+    DeviceInfoMap deviceInfoMap = DMDbusHandler::instance()->probDeviceInfo();
+    for (auto devInfo = deviceInfoMap.begin(); devInfo != deviceInfoMap.end(); devInfo++) {
+        DeviceInfo info = devInfo.value();
+        if (info.m_path.isEmpty() || info.m_path.contains("/dev/mapper")) {
+            continue;
+        }
+
+        if (pvList.indexOf(info.m_path) != -1) {
+            for (int i = 0; i < m_oldSeclectData.count(); i++) {
+                PVInfoData pvInfoData = m_oldSeclectData.at(i);
+                if (pvInfoData.m_diskPath == info.m_path) {
+                    QString diskSize = Utils::formatSize(info.m_length, info.m_sectorSize);
+                    pvInfoData.m_disktype = info.m_disktype;
+                    if (info.m_disktype == "none") {
+                        pvInfoData.m_disktype = "unrecognized";
+                        info.m_disktype = "unrecognized";
+                    }
+                    pvInfoData.m_level = DMDbusHandler::DISK;
+                    pvInfoData.m_diskPath = info.m_path;
+                    pvInfoData.m_diskSize = diskSize;
+                    pvInfoData.m_partitionPath = "";
+                    pvInfoData.m_partitionSize = "";
+                    pvInfoData.m_sectorSize = info.m_sectorSize;
+                    pvInfoData.m_sectorStart = 0;
+                    pvInfoData.m_sectorEnd = info.m_length - 1;
+
+                    m_oldSeclectData.replace(i, pvInfoData);
+                    lstDeviceInfo.append(info);
+                    break;
+                }
+            }
+        } else {
+            PartitionVec lstNewPartition;
+            lstNewPartition.clear();
+            bool isAvailable = true;
+
+            if (info.m_partition.size() == 1) {
+                PartitionInfo partitionInfo = info.m_partition.at(0);
+                //判断分区是否加入当前选择VG
+                if (pvList.indexOf(partitionInfo.m_path) != -1) {
+                    for (int i = 0; i < m_oldSeclectData.count(); i++) {
+                        PVInfoData pvInfoData = m_oldSeclectData.at(i);
+                        if (pvInfoData.m_partitionPath == partitionInfo.m_path) {
+                            QString partitionSize = Utils::formatSize(partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1,
+                                                                      partitionInfo.m_sectorSize);
+                            pvInfoData.m_level = DMDbusHandler::PARTITION;
+                            pvInfoData.m_disktype = info.m_disktype;
+                            pvInfoData.m_diskPath = partitionInfo.m_devicePath;
+                            pvInfoData.m_diskSize = "";
+                            pvInfoData.m_partitionPath = partitionInfo.m_path;
+                            pvInfoData.m_partitionSize = partitionSize;
+                            pvInfoData.m_sectorSize = partitionInfo.m_sectorSize;
+                            pvInfoData.m_sectorStart = partitionInfo.m_sectorStart;
+                            pvInfoData.m_sectorEnd = partitionInfo.m_sectorEnd;
+
+                            m_oldSeclectData.replace(i, pvInfoData);
+                            PartitionInfo newPartitionInfo = partitionInfo;
+                            lstNewPartition.append(newPartitionInfo);
+                            break;
+                        }
+                    }
+                } else {
+                    QString mountpoints = "";
+                    for (int i = 0; i < partitionInfo.m_mountPoints.size(); i++) {
+                        mountpoints += partitionInfo.m_mountPoints[i];
+                    }
+
+                    // 只有一个分区时，排除已加入VG的分区、被挂载的分区、分区大小小于100MiB的分区
+                    double partitionSize = Utils::sectorToUnit(partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1,
+                                                               partitionInfo.m_sectorSize, UNIT_MIB);
+                    if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) && (mountpoints.isEmpty()) && (partitionSize > 100)) {
+                        PartitionInfo newPartitionInfo = partitionInfo;
+                        lstNewPartition.append(newPartitionInfo);
+                    } else {
+                        isAvailable = false;
+                    }
+                }
+            } else {
+                int partitionCount = 0;
+                for (int i = 0; i < info.m_partition.size(); i++) {
+                    if (info.m_partition.at(i).m_path != "unallocated") {
+                        partitionCount++;
+                    }
+                }
+
+                for (int i = 0; i < info.m_partition.size(); i++) {
+                    PartitionInfo partitionInfo = info.m_partition.at(i);
+                    //判断分区是否加入当前选择VG
+                    if (pvList.indexOf(partitionInfo.m_path) != -1) {
+                        for (int j = 0; j < m_oldSeclectData.count(); j++) {
+                            PVInfoData pvInfoData = m_oldSeclectData.at(j);
+                            if (pvInfoData.m_partitionPath == partitionInfo.m_path) {
+                                QString partitionSize = Utils::formatSize(partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1,
+                                                                          partitionInfo.m_sectorSize);
+                                pvInfoData.m_level = DMDbusHandler::PARTITION;
+                                pvInfoData.m_disktype = info.m_disktype;
+                                pvInfoData.m_diskPath = partitionInfo.m_devicePath;
+                                pvInfoData.m_diskSize = "";
+                                pvInfoData.m_partitionPath = partitionInfo.m_path;
+                                pvInfoData.m_partitionSize = partitionSize;
+                                pvInfoData.m_sectorSize = partitionInfo.m_sectorSize;
+                                pvInfoData.m_sectorStart = partitionInfo.m_sectorStart;
+                                pvInfoData.m_sectorEnd = partitionInfo.m_sectorEnd;
+
+                                m_oldSeclectData.replace(j, pvInfoData);
+                                PartitionInfo newPartitionInfo = partitionInfo;
+                                lstNewPartition.append(newPartitionInfo);
+                                break;
+                            }
+                        }
+                    } else {
+                        QString mountpoints = "";
+                        for (int j = 0; j < partitionInfo.m_mountPoints.size(); j++) {
+                            mountpoints += partitionInfo.m_mountPoints[j];
+                        }
+
+                        // 排除系统磁盘
+                        if (mountpoints == "/boot/efi" || mountpoints == "/boot" || mountpoints == "/"
+                                || mountpoints == "/recovery" || partitionInfo.m_flag == 4) {
+                            isAvailable = false;
+                            break;
+                        }
+
+                        // 排除已加入VG的分区、被挂载的分区、分区大小小于100MiB的分区
+                        double partitionSize = Utils::sectorToUnit(partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1,
+                                                                   partitionInfo.m_sectorSize, UNIT_MIB);
+                        if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) && (mountpoints.isEmpty()) && (partitionSize > 100)) {
+                            // 排除不能创建新分区的磁盘空闲空间
+                            if (partitionInfo.m_path == "unallocated") {
+                                if (partitionCount >= info.m_maxPrims) {
+                                    continue;
+                                }
+                            }
+
+                            // 此处为各种条件排除后可创建VG的分区
+                            PartitionInfo newPartitionInfo = partitionInfo;
+                            lstNewPartition.append(newPartitionInfo);
+                        }
+                    }
+                }
+
+                // 如果没有可用分区，磁盘则不显示
+                if (lstNewPartition.size() == 0) {
+                    isAvailable = false;
+                }
+            }
+
+            if (isAvailable) {
+                DeviceInfo newDeviceInfo = info;
+                newDeviceInfo.m_partition = lstNewPartition;
+
+                lstDeviceInfo.append(newDeviceInfo);
+            }
+        }
+    }
+
+    if (m_isResizeInit) {
+        m_curSeclectData = m_oldSeclectData;
+    }
+
+    m_isResizeInit = false;
     return lstDeviceInfo;
 }
 
@@ -1338,17 +1659,88 @@ void CreateVGWidget::updateSelectedData()
         widget->setLayout(selectedLayout);
         m_selectedScrollArea->setWidget(widget);
 
-        if (isUnallocated) {
-            m_selectSpaceStackedWidget->setCurrentIndex(0);
-            m_selectSpaceLineEdit->lineEdit()->setPlaceholderText(QString("%1-%2").arg(QString::number(m_minSize, 'f', 2))
-                                                                  .arg(QString::number(m_maxSize, 'f', 2)));
-            m_selectSpaceLabel->setText(QString("(%1-%2)").arg(QString::number(m_minSize, 'f', 2))
-                                        .arg(QString::number(m_maxSize, 'f', 2)) + m_selectSpaceComboBox->currentText());
-            m_selectSpaceLineEdit->setText(QString::number(m_maxSize, 'f', 2));
+        if (m_curOperationType == OperationType::RESIZE) {
+            VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
+            set<PVData> pvDataSet = getCurSelectPVData();
+            Byte_Value maxSize = getMaxSize(vgInfo, pvDataSet);
+            Byte_Value minSize = getMinSize(vgInfo, pvDataSet);
+
+            m_maxSize = Utils::LVMSizeToUnit(maxSize, type);
+            m_minSize = Utils::LVMSizeToUnit(minSize, type);
+            m_sumSize = maxSize;
+
+            if (maxSize == minSize || !isUnallocated) {
+                m_selectSpaceStackedWidget->setCurrentIndex(1);
+                m_curSize = m_sumSize;
+                m_selectedSpaceLabel->setText(tr("Capacity selected: %1")
+                                              .arg(QString::number(m_maxSize, 'f', 2)) + m_selectSpaceComboBox->currentText());
+            } else {
+                m_selectSpaceStackedWidget->setCurrentIndex(0);
+                m_selectSpaceLineEdit->lineEdit()->setPlaceholderText(QString("%1-%2").arg(QString::number(m_minSize, 'f', 2))
+                                                                      .arg(QString::number(m_maxSize, 'f', 2)));
+                m_selectSpaceLabel->setText(QString("(%1-%2)").arg(QString::number(m_minSize, 'f', 2))
+                                            .arg(QString::number(m_maxSize, 'f', 2)) + m_selectSpaceComboBox->currentText());
+                m_selectSpaceLineEdit->setText(QString::number(m_maxSize, 'f', 2));
+            }
+
+            if (maxSize < minSize) {
+                bool bigDataMove;
+                QStringList realDelPvList;
+                adjudicationPVMove(vgInfo, pvDataSet, bigDataMove, realDelPvList);
+                MessageBox warningBox(this);
+                warningBox.setObjectName("messageBox");
+                warningBox.setAccessibleName("NotEnoughSpaceWidget");
+                // 剩余空间不足，移除XXX（磁盘名称）将会造成数据丢失，请先清理空间  确定
+                warningBox.setWarings(tr("Not enough space to back up data on %1, please clear disk space")
+                                      .arg(realDelPvList.join(',')), "", tr("OK"), "ok");
+
+                m_doneButton->setDisabled(true);
+                warningBox.exec();
+                return;
+            } else {
+                // 判断当前选择的PV是否与当前调整VG的PV完全相同，若相同则“完成”按钮禁用
+                if (m_curSeclectData.size() == m_oldSeclectData.size()) {
+                    bool isIdentical = true;
+                    for (int i = 0; i < m_curSeclectData.count(); i++) {
+                        PVInfoData curPVInfoData = m_curSeclectData.at(i);
+                        bool isSame = false;
+                        for (int j = 0; j < m_oldSeclectData.count(); j++) {
+                            PVInfoData oldPVInfoData = m_oldSeclectData.at(j);
+                            if (oldPVInfoData.m_diskPath == curPVInfoData.m_diskPath &&
+                                    oldPVInfoData.m_partitionPath == curPVInfoData.m_partitionPath &&
+                                    oldPVInfoData.m_sectorStart == curPVInfoData.m_sectorStart &&
+                                    oldPVInfoData.m_sectorEnd == curPVInfoData.m_sectorEnd) {
+                                isSame = true;
+                                break;
+                            }
+                        }
+                        if (!isSame) {
+                            isIdentical = false;
+                            break;
+                        }
+                    }
+                    if (isIdentical) {
+                        m_doneButton->setDisabled(true);
+                        return;
+                    }
+                }
+
+                m_doneButton->setDisabled(false);
+            }
         } else {
-            m_selectSpaceStackedWidget->setCurrentIndex(1);
-            m_curSize = m_sumSize;
-            m_selectedSpaceLabel->setText(tr("Capacity selected: %1").arg(QString::number(m_minSize, 'f', 2)) + m_selectSpaceComboBox->currentText());
+            if (isUnallocated) {
+                m_selectSpaceStackedWidget->setCurrentIndex(0);
+                m_selectSpaceLineEdit->lineEdit()->setPlaceholderText(QString("%1-%2").arg(QString::number(m_minSize, 'f', 2))
+                                                                      .arg(QString::number(m_maxSize, 'f', 2)));
+                m_selectSpaceLabel->setText(QString("(%1-%2)").arg(QString::number(m_minSize, 'f', 2))
+                                            .arg(QString::number(m_maxSize, 'f', 2)) + m_selectSpaceComboBox->currentText());
+                m_selectSpaceLineEdit->setText(QString::number(m_maxSize, 'f', 2));
+            } else {
+                m_selectSpaceStackedWidget->setCurrentIndex(1);
+                m_curSize = m_sumSize;
+                m_selectedSpaceLabel->setText(tr("Capacity selected: %1")
+                                              .arg(QString::number(m_minSize, 'f', 2)) + m_selectSpaceComboBox->currentText());
+            }
         }
     }
 }
@@ -1422,7 +1814,7 @@ void CreateVGWidget::onTextChanged(const QString &text)
     double minSize = QString::number(m_minSize, 'f', 2).toDouble();
     double maxSize = QString::number(m_maxSize, 'f', 2).toDouble();
 
-    if((curSize < minSize) || (curSize > maxSize) || (text.isEmpty())){
+    if((curSize < minSize) || (curSize > maxSize) || (text.isEmpty()) || curSize == 0.00){
         m_selectSpaceLineEdit->setAlert(true);
         m_doneButton->setDisabled(true);
     }else {
@@ -1466,5 +1858,205 @@ void CreateVGWidget::onVGCreateMessage(const QString &vgMessage)
     }
 
     close();
+}
 
+void CreateVGWidget::onUpdateUsb()
+{
+    QStringList deviceNameList = DMDbusHandler::instance()->getDeviceNameList();
+    if (m_curDeviceNameList == deviceNameList) {
+        return;
+    }
+
+    // 是否有磁盘拔出
+    QStringList deleteDevNameList;
+    for (int i = 0; i < m_curDeviceNameList.size(); i++) {
+        QString devPath = m_curDeviceNameList.at(i);
+        if (deviceNameList.indexOf(devPath) == -1) {
+            deleteDevNameList.append(devPath);
+        }
+    }
+
+    // 当前选择的磁盘信息列表里面是否包含拔出的磁盘
+    QList<int> deleteIndexList;
+    for (int i = 0; i < deleteDevNameList.size(); i++) {
+        QString devPath = deleteDevNameList.at(i);
+        for (int j = 0; j < m_curSeclectData.size(); j++) {
+            PVInfoData pvInfoData = m_curSeclectData.at(j);
+            if (pvInfoData.m_diskPath == devPath) {
+                deleteIndexList.append(j);
+            }
+        }
+    }
+
+    // 将拔出磁盘信息从当前选择的列表里剔除
+    for (int i = 0; i < deleteIndexList.size(); i++) {
+        m_curSeclectData.removeAt(deleteIndexList.at(i));
+    }
+
+    if (m_stackedWidget->currentIndex() == 0) {
+        DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/ok.svg"),
+                                                 tr("Refreshing the page to reload disks"));
+        DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
+
+        updateData();
+    } else if (m_stackedWidget->currentIndex() == 1) {
+        if (!deleteIndexList.isEmpty()) {
+            DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/ok.svg"),
+                                                     tr("Refreshing the page to reload disks"));
+            DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
+
+            updateSelectedData();
+        }
+    }
+
+    m_curDeviceNameList = deviceNameList;
+}
+
+Byte_Value CreateVGWidget::getPVSize(const PVData &pv, bool flag)
+{
+    auto it = DMDbusHandler::instance()->probDeviceInfo().find(pv.m_diskPath);
+    if (it == DMDbusHandler::instance()->probDeviceInfo().end()) {
+        return -1;
+    }
+
+    DeviceInfo dev = it.value();
+    long long startSec = pv.m_startSector;
+    long long endSec = pv.m_endSector;
+
+    if (startSec == 0 && pv.m_type == LVM_DEV_UNALLOCATED_PARTITION) {
+        startSec = UEFI_SECTOR;
+    }
+
+    if (pv.m_type == LVM_DEV_UNALLOCATED_PARTITION && pv.m_endSector == (dev.m_length - 1) && dev.m_disktype.contains("gpt")) {
+        endSec -= GPTBACKUP;
+    }
+
+    if (pv.m_type == LVM_DEV_DISK && flag) {
+        startSec -= UEFI_SECTOR;
+        endSec -= GPTBACKUP;
+    }
+
+    return dev.m_sectorSize * (endSec - startSec + 1);
+}
+
+Byte_Value CreateVGWidget::getMaxSize(const VGInfo &vg,const set<PVData> &pvlist)
+{
+    Byte_Value maxSize = 0;
+    foreach (const PVData &pv, pvlist) {
+        maxSize += (pv.m_endSector - pv.m_startSector + 1) * pv.m_sectorSize;
+    }
+    return maxSize;
+}
+
+Byte_Value CreateVGWidget::getMinSize(const VGInfo &vg, const set<PVData> &pvlist)
+{
+    QList<PVData>diskList;
+    QList<PVData>partList;
+    QList<PVData>unallocList;
+    QList<PVData>loopList;
+    QList<PVData>metaList;
+    Byte_Value vgUsed = vg.m_peUsed * vg.m_PESize;
+
+    Byte_Value partSize = 0;
+    Byte_Value unallocSize = 0;
+    Byte_Value diskSize = 0;
+
+    Byte_Value minSize = 0 ;
+
+    foreach (PVData pv, pvlist) {
+        switch (pv.m_type) {
+        case LVMDevType::LVM_DEV_DISK:
+            diskList.push_back(pv);
+            break;
+        case LVMDevType::LVM_DEV_PARTITION:
+            partList.push_back(pv);
+            break;
+        case LVMDevType::LVM_DEV_UNALLOCATED_PARTITION:
+            unallocList.push_back(pv);
+            break;
+        case LVMDevType::LVM_DEV_LOOP:
+            loopList.push_back(pv);
+            break;
+        case LVMDevType::LVM_DEV_META_DEVICES:
+            metaList.push_back(pv);
+            break;
+        }
+    }
+
+    //如果比所有分区之和小 那么最小值为分区之和
+    foreach (const PVData &pv, partList) {
+        Byte_Value size = getPVSize(pv);
+        if (size < 0) {
+            return -1;
+        }
+        partSize += size;
+    }
+    vgUsed -= partSize;
+    if (vgUsed <= 0) {
+        return partSize;
+    }
+    minSize = partSize;
+
+    //未分配空间
+    foreach (const PVData &pv, unallocList) {
+        Byte_Value size = getPVSize(pv); //获取pv设备大小
+        if (vgUsed <= size) {//vg使用<=当前pv设备时 返回
+            return vgUsed + unallocSize + minSize;
+        }
+        vgUsed -= size;
+        unallocSize += size;
+    }
+
+    minSize += unallocSize;
+
+    //磁盘
+    foreach (const PVData &pv, diskList) {
+        Byte_Value size = getPVSize(pv, false); //获取pv设备大小
+        if (vgUsed <= size) {//vg使用<=当前pv设备时 返回
+            if (vgUsed <= getPVSize(pv)) {
+                return size + diskSize + minSize;
+            } else {
+                return vgUsed + diskSize + minSize;
+            }
+        }
+        vgUsed -= size;
+        diskSize += size;
+    }
+    minSize += diskSize;
+
+    if (vgUsed > 0) {
+        return vg.m_peUsed * vg.m_PESize;
+    }
+
+    return minSize;
+}
+
+bool CreateVGWidget::adjudicationPVMove(const VGInfo &vg, const set<PVData> &pvlist, bool &bigDataMove, QStringList &realDelPvList)
+{
+    auto pvInfoMap = vg.m_pvInfo;
+    Byte_Value size = 0;
+    //获取所有删除的pv
+    foreach (auto it, pvInfoMap) {
+        bool isDelete = true;
+        foreach (const PVData &pv, pvlist) {
+            if(it.m_pvPath == pv.m_devicePath){
+                isDelete = false;
+                break;
+            }
+        }
+        if (isDelete) {
+            size+=it.m_pvByteTotalSize;
+            realDelPvList.push_back(it.m_pvPath);
+        }
+    }
+
+    if (getMinSize(vg, pvlist) > getMaxSize(vg, pvlist)) {
+        return false;
+    }
+
+    if (!bigDataMove) { //判断是否存在大量数据需要移动
+        bigDataMove = ((size / GIBIBYTE) >= 1);
+    }
+
+    return true;
 }

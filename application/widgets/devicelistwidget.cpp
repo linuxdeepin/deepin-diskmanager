@@ -141,7 +141,7 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
         connect(createPartitionTable, &QAction::triggered, this, &DeviceListWidget::onCreatePartitionTableClicked);
 
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
-        if (1 == info.m_vgFlag) {
+        if (info.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV) {
             createPartitionTable->setDisabled(true);
         }
 
@@ -176,7 +176,7 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
         }
 
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-        if (m_curDiskInfoData.m_fstype == "unallocated" || m_curDiskInfoData.m_fstype == "linux-swap" || 1 == info.m_vgFlag) {
+        if (m_curDiskInfoData.m_fstype == "unallocated" || m_curDiskInfoData.m_fstype == "linux-swap" || info.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV) {
 //            actionHidePartition->setDisabled(true);
 //            actionShowPartition->setDisabled(true);
             actionDelete->setDisabled(true);
@@ -214,6 +214,13 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
             actionCreate->setDisabled(true);
         }
 
+        // 如果VG异常，所有相关操作禁用
+        VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
+        if (vgInfo.isPartial()) {
+            actionDelete->setDisabled(true);
+            actionCreate->setDisabled(true);
+        }
+
         menu->exec(QCursor::pos());  //显示菜单
         delete menu;
     } else if (m_curDiskInfoData.m_level == DMDbusHandler::LOGICALVOLUME) {
@@ -229,6 +236,12 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
 
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
         if (lvInfo.m_lvName.isEmpty() && lvInfo.m_lvUuid.isEmpty()) {
+            actionDelete->setDisabled(true);
+        }
+
+        // 如果VG异常，删除逻辑卷操作禁用
+        VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
+        if (vgInfo.isPartial()) {
             actionDelete->setDisabled(true);
         }
 
@@ -553,6 +566,7 @@ void DeviceListWidget::onCreatePartitionTableMessage(const bool &flag)
 void DeviceListWidget::onDeleteVGClicked()
 {
     VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
+    setCurVGName(vgInfo.m_vgName);
     if (DMDbusHandler::instance()->isExistMountLV()){
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
@@ -560,6 +574,8 @@ void DeviceListWidget::onDeleteVGClicked()
         // 请先手动卸载XXX（逻辑卷组名称）  确定
         warningBox.setWarings(tr("Unmount %1 first").arg(vgInfo.m_vgName), "", tr("OK"), "ok");
         warningBox.exec();
+
+        setCurVGName("");
 
         return;
     }
@@ -576,10 +592,14 @@ void DeviceListWidget::onDeleteVGClicked()
 
         DMDbusHandler::instance()->deleteVG(vgNameList);
     }
+
+    setCurVGName("");
 }
 
 void DeviceListWidget::onCreateLVClicked()
 {
+    setCurVGName(DMDbusHandler::instance()->getCurVGInfo().m_vgName);
+
     PartitionDialog dlg(this);
     dlg.setTitleText(tr("Create logical volume"), tr("The disks will be formatted if you create a logical volume"));
     dlg.setObjectName("createLVDialog");
@@ -591,11 +611,15 @@ void DeviceListWidget::onCreateLVClicked()
         createLVWidget.setAccessibleName("createLVWidget");
         createLVWidget.exec();
     }
+
+    setCurVGName("");
 }
 
 void DeviceListWidget::onDeleteLVClicked()
 {
     LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+    setCurVGName(lvInfo.m_vgName);
+
     QString mountPoint = "";
     for (int i = 0; i < lvInfo.m_mountPoints.size(); i++) {
         mountPoint += lvInfo.m_mountPoints[i];
@@ -607,6 +631,8 @@ void DeviceListWidget::onDeleteLVClicked()
         // 请先手动卸载XXX（逻辑卷名称）  确定
         warningBox.setWarings(tr("Unmount %1 first").arg(lvInfo.m_lvName), "", tr("OK"), "ok");
         warningBox.exec();
+
+        setCurVGName("");
 
         return;
     }
@@ -623,42 +649,66 @@ void DeviceListWidget::onDeleteLVClicked()
 
         DMDbusHandler::instance()->deleteLV(lvNameList);
     }
+
+    setCurVGName("");
 }
 
 void DeviceListWidget::onUpdateUsb()
 {
-    if (m_curChooseDevicePath == "")
+    if (m_curChooseDevicePath.isEmpty() && m_curChooseVGName.isEmpty())
         return;
 
-    QStringList deviceNameList = DMDbusHandler::instance()->getDeviceNameList();
-    if (deviceNameList.indexOf(m_curChooseDevicePath) != -1)
-        return;
+    if (!m_curChooseDevicePath.isEmpty()) {
+        QStringList deviceNameList = DMDbusHandler::instance()->getDeviceNameList();
+        if (deviceNameList.indexOf(m_curChooseDevicePath) != -1)
+            return;
 
-    QWidgetList widgetList = QApplication::topLevelWidgets();
-    for (int i = 0; i < widgetList.count(); i++) {
-        QWidget *widget = widgetList.at(i);
-        if (widget->objectName() == "diskBadSectorsDialog") {
-            DiskBadSectorsDialog *diskBadSectorsDialog = static_cast<DiskBadSectorsDialog *>(widget);
-            diskBadSectorsDialog->stopCheckRepair();
+        QWidgetList widgetList = QApplication::topLevelWidgets();
+        for (int i = 0; i < widgetList.count(); i++) {
+            QWidget *widget = widgetList.at(i);
+            if (widget->objectName() == "diskBadSectorsDialog") {
+                DiskBadSectorsDialog *diskBadSectorsDialog = static_cast<DiskBadSectorsDialog *>(widget);
+                diskBadSectorsDialog->stopCheckRepair();
 
-            diskBadSectorsDialog->close();
-        } else if (widget->objectName() == "diskInfoDisplayDialog" || widget->objectName() == "diskHealthDetectionDialog" ||
-                   widget->objectName() == "partitionErrorCheck" || widget->objectName() == "createPartitionTable" ||
-                   widget->objectName() == "messageBox") {
-            widget->close();
-        } else if (widget->objectName() == "exitMessageBox") {
-            MessageBox *messageBox = static_cast<MessageBox *>(widget);
-            messageBox->accept();
-            break;
+                diskBadSectorsDialog->close();
+            } else if (widget->objectName() == "diskInfoDisplayDialog" || widget->objectName() == "diskHealthDetectionDialog" ||
+                       widget->objectName() == "partitionErrorCheck" || widget->objectName() == "createPartitionTable" ||
+                       widget->objectName() == "messageBox") {
+                widget->close();
+            } else if (widget->objectName() == "exitMessageBox") {
+                MessageBox *messageBox = static_cast<MessageBox *>(widget);
+                messageBox->accept();
+                break;
+            }
         }
-    }
 
-    setCurDevicePath("");
+        setCurDevicePath("");
+    } else if (!m_curChooseVGName.isEmpty()) {
+        QStringList vgNameList = DMDbusHandler::instance()->getVGNameList();
+        if (vgNameList.indexOf(m_curChooseVGName) != -1)
+            return;
+
+        QWidgetList widgetList = QApplication::topLevelWidgets();
+        for (int i = 0; i < widgetList.count(); i++) {
+            QWidget *widget = widgetList.at(i);
+            if (widget->objectName() == "messageBox" || widget->objectName() == "createLVDialog" ||
+                    widget->objectName() == "createLVWidget") {
+                widget->close();
+            }
+        }
+
+        setCurVGName("");
+    }
 }
 
 void DeviceListWidget::setCurDevicePath(const QString &devPath)
 {
     m_curChooseDevicePath = devPath;
+}
+
+void DeviceListWidget::setCurVGName(const QString &vgName)
+{
+    m_curChooseVGName = vgName;
 }
 
 void DeviceListWidget::onUpdateDeviceInfo()
@@ -817,7 +867,25 @@ void DeviceListWidget::onUpdateDeviceInfo()
                 }
             }
 
-            m_treeView->setRefreshItem(m_treeView->getCurrentTopNum(), index, m_treeView->getCurrentGroupNum());
+            int groupNum = m_treeView->getCurrentGroupNum();
+            int topNum = m_treeView->getCurrentTopNum();
+            // 判断是否第一次显示VG
+            if (!m_vgIsShow) {
+                groupNum = 1; // 设置组节点为1
+
+                // 判断VG显示之前是否选择的是磁盘节点
+                if (topNum == -1) {
+                    groupNum = -1; // 若之前选择的是磁盘节点，设置组节点为-1
+                    if (m_treeView->getCurrentNum() == 0) {
+                        topNum = 1; // 若之前选择的是第一个磁盘节点，设置根节点为1
+                    } else {
+                        topNum = m_treeView->getCurrentNum(); //若之前选择的不是第一个磁盘节点
+                    }
+                }
+                m_vgIsShow = true;
+            }
+
+            m_treeView->setRefreshItem(topNum, index, groupNum);
         }
 
         m_flag += 1;
@@ -894,17 +962,25 @@ void DeviceListWidget::onUpdateDeviceInfo()
                 index = countMap.value(m_deviceNum) - 1;
             }
 
-            if (m_treeView->getCurrentTopNum() == -1) {
+            int topNum = m_treeView->getCurrentTopNum();
+            // 判断是否显示过VG并且当前选择的节点是磁盘节点
+            if (m_vgIsShow && m_treeView->getCurrentGroupNum() == -1) {
+                topNum = -1;
+            }
+
+            if (topNum == -1) {
                 if (deviceNameList.indexOf(DMDbusHandler::instance()->getCurDevicePath()) == -1) {
                     m_treeView->setDefaultdmItem();
                 } else {
-                    m_treeView->setRefreshItem(m_treeView->getCurrentTopNum(), deviceNameList.indexOf(DMDbusHandler::instance()->getCurDevicePath()));
+                    m_treeView->setRefreshItem(topNum, deviceNameList.indexOf(DMDbusHandler::instance()->getCurDevicePath()));
                 }
 
             } else {
                 m_treeView->setRefreshItem(m_deviceNum, index);
             }
         }
+
+        m_vgIsShow = false;
 
         m_flag += 1;
     }

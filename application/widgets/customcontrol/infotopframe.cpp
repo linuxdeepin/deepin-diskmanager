@@ -113,7 +113,7 @@ void InfoTopFrame::updateDiskInfo()
     if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
         auto info = DMDbusHandler::instance()->getCurPartititonInfo();
 
-        if (1 == info.m_vgFlag) {
+        if (info.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV) {
             m_pictureLabel->setPixmap(Common::getIcon("lv").pixmap(85, 85));
         } else {
             m_pictureLabel->setPixmap(Common::getIcon("labeldisk").pixmap(85, 85));

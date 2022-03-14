@@ -85,6 +85,9 @@ void SizeInfoWidget::setData(LVInfo info, QVector<QColor> color, QVector<double>
     }
 
     m_totalSize = m_noused + m_used;
+    if (m_totalSize <= 0) {
+        m_totalSize = Utils::LVMSizeToUnit(info.m_lvLECount * info.m_LESize, SIZE_UNIT::UNIT_GIB);
+    }
     m_usedSize = Utils::LVMFormatSize(info.m_fsUsed);
 
     if (size.at(0) < 0.00 || size.at(1) < 0.00) {

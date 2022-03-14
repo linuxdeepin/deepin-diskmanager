@@ -76,21 +76,18 @@ void VGInfoShowWidget::setData(const QList< QMap<QString, QVariant> > &lstInfo)
     fontSize.setPixelSize(12);
 
     DPalette paletteText;
+    QPalette paletteBackground;
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
     if (themeType == DGuiApplicationHelper::LightType) {
         QColor color("#F7F7F7");
         color.setAlphaF(0.6);
-        DPalette paletteBack;
-        paletteBack.setColor(DPalette::Background, color);
-        setPalette(paletteBack);
+        paletteBackground.setColor(QPalette::Base, color);
 
         paletteText.setColor(DPalette::Text, QColor("#000000"));
     } else if (themeType == DGuiApplicationHelper::DarkType) {
-        QColor color("#000000");
+        QColor color("#080808");
         color.setAlphaF(0.6);
-        DPalette paletteBack;
-        paletteBack.setColor(DPalette::Background, color);
-        setPalette(paletteBack);
+        paletteBackground.setColor(QPalette::Base, color);
 
         paletteText.setColor(DPalette::Text, QColor("#C0C6D4"));
     }
@@ -146,6 +143,7 @@ void VGInfoShowWidget::setData(const QList< QMap<QString, QVariant> > &lstInfo)
     }
 
     DFrame *frame = new DFrame;
+    frame->setPalette(paletteBackground);
     if (height > 4) {
         setFixedSize(340, 192);
 

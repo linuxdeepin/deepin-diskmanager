@@ -267,7 +267,7 @@ void InfoShowWidget::onCurSelectChanged()
         m_volumeLabel->setObjectName(QString("@==@%1").arg(info.m_fileSystemLabel));
         m_infoTopFrame->updateDiskInfo();
 
-        if (1 != info.m_vgFlag) {
+        if (info.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) {
             m_partitionInfoWidget->hide();
             m_vgSizeInfoWidget->hide();
             m_infoWidget->show();
@@ -397,6 +397,18 @@ void InfoShowWidget::onCurSelectChanged()
             unused = Utils::LVMFormatSize(lvInfo.m_lvLECount * lvInfo.m_LESize);
             unusedSize = Utils::LVMSizeToUnit(lvInfo.m_lvLECount * lvInfo.m_LESize, SIZE_UNIT::UNIT_GIB);
             lvName = "unallocated";
+        }
+
+        if (usedSize == 0.00 && unusedSize == 0.00) {
+            unused = Utils::LVMFormatSize(lvInfo.m_lvLECount * lvInfo.m_LESize);
+        }
+
+        if (used.contains("-")) {
+            used = "-";
+        }
+
+        if (unused.contains("-")) {
+            unused = "-";
         }
 
         m_mountpointLabel->setText(tr("Mount point:"));

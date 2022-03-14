@@ -103,6 +103,7 @@ void DMDbusHandler::initConnection()
     connect(m_dbus, &DMDBusInterface::fixBadBlocksFinished, this, &DMDbusHandler::fixBadBlocksFinished);
     connect(m_dbus, &DMDBusInterface::clearMessage, this, &DMDbusHandler::wipeMessage);
     connect(m_dbus, &DMDBusInterface::vgCreateMessage, this, &DMDbusHandler::vgCreateMessage);
+    connect(m_dbus, &DMDBusInterface::pvDeleteMessage, this, &DMDbusHandler::pvDeleteMessage);
 //    connect(m_dbus, &DMDBusInterface::rootLogin, this, &DMDbusHandler::onRootLogin);
 }
 
@@ -343,7 +344,7 @@ void DMDbusHandler::onUpdateDeviceInfo(const DeviceInfoMap &infoMap, const LVMIn
            }
         }
 
-        if (("unrecognized" == info.m_disktype) && (1 == info.m_vgFlag)) {
+        if (("unrecognized" == info.m_disktype) && (info.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV)) {
             isJoinAllVG = "true";
         }
 
@@ -592,8 +593,6 @@ void DMDbusHandler::deleteVG(const QStringList &vglist)
 
 void DMDbusHandler::resizeVG(const QString &vgName, const QList<PVData> &devList, const long long &size)
 {
-    emit showSpinerWindow(true, tr("Resizing space..."));
-
     m_dbus->onResizeVG(vgName, devList, size);
 }
 
@@ -621,5 +620,10 @@ void DMDbusHandler::onUmountLV(LVAction act)
 void DMDbusHandler::onClearLV(LVAction act)
 {
     m_dbus->onClearLV(act);
+}
+
+void DMDbusHandler::onDeletePVList(QList<PVData> devList)
+{
+    m_dbus->onDeletePVList(devList);
 }
 

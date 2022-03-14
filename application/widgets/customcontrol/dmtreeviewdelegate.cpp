@@ -248,7 +248,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     } else {
         lefticon1Rect.setRect(paintRect.left() + 25, paintRect.top() + 10, 30, 30);
 
-        if (data.m_level == DMDbusHandler::LOGICALVOLUME || data.m_vgFlag == 1) {
+        if (data.m_level == DMDbusHandler::LOGICALVOLUME || data.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV) {
             QIcon icon = Common::getIcon("treelv");
             painter->drawPixmap(lefticon1Rect, icon.pixmap(28, 28));
         } else {

@@ -33,6 +33,7 @@
 #include "common.h"
 #include "messagebox.h"
 #include "createvgwidget.h"
+#include "removepvwidget.h"
 
 #include <QMouseEvent>
 #include <QHBoxLayout>
@@ -243,6 +244,7 @@ void TitleWidget::showUnmountInfoWidget()
 void TitleWidget::showResizeInfoWidget()
 {
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+    setCurDevicePath(info.m_devicePath);
     FS_Limits limits = info.m_fsLimits;
     if (limits.min_size == -1 && limits.max_size == -1) {
         MessageBox warningBox(this);
@@ -252,9 +254,10 @@ void TitleWidget::showResizeInfoWidget()
         warningBox.setWarings(tr("The file system does not support space adjustment"), "", tr("OK"), "ok");
         warningBox.exec();
 
+        setCurDevicePath("");
+
         return;
     }
-    setCurDevicePath(info.m_devicePath);
 
     ResizeDialog dlg(this);
     dlg.setObjectName("resizeDialog");
@@ -266,6 +269,7 @@ void TitleWidget::showResizeInfoWidget()
 
 void TitleWidget::onCreateLVClicked()
 {
+    setCurVGName(DMDbusHandler::instance()->getCurLVInfo().m_vgName);
     PartitionDialog dlg(this);
     dlg.setTitleText(tr("Create logical volume"), tr("The disks will be formatted if you create a logical volume"));
     dlg.setObjectName("createLVDialog");
@@ -277,11 +281,14 @@ void TitleWidget::onCreateLVClicked()
         createLVWidget.setAccessibleName("createLVWidget");
         createLVWidget.exec();
     }
+
+    setCurVGName("");
 }
 
 void TitleWidget::onDeleteLVClicked()
 {
     LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+    setCurVGName(lvInfo.m_vgName);
     QString mountPoint = "";
     for (int i = 0; i < lvInfo.m_mountPoints.size(); i++) {
         mountPoint += lvInfo.m_mountPoints[i];
@@ -294,6 +301,8 @@ void TitleWidget::onDeleteLVClicked()
         // 请先手动卸载XXX（逻辑卷名称）  确定
         warningBox.setWarings(tr("Unmount %1 first").arg(lvInfo.m_lvName), "", tr("OK"), "ok");
         warningBox.exec();
+
+        setCurVGName("");
 
         return;
     }
@@ -310,11 +319,14 @@ void TitleWidget::onDeleteLVClicked()
 
         DMDbusHandler::instance()->deleteLV(lvNameList);
     }
+
+    setCurVGName("");
 }
 
 void TitleWidget::onResizeLVClicked()
 {
     LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+    setCurVGName(lvInfo.m_vgName);
     QString mountPoint = "";
     for (int i = 0; i < lvInfo.m_mountPoints.size(); i++) {
         mountPoint += lvInfo.m_mountPoints[i];
@@ -328,6 +340,8 @@ void TitleWidget::onResizeLVClicked()
         warningBox.setWarings(tr("Unmount %1 first").arg(lvInfo.m_lvName), "", tr("OK"), "ok");
         warningBox.exec();
 
+        setCurVGName("");
+
         return;
     }
 
@@ -340,6 +354,8 @@ void TitleWidget::onResizeLVClicked()
         warningBox.setWarings(tr("The file system does not support space adjustment"), "", tr("OK"), "ok");
         warningBox.exec();
 
+        setCurVGName("");
+
         return;
     }
 
@@ -347,6 +363,8 @@ void TitleWidget::onResizeLVClicked()
     dlg.setObjectName("resizeLVDialog");
     dlg.setAccessibleName("resizeLVDialog");
     dlg.exec();
+
+    setCurVGName("");
 }
 
 void TitleWidget::onCreateVGClicked()
@@ -357,7 +375,7 @@ void TitleWidget::onCreateVGClicked()
     dlg.setAccessibleName("createVGDialog");
 
     if (dlg.exec() == 1) {
-        CreateVGWidget createVGWidget(this);
+        CreateVGWidget createVGWidget(CreateVGWidget::CREATE, this);
         createVGWidget.setObjectName("createVGWidget");
         createVGWidget.setAccessibleName("createVGWidget");
         createVGWidget.exec();
@@ -367,6 +385,7 @@ void TitleWidget::onCreateVGClicked()
 void TitleWidget::onDeleteVGClicked()
 {
     VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
+    setCurVGName(vgInfo.m_vgName);
     if (DMDbusHandler::instance()->isExistMountLV()){
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
@@ -374,6 +393,8 @@ void TitleWidget::onDeleteVGClicked()
         // 请先手动卸载XXX（逻辑卷组名称）  确定
         warningBox.setWarings(tr("Unmount %1 first").arg(vgInfo.m_vgName), "", tr("OK"), "ok");
         warningBox.exec();
+
+        setCurVGName("");
 
         return;
     }
@@ -390,24 +411,36 @@ void TitleWidget::onDeleteVGClicked()
 
         DMDbusHandler::instance()->deleteVG(vgNameList);
     }
+
+    setCurVGName("");
 }
 
 void TitleWidget::onResizeVGClicked()
 {
+    setCurVGName(DMDbusHandler::instance()->getCurVGInfo().m_vgName);
 
+    CreateVGWidget createVGWidget(CreateVGWidget::RESIZE, this);
+    createVGWidget.setObjectName("ResizeVGWidget");
+    createVGWidget.setAccessibleName("ResizeVGWidget");
+    createVGWidget.exec();
+
+    setCurVGName("");
 }
 
 void TitleWidget::onDeletePVClicked()
 {
-    MessageBox messageBox(this);
-    messageBox.setObjectName("messageBox");
-    messageBox.setAccessibleName("deletePVMessageBox");
-    // 您确定要删除该物理卷吗？ 其包含的所有文件将会丢失  删除  取消
-    messageBox.setWarings(tr("Are you sure you want to delete the physical volume?"), tr("You will lose all data in it"),
-                          tr("Delete"), DDialog::ButtonWarning, "delete", tr("Cancel"), "cancel");
-    if (messageBox.exec() == DDialog::Accepted) {
-
+    if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
+        setCurDevicePath(DMDbusHandler::instance()->getCurPartititonInfo().m_devicePath);
+    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
+        setCurDevicePath(DMDbusHandler::instance()->getCurDeviceInfo().m_path);
     }
+
+    RemovePVWidget removePVWidget(this);
+    removePVWidget.setObjectName("RemovePVWidget");
+    removePVWidget.setAccessibleName("RemovePVWidget");
+    removePVWidget.exec();
+
+    setCurDevicePath("");
 }
 
 bool TitleWidget::isExistMountPartition()
@@ -443,11 +476,18 @@ void TitleWidget::updateBtnStatus()
         m_btnResizeVG->hide();
 
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-        if (1 == info.m_vgFlag) {
+        if (info.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV) {
             m_btnParted->hide();
             m_btnCreateLV->show();
 
-            m_btnDeletePV->setDisabled(false);
+            QMap<QString, VGInfo> mapVGInfo = DMDbusHandler::instance()->probLVMInfo().m_vgInfo;
+            VGInfo vgInfo = mapVGInfo.value(info.m_vgData.m_vgName);
+            if (!vgInfo.isPartial()) {
+                m_btnDeletePV->setDisabled(false);
+            } else {
+                m_btnDeletePV->setDisabled(true);
+            }
+
             m_btnCreateLV->setDisabled(true);
             m_btnFormat->setDisabled(true);
             m_btnMount->setDisabled(true);
@@ -533,11 +573,27 @@ void TitleWidget::updateBtnStatus()
         m_btnResizeVG->hide();
 
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
-        if (1 == info.m_vgFlag) {
+        if (info.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV) {
             m_btnParted->hide();
             m_btnCreateLV->show();
 
-            m_btnDeletePV->setDisabled(false);
+            QMap<QString, VGInfo> mapVGInfo = DMDbusHandler::instance()->probLVMInfo().m_vgInfo;
+            QVector<VGData> vglist = info.m_vglist;
+            bool isVGNormal = true;
+            for (int i = 0; i < vglist.count(); i++) {
+                VGInfo vgInfo = mapVGInfo.value(vglist.at(i).m_vgName);
+                if (vgInfo.isPartial()) {
+                    isVGNormal = false;
+                    break;
+                }
+            }
+
+            if (isVGNormal) {
+                m_btnDeletePV->setDisabled(false);
+            } else {
+                m_btnDeletePV->setDisabled(true);
+            }
+
             m_btnCreateLV->setDisabled(true);
             m_btnFormat->setDisabled(true);
             m_btnMount->setDisabled(true);
@@ -572,6 +628,19 @@ void TitleWidget::updateBtnStatus()
         m_btnCreateLV->show();
         m_btnResizeVG->show();
 
+        // 如果VG异常，所有相关操作禁用
+        VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
+        if (vgInfo.isPartial()) {
+            m_btnFormat->setDisabled(true);
+            m_btnMount->setDisabled(true);
+            m_btnUnmount->setDisabled(true);
+            m_btnDeleteVG->setDisabled(true);
+            m_btnCreateLV->setDisabled(true);
+            m_btnResizeVG->setDisabled(true);
+
+            return;
+        }
+
         m_btnFormat->setDisabled(true);
         m_btnMount->setDisabled(true);
         m_btnUnmount->setDisabled(true);
@@ -580,7 +649,7 @@ void TitleWidget::updateBtnStatus()
         m_btnResizeVG->setDisabled(false);
 
         QMap<QString, QString> isExistUnallocated = DMDbusHandler::instance()->getIsExistUnallocated();
-        if (isExistUnallocated.value(DMDbusHandler::instance()->getCurVGInfo().m_vgName) == "false") {
+        if (isExistUnallocated.value(vgInfo.m_vgName) == "false") {
             m_btnCreateLV->setDisabled(true);
         }
 
@@ -593,6 +662,19 @@ void TitleWidget::updateBtnStatus()
         m_btnDeleteLV->show();
         m_btnCreateLV->show();
         m_btnResizeLV->show();
+
+        // 如果VG异常，所有相关操作禁用
+        VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
+        if (vgInfo.isPartial()) {
+            m_btnCreateLV->setDisabled(true);
+            m_btnFormat->setDisabled(true);
+            m_btnMount->setDisabled(true);
+            m_btnUnmount->setDisabled(true);
+            m_btnDeleteLV->setDisabled(true);
+            m_btnResizeLV->setDisabled(true);
+
+            return;
+        }
 
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
         QString mountPoint = "";
@@ -633,35 +715,58 @@ void TitleWidget::onCurSelectChanged()
 
 void TitleWidget::onUpdateUsb()
 {
-    if (m_curChooseDevicePath == "") {
+    if (m_curChooseDevicePath.isEmpty() && m_curChooseVGName.isEmpty()) {
         return;
     }
 
-    QStringList deviceNameList = DMDbusHandler::instance()->getDeviceNameList();
-    if (deviceNameList.indexOf(m_curChooseDevicePath) != -1)
-        return;
+    if (!m_curChooseDevicePath.isEmpty()) {
+        QStringList deviceNameList = DMDbusHandler::instance()->getDeviceNameList();
+        if (deviceNameList.indexOf(m_curChooseDevicePath) != -1)
+            return;
 
-    QWidgetList widgetList = QApplication::topLevelWidgets();
-    for (int i = 0; i < widgetList.count(); i++) {
-        QWidget *widget = widgetList.at(i);
+        QWidgetList widgetList = QApplication::topLevelWidgets();
+        for (int i = 0; i < widgetList.count(); i++) {
+            QWidget *widget = widgetList.at(i);
 
-        if (widget->objectName() == "partitionDialog" || widget->objectName() == "partitionWidget" ||
-                widget->objectName() == "wipeDialog" || widget->objectName() == "mountDialog" ||
-                widget->objectName() == "unmountDialog" || widget->objectName() == "resizeDialog" ||
-                widget->objectName() == "mountMessageBox" || widget->objectName() == "firstWarning" ||
-                widget->objectName() == "secondWarning") {
+            if (widget->objectName() == "partitionDialog" || widget->objectName() == "partitionWidget" ||
+                    widget->objectName() == "wipeDialog" || widget->objectName() == "mountDialog" ||
+                    widget->objectName() == "unmountDialog" || widget->objectName() == "resizeDialog" ||
+                    widget->objectName() == "mountMessageBox" || widget->objectName() == "firstWarning" ||
+                    widget->objectName() == "secondWarning" || widget->objectName() == "RemovePVWidget") {
 
-            widget->close();
-//            break;
+                widget->close();
+    //            break;
+            }
         }
-    }
 
-    setCurDevicePath("");
+        setCurDevicePath("");
+    } else if (!m_curChooseVGName.isEmpty()) {
+        QStringList vgNameList = DMDbusHandler::instance()->getVGNameList();
+        if (vgNameList.indexOf(m_curChooseVGName) != -1)
+            return;
+
+        QWidgetList widgetList = QApplication::topLevelWidgets();
+        for (int i = 0; i < widgetList.count(); i++) {
+            QWidget *widget = widgetList.at(i);
+            if (widget->objectName() == "ResizeVGWidget" || widget->objectName() == "messageBox" ||
+                    widget->objectName() == "resizeLVDialog" || widget->objectName() == "createLVDialog" ||
+                    widget->objectName() == "createLVWidget") {
+                widget->close();
+            }
+        }
+
+        setCurVGName("");
+    }
 }
 
 void TitleWidget::setCurDevicePath(const QString &devPath)
 {
     m_curChooseDevicePath = devPath;
+}
+
+void TitleWidget::setCurVGName(const QString &vgName)
+{
+    m_curChooseVGName = vgName;
 }
 
 void TitleWidget::mousePressEvent(QMouseEvent *event)

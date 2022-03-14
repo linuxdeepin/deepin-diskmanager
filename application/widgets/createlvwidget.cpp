@@ -750,6 +750,13 @@ void CreateLVWidget::onAddPartition()
     setAddOrRemResult(m_isExceed);
 
     m_applyBtn->setEnabled(true);
+
+    if (!m_partNameEdit->text().isEmpty()) {
+        QByteArray byteArray = m_partNameEdit->text().toUtf8();
+        if (byteArray.size() >= 128) {
+            m_addButton->setDisabled(true);
+        }
+    }
 }
 
 void CreateLVWidget::onRemovePartition()
@@ -789,6 +796,7 @@ void CreateLVWidget::onApplyButton()
         info.m_lvSize = m_patrinfo.at(i).m_lvSize;
         info.m_lvByteSize = m_patrinfo.at(i).m_lvByteSize;
         info.m_user = userName;
+        info.m_lvAct = LVMAction::LVM_ACT_LV_CREATE;
 
         lstLVInfo.append(info);
     }

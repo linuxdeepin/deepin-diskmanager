@@ -71,6 +71,11 @@ private:
      */
     void setCurDevicePath(const QString &devPath);
 
+    /**
+     * @brief 设置当前操作VG名称
+     */
+    void setCurVGName(const QString &vgName);
+
     DmTreeview *m_treeView = nullptr;
 
 signals:
@@ -193,6 +198,8 @@ private:
     int m_deviceNum;
     DiskInfoData m_curDiskInfoData;
     QString m_curChooseDevicePath;
+    QString m_curChooseVGName;
+    bool m_vgIsShow = false;
     //    DMDbusHandler *m_handler;
     //    DmDiskinfoBox *m_box = nullptr;
     //    DmDiskinfoBox *m_childbox = nullptr;

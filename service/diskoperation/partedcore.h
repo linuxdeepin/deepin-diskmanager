@@ -348,6 +348,14 @@ public:
      */
     bool clearLV(const LVAction &lvAction);
 
+
+    /**
+     * @brief pv删除
+     * @param devList: 待删除pv设备集合
+     * @return true 成功 false 失败
+     */
+    bool deletePVList(QList<PVData>devList);
+
 private:
 
     /**
@@ -968,6 +976,12 @@ signals:
      * @param vgMessage:创建结果
      */
     void vgCreateMessage(const QString &vgMessage);
+
+    /**
+     * @brief pv删除
+     * @param pvMessage:删除结果
+     */
+    void pvDeleteMessage(const QString &pvMessage);
 
 
 

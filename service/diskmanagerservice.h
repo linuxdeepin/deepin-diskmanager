@@ -145,6 +145,13 @@ Q_SIGNALS:
     Q_SCRIPTABLE void vgCreateMessage(const QString &vgMessage);
 
 
+    /**
+     * @brief pv删除
+     * @param pvMessage:删除结果
+     */
+    Q_SCRIPTABLE void pvDeleteMessage(const QString &vgMessage);
+
+
 public Q_SLOTS:
     /**
      * @brief 退出服务
@@ -395,6 +402,14 @@ public Q_SLOTS:
      * @return true 成功 false 失败
      */
     Q_SCRIPTABLE bool onClearLV(LVAction lvAction);
+
+    /**
+     * @brief pv删除
+     * @param devList: 待删除pv设备集合
+     * @return true 成功 false 失败
+     */
+    Q_SCRIPTABLE bool onDeletePVList(QList<PVData>devList);
+
 
     /**
      * @brief USB插入

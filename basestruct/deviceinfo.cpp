@@ -21,7 +21,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const DeviceInfo &info)
              << info.m_partition
              << info.m_mediaType
              << info.m_interface
-             << info.m_vgFlag
+             << static_cast<int>(info.m_vgFlag)
              << info.m_vglist;
     argument.endStructure();
 
@@ -31,6 +31,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const DeviceInfo &info)
 const QDBusArgument &operator>>(const QDBusArgument &argument, DeviceInfo &info)
 {
     argument.beginStructure();
+    int flag=0;
     argument >> info.m_length
              >> info.m_heads
              >> info.m_path
@@ -48,8 +49,9 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, DeviceInfo &info)
              >> info.m_partition
              >> info.m_mediaType
              >> info.m_interface
-             >> info.m_vgFlag
+             >> flag
              >> info.m_vglist;
+    info.m_vgFlag = static_cast<LVMFlag>(flag);
     argument.endStructure();
     return argument;
 }
@@ -155,6 +157,6 @@ DeviceInfo::DeviceInfo()
     m_length = m_heads = m_sectors = m_cylinders = m_cylsize = m_sectorSize = m_maxPrims = m_highestBusy = m_maxPartitionNameLength = 0;
     m_path = m_model = m_serialNumber = m_disktype = m_mediaType = m_interface = QString("");
     m_partition.clear();
-    m_vgFlag = 0;
+    m_vgFlag = LVM_FLAG_NOT_PV;
     m_vglist.clear();
 }

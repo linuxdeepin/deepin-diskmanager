@@ -125,7 +125,23 @@ public:
     static bool resizeLV(LVMInfo &lvmInfo, LVAction &lvAction, LVInfo &info);
 
 
+    /**
+     * @brief vg减少pv
+     * @param lvmInfo: lvm数据集合
+     * @param vgName:vg名称
+     * @param devList: pv设备集合
+     * @return true 成功 false 失败
+     */
+    static bool vgReduce(LVMInfo &lvmInfo,  const QString &vgName, QList<PVData>devList);
 
+
+    /**
+     * @brief pv删除
+     * @param lvmInfo: lvm数据集合
+     * @param devList: 待删除pv设备集合
+     * @return true 成功 false 失败
+     */
+    static bool deletePVList(LVMInfo &lvmInfo,  QList<PVData>devList);
 
 private:
 
@@ -198,6 +214,23 @@ private:
      * @return true 成功 false 失败
      */
     static bool vgRename(const QString &uuid, const QString &newName);
+
+
+    /**
+     * @brief vg减少pv
+     * @param pv: pv属性
+     * @return true 成功 false 失败
+     */
+    static bool vgReduce(const QString &vgName, const QString &pvPath);
+
+
+    /**
+     * @brief pv移动
+     * @param pvPath: pv设备路径
+     * @return true 成功 false 失败
+     */
+    static bool pvMove(const QString& pvPath);
+
 
     /**
      * @brief 获取系统命令支持

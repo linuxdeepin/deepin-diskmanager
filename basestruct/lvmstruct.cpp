@@ -322,7 +322,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const VGInfo &data)
              << data.m_vgStatus
              << static_cast<int>(data.m_vgError)
              << data.m_lvlist
-             << data.m_pvList;
+             << data.m_pvInfo;
     argument.endStructure();
     return argument;
 }
@@ -346,7 +346,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument,  VGInfo &data)
              >> data.m_vgStatus
              >> err
              >> data.m_lvlist
-             >> data.m_pvList;
+             >> data.m_pvInfo;
     data.m_vgError = static_cast<LVMError>(err);
     argument.endStructure();
     return argument;
@@ -375,6 +375,53 @@ PVInfo LVMInfo::getPV(const QString &pvPath)
     return getItem(pvPath, m_pvInfo);
 }
 
+QVector<PVInfo> LVMInfo::getVGAllPV(const QString &vgName)
+{
+    if (vgExists(vgName)) {
+        VGInfo vg = getVG(vgName);
+        return vg.m_pvInfo.values().toVector();
+    }
+    return QVector<PVInfo>();
+}
+
+QVector<PVInfo> LVMInfo::getVGAllUsedPV(const QString &vgName)
+{
+    return getVGPVList(vgName, true);
+}
+
+QVector<PVInfo> LVMInfo::getVGAllUnUsedPV(const QString &vgName)
+{
+    return getVGPVList(vgName, false);
+}
+
+QList<QString> LVMInfo::getVGOfDisk(const QString &vgName, const QString &disk)
+{
+    QList<QString>list;
+    foreach (auto it, m_pvInfo) {
+        //todo 要对这里进行优化 目前是比较是否包含磁盘路径字符串
+        if (it.m_pvPath.contains(disk) && it.m_vgName == vgName) {
+            list.push_back(it.m_pvPath);
+        }
+    }
+    return list;
+}
+
+
+QVector<PVInfo> LVMInfo::getVGPVList(const QString &vgName, bool isUsed)
+{
+    QVector<PVInfo> pvList;
+    if (vgExists(vgName)) {
+        VGInfo vg = getVG(vgName);
+        foreach (const PVInfo &pv, vg.m_pvInfo) {
+            if (isUsed && pv.m_pvUsedPE > 0) {
+                pvList.push_back(pv);
+            } else if (!isUsed && pv.m_pvUsedPE == 0) {
+                pvList.push_back(pv);
+            }
+        }
+    }
+    return pvList;
+}
 
 bool LVMInfo::lvInfoExists(const QString &vgName, const QString &lvName)
 {
@@ -395,6 +442,17 @@ bool LVMInfo::pvExists(const QString &pvPath)
 {
     return itemExists(pvPath, m_pvInfo);
 }
+
+bool LVMInfo::pvOfVg(const QString &vgName, const QString &pvPath)
+{
+    if (!vgExists(vgName)) {
+        return false;
+    }
+
+    auto vg = getVG(vgName);
+    return vg.m_pvInfo.find(pvPath) != vg.m_pvInfo.end();
+}
+
 
 template<class T>
 T LVMInfo:: getItem(const QString &str,  const QMap<QString, T>& containers)

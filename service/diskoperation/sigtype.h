@@ -35,6 +35,7 @@
 #define DISK_SIGNAL_USBUPDATE     5         //usb刷新信号
 #define DISK_SIGNAL_TYPE_CLEAR 6            //磁盘或分区清除动作信号
 #define DISK_SIGNAL_TYPE_VGCREATE 7         //vg创建信号
+#define DISK_SIGNAL_TYPE_PVDELETE 8         //pv删除信号
 
 #define DISK_SIGNAL_TYPE_AUTOMNT 100        //自动挂载
 

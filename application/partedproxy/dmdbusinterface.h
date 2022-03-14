@@ -456,6 +456,17 @@ public Q_SLOTS: // METHODS
         return asyncCallWithArgumentList(QStringLiteral("onClearLV"), argumentList);
     }
 
+    /**
+     * @brief pv删除
+     * @param devList: 待删除pv设备集合
+     */
+    inline QDBusPendingReply<bool> onDeletePVList(QList<PVData>devList)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(devList);
+        return asyncCallWithArgumentList(QStringLiteral("onDeletePVList"), argumentList);
+    }
+
 
 
 Q_SIGNALS: // SIGNALS
@@ -475,6 +486,7 @@ Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void createTableMessage(const bool &flag);
     Q_SCRIPTABLE void clearMessage(const QString &clearMessage);
     Q_SCRIPTABLE void vgCreateMessage(const QString &vgMessage);
+    Q_SCRIPTABLE void pvDeleteMessage(const QString &pvMessage);
 };
 
 namespace com {

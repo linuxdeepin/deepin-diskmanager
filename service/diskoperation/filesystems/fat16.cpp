@@ -277,17 +277,16 @@ bool FAT16::checkRepair(const QString &devpath)
     return exitcode == 0 || error.compare("Unknown error") == 0;
 }
 
-FS_Limits FAT16::getFilesystemLimits(const Partition &partition) const
+FS_Limits FAT16::getFilesystemLimits(const Partition &partition)
 {
     return getFilesystemLimits(partition.getPath());
 }
 
-FS_Limits FAT16::getFilesystemLimits(const QString &path) const
+FS_Limits FAT16::getFilesystemLimits(const QString &path)
 {
-    FS_Limits tmp {-1, -1};
-
+    m_fsLimits = FS_Limits {-1, -1};
     if (Utils::findProgramInPath("fatresize").isEmpty()) {
-        return tmp;
+        return m_fsLimits;
     }
 
 
@@ -295,7 +294,7 @@ FS_Limits FAT16::getFilesystemLimits(const QString &path) const
     QString output, error;
     int exitcode = Utils::executCmd(QString("fatresize %1 -i").arg(path), output, error);
     if (exitcode != 0) {
-        return tmp;
+        return m_fsLimits;
     }
     long long minSize = 0, maxSize = 0;
     FSType fs = FS_UNKNOWN;
@@ -324,7 +323,7 @@ FS_Limits FAT16::getFilesystemLimits(const QString &path) const
 
 
     if (fs == FS_UNKNOWN) {
-        return tmp;
+        return m_fsLimits;
     }
 
     if (fs == FS_FAT16) {
@@ -340,9 +339,9 @@ FS_Limits FAT16::getFilesystemLimits(const QString &path) const
         }
     }
 
-    tmp.max_size = maxSize;
-    tmp.min_size = minSize;
-    return tmp;
+    m_fsLimits.max_size = maxSize;
+    m_fsLimits.min_size = minSize;
+    return m_fsLimits;
 }
 
 //fat格式需要操作分区表 lvm不支持fat格式的调整大小  fatresize命令也不是一个好的调整分区大小方式 相对来说libparted库更合适

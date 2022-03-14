@@ -25,6 +25,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "lvmstruct.h"
 #include "utils.h"
 
 #include <sys/statvfs.h>
@@ -33,6 +34,7 @@
 #include <QRegularExpression>
 #include <QUuid>
 #include <QDebug>
+#include <algorithm>
 
 Utils::Utils()
 {
@@ -586,4 +588,56 @@ double Utils::LVMSizeToUnit(long long lvmSize, SIZE_UNIT sizeUnit)
     }
     return res;
 }
+
+bool Utils::adjudicationPVDelete(LVMInfo lvmInfo, const set<QString> &pvStrList, bool &bigDataMove, QStringList &realMovePvList)
+{
+    bigDataMove = false;
+    //获取所有存在于vg中 待删除的pv
+    QMap<QString, QVector<QString>>t_map;
+    foreach (auto pvPath, pvStrList) {
+        if (!lvmInfo.pvExists(pvPath)) {
+            continue;
+        }
+
+        PVInfo pv =  lvmInfo.getPV(pvPath);
+        if (!pv.noJoinVG()) { //只获取加入vg的pv路径
+            if (!lvmInfo.pvOfVg(pv.m_vgName, pv.m_pvPath)) { //vg不存在或pv不在vg中 说明数据有错误
+                return false;
+            }
+            t_map[pv.m_vgName].push_back(pv.m_pvPath);
+        }
+    }
+
+    //判断pv是否可以删除
+    long long remvoeAllSize = 0;
+    for (QMap<QString, QVector<QString>>::iterator it = t_map.begin(); it != t_map.end(); ++it) {
+        long long remvoePE = 0;
+        long long unusedPE = 0;
+        VGInfo vgInfo = lvmInfo.getVG(it.key());
+        foreach (const QString &path, it.value()) { //需要删除的pv
+            auto pvIt = vgInfo.m_pvInfo.find(path);
+            if (pvIt != vgInfo.m_pvInfo.end()) {
+                if (pvIt->m_pvUsedPE > 0) {
+                    realMovePvList.push_back(pvIt->m_pvPath);
+                    remvoePE += pvIt->m_pvUsedPE;
+                }
+                unusedPE += pvIt->m_pvUnusedPE;
+            }
+        }
+        if (vgInfo.m_peUnused - unusedPE < remvoePE) { //判断是否允许删除
+            return false;
+        }
+
+        if (!bigDataMove) { //判断是否存在大量数据需要移动
+            remvoeAllSize += (remvoePE * vgInfo.m_PESize);
+            bigDataMove = ((remvoeAllSize / GIBIBYTE) >= 1);
+        }
+    }
+    return true;
+}
+
+
+
+
+
 

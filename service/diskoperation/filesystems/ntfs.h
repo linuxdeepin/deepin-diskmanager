@@ -128,7 +128,7 @@ public:
      * @param partition：分区信息
      * @return 文件系统限制信息
      */
-    virtual FS_Limits getFilesystemLimits(const Partition &partition) const override;
+    virtual FS_Limits getFilesystemLimits(const Partition &partition) override;
 
 
     /**
@@ -136,7 +136,7 @@ public:
      * @param path：设备路径
      * @return 文件系统限制信息
      */
-    virtual FS_Limits getFilesystemLimits(const QString &path) const override;
+    virtual FS_Limits getFilesystemLimits(const QString &path)  override;
 
 };
 

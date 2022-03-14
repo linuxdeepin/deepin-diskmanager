@@ -118,6 +118,8 @@ void Partition::set(const QString &devicePath, const QString &partition, int par
     FileSystem *fs =  s.getFsObject(m_fstype);
     if (fs) {
         m_fsLimits = fs->getFilesystemLimits(*this);
+    }else {
+        m_fsLimits = FS_Limits{-1,-1}; //-1 -1 no support fileSystem  0 =>no limits
     }
 
 

@@ -211,34 +211,35 @@ bool NTFS::checkRepair(const QString &devpath)
     return exitcode == 0 || error.compare("Unknown error") == 0;
 }
 
-FS_Limits NTFS::getFilesystemLimits(const Partition &partition) const
+FS_Limits NTFS::getFilesystemLimits(const Partition &partition)
 {
     return getFilesystemLimits(partition.getPath());
 }
 
-FS_Limits NTFS::getFilesystemLimits(const QString &path) const
+FS_Limits NTFS::getFilesystemLimits(const QString &path)
 {
-    FS_Limits tmp {-1, 0};
+    m_fsLimits = FS_Limits {-1, -1};
     QString cmd, output, error;
     cmd = QString("ntfsresize -m -f %1").arg(path);
     if (Utils::executCmd(cmd, output, error) != 0 && error.compare("Unknown error") != 0) {
-        return tmp;
+        return m_fsLimits;
     }
 
     foreach (QString str, output.split("\n")) {
-       // qDebug()<<"getFilesystemLimits ntfs"<<str;
+        // qDebug()<<"getFilesystemLimits ntfs"<<str;
         if (str.contains("Minsize (in MB):")) {
             auto list = str.split(":");
-             //qDebug()<<"getFilesystemLimits ntfs list"<<list;
+            //qDebug()<<"getFilesystemLimits ntfs list"<<list;
             if (list.count() == 2) {
-                tmp.min_size = list[1].toLongLong() * 1000 * 1000; //转换为byte
+                m_fsLimits.min_size = list[1].toLongLong() * 1000 * 1000; //转换为byte  
                 //qDebug()<<"getFilesystemLimits ntfs min_size"<<tmp.min_size;
-                return tmp;
+                m_fsLimits.max_size = 0;
+                return m_fsLimits;
             }
         }
     }
 
-    return tmp;
+    return m_fsLimits;
 }
 
 } //DiskManager

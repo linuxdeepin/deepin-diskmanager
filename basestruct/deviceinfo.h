@@ -125,7 +125,7 @@ public:
     int m_maxPartitionNameLength;
     PartitionVec m_partition;
     QVector<VGData>m_vglist;
-    int m_vgFlag; //加入vg标志位
+    LVMFlag m_vgFlag; //vg标志位
 };
 Q_DECLARE_METATYPE(DeviceInfo)
 

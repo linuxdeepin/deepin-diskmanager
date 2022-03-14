@@ -31,6 +31,11 @@
 
 #include <QString>
 #include <QStringList>
+#include <set>
+
+class LVMInfo;
+using std::set;
+
 
 /**
  * @class Utils
@@ -196,6 +201,17 @@ public:
      * @return 大小字符串
      */
     static double LVMSizeToUnit(long long lvmSize, SIZE_UNIT sizeUnit);
+
+
+    /**
+     * @brief 判断pv是否可以删除
+     * @param lvmInfo:lvm 属性
+     * @param pvStrList:待删除pv列表
+     * @param bigDataMove:传入参数 大文件移动标志位
+     * @param realMovePvList:传入参数 真实需要移动的pv列表
+     * @return true 允许删除 false 不允许删除
+     */
+    static bool adjudicationPVDelete(LVMInfo lvmInfo, const set<QString> &pvStrList, bool &bigDataMove, QStringList &realMovePvList);
 
 
 };

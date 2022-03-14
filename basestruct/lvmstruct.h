@@ -142,11 +142,12 @@ typedef PVRanges VG_PV_Ranges;
 class PVInfo
 {
 public:
-    bool isDuplicate() {return m_pvStatus[0] == 'd';}
-    bool isAllocatable() {return m_pvStatus[0] == 'a';}//已经使用并且分配
-    bool isUsed() {return m_pvStatus[0] == 'u';} //已经加入vg 但是未分配
-    bool isExported() {return m_pvStatus[1] == 'x';}
-    bool isMissing() {return m_pvStatus[2] == 'm';}
+    bool isDuplicate()const {return m_pvStatus[0] == 'd';}
+    bool isAllocatable()const {return m_pvStatus[0] == 'a';}//已经使用并且分配
+    bool isUsed()const {return m_pvStatus[0] == 'u';} //已经加入vg 但是未分配
+    bool isExported()const {return m_pvStatus[1] == 'x';}
+    bool isMissing()const {return m_pvStatus[2] == 'm';}
+    bool noJoinVG()const {return m_pvStatus[0] == "-";}
 public:
     QString m_pvFmt;  //pv格式 lvm1 lvm2
     QString m_vgName; //vgName
@@ -218,8 +219,9 @@ class LVInfo
 {
 public:
     //由于属性过多 之后补上 目前只需要激活及暂停状态。
-    bool isActivve() {return m_lvStatus[4] == 'a';}
-    bool isSuspended() {return m_lvStatus[4] == 's';}
+    bool isActivve()const {return m_lvStatus[4] == 'a';}
+    bool isSuspended()const {return m_lvStatus[4] == 's';}
+    bool isPartial()const {return m_lvStatus[8] == 'p';}
 public:
     QString m_vgName; //vg名称
     QString m_lvPath; //lv路径
@@ -262,17 +264,17 @@ The vg_attr bits are:
 class VGInfo
 {
 public:
-    bool isWriteable() {return m_vgStatus[0] == 'w';}
-    bool isReadOnly() {return m_vgStatus[0] == 'r';}
-    bool isResizeable() {return m_vgStatus[1] == 'z';}
-    bool isExported() {return m_vgStatus[2] == 'x';}
-    bool isPartial() {return m_vgStatus[3] == 'p';}
-    bool isContiguous() {return m_vgStatus[4] == 'c';}
-    bool isCling() {return m_vgStatus[4] == 'l';}
-    bool isNormal() {return m_vgStatus[4] == 'n';}
-    bool isAnywhere() {return m_vgStatus[4] == 'a';}
-    bool isClustered() {return m_vgStatus[5] == 'c';}
-    bool isShared() {return m_vgStatus[5] == 's';}
+    bool isWriteable()const {return m_vgStatus[0] == 'w';}
+    bool isReadOnly()const {return m_vgStatus[0] == 'r';}
+    bool isResizeable()const {return m_vgStatus[1] == 'z';}
+    bool isExported()const {return m_vgStatus[2] == 'x';}
+    bool isPartial()const {return m_vgStatus[3] == 'p';}
+    bool isContiguous()const {return m_vgStatus[4] == 'c';}
+    bool isCling()const {return m_vgStatus[4] == 'l';}
+    bool isNormal()const {return m_vgStatus[4] == 'n';}
+    bool isAnywhere()const {return m_vgStatus[4] == 'a';}
+    bool isClustered()const {return m_vgStatus[5] == 'c';}
+    bool isShared()const {return m_vgStatus[5] == 's';}
     LVInfo getLVinfo(const QString &lvName);
     bool lvInfoExists(const QString &lvName);
 public:
@@ -290,7 +292,7 @@ public:
     QString m_vgStatus{"------"}; //状态
     LVMError m_vgError{LVMError::LVM_ERR_NORMAL};//逻辑卷组错误码
     QVector<LVInfo>m_lvlist; //vg 下lv列表
-    QStringList m_pvList;//pv列表
+    QMap<QString, PVInfo> m_pvInfo;
 };
 LVMStructEnd(VGInfo)
 
@@ -305,16 +307,26 @@ public:
     LVInfo getLVInfo(const QString &vgName, const QString &lvName);
     VGInfo getVG(const QString &vgName);
     PVInfo getPV(const QString &pvPath);
+    QVector<PVInfo> getVGAllPV(const QString &vgName);
+    QVector<PVInfo> getVGAllUsedPV(const QString &vgName);
+    QVector<PVInfo> getVGAllUnUsedPV(const QString &vgName);
+    QList<QString> getVGOfDisk(const QString &vgName, const QString &disk);
 
     bool lvInfoExists(const QString &vgName, const QString &lvName);
     bool vgExists(const QString &vgName);
     bool pvExists(const QString &pvPath);
+    bool pvOfVg(const QString &vgName, const QString &pvPath);
+
 private:
     template<class T>
     T getItem(const QString &str, const QMap<QString, T> &containers);
 
     template<class T>
     bool itemExists(const QString &str, const QMap<QString, T> &containers);
+
+    QVector<PVInfo> getVGPVList(const QString &vgName, bool isUsed = true);
+
+
 public:
     QMap<QString, VGInfo> m_vgInfo;        //lvm设备信息 key:vgName value vginfo
     QMap<QString, PVInfo> m_pvInfo;        //lvm pv信息 key:/dev/sdb1 value:pvinfo

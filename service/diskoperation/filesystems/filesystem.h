@@ -95,7 +95,7 @@ public:
      * @param partition：分区信息
      * @return 文件系统限制信息
      */
-    virtual FS_Limits getFilesystemLimits(const Partition &) const { return m_fsLimits; }
+    virtual FS_Limits getFilesystemLimits(const Partition &) { return m_fsLimits; }
 
 
 
@@ -104,7 +104,7 @@ public:
      * @param path：设备路径
      * @return 文件系统限制信息
      */
-    virtual FS_Limits getFilesystemLimits(const QString &) const { return m_fsLimits; }
+    virtual FS_Limits getFilesystemLimits(const QString &) { return m_fsLimits; }
 
     /**
      * @brief 创建

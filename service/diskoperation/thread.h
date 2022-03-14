@@ -115,6 +115,12 @@ signals:
     void vgCreateMessage(const QString &vgMessage);
 
     /**
+     * @brief pv删除
+     * @param 删除结果
+     */
+    void pvDeleteMessage(const QString &pvMessage);
+
+    /**
      * @brief USB设备刷新信号
      */
     void usbUpdated();

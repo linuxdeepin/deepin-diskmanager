@@ -39,7 +39,7 @@ PartitionInfo::PartitionInfo()
     m_partitionNumber = m_type = m_status = m_alignment = m_fileSystemType = 0;
     m_sectorStart = m_sectorEnd = m_sectorsUsed = m_sectorsUnused = m_sectorsUnallocated = m_significantThreshold = m_freeSpaceBefore = 0;
     m_flag = m_sectorSize = m_fileSystemBlockSize = 0;
-    m_vgFlag = 0;
+    m_vgFlag = LVM_FLAG_NOT_PV;
     // mountpoints.clear();
 }
 
@@ -91,10 +91,11 @@ QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info)
              << info.m_fileSystemReadOnly
              << info.m_flag
              << info.m_mountPoints
-             << info.m_vgFlag
+             << static_cast<int>(info.m_vgFlag)
              << info.m_vgData
              << info.m_fsLimits.min_size
              << info.m_fsLimits.max_size;
+
     argument.endStructure();
 
     return argument;
@@ -103,7 +104,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info)
 const QDBusArgument &operator>>(const QDBusArgument &argument, PartitionInfo &info)
 {
     argument.beginStructure();
-
+    int flag = 0;
     argument >> info.m_devicePath
              >> info.m_partitionNumber
              >> info.m_type
@@ -128,10 +129,11 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PartitionInfo &in
              >> info.m_fileSystemReadOnly
              >> info.m_flag
              >> info.m_mountPoints
-             >> info.m_vgFlag
+             >> flag
              >> info.m_vgData
              >> info.m_fsLimits.min_size
              >> info.m_fsLimits.max_size;
+    info.m_vgFlag = static_cast<LVMFlag>(flag);
     argument.endStructure();
 
     return argument;

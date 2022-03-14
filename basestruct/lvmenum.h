@@ -23,6 +23,17 @@
 
 #include <QDBusArgument>
 
+//new by liuwh 2022/3/11
+/**
+ * @enum PVFlag
+ * @brief pv 标志
+ */
+
+enum LVMFlag {
+    LVM_FLAG_NOT_PV = 0, //非pv设备
+    LVM_FLAG_JOIN_VG = 1, //加入vg
+    LVM_FLAG_NOT_JOIN_VG = 2, //未加入vg
+};
 
 //new by liuwh 2022/1/17
 /**
@@ -81,6 +92,9 @@ enum LVMError {
     LVM_ERR_PV = 100,
     LVM_ERR_PV_CREATE_FAILED,       //pv 创建失败
     LVM_ERR_PV_DELETE_FAILED,       //pv 删除失败
+    LVM_ERR_PV_NO_EXISTS,           //pv 不存在
+    LVM_ERR_PV_ARGUMENT,            //pv 参数错误
+    LVM_ERR_PV_MOVE_FAILED,         //pv 移动错误
 
     LVM_ERR_LV = 200,               //lv 错误
     LVM_ERR_LV_CREATE_FAILED,       //lv 创建失败
@@ -100,7 +114,9 @@ enum LVMError {
     LVM_ERR_VG_ARGUMENT,            //vg 创建参数错误
     LVM_ERR_VG_NO_EXISTS,           //vg 不存在
     LVM_ERR_VG_ALREADY_EXISTS,      //vg 重名
-    LVM_ERR_VG_DELETE_FAILED        //vg 删除失败
+    LVM_ERR_VG_DELETE_FAILED,       //vg 删除失败
+    LVM_ERR_VG_EXTEND_FAILED,       //vg 扩展失败
+    LVM_ERR_VG_REDUCE_FAILED        //vg 缩小失败
 
 };
 

@@ -3,6 +3,13 @@
 #include <QObject>
 #include <QVector>
 
+#define GPTBACKUP 33
+#define UEFI_SECTOR 2048 //第一个分区从2048开始 为将来UEFI升级预留空间
+
+
+
+
+
 typedef long long Sector;
 typedef long long Byte_Value;
 

@@ -298,18 +298,18 @@ bool EXT2::checkRepair(const QString &devpath)
     return  0 == exitcode || 0 == error.compare("Unknown error");
 }
 
-FS_Limits EXT2::getFilesystemLimits(const Partition &partition) const
+FS_Limits EXT2::getFilesystemLimits(const Partition &partition)
 {
     return getFilesystemLimits(partition.getPath());
 }
 
-FS_Limits EXT2::getFilesystemLimits(const QString &path) const
+FS_Limits EXT2::getFilesystemLimits(const QString &path)
 {
-    FS_Limits tmp {-1, 0};
+    m_fsLimits = FS_Limits{-1, -1};
     QString output, error;
     int exitcode = Utils::executCmd(QString("e2fsck -f %1").arg(path), output, error);
     if (exitcode != 0 && error.compare("Unknown error") != 0) {
-        return tmp;
+        return m_fsLimits;
     }
 
 
@@ -335,17 +335,18 @@ FS_Limits EXT2::getFilesystemLimits(const QString &path) const
     long long blockSize = getNumber(QString("tune2fs -l %1").arg(path), "Block size:", ":");
 
     if (-1 == blockSize) {
-        return tmp;
+        return m_fsLimits;
     }
     long long blockCount = getNumber(QString("resize2fs -P %1").arg(path), "Estimated minimum size of the filesystem:", ":");
 
     if (-1 == blockCount) {
-        return tmp;
+        return m_fsLimits;
     }
 
-    tmp.min_size = blockSize * blockCount;
+    m_fsLimits.max_size = 0;
+    m_fsLimits.min_size = blockSize * blockCount;
 
-    return tmp;
+    return m_fsLimits;
 }
 
 } // namespace DiskManager

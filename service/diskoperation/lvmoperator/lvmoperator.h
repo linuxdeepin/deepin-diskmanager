@@ -218,10 +218,20 @@ private:
 
     /**
      * @brief vg减少pv
-     * @param pv: pv属性
+     * @param vgName:vg名称
+     * @param pv: pv路径
      * @return true 成功 false 失败
      */
     static bool vgReduce(const QString &vgName, const QString &pvPath);
+
+
+    /**
+     * @brief vg增加pv
+     * @param vgName:vg名称
+     * @param pv: pv路径
+     * @return true 成功 false 失败
+     */
+    static bool vgExtend(const QString &vgName, const QString &pvPath);
 
 
     /**

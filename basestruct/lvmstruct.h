@@ -148,6 +148,7 @@ public:
     bool isExported()const {return m_pvStatus[1] == 'x';}
     bool isMissing()const {return m_pvStatus[2] == 'm';}
     bool noJoinVG()const {return m_pvStatus[0] == "-";}
+    bool joinVG()const {return m_pvStatus[0] == "a";}
 public:
     QString m_pvFmt;  //pv格式 lvm1 lvm2
     QString m_vgName; //vgName
@@ -277,6 +278,7 @@ public:
     bool isShared()const {return m_vgStatus[5] == 's';}
     LVInfo getLVinfo(const QString &lvName);
     bool lvInfoExists(const QString &lvName);
+    bool isAllPV(QVector<QString> pvList)const; //判断是否包含了全部pv
 public:
     QString m_vgName; //vg名称 vg0, vg1 ....
     QString m_vgUuid; //vg唯一名称 uuid

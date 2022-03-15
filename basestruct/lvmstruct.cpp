@@ -1,4 +1,5 @@
 #include "lvmstruct.h"
+#include <QSet>
 /*********************************** PVData *********************************************/
 bool PVData::operator<(const PVData &tmp) const
 {
@@ -302,6 +303,24 @@ bool VGInfo::lvInfoExists(const QString &lvName)
         }
     }
     return  false;
+}
+
+bool VGInfo::isAllPV(QVector<QString> pvList) const
+{
+    if (pvList.size() < m_pvInfo.keys().size()) {
+        return false;
+    }
+
+    foreach (const QString &str, m_pvInfo.keys()) {
+        auto it = std::find_if(pvList.begin(), pvList.end(), [ = ](const QString & str2)->bool{
+            return str == str2;
+        });
+        if (it == pvList.end()) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 

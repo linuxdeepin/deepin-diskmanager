@@ -513,7 +513,17 @@ bool LVMOperator::deleteLV(LVMInfo &lvmInfo, QStringList lvlist)
 
 bool LVMOperator::resizeVG(LVMInfo &lvmInfo, QString vgName, QList<PVData> devList, long long size)
 {
-    qDebug() << __FUNCTION__;
+    if (!lvmInfo.vgExists(vgName) || devList.size() <= 0 || size == 0) {
+        return setLVMErr(lvmInfo, LVMError::LVM_ERR_VG_ARGUMENT);
+    }
+
+    VGInfo vg = lvmInfo.getVG(vgName);
+
+
+
+
+
+
     return true;
 }
 
@@ -579,21 +589,19 @@ bool LVMOperator::deletePVList(LVMInfo &lvmInfo, QList<PVData> devList)
         return setLVMErr(lvmInfo, LVMError::LVM_ERR_NORMAL);
     }
 
-
-    bool flag;
-    QStringList list;
     set<QString>pvList;
+    QVector<QString>allDeletePV;
+    QSet<QString> vgList;
 
     foreach (const PVData &pv, devList) {
-        if (!lvmInfo.pvExists(pv.m_devicePath)                  //pv不存在
-                || pv.m_pvAct != LVMAction::LVM_ACT_DELETEPV    //参数错误
-                || !pvList.insert(pv.m_devicePath).second) {    //pv重复
+        if (!lvmInfo.pvExists(pv.m_devicePath)                              //pv不存在
+                || pv.m_pvAct != LVMAction::LVM_ACT_DELETEPV                //参数错误
+                || !pvList.insert(pv.m_devicePath).second) {                //pv重复
             return setLVMErr(lvmInfo, LVMError::LVM_ERR_PV_ARGUMENT);
         }
-    }
 
-    if (!Utils::adjudicationPVDelete(lvmInfo, pvList, flag, list)) {        //删除不合理
-        return setLVMErr(lvmInfo, LVMError::LVM_ERR_PV_ARGUMENT);
+        PVInfo info = lvmInfo.getPV(pv.m_devicePath);
+        allDeletePV.push_back(info.m_pvPath);
     }
 
     if (m_lvmSupport.LVM_CMD_pvremove == LVM_CMD_Support::NONE) {           //命令不支持
@@ -602,7 +610,17 @@ bool LVMOperator::deletePVList(LVMInfo &lvmInfo, QList<PVData> devList)
 
     foreach (const PVData &pv, devList) {
         PVInfo info = lvmInfo.getPV(pv.m_devicePath);
-        if (!info.noJoinVG()) {                                             //加入vg
+        if (info.joinVG()) {                                                //加入vg
+            if (!lvmInfo.vgExists(info.m_vgName)) {                         //vg是否存在
+                return setLVMErr(lvmInfo, LVMError::LVM_ERR_VG_NO_EXISTS);
+            }
+            VGInfo vg = lvmInfo.getVG(info.m_vgName);
+            if (vg.isAllPV(allDeletePV)) {
+                vgList.insert(vg.m_vgName);
+                continue;
+            }
+
+            //pv正常删除
             if (info.m_pvUsedPE > 0) {                                      //pv存在被使用 移动pv
                 if (m_lvmSupport.LVM_CMD_pvmove == LVM_CMD_Support::NONE) { //命令不支持
                     return setLVMErr(lvmInfo, LVMError::LVM_ERR_NO_CMD_SUPPORT);
@@ -627,7 +645,11 @@ bool LVMOperator::deletePVList(LVMInfo &lvmInfo, QList<PVData> devList)
         }
     }
 
-    return true;
+    if (vgList.size()) {
+        return deleteVG(lvmInfo, vgList.toList());
+    }
+
+    return setLVMErr(lvmInfo, LVMError::LVM_ERR_NORMAL);
 }
 
 /******************************** private lvm操作 ******************************/
@@ -635,6 +657,12 @@ bool LVMOperator::vgReduce(const QString &vgName, const QString &pvPath)
 {
     QString strout, strerror;
     return Utils::executCmd(QString("vgreduce %1 %2 -y").arg(vgName).arg(pvPath), strout, strerror) == 0;
+}
+
+bool LVMOperator::vgExtend(const QString &vgName, const QString &pvPath)
+{
+    QString strout, strerror;
+    return Utils::executCmd(QString("vgextend %1 %2 -y").arg(vgName).arg(pvPath), strout, strerror) == 0;
 }
 
 bool LVMOperator::pvMove(const QString &pvPath)

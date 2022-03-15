@@ -567,7 +567,7 @@ void DeviceListWidget::onDeleteVGClicked()
 {
     VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
     setCurVGName(vgInfo.m_vgName);
-    if (DMDbusHandler::instance()->isExistMountLV()){
+    if (DMDbusHandler::instance()->isExistMountLV(vgInfo)){
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("messageBox");
@@ -841,6 +841,7 @@ void DeviceListWidget::onUpdateDeviceInfo()
             for (int i = 0; i < deviceNameList.count(); i++) {
                 if (countMap.value(i) != 0) {
                     m_treeView->setRefreshItem(i, 0, 1);
+                    m_vgIsShow = true;
                     break;
                 }
             }

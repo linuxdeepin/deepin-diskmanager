@@ -61,7 +61,7 @@ void FormateDialog::initUi()
         m_pathInfo = info.m_path;
         m_curDiskMediaType = info.m_mediaType;
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
-        setFixedSize(450, 335);
+        setFixedSize(450, 315);
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
         m_pathInfo = lvInfo.m_lvPath;
     }
@@ -285,6 +285,7 @@ void FormateDialog::initUi()
 
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
         tipLabel->setText(tr("The action cannot be undone, please proceed with caution"));
+        tipLabel->setFixedHeight(30);
         fileName->setText(tr("LV name:"));
         m_fileNameEdit->setText(DMDbusHandler::instance()->getCurLVInfo().m_lvName);
         m_fileNameEdit->lineEdit()->setReadOnly(true);
@@ -445,7 +446,7 @@ void FormateDialog::onSecurityCurrentIndexChanged(int index)
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
         switch (index) {
         case 0: {
-            setFixedSize(450, 335);
+            setFixedSize(450, 315);
             m_describeInfo->setFixedHeight(10);
             m_labelTmp->setFixedHeight(9);
             m_buttonLayout->setContentsMargins(0, 0, 0, 0);
@@ -456,7 +457,7 @@ void FormateDialog::onSecurityCurrentIndexChanged(int index)
             break;
         }
         case 1: {
-            setFixedSize(450, 355);
+            setFixedSize(450, 335);
             m_describeInfo->setFixedHeight(30);
             m_labelTmp->setFixedHeight(29);
             m_buttonLayout->setContentsMargins(0, 0, 0, 0);

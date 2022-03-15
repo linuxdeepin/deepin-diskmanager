@@ -296,7 +296,7 @@ public:
      * @brief 判断逻辑卷组下是否存在已被挂载的逻辑卷
      * @return 存在返回true，否则返回false
      */
-    bool isExistMountLV();
+    bool isExistMountLV(const VGInfo &info);
 
     /**
      * @brief 创建vg

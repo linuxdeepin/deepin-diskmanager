@@ -544,11 +544,10 @@ QMap<QString, QString> DMDbusHandler::getIsJoinAllVG()
     return m_isJoinAllVG;
 }
 
-bool DMDbusHandler::isExistMountLV()
+bool DMDbusHandler::isExistMountLV(const VGInfo &info)
 {
     bool isExist = false;
 
-    VGInfo info = getCurVGInfo();
     for (int i = 0; i < info.m_lvlist.count(); i++) {
         LVInfo lvInfo = info.m_lvlist.at(i);
         QString mountPoint = "";

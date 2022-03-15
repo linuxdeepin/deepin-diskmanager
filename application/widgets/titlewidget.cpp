@@ -386,7 +386,7 @@ void TitleWidget::onDeleteVGClicked()
 {
     VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
     setCurVGName(vgInfo.m_vgName);
-    if (DMDbusHandler::instance()->isExistMountLV()){
+    if (DMDbusHandler::instance()->isExistMountLV(vgInfo)){
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("messageBox");
@@ -429,10 +429,94 @@ void TitleWidget::onResizeVGClicked()
 
 void TitleWidget::onDeletePVClicked()
 {
+    QMap<QString, VGInfo> mapVGInfo = DMDbusHandler::instance()->probLVMInfo().m_vgInfo;
+    bool vgIsMount = false;
+    QStringList lstVGName;
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
-        setCurDevicePath(DMDbusHandler::instance()->getCurPartititonInfo().m_devicePath);
+        PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+        setCurDevicePath(info.m_devicePath);
+        VGData vgData = info.m_vgData;
+        lstVGName.clear();
+        if (!vgData.m_vgName.isEmpty()) {
+            VGInfo vgInfo = mapVGInfo.value(vgData.m_vgName);
+            QMap<QString, PVInfo> mapPvInfo = vgInfo.m_pvInfo;
+            QStringList lstKeys = mapPvInfo.keys();
+            // 判断VG是否由一个PV组成
+            if (lstKeys.size() == 1) {
+                // 判断VG下的PV是否为当前分区
+                if (lstKeys.at(0) == info.m_path) {
+                    // 判断VG下是否有LV
+                    if (vgInfo.m_lvlist.size() > 0) {
+                        // 判断是否有LV被挂载
+                        if (DMDbusHandler::instance()->isExistMountLV(vgInfo)){
+                            lstVGName.append(vgInfo.m_vgName);
+                            vgIsMount = true;
+                        }
+                    }
+                }
+            }
+        }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
-        setCurDevicePath(DMDbusHandler::instance()->getCurDeviceInfo().m_path);
+        DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
+        setCurDevicePath(info.m_path);
+        QStringList pvStrList;
+        // 获取将要被删除的PV
+        if (info.m_disktype == "none") {
+            pvStrList.append(info.m_path);
+        } else {
+            for (int i = 0; i < info.m_partition.size(); i++) {
+                PartitionInfo partInfo = info.m_partition.at(i);
+                if (partInfo.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV) {
+                    pvStrList.append(partInfo.m_path);
+                }
+            }
+        }
+
+        QVector<VGData> vglist = info.m_vglist;
+        lstVGName.clear();
+        for (int i = 0; i < vglist.count(); i++) {
+            VGData vgData = vglist.at(i);
+            if (!vgData.m_vgName.isEmpty()) {
+                VGInfo vgInfo = mapVGInfo.value(vgData.m_vgName);
+                QMap<QString, PVInfo> mapPvInfo = vgInfo.m_pvInfo;
+                QStringList lstKeys = mapPvInfo.keys();
+                bool isDelete = true;
+                // 判断VG下的PV是否全部将被删除
+                for (int j = 0; j < lstKeys.count(); j++) {
+                    if (pvStrList.indexOf(lstKeys.at(j)) == -1) {
+                        isDelete = false;
+                        break;
+                    }
+                }
+
+                if (isDelete) {
+                    // 判断VG下是否有LV
+                    if (vgInfo.m_lvlist.size() > 0) {
+                        // 判断是否有LV被挂载
+                        if (DMDbusHandler::instance()->isExistMountLV(vgInfo)){
+                            lstVGName.append(vgData.m_vgName);
+                        }
+                    }
+                }
+            }
+        }
+
+        if (!lstVGName.isEmpty()){
+            vgIsMount = true;
+        }
+    }
+
+    if (vgIsMount){
+        MessageBox warningBox(this);
+        warningBox.setObjectName("messageBox");
+        warningBox.setAccessibleName("deletePVMessageBox");
+        // 请先手动卸载XXX（逻辑卷组名称）  确定
+        warningBox.setWarings(tr("Unmount %1 first").arg(lstVGName.join(',')), "", tr("OK"), "ok");
+        warningBox.exec();
+
+        setCurDevicePath("");
+
+        return;
     }
 
     RemovePVWidget removePVWidget(this);
@@ -732,7 +816,8 @@ void TitleWidget::onUpdateUsb()
                     widget->objectName() == "wipeDialog" || widget->objectName() == "mountDialog" ||
                     widget->objectName() == "unmountDialog" || widget->objectName() == "resizeDialog" ||
                     widget->objectName() == "mountMessageBox" || widget->objectName() == "firstWarning" ||
-                    widget->objectName() == "secondWarning" || widget->objectName() == "RemovePVWidget") {
+                    widget->objectName() == "secondWarning" || widget->objectName() == "RemovePVWidget" ||
+                    widget->objectName() == "messageBox") {
 
                 widget->close();
     //            break;

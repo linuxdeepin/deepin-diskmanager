@@ -7,7 +7,7 @@
         <translation>Capaciteit:</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="845"/>
+        <location filename="../widgets/createlvwidget.cpp" line="853"/>
         <source>Disk:</source>
         <translation>Schijf:</translation>
     </message>
@@ -32,55 +32,55 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="51"/>
         <source>Creating logical volumes on %1</source>
-        <translation type="unfinished"/>
+        <translation>Bezig met aanmaken van logische volumes op %1</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="53"/>
         <source>Click ‘+’ to create a logical volume. </source>
-        <translation type="unfinished"/>
+        <translation>Klik op ‘+’ om een logisch volume aan te maken.</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="120"/>
         <source>VG Information</source>
-        <translation type="unfinished"/>
+        <translation>Vg-informatie</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="144"/>
         <location filename="../widgets/createlvwidget.cpp" line="304"/>
         <source>LV name:</source>
-        <translation type="unfinished"/>
+        <translation>LV-naam:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="153"/>
         <location filename="../widgets/createlvwidget.cpp" line="157"/>
         <source>VG name:</source>
-        <translation type="unfinished"/>
+        <translation>Vg-naam:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="165"/>
         <location filename="../widgets/createlvwidget.cpp" line="324"/>
         <source>LV file system:</source>
-        <translation type="unfinished"/>
+        <translation>LV-bestandssysteem:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="271"/>
         <source>LV Information</source>
-        <translation type="unfinished"/>
+        <translation>LV-informatie:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="283"/>
         <source>Create LV:</source>
-        <translation type="unfinished"/>
+        <translation>LV aanmaken:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="294"/>
         <source>Delete last logical volume</source>
-        <translation type="unfinished"/>
+        <translation>Laatste logische volume wissen</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="333"/>
         <source>LV capacity:</source>
-        <translation type="unfinished"/>
+        <translation>LV-capaciteit:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="470"/>
@@ -134,101 +134,155 @@
 <context>
     <name>CreateVGWidget</name>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="68"/>
+        <location filename="../widgets/createvgwidget.cpp" line="75"/>
         <source>Create volume group</source>
-        <translation type="unfinished"/>
+        <translation>Volumegroep samenstellen</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="92"/>
+        <location filename="../widgets/createvgwidget.cpp" line="85"/>
+        <source>Resize</source>
+        <translation>Grootte aanpassen</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="103"/>
         <source>Select disks or partitions to create a volume group and set its capacity</source>
-        <translation type="unfinished"/>
+        <translation>Selecteer schijven of partities en stel de capaciteit in</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="97"/>
-        <location filename="../widgets/createvgwidget.cpp" line="379"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1102"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1112"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1162"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1213"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1216"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1246"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1351"/>
+        <location filename="../widgets/createvgwidget.cpp" line="108"/>
+        <location filename="../widgets/createvgwidget.cpp" line="395"/>
+        <location filename="../widgets/createvgwidget.cpp" line="993"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1003"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1423"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1433"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1483"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1534"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1537"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1567"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1675"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1741"/>
         <source>Capacity selected: %1</source>
-        <translation type="unfinished"/>
+        <translation>Ingestelde capaciteit: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="102"/>
+        <location filename="../widgets/createvgwidget.cpp" line="113"/>
         <source>The selected disks will be converted to dynamic disks, and you will not be able to start installed operating systems from the disks.</source>
-        <translation type="unfinished"/>
+        <translation>De geselecteerde schijven worden omgezet in dynamische schijven, waardoor je geen besturingssystemen kunt starten.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="158"/>
+        <location filename="../widgets/createvgwidget.cpp" line="169"/>
         <source>No partitions available</source>
-        <translation type="unfinished"/>
+        <translation>Er zijn geen partities beschikbaar</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="228"/>
+        <location filename="../widgets/createvgwidget.cpp" line="240"/>
         <source>No disks or partitions available</source>
-        <translation type="unfinished"/>
+        <translation>Er zijn geen schijven of partities beschikbaar</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="261"/>
-        <location filename="../widgets/createvgwidget.cpp" line="442"/>
+        <location filename="../widgets/createvgwidget.cpp" line="274"/>
+        <location filename="../widgets/createvgwidget.cpp" line="459"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Annuleren</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="264"/>
+        <location filename="../widgets/createvgwidget.cpp" line="277"/>
         <source>Next</source>
-        <translation type="unfinished"/>
+        <translation>Volgende</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="289"/>
+        <location filename="../widgets/createvgwidget.cpp" line="302"/>
         <source>Selected disks/partitions</source>
-        <translation type="unfinished"/>
+        <translation>Geselecteerde schijven/partities</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="329"/>
+        <location filename="../widgets/createvgwidget.cpp" line="342"/>
         <source>Set VG capacity</source>
-        <translation type="unfinished"/>
+        <translation>Vg-capaciteit instellen</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="409"/>
+        <location filename="../widgets/createvgwidget.cpp" line="425"/>
         <source>Choose one disk or partition at least</source>
-        <translation type="unfinished"/>
+        <translation>Selecteer minimaal één schijf of partitie</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="445"/>
+        <location filename="../widgets/createvgwidget.cpp" line="462"/>
         <source>Previous</source>
-        <translation type="unfinished"/>
+        <translation>Vorige</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="448"/>
+        <location filename="../widgets/createvgwidget.cpp" line="465"/>
         <source>Done</source>
         <comment>button</comment>
         <translation>Voltooid</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="525"/>
+        <location filename="../widgets/createvgwidget.cpp" line="548"/>
+        <source>Resizing space...</source>
+        <translation>Bezig met aanpassen van grootte…</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="550"/>
         <source>Creating...</source>
-        <translation type="unfinished"/>
+        <translation>Bezig met aanmaken…</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="579"/>
+        <location filename="../widgets/createvgwidget.cpp" line="602"/>
         <source>Selected disks and partitions:</source>
-        <translation type="unfinished"/>
+        <translation>Geselecteerde schijven/partities:</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="618"/>
-        <location filename="../widgets/createvgwidget.cpp" line="620"/>
+        <location filename="../widgets/createvgwidget.cpp" line="641"/>
+        <location filename="../widgets/createvgwidget.cpp" line="643"/>
         <source>VG capacity: %1</source>
-        <translation type="unfinished"/>
+        <translation>Vg-capaciteit: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="625"/>
+        <location filename="../widgets/createvgwidget.cpp" line="648"/>
         <source>VG name: %1</source>
-        <translation type="unfinished"/>
+        <translation>Vg-naam: %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="752"/>
+        <source>A lot of data exists on %1, </source>
+        <translation>%1 bevat veel gegevens,</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="753"/>
+        <source>which may take a long time to back it up.</source>
+        <translation>waardoor het back-uppen enige tijd kan duren.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="754"/>
+        <source>Do you want to continue?</source>
+        <translation>Wil je doorgaan?</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="755"/>
+        <source>Continue</source>
+        <translation>Doorgaan</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="756"/>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1694"/>
+        <source>Not enough space to back up data on %1, please clear disk space</source>
+        <translation>Er is onvoldoende vrije ruimte op %1. Maak ruimte vrij en probeer het opnieuw.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1695"/>
+        <source>OK</source>
+        <translation>Oké</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1898"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1905"/>
+        <source>Refreshing the page to reload disks</source>
+        <translation>De pagina wordt vernieuwd</translation>
     </message>
 </context>
 <context>
@@ -278,11 +332,13 @@
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="250"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="610"/>
         <source>Mounting %1 ...</source>
         <translation>Bezig met aankoppelen van ‘%1’…</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="257"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="617"/>
         <source>Unmounting %1 ...</source>
         <translation>Bezig met afkoppelen van ‘%1’…</translation>
     </message>
@@ -314,19 +370,19 @@
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="575"/>
         <source>Creating...</source>
-        <translation type="unfinished"/>
+        <translation>Bezig met aanmaken…</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="582"/>
         <location filename="../partedproxy/dmdbushandler.cpp" line="589"/>
         <source>Deleting...</source>
-        <translation type="unfinished"/>
+        <translation>Bezig met wissen…</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="596"/>
         <location filename="../partedproxy/dmdbushandler.cpp" line="603"/>
         <source>Resizing space...</source>
-        <translation type="unfinished"/>
+        <translation>Bezig met aanpassen van grootte…</translation>
     </message>
 </context>
 <context>
@@ -375,14 +431,14 @@
         <translation>Partitie verwijderen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="316"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="556"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="603"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="575"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="632"/>
         <source>OK</source>
         <translation>Oké</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="328"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="346"/>
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
@@ -391,214 +447,214 @@ tevens een nieuwe partitietabel maakt, dan gaan
 alle gegevens verloren!</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="328"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="346"/>
         <source>Proceed</source>
         <translation>Doorgaan</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="354"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="372"/>
         <source>No errors found in the partition table</source>
         <translation>Geen fouten aangetroffen in de partitietabel</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="367"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="385"/>
         <source>Do you want to hide this partition?</source>
         <translation>Weet je zeker dat je deze partitie wilt verwijderen?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="367"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="385"/>
         <source>Hide</source>
         <translation>Verbergen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="328"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="367"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="399"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="415"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="567"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="614"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="346"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="385"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="417"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="433"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="588"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="645"/>
         <source>Cancel</source>
         <translation>Annuleren</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="201"/>
         <source>Delete volume group</source>
-        <translation type="unfinished"/>
+        <translation>Volumegroep wissen</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="207"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="579"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="604"/>
         <source>Create logical volume</source>
-        <translation type="unfinished"/>
+        <translation>Logisch volume aanmaken</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="225"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="232"/>
         <source>Delete logical volume</source>
-        <translation type="unfinished"/>
+        <translation>Logisch volume wissen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="257"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="275"/>
         <source>Failed to get hardware information</source>
         <translation>Er kan geen hardware-informatie worden opgevraagd</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="257"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="275"/>
         <source>Close</source>
         <translation>Sluiten</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="316"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
         <source>Please unmount all partitions in the disk first</source>
         <translation>Koppel alle partities af en probeer het opnieuw</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="374"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="392"/>
         <source>Failed to hide the partition: unable to lock it</source>
         <translation>De partitie kan niet worden verborgen wegens een vergrendelfout</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="382"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="400"/>
         <source>You can only hide the unmounted partition</source>
         <translation>Je kunt alleen de afgekoppelde partitie verbergen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="399"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="417"/>
         <source>Do you want to unhide this partition?</source>
         <translation>Weet je zeker dat je deze partitie wilt tonen?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="399"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="417"/>
         <source>Unhide</source>
         <translation>Tonen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="415"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="433"/>
         <source>Are you sure you want to delete this partition?</source>
         <translation>Weet je zeker dat je deze partitie wilt verwijderen?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="415"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="433"/>
         <source>You will lose all data in it</source>
         <translation>Alle gegevens worden permanent verwijderd</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="415"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="567"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="614"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="433"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="588"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="645"/>
         <source>Delete</source>
         <translation>Verwijderen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="422"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="440"/>
         <source>Failed to delete the partition: unable to lock it</source>
         <translation>De partitie kan niet worden verwijderd wegens een vergrendelfout</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="437"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="455"/>
         <source>Hide the partition successfully</source>
         <translation>De partitie is verborgen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="442"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="460"/>
         <source>Failed to hide the partition</source>
         <translation>De partitie kan niet worden verborgen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="452"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="470"/>
         <source>Unhide the partition successfully</source>
         <translation>De partitie wordt weer getoond</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="457"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="475"/>
         <source>Failed to unhide the partition</source>
         <translation>De partitie kan niet worden getoond</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="473"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="491"/>
         <source>Delete the partition successfully</source>
         <translation>De partitie is verwijderd</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="481"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="499"/>
         <source>Failed to find the disk</source>
         <translation>De schijf is niet aangetroffen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="485"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="503"/>
         <source>Failed to get the partition info</source>
         <translation>De partitie-informatie kan niet worden opgehaald</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="489"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="507"/>
         <source>Failed to delete the partition</source>
         <translation>De partitie kan niet worden verwijderd</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="493"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="511"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>Het kernelverzoek kan niet worden behandeld</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="500"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="518"/>
         <source>Failed to delete the partition: %1</source>
         <translation>De partitie kan niet worden verwijderd: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="510"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="528"/>
         <source>Unmounting successful</source>
         <translation>Afkoppelen voltooid</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="515"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="533"/>
         <source>Unmounting failed</source>
         <translation>Afkoppelen mislukt</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="526"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="544"/>
         <source>Creating partition table successful</source>
         <translation>De partitietabel is aangemaakt</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="530"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="548"/>
         <source>Replacing partition table successful</source>
         <translation>De partitietabel is vervangen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="538"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="556"/>
         <source>Creating partition table failed</source>
         <translation>De partitietabel kan niet worden aangemaakt</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="542"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="560"/>
         <source>Replacing partition table failed</source>
         <translation>De partitietabel kan niet worden vervangen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="556"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="603"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="575"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="632"/>
         <source>Unmount %1 first</source>
-        <translation type="unfinished"/>
+        <translation>Koppel %1 eerst af</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="566"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="613"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="587"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation type="unfinished"/>
+        <translation>Als je doorgaat, dan kunnen de gegevens niet worden hersteld.</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="579"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="604"/>
         <source>The disks will be formatted if you create a logical volume</source>
-        <translation type="unfinished"/>
+        <translation>Door het aanmaken van een logisch volume worden de schijven geformatteerd.</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="680"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="735"/>
         <source>Volume Groups</source>
-        <translation type="unfinished"/>
+        <translation>Volumegroepen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="720"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="775"/>
         <source>Disks</source>
-        <translation type="unfinished"/>
+        <translation>Schijven</translation>
     </message>
 </context>
 <context>
@@ -1137,152 +1193,160 @@ alle gegevens verloren!</translation>
         <translation type="vanished">Door het formatteren worden alle gegevens op de schijf gewist. Dit kan niet ongedaan worden gemaakt.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="82"/>
+        <location filename="../widgets/formatedialog.cpp" line="86"/>
         <source>Wipe %1</source>
         <translation>%1 wissen</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="90"/>
+        <location filename="../widgets/formatedialog.cpp" line="94"/>
         <source>It will erase all data on this disk, which will not be recovered</source>
         <translation>Door het formatteren worden alle gegevens op de schijf gewist. Dit kan niet ongedaan worden gemaakt.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="101"/>
+        <location filename="../widgets/formatedialog.cpp" line="105"/>
         <source>Name:</source>
         <translation>Naam:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="112"/>
+        <location filename="../widgets/formatedialog.cpp" line="116"/>
         <source>Name</source>
         <translation>Naam</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="114"/>
+        <location filename="../widgets/formatedialog.cpp" line="118"/>
         <source>File system:</source>
         <translation>Bestandssysteem:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="133"/>
+        <location filename="../widgets/formatedialog.cpp" line="137"/>
         <source>Security:</source>
         <translation>Beveiliging:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="146"/>
         <location filename="../widgets/formatedialog.cpp" line="150"/>
+        <location filename="../widgets/formatedialog.cpp" line="154"/>
         <source>Fast</source>
         <translation>Snel</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="146"/>
         <location filename="../widgets/formatedialog.cpp" line="150"/>
+        <location filename="../widgets/formatedialog.cpp" line="154"/>
         <source>Secure</source>
         <translation>Veilig</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="150"/>
+        <location filename="../widgets/formatedialog.cpp" line="154"/>
         <source>Advanced</source>
         <translation>Geavanceerd</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="164"/>
-        <location filename="../widgets/formatedialog.cpp" line="388"/>
+        <location filename="../widgets/formatedialog.cpp" line="168"/>
+        <location filename="../widgets/formatedialog.cpp" line="412"/>
         <source>It only deletes the partition info without erasing the files on the disk. Disk recovery tools may recover the files at a certain probability.</source>
         <translation>Alle partitie-informatie wordt verwijderd, maar de bestanden blijven bewaard. Schijfherstel kan tot op zekere hoogte bestanden herstellen.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="169"/>
+        <location filename="../widgets/formatedialog.cpp" line="173"/>
         <source>Wiping method:</source>
         <translation>Wismethode:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="181"/>
+        <location filename="../widgets/formatedialog.cpp" line="185"/>
         <source>DoD 5220.22-M, 7 passes</source>
         <translation>DoD 5220.22-M (7 slagen)</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="181"/>
+        <location filename="../widgets/formatedialog.cpp" line="185"/>
         <source>Gutmann, 35 passes</source>
         <translation>Gutmann (35 slagen)</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="227"/>
+        <location filename="../widgets/formatedialog.cpp" line="231"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Annuleren</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="231"/>
+        <location filename="../widgets/formatedialog.cpp" line="235"/>
         <source>Wipe</source>
         <comment>button</comment>
         <translation>Wissen</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="280"/>
-        <location filename="../widgets/formatedialog.cpp" line="493"/>
+        <location filename="../widgets/formatedialog.cpp" line="284"/>
+        <location filename="../widgets/formatedialog.cpp" line="564"/>
         <source>Failed to find the disk</source>
         <translation>De schijf is niet aangetroffen</translation>
     </message>
     <message>
+        <location filename="../widgets/formatedialog.cpp" line="287"/>
         <source>The action cannot be undone, please proceed with caution</source>
-        <translation type="unfinished"/>
+        <translation>Let op: deze actie kan niet ongedaan worden gemaakt!</translation>
     </message>
     <message>
+        <location filename="../widgets/formatedialog.cpp" line="288"/>
         <source>LV name:</source>
-        <translation type="unfinished"/>
+        <translation>LV-naam:</translation>
     </message>
     <message>
+        <location filename="../widgets/formatedialog.cpp" line="292"/>
         <source>LV name</source>
-        <translation type="unfinished"/>
+        <translation>LV-naam</translation>
     </message>
     <message>
+        <location filename="../widgets/formatedialog.cpp" line="293"/>
         <source>LV file system:</source>
-        <translation type="unfinished"/>
+        <translation>LV-bestandssysteem:</translation>
     </message>
     <message>
+        <location filename="../widgets/formatedialog.cpp" line="295"/>
+        <location filename="../widgets/formatedialog.cpp" line="455"/>
         <source>You may be able to recover files after the wipe.</source>
-        <translation type="unfinished"/>
+        <translation>Na het wissen kun je mogelijk de bestanden herstellen.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="400"/>
+        <location filename="../widgets/formatedialog.cpp" line="424"/>
         <source>It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, and random data to the entire disk once. You will not be able to recover files, and the process will be slow.</source>
         <translation>Dit is een eenmalige, veilige wismethode die in overeenstemming is met NIST 800-88 en 0, 1 en gevoelige data eenmalig naar de schijf schrijft. Bestanden zijn niet te herstellen en het proces duurt lang.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="414"/>
+        <location filename="../widgets/formatedialog.cpp" line="438"/>
         <source>It writes 0, 1, and random data to the entire disk several times. You can set the number of times to erase disks and overwrite data, but the process will be very slow.</source>
         <translation>0, 1 en gevoelige data worden meermaals naar de schijf geschreven. Je kunt aangeven hoe vaak dit moet gebeuren en of je hiermee data wilt overschrijven, maar het proces duurt lang.</translation>
     </message>
     <message>
+        <location filename="../widgets/formatedialog.cpp" line="466"/>
         <source>You will not be able to recover files after the wipe, and the process will be slow.</source>
-        <translation type="unfinished"/>
+        <translation>Het proces duurt lang en na het wissen kun je de bestanden niet herstellen.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="458"/>
+        <location filename="../widgets/formatedialog.cpp" line="526"/>
         <source>Wiping %1</source>
         <translation>Bezig met wissen van ‘%1’…</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="478"/>
+        <location filename="../widgets/formatedialog.cpp" line="549"/>
         <source>&quot;%1&quot; wiped</source>
         <translation>‘%1’ is gewist</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="484"/>
+        <location filename="../widgets/formatedialog.cpp" line="555"/>
         <source>Failed to wipe %1</source>
         <translation>‘%1’ kan niet worden gewist</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="497"/>
+        <location filename="../widgets/formatedialog.cpp" line="568"/>
         <source>Failed to get the partition info</source>
         <translation>De partitie-informatie kan niet worden opgehaald</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="501"/>
+        <location filename="../widgets/formatedialog.cpp" line="572"/>
         <source>Failed to delete the partition</source>
         <translation>De partitie kan niet worden verwijderd</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="505"/>
+        <location filename="../widgets/formatedialog.cpp" line="298"/>
+        <location filename="../widgets/formatedialog.cpp" line="576"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>Het kernelverzoek kan niet worden behandeld</translation>
     </message>
@@ -1295,10 +1359,10 @@ alle gegevens verloren!</translation>
         <translation type="vanished">Formatteren</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="322"/>
-        <location filename="../widgets/formatedialog.cpp" line="334"/>
+        <location filename="../widgets/formatedialog.cpp" line="341"/>
         <location filename="../widgets/formatedialog.cpp" line="353"/>
-        <location filename="../widgets/formatedialog.cpp" line="365"/>
+        <location filename="../widgets/formatedialog.cpp" line="374"/>
+        <location filename="../widgets/formatedialog.cpp" line="386"/>
         <source>The length exceeds the limit</source>
         <translation>De lengte overschrijdt het limiet</translation>
     </message>
@@ -1308,7 +1372,7 @@ alle gegevens verloren!</translation>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="139"/>
         <location filename="../widgets/infoshowwidget.cpp" line="242"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="402"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="414"/>
         <source>Mount point:</source>
         <translation>Aankoppelpunt:</translation>
     </message>
@@ -1326,7 +1390,7 @@ alle gegevens verloren!</translation>
         <location filename="../widgets/infoshowwidget.cpp" line="161"/>
         <location filename="../widgets/infoshowwidget.cpp" line="243"/>
         <location filename="../widgets/infoshowwidget.cpp" line="366"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="403"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="415"/>
         <source>Type:</source>
         <translation>Soort:</translation>
     </message>
@@ -1359,29 +1423,29 @@ alle gegevens verloren!</translation>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="365"/>
         <source>LV count:</source>
-        <translation type="unfinished"/>
+        <translation>Aantal LVs:</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="367"/>
         <source>VG name:</source>
-        <translation type="unfinished"/>
+        <translation>Vg-naam:</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="372"/>
         <location filename="../widgets/infoshowwidget.cpp" line="375"/>
         <source>Volume group</source>
-        <translation type="unfinished"/>
+        <translation>Volumegroep</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="404"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="416"/>
         <source>Volume name:</source>
-        <translation type="unfinished"/>
+        <translation>Volumenaam:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="409"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="412"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="421"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="424"/>
         <source>Logical volume</source>
-        <translation type="unfinished"/>
+        <translation>Logisch volume</translation>
     </message>
 </context>
 <context>
@@ -1405,7 +1469,7 @@ alle gegevens verloren!</translation>
     <message>
         <location filename="../widgets/customcontrol/infotopframe.cpp" line="169"/>
         <source>Volume group</source>
-        <translation type="unfinished"/>
+        <translation>Volumegroep</translation>
     </message>
 </context>
 <context>
@@ -1420,37 +1484,38 @@ alle gegevens verloren!</translation>
     <name>MountDialog</name>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="49"/>
+        <location filename="../widgets/mountdialog.cpp" line="52"/>
         <source>Mount %1</source>
         <translation>%1 aankoppelen</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="52"/>
+        <location filename="../widgets/mountdialog.cpp" line="56"/>
         <source>Choose a mount point please</source>
         <translation>Kies een aankoppelpunt</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="55"/>
+        <location filename="../widgets/mountdialog.cpp" line="59"/>
         <source>Mount point:</source>
         <translation>Aankoppelpunt:</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="80"/>
-        <location filename="../widgets/mountdialog.cpp" line="168"/>
+        <location filename="../widgets/mountdialog.cpp" line="84"/>
+        <location filename="../widgets/mountdialog.cpp" line="216"/>
         <source>Cancel</source>
         <translation>Annuleren</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="81"/>
+        <location filename="../widgets/mountdialog.cpp" line="85"/>
         <source>Mount</source>
         <translation>Aankoppelen</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="168"/>
+        <location filename="../widgets/mountdialog.cpp" line="216"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>De gegevens van dit aankoppelpunt worden permanent verwijderd. Koppel de map aan op een andere locatie.</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="168"/>
+        <location filename="../widgets/mountdialog.cpp" line="216"/>
         <source>OK</source>
         <translation>Oké</translation>
     </message>
@@ -1671,71 +1736,163 @@ alle gegevens verloren!</translation>
     </message>
 </context>
 <context>
-    <name>ResizeDialog</name>
+    <name>RemovePVWidget</name>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="48"/>
-        <source>Resize %1</source>
-        <translation>Grootte aanpassen van %1</translation>
+        <location filename="../widgets/removepvwidget.cpp" line="86"/>
+        <source>Are you sure you want to delete the physical volume?</source>
+        <translation>Weet je zeker dat je dit volume wilt wissen?</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="49"/>
-        <source>It will resize the partitions on the disk</source>
-        <translation>Dit past de grootte aan van partities op de schijf</translation>
+        <location filename="../widgets/removepvwidget.cpp" line="91"/>
+        <source>You will lose all data in it</source>
+        <translation>Alle gegevens worden permanent verwijderd</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="63"/>
-        <source>Reserved size:</source>
-        <translation>Gereserveerde ruimte:</translation>
+        <location filename="../widgets/removepvwidget.cpp" line="96"/>
+        <source>Cancel</source>
+        <comment>button</comment>
+        <translation>Annuleren</translation>
     </message>
     <message>
-        <source>New capacity:</source>
-        <translation type="unfinished"/>
+        <location filename="../widgets/removepvwidget.cpp" line="103"/>
+        <source>Delete</source>
+        <comment>button</comment>
+        <translation>Verwijderen</translation>
     </message>
     <message>
-        <source>It will resize the logical volume space</source>
-        <translation type="unfinished"/>
+        <location filename="../widgets/removepvwidget.cpp" line="135"/>
+        <source>Deleting...</source>
+        <translation>Bezig met wissen…</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="80"/>
+        <location filename="../widgets/removepvwidget.cpp" line="242"/>
+        <source>A lot of data exists on %1, </source>
+        <translation>%1 bevat veel gegevens,</translation>
+    </message>
+    <message>
+        <location filename="../widgets/removepvwidget.cpp" line="243"/>
+        <source>which may take a long time to back it up.</source>
+        <translation>waardoor het back-uppen enige tijd kan duren.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/removepvwidget.cpp" line="244"/>
+        <source>Do you want to continue?</source>
+        <translation>Wil je doorgaan?</translation>
+    </message>
+    <message>
+        <location filename="../widgets/removepvwidget.cpp" line="245"/>
+        <source>Continue</source>
+        <translation>Doorgaan</translation>
+    </message>
+    <message>
+        <location filename="../widgets/removepvwidget.cpp" line="246"/>
         <source>Cancel</source>
         <translation>Annuleren</translation>
     </message>
     <message>
+        <location filename="../widgets/removepvwidget.cpp" line="258"/>
+        <source>Not enough space to back up data on %1, please clear disk space</source>
+        <translation>Er is onvoldoende vrije ruimte op %1. Maak ruimte vrij en probeer het opnieuw.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/removepvwidget.cpp" line="259"/>
+        <source>OK</source>
+        <translation>Oké</translation>
+    </message>
+    <message>
+        <location filename="../widgets/removepvwidget.cpp" line="286"/>
+        <source>Failed to delete the physical volume</source>
+        <translation>Het fysieke volume kan niet worden verwijderd</translation>
+    </message>
+</context>
+<context>
+    <name>ResizeDialog</name>
+    <message>
         <location filename="../widgets/resizedialog.cpp" line="81"/>
+        <location filename="../widgets/resizedialog.cpp" line="86"/>
+        <source>Resize %1</source>
+        <translation>Grootte aanpassen van %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="48"/>
+        <source>It will resize the partitions on the disk</source>
+        <translation>Dit past de grootte aan van partities op de schijf</translation>
+    </message>
+    <message>
+        <source>Reserved size:</source>
+        <translation type="vanished">Gereserveerde ruimte:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="62"/>
+        <source>New capacity:</source>
+        <translation>Nieuwe capaciteit:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="88"/>
+        <source>It will resize the logical volume space</source>
+        <translation>De ruimte van het logische volume wordt aangepast</translation>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="92"/>
+        <location filename="../widgets/resizedialog.cpp" line="193"/>
+        <location filename="../widgets/resizedialog.cpp" line="250"/>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="93"/>
         <source>Confirm</source>
         <translation>Oké</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="142"/>
+        <location filename="../widgets/resizedialog.cpp" line="144"/>
         <source>Space limit exceeded</source>
         <translation>Ruimtelimiet overschreden</translation>
     </message>
     <message>
+        <location filename="../widgets/resizedialog.cpp" line="167"/>
+        <location filename="../widgets/resizedialog.cpp" line="187"/>
+        <location filename="../widgets/resizedialog.cpp" line="244"/>
+        <location filename="../widgets/resizedialog.cpp" line="275"/>
         <source>Not enough space, please clear data in it</source>
-        <translation type="unfinished"/>
+        <translation>Er is onvoldoende vrije ruimte op de schijf</translation>
     </message>
     <message>
+        <location filename="../widgets/resizedialog.cpp" line="167"/>
+        <location filename="../widgets/resizedialog.cpp" line="187"/>
+        <location filename="../widgets/resizedialog.cpp" line="193"/>
+        <location filename="../widgets/resizedialog.cpp" line="244"/>
+        <location filename="../widgets/resizedialog.cpp" line="250"/>
+        <location filename="../widgets/resizedialog.cpp" line="275"/>
+        <location filename="../widgets/resizedialog.cpp" line="296"/>
         <source>OK</source>
-        <translation type="vanished">Oké</translation>
+        <translation>Oké</translation>
     </message>
     <message>
+        <location filename="../widgets/resizedialog.cpp" line="193"/>
+        <location filename="../widgets/resizedialog.cpp" line="250"/>
         <source>To prevent data loss, back up data in the logical volume before shrinking it</source>
-        <translation type="unfinished"/>
+        <translation>Maak een back-up van de gegevens op het logische volume om gegevensverlies te voorkomen.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="296"/>
+        <source>The file system does not support space adjustment</source>
+        <translation>Dit bestandssysteem heeft geen ondersteuning voor het aanpassen van de ruimte</translation>
     </message>
 </context>
 <context>
     <name>SizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="186"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="270"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="189"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="273"/>
         <source> Capacity:</source>
         <translation>Capaciteit:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="226"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="230"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="310"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="229"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="233"/>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="313"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="316"/>
         <source>Used:</source>
         <translation>Gebruikt:</translation>
     </message>
@@ -1743,7 +1900,7 @@ alle gegevens verloren!</translation>
 <context>
     <name>TitleWidget</name>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="52"/>
+        <location filename="../widgets/titlewidget.cpp" line="53"/>
         <source>Partition</source>
         <translation>Partitie</translation>
     </message>
@@ -1752,108 +1909,106 @@ alle gegevens verloren!</translation>
         <translation type="vanished">Formatteren als</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="53"/>
+        <location filename="../widgets/titlewidget.cpp" line="54"/>
         <source>Wipe</source>
         <translation>Wissen</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="54"/>
+        <location filename="../widgets/titlewidget.cpp" line="55"/>
         <source>Mount</source>
         <translation>Aankoppelen</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="55"/>
+        <location filename="../widgets/titlewidget.cpp" line="56"/>
         <source>Unmount</source>
         <translation>Afkoppelen</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="56"/>
-        <location filename="../widgets/titlewidget.cpp" line="77"/>
-        <location filename="../widgets/titlewidget.cpp" line="81"/>
+        <location filename="../widgets/titlewidget.cpp" line="57"/>
+        <location filename="../widgets/titlewidget.cpp" line="78"/>
+        <location filename="../widgets/titlewidget.cpp" line="82"/>
         <source>Resize</source>
         <translation>Grootte aanpassen</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="57"/>
-        <location filename="../widgets/titlewidget.cpp" line="312"/>
+        <location filename="../widgets/titlewidget.cpp" line="58"/>
+        <location filename="../widgets/titlewidget.cpp" line="373"/>
         <source>Create volume group</source>
-        <translation type="unfinished"/>
+        <translation>Volumegroep samenstellen</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="259"/>
+        <location filename="../widgets/titlewidget.cpp" line="254"/>
+        <location filename="../widgets/titlewidget.cpp" line="354"/>
+        <source>The file system does not support space adjustment</source>
+        <translation>Dit bestandssysteem heeft geen ondersteuning voor het aanpassen van de ruimte</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="274"/>
         <source>The disks will be formatted if you create a logical volume</source>
-        <translation type="unfinished"/>
+        <translation>Door het aanmaken van een logisch volume worden de schijven geformatteerd.</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="284"/>
-        <location filename="../widgets/titlewidget.cpp" line="332"/>
+        <location filename="../widgets/titlewidget.cpp" line="302"/>
+        <location filename="../widgets/titlewidget.cpp" line="340"/>
+        <location filename="../widgets/titlewidget.cpp" line="394"/>
         <source>Unmount %1 first</source>
-        <translation type="unfinished"/>
+        <translation>Koppel %1 eerst af</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="284"/>
-        <location filename="../widgets/titlewidget.cpp" line="332"/>
+        <location filename="../widgets/titlewidget.cpp" line="254"/>
+        <location filename="../widgets/titlewidget.cpp" line="302"/>
+        <location filename="../widgets/titlewidget.cpp" line="340"/>
+        <location filename="../widgets/titlewidget.cpp" line="354"/>
+        <location filename="../widgets/titlewidget.cpp" line="394"/>
         <source>OK</source>
         <translation>Oké</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="294"/>
-        <location filename="../widgets/titlewidget.cpp" line="342"/>
+        <location filename="../widgets/titlewidget.cpp" line="314"/>
+        <location filename="../widgets/titlewidget.cpp" line="406"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation type="unfinished"/>
+        <translation>Als je doorgaat, dan kunnen de gegevens niet worden hersteld.</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="295"/>
-        <location filename="../widgets/titlewidget.cpp" line="343"/>
-        <location filename="../widgets/titlewidget.cpp" line="364"/>
+        <location filename="../widgets/titlewidget.cpp" line="315"/>
+        <location filename="../widgets/titlewidget.cpp" line="407"/>
         <source>Cancel</source>
         <translation>Annuleren</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="312"/>
+        <location filename="../widgets/titlewidget.cpp" line="373"/>
         <source>The disks will be formatted if you create a volume group</source>
-        <translation type="unfinished"/>
+        <translation>Door het aanmaken van een volumegroep worden de schijven geformatteerd.</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="363"/>
-        <source>Are you sure you want to delete the physical volume?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../widgets/titlewidget.cpp" line="363"/>
-        <source>You will lose all data in it</source>
-        <translation>Alle gegevens worden permanent verwijderd</translation>
-    </message>
-    <message>
-        <location filename="../widgets/titlewidget.cpp" line="295"/>
-        <location filename="../widgets/titlewidget.cpp" line="343"/>
-        <location filename="../widgets/titlewidget.cpp" line="364"/>
+        <location filename="../widgets/titlewidget.cpp" line="315"/>
+        <location filename="../widgets/titlewidget.cpp" line="407"/>
         <source>Delete</source>
         <translation>Verwijderen</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="73"/>
-        <location filename="../widgets/titlewidget.cpp" line="259"/>
+        <location filename="../widgets/titlewidget.cpp" line="74"/>
+        <location filename="../widgets/titlewidget.cpp" line="274"/>
         <source>Create logical volume</source>
-        <translation type="unfinished"/>
+        <translation>Logisch volume aanmaken</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="61"/>
+        <location filename="../widgets/titlewidget.cpp" line="62"/>
         <source>Delete volume group</source>
-        <translation type="unfinished"/>
+        <translation>Volumegroep wissen</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="65"/>
+        <location filename="../widgets/titlewidget.cpp" line="66"/>
         <source>Delete logical volume</source>
-        <translation type="unfinished"/>
+        <translation>Logisch volume wissen</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="69"/>
+        <location filename="../widgets/titlewidget.cpp" line="70"/>
         <source>Delete physical volume</source>
-        <translation type="unfinished"/>
+        <translation>Volume wissen</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="191"/>
+        <location filename="../widgets/titlewidget.cpp" line="192"/>
         <source>Cannot recognize its partition table</source>
         <translation>Onbekende partitietabel</translation>
     </message>
@@ -1874,35 +2029,35 @@ alle gegevens verloren!</translation>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="61"/>
         <source>Make sure there are no programs running on the logical volume</source>
-        <translation type="unfinished"/>
+        <translation>Zorg er voor dat er geen programma&apos;s meer draaien op de schijf</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="64"/>
-        <location filename="../widgets/unmountdialog.cpp" line="105"/>
-        <location filename="../widgets/unmountdialog.cpp" line="112"/>
+        <location filename="../widgets/unmountdialog.cpp" line="124"/>
+        <location filename="../widgets/unmountdialog.cpp" line="131"/>
         <source>Cancel</source>
         <translation>Annuleren</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="65"/>
-        <location filename="../widgets/unmountdialog.cpp" line="112"/>
+        <location filename="../widgets/unmountdialog.cpp" line="131"/>
         <source>Unmount</source>
         <translation>Afkoppelen</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="104"/>
+        <location filename="../widgets/unmountdialog.cpp" line="123"/>
         <source>Unmounting system disk may result in system crash,
  please confirm before proceeding</source>
         <translation>Het afkoppelen van de systeemschijf kan leiden tot een crash.
  Weet je zeker dat je dit wilt doen?</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="105"/>
+        <location filename="../widgets/unmountdialog.cpp" line="124"/>
         <source>Continue</source>
         <translation>Doorgaan</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="111"/>
+        <location filename="../widgets/unmountdialog.cpp" line="130"/>
         <source>You will take subsequent risks if you continue to unmount the system disk</source>
         <translation>Het afkoppelen van de systeemschijf is voor eigen risico.</translation>
     </message>

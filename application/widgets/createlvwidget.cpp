@@ -310,6 +310,7 @@ void CreateLVWidget::partInfoShowing()
     m_partNameEdit->setObjectName("lvName");
     m_partNameEdit->setAccessibleName("lvName");
     m_partNameEdit->lineEdit()->setReadOnly(true);
+    m_partNameEdit->setClearButtonEnabled(false);
 
     line2Layout->addWidget(m_partDoLabel, 1);
     line2Layout->addSpacing(7);

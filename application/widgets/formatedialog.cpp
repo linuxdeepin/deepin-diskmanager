@@ -291,6 +291,7 @@ void FormateDialog::initUi()
         m_fileNameEdit->lineEdit()->setReadOnly(true);
         m_fileNameEdit->setAccessibleName("lvName");
         m_fileNameEdit->lineEdit()->setPlaceholderText(tr("LV name"));
+        m_fileNameEdit->setClearButtonEnabled(false);
         formatName->setText(tr("LV file system:"));
         m_formatComboBox->setAccessibleName("LV file system");
         m_describeInfo->setText(tr("You may be able to recover files after the wipe."));

@@ -115,6 +115,13 @@ void ResizeDialog::partitionResize()
     }
 
     Sector newSectorEnd = info.m_sectorStart + static_cast<Sector>(newSize * (MEBIBYTE / info.m_sectorSize));
+    if (newSectorEnd < 0) {
+        m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
+        m_lineEdit->showAlertMessage(tr("Space limit exceeded"), m_mainFrame);
+        m_lineEdit->setAlert(true);
+        return;
+    }
+
     Sector curSectorEnd = info.m_sectorEnd;
     FS_Limits limits = info.m_fsLimits;
     if (newSectorEnd > curSectorEnd) {
@@ -143,7 +150,7 @@ void ResizeDialog::partitionResize()
             m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
             m_lineEdit->showAlertMessage(tr("Space limit exceeded"), m_mainFrame);
             m_lineEdit->setAlert(true);
-            return ;
+            return;
         } else {
             PartitionInfo newInfo = info;
             newInfo.m_sectorEnd = newSectorEnd;
@@ -161,11 +168,10 @@ void ResizeDialog::partitionResize()
             }
 
             if (newInfo.m_sectorEnd > next.m_sectorEnd) {
-                MessageBox messageBox(this);
-                messageBox.setObjectName("messageBox");
-                messageBox.setAccessibleName("PartitionExtendDialog");
-                messageBox.setWarings(tr("Not enough space, please clear data in it"), "", tr("OK"), "ok");
-                messageBox.exec();
+                m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
+                m_lineEdit->showAlertMessage(tr("Space limit exceeded"), m_mainFrame);
+                m_lineEdit->setAlert(true);
+                return;
             } else {
                 newInfo.m_alignment = ALIGN_MEBIBYTE; //ALIGN_MEBIBYTE;
                 qDebug() << diff << newInfo.m_sectorEnd;
@@ -211,24 +217,35 @@ void ResizeDialog::partitionResize()
 void ResizeDialog::lvResize()
 {
     VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
-    int peSize = static_cast<int>(Utils::LVMSizeToUnit(vgInfo.m_PESize, SIZE_UNIT::UNIT_MIB));
+    int peSize = vgInfo.m_PESize;
 
     LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
-    double curSize = Utils::LVMSizeToUnit(lvInfo.m_lvLECount * lvInfo.m_LESize, UNIT_MIB);
+    Sector curSize = lvInfo.m_lvLECount * lvInfo.m_LESize;
+    Sector unUsedSize = static_cast<Sector>(vgInfo.m_PESize * vgInfo.m_peUnused);
+    FS_Limits limits = lvInfo.m_fsLimits;
 
-    double newSize = 0;
+    Sector newSize = 0;
     if (0 == m_comboBox->currentIndex()) {
-        newSize = m_lineEdit->text().toDouble();
+        newSize = static_cast<Sector>(m_lineEdit->text().toDouble() * MEBIBYTE);
     } else {
-        newSize = m_lineEdit->text().toDouble() * 1024;
+        newSize = static_cast<Sector>(m_lineEdit->text().toDouble() * GIBIBYTE);
     }
 
-    int peCount = static_cast<int>(newSize / peSize);
+    Sector peCount = newSize / peSize;
     if ((peCount * peSize) < newSize) {
         peCount += 1;
     }
     newSize = peCount * peSize;
-    FS_Limits limits = lvInfo.m_fsLimits;
+
+    if (newSize < 0 || (newSize - curSize) > unUsedSize || newSize < limits.min_size) {
+        MessageBox messageBox(this);
+        messageBox.setObjectName("messageBox");
+        messageBox.setAccessibleName("LVResizeWarning");
+        messageBox.setWarings(tr("Not enough space, please clear data in it"), "", tr("OK"), "ok");
+        messageBox.exec();
+
+        return;
+    }
 
     if (newSize < curSize) {
         if (limits.min_size == -1) {
@@ -236,28 +253,19 @@ void ResizeDialog::lvResize()
             return;
         }
 
-        Sector size = static_cast<Sector>(newSize * MEBIBYTE);
-        if (size < limits.min_size) {
-            MessageBox messageBox(this);
-            messageBox.setObjectName("messageBox");
-            messageBox.setAccessibleName("LVReduceDialog");
-            messageBox.setWarings(tr("Not enough space, please clear data in it"), "", tr("OK"), "ok");
-            messageBox.exec();
-        } else {
-            MessageBox messageBox(this);
-            messageBox.setObjectName("messageBox");
-            messageBox.setAccessibleName("messageBox");
-            messageBox.setWarings(tr("To prevent data loss, back up data in the logical volume before shrinking it"), "", tr("OK"), "ok", tr("Cancel"), "cancel");
-            if (messageBox.exec() == DDialog::Accepted) {
-                LVAction info;
-                info.m_vgName = lvInfo.m_vgName;
-                info.m_lvName = lvInfo.m_lvName;
-                info.m_lvByteSize = size;
-                info.m_lvAct = LVMAction::LVM_ACT_LV_REDUCE;
-                info.m_lvFs = lvInfo.m_lvFsType;
-                DMDbusHandler::instance()->resizeLV(info);
-                close();
-            }
+        MessageBox messageBox(this);
+        messageBox.setObjectName("messageBox");
+        messageBox.setAccessibleName("messageBox");
+        messageBox.setWarings(tr("To prevent data loss, back up data in the logical volume before shrinking it"), "", tr("OK"), "ok", tr("Cancel"), "cancel");
+        if (messageBox.exec() == DDialog::Accepted) {
+            LVAction info;
+            info.m_vgName = lvInfo.m_vgName;
+            info.m_lvName = lvInfo.m_lvName;
+            info.m_lvByteSize = newSize;
+            info.m_lvAct = LVMAction::LVM_ACT_LV_REDUCE;
+            info.m_lvFs = lvInfo.m_lvFsType;
+            DMDbusHandler::instance()->resizeLV(info);
+            close();
         }
     } else if (newSize > curSize) {
         if (limits.max_size == -1) {
@@ -265,25 +273,14 @@ void ResizeDialog::lvResize()
             return;
         }
 
-        Sector size = static_cast<Sector>(newSize * MEBIBYTE);
-        Sector curLVSize = static_cast<Sector>(lvInfo.m_lvLECount * lvInfo.m_LESize);
-        Sector unUsedSize = static_cast<Sector>(vgInfo.m_PESize * vgInfo.m_peUnused);
-        if ((size - curLVSize) > unUsedSize) {
-            MessageBox messageBox(this);
-            messageBox.setObjectName("messageBox");
-            messageBox.setAccessibleName("LVExtendDialog");
-            messageBox.setWarings(tr("Not enough space, please clear data in it"), "", tr("OK"), "ok");
-            messageBox.exec();
-        } else {
-            LVAction info;
-            info.m_vgName = lvInfo.m_vgName;
-            info.m_lvName = lvInfo.m_lvName;
-            info.m_lvByteSize = size;
-            info.m_lvAct = LVMAction::LVM_ACT_LV_EXTEND;
-            info.m_lvFs = lvInfo.m_lvFsType;
-            DMDbusHandler::instance()->resizeLV(info);
-            close();
-        }
+        LVAction info;
+        info.m_vgName = lvInfo.m_vgName;
+        info.m_lvName = lvInfo.m_lvName;
+        info.m_lvByteSize = newSize;
+        info.m_lvAct = LVMAction::LVM_ACT_LV_EXTEND;
+        info.m_lvFs = lvInfo.m_lvFsType;
+        DMDbusHandler::instance()->resizeLV(info);
+        close();
     }
 }
 
@@ -339,7 +336,7 @@ void ResizeDialog::onComboSelectedChanged(int index)
 
 void ResizeDialog::onEditTextChanged(const QString &)
 {
-    if (!m_lineEdit->text().isEmpty()) {
+    if (!m_lineEdit->text().isEmpty() && m_lineEdit->text().toDouble() != 0.00) {
         getButton(m_okCode)->setDisabled(false);
         if (m_lineEdit->isAlert()) {
             m_lineEdit->setAlert(false);

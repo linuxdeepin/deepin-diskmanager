@@ -482,6 +482,14 @@ private:
      */
     bool changeOwner(const QString &user, const QString &path);
 
+
+    /**
+     * @brief 创建pv使用的分区
+     * @param pv:pv数据结构体 创建分区依据
+     * @return true 分区创建成功 false 失败
+     */
+    bool createPVPart(PVData &pv);
+
 private:
     //general..
     /**
@@ -836,7 +844,14 @@ private:
      */
     QList<PVData> getCreatePVList(const QList<PVData> &devList, const long long &totalSize);
 
-
+    /**
+     * @brief 获取vg调整后的pvdata 列表
+     * @param vgName:需要调整的vg
+     * @param devList: 设备列表
+     * @param size: 总大小
+     * @return true false 与flag相同
+     */
+    QList<PVData> getResizePVList(const QString &vgName, const QList<PVData> &devList, const long long &totalSize);
 
     /**
      * @brief 获取创建PV的磁盘
@@ -846,7 +861,6 @@ private:
      */
     bool getPVDevice(const QString &devPath, Device &dev);
 
-
     /**
      * @brief 获取创建PV的磁盘
      * @param pv: pv数据结构体
@@ -854,7 +868,6 @@ private:
      * @return 大于0为pv长度 单位byte  小于0 为错误
      */
     long long getPVSize(const PVData &pv, bool flag = false);
-
 
     /**
      * @brief 获取创建PV的分区结尾
@@ -864,7 +877,6 @@ private:
      */
     bool getPVStartEndSector(PVData &pv, const long long &unallocaSize);
 
-
     /**
      * @brief 创建pv分区
      * @param pv: pv数据结构体
@@ -872,6 +884,25 @@ private:
      */
     bool createPVPartition(PVData &pv);
 
+    /**
+     * @brief 检查pv设备
+     * @param vgName: vg名称
+     * @param pv: pv数据结构体
+     * @return true 成功 允许使用 false 失败 不允许使用
+     */
+    bool checkPVDevice(const QString vgName, const PVData &pv);
+
+    /**
+     * @brief 删除pv结束信号
+     * @param flag:true成功false失败
+     */
+    void deletePVListMessage(bool flag);
+
+    /**
+     * @brief vg调整结束信号
+     * @param flag:true成功false失败
+     */
+    void resizeVGMessage(bool flag);
 
 signals:
     void probeAllInfo();
@@ -965,6 +996,23 @@ signals:
      * @brief 坏道修复线程启动信号
      */
     void fixBadBlocksStart();
+
+    /**
+     * @brief 删除pv列表
+     * @param lvmInfo:lvm属性类
+     * @param devList:待删除pv列表
+     */
+    void deletePVListStart(LVMInfo lvmInfo, QList<PVData> devList);
+
+    /**
+     * @brief vg调整
+     * @param lvmInfo:lvm属性类
+     * @param vgName:调整的vg名称
+     * @param devList:调整后pv设备
+     * @param size:调整后大小
+     */
+    void resizeVGStart(LVMInfo lvmInfo, QString vgName, QList<PVData>devList, long long size);
+
     /**
      * @brief 清除信号
      * @param clearMessage：清除结果
@@ -983,15 +1031,12 @@ signals:
      */
     void pvDeleteMessage(const QString &pvMessage);
 
-
-
 public slots:
 
     /**
      * @brief 刷新信息槽函数
      */
     void onRefreshDeviceInfo(int type = 0, bool arg1 = true, QString arg2 = "");
-
 
     /**
       * @brief 刷新硬件信息
@@ -1008,9 +1053,11 @@ private:
     QThread *m_workerCheckThread;         //坏道检查线程对象
     QThread *m_workerFixThread;           //坏道修复线程对象
     QThread *m_workerThreadProbe;         //硬件刷新专用
+    QThread *m_workerLVMThread;           //lvm专用线程对象
     WorkThread m_checkThread;
     FixThread m_fixthread;
     ProbeThread m_probeThread;
+    LVMThread m_lvmThread;                //lvm线程工作类
     bool m_isClear;
 
     LVMInfo m_lvmInfo;                    //lvm 数据集合

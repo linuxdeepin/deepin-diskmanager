@@ -48,6 +48,7 @@
 #include <string.h>
 #include <set>
 
+
 #define FAST_TYPE 1     // 快速
 #define SECURE_TYPE 2   // 安全
 #define DOD_TYPE 3      // 高级
@@ -69,6 +70,7 @@ SupportedFileSystems *PartedCore::m_supportedFileSystems = nullptr;
 PartedCore::PartedCore(QObject *parent)
     : QObject(parent), m_isClear(false)
 {
+    //qRegisterMetaType<LVMInfo>();
     initConnection();
     qDebug() << __FUNCTION__ << "^^1";
 
@@ -91,6 +93,8 @@ PartedCore::PartedCore(QObject *parent)
     m_workerThreadProbe = nullptr;
     m_workerCheckThread = nullptr;
     m_workerFixThread = nullptr;
+
+    m_workerLVMThread = nullptr;
     probeDeviceInfo();
     delTempMountFile();
 
@@ -122,6 +126,14 @@ PartedCore::~PartedCore()
         delete m_workerThreadProbe;
         m_workerThreadProbe = nullptr;
     }
+
+
+    if (m_workerLVMThread) {
+        m_workerLVMThread->quit();
+        m_workerLVMThread->wait();
+        delete m_workerLVMThread;
+        m_workerLVMThread = nullptr;
+    }
     delTempMountFile();
 }
 
@@ -149,6 +161,12 @@ void PartedCore::initConnection()
     connect(this, &PartedCore::checkBadBlocksRunCountStart, &m_checkThread, &WorkThread::runCount);
     connect(this, &PartedCore::checkBadBlocksRunTimeStart, &m_checkThread, &WorkThread::runTime);
     connect(this, &PartedCore::fixBadBlocksStart, &m_fixthread, &FixThread::runFix);
+
+    connect(this, &PartedCore::deletePVListStart, &m_lvmThread, &LVMThread::deletePVList);
+    connect(this, &PartedCore::resizeVGStart, &m_lvmThread, &LVMThread::resizeVG);
+
+    connect(&m_lvmThread, &LVMThread::deletePVListFinished, this, &PartedCore::deletePVListMessage);
+    connect(&m_lvmThread, &LVMThread::resizeVGFinished, this, &PartedCore::resizeVGMessage);
 
 }
 
@@ -1948,41 +1966,16 @@ void PartedCore::reWritePartition(const QString &devicePath)
         return;
     }
 }
-
-QList<PVData> PartedCore::getCreatePVList(const QList<PVData> &devList, const long long &totalSzie)
+/**********************************lvm**********************************/
+QList<PVData> PartedCore::getCreatePVList(const QList<PVData> &devList, const long long &totalSize)
 {
-    auto createPVPart = [ = ](PVData & pv)->bool{
-        Device dev;
-        if (!getPVDevice(pv.m_diskPath, dev))
-        {
-            return false;
-        }
-
-        if (pv.m_type == LVM_DEV_UNALLOCATED_PARTITION)
-        {
-            if (!createPVPartition(pv)) { //创建分区
-                return false;
-            };
-        } else  if (pv.m_type == LVM_DEV_DISK)
-        {
-            if (!createPartitionTable(dev.m_path, QString("%1").arg(dev.m_length), QString("%1").arg(dev.m_sectorSize), "gpt")) { //创建分区表
-                return false;
-            }
-            if (!createPVPartition(pv)) { //创建分区
-                return false;
-            };
-        }
-        pv.m_type = LVM_DEV_PARTITION;
-        return true;
-    };
-
     QList<PVData>diskList;
     QList<PVData>partList;
     QList<PVData>unallocList;
     QList<PVData>loopList;
     QList<PVData>metaList;
 
-    long long unallocSize = totalSzie; //去掉分区大小后的未分配空间
+    long long unallocSize = totalSize; //去掉分区大小后的未分配空间
     foreach (PVData pv, devList) {
         long long pvSize = getPVSize(pv);
         if (pvSize <= 0)
@@ -2014,6 +2007,7 @@ QList<PVData> PartedCore::getCreatePVList(const QList<PVData> &devList, const lo
 
     //优先使用 分区
     QList<PVData>list = partList;
+    //使用未分配空间 unallocList
     foreach (PVData pv, unallocList) {
         if (unallocSize <= 0) {
             break;
@@ -2023,16 +2017,23 @@ QList<PVData> PartedCore::getCreatePVList(const QList<PVData> &devList, const lo
             continue;
         }
 
+        if (unallocSize < pvSize) {
+            if (unallocSize <= 5 * MEBIBYTE) {
+                unallocSize = 5 * MEBIBYTE;
+            }
+        }
+
         if (!getPVStartEndSector(pv, unallocSize)) {
             return  QList<PVData>();
         }
 
-        unallocSize -= pvSize;
-        if (createPVPart(pv)) { //创建分区
-            list.push_back(pv);
-        } else {
+        //创建分区
+        if (!createPVPart(pv)) {
             return QList<PVData>();
         }
+
+        unallocSize -= pvSize;
+        list.push_back(pv);
     }
     //磁盘
     foreach (PVData pv, diskList) {
@@ -2040,24 +2041,22 @@ QList<PVData> PartedCore::getCreatePVList(const QList<PVData> &devList, const lo
             break;
         }
         long long pvSize = getPVSize(pv);
+        long long pvSize2 = getPVSize(pv, true);
         if (pvSize <= 0)
             continue;
-        if (unallocSize < pvSize) {  //说明需要创建新分区
-            pvSize = getPVSize(pv, true); //获取创建分区情况下的size
+        if (unallocSize < pvSize && unallocSize < pvSize2) { //获取创建分区情况下的size
+            if (unallocSize <= 5 * MEBIBYTE) {
+                unallocSize = 5 * MEBIBYTE;
+            }
             if (!getPVStartEndSector(pv, unallocSize)) {
                 return  QList<PVData>();
             }
-
             //创建分区
-            if (createPVPart(pv)) {
-                list.push_back(pv);
-            } else {
+            if (!createPVPart(pv)) {
                 return QList<PVData>();
             }
-
-        } else {
-            list.push_back(pv); //整盘加入 从头到尾都可用
         }
+        list.push_back(pv);
         unallocSize -= pvSize;
     }
     if (unallocSize > 0)
@@ -2070,8 +2069,6 @@ QList<PVData> PartedCore::getCreatePVList(const QList<PVData> &devList, const lo
         }
 
     }
-
-
 
 //    auto printPV = [ = ](QString name, QList<PVData>pvList) {
 //        qDebug() << "__FUNCTION__" << "-------------------------";
@@ -2095,6 +2092,139 @@ QList<PVData> PartedCore::getCreatePVList(const QList<PVData> &devList, const lo
 //    printPV("metaList", metaList);
 //    printPV("list", list);
 
+    return list;
+}
+
+QList<PVData> PartedCore::getResizePVList(const QString &vgName, const QList<PVData> &devList, const long long &totalSize)
+{
+    if (!m_lvmInfo.vgExists(vgName)) { //vg不存在
+        return QList<PVData> ();
+    }
+
+    VGInfo vg = m_lvmInfo.getVG(vgName);
+    if (vg.m_peUsed * vg.m_PESize > totalSize) { //调整数值有误  已使用 > 总大小
+        return QList<PVData> ();
+    }
+
+    //添加
+    QList<PVData>addDiskList;
+    QList<PVData>addPartList;
+    QList<PVData>addUnallocList;
+    QList<PVData>addLoopList;
+    QList<PVData>addMetaList;
+
+    //已有 oldList[0]=> disk oldList[1]=> part
+    QList<PVData>oldList[2];
+
+    foreach (PVData pv, devList) {
+        bool oldFlag = m_lvmInfo.pvOfVg(vgName, pv);;
+        if (pv.m_type == LVMDevType::LVM_DEV_DISK) {  //磁盘 如果已经加入pv
+            oldFlag ? oldList[0].push_back(pv) : addDiskList.push_back(pv);
+        } else if (pv.m_type == LVMDevType::LVM_DEV_PARTITION) {
+            oldFlag ? oldList[1].push_back(pv) : addPartList.push_back(pv);
+        } else if (pv.m_type == LVMDevType::LVM_DEV_UNALLOCATED_PARTITION) {
+            addUnallocList.push_back(pv);
+        } else if (pv.m_type == LVMDevType::LVM_DEV_LOOP) {
+            addLoopList.push_back(pv);
+        } else if (pv.m_type == LVMDevType::LVM_DEV_META_DEVICES) {
+            addMetaList.push_back(pv);
+        }
+    }
+
+    //排序
+    auto sortFunc = [ = ](const PVData & pv1, const PVData & pv2)->bool{
+        long long pv1Size = pv1.m_sectorSize * (pv1.m_endSector - pv1.m_startSector + 1);
+        long long pv2Size = pv2.m_sectorSize * (pv2.m_endSector - pv2.m_startSector + 1);
+
+        return pv1Size > pv2Size;
+    };
+
+    std::sort(addDiskList.begin(), addDiskList.end(), sortFunc);
+    std::sort(addPartList.begin(), addPartList.end(), sortFunc);
+    std::sort(addUnallocList.begin(), addUnallocList.end(), sortFunc);
+    std::sort(addLoopList.begin(), addLoopList.end(), sortFunc);
+    std::sort(addMetaList.begin(), addMetaList.end(), sortFunc);
+    std::sort(oldList[0].begin(), oldList[0].end(), sortFunc);
+    std::sort(oldList[1].begin(), oldList[1].end(), sortFunc);
+
+    QList<PVData>list;
+    long long unallocSize = totalSize;
+    //优先使用保留的disk 和part
+    //根据前端逻辑 所有的分区和pv都将要使用 所以此处这样写 如果前端逻辑修改后 此处需要修改
+    for (int i = 0; i < 2; ++i) {
+        foreach (const PVData &pv, oldList[i]) {
+            unallocSize -= getPVSize(pv);
+            list.push_back(pv);
+        }
+    }
+    //使用分区
+    foreach (PVData pv, addPartList) {
+        unallocSize -= getPVSize(pv);
+        list.push_back(pv);
+    }
+
+    if (unallocSize <= 0)
+        return list;
+
+
+    //使用未分配空间 unallocList
+    foreach (PVData pv, addUnallocList) {
+        if (unallocSize <= 0) {
+            break;
+        }
+        long long pvSize = getPVSize(pv);
+        if (pvSize <= 0) {
+            continue;
+        }
+
+        if (!getPVStartEndSector(pv, unallocSize)) {
+            return  QList<PVData>();
+        }
+
+        //创建分区
+        if (!createPVPart(pv)) {
+            return QList<PVData>();
+        }
+
+        unallocSize -= pvSize;
+        list.push_back(pv);
+    }
+
+
+    if (unallocSize <= 0)
+        return list;
+
+    //磁盘
+    foreach (PVData pv, addDiskList) {
+        if (unallocSize <= 0) {
+            break;
+        }
+        long long pvSize = getPVSize(pv);
+
+        if (pvSize <= 0)
+            continue;
+        if (unallocSize < pvSize) {
+            if (!getPVStartEndSector(pv, unallocSize)) {
+                return  QList<PVData>();
+            }
+            //创建分区
+            if (!createPVPart(pv)) {
+                return QList<PVData>();
+            }
+        }
+        unallocSize -= pvSize;
+
+        list.push_back(pv); //整盘加入 从头到尾都可用
+    }
+    if (unallocSize > 0)
+        return QList<PVData>();
+
+    //磁盘
+    foreach (PVData pv, list) {
+        if (pv.m_type == LVM_DEV_PARTITION) {
+            //todo 修改分区类型
+        }
+    }
     return list;
 }
 
@@ -2213,6 +2343,97 @@ bool PartedCore::createPVPartition(PVData &pv)
     return true;
 }
 
+bool PartedCore::createPVPart(PVData &pv)
+{
+    Device dev;
+    if (!getPVDevice(pv.m_diskPath, dev)) {
+        return false;
+    }
+
+    if (pv.m_type == LVM_DEV_UNALLOCATED_PARTITION) {
+        if (!createPVPartition(pv)) { //创建分区
+            return false;
+        };
+    } else  if (pv.m_type == LVM_DEV_DISK) {
+        if (!createPartitionTable(dev.m_path, QString("%1").arg(dev.m_length), QString("%1").arg(dev.m_sectorSize), "gpt")) { //创建分区表
+            return false;
+        }
+        if (!createPVPartition(pv)) { //创建分区
+            return false;
+        };
+    }
+    pv.m_type = LVM_DEV_PARTITION;
+    return true;
+}
+
+bool PartedCore::checkPVDevice(const QString vgName, const PVData &pv)
+{
+    if (pv.m_type == LVMDevType::LVM_DEV_UNKNOW_DEVICES) { //设备类型不明
+        return false;
+    }
+
+    auto devIt = m_deviceMap.find(pv.m_diskPath); //设备不存在
+    if (devIt == m_deviceMap.end()) {
+        return false;
+    }
+
+    const QVector<Partition *> &part = devIt.value().m_partitions;
+    QVector<Partition *>::const_iterator partIt = std::find_if(part.begin(), part.end(), [ = ](Partition * it)->bool{
+        if (it->m_type != TYPE_UNALLOCATED)
+        {
+            return it->getPath() == pv.m_devicePath;
+        } else
+        {
+            return it->m_sectorEnd == pv.m_endSector && it->m_sectorStart == pv.m_startSector;
+        }
+    });
+
+    if (m_lvmInfo.pvExists(pv)) { //pv已经存在
+        return true;
+    }
+
+    switch (pv.m_type) { //判断设备是否符合
+    case LVMDevType::LVM_DEV_DISK: { //验证是否存在分区表
+        if (devIt.value().m_diskType != "unrecognized") {
+            return false;
+        }
+    }
+    break;
+    case LVMDevType::LVM_DEV_PARTITION: { //验证分区是否存在 是否被挂载
+        if (part.end() == partIt || !(*partIt)->getMountPoint().isEmpty()) { //此处两个判断位置不可交换 交换会崩溃
+            return false;
+        }
+    }
+    break;
+    case LVMDevType::LVM_DEV_UNALLOCATED_PARTITION: { //验证未分配分区是否存在
+        if (part.end() == partIt) {
+            return false;
+        }
+    }
+    break;
+    case LVMDevType::LVM_DEV_LOOP: //暂时不做处理 以后支持时添加
+        break;
+    case LVMDevType::LVM_DEV_META_DEVICES://暂时不做处理 以后支持时添加
+        break;
+    default:
+        return false;
+    }
+    return true;
+}
+
+void PartedCore::deletePVListMessage(bool flag)
+{
+    sendRefSigAndReturn(flag, DISK_SIGNAL_TYPE_PVDELETE, true, QString("%1:%2").arg(flag ? 1 : 0).arg(m_lvmInfo.m_lvmErr));
+}
+
+void PartedCore::resizeVGMessage(bool flag)
+{
+    if (!flag) {
+        sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(m_lvmInfo.m_lvmErr));
+    }
+    sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_VGCREATE, true, QString("1:%1").arg(m_lvmInfo.m_lvmErr));
+}
+
 bool PartedCore::createVG(QString vgName, QList<PVData> devList, long long size)
 {
     std::set<PVData>tmpDevList;
@@ -2233,8 +2454,9 @@ bool PartedCore::createVG(QString vgName, QList<PVData> devList, long long size)
         const QVector<Partition *> &part = devIt.value().m_partitions;
         QVector<Partition *>::const_iterator partIt = std::find_if(part.begin(), part.end(), [ = ](Partition * it)->bool{
             if (it->m_type != TYPE_UNALLOCATED)
+            {
                 return it->getPath() == pv.m_devicePath;
-            else
+            } else
             {
                 return it->m_sectorEnd == pv.m_endSector && it->m_sectorStart == pv.m_startSector;
             }
@@ -2276,6 +2498,12 @@ bool PartedCore::createVG(QString vgName, QList<PVData> devList, long long size)
 
 bool PartedCore::createLV(QString vgName, QList<LVAction> lvList)
 {
+    foreach (const LVAction &clv, lvList) {
+        if (!supportedFileSystem(clv.m_lvFs)) { //判断文件系统是否支持
+            return sendRefSigAndReturn(false);
+        }
+    }
+
     //创建lv 失败返回false
     if (!LVMOperator::createLV(m_lvmInfo, vgName, lvList)) {
         return sendRefSigAndReturn(false);
@@ -2337,12 +2565,32 @@ bool PartedCore::deleteVG(QStringList vglist)
 
 bool PartedCore::deleteLV(QStringList lvlist)
 {
-    return sendRefSigAndReturn(LVMOperator::deleteLV(m_lvmInfo, lvlist));
+    return sendRefSigAndReturn(LVMOperator::lvRemove(m_lvmInfo, lvlist));
 }
 
 bool PartedCore::resizeVG(QString vgName, QList<PVData> devList, long long size)
 {
-    return sendRefSigAndReturn(LVMOperator::resizeVG(m_lvmInfo, vgName, devList, size));
+    std::set<PVData>tmpDevList;
+    foreach (PVData pv, devList) {
+        if (!tmpDevList.insert(pv).second || !checkPVDevice(vgName, pv)) { //插入失败说明有重复
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
+        }
+    }
+
+    if (m_workerLVMThread == nullptr) {
+        m_workerLVMThread = new QThread();
+        m_workerLVMThread->start();
+        m_lvmThread.moveToThread(m_workerLVMThread);
+    }
+
+    QList<PVData>list =  getResizePVList(vgName, devList, size);
+    if (list.size() <= 0) {
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVMError::LVM_ERR_VG_ARGUMENT));
+    }
+
+    //线程启动信号
+    emit resizeVGStart(m_lvmInfo, vgName, list, size);
+    return true;
 }
 
 bool PartedCore::resizeLV(LVAction &lvAct)
@@ -2373,15 +2621,6 @@ bool PartedCore::resizeLV(LVAction &lvAct)
         return sendRefSigAndReturn(false);
     }
 
-    /* //挂载
-     if (info.m_busy) {
-         foreach (QString mountPoint, info.m_mountPoints) {
-             if (!mountDevice(mountPoint, info.m_lvPath, info.m_lvFsType)) {
-                 return sendRefSigAndReturn(false);
-             }
-         }
-     }
-    */
     return sendRefSigAndReturn(true);
 }
 
@@ -2493,8 +2732,15 @@ bool PartedCore::clearLV(const LVAction &lvAction)
 
 bool PartedCore::deletePVList(QList<PVData> devList)
 {
-    bool flag = LVMOperator::deletePVList(m_lvmInfo, devList);
-    return sendRefSigAndReturn(flag, DISK_SIGNAL_TYPE_PVDELETE, true, QString("%1:%2").arg(flag ? 1 : 0).arg(m_lvmInfo.m_lvmErr));
+    if (m_workerLVMThread == nullptr) {
+        m_workerLVMThread = new QThread();
+        m_workerLVMThread->start();
+        m_lvmThread.moveToThread(m_workerLVMThread);
+    }
+
+    //线程启动信号
+    emit deletePVListStart(m_lvmInfo, devList);
+    return true;
 }
 
 bool PartedCore::delTempMountFile()
@@ -2574,6 +2820,7 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
     QString curDevicePath;
     QString cmd;
     QString output, errstr;
+
     if (PART_TYPE == diskType) {
         curDevicePath = m_curpartition.m_devicePath;
         curDiskType = m_deviceMap.value(curDevicePath).m_diskType;
@@ -2602,7 +2849,10 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
             if (0 == pInfo.m_sectorStart) {
                 pInfo.m_sectorStart = UEFI_SECTOR;
             }
-            if (curDiskType == "gpt") {
+
+            Device tmpDev = m_deviceMap.value(pInfo.m_devicePath);
+
+            if (curDiskType == "gpt" && tmpDev.m_length == (m_curpartition.m_sectorEnd + 1)) {
                 pInfo.m_sectorEnd = m_curpartition.m_sectorEnd - GPTBACKUP;
             } else {
                 pInfo.m_sectorEnd = m_curpartition.m_sectorEnd;
@@ -3829,11 +4079,10 @@ bool PartedCore::changeOwner(const QString &user, const QString &path)
     if (psInfo == nullptr) {
         return false;
     }
-    //todo 暂时先不判断返回值 此处有问题
+    //todo 暂时先不判断返回值 此处在fat ntfs文件系统有问题
     chown(path.toStdString().c_str(), psInfo->pw_uid, psInfo->pw_gid);
     return true;
 }
-
 
 int PartedCore::test()
 {

@@ -1,5 +1,4 @@
 #include "lvmstruct.h"
-#include <QSet>
 /*********************************** PVData *********************************************/
 bool PVData::operator<(const PVData &tmp) const
 {
@@ -128,7 +127,6 @@ QDBusArgument &operator<<(QDBusArgument &argument, const VGData &data)
     return argument;
 }
 
-
 const QDBusArgument &operator>>(const QDBusArgument &argument, VGData &data)
 {
     argument.beginStructure();
@@ -170,8 +168,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PVRanges &data)
     return argument;
 }
 
-
-
 /*********************************** PVInfo *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const PVInfo &data)
 {
@@ -198,7 +194,6 @@ QDBusArgument &operator<<(QDBusArgument &argument, const PVInfo &data)
     argument.endStructure();
     return argument;
 }
-
 
 const QDBusArgument &operator>>(const QDBusArgument &argument,  PVInfo &data)
 {
@@ -229,8 +224,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument,  PVInfo &data)
     return argument;
 }
 
-
-
 /*********************************** LVInfo *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const LVInfo &data)
 {
@@ -255,7 +248,6 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LVInfo &data)
     argument.endStructure();
     return argument;
 }
-
 
 const QDBusArgument &operator>>(const QDBusArgument &argument, LVInfo &data)
 {
@@ -287,7 +279,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LVInfo &data)
 /*********************************** VGInfo *********************************************/
 LVInfo VGInfo::getLVinfo(const QString &lvName)
 {
-    foreach (const LVInfo& info, m_lvlist) {
+    foreach (const LVInfo &info, m_lvlist) {
         if (info.m_lvName == lvName) {
             return info;
         }
@@ -297,7 +289,7 @@ LVInfo VGInfo::getLVinfo(const QString &lvName)
 
 bool VGInfo::lvInfoExists(const QString &lvName)
 {
-    foreach (const LVInfo& info, m_lvlist) {
+    foreach (const LVInfo &info, m_lvlist) {
         if (info.m_lvName == lvName) {
             return true;
         }
@@ -307,20 +299,14 @@ bool VGInfo::lvInfoExists(const QString &lvName)
 
 bool VGInfo::isAllPV(QVector<QString> pvList) const
 {
-    if (pvList.size() < m_pvInfo.keys().size()) {
+    QVector<QString> list = m_pvInfo.keys().toVector();
+    if (pvList.size() < list.size()) {
         return false;
     }
 
-    foreach (const QString &str, m_pvInfo.keys()) {
-        auto it = std::find_if(pvList.begin(), pvList.end(), [ = ](const QString & str2)->bool{
-            return str == str2;
-        });
-        if (it == pvList.end()) {
-            return false;
-        }
-    }
-
-    return true;
+    std::sort(list.begin(), list.end());
+    std::sort(pvList.begin(), pvList.end());
+    return std::includes(pvList.begin(), pvList.end(), list.begin(), list.end());
 }
 
 
@@ -394,6 +380,25 @@ PVInfo LVMInfo::getPV(const QString &pvPath)
     return getItem(pvPath, m_pvInfo);
 }
 
+VGInfo LVMInfo::getVG(const PVData &pv)
+{
+    if (pvExists(pv)) {
+        PVInfo info = getPV(pv);
+        return getVG(info.m_vgName);
+    }
+    return VGInfo();
+}
+
+VGInfo LVMInfo::getVG(const PVInfo &pv)
+{
+    return getVG(pv.m_vgName);
+}
+
+PVInfo LVMInfo::getPV(const PVData &pv)
+{
+    return getPV(pv.m_devicePath);
+}
+
 QVector<PVInfo> LVMInfo::getVGAllPV(const QString &vgName)
 {
     if (vgExists(vgName)) {
@@ -462,6 +467,25 @@ bool LVMInfo::pvExists(const QString &pvPath)
     return itemExists(pvPath, m_pvInfo);
 }
 
+bool LVMInfo::vgExists(const PVData &pv)
+{
+    if (pvExists(pv)) {
+        PVInfo info = getPV(pv);
+        return vgExists(info.m_vgName);
+    }
+    return false;
+}
+
+bool LVMInfo::vgExists(const PVInfo &pv)
+{
+    return vgExists(pv.m_vgName);
+}
+
+bool LVMInfo::pvExists(const PVData &pv)
+{
+    return pvExists(pv.m_devicePath);
+}
+
 bool LVMInfo::pvOfVg(const QString &vgName, const QString &pvPath)
 {
     if (!vgExists(vgName)) {
@@ -472,9 +496,34 @@ bool LVMInfo::pvOfVg(const QString &vgName, const QString &pvPath)
     return vg.m_pvInfo.find(pvPath) != vg.m_pvInfo.end();
 }
 
+bool LVMInfo::pvOfVg(const QString &vgName, const PVData &pv)
+{
+    return pvOfVg(vgName, pv.m_devicePath);
+}
+
+bool LVMInfo::pvOfVg(const PVInfo &pv)
+{
+    return pvOfVg(pv.m_vgName, pv.m_pvPath);
+}
+
+bool LVMInfo::pvOfVg(const VGInfo &vg, const PVInfo &pv)
+{
+    return pvOfVg(vg.m_vgName, pv.m_pvPath);
+}
+
+bool LVMInfo::pvOfVg(const VGInfo &vg, const PVData &pv)
+{
+    return pvOfVg(vg.m_vgName, pv.m_devicePath);
+}
+
+bool LVMInfo::pvOfVg(const QString &vgName, const PVInfo &pv)
+{
+    return pvOfVg(vgName, pv.m_pvPath);
+}
+
 
 template<class T>
-T LVMInfo:: getItem(const QString &str,  const QMap<QString, T>& containers)
+T LVMInfo:: getItem(const QString &str,  const QMap<QString, T> &containers)
 {
     //判断lv是否存在
     auto it = containers.find(str);
@@ -485,7 +534,7 @@ T LVMInfo:: getItem(const QString &str,  const QMap<QString, T>& containers)
 }
 
 template<class T>
-bool LVMInfo::itemExists(const QString& str,const QMap<QString, T>& containers)
+bool LVMInfo::itemExists(const QString &str, const QMap<QString, T> &containers)
 {
     return containers.find(str) != containers.end();
 }

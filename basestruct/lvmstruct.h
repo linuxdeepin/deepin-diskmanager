@@ -307,17 +307,34 @@ class LVMInfo
 {
 public:
     LVInfo getLVInfo(const QString &vgName, const QString &lvName);
+
     VGInfo getVG(const QString &vgName);
+    VGInfo getVG(const PVData &pv);
+    VGInfo getVG(const PVInfo &pv);
+
     PVInfo getPV(const QString &pvPath);
+    PVInfo getPV(const PVData &pv);
+
     QVector<PVInfo> getVGAllPV(const QString &vgName);
     QVector<PVInfo> getVGAllUsedPV(const QString &vgName);
     QVector<PVInfo> getVGAllUnUsedPV(const QString &vgName);
     QList<QString> getVGOfDisk(const QString &vgName, const QString &disk);
 
     bool lvInfoExists(const QString &vgName, const QString &lvName);
+
     bool vgExists(const QString &vgName);
+    bool vgExists(const PVData &pv);
+    bool vgExists(const PVInfo &pv);
+
     bool pvExists(const QString &pvPath);
+    bool pvExists(const PVData &pv);
+
     bool pvOfVg(const QString &vgName, const QString &pvPath);
+    bool pvOfVg(const QString &vgName, const PVData &pv);
+    bool pvOfVg(const PVInfo &pv);
+    bool pvOfVg(const VGInfo&vg,const PVInfo &pv);
+    bool pvOfVg(const VGInfo&vg,const PVData &pv);
+    bool pvOfVg(const QString &vgName,const PVInfo &pv);
 
 private:
     template<class T>
@@ -327,8 +344,6 @@ private:
     bool itemExists(const QString &str, const QMap<QString, T> &containers);
 
     QVector<PVInfo> getVGPVList(const QString &vgName, bool isUsed = true);
-
-
 public:
     QMap<QString, VGInfo> m_vgInfo;        //lvm设备信息 key:vgName value vginfo
     QMap<QString, PVInfo> m_pvInfo;        //lvm pv信息 key:/dev/sdb1 value:pvinfo

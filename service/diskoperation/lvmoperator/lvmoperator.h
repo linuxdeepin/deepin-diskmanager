@@ -103,7 +103,7 @@ public:
      * @param lvlist: 待删除lv列表
      * @return true 成功 false 失败
      */
-    static bool deleteLV(LVMInfo &lvmInfo, QStringList lvlist);
+    static bool lvRemove(LVMInfo &lvmInfo, QStringList lvlist);
 
     /**
      * @brief vg空间调整
@@ -123,17 +123,6 @@ public:
      * @return true 成功 false 失败
      */
     static bool resizeLV(LVMInfo &lvmInfo, LVAction &lvAction, LVInfo &info);
-
-
-    /**
-     * @brief vg减少pv
-     * @param lvmInfo: lvm数据集合
-     * @param vgName:vg名称
-     * @param devList: pv设备集合
-     * @return true 成功 false 失败
-     */
-    static bool vgReduce(LVMInfo &lvmInfo,  const QString &vgName, QList<PVData>devList);
-
 
     /**
      * @brief pv删除
@@ -159,7 +148,6 @@ private:
      * @return true 成功 false 失败
      */
     static bool updatePVInfo(LVMInfo &lvmInfo);
-
 
     /**
      * @brief 更新lvm VG信息
@@ -206,6 +194,13 @@ private:
      */
     static bool checkVG();
 
+    /**
+     * @brief 创建vg
+     * @param vgName:vg名称
+     * @param pv: pv路径
+     * @return true 成功 false 失败
+     */
+    static bool vgCreate(const QString &vgName, const QStringList &pvList);
 
     /**
      * @brief vg重命名
@@ -215,6 +210,13 @@ private:
      */
     static bool vgRename(const QString &uuid, const QString &newName);
 
+    /**
+     * @brief vg增加pv
+     * @param vgName:vg名称
+     * @param pv: pv路径
+     * @return true 成功 false 失败
+     */
+    static bool vgExtend(const QString &vgName, const QString &pvPath);
 
     /**
      * @brief vg减少pv
@@ -224,23 +226,57 @@ private:
      */
     static bool vgReduce(const QString &vgName, const QString &pvPath);
 
-
     /**
-     * @brief vg增加pv
-     * @param vgName:vg名称
-     * @param pv: pv路径
+     * @brief 创建pv
+     * @param devPath:pv路径
      * @return true 成功 false 失败
      */
-    static bool vgExtend(const QString &vgName, const QString &pvPath);
-
+    static bool pvCreate(const QString &devPath);
 
     /**
      * @brief pv移动
      * @param pvPath: pv设备路径
      * @return true 成功 false 失败
      */
-    static bool pvMove(const QString& pvPath);
+    static bool pvMove(const QString &pvPath, const QString &dest = "");
 
+    /**
+     * @brief 删除pv
+     * @param devPath:pv路径
+     * @return true 成功 false 失败
+     */
+    static bool pvRemove(const QString &devPath);
+
+    /**
+     * @brief 创建lv
+     * @param vgName:vg名称
+     * @param lvName:lv名称
+     * @param size: lv大小
+     * @return true 成功 false 失败
+     */
+    static bool lvCreate(const QString &vgName,const QString &lvName,const long long &size);
+
+    /**
+     * @brief 删除lv
+     * @param lvPath:lv路径
+     * @return true 成功 false 失败
+     */
+    static bool lvRemove(const QString &lvPath);
+
+    /**
+     * @brief 删除vg
+     * @param vgInfo:vg数据结构体
+     * @return true 成功 false 失败
+     */
+    static bool deleteVG(const VGInfo &vgInfo);
+
+    /**
+     * @brief 调整lv
+     * @param devPath:lv设备路径
+     * @param act:lv 操作结构体
+     * @return true 成功 false 失败
+     */
+    static bool resizeLV(const QString &devPath, const LVAction &act);
 
     /**
      * @brief 获取系统命令支持
@@ -262,38 +298,6 @@ private:
     {
         return (i >= 0 && list.size() > i) ? list[i] : QString();
     }
-
-    /**
-     * @brief 删除pv
-     * @param devPath:pv路径
-     * @return true 成功 false 失败
-     */
-    static bool delevtPV(const QString &devPath);
-
-    /**
-     * @brief 删除lv
-     * @param lvPath:lv路径
-     * @return true 成功 false 失败
-     */
-    static bool deleteLV(const QString &lvPath);
-
-    /**
-     * @brief 删除vg
-     * @param vgInfo:vg数据结构体
-     * @return true 成功 false 失败
-     */
-    static bool deleteVG(const VGInfo &vgInfo);
-
-
-
-    /**
-     * @brief 调整lv
-     * @param devPath:lv设备路径
-     * @param act:lv 操作结构体
-     * @return true 成功 false 失败
-     */
-    static bool resizeLV(const QString &devPath, const LVAction &act);
-
 
     /**
      * @brief 设置lvm错误

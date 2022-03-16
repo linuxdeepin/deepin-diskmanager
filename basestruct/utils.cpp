@@ -595,17 +595,19 @@ bool Utils::adjudicationPVDelete(LVMInfo lvmInfo, const set<QString> &pvStrList,
     //获取所有存在于vg中 待删除的pv
     QMap<QString, QVector<QString>>t_map;
     foreach (auto pvPath, pvStrList) {
-        if (!lvmInfo.pvExists(pvPath)) {
+        if (!lvmInfo.pvExists(pvPath)) { //pv不存在
             return false;
         }
 
         PVInfo pv =  lvmInfo.getPV(pvPath);
-        if (pv.joinVG()) { //只获取加入vg的pv路径
-            if (!lvmInfo.pvOfVg(pv.m_vgName, pv.m_pvPath)) { //vg不存在或pv不在vg中 说明数据有错误
-                return false;
-            }
-            t_map[pv.m_vgName].push_back(pv.m_pvPath);
+        if(pv.noJoinVG()){              //只获取加入vg的pv路径
+            continue;
         }
+
+        if (!lvmInfo.pvOfVg(pv)) {      //vg不存在或pv不在vg中 说明数据有错误
+            return false;
+        }
+        t_map[pv.m_vgName].push_back(pv.m_pvPath);
     }
 
     //判断pv是否可以删除

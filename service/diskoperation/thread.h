@@ -266,5 +266,43 @@ private:
     QStringList m_list;     //需要修复柱面集合
     int m_checkSize;        //检测柱面大小
 };
+
+class LVMThread: public QObject
+{
+    Q_OBJECT
+public:
+    LVMThread(QObject *parent = nullptr);
+
+    /**
+     * @brief 从vg中 删除pv设备 如果vg所有pv都被删除 将删除vg
+     * @param lvmInfo:lvm属性结构体
+     * @param devList: 待删除pv设备列表
+     */
+    void deletePVList(LVMInfo lvmInfo, QList<PVData> devList);
+
+    /**
+     * @brief vg空间调整
+     * @param lvmInfo:lvm属性结构体
+     * @param vgName: vg名称
+     * @param devList:vg调整后的设备
+     * @param size: vg调整后大小 byte字节
+     */
+    void resizeVG(LVMInfo lvmInfo, QString vgName, QList<PVData>devList, long long size);
+
+signals:
+
+    /**
+     * @brief 删除pv完成信号
+     * @param flag: 完成结果 true 为成功 false 为失败
+     */
+    void deletePVListFinished(bool flag);
+
+    /**
+     * @brief vg空间调整完成信号
+     * @param flag: 完成结果 true 为成功 false 为失败
+     */
+    void resizeVGFinished(bool);
+};
+
 }
 #endif // THREAD_H

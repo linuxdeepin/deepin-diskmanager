@@ -195,11 +195,22 @@ private:
 
     /**
      * @brief 获取PV大小
+     * @param vg 逻辑卷组
      * @param pv 物理卷数据
      * @param flag 是否需要创建分区或者分区表
      * @return PV大小
      */
-    Byte_Value getPVSize(const PVData &pv, bool flag = true);
+    Byte_Value getPVSize(const VGInfo &vg, const PVData &pv, bool flag = true);
+
+    /**
+     * @brief 获取设备真实大小
+     * @param vg 逻辑卷组
+     * @param pv 物理卷数据
+     * @param flag 是否需要创建分区或者分区表
+     * @param size 需要的pv大小
+     * @return 设备大小
+     */
+    Byte_Value getDevSize(const VGInfo &vg, const PVData &pv, bool flag, long long size);
 
     /**
      * @brief 获取最大值
@@ -207,7 +218,7 @@ private:
      * @param pvlist 当前选择的PV列表
      * @return 最大值
      */
-    Byte_Value getMaxSize(const VGInfo &vg,const set<PVData> &pvlist);
+    Byte_Value getMaxSize(const VGInfo &vg, const set<PVData> &pvlist);
 
     /**
      * @brief 获取最小值

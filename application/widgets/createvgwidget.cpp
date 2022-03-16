@@ -1051,6 +1051,7 @@ QList<DeviceInfo> CreateVGWidget::createAvailableDiskData()
                     }
                 }
 
+                PartitionInfo extendedInfo;
                 for (int i = 0; i < info.m_partition.size(); i++) {
                     PartitionInfo partitionInfo = info.m_partition.at(i);
 
@@ -1070,12 +1071,23 @@ QList<DeviceInfo> CreateVGWidget::createAvailableDiskData()
                     double partitionSize = Utils::sectorToUnit(partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1,
                                                                partitionInfo.m_sectorSize, UNIT_MIB);
                     QString fileSystemType = Utils::fileSystemTypeToString(static_cast<FSType>(partitionInfo.m_fileSystemType));
+                    if (fileSystemType == "extended") {
+                        extendedInfo = partitionInfo;
+                    }
                     if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) && (mountpoints.isEmpty()) &&
-                            (partitionSize > 100) && (fileSystemType != "extended")) {
+                            (partitionSize > 100) && (fileSystemType != "extended") &&
+                            (partitionInfo.m_type != PartitionType::TYPE_LOGICAL)) {
                         // 排除不能创建新分区的磁盘空闲空间
                         if (partitionInfo.m_path == "unallocated") {
                             if (partitionCount >= info.m_maxPrims) {
                                 continue;
+                            }
+
+                            if (info.m_disktype == "msdos") {
+                                if (partitionInfo.m_sectorStart >= extendedInfo.m_sectorStart &&
+                                        partitionInfo.m_sectorEnd <= extendedInfo.m_sectorEnd) {
+                                    continue;
+                                }
                             }
                         }
 
@@ -1210,6 +1222,7 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
                     }
                 }
 
+                PartitionInfo extendedInfo;
                 for (int i = 0; i < info.m_partition.size(); i++) {
                     PartitionInfo partitionInfo = info.m_partition.at(i);
                     //判断分区是否加入当前选择VG
@@ -1252,12 +1265,23 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
                         double partitionSize = Utils::sectorToUnit(partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1,
                                                                    partitionInfo.m_sectorSize, UNIT_MIB);
                         QString fileSystemType = Utils::fileSystemTypeToString(static_cast<FSType>(partitionInfo.m_fileSystemType));
+                        if (fileSystemType == "extended") {
+                            extendedInfo = partitionInfo;
+                        }
                         if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) && (mountpoints.isEmpty()) &&
-                                (partitionSize > 100) && (fileSystemType != "extended")) {
+                                (partitionSize > 100) && (fileSystemType != "extended") &&
+                                (partitionInfo.m_type != PartitionType::TYPE_LOGICAL)) {
                             // 排除不能创建新分区的磁盘空闲空间
                             if (partitionInfo.m_path == "unallocated") {
                                 if (partitionCount >= info.m_maxPrims) {
                                     continue;
+                                }
+
+                                if (info.m_disktype == "msdos") {
+                                    if (partitionInfo.m_sectorStart >= extendedInfo.m_sectorStart &&
+                                            partitionInfo.m_sectorEnd <= extendedInfo.m_sectorEnd) {
+                                        continue;
+                                    }
                                 }
                             }
 
@@ -1916,14 +1940,25 @@ void CreateVGWidget::onUpdateUsb()
     m_curDeviceNameList = deviceNameList;
 }
 
-Byte_Value CreateVGWidget::getPVSize(const PVData &pv, bool flag)
+Byte_Value CreateVGWidget::getPVSize(const VGInfo &vg, const PVData &pv, bool flag)
 {
+    LVMInfo lvmInfo =  DMDbusHandler::instance()->probLVMInfo();
+
+    //判断
+    if (lvmInfo.pvExists(pv)) {
+        PVInfo pvInfo = lvmInfo.getPV(pv);
+        if (pvInfo.joinVG()) { //如果pv已经加入vg 且加入的是别的vg 则返回-1
+            return lvmInfo.pvOfVg(vg, pv) ? pvInfo.m_pvByteTotalSize : -1;
+        }
+    }
+
     auto it = DMDbusHandler::instance()->probDeviceInfo().find(pv.m_diskPath);
     if (it == DMDbusHandler::instance()->probDeviceInfo().end()) {
         return -1;
     }
 
     DeviceInfo dev = it.value();
+
     long long startSec = pv.m_startSector;
     long long endSec = pv.m_endSector;
 
@@ -1939,14 +1974,70 @@ Byte_Value CreateVGWidget::getPVSize(const PVData &pv, bool flag)
         startSec -= UEFI_SECTOR;
         endSec -= GPTBACKUP;
     }
-
-    return dev.m_sectorSize * (endSec - startSec + 1);
+    long long allByte = dev.m_sectorSize * (endSec - startSec + 1); //获取总的byte
+    long long i = allByte % vg.m_PESize; //获取剩下的size大小
+    return i == 0 ? allByte : ((i >= MEBIBYTE) ? allByte - i : allByte - i - 4 * MEBIBYTE); //去除末尾 保证是vg pe的倍数
 }
 
-Byte_Value CreateVGWidget::getMaxSize(const VGInfo &vg,const set<PVData> &pvlist)
+
+Byte_Value CreateVGWidget::getDevSize(const VGInfo &vg, const PVData &pv, bool flag, long long size)
+{
+    LVMInfo lvmInfo =  DMDbusHandler::instance()->probLVMInfo();
+
+    //判断
+    if (lvmInfo.pvExists(pv)) {
+        PVInfo pvInfo = lvmInfo.getPV(pv);
+        if (pvInfo.joinVG()) { //如果pv已经加入vg 且加入的是别的vg 则返回-1
+            return lvmInfo.pvOfVg(vg, pv) ? (pv.m_endSector - pv.m_startSector + 1) * pv.m_sectorSize : -1;
+        }
+    }
+
+    auto it = DMDbusHandler::instance()->probDeviceInfo().find(pv.m_diskPath);
+    if (it == DMDbusHandler::instance()->probDeviceInfo().end()) {
+        return -1;
+    }
+
+    DeviceInfo dev = it.value();
+
+    long long startSec = pv.m_startSector;
+    long long endSec = pv.m_endSector;
+    if (startSec == 0 && pv.m_type == LVM_DEV_UNALLOCATED_PARTITION) {
+        startSec = UEFI_SECTOR;
+    }
+
+    if (pv.m_type == LVM_DEV_UNALLOCATED_PARTITION && pv.m_endSector == (dev.m_length - 1) && dev.m_disktype.contains("gpt")) {
+        endSec -= GPTBACKUP;
+    }
+
+    if (pv.m_type == LVM_DEV_DISK && flag) {
+        startSec -= UEFI_SECTOR;
+        endSec -= GPTBACKUP;
+    }
+
+
+
+    long long allSize = size;
+    long long tmpSize = size % vg.m_PESize;
+    if (tmpSize > 0) {
+        allSize += vg.m_PESize;
+    }
+    if (allSize == vg.m_PESize) {
+        allSize += vg.m_PESize;
+    }
+
+    long long allSec = allSize / dev.m_sectorSize + 1;
+
+    if ((endSec - startSec + 1) < allSec) {
+        return -1;
+    }
+    endSec = startSec + allSec - 1;
+    return (endSec - startSec + 1) * dev.m_sectorSize;
+}
+
+Byte_Value CreateVGWidget::getMaxSize(const VGInfo &vg, const set<PVData> &pvlist)
 {
     Byte_Value maxSize = 0;
-    foreach (const PVData &pv, pvlist) {
+    foreach (const PVData &pv, pvlist) { //这里计算设备真实大小 跟getpvsize不同
         maxSize += (pv.m_endSector - pv.m_startSector + 1) * pv.m_sectorSize;
     }
     return maxSize;
@@ -1955,22 +2046,25 @@ Byte_Value CreateVGWidget::getMaxSize(const VGInfo &vg,const set<PVData> &pvlist
 Byte_Value CreateVGWidget::getMinSize(const VGInfo &vg, const set<PVData> &pvlist)
 {
     QList<PVData>diskList;
+    QList<PVData>pvDiskList;
     QList<PVData>partList;
     QList<PVData>unallocList;
     QList<PVData>loopList;
     QList<PVData>metaList;
+
     Byte_Value vgUsed = vg.m_peUsed * vg.m_PESize;
-
-    Byte_Value partSize = 0;
-    Byte_Value unallocSize = 0;
-    Byte_Value diskSize = 0;
-
     Byte_Value minSize = 0 ;
+
+    if (vgUsed > getMaxSize(vg, pvlist)) { //vg使用大小超过最大值
+        return vgUsed;
+    }
+
+    LVMInfo lvmInfo =  DMDbusHandler::instance()->probLVMInfo();
 
     foreach (PVData pv, pvlist) {
         switch (pv.m_type) {
         case LVMDevType::LVM_DEV_DISK:
-            diskList.push_back(pv);
+            lvmInfo.pvExists(pv) ? pvDiskList.push_back(pv) : diskList.push_back(pv);
             break;
         case LVMDevType::LVM_DEV_PARTITION:
             partList.push_back(pv);
@@ -1987,46 +2081,84 @@ Byte_Value CreateVGWidget::getMinSize(const VGInfo &vg, const set<PVData> &pvlis
         }
     }
 
-    //如果比所有分区之和小 那么最小值为分区之和
+    //如果比所有分区之和以及pv设备小 那么最小值为分区之和+pv设备
+    //分区
     foreach (const PVData &pv, partList) {
-        Byte_Value size = getPVSize(pv);
+        Byte_Value size = getPVSize(vg, pv);
+
         if (size < 0) {
             return -1;
         }
-        partSize += size;
+        if (size < vg.m_PESize) {
+            continue; //小于一个pe大小 不计算
+        }
+        minSize += (pv.m_endSector - pv.m_startSector + 1) * pv.m_sectorSize;
     }
-    vgUsed -= partSize;
+    //pv
+    foreach (const PVData &pv, pvDiskList) {
+        Byte_Value size = getPVSize(vg, pv, false); //获取pv设备大小
+
+        if (size < 0) {
+            return -1;
+        }
+        if (size < vg.m_PESize) {
+            continue; //小于一个pe大小 不计算
+        }
+        minSize += (pv.m_endSector - pv.m_startSector + 1) * pv.m_sectorSize;
+    }
+
+    vgUsed -= minSize;
+
     if (vgUsed <= 0) {
-        return partSize;
+        return minSize;
     }
-    minSize = partSize;
 
     //未分配空间
     foreach (const PVData &pv, unallocList) {
-        Byte_Value size = getPVSize(pv); //获取pv设备大小
+        Byte_Value size = getPVSize(vg, pv); //获取pv设备大小
+        if (size < 0) {
+            return -1;
+        }
+        if (size < vg.m_PESize) {
+            continue; //小于一个pe大小 不计算
+        }
+
         if (vgUsed <= size) {//vg使用<=当前pv设备时 返回
-            return vgUsed + unallocSize + minSize;
+            if (vgUsed < vg.m_PESize) {
+                return minSize + getDevSize(vg, pv, true, vg.m_PESize); //至少是4M
+            }
+            return minSize + getDevSize(vg, pv, true, vgUsed); //至少是4M
         }
         vgUsed -= size;
-        unallocSize += size;
+        minSize += getDevSize(vg, pv, true, vgUsed);
     }
 
-    minSize += unallocSize;
 
     //磁盘
     foreach (const PVData &pv, diskList) {
-        Byte_Value size = getPVSize(pv, false); //获取pv设备大小
-        if (vgUsed <= size) {//vg使用<=当前pv设备时 返回
-            if (vgUsed <= getPVSize(pv)) {
-                return size + diskSize + minSize;
+        Byte_Value size = getPVSize(vg, pv, false); //磁盘加入pv大小
+        Byte_Value size2 = getPVSize(vg, pv); //分区加入pv的大小
+        if (size < 0) {
+            return -1;
+        }
+
+        if (size < vg.m_PESize) {
+            continue; //小于一个pe大小 不计算
+        }
+
+        if (vgUsed <= size) {
+            if (vgUsed >= size2) { //大于分区加入时的大小
+                return minSize + getDevSize(vg, pv, false, vgUsed); //全盘加入
             } else {
-                return vgUsed + diskSize + minSize;
+                if (vgUsed < vg.m_PESize) {
+                    return minSize + getDevSize(vg, pv, false, vg.m_PESize);
+                }
+                return minSize + getDevSize(vg, pv, false, vgUsed);
             }
         }
         vgUsed -= size;
-        diskSize += size;
+        minSize += getDevSize(vg, pv, true, vgUsed);;
     }
-    minSize += diskSize;
 
     if (vgUsed > 0) {
         return vg.m_peUsed * vg.m_PESize;
@@ -2043,13 +2175,13 @@ bool CreateVGWidget::adjudicationPVMove(const VGInfo &vg, const set<PVData> &pvl
     foreach (auto it, pvInfoMap) {
         bool isDelete = true;
         foreach (const PVData &pv, pvlist) {
-            if(it.m_pvPath == pv.m_devicePath){
+            if (it.m_pvPath == pv.m_devicePath) {
                 isDelete = false;
                 break;
             }
         }
         if (isDelete) {
-            size+=it.m_pvByteTotalSize;
+            size += it.m_pvByteTotalSize;
             realDelPvList.push_back(it.m_pvPath);
         }
     }

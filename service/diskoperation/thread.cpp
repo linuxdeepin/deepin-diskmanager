@@ -77,10 +77,9 @@ void WorkThread::runCount()
 {
 //    qDebug() << QThread::currentThreadId() << endl;
     Sector i = m_blockStart;
-    Sector j = m_blockStart+1;
+    Sector j = m_blockStart + 1;
     QProcess proc;
-    while(j <= m_blockEnd+1 && m_stopFlag != 2)
-    {
+    while (j <= m_blockEnd + 1 && m_stopFlag != 2) {
         QString cmd = QString("badblocks -sv -c %1 -b %2 %3 %4 %5").arg(m_checkConut).arg(m_checkSize).arg(m_devicePath).arg(j).arg(i);
 
         QDateTime ctime = QDateTime::currentDateTime();
@@ -375,6 +374,32 @@ void ProbeThread::probeDeviceInfo()
 QMap<QString, Device> ProbeThread::getDeviceMap()
 {
     return m_deviceMap;
+}
+
+
+LVMThread::LVMThread(QObject *parent)
+{
+     qRegisterMetaType<LVMInfo>();
+}
+
+void LVMThread::deletePVList(LVMInfo lvmInfo, QList<PVData> devList)
+{
+    static bool flag = true; //同时只允许一个线程进入
+    if (flag) {
+        flag = false;
+        emit deletePVListFinished(LVMOperator::deletePVList(lvmInfo, devList));
+    }
+    flag = true;
+}
+
+void LVMThread::resizeVG(LVMInfo lvmInfo, QString vgName, QList<PVData> devList, long long size)
+{
+    static bool flag = true;
+    if (flag) {
+        flag = false;
+        emit resizeVGFinished(LVMOperator::resizeVG(lvmInfo, vgName, devList, size));
+    }
+    flag = true;
 }
 
 }

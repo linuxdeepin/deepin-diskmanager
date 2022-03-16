@@ -171,7 +171,20 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
         menu->addAction(actionDelete);
         connect(actionDelete, &QAction::triggered, this, &DeviceListWidget::onDeletePartitionClicked);
 
-        if (!m_curDiskInfoData.m_mountpoints.isEmpty()) {
+        bool isJoinVg = false;
+        if (m_curDiskInfoData.m_fstype == "extended") {
+            DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
+            for (int i = 0; i < info.m_partition.size(); i++) {
+                if (info.m_partition.at(i).m_type == PartitionType::TYPE_LOGICAL) {
+                    if (info.m_partition.at(i).m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV) {
+                        isJoinVg = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!m_curDiskInfoData.m_mountpoints.isEmpty() || isJoinVg) {
             actionDelete->setDisabled(true);
         }
 

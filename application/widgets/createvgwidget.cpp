@@ -1046,7 +1046,7 @@ QList<DeviceInfo> CreateVGWidget::createAvailableDiskData()
             } else {
                 int partitionCount = 0;
                 for (int i = 0; i < info.m_partition.size(); i++) {
-                    if (info.m_partition.at(i).m_path != "unallocated") {
+                    if (info.m_partition.at(i).m_path != "unallocated" && info.m_partition.at(i).m_type != PartitionType::TYPE_LOGICAL) {
                         partitionCount++;
                     }
                 }
@@ -1069,7 +1069,9 @@ QList<DeviceInfo> CreateVGWidget::createAvailableDiskData()
                     // 排除已加入VG的分区、被挂载的分区、分区大小小于100MiB的分区
                     double partitionSize = Utils::sectorToUnit(partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1,
                                                                partitionInfo.m_sectorSize, UNIT_MIB);
-                    if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) && (mountpoints.isEmpty()) && (partitionSize > 100)) {
+                    QString fileSystemType = Utils::fileSystemTypeToString(static_cast<FSType>(partitionInfo.m_fileSystemType));
+                    if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) && (mountpoints.isEmpty()) &&
+                            (partitionSize > 100) && (fileSystemType != "extended")) {
                         // 排除不能创建新分区的磁盘空闲空间
                         if (partitionInfo.m_path == "unallocated") {
                             if (partitionCount >= info.m_maxPrims) {
@@ -1203,7 +1205,7 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
             } else {
                 int partitionCount = 0;
                 for (int i = 0; i < info.m_partition.size(); i++) {
-                    if (info.m_partition.at(i).m_path != "unallocated") {
+                    if (info.m_partition.at(i).m_path != "unallocated" && info.m_partition.at(i).m_type != PartitionType::TYPE_LOGICAL) {
                         partitionCount++;
                     }
                 }
@@ -1249,7 +1251,9 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
                         // 排除已加入VG的分区、被挂载的分区、分区大小小于100MiB的分区
                         double partitionSize = Utils::sectorToUnit(partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1,
                                                                    partitionInfo.m_sectorSize, UNIT_MIB);
-                        if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) && (mountpoints.isEmpty()) && (partitionSize > 100)) {
+                        QString fileSystemType = Utils::fileSystemTypeToString(static_cast<FSType>(partitionInfo.m_fileSystemType));
+                        if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) && (mountpoints.isEmpty()) &&
+                                (partitionSize > 100) && (fileSystemType != "extended")) {
                             // 排除不能创建新分区的磁盘空闲空间
                             if (partitionInfo.m_path == "unallocated") {
                                 if (partitionCount >= info.m_maxPrims) {

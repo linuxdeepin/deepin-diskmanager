@@ -258,14 +258,12 @@ void FormateDialog::initUi()
     wipeWidget->setLayout(wipeLayout);
 
     QWidget *spinnerWidget = new QWidget(this);
-    m_spinner = new DSpinner(spinnerWidget);
-    m_spinner->setFixedSize(28, 28);
-    m_spinner->start();
-    m_spinner->hide();
+    m_waterLoadingWidget = new WaterLoadingWidget(this);
+    m_waterLoadingWidget->setFixedSize(128, 128);
 
     QVBoxLayout *spinnerLayout = new QVBoxLayout;
-    spinnerLayout->addSpacing(80);
-    spinnerLayout->addWidget(m_spinner, 0, Qt::AlignCenter);
+    spinnerLayout->addSpacing(50);
+    spinnerLayout->addWidget(m_waterLoadingWidget, 0, Qt::AlignCenter);
     spinnerLayout->addStretch();
     spinnerWidget->setLayout(spinnerLayout);
 
@@ -533,7 +531,7 @@ void FormateDialog::onWipeButtonClicked()
         button->hide();
     }
 
-    m_spinner->show();
+    m_waterLoadingWidget->setStartTime(1000);
 }
 
 void FormateDialog::onWipeResult(const QString &info)
@@ -544,7 +542,7 @@ void FormateDialog::onWipeResult(const QString &info)
         return;
     }
 
-    m_spinner->hide();
+    m_waterLoadingWidget->stopTimer();
     if (infoList.at(0) == "1") {
         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget()->parentWidget()->parentWidget(),
                                                  QIcon::fromTheme("://icons/deepin/builtin/ok.svg"),

@@ -124,11 +124,11 @@ void RemovePVWidget::initUi()
     delTitleLabel->setPalette(palette1);
 
     m_waterLoadingWidget = new WaterLoadingWidget(this);
-    m_waterLoadingWidget->setFixedSize(98, 98);
+    m_waterLoadingWidget->setFixedSize(128, 128);
 
     QVBoxLayout *secondLayout = new QVBoxLayout;
     secondLayout->addWidget(delTitleLabel, 0, Qt::AlignCenter);
-    secondLayout->addSpacing(20);
+    secondLayout->addSpacing(4);
     secondLayout->addWidget(m_waterLoadingWidget, 0, Qt::AlignCenter);
     secondLayout->addStretch();
     secondLayout->setSpacing(0);

@@ -28,6 +28,7 @@
 #define FORMATEDIALOG_H
 
 #include "customcontrol/ddbase.h"
+#include "customcontrol/waterloadingwidget.h"
 
 #include <DComboBox>
 #include <DLineEdit>
@@ -80,13 +81,13 @@ private:
     DPushButton *m_pushButton;
     DWarningButton *m_warningButton;
     DStackedWidget *m_stackedWidget;
-    DSpinner *m_spinner;
     DLabel *m_failLabel;
     DLabel *m_titleLabel;
     QString m_pathInfo;
     int m_curWipeMethod;
     QString m_curDiskMediaType;
     QHBoxLayout *m_buttonLayout;
+    WaterLoadingWidget *m_waterLoadingWidget;
 signals:
 
 private slots:

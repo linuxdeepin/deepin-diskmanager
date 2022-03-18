@@ -537,7 +537,7 @@ void CreateVGWidget::showLoadingWidget(const QString &vgName)
     font2.setPixelSize(14);
 
     m_waterLoadingWidget = new WaterLoadingWidget(this);
-    m_waterLoadingWidget->setFixedSize(98, 98);
+    m_waterLoadingWidget->setFixedSize(128, 128);
 
     QLabel *waitLable = new QLabel(this);
     waitLable->setAlignment(Qt::AlignCenter);
@@ -604,6 +604,7 @@ void CreateVGWidget::showLoadingWidget(const QString &vgName)
     selectLable->setFont(font2);
     selectLable->setPalette(palette2);
 
+    bool isShowScrollArea = false;
     int count = m_curSeclectData.count() / 2 + m_curSeclectData.count() % 2;
     if (count > 5) {
         QWidget *widget = new QWidget;
@@ -625,11 +626,16 @@ void CreateVGWidget::showLoadingWidget(const QString &vgName)
 
         frame->setFixedSize(600, 124);
         frame->setLayout(scrollAreaLayout);
+
     } else {
         layout->insertWidget(0, selectLable, 0, Qt::AlignCenter);
 
         frame->setFixedSize(600, (count + 1) * 23);
         frame->setLayout(layout);
+    }
+
+    if (count >= 5) {
+        isShowScrollArea = true;
     }
 
     QLabel *vgSizeLabel = new QLabel(this);
@@ -654,7 +660,11 @@ void CreateVGWidget::showLoadingWidget(const QString &vgName)
     mainLayout->addWidget(m_waterLoadingWidget, 0, Qt::AlignCenter);
     mainLayout->addSpacing(10);
     mainLayout->addWidget(waitLable, 0, Qt::AlignCenter);
-    mainLayout->addSpacing(40);
+    if (isShowScrollArea) {
+        mainLayout->addSpacing(30);
+    } else {
+        mainLayout->addSpacing(40);
+    }
     mainLayout->addWidget(frame, 0, Qt::AlignCenter);
     mainLayout->addSpacing(10);
     mainLayout->addWidget(vgSizeLabel, 0, Qt::AlignCenter);

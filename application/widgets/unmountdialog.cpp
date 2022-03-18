@@ -27,6 +27,7 @@
 #include "unmountdialog.h"
 #include "partedproxy/dmdbushandler.h"
 #include "messagebox.h"
+#include "unmountwarningdialog.h"
 
 #include <DLabel>
 #include <DFrame>
@@ -66,6 +67,7 @@ void UnmountDialog::initUi()
 
     getButton(index)->setAccessibleName("cancel");
     getButton(m_okCode)->setAccessibleName("unmountButton");
+    setOnButtonClickedClose(false);
 }
 
 void UnmountDialog::initConnection()
@@ -116,25 +118,18 @@ void UnmountDialog::onButtonClicked(int index, const QString &text)
         qDebug() << __FUNCTION__;
         if (mountPoints == "/boot/efi" || mountPoints == "/boot" || mountPoints == "/"
                 || mountPoints == "/recovery" || flag == 4) {
-            MessageBox firstWarning(this);
-            firstWarning.setObjectName("firstWarning");
-            firstWarning.setAccessibleName("firstWarning");
-            // 卸载该系统盘可能会引起系统崩溃，请确认是否继续操作  继续  取消
-            QString title = tr("Unmounting system disk may result in system crash,\n please confirm before proceeding");
-            firstWarning.setWarings(title, "", tr("Continue"), DDialog::ButtonWarning, "continueBtn", tr("Cancel"), "cancelButton");
-            if (firstWarning.exec() == 1) {
-                MessageBox secondWarning(this);
-                secondWarning.setObjectName("secondWarning");
-                secondWarning.setAccessibleName("secondWarning");
-                // 继续执行卸载操作，后续引发的风险将由您自行承担  卸载  取消
-                QString title = tr("You will take subsequent risks if you continue to unmount the system disk");
-                secondWarning.setWarings(title, "", tr("Unmount"), DDialog::ButtonWarning, "unmountBtn", tr("Cancel"), "cancelBtn");
-                if (secondWarning.exec() == 1) {
-                    umountCurMountPoints();
-                }
+            UnmountWarningDialog unmountWarningDialog;
+            unmountWarningDialog.setObjectName("firstWarning");
+            unmountWarningDialog.setAccessibleName("firstWarning");
+            if (unmountWarningDialog.exec() == DDialog::Accepted) {
+                umountCurMountPoints();
+                close();
             }
         } else {
             umountCurMountPoints();
+            close();
         }
+    } else {
+        close();
     }
 }

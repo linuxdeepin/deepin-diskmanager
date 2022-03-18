@@ -7,7 +7,7 @@
         <translation>Capacidade:</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="853"/>
+        <location filename="../widgets/createlvwidget.cpp" line="854"/>
         <source>Disk:</source>
         <translation>Disco:</translation>
     </message>
@@ -58,7 +58,7 @@
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="165"/>
-        <location filename="../widgets/createlvwidget.cpp" line="324"/>
+        <location filename="../widgets/createlvwidget.cpp" line="325"/>
         <source>LV file system:</source>
         <translation type="unfinished"/>
     </message>
@@ -78,23 +78,23 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="333"/>
+        <location filename="../widgets/createlvwidget.cpp" line="334"/>
         <source>LV capacity:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="470"/>
-        <location filename="../widgets/createlvwidget.cpp" line="560"/>
+        <location filename="../widgets/createlvwidget.cpp" line="471"/>
+        <location filename="../widgets/createlvwidget.cpp" line="561"/>
         <source>Unallocated</source>
         <translation>Não atribuído</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="493"/>
+        <location filename="../widgets/createlvwidget.cpp" line="494"/>
         <source>Name</source>
         <translation>Nome</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="494"/>
+        <location filename="../widgets/createlvwidget.cpp" line="495"/>
         <source>Size</source>
         <translation>Tamanho</translation>
     </message>
@@ -151,16 +151,16 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="108"/>
         <location filename="../widgets/createvgwidget.cpp" line="395"/>
-        <location filename="../widgets/createvgwidget.cpp" line="993"/>
         <location filename="../widgets/createvgwidget.cpp" line="1003"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1423"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1433"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1483"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1534"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1537"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1567"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1675"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1741"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1013"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1461"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1471"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1521"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1572"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1575"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1605"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1713"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1779"/>
         <source>Capacity selected: %1</source>
         <translation type="unfinished"/>
     </message>
@@ -233,54 +233,54 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="641"/>
-        <location filename="../widgets/createvgwidget.cpp" line="643"/>
+        <location filename="../widgets/createvgwidget.cpp" line="647"/>
+        <location filename="../widgets/createvgwidget.cpp" line="649"/>
         <source>VG capacity: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="648"/>
+        <location filename="../widgets/createvgwidget.cpp" line="654"/>
         <source>VG name: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="752"/>
+        <location filename="../widgets/createvgwidget.cpp" line="762"/>
         <source>A lot of data exists on %1, </source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="753"/>
+        <location filename="../widgets/createvgwidget.cpp" line="763"/>
         <source>which may take a long time to back it up.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="754"/>
+        <location filename="../widgets/createvgwidget.cpp" line="764"/>
         <source>Do you want to continue?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="755"/>
+        <location filename="../widgets/createvgwidget.cpp" line="765"/>
         <source>Continue</source>
         <translation>Continuar</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="756"/>
+        <location filename="../widgets/createvgwidget.cpp" line="766"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1694"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1732"/>
         <source>Not enough space to back up data on %1, please clear disk space</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1695"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1733"/>
         <source>OK</source>
         <translation>Aceitar</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1898"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1905"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1936"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1943"/>
         <source>Refreshing the page to reload disks</source>
         <translation type="unfinished"/>
     </message>
@@ -332,13 +332,13 @@
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="250"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="610"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="607"/>
         <source>Mounting %1 ...</source>
         <translation>A montar %1 ...</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="257"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="617"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="614"/>
         <source>Unmounting %1 ...</source>
         <translation>A desmontar %1 ...</translation>
     </message>
@@ -368,19 +368,18 @@
         <translation>Substituir a tabela de partições de %1 ...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="575"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="574"/>
         <source>Creating...</source>
         <translation>A criar...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="582"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="589"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="581"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="588"/>
         <source>Deleting...</source>
         <translation>A eliminar...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="596"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="603"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="600"/>
         <source>Resizing space...</source>
         <translation type="unfinished"/>
     </message>
@@ -431,14 +430,14 @@
         <translation>Eliminar partição</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="575"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="632"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="347"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="588"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="645"/>
         <source>OK</source>
         <translation>Aceitar</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="346"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
@@ -447,212 +446,212 @@
  tenha cuidado</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="346"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
         <source>Proceed</source>
         <translation>Continuar</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="372"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="385"/>
         <source>No errors found in the partition table</source>
         <translation>Nenhum erro encontrado na tabela de partição</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="385"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="398"/>
         <source>Do you want to hide this partition?</source>
         <translation>Deseja ocultar esta partição?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="385"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="398"/>
         <source>Hide</source>
         <translation>Ocultar</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="346"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="385"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="417"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="433"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="588"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="645"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="398"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="430"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="446"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="601"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="658"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="201"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="214"/>
         <source>Delete volume group</source>
         <translation>Eliminar grupo de volume</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="207"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="604"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="220"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="617"/>
         <source>Create logical volume</source>
         <translation>Criar volume lógico</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="232"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="245"/>
         <source>Delete logical volume</source>
         <translation>Eliminar volume lógico</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="275"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
         <source>Failed to get hardware information</source>
         <translation>Falha ao obter informação sobre o equipamento</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="275"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
         <source>Close</source>
         <translation>Fechar</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="334"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="347"/>
         <source>Please unmount all partitions in the disk first</source>
         <translation>Desmonte primeiro todas as partições do disco</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="392"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="405"/>
         <source>Failed to hide the partition: unable to lock it</source>
         <translation>Falha ao ocultar a partição: não foi possível bloqueá-la</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="400"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="413"/>
         <source>You can only hide the unmounted partition</source>
         <translation>Só pode ocultar a partição não montada</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="417"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="430"/>
         <source>Do you want to unhide this partition?</source>
         <translation>Deseja mostrar esta partição?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="417"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="430"/>
         <source>Unhide</source>
         <translation>Mostrar</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="433"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="446"/>
         <source>Are you sure you want to delete this partition?</source>
         <translation>Tem a certeza que deseja eliminar esta partição?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="433"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="446"/>
         <source>You will lose all data in it</source>
         <translation>Perderá todos os dados nela contidos</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="433"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="588"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="645"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="446"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="601"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="658"/>
         <source>Delete</source>
         <translation>Eliminar</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="440"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="453"/>
         <source>Failed to delete the partition: unable to lock it</source>
         <translation>Falha ao eliminar a partição: não foi possível bloqueá-la</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="455"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="468"/>
         <source>Hide the partition successfully</source>
         <translation>Partição ocultada</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="460"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="473"/>
         <source>Failed to hide the partition</source>
         <translation>Falha ao ocultar a partição</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="470"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="483"/>
         <source>Unhide the partition successfully</source>
         <translation>Partição visível</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="475"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="488"/>
         <source>Failed to unhide the partition</source>
         <translation>Falha ao mostrar a partição</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="491"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="504"/>
         <source>Delete the partition successfully</source>
         <translation>Partição eliminada</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="499"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="512"/>
         <source>Failed to find the disk</source>
         <translation>Falha ao localizar o disco</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="503"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="516"/>
         <source>Failed to get the partition info</source>
         <translation>Falha ao obter a informação da partição</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="507"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="520"/>
         <source>Failed to delete the partition</source>
         <translation>Falha ao eliminar a partição</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="511"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="524"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>Falha ao submeter o pedido ao kernel</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="518"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="531"/>
         <source>Failed to delete the partition: %1</source>
         <translation>Falha ao eliminar a partição: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="528"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="541"/>
         <source>Unmounting successful</source>
         <translation>Desmontagem bem sucedida</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="533"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="546"/>
         <source>Unmounting failed</source>
         <translation>Falha ao desmontar</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="544"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="557"/>
         <source>Creating partition table successful</source>
         <translation>Criação de tabela de partição bem sucedida</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="548"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="561"/>
         <source>Replacing partition table successful</source>
         <translation>Substituição da tabela de partição bem sucedida</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="556"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="569"/>
         <source>Creating partition table failed</source>
         <translation>Falha na criação da tabela de partição</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="560"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="573"/>
         <source>Replacing partition table failed</source>
         <translation>A substituição da tabela de partição falhou</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="575"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="632"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="588"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="645"/>
         <source>Unmount %1 first</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="587"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="600"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="657"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="604"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="617"/>
         <source>The disks will be formatted if you create a logical volume</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="735"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="748"/>
         <source>Volume Groups</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="775"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="788"/>
         <source>Disks</source>
         <translation>Discos</translation>
     </message>
@@ -1241,7 +1240,7 @@
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="168"/>
-        <location filename="../widgets/formatedialog.cpp" line="412"/>
+        <location filename="../widgets/formatedialog.cpp" line="417"/>
         <source>It only deletes the partition info without erasing the files on the disk. Disk recovery tools may recover the files at a certain probability.</source>
         <translation>Apenas elimina as informações da partição sem apagar os ficheiros no disco. As ferramentas de recuperação do disco podem recuperar os ficheiros com uma certa probabilidade.</translation>
     </message>
@@ -1273,80 +1272,80 @@
         <translation>Limpar</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="284"/>
-        <location filename="../widgets/formatedialog.cpp" line="564"/>
+        <location filename="../widgets/formatedialog.cpp" line="287"/>
+        <location filename="../widgets/formatedialog.cpp" line="571"/>
         <source>Failed to find the disk</source>
         <translation>Falha ao localizar o disco</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="287"/>
+        <location filename="../widgets/formatedialog.cpp" line="290"/>
         <source>The action cannot be undone, please proceed with caution</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="288"/>
+        <location filename="../widgets/formatedialog.cpp" line="292"/>
         <source>LV name:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="292"/>
+        <location filename="../widgets/formatedialog.cpp" line="296"/>
         <source>LV name</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="293"/>
+        <location filename="../widgets/formatedialog.cpp" line="298"/>
         <source>LV file system:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="295"/>
-        <location filename="../widgets/formatedialog.cpp" line="455"/>
+        <location filename="../widgets/formatedialog.cpp" line="300"/>
+        <location filename="../widgets/formatedialog.cpp" line="460"/>
         <source>You may be able to recover files after the wipe.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="424"/>
+        <location filename="../widgets/formatedialog.cpp" line="429"/>
         <source>It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, and random data to the entire disk once. You will not be able to recover files, and the process will be slow.</source>
         <translation>É uma limpeza segura única que cumpre com NIST 800-88 e grava 0, 1 e dados aleatórios em todo o disco de uma só vez. Não será capaz de recuperar ficheiros e o processo será lento.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="438"/>
+        <location filename="../widgets/formatedialog.cpp" line="443"/>
         <source>It writes 0, 1, and random data to the entire disk several times. You can set the number of times to erase disks and overwrite data, but the process will be very slow.</source>
         <translation>Grava várias vezes 0, 1 e dados aleatórios em todo o disco. Pode definir o número de vezes para apagar discos e sobregravar dados, mas o processo será muito lento.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="466"/>
+        <location filename="../widgets/formatedialog.cpp" line="471"/>
         <source>You will not be able to recover files after the wipe, and the process will be slow.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="526"/>
+        <location filename="../widgets/formatedialog.cpp" line="531"/>
         <source>Wiping %1</source>
         <translation>A limpar %1</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="549"/>
+        <location filename="../widgets/formatedialog.cpp" line="556"/>
         <source>&quot;%1&quot; wiped</source>
         <translation>&quot;%1&quot; limpa</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="555"/>
+        <location filename="../widgets/formatedialog.cpp" line="562"/>
         <source>Failed to wipe %1</source>
         <translation>Falha ao limpar %1</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="568"/>
+        <location filename="../widgets/formatedialog.cpp" line="575"/>
         <source>Failed to get the partition info</source>
         <translation>Falha ao obter a informação da partição</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="572"/>
+        <location filename="../widgets/formatedialog.cpp" line="579"/>
         <source>Failed to delete the partition</source>
         <translation>Falha ao eliminar a partição</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="298"/>
-        <location filename="../widgets/formatedialog.cpp" line="576"/>
+        <location filename="../widgets/formatedialog.cpp" line="303"/>
+        <location filename="../widgets/formatedialog.cpp" line="583"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>Falha ao submeter o pedido ao kernel</translation>
     </message>
@@ -1359,10 +1358,10 @@
         <translation type="vanished">Formatar</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="341"/>
-        <location filename="../widgets/formatedialog.cpp" line="353"/>
-        <location filename="../widgets/formatedialog.cpp" line="374"/>
-        <location filename="../widgets/formatedialog.cpp" line="386"/>
+        <location filename="../widgets/formatedialog.cpp" line="346"/>
+        <location filename="../widgets/formatedialog.cpp" line="358"/>
+        <location filename="../widgets/formatedialog.cpp" line="379"/>
+        <location filename="../widgets/formatedialog.cpp" line="391"/>
         <source>The length exceeds the limit</source>
         <translation>O comprimento excede o limite</translation>
     </message>
@@ -1738,69 +1737,69 @@
 <context>
     <name>RemovePVWidget</name>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="86"/>
+        <location filename="../widgets/removepvwidget.cpp" line="73"/>
         <source>Are you sure you want to delete the physical volume?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="91"/>
+        <location filename="../widgets/removepvwidget.cpp" line="78"/>
         <source>You will lose all data in it</source>
         <translation>Perderá todos os dados nela contidos</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="96"/>
+        <location filename="../widgets/removepvwidget.cpp" line="83"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="103"/>
+        <location filename="../widgets/removepvwidget.cpp" line="90"/>
         <source>Delete</source>
         <comment>button</comment>
         <translation>Eliminar</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="135"/>
+        <location filename="../widgets/removepvwidget.cpp" line="121"/>
         <source>Deleting...</source>
         <translation>A eliminar...</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="242"/>
+        <location filename="../widgets/removepvwidget.cpp" line="228"/>
         <source>A lot of data exists on %1, </source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="243"/>
+        <location filename="../widgets/removepvwidget.cpp" line="229"/>
         <source>which may take a long time to back it up.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="244"/>
+        <location filename="../widgets/removepvwidget.cpp" line="230"/>
         <source>Do you want to continue?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="245"/>
+        <location filename="../widgets/removepvwidget.cpp" line="231"/>
         <source>Continue</source>
         <translation>Continuar</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="246"/>
+        <location filename="../widgets/removepvwidget.cpp" line="232"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="258"/>
+        <location filename="../widgets/removepvwidget.cpp" line="244"/>
         <source>Not enough space to back up data on %1, please clear disk space</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="259"/>
+        <location filename="../widgets/removepvwidget.cpp" line="245"/>
         <source>OK</source>
         <translation>Aceitar</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="286"/>
+        <location filename="../widgets/removepvwidget.cpp" line="272"/>
         <source>Failed to delete the physical volume</source>
         <translation type="unfinished"/>
     </message>
@@ -1834,8 +1833,8 @@
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="92"/>
-        <location filename="../widgets/resizedialog.cpp" line="193"/>
-        <location filename="../widgets/resizedialog.cpp" line="250"/>
+        <location filename="../widgets/resizedialog.cpp" line="199"/>
+        <location filename="../widgets/resizedialog.cpp" line="259"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
@@ -1845,37 +1844,39 @@
         <translation>Confirmar</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="144"/>
+        <location filename="../widgets/resizedialog.cpp" line="120"/>
+        <location filename="../widgets/resizedialog.cpp" line="151"/>
+        <location filename="../widgets/resizedialog.cpp" line="172"/>
         <source>Space limit exceeded</source>
         <translation>Limite de espaço excedido</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="167"/>
-        <location filename="../widgets/resizedialog.cpp" line="187"/>
+        <location filename="../widgets/resizedialog.cpp" line="193"/>
         <location filename="../widgets/resizedialog.cpp" line="244"/>
-        <location filename="../widgets/resizedialog.cpp" line="275"/>
         <source>Not enough space, please clear data in it</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="167"/>
-        <location filename="../widgets/resizedialog.cpp" line="187"/>
         <location filename="../widgets/resizedialog.cpp" line="193"/>
+        <location filename="../widgets/resizedialog.cpp" line="199"/>
         <location filename="../widgets/resizedialog.cpp" line="244"/>
-        <location filename="../widgets/resizedialog.cpp" line="250"/>
-        <location filename="../widgets/resizedialog.cpp" line="275"/>
-        <location filename="../widgets/resizedialog.cpp" line="296"/>
+        <location filename="../widgets/resizedialog.cpp" line="259"/>
+        <location filename="../widgets/resizedialog.cpp" line="293"/>
         <source>OK</source>
         <translation>Aceitar</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="193"/>
-        <location filename="../widgets/resizedialog.cpp" line="250"/>
+        <location filename="../widgets/resizedialog.cpp" line="199"/>
+        <source>To prevent data loss, back up data before shrinking it</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="259"/>
         <source>To prevent data loss, back up data in the logical volume before shrinking it</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="296"/>
+        <location filename="../widgets/resizedialog.cpp" line="293"/>
         <source>The file system does not support space adjustment</source>
         <translation type="unfinished"/>
     </message>
@@ -1951,6 +1952,7 @@
         <location filename="../widgets/titlewidget.cpp" line="302"/>
         <location filename="../widgets/titlewidget.cpp" line="340"/>
         <location filename="../widgets/titlewidget.cpp" line="394"/>
+        <location filename="../widgets/titlewidget.cpp" line="515"/>
         <source>Unmount %1 first</source>
         <translation type="unfinished"/>
     </message>
@@ -1960,6 +1962,7 @@
         <location filename="../widgets/titlewidget.cpp" line="340"/>
         <location filename="../widgets/titlewidget.cpp" line="354"/>
         <location filename="../widgets/titlewidget.cpp" line="394"/>
+        <location filename="../widgets/titlewidget.cpp" line="515"/>
         <source>OK</source>
         <translation>Aceitar</translation>
     </message>
@@ -2016,50 +2019,67 @@
 <context>
     <name>UnmountDialog</name>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="56"/>
-        <location filename="../widgets/unmountdialog.cpp" line="59"/>
+        <location filename="../widgets/unmountdialog.cpp" line="57"/>
+        <location filename="../widgets/unmountdialog.cpp" line="60"/>
         <source>Unmount %1</source>
         <translation>Desmontar %1</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="47"/>
+        <location filename="../widgets/unmountdialog.cpp" line="48"/>
         <source>Make sure there are no programs running on the disk</source>
         <translation>Certifique-se de que não há programas em execução no disco</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="61"/>
+        <location filename="../widgets/unmountdialog.cpp" line="62"/>
         <source>Make sure there are no programs running on the logical volume</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="64"/>
-        <location filename="../widgets/unmountdialog.cpp" line="124"/>
-        <location filename="../widgets/unmountdialog.cpp" line="131"/>
+        <location filename="../widgets/unmountdialog.cpp" line="65"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="65"/>
-        <location filename="../widgets/unmountdialog.cpp" line="131"/>
+        <location filename="../widgets/unmountdialog.cpp" line="66"/>
         <source>Unmount</source>
         <translation>Desmontar</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="123"/>
         <source>Unmounting system disk may result in system crash,
  please confirm before proceeding</source>
-        <translation>A desmontagem do disco do sistema pode resultar numa falha do sistema,
+        <translation type="vanished">A desmontagem do disco do sistema pode resultar numa falha do sistema,
 por favor confirme antes de prosseguir</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="124"/>
         <source>Continue</source>
-        <translation>Continuar</translation>
+        <translation type="vanished">Continuar</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="130"/>
         <source>You will take subsequent risks if you continue to unmount the system disk</source>
-        <translation>Assumirá riscos subsequentes se continuar a desmontar o disco do sistema</translation>
+        <translation type="vanished">Assumirá riscos subsequentes se continuar a desmontar o disco do sistema</translation>
+    </message>
+</context>
+<context>
+    <name>UnmountWarningDialog</name>
+    <message>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="53"/>
+        <source>Unmounting system disk may result in system crash</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="59"/>
+        <source>I will take the risks that may arise</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="77"/>
+        <source>Cancel</source>
+        <translation>Cancelar</translation>
+    </message>
+    <message>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="78"/>
+        <source>Unmount</source>
+        <translation>Desmontar</translation>
     </message>
 </context>
 <context>

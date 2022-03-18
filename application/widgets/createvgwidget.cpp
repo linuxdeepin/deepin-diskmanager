@@ -894,7 +894,7 @@ void CreateVGWidget::updateData()
                     for (int i = 0; i < m_curSeclectData.count(); i++) {
                         PVInfoData infoData = m_curSeclectData.at(i);
                         if (partitionInfo.m_path == infoData.m_partitionPath && partitionInfo.m_sectorStart == infoData.m_sectorStart &&
-                                partitionInfo.m_sectorEnd == infoData.m_sectorEnd) {
+                                partitionInfo.m_sectorEnd == infoData.m_sectorEnd && partitionInfo.m_devicePath == infoData.m_diskPath) {
                                 diskInfoData.m_selectStatus = Qt::CheckState::Checked;
                                 partInfoData.m_selectStatus = Qt::CheckState::Checked;
                             break;
@@ -910,7 +910,7 @@ void CreateVGWidget::updateData()
                         PVInfoData infoData = m_curSeclectData.at(i);
 
                         if (partitionInfo.m_devicePath == infoData.m_diskPath && partitionInfo.m_sectorStart == infoData.m_sectorStart &&
-                                partitionInfo.m_sectorEnd == infoData.m_sectorEnd) {
+                                partitionInfo.m_sectorEnd == infoData.m_sectorEnd && partitionInfo.m_devicePath == infoData.m_diskPath) {
                                 diskInfoData.m_selectStatus = Qt::CheckState::Checked;
                             break;
                         }
@@ -943,7 +943,7 @@ void CreateVGWidget::updateData()
                     for (int j = 0; j < m_curSeclectData.count(); j++) {
                         PVInfoData infoData = m_curSeclectData.at(j);
                         if (partitionInfo.m_path == infoData.m_partitionPath && partitionInfo.m_sectorStart == infoData.m_sectorStart &&
-                                partitionInfo.m_sectorEnd == infoData.m_sectorEnd) {
+                                partitionInfo.m_sectorEnd == infoData.m_sectorEnd && partitionInfo.m_devicePath == infoData.m_diskPath) {
                                 partInfoData.m_selectStatus = Qt::CheckState::Checked;
                                 checkCount++;
                             break;
@@ -1449,7 +1449,7 @@ void CreateVGWidget::onDiskCheckBoxStateChange(int state)
                     for (int j = 0; j < m_curSeclectData.count(); j++) {
                         PVInfoData infoData = m_curSeclectData.at(j);
                         if (pvData.m_partitionPath == infoData.m_partitionPath && pvData.m_sectorStart == infoData.m_sectorStart &&
-                                pvData.m_sectorEnd == infoData.m_sectorEnd) {
+                                pvData.m_sectorEnd == infoData.m_sectorEnd && pvData.m_diskPath == infoData.m_diskPath) {
                             m_curSeclectData.removeAt(j);
                             break;
                         }
@@ -1499,7 +1499,7 @@ void CreateVGWidget::onDiskCheckBoxStateChange(int state)
                     for (int j = 0; j < m_curSeclectData.count(); j++) {
                         PVInfoData infoData = m_curSeclectData.at(j);
                         if (pvData.m_partitionPath == infoData.m_partitionPath && pvData.m_sectorStart == infoData.m_sectorStart &&
-                                pvData.m_sectorEnd == infoData.m_sectorEnd) {
+                                pvData.m_sectorEnd == infoData.m_sectorEnd && pvData.m_diskPath == infoData.m_diskPath) {
                             isSameData = true;
                             break;
                         }
@@ -1556,7 +1556,7 @@ void CreateVGWidget::onPartitionCheckBoxStateChange(int state)
         for (int i = 0; i < m_curSeclectData.count(); i++) {
             PVInfoData infoData = m_curSeclectData.at(i);
             if (pvData.m_partitionPath == infoData.m_partitionPath && pvData.m_sectorStart == infoData.m_sectorStart &&
-                    pvData.m_sectorEnd == infoData.m_sectorEnd) {
+                    pvData.m_sectorEnd == infoData.m_sectorEnd && pvData.m_diskPath == infoData.m_diskPath) {
                 deleteNumber = i;
             } else {
                 sumSize += Utils::sectorToUnit(infoData.m_sectorEnd - infoData.m_sectorStart + 1,

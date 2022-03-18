@@ -493,7 +493,7 @@ void TitleWidget::onDeletePVClicked()
                     // 判断VG下是否有LV
                     if (vgInfo.m_lvlist.size() > 0) {
                         // 判断是否有LV被挂载
-                        if (DMDbusHandler::instance()->isExistMountLV(vgInfo)){
+                        if (DMDbusHandler::instance()->isExistMountLV(vgInfo) && lstVGName.indexOf(vgData.m_vgName) == -1){
                             lstVGName.append(vgData.m_vgName);
                         }
                     }

@@ -196,7 +196,7 @@ void ResizeDialog::partitionResize()
             MessageBox messageBox(this);
             messageBox.setObjectName("messageBox");
             messageBox.setAccessibleName("messageBox");
-            messageBox.setWarings(tr("To prevent data loss, back up data in the logical volume before shrinking it"), "", tr("OK"), "ok", tr("Cancel"), "cancel");
+            messageBox.setWarings(tr("To prevent data loss, back up data before shrinking it"), "", tr("OK"), "ok", tr("Cancel"), "cancel");
             if (messageBox.exec() == DDialog::Accepted) {
                 PartitionInfo newInfo = info;
                 newInfo.m_sectorEnd = newSectorEnd;

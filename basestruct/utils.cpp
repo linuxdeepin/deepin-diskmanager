@@ -616,9 +616,6 @@ bool Utils::adjudicationPVDelete(LVMInfo lvmInfo, const set<QString> &pvStrList,
         long long remvoePE = 0;
         long long unusedPE = 0;
         VGInfo vgInfo = lvmInfo.getVG(it.key());
-        if(vgInfo.isAllPV(it.value())){ //判断是否删除全部的pv
-            continue;
-        }
         foreach (const QString &path, it.value()) { //需要删除的pv
             auto pvIt = vgInfo.m_pvInfo.find(path);
             if (pvIt != vgInfo.m_pvInfo.end()) {

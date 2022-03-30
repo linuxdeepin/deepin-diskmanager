@@ -294,7 +294,7 @@ void TitleWidget::onDeleteLVClicked()
         mountPoint += lvInfo.m_mountPoints[i];
     }
 
-    if (!mountPoint.isEmpty()){
+    if (!mountPoint.isEmpty()) {
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("messageBox");
@@ -327,26 +327,29 @@ void TitleWidget::onResizeLVClicked()
 {
     LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
     setCurVGName(lvInfo.m_vgName);
-    QString mountPoint = "";
-    for (int i = 0; i < lvInfo.m_mountPoints.size(); i++) {
-        mountPoint += lvInfo.m_mountPoints[i];
-    }
+    if(lvInfo.m_lvFsType == FS_NTFS){
+        QString mountPoint = "";
+        for (int i = 0; i < lvInfo.m_mountPoints.size(); i++) {
+            mountPoint += lvInfo.m_mountPoints[i];
+        }
 
-    if (!mountPoint.isEmpty()){
-        MessageBox warningBox(this);
-        warningBox.setObjectName("messageBox");
-        warningBox.setAccessibleName("messageBox");
-        // 请先手动卸载XXX（逻辑卷名称）  确定
-        warningBox.setWarings(tr("Unmount %1 first").arg(lvInfo.m_lvName), "", tr("OK"), "ok");
-        warningBox.exec();
+        if (!mountPoint.isEmpty()){
+            MessageBox warningBox(this);
+            warningBox.setObjectName("messageBox");
+            warningBox.setAccessibleName("messageBox");
+            // 请先手动卸载XXX（逻辑卷名称）  确定
+            warningBox.setWarings(tr("Unmount %1 first").arg(lvInfo.m_lvName), "", tr("OK"), "ok");
+            warningBox.exec();
 
-        setCurVGName("");
+            setCurVGName("");
 
-        return;
+            return;
+        }
     }
 
     FS_Limits limits = lvInfo.m_fsLimits;
-    if (limits.min_size == -1 && limits.max_size == -1) {
+    if ((limits.min_size == -1 && limits.max_size == -1)
+            || lvInfo.m_lvFsType == FS_FAT16 || lvInfo.m_lvFsType == FS_FAT32) { //fat32 or fat16 lvm情况下不支持调整
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("LVNoSupportFSWidget");
@@ -386,7 +389,7 @@ void TitleWidget::onDeleteVGClicked()
 {
     VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
     setCurVGName(vgInfo.m_vgName);
-    if (DMDbusHandler::instance()->isExistMountLV(vgInfo)){
+    if (DMDbusHandler::instance()->isExistMountLV(vgInfo)) {
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("messageBox");
@@ -441,19 +444,12 @@ void TitleWidget::onDeletePVClicked()
             VGInfo vgInfo = mapVGInfo.value(vgData.m_vgName);
             QMap<QString, PVInfo> mapPvInfo = vgInfo.m_pvInfo;
             QStringList lstKeys = mapPvInfo.keys();
-            // 判断VG是否由一个PV组成
-            if (lstKeys.size() == 1) {
-                // 判断VG下的PV是否为当前分区
-                if (lstKeys.at(0) == info.m_path) {
-                    // 判断VG下是否有LV
-                    if (vgInfo.m_lvlist.size() > 0) {
-                        // 判断是否有LV被挂载
-                        if (DMDbusHandler::instance()->isExistMountLV(vgInfo)){
-                            lstVGName.append(vgInfo.m_vgName);
-                            vgIsMount = true;
-                        }
-                    }
-                }
+            if (lstKeys.size() == 1                 // 判断VG是否由一个PV组成
+                    && lstKeys.at(0) == info.m_path // 判断VG下的PV是否为当前分区
+                    && vgInfo.m_lvlist.size() > 0   // 判断VG下是否有LV
+                    && DMDbusHandler::instance()->isExistMountLV(vgInfo)) {  // 判断是否有LV被挂载
+                lstVGName.append(vgInfo.m_vgName);
+                vgIsMount = true;
             }
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
@@ -493,7 +489,7 @@ void TitleWidget::onDeletePVClicked()
                     // 判断VG下是否有LV
                     if (vgInfo.m_lvlist.size() > 0) {
                         // 判断是否有LV被挂载
-                        if (DMDbusHandler::instance()->isExistMountLV(vgInfo) && lstVGName.indexOf(vgData.m_vgName) == -1){
+                        if (DMDbusHandler::instance()->isExistMountLV(vgInfo) && lstVGName.indexOf(vgData.m_vgName) == -1) {
                             lstVGName.append(vgData.m_vgName);
                         }
                     }
@@ -501,12 +497,12 @@ void TitleWidget::onDeletePVClicked()
             }
         }
 
-        if (!lstVGName.isEmpty()){
+        if (!lstVGName.isEmpty()) {
             vgIsMount = true;
         }
     }
 
-    if (vgIsMount){
+    if (vgIsMount) {
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("deletePVMessageBox");
@@ -566,12 +562,7 @@ void TitleWidget::updateBtnStatus()
 
             QMap<QString, VGInfo> mapVGInfo = DMDbusHandler::instance()->probLVMInfo().m_vgInfo;
             VGInfo vgInfo = mapVGInfo.value(info.m_vgData.m_vgName);
-            if (!vgInfo.isPartial()) {
-                m_btnDeletePV->setDisabled(false);
-            } else {
-                m_btnDeletePV->setDisabled(true);
-            }
-
+            m_btnDeletePV->setDisabled(vgInfo.isPartial());
             m_btnCreateLV->setDisabled(true);
             m_btnFormat->setDisabled(true);
             m_btnMount->setDisabled(true);
@@ -594,8 +585,7 @@ void TitleWidget::updateBtnStatus()
                     m_btnUnmount->setDisabled(true);
                 }
             } else {
-                int result = info.m_flag;
-                if (1 == result) {
+                if (1 == info.m_flag) {
                     m_btnParted->setDisabled(true);
                     m_btnFormat->setDisabled(true);
                     m_btnMount->setDisabled(true);
@@ -609,6 +599,7 @@ void TitleWidget::updateBtnStatus()
                         m_btnMount->setDisabled(true);
                         m_btnUnmount->setDisabled(true);
                         m_btnResize->setDisabled(true);
+                        return ;
                     } else {
                         m_btnUnmount->setDisabled(true);
                         if (info.m_fileSystemType == FS_UNALLOCATED) {
@@ -639,11 +630,6 @@ void TitleWidget::updateBtnStatus()
                 m_btnUnmount->setDisabled(true);
                 m_btnResize->setDisabled(true);
             }
-
-            QMap<QString, QString> isExistUnallocated = DMDbusHandler::instance()->getIsExistUnallocated();
-            if (isExistUnallocated.value(info.m_devicePath) == "false") {
-                m_btnResize->setDisabled(true);
-            }
         }
 
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
@@ -657,51 +643,36 @@ void TitleWidget::updateBtnStatus()
         m_btnResizeVG->hide();
 
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
-        if (info.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV) {
+        if (info.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV) { //有分区创建为pv
             m_btnParted->hide();
             m_btnCreateLV->show();
 
-            QMap<QString, VGInfo> mapVGInfo = DMDbusHandler::instance()->probLVMInfo().m_vgInfo;
-            QVector<VGData> vglist = info.m_vglist;
             bool isVGNormal = true;
-            for (int i = 0; i < vglist.count(); i++) {
-                VGInfo vgInfo = mapVGInfo.value(vglist.at(i).m_vgName);
+            QMap<QString, VGInfo> mapVGInfo = DMDbusHandler::instance()->probLVMInfo().m_vgInfo;
+            foreach (const VGDATA &vgdata, info.m_vglist) {
+                VGInfo vgInfo = mapVGInfo.value(vgdata.m_vgName);
                 if (vgInfo.isPartial()) {
                     isVGNormal = false;
                     break;
                 }
             }
 
-            if (isVGNormal) {
-                m_btnDeletePV->setDisabled(false);
-            } else {
-                m_btnDeletePV->setDisabled(true);
-            }
-
+            m_btnDeletePV->setEnabled(isVGNormal);
             m_btnCreateLV->setDisabled(true);
             m_btnFormat->setDisabled(true);
-            m_btnMount->setDisabled(true);
-            m_btnUnmount->setDisabled(true);
-            m_btnResize->setDisabled(true);
         } else {
-            m_btnDeletePV->setDisabled(true);
             m_btnParted->show();
             m_btnCreateLV->hide();
 
-            if (isExistMountPartition()) {
-                m_btnParted->setDisabled(true);
-                m_btnFormat->setDisabled(true);
-                m_btnMount->setDisabled(true);
-                m_btnUnmount->setDisabled(true);
-                m_btnResize->setDisabled(true);
-            } else {
-                m_btnParted->setDisabled(true);
-                m_btnFormat->setDisabled(false);
-                m_btnMount->setDisabled(true);
-                m_btnUnmount->setDisabled(true);
-                m_btnResize->setDisabled(true);
-            }
+            m_btnDeletePV->setDisabled(true);
+            m_btnParted->setDisabled(true);
+            m_btnFormat->setDisabled(isExistMountPartition());
         }
+
+        m_btnMount->setDisabled(true);
+        m_btnUnmount->setDisabled(true);
+        m_btnResize->setDisabled(true);
+
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::VOLUMEGROUP) {
         m_btnParted->hide();
         m_btnDeleteLV->hide();
@@ -736,7 +707,6 @@ void TitleWidget::updateBtnStatus()
         if (isExistUnallocated.value(vgInfo.m_vgName) == "false") {
             m_btnCreateLV->setDisabled(true);
         }
-
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
         m_btnParted->hide();
         m_btnDeleteVG->hide();
@@ -766,15 +736,10 @@ void TitleWidget::updateBtnStatus()
             mountPoint += lvInfo.m_mountPoints[i];
         }
 
-        if (mountPoint.isEmpty()) {
-            m_btnFormat->setDisabled(false);
-            m_btnMount->setDisabled(false);
-            m_btnUnmount->setDisabled(true);
-        } else {
-            m_btnFormat->setDisabled(true);
-            m_btnMount->setDisabled(true);
-            m_btnUnmount->setDisabled(false);
-        }
+        bool noMountPoint = mountPoint.isEmpty();
+        m_btnFormat->setDisabled(!noMountPoint);
+        m_btnMount->setDisabled(!noMountPoint);
+        m_btnUnmount->setDisabled(noMountPoint);
 
         if (lvInfo.m_lvName.isEmpty() && lvInfo.m_lvUuid.isEmpty()) {
             m_btnCreateLV->setDisabled(false);
@@ -820,7 +785,7 @@ void TitleWidget::onUpdateUsb()
                     widget->objectName() == "messageBox") {
 
                 widget->close();
-    //            break;
+                //            break;
             }
         }
 

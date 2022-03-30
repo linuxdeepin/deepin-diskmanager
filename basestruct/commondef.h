@@ -6,10 +6,6 @@
 #define GPTBACKUP 33
 #define UEFI_SECTOR 2048 //第一个分区从2048开始 为将来UEFI升级预留空间
 
-
-
-
-
 typedef long long Sector;
 typedef long long Byte_Value;
 
@@ -215,7 +211,7 @@ enum DISK_ERROR {
     DISK_ERR_UPDATE_KERNEL_FAILED = 4,  //提交内核失败
     DISK_ERR_CREATE_FS_FAILED = 5,      //创建文件系统失败
     DISK_ERR_MOUNT_FAILED = 6,          //挂载失败
-    DISK_ERR_CREATE_MOUNTDIR_FAILED = 7,     //创建挂载文件夹失败
+    DISK_ERR_CREATE_MOUNTDIR_FAILED = 7,//创建挂载文件夹失败
     DISK_ERR_CHOWN_FAILED = 8,          //修改属主失败
 };
 

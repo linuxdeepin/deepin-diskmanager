@@ -258,7 +258,7 @@ private:
    DFrame *m_selectedFrame;
    DScrollArea *m_selectedScrollArea;
    DStackedWidget *m_selectedStackedWidget;
-   DLabel *m_selectSpaceLabel;
+   //DLabel *m_selectSpaceLabel;
    DLineEdit *m_selectSpaceLineEdit;
    DComboBox *m_selectSpaceComboBox;
    DStackedWidget *m_selectSpaceStackedWidget;

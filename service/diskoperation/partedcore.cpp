@@ -613,10 +613,7 @@ void PartedCore::destroyDeviceAndDisk(PedDevice *&lpDevice, PedDisk *&lpDisk)
 
 bool PartedCore::infoBelongToPartition(const Partition &partition, const PartitionInfo &info)
 {
-    bool belong = false;
-    if (info.m_sectorEnd == partition.m_sectorEnd && info.m_sectorStart == partition.m_sectorStart)
-        belong = true;
-    return belong;
+    return info.m_sectorEnd == partition.m_sectorEnd && info.m_sectorStart == partition.m_sectorStart;
 }
 
 bool PartedCore::getDeviceAndDisk(const QString &devicePath, PedDevice *&lpDevice, PedDisk *&lpDisk, bool strict, bool flush)
@@ -1781,7 +1778,7 @@ bool PartedCore::mountAndWriteFstab(const QString &mountpath)
     QString devPath = m_curpartition.getPath();
     QString uuid = m_curpartition.m_uuid;
     FSType fs = m_curpartition.m_fstype;
-    bool success = mountDevice(mountpath, devPath, fs) && writeFstab(uuid, devPath, type);     //位置不可交换 利用&&运算特性
+    bool success = mountDevice(mountpath, devPath, fs) && writeFstab(uuid, mountpath, type);     //位置不可交换 利用&&运算特性
     qDebug() << __FUNCTION__ << "Permanent mount end";
     return   sendRefSigAndReturn(success);
 }
@@ -1795,9 +1792,8 @@ bool PartedCore::unmount()
     }
     //修改/etc/fstab
     QString type = Utils::fileSystemTypeToString(m_curpartition.m_fstype);
-    QString devPath = m_curpartition.getPath();
     QString uuid = m_curpartition.m_uuid;
-    if (!writeFstab(uuid,  devPath, type, false)) {
+    if (!writeFstab(uuid,  "", type, false)) { //非挂载 不需要挂载点
         return sendRefSigAndReturn(false);
     }
 
@@ -1975,6 +1971,9 @@ QList<PVData> PartedCore::getCreatePVList(const QList<PVData> &devList, const lo
     QList<PVData>loopList;
     QList<PVData>metaList;
 
+    //默认分区最小大小
+    long long minPartSize =  6 * MEBIBYTE;
+
     long long unallocSize = totalSize; //去掉分区大小后的未分配空间
     foreach (PVData pv, devList) {
         long long pvSize = getPVSize(pv);
@@ -2018,8 +2017,8 @@ QList<PVData> PartedCore::getCreatePVList(const QList<PVData> &devList, const lo
         }
 
         if (unallocSize < pvSize) {
-            if (unallocSize <= 5 * MEBIBYTE) {
-                unallocSize = 5 * MEBIBYTE;
+            if (unallocSize <= minPartSize) {
+                unallocSize = minPartSize;
             }
         }
 
@@ -2045,8 +2044,8 @@ QList<PVData> PartedCore::getCreatePVList(const QList<PVData> &devList, const lo
         if (pvSize <= 0)
             continue;
         if (unallocSize < pvSize && unallocSize < pvSize2) { //获取创建分区情况下的size
-            if (unallocSize <= 5 * MEBIBYTE) {
-                unallocSize = 5 * MEBIBYTE;
+            if (unallocSize <= minPartSize) {
+                unallocSize = minPartSize;
             }
             if (!getPVStartEndSector(pv, unallocSize)) {
                 return  QList<PVData>();
@@ -2105,6 +2104,9 @@ QList<PVData> PartedCore::getResizePVList(const QString &vgName, const QList<PVD
     if (vg.m_peUsed * vg.m_PESize > totalSize) { //调整数值有误  已使用 > 总大小
         return QList<PVData> ();
     }
+
+    //默认分区最小大小
+    long long minPartSize = vg.m_PESize + 2 * MEBIBYTE;
 
     //添加
     QList<PVData>addDiskList;
@@ -2177,6 +2179,12 @@ QList<PVData> PartedCore::getResizePVList(const QString &vgName, const QList<PVD
             continue;
         }
 
+        if (unallocSize < pvSize) {
+            if (unallocSize <= minPartSize) {
+                unallocSize = minPartSize;
+            }
+        }
+
         if (!getPVStartEndSector(pv, unallocSize)) {
             return  QList<PVData>();
         }
@@ -2200,10 +2208,15 @@ QList<PVData> PartedCore::getResizePVList(const QString &vgName, const QList<PVD
             break;
         }
         long long pvSize = getPVSize(pv);
-
+        long long pvSize2 = getPVSize(pv, true);
         if (pvSize <= 0)
             continue;
-        if (unallocSize < pvSize) {
+
+
+        if (unallocSize < pvSize && unallocSize < pvSize2) { //获取创建分区情况下的size
+            if (unallocSize <= minPartSize) {
+                unallocSize = minPartSize;
+            }
             if (!getPVStartEndSector(pv, unallocSize)) {
                 return  QList<PVData>();
             }
@@ -2212,6 +2225,16 @@ QList<PVData> PartedCore::getResizePVList(const QString &vgName, const QList<PVD
                 return QList<PVData>();
             }
         }
+
+//        if (unallocSize < pvSize) {
+//            if (!getPVStartEndSector(pv, unallocSize)) {
+//                return  QList<PVData>();
+//            }
+//            //创建分区
+//            if (!createPVPart(pv)) {
+//                return QList<PVData>();
+//            }
+//        }
         unallocSize -= pvSize;
 
         list.push_back(pv); //整盘加入 从头到尾都可用
@@ -2239,6 +2262,7 @@ bool PartedCore::getPVDevice(const QString &devPath, Device &device)
 
 long long PartedCore::getPVSize(const PVData &pv, bool flag)
 {
+    Q_UNUSED(flag)
     Device dev;
     if (!getPVDevice(pv.m_diskPath, dev)) {
         return -1;
@@ -2366,7 +2390,7 @@ bool PartedCore::createPVPart(PVData &pv)
     return true;
 }
 
-bool PartedCore::checkPVDevice(const QString vgName, const PVData &pv)
+bool PartedCore::checkPVDevice(const QString vgName, const PVData &pv, bool isCreate)
 {
     if (pv.m_type == LVMDevType::LVM_DEV_UNKNOW_DEVICES) { //设备类型不明
         return false;
@@ -2389,7 +2413,12 @@ bool PartedCore::checkPVDevice(const QString vgName, const PVData &pv)
     });
 
     if (m_lvmInfo.pvExists(pv)) { //pv已经存在
-        return true;
+        PVInfo info = m_lvmInfo.getPV(pv);
+        bool noJoinVG = info.noJoinVG();
+        /*如果是创建vg 那么判断pv没有加入任何vg就可以
+         * 如果不是创建vg而是resize 那么pv没有加入任何vg或者pv属于当前vg都是可以的
+         *                       加入vg 且不属于当前vg的pv是错误的参数*/
+        return isCreate ? noJoinVG : (noJoinVG || m_lvmInfo.pvOfVg(vgName, info));
     }
 
     switch (pv.m_type) { //判断设备是否符合
@@ -2438,54 +2467,7 @@ bool PartedCore::createVG(QString vgName, QList<PVData> devList, long long size)
 {
     std::set<PVData>tmpDevList;
     foreach (PVData pv, devList) {
-        if (!tmpDevList.insert(pv).second) { //插入失败说明有重复
-            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
-        }
-
-        if (pv.m_pvAct != LVMAction::LVM_ACT_ADDPV || pv.m_type == LVMDevType::LVM_DEV_UNKNOW_DEVICES) {
-            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
-        }
-
-        auto devIt = m_deviceMap.find(pv.m_diskPath);
-        if (devIt == m_deviceMap.end()) {
-            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
-        }
-
-        const QVector<Partition *> &part = devIt.value().m_partitions;
-        QVector<Partition *>::const_iterator partIt = std::find_if(part.begin(), part.end(), [ = ](Partition * it)->bool{
-            if (it->m_type != TYPE_UNALLOCATED)
-            {
-                return it->getPath() == pv.m_devicePath;
-            } else
-            {
-                return it->m_sectorEnd == pv.m_endSector && it->m_sectorStart == pv.m_startSector;
-            }
-        });
-
-        switch (pv.m_type) {
-        case LVMDevType::LVM_DEV_DISK: { //验证是否存在分区表
-            if (devIt.value().m_diskType != "unrecognized") {
-                return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
-            }
-        }
-        break;
-        case LVMDevType::LVM_DEV_PARTITION: { //验证分区是否存在 是否被挂载
-            if (part.end() == partIt || !(*partIt)->getMountPoint().isEmpty()) { //此处两个判断位置不可交换 交换会崩溃
-                return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
-            }
-        }
-        break;
-        case LVMDevType::LVM_DEV_UNALLOCATED_PARTITION: { //验证未分配分区是否存在
-            if (part.end() == partIt) {
-                return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
-            }
-        }
-        break;
-        case LVMDevType::LVM_DEV_LOOP: //暂时不做处理 以后支持时添加
-            break;
-        case LVMDevType::LVM_DEV_META_DEVICES://暂时不做处理 以后支持时添加
-            break;
-        default:
+        if (!tmpDevList.insert(pv).second || !checkPVDevice(vgName, pv, true)) { //插入失败说明有重复
             return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
         }
     }
@@ -2572,7 +2554,7 @@ bool PartedCore::resizeVG(QString vgName, QList<PVData> devList, long long size)
 {
     std::set<PVData>tmpDevList;
     foreach (PVData pv, devList) {
-        if (!tmpDevList.insert(pv).second || !checkPVDevice(vgName, pv)) { //插入失败说明有重复
+        if (!tmpDevList.insert(pv).second || !checkPVDevice(vgName, pv, false)) { //插入失败说明有重复
             return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
         }
     }
@@ -2611,15 +2593,25 @@ bool PartedCore::resizeLV(LVAction &lvAct)
         return sendRefSigAndReturn(false);
     }
 
-    //判断是否挂载 存在挂载点退出 不再执行卸载操作
-    if (info.m_busy || info.m_mountPoints.size() /*&& !umontDevice(info.m_mountPoints)*/) {
-        return sendRefSigAndReturn(false);
+    if (lvAct.m_lvAct == LVM_ACT_LV_REDUCE) { //缩小
+        //自动卸载
+        if (!umontDevice(info.m_mountPoints)) {
+            return sendRefSigAndReturn(false);
+        }
     }
 
     //调整lv大小
     if (!LVMOperator::resizeLV(m_lvmInfo, lvAct, info)) {
         return sendRefSigAndReturn(false);
     }
+
+    if (lvAct.m_lvAct == LVM_ACT_LV_REDUCE && info.m_mountPoints.size() >= 1) {
+        //调整lv大小
+        if (!mountDevice(info.m_mountPoints[0], info.m_lvPath, info.m_lvFsType)) {
+            return sendRefSigAndReturn(false);
+        }
+    }
+
 
     return sendRefSigAndReturn(true);
 }
@@ -2987,7 +2979,7 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
     probeDeviceInfo();
 
     //创建完分区后，将当前创建的分区设置为当前选中分区
-    if (PART_TYPE  == diskType) {
+    if (DISK_TYPE  == diskType) {
         Device d = m_deviceMap.value(path);
         if (d.m_partitions.count() >= 1) {
             m_curpartition = *(d.m_partitions[0]);
@@ -3150,55 +3142,51 @@ LVMInfo PartedCore::getAllLVMinfo()
 
 void PartedCore::setCurSelect(const PartitionInfo &info)
 {
-    bool bfind = false;
-    for (auto it = m_deviceMap.begin(); it != m_deviceMap.end() && !bfind; it++) {
-        if (it.key() == info.m_devicePath) {
-            Device dev = it.value();
-            for (auto itpart = dev.m_partitions.begin(); itpart != dev.m_partitions.end() && !bfind; itpart++) {
-                Partition part = *(*itpart);
-                if (infoBelongToPartition(part, info)) {
-                    m_curpartition = part;
-                    bfind = true;
-                }
-                if (part.m_insideExtended && !bfind) {
-                    for (auto itextend = part.m_logicals.begin(); itextend != part.m_logicals.end(); itextend++) {
-                        Partition partlogical = *(*itextend);
-                        if (infoBelongToPartition(partlogical, info)) {
-                            m_curpartition = partlogical;
-                            bfind = true;
-                        }
-                    }
+//    bool bfind = false;
+//    for (auto it = m_deviceMap.begin(); it != m_deviceMap.end() && !bfind; it++) {
+//        if (it.key() == info.m_devicePath) {
+//            Device dev = it.value();
+//            for (auto itpart = dev.m_partitions.begin(); itpart != dev.m_partitions.end() && !bfind; itpart++) {
+//                Partition part = *(*itpart);
+//                if (infoBelongToPartition(part, info)) {
+//                    m_curpartition = part;
+//                    bfind = true;
+//                }
+//                if (part.m_insideExtended && !bfind) {
+//                    for (auto itextend = part.m_logicals.begin(); itextend != part.m_logicals.end(); itextend++) {
+//                        Partition partlogical = *(*itextend);
+//                        if (infoBelongToPartition(partlogical, info)) {
+//                            m_curpartition = partlogical;
+//                            bfind = true;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+
+//todo 2022.2.24  上面的bfind逻辑有点问题 后期修改
+    auto it = m_deviceMap.find(info.m_devicePath);
+    if (it == m_deviceMap.end()) {
+        return;
+    }
+
+    Device dev = it.value();
+
+    foreach (const Partition *part, dev.m_partitions) {
+        if (infoBelongToPartition(*part, info)) {
+            m_curpartition = *part;
+            return ;
+        }
+        if (part->m_insideExtended) {//扩展分区  查看是否为逻辑分区
+            foreach (const Partition *partlogical, part->m_logicals) {
+                if (infoBelongToPartition(*partlogical, info)) {
+                    m_curpartition = *partlogical;
+                    return;
                 }
             }
         }
     }
-
-//todo 2022.2.24  上面的bfind逻辑有点问题 后期修改
-//    bool bfind = false;
-//    auto it = m_deviceMap.find(info.m_devicePath);
-//    if (it == m_deviceMap.end()) {
-//        return;
-//    }
-
-//    Device dev = it.value();
-
-//    foreach (const Partition *part, dev.m_partitions) {
-//        if (infoBelongToPartition(*part, info)) {
-//            m_curpartition = *part;
-//            return ;
-//        }
-//        if (part->m_insideExtended && !bfind) {
-//            foreach (const Partition *partlogical, part->m_logicals) {
-//                if (infoBelongToPartition(*partlogical, info)) {
-//                    m_curpartition = *partlogical;
-//                    return;
-//                }
-//            }
-
-//        }
-//    }
-
-
 }
 
 QString PartedCore::getDeviceHardStatus(const QString &devicepath)
@@ -3984,20 +3972,11 @@ bool PartedCore::umontDevice(QVector<QString> mountPoints)
         arg << "-v" << path;
         int exitcode = Utils::executeCmdWithArtList("umount", arg, output, errstr);
         if (0 != exitcode) {
-            QProcess proc;
-            proc.start("df");
-            proc.waitForFinished(-1);
-            QString outBuf = proc.readAllStandardOutput();
-            if (outBuf.contains(m_curpartition.getPath())) {
-                emit refreshDeviceInfo(DISK_SIGNAL_TYPE_UMNT, true, "0");
-                return false;
-            } else {
-                emit refreshDeviceInfo(DISK_SIGNAL_TYPE_UMNT, true, "1");
-                return true;
-            }
+            Utils::executCmd("df", output, errstr);
+            return errstr.contains(m_curpartition.getPath()) ? sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_UMNT, true, "0")
+                   : sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_UMNT, true, "1");
         }
     }
-
     return true;
 }
 
@@ -4005,9 +3984,15 @@ bool PartedCore::writeFstab(const QString &uuid, const QString &mountpath, const
 {
     qDebug() << __FUNCTION__ << "Write fstab start";
     //写入fstab 永久挂载
-    if (uuid.isEmpty() || mountpath.isEmpty() || type.isEmpty()) {
+    if (uuid.isEmpty() || (mountpath.isEmpty() && isMount) || type.isEmpty()) { //非挂载 不需要挂载点 可以传空值
         qDebug() << __FUNCTION__ << "Write fstabt argument error";
         return false;
+    }
+
+    //此处修改：因为mount读取/etc/fstab配置文件 开机自动挂载  而fat32或fat16 mount不识别，所以要改成vfat
+    QString type2 = type;
+    if(type2.contains("fat32")||type2.contains("fat16")){
+        type2 = "vfat";
     }
 
     QFile file("/etc/fstab");
@@ -4025,10 +4010,10 @@ bool PartedCore::writeFstab(const QString &uuid, const QString &mountpath, const
         QString str = line;
         if (isMount) {
             if (str.contains(uuid)) {
-                list << QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(uuid).arg(mountpath).arg(type);
+                list << QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(uuid).arg(mountpath).arg(type2);
                 break;
             } else if (file.atEnd()) {
-                list << str << QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(uuid).arg(mountpath).arg(type);
+                list << str << QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(uuid).arg(mountpath).arg(type2);
                 break;
             }
             list << str;

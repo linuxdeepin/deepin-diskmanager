@@ -43,6 +43,7 @@ file(GLOB ALL_HEADERS "*.h" "./diskoperation/*.h" "./diskoperation/filesystems/*
 
 include_directories(../basestruct)
 include_directories(../log)
+include_directories(diskoperation)
 link_directories(${PROJECT_BINARY_DIR})
 
 add_executable(${PROJECT_NAME} ${ALL_SOURCES} ${ALL_HEADERS})

@@ -37,11 +37,10 @@
     QDBusArgument &operator<<(QDBusArgument &argument, const className &data);\
     const QDBusArgument &operator>>(const QDBusArgument &argument, className &data);
 
-
 //new by liuwh 2022/1/17
 /**
- * @class PVDATA
- * @brief pv设备信息数据结构体
+ * @struct PVDATA
+ * @brief pv设备信息数据结构体  创建vg 调整vg使用
  */
 typedef struct PVData {
     bool operator<(const PVData &tmp)const;
@@ -59,7 +58,7 @@ LVMStructEnd(PVData)
 
 //new by liuwh 2022/2/15
 /**
- * @class CreateLVInfo
+ * @struct CreateLVInfo
  * @brief 创建lv结构体 前后端通信用
  */
 typedef struct LVAction {
@@ -78,7 +77,7 @@ LVMStructEnd(LVAction)
 
 //new by liuwh 2022/1/17
 /**
- * @class LVDATA
+ * @struct LVDATA
  * @brief 逻辑卷信息数据结构体
  */
 typedef struct LVDATA {
@@ -92,7 +91,7 @@ LVMStructEnd(LVData)
 
 //new by liuwh 2022/1/17
 /**
- * @class VGDATA
+ * @struct VGDATA
  * @brief 逻辑卷组信息数据结构体
  */
 typedef struct VGDATA {
@@ -107,7 +106,7 @@ LVMStructEnd(VGData)
 
 //new by liuwh 2022/1/17
 /**
- * @class PV_RANGES
+ * @struct PV_RANGES
  * @brief pv设备 使用分布范围
  */
 typedef struct PVRANGES {
@@ -236,7 +235,7 @@ public:
     int m_LESize{0};  //单个pe大小 与所在vg的pe大小相同 单位byte
     bool m_busy{false}; //挂载标志
     QVector<QString> m_mountPoints;//挂载点 可多次挂载
-    QString m_lvStatus{"----------"};
+    QString m_lvStatus{"----------"};//lv状态
     LVMError m_lvError{LVMError::LVM_ERR_NORMAL};//逻辑卷错误码
     QString m_mountUuid;//逻辑卷挂载uuid
     FS_Limits m_fsLimits;//文件系统限制 该属性在没有文件系统存在时无效
@@ -265,17 +264,18 @@ The vg_attr bits are:
 class VGInfo
 {
 public:
-    bool isWriteable()const {return m_vgStatus[0] == 'w';}
-    bool isReadOnly()const {return m_vgStatus[0] == 'r';}
-    bool isResizeable()const {return m_vgStatus[1] == 'z';}
-    bool isExported()const {return m_vgStatus[2] == 'x';}
-    bool isPartial()const {return m_vgStatus[3] == 'p';}
-    bool isContiguous()const {return m_vgStatus[4] == 'c';}
-    bool isCling()const {return m_vgStatus[4] == 'l';}
-    bool isNormal()const {return m_vgStatus[4] == 'n';}
-    bool isAnywhere()const {return m_vgStatus[4] == 'a';}
-    bool isClustered()const {return m_vgStatus[5] == 'c';}
-    bool isShared()const {return m_vgStatus[5] == 's';}
+    bool isWriteable() const {return m_vgStatus[0] == 'w';}
+    bool isReadOnly() const {return m_vgStatus[0] == 'r';}
+    bool isResizeable() const {return m_vgStatus[1] == 'z';}
+    bool isExported() const {return m_vgStatus[2] == 'x';}
+    bool isPartial() const {return m_vgStatus[3] == 'p';}
+    bool isContiguous() const {return m_vgStatus[4] == 'c';}
+    bool isCling() const {return m_vgStatus[4] == 'l';}
+    bool isNormal() const {return m_vgStatus[4] == 'n';}
+    bool isAnywhere() const {return m_vgStatus[4] == 'a';}
+    bool isClustered() const {return m_vgStatus[5] == 'c';}
+    bool isShared() const {return m_vgStatus[5] == 's';}
+
     LVInfo getLVinfo(const QString &lvName);
     bool lvInfoExists(const QString &lvName);
     bool isAllPV(QVector<QString> pvList)const; //判断是否包含了全部pv
@@ -332,9 +332,9 @@ public:
     bool pvOfVg(const QString &vgName, const QString &pvPath);
     bool pvOfVg(const QString &vgName, const PVData &pv);
     bool pvOfVg(const PVInfo &pv);
-    bool pvOfVg(const VGInfo&vg,const PVInfo &pv);
-    bool pvOfVg(const VGInfo&vg,const PVData &pv);
-    bool pvOfVg(const QString &vgName,const PVInfo &pv);
+    bool pvOfVg(const VGInfo &vg, const PVInfo &pv);
+    bool pvOfVg(const VGInfo &vg, const PVData &pv);
+    bool pvOfVg(const QString &vgName, const PVInfo &pv);
 
 private:
     template<class T>

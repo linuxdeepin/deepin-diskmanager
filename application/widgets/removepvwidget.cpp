@@ -240,8 +240,8 @@ void RemovePVWidget::onButtonClicked()
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("NotEnoughSpaceWidget");
-        // 剩余空间不足，移除XXX（磁盘名称）将会造成数据丢失，请先清理空间  确定
-        warningBox.setWarings(tr("Not enough space to back up data on %1, please clear disk space")
+        // 剩余空间不足，移除XXX（磁盘名称）将会造成数据丢失，请先删除逻辑卷 确定
+        warningBox.setWarings(tr("Not enough space to back up data on %1, please delete the logical volume first")
                               .arg(realDelPvLis.join(',')), "", tr("OK"), "ok");
         warningBox.exec();
         return;

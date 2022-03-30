@@ -35,6 +35,7 @@
 #include <QUuid>
 #include <QDebug>
 #include <algorithm>
+#include <math.h>
 
 Utils::Utils()
 {
@@ -560,8 +561,6 @@ QString Utils::LVMFormatSize(long long lvmSize)
         res.append(" TiB");
     }
     return res;
-
-
 }
 
 double Utils::LVMSizeToUnit(long long lvmSize, SIZE_UNIT sizeUnit)

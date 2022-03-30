@@ -2,34 +2,6 @@
 <context>
     <name>CreateLVWidget</name>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="134"/>
-        <source>Capacity:</source>
-        <translation>Həcm:</translation>
-    </message>
-    <message>
-        <location filename="../widgets/createlvwidget.cpp" line="854"/>
-        <source>Disk:</source>
-        <translation>Disk:</translation>
-    </message>
-    <message>
-        <location filename="../widgets/createlvwidget.cpp" line="238"/>
-        <source>Confirm</source>
-        <comment>button</comment>
-        <translation>Təsdiq edin</translation>
-    </message>
-    <message>
-        <location filename="../widgets/createlvwidget.cpp" line="242"/>
-        <source>Cancel</source>
-        <comment>button</comment>
-        <translation>İmtina</translation>
-    </message>
-    <message>
-        <location filename="../widgets/createlvwidget.cpp" line="245"/>
-        <source>Revert</source>
-        <comment>button</comment>
-        <translation>Geri qaytarın</translation>
-    </message>
-    <message>
         <location filename="../widgets/createlvwidget.cpp" line="51"/>
         <source>Creating logical volumes on %1</source>
         <translation>%1 üzərində məntiqi tutumlar yaradılır</translation>
@@ -43,6 +15,11 @@
         <location filename="../widgets/createlvwidget.cpp" line="120"/>
         <source>VG Information</source>
         <translation>VG məlumatı</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="134"/>
+        <source>Capacity:</source>
+        <translation>Həcm:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="144"/>
@@ -61,6 +38,24 @@
         <location filename="../widgets/createlvwidget.cpp" line="325"/>
         <source>LV file system:</source>
         <translation>LV fayl sistemi:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="238"/>
+        <source>Confirm</source>
+        <comment>button</comment>
+        <translation>Təsdiq edin</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="242"/>
+        <source>Cancel</source>
+        <comment>button</comment>
+        <translation>İmtina</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="245"/>
+        <source>Revert</source>
+        <comment>button</comment>
+        <translation>Geri qaytarın</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="271"/>
@@ -98,22 +93,23 @@
         <source>Size</source>
         <translation>Ölçüsü:</translation>
     </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="854"/>
+        <source>Disk:</source>
+        <translation>Disk:</translation>
+    </message>
 </context>
 <context>
     <name>CreatePartitionTableDialog</name>
     <message>
-        <source>The disk has a partition table already. Create a new one and replace it?</source>
-        <translation type="vanished">Artıq bu diskdə bir bölmə var. Yenisi yaradılsın və ya o əvəz olunsun?</translation>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="30"/>
+        <source>Cancel</source>
+        <translation>İmtina</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="37"/>
         <source>No partition table in this disk. Create a new one?</source>
         <translation>Bu diskdə bölmələr cədvəli yoxdur. İndi yenisi yaradılsın?</translation>
-    </message>
-    <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="30"/>
-        <source>Cancel</source>
-        <translation>İmtina</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
@@ -144,145 +140,150 @@
         <translation>Ölçüsünü dəyişin</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="103"/>
+        <location filename="../widgets/createvgwidget.cpp" line="110"/>
         <source>Select disks or partitions to create a volume group and set its capacity</source>
         <translation>tutum qrupu yaratmaq və onun ölçüsünü təyin etmək üçün disk və ya bölmə seçin</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="108"/>
-        <location filename="../widgets/createvgwidget.cpp" line="395"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1003"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1013"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1461"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1471"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1521"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1572"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1575"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1605"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1713"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1779"/>
+        <location filename="../widgets/createvgwidget.cpp" line="115"/>
+        <location filename="../widgets/createvgwidget.cpp" line="414"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1022"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1032"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1481"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1491"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1541"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1592"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1595"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1625"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1733"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1799"/>
         <source>Capacity selected: %1</source>
         <translation>Seçilən ölçü: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="113"/>
+        <location filename="../widgets/createvgwidget.cpp" line="120"/>
         <source>The selected disks will be converted to dynamic disks, and you will not be able to start installed operating systems from the disks.</source>
         <translation>Seçilmiş disk dinamik diskə çevriləcək və siz diskdən əməliyyat sisteminin quraşdırılmasını başlada bilməyəcəksiniz.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="169"/>
+        <location filename="../widgets/createvgwidget.cpp" line="176"/>
         <source>No partitions available</source>
         <translation>Bölmələr yoxdur</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="240"/>
+        <location filename="../widgets/createvgwidget.cpp" line="247"/>
         <source>No disks or partitions available</source>
         <translation>Disklər və ya bölmələr əlçatmazdır</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="274"/>
-        <location filename="../widgets/createvgwidget.cpp" line="459"/>
+        <location filename="../widgets/createvgwidget.cpp" line="281"/>
+        <location filename="../widgets/createvgwidget.cpp" line="478"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>İmtina</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="277"/>
+        <location filename="../widgets/createvgwidget.cpp" line="284"/>
         <source>Next</source>
         <translation>Sonra</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="302"/>
+        <location filename="../widgets/createvgwidget.cpp" line="309"/>
         <source>Selected disks/partitions</source>
         <translation>Disklər/bölmələr seçildi</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="342"/>
+        <location filename="../widgets/createvgwidget.cpp" line="350"/>
         <source>Set VG capacity</source>
         <translation>VG ölçüsünü təyin edin</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="425"/>
+        <location filename="../widgets/createvgwidget.cpp" line="356"/>
+        <source>Auto adjusted to integral multiples of 4 MiB</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="444"/>
         <source>Choose one disk or partition at least</source>
         <translation>Ən az bir disk və ya bölmə seçin</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="462"/>
+        <location filename="../widgets/createvgwidget.cpp" line="481"/>
         <source>Previous</source>
         <translation>Əvvəlki</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="465"/>
+        <location filename="../widgets/createvgwidget.cpp" line="484"/>
         <source>Done</source>
         <comment>button</comment>
         <translation>Hazır</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="548"/>
+        <location filename="../widgets/createvgwidget.cpp" line="567"/>
         <source>Resizing space...</source>
         <translation>Ölçüsü dəyişdirilir...</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="550"/>
+        <location filename="../widgets/createvgwidget.cpp" line="569"/>
         <source>Creating...</source>
         <translation>Yaradılır...</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="602"/>
+        <location filename="../widgets/createvgwidget.cpp" line="621"/>
         <source>Selected disks and partitions:</source>
         <translation>Seçilmiş disklər və bölmələr:</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="647"/>
-        <location filename="../widgets/createvgwidget.cpp" line="649"/>
+        <location filename="../widgets/createvgwidget.cpp" line="666"/>
+        <location filename="../widgets/createvgwidget.cpp" line="668"/>
         <source>VG capacity: %1</source>
         <translation>VG ölçüsü: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="654"/>
+        <location filename="../widgets/createvgwidget.cpp" line="673"/>
         <source>VG name: %1</source>
         <translation>VG adı: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="762"/>
+        <location filename="../widgets/createvgwidget.cpp" line="781"/>
         <source>A lot of data exists on %1, </source>
-        <translation type="unfinished"/>
+        <translation>%1-da çoxlu verilənlər mövcuddur, </translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="763"/>
+        <location filename="../widgets/createvgwidget.cpp" line="782"/>
         <source>which may take a long time to back it up.</source>
-        <translation type="unfinished"/>
+        <translation>belə ki, onların ehtiyyat nüsxəsinin yaradılması çox vaxt apara bilər.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="764"/>
+        <location filename="../widgets/createvgwidget.cpp" line="783"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Davam etmək istəyirsiniz?</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="765"/>
+        <location filename="../widgets/createvgwidget.cpp" line="784"/>
         <source>Continue</source>
         <translation>Davam edin</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="766"/>
+        <location filename="../widgets/createvgwidget.cpp" line="785"/>
         <source>Cancel</source>
         <translation>İmtina</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1732"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1752"/>
         <source>Not enough space to back up data on %1, please clear disk space</source>
-        <translation type="unfinished"/>
+        <translation>%1 üzərində verilənlərin saxlanıması üçün kifayət qədər yer yoxdur, lütfən diskdə yer boşaldın</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1733"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1753"/>
         <source>OK</source>
         <translation>OLDU</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1936"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1943"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1956"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1963"/>
         <source>Refreshing the page to reload disks</source>
-        <translation type="unfinished"/>
+        <translation>Diski yenidən yükləmək üşün səhifə yenilənir</translation>
     </message>
 </context>
 <context>
@@ -417,61 +418,9 @@
         <translation>Bölmələr cədvəli yaradın</translation>
     </message>
     <message>
-        <source>Hide partition</source>
-        <translation type="vanished">Bölməni gizlədin</translation>
-    </message>
-    <message>
-        <source>Unhide partition</source>
-        <translation type="vanished">Bölməni görünən edin</translation>
-    </message>
-    <message>
         <location filename="../widgets/devicelistwidget.cpp" line="169"/>
         <source>Delete partition</source>
         <translation>Bölməni silin</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="347"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="588"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="645"/>
-        <source>OK</source>
-        <translation>OLDU</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
-        <source>All partitions in this disk will be merged and all data
- will be lost if creating a new partition table,
- please take it carefully</source>
-        <translation>Ehtiyyatlı olun, yeni bölmələr cədvəli yaradılarsa diskdəki bütün bölmələr birləşdiriləcək və onlardakı bütün məlumatlar itiriləcəkdir.</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
-        <source>Proceed</source>
-        <translation>Davam edin</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="385"/>
-        <source>No errors found in the partition table</source>
-        <translation>Bölmələr cədvəlində heç bir xəta tapılmadı</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="398"/>
-        <source>Do you want to hide this partition?</source>
-        <translation>Bu bölməni gizlətmək istəyirsiniz?</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="398"/>
-        <source>Hide</source>
-        <translation>Gizlədin</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="398"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="430"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="446"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="601"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="658"/>
-        <source>Cancel</source>
-        <translation>İmtina</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="214"/>
@@ -503,6 +452,50 @@
         <location filename="../widgets/devicelistwidget.cpp" line="347"/>
         <source>Please unmount all partitions in the disk first</source>
         <translation>İlk öncə diskdəki bütün bölmələri ayırın</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="347"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="588"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="645"/>
+        <source>OK</source>
+        <translation>OLDU</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
+        <source>All partitions in this disk will be merged and all data
+ will be lost if creating a new partition table,
+ please take it carefully</source>
+        <translation>Ehtiyyatlı olun, yeni bölmələr cədvəli yaradılarsa diskdəki bütün bölmələr birləşdiriləcək və onlardakı bütün məlumatlar itiriləcəkdir.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
+        <source>Proceed</source>
+        <translation>Davam edin</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="398"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="430"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="446"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="601"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="658"/>
+        <source>Cancel</source>
+        <translation>İmtina</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="385"/>
+        <source>No errors found in the partition table</source>
+        <translation>Bölmələr cədvəlində heç bir xəta tapılmadı</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="398"/>
+        <source>Do you want to hide this partition?</source>
+        <translation>Bu bölməni gizlətmək istəyirsiniz?</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="398"/>
+        <source>Hide</source>
+        <translation>Gizlədin</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="405"/>
@@ -738,6 +731,16 @@
         <translation>Sıfırlayın</translation>
     </message>
     <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="300"/>
+        <source>Repair</source>
+        <translation>Təmir edin</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="306"/>
+        <source>Start Verify</source>
+        <translation>Yoxlamanı başladın</translation>
+    </message>
+    <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="311"/>
         <source>Stop</source>
         <comment>button</comment>
@@ -750,47 +753,15 @@
         <translation>Davam edin</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="326"/>
-        <source>Done</source>
-        <comment>button</comment>
-        <translation>Hazır</translation>
-    </message>
-    <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
-        <source>Exit</source>
-        <translation>Çıxış</translation>
-    </message>
-    <message>
-        <source>Reset</source>
-        <translation type="vanished">Sıfırlayın</translation>
-    </message>
-    <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="300"/>
-        <source>Repair</source>
-        <translation>Təmir edin</translation>
-    </message>
-    <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="306"/>
-        <source>Start Verify</source>
-        <translation>Yoxlamanı başladın</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation type="vanished">Dayandırın</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation type="vanished">Davam edin</translation>
-    </message>
-    <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="321"/>
         <source>Verify Again</source>
         <translation>Yenidən yoxlayın</translation>
     </message>
     <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="326"/>
         <source>Done</source>
-        <translation type="vanished">Hazır</translation>
+        <comment>button</comment>
+        <translation>Hazır</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="357"/>
@@ -906,6 +877,12 @@
         <translation>Yoxlama məlumatları saxlanılmayacaqdır</translation>
     </message>
     <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
+        <source>Exit</source>
+        <translation>Çıxış</translation>
+    </message>
+    <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1208"/>
         <source>Repairing bad sectors, exit now?</source>
         <translation>Pozulmuş sektorlar təmir olunur, indi çıxılsın?</translation>
@@ -1012,10 +989,6 @@
         <source>Export</source>
         <comment>button</comment>
         <translation>İxrac edin</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">İxrac edin</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="388"/>
@@ -1145,10 +1118,6 @@
         <translation>İxrac edin</translation>
     </message>
     <message>
-        <source>Export</source>
-        <translation type="vanished">İxrac edin</translation>
-    </message>
-    <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="150"/>
         <source>Save File</source>
         <translation>Yolu saxlayın</translation>
@@ -1181,14 +1150,6 @@
 </context>
 <context>
     <name>FormateDialog</name>
-    <message>
-        <source>Format %1</source>
-        <translation type="vanished">%1 format edin</translation>
-    </message>
-    <message>
-        <source>Formatting will erase all data on the disk, which cannot be undone</source>
-        <translation type="vanished">Formatlama diskdəki bütün verilənləri siləcəkdir, bu əməliyyat ləğv edilə bilməz</translation>
-    </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="86"/>
         <source>Wipe %1</source>
@@ -1238,7 +1199,7 @@
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="168"/>
-        <location filename="../widgets/formatedialog.cpp" line="417"/>
+        <location filename="../widgets/formatedialog.cpp" line="412"/>
         <source>It only deletes the partition info without erasing the files on the disk. Disk recovery tools may recover the files at a certain probability.</source>
         <translation>Bu, diskdək fayllara toxunmadan yalnız bölmə haqqında məlumatı siləcəkdir. Diskin bərpası aləti faylların müəyyən  ehtimal ilə bərpa edə bilər.</translation>
     </message>
@@ -1270,98 +1231,90 @@
         <translation>Təmizləmək</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="287"/>
-        <location filename="../widgets/formatedialog.cpp" line="571"/>
+        <location filename="../widgets/formatedialog.cpp" line="282"/>
+        <location filename="../widgets/formatedialog.cpp" line="564"/>
         <source>Failed to find the disk</source>
         <translation>Disk tapılmadı</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="290"/>
+        <location filename="../widgets/formatedialog.cpp" line="285"/>
         <source>The action cannot be undone, please proceed with caution</source>
         <translation>Bu əməliyyat ləğv edilə billməz, lütfən davam edərkən diqqətli olun</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="292"/>
+        <location filename="../widgets/formatedialog.cpp" line="287"/>
         <source>LV name:</source>
         <translation>LV adı:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="296"/>
+        <location filename="../widgets/formatedialog.cpp" line="291"/>
         <source>LV name</source>
         <translation>LV adı</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="298"/>
+        <location filename="../widgets/formatedialog.cpp" line="293"/>
         <source>LV file system:</source>
         <translation>LV fayl sistemi:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="300"/>
-        <location filename="../widgets/formatedialog.cpp" line="460"/>
+        <location filename="../widgets/formatedialog.cpp" line="295"/>
+        <location filename="../widgets/formatedialog.cpp" line="455"/>
         <source>You may be able to recover files after the wipe.</source>
         <translation>Təmizlədikdən sonra faylları geri qaytara bilərsiniz.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="429"/>
-        <source>It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, and random data to the entire disk once. You will not be able to recover files, and the process will be slow.</source>
-        <translation>Bu birdəfəlik təhlükəsiz təmizləmədir, hansı ki, NIST 800-88 ilə uyğun gəlir və bütün diskə bir dəfə 0, 1 və təsadüfi məlumatları yazır. Siz faylları bərpa edə bilməyəcəksiniz və proses yavaş gedəcəkdir.</translation>
-    </message>
-    <message>
-        <location filename="../widgets/formatedialog.cpp" line="443"/>
-        <source>It writes 0, 1, and random data to the entire disk several times. You can set the number of times to erase disks and overwrite data, but the process will be very slow.</source>
-        <translation>Bu, 0, 1 və təsadüfi məlumatları bütün diskə bir neçə dəfəyə yazır. Siz diskin neçə dəfə silinməli və verilənlərin üzərinə yazılmasını təyin edə bilərsiniz, lakin bu proses çox yavaş davam edəcək. </translation>
-    </message>
-    <message>
-        <location filename="../widgets/formatedialog.cpp" line="471"/>
-        <source>You will not be able to recover files after the wipe, and the process will be slow.</source>
-        <translation>Təmizlədikdən sonra faylları geri qaytara bilməzsiniz və proses ləng davam edəcək.</translation>
-    </message>
-    <message>
-        <location filename="../widgets/formatedialog.cpp" line="531"/>
-        <source>Wiping %1</source>
-        <translation>%1 silinir</translation>
-    </message>
-    <message>
-        <location filename="../widgets/formatedialog.cpp" line="556"/>
-        <source>&quot;%1&quot; wiped</source>
-        <translation>&quot;%1&quot; silindi</translation>
-    </message>
-    <message>
-        <location filename="../widgets/formatedialog.cpp" line="562"/>
-        <source>Failed to wipe %1</source>
-        <translation>%1 silinmədi</translation>
-    </message>
-    <message>
-        <location filename="../widgets/formatedialog.cpp" line="575"/>
-        <source>Failed to get the partition info</source>
-        <translation>Bölmə haqqında məlumat alınmadı</translation>
-    </message>
-    <message>
-        <location filename="../widgets/formatedialog.cpp" line="579"/>
-        <source>Failed to delete the partition</source>
-        <translation>Bölmə silinə bilmədi</translation>
-    </message>
-    <message>
-        <location filename="../widgets/formatedialog.cpp" line="303"/>
-        <location filename="../widgets/formatedialog.cpp" line="583"/>
+        <location filename="../widgets/formatedialog.cpp" line="298"/>
+        <location filename="../widgets/formatedialog.cpp" line="576"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>Sorğu nüvəyə tətbiq edilə bilmədi</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">İmtina</translation>
-    </message>
-    <message>
-        <source>Format</source>
-        <translation type="vanished">Format</translation>
-    </message>
-    <message>
-        <location filename="../widgets/formatedialog.cpp" line="346"/>
-        <location filename="../widgets/formatedialog.cpp" line="358"/>
-        <location filename="../widgets/formatedialog.cpp" line="379"/>
-        <location filename="../widgets/formatedialog.cpp" line="391"/>
+        <location filename="../widgets/formatedialog.cpp" line="341"/>
+        <location filename="../widgets/formatedialog.cpp" line="353"/>
+        <location filename="../widgets/formatedialog.cpp" line="374"/>
+        <location filename="../widgets/formatedialog.cpp" line="386"/>
         <source>The length exceeds the limit</source>
         <translation>Uzunluq, həddi keçir</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="424"/>
+        <source>It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, and random data to the entire disk once. You will not be able to recover files, and the process will be slow.</source>
+        <translation>Bu birdəfəlik təhlükəsiz təmizləmədir, hansı ki, NIST 800-88 ilə uyğun gəlir və bütün diskə bir dəfə 0, 1 və təsadüfi məlumatları yazır. Siz faylları bərpa edə bilməyəcəksiniz və proses yavaş gedəcəkdir.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="438"/>
+        <source>It writes 0, 1, and random data to the entire disk several times. You can set the number of times to erase disks and overwrite data, but the process will be very slow.</source>
+        <translation>Bu, 0, 1 və təsadüfi məlumatları bütün diskə bir neçə dəfəyə yazır. Siz diskin neçə dəfə silinməli və verilənlərin üzərinə yazılmasını təyin edə bilərsiniz, lakin bu proses çox yavaş davam edəcək. </translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="466"/>
+        <source>You will not be able to recover files after the wipe, and the process will be slow.</source>
+        <translation>Təmizlədikdən sonra faylları geri qaytara bilməzsiniz və proses ləng davam edəcək.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="526"/>
+        <source>Wiping %1</source>
+        <translation>%1 silinir</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="549"/>
+        <source>&quot;%1&quot; wiped</source>
+        <translation>&quot;%1&quot; silindi</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="555"/>
+        <source>Failed to wipe %1</source>
+        <translation>%1 silinmədi</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="568"/>
+        <source>Failed to get the partition info</source>
+        <translation>Bölmə haqqında məlumat alınmadı</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="572"/>
+        <source>Failed to delete the partition</source>
+        <translation>Bölmə silinə bilmədi</translation>
     </message>
 </context>
 <context>
@@ -1584,10 +1537,6 @@
         <comment>button</comment>
         <translation>OLDU</translation>
     </message>
-    <message>
-        <source>OK</source>
-        <translation type="vanished">OLDU</translation>
-    </message>
 </context>
 <context>
     <name>PartitionWidget</name>
@@ -1628,18 +1577,6 @@
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="327"/>
         <source>File system:</source>
         <translation>Fayl sistemi:</translation>
-    </message>
-    <message>
-        <source>Confirm</source>
-        <translation type="vanished">Təsdiq edin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">İmtina</translation>
-    </message>
-    <message>
-        <source>Revert</source>
-        <translation type="vanished">Geri qaytarın</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="242"/>
@@ -1764,17 +1701,17 @@
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="228"/>
         <source>A lot of data exists on %1, </source>
-        <translation type="unfinished"/>
+        <translation>%1-da çoxlu verilənlər mövcuddur, </translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="229"/>
         <source>which may take a long time to back it up.</source>
-        <translation type="unfinished"/>
+        <translation>belə ki, onların ehtiyyat nüsxəsinin yaradılması çox vaxt apara bilər.</translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="230"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Davam etmək istəyirsiniz?</translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="231"/>
@@ -1788,7 +1725,7 @@
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="244"/>
-        <source>Not enough space to back up data on %1, please clear disk space</source>
+        <source>Not enough space to back up data on %1, please delete the logical volume first</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1799,84 +1736,99 @@
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="272"/>
         <source>Failed to delete the physical volume</source>
-        <translation type="unfinished"/>
+        <translation>Fiziki tutumu silmək mümkün olmadı</translation>
     </message>
 </context>
 <context>
     <name>ResizeDialog</name>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="81"/>
-        <location filename="../widgets/resizedialog.cpp" line="86"/>
-        <source>Resize %1</source>
-        <translation>%1 ölçüsünü dəyişin</translation>
-    </message>
-    <message>
-        <location filename="../widgets/resizedialog.cpp" line="48"/>
+        <location filename="../widgets/resizedialog.cpp" line="52"/>
         <source>It will resize the partitions on the disk</source>
         <translation>Bu, diskdəki bölmələrin ölçüsünü dəyişəcək</translation>
     </message>
     <message>
-        <source>Reserved size:</source>
-        <translation type="vanished">Ehtiyyat saxlanılanın ölçüsü:</translation>
-    </message>
-    <message>
-        <location filename="../widgets/resizedialog.cpp" line="62"/>
+        <location filename="../widgets/resizedialog.cpp" line="73"/>
         <source>New capacity:</source>
         <translation>Yeni ölçü:</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="88"/>
+        <location filename="../widgets/resizedialog.cpp" line="93"/>
+        <source>Auto adjusted to integral multiples of 4 MiB</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="105"/>
+        <location filename="../widgets/resizedialog.cpp" line="110"/>
+        <source>Resize %1</source>
+        <translation>%1 ölçüsünü dəyişin</translation>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="112"/>
         <source>It will resize the logical volume space</source>
         <translation>Bu, məntiqi tutumun ölçüsünü dəyişəcək</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="92"/>
-        <location filename="../widgets/resizedialog.cpp" line="199"/>
-        <location filename="../widgets/resizedialog.cpp" line="259"/>
+        <location filename="../widgets/resizedialog.cpp" line="116"/>
+        <location filename="../widgets/resizedialog.cpp" line="228"/>
+        <location filename="../widgets/resizedialog.cpp" line="300"/>
+        <location filename="../widgets/resizedialog.cpp" line="303"/>
         <source>Cancel</source>
         <translation>İmtina</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="93"/>
+        <location filename="../widgets/resizedialog.cpp" line="117"/>
         <source>Confirm</source>
         <translation>Təsdiq edin</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="120"/>
-        <location filename="../widgets/resizedialog.cpp" line="151"/>
-        <location filename="../widgets/resizedialog.cpp" line="172"/>
+        <location filename="../widgets/resizedialog.cpp" line="144"/>
+        <location filename="../widgets/resizedialog.cpp" line="175"/>
+        <location filename="../widgets/resizedialog.cpp" line="196"/>
+        <location filename="../widgets/resizedialog.cpp" line="274"/>
         <source>Space limit exceeded</source>
         <translation>Boş sahə həddi keçdi</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="193"/>
-        <location filename="../widgets/resizedialog.cpp" line="244"/>
-        <source>Not enough space, please clear data in it</source>
-        <translation>Kifayət qədət yer yoxdur, lütfən ondakı məlumatları silin</translation>
+        <location filename="../widgets/resizedialog.cpp" line="212"/>
+        <source>The file system does not support shrinking space</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="193"/>
-        <location filename="../widgets/resizedialog.cpp" line="199"/>
-        <location filename="../widgets/resizedialog.cpp" line="244"/>
-        <location filename="../widgets/resizedialog.cpp" line="259"/>
-        <location filename="../widgets/resizedialog.cpp" line="293"/>
+        <location filename="../widgets/resizedialog.cpp" line="212"/>
+        <location filename="../widgets/resizedialog.cpp" line="222"/>
+        <location filename="../widgets/resizedialog.cpp" line="228"/>
+        <location filename="../widgets/resizedialog.cpp" line="283"/>
+        <location filename="../widgets/resizedialog.cpp" line="300"/>
+        <location filename="../widgets/resizedialog.cpp" line="303"/>
+        <location filename="../widgets/resizedialog.cpp" line="340"/>
         <source>OK</source>
         <translation>OLDU</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="199"/>
+        <location filename="../widgets/resizedialog.cpp" line="222"/>
+        <location filename="../widgets/resizedialog.cpp" line="283"/>
+        <source>Not enough space, please clear data in it</source>
+        <translation>Kifayət qədət yer yoxdur, lütfən ondakı məlumatları silin</translation>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="228"/>
         <source>To prevent data loss, back up data before shrinking it</source>
+        <translation>Məlumat itkisinin qarşısını almaq üçün onları sıxmadan öncə ehtiyat nüsxəsini çıxarın</translation>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="300"/>
+        <source>The current device has been mounted and will be unmounted automatically. Please back up data in it to prevent data loss</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="259"/>
+        <location filename="../widgets/resizedialog.cpp" line="303"/>
         <source>To prevent data loss, back up data in the logical volume before shrinking it</source>
         <translation>Məlumatların itirilməsinin qarşısını almaq üçün ölçüsünü dəyişmədən ondakı məlumatların ehtiyyat nüsxəsini saxlayın</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="293"/>
+        <location filename="../widgets/resizedialog.cpp" line="340"/>
         <source>The file system does not support space adjustment</source>
-        <translation type="unfinished"/>
+        <translation>Bu sistem boş yer yaradılmasını dəstəkləmir</translation>
     </message>
 </context>
 <context>
@@ -1904,10 +1856,6 @@
         <translation>Bölmə</translation>
     </message>
     <message>
-        <source>Format to</source>
-        <translation type="vanished">Formatlayın</translation>
-    </message>
-    <message>
         <location filename="../widgets/titlewidget.cpp" line="54"/>
         <source>Wipe</source>
         <translation>Təmizləmək</translation>
@@ -1931,67 +1879,9 @@
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="58"/>
-        <location filename="../widgets/titlewidget.cpp" line="373"/>
+        <location filename="../widgets/titlewidget.cpp" line="376"/>
         <source>Create volume group</source>
         <translation>Tutum qrupu yaradın</translation>
-    </message>
-    <message>
-        <location filename="../widgets/titlewidget.cpp" line="254"/>
-        <location filename="../widgets/titlewidget.cpp" line="354"/>
-        <source>The file system does not support space adjustment</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../widgets/titlewidget.cpp" line="274"/>
-        <source>The disks will be formatted if you create a logical volume</source>
-        <translation>Məntiqi tutum yaratsanız disklər formatlanacaqdır</translation>
-    </message>
-    <message>
-        <location filename="../widgets/titlewidget.cpp" line="302"/>
-        <location filename="../widgets/titlewidget.cpp" line="340"/>
-        <location filename="../widgets/titlewidget.cpp" line="394"/>
-        <location filename="../widgets/titlewidget.cpp" line="515"/>
-        <source>Unmount %1 first</source>
-        <translation>Öncə %1 ayırın</translation>
-    </message>
-    <message>
-        <location filename="../widgets/titlewidget.cpp" line="254"/>
-        <location filename="../widgets/titlewidget.cpp" line="302"/>
-        <location filename="../widgets/titlewidget.cpp" line="340"/>
-        <location filename="../widgets/titlewidget.cpp" line="354"/>
-        <location filename="../widgets/titlewidget.cpp" line="394"/>
-        <location filename="../widgets/titlewidget.cpp" line="515"/>
-        <source>OK</source>
-        <translation>OLDU</translation>
-    </message>
-    <message>
-        <location filename="../widgets/titlewidget.cpp" line="314"/>
-        <location filename="../widgets/titlewidget.cpp" line="406"/>
-        <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation>Əgər silinərsə məlumatlar bərpa oluna bilməz, lütfən davam etmədən öncə təsdiq edin</translation>
-    </message>
-    <message>
-        <location filename="../widgets/titlewidget.cpp" line="315"/>
-        <location filename="../widgets/titlewidget.cpp" line="407"/>
-        <source>Cancel</source>
-        <translation>İmtina</translation>
-    </message>
-    <message>
-        <location filename="../widgets/titlewidget.cpp" line="373"/>
-        <source>The disks will be formatted if you create a volume group</source>
-        <translation>tutum qrupu yaratsanız disklər formatlanacaqdır</translation>
-    </message>
-    <message>
-        <location filename="../widgets/titlewidget.cpp" line="315"/>
-        <location filename="../widgets/titlewidget.cpp" line="407"/>
-        <source>Delete</source>
-        <translation>Silin</translation>
-    </message>
-    <message>
-        <location filename="../widgets/titlewidget.cpp" line="74"/>
-        <location filename="../widgets/titlewidget.cpp" line="274"/>
-        <source>Create logical volume</source>
-        <translation>Məntiqi tutum yaradın</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="62"/>
@@ -2009,23 +1899,81 @@
         <translation>Fiziki tutumu silin</translation>
     </message>
     <message>
+        <location filename="../widgets/titlewidget.cpp" line="74"/>
+        <location filename="../widgets/titlewidget.cpp" line="274"/>
+        <source>Create logical volume</source>
+        <translation>Məntiqi tutum yaradın</translation>
+    </message>
+    <message>
         <location filename="../widgets/titlewidget.cpp" line="192"/>
         <source>Cannot recognize its partition table</source>
         <translation>Bölmələr cədvəlini aşkarlamaq mümkün deyil</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="254"/>
+        <location filename="../widgets/titlewidget.cpp" line="357"/>
+        <source>The file system does not support space adjustment</source>
+        <translation>Bu sistem boş yer yaradılmasını dəstəkləmir</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="254"/>
+        <location filename="../widgets/titlewidget.cpp" line="302"/>
+        <location filename="../widgets/titlewidget.cpp" line="341"/>
+        <location filename="../widgets/titlewidget.cpp" line="357"/>
+        <location filename="../widgets/titlewidget.cpp" line="397"/>
+        <location filename="../widgets/titlewidget.cpp" line="510"/>
+        <source>OK</source>
+        <translation>OLDU</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="274"/>
+        <source>The disks will be formatted if you create a logical volume</source>
+        <translation>Məntiqi tutum yaratsanız disklər formatlanacaqdır</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="302"/>
+        <location filename="../widgets/titlewidget.cpp" line="341"/>
+        <location filename="../widgets/titlewidget.cpp" line="397"/>
+        <location filename="../widgets/titlewidget.cpp" line="510"/>
+        <source>Unmount %1 first</source>
+        <translation>Öncə %1 ayırın</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="314"/>
+        <location filename="../widgets/titlewidget.cpp" line="409"/>
+        <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
+        <translation>Əgər silinərsə məlumatlar bərpa oluna bilməz, lütfən davam etmədən öncə təsdiq edin</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="315"/>
+        <location filename="../widgets/titlewidget.cpp" line="410"/>
+        <source>Delete</source>
+        <translation>Silin</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="315"/>
+        <location filename="../widgets/titlewidget.cpp" line="410"/>
+        <source>Cancel</source>
+        <translation>İmtina</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="376"/>
+        <source>The disks will be formatted if you create a volume group</source>
+        <translation>tutum qrupu yaratsanız disklər formatlanacaqdır</translation>
     </message>
 </context>
 <context>
     <name>UnmountDialog</name>
     <message>
+        <location filename="../widgets/unmountdialog.cpp" line="48"/>
+        <source>Make sure there are no programs running on the disk</source>
+        <translation>Diskdəki heç bir proqramın açıq olmadığına əmin olun</translation>
+    </message>
+    <message>
         <location filename="../widgets/unmountdialog.cpp" line="57"/>
         <location filename="../widgets/unmountdialog.cpp" line="60"/>
         <source>Unmount %1</source>
         <translation>%1 ayırın</translation>
-    </message>
-    <message>
-        <location filename="../widgets/unmountdialog.cpp" line="48"/>
-        <source>Make sure there are no programs running on the disk</source>
-        <translation>Diskdəki heç bir proqramın açıq olmadığına əmin olun</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="62"/>
@@ -2042,40 +1990,26 @@
         <source>Unmount</source>
         <translation>Ayırmaq</translation>
     </message>
-    <message>
-        <source>Unmounting system disk may result in system crash,
- please confirm before proceeding</source>
-        <translation type="vanished">Sistem diskinin ayrılması sistemin çökməsi ilə nəticələnə bilər,
-lütfən davam etmədən öncə təsdiq edin</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation type="vanished">Davam edin</translation>
-    </message>
-    <message>
-        <source>You will take subsequent risks if you continue to unmount the system disk</source>
-        <translation type="vanished">Sistem diskini ayırmanız növbəti təhlükələrə səbəb ola olacaq</translation>
-    </message>
 </context>
 <context>
     <name>UnmountWarningDialog</name>
     <message>
         <location filename="../widgets/unmountwarningdialog.cpp" line="53"/>
         <source>Unmounting system disk may result in system crash</source>
-        <translation type="unfinished"/>
+        <translation>Sistem diskinin çıxarılması sistemin çıkməsinə səbəb ola bilər</translation>
     </message>
     <message>
         <location filename="../widgets/unmountwarningdialog.cpp" line="59"/>
         <source>I will take the risks that may arise</source>
-        <translation type="unfinished"/>
+        <translation>Yarana biləcək təhlükələri qəbul edirəm</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountwarningdialog.cpp" line="77"/>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="78"/>
         <source>Cancel</source>
         <translation>İmtina</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountwarningdialog.cpp" line="78"/>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="79"/>
         <source>Unmount</source>
         <translation>Ayırmaq</translation>
     </message>

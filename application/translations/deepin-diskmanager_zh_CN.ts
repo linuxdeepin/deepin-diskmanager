@@ -2,34 +2,6 @@
 <context>
     <name>CreateLVWidget</name>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="134"/>
-        <source>Capacity:</source>
-        <translation>总容量：</translation>
-    </message>
-    <message>
-        <location filename="../widgets/createlvwidget.cpp" line="854"/>
-        <source>Disk:</source>
-        <translation>磁盘：</translation>
-    </message>
-    <message>
-        <location filename="../widgets/createlvwidget.cpp" line="238"/>
-        <source>Confirm</source>
-        <comment>button</comment>
-        <translation>确 定</translation>
-    </message>
-    <message>
-        <location filename="../widgets/createlvwidget.cpp" line="242"/>
-        <source>Cancel</source>
-        <comment>button</comment>
-        <translation>取 消</translation>
-    </message>
-    <message>
-        <location filename="../widgets/createlvwidget.cpp" line="245"/>
-        <source>Revert</source>
-        <comment>button</comment>
-        <translation>复 原</translation>
-    </message>
-    <message>
         <location filename="../widgets/createlvwidget.cpp" line="51"/>
         <source>Creating logical volumes on %1</source>
         <translation>正在%1上创建逻辑卷</translation>
@@ -43,6 +15,11 @@
         <location filename="../widgets/createlvwidget.cpp" line="120"/>
         <source>VG Information</source>
         <translation>卷组信息</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="134"/>
+        <source>Capacity:</source>
+        <translation>总容量：</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="144"/>
@@ -61,6 +38,24 @@
         <location filename="../widgets/createlvwidget.cpp" line="325"/>
         <source>LV file system:</source>
         <translation>逻辑卷格式：</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="238"/>
+        <source>Confirm</source>
+        <comment>button</comment>
+        <translation>确 定</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="242"/>
+        <source>Cancel</source>
+        <comment>button</comment>
+        <translation>取 消</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="245"/>
+        <source>Revert</source>
+        <comment>button</comment>
+        <translation>复 原</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="271"/>
@@ -98,22 +93,23 @@
         <source>Size</source>
         <translation>分区大小</translation>
     </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="854"/>
+        <source>Disk:</source>
+        <translation>磁盘：</translation>
+    </message>
 </context>
 <context>
     <name>CreatePartitionTableDialog</name>
     <message>
-        <source>The disk has a partition table already. Create a new one and replace it?</source>
-        <translation type="vanished">当前磁盘已有分区表，是否新建并替换此分区表?</translation>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="30"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="37"/>
         <source>No partition table in this disk. Create a new one?</source>
         <translation>当前磁盘无分区表，是否新建分区表?</translation>
-    </message>
-    <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="30"/>
-        <source>Cancel</source>
-        <translation>取消</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
@@ -144,143 +140,148 @@
         <translation>空间调整</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="103"/>
+        <location filename="../widgets/createvgwidget.cpp" line="110"/>
         <source>Select disks or partitions to create a volume group and set its capacity</source>
         <translation>选择磁盘或分区，并为此逻辑卷组设置空间的大小</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="108"/>
-        <location filename="../widgets/createvgwidget.cpp" line="395"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1003"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1013"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1461"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1471"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1521"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1572"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1575"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1605"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1713"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1779"/>
+        <location filename="../widgets/createvgwidget.cpp" line="115"/>
+        <location filename="../widgets/createvgwidget.cpp" line="414"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1022"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1032"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1481"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1491"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1541"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1592"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1595"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1625"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1733"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1799"/>
         <source>Capacity selected: %1</source>
         <translation>已选空间：%1</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="113"/>
+        <location filename="../widgets/createvgwidget.cpp" line="120"/>
         <source>The selected disks will be converted to dynamic disks, and you will not be able to start installed operating systems from the disks.</source>
         <translation>选定的磁盘将转换成动态磁盘，您将无法从这些磁盘启动已经安装的操作系统</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="169"/>
+        <location filename="../widgets/createvgwidget.cpp" line="176"/>
         <source>No partitions available</source>
         <translation>选定磁盘无可用分区</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="240"/>
+        <location filename="../widgets/createvgwidget.cpp" line="247"/>
         <source>No disks or partitions available</source>
         <translation>没有磁盘或分区可供选择</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="274"/>
-        <location filename="../widgets/createvgwidget.cpp" line="459"/>
+        <location filename="../widgets/createvgwidget.cpp" line="281"/>
+        <location filename="../widgets/createvgwidget.cpp" line="478"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>取 消</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="277"/>
+        <location filename="../widgets/createvgwidget.cpp" line="284"/>
         <source>Next</source>
         <translation>下一步</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="302"/>
+        <location filename="../widgets/createvgwidget.cpp" line="309"/>
         <source>Selected disks/partitions</source>
         <translation>所选磁盘和分区</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="342"/>
+        <location filename="../widgets/createvgwidget.cpp" line="350"/>
         <source>Set VG capacity</source>
         <translation>设置卷组空间</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="425"/>
+        <location filename="../widgets/createvgwidget.cpp" line="356"/>
+        <source>Auto adjusted to integral multiples of 4 MiB</source>
+        <translation>自动调整为4 MiB的倍数</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="444"/>
         <source>Choose one disk or partition at least</source>
         <translation>请选择至少一个磁盘或分区</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="462"/>
+        <location filename="../widgets/createvgwidget.cpp" line="481"/>
         <source>Previous</source>
         <translation>上一步</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="465"/>
+        <location filename="../widgets/createvgwidget.cpp" line="484"/>
         <source>Done</source>
         <comment>button</comment>
         <translation>完 成</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="548"/>
+        <location filename="../widgets/createvgwidget.cpp" line="567"/>
         <source>Resizing space...</source>
         <translation>正在调整空间，请稍候...</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="550"/>
+        <location filename="../widgets/createvgwidget.cpp" line="569"/>
         <source>Creating...</source>
         <translation>正在创建，请稍候...</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="602"/>
+        <location filename="../widgets/createvgwidget.cpp" line="621"/>
         <source>Selected disks and partitions:</source>
         <translation>所选磁盘和分区</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="647"/>
-        <location filename="../widgets/createvgwidget.cpp" line="649"/>
+        <location filename="../widgets/createvgwidget.cpp" line="666"/>
+        <location filename="../widgets/createvgwidget.cpp" line="668"/>
         <source>VG capacity: %1</source>
         <translation>卷组大小：%1</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="654"/>
+        <location filename="../widgets/createvgwidget.cpp" line="673"/>
         <source>VG name: %1</source>
         <translation>卷组名称：%1</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="762"/>
+        <location filename="../widgets/createvgwidget.cpp" line="781"/>
         <source>A lot of data exists on %1, </source>
         <translation>%1中存在大量数据，</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="763"/>
+        <location filename="../widgets/createvgwidget.cpp" line="782"/>
         <source>which may take a long time to back it up.</source>
         <translation>预计将耗费较长时间进行数据迁移，</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="764"/>
+        <location filename="../widgets/createvgwidget.cpp" line="783"/>
         <source>Do you want to continue?</source>
         <translation>是否继续？</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="765"/>
+        <location filename="../widgets/createvgwidget.cpp" line="784"/>
         <source>Continue</source>
         <translation>继 续</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="766"/>
+        <location filename="../widgets/createvgwidget.cpp" line="785"/>
         <source>Cancel</source>
         <translation>取 消</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1732"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1752"/>
         <source>Not enough space to back up data on %1, please clear disk space</source>
         <translation>剩余空间不足，移除%1将会造成数据丢失，请先清理空间</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1733"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1753"/>
         <source>OK</source>
         <translation>确 定</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1936"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1943"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1956"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1963"/>
         <source>Refreshing the page to reload disks</source>
         <translation>硬件设备有更新，正在刷新界面</translation>
     </message>
@@ -417,62 +418,9 @@
         <translation>新建分区表</translation>
     </message>
     <message>
-        <source>Hide partition</source>
-        <translation type="vanished">隐藏分区</translation>
-    </message>
-    <message>
-        <source>Unhide partition</source>
-        <translation type="vanished">显示分区</translation>
-    </message>
-    <message>
         <location filename="../widgets/devicelistwidget.cpp" line="169"/>
         <source>Delete partition</source>
         <translation>删除分区</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="347"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="588"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="645"/>
-        <source>OK</source>
-        <translation>确定</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
-        <source>All partitions in this disk will be merged and all data
- will be lost if creating a new partition table,
- please take it carefully</source>
-        <translation>新建分区表之后将会合并当前磁盘所有分区，
-丢失所有数据，请谨慎使用</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
-        <source>Proceed</source>
-        <translation>继续</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="385"/>
-        <source>No errors found in the partition table</source>
-        <translation>分区表检测正常</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="398"/>
-        <source>Do you want to hide this partition?</source>
-        <translation>您是否要隐藏该分区？</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="398"/>
-        <source>Hide</source>
-        <translation>隐藏</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="398"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="430"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="446"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="601"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="658"/>
-        <source>Cancel</source>
-        <translation>取消</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="214"/>
@@ -504,6 +452,51 @@
         <location filename="../widgets/devicelistwidget.cpp" line="347"/>
         <source>Please unmount all partitions in the disk first</source>
         <translation>请先卸载当前磁盘中的所有分区</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="347"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="588"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="645"/>
+        <source>OK</source>
+        <translation>确定</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
+        <source>All partitions in this disk will be merged and all data
+ will be lost if creating a new partition table,
+ please take it carefully</source>
+        <translation>新建分区表之后将会合并当前磁盘所有分区，
+丢失所有数据，请谨慎使用</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
+        <source>Proceed</source>
+        <translation>继续</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="398"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="430"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="446"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="601"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="658"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="385"/>
+        <source>No errors found in the partition table</source>
+        <translation>分区表检测正常</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="398"/>
+        <source>Do you want to hide this partition?</source>
+        <translation>您是否要隐藏该分区？</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="398"/>
+        <source>Hide</source>
+        <translation>隐藏</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="405"/>
@@ -739,6 +732,16 @@
         <translation>复 位</translation>
     </message>
     <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="300"/>
+        <source>Repair</source>
+        <translation>尝试修复</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="306"/>
+        <source>Start Verify</source>
+        <translation>开始检测</translation>
+    </message>
+    <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="311"/>
         <source>Stop</source>
         <comment>button</comment>
@@ -751,47 +754,15 @@
         <translation>继 续</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="326"/>
-        <source>Done</source>
-        <comment>button</comment>
-        <translation>完 成</translation>
-    </message>
-    <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
-        <source>Exit</source>
-        <translation>退出</translation>
-    </message>
-    <message>
-        <source>Reset</source>
-        <translation type="vanished">复位</translation>
-    </message>
-    <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="300"/>
-        <source>Repair</source>
-        <translation>尝试修复</translation>
-    </message>
-    <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="306"/>
-        <source>Start Verify</source>
-        <translation>开始检测</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation type="vanished">停止</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation type="vanished">继续</translation>
-    </message>
-    <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="321"/>
         <source>Verify Again</source>
         <translation>重新检测</translation>
     </message>
     <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="326"/>
         <source>Done</source>
-        <translation type="vanished">完成</translation>
+        <comment>button</comment>
+        <translation>完 成</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="357"/>
@@ -907,6 +878,12 @@
         <translation>当前检测信息不会保留</translation>
     </message>
     <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
+        <source>Exit</source>
+        <translation>退出</translation>
+    </message>
+    <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1208"/>
         <source>Repairing bad sectors, exit now?</source>
         <translation>正在修复中，是否退出窗口？</translation>
@@ -1013,10 +990,6 @@
         <source>Export</source>
         <comment>button</comment>
         <translation>导 出</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">导出</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="388"/>
@@ -1146,10 +1119,6 @@
         <translation>导 出</translation>
     </message>
     <message>
-        <source>Export</source>
-        <translation type="vanished">导出</translation>
-    </message>
-    <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="150"/>
         <source>Save File</source>
         <translation>保存文件</translation>
@@ -1182,14 +1151,6 @@
 </context>
 <context>
     <name>FormateDialog</name>
-    <message>
-        <source>Format %1</source>
-        <translation type="vanished">将对%1进行格式化</translation>
-    </message>
-    <message>
-        <source>Formatting will erase all data on the disk, which cannot be undone</source>
-        <translation type="vanished">格式化分区将会删除储存在磁盘上的所有数据，且无法撤销</translation>
-    </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="86"/>
         <source>Wipe %1</source>
@@ -1239,7 +1200,7 @@
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="168"/>
-        <location filename="../widgets/formatedialog.cpp" line="417"/>
+        <location filename="../widgets/formatedialog.cpp" line="412"/>
         <source>It only deletes the partition info without erasing the files on the disk. Disk recovery tools may recover the files at a certain probability.</source>
         <translation>此选项仅删除磁盘分区信息，不会抹除磁盘上的文件。磁盘恢复程序有一定概率能够恢复这些文件。</translation>
     </message>
@@ -1271,98 +1232,90 @@
         <translation>擦 除</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="287"/>
-        <location filename="../widgets/formatedialog.cpp" line="571"/>
+        <location filename="../widgets/formatedialog.cpp" line="282"/>
+        <location filename="../widgets/formatedialog.cpp" line="564"/>
         <source>Failed to find the disk</source>
         <translation>获取磁盘设备失败</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="290"/>
+        <location filename="../widgets/formatedialog.cpp" line="285"/>
         <source>The action cannot be undone, please proceed with caution</source>
         <translation>该操作无法撤销，请谨慎操作</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="292"/>
+        <location filename="../widgets/formatedialog.cpp" line="287"/>
         <source>LV name:</source>
         <translation>逻辑卷名称：</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="296"/>
+        <location filename="../widgets/formatedialog.cpp" line="291"/>
         <source>LV name</source>
         <translation>逻辑卷名称</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="298"/>
+        <location filename="../widgets/formatedialog.cpp" line="293"/>
         <source>LV file system:</source>
         <translation>逻辑卷格式：</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="300"/>
-        <location filename="../widgets/formatedialog.cpp" line="460"/>
+        <location filename="../widgets/formatedialog.cpp" line="295"/>
+        <location filename="../widgets/formatedialog.cpp" line="455"/>
         <source>You may be able to recover files after the wipe.</source>
         <translation>若选择此选项，文件有一定概率会被恢复。</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="429"/>
-        <source>It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, and random data to the entire disk once. You will not be able to recover files, and the process will be slow.</source>
-        <translation>此选项是符合 NIST 800-88 的1次安全擦除。它会在整个磁盘中写入0、1和随机数据一次。擦除后将无法恢复磁盘上的文件，且处理过程较慢。</translation>
-    </message>
-    <message>
-        <location filename="../widgets/formatedialog.cpp" line="443"/>
-        <source>It writes 0, 1, and random data to the entire disk several times. You can set the number of times to erase disks and overwrite data, but the process will be very slow.</source>
-        <translation>此选项会多次将0、1和随机数据写到整个磁盘。您可以定义擦除磁盘并改写数据的次数，处理过程会非常缓慢。</translation>
-    </message>
-    <message>
-        <location filename="../widgets/formatedialog.cpp" line="471"/>
-        <source>You will not be able to recover files after the wipe, and the process will be slow.</source>
-        <translation>若选择此选项，文件将无法被恢复，且处理过程较慢。</translation>
-    </message>
-    <message>
-        <location filename="../widgets/formatedialog.cpp" line="531"/>
-        <source>Wiping %1</source>
-        <translation>正在对%1进行擦除</translation>
-    </message>
-    <message>
-        <location filename="../widgets/formatedialog.cpp" line="556"/>
-        <source>&quot;%1&quot; wiped</source>
-        <translation>擦除%1成功</translation>
-    </message>
-    <message>
-        <location filename="../widgets/formatedialog.cpp" line="562"/>
-        <source>Failed to wipe %1</source>
-        <translation>对%1进行擦除失败</translation>
-    </message>
-    <message>
-        <location filename="../widgets/formatedialog.cpp" line="575"/>
-        <source>Failed to get the partition info</source>
-        <translation>获取分区信息失败</translation>
-    </message>
-    <message>
-        <location filename="../widgets/formatedialog.cpp" line="579"/>
-        <source>Failed to delete the partition</source>
-        <translation>删除操作失败</translation>
-    </message>
-    <message>
-        <location filename="../widgets/formatedialog.cpp" line="303"/>
-        <location filename="../widgets/formatedialog.cpp" line="583"/>
+        <location filename="../widgets/formatedialog.cpp" line="298"/>
+        <location filename="../widgets/formatedialog.cpp" line="576"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>提交内核失败</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="vanished">取消</translation>
-    </message>
-    <message>
-        <source>Format</source>
-        <translation type="vanished">格式化</translation>
-    </message>
-    <message>
-        <location filename="../widgets/formatedialog.cpp" line="346"/>
-        <location filename="../widgets/formatedialog.cpp" line="358"/>
-        <location filename="../widgets/formatedialog.cpp" line="379"/>
-        <location filename="../widgets/formatedialog.cpp" line="391"/>
+        <location filename="../widgets/formatedialog.cpp" line="341"/>
+        <location filename="../widgets/formatedialog.cpp" line="353"/>
+        <location filename="../widgets/formatedialog.cpp" line="374"/>
+        <location filename="../widgets/formatedialog.cpp" line="386"/>
         <source>The length exceeds the limit</source>
         <translation>字符长度超过范围</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="424"/>
+        <source>It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, and random data to the entire disk once. You will not be able to recover files, and the process will be slow.</source>
+        <translation>此选项是符合 NIST 800-88 的1次安全擦除。它会在整个磁盘中写入0、1和随机数据一次。擦除后将无法恢复磁盘上的文件，且处理过程较慢。</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="438"/>
+        <source>It writes 0, 1, and random data to the entire disk several times. You can set the number of times to erase disks and overwrite data, but the process will be very slow.</source>
+        <translation>此选项会多次将0、1和随机数据写到整个磁盘。您可以定义擦除磁盘并改写数据的次数，处理过程会非常缓慢。</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="466"/>
+        <source>You will not be able to recover files after the wipe, and the process will be slow.</source>
+        <translation>若选择此选项，文件将无法被恢复，且处理过程较慢。</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="526"/>
+        <source>Wiping %1</source>
+        <translation>正在对%1进行擦除</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="549"/>
+        <source>&quot;%1&quot; wiped</source>
+        <translation>擦除%1成功</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="555"/>
+        <source>Failed to wipe %1</source>
+        <translation>对%1进行擦除失败</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="568"/>
+        <source>Failed to get the partition info</source>
+        <translation>获取分区信息失败</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="572"/>
+        <source>Failed to delete the partition</source>
+        <translation>删除操作失败</translation>
     </message>
 </context>
 <context>
@@ -1585,10 +1538,6 @@
         <comment>button</comment>
         <translation>确 定</translation>
     </message>
-    <message>
-        <source>OK</source>
-        <translation type="vanished">确定</translation>
-    </message>
 </context>
 <context>
     <name>PartitionWidget</name>
@@ -1629,18 +1578,6 @@
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="327"/>
         <source>File system:</source>
         <translation>分区格式：</translation>
-    </message>
-    <message>
-        <source>Confirm</source>
-        <translation type="vanished">确定</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">取消</translation>
-    </message>
-    <message>
-        <source>Revert</source>
-        <translation type="vanished">复原</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="242"/>
@@ -1789,8 +1726,8 @@
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="244"/>
-        <source>Not enough space to back up data on %1, please clear disk space</source>
-        <translation>剩余空间不足，移除%1将会造成数据丢失，请先清理空间</translation>
+        <source>Not enough space to back up data on %1, please delete the logical volume first</source>
+        <translation>剩余空间不足，移除%1将会造成数据丢失，请先删除逻辑卷</translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="245"/>
@@ -1806,76 +1743,91 @@
 <context>
     <name>ResizeDialog</name>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="81"/>
-        <location filename="../widgets/resizedialog.cpp" line="86"/>
-        <source>Resize %1</source>
-        <translation>将对%1进行空间调整</translation>
-    </message>
-    <message>
-        <location filename="../widgets/resizedialog.cpp" line="48"/>
+        <location filename="../widgets/resizedialog.cpp" line="52"/>
         <source>It will resize the partitions on the disk</source>
         <translation>即将对磁盘内的空间进行调整</translation>
     </message>
     <message>
-        <source>Reserved size:</source>
-        <translation type="vanished">保留空间：</translation>
-    </message>
-    <message>
-        <location filename="../widgets/resizedialog.cpp" line="62"/>
+        <location filename="../widgets/resizedialog.cpp" line="73"/>
         <source>New capacity:</source>
         <translation>调整后的空间：</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="88"/>
+        <location filename="../widgets/resizedialog.cpp" line="93"/>
+        <source>Auto adjusted to integral multiples of 4 MiB</source>
+        <translation>自动调整为4 MiB的倍数</translation>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="105"/>
+        <location filename="../widgets/resizedialog.cpp" line="110"/>
+        <source>Resize %1</source>
+        <translation>将对%1进行空间调整</translation>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="112"/>
         <source>It will resize the logical volume space</source>
         <translation>即将对逻辑卷内的空间进行调整</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="92"/>
-        <location filename="../widgets/resizedialog.cpp" line="199"/>
-        <location filename="../widgets/resizedialog.cpp" line="259"/>
+        <location filename="../widgets/resizedialog.cpp" line="116"/>
+        <location filename="../widgets/resizedialog.cpp" line="228"/>
+        <location filename="../widgets/resizedialog.cpp" line="300"/>
+        <location filename="../widgets/resizedialog.cpp" line="303"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="93"/>
+        <location filename="../widgets/resizedialog.cpp" line="117"/>
         <source>Confirm</source>
         <translation>确定</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="120"/>
-        <location filename="../widgets/resizedialog.cpp" line="151"/>
-        <location filename="../widgets/resizedialog.cpp" line="172"/>
+        <location filename="../widgets/resizedialog.cpp" line="144"/>
+        <location filename="../widgets/resizedialog.cpp" line="175"/>
+        <location filename="../widgets/resizedialog.cpp" line="196"/>
+        <location filename="../widgets/resizedialog.cpp" line="274"/>
         <source>Space limit exceeded</source>
         <translation>超出设置范围</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="193"/>
-        <location filename="../widgets/resizedialog.cpp" line="244"/>
-        <source>Not enough space, please clear data in it</source>
-        <translation>剩余空间不足，请先清理空间</translation>
+        <location filename="../widgets/resizedialog.cpp" line="212"/>
+        <source>The file system does not support shrinking space</source>
+        <translation>该文件系统不支持空间缩小</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="193"/>
-        <location filename="../widgets/resizedialog.cpp" line="199"/>
-        <location filename="../widgets/resizedialog.cpp" line="244"/>
-        <location filename="../widgets/resizedialog.cpp" line="259"/>
-        <location filename="../widgets/resizedialog.cpp" line="293"/>
+        <location filename="../widgets/resizedialog.cpp" line="212"/>
+        <location filename="../widgets/resizedialog.cpp" line="222"/>
+        <location filename="../widgets/resizedialog.cpp" line="228"/>
+        <location filename="../widgets/resizedialog.cpp" line="283"/>
+        <location filename="../widgets/resizedialog.cpp" line="300"/>
+        <location filename="../widgets/resizedialog.cpp" line="303"/>
+        <location filename="../widgets/resizedialog.cpp" line="340"/>
         <source>OK</source>
         <translation>确 定</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="199"/>
+        <location filename="../widgets/resizedialog.cpp" line="222"/>
+        <location filename="../widgets/resizedialog.cpp" line="283"/>
+        <source>Not enough space, please clear data in it</source>
+        <translation>剩余空间不足，请先清理空间</translation>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="228"/>
         <source>To prevent data loss, back up data before shrinking it</source>
         <translation>缩减空间前，请对其内的数据做好备份，以防数据丢失</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="259"/>
+        <location filename="../widgets/resizedialog.cpp" line="300"/>
+        <source>The current device has been mounted and will be unmounted automatically. Please back up data in it to prevent data loss</source>
+        <translation>当前设备已挂载，将会自动卸载，请对其内的数据做好备份，以防数据丢失</translation>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="303"/>
         <source>To prevent data loss, back up data in the logical volume before shrinking it</source>
         <translation>缩减逻辑卷前，请对其内的数据做好备份，以防数据丢失</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="293"/>
+        <location filename="../widgets/resizedialog.cpp" line="340"/>
         <source>The file system does not support space adjustment</source>
         <translation>该文件系统不支持调整空间</translation>
     </message>
@@ -1905,10 +1857,6 @@
         <translation>分区</translation>
     </message>
     <message>
-        <source>Format to</source>
-        <translation type="vanished">格式化</translation>
-    </message>
-    <message>
         <location filename="../widgets/titlewidget.cpp" line="54"/>
         <source>Wipe</source>
         <translation>擦除</translation>
@@ -1932,67 +1880,9 @@
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="58"/>
-        <location filename="../widgets/titlewidget.cpp" line="373"/>
+        <location filename="../widgets/titlewidget.cpp" line="376"/>
         <source>Create volume group</source>
         <translation>创建逻辑卷组</translation>
-    </message>
-    <message>
-        <location filename="../widgets/titlewidget.cpp" line="254"/>
-        <location filename="../widgets/titlewidget.cpp" line="354"/>
-        <source>The file system does not support space adjustment</source>
-        <translation>该文件系统不支持调整空间</translation>
-    </message>
-    <message>
-        <location filename="../widgets/titlewidget.cpp" line="274"/>
-        <source>The disks will be formatted if you create a logical volume</source>
-        <translation>创建逻辑卷将格式化磁盘</translation>
-    </message>
-    <message>
-        <location filename="../widgets/titlewidget.cpp" line="302"/>
-        <location filename="../widgets/titlewidget.cpp" line="340"/>
-        <location filename="../widgets/titlewidget.cpp" line="394"/>
-        <location filename="../widgets/titlewidget.cpp" line="515"/>
-        <source>Unmount %1 first</source>
-        <translation>请先手动卸载%1</translation>
-    </message>
-    <message>
-        <location filename="../widgets/titlewidget.cpp" line="254"/>
-        <location filename="../widgets/titlewidget.cpp" line="302"/>
-        <location filename="../widgets/titlewidget.cpp" line="340"/>
-        <location filename="../widgets/titlewidget.cpp" line="354"/>
-        <location filename="../widgets/titlewidget.cpp" line="394"/>
-        <location filename="../widgets/titlewidget.cpp" line="515"/>
-        <source>OK</source>
-        <translation>确 定</translation>
-    </message>
-    <message>
-        <location filename="../widgets/titlewidget.cpp" line="314"/>
-        <location filename="../widgets/titlewidget.cpp" line="406"/>
-        <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation>删除后数据将无法恢复，请确认</translation>
-    </message>
-    <message>
-        <location filename="../widgets/titlewidget.cpp" line="315"/>
-        <location filename="../widgets/titlewidget.cpp" line="407"/>
-        <source>Cancel</source>
-        <translation>取 消</translation>
-    </message>
-    <message>
-        <location filename="../widgets/titlewidget.cpp" line="373"/>
-        <source>The disks will be formatted if you create a volume group</source>
-        <translation>创建逻辑卷组将格式化磁盘</translation>
-    </message>
-    <message>
-        <location filename="../widgets/titlewidget.cpp" line="315"/>
-        <location filename="../widgets/titlewidget.cpp" line="407"/>
-        <source>Delete</source>
-        <translation>删除</translation>
-    </message>
-    <message>
-        <location filename="../widgets/titlewidget.cpp" line="74"/>
-        <location filename="../widgets/titlewidget.cpp" line="274"/>
-        <source>Create logical volume</source>
-        <translation>创建逻辑卷</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="62"/>
@@ -2010,23 +1900,81 @@
         <translation>删除物理卷</translation>
     </message>
     <message>
+        <location filename="../widgets/titlewidget.cpp" line="74"/>
+        <location filename="../widgets/titlewidget.cpp" line="274"/>
+        <source>Create logical volume</source>
+        <translation>创建逻辑卷</translation>
+    </message>
+    <message>
         <location filename="../widgets/titlewidget.cpp" line="192"/>
         <source>Cannot recognize its partition table</source>
         <translation>无法识别当前设备分区表</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="254"/>
+        <location filename="../widgets/titlewidget.cpp" line="357"/>
+        <source>The file system does not support space adjustment</source>
+        <translation>该文件系统不支持调整空间</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="254"/>
+        <location filename="../widgets/titlewidget.cpp" line="302"/>
+        <location filename="../widgets/titlewidget.cpp" line="341"/>
+        <location filename="../widgets/titlewidget.cpp" line="357"/>
+        <location filename="../widgets/titlewidget.cpp" line="397"/>
+        <location filename="../widgets/titlewidget.cpp" line="510"/>
+        <source>OK</source>
+        <translation>确 定</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="274"/>
+        <source>The disks will be formatted if you create a logical volume</source>
+        <translation>创建逻辑卷将格式化磁盘</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="302"/>
+        <location filename="../widgets/titlewidget.cpp" line="341"/>
+        <location filename="../widgets/titlewidget.cpp" line="397"/>
+        <location filename="../widgets/titlewidget.cpp" line="510"/>
+        <source>Unmount %1 first</source>
+        <translation>请先手动卸载%1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="314"/>
+        <location filename="../widgets/titlewidget.cpp" line="409"/>
+        <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
+        <translation>删除后数据将无法恢复，请确认</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="315"/>
+        <location filename="../widgets/titlewidget.cpp" line="410"/>
+        <source>Delete</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="315"/>
+        <location filename="../widgets/titlewidget.cpp" line="410"/>
+        <source>Cancel</source>
+        <translation>取 消</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="376"/>
+        <source>The disks will be formatted if you create a volume group</source>
+        <translation>创建逻辑卷组将格式化磁盘</translation>
     </message>
 </context>
 <context>
     <name>UnmountDialog</name>
     <message>
+        <location filename="../widgets/unmountdialog.cpp" line="48"/>
+        <source>Make sure there are no programs running on the disk</source>
+        <translation>请确认该磁盘无正在运行的程序</translation>
+    </message>
+    <message>
         <location filename="../widgets/unmountdialog.cpp" line="57"/>
         <location filename="../widgets/unmountdialog.cpp" line="60"/>
         <source>Unmount %1</source>
         <translation>将对%1进行卸载</translation>
-    </message>
-    <message>
-        <location filename="../widgets/unmountdialog.cpp" line="48"/>
-        <source>Make sure there are no programs running on the disk</source>
-        <translation>请确认该磁盘无正在运行的程序</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="62"/>
@@ -2043,21 +1991,6 @@
         <source>Unmount</source>
         <translation>卸载</translation>
     </message>
-    <message>
-        <source>Unmounting system disk may result in system crash,
- please confirm before proceeding</source>
-        <translation type="vanished">卸载该系统盘可能会引起系统崩溃，
-请确认是否继续操作</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation type="vanished">继续</translation>
-    </message>
-    <message>
-        <source>You will take subsequent risks if you continue to unmount the system disk</source>
-        <translation type="vanished">继续执行卸载操作，
-后续引发的风险将由您自行承担</translation>
-    </message>
 </context>
 <context>
     <name>UnmountWarningDialog</name>
@@ -2072,12 +2005,12 @@
         <translation>自愿承担可能引发的风险</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountwarningdialog.cpp" line="77"/>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="78"/>
         <source>Cancel</source>
         <translation>取 消</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountwarningdialog.cpp" line="78"/>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="79"/>
         <source>Unmount</source>
         <translation>卸 载</translation>
     </message>

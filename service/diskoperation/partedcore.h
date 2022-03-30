@@ -890,7 +890,7 @@ private:
      * @param pv: pv数据结构体
      * @return true 成功 允许使用 false 失败 不允许使用
      */
-    bool checkPVDevice(const QString vgName, const PVData &pv);
+    bool checkPVDevice(const QString vgName, const PVData &pv, bool isCreate = true);
 
     /**
      * @brief 删除pv结束信号

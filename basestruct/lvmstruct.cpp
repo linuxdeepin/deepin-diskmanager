@@ -54,7 +54,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PVData &data)
     return argument;
 }
 
-
 /*********************************** CreateLVInfo *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const LVAction &data)
 {
@@ -309,7 +308,6 @@ bool VGInfo::isAllPV(QVector<QString> pvList) const
     return std::includes(pvList.begin(), pvList.end(), list.begin(), list.end());
 }
 
-
 QDBusArgument &operator<<(QDBusArgument &argument, const VGInfo &data)
 {
     argument.beginStructure();
@@ -331,7 +329,6 @@ QDBusArgument &operator<<(QDBusArgument &argument, const VGInfo &data)
     argument.endStructure();
     return argument;
 }
-
 
 const QDBusArgument &operator>>(const QDBusArgument &argument,  VGInfo &data)
 {
@@ -357,7 +354,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument,  VGInfo &data)
     return argument;
 }
 
-
 /*********************************** LVMInfo *********************************************/
 LVInfo LVMInfo::getLVInfo(const QString &vgName, const QString &lvName)
 {
@@ -366,18 +362,12 @@ LVInfo LVMInfo::getLVInfo(const QString &vgName, const QString &lvName)
     if (m_vgInfo.end() == it) {
         return LVInfo();
     }
-
     return it.value().getLVinfo(lvName);
 }
 
 VGInfo LVMInfo::getVG(const QString &vgName)
 {
     return getItem(vgName, m_vgInfo);
-}
-
-PVInfo LVMInfo::getPV(const QString &pvPath)
-{
-    return getItem(pvPath, m_pvInfo);
 }
 
 VGInfo LVMInfo::getVG(const PVData &pv)
@@ -394,6 +384,11 @@ VGInfo LVMInfo::getVG(const PVInfo &pv)
     return getVG(pv.m_vgName);
 }
 
+PVInfo LVMInfo::getPV(const QString &pvPath)
+{
+    return getItem(pvPath, m_pvInfo);
+}
+
 PVInfo LVMInfo::getPV(const PVData &pv)
 {
     return getPV(pv.m_devicePath);
@@ -401,11 +396,7 @@ PVInfo LVMInfo::getPV(const PVData &pv)
 
 QVector<PVInfo> LVMInfo::getVGAllPV(const QString &vgName)
 {
-    if (vgExists(vgName)) {
-        VGInfo vg = getVG(vgName);
-        return vg.m_pvInfo.values().toVector();
-    }
-    return QVector<PVInfo>();
+    return vgExists(vgName) ? getVG(vgName).m_pvInfo.values().toVector() : QVector<PVInfo>();
 }
 
 QVector<PVInfo> LVMInfo::getVGAllUsedPV(const QString &vgName)
@@ -429,7 +420,6 @@ QList<QString> LVMInfo::getVGOfDisk(const QString &vgName, const QString &disk)
     }
     return list;
 }
-
 
 QVector<PVInfo> LVMInfo::getVGPVList(const QString &vgName, bool isUsed)
 {
@@ -469,11 +459,7 @@ bool LVMInfo::pvExists(const QString &pvPath)
 
 bool LVMInfo::vgExists(const PVData &pv)
 {
-    if (pvExists(pv)) {
-        PVInfo info = getPV(pv);
-        return vgExists(info.m_vgName);
-    }
-    return false;
+    return pvExists(pv) ? vgExists(getPV(pv).m_vgName) : false;
 }
 
 bool LVMInfo::vgExists(const PVInfo &pv)
@@ -521,16 +507,10 @@ bool LVMInfo::pvOfVg(const QString &vgName, const PVInfo &pv)
     return pvOfVg(vgName, pv.m_pvPath);
 }
 
-
 template<class T>
 T LVMInfo:: getItem(const QString &str,  const QMap<QString, T> &containers)
 {
-    //判断lv是否存在
-    auto it = containers.find(str);
-    if (containers.end() == it) {
-        return T();
-    }
-    return *it;
+    return itemExists(str, containers) ? *containers.find(str) : T();
 }
 
 template<class T>
@@ -538,7 +518,6 @@ bool LVMInfo::itemExists(const QString &str, const QMap<QString, T> &containers)
 {
     return containers.find(str) != containers.end();
 }
-
 
 QDBusArgument &operator<<(QDBusArgument &argument, const LVMInfo &data)
 {
@@ -549,7 +528,6 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LVMInfo &data)
     argument.endStructure();
     return argument;
 }
-
 
 const QDBusArgument &operator>>(const QDBusArgument &argument,  LVMInfo &data)
 {

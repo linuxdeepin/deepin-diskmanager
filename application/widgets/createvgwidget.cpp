@@ -99,6 +99,13 @@ void CreateVGWidget::initUi()
     font2.setWeight(QFont::Medium);
     font2.setFamily("Source Han Sans");
     font2.setPixelSize(13);
+
+
+    QFont font3;
+    font3.setWeight(QFont::Normal);
+    font3.setFamily("Source Han Sans");
+    font3.setPixelSize(12);
+
     // 第一个页面
     DLabel *subTitleLabel = new DLabel(tr("Select disks or partitions to create a volume group and set its capacity"), this);
     subTitleLabel->setFont(fontSubTitle);
@@ -111,7 +118,7 @@ void CreateVGWidget::initUi()
     m_seclectedLabel->setAlignment(Qt::AlignCenter);
 
     DLabel *describeLabel = new DLabel(tr("The selected disks will be converted to dynamic disks, "
-                                      "and you will not be able to start installed operating systems from the disks."), this);
+                                          "and you will not be able to start installed operating systems from the disks."), this);
     describeLabel->setFont(font1);
     describeLabel->setPalette(palette1);
     describeLabel->setWordWrap(true);
@@ -159,7 +166,7 @@ void CreateVGWidget::initUi()
     partitionScrollAreaLayout->setContentsMargins(0, 0, 0, 0);
     m_partitionFrame->setLayout(partitionScrollAreaLayout);
 
-    QLabel *iconNoPartitionLabel =new QLabel(this);
+    QLabel *iconNoPartitionLabel = new QLabel(this);
     QIcon iconNoPartition = Common::getIcon("nopartition");
     iconNoPartitionLabel->setPixmap(iconNoPartition.pixmap(QSize(90, 90)));
     iconNoPartitionLabel->setAlignment(Qt::AlignCenter);
@@ -200,7 +207,7 @@ void CreateVGWidget::initUi()
     m_partitionStackedWidget->addWidget(noPartitionWidget);
     m_partitionStackedWidget->setCurrentIndex(0);
 
-    DFrame * line =new DFrame(this);
+    DFrame *line = new DFrame(this);
     paletteBackground.setColor(QPalette::Base, QColor(0, 0, 0, 10));
     line->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     line->setFrameShape(QFrame::VLine);
@@ -230,7 +237,7 @@ void CreateVGWidget::initUi()
     QWidget *centerWidget = new QWidget(this);
     centerWidget->setLayout(firstCenterLayout);
 
-    QLabel *iconNoDiskLabel =new QLabel(this);
+    QLabel *iconNoDiskLabel = new QLabel(this);
     QIcon iconNoDisk = Common::getIcon("nodisk");
     iconNoDiskLabel->setPixmap(iconNoDisk.pixmap(QSize(136, 136)));
     iconNoDiskLabel->setAlignment(Qt::AlignCenter);
@@ -339,16 +346,23 @@ void CreateVGWidget::initUi()
     selectedScrollAreaLayout->setContentsMargins(0, 0, 0, 0);
     m_selectedFrame->setLayout(selectedScrollAreaLayout);
 
+
     DLabel *selectSpaceLabel = new DLabel(tr("Set VG capacity"), this);
     selectSpaceLabel->setFont(font2);
     selectSpaceLabel->setPalette(palette2);
-    selectSpaceLabel->setAlignment(Qt::AlignCenter);
+    //selectSpaceLabel->setAlignment(Qt::AlignCenter);
 
-    m_selectSpaceLabel = new DLabel("(1-100GiB)", this);
-    m_selectSpaceLabel->setFont(font1);
-    m_selectSpaceLabel->setPalette(palette1);
-    m_selectSpaceLabel->setAccessibleName("range");
-    m_selectSpaceLabel->setAlignment(Qt::AlignCenter);
+
+    DLabel *selectSpaceLabel2 = new DLabel(tr("Auto adjusted to integral multiples of 4 MiB"), this); //自动调整为4MiB的倍数
+    selectSpaceLabel2->setFont(font3);
+    selectSpaceLabel2->setPalette(palette2);
+    selectSpaceLabel2->setAlignment(Qt::AlignCenter);
+
+//    m_selectSpaceLabel = new DLabel("(1-100GiB)", this);
+//    m_selectSpaceLabel->setFont(font1);
+//    m_selectSpaceLabel->setPalette(palette1);
+//    m_selectSpaceLabel->setAccessibleName("range");
+//    m_selectSpaceLabel->setAlignment(Qt::AlignCenter);
 
     m_selectSpaceLineEdit = new DLineEdit(this);
     m_selectSpaceLineEdit->setFixedSize(182, 36);
@@ -375,10 +389,15 @@ void CreateVGWidget::initUi()
     m_selectSpaceComboBox->setCurrentText("GiB");
     m_selectSpaceComboBox->setAccessibleName("vgUnit");
 
+    QVBoxLayout *vBoxLayout = new QVBoxLayout;
+    vBoxLayout->addWidget(selectSpaceLabel);
+    vBoxLayout->addSpacing(5);
+    vBoxLayout->addWidget(selectSpaceLabel2);
+
     QHBoxLayout *selectSpaceLayout = new QHBoxLayout;
-    selectSpaceLayout->addWidget(selectSpaceLabel);
+    selectSpaceLayout->addLayout(vBoxLayout);
     selectSpaceLayout->addSpacing(5);
-    selectSpaceLayout->addWidget(m_selectSpaceLabel);
+    //selectSpaceLayout->addWidget(m_selectSpaceLabel);
     selectSpaceLayout->addStretch();
     selectSpaceLayout->addWidget(m_selectSpaceLineEdit);
     selectSpaceLayout->addSpacing(10);
@@ -415,7 +434,7 @@ void CreateVGWidget::initUi()
     QWidget *secondCenterWidget = new QWidget(this);
     secondCenterWidget->setLayout(secondCenterLayout);
 
-    QLabel *iconNoInfoLabel =new QLabel(this);
+    QLabel *iconNoInfoLabel = new QLabel(this);
     QIcon iconNoInfo = Common::getIcon("nodisk");
     iconNoInfoLabel->setPixmap(iconNoInfo.pixmap(QSize(136, 136)));
     iconNoInfoLabel->setAlignment(Qt::AlignCenter);
@@ -510,7 +529,7 @@ void CreateVGWidget::initConnection()
     connect(m_doneButton, &DPushButton::clicked, this, &CreateVGWidget::onDoneButtonClicked);
     connect(m_firstCancelButton, &DPushButton::clicked, this, &CreateVGWidget::onCancelButtonClicked);
     connect(m_secondCancelButton, &DPushButton::clicked, this, &CreateVGWidget::onCancelButtonClicked);
-    connect(m_selectSpaceComboBox, static_cast<void (DComboBox:: *)(const int)>(&DComboBox::currentIndexChanged),
+    connect(m_selectSpaceComboBox, static_cast<void (DComboBox::*)(const int)>(&DComboBox::currentIndexChanged),
             this, &CreateVGWidget::onCurrentIndexChanged);
     connect(m_selectSpaceLineEdit, &DLineEdit::textChanged, this, &CreateVGWidget::onTextChanged);
     connect(DMDbusHandler::instance(), &DMDbusHandler::vgCreateMessage, this, &CreateVGWidget::onVGCreateMessage);
@@ -895,8 +914,8 @@ void CreateVGWidget::updateData()
                         PVInfoData infoData = m_curSeclectData.at(i);
                         if (partitionInfo.m_path == infoData.m_partitionPath && partitionInfo.m_sectorStart == infoData.m_sectorStart &&
                                 partitionInfo.m_sectorEnd == infoData.m_sectorEnd && partitionInfo.m_devicePath == infoData.m_diskPath) {
-                                diskInfoData.m_selectStatus = Qt::CheckState::Checked;
-                                partInfoData.m_selectStatus = Qt::CheckState::Checked;
+                            diskInfoData.m_selectStatus = Qt::CheckState::Checked;
+                            partInfoData.m_selectStatus = Qt::CheckState::Checked;
                             break;
                         }
                     }
@@ -911,7 +930,7 @@ void CreateVGWidget::updateData()
 
                         if (partitionInfo.m_devicePath == infoData.m_diskPath && partitionInfo.m_sectorStart == infoData.m_sectorStart &&
                                 partitionInfo.m_sectorEnd == infoData.m_sectorEnd && partitionInfo.m_devicePath == infoData.m_diskPath) {
-                                diskInfoData.m_selectStatus = Qt::CheckState::Checked;
+                            diskInfoData.m_selectStatus = Qt::CheckState::Checked;
                             break;
                         }
                     }
@@ -944,8 +963,8 @@ void CreateVGWidget::updateData()
                         PVInfoData infoData = m_curSeclectData.at(j);
                         if (partitionInfo.m_path == infoData.m_partitionPath && partitionInfo.m_sectorStart == infoData.m_sectorStart &&
                                 partitionInfo.m_sectorEnd == infoData.m_sectorEnd && partitionInfo.m_devicePath == infoData.m_diskPath) {
-                                partInfoData.m_selectStatus = Qt::CheckState::Checked;
-                                checkCount++;
+                            partInfoData.m_selectStatus = Qt::CheckState::Checked;
+                            checkCount++;
                             break;
                         }
                     }
@@ -955,7 +974,7 @@ void CreateVGWidget::updateData()
 
                 if (checkCount == 0) {
                     diskInfoData.m_selectStatus = Qt::CheckState::Unchecked;
-                } else if (checkCount == lstPVInfoData.count()){
+                } else if (checkCount == lstPVInfoData.count()) {
                     diskInfoData.m_selectStatus = Qt::CheckState::Checked;
                 } else {
                     diskInfoData.m_selectStatus = Qt::CheckState::PartiallyChecked;
@@ -1111,8 +1130,9 @@ QList<DeviceInfo> CreateVGWidget::createAvailableDiskData()
             if (isAvailable) {
                 DeviceInfo newDeviceInfo = info;
                 newDeviceInfo.m_partition = lstNewPartition;
-
-                lstDeviceInfo.append(newDeviceInfo);
+                if (newDeviceInfo.m_partition.size()) {  //解决bug 119081
+                    lstDeviceInfo.append(newDeviceInfo);
+                }
             }
         }
     }
@@ -1415,7 +1435,7 @@ void CreateVGWidget::onDiskCheckBoxStateChange(int state)
     } else {
         if (state == Qt::CheckState::Unchecked) {
             // 磁盘取消选中
-            QList<SelectPVItemWidget*> lstPartitionItem = m_partitionScrollArea->findChildren<SelectPVItemWidget*>();
+            QList<SelectPVItemWidget *> lstPartitionItem = m_partitionScrollArea->findChildren<SelectPVItemWidget *>();
             if (lstPartitionItem.count() == 0) {
                 onDiskItemClicked();
             } else {
@@ -1472,7 +1492,7 @@ void CreateVGWidget::onDiskCheckBoxStateChange(int state)
             }
         } else if (state == Qt::CheckState::Checked) {
             // 磁盘选中
-            QList<SelectPVItemWidget*> lstPartitionItem = m_partitionScrollArea->findChildren<SelectPVItemWidget*>();
+            QList<SelectPVItemWidget *> lstPartitionItem = m_partitionScrollArea->findChildren<SelectPVItemWidget *>();
             if (lstPartitionItem.count() == 0) {
                 onDiskItemClicked();
             } else {
@@ -1578,7 +1598,7 @@ void CreateVGWidget::onPartitionCheckBoxStateChange(int state)
         // 分区选中
         for (int i = 0; i < lstData.count(); i++) {
             PVInfoData data = lstData.at(i);
-            if (pvData.m_sectorStart == data.m_sectorStart && pvData.m_sectorEnd == data.m_sectorEnd ) {
+            if (pvData.m_sectorStart == data.m_sectorStart && pvData.m_sectorEnd == data.m_sectorEnd) {
                 data.m_selectStatus = state;
                 lstData.replace(i, data);
             }
@@ -1661,7 +1681,7 @@ void CreateVGWidget::updateSelectedData()
                 isUnallocated = true;
             } else {
                 m_minSize += Utils::sectorToUnit(pvInfoData.m_sectorEnd - pvInfoData.m_sectorStart + 1,
-                                               pvInfoData.m_sectorSize, type);
+                                                 pvInfoData.m_sectorSize, type);
             }
 
             m_maxSize += Utils::sectorToUnit(pvInfoData.m_sectorEnd - pvInfoData.m_sectorStart + 1,
@@ -1716,8 +1736,8 @@ void CreateVGWidget::updateSelectedData()
                 m_selectSpaceStackedWidget->setCurrentIndex(0);
                 m_selectSpaceLineEdit->lineEdit()->setPlaceholderText(QString("%1-%2").arg(QString::number(m_minSize, 'f', 2))
                                                                       .arg(QString::number(m_maxSize, 'f', 2)));
-                m_selectSpaceLabel->setText(QString("(%1-%2)").arg(QString::number(m_minSize, 'f', 2))
-                                            .arg(QString::number(m_maxSize, 'f', 2)) + m_selectSpaceComboBox->currentText());
+//                m_selectSpaceLabel->setText(QString("(%1-%2)").arg(QString::number(m_minSize, 'f', 2))
+//                                            .arg(QString::number(m_maxSize, 'f', 2)) + m_selectSpaceComboBox->currentText());
                 m_selectSpaceLineEdit->setText(QString::number(m_maxSize, 'f', 2));
             }
 
@@ -1770,8 +1790,8 @@ void CreateVGWidget::updateSelectedData()
                 m_selectSpaceStackedWidget->setCurrentIndex(0);
                 m_selectSpaceLineEdit->lineEdit()->setPlaceholderText(QString("%1-%2").arg(QString::number(m_minSize, 'f', 2))
                                                                       .arg(QString::number(m_maxSize, 'f', 2)));
-                m_selectSpaceLabel->setText(QString("(%1-%2)").arg(QString::number(m_minSize, 'f', 2))
-                                            .arg(QString::number(m_maxSize, 'f', 2)) + m_selectSpaceComboBox->currentText());
+//                m_selectSpaceLabel->setText(QString("(%1-%2)").arg(QString::number(m_minSize, 'f', 2))
+//                                            .arg(QString::number(m_maxSize, 'f', 2)) + m_selectSpaceComboBox->currentText());
                 m_selectSpaceLineEdit->setText(QString::number(m_maxSize, 'f', 2));
             } else {
                 m_selectSpaceStackedWidget->setCurrentIndex(1);
@@ -1809,7 +1829,7 @@ void CreateVGWidget::onCurrentIndexChanged(int index)
 
         if (pvInfoData.m_partitionPath != "unallocated" && pvInfoData.m_disktype != "unrecognized") {
             m_minSize += Utils::sectorToUnit(pvInfoData.m_sectorEnd - pvInfoData.m_sectorStart + 1,
-                                           pvInfoData.m_sectorSize, type);
+                                             pvInfoData.m_sectorSize, type);
         }
 
         m_maxSize += Utils::sectorToUnit(pvInfoData.m_sectorEnd - pvInfoData.m_sectorStart + 1,
@@ -1821,8 +1841,8 @@ void CreateVGWidget::onCurrentIndexChanged(int index)
 
     m_selectSpaceLineEdit->lineEdit()->setPlaceholderText(QString("%1-%2").arg(QString::number(m_minSize, 'f', 2))
                                                           .arg(QString::number(m_maxSize, 'f', 2)));
-    m_selectSpaceLabel->setText(QString("(%1-%2)").arg(QString::number(m_minSize, 'f', 2))
-                                .arg(QString::number(m_maxSize, 'f', 2)) + m_selectSpaceComboBox->currentText());
+//    m_selectSpaceLabel->setText(QString("(%1-%2)").arg(QString::number(m_minSize, 'f', 2))
+//                                .arg(QString::number(m_maxSize, 'f', 2)) + m_selectSpaceComboBox->currentText());
 
     m_curSize = m_curSize > m_sumSize ? m_sumSize : m_curSize;
 
@@ -1852,10 +1872,10 @@ void CreateVGWidget::onTextChanged(const QString &text)
     double minSize = QString::number(m_minSize, 'f', 2).toDouble();
     double maxSize = QString::number(m_maxSize, 'f', 2).toDouble();
 
-    if((curSize < minSize) || (curSize > maxSize) || (text.isEmpty()) || curSize == 0.00){
+    if ((curSize < minSize) || (curSize > maxSize) || (text.isEmpty()) || curSize == 0.00) {
         m_selectSpaceLineEdit->setAlert(true);
         m_doneButton->setDisabled(true);
-    }else {
+    } else {
         m_selectSpaceLineEdit->setAlert(false);
         m_doneButton->setDisabled(false);
     }
@@ -2191,7 +2211,7 @@ bool CreateVGWidget::adjudicationPVMove(const VGInfo &vg, const set<PVData> &pvl
             }
         }
         if (isDelete) {
-            size += it.m_pvByteTotalSize;
+            size += it.m_pvUsedPE * it.m_PESize; //获取pv真实使用大小
             realDelPvList.push_back(it.m_pvPath);
         }
     }

@@ -284,7 +284,7 @@ FS_Limits FAT16::getFilesystemLimits(const Partition &partition)
 
 FS_Limits FAT16::getFilesystemLimits(const QString &path)
 {
-    m_fsLimits = FS_Limits {-1, -1};
+    m_fsLimits = FS_Limits {-1, 0};
     if (Utils::findProgramInPath("fatresize").isEmpty()) {
         return m_fsLimits;
     }

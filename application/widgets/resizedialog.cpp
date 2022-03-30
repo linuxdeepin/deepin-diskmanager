@@ -37,6 +37,7 @@
 ResizeDialog::ResizeDialog(QWidget *parent)
     : DDBase(parent)
 {
+
     initUi();
     initConnection();
     setOnButtonClickedClose(false);
@@ -44,12 +45,16 @@ ResizeDialog::ResizeDialog(QWidget *parent)
 
 void ResizeDialog::initUi()
 {
+    this->setFixedWidth(380);
+
     QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
+    mainLayout->setMargin(0);
     DLabel *tipLabel = new DLabel(tr("It will resize the partitions on the disk"), this);
     tipLabel->setWordWrap(true);
     tipLabel->setAlignment(Qt::AlignCenter);
     DFontSizeManager::instance()->bind(tipLabel, DFontSizeManager::T6);
 
+    QVBoxLayout *vboxLayout = new QVBoxLayout;
     QHBoxLayout *hLayout = new QHBoxLayout;
     m_lineEdit = new DLineEdit(this);
     QRegExp regexp("^[0-9]*\\.[0-9]{1,2}");
@@ -57,11 +62,19 @@ void ResizeDialog::initUi()
     m_lineEdit->lineEdit()->setValidator(pvalidaor);
     m_lineEdit->setAccessibleName("resizeSize");
 
+
+    QFont font;
+    font.setWeight(QFont::Normal);
+    font.setFamily("Source Han Sans");
+    font.setPixelSize(12);
+
     m_comboBox = new DComboBox(this);
     m_label = new DLabel(this);
     m_label->setText(tr("New capacity:"));
-    m_label->setAlignment(Qt::AlignLeft | Qt::AlignCenter);
-    DFontSizeManager::instance()->bind(m_label, DFontSizeManager::T6);
+    m_label->setAlignment(Qt::AlignLeft);
+    m_label->setFont(font);
+    //DFontSizeManager::instance()->bind(m_label, DFontSizeManager::T6);
+
     QStringList stritems;
     stritems << "MiB"
              << "GiB";
@@ -69,12 +82,23 @@ void ResizeDialog::initUi()
     m_comboBox->setCurrentIndex(1);
     m_comboBox->setFixedWidth(70);
     m_comboBox->setAccessibleName("unit");
-    hLayout->addWidget(m_label);
+
     hLayout->addWidget(m_lineEdit);
     hLayout->addWidget(m_comboBox);
+    vboxLayout->addWidget(m_label);
+    vboxLayout->addLayout(hLayout);
+
+    if (DMDbusHandler::LOGICALVOLUME == DMDbusHandler::instance()->getCurLevel()) {
+        m_lvResizeLable = new DLabel(this);
+        m_lvResizeLable->setText(tr("Auto adjusted to integral multiples of 4 MiB"));//自动调整为4MiB的倍数
+        m_lvResizeLable->setAlignment(Qt::AlignLeft);
+        m_lvResizeLable->setFont(font);
+        vboxLayout->addWidget(m_lvResizeLable);
+    }
 
     mainLayout->addWidget(tipLabel);
-    mainLayout->addLayout(hLayout);
+    mainLayout->addSpacing(5);
+    mainLayout->addLayout(vboxLayout);
 
     if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
@@ -181,7 +205,12 @@ void ResizeDialog::partitionResize()
         }
     } else if (newSectorEnd < curSectorEnd) {
         if (limits.min_size == -1) {
-            noSupportFSDailog();
+            MessageBox warningBox(this);
+            warningBox.setObjectName("messageBox");
+            warningBox.setAccessibleName("LVNoSupportFSWidget");
+            // 该文件系统不支持空间缩小  确定
+            warningBox.setWarings(tr("The file system does not support shrinking space"), "", tr("OK"), "ok");
+            warningBox.exec();
             return;
         }
 
@@ -223,6 +252,9 @@ void ResizeDialog::lvResize()
     Sector curSize = lvInfo.m_lvLECount * lvInfo.m_LESize;
     Sector unUsedSize = static_cast<Sector>(vgInfo.m_PESize * vgInfo.m_peUnused);
     FS_Limits limits = lvInfo.m_fsLimits;
+    if (lvInfo.m_lvFsType == FS_UNKNOWN || lvInfo.m_lvFsType == FS_UNALLOCATED) { //如果没有文件系统 不限制放大缩小
+        limits = FS_Limits();
+    }
 
     Sector newSize = 0;
     if (0 == m_comboBox->currentIndex()) {
@@ -237,7 +269,14 @@ void ResizeDialog::lvResize()
     }
     newSize = peCount * peSize;
 
-    if (newSize < 0 || (newSize - curSize) > unUsedSize || newSize < limits.min_size) {
+    if ((newSize - curSize) > unUsedSize) {
+        m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
+        m_lineEdit->showAlertMessage(tr("Space limit exceeded"), m_mainFrame);
+        m_lineEdit->setAlert(true);
+        return;
+    }
+
+    if (newSize < 0 || newSize < limits.min_size) {
         MessageBox messageBox(this);
         messageBox.setObjectName("messageBox");
         messageBox.setAccessibleName("LVResizeWarning");
@@ -256,7 +295,15 @@ void ResizeDialog::lvResize()
         MessageBox messageBox(this);
         messageBox.setObjectName("messageBox");
         messageBox.setAccessibleName("messageBox");
-        messageBox.setWarings(tr("To prevent data loss, back up data in the logical volume before shrinking it"), "", tr("OK"), "ok", tr("Cancel"), "cancel");
+        if (lvInfo.m_busy) {
+            //当前设备已挂载，将会自动卸载，请对其内的数据做好备份，以防数据丢失
+            messageBox.setWarings(tr("The current device has been mounted and will be unmounted automatically. Please back up data in it to prevent data loss"), "", tr("OK"), "ok", tr("Cancel"), "cancel");
+        } else {
+            //缩减逻辑卷前，请对其内的数据做好备份，以防数据丢失
+            messageBox.setWarings(tr("To prevent data loss, back up data in the logical volume before shrinking it"), "", tr("OK"), "ok", tr("Cancel"), "cancel");
+        }
+
+
         if (messageBox.exec() == DDialog::Accepted) {
             LVAction info;
             info.m_vgName = lvInfo.m_vgName;
@@ -342,35 +389,22 @@ void ResizeDialog::onEditTextChanged(const QString &)
             m_lineEdit->setAlert(false);
         }
 
-        if (0 == m_comboBox->currentIndex()) {
-            if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
-                PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-                if (QString::number(m_lineEdit->text().toDouble(), 'f', 2) ==
-                        QString::number(Utils::sectorToUnit(info.m_sectorEnd - info.m_sectorStart + 1, info.m_sectorSize, UNIT_MIB), 'f', 2)) {
-                    getButton(m_okCode)->setDisabled(true);
-                }
-            } else if (DMDbusHandler::LOGICALVOLUME == DMDbusHandler::instance()->getCurLevel()) {
-                LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
-                if (QString::number(m_lineEdit->text().toDouble(), 'f', 2) ==
-                        QString::number(Utils::LVMSizeToUnit(lvInfo.m_lvLECount * lvInfo.m_LESize, UNIT_MIB), 'f', 2)) {
-                    getButton(m_okCode)->setDisabled(true);
-                }
-            }
-        } else {
-            if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
-                PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-                if (QString::number(m_lineEdit->text().toDouble(), 'f', 2) ==
-                        QString::number(Utils::sectorToUnit(info.m_sectorEnd - info.m_sectorStart + 1, info.m_sectorSize, UNIT_GIB), 'f', 2)) {
-                    getButton(m_okCode)->setDisabled(true);
-                }
-            } else if (DMDbusHandler::LOGICALVOLUME == DMDbusHandler::instance()->getCurLevel()) {
-                LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
-                if (QString::number(m_lineEdit->text().toDouble(), 'f', 2) ==
-                        QString::number(Utils::LVMSizeToUnit(lvInfo.m_lvLECount * lvInfo.m_LESize, UNIT_GIB), 'f', 2)) {
-                    getButton(m_okCode)->setDisabled(true);
-                }
-            }
+        SIZE_UNIT unit = (0 == m_comboBox->currentIndex()) ? UNIT_MIB : UNIT_GIB;
+        double setSize = 0;
+        double curSize = 0;
+        if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) { //分区调整
+            PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo(); //获取磁盘
+            setSize = m_lineEdit->text().toDouble();                                //获取当前设置大小
+            curSize = Utils::sectorToUnit(info.m_sectorEnd - info.m_sectorStart + 1, info.m_sectorSize, unit);//获取磁盘大小
+        } else if (DMDbusHandler::LOGICALVOLUME == DMDbusHandler::instance()->getCurLevel()) { //lv调整
+            LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+            double tmpUnit = (unit == UNIT_MIB) ? MEBIBYTE : GIBIBYTE;
+            Byte_Value tmp = static_cast<Byte_Value>(m_lineEdit->text().toDouble() * tmpUnit); //获取输入大小
+            setSize = (tmp % lvInfo.m_LESize == 0) ? tmp / tmpUnit : ((tmp / lvInfo.m_LESize) + 1) * lvInfo.m_LESize / tmpUnit;
+            curSize = Utils::LVMSizeToUnit(lvInfo.m_lvLECount * lvInfo.m_LESize, unit);
         }
+        getButton(m_okCode)->setDisabled(QString::number(setSize, 'f', 2) == QString::number(curSize, 'f', 2));
+
     } else {
         getButton(m_okCode)->setDisabled(true);
     }

@@ -23,7 +23,7 @@
 
 #include "lvmstruct.h"
 #include "deviceinfo.h"
-#include "../supportedfilesystems.h"
+#include "supportedfilesystems.h"
 
 class LVMOperator
 {
@@ -81,29 +81,12 @@ public:
     static bool createVG(LVMInfo &lvmInfo, QString vgName, QList<PVData>devList, long long size);
 
     /**
-     * @brief 创建lv
-     * @param lvmInfo: lvm数据集合
-     * @param vgName:vg名称
-     * @param lvList: 待创建lv列表
-     * @return true 成功 false 失败
-     */
-    static bool createLV(LVMInfo &lvmInfo, QString vgName, QList<LVAction>lvList);
-
-    /**
      * @brief 删除vg
      * @param lvmInfo: lvm数据集合
      * @param vglist: 待删除vg列表
      * @return true 成功 false 失败
      */
     static bool deleteVG(LVMInfo &lvmInfo, QStringList vglist);
-
-    /**
-     * @brief 删除lv
-     * @param lvmInfo: lvm数据集合
-     * @param lvlist: 待删除lv列表
-     * @return true 成功 false 失败
-     */
-    static bool lvRemove(LVMInfo &lvmInfo, QStringList lvlist);
 
     /**
      * @brief vg空间调整
@@ -114,6 +97,23 @@ public:
      * @return true 成功 false 失败
      */
     static bool resizeVG(LVMInfo &lvmInfo, QString vgName, QList<PVData>devList, long long size);
+
+    /**
+     * @brief 创建lv
+     * @param lvmInfo: lvm数据集合
+     * @param vgName:vg名称
+     * @param lvList: 待创建lv列表
+     * @return true 成功 false 失败
+     */
+    static bool createLV(LVMInfo &lvmInfo, QString vgName, QList<LVAction>lvList);
+
+    /**
+     * @brief 删除lv
+     * @param lvmInfo: lvm数据集合
+     * @param lvlist: 待删除lv列表
+     * @return true 成功 false 失败
+     */
+    static bool lvRemove(LVMInfo &lvmInfo, QStringList lvlist);
 
     /**
      * @brief lv空间调整
@@ -200,7 +200,7 @@ private:
      * @param pv: pv路径
      * @return true 成功 false 失败
      */
-    static bool vgCreate(const QString &vgName, const QStringList &pvList);
+    static int vgCreate(const QString &vgName, const QStringList &pvList);
 
     /**
      * @brief vg重命名
@@ -225,6 +225,13 @@ private:
      * @return true 成功 false 失败
      */
     static bool vgReduce(const QString &vgName, const QString &pvPath);
+
+    /**
+     * @brief 删除vg
+     * @param vgInfo:vg数据结构体
+     * @return true 成功 false 失败
+     */
+    static bool deleteVG(const VGInfo &vgInfo);
 
     /**
      * @brief 创建pv
@@ -262,13 +269,6 @@ private:
      * @return true 成功 false 失败
      */
     static bool lvRemove(const QString &lvPath);
-
-    /**
-     * @brief 删除vg
-     * @param vgInfo:vg数据结构体
-     * @return true 成功 false 失败
-     */
-    static bool deleteVG(const VGInfo &vgInfo);
 
     /**
      * @brief 调整lv

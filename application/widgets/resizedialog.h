@@ -75,6 +75,7 @@ private:
     DLineEdit *m_lineEdit;
     DComboBox *m_comboBox;
     DLabel *m_label;
+    DLabel *m_lvResizeLable;
 
 private slots:
     /**

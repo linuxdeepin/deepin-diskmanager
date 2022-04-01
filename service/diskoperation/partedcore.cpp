@@ -2630,7 +2630,7 @@ bool PartedCore::mountLV(const LVAction &lvAction)
     //永久挂载
     QString type = Utils::fileSystemTypeToString(lv.m_lvFsType);
     if (mountDevice(lvAction.m_mountPoint, lv.m_lvPath, lv.m_lvFsType)) {
-        if (writeFstab(lv.m_mountUuid, lv.m_lvPath, type)) {
+        if (writeFstab(lv.m_mountUuid, lvAction.m_mountPoint, type,true)) {
             return sendRefSigAndReturn(true);
         }
     }
@@ -2653,7 +2653,7 @@ bool PartedCore::umountLV(const LVAction &lvAction)
         return false;
     }
     //修改fstab
-    if (!writeFstab(lv.m_mountUuid, lv.m_lvPath, Utils::fileSystemTypeToString(lv.m_lvFsType), false)) {
+    if (!writeFstab(lv.m_mountUuid,"", Utils::fileSystemTypeToString(lv.m_lvFsType), false)) {
         qDebug() << __FUNCTION__ << "Unmount LV error:lv writeFstab error";
         return sendRefSigAndReturn(false);
     }
@@ -3946,8 +3946,9 @@ bool PartedCore::mountDevice(const QString &mountpath, const QString devPath, co
 
     QString output, errstr;
     QString cmd ;
+    //vfat 1051系统上vfat格式不指定utf8挂载 通过文件管理器右键菜单新建文件夹会乱码  导致创建错误 为了规避该问题加上utf8属性
     if (fsType == FSType::FS_FAT32 || fsType == FSType::FS_FAT16) {
-        cmd = QString("mount -v %1 %2 -o dmask=000,fmask=111").arg(devPath).arg(mountpath);
+        cmd = QString("mount -v %1 %2 -o dmask=000,fmask=111,utf8").arg(devPath).arg(mountpath);
     } else if (fsType == FSType::FS_HFS) {
         cmd = QString("mount -v %1 %2 -o dir_umask=000,file_umask=111").arg(devPath).arg(mountpath);
     } else {
@@ -3973,7 +3974,7 @@ bool PartedCore::umontDevice(QVector<QString> mountPoints)
         int exitcode = Utils::executeCmdWithArtList("umount", arg, output, errstr);
         if (0 != exitcode) {
             Utils::executCmd("df", output, errstr);
-            return errstr.contains(m_curpartition.getPath()) ? sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_UMNT, true, "0")
+            return output.contains(m_curpartition.getPath()) ? sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_UMNT, true, "0")
                    : sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_UMNT, true, "1");
         }
     }
@@ -3989,12 +3990,6 @@ bool PartedCore::writeFstab(const QString &uuid, const QString &mountpath, const
         return false;
     }
 
-    //此处修改：因为mount读取/etc/fstab配置文件 开机自动挂载  而fat32或fat16 mount不识别，所以要改成vfat
-    QString type2 = type;
-    if(type2.contains("fat32")||type2.contains("fat16")){
-        type2 = "vfat";
-    }
-
     QFile file("/etc/fstab");
     QStringList list;
 
@@ -4004,16 +3999,25 @@ bool PartedCore::writeFstab(const QString &uuid, const QString &mountpath, const
         return false;
     }
 
+    //此处修改：因为mount读取/etc/fstab配置文件 开机自动挂载  而fat32或fat16 mount不识别，所以要改成vfat
+    QString type2 = (type.contains("fat32") || type.contains("fat16")) ? QString("vfat") : type;
+
     // read fstab
+    bool findflag = false; //目前默认只改第一个发现的uuid findflag 标志位：是否已经查找到uuid
     while (!file.atEnd()) {
         QByteArray line = file.readLine();//获取数据
         QString str = line;
         if (isMount) {
-            if (str.contains(uuid)) {
-                list << QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(uuid).arg(mountpath).arg(type2);
-                break;
-            } else if (file.atEnd()) {
-                list << str << QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(uuid).arg(mountpath).arg(type2);
+            //vfat 1051系统上vfat格式不指定utf8挂载 通过文件管理器右键菜单新建文件夹会乱码  导致创建错误 为了规避该问题加上utf8属性
+            QString mountStr = (type2 == "vfat") ? QString("UUID=%1 %2 %3 defaults,nofail,utf8 0 0\n").arg(uuid).arg(mountpath).arg(type2)
+                               : QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(uuid).arg(mountpath).arg(type2);
+
+            if (str.contains(uuid) && !findflag) { //首次查找到uuid
+                findflag = true;
+                list << mountStr;
+                continue;
+            } else if (file.atEnd() && !findflag) { //查找到结尾且没有查找到uuid
+                list << str << mountStr;
                 break;
             }
             list << str;

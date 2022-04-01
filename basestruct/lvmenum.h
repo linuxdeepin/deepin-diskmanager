@@ -88,6 +88,7 @@ enum LVMDevType {
 enum LVMError {
     LVM_ERR_NORMAL = 0,             //正常
     LVM_ERR_NO_CMD_SUPPORT,         //外部命令不支持
+    LVM_ERR_IO_ERROR,               //输入输出错误
 
     LVM_ERR_PV = 100,
     LVM_ERR_PV_CREATE_FAILED,       //pv 创建失败
@@ -117,7 +118,6 @@ enum LVMError {
     LVM_ERR_VG_DELETE_FAILED,       //vg 删除失败
     LVM_ERR_VG_EXTEND_FAILED,       //vg 扩展失败
     LVM_ERR_VG_REDUCE_FAILED        //vg 缩小失败
-
 };
 
 

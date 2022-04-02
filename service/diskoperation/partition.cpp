@@ -116,13 +116,7 @@ void Partition::set(const QString &devicePath, const QString &partition, int par
 
     SupportedFileSystems s;
     FileSystem *fs =  s.getFsObject(m_fstype);
-    if (fs) {
-        m_fsLimits = fs->getFilesystemLimits(*this);
-    }else {
-        m_fsLimits = FS_Limits{-1,-1}; //-1 -1 no support fileSystem  0 =>no limits
-    }
-
-
+    m_fsLimits = fs ? fs->getFilesystemLimits(*this) : FS_Limits{-1, -1}; //-1 -1 no support fileSystem  0 =>no limits
 }
 
 void Partition::setUnpartitioned(const QString &devicePath, const QString &partitionPath, FSType fstype, Sector length, Byte_Value sectorSize, bool busy)

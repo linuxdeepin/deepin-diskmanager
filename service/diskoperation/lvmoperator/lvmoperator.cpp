@@ -368,13 +368,10 @@ bool LVMOperator::updateLVInfo(LVMInfo &lvmInfo, VGInfo &vg)
                 lv.m_fsLimits = part.m_fsLimits;
                 if (FS_FAT32 == lv.m_lvFsType || FS_FAT16 == lv.m_lvFsType) {
                     lv.m_fsLimits = FS_Limits(-1, -1); //fat格式不支持逻辑卷的扩展缩小
+                }else if (FS_UNALLOCATED ==  lv.m_lvFsType) { //empty fs , no limits
+                    lv.m_fsLimits = FS_Limits(0, 0);
                 }
-
             }
-            if (-1 == lv.m_fsLimits.min_size) {
-                lv.m_fsLimits.min_size = (lv.m_fsUsed + lv.m_fsUnused);
-            }
-
         }
         vg.m_lvlist.push_back(lv);
     }
@@ -589,9 +586,13 @@ bool LVMOperator::resizeLV(LVMInfo &lvmInfo,  LVAction &lvAct, LVInfo &info)
     }
 
     FileSystem *fs = m_supportFs.getFsObject(lvAct.m_lvFs);
-    if (fs == nullptr) { //文件系统不存在 可以直接扩大或缩小lv
-        return setLVMErr(lvmInfo, resizeLV(info.m_lvPath, lvAct) ? LVMError::LVM_ERR_NORMAL : (lvAct.m_lvAct == LVM_ACT_LV_EXTEND ? LVM_ERR_LV_EXTEND_FAILED : LVM_ERR_LV_REDUCE_FAILED));
+    if (fs == nullptr) {
+        if (lvAct.m_lvFs == FS_UNALLOCATED) { //文件系统不存在 可以直接扩大或缩小lv
+            return setLVMErr(lvmInfo, resizeLV(info.m_lvPath, lvAct) ? LVMError::LVM_ERR_NORMAL : (lvAct.m_lvAct == LVM_ACT_LV_EXTEND ? LVM_ERR_LV_EXTEND_FAILED : LVM_ERR_LV_REDUCE_FAILED));
+        }
+        return setLVMErr(lvmInfo, LVMError::LVM_ERR_LV_RESIZE_FS_NO_SUPPORT); //fs no support resize
     }
+
     Partition p;
     p.setPath(info.m_lvPath);
     p.m_sectorStart = 0;

@@ -210,7 +210,7 @@ void VGSizeInfoWidget::setData(const QVector<VGData> &vglist)
                         for (int k = 0; k < lvList.count(); k++) {
                             LVData lvData = lvList.at(k);
 
-                            if (lvData.m_lvName == lvNameList.at(k)) {
+                            if (lvData.m_lvName == lvNameList.at(i)) {
                                 lvSize += lvData.m_lvByteSize;
                             }
                         }
@@ -226,7 +226,7 @@ void VGSizeInfoWidget::setData(const QVector<VGData> &vglist)
 
                 Sector difference = totalVGSize - lvSizeSum;
                 if (difference > 0) {
-                    m_sizeInfo.append(difference);
+                    m_sizeInfo.append(Utils::LVMSizeToUnit(difference, SIZE_UNIT::UNIT_GIB));
                     m_pathInfo.append("unallocated");
                     m_pathList.insert(0, "unallocated");
                     m_pathSizeInfo.insert(0, Utils::LVMFormatSize(difference));
@@ -261,7 +261,7 @@ void VGSizeInfoWidget::setData(const QVector<VGData> &vglist)
 
             Sector difference = vgData.m_vgByteSize - lvSizeSum;
             if (difference > 0) {
-                m_sizeInfo.append(difference);
+                m_sizeInfo.append(Utils::LVMSizeToUnit(difference, SIZE_UNIT::UNIT_GIB));
                 m_pathInfo.append("unallocated");
                 m_pathList.insert(0, "unallocated");
                 m_pathSizeInfo.insert(0, Utils::LVMFormatSize(difference));
@@ -307,7 +307,7 @@ void VGSizeInfoWidget::setData(const VGData &vgData)
 
         Sector difference = vgSize - lvSizeSum;
         if (difference > 0) {
-            m_sizeInfo.append(difference);
+            m_sizeInfo.append(Utils::LVMSizeToUnit(difference, SIZE_UNIT::UNIT_GIB));
             m_pathInfo.append("unallocated");
             m_pathList.insert(0, "unallocated");
             m_pathSizeInfo.insert(0, Utils::LVMFormatSize(difference));
@@ -571,7 +571,8 @@ void VGSizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(text1color);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8, QFont::Normal);
             painter.setFont(font);
-            QRect textRect1 = QRect(paintRect.bottomLeft().x() + 25 + lstWidth.at(i) + width * i, paintRect.bottomLeft().y() + 37, paintRect.width(), 70);
+            height = 37 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
+            QRect textRect1 = QRect(paintRect.bottomLeft().x() + 25 + lstWidth.at(i) + width * i, paintRect.bottomLeft().y() + height, paintRect.width(), 70);
             painter.drawText(textRect1, m_pathSizeInfo.at(i));
         } else {
             int height = 90 - static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
@@ -603,7 +604,8 @@ void VGSizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(text1color);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8, QFont::Normal);
             painter.setFont(font);
-            QRect textRect1 = QRect(paintRect.bottomLeft().x() + 25 + lstWidth.at(i) + width * i, paintRect.bottomLeft().y() + 37, paintRect.width(), 70);
+            height = 37 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
+            QRect textRect1 = QRect(paintRect.bottomLeft().x() + 25 + lstWidth.at(i) + width * i, paintRect.bottomLeft().y() + height, paintRect.width(), 70);
             painter.drawText(textRect1, m_pathSizeInfo.at(i));
         }
     }

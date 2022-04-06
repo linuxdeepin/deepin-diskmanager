@@ -390,6 +390,8 @@ signals:
     void wipeMessage(const QString &clearMessage);
     void vgCreateMessage(const QString &vgMessage);
     void pvDeleteMessage(const QString &pvMessage);
+    void vgDeleteMessage(const QString &vgMessage);
+    void lvDeleteMessage(const QString &lvMessage);
 
 public slots:
     /**

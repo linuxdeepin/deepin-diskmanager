@@ -104,6 +104,8 @@ void DMDbusHandler::initConnection()
     connect(m_dbus, &DMDBusInterface::clearMessage, this, &DMDbusHandler::wipeMessage);
     connect(m_dbus, &DMDBusInterface::vgCreateMessage, this, &DMDbusHandler::vgCreateMessage);
     connect(m_dbus, &DMDBusInterface::pvDeleteMessage, this, &DMDbusHandler::pvDeleteMessage);
+    connect(m_dbus, &DMDBusInterface::vgDeleteMessage, this, &DMDbusHandler::vgDeleteMessage);
+    connect(m_dbus, &DMDBusInterface::lvDeleteMessage, this, &DMDbusHandler::lvDeleteMessage);
 //    connect(m_dbus, &DMDBusInterface::rootLogin, this, &DMDbusHandler::onRootLogin);
 }
 

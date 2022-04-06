@@ -72,6 +72,8 @@ private:
      */
     void noSupportFSDailog();
 
+    void updateInputRange();
+
     DLineEdit *m_lineEdit;
     DComboBox *m_comboBox;
     DLabel *m_label;

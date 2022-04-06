@@ -86,6 +86,8 @@ void DeviceListWidget::initConnection()
     connect(DMDbusHandler::instance(), &DMDbusHandler::showPartitionMessage, this, &DeviceListWidget::onShowPartition);
     connect(DMDbusHandler::instance(), &DMDbusHandler::createPartitionTableMessage, this, &DeviceListWidget::onCreatePartitionTableMessage);
     connect(DMDbusHandler::instance(), &DMDbusHandler::updateUsb, this, &DeviceListWidget::onUpdateUsb);
+    connect(DMDbusHandler::instance(), &DMDbusHandler::vgDeleteMessage, this, &DeviceListWidget::onVGDeleteMessage);
+    connect(DMDbusHandler::instance(), &DMDbusHandler::lvDeleteMessage, this, &DeviceListWidget::onLVDeleteMessage);
 }
 
 void DeviceListWidget::treeMenu(const QPoint &pos)
@@ -666,6 +668,85 @@ void DeviceListWidget::onDeleteLVClicked()
     setCurVGName("");
 }
 
+void DeviceListWidget::onVGDeleteMessage(const QString &vgMessage)
+{
+    QStringList infoList = vgMessage.split(":");
+
+    if (infoList.count() <= 1) {
+        return;
+    }
+
+    if ("1" == infoList.at(0)) {
+        isDeleteVGSuccess = true;
+        return;
+    }
+
+    QString reason = "";
+    switch (infoList.at(1).toInt()) {
+    case LVMError::LVM_ERR_VG_IN_USED: { // VG被占用
+        // 逻辑卷组被占用，无法删除。请重启设备后重试。
+        reason = tr("The logical volume group is busy and cannot be deleted. Please restart your device and try again.");
+        break;
+    }
+    case LVMError::LVM_ERR_LV_IN_USED: { // VG下的LV被占用
+        // 逻辑卷被占用，无法删除。请重启设备后重试。
+        reason = tr("The logical volume is busy and cannot be deleted. Please restart your device and try again.");
+        break;
+    }
+    case LVMError::LVM_ERR_VG_DELETE_FAILED: {
+        // 删除逻辑卷组失败
+        reason = tr("Failed to delete the logical volume group");
+        break;
+    }
+    default:
+        break;
+    }
+
+    if (!reason.isEmpty()) {
+        isDeleteVGSuccess = false;
+        DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(),
+                                                 QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), reason);
+        DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
+    }
+}
+
+void DeviceListWidget::onLVDeleteMessage(const QString &lvMessage)
+{
+    QStringList infoList = lvMessage.split(":");
+
+    if (infoList.count() <= 1) {
+        return;
+    }
+
+    if ("1" == infoList.at(0)) {
+        isDeleteLVSuccess = true;
+        return;
+    }
+
+    QString reason = "";
+    switch (infoList.at(1).toInt()) {
+    case LVMError::LVM_ERR_LV_IN_USED: {
+        // 逻辑卷被占用，无法删除。请重启设备后重试。
+        reason = tr("The logical volume is busy and cannot be deleted. Please restart your device and try again.");
+        break;
+    }
+    case LVMError::LVM_ERR_LV_DELETE_FAILED: {
+        // 删除逻辑卷失败
+        reason = tr("Failed to delete the logical volume");
+        break;
+    }
+    default:
+        break;
+    }
+
+    if (!reason.isEmpty()) {
+        isDeleteLVSuccess = false;
+        DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(),
+                                                 QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), reason);
+        DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
+    }
+}
+
 void DeviceListWidget::onUpdateUsb()
 {
     if (m_curChooseDevicePath.isEmpty() && m_curChooseVGName.isEmpty())
@@ -897,6 +978,14 @@ void DeviceListWidget::onUpdateDeviceInfo()
                     }
                 }
                 m_vgIsShow = true;
+            }
+
+            // 当前选择的是逻辑卷时，判断父节点位置是否发生改变；当前是逻辑卷组时，判断位置是否发生改变
+            // 针对于逻辑盘插拔时，没有默认选中节点做的处理
+            if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
+                topNum = topNum == m_deviceNum ? topNum : m_deviceNum;
+            } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::VOLUMEGROUP){
+                index = index == m_deviceNum ? index : m_deviceNum;
             }
 
             m_treeView->setRefreshItem(topNum, index, groupNum);

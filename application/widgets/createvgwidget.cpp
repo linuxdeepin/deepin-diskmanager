@@ -355,7 +355,7 @@ void CreateVGWidget::initUi()
 
     DLabel *selectSpaceLabel2 = new DLabel(tr("Auto adjusted to integral multiples of 4 MiB"), this); //自动调整为4MiB的倍数
     selectSpaceLabel2->setFont(font3);
-    selectSpaceLabel2->setPalette(palette2);
+    selectSpaceLabel2->setPalette(palette1);
     selectSpaceLabel2->setAlignment(Qt::AlignCenter);
 
 //    m_selectSpaceLabel = new DLabel("(1-100GiB)", this);
@@ -1910,9 +1910,41 @@ void CreateVGWidget::onTextChanged(const QString &text)
 void CreateVGWidget::onVGCreateMessage(const QString &vgMessage)
 {
     qDebug() << vgMessage;
-
     if (m_waterLoadingWidget != nullptr) {
         m_waterLoadingWidget->stopTimer();
+    }
+
+    QStringList infoList = vgMessage.split(":");
+    if (infoList.count() <= 1) {
+        close();
+        return;
+    }
+
+    if (infoList.at(0) == "0") {
+        QString text = "";
+        switch (infoList.at(1).toInt()) {
+        case LVMError::LVM_ERR_VG_ALREADY_EXISTS: {
+            text = tr("Existing volume group, creation failed. Please retry after reboot."); // 逻辑卷组已存在，创建失败，请重启电脑再试
+            break;
+        }
+        case LVMError::LVM_ERR_PV_CREATE_FAILED: {
+            text = tr("Failed to create a physical volume. Please refresh Disk Utility and try again."); // 物理卷创建失败，请刷新磁盘管理器再试
+            break;
+        }
+        case LVMError::LVM_ERR_IO_ERROR: {
+            text = tr("Device input/output error. Please try again after reboot."); // 设备输入输出错误，请重启电脑再试
+            break;
+        }
+        default:
+            break;
+        }
+
+        if (!text.isEmpty()) {
+            DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget()->parentWidget()->parentWidget(),
+                                                     QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), text);
+            DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget()->parentWidget()->parentWidget(),
+                                                           QMargins(0, 0, 0, 20));
+        }
     }
 
     close();
@@ -2009,7 +2041,6 @@ Byte_Value CreateVGWidget::getPVSize(const VGInfo &vg, const PVData &pv, bool fl
     return i == 0 ? allByte : ((i >= MEBIBYTE) ? allByte - i : allByte - i - 4 * MEBIBYTE); //去除末尾 保证是vg pe的倍数
 }
 
-
 Byte_Value CreateVGWidget::getDevSize(const VGInfo &vg, const PVData &pv, bool flag, long long size)
 {
     LVMInfo lvmInfo =  DMDbusHandler::instance()->probLVMInfo();
@@ -2043,8 +2074,6 @@ Byte_Value CreateVGWidget::getDevSize(const VGInfo &vg, const PVData &pv, bool f
         startSec -= UEFI_SECTOR;
         endSec -= GPTBACKUP;
     }
-
-
 
     long long allSize = size;
     long long tmpSize = size % vg.m_PESize;
@@ -2163,7 +2192,6 @@ Byte_Value CreateVGWidget::getMinSize(const VGInfo &vg, const set<PVData> &pvlis
         minSize += getDevSize(vg, pv, true, vgUsed);
     }
 
-
     //磁盘
     foreach (const PVData &pv, diskList) {
         Byte_Value size = getPVSize(vg, pv, false); //磁盘加入pv大小
@@ -2199,6 +2227,7 @@ Byte_Value CreateVGWidget::getMinSize(const VGInfo &vg, const set<PVData> &pvlis
 
 bool CreateVGWidget::adjudicationPVMove(const VGInfo &vg, const set<PVData> &pvlist, bool &bigDataMove, QStringList &realDelPvList)
 {
+    bigDataMove = false;
     auto pvInfoMap = vg.m_pvInfo;
     Byte_Value size = 0;
     //获取所有删除的pv
@@ -2220,8 +2249,8 @@ bool CreateVGWidget::adjudicationPVMove(const VGInfo &vg, const set<PVData> &pvl
         return false;
     }
 
-    if (!bigDataMove) { //判断是否存在大量数据需要移动
-        bigDataMove = ((size / GIBIBYTE) >= 1);
+    if (((size / GIBIBYTE) >= 1)) { //判断是否存在大量数据需要移动
+        bigDataMove = true;
     }
 
     return true;

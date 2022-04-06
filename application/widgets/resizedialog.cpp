@@ -62,7 +62,6 @@ void ResizeDialog::initUi()
     m_lineEdit->lineEdit()->setValidator(pvalidaor);
     m_lineEdit->setAccessibleName("resizeSize");
 
-
     QFont font;
     font.setWeight(QFont::Normal);
     font.setFamily("Source Han Sans");
@@ -89,10 +88,14 @@ void ResizeDialog::initUi()
     vboxLayout->addLayout(hLayout);
 
     if (DMDbusHandler::LOGICALVOLUME == DMDbusHandler::instance()->getCurLevel()) {
+        DPalette palette;
+        palette.setColor(DPalette::Text, QColor("#526A7F"));
+
         m_lvResizeLable = new DLabel(this);
         m_lvResizeLable->setText(tr("Auto adjusted to integral multiples of 4 MiB"));//自动调整为4MiB的倍数
         m_lvResizeLable->setAlignment(Qt::AlignLeft);
         m_lvResizeLable->setFont(font);
+        m_lvResizeLable->setPalette(palette);
         vboxLayout->addWidget(m_lvResizeLable);
     }
 
@@ -112,6 +115,8 @@ void ResizeDialog::initUi()
         tipLabel->setText(tr("It will resize the logical volume space"));
         m_lineEdit->setText(QString::number(Utils::LVMSizeToUnit(lvInfo.m_lvLECount * lvInfo.m_LESize, UNIT_GIB), 'f', 2));
     }
+
+    updateInputRange();
 
     int index = addButton(tr("Cancel"), false, ButtonNormal);
     m_okCode = addButton(tr("Confirm"), true, ButtonRecommend);
@@ -379,6 +384,8 @@ void ResizeDialog::onComboSelectedChanged(int index)
 
         getButton(m_okCode)->setDisabled(true);
     }
+
+    updateInputRange();
 }
 
 void ResizeDialog::onEditTextChanged(const QString &)
@@ -408,4 +415,62 @@ void ResizeDialog::onEditTextChanged(const QString &)
     } else {
         getButton(m_okCode)->setDisabled(true);
     }
+}
+
+void ResizeDialog::updateInputRange()
+{
+    SIZE_UNIT unit = (0 == m_comboBox->currentIndex()) ? UNIT_MIB : UNIT_GIB;
+    QString minSize = "0";
+    QString maxSize = "0";
+    if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
+        PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+        FS_Limits limits = info.m_fsLimits;
+
+        if (limits.min_size == -1) {
+            minSize = QString::number(Utils::sectorToUnit(info.m_sectorEnd - info.m_sectorStart + 1, info.m_sectorSize, unit), 'f', 2);
+        } else {
+            minSize = QString::number(Utils::LVMSizeToUnit(limits.min_size, unit), 'f', 2);
+        }
+
+        bool canExpand = false;
+        PartitionInfo next;
+        PartitionVec arrInfo = DMDbusHandler::instance()->getCurDevicePartitionArr();
+        int index = 0;
+        for (index = 0; index < arrInfo.size(); index++) {
+            PartitionInfo tem = arrInfo.at(index);
+            if (info == tem && index + 1 < arrInfo.size()) {
+                next = arrInfo.at(index + 1);
+                if (next.m_type == TYPE_UNALLOCATED) {
+                    canExpand = true;
+                    index += 1;
+                    break;
+                }
+            }
+        }
+
+        if (!canExpand) {
+            maxSize = QString::number(Utils::sectorToUnit(info.m_sectorEnd - info.m_sectorStart + 1, info.m_sectorSize, unit), 'f', 2);
+        } else {
+            maxSize = QString::number(Utils::sectorToUnit(next.m_sectorEnd - next.m_sectorStart + 1, next.m_sectorSize, unit), 'f', 2);
+        }
+    } else if (DMDbusHandler::LOGICALVOLUME == DMDbusHandler::instance()->getCurLevel()) {
+        VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
+        LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+        Sector curSize = lvInfo.m_lvLECount * lvInfo.m_LESize;
+        int peSize = vgInfo.m_PESize;
+        Sector unUsedSize = static_cast<Sector>(peSize * vgInfo.m_peUnused);
+        FS_Limits limits = lvInfo.m_fsLimits;
+
+        if (limits.min_size == -1) {
+            minSize = QString::number(Utils::LVMSizeToUnit(curSize, unit), 'f', 2);
+        } else if (limits.min_size == 0) {
+            minSize = QString::number(Utils::LVMSizeToUnit(peSize, unit), 'f', 2);
+        } else {
+            minSize = QString::number(Utils::LVMSizeToUnit(limits.min_size, unit), 'f', 2);
+        }
+
+        maxSize = QString::number(Utils::LVMSizeToUnit(curSize + unUsedSize, unit), 'f', 2);
+    }
+
+    m_lineEdit->lineEdit()->setPlaceholderText(QString("%1-%2").arg(minSize).arg(maxSize));
 }

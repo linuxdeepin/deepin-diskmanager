@@ -54,6 +54,8 @@ public:
     bool isDeleteSuccess = false;
     bool isUnmountSuccess = false;
     bool isCreateTableSuccess = false;
+    bool isDeleteVGSuccess = false;
+    bool isDeleteLVSuccess = false;
 private:
 
     /**
@@ -189,6 +191,18 @@ private slots:
      * @brief 删除逻辑卷按钮点击响应的槽函数
      */
     void onDeleteLVClicked();
+
+    /**
+     * @brief 删除VG信号响应的槽函数
+     * @param vgMessage 执行结果
+     */
+    void onVGDeleteMessage(const QString &vgMessage);
+
+    /**
+     * @brief 删除LV信号响应的槽函数
+     * @param lvMessage 执行结果
+     */
+    void onLVDeleteMessage(const QString &lvMessage);
 
 private:
     int m_flag = 0;

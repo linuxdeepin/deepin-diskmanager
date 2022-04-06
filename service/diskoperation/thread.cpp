@@ -266,6 +266,12 @@ void ProbeThread::sendsignals()
     case DISK_SIGNAL_TYPE_PVDELETE:
         emit pvDeleteMessage(m_arg2);
         break;
+    case DISK_SIGNAL_TYPE_VGDELETE:
+        emit vgDeleteMessage(m_arg2);
+        break;
+    case DISK_SIGNAL_TYPE_LVDELETE:
+        emit lvDeleteMessage(m_arg2);
+        break;
     default:
         break;
     }

@@ -368,7 +368,7 @@ bool LVMOperator::updateLVInfo(LVMInfo &lvmInfo, VGInfo &vg)
                 lv.m_fsLimits = part.m_fsLimits;
                 if (FS_FAT32 == lv.m_lvFsType || FS_FAT16 == lv.m_lvFsType) {
                     lv.m_fsLimits = FS_Limits(-1, -1); //fat格式不支持逻辑卷的扩展缩小
-                }else if (FS_UNALLOCATED ==  lv.m_lvFsType) { //empty fs , no limits
+                } else if (FS_UNALLOCATED ==  lv.m_lvFsType) { //empty fs , no limits
                     lv.m_fsLimits = FS_Limits(0, 0);
                 }
             }
@@ -451,9 +451,29 @@ bool LVMOperator::deleteVG(LVMInfo &lvmInfo, QStringList vglist)
         if (!lvmInfo.vgExists(vgName)) { //vg 不存在 报错返回
             return setLVMErr(lvmInfo, LVMError::LVM_ERR_VG_NO_EXISTS);
         }
+        VGInfo vgInfo = lvmInfo.getVG(vgName);
 
-        if (!deleteVG(lvmInfo.getVG(vgName))) { //vg删除失败 报错返回 需要修改错误枚举
-            return setLVMErr(lvmInfo, LVMError::LVM_ERR_VG_DELETE_FAILED);
+        //删除lv
+        QStringList lvList;
+        for (int i = 0; i < vgInfo.m_lvlist.count() - 1; ++i) { //删除lv
+            lvList << vgInfo.m_lvlist[i].m_lvPath; //最后一个lv不要删除 前端显示占位用;
+        }
+
+        if (!lvRemove(lvmInfo, lvList)) {
+            return setLVMErr(lvmInfo, lvmInfo.m_lvmErr);
+        }
+
+        //删除vg
+        int exitCode =  vgRemove(vgInfo);
+        if (exitCode != 0) {
+            return exitCode == 5 ? setLVMErr(lvmInfo, LVMError::LVM_ERR_VG_IN_USED) : setLVMErr(lvmInfo, LVMError::LVM_ERR_VG_DELETE_FAILED);
+        }
+
+        //删除pv
+        foreach (const QString &devPath, vgInfo.m_pvInfo.keys()) { //删除pv
+            if (!pvRemove(devPath)) {
+                return setLVMErr(lvmInfo, LVMError::LVM_ERR_PV_DELETE_FAILED);
+            }
         }
     }
     return setLVMErr(lvmInfo, LVMError::LVM_ERR_NORMAL);
@@ -570,8 +590,9 @@ bool LVMOperator::lvRemove(LVMInfo &lvmInfo, QStringList lvlist)
         return setLVMErr(lvmInfo, LVMError::LVM_ERR_NO_CMD_SUPPORT);
     }
     foreach (const QString &lvPath, lvlist) {
-        if (!lvRemove(lvPath)) {
-            return setLVMErr(lvmInfo, LVMError::LVM_ERR_LV_DELETE_FAILED);
+        int exitCode = lvRemove(lvPath);
+        if (exitCode != 0) {
+            return exitCode == 5 ? setLVMErr(lvmInfo, LVMError::LVM_ERR_LV_IN_USED) : setLVMErr(lvmInfo, LVMError::LVM_ERR_LV_DELETE_FAILED);
         }
     }
     return setLVMErr(lvmInfo, LVMError::LVM_ERR_NORMAL);
@@ -700,25 +721,11 @@ int LVMOperator::vgCreate(const QString &vgName, const QStringList &pvList)
     return Utils::executCmd(QString("vgcreate %1 %2 -y").arg(vgName).arg(pvList.join(" ")), strout, strerror);
 }
 
-bool LVMOperator::deleteVG(const VGInfo &vgInfo)
+int LVMOperator::vgRemove(const VGInfo &vgInfo)
 {
-    for (int i = 0; i < vgInfo.m_lvlist.count() - 1; ++i) { //删除lv
-        if (!lvRemove(vgInfo.m_lvlist[i].m_lvPath)) { //最后一个lv不要删除 前端显示占位用
-            return false;
-        }
-    }
-
+    //删除vg
     QString strout, strerror;
-    if (Utils::executCmd(QString("vgremove %1 -y").arg(vgInfo.m_vgName), strout, strerror) != 0) { //删除vg
-        return false;
-    }
-
-    foreach (const QString &devPath, vgInfo.m_pvInfo.keys()) { //删除pv
-        if (!pvRemove(devPath)) {
-            return false;
-        }
-    }
-    return true;
+    return  Utils::executCmd(QString("vgremove %1 -y").arg(vgInfo.m_vgName), strout, strerror); //删除vg
 }
 
 bool LVMOperator::vgRename(const QString &uuid, const QString &newName)
@@ -823,13 +830,13 @@ bool LVMOperator::lvCreate(const QString &vgName, const QString &lvName, const l
     return Utils::executCmd(QString("lvcreate -L %1b -n %2 %3 -y").arg(size).arg(lvName).arg(vgName), strout, strerror) == 0;
 }
 
-bool LVMOperator::lvRemove(const QString &lvPath)
+int LVMOperator::lvRemove(const QString &lvPath)
 {
     if (DiskManager::MountInfo::getMountedMountpoints(lvPath).count() == 0) {
         QString strout, strerror;
-        return Utils::executCmd(QString("lvremove %1 -y").arg(lvPath), strout, strerror) == 0;
+        return Utils::executCmd(QString("lvremove %1 -y").arg(lvPath), strout, strerror);
     }
-    return false;
+    return 5; //因为lvremove 删除一个挂载的lv时 返回的错误码是5 如果发现待删除的lv被挂载了，就返回5 与lvremove错误码保持一致
 }
 
 bool LVMOperator::resizeLV(const QString &devPath, const LVAction &act)

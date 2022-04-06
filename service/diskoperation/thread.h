@@ -120,6 +120,19 @@ signals:
      */
     void pvDeleteMessage(const QString &pvMessage);
 
+
+    /**
+     * @brief vg删除
+     * @param 删除结果
+     */
+    void vgDeleteMessage(const QString &pvMessage);
+
+    /**
+     * @brief lv删除
+     * @param 删除结果
+     */
+    void lvDeleteMessage(const QString &pvMessage);
+
     /**
      * @brief USB设备刷新信号
      */

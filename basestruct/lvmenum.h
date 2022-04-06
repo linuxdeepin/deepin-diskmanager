@@ -109,6 +109,8 @@ enum LVMError {
     LVM_ERR_LV_RESIZE_FS_NO_SUPPORT,//lv 文件系统不支持调整
     LVM_ERR_LV_EXTEND_FAILED,       //lv 扩展失败
     LVM_ERR_LV_REDUCE_FAILED,       //lv 缩小失败
+    LVM_ERR_LV_IN_USED,             //lv 被使用
+    //LVM_ERR_LV_MOUNT,             //lv 已经挂载
 
     LVM_ERR_VG = 300,               //vg 错误
     LVM_ERR_VG_CREATE_FAILED,       //vg 创建失败
@@ -117,7 +119,8 @@ enum LVMError {
     LVM_ERR_VG_ALREADY_EXISTS,      //vg 重名
     LVM_ERR_VG_DELETE_FAILED,       //vg 删除失败
     LVM_ERR_VG_EXTEND_FAILED,       //vg 扩展失败
-    LVM_ERR_VG_REDUCE_FAILED        //vg 缩小失败
+    LVM_ERR_VG_REDUCE_FAILED,       //vg 缩小失败
+    LVM_ERR_VG_IN_USED              //vg 被使用
 };
 
 

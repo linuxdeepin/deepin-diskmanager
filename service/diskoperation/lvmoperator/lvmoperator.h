@@ -231,7 +231,7 @@ private:
      * @param vgInfo:vg数据结构体
      * @return true 成功 false 失败
      */
-    static bool deleteVG(const VGInfo &vgInfo);
+    static int vgRemove(const VGInfo &vgInfo);
 
     /**
      * @brief 创建pv
@@ -268,7 +268,7 @@ private:
      * @param lvPath:lv路径
      * @return true 成功 false 失败
      */
-    static bool lvRemove(const QString &lvPath);
+    static int lvRemove(const QString &lvPath);
 
     /**
      * @brief 调整lv

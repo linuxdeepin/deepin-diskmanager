@@ -151,6 +151,19 @@ Q_SIGNALS:
      */
     Q_SCRIPTABLE void pvDeleteMessage(const QString &vgMessage);
 
+    /**
+     * @brief vg删除
+     * @param vgMessage:删除结果
+     */
+    Q_SCRIPTABLE void vgDeleteMessage(const QString &vgMessage);
+
+
+    /**
+     * @brief lg删除
+     * @param lvMessage:删除结果
+     */
+    Q_SCRIPTABLE void lvDeleteMessage(const QString &lvMessage);
+
 
 public Q_SLOTS:
     /**

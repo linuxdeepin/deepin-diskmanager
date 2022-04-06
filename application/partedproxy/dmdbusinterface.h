@@ -487,6 +487,8 @@ Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void clearMessage(const QString &clearMessage);
     Q_SCRIPTABLE void vgCreateMessage(const QString &vgMessage);
     Q_SCRIPTABLE void pvDeleteMessage(const QString &pvMessage);
+    Q_SCRIPTABLE void vgDeleteMessage(const QString &vgMessage);
+    Q_SCRIPTABLE void lvDeleteMessage(const QString &lvMessage);
 };
 
 namespace com {

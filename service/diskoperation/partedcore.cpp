@@ -149,6 +149,8 @@ void PartedCore::initConnection()
     connect(&m_probeThread, &ProbeThread::clearPartitionMessage, this, &PartedCore::clearMessage);
     connect(&m_probeThread, &ProbeThread::vgCreateMessage, this, &PartedCore::vgCreateMessage);
     connect(&m_probeThread, &ProbeThread::pvDeleteMessage, this, &PartedCore::pvDeleteMessage);
+    connect(&m_probeThread, &ProbeThread::vgDeleteMessage, this, &PartedCore::vgDeleteMessage);
+    connect(&m_probeThread, &ProbeThread::lvDeleteMessage, this, &PartedCore::lvDeleteMessage);
     connect(this, &PartedCore::probeAllInfo, &m_probeThread, &ProbeThread::probeDeviceInfo);
 
     //connect(&m_probeThread, &ProbeThread::updateDeviceInfo, this, &PartedCore::updateDeviceInfo);
@@ -2542,12 +2544,16 @@ bool PartedCore::createLV(QString vgName, QList<LVAction> lvList)
 
 bool PartedCore::deleteVG(QStringList vglist)
 {
-    return sendRefSigAndReturn(LVMOperator::deleteVG(m_lvmInfo, vglist));
+    bool flag = LVMOperator::deleteVG(m_lvmInfo, vglist);
+    QString str = flag ? "1:0" : QString("0:%1").arg(m_lvmInfo.m_lvmErr);
+    return sendRefSigAndReturn(flag, DISK_SIGNAL_TYPE_VGDELETE, flag, str);
 }
 
 bool PartedCore::deleteLV(QStringList lvlist)
 {
-    return sendRefSigAndReturn(LVMOperator::lvRemove(m_lvmInfo, lvlist));
+    bool flag = LVMOperator::lvRemove(m_lvmInfo, lvlist);
+    QString str = flag ? "1:0" : QString("0:%1").arg(m_lvmInfo.m_lvmErr);
+    return sendRefSigAndReturn(flag, DISK_SIGNAL_TYPE_LVDELETE, flag, str);
 }
 
 bool PartedCore::resizeVG(QString vgName, QList<PVData> devList, long long size)
@@ -2630,7 +2636,7 @@ bool PartedCore::mountLV(const LVAction &lvAction)
     //永久挂载
     QString type = Utils::fileSystemTypeToString(lv.m_lvFsType);
     if (mountDevice(lvAction.m_mountPoint, lv.m_lvPath, lv.m_lvFsType)) {
-        if (writeFstab(lv.m_mountUuid, lvAction.m_mountPoint, type,true)) {
+        if (writeFstab(lv.m_mountUuid, lvAction.m_mountPoint, type, true)) {
             return sendRefSigAndReturn(true);
         }
     }
@@ -2653,7 +2659,7 @@ bool PartedCore::umountLV(const LVAction &lvAction)
         return false;
     }
     //修改fstab
-    if (!writeFstab(lv.m_mountUuid,"", Utils::fileSystemTypeToString(lv.m_lvFsType), false)) {
+    if (!writeFstab(lv.m_mountUuid, "", Utils::fileSystemTypeToString(lv.m_lvFsType), false)) {
         qDebug() << __FUNCTION__ << "Unmount LV error:lv writeFstab error";
         return sendRefSigAndReturn(false);
     }

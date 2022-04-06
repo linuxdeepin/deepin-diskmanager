@@ -36,6 +36,8 @@
 #define DISK_SIGNAL_TYPE_CLEAR 6            //磁盘或分区清除动作信号
 #define DISK_SIGNAL_TYPE_VGCREATE 7         //vg创建信号
 #define DISK_SIGNAL_TYPE_PVDELETE 8         //pv删除信号
+#define DISK_SIGNAL_TYPE_VGDELETE 9         //vg删除信号
+#define DISK_SIGNAL_TYPE_LVDELETE 10        //lv删除信号
 
 #define DISK_SIGNAL_TYPE_AUTOMNT 100        //自动挂载
 

@@ -1031,6 +1031,20 @@ signals:
      */
     void pvDeleteMessage(const QString &pvMessage);
 
+
+    /**
+     * @brief vg删除
+     * @param vgMessage:删除结果
+     */
+    void vgDeleteMessage(const QString &vgMessage);
+
+
+    /**
+     * @brief lg删除
+     * @param lvMessage:删除结果
+     */
+    void lvDeleteMessage(const QString &lvMessage);
+
 public slots:
 
     /**

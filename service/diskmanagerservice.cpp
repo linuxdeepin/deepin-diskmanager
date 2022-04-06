@@ -144,6 +144,8 @@ void DiskManagerService::initConnection()
     connect(m_partedcore, &PartedCore::createTableMessage, this, &DiskManagerService::createTableMessage);
     connect(m_partedcore, &PartedCore::vgCreateMessage, this, &DiskManagerService::vgCreateMessage);
     connect(m_partedcore, &PartedCore::pvDeleteMessage, this, &DiskManagerService::pvDeleteMessage);
+    connect(m_partedcore, &PartedCore::vgDeleteMessage, this, &DiskManagerService::vgDeleteMessage);
+    connect(m_partedcore, &PartedCore::lvDeleteMessage, this, &DiskManagerService::lvDeleteMessage);
     connect(this, &DiskManagerService::getAllDeviceInfomation, this, &DiskManagerService::onGetAllDeviceInfomation);
     connect(m_partedcore, &PartedCore::clearMessage, this, &DiskManagerService::clearMessage);
 }

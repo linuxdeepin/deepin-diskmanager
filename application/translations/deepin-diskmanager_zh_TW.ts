@@ -280,8 +280,23 @@
         <translation>確 定</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1956"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1963"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1927"/>
+        <source>Existing volume group, creation failed. Please retry after reboot.</source>
+        <translation>邏輯卷組已存在，創建失敗，請重啟電腦再試</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1931"/>
+        <source>Failed to create a physical volume. Please refresh Disk Utility and try again.</source>
+        <translation>物理卷創建失敗，請刷新磁碟管理器再試</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1935"/>
+        <source>Device input/output error. Please try again after reboot.</source>
+        <translation>設備輸入輸出錯誤，請重啟電腦再試</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1988"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1995"/>
         <source>Refreshing the page to reload disks</source>
         <translation>硬體設備有更新，正在刷新界面</translation>
     </message>
@@ -322,65 +337,65 @@
 <context>
     <name>DMDbusHandler</name>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="198"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="200"/>
         <source>Refreshing data...</source>
         <translation>正在重新整理資料...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="217"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="219"/>
         <source>Initializing data...</source>
         <translation>正在初始化資料...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="250"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="607"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="252"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="609"/>
         <source>Mounting %1 ...</source>
         <translation>正在對%1進行掛載...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="257"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="614"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="259"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="616"/>
         <source>Unmounting %1 ...</source>
         <translation>正在對%1進行移除...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="296"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="298"/>
         <source>Resizing %1 ...</source>
         <translation>正在對%1進行空間調整...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="303"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="305"/>
         <source>Creating a new partition...</source>
         <translation>正在建立分區...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="436"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="438"/>
         <source>Deleting %1 ...</source>
         <translation>正在對%1進行刪除...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="488"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="490"/>
         <source>Creating a partition table of %1 ...</source>
         <translation>正在對%1進行分區表建立...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="490"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="492"/>
         <source>Replacing the partition table of %1 ...</source>
         <translation>正在對%1進行分區表取代...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="574"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="576"/>
         <source>Creating...</source>
         <translation>正在建立，請稍候...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="581"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="588"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="583"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="590"/>
         <source>Deleting...</source>
         <translation>正在刪除，請稍候...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="600"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="602"/>
         <source>Resizing space...</source>
         <translation>正在調整空間，請稍候...</translation>
     </message>
@@ -388,80 +403,80 @@
 <context>
     <name>DeviceListWidget</name>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="107"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="109"/>
         <source>Disk info</source>
         <translation>磁碟訊息</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="114"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="116"/>
         <source>Health management</source>
         <translation>健康管理</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="120"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="122"/>
         <source>Check health</source>
         <translation>硬碟健康檢測</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="126"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="128"/>
         <source>Check partition table error</source>
         <translation>分區表錯誤檢測</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="132"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="134"/>
         <source>Verify or repair bad sectors</source>
         <translation>壞道檢測與修復</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="138"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="140"/>
         <source>Create partition table</source>
         <translation>建立分區表</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="169"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="171"/>
         <source>Delete partition</source>
         <translation>刪除分區</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="214"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="216"/>
         <source>Delete volume group</source>
         <translation>刪除邏輯卷組</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="220"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="617"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="222"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="619"/>
         <source>Create logical volume</source>
         <translation>建立邏輯卷</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="245"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="247"/>
         <source>Delete logical volume</source>
         <translation>刪除邏輯卷</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="290"/>
         <source>Failed to get hardware information</source>
         <translation>獲取不到硬體相應訊息</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="290"/>
         <source>Close</source>
         <translation>關閉</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="347"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
         <source>Please unmount all partitions in the disk first</source>
         <translation>請先移除目前磁碟中的所有分區</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="347"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="588"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="645"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="590"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="647"/>
         <source>OK</source>
         <translation>確定</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="361"/>
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
@@ -469,181 +484,202 @@
 遺失所有資料，請謹慎使用</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="361"/>
         <source>Proceed</source>
         <translation>繼續</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="398"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="430"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="446"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="601"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="658"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="361"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="400"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="432"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="603"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="660"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="385"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="387"/>
         <source>No errors found in the partition table</source>
         <translation>分區表檢測正常</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="398"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="400"/>
         <source>Do you want to hide this partition?</source>
         <translation>您是否要隱藏該分區？</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="398"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="400"/>
         <source>Hide</source>
         <translation>隱藏</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="405"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="407"/>
         <source>Failed to hide the partition: unable to lock it</source>
         <translation>隱藏分區失敗，無法鎖定該分區</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="413"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="415"/>
         <source>You can only hide the unmounted partition</source>
         <translation>只有處於移除狀態的分區才能被隱藏</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="430"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="432"/>
         <source>Do you want to unhide this partition?</source>
         <translation>您是否要顯示該隱藏分區？</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="430"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="432"/>
         <source>Unhide</source>
         <translation>顯示</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="446"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
         <source>Are you sure you want to delete this partition?</source>
         <translation>您確定要刪除該分區嗎？</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="446"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
         <source>You will lose all data in it</source>
         <translation>該分區內所有文件將會遺失</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="446"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="601"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="658"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="603"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="660"/>
         <source>Delete</source>
         <translation>刪除</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="453"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="455"/>
         <source>Failed to delete the partition: unable to lock it</source>
         <translation>刪除分區失敗！無法鎖定該分區</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="468"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="470"/>
         <source>Hide the partition successfully</source>
         <translation>隱藏分區成功</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="473"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="475"/>
         <source>Failed to hide the partition</source>
         <translation>隱藏分區失敗</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="483"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="485"/>
         <source>Unhide the partition successfully</source>
         <translation>顯示分區成功</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="488"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="490"/>
         <source>Failed to unhide the partition</source>
         <translation>顯示分區失敗</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="504"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="506"/>
         <source>Delete the partition successfully</source>
         <translation>刪除分區成功</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="512"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="514"/>
         <source>Failed to find the disk</source>
         <translation>獲取磁碟裝置失敗</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="516"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="518"/>
         <source>Failed to get the partition info</source>
         <translation>獲取分區訊息失敗</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="520"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="522"/>
         <source>Failed to delete the partition</source>
         <translation>刪除操作失敗</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="524"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="526"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>提交核心失敗</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="531"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="533"/>
         <source>Failed to delete the partition: %1</source>
         <translation>刪除分區失敗，%1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="541"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="543"/>
         <source>Unmounting successful</source>
         <translation>移除成功</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="546"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="548"/>
         <source>Unmounting failed</source>
         <translation>移除失敗</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="557"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="559"/>
         <source>Creating partition table successful</source>
         <translation>建立分區表成功</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="561"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="563"/>
         <source>Replacing partition table successful</source>
         <translation>取代分區表成功</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="569"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="571"/>
         <source>Creating partition table failed</source>
         <translation>建立分區表失敗</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="573"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="575"/>
         <source>Replacing partition table failed</source>
         <translation>取代分區表失敗</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="588"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="645"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="590"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="647"/>
         <source>Unmount %1 first</source>
         <translation>請先手動移除%1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="600"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="657"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="602"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="659"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
         <translation>刪除後資料將無法復原，請確認</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="617"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="619"/>
         <source>The disks will be formatted if you create a logical volume</source>
         <translation>建立邏輯卷將格式化磁碟</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="748"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="688"/>
+        <source>The logical volume group is busy and cannot be deleted. Please restart your device and try again.</source>
+        <translation>邏輯卷組被占用，無法刪除。請重啟設備後重試。</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="693"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="730"/>
+        <source>The logical volume is busy and cannot be deleted. Please restart your device and try again.</source>
+        <translation>邏輯卷被占用，無法刪除。請重啟設備後重試。</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="698"/>
+        <source>Failed to delete the logical volume group</source>
+        <translation>刪除邏輯卷組失敗</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="735"/>
+        <source>Failed to delete the logical volume</source>
+        <translation>刪除邏輯卷失敗</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="829"/>
         <source>Volume Groups</source>
         <translation>邏輯卷組</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="788"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="869"/>
         <source>Disks</source>
         <translation>所有裝置</translation>
     </message>
@@ -1748,86 +1784,86 @@
         <translation>即將對磁碟內的空間進行調整</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="73"/>
+        <location filename="../widgets/resizedialog.cpp" line="72"/>
         <source>New capacity:</source>
         <translation>調整後的空間：</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="93"/>
+        <location filename="../widgets/resizedialog.cpp" line="95"/>
         <source>Auto adjusted to integral multiples of 4 MiB</source>
         <translation>自動調整為4 MiB的倍數</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="105"/>
-        <location filename="../widgets/resizedialog.cpp" line="110"/>
+        <location filename="../widgets/resizedialog.cpp" line="108"/>
+        <location filename="../widgets/resizedialog.cpp" line="113"/>
         <source>Resize %1</source>
         <translation>將對%1進行空間調整</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="112"/>
+        <location filename="../widgets/resizedialog.cpp" line="115"/>
         <source>It will resize the logical volume space</source>
         <translation>即將對邏輯卷內的空間進行調整</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="116"/>
-        <location filename="../widgets/resizedialog.cpp" line="228"/>
-        <location filename="../widgets/resizedialog.cpp" line="300"/>
-        <location filename="../widgets/resizedialog.cpp" line="303"/>
+        <location filename="../widgets/resizedialog.cpp" line="121"/>
+        <location filename="../widgets/resizedialog.cpp" line="233"/>
+        <location filename="../widgets/resizedialog.cpp" line="305"/>
+        <location filename="../widgets/resizedialog.cpp" line="308"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="117"/>
+        <location filename="../widgets/resizedialog.cpp" line="122"/>
         <source>Confirm</source>
         <translation>確定</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="144"/>
-        <location filename="../widgets/resizedialog.cpp" line="175"/>
-        <location filename="../widgets/resizedialog.cpp" line="196"/>
-        <location filename="../widgets/resizedialog.cpp" line="274"/>
+        <location filename="../widgets/resizedialog.cpp" line="149"/>
+        <location filename="../widgets/resizedialog.cpp" line="180"/>
+        <location filename="../widgets/resizedialog.cpp" line="201"/>
+        <location filename="../widgets/resizedialog.cpp" line="279"/>
         <source>Space limit exceeded</source>
         <translation>超出設定範圍</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="212"/>
+        <location filename="../widgets/resizedialog.cpp" line="217"/>
         <source>The file system does not support shrinking space</source>
         <translation>該文件系統不支持空間縮小</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="212"/>
-        <location filename="../widgets/resizedialog.cpp" line="222"/>
-        <location filename="../widgets/resizedialog.cpp" line="228"/>
-        <location filename="../widgets/resizedialog.cpp" line="283"/>
-        <location filename="../widgets/resizedialog.cpp" line="300"/>
-        <location filename="../widgets/resizedialog.cpp" line="303"/>
-        <location filename="../widgets/resizedialog.cpp" line="340"/>
+        <location filename="../widgets/resizedialog.cpp" line="217"/>
+        <location filename="../widgets/resizedialog.cpp" line="227"/>
+        <location filename="../widgets/resizedialog.cpp" line="233"/>
+        <location filename="../widgets/resizedialog.cpp" line="288"/>
+        <location filename="../widgets/resizedialog.cpp" line="305"/>
+        <location filename="../widgets/resizedialog.cpp" line="308"/>
+        <location filename="../widgets/resizedialog.cpp" line="345"/>
         <source>OK</source>
         <translation>確 定</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="222"/>
-        <location filename="../widgets/resizedialog.cpp" line="283"/>
+        <location filename="../widgets/resizedialog.cpp" line="227"/>
+        <location filename="../widgets/resizedialog.cpp" line="288"/>
         <source>Not enough space, please clear data in it</source>
         <translation>剩餘空間不足，請先清理空間</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="228"/>
+        <location filename="../widgets/resizedialog.cpp" line="233"/>
         <source>To prevent data loss, back up data before shrinking it</source>
         <translation>縮減空間前，請對其內的資料做好備份，以防資料遺失</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="300"/>
+        <location filename="../widgets/resizedialog.cpp" line="305"/>
         <source>The current device has been mounted and will be unmounted automatically. Please back up data in it to prevent data loss</source>
         <translation>當前設備已掛載，將會自動卸載，請對其內的數據做好備份，以防數據遺失</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="303"/>
+        <location filename="../widgets/resizedialog.cpp" line="308"/>
         <source>To prevent data loss, back up data in the logical volume before shrinking it</source>
         <translation>縮減邏輯卷前，請對其內的資料做好備份，以防資料遺失</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="340"/>
+        <location filename="../widgets/resizedialog.cpp" line="345"/>
         <source>The file system does not support space adjustment</source>
         <translation>該文件系統不支持調整空間</translation>
     </message>

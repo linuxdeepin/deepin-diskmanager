@@ -200,7 +200,7 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="356"/>
         <source>Auto adjusted to integral multiples of 4 MiB</source>
-        <translation type="unfinished"/>
+        <translation>Automatikusan beállítva a 4 MB integrált többszörösére </translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="444"/>
@@ -280,8 +280,23 @@
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1956"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1963"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1927"/>
+        <source>Existing volume group, creation failed. Please retry after reboot.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1931"/>
+        <source>Failed to create a physical volume. Please refresh Disk Utility and try again.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1935"/>
+        <source>Device input/output error. Please try again after reboot.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1988"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1995"/>
         <source>Refreshing the page to reload disks</source>
         <translation>Az oldal frissítése a lemezek újratöltéséhez </translation>
     </message>
@@ -322,65 +337,65 @@
 <context>
     <name>DMDbusHandler</name>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="198"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="200"/>
         <source>Refreshing data...</source>
         <translation>Adatok frissítése...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="217"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="219"/>
         <source>Initializing data...</source>
         <translation>Adatok inicializálása...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="250"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="607"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="252"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="609"/>
         <source>Mounting %1 ...</source>
         <translation>%1 csatolása...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="257"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="614"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="259"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="616"/>
         <source>Unmounting %1 ...</source>
         <translation>%1 lecsatolása...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="296"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="298"/>
         <source>Resizing %1 ...</source>
         <translation>%1 átméretezése...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="303"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="305"/>
         <source>Creating a new partition...</source>
         <translation>Új partíció létrehozása...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="436"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="438"/>
         <source>Deleting %1 ...</source>
         <translation>%1 törlése...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="488"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="490"/>
         <source>Creating a partition table of %1 ...</source>
         <translation>Partíciós tábla létrehozása a %1-hez...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="490"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="492"/>
         <source>Replacing the partition table of %1 ...</source>
         <translation>% 1 partíciós táblájának cseréje...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="574"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="576"/>
         <source>Creating...</source>
         <translation>Létrehozás...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="581"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="588"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="583"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="590"/>
         <source>Deleting...</source>
         <translation>Törlés...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="600"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="602"/>
         <source>Resizing space...</source>
         <translation>Hely átméretezése...</translation>
     </message>
@@ -388,80 +403,80 @@
 <context>
     <name>DeviceListWidget</name>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="107"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="109"/>
         <source>Disk info</source>
         <translation>Lemez információ</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="114"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="116"/>
         <source>Health management</source>
         <translation>Egészség menedzsment</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="120"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="122"/>
         <source>Check health</source>
         <translation>Egészség ellenőrzése</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="126"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="128"/>
         <source>Check partition table error</source>
         <translation>Ellenőrizze a partíciós tábla hibáját</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="132"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="134"/>
         <source>Verify or repair bad sectors</source>
         <translation>Ellenőrizze vagy javítsa a hibás szektorokat</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="138"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="140"/>
         <source>Create partition table</source>
         <translation>Partíciós tábla létrehozása</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="169"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="171"/>
         <source>Delete partition</source>
         <translation>Partíció törlése</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="214"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="216"/>
         <source>Delete volume group</source>
         <translation>Kötetcsoport törlése</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="220"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="617"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="222"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="619"/>
         <source>Create logical volume</source>
         <translation>Logikai kötet létrehozása</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="245"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="247"/>
         <source>Delete logical volume</source>
         <translation>Logikai kötet törlése</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="290"/>
         <source>Failed to get hardware information</source>
         <translation>Nem sikerült beszerezni a hardveres információkat</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="288"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="290"/>
         <source>Close</source>
         <translation>Bezárás</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="347"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
         <source>Please unmount all partitions in the disk first</source>
         <translation>Kérjük először csatolja le az összes, lemezen lévő partíciót</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="347"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="588"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="645"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="590"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="647"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="361"/>
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
@@ -470,181 +485,202 @@ elveszik, ha új partíciós táblát hoz létre,
 kérjük legyen óvatos</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="361"/>
         <source>Proceed</source>
         <translation>Folytassa</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="359"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="398"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="430"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="446"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="601"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="658"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="361"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="400"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="432"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="603"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="660"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="385"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="387"/>
         <source>No errors found in the partition table</source>
         <translation>Nem található hiba a partíciós táblában</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="398"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="400"/>
         <source>Do you want to hide this partition?</source>
         <translation>Valóban el akarja rejteni ezt a partíciót?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="398"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="400"/>
         <source>Hide</source>
         <translation>Elrejtés</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="405"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="407"/>
         <source>Failed to hide the partition: unable to lock it</source>
         <translation>Nem sikerült elrejteni a partíciót: nem sikerült lezárni</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="413"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="415"/>
         <source>You can only hide the unmounted partition</source>
         <translation>Csak a leválasztatlan partíciót rejtheti el</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="430"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="432"/>
         <source>Do you want to unhide this partition?</source>
         <translation>Valóban fel akarja fedni ezt a partíciót?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="430"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="432"/>
         <source>Unhide</source>
         <translation>Felfedés</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="446"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
         <source>Are you sure you want to delete this partition?</source>
         <translation>Valóban törölni akarja ezt a partíciót?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="446"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
         <source>You will lose all data in it</source>
         <translation>Az összes tárolt adat el fog veszni</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="446"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="601"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="658"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="603"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="660"/>
         <source>Delete</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="453"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="455"/>
         <source>Failed to delete the partition: unable to lock it</source>
         <translation>Nem sikerült törölni a partíciót: nem sikerült lezárni</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="468"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="470"/>
         <source>Hide the partition successfully</source>
         <translation>A partíció elrejtése sikeres</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="473"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="475"/>
         <source>Failed to hide the partition</source>
         <translation>A partíció elrejtése sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="483"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="485"/>
         <source>Unhide the partition successfully</source>
         <translation>A partíció felfedése sikeres</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="488"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="490"/>
         <source>Failed to unhide the partition</source>
         <translation>A partíció felfedése sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="504"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="506"/>
         <source>Delete the partition successfully</source>
         <translation>A partíció törlése sikeres</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="512"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="514"/>
         <source>Failed to find the disk</source>
         <translation>A lemez elérése sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="516"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="518"/>
         <source>Failed to get the partition info</source>
         <translation>A partíció adatainak lekérése sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="520"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="522"/>
         <source>Failed to delete the partition</source>
         <translation>A partíció törlése sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="524"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="526"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>A kérelem elküldése a kernelnek sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="531"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="533"/>
         <source>Failed to delete the partition: %1</source>
         <translation>A partíció törlése sikertelen: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="541"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="543"/>
         <source>Unmounting successful</source>
         <translation>Az lecsatolás sikeres</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="546"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="548"/>
         <source>Unmounting failed</source>
         <translation>Az lecsatolás sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="557"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="559"/>
         <source>Creating partition table successful</source>
         <translation>A partíciós tábla létrehozása sikeres</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="561"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="563"/>
         <source>Replacing partition table successful</source>
         <translation>A partíciós tábla cseréje sikeres</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="569"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="571"/>
         <source>Creating partition table failed</source>
         <translation>A partíciós tábla létrehozása sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="573"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="575"/>
         <source>Replacing partition table failed</source>
         <translation>A partíciós tábla cseréje sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="588"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="645"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="590"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="647"/>
         <source>Unmount %1 first</source>
         <translation>Először csatolja le a %1-et</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="600"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="657"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="602"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="659"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
         <translation>Az adatok nem állíthatók vissza, ha törlésre kerülnek, kérjük erősítse meg a folytatás előtt </translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="617"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="619"/>
         <source>The disks will be formatted if you create a logical volume</source>
         <translation>A lemezek formázásra kerülnek, ha logikai kötetet hoz létre </translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="748"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="688"/>
+        <source>The logical volume group is busy and cannot be deleted. Please restart your device and try again.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="693"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="730"/>
+        <source>The logical volume is busy and cannot be deleted. Please restart your device and try again.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="698"/>
+        <source>Failed to delete the logical volume group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="735"/>
+        <source>Failed to delete the logical volume</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="829"/>
         <source>Volume Groups</source>
         <translation>Kötetcsoportok</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="788"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="869"/>
         <source>Disks</source>
         <translation>Lemezek</translation>
     </message>
@@ -1728,7 +1764,7 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="244"/>
         <source>Not enough space to back up data on %1, please delete the logical volume first</source>
-        <translation type="unfinished"/>
+        <translation>Nincs elég hely az adatok biztonsági mentéséhez a %1 helyen, kérjük először törölje a logikai kötetet</translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="245"/>
@@ -1749,86 +1785,86 @@ kérjük legyen óvatos</translation>
         <translation>Ez átméretezi a lemezen található partíciókat</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="73"/>
+        <location filename="../widgets/resizedialog.cpp" line="72"/>
         <source>New capacity:</source>
         <translation>Új kapacitás:</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="93"/>
+        <location filename="../widgets/resizedialog.cpp" line="95"/>
         <source>Auto adjusted to integral multiples of 4 MiB</source>
-        <translation type="unfinished"/>
+        <translation>Automatikusan beállítva a 4 MB integrált többszörösére </translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="105"/>
-        <location filename="../widgets/resizedialog.cpp" line="110"/>
+        <location filename="../widgets/resizedialog.cpp" line="108"/>
+        <location filename="../widgets/resizedialog.cpp" line="113"/>
         <source>Resize %1</source>
         <translation>%1 átméretezése</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="112"/>
+        <location filename="../widgets/resizedialog.cpp" line="115"/>
         <source>It will resize the logical volume space</source>
         <translation>A logikai kötet helyek átméretezésre kerülnek</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="116"/>
-        <location filename="../widgets/resizedialog.cpp" line="228"/>
-        <location filename="../widgets/resizedialog.cpp" line="300"/>
-        <location filename="../widgets/resizedialog.cpp" line="303"/>
+        <location filename="../widgets/resizedialog.cpp" line="121"/>
+        <location filename="../widgets/resizedialog.cpp" line="233"/>
+        <location filename="../widgets/resizedialog.cpp" line="305"/>
+        <location filename="../widgets/resizedialog.cpp" line="308"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="117"/>
+        <location filename="../widgets/resizedialog.cpp" line="122"/>
         <source>Confirm</source>
         <translation>Megerősítés</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="144"/>
-        <location filename="../widgets/resizedialog.cpp" line="175"/>
-        <location filename="../widgets/resizedialog.cpp" line="196"/>
-        <location filename="../widgets/resizedialog.cpp" line="274"/>
+        <location filename="../widgets/resizedialog.cpp" line="149"/>
+        <location filename="../widgets/resizedialog.cpp" line="180"/>
+        <location filename="../widgets/resizedialog.cpp" line="201"/>
+        <location filename="../widgets/resizedialog.cpp" line="279"/>
         <source>Space limit exceeded</source>
         <translation>Méretkorlát meghaladva</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="212"/>
+        <location filename="../widgets/resizedialog.cpp" line="217"/>
         <source>The file system does not support shrinking space</source>
-        <translation type="unfinished"/>
+        <translation>A fájlrendszer nem támogatja a terület szűkítését </translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="212"/>
-        <location filename="../widgets/resizedialog.cpp" line="222"/>
-        <location filename="../widgets/resizedialog.cpp" line="228"/>
-        <location filename="../widgets/resizedialog.cpp" line="283"/>
-        <location filename="../widgets/resizedialog.cpp" line="300"/>
-        <location filename="../widgets/resizedialog.cpp" line="303"/>
-        <location filename="../widgets/resizedialog.cpp" line="340"/>
+        <location filename="../widgets/resizedialog.cpp" line="217"/>
+        <location filename="../widgets/resizedialog.cpp" line="227"/>
+        <location filename="../widgets/resizedialog.cpp" line="233"/>
+        <location filename="../widgets/resizedialog.cpp" line="288"/>
+        <location filename="../widgets/resizedialog.cpp" line="305"/>
+        <location filename="../widgets/resizedialog.cpp" line="308"/>
+        <location filename="../widgets/resizedialog.cpp" line="345"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="222"/>
-        <location filename="../widgets/resizedialog.cpp" line="283"/>
+        <location filename="../widgets/resizedialog.cpp" line="227"/>
+        <location filename="../widgets/resizedialog.cpp" line="288"/>
         <source>Not enough space, please clear data in it</source>
         <translation>Nincs elegendő hely, kérjük töröljön adatokat</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="228"/>
+        <location filename="../widgets/resizedialog.cpp" line="233"/>
         <source>To prevent data loss, back up data before shrinking it</source>
         <translation>Az adatvesztés elkerülése érdekében készítsen biztonsági másolatot az adatokról, mielőtt csökkentené a kötet méretét</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="300"/>
+        <location filename="../widgets/resizedialog.cpp" line="305"/>
         <source>The current device has been mounted and will be unmounted automatically. Please back up data in it to prevent data loss</source>
-        <translation type="unfinished"/>
+        <translation>Az aktuális eszköz fel lett csatolva, és automatikusan le lesz választva. Kérjük készítsen biztonsági másolatot a rajta lévő adatokról az adatvesztés elkerülése érdekében </translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="303"/>
+        <location filename="../widgets/resizedialog.cpp" line="308"/>
         <source>To prevent data loss, back up data in the logical volume before shrinking it</source>
         <translation>Az adatvesztés elkerülése érdekében készítsen biztonsági másolatot a logikai kötetben lévő adatokról, mielőtt csökkentené azok méretét</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="340"/>
+        <location filename="../widgets/resizedialog.cpp" line="345"/>
         <source>The file system does not support space adjustment</source>
         <translation>A fájlrendszer nem támogatja a terület beállítását </translation>
     </message>

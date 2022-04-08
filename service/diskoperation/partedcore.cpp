@@ -1789,7 +1789,7 @@ bool PartedCore::unmount()
 {
     //永久卸载
     qDebug() << __FUNCTION__ << "Unmount start";
-    if (!umontDevice(m_curpartition.getMountPoints())) { //卸载挂载点  内部有信号发送 不要重复发送信号
+    if (!umontDevice(m_curpartition.getMountPoints(),m_curpartition.getPath())) { //卸载挂载点  内部有信号发送 不要重复发送信号
         return false;
     }
     //修改/etc/fstab
@@ -2601,7 +2601,8 @@ bool PartedCore::resizeLV(LVAction &lvAct)
 
     if (lvAct.m_lvAct == LVM_ACT_LV_REDUCE) { //缩小
         //自动卸载
-        if (!umontDevice(info.m_mountPoints)) {
+        QString devPath = QString("/dev/mapper/%1-%2").arg(info.m_vgName).arg(info.m_lvName);
+        if (!umontDevice(info.m_mountPoints,devPath)) {
             return sendRefSigAndReturn(false);
         }
     }
@@ -2654,7 +2655,8 @@ bool PartedCore::umountLV(const LVAction &lvAction)
     }
     //卸载
     LVInfo lv = m_lvmInfo.getLVInfo(lvAction.m_vgName, lvAction.m_lvName);
-    if (!umontDevice(lv.m_mountPoints)) { //卸载挂载点  内部有信号发送 不要重复发送信号
+    QString devPath = QString("/dev/mapper/%1-%2").arg(lv.m_vgName).arg(lv.m_lvName);
+    if (!umontDevice(lv.m_mountPoints, devPath)) { //卸载挂载点  内部有信号发送 不要重复发送信号
         qDebug() << __FUNCTION__ << "Unmount LV error:lv umount error";
         return false;
     }
@@ -2663,10 +2665,8 @@ bool PartedCore::umountLV(const LVAction &lvAction)
         qDebug() << __FUNCTION__ << "Unmount LV error:lv writeFstab error";
         return sendRefSigAndReturn(false);
     }
-
-    emit refreshDeviceInfo(DISK_SIGNAL_TYPE_UMNT, true, "1");
     qDebug() << __FUNCTION__ << "Unmount LV end";
-    return true;
+    return sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_UMNT, true, "1");
 }
 
 bool PartedCore::clearLV(const LVAction &lvAction)
@@ -3971,8 +3971,12 @@ bool PartedCore::mountDevice(const QString &mountpath, const QString devPath, co
 
 }
 
-bool PartedCore::umontDevice(QVector<QString> mountPoints)
+bool PartedCore::umontDevice(QVector<QString> mountPoints, QString devPath)
 {
+    if (devPath.isEmpty()) {
+        devPath = m_curpartition.getPath();
+    }
+
     QString output, errstr;
     for (QString path : mountPoints) {
         QStringList arg;
@@ -3980,7 +3984,7 @@ bool PartedCore::umontDevice(QVector<QString> mountPoints)
         int exitcode = Utils::executeCmdWithArtList("umount", arg, output, errstr);
         if (0 != exitcode) {
             Utils::executCmd("df", output, errstr);
-            return output.contains(m_curpartition.getPath()) ? sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_UMNT, true, "0")
+            return output.contains(devPath) ? sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_UMNT, true, "0")
                    : sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_UMNT, true, "1");
         }
     }

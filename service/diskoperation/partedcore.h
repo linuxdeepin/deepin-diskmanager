@@ -455,7 +455,7 @@ private:
      * @param mountPoints:挂载点集合
      * @return true 卸载成功 false 卸载失败
      */
-    bool umontDevice(QVector<QString>mountPoints);
+    bool umontDevice(QVector<QString>mountPoints,QString devPath = "");
 
     /**
      * @brief 写fstab文件

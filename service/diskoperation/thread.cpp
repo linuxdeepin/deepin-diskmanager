@@ -120,10 +120,9 @@ void WorkThread::runTime()
 {
 
     Sector i = m_blockStart;
-    Sector j = m_blockStart+1;
+    Sector j = m_blockStart + 1;
     QProcess proc;
-    while(j <= m_blockEnd+1 && m_stopFlag != 2)
-    {
+    while (j <= m_blockEnd + 1 && m_stopFlag != 2) {
         QString cmd = QString("badblocks -sv -b %1 %2 %3 %4").arg(m_checkSize).arg(m_devicePath).arg(j).arg(i);
 
         QDateTime ctime = QDateTime::currentDateTime();
@@ -133,7 +132,7 @@ void WorkThread::runTime()
 
         cmd = proc.readAllStandardError();
 
-        if(ctime.msecsTo(ctime1) > m_checkTime.toInt()) {
+        if (ctime.msecsTo(ctime1) > m_checkTime.toInt()) {
             QString cylinderNumber = QString("%1").arg(i);
             QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
             QString cylinderStatus = "bad";
@@ -183,7 +182,7 @@ void FixThread::runFix()
 //    qDebug() << m_list << endl;
     int i = 0;
     QProcess proc;
-    while(i < m_list.size() && m_stopFlag != 2) {
+    while (i < m_list.size() && m_stopFlag != 2) {
         Sector j = m_list.at(i).toInt();
         Sector k = m_list.at(i).toInt() + 1;
         QString cmd = QString("badblocks -sv -b %1 -w %2 %3 %4").arg(m_checkSize).arg(m_devicePath).arg(k).arg(j);
@@ -286,7 +285,7 @@ void ProbeThread::probeDeviceInfo()
         //Only usb add need to sleep 5 seconds
         qDebug() << __FUNCTION__ << "From auto Mount, So i will sleep 5 seconds! type:" << m_type;
         //相传有一块移动硬盘，需要先 sleep 一下才能正确读取。
-        sleep (5);
+        sleep(5);
     }
 
     QString rootFsName;
@@ -323,7 +322,7 @@ void ProbeThread::probeDeviceInfo()
         DeviceStorage device;
         tempDevice.m_mediaType = device.getDiskInfoMediaType(devicePaths[t]);
         device.getDiskInfoModel(devicePaths[t], tempDevice.m_model);
-        device.getDiskInfoInterface(devicePaths[t],tempDevice.m_interface, tempDevice.m_model);
+        device.getDiskInfoInterface(devicePaths[t], tempDevice.m_interface, tempDevice.m_model);
         m_deviceMap.insert(devicePaths.at(t), tempDevice);
     }
 //    qDebug() << __FUNCTION__ << "**9";
@@ -334,7 +333,7 @@ void ProbeThread::probeDeviceInfo()
         for (int i = 0; i < it.value().m_partitions.size(); i++) {
             const Partition &pat = *(it.value().m_partitions.at(i)); //拷贝构造速度提升 const 引用
             PartitionInfo partinfo = pat.getPartitionInfo();
-              //这里的代码有可能会恢复，与文管对移动设备的处理相关
+            //这里的代码有可能会恢复，与文管对移动设备的处理相关
 //            if(m_hiddenPartition.indexOf(partinfo.m_uuid) != -1 && !partinfo.m_uuid.isEmpty()) {
 //                partinfo.m_flag = 1;
 //            } else {
@@ -385,7 +384,8 @@ QMap<QString, Device> ProbeThread::getDeviceMap()
 
 LVMThread::LVMThread(QObject *parent)
 {
-     qRegisterMetaType<LVMInfo>();
+    Q_UNUSED(parent)
+    qRegisterMetaType<LVMInfo>();
 }
 
 void LVMThread::deletePVList(LVMInfo lvmInfo, QList<PVData> devList)

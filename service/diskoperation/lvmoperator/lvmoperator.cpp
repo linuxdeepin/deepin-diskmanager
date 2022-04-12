@@ -492,6 +492,7 @@ bool LVMOperator::resizeVG(LVMInfo &lvmInfo, QString vgName, QList<PVData> devLi
         return setLVMErr(lvmInfo, LVMError::LVM_ERR_NO_CMD_SUPPORT);
     }
 
+
     VGInfo vg = lvmInfo.getVG(vgName);
     QList<PVData>oldPVlist;
     QList<PVData>delPVList;

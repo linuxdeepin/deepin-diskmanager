@@ -136,14 +136,11 @@ Q_SIGNALS:
      */
     Q_SCRIPTABLE void clearMessage(const QString &clearMessage);
 
-
-
     /**
      * @brief 创建vg
      * @param vgMessage:创建结果
      */
     Q_SCRIPTABLE void vgCreateMessage(const QString &vgMessage);
-
 
     /**
      * @brief pv删除
@@ -422,7 +419,6 @@ public Q_SLOTS:
      * @return true 成功 false 失败
      */
     Q_SCRIPTABLE bool onDeletePVList(QList<PVData>devList);
-
 
     /**
      * @brief USB插入

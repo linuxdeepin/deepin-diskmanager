@@ -1789,7 +1789,7 @@ bool PartedCore::unmount()
 {
     //永久卸载
     qDebug() << __FUNCTION__ << "Unmount start";
-    if (!umontDevice(m_curpartition.getMountPoints(),m_curpartition.getPath())) { //卸载挂载点  内部有信号发送 不要重复发送信号
+    if (!umontDevice(m_curpartition.getMountPoints(), m_curpartition.getPath())) { //卸载挂载点  内部有信号发送 不要重复发送信号
         return false;
     }
     //修改/etc/fstab
@@ -2454,15 +2454,14 @@ bool PartedCore::checkPVDevice(const QString vgName, const PVData &pv, bool isCr
 
 void PartedCore::deletePVListMessage(bool flag)
 {
-    sendRefSigAndReturn(flag, DISK_SIGNAL_TYPE_PVDELETE, true, QString("%1:%2").arg(flag ? 1 : 0).arg(m_lvmInfo.m_lvmErr));
+    m_lvmInfo.m_lvmErr = LVMOperator::m_lvmErr;
+    sendRefSigAndReturn(flag, DISK_SIGNAL_TYPE_PVDELETE, flag, QString("%1:%2").arg(flag ? 1 : 0).arg(m_lvmInfo.m_lvmErr));
 }
 
 void PartedCore::resizeVGMessage(bool flag)
 {
-    if (!flag) {
-        sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(m_lvmInfo.m_lvmErr));
-    }
-    sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_VGCREATE, true, QString("1:%1").arg(m_lvmInfo.m_lvmErr));
+    m_lvmInfo.m_lvmErr = LVMOperator::m_lvmErr;
+    sendRefSigAndReturn(flag, DISK_SIGNAL_TYPE_VGCREATE, flag, QString("%1:%2").arg(flag ? 1 : 0).arg(m_lvmInfo.m_lvmErr));
 }
 
 bool PartedCore::createVG(QString vgName, QList<PVData> devList, long long size)
@@ -2602,7 +2601,7 @@ bool PartedCore::resizeLV(LVAction &lvAct)
     if (lvAct.m_lvAct == LVM_ACT_LV_REDUCE) { //缩小
         //自动卸载
         QString devPath = QString("/dev/mapper/%1-%2").arg(info.m_vgName).arg(info.m_lvName);
-        if (!umontDevice(info.m_mountPoints,devPath)) {
+        if (!umontDevice(info.m_mountPoints, devPath)) {
             return sendRefSigAndReturn(false);
         }
     }

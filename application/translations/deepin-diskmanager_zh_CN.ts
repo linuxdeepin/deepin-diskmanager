@@ -78,23 +78,23 @@
         <translation>逻辑卷大小：</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="471"/>
-        <location filename="../widgets/createlvwidget.cpp" line="561"/>
+        <location filename="../widgets/createlvwidget.cpp" line="479"/>
+        <location filename="../widgets/createlvwidget.cpp" line="569"/>
         <source>Unallocated</source>
         <translation>未分配</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="494"/>
+        <location filename="../widgets/createlvwidget.cpp" line="502"/>
         <source>Name</source>
         <translation>分区名称</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="495"/>
+        <location filename="../widgets/createlvwidget.cpp" line="503"/>
         <source>Size</source>
         <translation>分区大小</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="854"/>
+        <location filename="../widgets/createlvwidget.cpp" line="862"/>
         <source>Disk:</source>
         <translation>磁盘：</translation>
     </message>
@@ -637,9 +637,24 @@
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="590"/>
+        <source>Unmount all logical volumes in %1 first</source>
+        <translation>请先手动卸载%1下所有的逻辑卷</translation>
+    </message>
+    <message>
         <location filename="../widgets/devicelistwidget.cpp" line="647"/>
         <source>Unmount %1 first</source>
         <translation>请先手动卸载%1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="688"/>
+        <source>The logical volume group is busy and cannot be deleted. Please retry after reboot.</source>
+        <translation>逻辑卷组被占用，无法删除。请重启电脑后重试。</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="693"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="730"/>
+        <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
+        <translation>逻辑卷被占用，无法删除。请重启电脑后重试。</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="602"/>
@@ -651,17 +666,6 @@
         <location filename="../widgets/devicelistwidget.cpp" line="619"/>
         <source>The disks will be formatted if you create a logical volume</source>
         <translation>创建逻辑卷将格式化磁盘</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="688"/>
-        <source>The logical volume group is busy and cannot be deleted. Please restart your device and try again.</source>
-        <translation>逻辑卷组被占用，无法删除。请重启设备后重试。</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="693"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="730"/>
-        <source>The logical volume is busy and cannot be deleted. Please restart your device and try again.</source>
-        <translation>逻辑卷被占用，无法删除。请重启设备后重试。</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="698"/>
@@ -679,7 +683,7 @@
         <translation>逻辑卷组</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="869"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="881"/>
         <source>Disks</source>
         <translation>所有设备</translation>
     </message>
@@ -1358,8 +1362,8 @@
     <name>InfoShowWidget</name>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="139"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="242"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="414"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="244"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="435"/>
         <source>Mount point:</source>
         <translation>挂载点：</translation>
     </message>
@@ -1375,62 +1379,62 @@
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="161"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="243"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="366"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="415"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="245"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="378"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="436"/>
         <source>Type:</source>
         <translation>类型：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="167"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="169"/>
         <source>Capacity:</source>
         <translation>总容量：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="173"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="244"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="175"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="246"/>
         <source>Volume label:</source>
         <translation>分卷卷标：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="324"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="326"/>
         <source>Path:</source>
         <translation>路径：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="325"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="327"/>
         <source>Disk type:</source>
         <translation>介质类型：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="326"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="328"/>
         <source>Interface:</source>
         <translation>接口：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="365"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="377"/>
         <source>LV count:</source>
         <translation>逻辑卷数：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="367"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="379"/>
         <source>VG name:</source>
         <translation>卷组名称：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="372"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="375"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="384"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="387"/>
         <source>Volume group</source>
         <translation>逻辑卷组</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="416"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="437"/>
         <source>Volume name:</source>
         <translation>卷名称：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="421"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="424"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="442"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="445"/>
         <source>Logical volume</source>
         <translation>逻辑卷</translation>
     </message>
@@ -1444,7 +1448,7 @@
     </message>
     <message>
         <location filename="../widgets/customcontrol/infotopframe.cpp" line="139"/>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="179"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="187"/>
         <source>File system</source>
         <translation>格式</translation>
     </message>
@@ -1454,7 +1458,7 @@
         <translation>%1分区表</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="169"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="173"/>
         <source>Volume group</source>
         <translation>逻辑卷组</translation>
     </message>
@@ -1714,64 +1718,64 @@
         <translation>您确定要删除该物理卷吗？</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="78"/>
-        <source>You will lose all data in it</source>
-        <translation>其包含的所有文件将会丢失</translation>
+        <location filename="../widgets/removepvwidget.cpp" line="79"/>
+        <source>To prevent data loss, back up data in the physical volume before deleting it</source>
+        <translation>删除物理卷前，请对其内的数据做好备份，以防数据丢失</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="83"/>
+        <location filename="../widgets/removepvwidget.cpp" line="86"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>取 消</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="90"/>
+        <location filename="../widgets/removepvwidget.cpp" line="93"/>
         <source>Delete</source>
         <comment>button</comment>
         <translation>删 除</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="121"/>
+        <location filename="../widgets/removepvwidget.cpp" line="124"/>
         <source>Deleting...</source>
         <translation>正在删除，请稍候...</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="228"/>
+        <location filename="../widgets/removepvwidget.cpp" line="231"/>
         <source>A lot of data exists on %1, </source>
         <translation>%1中存在大量数据，</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="229"/>
+        <location filename="../widgets/removepvwidget.cpp" line="232"/>
         <source>which may take a long time to back it up.</source>
         <translation>预计将耗费较长时间进行数据迁移，</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="230"/>
+        <location filename="../widgets/removepvwidget.cpp" line="233"/>
         <source>Do you want to continue?</source>
         <translation>是否继续？</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="231"/>
+        <location filename="../widgets/removepvwidget.cpp" line="234"/>
         <source>Continue</source>
         <translation>继 续</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="232"/>
+        <location filename="../widgets/removepvwidget.cpp" line="235"/>
         <source>Cancel</source>
         <translation>取 消</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="244"/>
+        <location filename="../widgets/removepvwidget.cpp" line="247"/>
         <source>Not enough space to back up data on %1, please delete the logical volume first</source>
         <translation>剩余空间不足，移除%1将会造成数据丢失，请先删除逻辑卷</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="245"/>
+        <location filename="../widgets/removepvwidget.cpp" line="248"/>
         <source>OK</source>
         <translation>确 定</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="272"/>
+        <location filename="../widgets/removepvwidget.cpp" line="275"/>
         <source>Failed to delete the physical volume</source>
         <translation>删除操作失败</translation>
     </message>
@@ -1806,9 +1810,9 @@
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="121"/>
-        <location filename="../widgets/resizedialog.cpp" line="233"/>
-        <location filename="../widgets/resizedialog.cpp" line="305"/>
-        <location filename="../widgets/resizedialog.cpp" line="308"/>
+        <location filename="../widgets/resizedialog.cpp" line="232"/>
+        <location filename="../widgets/resizedialog.cpp" line="301"/>
+        <location filename="../widgets/resizedialog.cpp" line="304"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -1821,7 +1825,9 @@
         <location filename="../widgets/resizedialog.cpp" line="149"/>
         <location filename="../widgets/resizedialog.cpp" line="180"/>
         <location filename="../widgets/resizedialog.cpp" line="201"/>
-        <location filename="../widgets/resizedialog.cpp" line="279"/>
+        <location filename="../widgets/resizedialog.cpp" line="225"/>
+        <location filename="../widgets/resizedialog.cpp" line="272"/>
+        <location filename="../widgets/resizedialog.cpp" line="285"/>
         <source>Space limit exceeded</source>
         <translation>超出设置范围</translation>
     </message>
@@ -1832,38 +1838,34 @@
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="217"/>
-        <location filename="../widgets/resizedialog.cpp" line="227"/>
-        <location filename="../widgets/resizedialog.cpp" line="233"/>
-        <location filename="../widgets/resizedialog.cpp" line="288"/>
-        <location filename="../widgets/resizedialog.cpp" line="305"/>
-        <location filename="../widgets/resizedialog.cpp" line="308"/>
-        <location filename="../widgets/resizedialog.cpp" line="345"/>
+        <location filename="../widgets/resizedialog.cpp" line="232"/>
+        <location filename="../widgets/resizedialog.cpp" line="301"/>
+        <location filename="../widgets/resizedialog.cpp" line="304"/>
+        <location filename="../widgets/resizedialog.cpp" line="340"/>
         <source>OK</source>
         <translation>确 定</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="227"/>
-        <location filename="../widgets/resizedialog.cpp" line="288"/>
         <source>Not enough space, please clear data in it</source>
-        <translation>剩余空间不足，请先清理空间</translation>
+        <translation type="vanished">剩余空间不足，请先清理空间</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="233"/>
+        <location filename="../widgets/resizedialog.cpp" line="232"/>
         <source>To prevent data loss, back up data before shrinking it</source>
         <translation>缩减空间前，请对其内的数据做好备份，以防数据丢失</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="305"/>
+        <location filename="../widgets/resizedialog.cpp" line="301"/>
         <source>The current device has been mounted and will be unmounted automatically. Please back up data in it to prevent data loss</source>
         <translation>当前设备已挂载，将会自动卸载，请对其内的数据做好备份，以防数据丢失</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="308"/>
+        <location filename="../widgets/resizedialog.cpp" line="304"/>
         <source>To prevent data loss, back up data in the logical volume before shrinking it</source>
         <translation>缩减逻辑卷前，请对其内的数据做好备份，以防数据丢失</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="345"/>
+        <location filename="../widgets/resizedialog.cpp" line="340"/>
         <source>The file system does not support space adjustment</source>
         <translation>该文件系统不支持调整空间</translation>
     </message>
@@ -1871,16 +1873,16 @@
 <context>
     <name>SizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="189"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="273"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="192"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="276"/>
         <source> Capacity:</source>
         <translation>总容量：</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="229"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="233"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="313"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="232"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="236"/>
         <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="316"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="319"/>
         <source>Used:</source>
         <translation>已用空间：</translation>
     </message>
@@ -1970,7 +1972,6 @@
     <message>
         <location filename="../widgets/titlewidget.cpp" line="302"/>
         <location filename="../widgets/titlewidget.cpp" line="341"/>
-        <location filename="../widgets/titlewidget.cpp" line="397"/>
         <location filename="../widgets/titlewidget.cpp" line="510"/>
         <source>Unmount %1 first</source>
         <translation>请先手动卸载%1</translation>
@@ -1997,6 +1998,11 @@
         <location filename="../widgets/titlewidget.cpp" line="376"/>
         <source>The disks will be formatted if you create a volume group</source>
         <translation>创建逻辑卷组将格式化磁盘</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="397"/>
+        <source>Unmount all logical volumes in %1 first</source>
+        <translation>请先手动卸载%1下所有的逻辑卷</translation>
     </message>
 </context>
 <context>
@@ -2054,8 +2060,8 @@
 <context>
     <name>VGSizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/vgsizeinfowidget.cpp" line="498"/>
-        <location filename="../widgets/customcontrol/vgsizeinfowidget.cpp" line="567"/>
+        <location filename="../widgets/customcontrol/vgsizeinfowidget.cpp" line="532"/>
+        <location filename="../widgets/customcontrol/vgsizeinfowidget.cpp" line="601"/>
         <source>Unallocated</source>
         <translation>未分配</translation>
     </message>

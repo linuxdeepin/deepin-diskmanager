@@ -373,13 +373,21 @@ void VGSizeInfoWidget::paintEvent(QPaintEvent *event)
 
     DPalette palette;
     QColor color;
+    QColor nameColor;
+    QColor capacityColor;
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
     if (themeType == DGuiApplicationHelper::LightType) {
         color = palette.color(DPalette::Normal, DPalette::ToolTipText);
         color.setAlphaF(0.1);
+
+        nameColor = QColor("#414D68");
+        capacityColor = QColor("#526A7F");
     } else if (themeType == DGuiApplicationHelper::DarkType) {
         color = palette.color(DPalette::Normal, DPalette::BrightText);
         color.setAlphaF(0.2);
+
+        nameColor = QColor("#C0C6D4");
+        capacityColor = QColor("#6D7C88");
     }
 
     m_pathColorInfo.clear();
@@ -591,7 +599,7 @@ void VGSizeInfoWidget::paintEvent(QPaintEvent *event)
 
             QFont font;
             font = DFontSizeManager::instance()->get(DFontSizeManager::T6, QFont::Medium);
-            m_parentPb.setColor(DPalette::Text, QColor("#414D68"));
+            m_parentPb.setColor(DPalette::Text, nameColor);
             QColor textColor = m_parentPb.color(DPalette::Normal, DPalette::Text);
             painter.setFont(font);
             painter.setPen(textColor);
@@ -600,7 +608,7 @@ void VGSizeInfoWidget::paintEvent(QPaintEvent *event)
             QRect rectText = QRect(paintRect.bottomLeft().x() + 25 + lstWidth.at(i) + width * i, paintRect.bottomLeft().y() + 17, paintRect.width(), 70);
             painter.drawText(rectText, QString(tr("Unallocated")), option);
 
-            m_parentPb.setColor(DPalette::Text, QColor("#526A7F"));
+            m_parentPb.setColor(DPalette::Text, capacityColor);
             QColor text1color = m_parentPb.color(DPalette::Normal, DPalette::Text);
             painter.setPen(text1color);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8, QFont::Normal);
@@ -620,7 +628,7 @@ void VGSizeInfoWidget::paintEvent(QPaintEvent *event)
 
             QFont font;
             font = DFontSizeManager::instance()->get(DFontSizeManager::T6, QFont::Medium);
-            m_parentPb.setColor(DPalette::Text, QColor("#414D68"));
+            m_parentPb.setColor(DPalette::Text, nameColor);
             QColor textColor = m_parentPb.color(DPalette::Normal, DPalette::Text);
             painter.setFont(font);
             painter.setPen(textColor);
@@ -633,7 +641,7 @@ void VGSizeInfoWidget::paintEvent(QPaintEvent *event)
             }
             painter.drawText(rectText, devPath, option);
 
-            m_parentPb.setColor(DPalette::Text, QColor("#526A7F"));
+            m_parentPb.setColor(DPalette::Text, capacityColor);
             QColor text1color = m_parentPb.color(DPalette::Normal, DPalette::Text);
             painter.setPen(text1color);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8, QFont::Normal);
@@ -650,7 +658,7 @@ void VGSizeInfoWidget::paintEvent(QPaintEvent *event)
     if (m_pathList.count() > lstWidth.count()) {
         QFont font;
         font = DFontSizeManager::instance()->get(DFontSizeManager::T6, QFont::Medium);
-        m_parentPb.setColor(DPalette::Text, QColor("#414D68"));
+        m_parentPb.setColor(DPalette::Text, nameColor);
         QColor textColor = m_parentPb.color(DPalette::Normal, DPalette::Text);
         painter.setFont(font);
         painter.setPen(textColor);

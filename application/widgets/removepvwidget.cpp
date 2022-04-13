@@ -154,7 +154,7 @@ void RemovePVWidget::initUi()
 void RemovePVWidget::initConnection()
 {
     connect(m_deleteButton, &DWarningButton::clicked, this, &RemovePVWidget::onButtonClicked);
-    connect(m_cancelButton, &DWarningButton::clicked, this, &RemovePVWidget::onCancelButtonClicked);
+    connect(m_cancelButton, &DPushButton::clicked, this, &RemovePVWidget::onCancelButtonClicked);
     connect(DMDbusHandler::instance(), &DMDbusHandler::pvDeleteMessage, this, &RemovePVWidget::onPVDeleteMessage);
 }
 

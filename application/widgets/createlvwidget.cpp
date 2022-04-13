@@ -374,7 +374,11 @@ void CreateLVWidget::recPartitionInfo()
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
 
         m_deviceName->setText(vgInfo.m_vgName);
-        m_allMemory->setText(vgInfo.m_vgSize);
+        QString vgSize = vgInfo.m_vgSize;
+        if (vgSize.contains("1024")) {
+            vgSize = Utils::LVMFormatSize(vgInfo.m_peCount * vgInfo.m_PESize + vgInfo.m_PESize);
+        }
+        m_allMemory->setText(vgSize);
         m_selectedPartition->setText("unallocated");
         m_deviceFormate->setText("unallocated");
 
@@ -400,7 +404,11 @@ void CreateLVWidget::recPartitionInfo()
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
 
         m_deviceName->setText(lvInfo.m_vgName);
-        m_allMemory->setText(vgInfo.m_vgSize);
+        QString vgSize = vgInfo.m_vgSize;
+        if (vgSize.contains("1024")) {
+            vgSize = Utils::LVMFormatSize(vgInfo.m_peCount * vgInfo.m_PESize + vgInfo.m_PESize);
+        }
+        m_allMemory->setText(vgSize);
         m_selectedPartition->setText("unallocated");
         QString partFstype = Utils::fileSystemTypeToString(static_cast<FSType>(lvInfo.m_lvFsType));
         m_deviceFormate->setText(partFstype);

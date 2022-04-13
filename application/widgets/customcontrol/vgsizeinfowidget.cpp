@@ -25,6 +25,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "vgsizeinfowidget.h"
+#include "partedproxy/dmdbushandler.h"
 
 #include <DFontSizeManager>
 
@@ -95,16 +96,21 @@ void VGSizeInfoWidget::setData(const VGInfo &info)
         Sector lvByteSize = static_cast<Sector>(lvInfo.m_lvLECount * lvInfo.m_LESize);
         double lvSize = Utils::LVMSizeToUnit(lvByteSize, SIZE_UNIT::UNIT_GIB);
 
+        QString lvSizeInfo = lvInfo.m_lvSize;
+        if (lvSizeInfo.contains("1024")) {
+            lvSizeInfo = Utils::LVMFormatSize(lvInfo.m_lvLECount * lvInfo.m_LESize + lvInfo.m_LESize);
+        }
+
         if (lvInfo.m_lvName.isEmpty() && lvInfo.m_lvUuid.isEmpty()) {
             m_sizeInfo.append(lvSize);
             m_pathInfo.append("unallocated");
             m_pathList.insert(0, "unallocated");
-            m_pathSizeInfo.insert(0, lvInfo.m_lvSize);
+            m_pathSizeInfo.insert(0, lvSizeInfo);
         } else {
             m_sizeInfo.append(lvSize);
             m_pathInfo.append(lvInfo.m_lvName);
             m_pathList.append(lvInfo.m_lvName);
-            m_pathSizeInfo.append(lvInfo.m_lvSize);
+            m_pathSizeInfo.append(lvSizeInfo);
         }
     }
 
@@ -139,6 +145,8 @@ void VGSizeInfoWidget::setData(const QVector<VGData> &vglist)
                 vgNameList.append(vgData.m_vgName);
             }
         }
+
+        qSort(vgNameList.begin(), vgNameList.end());
 
         if (isUnallocated) {
             vgNameList.append("unallocated");
@@ -243,6 +251,7 @@ void VGSizeInfoWidget::setData(const QVector<VGData> &vglist)
         VGData vgData = vglist.at(0);
         QVector<LVData> lvList = vgData.m_lvList;
         m_totalSize = Utils::LVMSizeToUnit(vgData.m_vgByteSize, SIZE_UNIT::UNIT_GIB);
+        LVMInfo lvmInfo = DMDbusHandler::instance()->probLVMInfo();
 
         // 判断VG下是否存在LV，若存在就显示LV的分布情况，否则就显示VG的分布情况
         if (lvList.count() > 0) {
@@ -254,7 +263,13 @@ void VGSizeInfoWidget::setData(const QVector<VGData> &vglist)
                 m_sizeInfo.append(lvSize);
                 m_pathInfo.append(QString("%1-%2").arg(vgData.m_vgName).arg(lvData.m_lvName));
                 m_pathList.append(QString("%1-%2").arg(vgData.m_vgName).arg(lvData.m_lvName));
-                m_pathSizeInfo.append(lvData.m_lvSize);
+
+                QString lvSizeInfo = lvData.m_lvSize;
+                if (lvSizeInfo.contains("1024") && lvmInfo.lvInfoExists(vgData.m_vgName, lvData.m_lvName)) {
+                    LVInfo lvInfo = lvmInfo.getLVInfo(vgData.m_vgName, lvData.m_lvName);
+                    lvSizeInfo = Utils::LVMFormatSize(lvInfo.m_lvLECount * lvInfo.m_LESize + lvInfo.m_LESize);
+                }
+                m_pathSizeInfo.append(lvSizeInfo);
 
                 lvSizeSum += lvData.m_lvByteSize;
             }
@@ -271,7 +286,13 @@ void VGSizeInfoWidget::setData(const QVector<VGData> &vglist)
             m_sizeInfo.append(vgSize);
             m_pathInfo.append(vgData.m_vgName);
             m_pathList.append(vgData.m_vgName);
-            m_pathSizeInfo.append(vgData.m_vgSize);
+
+            QString vgSizeInfo = vgData.m_vgSize;
+            if (vgSizeInfo.contains("1024") && lvmInfo.vgExists(vgData.m_vgName)) {
+                VGInfo vgInfo = lvmInfo.getVG(vgData.m_vgName);
+                vgSizeInfo = Utils::LVMFormatSize(vgInfo.m_peCount * vgInfo.m_PESize + vgInfo.m_PESize);
+            }
+            m_pathSizeInfo.append(vgSizeInfo);
         }
     }
 
@@ -286,6 +307,7 @@ void VGSizeInfoWidget::setData(const VGData &vgData)
     m_pathSizeInfo.clear();
     m_totalSize = 0.00;
     QVector<LVData> lvList = vgData.m_lvList;
+    LVMInfo lvmInfo = DMDbusHandler::instance()->probLVMInfo();
 
     // 判断VG下是否存在LV，若存在就显示LV的分布情况，否则就显示VG的分布情况
     if (lvList.count() > 0) {
@@ -300,7 +322,13 @@ void VGSizeInfoWidget::setData(const VGData &vgData)
             m_sizeInfo.append(lvSize);
             m_pathInfo.append(QString("%1-%2").arg(vgData.m_vgName).arg(lvData.m_lvName));
             m_pathList.append(QString("%1-%2").arg(vgData.m_vgName).arg(lvData.m_lvName));
-            m_pathSizeInfo.append(lvData.m_lvSize);
+
+            QString lvSizeInfo = lvData.m_lvSize;
+            if (lvSizeInfo.contains("1024") && lvmInfo.lvInfoExists(vgData.m_vgName, lvData.m_lvName)) {
+                LVInfo lvInfo = lvmInfo.getLVInfo(vgData.m_vgName, lvData.m_lvName);
+                lvSizeInfo = Utils::LVMFormatSize(lvInfo.m_lvLECount * lvInfo.m_LESize + lvInfo.m_LESize);
+            }
+            m_pathSizeInfo.append(lvSizeInfo);
 
             lvSizeSum += lvData.m_lvByteSize;
         }
@@ -318,7 +346,13 @@ void VGSizeInfoWidget::setData(const VGData &vgData)
         m_sizeInfo.append(vgSize);
         m_pathInfo.append(vgData.m_vgName);
         m_pathList.append(vgData.m_vgName);
-        m_pathSizeInfo.append(vgData.m_vgSize);
+
+        QString vgSizeInfo = vgData.m_vgSize;
+        if (vgSizeInfo.contains("1024") && lvmInfo.vgExists(vgData.m_vgName)) {
+            VGInfo vgInfo = lvmInfo.getVG(vgData.m_vgName);
+            vgSizeInfo = Utils::LVMFormatSize(vgInfo.m_peCount * vgInfo.m_PESize + vgInfo.m_PESize);
+        }
+        m_pathSizeInfo.append(vgSizeInfo);
     }
 
     update();

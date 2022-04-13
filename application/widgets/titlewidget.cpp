@@ -393,8 +393,8 @@ void TitleWidget::onDeleteVGClicked()
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("messageBox");
-        // 请先手动卸载XXX（逻辑卷组名称）  确定
-        warningBox.setWarings(tr("Unmount %1 first").arg(vgInfo.m_vgName), "", tr("OK"), "ok");
+        // 请先手动卸载XXX（逻辑卷组的名称）下所有的逻辑卷  确定
+        warningBox.setWarings(tr("Unmount all logical volumes in %1 first").arg(vgInfo.m_vgName), "", tr("OK"), "ok");
         warningBox.exec();
 
         setCurVGName("");

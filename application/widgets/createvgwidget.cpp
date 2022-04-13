@@ -2240,8 +2240,10 @@ bool CreateVGWidget::adjudicationPVMove(const VGInfo &vg, const set<PVData> &pvl
             }
         }
         if (isDelete) {
-            size += it.m_pvUsedPE * it.m_PESize; //获取pv真实使用大小
-            realDelPvList.push_back(it.m_pvPath);
+            if (it.m_pvUsedPE * it.m_PESize > 0) {   //pv中存在数据
+                size += it.m_pvUsedPE * it.m_PESize; //获取pv真实使用大小
+                realDelPvList.push_back(it.m_pvPath);
+            }
         }
     }
 

@@ -77,6 +77,9 @@ void SizeInfoWidget::setData(LVInfo info, QVector<QColor> color, QVector<double>
     m_flag = flag;
     m_partitionPath = info.m_lvName;
     m_totalSpaceSize = info.m_lvSize;
+    if (m_totalSpaceSize.contains("1024")) {
+        m_totalSpaceSize = Utils::LVMFormatSize(info.m_lvLECount * info.m_LESize + info.m_LESize);
+    }
 
     m_used = Utils::LVMSizeToUnit(info.m_fsUsed, SIZE_UNIT::UNIT_GIB);
     m_noused = Utils::LVMSizeToUnit(info.m_fsUnused, SIZE_UNIT::UNIT_GIB);

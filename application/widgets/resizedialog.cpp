@@ -221,11 +221,10 @@ void ResizeDialog::partitionResize()
 
         Sector minReduceSize = info.m_sectorStart + limits.min_size / info.m_sectorSize - 1;
         if (newSectorEnd < minReduceSize) {
-            MessageBox messageBox(this);
-            messageBox.setObjectName("messageBox");
-            messageBox.setAccessibleName("PartitionReduceDialog");
-            messageBox.setWarings(tr("Not enough space, please clear data in it"), "", tr("OK"), "ok");
-            messageBox.exec();
+            m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
+            m_lineEdit->showAlertMessage(tr("Space limit exceeded"), m_mainFrame);
+            m_lineEdit->setAlert(true);
+            return;
         } else {
             MessageBox messageBox(this);
             messageBox.setObjectName("messageBox");
@@ -268,26 +267,23 @@ void ResizeDialog::lvResize()
         newSize = static_cast<Sector>(m_lineEdit->text().toDouble() * GIBIBYTE);
     }
 
-    Sector peCount = newSize / peSize;
-    if ((peCount * peSize) < newSize) {
-        peCount += 1;
-    }
-    newSize = peCount * peSize;
-
-    if ((newSize - curSize) > unUsedSize) {
+    if (newSize < limits.min_size) {
         m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
         m_lineEdit->showAlertMessage(tr("Space limit exceeded"), m_mainFrame);
         m_lineEdit->setAlert(true);
         return;
     }
 
-    if (newSize < 0 || newSize < limits.min_size) {
-        MessageBox messageBox(this);
-        messageBox.setObjectName("messageBox");
-        messageBox.setAccessibleName("LVResizeWarning");
-        messageBox.setWarings(tr("Not enough space, please clear data in it"), "", tr("OK"), "ok");
-        messageBox.exec();
+    Sector peCount = newSize / peSize;
+    if ((peCount * peSize) < newSize) {
+        peCount += 1;
+    }
+    newSize = peCount * peSize;
 
+    if (newSize < 0 || (newSize - curSize) > unUsedSize) {
+        m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
+        m_lineEdit->showAlertMessage(tr("Space limit exceeded"), m_mainFrame);
+        m_lineEdit->setAlert(true);
         return;
     }
 
@@ -307,7 +303,6 @@ void ResizeDialog::lvResize()
             //缩减逻辑卷前，请对其内的数据做好备份，以防数据丢失
             messageBox.setWarings(tr("To prevent data loss, back up data in the logical volume before shrinking it"), "", tr("OK"), "ok", tr("Cancel"), "cancel");
         }
-
 
         if (messageBox.exec() == DDialog::Accepted) {
             LVAction info;

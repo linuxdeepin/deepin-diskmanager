@@ -42,7 +42,7 @@ RemovePVWidget::RemovePVWidget(QWidget *parent) : DDBase(parent)
 void RemovePVWidget::initUi()
 {
     setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
-    setFixedSize(380, 170);
+    setFixedSize(380, 190);
 
     DPalette palette1;
     QColor color("#000000");
@@ -75,22 +75,25 @@ void RemovePVWidget::initUi()
     titleLabel->setFont(fontTitle);
     titleLabel->setPalette(palette1);
 
-    DLabel *subTitleLabel = new DLabel(tr("You will lose all data in it"), this);
+    // 删除物理卷前，请对其内的数据做好备份，以防数据丢失
+    DLabel *subTitleLabel = new DLabel(tr("To prevent data loss, back up data in the physical volume before deleting it"), this);
     subTitleLabel->setAlignment(Qt::AlignCenter);
     subTitleLabel->setFont(fontSubTitle);
     subTitleLabel->setPalette(palette2);
+    subTitleLabel->adjustSize();
+    subTitleLabel->setWordWrap(true);
 
     m_cancelButton = new DPushButton(tr("Cancel", "button"), this);
     m_cancelButton->setAccessibleName("cancel");
     m_cancelButton->setFont(fontTitle);
-    m_cancelButton->setPalette(palette3);
+//    m_cancelButton->setPalette(palette3);
     m_cancelButton->setFixedSize(170, 36);
 
     m_deleteButton = new DWarningButton(this);
     m_deleteButton->setText(tr("Delete", "button"));
     m_deleteButton->setAccessibleName("delete");
     m_deleteButton->setFont(fontTitle);
-    m_deleteButton->setPalette(palette4);
+//    m_deleteButton->setPalette(palette4);
     m_deleteButton->setFixedSize(170, 36);
 
     DVerticalLine *line = new DVerticalLine;

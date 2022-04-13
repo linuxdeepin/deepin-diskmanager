@@ -164,7 +164,11 @@ void InfoTopFrame::updateDiskInfo()
 
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
         m_nameLabel->setText(vgInfo.m_vgName);
-        m_allMemoryLabel->setText(vgInfo.m_vgSize);
+        QString vgSize = vgInfo.m_vgSize;
+        if (vgSize.contains("1024")) {
+            vgSize = Utils::LVMFormatSize(vgInfo.m_peCount * vgInfo.m_PESize + vgInfo.m_PESize);
+        }
+        m_allMemoryLabel->setText(vgSize);
 
         m_typeLabel->setText(tr("Volume group"));
     } else if (DMDbusHandler::LOGICALVOLUME == DMDbusHandler::instance()->getCurLevel()) {
@@ -172,7 +176,11 @@ void InfoTopFrame::updateDiskInfo()
 
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
         m_nameLabel->setText(lvInfo.m_lvPath);
-        m_allMemoryLabel->setText(lvInfo.m_lvSize);
+        QString lvSize = lvInfo.m_lvSize;
+        if (lvSize.contains("1024")) {
+            lvSize = Utils::LVMFormatSize(lvInfo.m_lvLECount * lvInfo.m_LESize + lvInfo.m_LESize);
+        }
+        m_allMemoryLabel->setText(lvSize);
 
         FSType fstype = static_cast<FSType>(lvInfo.m_lvFsType);
         QString fstypeName = Utils::fileSystemTypeToString(fstype);

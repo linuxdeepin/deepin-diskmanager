@@ -161,6 +161,8 @@ void InfoShowWidget::bottomFramSettings()
     m_typeLabel = new DLabel(tr("Type:"));
 //    m_typeLabel->setWordWrap(true);
 //    m_typeLabel->adjustSize();
+    m_typeLabel->setFixedHeight(30);
+    m_typeLabel->setAlignment(Qt::AlignTop);
     DFontSizeManager::instance()->bind(m_typeLabel, DFontSizeManager::T6, QFont::Medium);
     m_typeLabel->setAccessibleName("Type");
 
@@ -222,9 +224,9 @@ void InfoShowWidget::bottomFramSettings()
 
     rightInfolayout->addSpacing(1);
     rightInfolayout->addWidget(m_typeLabel, 0, Qt::AlignLeft);
-    rightInfolayout->addSpacing(25);
+    rightInfolayout->addSpacing(18);
     rightInfolayout->addWidget(m_capacityLabel, 0, Qt::AlignLeft);
-    rightInfolayout->addSpacing(23);
+    rightInfolayout->addSpacing(22);
     rightInfolayout->addWidget(m_volumeLabel, 0, Qt::AlignLeft);
     rightInfolayout->addStretch();
 
@@ -362,18 +364,28 @@ void InfoShowWidget::onCurSelectChanged()
 
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
 
+        QString vgSize = vgInfo.m_vgSize;
+        if (vgSize.contains("1024")) {
+            vgSize = Utils::LVMFormatSize(vgInfo.m_peCount * vgInfo.m_PESize + vgInfo.m_PESize);
+        }
+
+        QString unused = vgInfo.m_vgUnused;
+        if (unused.contains("1024")) {
+            unused = Utils::LVMFormatSize(vgInfo.m_peCount * vgInfo.m_PESize + vgInfo.m_PESize);
+        }
+
         m_mountpointLabel->setText(tr("LV count:"));
         m_typeLabel->setText(tr("Type:"));
         m_volumeLabel->setText(tr("VG name:"));
         m_mountpointLabel->setObjectName(QString("@==@%1").arg(vgInfo.m_curLV));
-        m_capacityLabel->setObjectName(QString("@==@%1").arg(vgInfo.m_vgSize));
-        m_freeLabel->setObjectName(QString("@==@%1").arg(vgInfo.m_vgUnused));
+        m_capacityLabel->setObjectName(QString("@==@%1").arg(vgSize));
+        m_freeLabel->setObjectName(QString("@==@%1").arg(unused));
         m_usedLabel->setObjectName(QString("@==@%1").arg(vgInfo.m_vgUsed));
         m_typeLabel->setObjectName(QString("@==@%1").arg(tr("Volume group")));
         m_volumeLabel->setObjectName(QString("@==@%1").arg(vgInfo.m_vgName));
 
         m_frameBottom->setDiskFrameData(QString("%1").arg(vgInfo.m_curLV), tr("Volume group"), vgInfo.m_vgUsed,
-                                        vgInfo.m_vgUnused, vgInfo.m_vgSize, vgInfo.m_vgName);
+                                        unused, vgSize, vgInfo.m_vgName);
         m_infoTopFrame->updateDiskInfo();
         m_vgSizeInfoWidget->setData(vgInfo);
     } else if (DMDbusHandler::LOGICALVOLUME == DMDbusHandler::instance()->getCurLevel()) {
@@ -411,17 +423,26 @@ void InfoShowWidget::onCurSelectChanged()
             unused = "-";
         }
 
+        QString lvSize = lvInfo.m_lvSize;
+        if (lvSize.contains("1024")) {
+            lvSize = Utils::LVMFormatSize(lvInfo.m_lvLECount * lvInfo.m_LESize + lvInfo.m_LESize);
+        }
+
+        if (unused.contains("1024")) {
+            unused = Utils::LVMFormatSize(lvInfo.m_lvLECount * lvInfo.m_LESize + lvInfo.m_LESize);
+        }
+
         m_mountpointLabel->setText(tr("Mount point:"));
         m_typeLabel->setText(tr("Type:"));
         m_volumeLabel->setText(tr("Volume name:"));
         m_mountpointLabel->setObjectName(QString("@==@%1").arg(mountPoint));
-        m_capacityLabel->setObjectName(QString("@==@%1").arg(lvInfo.m_lvSize));
+        m_capacityLabel->setObjectName(QString("@==@%1").arg(lvSize));
         m_freeLabel->setObjectName(QString("@==@%1").arg(unused));
         m_usedLabel->setObjectName(QString("@==@%1").arg(used));
         m_typeLabel->setObjectName(QString("@==@%1").arg(tr("Logical volume")));
         m_volumeLabel->setObjectName(QString("@==@%1").arg(lvName));
 
-        m_frameBottom->setDiskFrameData(mountPoint, tr("Logical volume"), used, unused, lvInfo.m_lvSize, lvName);
+        m_frameBottom->setDiskFrameData(mountPoint, tr("Logical volume"), used, unused, lvSize, lvName);
         m_infoTopFrame->updateDiskInfo();
 
         DPalette palette;

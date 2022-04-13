@@ -32,6 +32,7 @@
 
 #include <QDebug>
 #include <QTextOption>
+#include <QApplication>
 
 DmTreeviewDelegate::DmTreeviewDelegate(QAbstractItemView *parent)
     : DStyledItemDelegate(parent)
@@ -48,15 +49,19 @@ QSize DmTreeviewDelegate::sizeHint(const QStyleOptionViewItem &option,
     Q_UNUSED(option);
 
     DiskInfoData infoData = index.data(Qt::UserRole + 1).value<DiskInfoData>();
+    int height = 55;
     if (infoData.m_level == DMDbusHandler::DISK || infoData.m_level == DMDbusHandler::VOLUMEGROUP) {
-        return QSize(180, 72);
+        height = 72 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
+        return QSize(180, height);
     }
 
     if (infoData.m_level == DMDbusHandler::OTHER) {
-        return QSize(180, 30);
+        height = 30 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
+        return QSize(180, height);
     }
 
-    return QSize(180, 55);
+    height = 55 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
+    return QSize(180, height);
 }
 
 void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -197,9 +202,11 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         painter->drawPixmap(lefticon1Rect, directionIcon.pixmap(17, 17));
 
     } else if (data.m_level == DMDbusHandler::DISK || data.m_level == DMDbusHandler::VOLUMEGROUP) {
-        lefticon1Rect.setRect(paintRect.left() + 8, paintRect.top() + 24, pixmapWidth, pixmapHeight);
+        int height = 24 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
+        lefticon1Rect.setRect(paintRect.left() + 8, paintRect.top() + height, pixmapWidth, pixmapHeight);
         painter->drawPixmap(lefticon1Rect, directionIcon.pixmap(17, 17));
-        lefticonRect2.setRect(paintRect.left() + 20, paintRect.top() + 9, 40, 40);
+        height = 9 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
+        lefticonRect2.setRect(paintRect.left() + 20, paintRect.top() + height, 40, 40);
 
         if (data.m_level == DMDbusHandler::DISK) {
             QMap<QString, QString> isJoinAllVG = DMDbusHandler::instance()->getIsJoinAllVG();
@@ -227,7 +234,8 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             painter->setPen(text1color);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
             painter->setFont(font);
-            textRect1.setRect(paintRect.left() + 65, paintRect.top() + 32, 110, 100);
+            height = 32 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
+            textRect1.setRect(paintRect.left() + 65, paintRect.top() + height, 110, 100);
             QString textSize = painter->fontMetrics().elidedText(text1, Qt::ElideMiddle, 108);
             painter->drawText(textRect1, textSize);
         } else {
@@ -241,12 +249,14 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             painter->setPen(text1color);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
             painter->setFont(font);
-            textRect1.setRect(paintRect.left() + 65, paintRect.top() + 32, 110, 100);
+            height = 32 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
+            textRect1.setRect(paintRect.left() + 65, paintRect.top() + height, 110, 100);
             QString textSize = painter->fontMetrics().elidedText(text1, Qt::ElideMiddle, 108);
             painter->drawText(textRect1, textSize);
         }
     } else {
-        lefticon1Rect.setRect(paintRect.left() + 25, paintRect.top() + 10, 30, 30);
+        int height = 10 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
+        lefticon1Rect.setRect(paintRect.left() + 25, paintRect.top() + height, 30, 30);
 
         if (data.m_level == DMDbusHandler::LOGICALVOLUME || data.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV) {
             QIcon icon = Common::getIcon("treelv");
@@ -259,7 +269,8 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         QIcon icon1 = Common::getIcon("mounticon");
         QIcon icon2 = Common::getIcon("uninstallicon");
         QIcon icon3 = Common::getIcon("hidden");
-        QRect mounticonRect = QRect(paintRect.left() + 45, paintRect.top() + 28, 10, 10);
+        height = 28 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
+        QRect mounticonRect = QRect(paintRect.left() + 45, paintRect.top() + height, 10, 10);
 
 //        // 获取分区是否隐藏
 //        int hide = 0;
@@ -283,28 +294,30 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             QColor textColor = m_parentPb.color(DPalette::Normal, DPalette::HighlightedText);
             painter->setPen(textColor);
             painter->setFont(font);
-            textRect.setRect(paintRect.left() + 65, paintRect.top() + 8, 106, 100);
+            textRect.setRect(paintRect.left() + 65, paintRect.top() + 5, 106, 100);
             QString text = painter->fontMetrics().elidedText(text2, Qt::ElideMiddle, 104);
             painter->drawText(textRect, text);
             QColor text1Color = m_parentPb.color(DPalette::Normal, DPalette::HighlightedText);
             painter->setPen(text1Color);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
             painter->setFont(font);
-            textRect1.setRect(paintRect.left() + 65, paintRect.top() + 28, 106, 100);
+            height = 25 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
+            textRect1.setRect(paintRect.left() + 65, paintRect.top() + height, 106, 100);
             QString textSize = painter->fontMetrics().elidedText(text3, Qt::ElideMiddle, 104);
             painter->drawText(textRect1, textSize);
         } else {
             QColor textColor = m_parentPb.color(DPalette::Normal, DPalette::Text);
             painter->setPen(textColor);
             painter->setFont(font);
-            textRect.setRect(paintRect.left() + 65, paintRect.top() + 8, 106, 100);
+            textRect.setRect(paintRect.left() + 65, paintRect.top() + 5, 106, 100);
             QString text = painter->fontMetrics().elidedText(text2, Qt::ElideMiddle, 104);
             painter->drawText(textRect, text);
             QColor text1Color = m_parentPb.color(DPalette::Normal, DPalette::TextTips);
             painter->setPen(text1Color);
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
             painter->setFont(font);
-            textRect1.setRect(paintRect.left() + 65, paintRect.top() + 28, 106, 100);
+            height = 25 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
+            textRect1.setRect(paintRect.left() + 65, paintRect.top() + height, 106, 100);
             QString textSize = painter->fontMetrics().elidedText(text3, Qt::ElideMiddle, 104);
             painter->drawText(textRect1, textSize);
         }

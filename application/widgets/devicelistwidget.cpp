@@ -586,8 +586,8 @@ void DeviceListWidget::onDeleteVGClicked()
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("messageBox");
-        // 请先手动卸载XXX（逻辑卷组名称）  确定
-        warningBox.setWarings(tr("Unmount %1 first").arg(vgInfo.m_vgName), "", tr("OK"), "ok");
+        // 请先手动卸载XXX（逻辑卷组的名称）下所有的逻辑卷  确定
+        warningBox.setWarings(tr("Unmount all logical volumes in %1 first").arg(vgInfo.m_vgName), "", tr("OK"), "ok");
         warningBox.exec();
 
         setCurVGName("");
@@ -684,13 +684,13 @@ void DeviceListWidget::onVGDeleteMessage(const QString &vgMessage)
     QString reason = "";
     switch (infoList.at(1).toInt()) {
     case LVMError::LVM_ERR_VG_IN_USED: { // VG被占用
-        // 逻辑卷组被占用，无法删除。请重启设备后重试。
-        reason = tr("The logical volume group is busy and cannot be deleted. Please restart your device and try again.");
+        // 逻辑卷组被占用，无法删除。请重启电脑后重试。
+        reason = tr("The logical volume group is busy and cannot be deleted. Please retry after reboot.");
         break;
     }
     case LVMError::LVM_ERR_LV_IN_USED: { // VG下的LV被占用
-        // 逻辑卷被占用，无法删除。请重启设备后重试。
-        reason = tr("The logical volume is busy and cannot be deleted. Please restart your device and try again.");
+        // 逻辑卷被占用，无法删除。请重启电脑后重试。
+        reason = tr("The logical volume is busy and cannot be deleted. Please retry after reboot.");
         break;
     }
     case LVMError::LVM_ERR_VG_DELETE_FAILED: {
@@ -726,8 +726,8 @@ void DeviceListWidget::onLVDeleteMessage(const QString &lvMessage)
     QString reason = "";
     switch (infoList.at(1).toInt()) {
     case LVMError::LVM_ERR_LV_IN_USED: {
-        // 逻辑卷被占用，无法删除。请重启设备后重试。
-        reason = tr("The logical volume is busy and cannot be deleted. Please restart your device and try again.");
+        // 逻辑卷被占用，无法删除。请重启电脑后重试。
+        reason = tr("The logical volume is busy and cannot be deleted. Please retry after reboot.");
         break;
     }
     case LVMError::LVM_ERR_LV_DELETE_FAILED: {
@@ -833,8 +833,14 @@ void DeviceListWidget::onUpdateDeviceInfo()
             if (vgInformation.m_vgName.isEmpty()) {
                 continue;
             }
-
-            auto vgInfoBox = new DmDiskinfoBox(DMDbusHandler::VOLUMEGROUP, this, vgInformation.m_vgName, vgInformation.m_vgSize, 0, vgInformation.m_vgName);
+            qDebug() << vgInformation.m_vgName << Utils::LVMFormatSize(vgInformation.m_peCount * vgInformation.m_PESize)
+                     << vgInformation.m_peCount << vgInformation.m_PESize
+                     << Utils::LVMFormatSize(vgInformation.m_peCount * vgInformation.m_PESize + vgInformation.m_PESize) << vgInformation.m_vgSize;
+            QString vgSize = vgInformation.m_vgSize;
+            if (vgSize.contains("1024")) {
+                vgSize = Utils::LVMFormatSize(vgInformation.m_peCount * vgInformation.m_PESize + vgInformation.m_PESize);
+            }
+            auto vgInfoBox = new DmDiskinfoBox(DMDbusHandler::VOLUMEGROUP, this, vgInformation.m_vgName, vgSize, 0, vgInformation.m_vgName);
             int lvCount = 0;
 
             for (auto lvInfo = vgInformation.m_lvlist.begin(); lvInfo != vgInformation.m_lvlist.end(); lvInfo++) {
@@ -852,9 +858,15 @@ void DeviceListWidget::onUpdateDeviceInfo()
                 for (int i = 0; i < lvInfo->m_mountPoints.size(); i++) {
                     mountPoints += lvInfo->m_mountPoints[i];
                 }
-
-                auto lvInfoBox = new DmDiskinfoBox(DMDbusHandler::LOGICALVOLUME, this, lvInfo->m_vgName, "", 0, lvInfo->m_lvPath, lvInfo->m_lvSize, used, unused,
-                                                          0, 0, 0, fstypeName, mountPoints, lvInfo->m_lvName, 0);
+                qDebug() << lvInfo->m_lvName << Utils::LVMFormatSize(lvInfo->m_lvLECount * lvInfo->m_LESize)
+                         << Utils::LVMFormatSize(lvInfo->m_lvLECount * lvInfo->m_LESize + lvInfo->m_LESize)
+                         << lvInfo->m_lvLECount << lvInfo->m_LESize << lvInfo->m_lvSize;
+                QString lvSize = lvInfo->m_lvSize;
+                if (lvSize.contains("1024")) {
+                    lvSize = Utils::LVMFormatSize(lvInfo->m_lvLECount * lvInfo->m_LESize + lvInfo->m_LESize);
+                }
+                auto lvInfoBox = new DmDiskinfoBox(DMDbusHandler::LOGICALVOLUME, this, lvInfo->m_vgName, "", 0, lvInfo->m_lvPath, lvSize, used, unused,
+                                                   0, 0, 0, fstypeName, mountPoints, lvInfo->m_lvName, 0);
 
                 vgInfoBox->m_childs.append(lvInfoBox);
 

@@ -152,7 +152,7 @@ void VGInfoShowWidget::setData(const QList< QMap<QString, QVariant> > &lstInfo)
 
         QWidget *widget1 = new QWidget;
         widget1->setLayout(m_gridLayout);
-        widget1->setFixedSize(318, height * 48 - 20);
+        widget1->setFixedSize(318, height * 50 - 20);
 
         DScrollArea *scrollArea = new DScrollArea;
         scrollArea->setFrameShadow(QFrame::Plain);
@@ -172,7 +172,12 @@ void VGInfoShowWidget::setData(const QList< QMap<QString, QVariant> > &lstInfo)
         if (lstInfo.count() == 1) {
             width = 170;
         }
-        setFixedSize(width, height * 48);
+
+        if (height == 1) {
+            setFixedSize(width, 60);
+        } else {
+            setFixedSize(width, height * 50);
+        }
 
         m_gridLayout->setSpacing(8);
         m_gridLayout->setContentsMargins(10, 10, 10, 10);

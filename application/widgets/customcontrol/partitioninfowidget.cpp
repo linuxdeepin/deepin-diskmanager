@@ -65,12 +65,20 @@ void PartitionInfoWidget::setData(DeviceInfo info)
     }
 
     m_totalSize += Utils::sectorToUnit(info.m_length, info.m_sectorSize, SIZE_UNIT::UNIT_GIB);
+    if (info.m_partition.isEmpty()) {
+        m_sizeInfo.append(m_totalSize);
+        m_pathInfo.append("unallocated");
+    }
 
     update();
 }
 
 void PartitionInfoWidget::paintEvent(QPaintEvent *event)
 {
+    if (m_sizeInfo.isEmpty()) {
+        return;
+    }
+
     QWidget::paintEvent(event);
     QPainter painter(this);
     painter.save();

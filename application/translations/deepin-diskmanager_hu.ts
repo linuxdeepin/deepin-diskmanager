@@ -147,16 +147,16 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="115"/>
         <location filename="../widgets/createvgwidget.cpp" line="414"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1022"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1032"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1481"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1491"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1541"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1592"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1595"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1625"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1733"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1799"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1040"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1050"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1499"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1509"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1559"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1610"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1613"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1643"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1751"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1817"/>
         <source>Capacity selected: %1</source>
         <translation>Kiválasztott kapacitás: %1 </translation>
     </message>
@@ -245,58 +245,68 @@
         <translation>Kötetcsoport neve: %1</translation>
     </message>
     <message>
+        <location filename="../widgets/createvgwidget.cpp" line="776"/>
+        <source>No less than the used capacity please</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <location filename="../widgets/createvgwidget.cpp" line="781"/>
+        <source>No more than the maximum capacity please</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="799"/>
         <source>A lot of data exists on %1, </source>
         <translation>Nagyon sok adat létezik a % 1 helyen, </translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="782"/>
+        <location filename="../widgets/createvgwidget.cpp" line="800"/>
         <source>which may take a long time to back it up.</source>
         <translation>amelyeknek a biztonsági mentése hosszú ideig tarthat. </translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="783"/>
+        <location filename="../widgets/createvgwidget.cpp" line="801"/>
         <source>Do you want to continue?</source>
         <translation>Biztos folytatni akarja?</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="784"/>
+        <location filename="../widgets/createvgwidget.cpp" line="802"/>
         <source>Continue</source>
         <translation>Folytatás</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="785"/>
+        <location filename="../widgets/createvgwidget.cpp" line="803"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1752"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1770"/>
         <source>Not enough space to back up data on %1, please clear disk space</source>
         <translation>Nincs elég hely az adatok biztonsági mentéséhez a %1 helyen, kérjük szabadítson fel lemezterületet </translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1753"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1771"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1927"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1945"/>
         <source>Existing volume group, creation failed. Please retry after reboot.</source>
         <translation>Meglévő kötetcsoport, a létrehozás nem sikerült. Kérjük próbálja újra a számítógép újraindítása után.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1931"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1949"/>
         <source>Failed to create a physical volume. Please refresh Disk Utility and try again.</source>
         <translation>Nem sikerült létrehozni a fizikai kötetet. Kérjük frissítse a Lemezkezelő segédprogramot, és próbálja újra.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1935"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1953"/>
         <source>Device input/output error. Please try again after reboot.</source>
         <translation>Eszköz bemeneti / kimeneti hiba. Kérjük próbálja újra a számítógép újraindítása után.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1988"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1995"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2006"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2013"/>
         <source>Refreshing the page to reload disks</source>
         <translation>Az oldal frissítése a lemezek újratöltéséhez </translation>
     </message>
@@ -348,13 +358,13 @@
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="252"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="609"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="614"/>
         <source>Mounting %1 ...</source>
         <translation>%1 csatolása...</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="259"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="616"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="621"/>
         <source>Unmounting %1 ...</source>
         <translation>%1 lecsatolása...</translation>
     </message>
@@ -369,33 +379,33 @@
         <translation>Új partíció létrehozása...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="438"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="443"/>
         <source>Deleting %1 ...</source>
         <translation>%1 törlése...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="490"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="495"/>
         <source>Creating a partition table of %1 ...</source>
         <translation>Partíciós tábla létrehozása a %1-hez...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="492"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="497"/>
         <source>Replacing the partition table of %1 ...</source>
         <translation>% 1 partíciós táblájának cseréje...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="576"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="581"/>
         <source>Creating...</source>
         <translation>Létrehozás...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="583"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="590"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="588"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="595"/>
         <source>Deleting...</source>
         <translation>Törlés...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="602"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="607"/>
         <source>Resizing space...</source>
         <translation>Hely átméretezése...</translation>
     </message>
@@ -639,7 +649,7 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="590"/>
         <source>Unmount all logical volumes in %1 first</source>
-        <translation type="unfinished"/>
+        <translation>Először válassza le a %1 összes logikai kötetét</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="647"/>
@@ -649,13 +659,13 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="688"/>
         <source>The logical volume group is busy and cannot be deleted. Please retry after reboot.</source>
-        <translation type="unfinished"/>
+        <translation>A logikai kötetcsoport foglalt, és nem törölhető. Kérjük próbálja újra az eszköz újraindítása után.</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="693"/>
         <location filename="../widgets/devicelistwidget.cpp" line="730"/>
         <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
-        <translation type="unfinished"/>
+        <translation>A logikai kötet foglalt, és nem törölhető. Kérjük próbálja újra az eszköz újraindítása után.</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="602"/>
@@ -1546,7 +1556,7 @@ kérjük legyen óvatos</translation>
 <context>
     <name>PartitionInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/partitioninfowidget.cpp" line="248"/>
+        <location filename="../widgets/customcontrol/partitioninfowidget.cpp" line="256"/>
         <source>Unallocated</source>
         <translation>Felhasználatlan</translation>
     </message>
@@ -1721,7 +1731,7 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="79"/>
         <source>To prevent data loss, back up data in the physical volume before deleting it</source>
-        <translation type="unfinished"/>
+        <translation>Az adatvesztés elkerülése érdekében készítsen biztonsági másolatot a fizikai köteten lévő adatokról, mielőtt törölné azt</translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="86"/>
@@ -1812,8 +1822,8 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="121"/>
         <location filename="../widgets/resizedialog.cpp" line="232"/>
-        <location filename="../widgets/resizedialog.cpp" line="301"/>
-        <location filename="../widgets/resizedialog.cpp" line="304"/>
+        <location filename="../widgets/resizedialog.cpp" line="309"/>
+        <location filename="../widgets/resizedialog.cpp" line="312"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
@@ -1826,11 +1836,19 @@ kérjük legyen óvatos</translation>
         <location filename="../widgets/resizedialog.cpp" line="149"/>
         <location filename="../widgets/resizedialog.cpp" line="180"/>
         <location filename="../widgets/resizedialog.cpp" line="201"/>
+        <location filename="../widgets/resizedialog.cpp" line="285"/>
+        <source>No more than the maximum capacity please</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <location filename="../widgets/resizedialog.cpp" line="225"/>
         <location filename="../widgets/resizedialog.cpp" line="272"/>
-        <location filename="../widgets/resizedialog.cpp" line="285"/>
+        <source>No less than the used capacity please</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Space limit exceeded</source>
-        <translation>Méretkorlát meghaladva</translation>
+        <translation type="vanished">Méretkorlát meghaladva</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="217"/>
@@ -1840,9 +1858,9 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="217"/>
         <location filename="../widgets/resizedialog.cpp" line="232"/>
-        <location filename="../widgets/resizedialog.cpp" line="301"/>
-        <location filename="../widgets/resizedialog.cpp" line="304"/>
-        <location filename="../widgets/resizedialog.cpp" line="340"/>
+        <location filename="../widgets/resizedialog.cpp" line="309"/>
+        <location filename="../widgets/resizedialog.cpp" line="312"/>
+        <location filename="../widgets/resizedialog.cpp" line="348"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -1856,17 +1874,22 @@ kérjük legyen óvatos</translation>
         <translation>Az adatvesztés elkerülése érdekében készítsen biztonsági másolatot az adatokról, mielőtt csökkentené a kötet méretét</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="301"/>
+        <location filename="../widgets/resizedialog.cpp" line="299"/>
+        <source>Unmount it before shrinking its space</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="309"/>
         <source>The current device has been mounted and will be unmounted automatically. Please back up data in it to prevent data loss</source>
         <translation>Az aktuális eszköz fel lett csatolva, és automatikusan le lesz választva. Kérjük készítsen biztonsági másolatot a rajta lévő adatokról az adatvesztés elkerülése érdekében </translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="304"/>
+        <location filename="../widgets/resizedialog.cpp" line="312"/>
         <source>To prevent data loss, back up data in the logical volume before shrinking it</source>
         <translation>Az adatvesztés elkerülése érdekében készítsen biztonsági másolatot a logikai kötetben lévő adatokról, mielőtt csökkentené azok méretét</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="340"/>
+        <location filename="../widgets/resizedialog.cpp" line="348"/>
         <source>The file system does not support space adjustment</source>
         <translation>A fájlrendszer nem támogatja a terület beállítását </translation>
     </message>
@@ -2003,7 +2026,7 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="397"/>
         <source>Unmount all logical volumes in %1 first</source>
-        <translation type="unfinished"/>
+        <translation>Először válassza le a %1 összes logikai kötetét</translation>
     </message>
 </context>
 <context>
@@ -2062,8 +2085,8 @@ Győződjön meg arról, hogy nem futnak programok a logikai köteten</translati
 <context>
     <name>VGSizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/vgsizeinfowidget.cpp" line="532"/>
-        <location filename="../widgets/customcontrol/vgsizeinfowidget.cpp" line="601"/>
+        <location filename="../widgets/customcontrol/vgsizeinfowidget.cpp" line="544"/>
+        <location filename="../widgets/customcontrol/vgsizeinfowidget.cpp" line="613"/>
         <source>Unallocated</source>
         <translation>Felhasználatlan</translation>
     </message>

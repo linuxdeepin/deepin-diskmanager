@@ -322,11 +322,10 @@ void DMDbusHandler::onUpdateDeviceInfo(const DeviceInfoMap &infoMap, const LVMIn
 
     for (auto it = infoMap.begin(); it != infoMap.end(); it++) {
         DeviceInfo info = it.value();
-//        qDebug() << info.sector_size;
 //        qDebug() << __FUNCTION__ << info.m_path << info.m_length << info.m_heads << info.m_sectors
 //                 << info.m_cylinders << info.m_cylsize << info.m_model << info.m_serialNumber << info.m_disktype
 //                 << info.m_sectorSize << info.m_maxPrims << info.m_highestBusy << info.m_readonly
-//                 << info.m_maxPartitionNameLength << info.m_mediaType << info.m_interface;
+//                 << info.m_maxPartitionNameLength << info.m_mediaType << info.m_interface << info.m_vgFlag;
         if (info.m_path.isEmpty() || info.m_path.contains("/dev/mapper")) {
             continue;
         }
@@ -335,19 +334,23 @@ void DMDbusHandler::onUpdateDeviceInfo(const DeviceInfoMap &infoMap, const LVMIn
         QString isExistUnallocated = "false";
         QString isJoinAllVG = "true";
         for (auto it = info.m_partition.begin(); it != info.m_partition.end(); it++) {
-            //            qDebug() << it->sector_end << it->sector_start << Utils::sector_to_unit(it->sector_size, it->sector_end - it->sector_start, SIZE_UNIT::UNIT_GIB);
 //                    qDebug() << it->m_path << it->m_devicePath << it->m_partitionNumber << it->m_sectorsUsed << it->m_sectorsUnused << it->m_sectorStart << it->m_sectorEnd;
            if (it->m_path == "unallocated") {
                isExistUnallocated = "true";
            }
 
-           if (1 != it->m_vgFlag) {
+           if (it->m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) {
                isJoinAllVG = "false";
            }
         }
 
-        if (("unrecognized" == info.m_disktype) && (info.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV)) {
+        if (("unrecognized" == info.m_disktype || "none" == info.m_disktype) && (info.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV)) {
             isJoinAllVG = "true";
+        }
+
+        // 处理磁盘无分区时，磁盘图标显示错误
+        if (info.m_partition.size() == 0 && info.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) {
+            isJoinAllVG = "false";
         }
 
         m_isExistUnallocated[info.m_path] = isExistUnallocated;

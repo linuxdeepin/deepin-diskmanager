@@ -360,6 +360,10 @@ void VGSizeInfoWidget::setData(const VGData &vgData)
 
 void VGSizeInfoWidget::paintEvent(QPaintEvent *event)
 {
+    if (m_sizeInfo.isEmpty()) {
+        return;
+    }
+
     QWidget::paintEvent(event);
     QPainter painter(this);
     painter.save();
@@ -550,9 +554,9 @@ void VGSizeInfoWidget::paintEvent(QPaintEvent *event)
         int number = 0;
 
         if (width >= widthSize) {
-            number = width + 20;
+            number = width + 25;
         } else {
-            number = widthSize + 20;
+            number = widthSize + 25;
         }
 
         if (sumWidth + number > rect.width()) {

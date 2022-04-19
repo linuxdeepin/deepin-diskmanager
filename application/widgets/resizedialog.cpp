@@ -146,7 +146,7 @@ void ResizeDialog::partitionResize()
     Sector newSectorEnd = info.m_sectorStart + static_cast<Sector>(newSize * (MEBIBYTE / info.m_sectorSize));
     if (newSectorEnd < 0) {
         m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
-        m_lineEdit->showAlertMessage(tr("Space limit exceeded"), m_mainFrame);
+        m_lineEdit->showAlertMessage(tr("No more than the maximum capacity please"), m_mainFrame); // 超出最大可用空间
         m_lineEdit->setAlert(true);
         return;
     }
@@ -177,7 +177,7 @@ void ResizeDialog::partitionResize()
 
         if (!canExpand) {
             m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
-            m_lineEdit->showAlertMessage(tr("Space limit exceeded"), m_mainFrame);
+            m_lineEdit->showAlertMessage(tr("No more than the maximum capacity please"), m_mainFrame); // 超出最大可用空间
             m_lineEdit->setAlert(true);
             return;
         } else {
@@ -198,7 +198,7 @@ void ResizeDialog::partitionResize()
 
             if (newInfo.m_sectorEnd > next.m_sectorEnd) {
                 m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
-                m_lineEdit->showAlertMessage(tr("Space limit exceeded"), m_mainFrame);
+                m_lineEdit->showAlertMessage(tr("No more than the maximum capacity please"), m_mainFrame); // 超出最大可用空间
                 m_lineEdit->setAlert(true);
                 return;
             } else {
@@ -222,7 +222,7 @@ void ResizeDialog::partitionResize()
         Sector minReduceSize = info.m_sectorStart + limits.min_size / info.m_sectorSize - 1;
         if (newSectorEnd < minReduceSize) {
             m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
-            m_lineEdit->showAlertMessage(tr("Space limit exceeded"), m_mainFrame);
+            m_lineEdit->showAlertMessage(tr("No less than the used capacity please"), m_mainFrame); // 不得低于已用空间
             m_lineEdit->setAlert(true);
             return;
         } else {
@@ -269,7 +269,7 @@ void ResizeDialog::lvResize()
 
     if (newSize < limits.min_size) {
         m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
-        m_lineEdit->showAlertMessage(tr("Space limit exceeded"), m_mainFrame);
+        m_lineEdit->showAlertMessage(tr("No less than the used capacity please"), m_mainFrame); // 不得低于已用空间
         m_lineEdit->setAlert(true);
         return;
     }
@@ -282,7 +282,7 @@ void ResizeDialog::lvResize()
 
     if (newSize < 0 || (newSize - curSize) > unUsedSize) {
         m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
-        m_lineEdit->showAlertMessage(tr("Space limit exceeded"), m_mainFrame);
+        m_lineEdit->showAlertMessage(tr("No more than the maximum capacity please"), m_mainFrame); // 超出最大可用空间
         m_lineEdit->setAlert(true);
         return;
     }
@@ -290,6 +290,14 @@ void ResizeDialog::lvResize()
     if (newSize < curSize) {
         if (limits.min_size == -1) {
             noSupportFSDailog();
+            return;
+        }
+
+        Sector usedSize = lvInfo.m_fsUsed;
+        if (limits.min_size < usedSize) {
+            m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
+            m_lineEdit->showAlertMessage(tr("Unmount it before shrinking its space"), m_mainFrame); // 缩小空间前请先卸载
+            m_lineEdit->setAlert(true);
             return;
         }
 
@@ -446,7 +454,7 @@ void ResizeDialog::updateInputRange()
         if (!canExpand) {
             maxSize = QString::number(Utils::sectorToUnit(info.m_sectorEnd - info.m_sectorStart + 1, info.m_sectorSize, unit), 'f', 2);
         } else {
-            maxSize = QString::number(Utils::sectorToUnit(next.m_sectorEnd - next.m_sectorStart + 1, next.m_sectorSize, unit), 'f', 2);
+            maxSize = QString::number(Utils::sectorToUnit(next.m_sectorEnd - info.m_sectorStart + 1, next.m_sectorSize, unit), 'f', 2);
         }
     } else if (DMDbusHandler::LOGICALVOLUME == DMDbusHandler::instance()->getCurLevel()) {
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();

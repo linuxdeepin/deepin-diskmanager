@@ -983,11 +983,7 @@ void DeviceListWidget::onUpdateDeviceInfo()
                 // 判断VG显示之前是否选择的是磁盘节点
                 if (topNum == -1) {
                     groupNum = -1; // 若之前选择的是磁盘节点，设置组节点为-1
-                    if (m_treeView->getCurrentNum() == 0) {
-                        topNum = 1; // 若之前选择的是第一个磁盘节点，设置根节点为1
-                    } else {
-                        topNum = m_treeView->getCurrentNum(); //若之前选择的不是第一个磁盘节点
-                    }
+                    topNum = 1; // 若之前选择的是磁盘节点，设置根节点为1
                 }
                 m_vgIsShow = true;
             }

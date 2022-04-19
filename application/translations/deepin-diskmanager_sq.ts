@@ -147,16 +147,16 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="115"/>
         <location filename="../widgets/createvgwidget.cpp" line="414"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1022"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1032"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1481"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1491"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1541"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1592"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1595"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1625"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1733"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1799"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1040"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1050"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1499"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1509"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1559"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1610"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1613"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1643"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1751"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1817"/>
         <source>Capacity selected: %1</source>
         <translation>Kapacitet i përzgjedhur: %1</translation>
     </message>
@@ -245,58 +245,68 @@
         <translation>Emër GV: %1</translation>
     </message>
     <message>
+        <location filename="../widgets/createvgwidget.cpp" line="776"/>
+        <source>No less than the used capacity please</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <location filename="../widgets/createvgwidget.cpp" line="781"/>
+        <source>No more than the maximum capacity please</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="799"/>
         <source>A lot of data exists on %1, </source>
         <translation>Ka plotë të dhëna në %1, </translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="782"/>
+        <location filename="../widgets/createvgwidget.cpp" line="800"/>
         <source>which may take a long time to back it up.</source>
         <translation>çka mund të dojë një kohë të gjatë për t’i kopjeruajtur.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="783"/>
+        <location filename="../widgets/createvgwidget.cpp" line="801"/>
         <source>Do you want to continue?</source>
         <translation>Doni të vazhdohet?</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="784"/>
+        <location filename="../widgets/createvgwidget.cpp" line="802"/>
         <source>Continue</source>
         <translation>Vazhdo</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="785"/>
+        <location filename="../widgets/createvgwidget.cpp" line="803"/>
         <source>Cancel</source>
         <translation>Anuloje</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1752"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1770"/>
         <source>Not enough space to back up data on %1, please clear disk space</source>
         <translation>S’ka hapësirë të mjaftueshme për të kopjeruajtur të dhëna në %1, ju lutemi, spastroni hapësirë disku</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1753"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1771"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1927"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1945"/>
         <source>Existing volume group, creation failed. Please retry after reboot.</source>
         <translation>Grup ekzistues vëllimesh, krijimi dështoi. Ju lutemi, riprovoni pas rinisjeje.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1931"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1949"/>
         <source>Failed to create a physical volume. Please refresh Disk Utility and try again.</source>
         <translation>S’u arrit të krijohet një vëllim fizik. Ju lutemi, rifreskoni Mjet Disqesh dhe riprovoni.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1935"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1953"/>
         <source>Device input/output error. Please try again after reboot.</source>
         <translation>Gabim input-i/output-i pajisjeje. Ju lutemi, riprovoni pas rinisjeje.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1988"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1995"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2006"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2013"/>
         <source>Refreshing the page to reload disks</source>
         <translation>Po rifreskohet faqja për të ringarkuar disqe</translation>
     </message>
@@ -348,13 +358,13 @@
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="252"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="609"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="614"/>
         <source>Mounting %1 ...</source>
         <translation>Po montohet %1 …</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="259"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="616"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="621"/>
         <source>Unmounting %1 ...</source>
         <translation>Po çmontohet %1 …</translation>
     </message>
@@ -369,33 +379,33 @@
         <translation>Po krijohet pjesë e re…</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="438"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="443"/>
         <source>Deleting %1 ...</source>
         <translation>Po fshihet %1 …</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="490"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="495"/>
         <source>Creating a partition table of %1 ...</source>
         <translation>Po krijohet një tabelë pjesësh e %1 …</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="492"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="497"/>
         <source>Replacing the partition table of %1 ...</source>
         <translation>Po zëvendësohet tabela e pjesëve %1 …</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="576"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="581"/>
         <source>Creating...</source>
         <translation>Po krijohet…</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="583"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="590"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="588"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="595"/>
         <source>Deleting...</source>
         <translation>Po fshihet…</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="602"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="607"/>
         <source>Resizing space...</source>
         <translation>Po ripërmasohet hapësira…</translation>
     </message>
@@ -1546,7 +1556,7 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
 <context>
     <name>PartitionInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/partitioninfowidget.cpp" line="248"/>
+        <location filename="../widgets/customcontrol/partitioninfowidget.cpp" line="256"/>
         <source>Unallocated</source>
         <translation>Të padhëna</translation>
     </message>
@@ -1812,8 +1822,8 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
     <message>
         <location filename="../widgets/resizedialog.cpp" line="121"/>
         <location filename="../widgets/resizedialog.cpp" line="232"/>
-        <location filename="../widgets/resizedialog.cpp" line="301"/>
-        <location filename="../widgets/resizedialog.cpp" line="304"/>
+        <location filename="../widgets/resizedialog.cpp" line="309"/>
+        <location filename="../widgets/resizedialog.cpp" line="312"/>
         <source>Cancel</source>
         <translation>Anuloje</translation>
     </message>
@@ -1826,11 +1836,19 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
         <location filename="../widgets/resizedialog.cpp" line="149"/>
         <location filename="../widgets/resizedialog.cpp" line="180"/>
         <location filename="../widgets/resizedialog.cpp" line="201"/>
+        <location filename="../widgets/resizedialog.cpp" line="285"/>
+        <source>No more than the maximum capacity please</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <location filename="../widgets/resizedialog.cpp" line="225"/>
         <location filename="../widgets/resizedialog.cpp" line="272"/>
-        <location filename="../widgets/resizedialog.cpp" line="285"/>
+        <source>No less than the used capacity please</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Space limit exceeded</source>
-        <translation>U tejkalua kufi hapësire</translation>
+        <translation type="vanished">U tejkalua kufi hapësire</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="217"/>
@@ -1840,9 +1858,9 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
     <message>
         <location filename="../widgets/resizedialog.cpp" line="217"/>
         <location filename="../widgets/resizedialog.cpp" line="232"/>
-        <location filename="../widgets/resizedialog.cpp" line="301"/>
-        <location filename="../widgets/resizedialog.cpp" line="304"/>
-        <location filename="../widgets/resizedialog.cpp" line="340"/>
+        <location filename="../widgets/resizedialog.cpp" line="309"/>
+        <location filename="../widgets/resizedialog.cpp" line="312"/>
+        <location filename="../widgets/resizedialog.cpp" line="348"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -1856,17 +1874,22 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
         <translation>Për të parandaluar humbje të dhënash, kopjeruani të dhënat, para se ta tkurrni</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="301"/>
+        <location filename="../widgets/resizedialog.cpp" line="299"/>
+        <source>Unmount it before shrinking its space</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="309"/>
         <source>The current device has been mounted and will be unmounted automatically. Please back up data in it to prevent data loss</source>
         <translation>Pajisja e tanishme është montuar dhe do të çmontohet vetvetiu. Ju lutemi, kopjeruani të dhënat, që të parandaloni humbje të tyre</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="304"/>
+        <location filename="../widgets/resizedialog.cpp" line="312"/>
         <source>To prevent data loss, back up data in the logical volume before shrinking it</source>
         <translation>Që të parandalohet humbje të dhënash, kopjeruani të dhënat tuaja te vëllimi logjik, përpara tkurrjes së tij</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="340"/>
+        <location filename="../widgets/resizedialog.cpp" line="348"/>
         <source>The file system does not support space adjustment</source>
         <translation>Sistemi i kartelave nuk mbulon rregullim hapësire</translation>
     </message>
@@ -2061,8 +2084,8 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
 <context>
     <name>VGSizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/vgsizeinfowidget.cpp" line="532"/>
-        <location filename="../widgets/customcontrol/vgsizeinfowidget.cpp" line="601"/>
+        <location filename="../widgets/customcontrol/vgsizeinfowidget.cpp" line="544"/>
+        <location filename="../widgets/customcontrol/vgsizeinfowidget.cpp" line="613"/>
         <source>Unallocated</source>
         <translation>Të padhëna</translation>
     </message>

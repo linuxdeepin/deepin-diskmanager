@@ -766,6 +766,24 @@ void CreateVGWidget::onPreviousButtonClicked()
 
 void CreateVGWidget::onDoneButtonClicked()
 {
+    if (m_selectSpaceStackedWidget->currentIndex() == 0) {
+        double curSize = QString::number(m_selectSpaceLineEdit->text().toDouble(), 'f', 2).toDouble();
+        double minSize = QString::number(m_minSize, 'f', 2).toDouble();
+        double maxSize = QString::number(m_maxSize, 'f', 2).toDouble();
+
+        if (curSize < minSize) {
+            m_selectSpaceLineEdit->setAlertMessageAlignment(Qt::AlignTop);
+            m_selectSpaceLineEdit->showAlertMessage(tr("No less than the used capacity please"), m_mainFrame); // 不得低于已用空间
+            m_selectSpaceLineEdit->setAlert(true);
+            return;
+        } else if (curSize > maxSize){
+            m_selectSpaceLineEdit->setAlertMessageAlignment(Qt::AlignTop);
+            m_selectSpaceLineEdit->showAlertMessage(tr("No more than the maximum capacity please"), m_mainFrame); // 超出最大可用空间
+            m_selectSpaceLineEdit->setAlert(true);
+            return;
+        }
+    }
+
     if (m_curOperationType == OperationType::RESIZE) {
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
         set<PVData> pvDataSet = getCurSelectPVData();
@@ -1869,16 +1887,10 @@ void CreateVGWidget::onCurrentIndexChanged(int index)
 void CreateVGWidget::onTextChanged(const QString &text)
 {
     double curSize = QString::number(text.toDouble(), 'f', 2).toDouble();
-    double minSize = QString::number(m_minSize, 'f', 2).toDouble();
     double maxSize = QString::number(m_maxSize, 'f', 2).toDouble();
 
-    if ((curSize < minSize) || (curSize > maxSize) || (text.isEmpty()) || curSize == 0.00) {
-        m_selectSpaceLineEdit->setAlert(true);
-        m_doneButton->setDisabled(true);
-    } else {
-        m_selectSpaceLineEdit->setAlert(false);
-        m_doneButton->setDisabled(false);
-    }
+    m_doneButton->setDisabled(text.isEmpty() || curSize == 0.00);
+    m_selectSpaceLineEdit->setAlert(false);
 
     if (!m_selectSpaceLineEdit->text().isEmpty()) {
         double curSize = QString::number(m_selectSpaceLineEdit->text().toDouble(), 'f', 2).toDouble();

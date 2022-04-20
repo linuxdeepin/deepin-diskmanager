@@ -887,7 +887,7 @@ void DeviceListWidget::onUpdateDeviceInfo()
             }
 
             QString diskSize = Utils::formatSize(info.m_length, info.m_sectorSize);
-            auto diskinfoBox = new DmDiskinfoBox(DMDbusHandler::DISK, this, info.m_path, diskSize);
+            auto diskinfoBox = new DmDiskinfoBox(DMDbusHandler::DISK, this, info.m_path, diskSize, info.m_vgFlag, info.m_path);
             int partitionCount = 0;
 
             for (auto it = info.m_partition.begin(); it != info.m_partition.end(); it++) {
@@ -1009,7 +1009,7 @@ void DeviceListWidget::onUpdateDeviceInfo()
             }
 
             QString diskSize = Utils::formatSize(info.m_length, info.m_sectorSize);
-            auto diskinfoBox = new DmDiskinfoBox(DMDbusHandler::DISK, this, info.m_path, diskSize);
+            auto diskinfoBox = new DmDiskinfoBox(DMDbusHandler::DISK, this, info.m_path, diskSize, info.m_vgFlag, info.m_path);
             int partitionCount = 0;
 
             for (auto it = info.m_partition.begin(); it != info.m_partition.end(); it++) {
@@ -1054,6 +1054,11 @@ void DeviceListWidget::onUpdateDeviceInfo()
         }
 
         m_addItem = 1;
+
+        // 删除全部VG后，重置标志位
+        if (m_vgIsShow && DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::VOLUMEGROUP) {
+            m_flag = 0;
+        }
 
         if (m_flag == 0) {
             for (int i = 0; i < deviceNameList.count(); i++) {

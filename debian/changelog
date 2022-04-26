@@ -1,3 +1,12 @@
+deepin-diskmanager (1.3.10) stable; urgency=low
+
+  * 磁盘管理器V1.3第十次发版
+  * 126825 任意功能加载过程中按下ESC按键加载界面退出
+  * 125617 逻辑卷存储数据后空间调整界面区间值错误，缩小后该分区为未知的文件系统
+  * 125591 分区空间调整区间值显示错误
+
+ -- yuandandan <yuandandan@uniontech.com>  Tue, 26 Apr 2022 15:43:16 +0800
+
 deepin-diskmanager (1.3.9) stable; urgency=low
 
   * 磁盘管理器V1.3第九次发版

@@ -161,6 +161,11 @@ void VGInfoShowWidget::setData(const QList< QMap<QString, QVariant> > &lstInfo)
 //        m_scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//隐藏竖向滚动条
         scrollArea->setWidget(widget1);
 
+        // 设置滚动区域背景颜色为透明
+        QPalette areaPalette;
+        areaPalette.setColor(QPalette::Base, QColor(255, 255, 255, 0));
+        scrollArea->setPalette(areaPalette);
+
         QVBoxLayout *scrollAreaLayout = new QVBoxLayout;
         scrollAreaLayout->addWidget(scrollArea);
         scrollAreaLayout->setSpacing(0);

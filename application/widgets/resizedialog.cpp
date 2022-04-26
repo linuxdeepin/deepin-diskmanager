@@ -230,6 +230,12 @@ void ResizeDialog::partitionResize()
         }
 
         Sector minReduceSize = info.m_sectorStart + limits.min_size / info.m_sectorSize - 1;
+
+        // 处理输入最小值，弹出错误提示的问题
+        if (m_minSize == QString::number(m_lineEdit->text().toDouble(), 'f', 2) && newSectorEnd < minReduceSize) {
+            newSectorEnd = minReduceSize;
+        }
+
         if (newSectorEnd < minReduceSize) {
             m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
             m_lineEdit->showAlertMessage(tr("No less than the used capacity please"), m_mainFrame); // 不得低于已用空间
@@ -248,6 +254,10 @@ void ResizeDialog::partitionResize()
                 diff = (newInfo.m_sectorEnd + 1) % (MEBIBYTE / newInfo.m_sectorSize);
                 if (diff) {
                     newInfo.m_sectorEnd -= diff;
+                }
+
+                if (newInfo.m_sectorEnd < minReduceSize) {
+                    newInfo.m_sectorEnd = minReduceSize;
                 }
 
                 DMDbusHandler::instance()->resize(newInfo);

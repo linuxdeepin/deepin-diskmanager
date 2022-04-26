@@ -72,12 +72,17 @@ private:
      */
     void noSupportFSDailog();
 
+    /**
+     * @brief 更新调整区间
+     */
     void updateInputRange();
 
     DLineEdit *m_lineEdit;
     DComboBox *m_comboBox;
     DLabel *m_label;
     DLabel *m_lvResizeLable;
+    QString m_minSize = "0";
+    QString m_maxSize = "0";
 
 private slots:
     /**

@@ -196,6 +196,16 @@ void ResizeDialog::partitionResize()
                     newInfo.m_sectorEnd -= MEBIBYTE / newInfo.m_sectorSize;
             }
 
+            // 处理输入最大值，没有成功扩容的问题
+            if (m_maxSize == QString::number(m_lineEdit->text().toDouble(), 'f', 2)) {
+                DeviceInfo device = DMDbusHandler::instance()->getCurDeviceInfo();
+                if (device.m_disktype == "gpt" && device.m_length == (next.m_sectorEnd + 1)) {
+                    newInfo.m_sectorEnd = next.m_sectorEnd - 33;
+                } else {
+                    newInfo.m_sectorEnd = next.m_sectorEnd;
+                }
+            }
+
             if (newInfo.m_sectorEnd > next.m_sectorEnd) {
                 m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
                 m_lineEdit->showAlertMessage(tr("No more than the maximum capacity please"), m_mainFrame); // 超出最大可用空间
@@ -267,6 +277,11 @@ void ResizeDialog::lvResize()
         newSize = static_cast<Sector>(m_lineEdit->text().toDouble() * GIBIBYTE);
     }
 
+    // 处理输入最小值，弹出错误提示的问题
+    if (m_minSize == QString::number(m_lineEdit->text().toDouble(), 'f', 2) && newSize < limits.min_size) {
+        newSize = limits.min_size;
+    }
+
     if (newSize < limits.min_size) {
         m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
         m_lineEdit->showAlertMessage(tr("No less than the used capacity please"), m_mainFrame); // 不得低于已用空间
@@ -279,6 +294,11 @@ void ResizeDialog::lvResize()
         peCount += 1;
     }
     newSize = peCount * peSize;
+
+    // 处理输入最大值，没有成功扩容或者直接弹出错误提示的问题
+    if (m_maxSize == QString::number(m_lineEdit->text().toDouble(), 'f', 2) && newSize > curSize) {
+        newSize = curSize + unUsedSize;
+    }
 
     if (newSize < 0 || (newSize - curSize) > unUsedSize) {
         m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
@@ -423,16 +443,16 @@ void ResizeDialog::onEditTextChanged(const QString &)
 void ResizeDialog::updateInputRange()
 {
     SIZE_UNIT unit = (0 == m_comboBox->currentIndex()) ? UNIT_MIB : UNIT_GIB;
-    QString minSize = "0";
-    QString maxSize = "0";
+    m_minSize = "0";
+    m_maxSize = "0";
     if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         FS_Limits limits = info.m_fsLimits;
 
         if (limits.min_size == -1) {
-            minSize = QString::number(Utils::sectorToUnit(info.m_sectorEnd - info.m_sectorStart + 1, info.m_sectorSize, unit), 'f', 2);
+            m_minSize = QString::number(Utils::sectorToUnit(info.m_sectorEnd - info.m_sectorStart + 1, info.m_sectorSize, unit), 'f', 2);
         } else {
-            minSize = QString::number(Utils::LVMSizeToUnit(limits.min_size, unit), 'f', 2);
+            m_minSize = QString::number(Utils::LVMSizeToUnit(limits.min_size, unit), 'f', 2);
         }
 
         bool canExpand = false;
@@ -452,9 +472,9 @@ void ResizeDialog::updateInputRange()
         }
 
         if (!canExpand) {
-            maxSize = QString::number(Utils::sectorToUnit(info.m_sectorEnd - info.m_sectorStart + 1, info.m_sectorSize, unit), 'f', 2);
+            m_maxSize = QString::number(Utils::sectorToUnit(info.m_sectorEnd - info.m_sectorStart + 1, info.m_sectorSize, unit), 'f', 2);
         } else {
-            maxSize = QString::number(Utils::sectorToUnit(next.m_sectorEnd - info.m_sectorStart + 1, next.m_sectorSize, unit), 'f', 2);
+            m_maxSize = QString::number(Utils::sectorToUnit(next.m_sectorEnd - info.m_sectorStart + 1, next.m_sectorSize, unit), 'f', 2);
         }
     } else if (DMDbusHandler::LOGICALVOLUME == DMDbusHandler::instance()->getCurLevel()) {
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
@@ -465,15 +485,15 @@ void ResizeDialog::updateInputRange()
         FS_Limits limits = lvInfo.m_fsLimits;
 
         if (limits.min_size == -1) {
-            minSize = QString::number(Utils::LVMSizeToUnit(curSize, unit), 'f', 2);
+            m_minSize = QString::number(Utils::LVMSizeToUnit(curSize, unit), 'f', 2);
         } else if (limits.min_size == 0) {
-            minSize = QString::number(Utils::LVMSizeToUnit(peSize, unit), 'f', 2);
+            m_minSize = QString::number(Utils::LVMSizeToUnit(peSize, unit), 'f', 2);
         } else {
-            minSize = QString::number(Utils::LVMSizeToUnit(limits.min_size, unit), 'f', 2);
+            m_minSize = QString::number(Utils::LVMSizeToUnit(limits.min_size, unit), 'f', 2);
         }
 
-        maxSize = QString::number(Utils::LVMSizeToUnit(curSize + unUsedSize, unit), 'f', 2);
+        m_maxSize = QString::number(Utils::LVMSizeToUnit(curSize + unUsedSize, unit), 'f', 2);
     }
 
-    m_lineEdit->lineEdit()->setPlaceholderText(QString("%1-%2").arg(minSize).arg(maxSize));
+    m_lineEdit->lineEdit()->setPlaceholderText(QString("%1-%2").arg(m_minSize).arg(m_maxSize));
 }

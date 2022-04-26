@@ -48,6 +48,13 @@ public:
 
     DFrame *m_mainFrame = nullptr;
     int m_okCode = -1;
+
+protected:
+    /**
+     * @brief 键盘按下事件
+     * @param event事件
+     */
+    void keyPressEvent(QKeyEvent *event) override;
 };
 
 #endif // DDBASE_H

@@ -44,6 +44,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QApplication>
+#include <QKeyEvent>
 
 DiskHealthDetectionDialog::DiskHealthDetectionDialog(const QString &devicePath, HardDiskStatusInfoList hardDiskStatusInfoList, QWidget *parent)
     : DDialog(parent)
@@ -461,6 +462,15 @@ bool DiskHealthDetectionDialog::event(QEvent *event)
     }
 
     return DDialog::event(event);
+}
+
+void DiskHealthDetectionDialog::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key::Key_Escape) {
+        event->ignore();
+    } else {
+        DDialog::keyPressEvent(event);
+    }
 }
 
 

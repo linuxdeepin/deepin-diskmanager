@@ -973,3 +973,12 @@ bool PartitionWidget::event(QEvent *event)
 
     return DDialog::event(event);
 }
+
+void PartitionWidget::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key::Key_Escape) {
+        event->ignore();
+    } else {
+        DDialog::keyPressEvent(event);
+    }
+}

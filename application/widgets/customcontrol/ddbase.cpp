@@ -27,6 +27,8 @@
 #include "ddbase.h"
 #include "common.h"
 
+#include <QKeyEvent>
+
 DDBase::DDBase(QWidget *parent)
     : DDialog(parent)
 {
@@ -39,4 +41,13 @@ DDBase::DDBase(QWidget *parent)
 
     addContent(m_mainFrame);
     // updateGeometry();
+}
+
+void DDBase::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key::Key_Escape) {
+        event->ignore();
+    } else {
+        DDialog::keyPressEvent(event);
+    }
 }

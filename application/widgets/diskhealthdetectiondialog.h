@@ -68,6 +68,12 @@ protected:
      */
     bool event(QEvent *event) override;
 
+    /**
+     * @brief 键盘按下事件
+     * @param event事件
+     */
+    void keyPressEvent(QKeyEvent *event) override;
+
 private slots:
     /**
      * @brief 导出按钮点击响应的槽函数

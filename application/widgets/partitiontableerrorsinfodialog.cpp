@@ -38,6 +38,7 @@
 #include <QVBoxLayout>
 #include <QStandardItemModel>
 #include <QHeaderView>
+#include <QKeyEvent>
 
 PartitionTableErrorsInfoDialog::PartitionTableErrorsInfoDialog(const QString &deviceInfo, QWidget *parent)
     : DDialog(parent)
@@ -150,6 +151,15 @@ void PartitionTableErrorsInfoDialog::initUI()
 void PartitionTableErrorsInfoDialog::initConnections()
 {
     connect(pushButton, &DPushButton::clicked, this, &PartitionTableErrorsInfoDialog::close);
+}
+
+void PartitionTableErrorsInfoDialog::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key::Key_Escape) {
+        event->ignore();
+    } else {
+        DDialog::keyPressEvent(event);
+    }
 }
 
 

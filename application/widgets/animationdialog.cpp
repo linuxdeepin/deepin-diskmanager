@@ -29,6 +29,7 @@
 #include <DWindowCloseButton>
 
 #include <QVBoxLayout>
+#include <QKeyEvent>
 
 AnimationDialog::AnimationDialog(QWidget *parent) : DDialog(parent)
 {
@@ -68,6 +69,15 @@ void AnimationDialog::setShowSpinner(bool isShow, const QString &title)
         m_spinner->show();
     } else {
         m_spinner->hide();
+    }
+}
+
+void AnimationDialog::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key::Key_Escape) {
+        event->ignore();
+    } else {
+        DDialog::keyPressEvent(event);
     }
 }
 

@@ -997,7 +997,7 @@ void DiskBadSectorsDialog::onRepairButtonClicked()
         return;
     }
 
-    DDialog messageBox(this);
+    MessageBox messageBox(this);
     messageBox.setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
     messageBox.setTitle(tr("Warning")); // 警告
     messageBox.addSpacing(10);
@@ -1255,6 +1255,15 @@ bool DiskBadSectorsDialog::event(QEvent *event)
     }
 
     return DDialog::event(event);
+}
+
+void DiskBadSectorsDialog::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key::Key_Escape) {
+        event->ignore();
+    } else {
+        DDialog::keyPressEvent(event);
+    }
 }
 
 

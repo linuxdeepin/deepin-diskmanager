@@ -30,6 +30,7 @@
 #include <DLabel>
 
 #include <QAbstractButton>
+#include <QKeyEvent>
 
 MessageBox::MessageBox(QWidget *parent) : DDialog(parent)
 {
@@ -119,6 +120,15 @@ void MessageBox::addProgressBar()
     m_progressBar->setValue(50);
     m_progressBar->setFixedSize(330, 10);
     addContent(m_progressBar, Qt::AlignHCenter);
+}
+
+void MessageBox::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key::Key_Escape) {
+        event->ignore();
+    } else {
+        DDialog::keyPressEvent(event);
+    }
 }
 
 

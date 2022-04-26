@@ -57,6 +57,13 @@ signals:
 
 public slots:
 
+protected:
+    /**
+     * @brief 键盘按下事件
+     * @param event事件
+     */
+    void keyPressEvent(QKeyEvent *event) override;
+
 private:
     /**
      * @brief 初始化界面

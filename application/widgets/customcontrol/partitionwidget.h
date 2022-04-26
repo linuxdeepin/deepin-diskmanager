@@ -256,6 +256,12 @@ protected:
      */
     bool event(QEvent *event) override;
 
+    /**
+     * @brief 键盘按下事件
+     * @param event事件
+     */
+    void keyPressEvent(QKeyEvent *event) override;
+
 private:
     QWidget *m_mainFrame;
     DFrame *m_topFrame;

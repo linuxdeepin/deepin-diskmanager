@@ -39,6 +39,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QDebug>
+#include <QKeyEvent>
 
 DiskInfoDisplayDialog::DiskInfoDisplayDialog(const QString &devicePath, QWidget *parent)
     : DDialog(parent)
@@ -213,6 +214,15 @@ bool DiskInfoDisplayDialog::event(QEvent *event)
     }
 
     return DDialog::event(event);
+}
+
+void DiskInfoDisplayDialog::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key::Key_Escape) {
+        event->ignore();
+    } else {
+        DDialog::keyPressEvent(event);
+    }
 }
 
 

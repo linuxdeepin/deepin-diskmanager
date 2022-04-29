@@ -3992,8 +3992,8 @@ bool PartedCore::umontDevice(QVector<QString> mountPoints, QString devPath)
 
 bool PartedCore::writeFstab(const QString &uuid, const QString &mountpath, const QString &type, bool isMount)
 {
-    qDebug() << __FUNCTION__ << "Write fstab start";
     //写入fstab 永久挂载
+    qDebug() << __FUNCTION__ << "Write fstab start";
     if (uuid.isEmpty() || (mountpath.isEmpty() && isMount) || type.isEmpty()) { //非挂载 不需要挂载点 可以传空值
         qDebug() << __FUNCTION__ << "Write fstabt argument error";
         return false;
@@ -4018,7 +4018,7 @@ bool PartedCore::writeFstab(const QString &uuid, const QString &mountpath, const
         QString str = line;
         if (isMount) {
             //vfat 1051系统上vfat格式不指定utf8挂载 通过文件管理器右键菜单新建文件夹会乱码  导致创建错误 为了规避该问题加上utf8属性
-            QString mountStr = (type2 == "vfat") ? QString("UUID=%1 %2 %3 defaults,nofail,utf8 0 0\n").arg(uuid).arg(mountpath).arg(type2)
+            QString mountStr = (type2 == "vfat") ? QString("UUID=%1 %2 %3 defaults,nofail,utf8,dmask=000,fmask=111 0 0\n").arg(uuid).arg(mountpath).arg(type2)
                                : QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(uuid).arg(mountpath).arg(type2);
 
             if (str.contains(uuid) && !findflag) { //首次查找到uuid
@@ -4031,10 +4031,9 @@ bool PartedCore::writeFstab(const QString &uuid, const QString &mountpath, const
             }
             list << str;
         } else {
-            if (str.contains(uuid)) {
-                continue;
+            if (!str.contains(uuid)) {
+                list << str;
             }
-            list << str;
         }
     }
     file.close();
@@ -4085,111 +4084,8 @@ bool PartedCore::changeOwner(const QString &user, const QString &path)
 int PartedCore::test()
 {
 
-    QList<PVData>devList;
-    PVData pv1, pv2;
-    pv1.m_pvAct = LVMAction::LVM_ACT_DELETEPV ;
-    pv2.m_pvAct = LVMAction::LVM_ACT_DELETEPV ;
-    pv1.m_devicePath = "/dev/sdb9";
-    pv2.m_devicePath = "/dev/sdc2";
-
-
-    devList.push_back(pv1);
-    devList.push_back(pv2);
-    // LVMOperator::deletePVList(m_lvmInfo, devList);
-//    QString str = "smartctl 6.6 2017-11-05 r4594 [x86_64-linux-4.19.0-6-amd64] (local build)\nCopyright (C) 2002-17, Bruce Allen, Christian Franke, www.smartmontools.org\n\n=== START OF SMART DATA SECTION ===\nSMART/Health Information (NVMe Log 0x02, NSID 0xffffffff)\nCritical Warning:                   0x00\nTemperature:                        25 Celsius\nAvailable Spare:                    100%\nAvailable Spare Threshold:          5%\nPercentage Used:                    1%\nData Units Read:                    3,196,293 [1.63 TB]\nData Units Written:                 3,708,861 [1.89 TB]\nHost Read Commands:                 47,399,157\nHost Write Commands:                65,181,192\nController Busy Time:               418\nPower Cycles:                       97\nPower On Hours:                     1,362\nUnsafe Shutdowns:                   44\nMedia and Data Integrity Errors:    0\nError Information Log Entries:      171\nWarning  Comp. Temperature Time:    0\nCritical Comp. Temperature Time:    0\n\n";
-//    QStringList list = str.split("\n");
-//    qDebug() << list;
-//    for (int i = 0; i < list.size(); i++) {
-//        if (list.at(i).contains(":")) {
-//            QStringList slist = list.at(i).split(":");
-//            qDebug() << slist;
-//        }
-//    }
-
-//    if(createPartitionTable("/dev/sdc","468862128", "512", "msdos"))
-//    {
-//        return 0;
-//    }
-
-//    static LVMInfo s_lvm_info;
-//    LVMOperator::getDeviceDataAndLVMInfo(m_inforesult, s_lvm_info);
-//    LVMOperator::printLVMInfo(s_lvm_info);
-//    LVMOperator::printDeviceLVMData(m_inforesult);
-//    LVMOperator::printError(s_lvm_info.m_lvmErr);
-
-
-//    QList<PVData>list;
-//    PVData pv1, pv2, pv3, pv4;
-
-//    pv1.m_type = LVM_DEV_PARTITION;
-//    pv1.m_diskPath = "/dev/sdc";
-//    pv1.m_devicePath = "/dev/sdc1";
-//    pv1.m_sectorSize = 512;
-//    pv1.m_startSector = UEFI_SECTOR;
-//    pv1.m_endSector = 2099199;
-//    pv1.m_pvAct = LVM_ACT_ADDPV;
-
-
-//    pv2.m_type = LVM_DEV_PARTITION;
-//    pv2.m_diskPath = "/dev/sdc";
-//    pv2.m_devicePath = "/dev/sdc2";
-//    pv2.m_sectorSize = 512;
-//    pv2.m_startSector = 2099200;
-//    pv2.m_endSector = 4196351;
-//    pv2.m_pvAct = LVM_ACT_ADDPV;
-
-//    pv3.m_type = LVM_DEV_UNALLOCATED_PARTITION;
-//    pv3.m_diskPath = "/dev/sdc";
-//    pv3.m_devicePath = "/dev/sdc";
-//    pv3.m_sectorSize = 512;
-//    pv3.m_startSector = 4196352;
-//    pv3.m_endSector = 30433279;
-//    pv3.m_pvAct = LVM_ACT_ADDPV;
-
-
-//    pv4.m_type = LVM_DEV_DISK;
-//    pv4.m_diskPath = "/dev/sdb";
-//    pv4.m_devicePath = "/dev/sdb";
-//    pv4.m_sectorSize = 512;
-//    pv4.m_startSector = 0;
-//    pv4.m_endSector = 3906963455;
-//    pv4.m_pvAct = LVM_ACT_ADDPV;
-
-
-
-
-//    list.push_back(pv1);
-//    list.push_back(pv2);
-//    list.push_back(pv3);
-//    list.push_back(pv4);
-//    //createVG("vgTest1",list,2*GIBIBYTE);
-//    //createVG("vgTest1",list,3*GIBIBYTE);
-//    //createVG("vgTest1", list, (long long)(2015946063360));
-
-//    LVAction act;
-//    act.m_lvFs = FS_EXT2;
-//    act.m_user = "uos";
-//    act.m_lvAct = LVM_ACT_LV_SECURE_CLEAR;
-//    act.m_lvName = "lv01";
-//    act.m_vgName = "vg0";
-
-//    //clearLV(act);
-
-
-////    act.m_lvAct=LVM_ACT_LV_UMOUNT;
-////    umountLV(act);
-
-//    act.m_lvAct = LVM_ACT_LV_MOUNT;
-//    act.m_mountPoint = "/media/testLVMount";
-//    mountLV(act);
 
     return 1;
 }
-
-
-
-
-
-
 
 } // namespace DiskManager

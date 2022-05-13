@@ -213,7 +213,17 @@ public:
      */
     static bool adjudicationPVDelete(LVMInfo lvmInfo, const set<QString> &pvStrList, bool &bigDataMove, QStringList &realMovePvList);
 
-
+    /**
+     * @brief 删除指针
+     * @param point:待删除指针
+     */
+    template<typename T>
+    static inline void deletePoint( T *& point){
+        if(point !=nullptr){
+            delete point;
+            point = nullptr;
+        }
+    }
 };
 
 #endif // UTILS_H

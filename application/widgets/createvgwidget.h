@@ -238,6 +238,30 @@ private:
      */
     bool adjudicationPVMove(const VGInfo &vg, const set<PVData> &pvlist, bool &bigDataMove, QStringList &realDelPvList);
 
+    /**
+     * @brief 设置滚动区域属性
+     * @param scrollArea 滚动区域指针
+     * @param hScrollBarHidden 是否隐藏横向滚动条
+     * @param vScrollBarHidden 是否隐藏竖向滚动条
+     */
+    void setScrollAreaAttribute(DScrollArea *scrollArea, bool hScrollBarHidden, bool vScrollBarHidden);
+
+    /**
+     * @brief 判断数据是否相同
+     * @param data1 pv信息
+     * @param data2 pv信息
+     * @return true相同，反之则不相同
+     */
+    bool judgeDataEquality(const PVInfoData &data1, const PVInfoData &data2);
+
+    /**
+     * @brief 判断数据是否相同
+     * @param partInfo 分区信息
+     * @param pvInfo pv信息
+     * @return true相同，反之则不相同
+     */
+    bool judgeDataEquality(const PartitionInfo &partInfo, const PVInfoData &pvInfo);
+
 private:
    DStackedWidget *m_stackedWidget;
    DLabel *m_seclectedLabel;

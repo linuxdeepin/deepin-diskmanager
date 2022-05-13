@@ -14,18 +14,10 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(BASESTRUCT_SRCS
-    deviceinfo.h
-    deviceinfo.cpp
-    partitioninfo.h
-    partitioninfo.cpp
-    utils.h
-    utils.cpp
-    commondef.h
-    lvmstruct.h
-    lvmstruct.cpp
-    lvmenum.h
-    )
+file(GLOB BASESTRUCT_SOURCES "*.cpp")
+file(GLOB BASESTRUCT_HEADERS "*.h")
+
+set(BASESTRUCT_SRCS ${BASESTRUCT_SOURCES} ${BASESTRUCT_HEADERS} )
 
 add_library(${PROJECT_NAME} STATIC ${BASESTRUCT_SRCS})
 target_include_directories(${PROJECT_NAME} PUBLIC

@@ -216,4 +216,19 @@ enum DISK_ERROR {
 };
 
 
+//new by liuwh 2022/1/17
+/**
+ * @enum LVMDevType
+ * @brief lvm 设备类型
+ */
+enum DevType {
+    DEV_UNKNOW_DEVICES,         //未知设备
+    DEV_DISK,                   //磁盘
+    DEV_UNALLOCATED_PARTITION,  //未分配的分区
+    DEV_PARTITION,              //分区
+    DEV_LOOP,                   //loop设备
+    DEV_META_DEVICES            //元数据设备 raid 加密磁盘映射等虚拟设备
+};
+
+
 #endif // COMMONDEF_H

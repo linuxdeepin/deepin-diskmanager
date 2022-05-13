@@ -66,19 +66,6 @@ enum LVMAction {
     LVM_ACT_VG_REDUCE               //vg 缩小
 };
 
-//new by liuwh 2022/1/17
-/**
- * @enum LVMDevType
- * @brief lvm 设备类型
- */
-enum LVMDevType {
-    LVM_DEV_UNKNOW_DEVICES,         //未知设备
-    LVM_DEV_DISK,                   //磁盘
-    LVM_DEV_UNALLOCATED_PARTITION,  //未分配的分区
-    LVM_DEV_PARTITION,              //分区
-    LVM_DEV_LOOP,                   //loop设备
-    LVM_DEV_META_DEVICES            //元数据设备 raid 加密磁盘映射等
-};
 
 //new by liuwh 2022/3/4
 /**

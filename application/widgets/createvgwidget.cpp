@@ -749,14 +749,14 @@ set<PVData> CreateVGWidget::getCurSelectPVData()
 
         if (infoData.m_disktype == "unrecognized") {
             pvData.m_devicePath = infoData.m_diskPath;
-            pvData.m_type = LVMDevType::LVM_DEV_DISK;
+            pvData.m_type = DevType::DEV_DISK;
         } else {
             if (infoData.m_partitionPath == "unallocated") {
                 pvData.m_devicePath = infoData.m_diskPath;
-                pvData.m_type = LVMDevType::LVM_DEV_UNALLOCATED_PARTITION;
+                pvData.m_type = DevType::DEV_UNALLOCATED_PARTITION;
             } else {
                 pvData.m_devicePath = infoData.m_partitionPath;
-                pvData.m_type = LVMDevType::LVM_DEV_PARTITION;
+                pvData.m_type = DevType::DEV_PARTITION;
             }
         }
 
@@ -834,14 +834,14 @@ void CreateVGWidget::onDoneButtonClicked()
 
         if (infoData.m_disktype == "unrecognized") {
             pvData.m_devicePath = infoData.m_diskPath;
-            pvData.m_type = LVMDevType::LVM_DEV_DISK;
+            pvData.m_type = DevType::DEV_DISK;
         } else {
             if (infoData.m_partitionPath == "unallocated") {
                 pvData.m_devicePath = infoData.m_diskPath;
-                pvData.m_type = LVMDevType::LVM_DEV_UNALLOCATED_PARTITION;
+                pvData.m_type = DevType::DEV_UNALLOCATED_PARTITION;
             } else {
                 pvData.m_devicePath = infoData.m_partitionPath;
-                pvData.m_type = LVMDevType::LVM_DEV_PARTITION;
+                pvData.m_type = DevType::DEV_PARTITION;
             }
         }
 
@@ -906,7 +906,7 @@ void CreateVGWidget::updateData()
             diskInfoData.m_sectorStart = 0;
             diskInfoData.m_sectorEnd = 0;
             diskInfoData.m_selectStatus = Qt::CheckState::Unchecked;
-            diskInfoData.m_lvmDevType = LVMDevType::LVM_DEV_DISK;
+            diskInfoData.m_lvmDevType = DevType::DEV_DISK;
 
             QList<PVInfoData> lstPVInfoData;
             lstPVInfoData.clear();
@@ -930,9 +930,9 @@ void CreateVGWidget::updateData()
                     partInfoData.m_sectorEnd = partitionInfo.m_sectorEnd;
                     partInfoData.m_selectStatus = Qt::CheckState::Unchecked;
                     if (partitionInfo.m_path == "unallocated") {
-                        partInfoData.m_lvmDevType = LVMDevType::LVM_DEV_UNALLOCATED_PARTITION;
+                        partInfoData.m_lvmDevType = DevType::DEV_UNALLOCATED_PARTITION;
                     } else {
-                        partInfoData.m_lvmDevType = LVMDevType::LVM_DEV_PARTITION;
+                        partInfoData.m_lvmDevType = DevType::DEV_PARTITION;
                     }
 
                     for (int i = 0; i < m_curSeclectData.count(); ++i) {
@@ -977,9 +977,9 @@ void CreateVGWidget::updateData()
                     partInfoData.m_sectorEnd = partitionInfo.m_sectorEnd;
                     partInfoData.m_selectStatus = Qt::CheckState::Unchecked;
                     if (partitionInfo.m_path == "unallocated") {
-                        partInfoData.m_lvmDevType = LVMDevType::LVM_DEV_UNALLOCATED_PARTITION;
+                        partInfoData.m_lvmDevType = DevType::DEV_UNALLOCATED_PARTITION;
                     } else {
-                        partInfoData.m_lvmDevType = LVMDevType::LVM_DEV_PARTITION;
+                        partInfoData.m_lvmDevType = DevType::DEV_PARTITION;
                     }
 
                     for (int j = 0; j < m_curSeclectData.count(); ++j) {
@@ -1173,9 +1173,9 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
                 PVInfoData pvInfoData;
                 pvInfoData.m_lvmDevType = pvInfo.m_lvmDevType;
                 pvInfoData.m_selectStatus = Qt::CheckState::Checked;
-                if (pvInfo.m_lvmDevType == LVMDevType::LVM_DEV_DISK) {
+                if (pvInfo.m_lvmDevType == DevType::DEV_DISK) {
                     pvInfoData.m_diskPath = pvInfo.m_pvPath;
-                } else if (pvInfo.m_lvmDevType == LVMDevType::LVM_DEV_PARTITION) {
+                } else if (pvInfo.m_lvmDevType == DevType::DEV_PARTITION) {
                     pvInfoData.m_partitionPath = pvInfo.m_pvPath;
                 }
 
@@ -2019,15 +2019,15 @@ Byte_Value CreateVGWidget::getPVSize(const VGInfo &vg, const PVData &pv, bool fl
     long long startSec = pv.m_startSector;
     long long endSec = pv.m_endSector;
 
-    if (startSec == 0 && pv.m_type == LVM_DEV_UNALLOCATED_PARTITION) {
+    if (startSec == 0 && pv.m_type == DEV_UNALLOCATED_PARTITION) {
         startSec = UEFI_SECTOR;
     }
 
-    if (pv.m_type == LVM_DEV_UNALLOCATED_PARTITION && pv.m_endSector == (dev.m_length - 1) && dev.m_disktype.contains("gpt")) {
+    if (pv.m_type == DEV_UNALLOCATED_PARTITION && pv.m_endSector == (dev.m_length - 1) && dev.m_disktype.contains("gpt")) {
         endSec -= GPTBACKUP;
     }
 
-    if (pv.m_type == LVM_DEV_DISK && flag) {
+    if (pv.m_type == DEV_DISK && flag) {
         startSec -= UEFI_SECTOR;
         endSec -= GPTBACKUP;
     }
@@ -2065,15 +2065,15 @@ Byte_Value CreateVGWidget::getDevSize(const VGInfo &vg, const PVData &pv, bool f
 
     long long startSec = pv.m_startSector;
     long long endSec = pv.m_endSector;
-    if (startSec == 0 && pv.m_type == LVM_DEV_UNALLOCATED_PARTITION) {
+    if (startSec == 0 && pv.m_type == DEV_UNALLOCATED_PARTITION) {
         startSec = UEFI_SECTOR;
     }
 
-    if (pv.m_type == LVM_DEV_UNALLOCATED_PARTITION && pv.m_endSector == (dev.m_length - 1) && dev.m_disktype.contains("gpt")) {
+    if (pv.m_type == DEV_UNALLOCATED_PARTITION && pv.m_endSector == (dev.m_length - 1) && dev.m_disktype.contains("gpt")) {
         endSec -= GPTBACKUP;
     }
 
-    if (pv.m_type == LVM_DEV_DISK && flag) {
+    if (pv.m_type == DEV_DISK && flag) {
         startSec -= UEFI_SECTOR;
         endSec -= GPTBACKUP;
     }
@@ -2125,19 +2125,19 @@ Byte_Value CreateVGWidget::getMinSize(const VGInfo &vg, const set<PVData> &pvlis
 
     foreach (PVData pv, pvlist) {
         switch (pv.m_type) {
-        case LVMDevType::LVM_DEV_DISK:
+        case DevType::DEV_DISK:
             lvmInfo.pvExists(pv) ? pvDiskList.push_back(pv) : diskList.push_back(pv);
             break;
-        case LVMDevType::LVM_DEV_PARTITION:
+        case DevType::DEV_PARTITION:
             partList.push_back(pv);
             break;
-        case LVMDevType::LVM_DEV_UNALLOCATED_PARTITION:
+        case DevType::DEV_UNALLOCATED_PARTITION:
             unallocList.push_back(pv);
             break;
-        case LVMDevType::LVM_DEV_LOOP:
+        case DevType::DEV_LOOP:
             loopList.push_back(pv);
             break;
-        case LVMDevType::LVM_DEV_META_DEVICES:
+        case DevType::DEV_META_DEVICES:
             metaList.push_back(pv);
             break;
         }

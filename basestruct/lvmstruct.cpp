@@ -2,7 +2,7 @@
 /*********************************** PVData *********************************************/
 bool PVData::operator<(const PVData &tmp) const
 {
-    if (m_type == LVMDevType::LVM_DEV_UNALLOCATED_PARTITION) {
+    if (m_type == DevType::DEV_UNALLOCATED_PARTITION) {
         return m_devicePath < tmp.m_devicePath
                || m_startSector < tmp.m_startSector
                || m_endSector < tmp.m_endSector
@@ -49,7 +49,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PVData &data)
              >> data.m_diskPath
              >> data.m_sectorSize;
     data.m_pvAct = static_cast<LVMAction>(pvAct);
-    data.m_type = static_cast<LVMDevType>(type);
+    data.m_type = static_cast<DevType>(type);
     argument.endStructure();
     return argument;
 }
@@ -218,7 +218,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument,  PVInfo &data)
              >> data.m_pvByteTotalSize
              >> data.m_pvByteFreeSize;
     data.m_pvError = static_cast<LVMError>(err);
-    data.m_lvmDevType = static_cast<LVMDevType>(devType);
+    data.m_lvmDevType = static_cast<DevType>(devType);
     argument.endStructure();
     return argument;
 }

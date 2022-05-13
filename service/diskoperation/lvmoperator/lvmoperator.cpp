@@ -215,15 +215,15 @@ bool LVMOperator::updatePVInfo(LVMInfo &lvmInfo)
         cmd = QString("lsblk %1 -o type -nd").arg(pv.m_pvPath);
         Utils::executCmd(cmd, strout, strerror);
         if (strout.contains("part")) {
-            pv.m_lvmDevType = LVMDevType::LVM_DEV_PARTITION;
+            pv.m_lvmDevType = DevType::DEV_PARTITION;
         } else if (strout.contains("disk")) {
-            pv.m_lvmDevType = LVMDevType::LVM_DEV_DISK;
+            pv.m_lvmDevType = DevType::DEV_DISK;
         } else if (strout.contains("loop")) {
-            pv.m_lvmDevType = LVMDevType::LVM_DEV_LOOP;
+            pv.m_lvmDevType = DevType::DEV_LOOP;
         } else if (strout.contains("raid")) {
-            pv.m_lvmDevType = LVMDevType::LVM_DEV_META_DEVICES;
+            pv.m_lvmDevType = DevType::DEV_META_DEVICES;
         } else {
-            pv.m_lvmDevType = LVMDevType::LVM_DEV_UNKNOW_DEVICES;
+            pv.m_lvmDevType = DevType::DEV_UNKNOW_DEVICES;
         }
 
         //pv上pe使用情况

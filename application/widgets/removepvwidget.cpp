@@ -181,7 +181,7 @@ void RemovePVWidget::onButtonClicked()
         pvData.m_sectorSize = static_cast<int>(info.m_sectorSize);
         pvData.m_pvAct = LVMAction::LVM_ACT_DELETEPV;
         pvData.m_devicePath = info.m_path;
-        pvData.m_type = LVMDevType::LVM_DEV_PARTITION;
+        pvData.m_type = DevType::DEV_PARTITION;
 
         devList.append(pvData);
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
@@ -197,7 +197,7 @@ void RemovePVWidget::onButtonClicked()
             pvData.m_sectorSize = static_cast<int>(info.m_sectorSize);
             pvData.m_pvAct = LVMAction::LVM_ACT_DELETEPV;
             pvData.m_devicePath = info.m_path;
-            pvData.m_type = LVMDevType::LVM_DEV_DISK;
+            pvData.m_type = DevType::DEV_DISK;
 
             devList.append(pvData);
         } else {
@@ -213,7 +213,7 @@ void RemovePVWidget::onButtonClicked()
                     pvData.m_sectorSize = static_cast<int>(partInfo.m_sectorSize);
                     pvData.m_pvAct = LVMAction::LVM_ACT_DELETEPV;
                     pvData.m_devicePath = partInfo.m_path;
-                    pvData.m_type = LVMDevType::LVM_DEV_PARTITION;
+                    pvData.m_type = DevType::DEV_PARTITION;
 
                     devList.append(pvData);
                 }

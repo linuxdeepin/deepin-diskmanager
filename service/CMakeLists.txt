@@ -38,8 +38,16 @@ set(LINK_LIBS
     PolkitQt5-1::Agent
 )
 
-file(GLOB ALL_SOURCES "*.cpp" "./diskoperation/*.cpp" "./diskoperation/filesystems/*.cpp"  "./diskoperation/lvmoperator/*.cpp")
-file(GLOB ALL_HEADERS "*.h" "./diskoperation/*.h" "./diskoperation/filesystems/*.h" "./diskoperation/lvmoperator/*.h")
+file(GLOB ALL_SOURCES
+    "*.cpp"
+    "./diskoperation/*.cpp"
+    "./diskoperation/filesystems/*.cpp"
+    "./diskoperation/lvmoperator/*.cpp")
+file(GLOB ALL_HEADERS
+    "*.h"
+    "./diskoperation/*.h"
+    "./diskoperation/filesystems/*.h"
+    "./diskoperation/lvmoperator/*.h")
 
 include_directories(../basestruct)
 include_directories(../log)

@@ -50,7 +50,7 @@ typedef struct PVData {
     Sector m_endSector{0};    //结束扇区
     int m_sectorSize{0};      //扇区大小
     LVMAction m_pvAct{LVMAction::LVM_ACT_UNkNOW};//执行动作
-    LVMDevType m_type{LVMDevType::LVM_DEV_UNKNOW_DEVICES};//设备类型
+    DevType m_type{DevType::DEV_UNKNOW_DEVICES};//设备类型
     QString m_devicePath;  //pv路径
 } PVData;
 LVMStructEnd(PVData)
@@ -165,7 +165,7 @@ public:
     LVMError m_pvError{LVMError::LVM_ERR_NORMAL};//物理卷错误码
     QMap<QString, QVector<LV_PV_Ranges>> m_lvRangesList; //lv pv分布情况 key：lvPath  value：lv集合
     QVector<VG_PV_Ranges> m_vgRangesList; //vg pv分布情况
-    LVMDevType m_lvmDevType{LVMDevType::LVM_DEV_UNKNOW_DEVICES};    //lvm 设备类型
+    DevType m_lvmDevType{DevType::DEV_UNKNOW_DEVICES};    //lvm 设备类型
     long long m_pvByteTotalSize{0};//pv总大小  单位byte
     long long m_pvByteFreeSize{0};//pv未使用大小 单位byte
 };

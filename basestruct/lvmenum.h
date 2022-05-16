@@ -66,7 +66,6 @@ enum LVMAction {
     LVM_ACT_VG_REDUCE               //vg 缩小
 };
 
-
 //new by liuwh 2022/3/4
 /**
  * @enum LVMError

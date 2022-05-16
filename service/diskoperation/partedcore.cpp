@@ -57,6 +57,11 @@
 #define DISK_TYPE   0   // 磁盘
 #define PART_TYPE   1   // 分区
 
+const unsigned int LUKS1_MaxKey = 8;  //luks 1 最大密钥槽数
+const unsigned int LUKS2_MaxKey = 32; //luks 2 最大密钥槽数
+const QString saveConfigPath = "/root/.deepin-diskmanager-service/";  //配置文件保存位置
+const QString saveKeyPath = "/root/.deepin-diskmanager-service/";     //key文件保存位置
+
 
 namespace DiskManager {
 //hdparm可检测，显示与设定IDE或SCSI硬盘的参数。
@@ -1843,6 +1848,8 @@ bool PartedCore::create(Partition &newPartition)
         if (!namePartition(newPartition))
             return false;
     }
+
+    //判断是否加密 加密
 
     if (newPartition.m_type == TYPE_EXTENDED || newPartition.m_fstype == FS_UNFORMATTED)
         return true;

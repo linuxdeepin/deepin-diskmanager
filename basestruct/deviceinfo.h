@@ -30,6 +30,7 @@
 #include "utils.h"
 #include "partitioninfo.h"
 #include "lvmstruct.h"
+#include "luksstruct.h"
 #include <QVector>
 
 //dubs使用自定义数据结构中的成员变量建议初始化，在测试中发现数据结构中包含的bool类型变量未赋值，该数据结构作为槽函数返回值通过dbus调用可能导致应用崩溃退出
@@ -44,9 +45,7 @@ typedef struct CUSSTRUCTTEST {
     Sector m_heads;
     QString m_path;
 } stCustest;
-Q_DECLARE_METATYPE(stCustest)
-QDBusArgument &operator<<(QDBusArgument &argument, const stCustest &stcus);
-const QDBusArgument &operator>>(const QDBusArgument &argument, stCustest &stcus);
+DBUSStructEnd(stCustest)
 
 //new by li 2020/7/20
 
@@ -70,9 +69,8 @@ typedef struct HARDDISKINFO {
     QString m_firmwareVersion;    //<! 【固件版本】8
     QString m_speed;              //<! 【速度】5
 } HardDiskInfo;
-Q_DECLARE_METATYPE(HardDiskInfo)
-QDBusArgument &operator<<(QDBusArgument &argument, const HardDiskInfo &inhdinfo);
-const QDBusArgument &operator>>(const QDBusArgument &argument, HardDiskInfo &inhdinfo);
+DBUSStructEnd(HardDiskInfo)
+
 
 
 /**
@@ -92,10 +90,7 @@ typedef struct HARDDISKSTATUSINFO {
     QString m_rawValue;             //原始值
     //int m_flag;                   //标记位
 } HardDiskStatusInfo;
-Q_DECLARE_METATYPE(HardDiskStatusInfo)
-QDBusArgument &operator<<(QDBusArgument &argument, const HardDiskStatusInfo &inhdinfo);
-const QDBusArgument &operator>>(const QDBusArgument &argument, HardDiskStatusInfo &inhdinfo);
-
+DBUSStructEnd(HardDiskStatusInfo)
 
 /**
  * @class DeviceInfo
@@ -126,11 +121,10 @@ public:
     PartitionVec m_partition;
     QVector<VGData>m_vglist;
     LVMFlag m_vgFlag; //vg标志位
+    LUKSFlag m_luksFlag; //luks 标志位
+    QMap<QString, LUKS_INFO>m_luksList; //key /dev/sdb1  value luks属性
 };
-Q_DECLARE_METATYPE(DeviceInfo)
-
-QDBusArgument &operator<<(QDBusArgument &argument, const DeviceInfo &info);
-const QDBusArgument &operator>>(const QDBusArgument &argument, DeviceInfo &info);
+DBUSStructEnd(DeviceInfo)
 
 typedef QMap<QString, DeviceInfo> DeviceInfoMap;
 Q_DECLARE_METATYPE(DeviceInfoMap)

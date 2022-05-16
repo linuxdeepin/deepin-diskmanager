@@ -29,6 +29,7 @@
 #define PARTITIONINFO_H
 #include "commondef.h"
 #include "lvmstruct.h"
+#include "luksstruct.h"
 #include <QString>
 
 /**
@@ -86,10 +87,11 @@ public:
     LVMFlag m_vgFlag; //lv是否加入标志位
     VGData m_vgData;//vg数据 lv信息可从vg中读取
     FS_Limits m_fsLimits; //分区上文件系统限制 该属性在没有文件系统存在时无效
+
+    LUKSFlag m_luksFlag{LUKSFlag::NOT_CRYPT_LUKS};
+    LUKS_INFO m_luksInfo;
 };
-Q_DECLARE_METATYPE(PartitionInfo)
-QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info);
-const QDBusArgument &operator>>(const QDBusArgument &argument, PartitionInfo &info);
+DBUSStructEnd(PartitionInfo)
 
 typedef QVector<PartitionInfo> PartitionVec;
 Q_DECLARE_METATYPE(PartitionVec)

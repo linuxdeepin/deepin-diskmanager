@@ -2,6 +2,12 @@
 #define COMMONDEF_H
 #include <QObject>
 #include <QVector>
+#include <QDBusArgument>
+
+//new by liuwh 2022/1/17
+#define DBUSStructEnd(className) Q_DECLARE_METATYPE(className)\
+    QDBusArgument &operator<<(QDBusArgument &argument, const className &data);\
+    const QDBusArgument &operator>>(const QDBusArgument &argument, className &data);
 
 #define GPTBACKUP 33
 #define UEFI_SECTOR 2048 //第一个分区从2048开始 为将来UEFI升级预留空间

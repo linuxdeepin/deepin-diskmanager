@@ -22,7 +22,9 @@ QDBusArgument &operator<<(QDBusArgument &argument, const DeviceInfo &info)
              << info.m_mediaType
              << info.m_interface
              << static_cast<int>(info.m_vgFlag)
-             << info.m_vglist;
+             << info.m_vglist
+             << static_cast<int>(info.m_luksFlag)
+             << info.m_luksList;
     argument.endStructure();
 
     return argument;
@@ -31,7 +33,8 @@ QDBusArgument &operator<<(QDBusArgument &argument, const DeviceInfo &info)
 const QDBusArgument &operator>>(const QDBusArgument &argument, DeviceInfo &info)
 {
     argument.beginStructure();
-    int flag=0;
+    int flag = 0;
+    int flag2 = 0;
     argument >> info.m_length
              >> info.m_heads
              >> info.m_path
@@ -50,8 +53,11 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, DeviceInfo &info)
              >> info.m_mediaType
              >> info.m_interface
              >> flag
-             >> info.m_vglist;
+             >> info.m_vglist
+             >> flag2
+             >> info.m_luksList;
     info.m_vgFlag = static_cast<LVMFlag>(flag);
+    info.m_luksFlag = static_cast<LUKSFlag>(flag2);
     argument.endStructure();
     return argument;
 }
@@ -159,4 +165,5 @@ DeviceInfo::DeviceInfo()
     m_partition.clear();
     m_vgFlag = LVM_FLAG_NOT_PV;
     m_vglist.clear();
+    m_luksFlag = LUKSFlag::NOT_CRYPT_LUKS;
 }

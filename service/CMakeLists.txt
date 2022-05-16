@@ -41,11 +41,13 @@ set(LINK_LIBS
 file(GLOB ALL_SOURCES
     "*.cpp"
     "./diskoperation/*.cpp"
+    "./diskoperation/luksoperator/*.cpp"
     "./diskoperation/filesystems/*.cpp"
     "./diskoperation/lvmoperator/*.cpp")
 file(GLOB ALL_HEADERS
     "*.h"
     "./diskoperation/*.h"
+    "./diskoperation/luksoperator/*.h"
     "./diskoperation/filesystems/*.h"
     "./diskoperation/lvmoperator/*.h")
 

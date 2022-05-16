@@ -29,13 +29,7 @@
 
 #include "utils.h"
 #include "lvmenum.h"
-#include <QDBusArgument>
-#include <QVector>
-
-//new by liuwh 2022/1/17
-#define LVMStructEnd(className) Q_DECLARE_METATYPE(className)\
-    QDBusArgument &operator<<(QDBusArgument &argument, const className &data);\
-    const QDBusArgument &operator>>(const QDBusArgument &argument, className &data);
+#include "luksstruct.h"
 
 //new by liuwh 2022/1/17
 /**
@@ -45,15 +39,15 @@
 typedef struct PVData {
     bool operator<(const PVData &tmp)const;
     bool operator==(const PVData &tmp)const;
-    QString m_diskPath;    //磁盘路径
+    QString m_diskPath;       //磁盘路径
     Sector m_startSector{0};  //开始扇区
     Sector m_endSector{0};    //结束扇区
     int m_sectorSize{0};      //扇区大小
     LVMAction m_pvAct{LVMAction::LVM_ACT_UNkNOW};//执行动作
     DevType m_type{DevType::DEV_UNKNOW_DEVICES};//设备类型
-    QString m_devicePath;  //pv路径
+    QString m_devicePath;     //pv路径
 } PVData;
-LVMStructEnd(PVData)
+DBUSStructEnd(PVData)
 
 
 //new by liuwh 2022/2/15
@@ -72,7 +66,7 @@ typedef struct LVAction {
     QString m_mountPoint;   //挂载点
     QString m_mountUuid;    //挂载Uuid
 } LVAction;
-LVMStructEnd(LVAction)
+DBUSStructEnd(LVAction)
 
 
 //new by liuwh 2022/1/17
@@ -86,7 +80,7 @@ typedef struct LVDATA {
     QString m_lvSize;           //lv大小
     long long m_lvByteSize{0};  //lv大小 byte单位
 } LVData;
-LVMStructEnd(LVData)
+DBUSStructEnd(LVData)
 
 
 //new by liuwh 2022/1/17
@@ -101,7 +95,7 @@ typedef struct VGDATA {
     long long m_vgByteSize{0};  //vg大小 byte单位
     QVector <LVData>m_lvList;   //lv数据集合
 } VGData;
-LVMStructEnd(VGData)
+DBUSStructEnd(VGData)
 
 
 //new by liuwh 2022/1/17
@@ -118,7 +112,7 @@ typedef struct PVRANGES {
     long long m_end{0};     //单位 pe
     bool m_used{false};     //是否使用  针对vg lv不使用该属性
 } PVRanges;
-LVMStructEnd(PVRanges)
+DBUSStructEnd(PVRanges)
 
 typedef PVRanges LV_PV_Ranges;
 typedef PVRanges VG_PV_Ranges;
@@ -169,7 +163,7 @@ public:
     long long m_pvByteTotalSize{0};//pv总大小  单位byte
     long long m_pvByteFreeSize{0};//pv未使用大小 单位byte
 };
-LVMStructEnd(PVInfo)
+DBUSStructEnd(PVInfo)
 
 
 //new by liuwh 2022/1/17
@@ -214,6 +208,23 @@ lvs -o lv_attr
           Related to Thin Logical Volumes: (F)ailed.
           (F)ailed is set when related thin pool enters Failed state and no further I/O is permitted at all.
        10 s(k)ip activation: this volume is flagged to be skipped during activation.
+
+逻辑卷状态。逻辑卷的属性字节如下：
+      1：卷类型： (m)镜像卷，(M) 没有初始同步的镜像卷，(o)原始卷，(O)附带合并快照的原始卷，(r)阵列，(R)没有初始同步的阵列，(s)快照，(S)合并快照，(p)pvmove，(v)虚拟，(i)镜像或阵列映象，(I)未同步的镜像或阵列映象，
+        (l)映象日志设备，(c)底层转换卷，(V)精简卷，(t)精简池，(T)精简池数据，(e)阵列或精简池元数据或池元数据备件，
+      2：授权：(w)写入，(r)只读，(R)非只读卷的只读激活
+      3：分配策略：(a)任意位置，(c)相邻，(i)继承，(l)紧邻，(n)常规。如果该卷目前锁定无法进行分配更改，则该字母会呈大写状态。例如执行 pvmove 命令时。
+      4：(m)固定镜像
+      5：状态：(a)激活， (s)挂起, (I) 无效快照， (S) 无效挂起快照， (m) 快照合并失败，(M) 挂起快照合并失败，(d) 显示的映射设备不包含表格，(i) 显示的映射设备中包含停用表格。
+      6：设备 (o) 开启
+      7：目标类型： (m)镜像，(r) RAID，(s) 快照，(t) 精简，(u)未知，(v) 虚拟。这样可将有类似内核目标的逻辑卷分在一组。比如镜像映象、镜像日志以及镜像本身分为组（m），它们使用原始设备映射器内核驱动程序，使用 md raid 内核驱动程序的类似的 raid 设备则分组为（r）。
+        使用原始设备映射器驱动程序的快照则分组为（s），使用精简配置驱动程序的精简卷快照则分组为（t）。
+      8：使用前，以设置为 0 的块覆盖新分配了数据的块。
+      9：卷正常情况：(p) 部分正常，(r) 需要刷新，(m) 存在映射错误，(w) 大部分写入。(p) 部分正常表示该系统中缺少这个逻辑卷使用的一个或多个物理卷。
+                   (p) 部分正常表示这个 RAID 逻辑卷使用的一个或多个物理卷有写入错误。该写入错误可能是由于该物理卷故障造成，也可能表示该物理卷正在出现问题。应刷新或替换该设备。
+                   (m) 存在映射错误表示 RAID 逻辑卷中有阵列不一致的部分。在 RAID 逻辑卷中启动 check 操作就会发现这些不一致之处。（取消该操作，可使用 lvchange 命令在 RAID 逻辑卷中执行 check 和 repair ）。
+                   (w) 大部分写入表示已将 RAID 1 逻辑卷中的设备标记为大部分写入。
+      10：(k) 跳过激活：将该卷标记为在激活过程中跳过。
 */
 class LVInfo
 {
@@ -239,8 +250,11 @@ public:
     LVMError m_lvError{LVMError::LVM_ERR_NORMAL};//逻辑卷错误码
     QString m_mountUuid;//逻辑卷挂载uuid
     FS_Limits m_fsLimits;//文件系统限制 该属性在没有文件系统存在时无效
+
+    LUKSFlag m_luksFlag{LUKSFlag::NOT_CRYPT_LUKS};
+    LUKS_INFO m_luksInfo;
 };
-LVMStructEnd(LVInfo)
+DBUSStructEnd(LVInfo)
 
 
 
@@ -295,8 +309,11 @@ public:
     LVMError m_vgError{LVMError::LVM_ERR_NORMAL};//逻辑卷组错误码
     QVector<LVInfo>m_lvlist; //vg 下lv列表
     QMap<QString, PVInfo> m_pvInfo;
+
+    LUKSFlag m_luksFlag; //luks 标志位
+    QMap<QString,LUKS_INFO>m_luksList; //key /dev/sdb1  value luks属性
 };
-LVMStructEnd(VGInfo)
+DBUSStructEnd(VGInfo)
 
 //new by liuwh 2022/1/17
 /**
@@ -349,7 +366,7 @@ public:
     QMap<QString, PVInfo> m_pvInfo;        //lvm pv信息 key:/dev/sdb1 value:pvinfo
     LVMError m_lvmErr{LVMError::LVM_ERR_NORMAL};
 };
-LVMStructEnd(LVMInfo)
+DBUSStructEnd(LVMInfo)
 
 
 #endif // LVMSTRUCT_H

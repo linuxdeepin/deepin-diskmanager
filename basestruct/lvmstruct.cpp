@@ -243,7 +243,9 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LVInfo &data)
              << static_cast<int>(data.m_lvError)
              << data.m_mountUuid
              << data.m_fsLimits.max_size
-             << data.m_fsLimits.min_size;
+             << data.m_fsLimits.min_size
+             << static_cast<int>(data.m_luksFlag)
+             << data.m_luksInfo;
     argument.endStructure();
     return argument;
 }
@@ -251,7 +253,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LVInfo &data)
 const QDBusArgument &operator>>(const QDBusArgument &argument, LVInfo &data)
 {
     argument.beginStructure();
-    int err, type;
+    int err, type, luksFlag;
     argument >> data.m_vgName
              >> data.m_lvPath
              >> data.m_lvUuid
@@ -268,10 +270,12 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LVInfo &data)
              >> err
              >> data.m_mountUuid
              >> data.m_fsLimits.max_size
-             >> data.m_fsLimits.min_size;
+             >> data.m_fsLimits.min_size
+             >> luksFlag
+             >> data.m_luksInfo;
     data.m_lvFsType = static_cast<FSType>(type);
     data.m_lvError = static_cast<LVMError>(err);
-
+    data.m_luksFlag = static_cast<LUKSFlag>(luksFlag);
     argument.endStructure();
     return argument;
 }
@@ -325,7 +329,9 @@ QDBusArgument &operator<<(QDBusArgument &argument, const VGInfo &data)
              << data.m_vgStatus
              << static_cast<int>(data.m_vgError)
              << data.m_lvlist
-             << data.m_pvInfo;
+             << data.m_pvInfo
+             << static_cast<int>(data.m_luksFlag)
+             << data.m_luksList;
     argument.endStructure();
     return argument;
 }
@@ -333,7 +339,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const VGInfo &data)
 const QDBusArgument &operator>>(const QDBusArgument &argument,  VGInfo &data)
 {
     argument.beginStructure();
-    int err;
+    int err,luksFlag;
     argument >> data.m_vgName
              >> data.m_vgUuid
              >> data.m_vgSize
@@ -348,8 +354,11 @@ const QDBusArgument &operator>>(const QDBusArgument &argument,  VGInfo &data)
              >> data.m_vgStatus
              >> err
              >> data.m_lvlist
-             >> data.m_pvInfo;
+             >> data.m_pvInfo
+            >> luksFlag
+            >> data.m_luksList;
     data.m_vgError = static_cast<LVMError>(err);
+    data.m_luksFlag = static_cast<LUKSFlag>(luksFlag);
     argument.endStructure();
     return argument;
 }

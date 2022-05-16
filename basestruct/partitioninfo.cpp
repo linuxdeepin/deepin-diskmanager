@@ -94,8 +94,9 @@ QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info)
              << static_cast<int>(info.m_vgFlag)
              << info.m_vgData
              << info.m_fsLimits.min_size
-             << info.m_fsLimits.max_size;
-
+             << info.m_fsLimits.max_size
+             << static_cast<int>(info.m_luksFlag)
+             << info.m_luksInfo;
     argument.endStructure();
 
     return argument;
@@ -105,6 +106,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PartitionInfo &in
 {
     argument.beginStructure();
     int flag = 0;
+    int flag2 = 0;
     argument >> info.m_devicePath
              >> info.m_partitionNumber
              >> info.m_type
@@ -132,8 +134,11 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PartitionInfo &in
              >> flag
              >> info.m_vgData
              >> info.m_fsLimits.min_size
-             >> info.m_fsLimits.max_size;
+             >> info.m_fsLimits.max_size
+             >> flag2
+             >> info.m_luksInfo;
     info.m_vgFlag = static_cast<LVMFlag>(flag);
+    info.m_luksFlag = static_cast<LUKSFlag>(flag2);
     argument.endStructure();
 
     return argument;

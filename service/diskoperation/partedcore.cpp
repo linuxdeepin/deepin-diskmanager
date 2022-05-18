@@ -48,17 +48,6 @@
 #include <string.h>
 #include <set>
 
-
-#define FAST_TYPE 1     // 快速
-#define SECURE_TYPE 2   // 安全
-#define DOD_TYPE 3      // 高级
-#define GUTMANN_TYPE 4  // 古德曼算法
-
-#define DISK_TYPE   0   // 磁盘
-#define PART_TYPE   1   // 分区
-
-const unsigned int LUKS1_MaxKey = 8;  //luks 1 最大密钥槽数
-const unsigned int LUKS2_MaxKey = 32; //luks 2 最大密钥槽数
 const QString saveConfigPath = "/root/.deepin-diskmanager-service/";  //配置文件保存位置
 const QString saveKeyPath = "/root/.deepin-diskmanager-service/";     //key文件保存位置
 
@@ -1810,6 +1799,22 @@ bool PartedCore::unmount()
     return true;
 }
 
+bool PartedCore::deCrypt(const LUKS_INFO &luks)
+{
+    //发送解密是否成功信号
+    emit deCryptMessage(luks);
+}
+
+bool PartedCore::cryptMount(const LUKS_INFO &luks)
+{
+
+}
+
+bool PartedCore::cryptUmount(const LUKS_INFO &luks)
+{
+
+}
+
 bool PartedCore::create(const PartitionVec &infovec)
 {
     qDebug() << __FUNCTION__ << "Create start";
@@ -2792,22 +2797,22 @@ bool PartedCore::format(const QString &fstype, const QString &name)
     return success;
 }
 
-bool PartedCore::clear(const QString &fstype, const QString &path, const QString &name, const QString &user, const int &diskType, const int &clearType)
+bool PartedCore::clear(const WipeAction &wipe)
 {
-    qDebug() << __FUNCTION__ << QString("Clear Partitione start, path: %1").arg(path) ;
+    qDebug() << __FUNCTION__ << QString("Clear Partitione start, path: %1").arg(wipe.m_path) ;
     bool success = false;
-    FSType fs = Utils::stringToFileSystemType(fstype);
+    FSType fs = Utils::stringToFileSystemType(wipe.m_fstype);
     success = (fs == FS_NTFS || fs == FS_FAT16 || fs == FS_FAT32 || fs == FS_EXT2 || fs == FS_EXT3 || fs == FS_EXT4);
     if (success) {
-        if (path.isEmpty() || user.isEmpty()) {
+        if (wipe.m_path.isEmpty() || wipe.m_user.isEmpty()) {
             success = false;
         }
 
-        if (diskType < DISK_TYPE || diskType > PART_TYPE) {
+        if (wipe.m_diskType < DISK_TYPE || wipe.m_diskType > PART_TYPE) {
             success = false;
         }
 
-        if (clearType < FAST_TYPE || clearType > GUTMANN_TYPE) {
+        if (wipe.m_clearType < FAST_TYPE || wipe.m_clearType > GUTMANN_TYPE) {
             success = false;
         }
     }
@@ -2825,7 +2830,7 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
     QString cmd;
     QString output, errstr;
 
-    if (PART_TYPE == diskType) {
+    if (PART_TYPE == wipe.m_diskType) {
         curDevicePath = m_curpartition.m_devicePath;
         curDiskType = m_deviceMap.value(curDevicePath).m_diskType;
 
@@ -2838,13 +2843,13 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
             probeDeviceInfo();
         }
 
-        pInfo.m_fileSystemType = Utils::stringToFileSystemType(fstype);
-        pInfo.m_fileSystemLabel = name;
+        pInfo.m_fileSystemType = Utils::stringToFileSystemType(wipe.m_fstype);
+        pInfo.m_fileSystemLabel = wipe.m_name;
         pInfo.m_devicePath = m_curpartition.m_devicePath;
         pInfo.m_sectorSize = m_curpartition.m_sectorSize;
         pInfo.m_sectorStart = m_curpartition.m_sectorStart;
         pInfo.m_fileSystemReadOnly = false;
-        if ("unallocated" == path) {
+        if ("unallocated" == wipe.m_path) {
             pInfo.m_insideExtended = false;
             pInfo.m_busy = false;
             pInfo.m_fileSystemReadOnly = false;
@@ -2881,9 +2886,9 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
             pInfo.m_busy = m_curpartition.m_busy;
             pInfo.m_sectorEnd = m_curpartition.m_sectorEnd;
         }
-    } else if (DISK_TYPE == diskType) {
-        Device dev = m_deviceMap.value(path);
-        curDevicePath = path;
+    } else if (DISK_TYPE == wipe.m_diskType) {
+        Device dev = m_deviceMap.value(wipe.m_path);
+        curDevicePath = wipe.m_path;
         qDebug() << __FUNCTION__ << "Clear:  createPartitionTable start : " << dev.m_path;
         curDiskType = dev.m_diskType;
         if (curDiskType == "unrecognized") {
@@ -2893,14 +2898,14 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
         probeDeviceInfo();
 
         PartitionVec pVec;
-        pInfo.m_fileSystemType = Utils::stringToFileSystemType(fstype);;
-        pInfo.m_fileSystemLabel = name;
+        pInfo.m_fileSystemType = Utils::stringToFileSystemType(wipe.m_fstype);;
+        pInfo.m_fileSystemLabel = wipe.m_name;
         pInfo.m_alignment = ALIGN_MEBIBYTE;
         pInfo.m_sectorSize = dev.m_sectorSize;
         pInfo.m_insideExtended = false;
         pInfo.m_busy = false;
         pInfo.m_fileSystemReadOnly = false;
-        pInfo.m_devicePath = path;
+        pInfo.m_devicePath = wipe.m_path;
         pInfo.m_type = TYPE_PRIMARY;
         pInfo.m_sectorStart = UEFI_SECTOR;
 
@@ -2915,7 +2920,7 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
         success = create(pVec);
         probeDeviceInfo();
 
-        Device devTmp = m_deviceMap.value(path);
+        Device devTmp = m_deviceMap.value(wipe.m_path);
         if (devTmp.m_partitions.count() >= 1) {
             m_curpartition = *(devTmp.m_partitions[0]);
         }
@@ -2923,10 +2928,10 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
     }
 
     //清除
-    switch (clearType) {
+    switch (wipe.m_clearType) {
     case FAST_TYPE:
         qDebug() << __FUNCTION__ << "Clear:  format  start";
-        success = format(fstype, name);
+        success = format(wipe.m_fstype, wipe.m_name);
         if (!success) {
             qDebug() << __FUNCTION__ << "format error";
             emit clearMessage(QString("0:%1").arg(DISK_ERROR::DISK_ERR_DELETE_PART_FAILED));
@@ -2936,15 +2941,15 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
         break;
     case SECURE_TYPE:
         qDebug() << __FUNCTION__ << "Clear:  secuClear  start";
-        success = secuClear(m_curpartition.getPath(), m_curpartition.m_sectorStart, m_curpartition.m_sectorEnd, m_curpartition.m_sectorSize, fstype, name, 1);
+        success = secuClear(m_curpartition.getPath(), m_curpartition.m_sectorStart, m_curpartition.m_sectorEnd, m_curpartition.m_sectorSize, wipe.m_fstype, wipe.m_name, 1);
         break;
     case DOD_TYPE:
         qDebug() << __FUNCTION__ << "Clear:  secuClear  start";
-        success = secuClear(m_curpartition.getPath(), m_curpartition.m_sectorStart, m_curpartition.m_sectorEnd, m_curpartition.m_sectorSize, fstype, name, 7);
+        success = secuClear(m_curpartition.getPath(), m_curpartition.m_sectorStart, m_curpartition.m_sectorEnd, m_curpartition.m_sectorSize, wipe.m_fstype, wipe.m_name, 7);
         break;
     case GUTMANN_TYPE:
         qDebug() << __FUNCTION__ << "Clear:  secuClear  start";
-        success = secuClear(m_curpartition.getPath(), m_curpartition.m_sectorStart, m_curpartition.m_sectorEnd, m_curpartition.m_sectorSize, fstype, name, 35);
+        success = secuClear(m_curpartition.getPath(), m_curpartition.m_sectorStart, m_curpartition.m_sectorEnd, m_curpartition.m_sectorSize, wipe.m_fstype, wipe.m_name, 35);
         break;
     default:
         m_isClear = false;
@@ -2961,8 +2966,8 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
 
 
     // 如果是清理是磁盘时，需要新建分区表，并且新建分区
-    if (DISK_TYPE == diskType) {
-        Device d = m_deviceMap.value(path);
+    if (DISK_TYPE == wipe.m_diskType) {
+        Device d = m_deviceMap.value(wipe.m_path);
         qDebug() << __FUNCTION__ << "Clear after:  createPartitionTable  start";
         success = createPartitionTable(d.m_path, QString("%1").arg(d.m_length), QString("%1").arg(d.m_sectorSize), curDiskType);
         probeDeviceInfo();
@@ -2976,9 +2981,9 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
     }
 
     //如果清理是分区，并且清除模式不是快速清除时，执行格式化分区
-    if (FAST_TYPE != clearType && PART_TYPE == diskType) {
+    if (FAST_TYPE != wipe.m_clearType && PART_TYPE == wipe.m_diskType) {
         //新建分区
-        success = format(fstype, name);
+        success = format(wipe.m_fstype, wipe.m_name);
         if (!success) {
             qDebug() << __FUNCTION__ << "format error";
             blockSignals(false);
@@ -2991,8 +2996,8 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
     probeDeviceInfo();
 
     //创建完分区后，将当前创建的分区设置为当前选中分区
-    if (DISK_TYPE  == diskType) {
-        Device d = m_deviceMap.value(path);
+    if (DISK_TYPE  == wipe.m_diskType) {
+        Device d = m_deviceMap.value(wipe.m_path);
         if (d.m_partitions.count() >= 1) {
             m_curpartition = *(d.m_partitions[0]);
         }
@@ -3012,13 +3017,13 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
 
     QFileInfo f;
     //获取挂载文件夹名字，若名字不存在，使用uuid作为名字挂载
-    QString mountPath = QString("/media/%1/%2").arg(user).arg(name);
-    if (name.trimmed().isEmpty()) {
-        mountPath = QString("/media/%1/%2").arg(user).arg(FsInfo::getUuid(m_curpartition.getPath()));
+    QString mountPath = QString("/media/%1/%2").arg(wipe.m_user).arg(wipe.m_name);
+    if (wipe.m_name.trimmed().isEmpty()) {
+        mountPath = QString("/media/%1/%2").arg(wipe.m_user).arg(FsInfo::getUuid(m_curpartition.getPath()));
     } else {
         f.setFile(mountPath);
         if (f.exists()) {
-            mountPath = QString("/media/%1/%2").arg(user).arg(FsInfo::getUuid(m_curpartition.getPath()));
+            mountPath = QString("/media/%1/%2").arg(wipe.m_user).arg(FsInfo::getUuid(m_curpartition.getPath()));
         }
     }
 
@@ -3042,7 +3047,7 @@ bool PartedCore::clear(const QString &fstype, const QString &path, const QString
 
     //更改属主
 
-    changeOwner(user, mountPath);
+    changeOwner(wipe.m_user, mountPath);
     m_isClear = false;
     emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true,  QString("1:0"));
     return success;
@@ -3150,6 +3155,11 @@ DeviceInfoMap PartedCore::getAllDeviceinfo()
 LVMInfo PartedCore::getAllLVMinfo()
 {
     return m_lvmInfo;
+}
+
+LUKSInfoMap PartedCore::getAllLUKSinfo()
+{
+    return m_LUKSInfo;
 }
 
 void PartedCore::setCurSelect(const PartitionInfo &info)
@@ -3822,13 +3832,15 @@ void PartedCore::autoUmount()
 
 
 
-void PartedCore::syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const DeviceInfoMap inforesult, const LVMInfo lvmInfo)
+void PartedCore::syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const DeviceInfoMap inforesult, const LVMInfo lvmInfo, const LUKSInfoMap &luks)
 {
     qDebug() << "syncDeviceInfo finally!";
     //m_deviceMap = deviceMap;
     m_deviceMap = m_probeThread.getDeviceMap();
     m_inforesult = inforesult;
     m_lvmInfo = lvmInfo;
+    m_LUKSInfo = luks;
+    emit updateLUKSInfo(m_LUKSInfo);
     emit updateDeviceInfo(m_inforesult, m_lvmInfo);
 }
 

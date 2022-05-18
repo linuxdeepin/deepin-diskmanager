@@ -12,6 +12,18 @@
 #define GPTBACKUP 33
 #define UEFI_SECTOR 2048 //第一个分区从2048开始 为将来UEFI升级预留空间
 
+//todo 此处待优化  改为枚举
+#define FAST_TYPE 1     // 快速
+#define SECURE_TYPE 2   // 安全
+#define DOD_TYPE 3      // 高级
+#define GUTMANN_TYPE 4  // 古德曼算法
+//todo 此处待优化  修改为dev_type
+#define DISK_TYPE   0   // 磁盘
+#define PART_TYPE   1   // 分区
+
+const unsigned int LUKS1_MaxKey = 8;  //luks 1 最大密钥槽数
+const unsigned int LUKS2_MaxKey = 32; //luks 2 最大密钥槽数
+
 typedef long long Sector;
 typedef long long Byte_Value;
 

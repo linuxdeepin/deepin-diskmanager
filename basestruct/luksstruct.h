@@ -97,6 +97,7 @@ Digests:
  */
 
 struct CRYPT_CIPHER_Support {
+public:
     enum Support {
         NOT_SUPPORT = 0x0000,    //not support
         ENCRYPT = 0x0001,        //支持加密
@@ -107,10 +108,10 @@ struct CRYPT_CIPHER_Support {
     Support aes_xts_plain64 = NOT_SUPPORT;
     Support sm4_xts_plain = NOT_SUPPORT;
 
-    static inline bool supportAllcrypt(CRYPT_CIPHER_Support::Support x);
-    static inline bool notSupportCrypt(CRYPT_CIPHER_Support::Support x);
-    static inline bool supportEncrypt(CRYPT_CIPHER_Support::Support x);
-    static inline bool supportDecrypt(CRYPT_CIPHER_Support::Support x);
+    static  bool supportAllcrypt(CRYPT_CIPHER_Support::Support x);
+    static  bool notSupportCrypt(CRYPT_CIPHER_Support::Support x);
+    static  bool supportEncrypt(CRYPT_CIPHER_Support::Support x);
+    static  bool supportDecrypt(CRYPT_CIPHER_Support::Support x);
 };
 DBUSStructEnd(CRYPT_CIPHER_Support)
 
@@ -164,5 +165,21 @@ public:
     bool m_Suspend = false;                                 //是否挂起  该属性获取待定
 };
 DBUSStructEnd(LUKS_INFO)
+
+typedef QMap<QString, LUKS_INFO> LUKSInfoMap;
+Q_DECLARE_METATYPE(LUKSInfoMap)
+
+//new by liuwh 2022/5/17
+/**
+ * @class OperatorLUKSMap
+ * @brief 专为操作luksmap结构体用
+ */
+class OperatorLUKSMap
+{
+public:
+
+};
+
+
 
 #endif // LUKSSTRUCT_H

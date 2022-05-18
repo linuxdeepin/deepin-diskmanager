@@ -122,7 +122,7 @@ public:
     QVector<VGData>m_vglist;
     LVMFlag m_vgFlag; //vg标志位
     LUKSFlag m_luksFlag; //luks 标志位
-    QMap<QString, LUKS_INFO>m_luksList; //key /dev/sdb1  value luks属性
+    CRYPT_CIPHER_Support m_crySupport;
 };
 DBUSStructEnd(DeviceInfo)
 
@@ -131,5 +131,27 @@ Q_DECLARE_METATYPE(DeviceInfoMap)
 
 typedef QList<HardDiskStatusInfo> HardDiskStatusInfoList;
 Q_DECLARE_METATYPE(HardDiskStatusInfoList)
+
+
+//new by liuwh 2022/5/17
+/**
+ * @class WipeAction
+ * @brief 分区清除 格式化
+ */
+struct WipeAction {
+    QString m_fstype;
+    QString m_path;
+    QString m_name;
+    QString m_user;
+    int m_diskType{0};
+    int m_clearType{0};
+    LUKSFlag m_luksFlag{LUKSFlag::NOT_CRYPT_LUKS};
+    CRYPT_CIPHER m_crypt{CRYPT_CIPHER::NOT_CRYPT};
+    QStringList m_tokenList;                                //密钥提示   luks####提示信息####(创建分区时该属性有效)
+    QString m_decryptStr;                                   //用户解密密码字符串(创建分区时该属性有效)
+};
+DBUSStructEnd(WipeAction)
+
+
 
 #endif // DEVICEINFO_H

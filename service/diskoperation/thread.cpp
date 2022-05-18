@@ -31,6 +31,7 @@
 #include "fsinfo.h"
 #include "mountinfo.h"
 #include "partedcore.h"
+#include "luksoperator/luksoperator.h"
 
 #include <QDebug>
 #include <QProcess>
@@ -369,7 +370,9 @@ void ProbeThread::probeDeviceInfo()
 
     //todo 2022.1.26 获取m_lvminfo
     LVMOperator::getDeviceDataAndLVMInfo(m_inforesult, m_lvmInfo);
-    emit updateDeviceInfo(/*m_deviceMap,*/ m_inforesult, m_lvmInfo);
+    LUKSOperator::updateLUKSInfo(m_inforesult,m_lvmInfo,m_luksInfo);
+
+    emit updateDeviceInfo(/*m_deviceMap,*/ m_inforesult, m_lvmInfo,m_luksInfo);
 
     sendsignals();
     qDebug() << __FILE__ << ":" << __FUNCTION__ << "Someone call me in thread，working done!";

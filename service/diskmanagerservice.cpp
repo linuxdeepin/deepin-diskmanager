@@ -86,6 +86,8 @@ void DiskManagerService::onGetAllDeviceInfomation()
 {
     DeviceInfoMap infores = m_partedcore->getAllDeviceinfo();
     LVMInfo lvmInfo = m_partedcore->getAllLVMinfo();
+    LUKSInfoMap luksInfo = m_partedcore->getAllLUKSinfo();
+    Q_EMIT updateLUKSInfo(luksInfo);
     Q_EMIT updateDeviceInfo(infores, lvmInfo);
 }
 
@@ -104,6 +106,21 @@ bool DiskManagerService::mount(const QString &mountpath)
     return m_partedcore->mountAndWriteFstab(mountpath);
 }
 
+bool DiskManagerService::deCrypt(const LUKS_INFO &luks)
+{
+    return m_partedcore->deCrypt(luks);
+}
+
+bool DiskManagerService::cryptMount(const LUKS_INFO &luks)
+{
+    return m_partedcore->cryptMount(luks);
+}
+
+bool DiskManagerService::cryptUmount(const LUKS_INFO &luks)
+{
+    return m_partedcore->cryptUmount(luks);
+}
+
 QStringList DiskManagerService::getallsupportfs()
 {
     return m_partedcore->getallsupportfs();
@@ -114,9 +131,9 @@ bool DiskManagerService::format(const QString &fstype, const QString &name)
     return m_partedcore->format(fstype, name);
 }
 
-bool DiskManagerService::clear(const QString &fstype, const QString &path, const QString &name, const QString &user, const int &diskType, const int &clearType)
+bool DiskManagerService::clear(const WipeAction &wipe)
 {
-    return m_partedcore->clear(fstype, path, name, user, diskType, clearType);
+    return m_partedcore->clear(wipe);
 }
 
 bool DiskManagerService::resize(const PartitionInfo &info)
@@ -132,6 +149,7 @@ bool DiskManagerService::create(const PartitionVec &infovec)
 void DiskManagerService::initConnection()
 {
     connect(m_partedcore, &PartedCore::updateDeviceInfo, this, &DiskManagerService::updateDeviceInfo);
+    connect(m_partedcore, &PartedCore::updateLUKSInfo, this, &DiskManagerService::updateLUKSInfo);
     connect(m_partedcore, &PartedCore::deletePartitionMessage, this, &DiskManagerService::deletePartition);
     connect(m_partedcore, &PartedCore::hidePartitionInfo, this, &DiskManagerService::hidePartitionInfo);
     connect(m_partedcore, &PartedCore::showPartitionInfo, this, &DiskManagerService::showPartitionInfo);
@@ -148,6 +166,7 @@ void DiskManagerService::initConnection()
     connect(m_partedcore, &PartedCore::lvDeleteMessage, this, &DiskManagerService::lvDeleteMessage);
     connect(this, &DiskManagerService::getAllDeviceInfomation, this, &DiskManagerService::onGetAllDeviceInfomation);
     connect(m_partedcore, &PartedCore::clearMessage, this, &DiskManagerService::clearMessage);
+    connect(m_partedcore, &PartedCore::deCryptMessage, this, &DiskManagerService::deCryptMessage);
 }
 
 HardDiskInfo DiskManagerService::onGetDeviceHardInfo(const QString &devicepath)

@@ -35,7 +35,7 @@ public:
      * @param lvmInfo:lvm数据结构体
      * @return true 成功 false 失败
      */
-    static bool updateLUKSInfo(DeviceInfoMap &dev, LVMInfo &lvmInfo);
+    static bool updateLUKSInfo(DeviceInfoMap &dev, LVMInfo &lvmInfo, LUKSInfoMap &luks);
 
 private:
 

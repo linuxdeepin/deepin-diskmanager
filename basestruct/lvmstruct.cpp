@@ -66,7 +66,11 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LVAction &data)
              << data.m_user
              << static_cast<int>(data.m_lvAct)
              << data.m_mountPoint
-             << data.m_mountUuid;
+             << data.m_mountUuid
+             << static_cast<int>(data.m_luksFlag)
+             << static_cast<int>(data.m_crypt)
+             << data.m_tokenList
+             << data.m_decryptStr;
     argument.endStructure();
     return argument;
 }
@@ -74,7 +78,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LVAction &data)
 const QDBusArgument &operator>>(const QDBusArgument &argument, LVAction &data)
 {
     argument.beginStructure();
-    int type, act;
+    int type, act,luksFlag,crypt;
     argument >> data.m_vgName
              >> data.m_lvName
              >> data.m_lvSize
@@ -83,9 +87,15 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LVAction &data)
              >> data.m_user
              >> act
              >> data.m_mountPoint
-             >> data.m_mountUuid;
+             >> data.m_mountUuid
+             >> luksFlag
+             >> crypt
+             >> data.m_tokenList
+             >> data.m_decryptStr;
     data.m_lvFs = static_cast<FSType>(type);
     data.m_lvAct = static_cast<LVMAction>(act);
+    data.m_luksFlag = static_cast<LUKSFlag>(luksFlag);
+    data.m_crypt = static_cast<CRYPT_CIPHER>(crypt);
     argument.endStructure();
     return argument;
 }
@@ -244,8 +254,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LVInfo &data)
              << data.m_mountUuid
              << data.m_fsLimits.max_size
              << data.m_fsLimits.min_size
-             << static_cast<int>(data.m_luksFlag)
-             << data.m_luksInfo;
+             << static_cast<int>(data.m_luksFlag);
     argument.endStructure();
     return argument;
 }
@@ -271,8 +280,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LVInfo &data)
              >> data.m_mountUuid
              >> data.m_fsLimits.max_size
              >> data.m_fsLimits.min_size
-             >> luksFlag
-             >> data.m_luksInfo;
+             >> luksFlag;
     data.m_lvFsType = static_cast<FSType>(type);
     data.m_lvError = static_cast<LVMError>(err);
     data.m_luksFlag = static_cast<LUKSFlag>(luksFlag);
@@ -330,8 +338,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const VGInfo &data)
              << static_cast<int>(data.m_vgError)
              << data.m_lvlist
              << data.m_pvInfo
-             << static_cast<int>(data.m_luksFlag)
-             << data.m_luksList;
+             << static_cast<int>(data.m_luksFlag);
     argument.endStructure();
     return argument;
 }
@@ -339,7 +346,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const VGInfo &data)
 const QDBusArgument &operator>>(const QDBusArgument &argument,  VGInfo &data)
 {
     argument.beginStructure();
-    int err,luksFlag;
+    int err, luksFlag;
     argument >> data.m_vgName
              >> data.m_vgUuid
              >> data.m_vgSize
@@ -355,8 +362,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument,  VGInfo &data)
              >> err
              >> data.m_lvlist
              >> data.m_pvInfo
-            >> luksFlag
-            >> data.m_luksList;
+             >> luksFlag;
     data.m_vgError = static_cast<LVMError>(err);
     data.m_luksFlag = static_cast<LUKSFlag>(luksFlag);
     argument.endStructure();

@@ -25,15 +25,11 @@ LUKSOperator::LUKSOperator()
 
 }
 
-bool LUKSOperator::updateLUKSInfo(DeviceInfoMap &dev, LVMInfo &lvmInfo)
+bool LUKSOperator::updateLUKSInfo(DeviceInfoMap &dev, LVMInfo &lvmInfo,LUKSInfoMap&luks)
 {
+    //查看所有
     for (QMap<QString, DeviceInfo>::iterator it = dev.begin(); it != dev.end(); ++it) {
-        for (PartitionVec::iterator it2 = it.value().m_partition.begin();it2 != it.value().m_partition.end();++it2) {
-
-        }
-    }
-
-    for (auto it = lvmInfo.m_vgInfo.begin()->m_lvlist.begin(); it != lvmInfo.m_vgInfo.begin()->m_lvlist.begin(); ++it) {
 
     }
+    return  true;
 }

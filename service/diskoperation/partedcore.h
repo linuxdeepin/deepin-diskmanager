@@ -75,6 +75,13 @@ public:
      */
     LVMInfo getAllLVMinfo();
 
+
+    /**
+     * @brief 获取LUKS设备信息
+     * @return 返回LUKS设备信息
+     */
+    LUKSInfoMap getAllLUKSinfo();
+
     /**
      * @brief 获取当前页面选择分区信息
      * @param info：当前选择分区信息
@@ -95,6 +102,28 @@ public:
      * @return true成功false失败
      */
     bool unmount();
+
+
+    /**
+     * @brief 加密磁盘解密
+     * @param luks  加密磁盘属性
+     * @return true成功false失败
+     */
+    bool deCrypt(const LUKS_INFO&luks);
+
+    /**
+     * @brief 加密磁盘挂载
+     * @param luks  加密磁盘属性
+     * @return true成功false失败
+     */
+    bool cryptMount(const LUKS_INFO&luks);
+
+    /**
+     * @brief 加密磁盘卸载
+     * @param luks  加密磁盘属性
+     * @return true成功false失败
+     */
+    bool cryptUmount(const LUKS_INFO&luks);
 
     /**
      * @brief 挂载分区
@@ -120,7 +149,7 @@ public:
      * @param clearType: 清除标准， 1为快速，2为安全（NIST），3为DoD标准， 4为古德曼标准
      * @return true成功false失败
      */
-    bool clear(const QString &fstype, const QString &path, const QString &name, const QString &user, const int &diskType, const int &clearType);
+    bool clear(const WipeAction&wipe);
 
     /**
      * @brief 扩容分区
@@ -919,6 +948,13 @@ signals:
      */
     void updateDeviceInfo(const DeviceInfoMap &infomap, const LVMInfo &lvmInfo);
 
+
+    /**
+     * @brief 刷新加密设备信息信号
+     * @param infomap：所有加密设备分区信息
+     */
+    void updateLUKSInfo(const LUKSInfoMap&luks);
+
     /**
      * @brief 刷新信息信号
      * @param type:信号类型 详细类型见sigtype.h
@@ -1045,6 +1081,12 @@ signals:
      */
     void lvDeleteMessage(const QString &lvMessage);
 
+    /**
+     * @brief 解密消息
+     * @param luks:解密结果
+     */
+    void deCryptMessage(const LUKS_INFO&luks);
+
 public slots:
 
     /**
@@ -1055,7 +1097,7 @@ public slots:
     /**
       * @brief 刷新硬件信息
       */
-    void syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const DeviceInfoMap inforesult, const LVMInfo lvmInfo);
+    void syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const DeviceInfoMap inforesult, const LVMInfo lvmInfo,const LUKSInfoMap&luks);
 
 private:
     QVector<PedPartitionFlag> m_flags;    //分区标志hidden boot efi等
@@ -1075,6 +1117,7 @@ private:
     bool m_isClear;
 
     LVMInfo m_lvmInfo;                    //lvm 数据集合
+    LUKSInfoMap m_LUKSInfo;               //luks 数据集合
 
 };
 

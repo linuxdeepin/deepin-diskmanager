@@ -72,8 +72,16 @@ Q_SIGNALS:
     /**
      * @brief 刷新设备信息信号
      * @param infomap：所有设备分区信息
+     * @param lvmInfo：lvm信息
      */
     Q_SCRIPTABLE void updateDeviceInfo(const DeviceInfoMap &infomap, const LVMInfo &lvmInfo);
+
+
+    /**
+     * @brief 刷新加密设备信息信号
+     * @param infomap：所有加密设备分区信息
+     */
+    Q_SCRIPTABLE void updateLUKSInfo(const LUKSInfoMap &infomap);
 
     /**
      * @brief 卸载状态信号
@@ -161,6 +169,12 @@ Q_SIGNALS:
      */
     Q_SCRIPTABLE void lvDeleteMessage(const QString &lvMessage);
 
+    /**
+     * @brief 解密消息
+     * @param luks:解密消息
+     */
+    Q_SCRIPTABLE void deCryptMessage(const LUKS_INFO &luks);
+
 
 public Q_SLOTS:
     /**
@@ -207,6 +221,29 @@ public Q_SLOTS:
      */
     Q_SCRIPTABLE bool mount(const QString &mountpath);
 
+
+    /**
+     * @brief 加密磁盘解密
+     * @param luks  加密磁盘属性
+     * @return true成功false失败
+     */
+    Q_SCRIPTABLE bool deCrypt(const LUKS_INFO&luks);
+
+
+    /**
+     * @brief 加密磁盘挂载
+     * @param luks  加密磁盘属性
+     * @return true成功false失败
+     */
+    Q_SCRIPTABLE bool cryptMount(const LUKS_INFO&luks);
+
+    /**
+     * @brief 加密磁盘卸载
+     * @param luks  加密磁盘属性
+     * @return true成功false失败
+     */
+    Q_SCRIPTABLE bool cryptUmount(const LUKS_INFO&luks);
+
     /**
      * @brief 获取全部文件系统格式支持
      * @return 返回支持文件系统格式列表
@@ -230,7 +267,8 @@ public Q_SLOTS:
      * @param clearType: 擦除标准， 0为快速，1为安全（NIST），2为DoD标准， 3为古德曼标准
      * @return true成功false失败
      */
-    Q_SCRIPTABLE bool clear(const QString &fstype, const QString &path, const QString &name, const QString &user, const int &diskType, const int &clearType);
+    Q_SCRIPTABLE bool clear(const WipeAction&wipe);
+
 
     /**
      * @brief 扩容分区

@@ -57,20 +57,24 @@ Device::Device()
     qDBusRegisterMetaType<QList<PVData>>();
     qDBusRegisterMetaType<QList<LVAction>>();
 
+    //注册结构体 luks dbus通信使用
+    qDBusRegisterMetaType<LUKS_INFO>();
+    qDBusRegisterMetaType<LUKS_MapperInfo>();
+    qDBusRegisterMetaType<CRYPT_CIPHER_Support>();
+    qDBusRegisterMetaType<LUKSInfoMap>();
+
     m_sectorSize = 0;
     m_maxPrims = 0;
     m_highestBusy = 0;
     m_readonly = false;
     m_maxPartitionNameLength = 0;
-    m_vgFlag = LVM_FLAG_NOT_PV;
 }
 
 void Device::enablePartitionNaming(int length)
 {
     if (length > 0) {
         m_maxPartitionNameLength = length;
-    }
-    else {
+    } else {
         m_maxPartitionNameLength = 0;
     }
 }
@@ -104,9 +108,6 @@ DeviceInfo Device::getDeviceInfo()
     info.m_interface = m_interface;
     info.m_mediaType = m_mediaType;
 
-    info.m_vgFlag = m_vgFlag;
-    info.m_vglist = m_vglist;
-    info.m_luksFlag = m_luksFlag;
 //        qDebug() << __FUNCTION__ << info.m_path << info.length << info.heads << info.sectors
 //                 << info.cylinders << info.cylsize << info.model << info.serial_number << info.disktype
 //                 << info.sector_size << info.max_prims << info.highest_busy << info.readonly

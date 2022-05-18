@@ -24,7 +24,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const DeviceInfo &info)
              << static_cast<int>(info.m_vgFlag)
              << info.m_vglist
              << static_cast<int>(info.m_luksFlag)
-             << info.m_luksList;
+             << info.m_crySupport;
     argument.endStructure();
 
     return argument;
@@ -55,7 +55,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, DeviceInfo &info)
              >> flag
              >> info.m_vglist
              >> flag2
-             >> info.m_luksList;
+             >> info.m_crySupport;
     info.m_vgFlag = static_cast<LVMFlag>(flag);
     info.m_luksFlag = static_cast<LUKSFlag>(flag2);
     argument.endStructure();
@@ -156,6 +156,45 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, HardDiskStatusInf
     argument.endStructure();
     return argument;
 }
+
+QDBusArgument &operator<<(QDBusArgument &argument, const WipeAction &data)
+{
+    argument.beginStructure();
+    argument << data.m_fstype
+             << data.m_path
+             << data.m_name
+             << data.m_user
+             << data.m_diskType
+             << data.m_clearType
+             << static_cast<int>(data.m_luksFlag)
+             << static_cast<int>(data.m_crypt)
+             << data.m_tokenList
+             << data.m_decryptStr;
+    argument.endStructure();
+    return argument;
+}
+
+const QDBusArgument &operator>>(const QDBusArgument &argument, WipeAction &data)
+{
+    argument.beginStructure();
+    int flag1, flag2;
+    argument >> data.m_fstype
+             >> data.m_path
+             >> data.m_name
+             >> data.m_user
+             >> data.m_diskType
+             >> data.m_clearType
+             >> flag1
+             >> flag2
+             >> data.m_tokenList
+             >> data.m_decryptStr;
+    data.m_luksFlag = static_cast<LUKSFlag>(flag1);
+    data.m_crypt = static_cast<CRYPT_CIPHER>(flag2);
+    argument.endStructure();
+    return argument;
+}
+
+
 
 DeviceInfo::DeviceInfo()
     : m_readonly(false)

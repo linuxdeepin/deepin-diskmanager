@@ -19,7 +19,7 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "luksstruct.h"
-
+/*********************************** CRYPT_CIPHER_Support *********************************************/
 bool CRYPT_CIPHER_Support::supportDecrypt(CRYPT_CIPHER_Support::Support x)
 {
     return ((x) & 0xFFFF) == (CRYPT_CIPHER_Support::Support::CRYPT_ALL);
@@ -39,8 +39,6 @@ bool CRYPT_CIPHER_Support::supportAllcrypt(CRYPT_CIPHER_Support::Support x)
 {
     return supportAllcrypt(x) || (((x) & 0xFFFF) == (CRYPT_CIPHER_Support::Support::DECRYPT));
 }
-
-
 
 QDBusArgument &operator<<(QDBusArgument &argument, const CRYPT_CIPHER_Support &data)
 {
@@ -62,7 +60,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, CRYPT_CIPHER_Supp
     argument.endStructure();
     return argument;
 }
-
+/*********************************** LUKS_MapperInfo *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const LUKS_MapperInfo &data)
 {
     argument.beginStructure();
@@ -103,7 +101,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LUKS_MapperInfo &
     argument.endStructure();
     return argument;
 }
-
+/*********************************** LUKS_INFO *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const LUKS_INFO &data)
 {
     argument.beginStructure();

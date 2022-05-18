@@ -87,11 +87,6 @@ public:
     int m_highestBusy;       //挂载
     bool m_readonly;          //是否只读
     QVector<Partition *> m_partitions; //分区信息
-
-    QVector<VGData>m_vglist;
-    LVMFlag m_vgFlag; //vg标志位
-    LUKSFlag m_luksFlag; //luks 标志位
-
 private:
     int m_maxPartitionNameLength; //最大分区命名长度
 };

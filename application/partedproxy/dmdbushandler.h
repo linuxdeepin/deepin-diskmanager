@@ -249,15 +249,10 @@ public:
     QString getCurDevicePath();
 
     /**
-     * @brief 擦除
-     * @param type 分区类型
-     * @param path 磁盘或分区路径
-     * @param name 劵标名
-     * @param user 当前用户名
-     * @param diskType 磁盘或者分区类型 0是磁盘 1是分区
-     * @param clearType 擦除标准 1为快速 2安全 3为安全擦除7次 4为安全擦除35次
-     */
-    void clear(const QString &fstype, const QString &path, const QString &name,const QString &user, const int &diskType, const int &clearType);
+    * @brief 擦除
+    * @param wipe 擦除信息
+    */
+    void clear(const WipeAction &wipe);
 
     /**
      * @brief 获取所有逻辑卷信息
@@ -363,6 +358,18 @@ public:
      */
     void onDeletePVList(QList<PVData>devList);
 
+    /**
+     * @brief 获取加密格式
+     * @param formateList: 当前支持的文件系统
+     * @return 加密格式文件系统
+     */
+    QStringList getEncryptionFormate(const QStringList &formateList);
+
+    /**
+     * @brief 获取所有加密盘信息
+     */
+    const LUKSInfoMap &probLUKSInfo() const;
+
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
 
@@ -415,8 +422,15 @@ private slots:
     /**
      * @brief 数据更新信号响应的槽函数
      * @param infoMap 设备信息
+     * @param lvmInfo LVM信息
      */
     void onUpdateDeviceInfo(const DeviceInfoMap &infoMap, const LVMInfo &lvmInfo);
+
+    /**
+     * @brief 加密设备数据更新信号响应的槽函数
+     * @param infomap：所有加密设备分区信息
+     */
+    void onUpdateLUKSInfo(const LUKSInfoMap &infomap);
 
     /**
      * @brief 接收卸载分区返回执行结果的槽函数
@@ -477,6 +491,8 @@ private:
     LVInfo m_curLVInfo;
     VGInfo m_curVGInfo;
     QMap<QString, QString> m_isJoinAllVG;
+    LUKSInfoMap m_curLUKSInfoMap;
+    CRYPT_CIPHER_Support m_cryptSupport;
 };
 
 #endif // DMDBUSHANDLER_H

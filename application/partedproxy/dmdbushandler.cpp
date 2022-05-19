@@ -74,6 +74,12 @@ DMDbusHandler::DMDbusHandler(QObject *parent)
     qDBusRegisterMetaType<QList<PVData>>();
     qDBusRegisterMetaType<QList<LVAction>>();
 
+    //注册结构体 luks dbus通信使用
+    qDBusRegisterMetaType<LUKS_INFO>();
+    qDBusRegisterMetaType<LUKS_MapperInfo>();
+    qDBusRegisterMetaType<CRYPT_CIPHER_Support>();
+    qDBusRegisterMetaType<LUKSInfoMap>();
+
     m_dbus = new DMDBusInterface("com.deepin.diskmanager", "/com/deepin/diskmanager",
                                  QDBusConnection::systemBus(), this);
     //Note: when dealing with remote objects, it is not always possible to determine if it exists when creating a QDBusInterface.
@@ -91,6 +97,7 @@ void DMDbusHandler::initConnection()
     connect(m_dbus, &DMDBusInterface::MessageReport, this, &DMDbusHandler::onMessageReport);
     //  connect(m_dbus, &DMDBusInterface::sigUpdateDeviceInfo, this, &DMDbusHandler::sigUpdateDeviceInfo);
     connect(m_dbus, &DMDBusInterface::updateDeviceInfo, this, &DMDbusHandler::onUpdateDeviceInfo);
+    connect(m_dbus, &DMDBusInterface::updateLUKSInfo, this, &DMDbusHandler::onUpdateLUKSInfo);
     connect(m_dbus, &DMDBusInterface::unmountPartition, this, &DMDbusHandler::onUnmountPartition);
     connect(m_dbus, &DMDBusInterface::deletePartition, this, &DMDbusHandler::onDeletePartition);
     connect(m_dbus, &DMDBusInterface::hidePartitionInfo, this, &DMDbusHandler::onHidePartition);
@@ -326,6 +333,8 @@ void DMDbusHandler::onUpdateDeviceInfo(const DeviceInfoMap &infoMap, const LVMIn
 //                 << info.m_cylinders << info.m_cylsize << info.m_model << info.m_serialNumber << info.m_disktype
 //                 << info.m_sectorSize << info.m_maxPrims << info.m_highestBusy << info.m_readonly
 //                 << info.m_maxPartitionNameLength << info.m_mediaType << info.m_interface << info.m_vgFlag;
+
+        m_cryptSupport = info.m_crySupport;
         if (info.m_path.isEmpty() || info.m_path.contains("/dev/mapper")) {
             continue;
         }
@@ -379,6 +388,11 @@ void DMDbusHandler::onUpdateDeviceInfo(const DeviceInfoMap &infoMap, const LVMIn
 
     emit updateDeviceInfo();
     emit showSpinerWindow(false, "");
+}
+
+void DMDbusHandler::onUpdateLUKSInfo(const LUKSInfoMap &infomap)
+{
+    m_curLUKSInfoMap = infomap;
 }
 
 QMap<QString, QString> DMDbusHandler::getIsExistUnallocated()
@@ -514,9 +528,9 @@ QString DMDbusHandler::getCurDevicePath()
     return m_curDevicePath;
 }
 
-void DMDbusHandler::clear(const QString &fstype, const QString &path , const QString &name, const QString &user, const int &diskType , const int &clearType)
+void DMDbusHandler::clear(const WipeAction &wipe)
 {
-    m_dbus->clear(fstype, path, name, user, diskType, clearType);
+    m_dbus->clear(wipe);
 }
 
 const LVMInfo &DMDbusHandler::probLVMInfo() const
@@ -630,4 +644,30 @@ void DMDbusHandler::onDeletePVList(QList<PVData> devList)
 {
     m_dbus->onDeletePVList(devList);
 }
+
+QStringList DMDbusHandler::getEncryptionFormate(const QStringList &formateList)
+{
+    bool isSupportAES = m_cryptSupport.supportEncrypt(m_cryptSupport.aes_xts_plain64);
+    bool isSupportSM4 = m_cryptSupport.supportEncrypt(m_cryptSupport.sm4_xts_plain);
+
+    QStringList lstFormate;
+    for (int i = 0; i < formateList.count(); ++i) {
+        lstFormate << formateList.at(i);
+        if(isSupportAES) {
+            lstFormate << QString("%1 (%2)").arg(formateList.at(i)).arg(tr("AES Encryption"));
+        }
+
+        if (isSupportSM4) {
+            lstFormate << QString("%1 (%2)").arg(formateList.at(i)).arg(tr("SM4 Encryption"));
+        }
+    }
+
+    return lstFormate;
+}
+
+const LUKSInfoMap &DMDbusHandler::probLUKSInfo() const
+{
+    return m_curLUKSInfoMap;
+}
+
 

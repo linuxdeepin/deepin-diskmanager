@@ -26,6 +26,9 @@
  */
 #include "formatedialog.h"
 #include "partedproxy/dmdbushandler.h"
+#include "common.h"
+#include "customcontrol/passwordinputdialog.h"
+#include "messagebox.h"
 
 #include <DFontSizeManager>
 #include <DWindowCloseButton>
@@ -45,25 +48,35 @@ FormateDialog::FormateDialog(QWidget *parent)
 
 void FormateDialog::initUi()
 {
-    setFixedSize(450, 355);
+    m_height = 355;
+    setFixedSize(450, m_height);
 
     m_curWipeMethod = WipeType::FAST;
-    int fileSystemType = 11;
+    int fileSystemType = FSType::FS_EXT4;
+    double size = 0;
+    LUKSFlag luksFlag = LUKSFlag::NOT_CRYPT_LUKS;
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         m_pathInfo = info.m_path;
         fileSystemType = info.m_fileSystemType;
-
         DeviceInfo diskInfo = DMDbusHandler::instance()->getCurDeviceInfo();
         m_curDiskMediaType = diskInfo.m_mediaType;
+        size = Utils::sectorToUnit(info.m_sectorEnd - info.m_sectorStart + 1, info.m_sectorSize, SIZE_UNIT::UNIT_MIB);
+        luksFlag = info.m_luksFlag;
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         m_pathInfo = info.m_path;
         m_curDiskMediaType = info.m_mediaType;
+        size = Utils::sectorToUnit(info.m_length, info.m_sectorSize, SIZE_UNIT::UNIT_MIB);
+        luksFlag = info.m_luksFlag;
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
-        setFixedSize(450, 315);
+        m_height = 315;
+        setFixedSize(450, m_height);
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
         m_pathInfo = lvInfo.m_lvPath;
+        fileSystemType = lvInfo.m_lvFsType;
+        size = Utils::LVMSizeToUnit(lvInfo.m_lvLECount * lvInfo.m_LESize, SIZE_UNIT::UNIT_MIB);
+        luksFlag = lvInfo.m_luksFlag;
     }
 
     DPalette palette1;
@@ -125,13 +138,41 @@ void FormateDialog::initUi()
 
     QStringList fslist = DMDbusHandler::instance()->getAllSupportFileSystem();
     fslist.removeOne("linux-swap");
+//    QStringList formateList = fslist;
+    if (size > 100) {
+        fslist = DMDbusHandler::instance()->getEncryptionFormate(fslist);
+    }
+
     m_formatComboBox->addItems(fslist);
     m_formatComboBox->setFixedHeight(36);
 
-    if (-1 == fslist.indexOf(Utils::fileSystemTypeToString(static_cast<FSType>(fileSystemType)))) {
-        m_formatComboBox->setCurrentIndex(fslist.indexOf(Utils::fileSystemTypeToString(static_cast<FSType>(11))));
+    QString fsTypeName = Utils::fileSystemTypeToString(static_cast<FSType>(fileSystemType));
+    // 判断当前设备是否加密
+    if (luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+        LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().value(m_pathInfo);
+        // 加密设备是否打开，打开格式设为加密格式，未打开默认设为ext4
+        if (luksInfo.isDecrypt) {
+            fileSystemType = luksInfo.m_mapper.m_luksFs;
+            if (-1 == fslist.indexOf(Utils::fileSystemTypeToString(static_cast<FSType>(fileSystemType)))) {
+                fsTypeName = Utils::fileSystemTypeToString(FSType::FS_EXT4);
+            } else {
+                if (luksInfo.m_crypt == CRYPT_CIPHER::AES_XTS_PLAIN64) {
+                    fsTypeName = QString("%1 (%2)").arg(Utils::fileSystemTypeToString(static_cast<FSType>(fileSystemType)))
+                            .arg(tr("AES Encryption"));
+                } else if (luksInfo.m_crypt == CRYPT_CIPHER::SM4_XTS_PLAIN64){
+                    fsTypeName = QString("%1 (%2)").arg(Utils::fileSystemTypeToString(static_cast<FSType>(fileSystemType)))
+                            .arg(tr("SM4 Encryption"));
+                }
+            }
+        } else {
+            fsTypeName = Utils::fileSystemTypeToString(FSType::FS_EXT4);
+        }
+    }
+
+    if (-1 == fslist.indexOf(fsTypeName)) {
+        m_formatComboBox->setCurrentText("ext4");
     } else {
-        m_formatComboBox->setCurrentIndex(fslist.indexOf(Utils::fileSystemTypeToString(static_cast<FSType>(fileSystemType))));
+        m_formatComboBox->setCurrentText(fsTypeName);
     }
 
     DLabel *securityLabel = new DLabel(tr("Security:"), this);
@@ -168,6 +209,7 @@ void FormateDialog::initUi()
     m_describeInfo->setText(tr("It only deletes the partition info without erasing the files on the disk. "
                                "Disk recovery tools may recover the files at a certain probability."));
     m_describeInfo->setFixedHeight(30);
+    m_describeInfo->setAccessibleName("describeInfo");
     m_labelTmp->setFixedHeight(29);
 
     DLabel *wipingLabel = new DLabel(tr("Wiping method:"), this);
@@ -198,11 +240,24 @@ void FormateDialog::initUi()
     m_label->hide();
     m_wipingMethodWidget->hide();
 
+    m_encryptionInfo = new DLabel(this);
+    m_encryptionInfo->setFont(font);
+    m_encryptionInfo->setPalette(palette2);
+    m_encryptionInfo->adjustSize();
+    m_encryptionInfo->setWordWrap(true);
+    m_encryptionInfo->setAccessibleName("encryptionInfo");
+    m_encryptionInfo->hide();
+    m_emptyLabel = new DLabel(this);
+    m_emptyLabel->hide();
+    m_encryptionInfoHeight = 0;
+
     QVBoxLayout *layoutName = new QVBoxLayout;
     layoutName->addWidget(fileName);
     layoutName->addSpacing(10);
     layoutName->addWidget(formatName);
-    layoutName->addSpacing(10);
+    layoutName->addSpacing(5);
+    layoutName->addWidget(m_emptyLabel);
+    layoutName->addSpacing(5);
     layoutName->addWidget(securityLabel);
     layoutName->addSpacing(5);
     layoutName->addWidget(m_labelTmp);
@@ -215,7 +270,9 @@ void FormateDialog::initUi()
     layoutFormat->addWidget(m_fileNameEdit);
     layoutFormat->addSpacing(10);
     layoutFormat->addWidget(m_formatComboBox);
-    layoutFormat->addSpacing(10);
+    layoutFormat->addSpacing(5);
+    layoutFormat->addWidget(m_encryptionInfo);
+    layoutFormat->addSpacing(5);
     layoutFormat->addWidget(m_securityComboBox);
     layoutFormat->addSpacing(5);
     layoutFormat->addWidget(m_describeInfo);
@@ -316,6 +373,11 @@ void FormateDialog::initUi()
 
     mainLayout->addWidget(m_stackedWidget);
     mainLayout->setContentsMargins(0, 0, 0, 0);
+
+    if (m_formatComboBox->currentText().contains("AES") || m_formatComboBox->currentText().contains("SM4")) {
+        QFontMetrics fm(formatName->font());
+        updateEncryptionInfo(m_formatComboBox->currentText(), width() - fm.boundingRect(formatName->text()).width() - 40);
+    }
 }
 
 void FormateDialog::initConnection()
@@ -335,7 +397,7 @@ void FormateDialog::onTextChanged(const QString &text)
 {
     if (!text.isEmpty()) {
         QByteArray byteArray = text.toUtf8();
-        if (m_formatComboBox->currentText() == "fat32") {
+        if (m_formatComboBox->currentText().contains("fat32")) {
             if (byteArray.size() > 11) {
                 m_fileNameEdit->setAlert(true);
                 m_fileNameEdit->showAlertMessage(tr("The length exceeds the limit"), -1);
@@ -368,7 +430,7 @@ void FormateDialog::onComboxFormatTextChange(const QString &text)
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION ||
             DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
         QByteArray byteArray = m_fileNameEdit->text().toUtf8();
-        if (text == "fat32") {
+        if (text.contains("fat32")) {
             if (byteArray.size() > 11) {
                 m_fileNameEdit->setAlert(true);
                 m_fileNameEdit->showAlertMessage(tr("The length exceeds the limit"), -1);
@@ -394,6 +456,40 @@ void FormateDialog::onComboxFormatTextChange(const QString &text)
             }
         }
     }
+
+    updateEncryptionInfo(text, m_formatComboBox->width());
+}
+
+void FormateDialog::updateEncryptionInfo(const QString &text, const int &height)
+{
+    if (text.contains("AES")) {
+        QString text = tr("Use the aes-xts-plain64 standard algorithm to encrypt the disk. "
+                          "You should decrypt it before mounting it again.");
+        m_encryptionInfoHeight = Common::getLabelAdjustHeight(height, text, m_encryptionInfo->font());
+        m_encryptionInfo->setText(text);
+        setFixedSize(450, m_height + m_encryptionInfoHeight);
+        m_encryptionInfo->setFixedHeight(m_encryptionInfoHeight);
+        m_emptyLabel->setFixedHeight(m_encryptionInfoHeight - 1);
+        m_encryptionInfo->show();
+        m_emptyLabel->show();
+    } else if (text.contains("SM4")) {
+        QString text = tr("Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. "
+                          "You should decrypt it before mounting it again. Operating Systems that do not support the state "
+                          "cryptographic algorithm will not be able to decrypt the disk.");
+        m_encryptionInfoHeight = Common::getLabelAdjustHeight(height, text, m_encryptionInfo->font());
+        m_encryptionInfo->setText(text);
+        setFixedSize(450, m_height + m_encryptionInfoHeight);
+        m_encryptionInfo->setFixedHeight(m_encryptionInfoHeight);
+        m_emptyLabel->setFixedHeight(m_encryptionInfoHeight - 1);
+        m_encryptionInfo->show();
+        m_emptyLabel->show();
+    } else {
+        m_encryptionInfoHeight = 0;
+        setFixedSize(450, m_height);
+        m_encryptionInfo->hide();
+        m_emptyLabel->hide();
+        m_encryptionInfo->setText("");
+    }
 }
 
 void FormateDialog::onSecurityCurrentIndexChanged(int index)
@@ -402,41 +498,48 @@ void FormateDialog::onSecurityCurrentIndexChanged(int index)
             DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
         switch (index) {
         case 0: {
-            setFixedSize(450, 355);
-            m_describeInfo->setFixedHeight(30);
-            m_labelTmp->setFixedHeight(29);
+            m_describeInfo->setText(tr("It only deletes the partition info without erasing the files on the disk. "
+                                       "Disk recovery tools may recover the files at a certain probability."));
+            int height = Common::getLabelAdjustHeight(m_securityComboBox->width(), m_describeInfo->text(), m_describeInfo->font());
+            m_height = 325 + height;
+            setFixedSize(450, m_height + m_encryptionInfoHeight);
+            m_describeInfo->setFixedHeight(height);
+            m_labelTmp->setFixedHeight(height - 1);
             m_buttonLayout->setContentsMargins(0, 0, 0, 0);
             m_label->hide();
             m_wipingMethodWidget->hide();
             m_curWipeMethod = WipeType::FAST;
-            m_describeInfo->setText(tr("It only deletes the partition info without erasing the files on the disk. "
-                                       "Disk recovery tools may recover the files at a certain probability."));
+
             break;
         }
         case 1: {
-            setFixedSize(450, 365);
-            m_describeInfo->setFixedHeight(40);
-            m_labelTmp->setFixedHeight(40);
+            m_describeInfo->setText(tr("It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, "
+                                       "and random data to the entire disk once. You will not be able to recover files, "
+                                       "and the process will be slow."));
+            int height = Common::getLabelAdjustHeight(m_securityComboBox->width(), m_describeInfo->text(), m_describeInfo->font());
+            m_height = 325 + height;
+            setFixedSize(450, m_height + m_encryptionInfoHeight);
+            m_describeInfo->setFixedHeight(height);
+            m_labelTmp->setFixedHeight(height - 1);
             m_buttonLayout->setContentsMargins(0, 0, 0, 0);
             m_label->hide();
             m_wipingMethodWidget->hide();
             m_curWipeMethod = WipeType::SECURE;
-            m_describeInfo->setText(tr("It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, "
-                                       "and random data to the entire disk once. You will not be able to recover files, "
-                                       "and the process will be slow."));
             break;
         }
         case 2: {
-            setFixedSize(450, 412);
-            m_describeInfo->setFixedHeight(40);
-            m_labelTmp->setFixedHeight(40);
+            m_describeInfo->setText(tr("It writes 0, 1, and random data to the entire disk several times. You can set the "
+                                       "number of times to erase disks and overwrite data, but the process will be very slow."));
+            int height = Common::getLabelAdjustHeight(m_securityComboBox->width(), m_describeInfo->text(), m_describeInfo->font());
+            m_height = 372 + height;
+            setFixedSize(450, m_height + m_encryptionInfoHeight);
+            m_describeInfo->setFixedHeight(height);
+            m_labelTmp->setFixedHeight(height - 1);
             m_buttonLayout->setContentsMargins(0, 10, 0, 0);
             m_label->show();
             m_wipingMethodWidget->show();
             m_wipingMethodComboBox->setCurrentIndex(0);
             m_curWipeMethod = WipeType::DOD;
-            m_describeInfo->setText(tr("It writes 0, 1, and random data to the entire disk several times. You can set the "
-                                       "number of times to erase disks and overwrite data, but the process will be very slow."));
             break;
         }
         default:
@@ -445,25 +548,29 @@ void FormateDialog::onSecurityCurrentIndexChanged(int index)
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
         switch (index) {
         case 0: {
-            setFixedSize(450, 315);
-            m_describeInfo->setFixedHeight(10);
-            m_labelTmp->setFixedHeight(9);
+            m_describeInfo->setText(tr("You may be able to recover files after the wipe."));
+            int height = Common::getLabelAdjustHeight(m_securityComboBox->width(), m_describeInfo->text(), m_describeInfo->font());
+            m_height = 305 + height;
+            setFixedSize(450, m_height + m_encryptionInfoHeight);
+            m_describeInfo->setFixedHeight(height);
+            m_labelTmp->setFixedHeight(height - 1);
             m_buttonLayout->setContentsMargins(0, 0, 0, 0);
             m_label->hide();
             m_wipingMethodWidget->hide();
             m_curWipeMethod = WipeType::FAST;
-            m_describeInfo->setText(tr("You may be able to recover files after the wipe."));
             break;
         }
         case 1: {
-            setFixedSize(450, 335);
-            m_describeInfo->setFixedHeight(30);
-            m_labelTmp->setFixedHeight(29);
+            m_describeInfo->setText(tr("You will not be able to recover files after the wipe, and the process will be slow."));
+            int height = Common::getLabelAdjustHeight(m_securityComboBox->width(), m_describeInfo->text(), m_describeInfo->font());
+            m_height = 305 + height;
+            setFixedSize(450, m_height + m_encryptionInfoHeight);
+            m_describeInfo->setFixedHeight(height);
+            m_labelTmp->setFixedHeight(height - 1);
             m_buttonLayout->setContentsMargins(0, 0, 0, 0);
             m_label->hide();
             m_wipingMethodWidget->hide();
             m_curWipeMethod = WipeType::SECURE;
-            m_describeInfo->setText(tr("You will not be able to recover files after the wipe, and the process will be slow."));
             break;
         }
         default:
@@ -498,14 +605,65 @@ void FormateDialog::onWipeButtonClicked()
     QString userName = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
     userName.remove(0, 6);
 
+    QString formate = m_formatComboBox->currentText();
+    QString password = "";
+    QString passwordHint = "";
+    CRYPT_CIPHER encryption = CRYPT_CIPHER::NOT_CRYPT;
+    bool isEncryption = false;
+    if (formate.contains("AES") || formate.contains("SM4")) {
+        PasswordInputDialog passwordInputDialog(this);
+        passwordInputDialog.setDeviceName(m_pathInfo);
+        passwordInputDialog.setAccessibleName("passwordInputDialog");
+        if (passwordInputDialog.exec() != DDialog::Accepted) {
+            return;
+        } else {
+            password = passwordInputDialog.getPassword();
+            passwordHint = passwordInputDialog.getPasswordHint();
+            if (formate.contains("AES")) {
+                encryption = CRYPT_CIPHER::AES_XTS_PLAIN64;
+            } else if (formate.contains("SM4")) {
+                encryption = CRYPT_CIPHER::SM4_XTS_PLAIN64;
+            }
+            isEncryption = true;
+
+            MessageBox warningBox(this);
+            warningBox.setObjectName("messageBox");
+            warningBox.setAccessibleName("messageBox");
+            // 为防止遗忘密码，请您自行备份密码，并妥善保存！  确 定
+            warningBox.setWarings(tr("To avoid forgetting the password, please back up your password and keep it properly!"), "",
+                                  tr("OK", "button"), DDialog::ButtonRecommend, "OK");
+            warningBox.exec();
+        }
+
+        formate = formate.trimmed().split(" ").at(0);
+    }
+
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION ||
             DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
-        if (m_fileNameEdit->text().isEmpty()) {
-            DMDbusHandler::instance()->clear(m_formatComboBox->currentText(), m_pathInfo, " ",
-                                             userName, DMDbusHandler::instance()->getCurLevel(), m_curWipeMethod);
+        WipeAction wipe;
+        wipe.m_fstype = formate;
+        wipe.m_path = m_pathInfo;
+        wipe.m_user = userName;
+        wipe.m_diskType = DMDbusHandler::instance()->getCurLevel();
+        wipe.m_clearType = m_curWipeMethod;
+        wipe.m_crypt = encryption;
+        wipe.m_decryptStr = password;
+        if (isEncryption) {
+            wipe.m_luksFlag = LUKSFlag::IS_CRYPT_LUKS;
+            QStringList tokenList;
+            tokenList.append(passwordHint);
+            wipe.m_tokenList = tokenList;
         } else {
-            DMDbusHandler::instance()->clear(m_formatComboBox->currentText(), m_pathInfo, m_fileNameEdit->text(),
-                                             userName, DMDbusHandler::instance()->getCurLevel(), m_curWipeMethod);
+            wipe.m_luksFlag = LUKSFlag::NOT_CRYPT_LUKS;
+            wipe.m_tokenList = QStringList();
+        }
+
+        if (m_fileNameEdit->text().isEmpty()) {
+            wipe.m_name = " ";
+            DMDbusHandler::instance()->clear(wipe);
+        } else {
+            wipe.m_name = m_fileNameEdit->text();
+            DMDbusHandler::instance()->clear(wipe);
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
@@ -513,11 +671,22 @@ void FormateDialog::onWipeButtonClicked()
         LVAction lvAction;
         lvAction.m_vgName = lvInfo.m_vgName;
         lvAction.m_lvName = lvInfo.m_lvName;
-        lvAction.m_lvFs = Utils::stringToFileSystemType(m_formatComboBox->currentText());
+        lvAction.m_lvFs = Utils::stringToFileSystemType(formate);
         lvAction.m_user = userName;
         lvAction.m_lvSize = lvInfo.m_lvSize;
         lvAction.m_lvByteSize = lvInfo.m_lvLECount * lvInfo.m_LESize;
         lvAction.m_lvAct = (m_curWipeMethod == WipeType::FAST) ? LVMAction::LVM_ACT_LV_FAST_CLEAR : LVMAction::LVM_ACT_LV_SECURE_CLEAR;
+        lvAction.m_crypt = encryption;
+        lvAction.m_decryptStr = password;
+        if (isEncryption) {
+            lvAction.m_luksFlag = LUKSFlag::IS_CRYPT_LUKS;
+            QStringList tokenList;
+            tokenList.append(passwordHint);
+            lvAction.m_tokenList = tokenList;
+        } else {
+            lvAction.m_luksFlag = LUKSFlag::NOT_CRYPT_LUKS;
+            lvAction.m_tokenList = QStringList();
+        }
 
         DMDbusHandler::instance()->onClearLV(lvAction);
     }

@@ -60,12 +60,19 @@ typedef struct STRUCTPART {
         m_count = 0;
         m_labelName = m_fstype = "";
         m_blast = false;
+        m_password = m_passwordHint = "";
+        m_encryption = CRYPT_CIPHER::NOT_CRYPT;
+        m_isEncryption = false;
     }
     double m_size;
     Sector m_count;
     QString m_labelName;
     QString m_fstype;
     bool m_blast;
+    QString m_password;
+    QString m_passwordHint;
+    CRYPT_CIPHER m_encryption;
+    bool m_isEncryption;
 } stPart;
 
 /**
@@ -298,6 +305,10 @@ private:
     QVector<QString> m_partName;
     QVector<stPart> m_patrinfo;
     bool m_isExceed = true;
+    DLabel *m_partFormateLabel;
+    DLabel *m_encryptionInfo;
+    DLabel *m_emptyLabel;
+    DScrollArea *m_scrollArea;
 };
 
 #endif // PARTITIONWIDGET_H

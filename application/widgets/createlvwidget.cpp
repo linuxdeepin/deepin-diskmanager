@@ -26,6 +26,10 @@
  */
 #include "createlvwidget.h"
 #include "common.h"
+#include "customcontrol/passwordinputdialog.h"
+#include "messagebox.h"
+
+#include <DScrollArea>
 
 #include <QDebug>
 #include <QApplication>
@@ -265,6 +269,7 @@ void CreateLVWidget::partInfoShowing()
 {
     auto formateList = DMDbusHandler::instance()->getAllSupportFileSystem();
     formateList.removeOne("linux-swap");
+    formateList = DMDbusHandler::instance()->getEncryptionFormate(formateList);
     //整体垂直布局-三行
     QVBoxLayout *vLayout = new QVBoxLayout(m_partWidget);
     //第一行
@@ -322,13 +327,13 @@ void CreateLVWidget::partInfoShowing()
     line2Layout->addWidget(m_partNameEdit, 7);
     //第三行
     QHBoxLayout *line3Layout = new QHBoxLayout();
-    DLabel *partFormateLabel = new DLabel(tr("LV file system:"), m_partWidget);
-    DFontSizeManager::instance()->bind(partFormateLabel, DFontSizeManager::T8, QFont::Normal);
-    partFormateLabel->setPalette(infoPalette);
+    m_partFormateLabel = new DLabel(tr("LV file system:"), m_partWidget);
+    DFontSizeManager::instance()->bind(m_partFormateLabel, DFontSizeManager::T8, QFont::Normal);
+    m_partFormateLabel->setPalette(infoPalette);
 
     m_partFormateCombox = new DComboBox(m_partWidget);
     m_partFormateCombox->addItems(formateList);
-    m_partFormateCombox->setCurrentIndex(2);
+    m_partFormateCombox->setCurrentText("ext4");
     m_partFormateCombox->setAccessibleName("File system");
 
     DLabel *partSizeLabel = new DLabel(tr("LV capacity:"), m_partWidget);
@@ -348,7 +353,7 @@ void CreateLVWidget::partInfoShowing()
     m_partComboBox->setCurrentText("GiB");
     m_partComboBox->setAccessibleName("unit");
 
-    line3Layout->addWidget(partFormateLabel, 1);
+    line3Layout->addWidget(m_partFormateLabel, 1);
     line3Layout->addWidget(m_partFormateCombox, 7);
     line3Layout->addWidget(space, 1);
     line3Layout->addWidget(partSizeLabel);
@@ -356,10 +361,46 @@ void CreateLVWidget::partInfoShowing()
     line3Layout->addWidget(m_partSizeEdit, 3);
     line3Layout->addWidget(m_partComboBox, 2);
 
+    // 第四行
+    DPalette palette;
+    palette.setColor(DPalette::Text, QColor("#526a7f"));
+
+    QFont font;
+    font.setWeight(QFont::Normal);
+    font.setFamily("Source Han Sans");
+    font.setPixelSize(12);
+
+    m_emptyLabel = new DLabel(m_partWidget);
+    m_emptyLabel->setFixedWidth(m_partFormateLabel->fontMetrics().width(tr("LV file system:")));
+    m_encryptionInfo = new DLabel(m_partWidget);
+    m_encryptionInfo->setFont(font);
+    m_encryptionInfo->setPalette(palette);
+    m_encryptionInfo->adjustSize();
+    m_encryptionInfo->setWordWrap(true);
+    m_encryptionInfo->setAlignment(Qt::AlignTop);
+    m_encryptionInfo->setAccessibleName("encryptionInfo");
+
+    m_scrollArea = new DScrollArea;
+    m_scrollArea->setFrameShadow(QFrame::Plain);
+    m_scrollArea->setFrameShape(QFrame::NoFrame);
+    m_scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//隐藏横向滚动条
+    m_scrollArea->setWidget(m_encryptionInfo);
+
+    // 设置滚动区域背景颜色为透明
+    QPalette areaPalette;
+    areaPalette.setColor(QPalette::Base, QColor(255, 255, 255, 0));
+    m_scrollArea->setPalette(areaPalette);
+
+    QHBoxLayout *line4Layout = new QHBoxLayout();
+    line4Layout->addWidget(m_emptyLabel, 1);
+    line4Layout->addWidget(m_scrollArea, 7);
+    line4Layout->addStretch();
+
     vLayout->addWidget(m_partInfoLabel);
     vLayout->addLayout(line2Layout);
     vLayout->addSpacing(4);
     vLayout->addLayout(line3Layout);
+    vLayout->addLayout(line4Layout);
     vLayout->addStretch();
     vLayout->setContentsMargins(0, 0, 0, 0);
     //输入框正则表达
@@ -443,6 +484,7 @@ void CreateLVWidget::initConnection()
     connect(m_cancleBtn, &DPushButton::clicked, this, &CreateLVWidget::onCancelButton);
     connect(m_partComboBox, static_cast<void (DComboBox:: *)(const int)>(&DComboBox::currentIndexChanged),
             this, &CreateLVWidget::onComboxCurTextChange);
+    connect(m_partFormateCombox, &DComboBox::currentTextChanged, this, &CreateLVWidget::onComboxFormatTextChange);
     connect(m_partChartWidget, &PartChartShowing::sendMoveFlag, this, &CreateLVWidget::onShowTip);
     connect(m_partChartWidget, &PartChartShowing::sendFlag, this, &CreateLVWidget::onShowSelectPathInfo);
     connect(m_partChartWidget, &PartChartShowing::judgeLastPartition, this, &CreateLVWidget::onJudgeLastPartition);
@@ -660,6 +702,33 @@ void CreateLVWidget::onComboxCurTextChange(int index)
 
 }
 
+void CreateLVWidget::onComboxFormatTextChange(const QString &text)
+{
+    if (m_partSizeEdit->isAlert()) {
+        m_partSizeEdit->setAlert(false);
+        m_partSizeEdit->hideAlertMessage();
+    }
+
+    m_scrollArea->setFixedWidth(m_partFormateCombox->width());
+    if (text.contains("AES")) {
+        QString text = tr("Use the aes-xts-plain64 standard algorithm to encrypt the disk. "
+                          "You should decrypt it before mounting it again.");
+        m_encryptionInfo->setFixedSize(m_partFormateCombox->width(),
+                                       Common::getLabelAdjustHeight(m_partFormateCombox->width(), text, m_encryptionInfo->font()));
+        m_encryptionInfo->setText(text);
+    } else if (text.contains("SM4")) {
+        QString text = tr("Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. "
+                          "You should decrypt it before mounting it again. "
+                          "Operating Systems that do not support the state cryptographic "
+                          "algorithm will not be able to decrypt the disk.");
+        m_encryptionInfo->setFixedSize(m_partFormateCombox->width(),
+                                       Common::getLabelAdjustHeight(m_partFormateCombox->width(), text, m_encryptionInfo->font()) - 1);
+        m_encryptionInfo->setText(text);
+    } else {
+        m_encryptionInfo->setText("");
+    }
+}
+
 void CreateLVWidget::onJudgeLastPartition()
 {
     m_slider->setEnabled(false);
@@ -697,6 +766,11 @@ void CreateLVWidget::onSliderValueChanged(int value)
 
 void CreateLVWidget::onSetSliderValue()
 {
+    if (m_partSizeEdit->isAlert()) {
+        m_partSizeEdit->setAlert(false);
+        m_partSizeEdit->hideAlertMessage();
+    }
+
     if(m_partSizeEdit->text().trimmed().isEmpty()) {
         m_addButton->setDisabled(true);
         return;
@@ -733,11 +807,46 @@ void CreateLVWidget::onAddPartition()
         peCount += 1;
     }
     currentSize = peCount * m_peSize;
+    QString formate = m_partFormateCombox->currentText();
+    if (formate.contains("AES") || formate.contains("SM4")) {
+        if (currentSize <= 100) {
+            m_partSizeEdit->setAlert(true);
+            m_partSizeEdit->showAlertMessage(tr("To ecrypt a volume, it should be larger than 100 MiB"));
+            return;
+        }
+
+        PasswordInputDialog passwordInputDialog(this);
+        passwordInputDialog.setDeviceName(m_partNameEdit->text());
+        passwordInputDialog.setAccessibleName("passwordInputDialog");
+        if (passwordInputDialog.exec() != DDialog::Accepted) {
+            return;
+        } else {
+            part.m_password = passwordInputDialog.getPassword();
+            part.m_passwordHint = passwordInputDialog.getPasswordHint();
+            if (formate.contains("AES")) {
+                part.m_encryption = CRYPT_CIPHER::AES_XTS_PLAIN64;
+            } else if (formate.contains("SM4")) {
+                part.m_encryption = CRYPT_CIPHER::SM4_XTS_PLAIN64;
+            }
+            part.m_isEncryption = true;
+
+            MessageBox warningBox(this);
+            warningBox.setObjectName("messageBox");
+            warningBox.setAccessibleName("messageBox");
+            // 为防止遗忘密码，请您自行备份密码，并妥善保存！  确 定
+            warningBox.setWarings(tr("To avoid forgetting the password, please back up your password and keep it properly!"), "",
+                                  tr("OK", "button"), DDialog::ButtonRecommend, "OK");
+            warningBox.exec();
+        }
+
+        formate = formate.trimmed().split(" ").at(0);
+    }
+
     m_sizeInfo.append(currentSize);
     //绘制新建逻辑卷图形
     m_partChartWidget->transInfos(m_totalSize, m_sizeInfo);
     part.m_lvName = m_partNameEdit->text();
-    part.m_fstype = m_partFormateCombox->currentText();
+    part.m_fstype = formate;
     part.m_lvByteSize = static_cast<long long>(currentSize * 1024 * 1024);
 
     if (m_partComboBox->currentText() == "GiB") {
@@ -807,6 +916,20 @@ void CreateLVWidget::onApplyButton()
         info.m_user = userName;
         info.m_lvAct = LVMAction::LVM_ACT_LV_CREATE;
 
+        if (m_patrinfo.at(i).m_isEncryption) {
+            info.m_luksFlag = LUKSFlag::IS_CRYPT_LUKS;
+            info.m_crypt = m_patrinfo.at(i).m_encryption;
+            QStringList tokenList;
+            tokenList.append(m_patrinfo.at(i).m_passwordHint);
+            info.m_tokenList = tokenList;
+            info.m_decryptStr = m_patrinfo.at(i).m_password;
+        } else {
+            info.m_luksFlag = LUKSFlag::NOT_CRYPT_LUKS;
+            info.m_crypt = CRYPT_CIPHER::NOT_CRYPT;
+            info.m_tokenList = QStringList();
+            info.m_decryptStr = "";
+        }
+
         lstLVInfo.append(info);
     }
 
@@ -860,6 +983,9 @@ bool CreateLVWidget::event(QEvent *event)
         qDebug() << event->type() << QApplication::font().pointSizeF() / 0.75;
         QFontMetrics fm(m_deviceNameLabel->font());
         m_deviceNameLabel->setFixedWidth(fm.boundingRect(tr("Disk:")).width() + 5);
+        m_emptyLabel->setFixedWidth(m_partFormateLabel->fontMetrics().width(tr("LV file system:")));
+        m_encryptionInfo->setFixedWidth(m_partFormateCombox->width());
+        m_scrollArea->setFixedWidth(m_partFormateCombox->width());
         DWidget::event(event);
     }
 

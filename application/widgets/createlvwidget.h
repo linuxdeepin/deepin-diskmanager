@@ -60,6 +60,9 @@ typedef struct STRUCTLV {
         m_lvName = m_fstype = m_lvSize = "";
         m_lvByteSize = 0;
         m_blast = false;
+        m_password = m_passwordHint = "";
+        m_encryption = CRYPT_CIPHER::NOT_CRYPT;
+        m_isEncryption = false;
     }
     double m_size;
     QString m_lvName;
@@ -67,6 +70,10 @@ typedef struct STRUCTLV {
     bool m_blast;
     QString m_lvSize;
     long long m_lvByteSize;
+    QString m_password;
+    QString m_passwordHint;
+    CRYPT_CIPHER m_encryption;
+    bool m_isEncryption;
 } stLV;
 
 /**
@@ -230,6 +237,12 @@ private slots:
      */
     void onJudgeLastPartition();
 
+    /**
+     * @brief 下拉框分区格式切换
+     * @param text 当前选择文本
+     */
+    void onComboxFormatTextChange(const QString &text); //下拉框分区格式切换
+
 protected:
     /**
      * @brief event:事件变化
@@ -282,6 +295,10 @@ private:
     bool m_isExceed = true;
     QStringList m_lstLVName;
     int m_peSize = 4;
+    DLabel *m_partFormateLabel;
+    DLabel *m_encryptionInfo;
+    DLabel *m_emptyLabel;
+    DScrollArea *m_scrollArea;
 };
 
 #endif // CREATELVWIDGET_H

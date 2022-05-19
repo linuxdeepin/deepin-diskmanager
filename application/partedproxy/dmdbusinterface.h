@@ -176,17 +176,12 @@ public Q_SLOTS: // METHODS
 
     /**
     * @brief 擦除
-    * @param type 分区类型
-    * @param path 磁盘或分区路径
-    * @param name 劵标名
-    * @param user 当前用户名
-    * @param diskType 磁盘或者分区类型 0是分区 1是磁盘
-    * @param clearType 擦除标准 1为快速 2安全 3为安全擦除7次 4为安全擦除35次
+    * @param wipe 擦除信息
     */
-    inline QDBusPendingReply<bool> clear(const QString &fstype, const QString &path, const QString &name, const QString &user, const int &diskType, const int &clearType)
+    inline QDBusPendingReply<bool> clear(const WipeAction &wipe)
     {
         QList<QVariant> argumentList;
-        argumentList << QVariant::fromValue(fstype) << QVariant::fromValue(path) << QVariant::fromValue(name) << QVariant::fromValue(user) << QVariant::fromValue(diskType) << QVariant::fromValue(clearType);
+        argumentList << QVariant::fromValue(wipe) ;
         return asyncCallWithArgumentList(QStringLiteral("clear"), argumentList);
     }
 
@@ -405,7 +400,6 @@ public Q_SLOTS: // METHODS
         return asyncCallWithArgumentList(QStringLiteral("onResizeVG"), argumentList);
     }
 
-
     /**
      * @brief lv空间调整
      * @param act:操作lv结构体
@@ -416,7 +410,6 @@ public Q_SLOTS: // METHODS
         argumentList << QVariant::fromValue(act);
         return asyncCallWithArgumentList(QStringLiteral("onResizeLV"), argumentList);
     }
-
 
     /**
      * @brief lv挂载
@@ -429,8 +422,6 @@ public Q_SLOTS: // METHODS
         return asyncCallWithArgumentList(QStringLiteral("onMountLV"), argumentList);
     }
 
-
-
     /**
      * @brief lv卸载
      * @param act:操作lv结构体
@@ -441,9 +432,6 @@ public Q_SLOTS: // METHODS
         argumentList << QVariant::fromValue(act);
         return asyncCallWithArgumentList(QStringLiteral("onUmountLV"), argumentList);
     }
-
-
-
 
     /**
      * @brief lv擦除
@@ -467,11 +455,43 @@ public Q_SLOTS: // METHODS
         return asyncCallWithArgumentList(QStringLiteral("onDeletePVList"), argumentList);
     }
 
+    /**
+     * @brief 加密磁盘解密
+     * @param luks  加密磁盘属性
+     */
+    inline QDBusPendingReply<bool> deCrypt(const LUKS_INFO&luks)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(luks);
+        return asyncCallWithArgumentList(QStringLiteral("deCrypt"), argumentList);
+    }
 
+    /**
+     * @brief 加密磁盘挂载
+     * @param luks  加密磁盘属性
+     */
+    inline QDBusPendingReply<bool> cryptMount(const LUKS_INFO&luks)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(luks);
+        return asyncCallWithArgumentList(QStringLiteral("cryptMount"), argumentList);
+    }
+
+    /**
+     * @brief 加密磁盘卸载
+     * @param luks  加密磁盘属性
+     */
+    inline QDBusPendingReply<bool> cryptUmount(const LUKS_INFO&luks)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(luks);
+        return asyncCallWithArgumentList(QStringLiteral("cryptUmount"), argumentList);
+    }
 
 Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void MessageReport(const QString &msg);
     Q_SCRIPTABLE void updateDeviceInfo(const DeviceInfoMap &infomap, const LVMInfo &lvmInfo);
+    Q_SCRIPTABLE void updateLUKSInfo(const LUKSInfoMap &infomap);
     Q_SCRIPTABLE void deletePartition(const QString &deleteMessage);
     Q_SCRIPTABLE void hidePartitionInfo(const QString &hideMessage);
     Q_SCRIPTABLE void showPartitionInfo(const QString &showMessage);
@@ -489,6 +509,7 @@ Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void pvDeleteMessage(const QString &pvMessage);
     Q_SCRIPTABLE void vgDeleteMessage(const QString &vgMessage);
     Q_SCRIPTABLE void lvDeleteMessage(const QString &lvMessage);
+    Q_SCRIPTABLE void deCryptMessage(const LUKS_INFO &luks);
 };
 
 namespace com {

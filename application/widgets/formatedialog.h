@@ -70,6 +70,12 @@ private:
      */
     void initConnection();
 
+    /**
+     * @brief 更新加密算法信息
+     */
+    void updateEncryptionInfo(const QString &text, const int &height);
+
+private:
     DComboBox *m_formatComboBox;
     DLineEdit *m_fileNameEdit;
     DComboBox *m_securityComboBox;
@@ -88,6 +94,10 @@ private:
     QString m_curDiskMediaType;
     QHBoxLayout *m_buttonLayout;
     WaterLoadingWidget *m_waterLoadingWidget;
+    DLabel *m_encryptionInfo;
+    DLabel *m_emptyLabel;
+    int m_height;
+    int m_encryptionInfoHeight;
 signals:
 
 private slots:

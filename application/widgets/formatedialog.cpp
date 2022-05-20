@@ -55,6 +55,7 @@ void FormateDialog::initUi()
     int fileSystemType = FSType::FS_EXT4;
     double size = 0;
     LUKSFlag luksFlag = LUKSFlag::NOT_CRYPT_LUKS;
+    bool isSystemDevice = false;
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         m_pathInfo = info.m_path;
@@ -63,12 +64,14 @@ void FormateDialog::initUi()
         m_curDiskMediaType = diskInfo.m_mediaType;
         size = Utils::sectorToUnit(info.m_sectorEnd - info.m_sectorStart + 1, info.m_sectorSize, SIZE_UNIT::UNIT_MIB);
         luksFlag = info.m_luksFlag;
+        isSystemDevice = DMDbusHandler::instance()->getIsSystemDisk(info.m_devicePath);
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         m_pathInfo = info.m_path;
         m_curDiskMediaType = info.m_mediaType;
         size = Utils::sectorToUnit(info.m_length, info.m_sectorSize, SIZE_UNIT::UNIT_MIB);
         luksFlag = info.m_luksFlag;
+        isSystemDevice = DMDbusHandler::instance()->getIsSystemDisk(info.m_path);
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
         m_height = 315;
         setFixedSize(450, m_height);
@@ -77,6 +80,7 @@ void FormateDialog::initUi()
         fileSystemType = lvInfo.m_lvFsType;
         size = Utils::LVMSizeToUnit(lvInfo.m_lvLECount * lvInfo.m_LESize, SIZE_UNIT::UNIT_MIB);
         luksFlag = lvInfo.m_luksFlag;
+        isSystemDevice = DMDbusHandler::instance()->getIsSystemDisk(lvInfo.m_vgName);
     }
 
     DPalette palette1;
@@ -139,7 +143,7 @@ void FormateDialog::initUi()
     QStringList fslist = DMDbusHandler::instance()->getAllSupportFileSystem();
     fslist.removeOne("linux-swap");
 //    QStringList formateList = fslist;
-    if (size > 100) {
+    if (size > 100 && !isSystemDevice) {
         fslist = DMDbusHandler::instance()->getEncryptionFormate(fslist);
     }
 
@@ -460,12 +464,12 @@ void FormateDialog::onComboxFormatTextChange(const QString &text)
     updateEncryptionInfo(text, m_formatComboBox->width());
 }
 
-void FormateDialog::updateEncryptionInfo(const QString &text, const int &height)
+void FormateDialog::updateEncryptionInfo(const QString &text, const int &width)
 {
     if (text.contains("AES")) {
         QString text = tr("Use the aes-xts-plain64 standard algorithm to encrypt the disk. "
                           "You should decrypt it before mounting it again.");
-        m_encryptionInfoHeight = Common::getLabelAdjustHeight(height, text, m_encryptionInfo->font());
+        m_encryptionInfoHeight = Common::getLabelAdjustHeight(width, text, m_encryptionInfo->font());
         m_encryptionInfo->setText(text);
         setFixedSize(450, m_height + m_encryptionInfoHeight);
         m_encryptionInfo->setFixedHeight(m_encryptionInfoHeight);
@@ -476,7 +480,7 @@ void FormateDialog::updateEncryptionInfo(const QString &text, const int &height)
         QString text = tr("Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. "
                           "You should decrypt it before mounting it again. Operating Systems that do not support the state "
                           "cryptographic algorithm will not be able to decrypt the disk.");
-        m_encryptionInfoHeight = Common::getLabelAdjustHeight(height, text, m_encryptionInfo->font());
+        m_encryptionInfoHeight = Common::getLabelAdjustHeight(width, text, m_encryptionInfo->font());
         m_encryptionInfo->setText(text);
         setFixedSize(450, m_height + m_encryptionInfoHeight);
         m_encryptionInfo->setFixedHeight(m_encryptionInfoHeight);

@@ -273,7 +273,10 @@ void PartitionWidget::partInfoShowing()
 {
     auto formateList = DMDbusHandler::instance()->getAllSupportFileSystem();
     formateList.removeOne("linux-swap");
-    formateList = DMDbusHandler::instance()->getEncryptionFormate(formateList);
+    if (!DMDbusHandler::instance()->getIsSystemDisk(DMDbusHandler::instance()->getCurPartititonInfo().m_devicePath)) {
+        formateList = DMDbusHandler::instance()->getEncryptionFormate(formateList);
+    }
+
     //整体垂直布局-三行
     QVBoxLayout *vLayout = new QVBoxLayout(m_partWidget);
     //第一行

@@ -269,7 +269,10 @@ void CreateLVWidget::partInfoShowing()
 {
     auto formateList = DMDbusHandler::instance()->getAllSupportFileSystem();
     formateList.removeOne("linux-swap");
-    formateList = DMDbusHandler::instance()->getEncryptionFormate(formateList);
+    if (!DMDbusHandler::instance()->getIsSystemDisk(DMDbusHandler::instance()->getCurVGInfo().m_vgName)) {
+        formateList = DMDbusHandler::instance()->getEncryptionFormate(formateList);
+    }
+
     //整体垂直布局-三行
     QVBoxLayout *vLayout = new QVBoxLayout(m_partWidget);
     //第一行

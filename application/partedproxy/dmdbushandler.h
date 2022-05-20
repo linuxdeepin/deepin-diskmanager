@@ -370,6 +370,13 @@ public:
      */
     const LUKSInfoMap &probLUKSInfo() const;
 
+    /**
+     * @brief 获取是否为系统盘
+     * @param devName: 设备名称
+     * @return true是,false不是
+     */
+    bool getIsSystemDisk(const QString &devName);
+
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
 

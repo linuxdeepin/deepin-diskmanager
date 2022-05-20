@@ -244,20 +244,6 @@ void PasswordInputDialog::onButtonClicked(int index, const QString &text)
             return;
         }
 
-        // 密码不能为空
-        if (m_checkPasswordEdit->text().isEmpty()) {
-            m_checkPasswordEdit->setAlert(true);
-            m_checkPasswordEdit->showAlertMessage(tr("The password cannot be empty"));
-            return;
-        }
-
-        // 超出最大长度
-        if (m_checkPasswordEdit->text().length() > 256) {
-            m_checkPasswordEdit->setAlert(true);
-            m_checkPasswordEdit->showAlertMessage(tr("The password exceeds the maximum length"));
-            return;
-        }
-
         // 密码不一致
         if (m_inputPasswordEdit->text() != m_checkPasswordEdit->text()) {
             m_checkPasswordEdit->setAlert(true);

@@ -670,4 +670,37 @@ const LUKSInfoMap &DMDbusHandler::probLUKSInfo() const
     return m_curLUKSInfoMap;
 }
 
+bool DMDbusHandler::getIsSystemDisk(const QString &devName)
+{
+    if (m_curLevel == DeviceType::DISK || m_curLevel == DeviceType::PARTITION) {
+        DeviceInfo devInfo = m_deviceMap.value(devName);
+        for (int i = 0; i < devInfo.m_partition.size(); ++i) {
+            PartitionInfo partitionInfo = devInfo.m_partition.at(i);
+            if (partitionInfo.m_flag == 4) {
+                return true;
+            }
+
+            for (int j = 0; j < partitionInfo.m_mountPoints.size(); ++j) {
+                if (partitionInfo.m_mountPoints[j] == "/boot/efi" || partitionInfo.m_mountPoints[j] == "/"
+                        || partitionInfo.m_mountPoints[j] == "/recovery" || partitionInfo.m_mountPoints[j] == "/boot") {
+                    return true;
+                }
+            }
+        }
+    } else if (m_curLevel == DeviceType::VOLUMEGROUP || m_curLevel == DeviceType::LOGICALVOLUME) {
+        VGInfo vgInfo = m_lvmInfo.m_vgInfo.value(devName);
+        for (int i = 0; i < vgInfo.m_lvlist.size(); ++i) {
+            LVInfo lvInfo = vgInfo.m_lvlist.at(i);
+            for (int j = 0; j < lvInfo.m_mountPoints.size(); ++j) {
+                if (lvInfo.m_mountPoints[j] == "/boot/efi" || lvInfo.m_mountPoints[j] == "/"
+                        || lvInfo.m_mountPoints[j] == "/recovery" || lvInfo.m_mountPoints[j] == "/boot") {
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
 

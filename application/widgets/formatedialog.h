@@ -73,7 +73,7 @@ private:
     /**
      * @brief 更新加密算法信息
      */
-    void updateEncryptionInfo(const QString &text, const int &height);
+    void updateEncryptionInfo(const QString &text, const int &width);
 
 private:
     DComboBox *m_formatComboBox;

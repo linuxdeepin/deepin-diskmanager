@@ -31,6 +31,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QDebug>
+#include <QMouseEvent>
 
 PasswordInputDialog::PasswordInputDialog(QWidget *parent) : DDBase(parent)
 {
@@ -96,15 +97,21 @@ void PasswordInputDialog::initUi()
     recommendedLabel->setPalette(palette3);
     recommendedLabel->setFont(font3);
 
+    // 限制中文和中文字符
+    QRegExp regExp("^[A-Za-z0-9`~!@#$%^&*()_-+=<>,.\\/ ]+$");
+    QRegExpValidator *regExpValidator = new QRegExpValidator(regExp, this);
+
     m_inputPasswordEdit = new DPasswordEdit(this);
     m_inputPasswordEdit->setAccessibleName("Password");
     m_inputPasswordEdit->lineEdit()->setPlaceholderText(tr("Enter a password "));
     m_inputPasswordEdit->setFixedHeight(36);
+    m_inputPasswordEdit->lineEdit()->setValidator(regExpValidator);
 
     m_checkPasswordEdit = new DPasswordEdit(this);
     m_checkPasswordEdit->setAccessibleName("Repeat password");
     m_checkPasswordEdit->lineEdit()->setPlaceholderText(tr("Enter the password again"));
     m_checkPasswordEdit->setFixedHeight(36);
+    m_checkPasswordEdit->lineEdit()->setValidator(regExpValidator);
 
     m_textEdit = new DTextEdit(this);
     m_textEdit->setAccessibleName("Password hint");

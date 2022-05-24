@@ -153,7 +153,7 @@ void FormateDialog::initUi()
     QString fsTypeName = Utils::fileSystemTypeToString(static_cast<FSType>(fileSystemType));
     // 判断当前设备是否加密
     if (luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
-        LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().value(m_pathInfo);
+        LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(m_pathInfo);
         // 加密设备是否打开，打开格式设为加密格式，未打开默认设为ext4
         if (luksInfo.isDecrypt) {
             fileSystemType = luksInfo.m_mapper.m_luksFs;
@@ -612,6 +612,7 @@ void FormateDialog::onWipeButtonClicked()
     QString formate = m_formatComboBox->currentText();
     QString password = "";
     QString passwordHint = "";
+    QString encryptName = "";
     CRYPT_CIPHER encryption = CRYPT_CIPHER::NOT_CRYPT;
     bool isEncryption = false;
     if (formate.contains("AES") || formate.contains("SM4")) {
@@ -625,8 +626,10 @@ void FormateDialog::onWipeButtonClicked()
             passwordHint = passwordInputDialog.getPasswordHint();
             if (formate.contains("AES")) {
                 encryption = CRYPT_CIPHER::AES_XTS_PLAIN64;
+                encryptName = "aesE";
             } else if (formate.contains("SM4")) {
                 encryption = CRYPT_CIPHER::SM4_XTS_PLAIN64;
+                encryptName = "sm4E";
             }
             isEncryption = true;
 
@@ -657,16 +660,22 @@ void FormateDialog::onWipeButtonClicked()
             QStringList tokenList;
             tokenList.append(passwordHint);
             wipe.m_tokenList = tokenList;
+            if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
+                wipe.m_dmName = "";
+            } else {
+                m_pathInfo == "unallocated" ? wipe.m_dmName = "" : wipe.m_dmName = QString("%1_%2").arg(m_pathInfo.remove("/dev/")).arg(encryptName);
+            }
         } else {
             wipe.m_luksFlag = LUKSFlag::NOT_CRYPT_LUKS;
             wipe.m_tokenList = QStringList();
+            wipe.m_dmName = "";
         }
 
         if (m_fileNameEdit->text().isEmpty()) {
-            wipe.m_name = " ";
+            wipe.m_fileSystemLabel  = " ";
             DMDbusHandler::instance()->clear(wipe);
         } else {
-            wipe.m_name = m_fileNameEdit->text();
+            wipe.m_fileSystemLabel  = m_fileNameEdit->text();
             DMDbusHandler::instance()->clear(wipe);
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
@@ -687,9 +696,11 @@ void FormateDialog::onWipeButtonClicked()
             QStringList tokenList;
             tokenList.append(passwordHint);
             lvAction.m_tokenList = tokenList;
+            lvAction.m_dmName = QString("%1_%2_%3").arg(lvInfo.m_vgName).arg(lvInfo.m_lvName).arg(encryptName);
         } else {
             lvAction.m_luksFlag = LUKSFlag::NOT_CRYPT_LUKS;
             lvAction.m_tokenList = QStringList();
+            lvAction.m_dmName = "";
         }
 
         DMDbusHandler::instance()->onClearLV(lvAction);

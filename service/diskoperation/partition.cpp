@@ -79,6 +79,11 @@ void Partition::reset()
     m_flags.clear();
     m_mountpoints.clear();
     m_fsLimits = FS_Limits();
+    m_luksFlag = LUKSFlag::NOT_CRYPT_LUKS;
+    m_cryptCipher = CRYPT_CIPHER::NOT_CRYPT;
+    m_tokenList.clear();
+    m_decryptStr = "";
+    m_dmName = "";
 }
 
 void Partition::reset(const PartitionInfo &info)
@@ -99,6 +104,13 @@ void Partition::reset(const PartitionInfo &info)
     m_devicePath = info.m_devicePath;
     setFilesystemLabel(info.m_fileSystemLabel);
     m_fsLimits = info.m_fsLimits;
+
+    m_luksFlag = info.m_luksFlag;
+    m_cryptCipher = info.m_crypt;
+    m_tokenList = info.m_tokenList;
+    m_decryptStr = info.m_decryptStr;
+    m_dmName = info.m_dmName;
+
 }
 
 void Partition::set(const QString &devicePath, const QString &partition, int partitionNumber, PartitionType type, FSType fstype, Sector sectorStart, Sector sectorEnd, Byte_Value sectorSize, bool insideExtended, bool busy)

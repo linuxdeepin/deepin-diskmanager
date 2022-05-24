@@ -98,7 +98,8 @@ QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info)
              << static_cast<int>(info.m_luksFlag)
              << static_cast<int>(info.m_crypt)
              << info.m_tokenList
-             << info.m_decryptStr;
+             << info.m_decryptStr
+             << info.m_dmName;;
     argument.endStructure();
 
     return argument;
@@ -141,7 +142,8 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PartitionInfo &in
              >> flag2
              >> crypt
              >> info.m_tokenList
-             >> info.m_decryptStr;
+             >> info.m_decryptStr
+             >> info.m_dmName;
     info.m_vgFlag = static_cast<LVMFlag>(flag);
     info.m_luksFlag = static_cast<LUKSFlag>(flag2);
     info.m_crypt = static_cast<CRYPT_CIPHER>(crypt);

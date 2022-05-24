@@ -75,7 +75,7 @@ signals:
      * @brief 更新硬件信息信号
      * @param 要同步的硬件信息
      */
-    void updateDeviceInfo(/*const QMap<QString, Device> m_deviceMap, */const DeviceInfoMap infomap, const LVMInfo lvmInfo,const LUKSInfoMap&luks);
+    void updateDeviceInfo(/*const QMap<QString, Device> m_deviceMap, */const DeviceInfoMap infomap, const LVMInfo lvmInfo, const LUKSMap &luks);
 
     /**
      * @brief 发送卸载分区信号
@@ -144,7 +144,7 @@ private:
     bool m_arg1;                       //需要发送的信号bool类型参数
     QString m_arg2;                    //需要发送的信号QString类型参数
     LVMInfo m_lvmInfo;                 //lvm 属性信息
-    LUKSInfoMap m_luksInfo;            //luks 属性信息
+    LUKSMap m_luksInfo;                //luks 属性信息
 };
 
 /**

@@ -491,7 +491,7 @@ public Q_SLOTS: // METHODS
 Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void MessageReport(const QString &msg);
     Q_SCRIPTABLE void updateDeviceInfo(const DeviceInfoMap &infomap, const LVMInfo &lvmInfo);
-    Q_SCRIPTABLE void updateLUKSInfo(const LUKSInfoMap &infomap);
+    Q_SCRIPTABLE void updateLUKSInfo(const LUKSMap &infomap);
     Q_SCRIPTABLE void deletePartition(const QString &deleteMessage);
     Q_SCRIPTABLE void hidePartitionInfo(const QString &hideMessage);
     Q_SCRIPTABLE void showPartitionInfo(const QString &showMessage);

@@ -60,7 +60,7 @@ typedef struct STRUCTLV {
         m_lvName = m_fstype = m_lvSize = "";
         m_lvByteSize = 0;
         m_blast = false;
-        m_password = m_passwordHint = "";
+        m_password = m_passwordHint = m_dmName = "";
         m_encryption = CRYPT_CIPHER::NOT_CRYPT;
         m_isEncryption = false;
     }
@@ -72,6 +72,7 @@ typedef struct STRUCTLV {
     long long m_lvByteSize;
     QString m_password;
     QString m_passwordHint;
+    QString m_dmName;
     CRYPT_CIPHER m_encryption;
     bool m_isEncryption;
 } stLV;

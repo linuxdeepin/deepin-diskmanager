@@ -221,6 +221,12 @@ public:
     Byte_Value m_fsBlockSize; // Block size of of the file system, or -1 when unknown.
 
     FS_Limits m_fsLimits; //分区上文件系统限制 该属性在没有文件系统存在时无效
+
+    LUKSFlag m_luksFlag{LUKSFlag::NOT_CRYPT_LUKS};          //创建分区时 该属性为确认是否创建加密  其余情况为确认该分区是否为加密分区
+    CRYPT_CIPHER m_cryptCipher{CRYPT_CIPHER::NOT_CRYPT};          //加密算法(创建分区时该属性有效)
+    QStringList m_tokenList;                                //密钥提示   luks####提示信息####(创建分区时该属性有效)
+    QString m_decryptStr;                                   //用户解密密码字符串(创建分区时该属性有效)
+    QString m_dmName;
 private:
     /**
      * @brief 计算重要未分配扇区

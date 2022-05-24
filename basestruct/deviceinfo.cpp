@@ -162,14 +162,15 @@ QDBusArgument &operator<<(QDBusArgument &argument, const WipeAction &data)
     argument.beginStructure();
     argument << data.m_fstype
              << data.m_path
-             << data.m_name
+             << data.m_fileSystemLabel
              << data.m_user
              << data.m_diskType
              << data.m_clearType
              << static_cast<int>(data.m_luksFlag)
              << static_cast<int>(data.m_crypt)
              << data.m_tokenList
-             << data.m_decryptStr;
+             << data.m_decryptStr
+             << data.m_dmName;
     argument.endStructure();
     return argument;
 }
@@ -180,14 +181,15 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, WipeAction &data)
     int flag1, flag2;
     argument >> data.m_fstype
              >> data.m_path
-             >> data.m_name
+             >> data.m_fileSystemLabel
              >> data.m_user
              >> data.m_diskType
              >> data.m_clearType
              >> flag1
              >> flag2
              >> data.m_tokenList
-             >> data.m_decryptStr;
+             >> data.m_decryptStr
+             >> data.m_dmName;
     data.m_luksFlag = static_cast<LUKSFlag>(flag1);
     data.m_crypt = static_cast<CRYPT_CIPHER>(flag2);
     argument.endStructure();

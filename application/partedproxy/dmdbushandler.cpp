@@ -79,6 +79,8 @@ DMDbusHandler::DMDbusHandler(QObject *parent)
     qDBusRegisterMetaType<LUKS_MapperInfo>();
     qDBusRegisterMetaType<CRYPT_CIPHER_Support>();
     qDBusRegisterMetaType<LUKSInfoMap>();
+    qDBusRegisterMetaType<LUKSMap>();
+    qDBusRegisterMetaType<WipeAction>();
 
     m_dbus = new DMDBusInterface("com.deepin.diskmanager", "/com/deepin/diskmanager",
                                  QDBusConnection::systemBus(), this);
@@ -344,13 +346,13 @@ void DMDbusHandler::onUpdateDeviceInfo(const DeviceInfoMap &infoMap, const LVMIn
         QString isJoinAllVG = "true";
         for (auto it = info.m_partition.begin(); it != info.m_partition.end(); it++) {
 //                    qDebug() << it->m_path << it->m_devicePath << it->m_partitionNumber << it->m_sectorsUsed << it->m_sectorsUnused << it->m_sectorStart << it->m_sectorEnd;
-           if (it->m_path == "unallocated") {
-               isExistUnallocated = "true";
-           }
+            if (it->m_path == "unallocated") {
+                isExistUnallocated = "true";
+            }
 
-           if (it->m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) {
-               isJoinAllVG = "false";
-           }
+            if (it->m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) {
+                isJoinAllVG = "false";
+            }
         }
 
         if (("unrecognized" == info.m_disktype || "none" == info.m_disktype) && (info.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV)) {
@@ -390,7 +392,7 @@ void DMDbusHandler::onUpdateDeviceInfo(const DeviceInfoMap &infoMap, const LVMIn
     emit showSpinerWindow(false, "");
 }
 
-void DMDbusHandler::onUpdateLUKSInfo(const LUKSInfoMap &infomap)
+void DMDbusHandler::onUpdateLUKSInfo(const LUKSMap &infomap)
 {
     m_curLUKSInfoMap = infomap;
 }
@@ -574,7 +576,7 @@ bool DMDbusHandler::isExistMountLV(const VGInfo &info)
             mountPoint += lvInfo.m_mountPoints[j];
         }
 
-        if (!mountPoint.isEmpty()){
+        if (!mountPoint.isEmpty()) {
             isExist = true;
             break;
         }
@@ -648,24 +650,23 @@ void DMDbusHandler::onDeletePVList(QList<PVData> devList)
 QStringList DMDbusHandler::getEncryptionFormate(const QStringList &formateList)
 {
     bool isSupportAES = m_cryptSupport.supportEncrypt(m_cryptSupport.aes_xts_plain64);
-    bool isSupportSM4 = m_cryptSupport.supportEncrypt(m_cryptSupport.sm4_xts_plain);
+    bool isSupportSM4 = m_cryptSupport.supportEncrypt(m_cryptSupport.sm4_xts_plain64);
 
     QStringList lstFormate;
     for (int i = 0; i < formateList.count(); ++i) {
         lstFormate << formateList.at(i);
-        if(isSupportAES) {
+        if (isSupportAES) {
             lstFormate << QString("%1 (%2)").arg(formateList.at(i)).arg(tr("AES Encryption"));
-        }
-
-        if (isSupportSM4) {
-            lstFormate << QString("%1 (%2)").arg(formateList.at(i)).arg(tr("SM4 Encryption"));
+            if (isSupportSM4) {
+                lstFormate << QString("%1 (%2)").arg(formateList.at(i)).arg(tr("SM4 Encryption"));
+            }
         }
     }
 
     return lstFormate;
 }
 
-const LUKSInfoMap &DMDbusHandler::probLUKSInfo() const
+const LUKSMap &DMDbusHandler::probLUKSInfo() const
 {
     return m_curLUKSInfoMap;
 }

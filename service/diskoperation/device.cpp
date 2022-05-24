@@ -62,6 +62,8 @@ Device::Device()
     qDBusRegisterMetaType<LUKS_MapperInfo>();
     qDBusRegisterMetaType<CRYPT_CIPHER_Support>();
     qDBusRegisterMetaType<LUKSInfoMap>();
+    qDBusRegisterMetaType<LUKSMap>();
+    qDBusRegisterMetaType<WipeAction>();
 
     m_sectorSize = 0;
     m_maxPrims = 0;

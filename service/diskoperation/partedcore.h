@@ -80,7 +80,7 @@ public:
      * @brief 获取LUKS设备信息
      * @return 返回LUKS设备信息
      */
-    LUKSInfoMap getAllLUKSinfo();
+    LUKSMap getAllLUKSinfo();
 
     /**
      * @brief 获取当前页面选择分区信息
@@ -109,21 +109,21 @@ public:
      * @param luks  加密磁盘属性
      * @return true成功false失败
      */
-    bool deCrypt(const LUKS_INFO&luks);
+    bool deCrypt(const LUKS_INFO &luks);
 
     /**
      * @brief 加密磁盘挂载
      * @param luks  加密磁盘属性
      * @return true成功false失败
      */
-    bool cryptMount(const LUKS_INFO&luks);
+    bool cryptMount(const LUKS_INFO &luks);
 
     /**
      * @brief 加密磁盘卸载
      * @param luks  加密磁盘属性
      * @return true成功false失败
      */
-    bool cryptUmount(const LUKS_INFO&luks);
+    bool cryptUmount(const LUKS_INFO &luks);
 
     /**
      * @brief 挂载分区
@@ -149,7 +149,7 @@ public:
      * @param clearType: 清除标准， 1为快速，2为安全（NIST），3为DoD标准， 4为古德曼标准
      * @return true成功false失败
      */
-    bool clear(const WipeAction&wipe);
+    bool clear(const WipeAction &wipe);
 
     /**
      * @brief 扩容分区
@@ -480,11 +480,21 @@ private:
 
 
     /**
+     * @brief 挂载设备
+     * @param mountpath:挂载点
+     * @param devPath:设备路径
+     * @param fsType:文件系统类型
+     * @return true 挂载成功 false 挂载失败
+     */
+    QPair<bool, QString> tmpMountDevice(const QString &mountpath, const QString devPath, const FSType &fsType, const QString &userName);
+
+
+    /**
      * @brief 卸载设备
      * @param mountPoints:挂载点集合
      * @return true 卸载成功 false 卸载失败
      */
-    bool umontDevice(QVector<QString>mountPoints,QString devPath = "");
+    bool umontDevice(QVector<QString>mountPoints, QString devPath = "");
 
     /**
      * @brief 写fstab文件
@@ -518,6 +528,10 @@ private:
      * @return true 分区创建成功 false 失败
      */
     bool createPVPart(PVData &pv);
+
+    LUKS_INFO getNewLUKSInfo(const Partition &part);
+    LUKS_INFO getNewLUKSInfo(const LVAction &lvAct);
+    LUKS_INFO getNewLUKSInfo(const FSType &type, const QStringList &token, const CRYPT_CIPHER &cipher, const QString &decryptStr, const QString &dmName, const QString devPath);
 
 private:
     //general..
@@ -770,6 +784,15 @@ private:
      */
     bool createFileSystem(const Partition &partition);
 
+
+
+    /**
+     * @brief 创建分区文件系统
+     * @param partition：分区信息
+     * @return true成功false失败
+     */
+    bool createFileSystem(const FSType &type, const bool &busy, const QString path, const Partition &partition = Partition());
+
     /**
      * @brief 格式化分区
      * @param partition：分区信息
@@ -844,7 +867,7 @@ private:
     /**
      * @brief 创建分区
      * @param partition：分区信息
-     * @return true成功false失败
+     * @return true成功false失败  QString partName
      */
     bool createPartition(Partition &newPartition, Sector minSize = 0);
 
@@ -953,7 +976,7 @@ signals:
      * @brief 刷新加密设备信息信号
      * @param infomap：所有加密设备分区信息
      */
-    void updateLUKSInfo(const LUKSInfoMap&luks);
+    void updateLUKSInfo(const LUKSMap &luks);
 
     /**
      * @brief 刷新信息信号
@@ -1085,7 +1108,7 @@ signals:
      * @brief 解密消息
      * @param luks:解密结果
      */
-    void deCryptMessage(const LUKS_INFO&luks);
+    void deCryptMessage(const LUKS_INFO &luks);
 
 public slots:
 
@@ -1097,7 +1120,7 @@ public slots:
     /**
       * @brief 刷新硬件信息
       */
-    void syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const DeviceInfoMap inforesult, const LVMInfo lvmInfo,const LUKSInfoMap&luks);
+    void syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const DeviceInfoMap inforesult, const LVMInfo lvmInfo, const LUKSMap &luks);
 
 private:
     QVector<PedPartitionFlag> m_flags;    //分区标志hidden boot efi等
@@ -1117,7 +1140,7 @@ private:
     bool m_isClear;
 
     LVMInfo m_lvmInfo;                    //lvm 数据集合
-    LUKSInfoMap m_LUKSInfo;               //luks 数据集合
+    LUKSMap m_LUKSInfo;                   //luks 数据集合
 
 };
 

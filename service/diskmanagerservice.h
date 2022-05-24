@@ -81,7 +81,7 @@ Q_SIGNALS:
      * @brief 刷新加密设备信息信号
      * @param infomap：所有加密设备分区信息
      */
-    Q_SCRIPTABLE void updateLUKSInfo(const LUKSInfoMap &infomap);
+    Q_SCRIPTABLE void updateLUKSInfo(const LUKSMap &infomap);
 
     /**
      * @brief 卸载状态信号

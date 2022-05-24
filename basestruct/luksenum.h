@@ -41,8 +41,12 @@ enum LUKSFlag {
  */
 enum CRYPTError {
     CRYPT_ERR_NORMAL = 0,            //正常
+    CRYPT_ERR_INIT_FAILED,
+    CRYPT_ERR_NO_CMD_SUPPORT,        //外部命令不支持
     CRYPT_ERR_ENCRYPT_FAILED,        //加密失败
-    CRYPT_ERR_DECRYPT_FAILED         //解密失败
+    CRYPT_ERR_DECRYPT_FAILED,        //解密失败
+    CRYPT_ERR_ENCRYPT_ARGUMENT,      //加密参数错误
+    CRYPT_ERR_GET_LUKSINFO_FAILED
 };
 
 //new by liuwh 2022/5/13
@@ -53,7 +57,9 @@ enum CRYPTError {
 enum CRYPT_CIPHER {
     NOT_CRYPT = 0,
     AES_XTS_PLAIN64 = 1,
-    SM4_XTS_PLAIN64 = 2
+    SM4_XTS_PLAIN64 = 2,
+
+    CRYPT_UNkNOW = 100
 };
 
 #endif // LUKSENUM_H

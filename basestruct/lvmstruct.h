@@ -70,6 +70,7 @@ typedef struct LVAction {
     CRYPT_CIPHER m_crypt{CRYPT_CIPHER::NOT_CRYPT};          //加密算法(创建分区时该属性有效)
     QStringList m_tokenList;                                //密钥提示   luks####提示信息####(创建分区时该属性有效)
     QString m_decryptStr;                                   //用户解密密码字符串(创建分区时该属性有效)
+    QString m_dmName;
 
 } LVAction;
 DBUSStructEnd(LVAction)
@@ -239,6 +240,7 @@ public:
     bool isActivve()const {return m_lvStatus[4] == 'a';}
     bool isSuspended()const {return m_lvStatus[4] == 's';}
     bool isPartial()const {return m_lvStatus[8] == 'p';}
+    QString toMapperPath(){return QString("/dev/mapper/%1-%2").arg(m_vgName).arg(m_lvName);}
 public:
     QString m_vgName; //vg名称
     QString m_lvPath; //lv路径
@@ -326,6 +328,7 @@ DBUSStructEnd(VGInfo)
 class LVMInfo
 {
 public:
+    LVInfo getLVInfo(const QString &lvPath); //  /dev/vg01/lv01   /dev/mapper/vg01-lv01
     LVInfo getLVInfo(const QString &vgName, const QString &lvName);
 
     VGInfo getVG(const QString &vgName);
@@ -341,6 +344,7 @@ public:
     QList<QString> getVGOfDisk(const QString &vgName, const QString &disk);
 
     bool lvInfoExists(const QString &vgName, const QString &lvName);
+    bool lvInfoExists(const QString &lvPath);//  /dev/vg01/lv01   /dev/mapper/vg01-lv01
 
     bool vgExists(const QString &vgName);
     bool vgExists(const PVData &pv);

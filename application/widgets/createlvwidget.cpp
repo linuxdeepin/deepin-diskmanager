@@ -116,7 +116,7 @@ void CreateLVWidget::topFrameSetting()
     hLayout->setSpacing(5);
     hLayout->setContentsMargins(30, 0, 0, 0);
     DLabel *picLabel = new DLabel(m_topFrame);
-    picLabel->setPixmap(Common::getIcon("disk").pixmap(85, 85));
+    picLabel->setPixmap(Common::getIcon("vg").pixmap(85, 85));
     picLabel->setMinimumSize(85, 85);
     //垂直布局-右侧三行标签
     QVBoxLayout *vLayout = new QVBoxLayout();
@@ -828,8 +828,10 @@ void CreateLVWidget::onAddPartition()
             part.m_passwordHint = passwordInputDialog.getPasswordHint();
             if (formate.contains("AES")) {
                 part.m_encryption = CRYPT_CIPHER::AES_XTS_PLAIN64;
+                part.m_dmName = QString("%1_%2_aesE").arg(m_deviceName->text()).arg(m_partNameEdit->text());
             } else if (formate.contains("SM4")) {
                 part.m_encryption = CRYPT_CIPHER::SM4_XTS_PLAIN64;
+                part.m_dmName = QString("%1_%2_sm4E").arg(m_deviceName->text()).arg(m_partNameEdit->text());
             }
             part.m_isEncryption = true;
 
@@ -926,11 +928,13 @@ void CreateLVWidget::onApplyButton()
             tokenList.append(m_patrinfo.at(i).m_passwordHint);
             info.m_tokenList = tokenList;
             info.m_decryptStr = m_patrinfo.at(i).m_password;
+            info.m_dmName = m_patrinfo.at(i).m_dmName;
         } else {
             info.m_luksFlag = LUKSFlag::NOT_CRYPT_LUKS;
             info.m_crypt = CRYPT_CIPHER::NOT_CRYPT;
             info.m_tokenList = QStringList();
             info.m_decryptStr = "";
+            info.m_dmName = "";
         }
 
         lstLVInfo.append(info);
@@ -985,7 +989,7 @@ bool CreateLVWidget::event(QEvent *event)
     if (QEvent::ApplicationFontChange == event->type()) {
         qDebug() << event->type() << QApplication::font().pointSizeF() / 0.75;
         QFontMetrics fm(m_deviceNameLabel->font());
-        m_deviceNameLabel->setFixedWidth(fm.boundingRect(tr("Disk:")).width() + 5);
+        m_deviceNameLabel->setFixedWidth(fm.boundingRect(tr("VG name:")).width() + 5);
         m_emptyLabel->setFixedWidth(m_partFormateLabel->fontMetrics().width(tr("LV file system:")));
         m_encryptionInfo->setFixedWidth(m_partFormateCombox->width());
         m_scrollArea->setFixedWidth(m_partFormateCombox->width());

@@ -917,7 +917,7 @@ void PartitionWidget::onAddPartition()
     //绘制新建分区图形
     m_partChartWidget->transInfos(m_totalSize, m_sizeInfo);
     part.m_labelName = m_partNameEdit->text();
-    part.m_fstype = m_partFormateCombox->currentText();
+    part.m_fstype = formate;
     Byte_Value sectorSize = DMDbusHandler::instance()->getCurPartititonInfo().m_sectorSize;
     part.m_count = static_cast<Sector>(currentSize * (MEBIBYTE / sectorSize));
 //    if (partComCobox->currentText().compare("MiB") == 0) {

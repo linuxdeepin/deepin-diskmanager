@@ -236,8 +236,8 @@ enum DISK_ERROR {
 
 //new by liuwh 2022/1/17
 /**
- * @enum LVMDevType
- * @brief lvm 设备类型
+ * @enum DevType
+ * @brief 设备类型
  */
 enum DevType {
     DEV_UNKNOW_DEVICES,         //未知设备

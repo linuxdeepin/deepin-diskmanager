@@ -70,7 +70,8 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LVAction &data)
              << static_cast<int>(data.m_luksFlag)
              << static_cast<int>(data.m_crypt)
              << data.m_tokenList
-             << data.m_decryptStr;
+             << data.m_decryptStr
+             << data.m_dmName;
     argument.endStructure();
     return argument;
 }
@@ -78,7 +79,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LVAction &data)
 const QDBusArgument &operator>>(const QDBusArgument &argument, LVAction &data)
 {
     argument.beginStructure();
-    int type, act,luksFlag,crypt;
+    int type, act, luksFlag, crypt;
     argument >> data.m_vgName
              >> data.m_lvName
              >> data.m_lvSize
@@ -91,7 +92,8 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LVAction &data)
              >> luksFlag
              >> crypt
              >> data.m_tokenList
-             >> data.m_decryptStr;
+             >> data.m_decryptStr
+             >> data.m_dmName;
     data.m_lvFs = static_cast<FSType>(type);
     data.m_lvAct = static_cast<LVMAction>(act);
     data.m_luksFlag = static_cast<LUKSFlag>(luksFlag);
@@ -370,6 +372,31 @@ const QDBusArgument &operator>>(const QDBusArgument &argument,  VGInfo &data)
 }
 
 /*********************************** LVMInfo *********************************************/
+LVInfo LVMInfo::getLVInfo(const QString &lvPath)
+{
+    QStringList list = lvPath.split("/");
+    list.pop_front();
+    if (list.count() < 3) {
+        return LVInfo();
+    }
+
+    if (lvPath.contains("/dev/mapper/")) {
+        QStringList list2 = list[2].split("-");
+        if (!vgExists(list2[0])) {
+            return LVInfo();
+        }
+
+        VGInfo vg =  getVG(list2[0]);
+        foreach (LVInfo lv, vg.m_lvlist) {
+            if ("/dev/mapper/" + vg.m_vgName + "-" + lv.m_lvName == lvPath) {
+                return lv;
+            }
+        }
+        return LVInfo();
+    }
+    return getLVInfo(list[1], list[2]);
+}
+
 LVInfo LVMInfo::getLVInfo(const QString &vgName, const QString &lvName)
 {
     //判断lv是否存在
@@ -460,6 +487,31 @@ bool LVMInfo::lvInfoExists(const QString &vgName, const QString &lvName)
         return false;
     }
     return it.value().lvInfoExists(lvName);
+}
+
+bool LVMInfo::lvInfoExists(const QString &lvPath)
+{
+    QStringList list = lvPath.split("/");
+    list.pop_front();
+    if (list.count() < 3) {
+        return false;
+    }
+
+    if (lvPath.contains("/dev/mapper/")) {
+        QStringList list2 = list[2].split("-");
+        if (!vgExists(list2[0])) {
+            return false;
+        }
+
+        VGInfo vg =  getVG(list2[0]);
+        foreach (LVInfo lv, vg.m_lvlist) {
+            if ("/dev/mapper/" + vg.m_vgName + "-" + lv.m_lvName == lvPath) {
+                return true;
+            }
+        }
+        return false;
+    }
+    return lvInfoExists(list[1], list[2]);
 }
 
 bool LVMInfo::vgExists(const QString &vgName)

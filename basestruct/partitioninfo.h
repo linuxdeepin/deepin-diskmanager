@@ -92,6 +92,7 @@ public:
     CRYPT_CIPHER m_crypt{CRYPT_CIPHER::NOT_CRYPT};          //加密算法(创建分区时该属性有效)
     QStringList m_tokenList;                                //密钥提示   luks####提示信息####(创建分区时该属性有效)
     QString m_decryptStr;                                   //用户解密密码字符串(创建分区时该属性有效)
+    QString m_dmName;
 };
 DBUSStructEnd(PartitionInfo)
 

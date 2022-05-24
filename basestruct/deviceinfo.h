@@ -141,7 +141,7 @@ Q_DECLARE_METATYPE(HardDiskStatusInfoList)
 struct WipeAction {
     QString m_fstype;
     QString m_path;
-    QString m_name;
+    QString m_fileSystemLabel ;
     QString m_user;
     int m_diskType{0};
     int m_clearType{0};
@@ -149,6 +149,7 @@ struct WipeAction {
     CRYPT_CIPHER m_crypt{CRYPT_CIPHER::NOT_CRYPT};
     QStringList m_tokenList;                                //密钥提示   luks####提示信息####(创建分区时该属性有效)
     QString m_decryptStr;                                   //用户解密密码字符串(创建分区时该属性有效)
+    QString m_dmName;
 };
 DBUSStructEnd(WipeAction)
 

@@ -599,7 +599,7 @@ bool Utils::adjudicationPVDelete(LVMInfo lvmInfo, const set<QString> &pvStrList,
         }
 
         PVInfo pv =  lvmInfo.getPV(pvPath);
-        if(pv.noJoinVG()){              //只获取加入vg的pv路径
+        if (pv.noJoinVG()) {            //只获取加入vg的pv路径
             continue;
         }
 
@@ -635,6 +635,34 @@ bool Utils::adjudicationPVDelete(LVMInfo lvmInfo, const set<QString> &pvStrList,
         }
     }
     return true;
+}
+
+QString Utils::getCipherStr(CRYPT_CIPHER cipher)
+{
+    switch (cipher) {
+    case CRYPT_CIPHER::NOT_CRYPT:
+        return QString("not_crypt");
+    case CRYPT_CIPHER::AES_XTS_PLAIN64:
+        return QString("aes-xts-plain64");
+    case CRYPT_CIPHER::SM4_XTS_PLAIN64:
+        return QString("sm4-xts-plain64");
+    default:
+        return QString("crypt_unknow");
+    }
+}
+
+CRYPT_CIPHER Utils::getCipher(QString cipher)
+{
+    if (cipher.contains("not_crypt")) {
+        return  CRYPT_CIPHER::NOT_CRYPT;
+    } else if (cipher.contains("aes-xts-plain64")) {
+        return  CRYPT_CIPHER::AES_XTS_PLAIN64;
+    } else if (cipher.contains("sm4-xts-plain64")) {
+        return  CRYPT_CIPHER::SM4_XTS_PLAIN64;
+    } else {
+        return  CRYPT_CIPHER::CRYPT_UNkNOW;
+    }
+
 }
 
 

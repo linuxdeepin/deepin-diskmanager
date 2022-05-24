@@ -28,6 +28,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 #include "commondef.h"
+#include "luksenum.h"
 
 #include <QString>
 #include <QStringList>
@@ -224,6 +225,20 @@ public:
             point = nullptr;
         }
     }
+
+    /**
+     * @brief 根据枚举获取算法字符串
+     * @param cipher:算法枚举
+     * @return 算法字符串
+     */
+    static QString getCipherStr(CRYPT_CIPHER cipher);
+
+    /**
+     * @brief 根据字符串获取枚举值
+     * @param cipher:算法字符串
+     * @return 算法枚举
+     */
+    static CRYPT_CIPHER getCipher(QString cipher);
 };
 
 #endif // UTILS_H

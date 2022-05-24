@@ -368,7 +368,7 @@ public:
     /**
      * @brief 获取所有加密盘信息
      */
-    const LUKSInfoMap &probLUKSInfo() const;
+    const LUKSMap &probLUKSInfo() const;
 
     /**
      * @brief 获取是否为系统盘
@@ -437,7 +437,7 @@ private slots:
      * @brief 加密设备数据更新信号响应的槽函数
      * @param infomap：所有加密设备分区信息
      */
-    void onUpdateLUKSInfo(const LUKSInfoMap &infomap);
+    void onUpdateLUKSInfo(const LUKSMap &infomap);
 
     /**
      * @brief 接收卸载分区返回执行结果的槽函数
@@ -498,7 +498,7 @@ private:
     LVInfo m_curLVInfo;
     VGInfo m_curVGInfo;
     QMap<QString, QString> m_isJoinAllVG;
-    LUKSInfoMap m_curLUKSInfoMap;
+    LUKSMap m_curLUKSInfoMap;
     CRYPT_CIPHER_Support m_cryptSupport;
 };
 

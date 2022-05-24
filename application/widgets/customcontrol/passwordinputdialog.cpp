@@ -31,7 +31,6 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QDebug>
-#include <QMouseEvent>
 
 PasswordInputDialog::PasswordInputDialog(QWidget *parent) : DDBase(parent)
 {

@@ -41,6 +41,29 @@ DiskManagerService::DiskManagerService(QObject *parent)
     initConnection();
 }
 
+void DiskManagerService::initConnection()
+{
+    connect(m_partedcore, &PartedCore::updateDeviceInfo, this, &DiskManagerService::updateDeviceInfo);
+    connect(m_partedcore, &PartedCore::updateLUKSInfo, this, &DiskManagerService::updateLUKSInfo);
+    connect(m_partedcore, &PartedCore::deletePartitionMessage, this, &DiskManagerService::deletePartition);
+    connect(m_partedcore, &PartedCore::hidePartitionInfo, this, &DiskManagerService::hidePartitionInfo);
+    connect(m_partedcore, &PartedCore::showPartitionInfo, this, &DiskManagerService::showPartitionInfo);
+    connect(m_partedcore, &PartedCore::usbUpdated, this, &DiskManagerService::usbUpdated);
+    connect(m_partedcore, &PartedCore::checkBadBlocksCountInfo, this, &DiskManagerService::checkBadBlocksCountInfo);
+    connect(m_partedcore, &PartedCore::fixBadBlocksInfo, this, &DiskManagerService::fixBadBlocksInfo);
+    connect(m_partedcore, &PartedCore::checkBadBlocksFinished, this, &DiskManagerService::checkBadBlocksFinished);
+    connect(m_partedcore, &PartedCore::fixBadBlocksFinished, this, &DiskManagerService::fixBadBlocksFinished);
+    connect(m_partedcore, &PartedCore::unmountPartition, this, &DiskManagerService::unmountPartition);
+    connect(m_partedcore, &PartedCore::createTableMessage, this, &DiskManagerService::createTableMessage);
+    connect(m_partedcore, &PartedCore::vgCreateMessage, this, &DiskManagerService::vgCreateMessage);
+    connect(m_partedcore, &PartedCore::pvDeleteMessage, this, &DiskManagerService::pvDeleteMessage);
+    connect(m_partedcore, &PartedCore::vgDeleteMessage, this, &DiskManagerService::vgDeleteMessage);
+    connect(m_partedcore, &PartedCore::lvDeleteMessage, this, &DiskManagerService::lvDeleteMessage);
+    connect(this, &DiskManagerService::getAllDeviceInfomation, this, &DiskManagerService::onGetAllDeviceInfomation);
+    connect(m_partedcore, &PartedCore::clearMessage, this, &DiskManagerService::clearMessage);
+    connect(m_partedcore, &PartedCore::deCryptMessage, this, &DiskManagerService::deCryptMessage);
+}
+
 void DiskManagerService::Quit()
 {
     qDebug() << "DiskManagerService::Quit called";
@@ -74,6 +97,7 @@ DeviceInfo DiskManagerService::getDeviceinfo()
     return m_partedcore->getDeviceinfo();
 }
 
+//TODO： 这里感觉没有必要发送信号 等之后有时间测试一下 能否去掉多余的代码
 void DiskManagerService::getalldevice()
 {
 //    qDebug() << "DiskManagerService::getalldevice";
@@ -86,7 +110,7 @@ void DiskManagerService::onGetAllDeviceInfomation()
 {
     DeviceInfoMap infores = m_partedcore->getAllDeviceinfo();
     LVMInfo lvmInfo = m_partedcore->getAllLVMinfo();
-    LUKSInfoMap luksInfo = m_partedcore->getAllLUKSinfo();
+    LUKSMap luksInfo = m_partedcore->getAllLUKSinfo();
     Q_EMIT updateLUKSInfo(luksInfo);
     Q_EMIT updateDeviceInfo(infores, lvmInfo);
 }
@@ -144,29 +168,6 @@ bool DiskManagerService::resize(const PartitionInfo &info)
 bool DiskManagerService::create(const PartitionVec &infovec)
 {
     return m_partedcore->create(infovec);
-}
-
-void DiskManagerService::initConnection()
-{
-    connect(m_partedcore, &PartedCore::updateDeviceInfo, this, &DiskManagerService::updateDeviceInfo);
-    connect(m_partedcore, &PartedCore::updateLUKSInfo, this, &DiskManagerService::updateLUKSInfo);
-    connect(m_partedcore, &PartedCore::deletePartitionMessage, this, &DiskManagerService::deletePartition);
-    connect(m_partedcore, &PartedCore::hidePartitionInfo, this, &DiskManagerService::hidePartitionInfo);
-    connect(m_partedcore, &PartedCore::showPartitionInfo, this, &DiskManagerService::showPartitionInfo);
-    connect(m_partedcore, &PartedCore::usbUpdated, this, &DiskManagerService::usbUpdated);
-    connect(m_partedcore, &PartedCore::checkBadBlocksCountInfo, this, &DiskManagerService::checkBadBlocksCountInfo);
-    connect(m_partedcore, &PartedCore::fixBadBlocksInfo, this, &DiskManagerService::fixBadBlocksInfo);
-    connect(m_partedcore, &PartedCore::checkBadBlocksFinished, this, &DiskManagerService::checkBadBlocksFinished);
-    connect(m_partedcore, &PartedCore::fixBadBlocksFinished, this, &DiskManagerService::fixBadBlocksFinished);
-    connect(m_partedcore, &PartedCore::unmountPartition, this, &DiskManagerService::unmountPartition);
-    connect(m_partedcore, &PartedCore::createTableMessage, this, &DiskManagerService::createTableMessage);
-    connect(m_partedcore, &PartedCore::vgCreateMessage, this, &DiskManagerService::vgCreateMessage);
-    connect(m_partedcore, &PartedCore::pvDeleteMessage, this, &DiskManagerService::pvDeleteMessage);
-    connect(m_partedcore, &PartedCore::vgDeleteMessage, this, &DiskManagerService::vgDeleteMessage);
-    connect(m_partedcore, &PartedCore::lvDeleteMessage, this, &DiskManagerService::lvDeleteMessage);
-    connect(this, &DiskManagerService::getAllDeviceInfomation, this, &DiskManagerService::onGetAllDeviceInfomation);
-    connect(m_partedcore, &PartedCore::clearMessage, this, &DiskManagerService::clearMessage);
-    connect(m_partedcore, &PartedCore::deCryptMessage, this, &DiskManagerService::deCryptMessage);
 }
 
 HardDiskInfo DiskManagerService::onGetDeviceHardInfo(const QString &devicepath)

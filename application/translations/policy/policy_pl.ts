@@ -4,7 +4,7 @@
 		<message>
 			<location filename="com.deepin.diskmanager!message" line="0"/>
 			<source>Authentication is required to read disk information</source>
-			<translation>Wymagane jest uwierzytelnienie, aby odczytywać informacje o dyskach</translation>
+			<translation>Wymagane jest uwierzytelnienie do odczytywania informacji o dyskach</translation>
 		</message>
 		<message>
 			<location filename="com.deepin.diskmanager!description" line="0"/>

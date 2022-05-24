@@ -876,7 +876,7 @@ void PartitionWidget::onAddPartition()
     if (formate.contains("AES") || formate.contains("SM4")) {
         if (currentSize <= 100) {
             m_partSizeEdit->setAlert(true);
-            m_partSizeEdit->showAlertMessage(tr("To ecrypt a partition, it should be larger than 100 MiB"));
+            m_partSizeEdit->showAlertMessage(tr("To encrypt a partition, it should be larger than 100 MiB"));
             return;
         }
 

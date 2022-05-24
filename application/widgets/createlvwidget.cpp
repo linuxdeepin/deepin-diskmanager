@@ -814,7 +814,7 @@ void CreateLVWidget::onAddPartition()
     if (formate.contains("AES") || formate.contains("SM4")) {
         if (currentSize <= 100) {
             m_partSizeEdit->setAlert(true);
-            m_partSizeEdit->showAlertMessage(tr("To ecrypt a volume, it should be larger than 100 MiB"));
+            m_partSizeEdit->showAlertMessage(tr("To encrypt a volume, it should be larger than 100 MiB"));
             return;
         }
 

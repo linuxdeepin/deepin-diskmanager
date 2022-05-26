@@ -34,6 +34,7 @@
 #include "messagebox.h"
 #include "createvgwidget.h"
 #include "removepvwidget.h"
+#include "decryptdialog.h"
 
 #include <QMouseEvent>
 #include <QHBoxLayout>
@@ -215,30 +216,68 @@ void TitleWidget::showFormateInfoWidget()
     setCurDevicePath("");
 }
 
+bool TitleWidget::showDecryptDialog()
+{
+    DecryptDialog decryptDialog(this);
+    decryptDialog.setObjectName("decryptDialog");
+    decryptDialog.setAccessibleName("decryptDialog");
+    if (decryptDialog.exec() != DDialog::Accepted) {
+        return false;
+    }
+
+    return true;
+}
+
 void TitleWidget::showMountInfoWidget()
 {
-    PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    setCurDevicePath(info.m_devicePath);
+    if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
+        PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+        if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            if (!showDecryptDialog()) {
+                return;
+            }
+        }
+        setCurDevicePath(info.m_devicePath);
+    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
+        LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+        if (lvInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            if (!showDecryptDialog()) {
+                return;
+            }
+        }
+        setCurVGName(lvInfo.m_vgName);
+    }
 
     MountDialog dlg(this);
     dlg.setObjectName("mountDialog");
     dlg.setAccessibleName("mountDialog");
     dlg.exec();
 
-    setCurDevicePath("");
+    if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
+        setCurDevicePath("");
+    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
+        setCurVGName("");
+    }
 }
 
 void TitleWidget::showUnmountInfoWidget()
 {
-    PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-    setCurDevicePath(info.m_devicePath);
+    if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
+        setCurDevicePath(DMDbusHandler::instance()->getCurPartititonInfo().m_devicePath);
+    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
+        setCurVGName(DMDbusHandler::instance()->getCurLVInfo().m_vgName);
+    }
 
     UnmountDialog dlg(this);
     dlg.setObjectName("unmountDialog");
     dlg.setAccessibleName("unmountDialog");
     dlg.exec();
 
-    setCurDevicePath("");
+    if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
+        setCurDevicePath("");
+    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
+        setCurVGName("");
+    }
 }
 
 void TitleWidget::showResizeInfoWidget()

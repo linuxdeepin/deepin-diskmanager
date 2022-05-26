@@ -115,6 +115,7 @@ void DMDbusHandler::initConnection()
     connect(m_dbus, &DMDBusInterface::pvDeleteMessage, this, &DMDbusHandler::pvDeleteMessage);
     connect(m_dbus, &DMDBusInterface::vgDeleteMessage, this, &DMDbusHandler::vgDeleteMessage);
     connect(m_dbus, &DMDBusInterface::lvDeleteMessage, this, &DMDbusHandler::lvDeleteMessage);
+    connect(m_dbus, &DMDBusInterface::deCryptMessage, this, &DMDbusHandler::deCryptMessage);
 //    connect(m_dbus, &DMDBusInterface::rootLogin, this, &DMDbusHandler::onRootLogin);
 }
 
@@ -671,6 +672,11 @@ const LUKSMap &DMDbusHandler::probLUKSInfo() const
     return m_curLUKSInfoMap;
 }
 
+void DMDbusHandler::updateLUKSInfo(const QString &devPath, const LUKS_INFO &luks)
+{
+    m_curLUKSInfoMap.m_luksMap[devPath] = luks;
+}
+
 bool DMDbusHandler::getIsSystemDisk(const QString &devName)
 {
     if (m_curLevel == DeviceType::DISK || m_curLevel == DeviceType::PARTITION) {
@@ -704,4 +710,22 @@ bool DMDbusHandler::getIsSystemDisk(const QString &devName)
     return false;
 }
 
+void DMDbusHandler::deCrypt(const LUKS_INFO &luks)
+{
+    m_dbus->deCrypt(luks);
+}
+
+void DMDbusHandler::cryptMount(const LUKS_INFO &luks, const QString &devName)
+{
+    emit showSpinerWindow(true, tr("Mounting %1 ...").arg(devName));
+
+    m_dbus->cryptMount(luks);
+}
+
+void DMDbusHandler::cryptUmount(const LUKS_INFO &luks, const QString &devName)
+{
+    emit showSpinerWindow(true, tr("Unmounting %1 ...").arg(devName));
+
+    m_dbus->cryptUmount(luks);
+}
 

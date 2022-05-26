@@ -182,20 +182,38 @@ bool MountDialog::isSystemDirectory(const QString &directory)
 void MountDialog::mountCurPath()
 {
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
-        DMDbusHandler::instance()->mount(m_ComboBox->currentText());
+        PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+        if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
+            QVector<QString> mountPoints;
+            mountPoints.append(m_ComboBox->currentText());
+            luksInfo.m_mapper.m_mountPoints = mountPoints;
+
+            DMDbusHandler::instance()->cryptMount(luksInfo, info.m_path);
+        } else {
+            DMDbusHandler::instance()->mount(m_ComboBox->currentText());
+        }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+        if (lvInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(lvInfo.m_lvPath);
+            QVector<QString> mountPoints;
+            mountPoints.append(m_ComboBox->currentText());
+            luksInfo.m_mapper.m_mountPoints = mountPoints;
 
-        LVAction lvAction;
-        lvAction.m_vgName = lvInfo.m_vgName;
-        lvAction.m_lvName = lvInfo.m_lvName;
-        lvAction.m_lvFs = lvInfo.m_lvFsType;
-        lvAction.m_lvSize = lvInfo.m_lvSize;
-        lvAction.m_lvByteSize = lvInfo.m_lvLECount * lvInfo.m_LESize;
-        lvAction.m_lvAct = LVMAction::LVM_ACT_LV_MOUNT;
-        lvAction.m_mountPoint = m_ComboBox->currentText();
+            DMDbusHandler::instance()->cryptMount(luksInfo, lvInfo.m_lvName);
+        } else {
+            LVAction lvAction;
+            lvAction.m_vgName = lvInfo.m_vgName;
+            lvAction.m_lvName = lvInfo.m_lvName;
+            lvAction.m_lvFs = lvInfo.m_lvFsType;
+            lvAction.m_lvSize = lvInfo.m_lvSize;
+            lvAction.m_lvByteSize = lvInfo.m_lvLECount * lvInfo.m_LESize;
+            lvAction.m_lvAct = LVMAction::LVM_ACT_LV_MOUNT;
+            lvAction.m_mountPoint = m_ComboBox->currentText();
 
-        DMDbusHandler::instance()->onMountLV(lvAction);
+            DMDbusHandler::instance()->onMountLV(lvAction);
+        }
     }
 }
 

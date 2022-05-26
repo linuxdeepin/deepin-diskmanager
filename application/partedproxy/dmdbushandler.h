@@ -371,11 +371,38 @@ public:
     const LUKSMap &probLUKSInfo() const;
 
     /**
+     * @brief 更新加密磁盘数据
+     * @param devPath 设备路径
+     * @param luks 加密磁盘属性
+     */
+    void updateLUKSInfo(const QString &devPath, const LUKS_INFO &luks);
+
+    /**
      * @brief 获取是否为系统盘
      * @param devName: 设备名称
      * @return true是,false不是
      */
     bool getIsSystemDisk(const QString &devName);
+
+    /**
+     * @brief 加密磁盘解密
+     * @param luks 加密磁盘属性
+     */
+    void deCrypt(const LUKS_INFO &luks);
+
+    /**
+     * @brief 加密磁盘挂载
+     * @param luks 加密磁盘属性
+     * @param devName 设备名称
+     */
+    void cryptMount(const LUKS_INFO &luks, const QString &devName);
+
+    /**
+     * @brief 加密磁盘卸载
+     * @param luks 加密磁盘属性
+     * @param devName 设备名称
+     */
+    void cryptUmount(const LUKS_INFO &luks, const QString &devName);
 
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
@@ -406,6 +433,7 @@ signals:
     void pvDeleteMessage(const QString &pvMessage);
     void vgDeleteMessage(const QString &vgMessage);
     void lvDeleteMessage(const QString &lvMessage);
+    void deCryptMessage(const LUKS_INFO &luks);
 
 public slots:
     /**

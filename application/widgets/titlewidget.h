@@ -90,6 +90,11 @@ private:
      */
     bool isExistMountPartition();
 
+    /**
+     * @brief 显示解密窗口
+     */
+    bool showDecryptDialog();
+
 signals:
 
 private slots:

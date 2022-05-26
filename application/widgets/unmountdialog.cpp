@@ -78,19 +78,27 @@ void UnmountDialog::initConnection()
 void UnmountDialog::umountCurMountPoints()
 {
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
-        DMDbusHandler::instance()->unmount();
+        PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+        if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            DMDbusHandler::instance()->cryptUmount(DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path), info.m_path);
+        } else {
+            DMDbusHandler::instance()->unmount();
+        }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+        if (lvInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            DMDbusHandler::instance()->cryptUmount(DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(lvInfo.m_lvPath), lvInfo.m_lvName);
+        } else {
+            LVAction lvAction;
+            lvAction.m_vgName = lvInfo.m_vgName;
+            lvAction.m_lvName = lvInfo.m_lvName;
+            lvAction.m_lvFs = lvInfo.m_lvFsType;
+            lvAction.m_lvSize = lvInfo.m_lvSize;
+            lvAction.m_lvByteSize = lvInfo.m_lvLECount * lvInfo.m_LESize;
+            lvAction.m_lvAct = LVMAction::LVM_ACT_LV_UMOUNT;
 
-        LVAction lvAction;
-        lvAction.m_vgName = lvInfo.m_vgName;
-        lvAction.m_lvName = lvInfo.m_lvName;
-        lvAction.m_lvFs = lvInfo.m_lvFsType;
-        lvAction.m_lvSize = lvInfo.m_lvSize;
-        lvAction.m_lvByteSize = lvInfo.m_lvLECount * lvInfo.m_LESize;
-        lvAction.m_lvAct = LVMAction::LVM_ACT_LV_UMOUNT;
-
-        DMDbusHandler::instance()->onUmountLV(lvAction);
+            DMDbusHandler::instance()->onUmountLV(lvAction);
+        }
     }
 }
 
@@ -98,26 +106,32 @@ void UnmountDialog::onButtonClicked(int index, const QString &text)
 {
     Q_UNUSED(text);
     if (m_okCode == index) {
-        QString mountPoints;
         int flag = 0;
+        bool isSysPath = false;
         if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
             PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+            flag = info.m_flag;
 
             for (int i = 0; i < info.m_mountPoints.size(); i++) {
-                mountPoints += info.m_mountPoints[i];
+                if (info.m_mountPoints[i] == "/boot/efi" || info.m_mountPoints[i] == "/boot"
+                        || info.m_mountPoints[i] == "/" || info.m_mountPoints[i] == "/recovery") {
+                    isSysPath = true;
+                    break;
+                }
             }
-
-            flag = info.m_flag;
-        } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
+        } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
             LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
             for (int i = 0; i < lvInfo.m_mountPoints.size(); i++) {
-                mountPoints += lvInfo.m_mountPoints[i];
+                if (lvInfo.m_mountPoints[i] == "/boot/efi" || lvInfo.m_mountPoints[i] == "/boot"
+                        || lvInfo.m_mountPoints[i] == "/" || lvInfo.m_mountPoints[i] == "/recovery") {
+                    isSysPath = true;
+                    break;
+                }
             }
         }
 
         qDebug() << __FUNCTION__;
-        if (mountPoints == "/boot/efi" || mountPoints == "/boot" || mountPoints == "/"
-                || mountPoints == "/recovery" || flag == 4) {
+        if (isSysPath || flag == 4) {
             UnmountWarningDialog unmountWarningDialog;
             unmountWarningDialog.setObjectName("firstWarning");
             unmountWarningDialog.setAccessibleName("firstWarning");

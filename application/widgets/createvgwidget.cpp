@@ -541,17 +541,17 @@ void CreateVGWidget::setScrollAreaAttribute(DScrollArea *scrollArea, bool hScrol
 bool CreateVGWidget::judgeDataEquality(const PVInfoData &data1, const PVInfoData &data2)
 {
     return data1.m_partitionPath == data2.m_partitionPath
-            && data1.m_sectorStart == data2.m_sectorStart
-            && data1.m_sectorEnd == data2.m_sectorEnd
-            && data1.m_diskPath == data2.m_diskPath;
+           && data1.m_sectorStart == data2.m_sectorStart
+           && data1.m_sectorEnd == data2.m_sectorEnd
+           && data1.m_diskPath == data2.m_diskPath;
 }
 
 bool CreateVGWidget::judgeDataEquality(const PartitionInfo &partInfo, const PVInfoData &pvInfo)
 {
     return partInfo.m_path == pvInfo.m_partitionPath
-            && partInfo.m_sectorStart == pvInfo.m_sectorStart
-            && partInfo.m_sectorEnd == pvInfo.m_sectorEnd
-            && partInfo.m_devicePath == pvInfo.m_diskPath;
+           && partInfo.m_sectorStart == pvInfo.m_sectorStart
+           && partInfo.m_sectorEnd == pvInfo.m_sectorEnd
+           && partInfo.m_devicePath == pvInfo.m_diskPath;
 }
 
 void CreateVGWidget::showLoadingWidget(const QString &vgName)
@@ -588,7 +588,7 @@ void CreateVGWidget::showLoadingWidget(const QString &vgName)
     }
 
     QVBoxLayout *layout = new QVBoxLayout;
-    for (int i = 0; i < m_curSeclectData.count(); i+=2) {
+    for (int i = 0; i < m_curSeclectData.count(); i += 2) {
         QLabel *label = new QLabel(this);
         label->setAlignment(Qt::AlignCenter);
         label->setFont(font2);
@@ -790,7 +790,7 @@ void CreateVGWidget::onDoneButtonClicked()
             m_selectSpaceLineEdit->showAlertMessage(tr("No less than the used capacity please"), m_mainFrame); // 不得低于已用空间
             m_selectSpaceLineEdit->setAlert(true);
             return;
-        } else if (curSize > maxSize){
+        } else if (curSize > maxSize) {
             m_selectSpaceLineEdit->setAlertMessageAlignment(Qt::AlignTop);
             m_selectSpaceLineEdit->showAlertMessage(tr("No more than the maximum capacity please"), m_mainFrame); // 超出最大可用空间
             m_selectSpaceLineEdit->setAlert(true);
@@ -1171,6 +1171,7 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
             if (lvmInfo.pvExists(pvList.at(i))) {
                 PVInfo pvInfo = lvmInfo.getPV(pvList.at(i));
                 PVInfoData pvInfoData;
+                pvInfoData.m_level = 1;
                 pvInfoData.m_lvmDevType = pvInfo.m_lvmDevType;
                 pvInfoData.m_selectStatus = Qt::CheckState::Checked;
                 if (pvInfo.m_lvmDevType == DevType::DEV_DISK) {
@@ -2034,14 +2035,14 @@ Byte_Value CreateVGWidget::getPVSize(const VGInfo &vg, const PVData &pv, bool fl
     long long allByte = dev.m_sectorSize * (endSec - startSec + 1); //获取总的byte
     long long i = allByte % vg.m_PESize; //获取剩下的size大小
 
-    if(i == 0){
+    if (i == 0) {
         return  allByte;
-    }else if(i >= MEBIBYTE){
+    } else if (i >= MEBIBYTE) {
         return allByte - i;
-    }else  {
+    } else  {
         return allByte - i - 4 * MEBIBYTE;
     }
-   // return i == 0 ? allByte : ((i >= MEBIBYTE) ? allByte - i : allByte - i - 4 * MEBIBYTE); //去除末尾 保证是vg pe的倍数
+    // return i == 0 ? allByte : ((i >= MEBIBYTE) ? allByte - i : allByte - i - 4 * MEBIBYTE); //去除末尾 保证是vg pe的倍数
 }
 
 Byte_Value CreateVGWidget::getDevSize(const VGInfo &vg, const PVData &pv, bool flag, long long size)

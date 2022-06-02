@@ -260,6 +260,8 @@ public:
     FS_Limits m_fsLimits;//文件系统限制 该属性在没有文件系统存在时无效
 
     LUKSFlag m_luksFlag{LUKSFlag::NOT_CRYPT_LUKS};
+    QString m_fileSystemLabel;
+    bool m_dataFlag{false};
 };
 DBUSStructEnd(LVInfo)
 

@@ -21,6 +21,7 @@
 #include "lvmoperator.h"
 #include "utils.h"
 #include "mountinfo.h"
+#include "../fsinfo.h"
 
 #include <QStringList>
 #include <QDebug>
@@ -222,7 +223,9 @@ bool LVMOperator::updatePVInfo(LVMInfo &lvmInfo)
             pv.m_lvmDevType = DevType::DEV_LOOP;
         } else if (strout.contains("raid")) {
             pv.m_lvmDevType = DevType::DEV_META_DEVICES;
-        } else {
+        } else if (strout.contains("crypt")) {
+            pv.m_lvmDevType = DevType::DEV_META_DEVICES;
+        }else {
             pv.m_lvmDevType = DevType::DEV_UNKNOW_DEVICES;
         }
 
@@ -354,6 +357,13 @@ bool LVMOperator::updateLVInfo(LVMInfo &lvmInfo, VGInfo &vg)
         lv.m_lvLECount = Size / lv.m_LESize;
 
         QString lvPath = QString("/dev/mapper/%1-%2").arg(lv.m_vgName).arg(lv.m_lvName);
+
+        bool labelFound = false;
+        QString label = DiskManager::FsInfo::getLabel(lvPath, labelFound);
+        if (labelFound) {
+            lv.m_fileSystemLabel = label;
+        }
+
         auto devIt = m_devInfo.find(lvPath);
         if (devIt != m_devInfo.end()) {
             auto partIt = devIt.value().m_partition.begin();
@@ -1058,6 +1068,8 @@ void LVMOperator::printLVInfo(const LVInfo &info)
     qDebug() << "mountUuid: " << info.m_mountUuid;//逻辑卷挂载uuid
     qDebug() << "fsLimits_min_size: " << info.m_fsLimits.min_size;
     qDebug() << "fsLimits_max_size: " << info.m_fsLimits.max_size;
+    qDebug() << "luksFlag: " << info.m_luksFlag;
+    qDebug() << "fileSystemLabel: " << info.m_fileSystemLabel;
     qDebug() << "LVInfo:====================================end";
 }
 

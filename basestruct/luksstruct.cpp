@@ -67,6 +67,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LUKS_MapperInfo &data)
     argument << static_cast<int>(data.m_luksFs)
              << data.m_mountPoints
              << data.m_uuid
+             << data.m_dmName
              << data.m_dmPath
              << data.m_busy
              << data.m_fsUsed
@@ -90,6 +91,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LUKS_MapperInfo &
     argument >> luksFlag
              >> data.m_mountPoints
              >> data.m_uuid
+             >> data.m_dmName
              >> data.m_dmPath
              >> data.m_busy
              >> data.m_fsUsed
@@ -125,7 +127,8 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LUKS_INFO &data)
              << data.m_decryptStr
              << data.isDecrypt
              << data.m_keySlots
-             << data.m_Suspend;
+             << data.m_Suspend
+             << data.m_fileSystemLabel;
     argument.endStructure();
     return argument;
 }
@@ -146,7 +149,8 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LUKS_INFO &data)
              >> data.m_decryptStr
              >> data.isDecrypt
              >> data.m_keySlots
-             >> data.m_Suspend;
+             >> data.m_Suspend
+             >> data.m_fileSystemLabel;
     data.m_crypt = static_cast<CRYPT_CIPHER>(crypt);
     data.m_cryptErr = static_cast<CRYPTError>(cryptErr);
     argument.endStructure();

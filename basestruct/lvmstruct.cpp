@@ -256,7 +256,9 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LVInfo &data)
              << data.m_mountUuid
              << data.m_fsLimits.max_size
              << data.m_fsLimits.min_size
-             << static_cast<int>(data.m_luksFlag);
+             << static_cast<int>(data.m_luksFlag)
+             << data.m_fileSystemLabel
+             << data.m_dataFlag;
     argument.endStructure();
     return argument;
 }
@@ -282,7 +284,9 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LVInfo &data)
              >> data.m_mountUuid
              >> data.m_fsLimits.max_size
              >> data.m_fsLimits.min_size
-             >> luksFlag;
+             >> luksFlag
+             >> data.m_fileSystemLabel
+             >> data.m_dataFlag;
     data.m_lvFsType = static_cast<FSType>(type);
     data.m_lvError = static_cast<LVMError>(err);
     data.m_luksFlag = static_cast<LUKSFlag>(luksFlag);
@@ -374,6 +378,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument,  VGInfo &data)
 /*********************************** LVMInfo *********************************************/
 LVInfo LVMInfo::getLVInfo(const QString &lvPath)
 {
+    // /dev/vg01/lv01    Or /dev/mapper/vg01-lv01
     QStringList list = lvPath.split("/");
     list.pop_front();
     if (list.count() < 3) {

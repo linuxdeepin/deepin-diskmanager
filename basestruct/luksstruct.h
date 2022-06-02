@@ -138,6 +138,7 @@ public:
     QString m_mode;                                         //read/write
     LVMFlag m_vgflag{LVMFlag::LVM_FLAG_NOT_PV};             //pv设备标识  当该标识为LVM_FLAG_JOIN_VG时，数据从lvminfo中获取
     FS_Limits m_fsLimits;                                   //文件系统限制 该属性在没有文件系统存在时无效
+    //QString m_fileSystemLabel;                              //卷标名  TODO: 之后补上该属性
 };
 DBUSStructEnd(LUKS_MapperInfo)
 
@@ -166,6 +167,7 @@ public:
     int m_keySlots = 0;                                     //当前密钥槽个数
 
     bool m_Suspend = false;                                 //是否挂起  该属性获取待定
+    QString m_fileSystemLabel;                              //卷标名
 };
 DBUSStructEnd(LUKS_INFO)
 
@@ -206,9 +208,9 @@ private:
     template<class T>
     bool itemExists(const QString &str, const QMap<QString, T> &containers)const;
 public:
-    LUKSInfoMap m_luksMap;
+    LUKSInfoMap m_luksMap;                          // key:/dev/sda1  value: LUKS_INFO  Or key:/dev/vg01/lv01  value: LUKS_INFO
     CRYPTError m_cryErr;
-    QMap<QString, LUKS_MapperInfo>m_mapper;
+    QMap<QString, LUKS_MapperInfo>m_mapper;         // key:/dev/sda1   value: LUKS_MapperInfo  Or  key:/dev/vg01/lv01  value:  LUKS_MapperInfo
     CRYPT_CIPHER_Support m_cryptSuuport;
 };
 DBUSStructEnd(LUKSMap)

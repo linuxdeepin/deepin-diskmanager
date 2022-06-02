@@ -96,13 +96,11 @@ public:
      */
     bool mountAndWriteFstab(const QString &mountpath);
 
-
     /**
      * @brief 卸载分区
      * @return true成功false失败
      */
     bool unmount();
-
 
     /**
      * @brief 加密磁盘解密
@@ -531,7 +529,7 @@ private:
 
     LUKS_INFO getNewLUKSInfo(const Partition &part);
     LUKS_INFO getNewLUKSInfo(const LVAction &lvAct);
-    LUKS_INFO getNewLUKSInfo(const FSType &type, const QStringList &token, const CRYPT_CIPHER &cipher, const QString &decryptStr, const QString &dmName, const QString devPath);
+    LUKS_INFO getNewLUKSInfo(const FSType &type, const QStringList &token, const CRYPT_CIPHER &cipher, const QString &decryptStr, const QString &dmName, const QString devPath,const QString &label);
 
 private:
     //general..
@@ -783,8 +781,6 @@ private:
      * @return true成功false失败
      */
     bool createFileSystem(const Partition &partition);
-
-
 
     /**
      * @brief 创建分区文件系统

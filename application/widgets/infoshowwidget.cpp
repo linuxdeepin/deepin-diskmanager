@@ -253,19 +253,41 @@ void InfoShowWidget::onCurSelectChanged()
         for (QString point : info.m_mountPoints) {
             mountpoints.append(point + " ");
         }
-        m_mountpointLabel->setObjectName(QString("@==@%1").arg(mountpoints));
+
         QString free = Utils::formatSize(info.m_sectorsUnused, info.m_sectorSize);
+        QString used = Utils::formatSize(info.m_sectorsUsed, info.m_sectorSize);
+        QString fsTypeName = Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType));
+        QString capacity = Utils::formatSize(info.m_sectorEnd - info.m_sectorStart + 1, info.m_sectorSize);
+
+        if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
+            if (luksInfo.isDecrypt) {
+                free = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUnused);
+                used = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUsed);
+                mountpoints = "";
+                for (QString point : luksInfo.m_mapper.m_mountPoints) {
+                    mountpoints.append(point + " ");
+                }
+
+                fsTypeName = Utils::fileSystemTypeToString(luksInfo.m_mapper.m_luksFs);
+                m_noused = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUnused, SIZE_UNIT::UNIT_GIB);
+                m_used = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUsed, SIZE_UNIT::UNIT_GIB);
+            }
+        }
+
         if (free.contains("-")){
             free = "-";
         }
-        m_freeLabel->setObjectName(QString("@==@%1").arg(free));
-        QString used = Utils::formatSize(info.m_sectorsUsed, info.m_sectorSize);
+
         if (used.contains("-")){
             used = "-";
         }
+
+        m_mountpointLabel->setObjectName(QString("@==@%1").arg(mountpoints));
+        m_freeLabel->setObjectName(QString("@==@%1").arg(free));
         m_usedLabel->setObjectName(QString("@==@%1").arg(used));
-        m_typeLabel->setObjectName(QString("@==@%1").arg(Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType))));
-        m_capacityLabel->setObjectName(QString("@==@%1").arg(Utils::formatSize(info.m_sectorEnd - info.m_sectorStart + 1, info.m_sectorSize)));
+        m_typeLabel->setObjectName(QString("@==@%1").arg(fsTypeName));
+        m_capacityLabel->setObjectName(QString("@==@%1").arg(capacity));
         m_volumeLabel->setObjectName(QString("@==@%1").arg(info.m_fileSystemLabel));
         m_infoTopFrame->updateDiskInfo();
 
@@ -298,42 +320,124 @@ void InfoShowWidget::onCurSelectChanged()
             m_vgSizeInfoWidget->setData(info.m_vgData);
         }
     } else if (DMDbusHandler::DISK == DMDbusHandler::instance()->getCurLevel()) {
-        DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
-        Sector usedSector = 0;
-        Sector unusedSector = 0;
-        for (int i = 0; i < info.m_partition.size(); i++) {
-            PartitionInfo partitionInfo = info.m_partition.at(i);
-            if (partitionInfo.m_path != "unallocated") {
-                usedSector += partitionInfo.m_sectorsUsed;
-                unusedSector += partitionInfo.m_sectorsUnused;
-            } else {
-                unusedSector += partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1;
-            }
-        }
-
-        QString diskSize = Utils::formatSize(info.m_length, info.m_sectorSize);
-        QString used = Utils::formatSize(usedSector, info.m_sectorSize);
-        QString unused = Utils::formatSize(unusedSector, info.m_sectorSize);
-
-        if (used.contains("-")) {
-            used = "-";
-        }
-
-        if (unused.contains("-")) {
-            unused = "-";
-        }
-
         m_mountpointLabel->setText(tr("Path:"));
         m_typeLabel->setText(tr("Disk type:"));
         m_volumeLabel->setText(tr("Interface:"));
-        m_mountpointLabel->setObjectName(QString("@==@%1").arg(info.m_path));
+
+        DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
+        Sector usedSector = 0;
+        Sector unusedSector = 0;
+        Sector sumUsed = 0;
+        Sector sumUnused = 0;
+        for (int i = 0; i < info.m_partition.size(); i++) {
+            PartitionInfo partitionInfo = info.m_partition.at(i);
+            if (partitionInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+                LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(partitionInfo.m_path);
+                if (luksInfo.isDecrypt) {
+                    if (luksInfo.m_mapper.m_fsUsed > 0) {
+                        usedSector += luksInfo.m_mapper.m_fsUsed;
+                    }
+
+                    if (luksInfo.m_mapper.m_fsUnused > 0) {
+                        unusedSector += luksInfo.m_mapper.m_fsUnused;
+                    }
+
+                    sumUsed += luksInfo.m_mapper.m_fsUsed;
+                    sumUnused += luksInfo.m_mapper.m_fsUnused;
+                } else {
+                    usedSector += (partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1) * partitionInfo.m_sectorSize;
+                    sumUsed += (partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1) * partitionInfo.m_sectorSize;
+                    sumUnused += luksInfo.m_mapper.m_fsUnused;
+                }
+
+                continue;
+            }
+
+            if (partitionInfo.m_path != "unallocated") {
+                if (partitionInfo.m_sectorsUsed > 0) {
+                    usedSector += partitionInfo.m_sectorsUsed * partitionInfo.m_sectorSize;
+                }
+
+                if (partitionInfo.m_sectorsUnused > 0) {
+                    unusedSector += partitionInfo.m_sectorsUnused * partitionInfo.m_sectorSize;
+                }
+
+                if (partitionInfo.m_sectorsUsed < 0 && partitionInfo.m_sectorsUnused < 0) {
+                    usedSector += (partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1) * partitionInfo.m_sectorSize;
+                }
+
+                sumUsed += partitionInfo.m_sectorsUsed * partitionInfo.m_sectorSize;
+                sumUnused += partitionInfo.m_sectorsUnused * partitionInfo.m_sectorSize;
+            } else {
+                unusedSector += (partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1) * partitionInfo.m_sectorSize;
+                sumUsed += partitionInfo.m_sectorsUsed * partitionInfo.m_sectorSize;
+                sumUnused += (partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1) * partitionInfo.m_sectorSize;
+            }
+        }
+
+        QString mountpoints = info.m_path;
+        QString diskType = info.m_mediaType;
+        QString volumeLabel = info.m_interface;
+
+        // 当前选择为磁盘时，是否是整盘加密的磁盘
+        if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS && info.m_partition.size() == 0) {
+            LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
+            m_mountpointLabel->setText(tr("Mount point:"));
+            m_typeLabel->setText(tr("Type:"));
+            m_volumeLabel->setText(tr("Volume label:"));
+            if (luksInfo.isDecrypt) {
+                if (luksInfo.m_mapper.m_fsUsed > 0) {
+                    usedSector += luksInfo.m_mapper.m_fsUsed;
+                }
+
+                if (luksInfo.m_mapper.m_fsUnused > 0) {
+                    unusedSector += luksInfo.m_mapper.m_fsUnused;
+                }
+
+                sumUsed += luksInfo.m_mapper.m_fsUsed;
+                sumUnused += luksInfo.m_mapper.m_fsUnused;
+
+                mountpoints = "";
+                for (QString point : luksInfo.m_mapper.m_mountPoints) {
+                    mountpoints.append(point + " ");
+                }
+                diskType = Utils::fileSystemTypeToString(luksInfo.m_mapper.m_luksFs);
+            } else {
+                usedSector = -1 * info.m_sectorSize;
+                unusedSector = -1 * info.m_sectorSize;
+                sumUsed = -1 * info.m_sectorSize;
+                sumUnused = -1 * info.m_sectorSize;
+
+                mountpoints = "";
+                diskType = Utils::fileSystemTypeToString(FSType::FS_LUKS);
+            }
+
+            volumeLabel = luksInfo.m_fileSystemLabel;
+        }
+
+        QString diskSize = Utils::formatSize(info.m_length, info.m_sectorSize);
+        QString used = Utils::LVMFormatSize(usedSector);
+        QString unused = Utils::LVMFormatSize(unusedSector);
+        QString sumUsedSize = Utils::LVMFormatSize(sumUsed);
+        QString sumUnusedSiz = Utils::LVMFormatSize(sumUnused);
+
+        if (sumUsedSize.contains("-")) {
+            used = "-";
+        }
+
+        if (sumUnusedSiz.contains("-")) {
+            unused = "-";
+        }
+
+
+        m_mountpointLabel->setObjectName(QString("@==@%1").arg(mountpoints));
         m_capacityLabel->setObjectName(QString("@==@%1").arg(diskSize));
         m_freeLabel->setObjectName(QString("@==@%1").arg(unused));
         m_usedLabel->setObjectName(QString("@==@%1").arg(used));
-        m_typeLabel->setObjectName(QString("@==@%1").arg(info.m_mediaType));
-        m_volumeLabel->setObjectName(QString("@==@%1").arg(info.m_interface));
+        m_typeLabel->setObjectName(QString("@==@%1").arg(diskType));
+        m_volumeLabel->setObjectName(QString("@==@%1").arg(volumeLabel));
 
-        m_frameBottom->setDiskFrameData(info.m_path, info.m_mediaType, used, unused, diskSize, info.m_interface);
+        m_frameBottom->setDiskFrameData(mountpoints, diskType, used, unused, diskSize, volumeLabel);
         m_infoTopFrame->updateDiskInfo();
 
 //        m_partitionInfoWidget->hide();
@@ -341,9 +445,32 @@ void InfoShowWidget::onCurSelectChanged()
 //        m_vgSizeInfoWidget->show();
 //        m_vgSizeInfoWidget->setData(info);
 
-        QMap<QString, QString> isJoinAllVG = DMDbusHandler::instance()->getIsJoinAllVG();
-        // 判断当前磁盘是否全部加入VG，是则显示磁盘下VG的分布情况，否则依然显示磁盘分区的分布情况
-        if (isJoinAllVG.value(info.m_path) == "false") {
+        if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS && info.m_partition.size() == 0) {
+            // 当前磁盘是整盘加密时的逻辑处理
+            m_partitionInfoWidget->hide();
+            m_vgSizeInfoWidget->hide();
+            m_infoWidget->show();
+
+            m_noused = Utils::LVMSizeToUnit(unusedSector, SIZE_UNIT::UNIT_GIB);
+            m_used = Utils::LVMSizeToUnit(usedSector, SIZE_UNIT::UNIT_GIB);
+
+            DPalette palette;
+            DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+            if (themeType == DGuiApplicationHelper::LightType) {
+                fillcolor = QColor("#0091ff");
+                fillcolor1 = palette.color(DPalette::Normal, DPalette::ToolTipText);
+                fillcolor1.setAlphaF(0.1);
+            } else if (themeType == DGuiApplicationHelper::DarkType) {
+                fillcolor = QColor("#0059D2");
+                fillcolor1 = palette.color(DPalette::Normal, DPalette::BrightText);
+                fillcolor1.setAlphaF(0.2);
+            }
+
+            QVector<QColor> color {fillcolor, fillcolor1};
+            QVector<double> size {m_used, m_noused};
+            m_infoWidget->setData(info, color, size, 1);
+        } else if (DMDbusHandler::instance()->getIsJoinAllVG().value(info.m_path) == "false") {
+            // 判断当前磁盘是否全部加入VG，是则显示磁盘下VG的分布情况，否则依然显示磁盘分区的分布情况
             m_partitionInfoWidget->show();
             m_vgSizeInfoWidget->hide();
             m_infoWidget->hide();
@@ -363,7 +490,6 @@ void InfoShowWidget::onCurSelectChanged()
         m_vgSizeInfoWidget->show();
 
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
-
         QString vgSize = vgInfo.m_vgSize;
         if (vgSize.contains("1024")) {
             vgSize = Utils::LVMFormatSize(vgInfo.m_peCount * vgInfo.m_PESize + vgInfo.m_PESize);
@@ -404,6 +530,24 @@ void InfoShowWidget::onCurSelectChanged()
         double usedSize = Utils::LVMSizeToUnit(lvInfo.m_fsUsed, SIZE_UNIT::UNIT_GIB);
         double unusedSize = Utils::LVMSizeToUnit(lvInfo.m_fsUnused, SIZE_UNIT::UNIT_GIB);
         QString lvName = lvInfo.m_lvName;
+        QString lvSize = lvInfo.m_lvSize;
+
+        if (lvInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(lvInfo.m_lvPath);
+            if (luksInfo.isDecrypt) {
+                unused = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUnused);
+                used = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUsed);
+                mountPoint = "";
+                for (int i = 0; i < luksInfo.m_mapper.m_mountPoints.size(); ++i) {
+                    mountPoint += luksInfo.m_mapper.m_mountPoints[i];
+                }
+
+                unusedSize = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUnused, SIZE_UNIT::UNIT_GIB);
+                usedSize = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUsed, SIZE_UNIT::UNIT_GIB);
+            } else {
+
+            }
+        }
 
         if (lvInfo.m_lvName.isEmpty() && lvInfo.m_lvUuid.isEmpty()) {
             unused = Utils::LVMFormatSize(lvInfo.m_lvLECount * lvInfo.m_LESize);
@@ -423,7 +567,6 @@ void InfoShowWidget::onCurSelectChanged()
             unused = "-";
         }
 
-        QString lvSize = lvInfo.m_lvSize;
         if (lvSize.contains("1024")) {
             lvSize = Utils::LVMFormatSize(lvInfo.m_lvLECount * lvInfo.m_LESize + lvInfo.m_LESize);
         }

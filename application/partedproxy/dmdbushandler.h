@@ -294,6 +294,26 @@ public:
     bool isExistMountLV(const VGInfo &info);
 
     /**
+     * @brief 判断LV是否被挂载
+     * @param lvInfo lv信息
+     * @return 挂载返回true，否则返回false
+     */
+    bool lvIsMount(const LVInfo &lvInfo);
+
+    /**
+     * @brief 判断当前磁盘是否存在已被挂载分区
+     * @return 存在返回true，否则返回false
+     */
+    bool isExistMountPartition(const DeviceInfo &info);
+
+    /**
+     * @brief 判断分区是否被挂载
+     * @param info 分区信息
+     * @return 挂载返回true，否则返回false
+     */
+    bool partitionISMount(const PartitionInfo &info);
+
+    /**
      * @brief 创建vg
      * @param vgName:待创建vg名称
      * @param devList: pv设备集合
@@ -403,6 +423,12 @@ public:
      * @param devName 设备名称
      */
     void cryptUmount(const LUKS_INFO &luks, const QString &devName);
+
+    /**
+     * @brief 获取是否全部加密
+     * @return 返回是否全部加密
+     */
+    QMap<QString, QString> getIsAllEncryption();
 
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
@@ -528,6 +554,7 @@ private:
     QMap<QString, QString> m_isJoinAllVG;
     LUKSMap m_curLUKSInfoMap;
     CRYPT_CIPHER_Support m_cryptSupport;
+    QMap<QString, QString> m_isAllEncryption;
 };
 
 #endif // DMDBUSHANDLER_H

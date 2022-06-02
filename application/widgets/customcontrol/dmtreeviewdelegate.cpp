@@ -208,20 +208,22 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         height = 9 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
         lefticonRect2.setRect(paintRect.left() + 20, paintRect.top() + height, 40, 40);
 
+        QIcon icon = Common::getIcon("treedisk");
         if (data.m_level == DMDbusHandler::DISK) {
-            QMap<QString, QString> isJoinAllVG = DMDbusHandler::instance()->getIsJoinAllVG();
-            if (isJoinAllVG.value(text) == "true") {
-                QIcon icon = Common::getIcon("treevg");
-                painter->drawPixmap(lefticonRect2, icon.pixmap(38, 38));
-            } else {
-                QIcon icon = Common::getIcon("treedisk");
-                painter->drawPixmap(lefticonRect2, icon.pixmap(38, 38));
+            if (DMDbusHandler::instance()->getIsJoinAllVG().value(text) == "true") {
+                icon = Common::getIcon("treevg");
+            } else if (DMDbusHandler::instance()->getIsAllEncryption().value(text) == "true") {
+                icon = Common::getIcon("treedisklock");
             }
         } else if (data.m_level == DMDbusHandler::VOLUMEGROUP) {
-            QIcon icon = Common::getIcon("treevg");
-            painter->drawPixmap(lefticonRect2, icon.pixmap(38, 38));
+            if (DMDbusHandler::instance()->getIsAllEncryption().value(text) == "true") {
+                icon = Common::getIcon("treevglock");
+            } else {
+                icon = Common::getIcon("treevg");
+            }
         }
-//        QTextOption option;
+        painter->drawPixmap(lefticonRect2, icon.pixmap(38, 38));
+
         QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
         if ((option.state & QStyle::State_Selected) && (data.m_level == DMDbusHandler::DISK || data.m_level == DMDbusHandler::VOLUMEGROUP)) {
             QColor textcolor = m_parentPb.color(DPalette::Normal, DPalette::HighlightedText);
@@ -257,14 +259,21 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     } else {
         int height = 10 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
         lefticon1Rect.setRect(paintRect.left() + 25, paintRect.top() + height, 30, 30);
-
-        if (data.m_level == DMDbusHandler::LOGICALVOLUME || data.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV) {
-            QIcon icon = Common::getIcon("treelv");
-            painter->drawPixmap(lefticon1Rect, icon.pixmap(28, 28));
+        QIcon icon = Common::getIcon("harddisk");
+        if (data.m_level == DMDbusHandler::LOGICALVOLUME) {
+            if (data.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+                icon = Common::getIcon("treelvlock");
+            } else {
+                icon = Common::getIcon("treelv");
+            }
         } else {
-            QIcon icon = Common::getIcon("harddisk");
-            painter->drawPixmap(lefticon1Rect, icon.pixmap(28, 28));
+            if (data.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV) {
+                icon = Common::getIcon("treelv");
+            } else if (data.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+                icon = Common::getIcon("treepartitionlock");
+            }
         }
+        painter->drawPixmap(lefticon1Rect, icon.pixmap(28, 28));
 
         QIcon icon1 = Common::getIcon("mounticon");
         QIcon icon2 = Common::getIcon("uninstallicon");

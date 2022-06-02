@@ -47,6 +47,8 @@ public:
      * @param level 磁盘数据类型   0代表磁盘   1代表分区
      * @param diskPath 磁盘路径
      * @param diskSize 磁盘大小
+     * @param vgFlag vg标志
+     * @param luksFlag 加密盘标志
      * @param partitionPath 分区路径
      * @param partitionSize 分区大小
      * @param used 已用空间
@@ -59,8 +61,8 @@ public:
      * @param systemLabel 分区分卷卷标名
      * @param flag 分区隐藏标志
     */
-    DmDiskinfoBox(int level, QObject *parent = nullptr, QString diskPath = "", QString diskSize = "", int vgFlag = 0, QString partitionPath = "",
-                  QString partitionSize = "", QString used = "", QString unused = "",
+    DmDiskinfoBox(int level, QObject *parent = nullptr, QString diskPath = "", QString diskSize = "", int vgFlag = 0, int luksFlag = 0,
+                  QString partitionPath = "", QString partitionSize = "", QString used = "", QString unused = "",
                   Sector sectorsUnallocated = 0, Sector start = 0, Sector end = 0, QString fstype = "",
                   QString mountpoints = "", QString systemLabel = "", int flag = 0);
     DmDiskinfoBox(QObject *parent = nullptr);
@@ -85,6 +87,7 @@ public:
     QString m_diskPath;
     QString m_diskSize;
     int m_vgFlag;
+    int m_luksFlag;
     QString m_partitionPath;
     QString m_partitionSize;
     QString m_used;

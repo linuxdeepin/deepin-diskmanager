@@ -48,9 +48,9 @@ InfoTopFrame::InfoTopFrame(DWidget *parent)
     } else if (DMDbusHandler::DISK == DMDbusHandler::instance()->getCurLevel()) {
         m_pictureLabel->setPixmap(Common::getIcon("disk").pixmap(85, 85));
     } else if (DMDbusHandler::VOLUMEGROUP == DMDbusHandler::instance()->getCurLevel()) {
-        m_pictureLabel->setPixmap(Common::getIcon("disk").pixmap(85, 85));
+        m_pictureLabel->setPixmap(Common::getIcon("vg").pixmap(85, 85));
     } else if (DMDbusHandler::LOGICALVOLUME == DMDbusHandler::instance()->getCurLevel()) {
-        m_pictureLabel->setPixmap(Common::getIcon("labeldisk").pixmap(85, 85));
+        m_pictureLabel->setPixmap(Common::getIcon("lv").pixmap(85, 85));
     }
 
     m_pictureLabel->setMinimumSize(85, 85);
@@ -115,6 +115,8 @@ void InfoTopFrame::updateDiskInfo()
 
         if (info.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV) {
             m_pictureLabel->setPixmap(Common::getIcon("lv").pixmap(85, 85));
+        } else if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            m_pictureLabel->setPixmap(Common::getIcon("partitionlock").pixmap(85, 85));
         } else {
             m_pictureLabel->setPixmap(Common::getIcon("labeldisk").pixmap(85, 85));
         }
@@ -136,33 +138,58 @@ void InfoTopFrame::updateDiskInfo()
         m_allMemoryLabel->setText(diskSize);
 
         QString diskType = Utils::fileSystemTypeToString(static_cast<FSType>(info.m_fileSystemType));
+        if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
+            if (luksInfo.isDecrypt) {
+                diskType = Utils::fileSystemTypeToString(luksInfo.m_mapper.m_luksFs);
+            }
+        }
         m_typeLabel->setText(tr("File system") + ": " + diskType);
     } else if (DMDbusHandler::DISK == DMDbusHandler::instance()->getCurLevel()) {
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
-        QMap<QString, QString> isJoinAllVG = DMDbusHandler::instance()->getIsJoinAllVG();
-        if (isJoinAllVG.value(info.m_path) == "true") {
+
+        if (DMDbusHandler::instance()->getIsJoinAllVG().value(info.m_path) == "true") {
             m_pictureLabel->setPixmap(Common::getIcon("vg").pixmap(85, 85));
+        } else if (DMDbusHandler::instance()->getIsAllEncryption().value(info.m_path) == "true") {
+            m_pictureLabel->setPixmap(Common::getIcon("disklock").pixmap(85, 85));
         } else {
             m_pictureLabel->setPixmap(Common::getIcon("disk").pixmap(85, 85));
         }
 
-        m_nameLabel->setText(info.m_model);
         QString diskSize = Utils::formatSize(info.m_length, info.m_sectorSize);
         m_allMemoryLabel->setText(diskSize);
 
-        QString partitionTable;
-        if (info.m_disktype == "gpt") {
-            partitionTable = "GPT";
-        } else if (info.m_disktype == "msdos") {
-            partitionTable = "MBR";
+        if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS && info.m_partition.size() == 0) {
+            // 处理磁盘是整盘加密页面显示
+            LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
+            m_nameLabel->setText(info.m_path);
+            if (luksInfo.isDecrypt) {
+                m_typeLabel->setText(tr("File system") + ": " + Utils::fileSystemTypeToString(luksInfo.m_mapper.m_luksFs));
+            } else {
+                m_typeLabel->setText(tr("File system") + ": " + Utils::fileSystemTypeToString(FSType::FS_LUKS));
+            }
         } else {
-            partitionTable = info.m_disktype;
+            m_nameLabel->setText(info.m_model);
+            QString partitionTable;
+            if (info.m_disktype == "gpt") {
+                partitionTable = "GPT";
+            } else if (info.m_disktype == "msdos") {
+                partitionTable = "MBR";
+            } else {
+                partitionTable = info.m_disktype;
+            }
+            m_typeLabel->setText(tr("%1 partition table").arg(partitionTable));
         }
-        m_typeLabel->setText(tr("%1 partition table").arg(partitionTable));
-    } else if (DMDbusHandler::VOLUMEGROUP == DMDbusHandler::instance()->getCurLevel()) {
-        m_pictureLabel->setPixmap(Common::getIcon("vg").pixmap(85, 85));
 
+    } else if (DMDbusHandler::VOLUMEGROUP == DMDbusHandler::instance()->getCurLevel()) {
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
+
+        if (DMDbusHandler::instance()->getIsAllEncryption().value(vgInfo.m_vgName) == "true") {
+            m_pictureLabel->setPixmap(Common::getIcon("vglock").pixmap(85, 85));
+        } else {
+            m_pictureLabel->setPixmap(Common::getIcon("vg").pixmap(85, 85));
+        }
+
         m_nameLabel->setText(vgInfo.m_vgName);
         QString vgSize = vgInfo.m_vgSize;
         if (vgSize.contains("1024")) {
@@ -172,18 +199,28 @@ void InfoTopFrame::updateDiskInfo()
 
         m_typeLabel->setText(tr("Volume group"));
     } else if (DMDbusHandler::LOGICALVOLUME == DMDbusHandler::instance()->getCurLevel()) {
-        m_pictureLabel->setPixmap(Common::getIcon("lv").pixmap(85, 85));
-
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+
+        if (lvInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            m_pictureLabel->setPixmap(Common::getIcon("lvlock").pixmap(85, 85));
+        } else {
+            m_pictureLabel->setPixmap(Common::getIcon("lv").pixmap(85, 85));
+        }
+
         m_nameLabel->setText(lvInfo.m_lvPath);
         QString lvSize = lvInfo.m_lvSize;
         if (lvSize.contains("1024")) {
             lvSize = Utils::LVMFormatSize(lvInfo.m_lvLECount * lvInfo.m_LESize + lvInfo.m_LESize);
         }
         m_allMemoryLabel->setText(lvSize);
-
-        FSType fstype = static_cast<FSType>(lvInfo.m_lvFsType);
-        QString fstypeName = Utils::fileSystemTypeToString(fstype);
+qDebug() << lvInfo.m_lvFsType << Utils::fileSystemTypeToString(static_cast<FSType>(lvInfo.m_lvFsType));
+        QString fstypeName = Utils::fileSystemTypeToString(static_cast<FSType>(lvInfo.m_lvFsType));
+        if (lvInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(lvInfo.m_lvPath);
+            if (luksInfo.isDecrypt) {
+                fstypeName = Utils::fileSystemTypeToString(luksInfo.m_mapper.m_luksFs);
+            }
+        }
         m_typeLabel->setText(tr("File system") + ": " + fstypeName);
     }
 }

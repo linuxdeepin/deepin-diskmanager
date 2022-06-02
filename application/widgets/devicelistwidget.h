@@ -167,12 +167,6 @@ private slots:
     void onDiskBadSectorsClicked();
 
     /**
-     * @brief 判断当前检测磁盘是否存在被挂载的分区
-     * @return 存在返回true，否则返回false
-     */
-    bool isExistMountPartition();
-
-    /**
      * @brief 磁盘新建分区表按钮点击响应的槽函数
      */
     void onCreatePartitionTableClicked();

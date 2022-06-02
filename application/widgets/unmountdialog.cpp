@@ -60,6 +60,9 @@ void UnmountDialog::initUi()
         setTitle(tr("Unmount %1").arg(lvInfo.m_lvName));
 
         tipLabel->setText(tr("Make sure there are no programs running on the logical volume"));
+    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
+        DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
+        setTitle(tr("Unmount %1").arg(info.m_path));
     }
 
     int index = addButton(tr("Cancel"), false, ButtonNormal);
@@ -98,6 +101,11 @@ void UnmountDialog::umountCurMountPoints()
             lvAction.m_lvAct = LVMAction::LVM_ACT_LV_UMOUNT;
 
             DMDbusHandler::instance()->onUmountLV(lvAction);
+        }
+    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
+        DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
+        if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            DMDbusHandler::instance()->cryptUmount(DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path), info.m_path);
         }
     }
 }

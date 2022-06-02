@@ -1,10 +1,8 @@
-
-
 # Disk Utility|deepin-diskmanager|
 
 ## Overview
 
-Disk Utility is a useful disk management tool,  which help the user to view the basic information of disks and create and manage logical volumes.
+Disk Utility is a useful disk management tool,  which helps the user to view the basic information of disks, create and manage logical volumes.
 
 ## Guide
 
@@ -247,7 +245,7 @@ Wiping a logical volume is similar with wiping a disk or partition. Please refer
 
 #### Mounting a Logical Volume
 
-Mounting a logical volume is similar with mounting a partition. Please refer to [Mount a Partition](#Mount a Partition)in the Disk Management section.
+Mounting a logical volume is similar with mounting a partition. Please refer to [Mount a Partition](#Mount a Partition) in the Disk Management section.
 
 #### Unmounting a Logical Volume
 

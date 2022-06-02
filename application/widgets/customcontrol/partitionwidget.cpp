@@ -297,10 +297,10 @@ void PartitionWidget::partInfoShowing()
     m_partDoLabel->setPalette(infoPalette);
 
     DLabel *labelSpace = new DLabel(m_partWidget);
-    m_addButton = new DIconButton(DStyle::SP_IncreaseElement);
+    m_addButton = new DIconButton(DStyle::SP_IncreaseElement, m_partWidget);
     m_addButton->setObjectName("addButton");
     m_addButton->setAccessibleName("addButton");
-    m_remButton = new DIconButton(DStyle::SP_DecreaseElement);
+    m_remButton = new DIconButton(DStyle::SP_DecreaseElement, m_partWidget);
     m_remButton->setObjectName("removeButton");
     m_remButton->setAccessibleName("removeButton");
     m_remButton->setToolTip(tr("Delete last partition"));
@@ -503,7 +503,7 @@ void PartitionWidget::setAddOrRemResult(const bool &isExceed)
     m_slider->setValue(100);
     m_partNameEdit->lineEdit()->setPlaceholderText(tr("Name"));
     m_partSizeEdit->lineEdit()->setPlaceholderText(tr("Size"));
-
+qDebug() << isExceed;
     setEnable(0, isExceed);
     onSliderValueChanged(100);
 }
@@ -645,7 +645,7 @@ void PartitionWidget::setControlEnable(const bool &isTrue)
 }
 
 void PartitionWidget::setLabelColor(const bool &isOk)
-{
+{qDebug() << "11111111111111111";
     if (isOk) {
         DPalette framePalette = DApplicationHelper::instance()->palette(m_botFrame);
         framePalette.setColor(DPalette::Text, QColor(palette().buttonText().color()));
@@ -859,7 +859,7 @@ void PartitionWidget::onAddPartition()
 
     double currentSize = 0.00;
     stPart part;
-    m_applyBtn->setEnabled(true);
+
     //一次新建不超过24个分区
     if (m_partNameEdit->text().isEmpty()) {
         m_partNameEdit->setText(" ");
@@ -883,6 +883,7 @@ void PartitionWidget::onAddPartition()
         PasswordInputDialog passwordInputDialog(this);
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         passwordInputDialog.setDeviceName(info.m_path);
+        passwordInputDialog.setObjectName("passwordInputDialog");
         passwordInputDialog.setAccessibleName("passwordInputDialog");
         if (passwordInputDialog.exec() != DDialog::Accepted) {
             return;
@@ -929,11 +930,13 @@ void PartitionWidget::onAddPartition()
     m_partChartWidget->update();
 
     //新增分区后样式变化
-    if (sumValue() >= m_totalSize - 0.01)
+    if (sumValue() >= m_totalSize - 0.01) {
         m_isExceed = false;
-    else
+    } else {
         m_isExceed = true;
+    }
 
+    m_applyBtn->setEnabled(true);
     setAddOrRemResult(m_isExceed);
 }
 
@@ -1062,7 +1065,7 @@ void PartitionWidget::onRevertButton()
     m_sizeInfo.clear();
     m_partName.clear();
     m_partNameEdit->clear();
-    m_partFormateCombox->setCurrentIndex(2);
+    m_partFormateCombox->setCurrentText("ext4");
     m_partComboBox->setCurrentIndex(0);
     m_partChartWidget->transInfos(m_totalSize, m_sizeInfo);
     m_isExceed = true;

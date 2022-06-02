@@ -30,6 +30,7 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="157"/>
         <location filename="../widgets/createlvwidget.cpp" line="161"/>
+        <location filename="../widgets/createlvwidget.cpp" line="992"/>
         <source>VG name:</source>
         <translation>VG adı:</translation>
     </message>
@@ -37,7 +38,7 @@
         <location filename="../widgets/createlvwidget.cpp" line="169"/>
         <location filename="../widgets/createlvwidget.cpp" line="333"/>
         <location filename="../widgets/createlvwidget.cpp" line="377"/>
-        <location filename="../widgets/createlvwidget.cpp" line="989"/>
+        <location filename="../widgets/createlvwidget.cpp" line="993"/>
         <source>LV file system:</source>
         <translation>LV fayl sistemi:</translation>
     </message>
@@ -98,33 +99,32 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="717"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
-        <translation type="unfinished"/>
+        <translation>Diski şifrələmək üçün aes-xts-plain64 standart alqoritmindən istifadə edin. Diski yenidən qoşmadan öncə onu şifrələməlisiniz.</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="723"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation type="unfinished"/>
+        <translation>Diskin şifrəsini açmaq üçün sm4-xts-plain kriptoqrafiya alqoritmindən istifadə edin. Diski yenidən qoşmadan öncə onun şifrəsini açın. Kriptoqrafiya alqoritmi dəstəkləməyən əməliyyat sistemləri diskin şifrəsini aça bilməyəcək.</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="817"/>
         <source>To encrypt a volume, it should be larger than 100 MiB</source>
-        <translation type="unfinished"/>
+        <translation>Şifrələnəcək tutum 100 MiB-dan böyük olmalıdır</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="840"/>
+        <location filename="../widgets/createlvwidget.cpp" line="842"/>
         <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
-        <translation type="unfinished"/>
+        <translation>Şifrənin itirilməsinin qarşısını almaq üçün onun ehtiyyat nüsxəsini etibarlı bir yerdə saxlayın.</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="841"/>
+        <location filename="../widgets/createlvwidget.cpp" line="843"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>OLDU</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="988"/>
         <source>Disk:</source>
-        <translation>Disk:</translation>
+        <translation type="vanished">Disk:</translation>
     </message>
 </context>
 <context>
@@ -175,16 +175,16 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="114"/>
         <location filename="../widgets/createvgwidget.cpp" line="402"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1044"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1054"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1047"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1057"/>
         <location filename="../widgets/createvgwidget.cpp" line="1491"/>
         <location filename="../widgets/createvgwidget.cpp" line="1501"/>
         <location filename="../widgets/createvgwidget.cpp" line="1550"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1600"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1603"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1633"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1738"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1801"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1611"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1614"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1644"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1760"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1823"/>
         <source>Capacity selected: %1</source>
         <translation>Seçilən ölçü: %1</translation>
     </message>
@@ -308,33 +308,43 @@
         <translation>İmtina</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1757"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1559"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1653"/>
+        <source>Adding the disk/partition to a logical volume group 
+will format it and remove its password.</source>
+        <translation>Diskin/bölmənin məntiqi qrupa əlavə edilməsi
+onu formatlayacaq və şifrəsini siləcək.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1779"/>
         <source>Not enough space to back up data on %1, please clear disk space</source>
         <translation>%1 üzərində verilənlərin saxlanıması üçün kifayət qədər yer yoxdur, lütfən diskdə yer boşaldın</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1758"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1560"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1654"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1780"/>
         <source>OK</source>
         <translation>OLDU</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1922"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1944"/>
         <source>Existing volume group, creation failed. Please retry after reboot.</source>
         <translation>Mövcud tutum qrupunun yaradılması uğursuz oldu. Lütfən sistemi yenidən başlatdıqdan sonra yenidən cəhd edin.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1926"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1948"/>
         <source>Failed to create a physical volume. Please refresh Disk Utility and try again.</source>
         <translation>Fiziki tutumun yaradılması uğursuz oldu. Disk Alətini yeniləyin və bir daha cəhd edin.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1930"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1952"/>
         <source>Device input/output error. Please try again after reboot.</source>
         <translation>Cihaz giriş/çıxış xətası. Yenidən başlatdıqdan sonra bir daha cəhd edin.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1983"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1990"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2005"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2012"/>
         <source>Refreshing the page to reload disks</source>
         <translation>Diski yenidən yükləmək üşün səhifə yenilənir</translation>
     </message>
@@ -375,144 +385,149 @@
 <context>
     <name>DMDbusHandler</name>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="208"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="210"/>
         <source>Refreshing data...</source>
         <translation>Verilənlər yenilənir...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="227"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="229"/>
         <source>Initializing data...</source>
         <translation>Verilənlər işə salınır...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="260"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="627"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="262"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="703"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="794"/>
         <source>Mounting %1 ...</source>
         <translation>%1 qoşulur...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="267"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="634"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="269"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="710"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="801"/>
         <source>Unmounting %1 ...</source>
         <translation>%1 ayrılır...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="306"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="308"/>
         <source>Resizing %1 ...</source>
         <translation>%1 ölçüsü dəyişir...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="313"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="315"/>
         <source>Creating a new partition...</source>
         <translation>Yeni bölmə yaradılır...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="456"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="474"/>
         <source>Deleting %1 ...</source>
         <translation>%1 silinir...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="508"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="526"/>
         <source>Creating a partition table of %1 ...</source>
         <translation>%1 bölmələr cədvəli yaradılır...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="510"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="528"/>
         <source>Replacing the partition table of %1 ...</source>
         <translation>%1 bölmələr cədvəli əvəzlənir...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="594"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="670"/>
         <source>Creating...</source>
         <translation>Yaradılır...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="601"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="608"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="677"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="684"/>
         <source>Deleting...</source>
         <translation>Silinir...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="620"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="696"/>
         <source>Resizing space...</source>
         <translation>Ölçüsü dəyişdirilir...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="658"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="734"/>
         <source>AES Encryption</source>
-        <translation type="unfinished"/>
+        <translation>AES şifrələmə</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="662"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="736"/>
         <source>SM4 Encryption</source>
-        <translation type="unfinished"/>
+        <translation>AM4 şifrələmə</translation>
     </message>
 </context>
 <context>
     <name>DecryptDialog</name>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="57"/>
+        <location filename="../widgets/decryptdialog.cpp" line="59"/>
         <source>Enter the password to decrypt the disk</source>
-        <translation type="unfinished"/>
+        <translation>Diskin şifrəsini açmaq üçün şifrəni daxil edin</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="69"/>
+        <location filename="../widgets/decryptdialog.cpp" line="71"/>
         <source>Enter the password to decrypt the volume group</source>
-        <translation type="unfinished"/>
+        <translation>Tutum qrupunun şifrəsini açmaq üçün şifrəni daxil edin</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="86"/>
+        <location filename="../widgets/decryptdialog.cpp" line="88"/>
         <source>Enter a password </source>
-        <translation type="unfinished"/>
+        <translation>Şifrə daxil edin</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="90"/>
+        <location filename="../widgets/decryptdialog.cpp" line="92"/>
         <source>Password hint</source>
-        <translation type="unfinished"/>
+        <translation>Şifrə ipucu</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="133"/>
+        <location filename="../widgets/decryptdialog.cpp" line="140"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>İmtina</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="138"/>
+        <location filename="../widgets/decryptdialog.cpp" line="145"/>
         <source>Decrypt</source>
         <comment>button</comment>
-        <translation type="unfinished"/>
+        <translation>Şifrəni açın</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="166"/>
+        <location filename="../widgets/decryptdialog.cpp" line="173"/>
         <source>Decrypting...</source>
-        <translation type="unfinished"/>
+        <translation>Şifrə açılır...</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="209"/>
-        <location filename="../widgets/decryptdialog.cpp" line="349"/>
+        <location filename="../widgets/decryptdialog.cpp" line="336"/>
+        <source>Decryption failed</source>
+        <translation>Şifrəsini açmaq mümkün olmadı</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="354"/>
         <source>Wrong password, %1 chances left</source>
-        <translation type="unfinished"/>
+        <translation>Şifrə səhvdir, %1 cəhd qaldı</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="211"/>
-        <location filename="../widgets/decryptdialog.cpp" line="351"/>
+        <location filename="../widgets/decryptdialog.cpp" line="356"/>
         <source>Wrong password, only one chance left</source>
-        <translation type="unfinished"/>
+        <translation>Şifrə səhvdir, yalnız bir cəhd qaldı</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="216"/>
+        <location filename="../widgets/decryptdialog.cpp" line="224"/>
         <source>Please try again %1 minutes later</source>
-        <translation type="unfinished"/>
+        <translation>Lütfən %1 dəqiqə sonra yenidən cəhd edin</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="291"/>
+        <location filename="../widgets/decryptdialog.cpp" line="298"/>
         <source>The password cannot be empty</source>
-        <translation type="unfinished"/>
+        <translation>Çifrə boş ola bilməz</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="347"/>
+        <location filename="../widgets/decryptdialog.cpp" line="352"/>
         <source>Password locked, please try again %1 minutes later</source>
-        <translation type="unfinished"/>
+        <translation>Şifrə kilidləndi, lütfən %1 dəqiqə sonra cəhd edin</translation>
     </message>
 </context>
 <context>
@@ -553,251 +568,251 @@
         <translation>Bölməni silin</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="216"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="226"/>
         <source>Delete volume group</source>
         <translation>Tutum qrupunu silin</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="222"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="619"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="232"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="607"/>
         <source>Create logical volume</source>
         <translation>Məntiqi tutum yaradın</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="247"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="257"/>
         <source>Delete logical volume</source>
         <translation>Məntiqi tutumu silin</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="290"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="300"/>
         <source>Failed to get hardware information</source>
         <translation>Avadanlıq haqqında məlumatlar alına bilmədi</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="290"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="300"/>
         <source>Close</source>
         <translation>Bağlayın</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="337"/>
         <source>Please unmount all partitions in the disk first</source>
         <translation>İlk öncə diskdəki bütün bölmələri ayırın</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="590"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="647"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="337"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="578"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="631"/>
         <source>OK</source>
         <translation>OLDU</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="361"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
         <translation>Ehtiyyatlı olun, yeni bölmələr cədvəli yaradılarsa diskdəki bütün bölmələr birləşdiriləcək və onlardakı bütün məlumatlar itiriləcəkdir.</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="361"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
         <source>Proceed</source>
         <translation>Davam edin</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="361"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="400"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="432"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="603"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="660"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="388"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="420"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="436"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
         <source>Cancel</source>
         <translation>İmtina</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="387"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="375"/>
         <source>No errors found in the partition table</source>
         <translation>Bölmələr cədvəlində heç bir xəta tapılmadı</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="400"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="388"/>
         <source>Do you want to hide this partition?</source>
         <translation>Bu bölməni gizlətmək istəyirsiniz?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="400"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="388"/>
         <source>Hide</source>
         <translation>Gizlədin</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="407"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="395"/>
         <source>Failed to hide the partition: unable to lock it</source>
         <translation>Bölmə gizlədilə bilmədi: onu kilidləmək mümkün deyil</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="415"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="403"/>
         <source>You can only hide the unmounted partition</source>
         <translation>Siz yalnız ayrılmış bölmələri gizlədə bilərsiniz</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="432"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="420"/>
         <source>Do you want to unhide this partition?</source>
         <translation>Bu bölməni, görünən etmək istəyirsiniz?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="432"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="420"/>
         <source>Unhide</source>
         <translation>Göstərin</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="436"/>
         <source>Are you sure you want to delete this partition?</source>
         <translation>Bu bölməni silmək istədiyinizə əminsiniz?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="436"/>
         <source>You will lose all data in it</source>
         <translation>Siz ondakı bütün verilənləri itirəcəksiniz</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="603"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="660"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="436"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
         <source>Delete</source>
         <translation>Silin</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="455"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="443"/>
         <source>Failed to delete the partition: unable to lock it</source>
         <translation>Bölmə silinə bilmədi: onu kilidləmək mümkün deyil</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="470"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="458"/>
         <source>Hide the partition successfully</source>
         <translation>Bölmə uğurla gizlədildi</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="475"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="463"/>
         <source>Failed to hide the partition</source>
         <translation>Bölmə gizlədilə bilmədi</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="485"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="473"/>
         <source>Unhide the partition successfully</source>
         <translation>Bölmə uğurla göstərildi</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="490"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="478"/>
         <source>Failed to unhide the partition</source>
         <translation>Bölməni göstərmək alınmadı</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="506"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="494"/>
         <source>Delete the partition successfully</source>
         <translation>Bölmə uğurla silindi</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="514"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="502"/>
         <source>Failed to find the disk</source>
         <translation>Disk tapılmadı</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="518"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="506"/>
         <source>Failed to get the partition info</source>
         <translation>Bölmə haqqında məlumat alınmadı</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="522"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="510"/>
         <source>Failed to delete the partition</source>
         <translation>Bölmə silinə bilmədi</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="526"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="514"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>Sorğu nüvəyə tətbiq edilə bilmədi</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="533"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="521"/>
         <source>Failed to delete the partition: %1</source>
         <translation>Bu bölmə silinə bilmədi: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="543"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="531"/>
         <source>Unmounting successful</source>
         <translation>Uğurla ayrıldı</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="548"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="536"/>
         <source>Unmounting failed</source>
         <translation>Ayırmaq baş tutmadı</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="559"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="547"/>
         <source>Creating partition table successful</source>
         <translation>Bölmələr cədvəli uğurla yaradıldı</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="563"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="551"/>
         <source>Replacing partition table successful</source>
         <translation>Bölmələr cədvəli uöurla əvəz olundu</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="571"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="559"/>
         <source>Creating partition table failed</source>
         <translation>Bölmələr cədvəli yaradıla bilmədi</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="575"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="563"/>
         <source>Replacing partition table failed</source>
         <translation>Bölmələr cədvəlinin əvəz olunması baş tutmadı</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="590"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="578"/>
         <source>Unmount all logical volumes in %1 first</source>
         <translation>Öncə %1 daxilindəki bütün məntiqi tutumları ayıtın</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="647"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="631"/>
         <source>Unmount %1 first</source>
         <translation>Öncə %1 ayırın</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="688"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="672"/>
         <source>The logical volume group is busy and cannot be deleted. Please retry after reboot.</source>
         <translation>Məntiqi tutum qrupu məşğuldur və silinə bilməz. Yenidən başlatdıqdan sonra bir daha cəhd edin</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="693"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="730"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="677"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="714"/>
         <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
         <translation>Məntiqi tutumlar məşğuldur və silinə bilməz. Yenidən başlatdıqdan sonra bir daha cəhd edin</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="602"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="659"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="590"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="643"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
         <translation>Əgər silinərsə məlumatlar bərpa oluna bilməz, lütfən davam etmədən öncə təsdiq edin</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="619"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="607"/>
         <source>The disks will be formatted if you create a logical volume</source>
         <translation>Məntiqi tutum yaratsanız disklər formatlanacaqdır</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="698"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="682"/>
         <source>Failed to delete the logical volume group</source>
         <translation>Məntiqi tutum qrupunun silinməsi uğursuz oldu</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="735"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="719"/>
         <source>Failed to delete the logical volume</source>
         <translation>Məntiqi tutumun silinməsi uğursuz oldu</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="829"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="813"/>
         <source>Volume Groups</source>
         <translation>Tutum qrupları</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="881"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="867"/>
         <source>Disks</source>
         <translation>Disklər</translation>
     </message>
@@ -812,7 +827,7 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="84"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="136"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1245"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1224"/>
         <source>Verify:</source>
         <translation>Yoxlayın:</translation>
     </message>
@@ -834,14 +849,14 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="132"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="137"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1246"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1225"/>
         <source>Method:</source>
         <translation>Usul:</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="147"/>
-        <source>Verifying times</source>
-        <translation>Yoxlama vaxtı</translation>
+        <source>Rounds</source>
+        <translation>Dövrlər</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="148"/>
@@ -924,8 +939,8 @@
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="760"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="884"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="930"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1034"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1129"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1013"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1108"/>
         <source>Time elapsed:</source>
         <translation>Keçən vaxt:</translation>
     </message>
@@ -936,10 +951,10 @@
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="778"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="885"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="931"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1035"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1054"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1102"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1135"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1014"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1033"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1081"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1114"/>
         <source>Time left:</source>
         <translation>Qalan vaxt:</translation>
     </message>
@@ -960,90 +975,90 @@
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="802"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="994"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="973"/>
         <source>OK</source>
         <translation>OLDU</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="990"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="969"/>
         <source>The verifying disk contains mounted partitions, so you cannot repair it.</source>
         <translation>Yoxlanılan disk qoşulmuş bölmələrdən ibarətdir, belə ki, siz onu təmir edə bilməzsiniz.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="992"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="971"/>
         <source>Please unmount partitions and then repair the disk.</source>
         <translation>Diskin təmirinə başlamadan öncə onu ayırın.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="981"/>
         <source>Warning</source>
         <translation>Xəbərdarlıq</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1007"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="986"/>
         <source>Bad sector repairing cannot recover files,</source>
         <translation>Pozulmuş sektorun təmiri faylları bərpa etməyəcək.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1008"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="987"/>
         <source>but destroys data on and near bad sectors instead.</source>
         <translation>lakin pozulmuş sektor və yaxınlığındakı məlumatları məhv edir.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1009"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="988"/>
         <source>Please back up all data before repair.</source>
         <translation>Təmirə başlamadan öncə bütün verilənlərin ehtiyyat nüsxəsini saxlayın.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1023"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1161"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1188"/>
         <source>Cancel</source>
         <translation>İmtina</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1024"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1003"/>
         <source>Start Repair</source>
         <translation>Təmiri başladın</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1070"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1049"/>
         <source>Repairing cylinder: %1</source>
         <translation>Silindirin təmiri: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1107"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1086"/>
         <source>Repair completed. Cylinder: %1 repaired.</source>
         <translation>Təmir başa çatdı. Silindir: %1 bərpa olundu.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1110"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1089"/>
         <source>Disk repair completed. %1 bad blocks repaired.</source>
         <translation>Diskin təmiri başa çatdı. %1 pozulmuş blok bərpa olundu.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1181"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1160"/>
         <source>Verifying for bad sectors, exit now?</source>
         <translation>Pozulmuş sektorlar yaxlanılır, indi çıxılsın?</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1181"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1160"/>
         <source>The verified information will not be reserved</source>
         <translation>Yoxlama məlumatları saxlanılmayacaqdır</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1161"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1188"/>
         <source>Exit</source>
         <translation>Çıxış</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1208"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1187"/>
         <source>Repairing bad sectors, exit now?</source>
         <translation>Pozulmuş sektorlar təmir olunur, indi çıxılsın?</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1208"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1187"/>
         <source>The repairing information will not be reserved</source>
         <translation>Bərpa məlumatları saxlanılmayacaqdır</translation>
     </message>
@@ -1333,12 +1348,12 @@
     <message>
         <location filename="../widgets/formatedialog.cpp" line="165"/>
         <source>AES Encryption</source>
-        <translation type="unfinished"/>
+        <translation>AES şifrələmə</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="168"/>
         <source>SM4 Encryption</source>
-        <translation type="unfinished"/>
+        <translation>AM4 şifrələmə</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="182"/>
@@ -1397,7 +1412,7 @@
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="343"/>
-        <location filename="../widgets/formatedialog.cpp" line="737"/>
+        <location filename="../widgets/formatedialog.cpp" line="748"/>
         <source>Failed to find the disk</source>
         <translation>Disk tapılmadı</translation>
     </message>
@@ -1429,7 +1444,7 @@
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="359"/>
-        <location filename="../widgets/formatedialog.cpp" line="749"/>
+        <location filename="../widgets/formatedialog.cpp" line="760"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>Sorğu nüvəyə tətbiq edilə bilmədi</translation>
     </message>
@@ -1444,12 +1459,12 @@
     <message>
         <location filename="../widgets/formatedialog.cpp" line="470"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
-        <translation type="unfinished"/>
+        <translation>Diski şifrələmək üçün aes-xts-plain64 standart alqoritmindən istifadə edin. Diski qoşmadan öncə onu şifrələməlisiniz.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="480"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation type="unfinished"/>
+        <translation>Diskin şifrəsini açmaq üçün sm4-xts-plain kriptoqrafiya alqoritmindən istifadə edin. Diski yenidən qoşmadan öncə onun şifrəsini açın. Kriptoqrafiya alqoritmi dəstəkləməyən əməliyyat sistemləri diskin şifrəsini aça bilməyəcək.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="520"/>
@@ -1467,38 +1482,38 @@
         <translation>Təmizlədikdən sonra faylları geri qaytara bilməzsiniz və proses ləng davam edəcək.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="637"/>
+        <location filename="../widgets/formatedialog.cpp" line="640"/>
         <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
-        <translation type="unfinished"/>
+        <translation>Şifrənin itirilməsinin qarşısını almaq üçün onun ehtiyyat nüsxəsini etibarlı bir yerdə saxlayın.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="638"/>
+        <location filename="../widgets/formatedialog.cpp" line="641"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>OLDU</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="699"/>
+        <location filename="../widgets/formatedialog.cpp" line="710"/>
         <source>Wiping %1</source>
         <translation>%1 silinir</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="722"/>
+        <location filename="../widgets/formatedialog.cpp" line="733"/>
         <source>&quot;%1&quot; wiped</source>
         <translation>&quot;%1&quot; silindi</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="728"/>
+        <location filename="../widgets/formatedialog.cpp" line="739"/>
         <source>Failed to wipe %1</source>
         <translation>%1 silinmədi</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="741"/>
+        <location filename="../widgets/formatedialog.cpp" line="752"/>
         <source>Failed to get the partition info</source>
         <translation>Bölmə haqqında məlumat alınmadı</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="745"/>
+        <location filename="../widgets/formatedialog.cpp" line="756"/>
         <source>Failed to delete the partition</source>
         <translation>Bölmə silinə bilmədi</translation>
     </message>
@@ -1508,7 +1523,8 @@
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="139"/>
         <location filename="../widgets/infoshowwidget.cpp" line="244"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="435"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="385"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="578"/>
         <source>Mount point:</source>
         <translation>Qoşulma nöqtəsi:</translation>
     </message>
@@ -1525,8 +1541,9 @@
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="161"/>
         <location filename="../widgets/infoshowwidget.cpp" line="245"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="378"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="436"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="386"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="504"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="579"/>
         <source>Type:</source>
         <translation>Növ:</translation>
     </message>
@@ -1538,48 +1555,49 @@
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="175"/>
         <location filename="../widgets/infoshowwidget.cpp" line="246"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="387"/>
         <source>Volume label:</source>
         <translation>Tutumun yarlığı:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="326"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="323"/>
         <source>Path:</source>
         <translation>Yol:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="327"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="324"/>
         <source>Disk type:</source>
         <translation>Disk növü:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="328"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="325"/>
         <source>Interface:</source>
         <translation>İnterfeys:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="377"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="503"/>
         <source>LV count:</source>
         <translation>LV sayı:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="379"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="505"/>
         <source>VG name:</source>
         <translation>VG adı:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="384"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="387"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="510"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="513"/>
         <source>Volume group</source>
         <translation>Tutum qrupu</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="437"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="580"/>
         <source>Volume name:</source>
         <translation>Tutumun adı:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="442"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="445"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="585"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="588"/>
         <source>Logical volume</source>
         <translation>Məntiqi tutum</translation>
     </message>
@@ -1592,18 +1610,20 @@
         <translation>Tutumu</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="139"/>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="187"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="147"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="167"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="169"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="224"/>
         <source>File system</source>
         <translation>Fayl sistemi</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="161"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="181"/>
         <source>%1 partition table</source>
         <translation>%1 bölmə cədvəli</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="173"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="200"/>
         <source>Volume group</source>
         <translation>Tutum qrupu</translation>
     </message>
@@ -1636,7 +1656,7 @@
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="84"/>
-        <location filename="../widgets/mountdialog.cpp" line="216"/>
+        <location filename="../widgets/mountdialog.cpp" line="234"/>
         <source>Cancel</source>
         <translation>İmtina</translation>
     </message>
@@ -1646,12 +1666,12 @@
         <translation>Qoşmaq</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="216"/>
+        <location filename="../widgets/mountdialog.cpp" line="234"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>Bu qoşulma nöqtəsi altındakı verilənlər itiriləcəkdir, kataloqu başqa yerə qoşmanız xahiş olunur</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="216"/>
+        <location filename="../widgets/mountdialog.cpp" line="234"/>
         <source>OK</source>
         <translation>OLDU</translation>
     </message>
@@ -1836,12 +1856,12 @@
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="723"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting.</source>
-        <translation type="unfinished"/>
+        <translation>Diski şifrələmək üçün aes-xts-plain64 standart alqoritmindən istifadə edin. Əgər disk şifrələnibsə, qoşmadan öncə onu şifrəsini açmalısınız.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="729"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation type="unfinished"/>
+        <translation>Diskin şifrəsini açmaq üçün sm4-xts-plain kriptoqrafiya alqoritmindən istifadə edin. Əgər disk şifrələnibsə, qoşmadan öncə onun şifrəsini açmalısınız. Kriptoqrafiya alqoritmi dəstəkləməyən əməliyyat sistemləri diskin şifrəsini aça bilməyəcək.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="856"/>
@@ -1851,12 +1871,12 @@
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="879"/>
         <source>To encrypt a partition, it should be larger than 100 MiB</source>
-        <translation type="unfinished"/>
+        <translation>Şifrələnəcək bölmə 100 MiB-dan böyük olmalıdır</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="903"/>
         <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
-        <translation type="unfinished"/>
+        <translation>Şifrənin itirilməsinin qarşısını almaq üçün onun ehtiyyat nüsxəsini etibarlı bir yerdə saxlayın.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="904"/>
@@ -1873,84 +1893,84 @@
 <context>
     <name>PasswordInputDialog</name>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="74"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="179"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="73"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="178"/>
         <source>Set a password to encrypt %1</source>
-        <translation type="unfinished"/>
+        <translation>%1 şifrələmək üçün şifrəni daxil edin</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="78"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="77"/>
         <source>The password cannot be reset or retrieved online</source>
-        <translation type="unfinished"/>
+        <translation>Şifrə onlayn bərpa edilə və ya qaytarıla bilməz</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="82"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="81"/>
         <source>Password</source>
-        <translation type="unfinished"/>
+        <translation>Şifrə</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="87"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="86"/>
         <source>Repeat password</source>
-        <translation type="unfinished"/>
+        <translation>Şifrənin təkrarı</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="92"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="91"/>
         <source>Password hint</source>
-        <translation type="unfinished"/>
+        <translation>Şifrə ipucu</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="96"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="95"/>
         <source>(Recommended)</source>
-        <translation type="unfinished"/>
+        <translation>(Tövsiyyə olunur)</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="106"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="105"/>
         <source>Enter a password </source>
-        <translation type="unfinished"/>
+        <translation>Şifrə daxil edin</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="112"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="111"/>
         <source>Enter the password again</source>
-        <translation type="unfinished"/>
+        <translation>Şifrəni yenidən daxil edin</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="161"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="160"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>İmtina</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="162"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="161"/>
         <source>Confirm</source>
         <comment>button</comment>
         <translation>Təsdiq edin</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="202"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="216"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="250"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="201"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="215"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="249"/>
         <source>The password exceeds the maximum length</source>
-        <translation type="unfinished"/>
+        <translation>Şifrə maksimum uzunluğu keçir</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="243"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="242"/>
         <source>The password cannot be empty</source>
-        <translation type="unfinished"/>
+        <translation>Çifrə boş ola bilməz</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="257"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="256"/>
         <source>Passwords do not match</source>
-        <translation type="unfinished"/>
+        <translation>Şifrələr eyni deyil</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="264"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="263"/>
         <source>The password hint should differ from the password</source>
-        <translation type="unfinished"/>
+        <translation>Şifrə ipucu şifrədən fərqli olmalıdır</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="118"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="117"/>
         <source>Enter a password hint</source>
-        <translation type="unfinished"/>
+        <translation>Şifrə ipucunu yazın</translation>
     </message>
 </context>
 <context>
@@ -2142,16 +2162,16 @@
 <context>
     <name>SizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="192"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="276"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="245"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="329"/>
         <source> Capacity:</source>
         <translation>Həcm:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="232"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="236"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="316"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="319"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="285"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="289"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="369"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="372"/>
         <source>Used:</source>
         <translation>İstifadə olunmuş:</translation>
     </message>
@@ -2187,7 +2207,7 @@
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="59"/>
-        <location filename="../widgets/titlewidget.cpp" line="393"/>
+        <location filename="../widgets/titlewidget.cpp" line="435"/>
         <source>Create volume group</source>
         <translation>Tutum qrupu yaradın</translation>
     </message>
@@ -2208,7 +2228,7 @@
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="75"/>
-        <location filename="../widgets/titlewidget.cpp" line="291"/>
+        <location filename="../widgets/titlewidget.cpp" line="342"/>
         <source>Create logical volume</source>
         <translation>Məntiqi tutum yaradın</translation>
     </message>
@@ -2218,58 +2238,64 @@
         <translation>Bölmələr cədvəlini aşkarlamaq mümkün deyil</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="271"/>
-        <location filename="../widgets/titlewidget.cpp" line="374"/>
+        <location filename="../widgets/titlewidget.cpp" line="239"/>
+        <source>Unable to mount the device: no file system is found, or the file system is not supported</source>
+        <translation>Cihazı qoşmaq mümkün olmadı: fayl sistemi tapılmadı və ya fayl sistemi dəstəklənmir</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="322"/>
+        <location filename="../widgets/titlewidget.cpp" line="416"/>
         <source>The file system does not support space adjustment</source>
         <translation>Bu sistem boş yer yaradılmasını dəstəkləmir</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="271"/>
-        <location filename="../widgets/titlewidget.cpp" line="319"/>
-        <location filename="../widgets/titlewidget.cpp" line="358"/>
-        <location filename="../widgets/titlewidget.cpp" line="374"/>
-        <location filename="../widgets/titlewidget.cpp" line="414"/>
-        <location filename="../widgets/titlewidget.cpp" line="527"/>
+        <location filename="../widgets/titlewidget.cpp" line="240"/>
+        <location filename="../widgets/titlewidget.cpp" line="322"/>
+        <location filename="../widgets/titlewidget.cpp" line="366"/>
+        <location filename="../widgets/titlewidget.cpp" line="400"/>
+        <location filename="../widgets/titlewidget.cpp" line="416"/>
+        <location filename="../widgets/titlewidget.cpp" line="456"/>
+        <location filename="../widgets/titlewidget.cpp" line="569"/>
         <source>OK</source>
         <translation>OLDU</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="291"/>
+        <location filename="../widgets/titlewidget.cpp" line="342"/>
         <source>The disks will be formatted if you create a logical volume</source>
         <translation>Məntiqi tutum yaratsanız disklər formatlanacaqdır</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="319"/>
-        <location filename="../widgets/titlewidget.cpp" line="358"/>
-        <location filename="../widgets/titlewidget.cpp" line="527"/>
+        <location filename="../widgets/titlewidget.cpp" line="366"/>
+        <location filename="../widgets/titlewidget.cpp" line="400"/>
+        <location filename="../widgets/titlewidget.cpp" line="569"/>
         <source>Unmount %1 first</source>
         <translation>Öncə %1 ayırın</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="331"/>
-        <location filename="../widgets/titlewidget.cpp" line="426"/>
+        <location filename="../widgets/titlewidget.cpp" line="378"/>
+        <location filename="../widgets/titlewidget.cpp" line="468"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
         <translation>Əgər silinərsə məlumatlar bərpa oluna bilməz, lütfən davam etmədən öncə təsdiq edin</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="332"/>
-        <location filename="../widgets/titlewidget.cpp" line="427"/>
+        <location filename="../widgets/titlewidget.cpp" line="379"/>
+        <location filename="../widgets/titlewidget.cpp" line="469"/>
         <source>Delete</source>
         <translation>Silin</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="332"/>
-        <location filename="../widgets/titlewidget.cpp" line="427"/>
+        <location filename="../widgets/titlewidget.cpp" line="379"/>
+        <location filename="../widgets/titlewidget.cpp" line="469"/>
         <source>Cancel</source>
         <translation>İmtina</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="393"/>
+        <location filename="../widgets/titlewidget.cpp" line="435"/>
         <source>The disks will be formatted if you create a volume group</source>
         <translation>tutum qrupu yaratsanız disklər formatlanacaqdır</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="414"/>
+        <location filename="../widgets/titlewidget.cpp" line="456"/>
         <source>Unmount all logical volumes in %1 first</source>
         <translation>Öncə %1 daxilindəki bütün məntiqi tutumları ayıtın</translation>
     </message>

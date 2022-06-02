@@ -50,6 +50,9 @@ void MountDialog::initUi()
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
         setTitle(tr("Mount %1").arg(lvInfo.m_lvPath));
+    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
+        DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
+        setTitle(tr("Mount %1").arg(info.m_path));
     }
 
     QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
@@ -213,6 +216,16 @@ void MountDialog::mountCurPath()
             lvAction.m_mountPoint = m_ComboBox->currentText();
 
             DMDbusHandler::instance()->onMountLV(lvAction);
+        }
+    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
+        DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
+        if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
+            QVector<QString> mountPoints;
+            mountPoints.append(m_ComboBox->currentText());
+            luksInfo.m_mapper.m_mountPoints = mountPoints;
+
+            DMDbusHandler::instance()->cryptMount(luksInfo, info.m_path);
         }
     }
 }

@@ -907,6 +907,7 @@ void CreateVGWidget::updateData()
             diskInfoData.m_sectorEnd = 0;
             diskInfoData.m_selectStatus = Qt::CheckState::Unchecked;
             diskInfoData.m_lvmDevType = DevType::DEV_DISK;
+            diskInfoData.m_luksFlag = info.m_luksFlag;
 
             QList<PVInfoData> lstPVInfoData;
             lstPVInfoData.clear();
@@ -929,6 +930,7 @@ void CreateVGWidget::updateData()
                     partInfoData.m_sectorStart = partitionInfo.m_sectorStart;
                     partInfoData.m_sectorEnd = partitionInfo.m_sectorEnd;
                     partInfoData.m_selectStatus = Qt::CheckState::Unchecked;
+                    partInfoData.m_luksFlag = partitionInfo.m_luksFlag;
                     if (partitionInfo.m_path == "unallocated") {
                         partInfoData.m_lvmDevType = DevType::DEV_UNALLOCATED_PARTITION;
                     } else {
@@ -976,6 +978,7 @@ void CreateVGWidget::updateData()
                     partInfoData.m_sectorStart = partitionInfo.m_sectorStart;
                     partInfoData.m_sectorEnd = partitionInfo.m_sectorEnd;
                     partInfoData.m_selectStatus = Qt::CheckState::Unchecked;
+                    partInfoData.m_luksFlag = partitionInfo.m_luksFlag;
                     if (partitionInfo.m_path == "unallocated") {
                         partInfoData.m_lvmDevType = DevType::DEV_UNALLOCATED_PARTITION;
                     } else {
@@ -1079,16 +1082,11 @@ QList<DeviceInfo> CreateVGWidget::createAvailableDiskData()
 
             if (info.m_partition.size() == 1) {
                 PartitionInfo partitionInfo = info.m_partition.at(0);
-
-                QString mountpoints = "";
-                for (int i = 0; i < partitionInfo.m_mountPoints.size(); ++i) {
-                    mountpoints += partitionInfo.m_mountPoints[i];
-                }
-
                 // 只有一个分区时，排除已加入VG的分区、被挂载的分区、分区大小小于100MiB的分区
                 double partitionSize = Utils::sectorToUnit(partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1,
                                                            partitionInfo.m_sectorSize, UNIT_MIB);
-                if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) && (mountpoints.isEmpty()) && (partitionSize > 100)) {
+                if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV)
+                        && !DMDbusHandler::instance()->partitionISMount(partitionInfo) && (partitionSize > 100)) {
                     lstNewPartition.append(partitionInfo);
                 } else {
                     isAvailable = false;
@@ -1104,15 +1102,17 @@ QList<DeviceInfo> CreateVGWidget::createAvailableDiskData()
                 PartitionInfo extendedInfo;
                 for (int i = 0; i < info.m_partition.size(); ++i) {
                     PartitionInfo partitionInfo = info.m_partition.at(i);
-
-                    QString mountpoints = "";
+                    bool isSysMountPoint = false;
                     for (int j = 0; j < partitionInfo.m_mountPoints.size(); ++j) {
-                        mountpoints += partitionInfo.m_mountPoints[j];
+                        if (partitionInfo.m_mountPoints[j] == "/boot/efi" || partitionInfo.m_mountPoints[j] == "/boot"
+                                || partitionInfo.m_mountPoints[j] == "/" || partitionInfo.m_mountPoints[j] == "/recovery") {
+                            isSysMountPoint = true;
+                            break;
+                        }
                     }
 
                     // 排除系统磁盘
-                    if (mountpoints == "/boot/efi" || mountpoints == "/boot" || mountpoints == "/"
-                            || mountpoints == "/recovery" || partitionInfo.m_flag == 4) {
+                    if (isSysMountPoint || partitionInfo.m_flag == 4) {
                         isAvailable = false;
                         break;
                     }
@@ -1124,9 +1124,9 @@ QList<DeviceInfo> CreateVGWidget::createAvailableDiskData()
                     if (fileSystemType == "extended") {
                         extendedInfo = partitionInfo;
                     }
-                    if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) && (mountpoints.isEmpty()) &&
-                            (partitionSize > 100) && (fileSystemType != "extended") &&
-                            (partitionInfo.m_type != PartitionType::TYPE_LOGICAL)) {
+                    if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) && !DMDbusHandler::instance()->partitionISMount(partitionInfo)
+                            && (partitionSize > 100) && (fileSystemType != "extended")
+                            && (partitionInfo.m_type != PartitionType::TYPE_LOGICAL)) {
                         // 排除不能创建新分区的磁盘空闲空间
                         if (partitionInfo.m_path == "unallocated") {
                             if (partitionCount >= info.m_maxPrims) {
@@ -1172,6 +1172,7 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
                 PVInfo pvInfo = lvmInfo.getPV(pvList.at(i));
                 PVInfoData pvInfoData;
                 pvInfoData.m_level = 1;
+                pvInfoData.m_luksFlag = LUKSFlag::NOT_CRYPT_LUKS;
                 pvInfoData.m_lvmDevType = pvInfo.m_lvmDevType;
                 pvInfoData.m_selectStatus = Qt::CheckState::Checked;
                 if (pvInfo.m_lvmDevType == DevType::DEV_DISK) {
@@ -1248,15 +1249,11 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
                         }
                     }
                 } else {
-                    QString mountpoints = "";
-                    for (int i = 0; i < partitionInfo.m_mountPoints.size(); ++i) {
-                        mountpoints += partitionInfo.m_mountPoints[i];
-                    }
-
                     // 只有一个分区时，排除已加入VG的分区、被挂载的分区、分区大小小于100MiB的分区
                     double partitionSize = Utils::sectorToUnit(partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1,
                                                                partitionInfo.m_sectorSize, UNIT_MIB);
-                    if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) && (mountpoints.isEmpty()) && (partitionSize > 100)) {
+                    if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV)
+                            && !DMDbusHandler::instance()->partitionISMount(partitionInfo) && (partitionSize > 100)) {
                         lstNewPartition.append(partitionInfo);
                     } else {
                         isAvailable = false;
@@ -1296,14 +1293,17 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
                             }
                         }
                     } else {
-                        QString mountpoints = "";
+                        bool isSysMountPoint = false;
                         for (int j = 0; j < partitionInfo.m_mountPoints.size(); ++j) {
-                            mountpoints += partitionInfo.m_mountPoints[j];
+                            if (partitionInfo.m_mountPoints[j] == "/boot/efi" || partitionInfo.m_mountPoints[j] == "/boot"
+                                    || partitionInfo.m_mountPoints[j] == "/" || partitionInfo.m_mountPoints[j] == "/recovery") {
+                                isSysMountPoint = true;
+                                break;
+                            }
                         }
 
                         // 排除系统磁盘
-                        if (mountpoints == "/boot/efi" || mountpoints == "/boot" || mountpoints == "/"
-                                || mountpoints == "/recovery" || partitionInfo.m_flag == 4) {
+                        if (isSysMountPoint || partitionInfo.m_flag == 4) {
                             isAvailable = false;
                             break;
                         }
@@ -1315,9 +1315,10 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
                         if (fileSystemType == "extended") {
                             extendedInfo = partitionInfo;
                         }
-                        if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) && (mountpoints.isEmpty()) &&
-                                (partitionSize > 100) && (fileSystemType != "extended") &&
-                                (partitionInfo.m_type != PartitionType::TYPE_LOGICAL)) {
+                        if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV)
+                                && !DMDbusHandler::instance()->partitionISMount(partitionInfo)
+                                && (partitionSize > 100) && (fileSystemType != "extended")
+                                && (partitionInfo.m_type != PartitionType::TYPE_LOGICAL)) {
                             // 排除不能创建新分区的磁盘空闲空间
                             if (partitionInfo.m_path == "unallocated") {
                                 if (partitionCount >= info.m_maxPrims) {
@@ -1518,7 +1519,7 @@ void CreateVGWidget::onDiskCheckBoxStateChange(int state)
                 }
             }
 
-            // 当前取消磁盘是否没有分区表
+            // 当前选中磁盘是否没有分区表
             if (m_curDiskItemWidget->getCurInfo().m_disktype == "unrecognized") {
                 m_curSeclectData << m_curDiskItemWidget->getCurInfo();
             } else {
@@ -1550,6 +1551,17 @@ void CreateVGWidget::onDiskCheckBoxStateChange(int state)
 
             m_seclectedLabel->setText(tr("Capacity selected: %1").arg(QString::number(sumSize, 'f', 2)) + "GiB");
             m_nextButton->setDisabled(false);
+
+            if (m_curDiskItemWidget->getCurInfo().m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+                MessageBox warningBox(this);
+                warningBox.setFixedWidth(450);
+                warningBox.setObjectName("messageBox");
+                warningBox.setAccessibleName("cryptDeviceWidget");
+                // 加入逻辑卷组会进行磁盘/分区格式化，并删除加密磁盘/分区的密码  确定
+                warningBox.setWarings(tr("Adding the disk/partition to a logical volume group \n"
+                                         "will format it and remove its password."), "", tr("OK"), "ok");
+                warningBox.exec();
+            }
         }
     }
 }
@@ -1633,6 +1645,17 @@ void CreateVGWidget::onPartitionCheckBoxStateChange(int state)
 
         m_seclectedLabel->setText(tr("Capacity selected: %1").arg(QString::number(sumSize, 'f', 2)) + "GiB");
         m_nextButton->setDisabled(false);
+
+        if (pvData.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            MessageBox warningBox(this);
+//            warningBox.setFixedWidth(400);
+            warningBox.setObjectName("messageBox");
+            warningBox.setAccessibleName("cryptDeviceWidget");
+            // 加入/创建逻辑卷组会进行磁盘/分区格式化，并删除加密磁盘/分区的密码  确定
+            warningBox.setWarings(tr("Adding the disk/partition to a logical volume group \n"
+                                     "will format it and remove its password."), "", tr("OK"), "ok");
+            warningBox.exec();
+        }
     }
 
     m_curDiskItemWidget->setData(lstData);
@@ -2035,14 +2058,14 @@ Byte_Value CreateVGWidget::getPVSize(const VGInfo &vg, const PVData &pv, bool fl
     long long allByte = dev.m_sectorSize * (endSec - startSec + 1); //获取总的byte
     long long i = allByte % vg.m_PESize; //获取剩下的size大小
 
-    if (i == 0) {
+    if(i == 0){
         return  allByte;
-    } else if (i >= MEBIBYTE) {
+    }else if(i >= MEBIBYTE){
         return allByte - i;
-    } else  {
+    }else  {
         return allByte - i - 4 * MEBIBYTE;
     }
-    // return i == 0 ? allByte : ((i >= MEBIBYTE) ? allByte - i : allByte - i - 4 * MEBIBYTE); //去除末尾 保证是vg pe的倍数
+   // return i == 0 ? allByte : ((i >= MEBIBYTE) ? allByte - i : allByte - i - 4 * MEBIBYTE); //去除末尾 保证是vg pe的倍数
 }
 
 Byte_Value CreateVGWidget::getDevSize(const VGInfo &vg, const PVData &pv, bool flag, long long size)

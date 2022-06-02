@@ -820,6 +820,7 @@ void CreateLVWidget::onAddPartition()
 
         PasswordInputDialog passwordInputDialog(this);
         passwordInputDialog.setDeviceName(m_partNameEdit->text());
+        passwordInputDialog.setObjectName("passwordInputDialog");
         passwordInputDialog.setAccessibleName("passwordInputDialog");
         if (passwordInputDialog.exec() != DDialog::Accepted) {
             return;
@@ -961,7 +962,7 @@ void CreateLVWidget::onRevertButton()
         }
     }
     m_partNameEdit->setText(lvName());
-    m_partFormateCombox->setCurrentIndex(2);
+    m_partFormateCombox->setCurrentText("ext4");
     m_partComboBox->setCurrentIndex(0);
     m_partChartWidget->transInfos(m_totalSize, m_sizeInfo);
     m_isExceed = true;

@@ -228,24 +228,70 @@ bool TitleWidget::showDecryptDialog()
     return true;
 }
 
+bool TitleWidget::showNoFileSystemWarningDialog(const LUKS_INFO &luksInfo)
+{
+    if (luksInfo.m_mapper.m_luksFs == FSType::FS_UNKNOWN || luksInfo.m_mapper.m_luksFs == FSType::FS_UNALLOCATED
+            || luksInfo.m_mapper.m_luksFs == FSType::FS_UNSUPPORTED || luksInfo.m_mapper.m_luksFs == FSType::FS_UNFORMATTED) {
+        MessageBox warningBox(this);
+        warningBox.setObjectName("messageBox");
+        warningBox.setAccessibleName("partNoSupportFSWidget");
+        // 该设备没有文件系统，或文件系统不被支持，无法挂载  确定
+        warningBox.setWarings(tr("Unable to mount the device: no file system is found, "
+                                 "or the file system is not supported"), "", tr("OK"), "ok");
+        warningBox.exec();
+        return true;
+    }
+
+    return false;
+}
+
 void TitleWidget::showMountInfoWidget()
 {
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+        setCurDevicePath(info.m_devicePath);
         if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
             if (!showDecryptDialog()) {
+                setCurDevicePath("");
+                return;
+            }
+
+            LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
+            if (showNoFileSystemWarningDialog(luksInfo)) {
+                setCurDevicePath("");
                 return;
             }
         }
-        setCurDevicePath(info.m_devicePath);
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+        setCurVGName(lvInfo.m_vgName);
         if (lvInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
             if (!showDecryptDialog()) {
+                setCurVGName("");
+                return;
+            }
+
+            LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(lvInfo.m_lvPath);
+            if (showNoFileSystemWarningDialog(luksInfo)) {
+                setCurVGName("");
                 return;
             }
         }
-        setCurVGName(lvInfo.m_vgName);
+    } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
+        DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
+        setCurDevicePath(info.m_path);
+        if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            if (!showDecryptDialog()) {
+                setCurDevicePath("");
+                return;
+            }
+
+            LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
+            if (showNoFileSystemWarningDialog(luksInfo)) {
+                setCurDevicePath("");
+                return;
+            }
+        }
     }
 
     MountDialog dlg(this);
@@ -328,12 +374,8 @@ void TitleWidget::onDeleteLVClicked()
 {
     LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
     setCurVGName(lvInfo.m_vgName);
-    QString mountPoint = "";
-    for (int i = 0; i < lvInfo.m_mountPoints.size(); i++) {
-        mountPoint += lvInfo.m_mountPoints[i];
-    }
 
-    if (!mountPoint.isEmpty()) {
+    if (DMDbusHandler::instance()->lvIsMount(lvInfo)) {
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("messageBox");
@@ -367,12 +409,7 @@ void TitleWidget::onResizeLVClicked()
     LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
     setCurVGName(lvInfo.m_vgName);
     if(lvInfo.m_lvFsType == FS_NTFS){
-        QString mountPoint = "";
-        for (int i = 0; i < lvInfo.m_mountPoints.size(); i++) {
-            mountPoint += lvInfo.m_mountPoints[i];
-        }
-
-        if (!mountPoint.isEmpty()){
+        if (DMDbusHandler::instance()->lvIsMount(lvInfo)){
             MessageBox warningBox(this);
             warningBox.setObjectName("messageBox");
             warningBox.setAccessibleName("messageBox");
@@ -562,38 +599,10 @@ void TitleWidget::onDeletePVClicked()
     setCurDevicePath("");
 }
 
-bool TitleWidget::isExistMountPartition()
-{
-    bool isExist = false;
-
-    DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
-    for (int i = 0; i < info.m_partition.size(); i++) {
-        PartitionInfo partitionInfo = info.m_partition.at(i);
-
-        QString mountpoints;
-        for (int j = 0; j < partitionInfo.m_mountPoints.size(); j++) {
-            mountpoints += partitionInfo.m_mountPoints[j];
-        }
-
-        if (!mountpoints.isEmpty()) {
-            isExist = true;
-            break;
-        }
-    }
-
-    return isExist;
-}
-
 void TitleWidget::updateBtnStatus()
 {
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
-        m_btnDeletePV->show();
-        m_btnResize->show();
-        m_btnDeleteVG->hide();
-        m_btnDeleteLV->hide();
-        m_btnResizeLV->hide();
-        m_btnResizeVG->hide();
-
+        updateBtnShowStatus(true, true, false, false, true, false, true, true);
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         if (info.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV) {
             m_btnParted->hide();
@@ -603,10 +612,14 @@ void TitleWidget::updateBtnStatus()
             VGInfo vgInfo = mapVGInfo.value(info.m_vgData.m_vgName);
             m_btnDeletePV->setDisabled(vgInfo.isPartial());
             m_btnCreateLV->setDisabled(true);
-            m_btnFormat->setDisabled(true);
-            m_btnMount->setDisabled(true);
-            m_btnUnmount->setDisabled(true);
+            updatePartitionBtnStatus(true, true, true, true, true);
+        } else if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
             m_btnResize->setDisabled(true);
+            m_btnDeletePV->setDisabled(true);
+            m_btnParted->setDisabled(true);
+
+            LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
+            updateEncryptDeviceBtnStatus(luksInfo);
         } else {
             m_btnDeletePV->setDisabled(true);
             m_btnParted->show();
@@ -614,48 +627,26 @@ void TitleWidget::updateBtnStatus()
 
             //已挂载
             if (info.m_mountPoints.size() > 0 && info.m_busy) {
-                m_btnParted->setDisabled(true);
-                m_btnFormat->setDisabled(true);
-                m_btnMount->setDisabled(true);
-                m_btnUnmount->setDisabled(false);
-                m_btnResize->setDisabled(true);
+                updatePartitionBtnStatus(true, true, true, false, true);
 
                 if (1 == info.m_flag) {
                     m_btnUnmount->setDisabled(true);
                 }
             } else {
                 if (1 == info.m_flag) {
-                    m_btnParted->setDisabled(true);
-                    m_btnFormat->setDisabled(true);
-                    m_btnMount->setDisabled(true);
-                    m_btnUnmount->setDisabled(true);
-                    m_btnResize->setDisabled(true);
+                    updatePartitionBtnStatus(true, true, true, true, true);
                 } else {
                     //需判断扩展分区上是否无分区，否则认为不可操作，此处省略操作
                     if (FS_EXTENDED == info.m_fileSystemType) {
-                        m_btnParted->setDisabled(true);
-                        m_btnFormat->setDisabled(true);
-                        m_btnMount->setDisabled(true);
-                        m_btnUnmount->setDisabled(true);
-                        m_btnResize->setDisabled(true);
+                        updatePartitionBtnStatus(true, true, true, true, true);
                         return ;
                     } else {
-                        m_btnUnmount->setDisabled(true);
                         if (info.m_fileSystemType == FS_UNALLOCATED) {
-                            m_btnParted->setDisabled(false);
-                            m_btnFormat->setDisabled(false);
-                            m_btnMount->setDisabled(true);
-                            m_btnResize->setDisabled(true);
+                            updatePartitionBtnStatus(false, false, true, true, true);
                         } else if (info.m_fileSystemType == FS_UNKNOWN) {
-                            m_btnParted->setDisabled(true);
-                            m_btnFormat->setDisabled(false);
-                            m_btnMount->setDisabled(true);
-                            m_btnResize->setDisabled(true);
+                            updatePartitionBtnStatus(true, false, true, true, true);
                         } else {
-                            m_btnParted->setDisabled(true);
-                            m_btnFormat->setDisabled(false);
-                            m_btnMount->setDisabled(false);
-                            m_btnResize->setDisabled(false);
+                            updatePartitionBtnStatus(true, false, false, true, false);
                         }
                     }
                 }
@@ -663,23 +654,12 @@ void TitleWidget::updateBtnStatus()
 
             qDebug() << info.m_type << info.m_fileSystemType;
             if (info.m_fileSystemType == FSType::FS_LINUX_SWAP) {
-                m_btnParted->setDisabled(true);
-                m_btnFormat->setDisabled(true);
-                m_btnMount->setDisabled(true);
-                m_btnUnmount->setDisabled(true);
-                m_btnResize->setDisabled(true);
+                updatePartitionBtnStatus(true, true, true, true, true);
             }
         }
-
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
-        m_btnParted->show();
-        m_btnDeletePV->show();
-        m_btnResize->show();
-        m_btnCreateLV->hide();
-        m_btnDeleteVG->hide();
-        m_btnDeleteLV->hide();
-        m_btnResizeLV->hide();
-        m_btnResizeVG->hide();
+        updateBtnShowStatus(true, true, false, false, true, false, true, true);
+        updatePartitionBtnStatus(true, true, true, true, true);
 
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         if (info.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV) { //有分区创建为pv
@@ -699,99 +679,133 @@ void TitleWidget::updateBtnStatus()
             m_btnDeletePV->setEnabled(isVGNormal);
             m_btnCreateLV->setDisabled(true);
             m_btnFormat->setDisabled(true);
+        } else if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS && info.m_partition.size() == 0) {
+            LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
+            m_btnDeletePV->setDisabled(true);
+            if (luksInfo.isDecrypt) {
+                if (luksInfo.m_mapper.m_mountPoints.isEmpty()) {
+                    updatePartitionBtnStatus(true, false, false, true, true);
+                } else {
+                    updatePartitionBtnStatus(true, true, true, false, true);
+                }
+            } else {
+                updatePartitionBtnStatus(true, false, false, true, true);
+            }
         } else {
             m_btnParted->show();
             m_btnCreateLV->hide();
 
             m_btnDeletePV->setDisabled(true);
             m_btnParted->setDisabled(true);
-            m_btnFormat->setDisabled(isExistMountPartition());
+            m_btnFormat->setDisabled(DMDbusHandler::instance()->isExistMountPartition(DMDbusHandler::instance()->getCurDeviceInfo()));
         }
-
-        m_btnMount->setDisabled(true);
-        m_btnUnmount->setDisabled(true);
-        m_btnResize->setDisabled(true);
-
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::VOLUMEGROUP) {
-        m_btnParted->hide();
-        m_btnDeleteLV->hide();
-        m_btnDeletePV->hide();
-        m_btnResize->hide();
-        m_btnResizeLV->hide();
-        m_btnDeleteVG->show();
-        m_btnCreateLV->show();
-        m_btnResizeVG->show();
+        updateBtnShowStatus(false, true, true, true, false, true, false, true);
 
         // 如果VG异常，所有相关操作禁用
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
         if (vgInfo.isPartial()) {
-            m_btnFormat->setDisabled(true);
-            m_btnMount->setDisabled(true);
-            m_btnUnmount->setDisabled(true);
-            m_btnDeleteVG->setDisabled(true);
-            m_btnCreateLV->setDisabled(true);
-            m_btnResizeVG->setDisabled(true);
-
+            updateVGBtnStatus(true, true, true, true, true, true);
             return;
         }
 
-        m_btnFormat->setDisabled(true);
-        m_btnMount->setDisabled(true);
-        m_btnUnmount->setDisabled(true);
-        m_btnDeleteVG->setDisabled(false);
-        m_btnCreateLV->setDisabled(false);
-        m_btnResizeVG->setDisabled(false);
+        updateVGBtnStatus(false, false, true, true, true, false);
 
         QMap<QString, QString> isExistUnallocated = DMDbusHandler::instance()->getIsExistUnallocated();
         if (isExistUnallocated.value(vgInfo.m_vgName) == "false") {
             m_btnCreateLV->setDisabled(true);
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
-        m_btnParted->hide();
-        m_btnDeleteVG->hide();
-        m_btnDeletePV->hide();
-        m_btnResize->hide();
-        m_btnResizeVG->hide();
-        m_btnDeleteLV->show();
-        m_btnCreateLV->show();
-        m_btnResizeLV->show();
+        updateBtnShowStatus(true, false, true, true, false, true, true, false);
 
         // 如果VG异常，所有相关操作禁用
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
         if (vgInfo.isPartial()) {
-            m_btnCreateLV->setDisabled(true);
-            m_btnFormat->setDisabled(true);
-            m_btnMount->setDisabled(true);
-            m_btnUnmount->setDisabled(true);
-            m_btnDeleteLV->setDisabled(true);
-            m_btnResizeLV->setDisabled(true);
-
+            updateLVBtnStatus(true, true, true, true, true, true);
             return;
         }
 
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
-        QString mountPoint = "";
-        for (int i = 0; i < lvInfo.m_mountPoints.size(); i++) {
-            mountPoint += lvInfo.m_mountPoints[i];
-        }
+        if (lvInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            m_btnResizeLV->setDisabled(true);
+            m_btnCreateLV->setDisabled(true);
 
-        bool noMountPoint = mountPoint.isEmpty();
-        m_btnFormat->setDisabled(!noMountPoint);
-        m_btnMount->setDisabled(!noMountPoint);
-        m_btnUnmount->setDisabled(noMountPoint);
+            LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(lvInfo.m_lvPath);
+            updateEncryptDeviceBtnStatus(luksInfo);
+            return;
+        }
 
         if (lvInfo.m_lvName.isEmpty() && lvInfo.m_lvUuid.isEmpty()) {
-            m_btnCreateLV->setDisabled(false);
+            updateLVBtnStatus(true, false, true, true, true, true);
+        } else {
+            bool noMountPoint = lvInfo.m_mountPoints.isEmpty();
+            updateLVBtnStatus(false, true, !noMountPoint, !noMountPoint, noMountPoint, false);
+        }
+    }
+}
+
+void TitleWidget::updatePartitionBtnStatus(const bool &isCreate, const bool &isWipe, const bool &isMount,
+                                           const bool &isUnmount, const bool &isResize)
+{
+    m_btnParted->setDisabled(isCreate);
+    m_btnFormat->setDisabled(isWipe);
+    m_btnMount->setDisabled(isMount);
+    m_btnUnmount->setDisabled(isUnmount);
+    m_btnResize->setDisabled(isResize);
+}
+
+void TitleWidget::updateVGBtnStatus(const bool &isDeleteVG, const bool &isCreateLV, const bool &isWipe,
+                                    const bool &isMount, const bool &isUnmount, const bool &isResize)
+{
+    m_btnDeleteVG->setDisabled(isDeleteVG);
+    m_btnCreateLV->setDisabled(isCreateLV);
+    m_btnFormat->setDisabled(isWipe);
+    m_btnMount->setDisabled(isMount);
+    m_btnUnmount->setDisabled(isUnmount);
+    m_btnResizeVG->setDisabled(isResize);
+}
+
+void TitleWidget::updateLVBtnStatus(const bool &isDeleteLV, const bool &isCreateLV, const bool &isWipe,
+                       const bool &isMount, const bool &isUnmount, const bool &isResize)
+{
+    m_btnDeleteLV->setDisabled(isDeleteLV);
+    m_btnCreateLV->setDisabled(isCreateLV);
+    m_btnFormat->setDisabled(isWipe);
+    m_btnMount->setDisabled(isMount);
+    m_btnUnmount->setDisabled(isUnmount);
+    m_btnResizeLV->setDisabled(isResize);
+}
+
+void TitleWidget::updateBtnShowStatus(const bool &isDeleteVGShow, const bool &isDeleteLVShow, const bool &isDeletePVShow,
+                                      const bool &isPartedShow, const bool &isCreateLVShow, const bool &isResizShow,
+                                      const bool &isResizeVGShow, const bool &isResizeLVShow)
+{
+    m_btnDeleteVG->setHidden(isDeleteVGShow);
+    m_btnDeleteLV->setHidden(isDeleteLVShow);
+    m_btnDeletePV->setHidden(isDeletePVShow);
+    m_btnParted->setHidden(isPartedShow);
+    m_btnCreateLV->setHidden(isCreateLVShow);
+    m_btnResize->setHidden(isResizShow);
+    m_btnResizeVG->setHidden(isResizeVGShow);
+    m_btnResizeLV->setHidden(isResizeLVShow);
+}
+
+void TitleWidget::updateEncryptDeviceBtnStatus(const LUKS_INFO &luksInfo)
+{
+    if (luksInfo.isDecrypt) {
+        if (luksInfo.m_mapper.m_mountPoints.isEmpty()) {
+            m_btnFormat->setDisabled(false);
+            m_btnMount->setDisabled(false);
+            m_btnUnmount->setDisabled(true);
+        } else {
             m_btnFormat->setDisabled(true);
             m_btnMount->setDisabled(true);
-            m_btnUnmount->setDisabled(true);
-            m_btnDeleteLV->setDisabled(true);
-            m_btnResizeLV->setDisabled(true);
-        } else {
-            m_btnCreateLV->setDisabled(true);
-            m_btnDeleteLV->setDisabled(false);
-            m_btnResizeLV->setDisabled(false);
+            m_btnUnmount->setDisabled(false);
         }
+    } else {
+        m_btnFormat->setDisabled(false);
+        m_btnMount->setDisabled(false);
+        m_btnUnmount->setDisabled(true);
     }
 }
 
@@ -821,7 +835,8 @@ void TitleWidget::onUpdateUsb()
                     widget->objectName() == "unmountDialog" || widget->objectName() == "resizeDialog" ||
                     widget->objectName() == "mountMessageBox" || widget->objectName() == "firstWarning" ||
                     widget->objectName() == "secondWarning" || widget->objectName() == "RemovePVWidget" ||
-                    widget->objectName() == "messageBox") {
+                    widget->objectName() == "messageBox" || widget->objectName() == "decryptDialog" ||
+                    widget->objectName() == "passwordInputDialog") {
 
                 widget->close();
                 //            break;
@@ -839,7 +854,8 @@ void TitleWidget::onUpdateUsb()
             QWidget *widget = widgetList.at(i);
             if (widget->objectName() == "ResizeVGWidget" || widget->objectName() == "messageBox" ||
                     widget->objectName() == "resizeLVDialog" || widget->objectName() == "createLVDialog" ||
-                    widget->objectName() == "createLVWidget") {
+                    widget->objectName() == "createLVWidget" || widget->objectName() == "decryptDialog" ||
+                    widget->objectName() == "passwordInputDialog") {
                 widget->close();
             }
         }

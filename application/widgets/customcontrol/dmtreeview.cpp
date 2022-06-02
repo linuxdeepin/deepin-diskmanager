@@ -161,6 +161,7 @@ void DmTreeview::addItem(DmDiskinfoBox *infoBox, int flag, QStandardItem *purIte
     data.m_mountpoints = infoBox->m_mountpoints;
     data.m_flag = infoBox->m_flag;
     data.m_vgFlag = infoBox->m_vgFlag;
+    data.m_luksFlag = infoBox->m_luksFlag;
 
     if ((infoBox->m_level <= 0) && !isGroup) {
         data.m_level = DMDbusHandler::DISK;

@@ -345,6 +345,7 @@ void DMDbusHandler::onUpdateDeviceInfo(const DeviceInfoMap &infoMap, const LVMIn
         m_deviceNameList << info.m_path;
         QString isExistUnallocated = "false";
         QString isJoinAllVG = "true";
+        QString isAllEncryption = "true";
         for (auto it = info.m_partition.begin(); it != info.m_partition.end(); it++) {
 //                    qDebug() << it->m_path << it->m_devicePath << it->m_partitionNumber << it->m_sectorsUsed << it->m_sectorsUnused << it->m_sectorStart << it->m_sectorEnd;
             if (it->m_path == "unallocated") {
@@ -353,6 +354,10 @@ void DMDbusHandler::onUpdateDeviceInfo(const DeviceInfoMap &infoMap, const LVMIn
 
             if (it->m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) {
                 isJoinAllVG = "false";
+            }
+
+            if (it->m_luksFlag == LUKSFlag::NOT_CRYPT_LUKS) {
+                isAllEncryption = "false";
             }
         }
 
@@ -365,8 +370,13 @@ void DMDbusHandler::onUpdateDeviceInfo(const DeviceInfoMap &infoMap, const LVMIn
             isJoinAllVG = "false";
         }
 
+        if (info.m_partition.size() == 0 && info.m_luksFlag == LUKSFlag::NOT_CRYPT_LUKS) {
+            isAllEncryption = "false";
+        }
+
         m_isExistUnallocated[info.m_path] = isExistUnallocated;
         m_isJoinAllVG[info.m_path] = isJoinAllVG;
+        m_isAllEncryption[info.m_path] = isAllEncryption;
     }
 
     QMap<QString, VGInfo> lstVGInfo = lvmInfo.m_vgInfo;
@@ -379,14 +389,20 @@ void DMDbusHandler::onUpdateDeviceInfo(const DeviceInfoMap &infoMap, const LVMIn
 
         m_vgNameList << vgInformation.m_vgName;
         QString isExistUnallocated = "false";
+        QString isAllEncryption = "true";
         for (int i = 0; i < vgInformation.m_lvlist.count(); i++) {
             LVInfo info = vgInformation.m_lvlist.at(i);
             if (info.m_lvName.isEmpty() && info.m_lvUuid.isEmpty()) {
                 isExistUnallocated = "true";
             }
+
+            if (info.m_luksFlag == LUKSFlag::NOT_CRYPT_LUKS) {
+                isAllEncryption = "false";
+            }
         }
 
         m_isExistUnallocated[vgInformation.m_vgName] = isExistUnallocated;
+        m_isAllEncryption[vgInformation.m_vgName] = isAllEncryption;
     }
 
     emit updateDeviceInfo();
@@ -568,22 +584,80 @@ QMap<QString, QString> DMDbusHandler::getIsJoinAllVG()
 
 bool DMDbusHandler::isExistMountLV(const VGInfo &info)
 {
-    bool isExist = false;
-
     for (int i = 0; i < info.m_lvlist.count(); i++) {
         LVInfo lvInfo = info.m_lvlist.at(i);
-        QString mountPoint = "";
-        for (int j = 0; j < lvInfo.m_mountPoints.size(); j++) {
-            mountPoint += lvInfo.m_mountPoints[j];
-        }
-
-        if (!mountPoint.isEmpty()) {
-            isExist = true;
-            break;
+        if (lvInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            LUKS_INFO luksInfo = probLUKSInfo().m_luksMap.value(lvInfo.m_lvPath);
+            if (luksInfo.isDecrypt) {
+                if (!luksInfo.m_mapper.m_mountPoints.isEmpty()) {
+                    return true;
+                }
+            }
+        } else {
+            if (!lvInfo.m_mountPoints.isEmpty()) {
+                return true;
+            }
         }
     }
 
-    return isExist;
+    return false;
+}
+
+bool DMDbusHandler::lvIsMount(const LVInfo &lvInfo)
+{
+    if (lvInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+        LUKS_INFO luksInfo = probLUKSInfo().m_luksMap.value(lvInfo.m_lvPath);
+        if (luksInfo.isDecrypt) {
+            if (!luksInfo.m_mapper.m_mountPoints.isEmpty()) {
+                return true;
+            }
+        }
+    } else {
+        if (!lvInfo.m_mountPoints.isEmpty()) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool DMDbusHandler::isExistMountPartition(const DeviceInfo &info)
+{
+    for (int i = 0; i < info.m_partition.size(); i++) {
+        PartitionInfo partitionInfo = info.m_partition.at(i);
+        if (partitionInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            LUKS_INFO luksInfo = probLUKSInfo().m_luksMap.value(partitionInfo.m_path);
+            if (luksInfo.isDecrypt) {
+                if (!luksInfo.m_mapper.m_mountPoints.isEmpty()) {
+                    return true;
+                }
+            }
+        } else {
+            if (!partitionInfo.m_mountPoints.isEmpty()) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+bool DMDbusHandler::partitionISMount(const PartitionInfo &info)
+{
+    if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+        LUKS_INFO luksInfo = probLUKSInfo().m_luksMap.value(info.m_path);
+        if (luksInfo.isDecrypt) {
+            if (!luksInfo.m_mapper.m_mountPoints.isEmpty()) {
+                return true;
+            }
+        }
+    } else {
+        if (!info.m_mountPoints.isEmpty()) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void DMDbusHandler::createVG(const QString &vgName, const QList<PVData> &devList, const long long &size)
@@ -727,5 +801,10 @@ void DMDbusHandler::cryptUmount(const LUKS_INFO &luks, const QString &devName)
     emit showSpinerWindow(true, tr("Unmounting %1 ...").arg(devName));
 
     m_dbus->cryptUmount(luks);
+}
+
+QMap<QString, QString> DMDbusHandler::getIsAllEncryption()
+{
+    return m_isAllEncryption;
 }
 

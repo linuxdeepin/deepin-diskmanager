@@ -30,6 +30,7 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="157"/>
         <location filename="../widgets/createlvwidget.cpp" line="161"/>
+        <location filename="../widgets/createlvwidget.cpp" line="992"/>
         <source>VG name:</source>
         <translation>Emër GV:</translation>
     </message>
@@ -37,7 +38,7 @@
         <location filename="../widgets/createlvwidget.cpp" line="169"/>
         <location filename="../widgets/createlvwidget.cpp" line="333"/>
         <location filename="../widgets/createlvwidget.cpp" line="377"/>
-        <location filename="../widgets/createlvwidget.cpp" line="989"/>
+        <location filename="../widgets/createlvwidget.cpp" line="993"/>
         <source>LV file system:</source>
         <translation>Sistem kartelash VL:</translation>
     </message>
@@ -111,20 +112,19 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="840"/>
+        <location filename="../widgets/createlvwidget.cpp" line="842"/>
         <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="841"/>
+        <location filename="../widgets/createlvwidget.cpp" line="843"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="988"/>
         <source>Disk:</source>
-        <translation>Disk:</translation>
+        <translation type="vanished">Disk:</translation>
     </message>
 </context>
 <context>
@@ -175,16 +175,16 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="114"/>
         <location filename="../widgets/createvgwidget.cpp" line="402"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1044"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1054"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1047"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1057"/>
         <location filename="../widgets/createvgwidget.cpp" line="1491"/>
         <location filename="../widgets/createvgwidget.cpp" line="1501"/>
         <location filename="../widgets/createvgwidget.cpp" line="1550"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1600"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1603"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1633"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1738"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1801"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1611"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1614"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1644"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1760"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1823"/>
         <source>Capacity selected: %1</source>
         <translation>Kapacitet i përzgjedhur: %1</translation>
     </message>
@@ -308,33 +308,42 @@
         <translation>Anuloje</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1757"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1559"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1653"/>
+        <source>Adding the disk/partition to a logical volume group 
+will format it and remove its password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1779"/>
         <source>Not enough space to back up data on %1, please clear disk space</source>
         <translation>S’ka hapësirë të mjaftueshme për të kopjeruajtur të dhëna në %1, ju lutemi, spastroni hapësirë disku</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1758"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1560"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1654"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1780"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1922"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1944"/>
         <source>Existing volume group, creation failed. Please retry after reboot.</source>
         <translation>Grup ekzistues vëllimesh, krijimi dështoi. Ju lutemi, riprovoni pas rinisjeje.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1926"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1948"/>
         <source>Failed to create a physical volume. Please refresh Disk Utility and try again.</source>
         <translation>S’u arrit të krijohet një vëllim fizik. Ju lutemi, rifreskoni Mjet Disqesh dhe riprovoni.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1930"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1952"/>
         <source>Device input/output error. Please try again after reboot.</source>
         <translation>Gabim input-i/output-i pajisjeje. Ju lutemi, riprovoni pas rinisjeje.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1983"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1990"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2005"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2012"/>
         <source>Refreshing the page to reload disks</source>
         <translation>Po rifreskohet faqja për të ringarkuar disqe</translation>
     </message>
@@ -375,75 +384,77 @@
 <context>
     <name>DMDbusHandler</name>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="208"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="210"/>
         <source>Refreshing data...</source>
         <translation>Po rifreskohen të dhëna…</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="227"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="229"/>
         <source>Initializing data...</source>
         <translation>Po gatiten të dhëna…</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="260"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="627"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="262"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="703"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="794"/>
         <source>Mounting %1 ...</source>
         <translation>Po montohet %1 …</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="267"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="634"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="269"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="710"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="801"/>
         <source>Unmounting %1 ...</source>
         <translation>Po çmontohet %1 …</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="306"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="308"/>
         <source>Resizing %1 ...</source>
         <translation>Po ripërmasohen %1 …</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="313"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="315"/>
         <source>Creating a new partition...</source>
         <translation>Po krijohet pjesë e re…</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="456"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="474"/>
         <source>Deleting %1 ...</source>
         <translation>Po fshihet %1 …</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="508"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="526"/>
         <source>Creating a partition table of %1 ...</source>
         <translation>Po krijohet një tabelë pjesësh e %1 …</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="510"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="528"/>
         <source>Replacing the partition table of %1 ...</source>
         <translation>Po zëvendësohet tabela e pjesëve %1 …</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="594"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="670"/>
         <source>Creating...</source>
         <translation>Po krijohet…</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="601"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="608"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="677"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="684"/>
         <source>Deleting...</source>
         <translation>Po fshihet…</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="620"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="696"/>
         <source>Resizing space...</source>
         <translation>Po ripërmasohet hapësira…</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="658"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="734"/>
         <source>AES Encryption</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="662"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="736"/>
         <source>SM4 Encryption</source>
         <translation type="unfinished"/>
     </message>
@@ -451,66 +462,69 @@
 <context>
     <name>DecryptDialog</name>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="57"/>
+        <location filename="../widgets/decryptdialog.cpp" line="59"/>
         <source>Enter the password to decrypt the disk</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="69"/>
+        <location filename="../widgets/decryptdialog.cpp" line="71"/>
         <source>Enter the password to decrypt the volume group</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="86"/>
+        <location filename="../widgets/decryptdialog.cpp" line="88"/>
         <source>Enter a password </source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="90"/>
+        <location filename="../widgets/decryptdialog.cpp" line="92"/>
         <source>Password hint</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="133"/>
+        <location filename="../widgets/decryptdialog.cpp" line="140"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Anuloje</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="138"/>
+        <location filename="../widgets/decryptdialog.cpp" line="145"/>
         <source>Decrypt</source>
         <comment>button</comment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="166"/>
+        <location filename="../widgets/decryptdialog.cpp" line="173"/>
         <source>Decrypting...</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="209"/>
-        <location filename="../widgets/decryptdialog.cpp" line="349"/>
+        <location filename="../widgets/decryptdialog.cpp" line="336"/>
+        <source>Decryption failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="354"/>
         <source>Wrong password, %1 chances left</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="211"/>
-        <location filename="../widgets/decryptdialog.cpp" line="351"/>
+        <location filename="../widgets/decryptdialog.cpp" line="356"/>
         <source>Wrong password, only one chance left</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="216"/>
+        <location filename="../widgets/decryptdialog.cpp" line="224"/>
         <source>Please try again %1 minutes later</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="291"/>
+        <location filename="../widgets/decryptdialog.cpp" line="298"/>
         <source>The password cannot be empty</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="347"/>
+        <location filename="../widgets/decryptdialog.cpp" line="352"/>
         <source>Password locked, please try again %1 minutes later</source>
         <translation type="unfinished"/>
     </message>
@@ -553,45 +567,45 @@
         <translation>Fshije pjesën</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="216"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="226"/>
         <source>Delete volume group</source>
         <translation>Fshi grup vëllimesh</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="222"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="619"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="232"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="607"/>
         <source>Create logical volume</source>
         <translation>Krijo vëllim logjik</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="247"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="257"/>
         <source>Delete logical volume</source>
         <translation>Fshi vëllim logjik</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="290"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="300"/>
         <source>Failed to get hardware information</source>
         <translation>S’u arrit të merrej informacion hardware-i</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="290"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="300"/>
         <source>Close</source>
         <translation>Mbylle</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="337"/>
         <source>Please unmount all partitions in the disk first</source>
         <translation>Ju lutemi, së pari çmontoni krejt pjesët te disku</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="590"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="647"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="337"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="578"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="631"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="361"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
@@ -600,206 +614,206 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
  ju lutemi, merreni shtruar</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="361"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
         <source>Proceed</source>
         <translation>Bëje</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="361"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="400"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="432"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="603"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="660"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="388"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="420"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="436"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
         <source>Cancel</source>
         <translation>Anuloje</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="387"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="375"/>
         <source>No errors found in the partition table</source>
         <translation>Te tabela e pjesëve s’u gjetën gabime</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="400"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="388"/>
         <source>Do you want to hide this partition?</source>
         <translation>Doni të kalohet e fshehur kjo pjesë?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="400"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="388"/>
         <source>Hide</source>
         <translation>Fshihe</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="407"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="395"/>
         <source>Failed to hide the partition: unable to lock it</source>
         <translation>S’u arrit të fshihej pjesa: s’arrihet të kyçet ajo</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="415"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="403"/>
         <source>You can only hide the unmounted partition</source>
         <translation>Mund të fshihni vetëm pjesën e pamontuar</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="432"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="420"/>
         <source>Do you want to unhide this partition?</source>
         <translation>Doni të shfshihet kjo pjesë?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="432"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="420"/>
         <source>Unhide</source>
         <translation>Shfshihe</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="436"/>
         <source>Are you sure you want to delete this partition?</source>
         <translation>Jeni i sigurt se doni të fshihet kjo pjesë?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="436"/>
         <source>You will lose all data in it</source>
         <translation>Do të humbni krejt të dhënat në të</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="603"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="660"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="436"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
         <source>Delete</source>
         <translation>Fshije</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="455"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="443"/>
         <source>Failed to delete the partition: unable to lock it</source>
         <translation>S’u arrit të fshihej pjesa: s’arrihet të kyçet ajo</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="470"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="458"/>
         <source>Hide the partition successfully</source>
         <translation>Fshehje e suksesshme e pjesës</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="475"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="463"/>
         <source>Failed to hide the partition</source>
         <translation>S’u arrit të fshihet pjesa</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="485"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="473"/>
         <source>Unhide the partition successfully</source>
         <translation>Shfshehje e suksesshme e pjesës</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="490"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="478"/>
         <source>Failed to unhide the partition</source>
         <translation>S’u arrit të çfshihet pjesa</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="506"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="494"/>
         <source>Delete the partition successfully</source>
         <translation>Fshirje e suksesshme e pjesës</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="514"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="502"/>
         <source>Failed to find the disk</source>
         <translation>S’u arrit të gjendet disku</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="518"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="506"/>
         <source>Failed to get the partition info</source>
         <translation>S’u arrit të merren hollësi pjese</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="522"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="510"/>
         <source>Failed to delete the partition</source>
         <translation>S’u arrit të fshihet pjesa</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="526"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="514"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>S’u arrit të parashtrohet kërkesa ndaj kernelit</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="533"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="521"/>
         <source>Failed to delete the partition: %1</source>
         <translation>S’u arrit të fshihej pjesa: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="543"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="531"/>
         <source>Unmounting successful</source>
         <translation>Çmontim i suksesshëm</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="548"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="536"/>
         <source>Unmounting failed</source>
         <translation>Çmontimi dështoi</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="559"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="547"/>
         <source>Creating partition table successful</source>
         <translation>Krijim i suksesshëm tabele pjesësh</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="563"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="551"/>
         <source>Replacing partition table successful</source>
         <translation>Zëvendësim i suksesshëm i tabelës së pjesëzimit</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="571"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="559"/>
         <source>Creating partition table failed</source>
         <translation>Krijimi i tabelës së pjesëve dështoi</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="575"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="563"/>
         <source>Replacing partition table failed</source>
         <translation>Zëvendësimi i tabelës së pjesëzimit dështoi</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="590"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="578"/>
         <source>Unmount all logical volumes in %1 first</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="647"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="631"/>
         <source>Unmount %1 first</source>
         <translation>Çmonto $1 së pari</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="688"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="672"/>
         <source>The logical volume group is busy and cannot be deleted. Please retry after reboot.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="693"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="730"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="677"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="714"/>
         <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="602"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="659"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="590"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="643"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
         <translation>Të dhënat s’mund të rimerren, nëse fshihen, ju lutemi, ripohojeni, para se të vazhdohet</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="619"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="607"/>
         <source>The disks will be formatted if you create a logical volume</source>
         <translation>Disqet do të formatohen, nëse krijoni një vëllim logjik</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="698"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="682"/>
         <source>Failed to delete the logical volume group</source>
         <translation>S’u arrit të fshihet grup volumesh logjike</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="735"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="719"/>
         <source>Failed to delete the logical volume</source>
         <translation>S’u arrit të fshihet vëllimi logjik</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="829"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="813"/>
         <source>Volume Groups</source>
         <translation>Grupe Vëllimesh</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="881"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="867"/>
         <source>Disks</source>
         <translation>Disqe</translation>
     </message>
@@ -814,7 +828,7 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="84"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="136"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1245"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1224"/>
         <source>Verify:</source>
         <translation>Verifikoje:</translation>
     </message>
@@ -836,14 +850,14 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="132"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="137"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1246"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1225"/>
         <source>Method:</source>
         <translation>Metodë:</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="147"/>
-        <source>Verifying times</source>
-        <translation>Po verifikohen kohë</translation>
+        <source>Rounds</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="148"/>
@@ -926,8 +940,8 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="760"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="884"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="930"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1034"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1129"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1013"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1108"/>
         <source>Time elapsed:</source>
         <translation>Kohë e rrjedhur:</translation>
     </message>
@@ -938,10 +952,10 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="778"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="885"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="931"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1035"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1054"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1102"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1135"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1014"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1033"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1081"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1114"/>
         <source>Time left:</source>
         <translation>Kohë e mbetur:</translation>
     </message>
@@ -962,90 +976,90 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="802"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="994"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="973"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="990"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="969"/>
         <source>The verifying disk contains mounted partitions, so you cannot repair it.</source>
         <translation>Disku që po verifikohet përmban pjesë të montuara, ndaj s’mund ta ndreqni.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="992"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="971"/>
         <source>Please unmount partitions and then repair the disk.</source>
         <translation>Ju lutemi, çmontoni pjesët dhe mandej ndreqni diskun.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="981"/>
         <source>Warning</source>
         <translation>Kujdes</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1007"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="986"/>
         <source>Bad sector repairing cannot recover files,</source>
         <translation>Ndreqja e sektorëve të këqij s’mund të rikthejë kartela,</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1008"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="987"/>
         <source>but destroys data on and near bad sectors instead.</source>
         <translation>por në vend të kësaj shkatërron të dhëna te dhe pranë sektorëve të këqij.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1009"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="988"/>
         <source>Please back up all data before repair.</source>
         <translation>Ju lutemi, para ndreqjesh, kopjeruani krejt të dhënat tuaja.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1023"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1161"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1188"/>
         <source>Cancel</source>
         <translation>Anuloje</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1024"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1003"/>
         <source>Start Repair</source>
         <translation>Fillo Ndreqjen</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1070"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1049"/>
         <source>Repairing cylinder: %1</source>
         <translation>Po ndreqet cilindri: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1107"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1086"/>
         <source>Repair completed. Cylinder: %1 repaired.</source>
         <translation>Ndreqja u plotësua. Cilindër: %1 të ndrequr.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1110"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1089"/>
         <source>Disk repair completed. %1 bad blocks repaired.</source>
         <translation>Ndreqja e diskut u plotësua. U ndreqën %1 blloqe të këqij.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1181"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1160"/>
         <source>Verifying for bad sectors, exit now?</source>
         <translation>Po riparohen sektorë të dëmtuar, të dilet tani?</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1181"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1160"/>
         <source>The verified information will not be reserved</source>
         <translation>Informacioni i verifikimit s’do të ruhet</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1161"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1188"/>
         <source>Exit</source>
         <translation>Dil</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1208"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1187"/>
         <source>Repairing bad sectors, exit now?</source>
         <translation>Po riparohen sektorë të dëmtuar, të dilet tani?</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1208"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1187"/>
         <source>The repairing information will not be reserved</source>
         <translation>Informacioni i ndreqjes s’do të ruhet</translation>
     </message>
@@ -1399,7 +1413,7 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="343"/>
-        <location filename="../widgets/formatedialog.cpp" line="737"/>
+        <location filename="../widgets/formatedialog.cpp" line="748"/>
         <source>Failed to find the disk</source>
         <translation>S’u arrit të gjendet disku</translation>
     </message>
@@ -1431,7 +1445,7 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="359"/>
-        <location filename="../widgets/formatedialog.cpp" line="749"/>
+        <location filename="../widgets/formatedialog.cpp" line="760"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>S’u arrit të parashtrohet kërkesa ndaj kernelit</translation>
     </message>
@@ -1469,38 +1483,38 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
         <translation>S’do të jeni në gjendje të rimerrni kartela pas fshirjes dhe procesi do të jetë i ngadaltë.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="637"/>
+        <location filename="../widgets/formatedialog.cpp" line="640"/>
         <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="638"/>
+        <location filename="../widgets/formatedialog.cpp" line="641"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="699"/>
+        <location filename="../widgets/formatedialog.cpp" line="710"/>
         <source>Wiping %1</source>
         <translation>Po fshihet %1</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="722"/>
+        <location filename="../widgets/formatedialog.cpp" line="733"/>
         <source>&quot;%1&quot; wiped</source>
         <translation>“%1” u fshi</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="728"/>
+        <location filename="../widgets/formatedialog.cpp" line="739"/>
         <source>Failed to wipe %1</source>
         <translation>S’u arrit të fshihet %1</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="741"/>
+        <location filename="../widgets/formatedialog.cpp" line="752"/>
         <source>Failed to get the partition info</source>
         <translation>S’u arrit të merren hollësi pjese</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="745"/>
+        <location filename="../widgets/formatedialog.cpp" line="756"/>
         <source>Failed to delete the partition</source>
         <translation>S’u arrit të fshihet pjesa</translation>
     </message>
@@ -1510,7 +1524,8 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="139"/>
         <location filename="../widgets/infoshowwidget.cpp" line="244"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="435"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="385"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="578"/>
         <source>Mount point:</source>
         <translation>Pikë montimi:</translation>
     </message>
@@ -1527,8 +1542,9 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="161"/>
         <location filename="../widgets/infoshowwidget.cpp" line="245"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="378"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="436"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="386"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="504"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="579"/>
         <source>Type:</source>
         <translation>Lloj:</translation>
     </message>
@@ -1540,48 +1556,49 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="175"/>
         <location filename="../widgets/infoshowwidget.cpp" line="246"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="387"/>
         <source>Volume label:</source>
         <translation>Etiketë volumi:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="326"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="323"/>
         <source>Path:</source>
         <translation>Shteg:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="327"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="324"/>
         <source>Disk type:</source>
         <translation>Lloj disku:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="328"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="325"/>
         <source>Interface:</source>
         <translation>Ndërfaqe:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="377"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="503"/>
         <source>LV count:</source>
         <translation>Numër VL-sh:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="379"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="505"/>
         <source>VG name:</source>
         <translation>Emër VG:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="384"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="387"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="510"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="513"/>
         <source>Volume group</source>
         <translation>Grup vëllimesh</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="437"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="580"/>
         <source>Volume name:</source>
         <translation>Emër vëllimi:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="442"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="445"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="585"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="588"/>
         <source>Logical volume</source>
         <translation>Vëllim logjik</translation>
     </message>
@@ -1594,18 +1611,20 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
         <translation>Kapacitet</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="139"/>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="187"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="147"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="167"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="169"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="224"/>
         <source>File system</source>
         <translation>Sistem kartelash</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="161"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="181"/>
         <source>%1 partition table</source>
         <translation>Tabelë pjesësh %1</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="173"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="200"/>
         <source>Volume group</source>
         <translation>Grup vëllimesh</translation>
     </message>
@@ -1638,7 +1657,7 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="84"/>
-        <location filename="../widgets/mountdialog.cpp" line="216"/>
+        <location filename="../widgets/mountdialog.cpp" line="234"/>
         <source>Cancel</source>
         <translation>Anuloje</translation>
     </message>
@@ -1648,12 +1667,12 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
         <translation>Montoni</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="216"/>
+        <location filename="../widgets/mountdialog.cpp" line="234"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>Të dhënat nën këtë pikë montimi do të humbnin, ju lutemi, montojeni drejtorinë te një vendndodhje tjetër</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="216"/>
+        <location filename="../widgets/mountdialog.cpp" line="234"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -1875,82 +1894,82 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
 <context>
     <name>PasswordInputDialog</name>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="74"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="179"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="73"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="178"/>
         <source>Set a password to encrypt %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="78"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="77"/>
         <source>The password cannot be reset or retrieved online</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="82"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="81"/>
         <source>Password</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="87"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="86"/>
         <source>Repeat password</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="92"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="91"/>
         <source>Password hint</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="96"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="95"/>
         <source>(Recommended)</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="106"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="105"/>
         <source>Enter a password </source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="112"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="111"/>
         <source>Enter the password again</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="161"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="160"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Anuloje</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="162"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="161"/>
         <source>Confirm</source>
         <comment>button</comment>
         <translation>Ripohojeni</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="202"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="216"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="250"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="201"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="215"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="249"/>
         <source>The password exceeds the maximum length</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="243"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="242"/>
         <source>The password cannot be empty</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="257"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="256"/>
         <source>Passwords do not match</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="264"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="263"/>
         <source>The password hint should differ from the password</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="118"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="117"/>
         <source>Enter a password hint</source>
         <translation type="unfinished"/>
     </message>
@@ -2144,16 +2163,16 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
 <context>
     <name>SizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="192"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="276"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="245"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="329"/>
         <source> Capacity:</source>
         <translation> Kapacitet:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="232"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="236"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="316"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="319"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="285"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="289"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="369"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="372"/>
         <source>Used:</source>
         <translation>E përdorur:</translation>
     </message>
@@ -2189,7 +2208,7 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="59"/>
-        <location filename="../widgets/titlewidget.cpp" line="393"/>
+        <location filename="../widgets/titlewidget.cpp" line="435"/>
         <source>Create volume group</source>
         <translation>Krijoni grup vëllimesh</translation>
     </message>
@@ -2210,7 +2229,7 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="75"/>
-        <location filename="../widgets/titlewidget.cpp" line="291"/>
+        <location filename="../widgets/titlewidget.cpp" line="342"/>
         <source>Create logical volume</source>
         <translation>Krijo vëllim logjik</translation>
     </message>
@@ -2220,58 +2239,64 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
         <translation>S’mund të njohë tabelën e pjesëve për të</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="271"/>
-        <location filename="../widgets/titlewidget.cpp" line="374"/>
+        <location filename="../widgets/titlewidget.cpp" line="239"/>
+        <source>Unable to mount the device: no file system is found, or the file system is not supported</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="322"/>
+        <location filename="../widgets/titlewidget.cpp" line="416"/>
         <source>The file system does not support space adjustment</source>
         <translation>Sistemi i kartelave nuk mbulon rregullim hapësire</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="271"/>
-        <location filename="../widgets/titlewidget.cpp" line="319"/>
-        <location filename="../widgets/titlewidget.cpp" line="358"/>
-        <location filename="../widgets/titlewidget.cpp" line="374"/>
-        <location filename="../widgets/titlewidget.cpp" line="414"/>
-        <location filename="../widgets/titlewidget.cpp" line="527"/>
+        <location filename="../widgets/titlewidget.cpp" line="240"/>
+        <location filename="../widgets/titlewidget.cpp" line="322"/>
+        <location filename="../widgets/titlewidget.cpp" line="366"/>
+        <location filename="../widgets/titlewidget.cpp" line="400"/>
+        <location filename="../widgets/titlewidget.cpp" line="416"/>
+        <location filename="../widgets/titlewidget.cpp" line="456"/>
+        <location filename="../widgets/titlewidget.cpp" line="569"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="291"/>
+        <location filename="../widgets/titlewidget.cpp" line="342"/>
         <source>The disks will be formatted if you create a logical volume</source>
         <translation>Disqet do të formatohen, nëse krijoni një vëllim logjik</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="319"/>
-        <location filename="../widgets/titlewidget.cpp" line="358"/>
-        <location filename="../widgets/titlewidget.cpp" line="527"/>
+        <location filename="../widgets/titlewidget.cpp" line="366"/>
+        <location filename="../widgets/titlewidget.cpp" line="400"/>
+        <location filename="../widgets/titlewidget.cpp" line="569"/>
         <source>Unmount %1 first</source>
         <translation>Çmonto $1 së pari</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="331"/>
-        <location filename="../widgets/titlewidget.cpp" line="426"/>
+        <location filename="../widgets/titlewidget.cpp" line="378"/>
+        <location filename="../widgets/titlewidget.cpp" line="468"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
         <translation>Të dhënat s’mund të rimerren, nëse fshihen, ju lutemi, ripohojeni, para se të vazhdohet</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="332"/>
-        <location filename="../widgets/titlewidget.cpp" line="427"/>
+        <location filename="../widgets/titlewidget.cpp" line="379"/>
+        <location filename="../widgets/titlewidget.cpp" line="469"/>
         <source>Delete</source>
         <translation>Fshije</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="332"/>
-        <location filename="../widgets/titlewidget.cpp" line="427"/>
+        <location filename="../widgets/titlewidget.cpp" line="379"/>
+        <location filename="../widgets/titlewidget.cpp" line="469"/>
         <source>Cancel</source>
         <translation>Anuloje</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="393"/>
+        <location filename="../widgets/titlewidget.cpp" line="435"/>
         <source>The disks will be formatted if you create a volume group</source>
         <translation>Nëse krijoni një grup vëllimesh, disqet do të formatohen</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="414"/>
+        <location filename="../widgets/titlewidget.cpp" line="456"/>
         <source>Unmount all logical volumes in %1 first</source>
         <translation type="unfinished"/>
     </message>

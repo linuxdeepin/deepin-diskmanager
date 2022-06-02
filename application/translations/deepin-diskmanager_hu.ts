@@ -30,6 +30,7 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="157"/>
         <location filename="../widgets/createlvwidget.cpp" line="161"/>
+        <location filename="../widgets/createlvwidget.cpp" line="992"/>
         <source>VG name:</source>
         <translation>Kötetcsoport neve:</translation>
     </message>
@@ -37,7 +38,7 @@
         <location filename="../widgets/createlvwidget.cpp" line="169"/>
         <location filename="../widgets/createlvwidget.cpp" line="333"/>
         <location filename="../widgets/createlvwidget.cpp" line="377"/>
-        <location filename="../widgets/createlvwidget.cpp" line="989"/>
+        <location filename="../widgets/createlvwidget.cpp" line="993"/>
         <source>LV file system:</source>
         <translation>Logikai kötet fájlrendszere:</translation>
     </message>
@@ -108,23 +109,22 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="817"/>
         <source>To encrypt a volume, it should be larger than 100 MiB</source>
-        <translation type="unfinished"/>
+        <translation>A kötet titkosításához, annak méretének 100 MB-nál nagyobbnak kell lennie</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="840"/>
+        <location filename="../widgets/createlvwidget.cpp" line="842"/>
         <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
         <translation>A jelszó elfelejtésének elkerülése érdekében kérjük készítsen biztonsági másolatot jelszaváról, és őrizze meg megfelelően!</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="841"/>
+        <location filename="../widgets/createlvwidget.cpp" line="843"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="988"/>
         <source>Disk:</source>
-        <translation>Lemez:  </translation>
+        <translation type="vanished">Lemez:  </translation>
     </message>
 </context>
 <context>
@@ -175,16 +175,16 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="114"/>
         <location filename="../widgets/createvgwidget.cpp" line="402"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1044"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1054"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1047"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1057"/>
         <location filename="../widgets/createvgwidget.cpp" line="1491"/>
         <location filename="../widgets/createvgwidget.cpp" line="1501"/>
         <location filename="../widgets/createvgwidget.cpp" line="1550"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1600"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1603"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1633"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1738"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1801"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1611"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1614"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1644"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1760"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1823"/>
         <source>Capacity selected: %1</source>
         <translation>Kiválasztott kapacitás: %1 </translation>
     </message>
@@ -308,33 +308,43 @@
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1757"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1559"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1653"/>
+        <source>Adding the disk/partition to a logical volume group 
+will format it and remove its password.</source>
+        <translation>A Lemez/partíció hozzáadása a logikai kötetcsoporthoz 
+formázza azt és eltávolítja a jelszavát.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1779"/>
         <source>Not enough space to back up data on %1, please clear disk space</source>
         <translation>Nincs elég hely az adatok biztonsági mentéséhez a %1 helyen, kérjük szabadítson fel lemezterületet </translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1758"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1560"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1654"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1780"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1922"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1944"/>
         <source>Existing volume group, creation failed. Please retry after reboot.</source>
         <translation>Meglévő kötetcsoport, a létrehozás nem sikerült. Kérjük próbálja újra a számítógép újraindítása után.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1926"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1948"/>
         <source>Failed to create a physical volume. Please refresh Disk Utility and try again.</source>
         <translation>Nem sikerült létrehozni a fizikai kötetet. Kérjük frissítse a Lemezkezelő segédprogramot, és próbálja újra.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1930"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1952"/>
         <source>Device input/output error. Please try again after reboot.</source>
         <translation>Eszköz bemeneti / kimeneti hiba. Kérjük próbálja újra a számítógép újraindítása után.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1983"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1990"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2005"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2012"/>
         <source>Refreshing the page to reload disks</source>
         <translation>Az oldal frissítése a lemezek újratöltéséhez </translation>
     </message>
@@ -375,75 +385,77 @@
 <context>
     <name>DMDbusHandler</name>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="208"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="210"/>
         <source>Refreshing data...</source>
         <translation>Adatok frissítése...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="227"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="229"/>
         <source>Initializing data...</source>
         <translation>Adatok inicializálása...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="260"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="627"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="262"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="703"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="794"/>
         <source>Mounting %1 ...</source>
         <translation>%1 csatolása...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="267"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="634"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="269"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="710"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="801"/>
         <source>Unmounting %1 ...</source>
         <translation>%1 lecsatolása...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="306"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="308"/>
         <source>Resizing %1 ...</source>
         <translation>%1 átméretezése...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="313"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="315"/>
         <source>Creating a new partition...</source>
         <translation>Új partíció létrehozása...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="456"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="474"/>
         <source>Deleting %1 ...</source>
         <translation>%1 törlése...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="508"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="526"/>
         <source>Creating a partition table of %1 ...</source>
         <translation>Partíciós tábla létrehozása a %1-hez...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="510"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="528"/>
         <source>Replacing the partition table of %1 ...</source>
         <translation>% 1 partíciós táblájának cseréje...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="594"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="670"/>
         <source>Creating...</source>
         <translation>Létrehozás...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="601"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="608"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="677"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="684"/>
         <source>Deleting...</source>
         <translation>Törlés...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="620"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="696"/>
         <source>Resizing space...</source>
         <translation>Hely átméretezése...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="658"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="734"/>
         <source>AES Encryption</source>
         <translation>AES titkosítás</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="662"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="736"/>
         <source>SM4 Encryption</source>
         <translation>SM4 titkosítás</translation>
     </message>
@@ -451,68 +463,71 @@
 <context>
     <name>DecryptDialog</name>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="57"/>
+        <location filename="../widgets/decryptdialog.cpp" line="59"/>
         <source>Enter the password to decrypt the disk</source>
         <translation>Adja meg a jelszót a lemez visszafejtéséhez</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="69"/>
+        <location filename="../widgets/decryptdialog.cpp" line="71"/>
         <source>Enter the password to decrypt the volume group</source>
         <translation>Adja meg a jelszót a kötetcsoport visszafejtéséhez</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="86"/>
+        <location filename="../widgets/decryptdialog.cpp" line="88"/>
         <source>Enter a password </source>
         <translation>Adja meg a jelszót</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="90"/>
+        <location filename="../widgets/decryptdialog.cpp" line="92"/>
         <source>Password hint</source>
         <translation>Jelszó emlékeztető</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="133"/>
+        <location filename="../widgets/decryptdialog.cpp" line="140"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="138"/>
+        <location filename="../widgets/decryptdialog.cpp" line="145"/>
         <source>Decrypt</source>
         <comment>button</comment>
         <translation>Visszafejtés</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="166"/>
+        <location filename="../widgets/decryptdialog.cpp" line="173"/>
         <source>Decrypting...</source>
-        <translation type="unfinished"/>
+        <translation>Visszafejtés...</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="209"/>
-        <location filename="../widgets/decryptdialog.cpp" line="349"/>
+        <location filename="../widgets/decryptdialog.cpp" line="336"/>
+        <source>Decryption failed</source>
+        <translation>A visszafejtés sikertelen</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="354"/>
         <source>Wrong password, %1 chances left</source>
-        <translation type="unfinished"/>
+        <translation>Helytelen jelszó, %1 próbálkozása maradt</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="211"/>
-        <location filename="../widgets/decryptdialog.cpp" line="351"/>
+        <location filename="../widgets/decryptdialog.cpp" line="356"/>
         <source>Wrong password, only one chance left</source>
-        <translation type="unfinished"/>
+        <translation>Helytelen jelszó, már csak egy próbálkozása maradt</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="216"/>
+        <location filename="../widgets/decryptdialog.cpp" line="224"/>
         <source>Please try again %1 minutes later</source>
-        <translation type="unfinished"/>
+        <translation>Kérjük próbálja újra %1 perccel később</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="291"/>
+        <location filename="../widgets/decryptdialog.cpp" line="298"/>
         <source>The password cannot be empty</source>
         <translation>A jelszó nem lehet üres</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="347"/>
+        <location filename="../widgets/decryptdialog.cpp" line="352"/>
         <source>Password locked, please try again %1 minutes later</source>
-        <translation type="unfinished"/>
+        <translation>A jelszó zárolva, kérjük próbálkozzon újra %1 perccel később</translation>
     </message>
 </context>
 <context>
@@ -553,45 +568,45 @@
         <translation>Partíció törlése</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="216"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="226"/>
         <source>Delete volume group</source>
         <translation>Kötetcsoport törlése</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="222"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="619"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="232"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="607"/>
         <source>Create logical volume</source>
         <translation>Logikai kötet létrehozása</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="247"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="257"/>
         <source>Delete logical volume</source>
         <translation>Logikai kötet törlése</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="290"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="300"/>
         <source>Failed to get hardware information</source>
         <translation>Nem sikerült beszerezni a hardveres információkat</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="290"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="300"/>
         <source>Close</source>
         <translation>Bezárás</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="337"/>
         <source>Please unmount all partitions in the disk first</source>
         <translation>Kérjük először csatolja le az összes, lemezen lévő partíciót</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="590"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="647"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="337"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="578"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="631"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="361"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
@@ -600,206 +615,206 @@ elveszik, ha új partíciós táblát hoz létre,
 kérjük legyen óvatos</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="361"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
         <source>Proceed</source>
         <translation>Folytassa</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="361"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="400"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="432"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="603"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="660"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="388"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="420"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="436"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="387"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="375"/>
         <source>No errors found in the partition table</source>
         <translation>Nem található hiba a partíciós táblában</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="400"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="388"/>
         <source>Do you want to hide this partition?</source>
         <translation>Valóban el akarja rejteni ezt a partíciót?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="400"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="388"/>
         <source>Hide</source>
         <translation>Elrejtés</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="407"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="395"/>
         <source>Failed to hide the partition: unable to lock it</source>
         <translation>Nem sikerült elrejteni a partíciót: nem sikerült lezárni</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="415"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="403"/>
         <source>You can only hide the unmounted partition</source>
         <translation>Csak a leválasztatlan partíciót rejtheti el</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="432"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="420"/>
         <source>Do you want to unhide this partition?</source>
         <translation>Valóban fel akarja fedni ezt a partíciót?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="432"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="420"/>
         <source>Unhide</source>
         <translation>Felfedés</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="436"/>
         <source>Are you sure you want to delete this partition?</source>
         <translation>Valóban törölni akarja ezt a partíciót?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="436"/>
         <source>You will lose all data in it</source>
         <translation>Az összes tárolt adat el fog veszni</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="603"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="660"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="436"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
         <source>Delete</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="455"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="443"/>
         <source>Failed to delete the partition: unable to lock it</source>
         <translation>Nem sikerült törölni a partíciót: nem sikerült lezárni</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="470"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="458"/>
         <source>Hide the partition successfully</source>
         <translation>A partíció elrejtése sikeres</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="475"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="463"/>
         <source>Failed to hide the partition</source>
         <translation>A partíció elrejtése sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="485"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="473"/>
         <source>Unhide the partition successfully</source>
         <translation>A partíció felfedése sikeres</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="490"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="478"/>
         <source>Failed to unhide the partition</source>
         <translation>A partíció felfedése sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="506"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="494"/>
         <source>Delete the partition successfully</source>
         <translation>A partíció törlése sikeres</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="514"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="502"/>
         <source>Failed to find the disk</source>
         <translation>A lemez elérése sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="518"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="506"/>
         <source>Failed to get the partition info</source>
         <translation>A partíció adatainak lekérése sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="522"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="510"/>
         <source>Failed to delete the partition</source>
         <translation>A partíció törlése sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="526"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="514"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>A kérelem elküldése a kernelnek sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="533"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="521"/>
         <source>Failed to delete the partition: %1</source>
         <translation>A partíció törlése sikertelen: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="543"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="531"/>
         <source>Unmounting successful</source>
         <translation>Az lecsatolás sikeres</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="548"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="536"/>
         <source>Unmounting failed</source>
         <translation>Az lecsatolás sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="559"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="547"/>
         <source>Creating partition table successful</source>
         <translation>A partíciós tábla létrehozása sikeres</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="563"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="551"/>
         <source>Replacing partition table successful</source>
         <translation>A partíciós tábla cseréje sikeres</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="571"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="559"/>
         <source>Creating partition table failed</source>
         <translation>A partíciós tábla létrehozása sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="575"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="563"/>
         <source>Replacing partition table failed</source>
         <translation>A partíciós tábla cseréje sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="590"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="578"/>
         <source>Unmount all logical volumes in %1 first</source>
         <translation>Először válassza le a %1 összes logikai kötetét</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="647"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="631"/>
         <source>Unmount %1 first</source>
         <translation>Először csatolja le a %1-et</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="688"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="672"/>
         <source>The logical volume group is busy and cannot be deleted. Please retry after reboot.</source>
         <translation>A logikai kötetcsoport foglalt, és nem törölhető. Kérjük próbálja újra az eszköz újraindítása után.</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="693"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="730"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="677"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="714"/>
         <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
         <translation>A logikai kötet foglalt, és nem törölhető. Kérjük próbálja újra az eszköz újraindítása után.</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="602"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="659"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="590"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="643"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
         <translation>Az adatok nem állíthatók vissza, ha törlésre kerülnek, kérjük erősítse meg a folytatás előtt </translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="619"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="607"/>
         <source>The disks will be formatted if you create a logical volume</source>
         <translation>A lemezek formázásra kerülnek, ha logikai kötetet hoz létre </translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="698"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="682"/>
         <source>Failed to delete the logical volume group</source>
         <translation>A logikai kötetcsoport törlése sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="735"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="719"/>
         <source>Failed to delete the logical volume</source>
         <translation>A logikai kötet törlése sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="829"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="813"/>
         <source>Volume Groups</source>
         <translation>Kötetcsoportok</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="881"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="867"/>
         <source>Disks</source>
         <translation>Lemezek</translation>
     </message>
@@ -814,7 +829,7 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="84"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="136"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1245"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1224"/>
         <source>Verify:</source>
         <translation>Ellenőrzés:</translation>
     </message>
@@ -836,14 +851,14 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="132"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="137"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1246"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1225"/>
         <source>Method:</source>
         <translation>Módszer:</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="147"/>
-        <source>Verifying times</source>
-        <translation>Ellenőrzési idők</translation>
+        <source>Rounds</source>
+        <translation>Körök</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="148"/>
@@ -926,8 +941,8 @@ kérjük legyen óvatos</translation>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="760"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="884"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="930"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1034"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1129"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1013"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1108"/>
         <source>Time elapsed:</source>
         <translation>Eltelt idő:</translation>
     </message>
@@ -938,10 +953,10 @@ kérjük legyen óvatos</translation>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="778"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="885"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="931"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1035"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1054"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1102"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1135"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1014"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1033"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1081"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1114"/>
         <source>Time left:</source>
         <translation>Hátralévő idő:</translation>
     </message>
@@ -962,90 +977,90 @@ kérjük legyen óvatos</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="802"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="994"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="973"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="990"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="969"/>
         <source>The verifying disk contains mounted partitions, so you cannot repair it.</source>
         <translation>Az ellenőrző lemez csatolt partíciókat tartalmaz, ezért nem tudja megjavítani.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="992"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="971"/>
         <source>Please unmount partitions and then repair the disk.</source>
         <translation>Kérjük csatolja le a partíciókat, majd javítsa a lemezt.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="981"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1007"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="986"/>
         <source>Bad sector repairing cannot recover files,</source>
         <translation>A rossz szektorok javításával nem lehet helyreállítani a fájlokat,</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1008"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="987"/>
         <source>but destroys data on and near bad sectors instead.</source>
         <translation>hanem megsemmisíti a rossz szektorokat, és azok közelében lévő adatokat.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1009"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="988"/>
         <source>Please back up all data before repair.</source>
         <translation>Kérjük mentse az összes adatát, mielőtt javítást végez</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1023"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1161"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1188"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1024"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1003"/>
         <source>Start Repair</source>
         <translation>Javítás indítása</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1070"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1049"/>
         <source>Repairing cylinder: %1</source>
         <translation>Cilinderek javítása: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1107"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1086"/>
         <source>Repair completed. Cylinder: %1 repaired.</source>
         <translation>A javítás befejeződött. %1 cilinder javítva.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1110"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1089"/>
         <source>Disk repair completed. %1 bad blocks repaired.</source>
         <translation>A lemez javítása befejeződött. %1 hibás blokk javítva.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1181"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1160"/>
         <source>Verifying for bad sectors, exit now?</source>
         <translation>Ellenőrizze a rossz szektorokat, kilépés most?</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1181"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1160"/>
         <source>The verified information will not be reserved</source>
         <translation>Az ellenőrzött információk nem kerülnek tárolásra</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1161"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1188"/>
         <source>Exit</source>
         <translation>Kilépés</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1208"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1187"/>
         <source>Repairing bad sectors, exit now?</source>
         <translation>Hibás szektorok javítása, kilépés most?</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1208"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1187"/>
         <source>The repairing information will not be reserved</source>
         <translation> A javítási információk nem kerülnek tárolásra</translation>
     </message>
@@ -1399,7 +1414,7 @@ kérjük legyen óvatos</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="343"/>
-        <location filename="../widgets/formatedialog.cpp" line="737"/>
+        <location filename="../widgets/formatedialog.cpp" line="748"/>
         <source>Failed to find the disk</source>
         <translation>A lemez elérése sikertelen</translation>
     </message>
@@ -1431,7 +1446,7 @@ kérjük legyen óvatos</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="359"/>
-        <location filename="../widgets/formatedialog.cpp" line="749"/>
+        <location filename="../widgets/formatedialog.cpp" line="760"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>A kérelem elküldése a kernelnek sikertelen</translation>
     </message>
@@ -1469,38 +1484,38 @@ kérjük legyen óvatos</translation>
         <translation>A törlés után nem tudja visszaállítani a fájlokat, és a választott folyamat lassú lesz. </translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="637"/>
+        <location filename="../widgets/formatedialog.cpp" line="640"/>
         <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
         <translation>A jelszó elfelejtésének elkerülése érdekében kérjük készítsen biztonsági másolatot jelszaváról, és őrizze meg megfelelően!</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="638"/>
+        <location filename="../widgets/formatedialog.cpp" line="641"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="699"/>
+        <location filename="../widgets/formatedialog.cpp" line="710"/>
         <source>Wiping %1</source>
         <translation>&quot;%1&quot; törlése...</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="722"/>
+        <location filename="../widgets/formatedialog.cpp" line="733"/>
         <source>&quot;%1&quot; wiped</source>
         <translation>&quot;%1&quot; törölve</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="728"/>
+        <location filename="../widgets/formatedialog.cpp" line="739"/>
         <source>Failed to wipe %1</source>
         <translation>A %1 törlése sikertelen</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="741"/>
+        <location filename="../widgets/formatedialog.cpp" line="752"/>
         <source>Failed to get the partition info</source>
         <translation>Nem sikerült lekérni a partíció adatait</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="745"/>
+        <location filename="../widgets/formatedialog.cpp" line="756"/>
         <source>Failed to delete the partition</source>
         <translation>A partíció törlése sikertelen</translation>
     </message>
@@ -1510,7 +1525,8 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="139"/>
         <location filename="../widgets/infoshowwidget.cpp" line="244"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="435"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="385"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="578"/>
         <source>Mount point:</source>
         <translation>Csatolási hely:  </translation>
     </message>
@@ -1527,8 +1543,9 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="161"/>
         <location filename="../widgets/infoshowwidget.cpp" line="245"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="378"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="436"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="386"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="504"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="579"/>
         <source>Type:</source>
         <translation>Típus:  </translation>
     </message>
@@ -1540,48 +1557,49 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="175"/>
         <location filename="../widgets/infoshowwidget.cpp" line="246"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="387"/>
         <source>Volume label:</source>
         <translation>Kötetcímke:  </translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="326"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="323"/>
         <source>Path:</source>
         <translation>Útvonal:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="327"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="324"/>
         <source>Disk type:</source>
         <translation>Lemez típusa:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="328"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="325"/>
         <source>Interface:</source>
         <translation>Felület:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="377"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="503"/>
         <source>LV count:</source>
         <translation>Logikai kötet szám:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="379"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="505"/>
         <source>VG name:</source>
         <translation>Kötetcsoport neve:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="384"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="387"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="510"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="513"/>
         <source>Volume group</source>
         <translation>Kötetcsoportok</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="437"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="580"/>
         <source>Volume name:</source>
         <translation>Kötet neve:  </translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="442"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="445"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="585"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="588"/>
         <source>Logical volume</source>
         <translation>Logikai kötet</translation>
     </message>
@@ -1594,18 +1612,20 @@ kérjük legyen óvatos</translation>
         <translation>Kapacitás</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="139"/>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="187"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="147"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="167"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="169"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="224"/>
         <source>File system</source>
         <translation>Fájlrendszer</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="161"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="181"/>
         <source>%1 partition table</source>
         <translation>%1 partíciós tábla</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="173"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="200"/>
         <source>Volume group</source>
         <translation>Kötetcsoport</translation>
     </message>
@@ -1638,7 +1658,7 @@ kérjük legyen óvatos</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="84"/>
-        <location filename="../widgets/mountdialog.cpp" line="216"/>
+        <location filename="../widgets/mountdialog.cpp" line="234"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
@@ -1648,12 +1668,12 @@ kérjük legyen óvatos</translation>
         <translation>Csatolás</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="216"/>
+        <location filename="../widgets/mountdialog.cpp" line="234"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>Az ezen a csatolási ponton lévő adatok elvesznének, kérjük csatolja be a könyvtárat egy másik helyre</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="216"/>
+        <location filename="../widgets/mountdialog.cpp" line="234"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -1853,7 +1873,7 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="879"/>
         <source>To encrypt a partition, it should be larger than 100 MiB</source>
-        <translation type="unfinished"/>
+        <translation>Egy partíció titkosításához, annak méretének 100 MB-nál nagyobbnak kell lennie</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="903"/>
@@ -1875,82 +1895,82 @@ kérjük legyen óvatos</translation>
 <context>
     <name>PasswordInputDialog</name>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="74"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="179"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="73"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="178"/>
         <source>Set a password to encrypt %1</source>
         <translation>Állítson be jelszót a %1 titkosításához</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="78"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="77"/>
         <source>The password cannot be reset or retrieved online</source>
         <translation>A jelszót nem lehet visszaállítani vagy online visszakeresni</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="82"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="81"/>
         <source>Password</source>
         <translation>Jelszó</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="87"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="86"/>
         <source>Repeat password</source>
         <translation>Jelszó ismétlése</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="92"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="91"/>
         <source>Password hint</source>
         <translation>Jelszó emlékeztető</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="96"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="95"/>
         <source>(Recommended)</source>
         <translation>(Ajánlott)</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="106"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="105"/>
         <source>Enter a password </source>
         <translation>Adja meg a jelszót</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="112"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="111"/>
         <source>Enter the password again</source>
         <translation>Adja meg a jelszót újra</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="161"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="160"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="162"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="161"/>
         <source>Confirm</source>
         <comment>button</comment>
         <translation>Megerősítés</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="202"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="216"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="250"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="201"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="215"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="249"/>
         <source>The password exceeds the maximum length</source>
         <translation>A jelszó meghaladja a maximális hosszt</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="243"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="242"/>
         <source>The password cannot be empty</source>
         <translation>A jelszó nem lehet üres</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="257"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="256"/>
         <source>Passwords do not match</source>
         <translation>A jelszavak nem egyeznek</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="264"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="263"/>
         <source>The password hint should differ from the password</source>
         <translation>A jelszóra vonatkozó emlékeztetőnek különböznie kell a jelszótól</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="118"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="117"/>
         <source>Enter a password hint</source>
         <translation>Adja meg a jelszó emlékeztetőtt</translation>
     </message>
@@ -2144,16 +2164,16 @@ kérjük legyen óvatos</translation>
 <context>
     <name>SizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="192"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="276"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="245"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="329"/>
         <source> Capacity:</source>
         <translation>Kapacitás:  </translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="232"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="236"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="316"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="319"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="285"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="289"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="369"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="372"/>
         <source>Used:</source>
         <translation>Használatban:  </translation>
     </message>
@@ -2189,7 +2209,7 @@ kérjük legyen óvatos</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="59"/>
-        <location filename="../widgets/titlewidget.cpp" line="393"/>
+        <location filename="../widgets/titlewidget.cpp" line="435"/>
         <source>Create volume group</source>
         <translation>Kötetcsoport létrehozása</translation>
     </message>
@@ -2210,7 +2230,7 @@ kérjük legyen óvatos</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="75"/>
-        <location filename="../widgets/titlewidget.cpp" line="291"/>
+        <location filename="../widgets/titlewidget.cpp" line="342"/>
         <source>Create logical volume</source>
         <translation>Logikai kötet létrehozása</translation>
     </message>
@@ -2220,58 +2240,64 @@ kérjük legyen óvatos</translation>
         <translation>Ez a partíciós tábla nem ismerhető fel</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="271"/>
-        <location filename="../widgets/titlewidget.cpp" line="374"/>
+        <location filename="../widgets/titlewidget.cpp" line="239"/>
+        <source>Unable to mount the device: no file system is found, or the file system is not supported</source>
+        <translation>Az eszköz csatlakoztatása nem lehetséges: nem található fájlrendszer, vagy a fájlrendszer nem támogatott.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="322"/>
+        <location filename="../widgets/titlewidget.cpp" line="416"/>
         <source>The file system does not support space adjustment</source>
         <translation>A fájlrendszer nem támogatja a terület beállítását </translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="271"/>
-        <location filename="../widgets/titlewidget.cpp" line="319"/>
-        <location filename="../widgets/titlewidget.cpp" line="358"/>
-        <location filename="../widgets/titlewidget.cpp" line="374"/>
-        <location filename="../widgets/titlewidget.cpp" line="414"/>
-        <location filename="../widgets/titlewidget.cpp" line="527"/>
+        <location filename="../widgets/titlewidget.cpp" line="240"/>
+        <location filename="../widgets/titlewidget.cpp" line="322"/>
+        <location filename="../widgets/titlewidget.cpp" line="366"/>
+        <location filename="../widgets/titlewidget.cpp" line="400"/>
+        <location filename="../widgets/titlewidget.cpp" line="416"/>
+        <location filename="../widgets/titlewidget.cpp" line="456"/>
+        <location filename="../widgets/titlewidget.cpp" line="569"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="291"/>
+        <location filename="../widgets/titlewidget.cpp" line="342"/>
         <source>The disks will be formatted if you create a logical volume</source>
         <translation>A lemezek formázásra kerülnek, ha logikai kötetet hoz létre </translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="319"/>
-        <location filename="../widgets/titlewidget.cpp" line="358"/>
-        <location filename="../widgets/titlewidget.cpp" line="527"/>
+        <location filename="../widgets/titlewidget.cpp" line="366"/>
+        <location filename="../widgets/titlewidget.cpp" line="400"/>
+        <location filename="../widgets/titlewidget.cpp" line="569"/>
         <source>Unmount %1 first</source>
         <translation>Először csatolja le a %1-et</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="331"/>
-        <location filename="../widgets/titlewidget.cpp" line="426"/>
+        <location filename="../widgets/titlewidget.cpp" line="378"/>
+        <location filename="../widgets/titlewidget.cpp" line="468"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
         <translation>Az adatok nem állíthatók vissza, ha törlésre kerülnek, kérjük erősítse meg a folytatás előtt </translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="332"/>
-        <location filename="../widgets/titlewidget.cpp" line="427"/>
+        <location filename="../widgets/titlewidget.cpp" line="379"/>
+        <location filename="../widgets/titlewidget.cpp" line="469"/>
         <source>Delete</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="332"/>
-        <location filename="../widgets/titlewidget.cpp" line="427"/>
+        <location filename="../widgets/titlewidget.cpp" line="379"/>
+        <location filename="../widgets/titlewidget.cpp" line="469"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="393"/>
+        <location filename="../widgets/titlewidget.cpp" line="435"/>
         <source>The disks will be formatted if you create a volume group</source>
         <translation>A lemezek formázásra kerülnek, ha logikai kötetetcsoportot hoz létre </translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="414"/>
+        <location filename="../widgets/titlewidget.cpp" line="456"/>
         <source>Unmount all logical volumes in %1 first</source>
         <translation>Először válassza le a %1 összes logikai kötetét</translation>
     </message>

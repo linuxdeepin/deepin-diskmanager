@@ -111,6 +111,8 @@ void MessageBox::addLabel(QString text)
 {
     DLabel *label= new DLabel(this);
     label->setText(text);
+    label->adjustSize();
+    label->setWordWrap(true);
     addContent(label, Qt::AlignHCenter);
 }
 

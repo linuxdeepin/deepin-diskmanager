@@ -85,15 +85,71 @@ private:
     void setCurVGName(const QString &vgName);
 
     /**
-     * @brief 判断当前磁盘是否存在已被挂载分区
-     * @return 存在返回true，否则返回false
-     */
-    bool isExistMountPartition();
-
-    /**
      * @brief 显示解密窗口
      */
     bool showDecryptDialog();
+
+    /**
+     * @brief 显示加密盘没有文件系统警告窗口
+     * @param luksInfo 加密盘属性数据
+     */
+    bool showNoFileSystemWarningDialog(const LUKS_INFO &luksInfo);
+
+    /**
+     * @brief 当前选择为分区时更新按钮是否可选状态
+     * @param isCreate 分区按钮是否可选
+     * @param isWipe 擦除按钮是否可选
+     * @param isMount 挂载按钮是否可选
+     * @param isUnmount 卸载按钮是否可选
+     * @param isResize 空间调整按钮是否可选
+     */
+    void updatePartitionBtnStatus(const bool &isCreate, const bool &isWipe, const bool &isMount,
+                                  const bool &isUnmount, const bool &isResize);
+
+    /**
+     * @brief 当前选择为逻辑卷组时更新按钮是否可选状态
+     * @param isDeleteVG 删除逻辑卷组按钮是否可选
+     * @param isCreateLV 创建逻辑卷按钮是否可选
+     * @param isWipe 擦除按钮是否可选
+     * @param isMount 挂载按钮是否可选
+     * @param isUnmount 卸载按钮是否可选
+     * @param isResize 空间调整按钮是否可选
+     */
+    void updateVGBtnStatus(const bool &isDeleteVG, const bool &isCreateLV, const bool &isWipe,
+                           const bool &isMount, const bool &isUnmount, const bool &isResize);
+
+    /**
+     * @brief 当前选择为逻辑卷时更新按钮是否可选状态
+     * @param isDeleteVG 删除逻辑卷按钮是否可选
+     * @param isCreateLV 创建逻辑卷按钮是否可选
+     * @param isWipe 擦除按钮是否可选
+     * @param isMount 挂载按钮是否可选
+     * @param isUnmount 卸载按钮是否可选
+     * @param isResize 空间调整按钮是否可选
+     */
+    void updateLVBtnStatus(const bool &isDeleteLV, const bool &isCreateLV, const bool &isWipe,
+                           const bool &isMount, const bool &isUnmount, const bool &isResize);
+
+    /**
+     * @brief 切换左侧树节点更新按钮是否显示
+     * @param isDeleteVGShow 删除逻辑卷按钮是否显示
+     * @param isDeleteLVShow 删除逻辑卷按钮是否显示
+     * @param isDeletePVShow 删除物理卷按钮是否显示
+     * @param isPartedShow 分区按钮是否显示
+     * @param isCreateLVShow 创建逻辑卷按钮是否显示
+     * @param isResizShow 分区空间调整按钮是否显示
+     * @param isResizeVGShow 逻辑卷组空间调整按钮是否显示
+     * @param isResizeLVShow 逻辑卷空间调整按钮是否显示
+     */
+    void updateBtnShowStatus(const bool &isDeleteVGShow, const bool &isDeleteLVShow, const bool &isDeletePVShow,
+                             const bool &isPartedShow, const bool &isCreateLVShow, const bool &isResizShow,
+                             const bool &isResizeVGShow, const bool &isResizeLVShow);
+
+    /**
+     * @brief 当前选择为加密盘时更新按钮是否可选状态
+     * @param LUKS_INFO 加密盘属性
+     */
+    void updateEncryptDeviceBtnStatus(const LUKS_INFO &luksInfo);
 
 signals:
 

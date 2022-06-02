@@ -58,6 +58,7 @@ struct PVInfoData {
     QString m_disktype;
     int m_selectStatus;
     int m_lvmDevType;
+    int m_luksFlag; //luks 标志位
 };
 Q_DECLARE_METATYPE(PVInfoData)
 

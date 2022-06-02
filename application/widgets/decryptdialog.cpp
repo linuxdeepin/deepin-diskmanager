@@ -28,6 +28,7 @@
 #include "common.h"
 
 #include <DWindowCloseButton>
+#include <DMessageManager>
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -212,14 +213,7 @@ void DecryptDialog::initConnection()
 void DecryptDialog::initData()
 {
     if (m_luksInfo.m_decryptErrCount > 0) {
-        if (m_luksInfo.m_decryptErrCount < 5) {
-            QString text = tr("Wrong password, %1 chances left").arg(5 - m_luksInfo.m_decryptErrCount);
-            if ((5 - m_luksInfo.m_decryptErrCount) == 1) {
-                text = tr("Wrong password, only one chance left");
-            }
-
-            setPasswordEditStatus(false, true, text);
-        } else {
+        if (m_luksInfo.m_decryptErrCount >= 5) {
             QString text = tr("Please try again %1 minutes later");
             QDateTime lastErrorTime = QDateTime::fromString(m_luksInfo.m_decryptErrorLastTime, "yyyy-MM-dd hh:mm:ss");
             QDateTime curDateTime = QDateTime::fromString(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"), "yyyy-MM-dd hh:mm:ss");
@@ -299,9 +293,9 @@ void DecryptDialog::onButtonClicked()
         return;
     }
 
-    LUKS_INFO luksInfo;
+    LUKS_INFO luksInfo = m_luksInfo;
     luksInfo.m_decryptStr = m_passwordEdit->text();
-    luksInfo.m_mapper.m_devicePath = m_devPath;
+    luksInfo.m_devicePath = m_devPath;
     if (m_luksInfo.m_crypt == CRYPT_CIPHER::AES_XTS_PLAIN64) {
         luksInfo.m_mapper.m_dmName = QString("%1_aesE").arg(m_devName);
     } else if (m_luksInfo.m_crypt == CRYPT_CIPHER::SM4_XTS_PLAIN64) {
@@ -325,9 +319,18 @@ void DecryptDialog::onButtonClicked()
 void DecryptDialog::onDecryptMessage(const LUKS_INFO &luks)
 {
     DMDbusHandler::instance()->updateLUKSInfo(m_devPath, luks);
+    m_luksInfo = luks;
 
     if (luks.isDecrypt && luks.m_decryptErrCount == 0) {
-        accept();
+        if (luks.m_cryptErr == CRYPTError::CRYPT_ERR_DECRYPT_FAILED) {
+            DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget()->parentWidget()->parentWidget(),
+                                                     QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Decryption failed"));
+            DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget()->parentWidget()->parentWidget(),
+                                                           QMargins(0, 0, 0, 20));
+            reject();
+        } else {
+            accept();
+        }
     } else {
         setFixedSize(406, m_height);
         m_stackedWidget->setCurrentIndex(0);

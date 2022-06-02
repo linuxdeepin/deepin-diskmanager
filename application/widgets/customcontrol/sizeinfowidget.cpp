@@ -59,14 +59,26 @@ void SizeInfoWidget::setData(PartitionInfo info, QVector<QColor> color, QVector<
     m_used = Utils::sectorToUnit(info.m_sectorsUsed, info.m_sectorSize, SIZE_UNIT::UNIT_GIB);
     m_totalSpaceSize = Utils::formatSize(info.m_sectorEnd - info.m_sectorStart + 1, info.m_sectorSize);
     m_usedSize = Utils::formatSize(info.m_sectorsUsed, info.m_sectorSize);
+
+    if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+        LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
+        if (luksInfo.isDecrypt) {
+            m_usedSize = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUsed);
+            m_noused = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUnused, SIZE_UNIT::UNIT_GIB);
+            m_used = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUsed, SIZE_UNIT::UNIT_GIB);
+        }
+    }
+
     m_totalSize = m_noused + m_used;
     m_partitionPath = info.m_path;
     if ("unallocated" != m_partitionPath) {
         m_partitionPath = m_partitionPath.remove(0, 5);
     }
+
     if (size.at(0) < 0.00 || size.at(1) < 0.00) {
         m_sizeInfo = QVector<double> {0.00, 0.00};
     }
+
     update();
 }
 
@@ -77,12 +89,23 @@ void SizeInfoWidget::setData(LVInfo info, QVector<QColor> color, QVector<double>
     m_flag = flag;
     m_partitionPath = info.m_lvName;
     m_totalSpaceSize = info.m_lvSize;
+    m_used = Utils::LVMSizeToUnit(info.m_fsUsed, SIZE_UNIT::UNIT_GIB);
+    m_noused = Utils::LVMSizeToUnit(info.m_fsUnused, SIZE_UNIT::UNIT_GIB);
+    m_usedSize = Utils::LVMFormatSize(info.m_fsUsed);
+
+    if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+        LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_lvPath);
+        if (luksInfo.isDecrypt) {
+            m_usedSize = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUsed);
+            m_noused = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUnused, SIZE_UNIT::UNIT_GIB);
+            m_used = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUsed, SIZE_UNIT::UNIT_GIB);
+        }
+    }
+
     if (m_totalSpaceSize.contains("1024")) {
         m_totalSpaceSize = Utils::LVMFormatSize(info.m_lvLECount * info.m_LESize + info.m_LESize);
     }
 
-    m_used = Utils::LVMSizeToUnit(info.m_fsUsed, SIZE_UNIT::UNIT_GIB);
-    m_noused = Utils::LVMSizeToUnit(info.m_fsUnused, SIZE_UNIT::UNIT_GIB);
     if (info.m_lvName.isEmpty() && info.m_lvUuid.isEmpty()) {
         m_noused = Utils::LVMSizeToUnit(info.m_lvLECount * info.m_LESize, SIZE_UNIT::UNIT_GIB);
     }
@@ -91,7 +114,37 @@ void SizeInfoWidget::setData(LVInfo info, QVector<QColor> color, QVector<double>
     if (m_totalSize <= 0) {
         m_totalSize = Utils::LVMSizeToUnit(info.m_lvLECount * info.m_LESize, SIZE_UNIT::UNIT_GIB);
     }
-    m_usedSize = Utils::LVMFormatSize(info.m_fsUsed);
+
+    if (size.at(0) < 0.00 || size.at(1) < 0.00) {
+        m_sizeInfo = QVector<double> {0.00, 0.00};
+    }
+    update();
+}
+
+void SizeInfoWidget::setData(DeviceInfo info, QVector<QColor> color, QVector<double> size, bool flag)
+{
+    m_sizeInfo = size;
+    m_colorInfo = color;
+    m_flag = flag;
+    m_partitionPath = info.m_path;
+    m_totalSpaceSize = Utils::formatSize(info.m_length, info.m_sectorSize);
+    m_used = 0.00;
+    m_noused = Utils::LVMSizeToUnit(info.m_length * info.m_sectorSize, SIZE_UNIT::UNIT_GIB);
+    m_usedSize = Utils::LVMFormatSize(-1 * info.m_sectorSize);
+
+    if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS && info.m_partition.size() == 0) {
+        LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
+        if (luksInfo.isDecrypt) {
+            m_usedSize = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUsed);
+            m_noused = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUnused, SIZE_UNIT::UNIT_GIB);
+            m_used = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUsed, SIZE_UNIT::UNIT_GIB);
+        }
+    }
+
+    m_totalSize = m_noused + m_used;
+    if (m_totalSize <= 0) {
+        m_totalSize = Utils::LVMSizeToUnit(info.m_length * info.m_sectorSize, SIZE_UNIT::UNIT_GIB);
+    }
 
     if (size.at(0) < 0.00 || size.at(1) < 0.00) {
         m_sizeInfo = QVector<double> {0.00, 0.00};

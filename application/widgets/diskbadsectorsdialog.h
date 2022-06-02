@@ -219,12 +219,6 @@ private:
      */
     void mSecsToTime(qint64 msecs, qint64 &hour, qint64 &minute, qint64 &second);
 
-    /**
-     * @brief 判断当前检测磁盘是否存在被挂载的分区
-     * @return true存在，false不存在
-     */
-    bool isExistMountPartition();
-
 private:
     DComboBox *m_verifyComboBox;
     DLineEdit *m_startLineEdit;

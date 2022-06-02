@@ -29,6 +29,7 @@
 
 #include "partitioninfo.h"
 #include "utils.h"
+#include "partedproxy/dmdbushandler.h"
 
 #include <DWidget>
 #include <DApplicationHelper>
@@ -81,6 +82,14 @@ public:
      * @param flag 是否显示下方标注
      */
     void setData(LVInfo info, QVector<QColor> color, QVector<double> size, bool flag);
+
+    /**
+     * @brief 设置数据
+     * @param info 当前磁盘信息
+     * @param color 颜色列表
+     * @param flag 是否显示下方标注
+     */
+    void setData(DeviceInfo info, QVector<QColor> color, QVector<double> size, bool flag);
 
 protected:
     /**

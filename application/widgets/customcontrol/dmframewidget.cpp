@@ -55,23 +55,47 @@ void DmFrameWidget::setFrameData()
         for (QString point : data.m_mountPoints) {
             mountpoints.append(point + " ");
         }
+
+        //    m_infoData.m_mountpoints = diffMountpoints(m_width, mountpoints);
+        QString unused = Utils::formatSize(data.m_sectorsUnused, data.m_sectorSize);
+        QString used = Utils::formatSize(data.m_sectorsUsed, data.m_sectorSize);
+        QString fsTypeName = Utils::fileSystemTypeToString(static_cast<FSType>(data.m_fileSystemType));
+        QString partitionSize = Utils::formatSize(data.m_sectorEnd - data.m_sectorStart + 1, data.m_sectorSize);
+
+        if (data.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(data.m_path);
+            if (luksInfo.isDecrypt) {
+                mountpoints = "";
+                for (QString point : luksInfo.m_mapper.m_mountPoints) {
+                    mountpoints.append(point + " ");
+                }
+
+                unused = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUnused);
+                used = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUsed);
+                fsTypeName = Utils::fileSystemTypeToString(luksInfo.m_mapper.m_luksFs);
+            }
+        }
+
         if (mountpoints.contains("�")) {
             mountpoints.remove(mountpoints.mid(mountpoints.indexOf("�")));
             mountpoints.append(m_str);
         }
-        //    m_infoData.m_mountpoints = diffMountpoints(m_width, mountpoints);
+
         m_infoData.m_mountpoints = mountpoints;
-        m_infoData.m_unused = Utils::formatSize(data.m_sectorsUnused, data.m_sectorSize);
+        m_infoData.m_unused = unused;
         if (m_infoData.m_unused.contains("-")) {
             m_infoData.m_unused = "-";
         }
-        m_infoData.m_used = Utils::formatSize(data.m_sectorsUsed, data.m_sectorSize);
+
+        m_infoData.m_used = used;
         if (m_infoData.m_used.contains("-")) {
             m_infoData.m_used = "-";
         }
+
+        m_infoData.m_fstype = fsTypeName;
+        m_infoData.m_partitionSize = partitionSize;
+
         QString partitionPath = data.m_path.remove(0, 5); // 从下标0开始，删除5个字符
-        m_infoData.m_fstype = Utils::fileSystemTypeToString(static_cast<FSType>(data.m_fileSystemType));
-        m_infoData.m_partitionSize = Utils::formatSize(data.m_sectorEnd - data.m_sectorStart + 1, data.m_sectorSize);
         if (data.m_fileSystemLabel == "") {
             m_infoData.m_sysLabel = "";
         } else {

@@ -144,7 +144,7 @@ void DiskBadSectorsDialog::initUI()
     }
 
     m_methodComboBox = new DComboBox;
-    m_methodComboBox->addItem(tr("Verifying times")); // 检测次数
+    m_methodComboBox->addItem(tr("Rounds")); // 检测次数
     m_methodComboBox->addItem(tr("Timeout")); // 超时时间
     m_methodComboBox->setFixedSize(155, 36);
     DFontSizeManager::instance()->bind(m_methodComboBox, DFontSizeManager::T6, QFont::Medium);
@@ -960,30 +960,9 @@ void DiskBadSectorsDialog::onResetButtonClicked()
     m_cylinderInfoWidget->reset(m_blockEnd - m_blockStart + 1);
 }
 
-bool DiskBadSectorsDialog::isExistMountPartition()
-{
-    bool isExist = false;
-
-    for (int i = 0; i < m_deviceInfo.m_partition.size(); i++) {
-        PartitionInfo partitionInfo = m_deviceInfo.m_partition.at(i);
-
-        QString mountpoints;
-        for (int j = 0; j < partitionInfo.m_mountPoints.size(); j++) {
-            mountpoints += partitionInfo.m_mountPoints[j];
-        }
-
-        if (!mountpoints.isEmpty()) {
-            isExist = true;
-            break;
-        }
-    }
-
-    return isExist;
-}
-
 void DiskBadSectorsDialog::onRepairButtonClicked()
 {
-    if (isExistMountPartition()) {
+    if (DMDbusHandler::instance()->isExistMountPartition(m_deviceInfo)) {
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("messageBox");

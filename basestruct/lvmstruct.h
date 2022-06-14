@@ -50,6 +50,7 @@ typedef struct PVData {
 DBUSStructEnd(PVData)
 
 
+
 //new by liuwh 2022/2/15
 /**
  * @struct CreateLVInfo
@@ -76,6 +77,7 @@ typedef struct LVAction {
 DBUSStructEnd(LVAction)
 
 
+
 //new by liuwh 2022/1/17
 /**
  * @struct LVDATA
@@ -88,6 +90,7 @@ typedef struct LVDATA {
     long long m_lvByteSize{0};  //lv大小 byte单位
 } LVData;
 DBUSStructEnd(LVData)
+
 
 
 //new by liuwh 2022/1/17
@@ -103,6 +106,7 @@ typedef struct VGDATA {
     QVector <LVData>m_lvList;   //lv数据集合
 } VGData;
 DBUSStructEnd(VGData)
+
 
 
 //new by liuwh 2022/1/17
@@ -173,12 +177,12 @@ public:
 DBUSStructEnd(PVInfo)
 
 
+
 //new by liuwh 2022/1/17
 /**
  * @class LVInfo
  * @brief 逻辑卷信息 属性结构体
  */
-
 /*
 lvs -o lv_attr
   Attr
@@ -321,6 +325,8 @@ public:
     LUKSFlag m_luksFlag; //luks 标志位
 };
 DBUSStructEnd(VGInfo)
+
+
 
 //new by liuwh 2022/1/17
 /**

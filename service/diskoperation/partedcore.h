@@ -56,6 +56,8 @@ class PartedCore : public QObject
 public:
     explicit PartedCore(QObject *parent = nullptr);
     ~PartedCore();
+    //DBUS 调用
+    //信息获取操作
     /**
      * @brief 获取设备信息
      * @return 返回设备信息
@@ -68,13 +70,11 @@ public:
      */
     DeviceInfoMap getAllDeviceinfo();
 
-
     /**
      * @brief 获取LVM设备信息
      * @return 返回LVM设备信息
      */
     LVMInfo getAllLVMinfo();
-
 
     /**
      * @brief 获取LUKS设备信息
@@ -83,48 +83,52 @@ public:
     LUKSMap getAllLUKSinfo();
 
     /**
-     * @brief 获取当前页面选择分区信息
-     * @param info：当前选择分区信息
+     * @brief 获取支持格式列表
+     * @return 返回支持格式列表
      */
-    void setCurSelect(const PartitionInfo &info);
+    QStringList getallsupportfs();
 
-    //operationstuff...
     /**
-     * @brief 挂载分区
-     * @param mountpath：挂载路径
+     * @brief 获取硬盘硬件信息
+     * @param devicepath：设备路径
+     * @return 返回硬盘硬件信息
+     */
+    HardDiskInfo getDeviceHardInfo(const QString &devicepath);
+
+    /**
+     * @brief 获取硬盘状态信息
+     * @param devicepath：设备路径
+     * @return 返回硬盘状态信息
+     */
+    QString getDeviceHardStatus(const QString &devicepath);
+
+    /**
+     * @brief 获取硬盘健康信息
+     * @param devicepath：设备路径
+     * @return 返回硬盘健康信息
+     */
+    HardDiskStatusInfoList getDeviceHardStatusInfo(const QString &devicepath);
+
+    //分区表与分区相关
+    /**
+     * @brief 创建分区表
+     * @param devicepath：设备信息路径
+     * @param length:设备大小
+     * @param sectorSize:扇区大小
+     * @param diskLabel:分区表格式
      * @return true成功false失败
      */
-    bool mountAndWriteFstab(const QString &mountpath);
+    bool createPartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel);
 
     /**
-     * @brief 卸载分区
-     * @return true成功false失败
+     * @brief 分区表错误检测
+     * @param devicePath：设备路径
+     * @return true错误false正常
      */
-    bool unmount();
+    bool detectionPartitionTableError(const QString &devicePath);
 
     /**
-     * @brief 加密磁盘解密
-     * @param luks  加密磁盘属性
-     * @return true成功false失败
-     */
-    bool deCrypt(const LUKS_INFO &luks);
-
-    /**
-     * @brief 加密磁盘挂载
-     * @param luks  加密磁盘属性
-     * @return true成功false失败
-     */
-    bool cryptMount(const LUKS_INFO &luks);
-
-    /**
-     * @brief 加密磁盘卸载
-     * @param luks  加密磁盘属性
-     * @return true成功false失败
-     */
-    bool cryptUmount(const LUKS_INFO &luks);
-
-    /**
-     * @brief 挂载分区
+     * @brief 创建分区
      * @param infovec：要创建的分区信息列表
      * @return true成功false失败
      */
@@ -157,47 +161,12 @@ public:
     bool resize(const PartitionInfo &info);
 
     /**
-     * @brief 获取支持格式列表
-     * @return 返回支持格式列表
-     */
-    QStringList getallsupportfs();
-
-    /**
-     * @brief 获取硬盘硬件信息
-     * @param devicepath：设备路径
-     * @return 返回硬盘硬件信息
-     */
-    HardDiskInfo getDeviceHardInfo(const QString &devicepath);
-
-    /**
-     * @brief 获取硬盘状态信息
-     * @param devicepath：设备路径
-     * @return 返回硬盘状态信息
-     */
-    QString getDeviceHardStatus(const QString &devicepath);
-
-    /**
-     * @brief 获取硬盘健康信息
-     * @param devicepath：设备路径
-     * @return 返回硬盘健康信息
-     */
-    HardDiskStatusInfoList getDeviceHardStatusInfo(const QString &devicepath);
-
-    /**
      * @brief 删除分区实际操作
      * @param devicePath：设备路径
      * @param parttitionPath：分区路径
      * @return true成功false失败
      */
     bool deletePartition();
-
-    /**
-     * @brief 隐藏分区
-     * @param devicePath：设备路径
-     * @param parttitionPath：分区路径
-     * @return true成功false失败
-     */
-    bool hidePartition();
 
     /**
      * @brief 显示分区
@@ -208,22 +177,57 @@ public:
     bool showPartition();
 
     /**
-     * @brief 创建分区表
-     * @param devicepath：设备信息路径
-     * @param length:设备大小
-     * @param sectorSize:扇区大小
-     * @param diskLabel:分区表格式
+     * @brief 隐藏分区
+     * @param devicePath：设备路径
+     * @param parttitionPath：分区路径
      * @return true成功false失败
      */
-    bool createPartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel);
+    bool hidePartition();
 
     /**
-     * @brief 分区表错误检测
-     * @param devicePath：设备路径
-     * @return true错误false正常
+     * @brief 获取当前页面选择分区信息
+     * @param info：当前选择分区信息
      */
-    bool detectionPartitionTableError(const QString &devicePath);
+    void setCurSelect(const PartitionInfo &info);
 
+
+    //挂载相关
+    /**
+     * @brief 挂载分区
+     * @param mountpath：挂载路径
+     * @return true成功false失败
+     */
+    bool mountAndWriteFstab(const QString &mountpath);
+
+    /**
+     * @brief 卸载分区
+     * @return true成功false失败
+     */
+    bool unmount();
+
+    /**
+     * @brief 加密磁盘挂载
+     * @param luks  加密磁盘属性
+     * @return true成功false失败
+     */
+    bool cryptMount(const LUKS_INFO &luks);
+
+    /**
+     * @brief 加密磁盘卸载
+     * @param luks  加密磁盘属性
+     * @return true成功false失败
+     */
+    bool cryptUmount(const LUKS_INFO &luks);
+
+    /**
+     * @brief 加密磁盘解密
+     * @param luks  加密磁盘属性
+     * @return true成功false失败
+     */
+    bool deCrypt(const LUKS_INFO &luks);
+
+
+    //外接设备刷新相关
     /**
      * @brief USB刷新(插入)
      */
@@ -234,12 +238,8 @@ public:
      */
     bool updateUsbRemove();
 
-    /**
-     * @brief 获取隐藏分区是否隐藏属性
-     * @return 0成功-1失败
-     */
-    int getPartitionHiddenFlag();
 
+    //线程相关
     /**
      * @brief 坏道检测（检测次数）
      * @param devicePath：设备信息路径
@@ -272,41 +272,12 @@ public:
     bool fixBadBlocks(const QString &devicePath, QStringList badBlocksList, int checkSize, int flag);
 
     /**
-     * @brief 刷新按钮
+     * @brief 刷新按钮 启动刷新硬件线程
      */
     void refreshFunc();
 
-    /**
-     * @brief 个人测试
-     */
-    int test();
 
-    /**
-     * @brief 确定是否是真正的设备
-     * @param lpDisk：设备信息
-     * @return true确定false不确定
-     */
-    static bool useableDevice(const PedDevice *lpDevice);
-
-    /**
-     * @brief 设置设备信息根据磁盘
-     * @param device：设备信息
-     * @param devicePath：设备路径
-     */
-    void setDeviceFromDisk(Device &device, const QString &devicePath);
-
-    /**
-     * @brief 删除临时挂载文件
-     */
-    bool delTempMountFile();
-
-    /**
-    * @brief 判断设备有否经历过gpt分区表扩容
-    * @param devicePath：设备路径
-    * @return true扩展后gpt分区表状态与实际不一致, false分区表状态正常
-    */
-    bool gptIsExpanded(const QString &devicePath);
-
+    //lvm相关
     /**
      * @brief 创建vg
      * @param vgName:待创建vg名称
@@ -317,19 +288,19 @@ public:
     bool createVG(QString vgName, QList<PVData>devList, long long size);
 
     /**
+     * @brief 删除vg
+     * @param vglist: 待删除vg列表
+     * @return true 成功 false 失败
+     */
+    bool deleteVG(QStringList vglist);
+
+    /**
      * @brief 创建lv
      * @param vgName:vg名称
      * @param lvList: 待创建lv列表
      * @return true 成功 false 失败
      */
     bool createLV(QString vgName, QList<LVAction>lvList);
-
-    /**
-     * @brief 删除vg
-     * @param vglist: 待删除vg列表
-     * @return true 成功 false 失败
-     */
-    bool deleteVG(QStringList vglist);
 
     /**
      * @brief 删除lv
@@ -375,7 +346,6 @@ public:
      */
     bool clearLV(const LVAction &lvAction);
 
-
     /**
      * @brief pv删除
      * @param devList: 待删除pv设备集合
@@ -383,7 +353,67 @@ public:
      */
     bool deletePVList(QList<PVData>devList);
 
+    //其他
+    /**
+     * @brief 个人测试
+     */
+    int test();
+public:
+    //外部调用 非DBUS
+    /**
+     * @brief 设置设备信息根据磁盘
+     * @param device：设备信息
+     * @param devicePath：设备路径
+     */
+    void setDeviceFromDisk(Device &device, const QString &devicePath);
+
+    /**
+     * @brief 确定是否是真正的设备
+     * @param lpDisk：设备信息
+     * @return true确定false不确定
+     */
+    static bool useableDevice(const PedDevice *lpDevice);
+
+    /**
+     * @brief 删除临时挂载文件
+     */
+    bool delTempMountFile();
+
 private:
+    //general..
+    /**
+     * @brief 初始化信号槽链接
+     */
+    void initConnection();
+
+    /**
+     * @brief 获取hdparm和udevadm的是否支持状态
+     */
+    static void findSupportedCore();
+
+    /**
+     * @brief 设置设备序列号
+     * @param device：设备信息
+     */
+    void setDeviceSerialNumber(Device &device);
+
+    /**
+     * @brief 获取隐藏分区是否隐藏属性
+     * @return 0成功-1失败
+     */
+    int getPartitionHiddenFlag();
+
+    /**
+    * @brief 判断设备有否经历过gpt分区表扩容
+    * @param devicePath：设备路径
+    * @return true扩展后gpt分区表状态与实际不一致, false分区表状态正常
+    */
+    bool gptIsExpanded(const QString &devicePath);
+
+    /**
+     * @brief USB设备插入，自动挂载
+     */
+    void autoMount();
 
     /**
      * @brief USB设备拔出，自动卸载
@@ -391,68 +421,31 @@ private:
     void autoUmount();
 
     /**
-     * @brief USB设备插入，自动挂载
+     * @brief 获取设备详细信息
+     * @param path：默认空
      */
-    void autoMount();
-
-    //static
-    /**
-     * @brief 获取hdparm和udevadm的是否支持状态
-     */
-    static void findSupportedCore();
+    void probeDeviceInfo(const QString &path = QString());
 
     /**
-     * @brief 获取是否支持文件系统格式
-     * @param fstype：文件系统格式
-     * @return true支持false不支持
+     * @brief 刷新信息槽函数
      */
-    static bool supportedFileSystem(FSType fstype);
+    void onRefreshDeviceInfo(int type = 0, bool arg1 = true, QString arg2 = "");
 
     /**
-     * @brief 获取支持文件系统格式
-     * @param fstype：文件系统格式
-     * @return 支持的文件系统格式
-     */
-    const FS &getFileSystem(FSType fstype) const;
+      * @brief 刷新硬件信息
+      */
+    void syncDeviceInfo(const DeviceInfoMap inforesult, const LVMInfo lvmInfo, const LUKSMap &luks);
 
     /**
-     * @brief 获取文件系统对象
-     * @param fstype：文件系统格式
-     * @return 文件系统对象
+     * @brief 发送刷新信号并且返回bool值
+     * @param flag：设置的返回值
+     * @return true false 与flag相同
      */
-    static FileSystem *getFileSystemObject(FSType fstype);
-//    static bool filesystem_resize_disallowed(const Partition &partition);
-
-    /**
-     * @brief 设置空闲空间
-     * @param devicePath：设备路径
-     * @param partitions：分区信息列表
-     * @param start：扇区开始
-     * @param end：扇区结束
-     * @param sectorSize：扇区大小
-     * @param insideExtended：扩展分区标志
-     */
-    static void insertUnallocated(const QString &devicePath,
-                                  QVector<Partition *> &partitions,
-                                  Sector start,
-                                  Sector end,
-                                  Byte_Value sectorSize,
-                                  bool insideExtended);
-
-    /**
-     * @brief 设置分区标志
-     * @param partition：分区信息
-     * @param lpPartition：（库）分区详细信息
-     */
-    void setFlags(Partition &partition, PedPartition *lpPartition);
-
-    /**
-     * @brief 最小和最大文件系统大小限制
-     * @param fstype：文件系统格式
-     * @param partition：分区信息
-     * @return 最小和最大文件系统大小限制结构体
-     */
-    static FS_Limits getFileSystemLimits(FSType fstype, const Partition &partition);
+    inline bool sendRefSigAndReturn(bool flag, int type = 0, bool arg1 = true, QString arg2 = "")
+    {
+        emit refreshDeviceInfo(type, arg1, arg2);
+        return flag;
+    }
 
     /**
      * @brief 安全擦除算法
@@ -467,113 +460,7 @@ private:
     bool secuClear(const QString &path, const Sector &start, const Sector &end, const Byte_Value &size, const QString &fstype, const QString &name = " ", const int &count = 1);
 
 
-    /**
-     * @brief 挂载设备
-     * @param mountpath:挂载点
-     * @param devPath:设备路径
-     * @param fsType:文件系统类型
-     * @return true 挂载成功 false 挂载失败
-     */
-    bool mountDevice(const QString &mountpath, const QString devPath, const FSType &fsType);
-
-
-    /**
-     * @brief 挂载设备
-     * @param mountpath:挂载点
-     * @param devPath:设备路径
-     * @param fsType:文件系统类型
-     * @return true 挂载成功 false 挂载失败
-     */
-    QPair<bool, QString> tmpMountDevice(const QString &mountpath, const QString devPath, const FSType &fsType, const QString &userName);
-
-
-    /**
-     * @brief 卸载设备
-     * @param mountPoints:挂载点集合
-     * @return true 卸载成功 false 卸载失败
-     */
-    bool umontDevice(QVector<QString>mountPoints, QString devPath = "");
-
-    /**
-     * @brief 写fstab文件
-     * @param uuid:设备（磁盘分区，lvm lv）uuid
-     * @param mountpath:挂载点
-     * @param type:文件系统类型
-     * @param isMount:true 挂载 false 卸载
-     * @return true 写入成功 false 写入失败
-     */
-    bool writeFstab(const QString &uuid, const QString &mountpath, const QString &type, bool isMount = true);
-
-    /**
-     * @brief 创建临时挂载目录
-     * @param mountpath:挂载目录
-     * @return true 创建成功 false 创建失败
-     */
-    bool createTmpMountDir(const QString &mountPath);
-
-    /**
-     * @brief 修改文件属主
-     * @param user:用户名
-     * @param path:文件路径
-     * @return true 修改成功 false 修改失败
-     */
-    bool changeOwner(const QString &user, const QString &path);
-
-
-    /**
-     * @brief 创建pv使用的分区
-     * @param pv:pv数据结构体 创建分区依据
-     * @return true 分区创建成功 false 失败
-     */
-    bool createPVPart(PVData &pv);
-
-    LUKS_INFO getNewLUKSInfo(const Partition &part);
-    LUKS_INFO getNewLUKSInfo(const LVAction &lvAct);
-    LUKS_INFO getNewLUKSInfo(const FSType &type, const QStringList &token, const CRYPT_CIPHER &cipher, const QString &decryptStr, const QString &dmName, const QString devPath,const QString &label);
-
-private:
-    //general..
-    /**
-     * @brief 初始化信号槽链接
-     */
-    void initConnection();
-
-    /**
-     * @brief 创建分区表
-     * @param devicePath:设备路径
-     * @param diskLabel:分区表格式
-     * @return true成功false失败
-     */
-    bool newDiskLabel(const QString &devicePath, const QString &diskLabel);
-
-    /**
-     * @brief 刷新设备设置
-     * @param lpDevice：设备信息
-     * @return true成功false失败
-     */
-    static bool flushDevice(PedDevice *lpDevice);
-
-//    /**
-//     * @brief 刷新udev事件队列
-//     * @param timeout：超时时间
-//     */
-//    static void settleDevice(std::time_t timeout);
-
-    /**
-     * @brief 等待udev时间处理，启动分区内核更新
-     * @param lpDisk：设备信息
-     * @param timeout：超时时间
-     * @return true成功false失败
-     */
-    static bool commitToOs(PedDisk *lpDisk);
-
-    /**
-     * @brief 确定是否是真正的设备
-     * @param lpDisk：设备信息
-     * @return true确定false不确定
-     */
-    //static bool useableDevice(const PedDevice *lpDevice);
-
+    //gparted 分区表 分区 文件系统
     /**
      * @brief 获取设备
      * @param devicePath：设备路径
@@ -593,21 +480,6 @@ private:
     static bool getDisk(PedDevice *&lpDevice, PedDisk *&lpDisk, bool strict = true);
 
     /**
-     * @brief 销毁磁盘信息和设备信息
-     * @param lpDevice：设备信息
-     * @param lpDisk：磁盘信息
-     */
-    static void destroyDeviceAndDisk(PedDevice *&lpDevice, PedDisk *&lpDisk);
-
-    /**
-     * @brief 同步页面选择分区信息
-     * @param partition：分区信息
-     * @param info：分区详细信息
-     * @return true成功false失败
-     */
-    bool infoBelongToPartition(const Partition &partition, const PartitionInfo &info);
-
-    /**
      * @brief 获取磁盘和设备信息
      * @param devicePath：设备路径
      * @param lpDevice：设备信息
@@ -620,11 +492,64 @@ private:
                                  PedDisk *&lpDisk, bool strict = true, bool flush = false);
 
     /**
+     * @brief 销毁磁盘信息和设备信息
+     * @param lpDevice：设备信息
+     * @param lpDisk：磁盘信息
+     */
+    static void destroyDeviceAndDisk(PedDevice *&lpDevice, PedDisk *&lpDisk);
+
+
+    /**
+     * @brief 分区是否挂载状态
+     * @param fstype：文件系统格式
+     * @param path：挂载路径
+     * @param lp_partition：分区详细信息
+     * @return true挂载false没挂载
+     */
+    bool isBusy(FSType fstype, const QString &path, const PedPartition *lpPartition = nullptr);
+
+    /**
+     * @brief 刷新设备设置
+     * @param lpDevice：设备信息
+     * @return true成功false失败
+     */
+    static bool flushDevice(PedDevice *lpDevice);
+
+//    /**
+//     * @brief 刷新udev事件队列
+//     * @param timeout：超时时间
+//     */
+//    static void settleDevice(std::time_t timeout);
+
+    /**
      * @brief 更新到磁盘信息
      * @param lpDisk：磁盘信息
      * @return true成功false失败
      */
     static bool commit(PedDisk *lpDisk);
+
+    /**
+     * @brief 等待udev时间处理，启动分区内核更新
+     * @param lpDisk：设备信息
+     * @param timeout：超时时间
+     * @return true成功false失败
+     */
+    static bool commitToOs(PedDisk *lpDisk);
+
+    /**
+     * @brief 确定是否是真正的设备
+     * @param lpDisk：设备信息
+     * @return true确定false不确定
+     */
+    //static bool useableDevice(const PedDevice *lpDevice);
+
+    /**
+     * @brief 同步页面选择分区信息
+     * @param partition：分区信息
+     * @param info：分区详细信息
+     * @return true成功false失败
+     */
+    bool infoBelongToPartition(const Partition &partition, const PartitionInfo &info);
 
     /**
      * @brief 获取分区详细信息
@@ -635,23 +560,11 @@ private:
     //detectionstuff..
 
     /**
-     * @brief 获取分区详细信息
-     * @param path：默认空
-     */
-    void probeDeviceInfo(const QString &path = QString());
-
-    /**
      * @brief 设置设备信息根据磁盘
      * @param device：设备信息
      * @param devicePath：设备路径
      */
     //void setDeviceFromDisk(Device &device, const QString &devicePath);
-
-    /**
-     * @brief 设置设备序列号
-     * @param device：设备信息
-     */
-    void setDeviceSerialNumber(Device &device);
 
     /**
      * @brief 设置设备分区信息
@@ -668,27 +581,6 @@ private:
     void setPartitionLabelAndUuid(Partition &partition);
 
     /**
-     * @brief 分区是否挂载状态
-     * @param fstype：文件系统格式
-     * @param path：挂载路径
-     * @param lp_partition：分区详细信息
-     * @return true挂载false没挂载
-     */
-    bool isBusy(FSType fstype, const QString &path, const PedPartition *lpPartition = nullptr);
-
-    /**
-     * @brief 读取分区表
-     * @param partition：分区信息
-     */
-    void readLabel(Partition &partition);
-
-    /**
-     * @brief 读取UUid
-     * @param partition：分区信息
-     */
-    void readUuid(Partition &partition);
-
-    /**
      * @brief 设置分区挂载点信息
      * @param partition：分区信息
      */
@@ -701,6 +593,7 @@ private:
      * @return true成功false失败
      */
     bool setMountPointsHelper(Partition &partition, const QString &path);
+
 
     /**
      * @brief 设置分区已用空间
@@ -776,20 +669,6 @@ private:
     bool setPartitionType(const Partition &partition);
 
     /**
-     * @brief 创建分区文件系统
-     * @param partition：分区信息
-     * @return true成功false失败
-     */
-    bool createFileSystem(const Partition &partition);
-
-    /**
-     * @brief 创建分区文件系统
-     * @param partition：分区信息
-     * @return true成功false失败
-     */
-    bool createFileSystem(const FSType &type, const bool &busy, const QString path, const Partition &partition = Partition());
-
-    /**
      * @brief 格式化分区
      * @param partition：分区信息
      * @return true成功false失败
@@ -804,13 +683,6 @@ private:
     bool resize(const Partition &partitionNew);
 
     /**
-     * @brief 检查修复文件系统
-     * @param partition：分区信息
-     * @return true成功false失败
-     */
-    bool checkRepairFileSystem(const Partition &partition);
-
-    /**
      * @brief 调整移动分区大小
      * @param partitionOld：旧分区信息
      * @param partitionNew：新分区信息
@@ -818,7 +690,6 @@ private:
      * @return true成功false失败
      */
     bool resizeMovePartition(const Partition &partitionOld, const Partition &partitionNew, bool rollbackOnFail);
-
 
     /**
      * @brief 调整移动分区实现大小
@@ -853,6 +724,22 @@ private:
      */
     bool resizeMoveFileSystemUsingLibparted(const Partition &partitionOld, const Partition &partitionNew);
 
+    //分区表
+    /**
+     * @brief 创建分区表
+     * @param devicePath:设备路径
+     * @param diskLabel:分区表格式
+     * @return true成功false失败
+     */
+    bool newDiskLabel(const QString &devicePath, const QString &diskLabel);
+
+    /**
+     * @brief 重写分区表
+     * @param devicePath：设备名称
+     */
+    void reWritePartition(const QString &devicePath);
+
+    //分区
     /**
      * @brief 创建分区
      * @param partition：分区信息
@@ -868,22 +755,171 @@ private:
     bool createPartition(Partition &newPartition, Sector minSize = 0);
 
     /**
-     * @brief 重写分区表
-     * @param devicePath：设备名称
+     * @brief 设置空闲空间
+     * @param devicePath：设备路径
+     * @param partitions：分区信息列表
+     * @param start：扇区开始
+     * @param end：扇区结束
+     * @param sectorSize：扇区大小
+     * @param insideExtended：扩展分区标志
      */
-    void reWritePartition(const QString &devicePath);
+    static void insertUnallocated(const QString &devicePath,
+                                  QVector<Partition *> &partitions,
+                                  Sector start,
+                                  Sector end,
+                                  Byte_Value sectorSize,
+                                  bool insideExtended);
 
     /**
-     * @brief 发送刷新信号并且返回bool值
-     * @param flag：设置的返回值
-     * @return true false 与flag相同
+     * @brief 设置分区标志
+     * @param partition：分区信息
+     * @param lpPartition：（库）分区详细信息
      */
-    inline bool sendRefSigAndReturn(bool flag, int type = 0, bool arg1 = true, QString arg2 = "")
-    {
-        emit refreshDeviceInfo(type, arg1, arg2);
-        return flag;
-    }
+    void setFlags(Partition &partition, PedPartition *lpPartition);
 
+    /**
+     * @brief 读取分区标签
+     * @param partition：分区信息
+     */
+    void readLabel(Partition &partition);
+
+    /**
+     * @brief 读取UUid
+     * @param partition：分区信息
+     */
+    void readUuid(Partition &partition);
+
+
+
+    //文件系统
+
+    /**
+     * @brief 获取是否支持文件系统格式
+     * @param fstype：文件系统格式
+     * @return true支持false不支持
+     */
+    static SupportedFileSystems* supportedFSInstance();
+
+    /**
+     * @brief 获取是否支持文件系统格式
+     * @param fstype：文件系统格式
+     * @return true支持false不支持
+     */
+    static bool supportedFileSystem(FSType fstype);
+
+    /**
+     * @brief 获取支持文件系统格式
+     * @param fstype：文件系统格式
+     * @return 支持的文件系统格式
+     */
+    const FS &getFileSystem(FSType fstype) const;
+
+    /**
+     * @brief 获取文件系统对象
+     * @param fstype：文件系统格式
+     * @return 文件系统对象
+     */
+    static FileSystem *getFileSystemObject(FSType fstype);
+//    static bool filesystem_resize_disallowed(const Partition &partition);
+
+    /**
+     * @brief 最小和最大文件系统大小限制
+     * @param fstype：文件系统格式
+     * @param partition：分区信息
+     * @return 最小和最大文件系统大小限制结构体
+     */
+    static FS_Limits getFileSystemLimits(FSType fstype, const Partition &partition);
+
+    /**
+     * @brief 创建分区文件系统
+     * @param partition：分区信息
+     * @return true成功false失败
+     */
+    bool createFileSystem(const Partition &partition);
+
+    /**
+     * @brief 创建分区文件系统
+     * @param type:文件系统
+     * @param busy:是否使用
+     * @param path:设备路径
+     * @param lable:卷标
+     * @param partition:分区
+     * @return true成功false失败
+     */
+    bool createFileSystem(const FSType &type, const bool &busy, const QString &path, const QString lable = "", const Partition &partition = Partition());
+
+    /**
+     * @brief 检查修复文件系统
+     * @param partition：分区信息
+     * @return true成功false失败
+     */
+    bool checkRepairFileSystem(const Partition &partition);
+
+
+    //挂载
+    /**
+     * @brief 挂载设备
+     * @param mountpath:挂载点
+     * @param devPath:设备路径
+     * @param fsType:文件系统类型
+     * @return true 挂载成功 false 挂载失败
+     */
+    bool mountDevice(const QString &mountpath, const QString devPath, const FSType &fsType);
+
+    /**
+     * @brief 卸载设备
+     * @param mountPoints:挂载点集合
+     * @return true 卸载成功 false 卸载失败
+     */
+    bool umontDevice(QVector<QString>mountPoints, QString devPath = "");
+
+
+    /**
+     * @brief 写fstab文件
+     * @param uuid:设备（磁盘分区，lvm lv）uuid
+     * @param mountpath:挂载点
+     * @param type:文件系统类型
+     * @param isMount:true 挂载 false 卸载
+     * @return true 写入成功 false 写入失败
+     */
+    bool writeFstab(const QString &uuid, const QString &mountpath, const QString &type, bool isMount = true);
+
+    /**
+     * @brief 挂载设备
+     * @param mountpath:挂载点
+     * @param devPath:设备路径
+     * @param fsType:文件系统类型
+     * @return true 挂载成功 false 挂载失败
+     */
+    QPair<bool, QString> tmpMountDevice(const QString &mountpath, const QString devPath, const FSType &fsType, const QString &userName);
+
+    /**
+     * @brief 获取可用的临时挂载路径
+     * @param user:用户名
+     * @param lable: 卷标
+     * @param uuid: 设备uuid
+     * @param devPath: 设备路径
+     * @return 临时挂载路径
+     */
+    QString getTmpMountPath(const QString &user, const QString &lable, const QString &uuid, const QString &devPath);
+
+    /**
+     * @brief 创建临时挂载目录
+     * @param mountpath:挂载目录
+     * @return true 创建成功 false 创建失败
+     */
+    bool createTmpMountDir(const QString &mountPath);
+
+    /**
+     * @brief 修改文件属主
+     * @param user:用户名
+     * @param path:文件路径
+     * @return true 修改成功 false 修改失败
+     */
+    bool changeOwner(const QString &user, const QString &path);
+
+
+    //lvm
     /**
      * @brief 获取创建VG的pvdata 列表
      * @param devList: 设备列表
@@ -933,6 +969,13 @@ private:
     bool createPVPartition(PVData &pv);
 
     /**
+     * @brief 创建pv使用的分区
+     * @param pv:pv数据结构体 创建分区依据
+     * @return true 分区创建成功 false 失败
+     */
+    bool createPVPart(PVData &pv);
+
+    /**
      * @brief 检查pv设备
      * @param vgName: vg名称
      * @param pv: pv数据结构体
@@ -952,27 +995,41 @@ private:
      */
     void resizeVGMessage(bool flag);
 
+
+    //luks
+    /**
+     * @brief 创建加密结构体数据
+     * @param part:分区数据
+     * @return 加密结构体
+     */
+    LUKS_INFO getNewLUKSInfo(const Partition &part);
+
+    /**
+     * @brief 创建加密结构体数据
+     * @param lvAct:lv操作结构体
+     * @return 加密结构体
+     */
+    LUKS_INFO getNewLUKSInfo(const LVAction &lvAct);
+
+    /**
+     * @brief 创建加密结构体数据
+     * @param type：文件系统类型
+     * @param token：密钥提示信息
+     * @param cipher：加密算法
+     * @param decryptStr：加密密码
+     * @param dmName：映射名称
+     * @param devPath：设备路径
+     * @param label：卷标
+     * @return 加密结构体
+     */
+    LUKS_INFO getNewLUKSInfo(const FSType &type, const QStringList &token, const CRYPT_CIPHER &cipher, const QString &decryptStr, const QString &dmName, const QString devPath, const QString &label);
+
 signals:
+    //硬件刷新相关信号
+    /**
+     * @brief 刷新硬件信息 启动刷新硬件线程
+     */
     void probeAllInfo();
-
-    /**
-     * @brief 创建分区表信号
-     * @param flag:true成功false失败
-     */
-    void createTableMessage(const bool &flag);
-
-    /**
-     * @brief 更新信息信号
-     * @param infomap：硬盘信息
-     */
-    void updateDeviceInfo(const DeviceInfoMap &infomap, const LVMInfo &lvmInfo);
-
-
-    /**
-     * @brief 刷新加密设备信息信号
-     * @param infomap：所有加密设备分区信息
-     */
-    void updateLUKSInfo(const LUKSMap &luks);
 
     /**
      * @brief 刷新信息信号
@@ -983,33 +1040,27 @@ signals:
     void refreshDeviceInfo(int type = 0, bool arg1 = true, QString arg2 = "");
 
     /**
-     * @brief 卸载状态信号
-     * @param umountMessage:卸载信息
+     * @brief 更新信息信号
+     * @param infomap：硬盘信息
      */
-    void unmountPartition(const QString &unmountMessage);
+    void updateDeviceInfo(const DeviceInfoMap &infomap, const LVMInfo &lvmInfo);
 
     /**
-     * @brief 删除分区信号
-     * @param deleteMessage：删除结果
+     * @brief 刷新加密设备信息信号
+     * @param infomap：所有加密设备分区信息
      */
-    void deletePartitionMessage(const QString &deleteMessage);
+    void updateLUKSInfo(const LUKSMap &luks);
+
+    //坏道检测相关信号
+    /**
+     * @brief 坏道检查线程启动信号(次数)
+     */
+    void checkBadBlocksRunCountStart();
 
     /**
-     * @brief 隐藏分区信号
-     * @param hideMessage：隐藏结果
+     * @brief 坏道检查线程启动信号(时间)
      */
-    void hidePartitionInfo(const QString &hideMessage);
-
-    /**
-     * @brief 显示分区信号
-     * @param hideMessage：显示结果
-     */
-    void showPartitionInfo(const QString &showMessage);
-
-    /**
-     * @brief USB信号
-     */
-    void usbUpdated();
+    void checkBadBlocksRunTimeStart();
 
     /**
      * @brief 坏道检测检测信息信号(次数检测)
@@ -1025,6 +1076,12 @@ signals:
      */
     void checkBadBlocksFinished();
 
+    //坏道修复相关信号
+    /**
+     * @brief 坏道修复线程启动信号
+     */
+    void fixBadBlocksStart();
+
     /**
      * @brief 坏道修复完成信号
      */
@@ -1037,21 +1094,7 @@ signals:
      */
     void fixBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus, const QString &cylinderTimeConsuming);
 
-    /**
-     * @brief 坏道检查线程启动信号(次数)
-     */
-    void checkBadBlocksRunCountStart();
-
-    /**
-     * @brief 坏道检查线程启动信号(时间)
-     */
-    void checkBadBlocksRunTimeStart();
-
-    /**
-     * @brief 坏道修复线程启动信号
-     */
-    void fixBadBlocksStart();
-
+    //lvm线程相关信号
     /**
      * @brief 删除pv列表
      * @param lvmInfo:lvm属性类
@@ -1068,12 +1111,7 @@ signals:
      */
     void resizeVGStart(LVMInfo lvmInfo, QString vgName, QList<PVData>devList, long long size);
 
-    /**
-     * @brief 清除信号
-     * @param clearMessage：清除结果
-     */
-    void clearMessage(const QString &clearMessage);
-
+    //lvm相关信号
     /**
      * @brief vg创建
      * @param vgMessage:创建结果
@@ -1081,18 +1119,16 @@ signals:
     void vgCreateMessage(const QString &vgMessage);
 
     /**
-     * @brief pv删除
-     * @param pvMessage:删除结果
-     */
-    void pvDeleteMessage(const QString &pvMessage);
-
-
-    /**
      * @brief vg删除
      * @param vgMessage:删除结果
      */
     void vgDeleteMessage(const QString &vgMessage);
 
+    /**
+     * @brief pv删除
+     * @param pvMessage:删除结果
+     */
+    void pvDeleteMessage(const QString &pvMessage);
 
     /**
      * @brief lg删除
@@ -1100,24 +1136,64 @@ signals:
      */
     void lvDeleteMessage(const QString &lvMessage);
 
+    //luks信号
     /**
      * @brief 解密消息
      * @param luks:解密结果
      */
     void deCryptMessage(const LUKS_INFO &luks);
 
-public slots:
 
+    //其他通用信号
     /**
-     * @brief 刷新信息槽函数
+     * @brief 创建分区表信号
+     * @param flag:true成功false失败
      */
-    void onRefreshDeviceInfo(int type = 0, bool arg1 = true, QString arg2 = "");
+    void createTableMessage(const bool &flag);
 
     /**
-      * @brief 刷新硬件信息
-      */
-    void syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const DeviceInfoMap inforesult, const LVMInfo lvmInfo, const LUKSMap &luks);
+     * @brief 创建失败(lv/分区 (加密/未加密))
+     * @param message:失败信息  enum:errcode:devicePath   示例: DISK_ERROR:1:/dev/sda1
+     *                                                        LVMError:1:/dev/vg01/lv01
+     *                                                        CRYPTError:1:/dev/mapper/sda1-aesE
+     *
+     */
+    void createFailedMessage(const QString &message);
 
+    /**
+     * @brief 擦除设备信号
+     * @param clearMessage：清除结果
+     */
+    void clearMessage(const QString &clearMessage);
+
+    /**
+     * @brief 删除分区信号
+     * @param deleteMessage：删除结果
+     */
+    void deletePartitionMessage(const QString &deleteMessage);
+
+    /**
+     * @brief 显示分区信号
+     * @param hideMessage：显示结果
+     */
+    void showPartitionInfo(const QString &showMessage);
+
+    /**
+     * @brief 隐藏分区信号
+     * @param hideMessage：隐藏结果
+     */
+    void hidePartitionInfo(const QString &hideMessage);
+
+    /**
+     * @brief USB信号
+     */
+    void usbUpdated();
+
+    /**
+     * @brief 卸载状态信号
+     * @param umountMessage:卸载信息
+     */
+    void unmountPartition(const QString &unmountMessage);
 private:
     QVector<PedPartitionFlag> m_flags;    //分区标志hidden boot efi等
     QMap<QString, Device> m_deviceMap;    //设备对应信息表
@@ -1129,15 +1205,18 @@ private:
     QThread *m_workerFixThread;           //坏道修复线程对象
     QThread *m_workerThreadProbe;         //硬件刷新专用
     QThread *m_workerLVMThread;           //lvm专用线程对象
-    WorkThread m_checkThread;
-    FixThread m_fixthread;
-    ProbeThread m_probeThread;
-    LVMThread m_lvmThread;                //lvm线程工作类
+    WorkThread m_checkThread;             //坏道检查线程对象
+    FixThread m_fixthread;                //坏道修复线程对象
+    ProbeThread m_probeThread;            //硬件刷新专用
+    LVMThread m_lvmThread;                //lvm线程工作对象
     bool m_isClear;
 
     LVMInfo m_lvmInfo;                    //lvm 数据集合
     LUKSMap m_LUKSInfo;                   //luks 数据集合
 
+    int m_type;                          //刷新结束后需要发送的信号类型
+    bool m_arg1;                         //需要发送的信号bool类型参数
+    QString m_arg2;                      //需要发送的信号QString类型参数
 };
 
 } // namespace DiskManager

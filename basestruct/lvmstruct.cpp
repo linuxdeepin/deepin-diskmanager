@@ -3,24 +3,24 @@
 bool PVData::operator<(const PVData &tmp) const
 {
     if (m_type == DevType::DEV_UNALLOCATED_PARTITION) {
-        return m_devicePath < tmp.m_devicePath
+        return m_devicePath     < tmp.m_devicePath
                || m_startSector < tmp.m_startSector
-               || m_endSector < tmp.m_endSector
-               || m_diskPath < tmp.m_diskPath
-               || m_sectorSize < tmp.m_sectorSize;
+               || m_endSector   < tmp.m_endSector
+               || m_diskPath    < tmp.m_diskPath
+               || m_sectorSize  < tmp.m_sectorSize;
     }
     return m_devicePath < tmp.m_devicePath || m_diskPath < tmp.m_diskPath;
 }
 
 bool PVData::operator==(const PVData &tmp) const
 {
-    return m_devicePath == tmp.m_devicePath
+    return m_devicePath     == tmp.m_devicePath
            && m_startSector == tmp.m_startSector
-           && m_endSector == tmp.m_endSector
-           && m_type == tmp.m_type
-           && m_pvAct == tmp.m_pvAct
-           && m_diskPath == tmp.m_diskPath
-           && m_sectorSize == tmp.m_sectorSize;
+           && m_endSector   == tmp.m_endSector
+           && m_type        == tmp.m_type
+           && m_pvAct       == tmp.m_pvAct
+           && m_diskPath    == tmp.m_diskPath
+           && m_sectorSize  == tmp.m_sectorSize;
 }
 
 QDBusArgument &operator<<(QDBusArgument &argument, const PVData &data)
@@ -53,7 +53,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PVData &data)
     argument.endStructure();
     return argument;
 }
-
 /*********************************** CreateLVInfo *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const LVAction &data)
 {
@@ -101,7 +100,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LVAction &data)
     argument.endStructure();
     return argument;
 }
-
 /*********************************** LVDATA *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const LVData &data)
 {
@@ -124,7 +122,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LVData &data)
     argument.endStructure();
     return argument;
 }
-
 /*********************************** VGDATA *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const VGData &data)
 {
@@ -149,7 +146,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, VGData &data)
     argument.endStructure();
     return argument;
 }
-
 /*********************************** PVRANGES *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const PVRanges &data)
 {
@@ -178,7 +174,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PVRanges &data)
     argument.endStructure();
     return argument;
 }
-
 /*********************************** PVInfo *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const PVInfo &data)
 {
@@ -234,7 +229,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument,  PVInfo &data)
     argument.endStructure();
     return argument;
 }
-
 /*********************************** LVInfo *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const LVInfo &data)
 {
@@ -294,38 +288,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LVInfo &data)
     return argument;
 }
 /*********************************** VGInfo *********************************************/
-LVInfo VGInfo::getLVinfo(const QString &lvName)
-{
-    foreach (const LVInfo &info, m_lvlist) {
-        if (info.m_lvName == lvName) {
-            return info;
-        }
-    }
-    return  LVInfo();
-}
-
-bool VGInfo::lvInfoExists(const QString &lvName)
-{
-    foreach (const LVInfo &info, m_lvlist) {
-        if (info.m_lvName == lvName) {
-            return true;
-        }
-    }
-    return  false;
-}
-
-bool VGInfo::isAllPV(QVector<QString> pvList) const
-{
-    QVector<QString> list = m_pvInfo.keys().toVector();
-    if (pvList.size() < list.size()) {
-        return false;
-    }
-
-    std::sort(list.begin(), list.end());
-    std::sort(pvList.begin(), pvList.end());
-    return std::includes(pvList.begin(), pvList.end(), list.begin(), list.end());
-}
-
 QDBusArgument &operator<<(QDBusArgument &argument, const VGInfo &data)
 {
     argument.beginStructure();
@@ -375,7 +337,60 @@ const QDBusArgument &operator>>(const QDBusArgument &argument,  VGInfo &data)
     return argument;
 }
 
+LVInfo VGInfo::getLVinfo(const QString &lvName)
+{
+    foreach (const LVInfo &info, m_lvlist) {
+        if (info.m_lvName == lvName) {
+            return info;
+        }
+    }
+    return  LVInfo();
+}
+
+bool VGInfo::lvInfoExists(const QString &lvName)
+{
+    foreach (const LVInfo &info, m_lvlist) {
+        if (info.m_lvName == lvName) {
+            return true;
+        }
+    }
+    return  false;
+}
+
+bool VGInfo::isAllPV(QVector<QString> pvList) const
+{
+    QVector<QString> list = m_pvInfo.keys().toVector();
+    if (pvList.size() < list.size()) {
+        return false;
+    }
+
+    std::sort(list.begin(), list.end());
+    std::sort(pvList.begin(), pvList.end());
+    return std::includes(pvList.begin(), pvList.end(), list.begin(), list.end());
+}
 /*********************************** LVMInfo *********************************************/
+QDBusArgument &operator<<(QDBusArgument &argument, const LVMInfo &data)
+{
+    argument.beginStructure();
+    argument << data.m_pvInfo
+             << data.m_vgInfo
+             << static_cast<int>(data.m_lvmErr);
+    argument.endStructure();
+    return argument;
+}
+
+const QDBusArgument &operator>>(const QDBusArgument &argument,  LVMInfo &data)
+{
+    argument.beginStructure();
+    int err;
+    argument >> data.m_pvInfo
+             >> data.m_vgInfo
+             >> err;
+    data.m_lvmErr = static_cast<LVMError>(err);
+    argument.endStructure();
+    return argument;
+}
+
 LVInfo LVMInfo::getLVInfo(const QString &lvPath)
 {
     // /dev/vg01/lv01    Or /dev/mapper/vg01-lv01
@@ -590,26 +605,3 @@ bool LVMInfo::itemExists(const QString &str, const QMap<QString, T> &containers)
 {
     return containers.find(str) != containers.end();
 }
-
-QDBusArgument &operator<<(QDBusArgument &argument, const LVMInfo &data)
-{
-    argument.beginStructure();
-    argument << data.m_pvInfo
-             << data.m_vgInfo
-             << static_cast<int>(data.m_lvmErr);
-    argument.endStructure();
-    return argument;
-}
-
-const QDBusArgument &operator>>(const QDBusArgument &argument,  LVMInfo &data)
-{
-    argument.beginStructure();
-    int err;
-    argument >> data.m_pvInfo
-             >> data.m_vgInfo
-             >> err;
-    data.m_lvmErr = static_cast<LVMError>(err);
-    argument.endStructure();
-    return argument;
-}
-

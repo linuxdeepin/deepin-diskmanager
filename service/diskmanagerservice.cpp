@@ -62,6 +62,7 @@ void DiskManagerService::initConnection()
     connect(this, &DiskManagerService::getAllDeviceInfomation, this, &DiskManagerService::onGetAllDeviceInfomation);
     connect(m_partedcore, &PartedCore::clearMessage, this, &DiskManagerService::clearMessage);
     connect(m_partedcore, &PartedCore::deCryptMessage, this, &DiskManagerService::deCryptMessage);
+    connect(m_partedcore, &PartedCore::createFailedMessage, this, &DiskManagerService::createFailedMessage);
 }
 
 void DiskManagerService::Quit()

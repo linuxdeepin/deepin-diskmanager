@@ -30,14 +30,11 @@
 #include "commondef.h"
 #include "lvmstruct.h"
 #include "luksstruct.h"
-#include <QString>
 
 /**
  * @class PartitionInfo
  * @brief 分区信息类
  */
-
-class QDBusArgument;
 
 class PartitionInfo
 {

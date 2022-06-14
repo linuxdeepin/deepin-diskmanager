@@ -228,63 +228,15 @@ void FixThread::setFixBadBlocksInfo(const QString &devicePath, QStringList list,
 ProbeThread::ProbeThread(QObject *parent)
 {
     Q_UNUSED(parent);
-    m_type = 0;
-}
-
-void ProbeThread::setSignal(int type, bool arg1, QString arg2)
-{
-    m_type = type;
-    m_arg1 = arg1;
-    m_arg2 = arg2;
-}
-
-void ProbeThread::sendsignals()
-{
-    qDebug() << __FILE__ << ":" << __FUNCTION__ << " m_type:" << m_type;
-    switch (m_type) {
-    case DISK_SIGNAL_TYPE_UMNT:
-        emit unmountPartition(m_arg2);
-        break;
-    case DISK_SIGNAL_TYPE_DEL:
-        emit deletePartitionMessage(m_arg2);
-        break;
-    case DISK_SIGNAL_TYPE_SHOW:
-        emit showPartitionInfo(m_arg2);
-        break;
-    case DISK_SIGNAL_TYPE_CREATE_TABLE:
-        emit createTableMessage(m_arg1);
-        break;
-    case DISK_SIGNAL_USBUPDATE:
-        emit usbUpdated();
-        break;
-    case DISK_SIGNAL_TYPE_CLEAR:
-        emit clearPartitionMessage(m_arg2);
-        break;
-    case DISK_SIGNAL_TYPE_VGCREATE:
-        emit vgCreateMessage(m_arg2);
-        break;
-    case DISK_SIGNAL_TYPE_PVDELETE:
-        emit pvDeleteMessage(m_arg2);
-        break;
-    case DISK_SIGNAL_TYPE_VGDELETE:
-        emit vgDeleteMessage(m_arg2);
-        break;
-    case DISK_SIGNAL_TYPE_LVDELETE:
-        emit lvDeleteMessage(m_arg2);
-        break;
-    default:
-        break;
-    }
-    m_type = 0;
 }
 
 void ProbeThread::probeDeviceInfo()
 {
     qDebug() << __FILE__ << ":" << __FUNCTION__ << "Someone call me in thread!";
 
-    if (DISK_SIGNAL_TYPE_AUTOMNT == m_type) {
+    if (DISK_SIGNAL_TYPE_AUTOMNT == m_sigType) {
         //Only usb add need to sleep 5 seconds
-        qDebug() << __FUNCTION__ << "From auto Mount, So i will sleep 5 seconds! type:" << m_type;
+        qDebug() << __FUNCTION__ << "From auto Mount, So i will sleep 5 seconds! type:" << m_sigType;
         //相传有一块移动硬盘，需要先 sleep 一下才能正确读取。
         sleep(5);
     }
@@ -374,7 +326,6 @@ void ProbeThread::probeDeviceInfo()
 
     emit updateDeviceInfo(/*m_deviceMap,*/ m_inforesult, m_lvmInfo,m_luksInfo);
 
-    sendsignals();
     qDebug() << __FILE__ << ":" << __FUNCTION__ << "Someone call me in thread，working done!";
     qDebug() << __FILE__ << "Now I am working on thread:" << QThread::currentThreadId();
 }

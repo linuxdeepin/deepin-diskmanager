@@ -32,7 +32,6 @@
 #include "partition.h"
 #include "procpartitionsinfo.h"
 #include "filesystems/filesystem.h"
-#include "lvmoperator/lvmoperator.h"
 #include "luksoperator/luksoperator.h"
 
 #include <QDebug>
@@ -76,8 +75,8 @@ PartedCore::PartedCore(QObject *parent)
 
     qDebug() << __FUNCTION__ << "^^3";
 
-    m_supportedFileSystems = new SupportedFileSystems();
     //Determine file system support capabilities for the first time
+    m_supportedFileSystems = new SupportedFileSystems();
     m_supportedFileSystems->findSupportedFilesystems();
 
     qDebug() << __FUNCTION__ << "^^4";
@@ -85,20 +84,24 @@ PartedCore::PartedCore(QObject *parent)
     m_workerThreadProbe = nullptr;
     m_workerCheckThread = nullptr;
     m_workerFixThread = nullptr;
-
     m_workerLVMThread = nullptr;
+
     probeDeviceInfo();
     delTempMountFile();
-
 
     qDebug() << __FUNCTION__ << "^^5";
 }
 
 PartedCore::~PartedCore()
 {
-    delete m_supportedFileSystems;
-    m_supportedFileSystems = nullptr;
+    Utils::deletePoint(m_supportedFileSystems);
 
+    if (m_workerThreadProbe) {
+        m_workerThreadProbe->quit();
+        m_workerThreadProbe->wait();
+        delete m_workerThreadProbe;
+        m_workerThreadProbe = nullptr;
+    }
 
     if (m_workerCheckThread) {
         m_workerCheckThread->quit();
@@ -114,12 +117,6 @@ PartedCore::~PartedCore()
         m_workerFixThread = nullptr;
     }
 
-    if (m_workerThreadProbe) {
-        delete m_workerThreadProbe;
-        m_workerThreadProbe = nullptr;
-    }
-
-
     if (m_workerLVMThread) {
         m_workerLVMThread->quit();
         m_workerLVMThread->wait();
@@ -129,39 +126,1686 @@ PartedCore::~PartedCore()
     delTempMountFile();
 }
 
+
+/***********************************************public  DBUS****************************************************************/
+DeviceInfo PartedCore::getDeviceinfo()
+{
+    DeviceInfo info;
+    return info;
+}
+
+DeviceInfoMap PartedCore::getAllDeviceinfo()
+{
+    return m_inforesult;
+}
+
+LVMInfo PartedCore::getAllLVMinfo()
+{
+    return m_lvmInfo;
+}
+
+LUKSMap PartedCore::getAllLUKSinfo()
+{
+    return m_LUKSInfo;
+}
+
+QStringList PartedCore::getallsupportfs()
+{
+    return supportedFSInstance()->getAllFsName();
+}
+
+HardDiskInfo PartedCore::getDeviceHardInfo(const QString &devicepath)
+{
+    qDebug() << __FUNCTION__ << "Get Device Hard Info Start";
+    HardDiskInfo hdinfo;
+    if (devicepath.isEmpty()) {
+        qDebug() << "disk path is empty";
+        return hdinfo;
+    }
+
+    DeviceStorage device;
+    device.getDiskInfoFromHwinfo(devicepath);
+
+    device.getDiskInfoFromLshw(devicepath);
+
+    device.getDiskInfoFromLsblk(devicepath);
+
+    device.getDiskInfoFromSmartCtl(devicepath);
+
+    hdinfo.m_model = device.m_model;
+    hdinfo.m_vendor = device.m_vendor;
+    hdinfo.m_mediaType = device.m_mediaType;
+    hdinfo.m_size = device.m_size;
+    hdinfo.m_rotationRate = device.m_rotationRate;
+    hdinfo.m_interface = device.m_interface;
+    hdinfo.m_serialNumber = device.m_serialNumber;
+    hdinfo.m_version = device.m_version;
+    hdinfo.m_capabilities = device.m_capabilities;
+    hdinfo.m_description = device.m_description;
+    hdinfo.m_powerOnHours = device.m_powerOnHours;
+    hdinfo.m_powerCycleCount = device.m_powerCycleCount;
+    hdinfo.m_firmwareVersion = device.m_firmwareVersion;
+    hdinfo.m_speed = device.m_speed;
+
+    qDebug() << __FUNCTION__ << "Get Device Hard Info end";
+    return hdinfo;
+}
+
+QString PartedCore::getDeviceHardStatus(const QString &devicepath)
+{
+    qDebug() << __FUNCTION__ << "Get Device Hard Status Start";
+    QString status;
+    QString devicePath = devicepath;
+    if (devicepath.contains("nvme")) {
+        QStringList list = devicepath.split("nvme");
+        if (list.size() < 2) {
+            return status;
+        }
+        QString str = "";
+        for (int i = 0; i < list.at(1).size(); i++) {
+            if (list.at(1).at(i) >= "0" && list.at(1).at(i) <= "9") {
+                str += list.at(1).at(i);
+            } else {
+                break;
+            }
+        }
+
+        devicePath = list.at(0) + "nvme" + str;
+    }
+
+    QString cmd = QString("smartctl -H %1").arg(devicePath);
+    QProcess proc;
+    proc.start(cmd);
+    proc.waitForFinished(-1);
+    QString output = proc.readAllStandardOutput();
+
+    if (output.indexOf("SMART overall-health self-assessment test result:") != -1) {
+        QStringList list = output.split("\n");
+        for (int i = 0; i < list.size(); i++) {
+            if (list.at(i).indexOf("SMART overall-health self-assessment test result:") != -1) {
+                status = list.at(i).mid(strlen("SMART overall-health self-assessment test result:"));
+                status.remove(QRegExp("^ +\\s*"));
+//                qDebug() << __FUNCTION__ << status;
+                break;
+            }
+        }
+    } else {
+        QString cmd = QString("smartctl -H -d sat %1").arg(devicePath);
+        QProcess proc;
+        proc.start(cmd);
+        proc.waitForFinished(-1);
+        QString output = proc.readAllStandardOutput();
+
+        if (output.indexOf("SMART overall-health self-assessment test result:") != -1) {
+            QStringList list = output.split("\n");
+            for (int i = 0; i < list.size(); i++) {
+                if (list.at(i).indexOf("SMART overall-health self-assessment test result:") != -1) {
+                    status = list.at(i).mid(strlen("SMART overall-health self-assessment test result:"));
+                    status.remove(QRegExp("^ +\\s*"));
+//                    qDebug() << __FUNCTION__ << status;
+                    break;
+                }
+            }
+        }
+    }
+
+    qDebug() << __FUNCTION__ << "Get Device Hard Status End";
+    return status;
+}
+
+HardDiskStatusInfoList PartedCore::getDeviceHardStatusInfo(const QString &devicepath)
+{
+    qDebug() << __FUNCTION__ << "Get Device Hard Status Info Start";
+    HardDiskStatusInfoList hdsilist;
+
+    QString devicePath = devicepath;
+//    QString devicePath = "/dev/nvme12n1";
+    if (devicePath.contains("nvme")) {
+        //重新拼接硬盘字符串
+        QStringList list = devicePath.split("nvme");
+        if (list.size() < 2) {
+            return hdsilist;
+        }
+        QString str = "";
+        for (int i = 0; i < list.at(1).size(); i++) {
+            if (list.at(1).at(i) >= "0" && list.at(1).at(i) <= "9") {
+                str += list.at(1).at(i);
+            } else {
+                break;
+            }
+        }
+
+        devicePath = list.at(0) + "nvme" + str;
+
+        QString cmd = QString("smartctl -A %1").arg(devicePath);
+        QProcess proc;
+        proc.start(cmd);
+        proc.waitForFinished(-1);
+        QString output = proc.readAllStandardOutput();
+//        QString output = "smartctl 6.6 2017-11-05 r4594 [x86_64-linux-4.19.0-6-amd64] (local build)\nCopyright (C) 2002-17, Bruce Allen, Christian Franke, www.smartmontools.org\n\n=== START OF SMART DATA SECTION ===\nSMART/Health Information (NVMe Log 0x02, NSID 0xffffffff)\nCritical Warning:                   0x00\nTemperature:                        25 Celsius\nAvailable Spare:                    100%\nAvailable Spare Threshold:          5%\nPercentage Used:                    1%\nData Units Read:                    3,196,293 [1.63 TB]\nData Units Written:                 3,708,861 [1.89 TB]\nHost Read Commands:                 47,399,157\nHost Write Commands:                65,181,192\nController Busy Time:               418\nPower Cycles:                       97\nPower On Hours:                     1,362\nUnsafe Shutdowns:                   44\nMedia and Data Integrity Errors:    0\nError Information Log Entries:      171\nWarning  Comp. Temperature Time:    0\nCritical Comp. Temperature Time:    0\n\n";
+        list.clear();
+        list = output.split("\n");
+        for (int i = 0; i < list.size(); i++) {
+            HardDiskStatusInfo hdsinfo;
+            if (list.at(i).contains(":")) {
+                QStringList slist = list.at(i).split(":");
+                if (slist.size() != 2) {
+                    break;
+                }
+                hdsinfo.m_attributeName = slist.at(0);
+                hdsinfo.m_rawValue = slist.at(1).trimmed();
+            } else {
+                continue;
+            }
+            hdsilist.append(hdsinfo);
+        }
+    } else {
+
+        QString cmd = QString("smartctl -A %1").arg(devicepath);
+        QProcess proc;
+        proc.start(cmd);
+        proc.waitForFinished(-1);
+        QString output = proc.readAllStandardOutput();
+
+        if (output.contains("ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE")) {
+            QStringList list = output.split("\n");
+            int n = list.indexOf("ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE");
+            for (int i = n + 1; i < list.size(); i++) {
+                HardDiskStatusInfo hdsinfo;
+                QString statusInfo = list.at(i);
+
+
+                QStringList slist = statusInfo.split(' ');
+                slist.removeAll("");
+
+                if (slist.size() == 0) {
+                    break;
+                }
+
+                if (list.size() >= 10) {
+                    hdsinfo.m_id = slist.at(0);
+                    hdsinfo.m_attributeName = slist.at(1);
+                    hdsinfo.m_flag = slist.at(2);
+                    hdsinfo.m_value = slist.at(3);
+                    hdsinfo.m_worst = slist.at(4);
+                    hdsinfo.m_thresh = slist.at(5);
+                    hdsinfo.m_type = slist.at(6);
+                    hdsinfo.m_updated = slist.at(7);
+                    hdsinfo.m_whenFailed = slist.at(8);
+                    for (int k = 9; k < slist.size(); k++) {
+                        hdsinfo.m_rawValue += slist.at(k);
+                    }
+                }
+
+                hdsilist.append(hdsinfo);
+            }
+        } else {
+            QString cmd = QString("smartctl -A -d sat %1").arg(devicepath);
+            QProcess proc;
+            proc.start(cmd);
+            proc.waitForFinished(-1);
+            QString output = proc.readAllStandardOutput();
+            if (output.contains("ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE")) {
+                QStringList list = output.split("\n");
+                int n = list.indexOf("ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE");
+                for (int i = n + 1; i < list.size(); i++) {
+                    HardDiskStatusInfo hdsinfo;
+                    QString statusInfo = list.at(i);
+                    QStringList slist = statusInfo.split(' ');
+                    slist.removeAll("");
+
+                    if (slist.size() == 0) {
+                        break;
+                    }
+
+                    if (list.size() >= 10) {
+                        hdsinfo.m_id = slist.at(0);
+                        hdsinfo.m_attributeName = slist.at(1);
+                        hdsinfo.m_flag = slist.at(2);
+                        hdsinfo.m_value = slist.at(3);
+                        hdsinfo.m_worst = slist.at(4);
+                        hdsinfo.m_thresh = slist.at(5);
+                        hdsinfo.m_type = slist.at(6);
+                        hdsinfo.m_updated = slist.at(7);
+                        hdsinfo.m_whenFailed = slist.at(8);
+                        for (int k = 9; k < slist.size(); k++) {
+                            hdsinfo.m_rawValue += slist.at(k);
+                        }
+                    }
+
+                    hdsilist.append(hdsinfo);
+                }
+            }
+        }
+    }
+    qDebug() << __FUNCTION__ << "Get Device Hard Status Info end";
+    return hdsilist;
+}
+
+bool PartedCore::createPartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel)
+{
+//    Glib::ustring device_path = device.get_path();
+
+    // FIXME: Should call file system specific removal actions
+    // (to remove LVM2 PVs before deleting the partitions).
+
+//#ifdef ENABLE_LOOP_DELETE_OLD_PTNS_WORKAROUND
+    // When creating a "loop" table with libparted 2.0 to 3.0 inclusive, it doesn't
+    // inform the kernel to delete old partitions so as a consequence blkid's cache
+    // becomes stale and it won't report a file system subsequently created on the
+    // whole disk device.  Create a GPT first to use that code in libparted to delete
+    // any old partitions.  Fixed in parted 3.1 by commit:
+    //     f5c909c0cd50ed52a48dae6d35907dc08b137e88
+    //     libparted: remove has_partitions check to allow loopback partitions
+//    if ( disklabel == "loop" )
+//        newDiskLabel( device_path, "gpt", false );
+//#endif
+
+    // Ensure that any previous whole disk device file system can't be recognised by
+    // libparted in preference to the "loop" partition table signature, or by blkid in
+    // preference to any partition table about to be written.
+//    OperationDetail dummy_od;
+    Sector deviceLength = length.toLongLong();
+    Sector deviceSectorSize = sectorSize.toLong();
+    Partition tempPartition;
+    tempPartition.setUnpartitioned(devicePath,
+                                   "",
+                                   FS_UNALLOCATED,
+                                   deviceLength,
+                                   deviceSectorSize,
+                                   false);
+    eraseFilesystemSignatures(tempPartition);
+
+    bool flag = newDiskLabel(devicePath, diskLabel);
+
+    if (!m_isClear) {
+        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CREATE_TABLE, flag, "");
+    }
+
+    return flag;
+}
+
+bool PartedCore::detectionPartitionTableError(const QString &devicePath)
+{
+    qDebug() << __FUNCTION__ << "Detection Partition Table Error start";
+
+    struct stat fileStat;
+    stat(devicePath.toStdString().c_str(), &fileStat);
+    if (!S_ISBLK(fileStat.st_mode)) {
+        qDebug() << __FUNCTION__ << QString("%1 is not blk file").arg(devicePath);
+        return false;
+    }
+
+    bool needRewrite = gptIsExpanded(devicePath);
+    if (needRewrite) {
+        QString outPutFix, errorFix;
+        QString cmdFix = QString("echo w | fdisk %1").arg(devicePath);
+        Utils::executWithPipeCmd(cmdFix, outPutFix, errorFix);
+        qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
+        return true;
+    }
+
+    QString outPut, error, outPutError;
+    QStringList argList;
+    argList << "-l" << devicePath << "2>&1";
+    int ret = Utils::executWithErrorCmd("fdisk", argList, outPut, outPutError, error);
+    if (ret != 0) {
+        qDebug() << __FUNCTION__ << "Detection Partition Table Error order error";
+        return false;
+    }
+
+    QStringList outPulList = outPut.split("\n");
+    for (int i = 0; i < outPulList.size(); i++) {
+        if (strstr(outPulList[i].toStdString().c_str(), "Partition table entries are not in disk order") != nullptr) {
+            return true;
+        }
+    }
+    qDebug() << __FUNCTION__ << "Detection Partition Table Error end";
+    return false;
+
+//    QString cmd = QString("fdisk -l %1 2>&1").arg(devicePath);
+//    FILE *fd = nullptr;
+//    fd = popen(cmd.toStdString().data(), "r");
+//    char pb[1024];
+//    memset(pb, 0, 1024);
+
+//    if (fd == nullptr) {
+//        qDebug() << __FUNCTION__ << "Detection Partition Table Error order error";
+//        return false;
+//    }
+
+//    while (fgets(pb, 1024, fd) != nullptr) {
+//        if (strstr(pb, "Partition table entries are not in disk order") != nullptr) {
+//            return true;
+//        }
+//        if (nullptr != strstr(pb, "will be corrected by write")) {
+//            //QString output, errstr;
+//            QString cmd_fix = QString("echo w | fdisk %1").arg(devicePath);
+
+//            FILE *fixfd = popen(cmd_fix.toStdString().data(), "r");
+//            qDebug() << __FUNCTION__ << "Detection Partition Table Rewrite Done";
+//            if (fixfd) {
+//                fclose(fixfd);
+//            }
+
+//            return true;
+//        }
+//    }
+
+//    fclose(fd);
+//    qDebug() << __FUNCTION__ << "Detection Partition Table Error end";
+//    return false;
+}
+
+bool PartedCore::create(const PartitionVec &infovec)
+{
+    qDebug() << __FUNCTION__ << "Create start";
+    bool success = true;
+    for (PartitionInfo info : infovec) {
+        Partition newPartition;
+        newPartition.reset(info);
+        if (!create(newPartition)) {
+            qDebug() << __FUNCTION__ << "Create Partitione error";
+            success = false;
+            break;
+        }
+    }
+    if (!m_isClear) {
+        m_type = DISK_SIGNAL_TYPE_CREATE_FAILED;
+        emit refreshDeviceInfo(m_type, m_arg1, m_arg2);
+    }
+
+    qDebug() << __FUNCTION__ << "Create end";
+    return success;
+}
+
+bool PartedCore::format(const QString &fstype, const QString &name)
+{
+    qDebug() << __FUNCTION__ << "Format Partitione start";
+    Partition part = m_curpartition;
+    part.m_fstype = Utils::stringToFileSystemType(fstype);
+    part.setFilesystemLabel(name);
+    bool success = formatPartition(part);
+    qDebug() << __FUNCTION__ << "Format Partitione end";
+    return success;
+}
+
+bool PartedCore::clear(const WipeAction &wipe)
+{
+    //arg check
+    qDebug() << __FUNCTION__ << QString("Clear Partitione start, path: %1").arg(wipe.m_path) ;
+    bool success = false;
+    FSType fs = Utils::stringToFileSystemType(wipe.m_fstype);
+    success = (fs == FS_NTFS || fs == FS_FAT16 || fs == FS_FAT32 || fs == FS_EXT2 || fs == FS_EXT3 || fs == FS_EXT4);
+    if (success) {
+        if (wipe.m_path.isEmpty() || wipe.m_user.isEmpty()) {
+            success = false;
+        }
+
+        if (wipe.m_diskType < DISK_TYPE || wipe.m_diskType > PART_TYPE) {
+            success = false;
+        }
+
+        if (wipe.m_clearType < FAST_TYPE || wipe.m_clearType > GUTMANN_TYPE) {
+            success = false;
+        }
+    }
+
+    if (!success) {
+        QString str = QString("%1:%2:%3").arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_DBUS_ARGUMENT).arg(wipe.m_path);
+        m_isClear = false;
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, str);
+    }
+
+    bool isClose = false;
+    //close luks
+    auto closeLUKS = [&](const QString & path)->bool{
+        if (!m_LUKSInfo.luksExists(path))
+        {
+            return true;
+        }
+        LUKS_INFO info = m_LUKSInfo.getLUKS(path);
+        if (info.isDecrypt)
+        {
+            isClose = true;
+        }
+        return LUKSOperator::removeMapperAndKey(m_LUKSInfo, info);
+    };
+
+    if (wipe.m_diskType == DISK_TYPE) {
+        Device dev = m_deviceMap.value(wipe.m_path);
+        if (dev.m_diskType == "unrecognized") {
+            success = closeLUKS(wipe.m_path);    //关闭加密磁盘
+        } else {
+            foreach (const Partition *p, dev.m_partitions) {
+                if (!closeLUKS(p->getPath())) {
+                    success = false;
+                    break;
+                }
+            }
+        }
+    }
+    if (wipe.m_diskType == PART_TYPE) {
+        success = closeLUKS(wipe.m_path);
+    }
+
+    if (isClose) {
+        probeDeviceInfo();
+    }
+
+    if (!success) {
+        QString str = QString("%1:%2:%3").arg("CRYPTError").arg(CRYPTError::CRYPT_ERR_CLOSE_FAILED).arg(wipe.m_path);
+        m_isClear = false;
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, str);
+    }
+
+
+    m_isClear = true;
+    PartitionInfo pInfo;
+    QString curDiskType;
+    QString curDevicePath;
+    QString cmd;
+    QString output, errstr;
+
+    if (PART_TYPE == wipe.m_diskType) {
+        curDevicePath = m_curpartition.m_devicePath;
+        curDiskType = m_deviceMap.value(curDevicePath).m_diskType;
+
+        if (curDiskType == "unrecognized" || curDiskType == "none") {
+            curDiskType = "gpt";
+
+            Device dev = m_deviceMap.value(curDevicePath);
+            success = createPartitionTable(dev.m_path, QString("%1").arg(dev.m_length), QString("%1").arg(dev.m_sectorSize),
+                                           curDiskType);
+
+            if (!success) {
+                QString str = QString("%1:%2:%3").arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_CREATE_PARTTAB_FAILED).arg(wipe.m_path);
+                m_isClear = false;
+                return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, str);
+            }
+
+            probeDeviceInfo();
+        }
+
+        pInfo.m_fileSystemType = FSType::FS_CLEARED;
+        pInfo.m_fileSystemLabel = wipe.m_fileSystemLabel ;
+        pInfo.m_devicePath = m_curpartition.m_devicePath;
+        pInfo.m_sectorSize = m_curpartition.m_sectorSize;
+        pInfo.m_sectorStart = m_curpartition.m_sectorStart;
+        pInfo.m_fileSystemReadOnly = false;
+        pInfo.m_alignment = m_curpartition.m_alignment;
+        pInfo.m_type = m_curpartition.m_type;
+        pInfo.m_insideExtended = m_curpartition.m_insideExtended;
+        pInfo.m_busy = m_curpartition.m_busy;
+        pInfo.m_sectorEnd = m_curpartition.m_sectorEnd;
+
+        if ("unallocated" == wipe.m_path) {
+            pInfo.m_insideExtended = false;
+            pInfo.m_busy = false;
+            pInfo.m_fileSystemReadOnly = false;
+            pInfo.m_alignment = ALIGN_MEBIBYTE;
+            pInfo.m_type = TYPE_PRIMARY;
+            if (0 == pInfo.m_sectorStart) {
+                pInfo.m_sectorStart = UEFI_SECTOR;
+            }
+
+            Device tmpDev = m_deviceMap.value(pInfo.m_devicePath);
+
+            if (curDiskType == "gpt" && tmpDev.m_length == (m_curpartition.m_sectorEnd + 1)) {
+                pInfo.m_sectorEnd = m_curpartition.m_sectorEnd - GPTBACKUP;
+            } else {
+                pInfo.m_sectorEnd = m_curpartition.m_sectorEnd;
+            }
+            PartitionVec pVec;
+            pVec.push_back(pInfo);
+            success = create(pVec);
+
+            if (!success) {
+                QString str = QString("%1:%2:%3").arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_CREATE_PART_FAILED).arg(wipe.m_path);
+                m_isClear = false;
+                return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, str);
+            }
+
+            probeDeviceInfo();
+
+            Device dev = m_deviceMap.value(curDevicePath);
+            for (int i = 0 ; i < dev.m_partitions.size(); i++) {
+                Partition *info = dev.m_partitions.at(i);
+                if (info->m_sectorStart == pInfo.m_sectorStart && info->m_sectorEnd == pInfo.m_sectorEnd) {
+                    m_curpartition = *info;
+                    break;
+                }
+            }
+        }
+    } else if (DISK_TYPE == wipe.m_diskType) {
+        Device dev = m_deviceMap.value(wipe.m_path);
+        curDevicePath = wipe.m_path;
+        qDebug() << __FUNCTION__ << "Clear:  createPartitionTable start : " << dev.m_path;
+        curDiskType = dev.m_diskType;
+        if (curDiskType == "unrecognized" || curDiskType == "none") {
+            curDiskType = "gpt";
+        }
+        success = createPartitionTable(dev.m_path, QString("%1").arg(dev.m_length), QString("%1").arg(dev.m_sectorSize), curDiskType);
+        if (!success) {
+            QString str = QString("%1:%2:%3").arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_CREATE_PARTTAB_FAILED).arg(wipe.m_path);
+            m_isClear = false;
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, str);
+        }
+
+        probeDeviceInfo();
+
+        PartitionVec pVec;
+        pInfo.m_fileSystemType = FSType::FS_CLEARED;
+        pInfo.m_fileSystemLabel = wipe.m_fileSystemLabel ;
+        pInfo.m_alignment = ALIGN_MEBIBYTE;
+        pInfo.m_sectorSize = dev.m_sectorSize;
+        pInfo.m_insideExtended = false;
+        pInfo.m_busy = false;
+        pInfo.m_fileSystemReadOnly = false;
+        pInfo.m_devicePath = wipe.m_path;
+        pInfo.m_type = TYPE_PRIMARY;
+        pInfo.m_sectorStart = UEFI_SECTOR;
+
+        if (curDiskType == "gpt") {
+            pInfo.m_sectorEnd = dev.m_length - GPTBACKUP - 1;
+        } else {
+            pInfo.m_sectorEnd = dev.m_length - 1;
+        }
+
+        pVec.push_back(pInfo);
+        qDebug() << __FUNCTION__ << "Clear:  createPartition  start : " << pInfo.m_path;
+        success = create(pVec);
+        if (!success) {
+            QString str = QString("%1:%2:%3").arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_CREATE_PART_FAILED).arg(wipe.m_path);
+            m_isClear = false;
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, str);
+        }
+
+        probeDeviceInfo();
+
+        Device devTmp = m_deviceMap.value(wipe.m_path);
+        if (devTmp.m_partitions.count() >= 1) {
+            m_curpartition = *(devTmp.m_partitions[0]);
+        }
+    }
+
+    //清除
+    switch (wipe.m_clearType) {
+    case SECURE_TYPE:
+        qDebug() << __FUNCTION__ << "Clear:  secuClear  start";
+        success = secuClear(m_curpartition.getPath(), m_curpartition.m_sectorStart, m_curpartition.m_sectorEnd, m_curpartition.m_sectorSize, wipe.m_fstype, wipe.m_fileSystemLabel, 1);
+        break;
+    case DOD_TYPE:
+        qDebug() << __FUNCTION__ << "Clear:  secuClear  start";
+        success = secuClear(m_curpartition.getPath(), m_curpartition.m_sectorStart, m_curpartition.m_sectorEnd, m_curpartition.m_sectorSize, wipe.m_fstype, wipe.m_fileSystemLabel, 7);
+        break;
+    case GUTMANN_TYPE:
+        qDebug() << __FUNCTION__ << "Clear:  secuClear  start";
+        success = secuClear(m_curpartition.getPath(), m_curpartition.m_sectorStart, m_curpartition.m_sectorEnd, m_curpartition.m_sectorSize, wipe.m_fstype, wipe.m_fileSystemLabel, 35);
+        break;
+    }
+
+    if (!success) {
+        qDebug() << __FUNCTION__ << "secuClear error";
+        QString str = QString("%1:%2:%3").arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_UPDATE_KERNEL_FAILED).arg(wipe.m_path);
+        m_isClear = false;
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, str);
+    }
+
+
+    //格式化分区
+    if (wipe.m_luksFlag == LUKSFlag::NOT_CRYPT_LUKS) {
+        success = format(wipe.m_fstype, wipe.m_fileSystemLabel);
+        if (!success) {
+            qDebug() << __FUNCTION__ << "format error";
+            blockSignals(false);
+            QString str = QString("%1:%2:%3").arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_CREATE_PART_FAILED).arg(wipe.m_path);
+            m_isClear = false;
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, str);
+        }
+
+        probeDeviceInfo();
+    }
+
+    //创建完分区后，将当前创建的分区设置为当前选中分区
+    if (DISK_TYPE  == wipe.m_diskType) {
+        Device d = m_deviceMap.value(wipe.m_path);
+        if (d.m_partitions.count() >= 1) {
+            m_curpartition = *(d.m_partitions[0]);
+        }
+    } else {
+        Device d = m_deviceMap.value(curDevicePath);
+        for (int i = 0 ; i < d.m_partitions.size(); i++) {
+            Partition *info = d.m_partitions.at(i);
+            if (pInfo.m_sectorStart == info->m_sectorStart && pInfo.m_sectorEnd == info->m_sectorEnd) {
+                m_curpartition = *info;
+                break;
+            }
+        }
+    }
+
+    QString mountPath;
+    QString devPath;
+    FSType fsType;
+    if (wipe.m_luksFlag == LUKSFlag::NOT_CRYPT_LUKS) {
+        mountPath = getTmpMountPath(wipe.m_user, wipe.m_fileSystemLabel, m_curpartition.m_uuid, m_curpartition.getPath());
+        devPath = m_curpartition.getPath();
+        fsType = m_curpartition.m_fstype;
+    } else {
+        //加密
+        Partition p = m_curpartition;
+        p.m_dmName = wipe.m_dmName;
+        p.m_tokenList = wipe.m_tokenList;
+        p.m_decryptStr = wipe.m_decryptStr;
+        p.m_luksFlag = wipe.m_luksFlag;
+        p.m_cryptCipher = wipe.m_crypt;
+        p.m_fstype = Utils::stringToFileSystemType(wipe.m_fstype);
+        p.setFilesystemLabel(wipe.m_fileSystemLabel);
+
+        LUKS_INFO info = getNewLUKSInfo(p);
+
+        //加密失败
+        if (!LUKSOperator::encrypt(m_LUKSInfo, info)) {
+            m_isClear = false;
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, QString("%1:%2:%3")
+                                       .arg("CRYPTError").arg(CRYPTError::CRYPT_ERR_ENCRYPT_FAILED).arg(info.m_devicePath));
+        }
+
+        //解密失败
+        if (!LUKSOperator::decrypt(m_LUKSInfo, info)) {
+            m_isClear = false;
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, QString("%1:%2:%3").arg("CRYPTError")
+                                       .arg(CRYPTError::CRYPT_ERR_DECRYPT_FAILED).arg(info.m_devicePath));
+
+        }
+        //创建文件系统失败
+        if (!createFileSystem(info.m_mapper.m_luksFs, info.m_mapper.m_busy, info.m_mapper.m_dmPath, info.m_mapper.m_fileSystemLabel)) {
+            m_isClear = false;
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, QString("%1:%2:%3")
+                                       .arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_CREATE_FS_FAILED).arg(info.m_devicePath));
+        }
+
+        probeDeviceInfo();
+
+        LUKS_INFO info2 = m_LUKSInfo.getLUKS(m_curpartition.getPath());
+        mountPath = getTmpMountPath(wipe.m_user, info2.m_mapper.m_fileSystemLabel, info2.m_mapper.m_uuid, info2.m_mapper.m_dmPath);
+        devPath = info2.m_mapper.m_dmPath;
+        fsType = info2.m_mapper.m_luksFs;
+    }
+    QPair<bool, QString>pair = tmpMountDevice(mountPath, devPath, fsType, wipe.m_user);
+    m_isClear = false;
+    qDebug() << __FUNCTION__ << "clear end";
+    return sendRefSigAndReturn(pair.first, DISK_SIGNAL_TYPE_CLEAR, pair.first, pair.second);
+}
+
+bool PartedCore::resize(const PartitionInfo &info)
+{
+    qDebug() << __FUNCTION__ << "Resize Partitione start: " << info.m_devicePath;
+
+//    //对应 Bug 95232, 如果检测到虚拟磁盘扩容的话，重新写一下分区表，就可以修正分区表数据.
+    reWritePartition(info.m_devicePath);
+//    QString cmd = QString("fdisk -l %1 2>&1").arg(info.m_devicePath);
+//    FILE *fd = nullptr;
+//    fd = popen(cmd.toStdString().data(), "r");
+//    char pb[1024];
+//    memset(pb, 0, 1024);
+
+//    if (fd) {
+//        while (fgets(pb, 1024, fd) != nullptr) {
+//            if (strstr(pb, "will be corrected by write")) {
+//                QString cmd_fix = QString("echo w | fdisk %1").arg(info.m_devicePath);
+
+//                FILE *fixfd = popen(cmd_fix.toStdString().data(), "r");
+//                if (fixfd) {
+//                    fclose(fixfd);
+//                }
+//                qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
+//            }
+//        }
+
+//        fclose(fd);
+//    }
+
+    qDebug() << __FUNCTION__ << "Resize Partitione start";
+    Partition newPartition = m_curpartition;
+    newPartition.reset(info);
+    if (newPartition.getByteLength() < m_curpartition.m_fsLimits.min_size) {
+        return sendRefSigAndReturn(false);
+    }
+
+    bool success = resize(newPartition);
+    emit refreshDeviceInfo();
+    qDebug() << __FUNCTION__ << "Resize Partitione end";
+    return success;
+}
+
+bool PartedCore::deletePartition()
+{
+    qDebug() << __FUNCTION__ << "Delete Partition start";
+    PedPartition *ped = nullptr;
+    PedDevice *lpDevice = nullptr;
+    PedDisk *lpDisk = nullptr;
+
+    QString parttitionPath = m_curpartition.getPath();
+    QString devicePath = m_curpartition.m_devicePath;
+
+    //close luksMapper
+    if (m_LUKSInfo.luksExists(devicePath)) {
+        LUKS_INFO info = m_LUKSInfo.getLUKS(devicePath);
+        if (!LUKSOperator::removeMapperAndKey(m_LUKSInfo, info)) {
+            qDebug() << __FUNCTION__ << "Close luks Mapper failed";
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_DEL, true, QString("0:%1").arg(DISK_ERROR::DISK_ERR_PART_INFO));
+        }
+    }
+
+
+    bool success = true;
+    if (m_LUKSInfo.luksExists(parttitionPath)) {
+        LUKS_INFO info = m_LUKSInfo.getLUKS(parttitionPath);
+
+        success = LUKSOperator::removeMapperAndKey(m_LUKSInfo, info);
+    }
+
+    if (!getDeviceAndDisk(devicePath, lpDevice, lpDisk) || !success) {
+        qDebug() << __FUNCTION__ << "Delete Partition get device and disk failed";
+
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_DEL, true, QString("0:%1").arg(DISK_ERROR::DISK_ERR_DISK_INFO));
+    }
+
+    QStringList list;
+
+    for (int i = parttitionPath.size() - 1; i != 0; i--) {
+        if (parttitionPath.at(i) >= '0' && parttitionPath.at(i) <= '9') {
+            list.insert(0, parttitionPath.at(i));
+        } else {
+            break;
+        }
+    }
+
+    int num = list.join("").toInt();
+    ped = ped_disk_get_partition(lpDisk, num);
+
+    if (ped == nullptr) {
+        qDebug() << __FUNCTION__ << "Delete Partition Get Partition failed";
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_DEL, true, QString("0:%1").arg(DISK_ERROR::DISK_ERR_PART_INFO));
+    }
+
+    int i = ped_disk_delete_partition(lpDisk, ped);
+
+    if (i == 0) {
+        qDebug() << __FUNCTION__ << "Delete Partition failed";
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_DEL, true, QString("0:%1").arg(DISK_ERROR::DISK_ERR_DELETE_PART_FAILED));
+    }
+
+    if (!commit(lpDisk)) {
+        qDebug() << __FUNCTION__ << "Delete Partition commit failed";
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_DEL, true, QString("0:%1").arg(DISK_ERROR::DISK_ERR_UPDATE_KERNEL_FAILED));
+    }
+
+    destroyDeviceAndDisk(lpDevice, lpDisk);
+    qDebug() << __FUNCTION__ << "Delete Partition end";
+    return sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_DEL, true, "1:0");
+}
+
+bool PartedCore::showPartition()
+{
+    qDebug() << __FUNCTION__ << "Show Partition start";
+    getPartitionHiddenFlag();
+    if (m_hiddenPartition.indexOf(m_curpartition.m_uuid) == -1) {
+        emit refreshDeviceInfo();
+        emit showPartitionInfo("0");
+        return false;
+    }
+
+    QFile file("/etc/udev/rules.d/80-udisks2.rules");
+    QStringList list;
+
+    if (!file.open(QIODevice::ReadOnly)) { //打开指定文件
+        qDebug() << __FUNCTION__ << "Permanent unmount open file error";
+        emit refreshDeviceInfo();
+        emit showPartitionInfo("0");
+        return false;
+    } else {
+        QStringList list;
+        while (!file.atEnd()) {
+            QByteArray line = file.readLine();//获取数据
+            QString str = line;
+
+            if (str.contains(m_curpartition.m_uuid)) {
+                continue;
+            }
+            list << str;
+        }
+        file.close();
+        if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
+            QTextStream out(&file);
+            for (int i = 0; i < list.count(); i++) {
+                out << list.at(i);
+                out.flush();
+            }
+            file.close();
+        }
+    }
+
+    QProcess proc;
+    proc.start("udevadm control --reload");
+    proc.waitForFinished(-1);
+    emit refreshDeviceInfo();
+    emit showPartitionInfo("1");
+
+    qDebug() << __FUNCTION__ << "Show Partition end";
+    return true;
+
+}
+
+bool PartedCore::hidePartition()
+{
+    qDebug() << __FUNCTION__ << "Hide Partition start";
+//ENV{ID_FS_UUID}==\"1ee3b4c6-1c69-46b9-9656-8c534ffd4f43\", ENV{UDISKS_IGNORE}=\"1\"\n
+    getPartitionHiddenFlag();
+    if (m_hiddenPartition.indexOf(m_curpartition.m_uuid) != -1) {
+        emit refreshDeviceInfo();
+        emit hidePartitionInfo("0");
+        return false;
+    }
+    QFile file("/etc/udev/rules.d/80-udisks2.rules");
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Append)) { //打开指定文件
+        qDebug() << __FUNCTION__ << "Permanent mount open file error";
+        emit refreshDeviceInfo();
+        emit hidePartitionInfo("0");
+        return false;
+    } else {
+        QTextStream out(&file);
+        out << QString("ENV{ID_FS_UUID}==\"%1\", ENV{UDISKS_IGNORE}=\"1\"").arg(m_curpartition.m_uuid) << endl;
+    }
+
+    qDebug() << __FUNCTION__ << "Hide Partition end";
+    QProcess proc;
+    proc.start("udevadm control --reload");
+    proc.waitForFinished(-1);
+    emit refreshDeviceInfo();
+    emit hidePartitionInfo("1");
+    return true;
+}
+
+void PartedCore::setCurSelect(const PartitionInfo &info)
+{
+    auto it = m_deviceMap.find(info.m_devicePath);
+    if (it == m_deviceMap.end()) {
+        return;
+    }
+
+    Device dev = it.value();
+
+    foreach (const Partition *part, dev.m_partitions) {
+        if (infoBelongToPartition(*part, info)) {
+            m_curpartition = *part;
+            return ;
+        }
+        if (part->m_insideExtended) {//扩展分区  查看是否为逻辑分区
+            foreach (const Partition *partlogical, part->m_logicals) {
+                if (infoBelongToPartition(*partlogical, info)) {
+                    m_curpartition = *partlogical;
+                    return;
+                }
+            }
+        }
+    }
+}
+
+bool PartedCore::mountAndWriteFstab(const QString &mountpath)
+{
+    qDebug() << __FUNCTION__ << "Permanent mount start";
+    QString type = Utils::fileSystemTypeToString(m_curpartition.m_fstype);
+    bool success = mountDevice(mountpath, m_curpartition.getPath(),  m_curpartition.m_fstype)  //位置不可交换 利用&&运算特性
+                   && writeFstab(m_curpartition.m_uuid, mountpath, type, true);
+    qDebug() << __FUNCTION__ << "Permanent mount end";
+    return   sendRefSigAndReturn(success);
+}
+
+bool PartedCore::unmount()
+{
+    qDebug() << __FUNCTION__ << "Unmount start";
+    if (!umontDevice(m_curpartition.getMountPoints(), m_curpartition.getPath())) { //卸载挂载点  内部有信号发送 不要重复发送信号
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_UMNT, true, "0");
+    }
+    QString type = Utils::fileSystemTypeToString(m_curpartition.m_fstype);//修改/etc/fstab
+    writeFstab(m_curpartition.m_uuid,  "", type, false);//非挂载 不需要挂载点
+    qDebug() << __FUNCTION__ << "Unmount end";
+    return sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_UMNT, true, "1");
+}
+
+bool PartedCore::cryptMount(const LUKS_INFO &luks)
+{
+    LUKS_INFO luks2 = luks;
+    if (!m_LUKSInfo.luksExists(luks.m_devicePath)             //luks
+            || !luks2.isDecrypt                               //判断是否解密
+            || luks2.m_mapper.m_luksFs == FSType::FS_UNSUPPORTED    //判断文件系统是否可以支持
+            || luks2.m_mapper.m_luksFs == FSType::FS_UNALLOCATED
+            || luks2.m_mapper.m_luksFs == FSType::FS_UNKNOWN
+            || luks2.m_mapper.m_luksFs == FSType::FS_UNFORMATTED) {
+        return   sendRefSigAndReturn(false);
+    }
+
+    //mount
+    foreach (const QString &mount, luks2.m_mapper.m_mountPoints) {
+        if (!mountDevice(mount, luks2.m_mapper.m_dmPath, luks2.m_mapper.m_luksFs)) {
+            return   sendRefSigAndReturn(false) ;
+        }
+    }
+
+    //write confile
+    if ((luks2.m_luksVersion == 1 && luks2.m_keySlots < LUKS1_MaxKey)  //判断密钥槽是否仍有空间
+            || (luks2.m_luksVersion == 2 && luks2.m_keySlots < LUKS2_MaxKey)) {
+
+        if (!LUKSOperator::addKeyAndCrypttab(m_LUKSInfo, luks2)) {      //判断写入crypttab文件是否成功
+            return   sendRefSigAndReturn(false) ;
+        }
+
+        foreach (const QString &mount, luks2.m_mapper.m_mountPoints) {  //判断写入fstab文件是否成功
+            if (!writeFstab(luks2.m_mapper.m_uuid, mount, Utils::fileSystemTypeToString(luks2.m_mapper.m_luksFs))) {
+                return   sendRefSigAndReturn(false) ;
+            }
+        }
+    }
+
+    return   sendRefSigAndReturn(true);
+}
+
+bool PartedCore::cryptUmount(const LUKS_INFO &luks)
+{
+    LUKS_INFO luks2 = luks;
+    if (!m_LUKSInfo.luksExists(luks2.m_devicePath) || !luks2.m_mapper.m_busy) {
+        luks2.m_cryptErr = CRYPTError::CRYPT_ERR_DEVICE_NO_EXISTS;
+        qDebug() << __FUNCTION__ << "Unmount CRYPT device error:device not exists or not mount";
+        return sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_UMNT, true, "0");
+    }
+
+    //卸载
+    if (!umontDevice(luks2.m_mapper.m_mountPoints, luks2.m_mapper.m_dmName)) {
+        qDebug() << __FUNCTION__ << "Unmount CRYPT device error:device umount error";
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_UMNT, true, "0");
+    }
+
+    //判断写入fstab文件是否成功
+    foreach (const QString &mount, luks2.m_mapper.m_mountPoints) {
+        if (!writeFstab(luks2.m_mapper.m_uuid, mount, Utils::fileSystemTypeToString(luks2.m_mapper.m_luksFs), false)) {
+            qDebug() << __FUNCTION__ << "Unmount CRYPT device error: writeFstab error";
+        }
+    }
+
+    LUKSOperator::removeMapperAndKey(m_LUKSInfo, luks2);
+    qDebug() << __FUNCTION__ << "Unmount CRYPT device end";
+    return sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_UMNT, true, "1");
+}
+
+bool PartedCore::deCrypt(const LUKS_INFO &luks)
+{
+    LUKS_INFO luks2 =  luks;
+    do {
+        if (!m_LUKSInfo.luksExists(luks.m_devicePath)) {
+            luks2.m_cryptErr = CRYPTError::CRYPT_ERR_DEVICE_NO_EXISTS;
+            break;
+        }
+        luks2.isDecrypt = m_LUKSInfo.getLUKS(luks.m_devicePath).isDecrypt;
+
+        if (!LUKSOperator::decrypt(m_LUKSInfo, luks2)) {
+            luks2.m_cryptErr = CRYPTError::CRYPT_ERR_DECRYPT_FAILED;
+            break;
+        }
+        probeDeviceInfo();
+        if (!m_LUKSInfo.luksExists(luks.m_devicePath)) {
+            luks2.m_cryptErr = CRYPTError::CRYPT_ERR_DEVICE_NO_EXISTS;
+            break;
+        }
+        luks2 = m_LUKSInfo.getLUKS(luks.m_devicePath);
+    } while (0);
+
+    //发送解密是否成功信号
+    luks2.m_decryptStr = luks.m_decryptStr;
+    emit deCryptMessage(luks2);
+    return luks2.m_cryptErr == CRYPTError::CRYPT_ERR_NORMAL;
+}
+
+bool PartedCore::updateUsb()
+{
+    qDebug() << __FUNCTION__ << "USB add update start";
+
+    //sleep(5);
+    emit usbUpdated();
+
+    autoMount();
+
+    qDebug() << __FUNCTION__ << "USB add update end";
+    return true;
+}
+
+bool PartedCore::updateUsbRemove()
+{
+    qDebug() << __FUNCTION__ << "USB add update remove";
+
+    //emit usbUpdated();
+    emit refreshDeviceInfo(DISK_SIGNAL_USBUPDATE);
+
+    autoUmount();
+
+    qDebug() << __FUNCTION__ << "USB add update end";
+    return true;
+}
+
+bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize, int flag)
+{
+    if (m_workerCheckThread == nullptr) {
+        m_workerCheckThread = new QThread();
+        m_workerCheckThread->start();
+        m_checkThread.moveToThread(m_workerCheckThread);
+//      qDebug() << QThread::currentThreadId() << 1111111111111 << endl;
+    }
+
+    m_checkThread.setStopFlag(flag);
+    if (flag == 1 || flag == 3) {
+        m_checkThread.setCountInfo(devicePath, blockStart, blockEnd, checkConut, checkSize);
+        emit checkBadBlocksRunCountStart();
+    }
+
+    return true;
+}
+
+bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int blockEnd, QString checkTime, int checkSize, int flag)
+{
+    if (m_workerCheckThread == nullptr) {
+        m_workerCheckThread = new QThread();
+        m_workerCheckThread->start();
+        m_checkThread.moveToThread(m_workerCheckThread);
+    }
+
+    m_checkThread.setStopFlag(flag);
+    if (flag == 1 || flag == 3) {
+        m_checkThread.setTimeInfo(devicePath, blockStart, blockEnd, checkTime, checkSize);
+        emit checkBadBlocksRunTimeStart();
+    }
+
+    return true;
+}
+
+bool PartedCore::fixBadBlocks(const QString &devicePath, QStringList badBlocksList, int checkSize, int flag)
+{
+    if (m_workerFixThread == nullptr) {
+        m_workerFixThread = new QThread();
+        m_workerFixThread->start();
+        m_fixthread.moveToThread(m_workerFixThread);
+    }
+
+
+    /*flag
+            1 start
+            2 stop
+            3 continue
+    */
+
+    m_fixthread.setStopFlag(flag);
+    if (flag == 1 || flag == 3) {
+        m_fixthread.setFixBadBlocksInfo(devicePath, badBlocksList, checkSize);
+        emit fixBadBlocksStart();
+    }
+
+    return true;
+}
+
+void PartedCore::refreshFunc()
+{
+    qDebug() << __FUNCTION__ << "refreshFunc start";
+    emit refreshDeviceInfo();
+    qDebug() << __FUNCTION__ << "refreshFunc end";
+}
+
+bool PartedCore::createVG(QString vgName, QList<PVData> devList, long long size)
+{
+    std::set<PVData>tmpDevList;
+    foreach (PVData pv, devList) {
+        if (!tmpDevList.insert(pv).second || !checkPVDevice(vgName, pv, true)) { //插入失败说明有重复
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
+        }
+    }
+
+    QList<PVData>list =  getCreatePVList(devList, size);
+
+    // find luks Device and Close
+    foreach (const PVData &pv, list) {
+        if (!m_LUKSInfo.luksExists(pv.m_devicePath)) {
+            continue;
+        }
+        LUKS_INFO luks = m_LUKSInfo.getLUKS(pv.m_devicePath);
+        LUKSOperator::removeMapperAndKey(m_LUKSInfo, luks);
+    }
+
+    //磁盘
+    foreach (PVData pv, list) {
+        if (pv.m_type == DEV_PARTITION) {
+            //todo 修改分区类型
+            Partition p;
+            p.m_devicePath = pv.m_devicePath;
+            p.m_fstype = FS_LVM2_PV;
+            p.m_sectorStart = pv.m_startSector;
+            p.m_sectorEnd = pv.m_endSector;
+            p.m_sectorSize = pv.m_sectorSize;
+            p.m_type = TYPE_PRIMARY;
+            setPartitionType(p);
+        }
+    }
+
+
+    if (!LVMOperator::createVG(m_lvmInfo, vgName, list, size)) {
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(m_lvmInfo.m_lvmErr));
+    }
+    return sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_VGCREATE, true, QString("1:%1").arg(m_lvmInfo.m_lvmErr));
+}
+
+bool PartedCore::deleteVG(QStringList vglist)
+{
+    bool flag = LVMOperator::deleteVG(m_lvmInfo, vglist);
+    QString str = flag ? "1:0" : QString("0:%1").arg(m_lvmInfo.m_lvmErr);
+    return sendRefSigAndReturn(flag, DISK_SIGNAL_TYPE_VGDELETE, flag, str);
+}
+
+bool PartedCore::createLV(QString vgName, QList<LVAction> lvList)
+{
+    foreach (const LVAction &clv, lvList) {
+        if (!supportedFileSystem(clv.m_lvFs)) { //判断文件系统是否支持
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CREATE_FAILED, false, QString("%1:%2:%3")
+                                       .arg("LVMError").arg(LVMError::LVM_ERR_LV_ARGUMENT).arg("unknow"));
+        }
+    }
+
+    //创建lv 失败返回false
+    if (!LVMOperator::createLV(m_lvmInfo, vgName, lvList)) {
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CREATE_FAILED, false, QString("%1:%2:%3")
+                                   .arg("LVMError").arg(LVMError::LVM_ERR_LV_CREATE_FAILED).arg("unknow"));
+    }
+
+    //获取新创建lv列表
+    QVector<LVInfo>lvVec;
+    QVector<LVAction>lvVecActDecrypt;
+    QVector<LVInfo>lvVecDecrypt;
+    VGInfo vg = m_lvmInfo.getVG(vgName);
+    foreach (const LVAction &clv, lvList) {
+        if (!vg.lvInfoExists(clv.m_lvName)) {
+            continue;
+        }
+
+        LVInfo lv = vg.getLVinfo(clv.m_lvName);
+        lv.m_lvFsType = clv.m_lvFs;
+        if (clv.m_luksFlag == LUKSFlag::NOT_CRYPT_LUKS) {
+            lvVec.push_back(lv);
+        } else {
+            lvVecDecrypt.push_back(lv);
+            lvVecActDecrypt.push_back(clv);
+        }
+    }
+
+    QString userName = lvList.begin()->m_user;
+    if (userName.trimmed().isEmpty()) {
+        return sendRefSigAndReturn(false);
+    }
+
+    foreach (const LVInfo &lvInfo, lvVec) {
+        if (lvInfo.m_lvUuid.trimmed().isEmpty()) {
+            return sendRefSigAndReturn(false);
+        }
+        //创建文件系统
+        QString lvPath =  QString("/dev/%1/%2").arg(lvInfo.m_vgName).arg(lvInfo.m_lvName);
+        if (!createFileSystem(lvInfo.m_lvFsType, lvInfo.m_busy, lvPath)) {
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CREATE_FAILED, false, QString("%1:%2:%3")
+                                       .arg("LVMError").arg(LVMError::LVM_ERR_LV_CREATE_FS_FAILED).arg(lvPath));
+        }
+        //自动挂载 获取挂载文件夹名字
+        QString mountPath = getTmpMountPath(userName, lvInfo.m_fileSystemLabel, lvInfo.m_lvUuid, lvInfo.m_lvPath);
+        if (!tmpMountDevice(mountPath, lvInfo.m_lvPath, lvInfo.m_lvFsType, userName).first) {
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CREATE_FAILED, false, QString("%1:%2:%3")
+                                       .arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_MOUNT_FAILED).arg(lvPath));
+        }
+    }
+
+    //新建加密
+    foreach (const LVAction &lv, lvVecActDecrypt) {
+        LUKS_INFO info = getNewLUKSInfo(lv);
+        //加密失败
+        if (!LUKSOperator::encrypt(m_LUKSInfo, info)) {
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CREATE_FAILED, false, QString("%1:%2:%3")
+                                       .arg("CRYPTError").arg(CRYPTError::CRYPT_ERR_ENCRYPT_FAILED).arg(info.m_devicePath));
+        }
+
+        //解密失败
+        if (!LUKSOperator::decrypt(m_LUKSInfo, info)) {
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CREATE_FAILED, false, QString("%1:%2:%3").arg("CRYPTError")
+                                       .arg(CRYPTError::CRYPT_ERR_DECRYPT_FAILED).arg(info.m_devicePath));
+
+        }
+        //创建文件系统失败
+        if (!createFileSystem(info.m_mapper.m_luksFs, info.m_mapper.m_busy, info.m_mapper.m_dmPath, info.m_mapper.m_fileSystemLabel)) {
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CREATE_FAILED, false, QString("%1:%2:%3")
+                                       .arg("LVMError").arg(LVMError::LVM_ERR_LV_CREATE_FS_FAILED).arg(info.m_devicePath));
+        }
+    }
+
+    probeDeviceInfo();
+    foreach (const LVInfo &lv, lvVecDecrypt) {
+        LUKS_INFO info = m_LUKSInfo.getLUKS(lv.m_lvPath);
+        //自动挂载 获取挂载文件夹名字
+        QString mountPath = getTmpMountPath(userName, info.m_mapper.m_fileSystemLabel, info.m_mapper.m_uuid, info.m_mapper.m_dmPath);
+        auto pair = tmpMountDevice(mountPath, info.m_mapper.m_dmPath, info.m_mapper.m_luksFs, userName);
+        if (!pair.first) {
+            return sendRefSigAndReturn(pair.first, DISK_SIGNAL_TYPE_CREATE_FAILED, pair.first, pair.second);
+        }
+    }
+    return sendRefSigAndReturn(true);
+}
+
+bool PartedCore::deleteLV(QStringList lvlist)
+{
+    // find luks Device and Close
+    foreach (const QString &str, lvlist) {
+        if (!m_LUKSInfo.luksExists(str)) {
+            continue;
+        }
+        LUKS_INFO luks = m_LUKSInfo.getLUKS(str);
+        LUKSOperator::removeMapperAndKey(m_LUKSInfo, luks);
+    }
+
+    bool flag = LVMOperator::lvRemove(m_lvmInfo, lvlist);
+    QString str = flag ? "1:0" : QString("0:%1").arg(m_lvmInfo.m_lvmErr);
+    return sendRefSigAndReturn(flag, DISK_SIGNAL_TYPE_LVDELETE, flag, str);
+}
+
+bool PartedCore::resizeVG(QString vgName, QList<PVData> devList, long long size)
+{
+    std::set<PVData>tmpDevList;
+    foreach (PVData pv, devList) {
+        if (!tmpDevList.insert(pv).second || !checkPVDevice(vgName, pv, false)) { //插入失败说明有重复
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
+        }
+    }
+
+    if (m_workerLVMThread == nullptr) {
+        m_workerLVMThread = new QThread();
+        m_workerLVMThread->start();
+        m_lvmThread.moveToThread(m_workerLVMThread);
+    }
+
+    QList<PVData>list =  getResizePVList(vgName, devList, size);
+
+
+    // find luks Device and Close
+    foreach (const PVData &pv, list) {
+        if (!m_LUKSInfo.luksExists(pv.m_devicePath)) {
+            continue;
+        }
+        LUKS_INFO luks = m_LUKSInfo.getLUKS(pv.m_devicePath);
+        LUKSOperator::removeMapperAndKey(m_LUKSInfo, luks);
+    }
+
+    //磁盘
+    foreach (PVData pv, list) {
+        if (pv.m_type == DEV_PARTITION) {
+            //todo 修改分区类型
+            Partition p;
+            p.m_devicePath = pv.m_devicePath;
+            p.m_fstype = FS_LVM2_PV;
+            p.m_sectorStart = pv.m_startSector;
+            p.m_sectorEnd = pv.m_endSector;
+            p.m_sectorSize = pv.m_sectorSize;
+            p.m_type = TYPE_PRIMARY;
+            setPartitionType(p);
+        }
+    }
+
+    if (list.size() <= 0) {
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVMError::LVM_ERR_VG_ARGUMENT));
+    }
+
+    //线程启动信号
+    emit resizeVGStart(m_lvmInfo, vgName, list, size);
+    return true;
+}
+
+bool PartedCore::resizeLV(LVAction &lvAct)
+{
+    //lv是否存在
+    if (! m_lvmInfo.lvInfoExists(lvAct.m_vgName, lvAct.m_lvName)) {
+        return sendRefSigAndReturn(false);
+    }
+
+    //执行动作是否为扩大或缩小
+    if (!(lvAct.m_lvAct == LVM_ACT_LV_EXTEND || lvAct.m_lvAct == LVM_ACT_LV_REDUCE)) {
+        return sendRefSigAndReturn(false);
+    }
+
+    //调整大小是否小于文件系统最小值 或者等于当前大小
+    LVInfo info = m_lvmInfo.getLVInfo(lvAct.m_vgName, lvAct.m_lvName);
+    if (lvAct.m_lvByteSize < info.m_fsLimits.min_size || lvAct.m_lvByteSize == (info.m_lvLECount * info.m_LESize)) {
+        return sendRefSigAndReturn(false);
+    }
+
+    if (lvAct.m_lvAct == LVM_ACT_LV_REDUCE) { //缩小
+        //自动卸载
+        if (!umontDevice(info.m_mountPoints, info.toMapperPath())) {
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_UMNT, true, "0");
+        }
+    }
+
+    //调整lv大小
+    if (!LVMOperator::resizeLV(m_lvmInfo, lvAct, info)) {
+        return sendRefSigAndReturn(false);
+    }
+
+    if (lvAct.m_lvAct == LVM_ACT_LV_REDUCE && info.m_mountPoints.size() >= 1) {
+        //调整lv大小
+        if (!mountDevice(info.m_mountPoints[0], info.m_lvPath, info.m_lvFsType)) {
+            return sendRefSigAndReturn(false);
+        }
+    }
+
+    return sendRefSigAndReturn(true);
+}
+
+bool PartedCore::mountLV(const LVAction &lvAction)
+{
+    //判断lv是否存在 不存在退出
+    qDebug() << __FUNCTION__ << "mount LV start";
+    if (lvAction.m_lvAct != LVM_ACT_LV_MOUNT || !m_lvmInfo.lvInfoExists(lvAction.m_vgName, lvAction.m_lvName)) {
+        qDebug() << __FUNCTION__ << "mount LV error:lv not exists or lvact not  LVM_ACT_LV_MOUNT";
+        return sendRefSigAndReturn(false);
+    }
+
+    //永久挂载
+    LVInfo lv = m_lvmInfo.getLVInfo(lvAction.m_vgName, lvAction.m_lvName);
+    QString type = Utils::fileSystemTypeToString(lv.m_lvFsType);
+    if (!mountDevice(lvAction.m_mountPoint, lv.m_lvPath, lv.m_lvFsType)) {
+        return sendRefSigAndReturn(false);
+    }
+    return   sendRefSigAndReturn(writeFstab(lv.m_mountUuid, lvAction.m_mountPoint, type, true));
+}
+
+bool PartedCore::umountLV(const LVAction &lvAction)
+{
+    //判断lv是否存在 不存在退出
+    qDebug() << __FUNCTION__ << "Unmount LV start";
+    if (lvAction.m_lvAct != LVM_ACT_LV_UMOUNT || !m_lvmInfo.lvInfoExists(lvAction.m_vgName, lvAction.m_lvName)) {
+        qDebug() << __FUNCTION__ << "Unmount LV error:lv not exists or lvact not  LVM_ACT_LV_UMOUNT";
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_UMNT, true, "0");
+    }
+    //卸载
+    LVInfo lv = m_lvmInfo.getLVInfo(lvAction.m_vgName, lvAction.m_lvName);
+    if (!umontDevice(lv.m_mountPoints, lv.toMapperPath())) {
+        qDebug() << __FUNCTION__ << "Unmount LV error:lv umount error";
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_UMNT, true, "0");
+    }
+    //修改fstab
+    writeFstab(lv.m_mountUuid, "", Utils::fileSystemTypeToString(lv.m_lvFsType), false);
+    qDebug() << __FUNCTION__ << "Unmount LV end";
+    return sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_UMNT, true, "1");
+}
+
+bool PartedCore::clearLV(const LVAction &lvAction)
+{
+    qDebug() << __FUNCTION__ << "clearLV LV start";
+
+    // 判断act是否正确 lv是否存在
+    if (!(lvAction.m_lvAct == LVM_ACT_LV_FAST_CLEAR || lvAction.m_lvAct == LVM_ACT_LV_SECURE_CLEAR)
+            || !m_lvmInfo.lvInfoExists(lvAction.m_vgName, lvAction.m_lvName)) {
+        qDebug() << __FUNCTION__ << "clearLV LV error:lv not exists or lvact not  LVM_ACT_LV_FAST_CLEAR or LVM_ACT_LV_SECURE_CLEAR";
+        QString str = QString("%1:%2:%3").arg("LVMError").arg(LVMError::LVM_ERR_LV_ARGUMENT).arg(lvAction.m_lvName);
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, str);
+    }
+
+    //判断需要创建的文件系统是否符合
+    bool success = (lvAction.m_lvFs == FS_NTFS || lvAction.m_lvFs == FS_FAT16
+                    || lvAction.m_lvFs == FS_FAT32 || lvAction.m_lvFs == FS_EXT2
+                    || lvAction.m_lvFs == FS_EXT3 || lvAction.m_lvFs == FS_EXT4);
+    LVInfo lv = m_lvmInfo.getLVInfo(lvAction.m_vgName, lvAction.m_lvName);
+    if (lv.m_busy || !success) { //被挂载 or 文件系统不支持 退出
+        QString str = QString("%1:%2:%3").arg("LVMError").arg(LVMError::LVM_ERR_LV_ARGUMENT).arg(lvAction.m_lvName);
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, str);
+    }
+
+
+    //关闭加密磁盘
+    if (m_LUKSInfo.luksExists(lv.m_lvPath)) {
+        LUKS_INFO info = m_LUKSInfo.getLUKS(lv.m_lvPath);
+        success = LUKSOperator::removeMapperAndKey(m_LUKSInfo, info);
+    }
+
+    if (!success) {
+        QString str = QString("%1:%2:%3").arg("CRYPTError").arg(CRYPTError::CRYPT_ERR_CLOSE_FAILED).arg(lv.m_lvPath);
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, str);
+    }
+
+
+    //获取文件系统类型
+    QString type = Utils::getFileSystemSoftWare(lvAction.m_lvFs);
+    switch (lvAction.m_lvAct) {
+    case LVM_ACT_LV_SECURE_CLEAR:
+        //清除算法
+        secuClear(lv.m_lvPath, 0, lv.m_lvLECount - 1, lv.m_LESize, type); //不要加break 如果是安全清除 还是需要创建文件系统的
+    case LVM_ACT_LV_FAST_CLEAR: {
+        QString tmpPath = QString("/dev/%1/%2").arg(lvAction.m_vgName).arg(lvAction.m_lvName);
+        //判断是否加密
+        if (lvAction.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            LUKS_INFO info = getNewLUKSInfo(lvAction);
+            //加密失败
+            if (!LUKSOperator::encrypt(m_LUKSInfo, info)) {
+                QString str = QString("%1:%2:%3").arg("CRYPTError").arg(CRYPTError::CRYPT_ERR_DECRYPT_FAILED).arg(lv.m_lvPath);
+                return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, str);
+            }
+            //解密失败
+            if (!LUKSOperator::decrypt(m_LUKSInfo, info)) {
+                QString str = QString("%1:%2:%3").arg("CRYPTError").arg(CRYPTError::CRYPT_ERR_DECRYPT_FAILED).arg(lv.m_lvPath);
+                return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, str);
+            }
+            tmpPath = info.m_mapper.m_dmPath;
+        }
+
+        //创建文件系统
+        if (!createFileSystem(lvAction.m_lvFs, false, tmpPath)) {
+            QString str = QString("%1:%2:%3").arg("LVMError").arg(LVMError::LVM_ERR_LV_CREATE_FS_FAILED).arg(lv.m_lvPath);
+            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, str);
+        }
+        break;
+    }
+    default:
+        QString str = QString("%1:%2:%3").arg("LVMError").arg(LVMError::LVM_ERR_LV_ARGUMENT).arg(lv.m_lvPath);
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, str);
+    }
+
+    QString mountPath, devPath;
+    //判断是否加密
+    if (lvAction.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+        probeDeviceInfo();
+        LUKS_INFO info = m_LUKSInfo.getLUKS(lv.m_lvPath);
+        //自动挂载 获取挂载文件夹名字
+        mountPath = getTmpMountPath(lvAction.m_user, info.m_mapper.m_fileSystemLabel, info.m_mapper.m_uuid, info.m_mapper.m_dmPath);
+        devPath = info.m_mapper.m_dmPath;
+    } else {
+        mountPath = getTmpMountPath(lvAction.m_user, lv.m_fileSystemLabel, lv.m_lvUuid, lv.m_lvPath);
+        devPath = lv.m_lvPath;
+    }
+    QPair<bool, QString>pair = tmpMountDevice(mountPath, devPath, lvAction.m_lvFs, lvAction.m_user);
+    qDebug() << __FUNCTION__ << "clearLV LV end";
+    return sendRefSigAndReturn(pair.first, DISK_SIGNAL_TYPE_CLEAR, pair.first, pair.second);
+}
+
+bool PartedCore::deletePVList(QList<PVData> devList)
+{
+    if (m_workerLVMThread == nullptr) {
+        m_workerLVMThread = new QThread();
+        m_workerLVMThread->start();
+        m_lvmThread.moveToThread(m_workerLVMThread);
+    }
+
+    //线程启动信号
+    emit deletePVListStart(m_lvmInfo, devList);
+    return true;
+}
+
+int PartedCore::test()
+{
+    return 1;
+}
+
+/***********************************************public****************************************************************/
+void PartedCore::setDeviceFromDisk(Device &device, const QString &devicePath)
+{
+    PedDevice *lpDevice = nullptr;
+    PedDisk *lpDisk = nullptr;
+    if (getDevice(devicePath, lpDevice, true)) {
+        device.m_heads = lpDevice->bios_geom.heads;
+        device.m_length = lpDevice->length;
+        device.m_path = devicePath;
+        device.m_model = lpDevice->model;
+        device.m_sectorSize = lpDevice->sector_size;
+        device.m_sectors = lpDevice->bios_geom.sectors;
+        device.m_cylinders = lpDevice->bios_geom.cylinders;
+        device.m_cylsize = device.m_heads * device.m_sectors;
+        setDeviceSerialNumber(device);
+        if (device.m_cylsize < (MEBIBYTE / device.m_sectorSize))
+            device.m_cylsize = MEBIBYTE / device.m_sectorSize;
+
+        FSType fstype = detectFilesystem(lpDevice, nullptr);
+        if (fstype != FSType::FS_UNKNOWN) {
+            device.m_diskType = "none";
+            device.m_maxPrims = 1;
+            setDeviceOnePartition(device, lpDevice, fstype);
+        } else if (getDisk(lpDevice, lpDisk, false)) {
+            // Partitioned drive (excluding "loop"), as recognised by libparted
+            if (lpDisk && lpDisk->type && lpDisk->type->name && strcmp(lpDisk->type->name, "loop") != 0) {
+                device.m_diskType = lpDisk->type->name;
+                device.m_maxPrims = ped_disk_get_max_primary_partition_count(lpDisk);
+
+                // Determine if partition naming is supported.
+                if (ped_disk_type_check_feature(lpDisk->type, PED_DISK_TYPE_PARTITION_NAME)) {
+                    device.enablePartitionNaming(Utils::getMaxPartitionNameLength(device.m_diskType));
+                }
+
+                setDevicePartitions(device, lpDevice, lpDisk);
+
+                if (device.m_highestBusy) {
+                    device.m_readonly = !commitToOs(lpDisk);
+                }
+            }
+            // Drive just containing libparted "loop" signature and nothing
+            // else.  (Actually any drive reported by libparted as "loop" but
+            // not recognised by blkid on the whole disk device).
+            else if (lpDisk && lpDisk->type && strcmp(lpDisk->type->name, "loop") == 0) {
+//            else if (lpDisk && lpDisk->type && lpDisk->type->name && strcmp(lpDisk->type->name, "loop") == 0) {
+                device.m_diskType = lpDisk->type->name; //赋值
+                device.m_maxPrims = 1; //赋值
+
+                // Create virtual partition covering the whole disk device
+                // with unknown contents.
+                Partition *partition_temp = new Partition();
+                partition_temp->setUnpartitioned(device.m_path,
+                                                 lpDevice->path,
+                                                 FS_UNKNOWN,
+                                                 device.m_length,
+                                                 device.m_sectorSize,
+                                                 false);
+                // Place unknown file system message in this partition.
+                device.m_partitions.push_back(partition_temp);
+            }
+            // Unrecognised, unpartitioned drive.
+            else {
+                device.m_diskType = "unrecognized";
+                device.m_maxPrims = 1;
+
+                Partition *partition_temp = new Partition();
+                partition_temp->setUnpartitioned(device.m_path,
+                                                 "", // Overridden with "unallocated"
+                                                 FS_UNALLOCATED,
+                                                 device.m_length,
+                                                 device.m_sectorSize,
+                                                 false);
+                device.m_partitions.push_back(partition_temp);
+            }
+        }
+        destroyDeviceAndDisk(lpDevice, lpDisk);
+    }
+}
+
+bool PartedCore::useableDevice(const PedDevice *lpDevice)
+{
+    Q_ASSERT(nullptr != lpDevice);
+    char *buf = static_cast<char *>(malloc(lpDevice->sector_size));
+    if (!buf)
+        return false;
+
+    // Must be able to read from the first sector before the disk device is considered
+    // useable in GParted.
+    bool success = false;
+    int fd = open(lpDevice->path, O_RDONLY | O_NONBLOCK);
+    if (fd >= 0) {
+        ssize_t bytesRead = read(fd, buf, lpDevice->sector_size);
+        success = (bytesRead == lpDevice->sector_size);
+        close(fd);
+    }
+    free(buf);
+    return success;
+}
+
+bool PartedCore::delTempMountFile()
+{
+    QDir dir("/media");
+    QDir userPath;
+    if (!dir.exists()) {
+        return false;
+    }
+    QStringList mountPath;
+    for (int i = 2 ; i < dir.count(); i++) {
+        userPath.setPath(QString("/media/%1").arg(dir[i]));
+        for (int j = 2; j < userPath.count(); j++) {
+            mountPath.append(QString("/media/%1/%2").arg(dir[i]).arg(userPath[j]));
+        }
+    }
+    QMap<QString, Device>::iterator it = m_deviceMap.begin();
+    for (; it != m_deviceMap.end() ; it++) {
+        for (int i = 0; i < it->m_partitions.size(); i++) {
+            if (mountPath.contains(it->m_partitions[i]->getMountPoint())) {
+                mountPath.removeOne(it->m_partitions[i]->getMountPoint());
+            }
+        }
+    }
+
+    QDir d;
+    char value[1024] = {0};
+    for (int i = 0; i < mountPath.size(); i++) {
+        getxattr(mountPath[i].toStdString().c_str(), "user.deepin-diskmanager", value, 1024);
+        if (QString(value) == "deepin-diskmanager") {
+            d.rmdir(mountPath[i]);
+        }
+    }
+    return true;
+}
+
+/***********************************************private general****************************************************************/
 void PartedCore::initConnection()
 {
     connect(this, &PartedCore::refreshDeviceInfo, this, &PartedCore::onRefreshDeviceInfo);
-    connect(&m_probeThread, &ProbeThread::updateDeviceInfo, this, &PartedCore::syncDeviceInfo);
-    connect(&m_probeThread, &ProbeThread::unmountPartition, this, &PartedCore::unmountPartition);
-    connect(&m_probeThread, &ProbeThread::deletePartitionMessage, this, &PartedCore::deletePartitionMessage);
-    connect(&m_probeThread, &ProbeThread::showPartitionInfo, this, &PartedCore::showPartitionInfo);
-    connect(&m_probeThread, &ProbeThread::createTableMessage, this, &PartedCore::createTableMessage);
-    connect(&m_probeThread, &ProbeThread::usbUpdated, this, &PartedCore::usbUpdated);
-    connect(&m_probeThread, &ProbeThread::clearPartitionMessage, this, &PartedCore::clearMessage);
-    connect(&m_probeThread, &ProbeThread::vgCreateMessage, this, &PartedCore::vgCreateMessage);
-    connect(&m_probeThread, &ProbeThread::pvDeleteMessage, this, &PartedCore::pvDeleteMessage);
-    connect(&m_probeThread, &ProbeThread::vgDeleteMessage, this, &PartedCore::vgDeleteMessage);
-    connect(&m_probeThread, &ProbeThread::lvDeleteMessage, this, &PartedCore::lvDeleteMessage);
     connect(this, &PartedCore::probeAllInfo, &m_probeThread, &ProbeThread::probeDeviceInfo);
-
-    //connect(&m_probeThread, &ProbeThread::updateDeviceInfo, this, &PartedCore::updateDeviceInfo);
-    connect(&m_checkThread, &WorkThread::checkBadBlocksInfo, this, &PartedCore::checkBadBlocksCountInfo);
-    connect(&m_checkThread, &WorkThread::checkBadBlocksFinished, this, &PartedCore::checkBadBlocksFinished);
-    connect(&m_fixthread, &FixThread::fixBadBlocksInfo, this, &PartedCore::fixBadBlocksInfo);
-    connect(&m_fixthread, &FixThread::fixBadBlocksFinished, this, &PartedCore::fixBadBlocksFinished);
-
+    connect(&m_probeThread, &ProbeThread::updateDeviceInfo, this, &PartedCore::syncDeviceInfo);
 
     connect(this, &PartedCore::checkBadBlocksRunCountStart, &m_checkThread, &WorkThread::runCount);
     connect(this, &PartedCore::checkBadBlocksRunTimeStart, &m_checkThread, &WorkThread::runTime);
+    connect(&m_checkThread, &WorkThread::checkBadBlocksInfo, this, &PartedCore::checkBadBlocksCountInfo);
+    connect(&m_checkThread, &WorkThread::checkBadBlocksFinished, this, &PartedCore::checkBadBlocksFinished);
+
+    connect(&m_fixthread, &FixThread::fixBadBlocksInfo, this, &PartedCore::fixBadBlocksInfo);
+    connect(&m_fixthread, &FixThread::fixBadBlocksFinished, this, &PartedCore::fixBadBlocksFinished);
     connect(this, &PartedCore::fixBadBlocksStart, &m_fixthread, &FixThread::runFix);
 
     connect(this, &PartedCore::deletePVListStart, &m_lvmThread, &LVMThread::deletePVList);
     connect(this, &PartedCore::resizeVGStart, &m_lvmThread, &LVMThread::resizeVG);
-
     connect(&m_lvmThread, &LVMThread::deletePVListFinished, this, &PartedCore::deletePVListMessage);
     connect(&m_lvmThread, &LVMThread::resizeVGFinished, this, &PartedCore::resizeVGMessage);
-
 }
 
 void PartedCore::findSupportedCore()
@@ -170,184 +1814,162 @@ void PartedCore::findSupportedCore()
     hdparmFound = !Utils::findProgramInPath("hdparm").isEmpty();
 }
 
-bool PartedCore::supportedFileSystem(FSType fstype)
+void PartedCore::setDeviceSerialNumber(Device &device)
 {
-    if (nullptr == m_supportedFileSystems) {
-        m_supportedFileSystems = new SupportedFileSystems();
-        //Determine file system support capabilities for the first time
-        m_supportedFileSystems->findSupportedFilesystems();
+    if (!hdparmFound)
+        // Serial number left blank when the hdparm command is not installed.
+        return;
+
+    QString output, error;
+    Utils::executCmd(QString("hdparm -I %1").arg(device.m_path), output, error);
+    if (error.isEmpty()) {
+        // hdparm reported an error message to stderr.  Assume it's a device
+        // without a hard drive serial number.
+        //
+        // Using hdparm -I to query Linux software RAID arrays and BIOS fake RAID
+        // arrays, both devices without their own hard drive serial numbers,
+        // produce this error:
+        //     HDIO_DRIVE_CMD(identify) failed: Inappropriate ioctl for device
+        //
+        // And querying USB flash drives, also a device type without their own
+        // hard drive serial numbers, generates this error:
+        //     SG_IO: bad/missing sense data, sb[]:  70 00 05 00 00 00 00 0a ...
+        device.m_serialNumber = "none";
+    } else {
+        QString serialNumber = Utils::regexpLabel(output, "(?<=Serial Number:).*(?=\n)").trimmed();
+        if (!serialNumber.isEmpty())
+            device.m_serialNumber = serialNumber;
     }
-    return m_supportedFileSystems->getFsObject(fstype) != nullptr;
+    // Otherwise serial number left blank when not found in the hdparm output.
 }
 
-const FS &PartedCore::getFileSystem(FSType fstype) const
+int PartedCore::getPartitionHiddenFlag()
 {
-    if (nullptr == m_supportedFileSystems) {
-        m_supportedFileSystems = new SupportedFileSystems();
-        //Determine file system support capabilities for the first time
-        m_supportedFileSystems->findSupportedFilesystems();
+    qDebug() << __FUNCTION__ << "Get Partition Hidden Flag start";
+
+    m_hiddenPartition.clear();
+    QFile file("/etc/udev/rules.d/80-udisks2.rules");
+    QStringList list;
+
+    if (!file.open(QIODevice::ReadOnly)) { //打开指定文件
+        qDebug() << __FUNCTION__ << "Permanent mount open file error";
+        file.close();
+        return -1;
+    } else {
+        m_hiddenPartition = file.readAll();
+//        qDebug() << m_hiddenPartition;
     }
-    return m_supportedFileSystems->getFsSupport(fstype);
+    file.close();
+    qDebug() << __FUNCTION__ << "Get Partition Hidden Flag end";
+    return 0;
 }
 
-FileSystem *PartedCore::getFileSystemObject(FSType fstype)
+bool PartedCore::gptIsExpanded(const QString &devicePath)
 {
-    if (nullptr == m_supportedFileSystems) {
-        m_supportedFileSystems = new SupportedFileSystems();
-        //Determine file system support capabilities for the first time
-        m_supportedFileSystems->findSupportedFilesystems();
+    qDebug() << __FUNCTION__ << "gptIsExpanded called";
+
+    /* GPT 与 MBR 分区格式的介绍可以参考下面的链接：
+     * https://www.cnblogs.com/cwcheng/p/11270774.html
+     * 简单来说，如果MBR内容中，偏移量为0x1c2处的字节内容为 0xee,则表示当前磁盘采用GPT分区表。
+    */
+    int offset = 0x1c2;
+    uint8_t phdr[1024] = {0};
+
+    int fd = ::open(devicePath.toLatin1().data(), O_RDONLY);
+    if (fd < 0) {
+        return false;
     }
-    return m_supportedFileSystems->getFsObject(fstype);
+
+    int ret = ::read(fd, phdr, 1024);
+    ::close(fd);
+    if (ret < 0) {
+        return false;
+    }
+
+    if (0xee == phdr[offset]) {
+        gpt_header_t *gpt = (gpt_header_t *)(phdr + 512);
+
+        for (auto it = m_deviceMap.begin(); it != m_deviceMap.end(); it++) {
+            if (it.key() == devicePath) {
+                Device dev = it.value();
+                qDebug() << __FUNCTION__ << " CHEN Enum device : \t " << dev.m_length << " " << dev.m_sectors << " " << dev.m_heads;
+                if (gpt->alternative_lba != (dev.m_length - 1)) {
+                    return true;
+                }
+            }
+        }
+
+    }
+    return false;
 }
 
-//bool PartedCore::filesystem_resize_disallowed(const Partition &partition)
-//{
-//    if (partition.fstype == FS_LVM2_PV) {
-//        //        //The LVM2 PV can't be resized when it's a member of an export VG
-//        //        QString vgname = LVM2_PV_Info::get_vg_name(partition.getPath());
-//        //        if (vgname .isEmpty())
-//        //            return false ;
-//        //        return LVM2_PV_Info::is_vg_exported(vgname);
-//    }
-//    return false;
-//}
-
-void PartedCore::insertUnallocated(const QString &devicePath, QVector<Partition *> &partitions, Sector start, Sector end, Byte_Value sectorSize, bool insideExtended)
+void PartedCore::autoMount()
 {
-    //if there are no partitions at all..
-    if (partitions.empty()) {
-        Partition *partitionTemp = new Partition();
-        partitionTemp->setUnallocated(devicePath, start, end, sectorSize, insideExtended);
-        partitions.push_back(partitionTemp);
+    //因为永久挂载的原因需要先执行mount -a让系统文件挂载生效
+    qDebug() << __FUNCTION__ << "solt automount start";
+    QString output, errstr;
+    QString cmd = QString("mount -a");
+    int exitcode = Utils::executCmd(cmd, output, errstr);
+
+    if (exitcode != 0) {
+//        qDebug() << __FUNCTION__ << output;
+    }
+
+    emit refreshDeviceInfo(DISK_SIGNAL_TYPE_AUTOMNT);
+
+    qDebug() << __FUNCTION__ << "solt automount end";
+}
+
+void PartedCore::autoUmount()
+{
+    qDebug() << __FUNCTION__ << "autoUmount start";
+    QStringList deviceList;
+
+    for (auto it = m_inforesult.begin(); it != m_inforesult.end(); it++) {
+        deviceList << it.key();
+    }
+    QString outPut, error;
+    QString cmd = QString("df");
+    int ret = Utils::executCmd(cmd, outPut, error);
+    if (ret != 0) {
+        qDebug() << __FUNCTION__ << "Detection Partition Table Error order error";
         return;
     }
-
-    //start <---> first partition start
-    if ((partitions.front()->m_sectorStart - start) > (MEBIBYTE / sectorSize)) {
-        Sector tempEnd = partitions.front()->m_sectorStart - 1;
-        Partition *partitionTemp = new Partition();
-        partitionTemp->setUnallocated(devicePath, start, tempEnd, sectorSize, insideExtended);
-        partitions.insert(partitions.begin(), partitionTemp);
-    }
-
-    //look for gaps in between
-    for (int t = 0; t < partitions.size() - 1; t++) {
-        if (((partitions.at(t + 1)->m_sectorStart - partitions.at(t)->m_sectorEnd - 1) > (MEBIBYTE / sectorSize))
-                || ((partitions.at(t + 1)->m_type != TYPE_LOGICAL) // Only show exactly 1 MiB if following partition is not logical.
-                    && ((partitions.at(t + 1)->m_sectorStart - partitions.at(t)->m_sectorEnd - 1) == (MEBIBYTE / sectorSize)))) {
-            Sector tempStart = partitions.at(t)->m_sectorEnd + 1;
-            Sector tempEnd = partitions.at(t + 1)->m_sectorStart - 1;
-            Partition *partitionTemp = new Partition();
-            partitionTemp->setUnallocated(devicePath, tempStart, tempEnd,
-                                          sectorSize, insideExtended);
-            partitions.insert(partitions.begin() + (++t), partitionTemp);
-            // partitions.insert_adopt(partitions.begin() + ++t, partition_temp);
-        }
-    }
-//    partitions.back();
-    //last partition end <---> end
-    if ((end - partitions.back()->m_sectorEnd) >= (MEBIBYTE / sectorSize)) {
-        Sector tempStart = partitions.back()->m_sectorEnd + 1;
-        Partition *partitionTemp = new Partition();
-        partitionTemp->setUnallocated(devicePath, tempStart, end, sectorSize, insideExtended);
-        partitions.push_back(partitionTemp);
-    }
-}
-
-void PartedCore::setFlags(Partition &partition, PedPartition *lpPartition)
-{
-    for (int t = 0; t < m_flags.size(); t++) {
-        if (ped_partition_is_flag_available(lpPartition, m_flags[t]) && ped_partition_get_flag(lpPartition, m_flags[t]))
-            partition.m_flags.push_back(ped_partition_flag_get_name(m_flags[t]));
-    }
-}
-
-FS_Limits PartedCore::getFileSystemLimits(FSType fstype, const Partition &partition)
-{
-    if (nullptr == m_supportedFileSystems) {
-        m_supportedFileSystems = new SupportedFileSystems();
-        //Determine file system support capabilities for the first time
-        m_supportedFileSystems->findSupportedFilesystems();
-    }
-    FileSystem *pFileSystem = m_supportedFileSystems->getFsObject(fstype);
-    FS_Limits fsLimits;
-    if (pFileSystem != nullptr)
-        fsLimits = pFileSystem->getFilesystemLimits(partition);
-    return fsLimits;
-}
-
-bool PartedCore::secuClear(const QString &path, const Sector &start, const Sector &end, const Byte_Value &size, const QString &fstype, const QString &name, const int &count)
-{
-    QString cmd, output, error;
-    int exitCode = 0;
-    long long allSecSize = (end - start + 1) * size;
-    long long tmpSize  = allSecSize % (MEBIBYTE * 512);
-    long long tempEnd = (end - start + 1) * size / (MEBIBYTE * 512); //磁盘中存在多少个512M
-    struct stat fileStat;
-
-
-    //清除末尾残留
-    for (int i = 0; i < count; ++i) {
-        int j = 0;
-        while (j < tempEnd) {
-            //判断是否为块设备
-            stat(path.toStdString().c_str(), &fileStat);
-            if (!S_ISBLK(fileStat.st_mode)) {
-                qDebug() << __FUNCTION__ << QString("%1 file not exit").arg(path);
-                return false;
-            }
-            cmd = QString("dd if=/dev/zero of=%1 bs=512M count=1 seek=%2 conv=nocreat").arg(path).arg(j);
-            exitCode = Utils::executCmd(cmd, output, error);
-            if (exitCode != 0) {
-                qDebug() << __FUNCTION__ << QString("errorCode: %1,   error: %2 ").arg(exitCode).arg(error);
-                return false;
-            }
-
-            j++;
-
-            if (j >= tempEnd) {
-                break;
-            }
-
-            qDebug() << __FUNCTION__ << QString("count size:%1M      current size:%2M").arg(end - 1 * size / 1024 / 1024).arg(j * MEBIBYTE * 512);
-            qDebug() << __FUNCTION__ << QString("count num:%1       current num:%2").arg(tempEnd).arg(j);
-
-            cmd = QString("dd if=/dev/urandom of=%1 bs=512M count=1 seek=%2 conv=nocreat").arg(path).arg(j);
-            exitCode = Utils::executCmd(cmd, output, error);
-
-            if (exitCode != 0 && j < tempEnd) {
-                qDebug() << __FUNCTION__ << QString("errorCode: %1,   error: %2 ").arg(exitCode).arg(error);
-                return false;
-            }
-            j++;
-            if (j >= tempEnd) {
-                break;
-            }
-
-            qDebug() << __FUNCTION__ << QString("count size:%1M      current size:%2M").arg(end - 1 * size / 1024 / 1024).arg(j * MEBIBYTE * 512);
-            qDebug() << __FUNCTION__ << QString("count num:%1       current num:%2").arg(tempEnd).arg(j);
-        }
-
-        //清除末尾残留
-        if (tmpSize > 0) {
-            stat(path.toStdString().c_str(), &fileStat);
-            if (!S_ISBLK(fileStat.st_mode)) {
-                qDebug() << __FUNCTION__ << QString("%1 file not exit").arg(path);
-                return false;
-            }
-
-            cmd = QString("dd if=/dev/zero of=%1 bs=%2 count=1 seek=%3 conv=nocreat oflag=seek_bytes").arg(path).arg(tmpSize).arg(j * (MEBIBYTE * 512));
-            exitCode = Utils::executCmd(cmd, output, error);
-            if (exitCode != 0) {
-                qDebug() << __FUNCTION__ << QString("errorCode: %1,   error: ").arg(exitCode).arg(error);
-                return false;
+    QStringList outPutList = outPut.split("\n");
+    for (int i = 0; i < outPutList.size(); i++) {
+        QStringList dfList = outPutList[i].split(" ");
+        if (deviceList.indexOf(dfList.at(0).left(dfList.at(0).size() - 1)) == -1 && dfList.at(0).contains("/dev/")) {
+            QStringList arg;
+            arg << "-v" << dfList.last();
+            QString output, errstr;
+            int exitcode = Utils::executeCmdWithArtList("umount", arg, output, errstr);
+            if (exitcode != 0) {
+                qDebug() << __FUNCTION__ << "卸载挂载点失败";
             }
         }
-
-        qDebug() << __FUNCTION__ << " secuClear end ";
-        qDebug() << __FUNCTION__ << QString("count loop:%1      current loop:%2 ").arg(count).arg(i);
     }
-    return true;
+    qDebug() << __FUNCTION__ << "autoUmount end";
+
+
+//    QString cmd = QString("df");
+//    FILE *fd = nullptr;
+//    fd = popen(cmd.toStdString().data(), "r");
+//    char pb[1024];
+//    memset(pb, 0, 1024);
+
+//    while (fgets(pb, 1024, fd) != nullptr) {
+//        QString dfBuf = pb;
+//        QStringList dfList = dfBuf.split(" ");
+//        if (deviceList.indexOf(dfList.at(0).left(dfList.at(0).size()-1)) == -1 && dfList.at(0).contains("/dev/")) {
+//            cmd = QString("umount -v %1").arg(dfList.last());
+//            QString output, errstr;
+//            int exitcode = Utils::executCmd(cmd, output, errstr);
+//            if (exitcode != 0) {
+//                qDebug() << __FUNCTION__ << "卸载挂载点失败";
+//            }
+//        }
+//    }
+//    qDebug() << __FUNCTION__ << "autoUmount end";
 }
 
 void PartedCore::probeDeviceInfo(const QString &)
@@ -440,104 +2062,152 @@ void PartedCore::probeDeviceInfo(const QString &)
     //qDebug() << __FUNCTION__ << "**10";
 }
 
-bool PartedCore::useableDevice(const PedDevice *lpDevice)
+void PartedCore::onRefreshDeviceInfo(int type, bool arg1, QString arg2)
 {
-    Q_ASSERT(nullptr != lpDevice);
-    char *buf = static_cast<char *>(malloc(lpDevice->sector_size));
-    if (!buf)
-        return false;
-
-    // Must be able to read from the first sector before the disk device is considered
-    // useable in GParted.
-    bool success = false;
-    int fd = open(lpDevice->path, O_RDONLY | O_NONBLOCK);
-    if (fd >= 0) {
-        ssize_t bytesRead = read(fd, buf, lpDevice->sector_size);
-        success = (bytesRead == lpDevice->sector_size);
-        close(fd);
+    qDebug() << " will call probeThread in thread !";
+    if (m_workerThreadProbe == nullptr) {
+        m_workerThreadProbe = new QThread();
+        qDebug() << "onRefresh Create thread: " << QThread::currentThreadId() << " ++++++++" << m_workerThreadProbe << endl;
+        qDebug() << "  ----------------------! 0 !--------------------- :" << m_probeThread.thread();
+        m_probeThread.moveToThread(m_workerThreadProbe);
+        m_probeThread.setSigType(type);
+        m_workerThreadProbe->start();
     }
-    free(buf);
-    return success;
+
+    m_type = type;
+    m_arg1 = arg1;
+    m_arg2 = arg2;
+
+    emit probeAllInfo();
+    qDebug() << " called probeThread in thread !";
 }
 
-void PartedCore::setDeviceFromDisk(Device &device, const QString &devicePath)
+void PartedCore::syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const DeviceInfoMap inforesult, const LVMInfo lvmInfo, const LUKSMap &luks)
 {
-    PedDevice *lpDevice = nullptr;
-    PedDisk *lpDisk = nullptr;
-    if (getDevice(devicePath, lpDevice, true)) {
-        device.m_heads = lpDevice->bios_geom.heads;
-        device.m_length = lpDevice->length;
-        device.m_path = devicePath;
-        device.m_model = lpDevice->model;
-        device.m_sectorSize = lpDevice->sector_size;
-        device.m_sectors = lpDevice->bios_geom.sectors;
-        device.m_cylinders = lpDevice->bios_geom.cylinders;
-        device.m_cylsize = device.m_heads * device.m_sectors;
-        setDeviceSerialNumber(device);
-        if (device.m_cylsize < (MEBIBYTE / device.m_sectorSize))
-            device.m_cylsize = MEBIBYTE / device.m_sectorSize;
+    qDebug() << "syncDeviceInfo finally!";
+    //m_deviceMap = deviceMap;
+    m_deviceMap = m_probeThread.getDeviceMap();
+    m_inforesult = inforesult;
+    m_lvmInfo = lvmInfo;
+    m_LUKSInfo = luks;
+    emit updateLUKSInfo(m_LUKSInfo);
+    emit updateDeviceInfo(m_inforesult, m_lvmInfo);
 
-        FSType fstype = detectFilesystem(lpDevice, nullptr);
-        if (fstype != FSType::FS_UNKNOWN) {
-            device.m_diskType = "none";
-            device.m_maxPrims = 1;
-            setDeviceOnePartition(device, lpDevice, fstype);
-        } else if (getDisk(lpDevice, lpDisk, false)) {
-            // Partitioned drive (excluding "loop"), as recognised by libparted
-            if (lpDisk && lpDisk->type && lpDisk->type->name && strcmp(lpDisk->type->name, "loop") != 0) {
-                device.m_diskType = lpDisk->type->name;
-                device.m_maxPrims = ped_disk_get_max_primary_partition_count(lpDisk);
+    switch (m_type) {
+    case DISK_SIGNAL_TYPE_UMNT:
+        emit unmountPartition(m_arg2);
+        break;
+    case DISK_SIGNAL_TYPE_DEL:
+        emit deletePartitionMessage(m_arg2);
+        break;
+    case DISK_SIGNAL_TYPE_SHOW:
+        emit showPartitionInfo(m_arg2);
+        break;
+    case DISK_SIGNAL_TYPE_CREATE_TABLE:
+        emit createTableMessage(m_arg1);
+        break;
+    case DISK_SIGNAL_USBUPDATE:
+        emit usbUpdated();
+        break;
+    case DISK_SIGNAL_TYPE_CLEAR:
+        emit clearMessage(m_arg2);
+        break;
+    case DISK_SIGNAL_TYPE_VGCREATE:
+        emit vgCreateMessage(m_arg2);
+        break;
+    case DISK_SIGNAL_TYPE_PVDELETE:
+        emit pvDeleteMessage(m_arg2);
+        break;
+    case DISK_SIGNAL_TYPE_VGDELETE:
+        emit vgDeleteMessage(m_arg2);
+        break;
+    case DISK_SIGNAL_TYPE_LVDELETE:
+        emit lvDeleteMessage(m_arg2);
+        break;
+    case DISK_SIGNAL_TYPE_CREATE_FAILED:
+        emit createFailedMessage(m_arg2);
+        break;
+    default:
+        break;
+    }
+    m_type = 0;
+}
 
-                // Determine if partition naming is supported.
-                if (ped_disk_type_check_feature(lpDisk->type, PED_DISK_TYPE_PARTITION_NAME)) {
-                    device.enablePartitionNaming(Utils::getMaxPartitionNameLength(device.m_diskType));
-                }
+bool PartedCore::secuClear(const QString &path, const Sector &start, const Sector &end, const Byte_Value &size, const QString &fstype, const QString &name, const int &count)
+{
+    QString cmd, output, error;
+    int exitCode = 0;
+    long long allSecSize = (end - start + 1) * size;
+    long long tmpSize  = allSecSize % (MEBIBYTE * 512);
+    long long tempEnd = (end - start + 1) * size / (MEBIBYTE * 512); //磁盘中存在多少个512M
+    struct stat fileStat;
 
-                setDevicePartitions(device, lpDevice, lpDisk);
 
-                if (device.m_highestBusy) {
-                    device.m_readonly = !commitToOs(lpDisk);
-                }
+    //清除末尾残留
+    for (int i = 0; i < count; ++i) {
+        int j = 0;
+        while (j < tempEnd) {
+            //判断是否为块设备
+            stat(path.toStdString().c_str(), &fileStat);
+            if (!S_ISBLK(fileStat.st_mode)) {
+                qDebug() << __FUNCTION__ << QString("%1 file not exit").arg(path);
+                return false;
             }
-            // Drive just containing libparted "loop" signature and nothing
-            // else.  (Actually any drive reported by libparted as "loop" but
-            // not recognised by blkid on the whole disk device).
-            else if (lpDisk && lpDisk->type && strcmp(lpDisk->type->name, "loop") == 0) {
-//            else if (lpDisk && lpDisk->type && lpDisk->type->name && strcmp(lpDisk->type->name, "loop") == 0) {
-                device.m_diskType = lpDisk->type->name; //赋值
-                device.m_maxPrims = 1; //赋值
-
-                // Create virtual partition covering the whole disk device
-                // with unknown contents.
-                Partition *partition_temp = new Partition();
-                partition_temp->setUnpartitioned(device.m_path,
-                                                 lpDevice->path,
-                                                 FS_UNKNOWN,
-                                                 device.m_length,
-                                                 device.m_sectorSize,
-                                                 false);
-                // Place unknown file system message in this partition.
-                device.m_partitions.push_back(partition_temp);
+            cmd = QString("dd if=/dev/zero of=%1 bs=512M count=1 seek=%2 conv=nocreat").arg(path).arg(j);
+            exitCode = Utils::executCmd(cmd, output, error);
+            if (exitCode != 0) {
+                qDebug() << __FUNCTION__ << QString("errorCode: %1,   error: %2 ").arg(exitCode).arg(error);
+                return false;
             }
-            // Unrecognised, unpartitioned drive.
-            else {
-                device.m_diskType = "unrecognized";
-                device.m_maxPrims = 1;
 
-                Partition *partition_temp = new Partition();
-                partition_temp->setUnpartitioned(device.m_path,
-                                                 "", // Overridden with "unallocated"
-                                                 FS_UNALLOCATED,
-                                                 device.m_length,
-                                                 device.m_sectorSize,
-                                                 false);
-                device.m_partitions.push_back(partition_temp);
+            j++;
+
+            if (j >= tempEnd) {
+                break;
+            }
+
+            qDebug() << __FUNCTION__ << QString("count size:%1M      current size:%2M").arg(end - 1 * size / 1024 / 1024).arg(j * MEBIBYTE * 512);
+            qDebug() << __FUNCTION__ << QString("count num:%1       current num:%2").arg(tempEnd).arg(j);
+
+            cmd = QString("dd if=/dev/urandom of=%1 bs=512M count=1 seek=%2 conv=nocreat").arg(path).arg(j);
+            exitCode = Utils::executCmd(cmd, output, error);
+
+            if (exitCode != 0 && j < tempEnd) {
+                qDebug() << __FUNCTION__ << QString("errorCode: %1,   error: %2 ").arg(exitCode).arg(error);
+                return false;
+            }
+            j++;
+            if (j >= tempEnd) {
+                break;
+            }
+
+            qDebug() << __FUNCTION__ << QString("count size:%1M      current size:%2M").arg(end - 1 * size / 1024 / 1024).arg(j * MEBIBYTE * 512);
+            qDebug() << __FUNCTION__ << QString("count num:%1       current num:%2").arg(tempEnd).arg(j);
+        }
+
+        //清除末尾残留
+        if (tmpSize > 0) {
+            stat(path.toStdString().c_str(), &fileStat);
+            if (!S_ISBLK(fileStat.st_mode)) {
+                qDebug() << __FUNCTION__ << QString("%1 file not exit").arg(path);
+                return false;
+            }
+
+            cmd = QString("dd if=/dev/zero of=%1 bs=%2 count=1 seek=%3 conv=nocreat oflag=seek_bytes").arg(path).arg(tmpSize).arg(j * (MEBIBYTE * 512));
+            exitCode = Utils::executCmd(cmd, output, error);
+            if (exitCode != 0) {
+                qDebug() << __FUNCTION__ << QString("errorCode: %1,   error: ").arg(exitCode).arg(error);
+                return false;
             }
         }
-        destroyDeviceAndDisk(lpDevice, lpDisk);
+
+        qDebug() << __FUNCTION__ << " secuClear end ";
+        qDebug() << __FUNCTION__ << QString("count loop:%1      current loop:%2 ").arg(count).arg(i);
     }
+    return true;
 }
 
+/***********************************************private gparted****************************************************************/
 bool PartedCore::getDevice(const QString &devicePath, PedDevice *&lpDevice, bool flush)
 {
     lpDevice = ped_device_get(devicePath.toStdString().c_str());
@@ -594,6 +2264,15 @@ bool PartedCore::getDisk(PedDevice *&lpDevice, PedDisk *&lpDisk, bool strict)
     return false;
 }
 
+bool PartedCore::getDeviceAndDisk(const QString &devicePath, PedDevice *&lpDevice, PedDisk *&lpDisk, bool strict, bool flush)
+{
+    if (getDevice(devicePath, lpDevice, flush)) {
+        return getDisk(lpDevice, lpDisk, strict);
+    }
+
+    return false;
+}
+
 void PartedCore::destroyDeviceAndDisk(PedDevice *&lpDevice, PedDisk *&lpDisk)
 {
     if (lpDisk)
@@ -605,18 +2284,49 @@ void PartedCore::destroyDeviceAndDisk(PedDevice *&lpDevice, PedDisk *&lpDisk)
     lpDevice = nullptr;
 }
 
-bool PartedCore::infoBelongToPartition(const Partition &partition, const PartitionInfo &info)
+bool PartedCore::isBusy(FSType fstype, const QString &path, const PedPartition *lpPartition)
 {
-    return info.m_sectorEnd == partition.m_sectorEnd && info.m_sectorStart == partition.m_sectorStart;
-}
+    FileSystem *pFilesystem = nullptr;
+    bool busy = false;
+    if (nullptr != lpPartition) {
+        busy = ped_partition_is_busy(lpPartition);
+    }
+    if (!busy && supportedFileSystem(fstype)) {
+        switch (getFileSystem(fstype).busy) {
+        case FS::GPARTED:
+            //Search GParted internal mounted partitions map
+            busy = MountInfo::isDevMounted(path);
+            break;
+        case FS::EXTERNAL:
+            //Call file system specific method
+            pFilesystem = getFileSystemObject(fstype);
+            if (pFilesystem)
+                busy = pFilesystem->isBusy(path);
+            break;
 
-bool PartedCore::getDeviceAndDisk(const QString &devicePath, PedDevice *&lpDevice, PedDisk *&lpDisk, bool strict, bool flush)
-{
-    if (getDevice(devicePath, lpDevice, flush)) {
-        return getDisk(lpDevice, lpDisk, strict);
+        default:
+            break;
+        }
     }
 
-    return false;
+    return busy;
+}
+
+bool PartedCore::flushDevice(PedDevice *lpDevice)
+{
+    bool success = false;
+    if (ped_device_open(lpDevice)) {
+        success = ped_device_sync(lpDevice);
+        ped_device_close(lpDevice);
+        // (!46) Wait for udev rules to complete after this ped_device_open() and
+        // ped_device_close() pair to avoid busy /dev/DISK entry when running file
+        // system specific querying commands on the whole disk device in the call
+        // sequence after getDevice() in setDeviceFromDisk().
+        //settleDevice(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS);
+        QString out, err;
+        Utils::executCmd(QString("udevadm settle --timeout=%1").arg(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS), out, err);
+    }
+    return success;
 }
 
 bool PartedCore::commit(PedDisk *lpDisk)
@@ -639,40 +2349,26 @@ bool PartedCore::commit(PedDisk *lpDisk)
     return succeed;
 }
 
+bool PartedCore::commitToOs(PedDisk *lpDisk)
+{
+//    bool succes;
+//    succes = ped_disk_commit_to_os(lpDisk);
+    // Wait for udev rules to complete and partition device nodes to settle from above
+    // ped_disk_commit_to_os() initiated kernel update of the partitions.
+    //settleDevice(timeout);
+    return ped_disk_commit_to_os(lpDisk);
+}
+
+bool PartedCore::infoBelongToPartition(const Partition &partition, const PartitionInfo &info)
+{
+    return info.m_sectorEnd == partition.m_sectorEnd && info.m_sectorStart == partition.m_sectorStart;
+}
+
 PedPartition *PartedCore::getLpPartition(const PedDisk *lpDisk, const Partition &partition)
 {
     if (partition.m_type == PartitionType::TYPE_EXTENDED)
         return ped_disk_extended_partition(lpDisk);
     return ped_disk_get_partition_by_sector(lpDisk, partition.getSector());
-}
-
-void PartedCore::setDeviceSerialNumber(Device &device)
-{
-    if (!hdparmFound)
-        // Serial number left blank when the hdparm command is not installed.
-        return;
-
-    QString output, error;
-    Utils::executCmd(QString("hdparm -I %1").arg(device.m_path), output, error);
-    if (error.isEmpty()) {
-        // hdparm reported an error message to stderr.  Assume it's a device
-        // without a hard drive serial number.
-        //
-        // Using hdparm -I to query Linux software RAID arrays and BIOS fake RAID
-        // arrays, both devices without their own hard drive serial numbers,
-        // produce this error:
-        //     HDIO_DRIVE_CMD(identify) failed: Inappropriate ioctl for device
-        //
-        // And querying USB flash drives, also a device type without their own
-        // hard drive serial numbers, generates this error:
-        //     SG_IO: bad/missing sense data, sb[]:  70 00 05 00 00 00 00 0a ...
-        device.m_serialNumber = "none";
-    } else {
-        QString serialNumber = Utils::regexpLabel(output, "(?<=Serial Number:).*(?=\n)").trimmed();
-        if (!serialNumber.isEmpty())
-            device.m_serialNumber = serialNumber;
-    }
-    // Otherwise serial number left blank when not found in the hdparm output.
 }
 
 void PartedCore::setDeviceOnePartition(Device &device, PedDevice *lpDevice, FSType fstype)
@@ -725,64 +2421,6 @@ void PartedCore::setPartitionLabelAndUuid(Partition &partition)
     partition.m_name = partitionPath;
     if (partition.m_uuid.isEmpty()) {
         readUuid(partition);
-    }
-}
-
-bool PartedCore::isBusy(FSType fstype, const QString &path, const PedPartition *lpPartition)
-{
-    FileSystem *pFilesystem = nullptr;
-    bool busy = false;
-    if (nullptr != lpPartition) {
-        busy = ped_partition_is_busy(lpPartition);
-    }
-    if (!busy && supportedFileSystem(fstype)) {
-        switch (getFileSystem(fstype).busy) {
-        case FS::GPARTED:
-            //Search GParted internal mounted partitions map
-            busy = MountInfo::isDevMounted(path);
-            break;
-        case FS::EXTERNAL:
-            //Call file system specific method
-            pFilesystem = getFileSystemObject(fstype);
-            if (pFilesystem)
-                busy = pFilesystem->isBusy(path);
-            break;
-
-        default:
-            break;
-        }
-    }
-
-    return busy;
-}
-
-void PartedCore::readLabel(Partition &partition)
-{
-    FileSystem *pFilesystem = nullptr;
-    switch (getFileSystem(partition.m_fstype).read_label) {
-    case FS::EXTERNAL:
-        pFilesystem = getFileSystemObject(partition.m_fstype);
-        if (pFilesystem)
-            pFilesystem->readLabel(partition);
-        break;
-
-    default:
-        break;
-    }
-}
-
-void PartedCore::readUuid(Partition &partition)
-{
-    FileSystem *pFilesystem = nullptr;
-    switch (getFileSystem(partition.m_fstype).read_uuid) {
-    case FS::EXTERNAL:
-        pFilesystem = getFileSystemObject(partition.m_fstype);
-        if (pFilesystem)
-            pFilesystem->readUuid(partition);
-        break;
-
-    default:
-        break;
     }
 }
 
@@ -1040,22 +2678,6 @@ void PartedCore::setDevicePartitions(Device &device, PedDevice *lpDevice, PedDis
     insertUnallocated(device.m_path, device.m_partitions, 0, device.m_length - 1, device.m_sectorSize, false);
 }
 
-bool PartedCore::flushDevice(PedDevice *lpDevice)
-{
-    bool success = false;
-    if (ped_device_open(lpDevice)) {
-        success = ped_device_sync(lpDevice);
-        ped_device_close(lpDevice);
-        // (!46) Wait for udev rules to complete after this ped_device_open() and
-        // ped_device_close() pair to avoid busy /dev/DISK entry when running file
-        // system specific querying commands on the whole disk device in the call
-        // sequence after getDevice() in setDeviceFromDisk().
-        //settleDevice(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS);
-        QString out, err;
-        Utils::executCmd(QString("udevadm settle --timeout=%1").arg(SETTLE_DEVICE_PROBE_MAX_WAIT_SECONDS), out, err);
-    }
-    return success;
-}
 
 //void PartedCore::settleDevice(std::time_t timeout)
 //{
@@ -1068,15 +2690,6 @@ bool PartedCore::flushDevice(PedDevice *lpDevice)
 //        sleep(timeout);
 //}
 
-bool PartedCore::commitToOs(PedDisk *lpDisk)
-{
-//    bool succes;
-//    succes = ped_disk_commit_to_os(lpDisk);
-    // Wait for udev rules to complete and partition device nodes to settle from above
-    // ped_disk_commit_to_os() initiated kernel update of the partitions.
-    //settleDevice(timeout);
-    return ped_disk_commit_to_os(lpDisk);
-}
 
 FSType PartedCore::detectFilesystem(PedDevice *lpDevice, PedPartition *lpPartition)
 {
@@ -1463,46 +3076,6 @@ bool PartedCore::setPartitionType(const Partition &partition)
     return returnValue;
 }
 
-bool PartedCore::createFileSystem(const Partition &partition)
-{
-    if (partition.m_fstype == FS_LUKS && partition.m_busy) {
-        qDebug() << __FUNCTION__ << QString("partition contains open LUKS encryption for a create file system only step");
-        return false;
-    }
-//    qDebug() << __FUNCTION__ << partition.m_sectorsUsed << partition.m_sectorsUnused;
-    qDebug() << __FUNCTION__ << QString("create new %1 file system").arg(partition.m_fstype);
-    bool succes = false;
-    FileSystem *pFilesystem = nullptr;
-    switch (getFileSystem(partition.m_fstype).create) {
-    case FS::NONE:
-        break;
-    case FS::GPARTED:
-        break;
-    case FS::LIBPARTED:
-        break;
-    case FS::EXTERNAL: {
-        succes = (pFilesystem = getFileSystemObject(partition.m_fstype)) && pFilesystem->create(partition);
-        if (succes && !partition.getFileSystemLabel().isEmpty()) {
-            pFilesystem->writeLabel(partition);
-        }
-    }
-    break;
-    default:
-        break;
-    }
-    return succes;
-}
-
-bool PartedCore::createFileSystem(const FSType &type, const bool &busy, const QString path, const Partition &partition)
-{
-    //创建文件系统
-    Partition p = partition;
-    p.m_fstype = type;
-    p.m_busy = false;
-    p.setPath(path);
-    return createFileSystem(p);
-}
-
 bool PartedCore::formatPartition(const Partition &partition)
 {
     bool success = false;
@@ -1546,40 +3119,6 @@ bool PartedCore::resize(const Partition &partitionNew)
                && maxImizeFileSystem(partitionNew);
     }
     return true;
-}
-
-bool PartedCore::checkRepairFileSystem(const Partition &partition)
-{
-    if (partition.m_fstype == FS_LUKS && partition.m_busy) {
-        qDebug() << "partition contains open LUKS encryption for a check file system only step";
-        return false;
-    }
-
-    if (partition.m_busy)
-        // Trying to check an online file system is a successful non-operation.
-        return true;
-    qDebug() << QString("PartedCore::checkRepairFileSystem:check file system on %1"
-                        " for errors and (if possible) fix them")
-             .arg(partition.getPath());
-
-    bool succes = false;
-    FileSystem *pFilesystem = nullptr;
-    switch (getFileSystem(partition.m_fstype).check) {
-    case FS::NONE:
-        qDebug() << "PartedCore::checkRepairFileSystem ,checking is not available for this file system";
-        break;
-    case FS::GPARTED:
-        break;
-    case FS::LIBPARTED:
-        break;
-    case FS::EXTERNAL:
-        succes = (pFilesystem = getFileSystemObject(partition.m_fstype)) && pFilesystem->checkRepair(partition);
-        break;
-    default:
-        break;
-    }
-
-    return succes;
 }
 
 bool PartedCore::resizeMovePartition(const Partition &partitionOld, const Partition &partitionNew, bool rollbackOnFail)
@@ -1757,161 +3296,59 @@ bool PartedCore::resizeMoveFileSystemUsingLibparted(const Partition &partitionOl
     return returnValue;
 }
 
-void PartedCore::onRefreshDeviceInfo(int type, bool arg1, QString arg2)
+/***********************************************private 分区表****************************************************************/
+bool PartedCore::newDiskLabel(const QString &devicePath, const QString &diskLabel)
 {
-    qDebug() << " will call probeThread in thread !";
-    if (m_workerThreadProbe == nullptr) {
-        m_workerThreadProbe = new QThread();
-        qDebug() << "onRefresh Create thread: " << QThread::currentThreadId() << " ++++++++" << m_workerThreadProbe << endl;
+    bool returnValue = false;
+
+    PedDevice *lpDevice = nullptr;
+    PedDisk *lpDisk = nullptr;
+    if (getDevice(devicePath, lpDevice)) {
+        PedDiskType *type = nullptr;
+        type = ped_disk_type_get(diskLabel.toStdString().c_str());
+
+        if (type) {
+            lpDisk = ped_disk_new_fresh(lpDevice, type);
+            returnValue = commit(lpDisk) ;
+        }
+
+        destroyDeviceAndDisk(lpDevice, lpDisk) ;
     }
 
+//#ifndef USE_LIBPARTED_DMRAID
+//    //delete and recreate disk entries if dmraid
+//    DMRaid dmraid ;
+//    if ( recreate_dmraid_devs && return_value && dmraid.is_dmraid_device( device_path ) )
+//    {
+//        dmraid .purge_dev_map_entries( device_path ) ;
+//        dmraid .create_dev_map_entries( device_path ) ;
+//    }
+//#endif
 
-    qDebug() << "  ----------------------! 0 !--------------------- :" << m_probeThread.thread();
-    m_probeThread.moveToThread(m_workerThreadProbe);
-    m_probeThread.setSignal(type, arg1, arg2);
-    //connect(this, &PartedCore::probeAllInfo, &m_probeThread, &ProbeThread::probeDeviceInfo, Qt::UniqueConnection);
-    m_workerThreadProbe->start();
-    emit probeAllInfo();
-    qDebug() << " called probeThread in thread !";
+    return returnValue;
 }
 
-bool PartedCore::mountAndWriteFstab(const QString &mountpath)
+void PartedCore::reWritePartition(const QString &devicePath)
 {
-    qDebug() << __FUNCTION__ << "Permanent mount start";
-    QString type = Utils::fileSystemTypeToString(m_curpartition.m_fstype);
-    bool success = mountDevice(mountpath, m_curpartition.getPath(),  m_curpartition.m_fstype)  //位置不可交换 利用&&运算特性
-                   && writeFstab(m_curpartition.m_uuid, mountpath, type, true);
-    qDebug() << __FUNCTION__ << "Permanent mount end";
-    return   sendRefSigAndReturn(success);
+
+    struct stat fileStat;
+    stat(devicePath.toStdString().c_str(), &fileStat);
+    if (!S_ISBLK(fileStat.st_mode)) {
+        qDebug() << __FUNCTION__ << QString("%1 is not blk file").arg(devicePath);
+        return;
+    }
+
+    bool needRewrite = gptIsExpanded(devicePath);
+    if (needRewrite) {
+        QString outPutFix, errorFix;
+        QString cmdFix = QString("echo w | fdisk %1").arg(devicePath);
+        Utils::executWithPipeCmd(cmdFix, outPutFix, errorFix);
+        qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
+        return;
+    }
 }
 
-bool PartedCore::unmount()
-{
-    //永久卸载
-    qDebug() << __FUNCTION__ << "Unmount start";
-    if (!umontDevice(m_curpartition.getMountPoints(), m_curpartition.getPath())) { //卸载挂载点  内部有信号发送 不要重复发送信号
-        return false;
-    }
-    //修改/etc/fstab
-    QString type = Utils::fileSystemTypeToString(m_curpartition.m_fstype);
-    writeFstab(m_curpartition.m_uuid,  "", type, false);//非挂载 不需要挂载点
-    qDebug() << __FUNCTION__ << "Unmount end";
-    return sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_UMNT, true, "1");
-}
-
-bool PartedCore::deCrypt(const LUKS_INFO &luks)
-{
-    LUKS_INFO luks2 =  luks;
-    do {
-        if (!m_LUKSInfo.luksExists(luks.m_devicePath)) {
-            luks2.m_cryptErr = CRYPTError::CRYPT_ERR_DEVICE_NO_EXISTS;
-            break;
-        }
-        luks2.isDecrypt = m_LUKSInfo.getLUKS(luks.m_devicePath).isDecrypt;
-
-        if (!LUKSOperator::decrypt(m_LUKSInfo, luks2)) {
-            luks2.m_cryptErr = CRYPTError::CRYPT_ERR_DECRYPT_FAILED;
-            break;
-        }
-        probeDeviceInfo();
-        if (!m_LUKSInfo.luksExists(luks.m_devicePath)) {
-            luks2.m_cryptErr = CRYPTError::CRYPT_ERR_DEVICE_NO_EXISTS;
-            break;
-        }
-        luks2 = m_LUKSInfo.getLUKS(luks.m_devicePath);
-    } while (0);
-
-    //发送解密是否成功信号
-    luks2.m_decryptStr = luks.m_decryptStr;
-    emit deCryptMessage(luks2);
-    return luks2.m_cryptErr == CRYPTError::CRYPT_ERR_NORMAL;
-}
-
-bool PartedCore::cryptMount(const LUKS_INFO &luks)
-{
-    LUKS_INFO luks2 = luks;
-    if (!m_LUKSInfo.luksExists(luks.m_devicePath)             //luks
-            || !luks2.isDecrypt                               //判断是否解密
-            || luks2.m_mapper.m_luksFs == FSType::FS_UNSUPPORTED    //判断文件系统是否可以支持
-            || luks2.m_mapper.m_luksFs == FSType::FS_UNALLOCATED
-            || luks2.m_mapper.m_luksFs == FSType::FS_UNKNOWN
-            || luks2.m_mapper.m_luksFs == FSType::FS_UNFORMATTED) {
-        return   sendRefSigAndReturn(false);
-    }
-
-    //mount
-    foreach (const QString &mount, luks2.m_mapper.m_mountPoints) {
-        if (!mountDevice(mount, luks2.m_mapper.m_dmPath, luks2.m_mapper.m_luksFs)) {
-            return   sendRefSigAndReturn(false) ;
-        }
-    }
-
-    //write confile
-    if ((luks2.m_luksVersion == 1 && luks2.m_keySlots < LUKS1_MaxKey)  //判断密钥槽是否仍有空间
-            || (luks2.m_luksVersion == 2 && luks2.m_keySlots < LUKS2_MaxKey)) {
-
-        if (!LUKSOperator::addKeyAndCrypttab(m_LUKSInfo, luks2)) {      //判断写入crypttab文件是否成功
-            return   sendRefSigAndReturn(false) ;
-        }
-
-        foreach (const QString &mount, luks2.m_mapper.m_mountPoints) {  //判断写入fstab文件是否成功
-            if (!writeFstab(luks2.m_mapper.m_uuid, mount, Utils::fileSystemTypeToString(luks2.m_mapper.m_luksFs))) {
-                return   sendRefSigAndReturn(false) ;
-            }
-        }
-    }
-
-    return   sendRefSigAndReturn(true);
-}
-
-bool PartedCore::cryptUmount(const LUKS_INFO &luks)
-{
-    LUKS_INFO luks2 = luks;
-    if (!m_LUKSInfo.luksExists(luks2.m_devicePath) || !luks2.m_mapper.m_busy) {
-        luks2.m_cryptErr = CRYPTError::CRYPT_ERR_DEVICE_NO_EXISTS;
-        qDebug() << __FUNCTION__ << "Unmount CRYPT device error:device not exists or not mount";
-        return sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_UMNT, true, "0");
-    }
-
-    //卸载
-    if (!umontDevice(luks2.m_mapper.m_mountPoints, luks2.m_mapper.m_dmName)) { //卸载挂载点  内部有信号发送 不要重复发送信号
-        qDebug() << __FUNCTION__ << "Unmount CRYPT device error:device umount error";
-        return false;
-    }
-
-    //判断写入fstab文件是否成功
-    foreach (const QString &mount, luks2.m_mapper.m_mountPoints) {
-        if (!writeFstab(luks2.m_mapper.m_uuid, mount, Utils::fileSystemTypeToString(luks2.m_mapper.m_luksFs), false)) {
-            qDebug() << __FUNCTION__ << "Unmount CRYPT device error: writeFstab error";
-        }
-    }
-
-    LUKSOperator::removeMapperAndKey(m_LUKSInfo, luks2);
-    qDebug() << __FUNCTION__ << "Unmount CRYPT device end";
-    return sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_UMNT, true, "1");
-}
-
-bool PartedCore::create(const PartitionVec &infovec)
-{
-    qDebug() << __FUNCTION__ << "Create start";
-    bool success = true;
-    for (PartitionInfo info : infovec) {
-        Partition newPartition;
-        newPartition.reset(info);
-        if (!create(newPartition)) {
-            qDebug() << __FUNCTION__ << "Create Partitione error";
-            success = false;
-            break;
-        }
-    }
-    if (!m_isClear) {
-        emit refreshDeviceInfo();
-    }
-
-    qDebug() << __FUNCTION__ << "Create end";
-    return success;
-}
-
+/***********************************************private 分区*****************************************************************/
 bool PartedCore::create(Partition &newPartition)
 {
     bool success = false;
@@ -1921,9 +3358,10 @@ bool PartedCore::create(Partition &newPartition)
         FS_Limits fsLimits = getFileSystemLimits(newPartition.m_fstype, newPartition);
         success = createPartition(newPartition, fsLimits.min_size / newPartition.m_sectorSize);
     }
-    if (!success)
+    if (!success) {
+        m_arg2 = QString("%1:%2:%3").arg("DISK_ERROR").arg(DISK_ERR_CREATE_PART_FAILED).arg(newPartition.getPath());
         return false;
-
+    }
     if (!newPartition.m_name.isEmpty()) {
         if (!namePartition(newPartition))
             return false;
@@ -1931,27 +3369,56 @@ bool PartedCore::create(Partition &newPartition)
 
     //判断是否加密 加密
     if (newPartition.m_luksFlag == LUKSFlag::NOT_CRYPT_LUKS) {
-        if (newPartition.m_type == TYPE_EXTENDED || newPartition.m_fstype == FS_UNFORMATTED)
-            return true;
-        else if (newPartition.m_fstype == FS_CLEARED)
-            return eraseFilesystemSignatures(newPartition);
-        else
-            return eraseFilesystemSignatures(newPartition)
-                   && setPartitionType(newPartition)
-                   && createFileSystem(newPartition);
+        if (newPartition.m_type == TYPE_EXTENDED || newPartition.m_fstype == FS_UNFORMATTED) {
+            success = true;
+        } else if (newPartition.m_fstype == FS_CLEARED) {
+            success = eraseFilesystemSignatures(newPartition);
+        } else {
+            success = eraseFilesystemSignatures(newPartition)
+                      && setPartitionType(newPartition)
+                      && createFileSystem(newPartition);
+        }
+
+        if (!success) {
+            m_arg2 = QString("%1:%2:%3").arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_CREATE_FS_FAILED).arg(newPartition.getPath());
+        }
+
+        return success;
+
     } else {
         success = eraseFilesystemSignatures(newPartition)
                   && setPartitionType(newPartition);
 
         if (!success) {
+            m_arg2 = QString("%1:%2:%3").arg("CRYPTError").arg(CRYPTError::CRYPT_ERR_ENCRYPT_FAILED).arg(newPartition.getPath());
             return false;
         }
 
         LUKS_INFO info = getNewLUKSInfo(newPartition);
-        return LUKSOperator::encrypt(m_LUKSInfo, info)
-               && LUKSOperator::decrypt(m_LUKSInfo, info)
-               && createFileSystem(info.m_mapper.m_luksFs, false, info.m_mapper.m_dmPath)
-               && LUKSOperator::closeMapper(m_LUKSInfo, info);
+
+        //加密失败
+        if (!LUKSOperator::encrypt(m_LUKSInfo, info)) {
+            m_arg2 = QString("%1:%2:%3").arg("CRYPTError").arg(CRYPTError::CRYPT_ERR_ENCRYPT_FAILED).arg(newPartition.getPath());
+            return false;
+        }
+
+        //解密失败
+        if (!LUKSOperator::decrypt(m_LUKSInfo, info)) {
+            m_arg2 = QString("%1:%2:%3").arg("CRYPTError").arg(CRYPTError::CRYPT_ERR_DECRYPT_FAILED).arg(newPartition.getPath());
+            return false;
+        }
+        //创建文件系统失败
+        if (!createFileSystem(info.m_mapper.m_luksFs, false, info.m_mapper.m_dmPath, info.m_mapper.m_fileSystemLabel)) {
+            m_arg2 = QString("%1:%2:%3").arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_CREATE_FS_FAILED).arg(newPartition.getPath());
+            return false;
+        }
+        //关闭映射失败
+        if (!LUKSOperator::closeMapper(m_LUKSInfo, info)) {
+            m_arg2 = QString("%1:%2:%3").arg("CRYPTError").arg(CRYPTError::CRYPT_ERR_CLOSE_FAILED).arg(newPartition.getPath());
+            return false;
+        }
+
+        return true;
     }
 }
 
@@ -2043,26 +3510,401 @@ bool PartedCore::createPartition(Partition &newPartition, Sector minSize)
     return newPartition.m_partitionNumber > 0;
 }
 
-void PartedCore::reWritePartition(const QString &devicePath)
+void PartedCore::insertUnallocated(const QString &devicePath, QVector<Partition *> &partitions, Sector start, Sector end, Byte_Value sectorSize, bool insideExtended)
 {
-
-    struct stat fileStat;
-    stat(devicePath.toStdString().c_str(), &fileStat);
-    if (!S_ISBLK(fileStat.st_mode)) {
-        qDebug() << __FUNCTION__ << QString("%1 is not blk file").arg(devicePath);
+    //if there are no partitions at all..
+    if (partitions.empty()) {
+        Partition *partitionTemp = new Partition();
+        partitionTemp->setUnallocated(devicePath, start, end, sectorSize, insideExtended);
+        partitions.push_back(partitionTemp);
         return;
     }
 
-    bool needRewrite = gptIsExpanded(devicePath);
-    if (needRewrite) {
-        QString outPutFix, errorFix;
-        QString cmdFix = QString("echo w | fdisk %1").arg(devicePath);
-        Utils::executWithPipeCmd(cmdFix, outPutFix, errorFix);
-        qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
-        return;
+    //start <---> first partition start
+    if ((partitions.front()->m_sectorStart - start) > (MEBIBYTE / sectorSize)) {
+        Sector tempEnd = partitions.front()->m_sectorStart - 1;
+        Partition *partitionTemp = new Partition();
+        partitionTemp->setUnallocated(devicePath, start, tempEnd, sectorSize, insideExtended);
+        partitions.insert(partitions.begin(), partitionTemp);
+    }
+
+    //look for gaps in between
+    for (int t = 0; t < partitions.size() - 1; t++) {
+        if (((partitions.at(t + 1)->m_sectorStart - partitions.at(t)->m_sectorEnd - 1) > (MEBIBYTE / sectorSize))
+                || ((partitions.at(t + 1)->m_type != TYPE_LOGICAL) // Only show exactly 1 MiB if following partition is not logical.
+                    && ((partitions.at(t + 1)->m_sectorStart - partitions.at(t)->m_sectorEnd - 1) == (MEBIBYTE / sectorSize)))) {
+            Sector tempStart = partitions.at(t)->m_sectorEnd + 1;
+            Sector tempEnd = partitions.at(t + 1)->m_sectorStart - 1;
+            Partition *partitionTemp = new Partition();
+            partitionTemp->setUnallocated(devicePath, tempStart, tempEnd,
+                                          sectorSize, insideExtended);
+            partitions.insert(partitions.begin() + (++t), partitionTemp);
+            // partitions.insert_adopt(partitions.begin() + ++t, partition_temp);
+        }
+    }
+//    partitions.back();
+    //last partition end <---> end
+    if ((end - partitions.back()->m_sectorEnd) >= (MEBIBYTE / sectorSize)) {
+        Sector tempStart = partitions.back()->m_sectorEnd + 1;
+        Partition *partitionTemp = new Partition();
+        partitionTemp->setUnallocated(devicePath, tempStart, end, sectorSize, insideExtended);
+        partitions.push_back(partitionTemp);
     }
 }
-/**********************************lvm**********************************/
+
+void PartedCore::setFlags(Partition &partition, PedPartition *lpPartition)
+{
+    for (int t = 0; t < m_flags.size(); t++) {
+        if (ped_partition_is_flag_available(lpPartition, m_flags[t]) && ped_partition_get_flag(lpPartition, m_flags[t]))
+            partition.m_flags.push_back(ped_partition_flag_get_name(m_flags[t]));
+    }
+}
+
+void PartedCore::readLabel(Partition &partition)
+{
+    FileSystem *pFilesystem = nullptr;
+    switch (getFileSystem(partition.m_fstype).read_label) {
+    case FS::EXTERNAL:
+        pFilesystem = getFileSystemObject(partition.m_fstype);
+        if (pFilesystem)
+            pFilesystem->readLabel(partition);
+        break;
+
+    default:
+        break;
+    }
+}
+
+void PartedCore::readUuid(Partition &partition)
+{
+    FileSystem *pFilesystem = nullptr;
+    switch (getFileSystem(partition.m_fstype).read_uuid) {
+    case FS::EXTERNAL:
+        pFilesystem = getFileSystemObject(partition.m_fstype);
+        if (pFilesystem)
+            pFilesystem->readUuid(partition);
+        break;
+
+    default:
+        break;
+    }
+}
+
+/***********************************************private 文件系统*****************************************************************/
+SupportedFileSystems *PartedCore::supportedFSInstance()
+{
+    if (nullptr == m_supportedFileSystems) {
+        m_supportedFileSystems = new SupportedFileSystems();
+        m_supportedFileSystems->findSupportedFilesystems();
+    }
+
+    return m_supportedFileSystems;
+}
+
+bool PartedCore::supportedFileSystem(FSType fstype)
+{
+    return supportedFSInstance()->getFsObject(fstype) != nullptr;
+}
+
+const FS &PartedCore::getFileSystem(FSType fstype) const
+{
+    return supportedFSInstance()->getFsSupport(fstype);
+}
+
+FileSystem *PartedCore::getFileSystemObject(FSType fstype)
+{
+    return supportedFSInstance()->getFsObject(fstype);
+}
+
+//bool PartedCore::filesystem_resize_disallowed(const Partition &partition)
+//{
+//    if (partition.fstype == FS_LVM2_PV) {
+//        //        //The LVM2 PV can't be resized when it's a member of an export VG
+//        //        QString vgname = LVM2_PV_Info::get_vg_name(partition.getPath());
+//        //        if (vgname .isEmpty())
+//        //            return false ;
+//        //        return LVM2_PV_Info::is_vg_exported(vgname);
+//    }
+//    return false;
+//}
+
+FS_Limits PartedCore::getFileSystemLimits(FSType fstype, const Partition &partition)
+{
+    FileSystem *pFileSystem = supportedFSInstance()->getFsObject(fstype);
+    FS_Limits fsLimits;
+    if (pFileSystem != nullptr)
+        fsLimits = pFileSystem->getFilesystemLimits(partition);
+    return fsLimits;
+}
+
+bool PartedCore::createFileSystem(const Partition &partition)
+{
+    if (partition.m_fstype == FS_LUKS && partition.m_busy) {
+        qDebug() << __FUNCTION__ << QString("partition contains open LUKS encryption for a create file system only step");
+        return false;
+    }
+//    qDebug() << __FUNCTION__ << partition.m_sectorsUsed << partition.m_sectorsUnused;
+    qDebug() << __FUNCTION__ << QString("create new %1 file system").arg(partition.m_fstype);
+    bool succes = false;
+    FileSystem *pFilesystem = nullptr;
+    switch (getFileSystem(partition.m_fstype).create) {
+    case FS::NONE:
+        break;
+    case FS::GPARTED:
+        break;
+    case FS::LIBPARTED:
+        break;
+    case FS::EXTERNAL: {
+        pFilesystem = getFileSystemObject(partition.m_fstype);
+        if (pFilesystem == nullptr) {
+            return false;
+        }
+        succes = pFilesystem->create(partition);
+        if (!succes) {
+            succes = pFilesystem->create(partition);
+        }
+
+        if (succes && !partition.getFileSystemLabel().isEmpty()) {
+            pFilesystem->writeLabel(partition);
+        }
+    }
+    break;
+    default:
+        break;
+    }
+    return succes;
+}
+
+bool PartedCore::createFileSystem(const FSType &type, const bool &busy, const QString &path, const QString lable, const Partition &partition)
+{
+    //创建文件系统
+    Partition p = partition;
+    p.m_fstype = type;
+    p.m_busy = false;
+    p.setPath(path);
+    p.setFilesystemLabel(lable);
+    return createFileSystem(p);
+}
+
+bool PartedCore::checkRepairFileSystem(const Partition &partition)
+{
+    if (partition.m_fstype == FS_LUKS && partition.m_busy) {
+        qDebug() << "partition contains open LUKS encryption for a check file system only step";
+        return false;
+    }
+
+    if (partition.m_busy)
+        // Trying to check an online file system is a successful non-operation.
+        return true;
+    qDebug() << QString("PartedCore::checkRepairFileSystem:check file system on %1"
+                        " for errors and (if possible) fix them")
+             .arg(partition.getPath());
+
+    bool succes = false;
+    FileSystem *pFilesystem = nullptr;
+    switch (getFileSystem(partition.m_fstype).check) {
+    case FS::NONE:
+        qDebug() << "PartedCore::checkRepairFileSystem ,checking is not available for this file system";
+        break;
+    case FS::GPARTED:
+        break;
+    case FS::LIBPARTED:
+        break;
+    case FS::EXTERNAL:
+        succes = (pFilesystem = getFileSystemObject(partition.m_fstype)) && pFilesystem->checkRepair(partition);
+        break;
+    default:
+        break;
+    }
+
+    return succes;
+}
+
+/***********************************************private 挂载*****************************************************************/
+bool PartedCore::mountDevice(const QString &mountpath, const QString devPath, const FSType &fsType)
+{
+    qDebug() << __FUNCTION__ << "Mount start";
+    if (mountpath.isEmpty() || devPath.isEmpty() || fsType == FSType::FS_UNKNOWN) {
+        qDebug() << __FUNCTION__ << "Mount argument error";
+        return false;
+    }
+
+    QString output, errstr;
+    QString cmd ;
+    //vfat 1051系统上vfat格式不指定utf8挂载 通过文件管理器右键菜单新建文件夹会乱码  导致创建错误 为了规避该问题加上utf8属性
+    if (fsType == FSType::FS_FAT32 || fsType == FSType::FS_FAT16) {
+        cmd = QString("mount -v %1 %2 -o dmask=000,fmask=111,utf8").arg(devPath).arg(mountpath);
+    } else if (fsType == FSType::FS_HFS) {
+        cmd = QString("mount -v %1 %2 -o dir_umask=000,file_umask=111").arg(devPath).arg(mountpath);
+    } else {
+        cmd = QString("mount -v %1 %2").arg(devPath).arg(mountpath);
+    }
+
+    int exitcode = Utils::executCmd(cmd, output, errstr);
+    if (exitcode != 0) {
+        qDebug() << __FUNCTION__ << "Mount error";
+        return false;
+    }
+    //修改权限
+    chmod(mountpath.toStdString().c_str(), 0777);
+    qDebug() << __FUNCTION__ << "Mount end";
+    return true;
+
+}
+
+bool PartedCore::umontDevice(QVector<QString> mountPoints, QString devPath)
+{
+    if (devPath.isEmpty()) {
+        devPath = m_curpartition.getPath();
+    }
+
+    QString output, errstr;
+    for (QString path : mountPoints) {
+        QStringList arg;
+        arg << "-v" << path;
+        int exitcode = Utils::executeCmdWithArtList("umount", arg, output, errstr);
+        if (0 != exitcode) {
+            Utils::executCmd("df", output, errstr);
+            return !output.contains(devPath);
+        }
+    }
+    return true;
+}
+
+bool PartedCore::writeFstab(const QString &uuid, const QString &mountpath, const QString &type, bool isMount)
+{
+    //写入fstab 永久挂载
+    qDebug() << __FUNCTION__ << "Write fstab start";
+    if (uuid.isEmpty() || (mountpath.isEmpty() && isMount) || type.isEmpty()) { //非挂载 不需要挂载点 可以传空值
+        qDebug() << __FUNCTION__ << "Write fstabt argument error";
+        return false;
+    }
+
+    QFile file("/etc/fstab");
+    QStringList list;
+
+    // open fstab
+    if (!file.open(QIODevice::ReadOnly)) { //打开指定文件
+        qDebug() << __FUNCTION__ << "Write fstabt: open file error";
+        return false;
+    }
+
+    //此处修改：因为mount读取/etc/fstab配置文件 开机自动挂载  而fat32或fat16 mount不识别，所以要改成vfat
+    QString type2 = (type.contains("fat32") || type.contains("fat16")) ? QString("vfat") : type;
+
+    // read fstab
+    bool findflag = false; //目前默认只改第一个发现的uuid findflag 标志位：是否已经查找到uuid
+    while (!file.atEnd()) {
+        QByteArray line = file.readLine();//获取数据
+        QString str = line;
+        if (isMount) {
+            //vfat 1051系统上vfat格式不指定utf8挂载 通过文件管理器右键菜单新建文件夹会乱码  导致创建错误 为了规避该问题加上utf8属性
+            QString mountStr = (type2 == "vfat") ? QString("UUID=%1 %2 %3 defaults,nofail,utf8,dmask=000,fmask=111 0 0\n").arg(uuid).arg(mountpath).arg(type2)
+                               : QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(uuid).arg(mountpath).arg(type2);
+
+            if (str.contains(uuid) && !findflag) { //首次查找到uuid
+                findflag = true;
+                list << mountStr;
+                continue;
+            } else if (file.atEnd() && !findflag) { //查找到结尾且没有查找到uuid
+                list << str << mountStr;
+                break;
+            }
+            list << str;
+        } else {
+            if (!str.contains(uuid)) {
+                list << str;
+            }
+        }
+    }
+    file.close();
+
+    //write fstab
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
+        qDebug() << __FUNCTION__ << "Write fstabt: open file error";
+        return false;
+    }
+
+    QTextStream out(&file);
+    for (int i = 0; i < list.count(); i++) {
+        out << list.at(i);
+    }
+    out.flush();
+    file.close();
+    qDebug() << __FUNCTION__ << "Write fstabt end";
+    return true;
+}
+
+QPair<bool, QString> PartedCore::tmpMountDevice(const QString &mountpath, const QString devPath, const FSType &fsType, const QString &userName)
+{
+    //自动挂载 设置文件夹属性，删除时，按照文件夹属性删除
+    if (!createTmpMountDir(mountpath)) {
+        QString str = QString("%1:%2:%3").arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_CREATE_MOUNTDIR_FAILED).arg(devPath);
+        return QPair<bool, QString>(false, str);
+    }
+
+    //挂载
+    if (!mountDevice(mountpath, devPath, fsType)) {
+        QString str = QString("%1:%2:%3").arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_MOUNT_FAILED).arg(devPath);
+        return QPair<bool, QString>(false, str);
+    }
+
+    //更改属主
+    if (!changeOwner(userName, mountpath)) {
+        QString str = QString("%1:%2:%3").arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_CHOWN_FAILED).arg(devPath);
+        return QPair<bool, QString>(false, str);
+    }
+    QString str = QString("%1:%2:%3").arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_NORMAL).arg(devPath);
+    return QPair<bool, QString>(false, str);
+}
+
+QString PartedCore::getTmpMountPath(const QString &user, const QString &lable, const QString &uuid, const QString &devPath)
+{
+    //获取挂载文件夹名字，若名字不存在，使用uuid作为名字挂载
+    QString mountPath = QString("/media/%1/%2").arg(user).arg(lable);
+    if (lable .trimmed().isEmpty()) {
+        mountPath = QString("/media/%1/%2").arg(user).arg(uuid);
+    }
+
+    QDir dir;
+    for (int i = 0; i < 5; ++i) {
+        if (dir.exists(mountPath)) {
+            mountPath = QString("/media/%1/%2").arg(user).arg(FsInfo::getUuid(devPath));
+        } else {
+            break;
+        }
+    }
+    return mountPath;
+}
+
+bool PartedCore::createTmpMountDir(const  QString &mountPath)
+{
+    //自动挂载 获取挂载文件夹名字
+    QDir dir;
+    if (!dir.exists(mountPath)) {
+        if (!dir.mkdir(mountPath)) {
+            return false;
+        }
+    }
+
+    //设置文件属性，删除时，按照文件属性删除
+    const char *v = "deepin-diskmanager";
+    return setxattr(mountPath.toStdString().c_str(), "user.deepin-diskmanager", v, strlen(v), 0) == 0;
+}
+
+bool PartedCore::changeOwner(const QString &user, const QString &path)
+{
+    struct passwd *psInfo;
+    psInfo = getpwnam(user.toStdString().c_str());
+    if (psInfo == nullptr) {
+        return false;
+    }
+    //todo 暂时先不判断返回值 此处在fat ntfs文件系统有问题
+    chown(path.toStdString().c_str(), psInfo->pw_uid, psInfo->pw_gid);
+    return true;
+}
+
+/***********************************************private lvm*****************************************************************/
 QList<PVData> PartedCore::getCreatePVList(const QList<PVData> &devList, const long long &totalSize)
 {
     QList<PVData>diskList;
@@ -2161,36 +4003,6 @@ QList<PVData> PartedCore::getCreatePVList(const QList<PVData> &devList, const lo
     if (unallocSize > 0)
         return QList<PVData>();
 
-    //磁盘
-    foreach (PVData pv, list) {
-        if (pv.m_type == DEV_PARTITION) {
-            //todo 修改分区类型
-        }
-
-    }
-
-//    auto printPV = [ = ](QString name, QList<PVData>pvList) {
-//        qDebug() << "__FUNCTION__" << "-------------------------";
-//        qDebug() << "__FUNCTION__" << name;
-//        foreach (PVData pv, pvList) {
-//            qDebug() << "__FUNCTION__"  << pv.m_diskPath;
-//            qDebug() << "__FUNCTION__"  << pv.m_startSector;
-//            qDebug() << "__FUNCTION__"  << pv.m_devicePath;
-//            qDebug() << "__FUNCTION__"  << pv.m_endSector;
-//            qDebug() << "__FUNCTION__"  << pv.m_sectorSize;
-//        }
-//        qDebug() << "__FUNCTION__" << "-------------------------";
-//    };
-
-
-//    printPV("devList", devList);
-//    printPV("partList", partList);
-//    printPV("unallocList", unallocList);
-//    printPV("diskList", diskList);
-//    printPV("loopList", loopList);
-//    printPV("metaList", metaList);
-//    printPV("list", list);
-
     return list;
 }
 
@@ -2219,7 +4031,7 @@ QList<PVData> PartedCore::getResizePVList(const QString &vgName, const QList<PVD
     QList<PVData>oldList[2];
 
     foreach (PVData pv, devList) {
-        bool oldFlag = m_lvmInfo.pvOfVg(vgName, pv);;
+        bool oldFlag = m_lvmInfo.pvOfVg(vgName, pv);
         if (pv.m_type == DevType::DEV_DISK) {  //磁盘 如果已经加入pv
             oldFlag ? oldList[0].push_back(pv) : addDiskList.push_back(pv);
         } else if (pv.m_type == DevType::DEV_PARTITION) {
@@ -2309,9 +4121,9 @@ QList<PVData> PartedCore::getResizePVList(const QString &vgName, const QList<PVD
         }
         long long pvSize = getPVSize(pv);
         long long pvSize2 = getPVSize(pv, true);
-        if (pvSize <= 0)
+        if (pvSize <= 0) {
             continue;
-
+        }
 
         if (unallocSize < pvSize && unallocSize < pvSize2) { //获取创建分区情况下的size
             if (unallocSize <= minPartSize) {
@@ -2326,28 +4138,14 @@ QList<PVData> PartedCore::getResizePVList(const QString &vgName, const QList<PVD
             }
         }
 
-//        if (unallocSize < pvSize) {
-//            if (!getPVStartEndSector(pv, unallocSize)) {
-//                return  QList<PVData>();
-//            }
-//            //创建分区
-//            if (!createPVPart(pv)) {
-//                return QList<PVData>();
-//            }
-//        }
         unallocSize -= pvSize;
-
         list.push_back(pv); //整盘加入 从头到尾都可用
     }
-    if (unallocSize > 0)
-        return QList<PVData>();
 
-    //磁盘
-    foreach (PVData pv, list) {
-        if (pv.m_type == DEV_PARTITION) {
-            //todo 修改分区类型
-        }
+    if (unallocSize > 0) {
+        return QList<PVData>();
     }
+
     return list;
 }
 
@@ -2398,7 +4196,11 @@ bool PartedCore::getPVStartEndSector(PVData &pv, const long long &unallocaSize)
 
     long long startSec = pv.m_startSector;
     long long endSec = pv.m_endSector;
-    long long allSec = unallocaSize / dev.m_sectorSize + 1; //总共需要的扇区
+    long long allSec = unallocaSize / dev.m_sectorSize; //总共需要的扇区
+    if (unallocaSize % dev.m_sectorSize) {
+        allSec++;
+    }
+
     long long pvSize = getPVSize(pv);
 
     if (pv.m_type == DEV_DISK || (pv.m_type == DEV_UNALLOCATED_PARTITION && pv.m_startSector == 0)) { //如果是磁盘或者有分区表但是没有分区 要从2048扇区开始
@@ -2490,53 +4292,6 @@ bool PartedCore::createPVPart(PVData &pv)
     return true;
 }
 
-LUKS_INFO PartedCore::getNewLUKSInfo(const Partition &part)
-{
-    QString dmName = part.m_dmName;
-    if (dmName.isEmpty()) {
-        QString crypt;
-        if (part.m_cryptCipher == CRYPT_CIPHER::AES_XTS_PLAIN64) {
-            crypt = "aesE";
-        } else if (part.m_cryptCipher == CRYPT_CIPHER::SM4_XTS_PLAIN64) {
-            crypt = "sm4E";
-        }
-        dmName = part.getPath().replace("/dev/", "") + "_" + crypt;
-    }
-
-    return getNewLUKSInfo(part.m_fstype,
-                          part.m_tokenList,
-                          part.m_cryptCipher,
-                          part.m_decryptStr,
-                          dmName,
-                          part.getPath(),
-                          part.getFileSystemLabel());
-}
-
-LUKS_INFO PartedCore::getNewLUKSInfo(const LVAction &lvAct)
-{
-    return getNewLUKSInfo(lvAct.m_lvFs,
-                          lvAct.m_tokenList,
-                          lvAct.m_crypt,
-                          lvAct.m_decryptStr,
-                          lvAct.m_dmName,
-                          QString("/dev/mapper/%1-%2").arg(lvAct.m_vgName).arg(lvAct.m_lvName),
-                          "");
-}
-
-LUKS_INFO PartedCore::getNewLUKSInfo(const FSType &type, const QStringList &token, const CRYPT_CIPHER &cipher, const QString &decryptStr, const QString &dmName, const QString devPath, const QString &label)
-{
-    LUKS_INFO info;
-    info.m_mapper.m_luksFs = type;
-    info.m_tokenList = token;
-    info.m_crypt = cipher;
-    info.m_decryptStr = decryptStr;
-    info.m_mapper.m_dmName = dmName;
-    info.m_mapper.m_dmPath = "/dev/mapper/" + dmName;
-    info.m_devicePath = devPath;
-    info.m_fileSystemLabel = label;
-    return info;
-}
-
 bool PartedCore::checkPVDevice(const QString vgName, const PVData &pv, bool isCreate)
 {
     if (pv.m_type == DevType::DEV_UNKNOW_DEVICES) { //设备类型不明
@@ -2609,1710 +4364,54 @@ void PartedCore::resizeVGMessage(bool flag)
     sendRefSigAndReturn(flag, DISK_SIGNAL_TYPE_VGCREATE, flag, QString("%1:%2").arg(flag ? 1 : 0).arg(m_lvmInfo.m_lvmErr));
 }
 
-bool PartedCore::createVG(QString vgName, QList<PVData> devList, long long size)
+/***********************************************private lvm*****************************************************************/
+
+LUKS_INFO PartedCore::getNewLUKSInfo(const Partition &part)
 {
-    std::set<PVData>tmpDevList;
-    foreach (PVData pv, devList) {
-        if (!tmpDevList.insert(pv).second || !checkPVDevice(vgName, pv, true)) { //插入失败说明有重复
-            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
+    QString dmName = part.m_dmName;
+    if (dmName.isEmpty()) {
+        QString crypt;
+        if (part.m_cryptCipher == CRYPT_CIPHER::AES_XTS_PLAIN64) {
+            crypt = "aesE";
+        } else if (part.m_cryptCipher == CRYPT_CIPHER::SM4_XTS_PLAIN64) {
+            crypt = "sm4E";
         }
+        dmName = part.getPath().replace("/dev/", "") + "_" + crypt;
     }
 
-    QList<PVData>list =  getCreatePVList(devList, size);
-
-    // find luks Device and Close
-    foreach (const PVData &pv, list) {
-        if (!m_LUKSInfo.luksExists(pv.m_devicePath)) {
-            continue;
-        }
-        LUKS_INFO luks = m_LUKSInfo.getLUKS(pv.m_devicePath);
-        LUKSOperator::removeMapperAndKey(m_LUKSInfo, luks);
-    }
-
-    if (!LVMOperator::createVG(m_lvmInfo, vgName, list, size)) {
-        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(m_lvmInfo.m_lvmErr));
-    }
-    return sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_VGCREATE, true, QString("1:%1").arg(m_lvmInfo.m_lvmErr));
+    return getNewLUKSInfo(part.m_fstype,
+                          part.m_tokenList,
+                          part.m_cryptCipher,
+                          part.m_decryptStr,
+                          dmName,
+                          part.getPath(),
+                          part.getFileSystemLabel());
 }
 
-bool PartedCore::createLV(QString vgName, QList<LVAction> lvList)
+LUKS_INFO PartedCore::getNewLUKSInfo(const LVAction &lvAct)
 {
-    foreach (const LVAction &clv, lvList) {
-        if (!supportedFileSystem(clv.m_lvFs)) { //判断文件系统是否支持
-            return sendRefSigAndReturn(false);
-        }
-    }
-
-    //创建lv 失败返回false
-    if (!LVMOperator::createLV(m_lvmInfo, vgName, lvList)) {
-        return sendRefSigAndReturn(false);
-    }
-
-    //获取新创建lv列表
-    QVector<LVInfo>lvVec;
-    QVector<LVAction>lvVecActDecrypt;
-    QVector<LVInfo>lvVecDecrypt;
-    VGInfo vg = m_lvmInfo.getVG(vgName);
-    foreach (const LVAction &clv, lvList) {
-        if (!vg.lvInfoExists(clv.m_lvName)) {
-            continue;
-        }
-
-        LVInfo lv = vg.getLVinfo(clv.m_lvName);
-        lv.m_lvFsType = clv.m_lvFs;
-        if (clv.m_luksFlag == LUKSFlag::NOT_CRYPT_LUKS) {
-            lvVec.push_back(lv);
-        } else {
-            lvVecDecrypt.push_back(lv);
-            lvVecActDecrypt.push_back(clv);
-        }
-    }
-
-    QString userName = lvList.begin()->m_user;
-    if (userName.trimmed().isEmpty()) {
-        return sendRefSigAndReturn(false);
-    }
-
-    foreach (const LVInfo &lvInfo, lvVec) {
-        if (lvInfo.m_lvUuid.trimmed().isEmpty()) {
-            return sendRefSigAndReturn(false);
-        }
-        //创建文件系统
-        if (!createFileSystem(lvInfo.m_lvFsType, lvInfo.m_busy, QString("/dev/%1/%2").arg(lvInfo.m_vgName).arg(lvInfo.m_lvName))) {
-            return sendRefSigAndReturn(false);
-        }
-        //自动挂载 获取挂载文件夹名字
-        QString mountPath = QString("/media/%1/%2").arg(userName).arg(lvInfo.m_lvUuid);
-        if (!tmpMountDevice(mountPath, lvInfo.m_lvPath, lvInfo.m_lvFsType, userName).first) {
-            return sendRefSigAndReturn(false);
-        }
-    }
-
-
-    //新建加密
-    foreach (const LVAction &lv, lvVecActDecrypt) {
-        LUKS_INFO info = getNewLUKSInfo(lv);
-        if (!(LUKSOperator::encrypt(m_LUKSInfo, info)
-                && LUKSOperator::decrypt(m_LUKSInfo, info)
-                && createFileSystem(info.m_mapper.m_luksFs, info.m_mapper.m_busy, info.m_mapper.m_dmPath))) {
-            return sendRefSigAndReturn(false);
-        }
-    }
-
-    probeDeviceInfo();
-    foreach (const LVInfo &lv, lvVecDecrypt) {
-        LUKS_INFO info = m_LUKSInfo.getLUKS(lv.m_lvPath);
-        //自动挂载 获取挂载文件夹名字
-        QString mountPath = QString("/media/%1/%2").arg(userName).arg(info.m_mapper.m_uuid);
-        if (!tmpMountDevice(mountPath, info.m_mapper.m_dmPath, info.m_mapper.m_luksFs, userName).first) {
-            return sendRefSigAndReturn(false);
-        }
-    }
-    return sendRefSigAndReturn(true);
+    return getNewLUKSInfo(lvAct.m_lvFs,
+                          lvAct.m_tokenList,
+                          lvAct.m_crypt,
+                          lvAct.m_decryptStr,
+                          lvAct.m_dmName,
+                          QString("/dev/mapper/%1-%2").arg(lvAct.m_vgName).arg(lvAct.m_lvName),
+                          "");
 }
 
-bool PartedCore::deleteVG(QStringList vglist)
+LUKS_INFO PartedCore::getNewLUKSInfo(const FSType &type, const QStringList &token, const CRYPT_CIPHER &cipher, const QString &decryptStr, const QString &dmName, const QString devPath, const QString &label)
 {
-    bool flag = LVMOperator::deleteVG(m_lvmInfo, vglist);
-    QString str = flag ? "1:0" : QString("0:%1").arg(m_lvmInfo.m_lvmErr);
-    return sendRefSigAndReturn(flag, DISK_SIGNAL_TYPE_VGDELETE, flag, str);
-}
-
-bool PartedCore::deleteLV(QStringList lvlist)
-{
-    // find luks Device and Close
-    foreach (const QString &str, lvlist) {
-        if (!m_LUKSInfo.luksExists(str)) {
-            continue;
-        }
-        LUKS_INFO luks = m_LUKSInfo.getLUKS(str);
-        LUKSOperator::removeMapperAndKey(m_LUKSInfo, luks);
-    }
-
-    bool flag = LVMOperator::lvRemove(m_lvmInfo, lvlist);
-    QString str = flag ? "1:0" : QString("0:%1").arg(m_lvmInfo.m_lvmErr);
-    return sendRefSigAndReturn(flag, DISK_SIGNAL_TYPE_LVDELETE, flag, str);
-}
-
-bool PartedCore::resizeVG(QString vgName, QList<PVData> devList, long long size)
-{
-    std::set<PVData>tmpDevList;
-    foreach (PVData pv, devList) {
-        if (!tmpDevList.insert(pv).second || !checkPVDevice(vgName, pv, false)) { //插入失败说明有重复
-            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
-        }
-    }
-
-    if (m_workerLVMThread == nullptr) {
-        m_workerLVMThread = new QThread();
-        m_workerLVMThread->start();
-        m_lvmThread.moveToThread(m_workerLVMThread);
-    }
-
-    QList<PVData>list =  getResizePVList(vgName, devList, size);
-
-
-    // find luks Device and Close
-    foreach (const PVData &pv, list) {
-        if (!m_LUKSInfo.luksExists(pv.m_devicePath)) {
-            continue;
-        }
-        LUKS_INFO luks = m_LUKSInfo.getLUKS(pv.m_devicePath);
-        LUKSOperator::removeMapperAndKey(m_LUKSInfo, luks);
-    }
-
-    if (list.size() <= 0) {
-        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVMError::LVM_ERR_VG_ARGUMENT));
-    }
-
-    //线程启动信号
-    emit resizeVGStart(m_lvmInfo, vgName, list, size);
-    return true;
-}
-
-bool PartedCore::resizeLV(LVAction &lvAct)
-{
-    //lv是否存在
-    if (! m_lvmInfo.lvInfoExists(lvAct.m_vgName, lvAct.m_lvName)) {
-        return sendRefSigAndReturn(false);
-    }
-
-    //执行动作是否为扩大或缩小
-    if (!(lvAct.m_lvAct == LVM_ACT_LV_EXTEND || lvAct.m_lvAct == LVM_ACT_LV_REDUCE)) {
-        return sendRefSigAndReturn(false);
-    }
-
-    //调整大小是否小于文件系统最小值 或者等于当前大小
-    LVInfo info = m_lvmInfo.getLVInfo(lvAct.m_vgName, lvAct.m_lvName);
-    if (lvAct.m_lvByteSize < info.m_fsLimits.min_size || lvAct.m_lvByteSize == (info.m_lvLECount * info.m_LESize)) {
-        return sendRefSigAndReturn(false);
-    }
-
-    if (lvAct.m_lvAct == LVM_ACT_LV_REDUCE) { //缩小
-        //自动卸载
-        if (!umontDevice(info.m_mountPoints, info.toMapperPath())) {
-            return sendRefSigAndReturn(false);
-        }
-    }
-
-    //调整lv大小
-    if (!LVMOperator::resizeLV(m_lvmInfo, lvAct, info)) {
-        return sendRefSigAndReturn(false);
-    }
-
-    if (lvAct.m_lvAct == LVM_ACT_LV_REDUCE && info.m_mountPoints.size() >= 1) {
-        //调整lv大小
-        if (!mountDevice(info.m_mountPoints[0], info.m_lvPath, info.m_lvFsType)) {
-            return sendRefSigAndReturn(false);
-        }
-    }
-
-    return sendRefSigAndReturn(true);
-}
-
-bool PartedCore::mountLV(const LVAction &lvAction)
-{
-    //判断lv是否存在 不存在退出
-    qDebug() << __FUNCTION__ << "mount LV start";
-    if (lvAction.m_lvAct != LVM_ACT_LV_MOUNT || !m_lvmInfo.lvInfoExists(lvAction.m_vgName, lvAction.m_lvName)) {
-        qDebug() << __FUNCTION__ << "mount LV error:lv not exists or lvact not  LVM_ACT_LV_MOUNT";
-        return sendRefSigAndReturn(false);
-    }
-
-    //永久挂载
-    LVInfo lv = m_lvmInfo.getLVInfo(lvAction.m_vgName, lvAction.m_lvName);
-    QString type = Utils::fileSystemTypeToString(lv.m_lvFsType);
-    if (!mountDevice(lvAction.m_mountPoint, lv.m_lvPath, lv.m_lvFsType)) {
-        return sendRefSigAndReturn(false);
-    }
-    return   sendRefSigAndReturn(writeFstab(lv.m_mountUuid, lvAction.m_mountPoint, type, true));
-}
-
-bool PartedCore::umountLV(const LVAction &lvAction)
-{
-    //判断lv是否存在 不存在退出
-    qDebug() << __FUNCTION__ << "Unmount LV start";
-    if (lvAction.m_lvAct != LVM_ACT_LV_UMOUNT || !m_lvmInfo.lvInfoExists(lvAction.m_vgName, lvAction.m_lvName)) {
-        qDebug() << __FUNCTION__ << "Unmount LV error:lv not exists or lvact not  LVM_ACT_LV_UMOUNT";
-        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_UMNT, true, "0");
-    }
-    //卸载
-    LVInfo lv = m_lvmInfo.getLVInfo(lvAction.m_vgName, lvAction.m_lvName);
-    if (!umontDevice(lv.m_mountPoints, lv.toMapperPath())) { //卸载挂载点  内部有信号发送 不要重复发送信号
-        qDebug() << __FUNCTION__ << "Unmount LV error:lv umount error";
-        return false;
-    }
-    //修改fstab
-    writeFstab(lv.m_mountUuid, "", Utils::fileSystemTypeToString(lv.m_lvFsType), false);
-    qDebug() << __FUNCTION__ << "Unmount LV end";
-    return sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_UMNT, true, "1");
-}
-
-bool PartedCore::clearLV(const LVAction &lvAction)
-{
-    qDebug() << __FUNCTION__ << "clearLV LV start";
-
-    // 判断act是否正确 lv是否存在
-    if (!(lvAction.m_lvAct == LVM_ACT_LV_FAST_CLEAR || lvAction.m_lvAct == LVM_ACT_LV_SECURE_CLEAR)
-            || !m_lvmInfo.lvInfoExists(lvAction.m_vgName, lvAction.m_lvName)) {
-        qDebug() << __FUNCTION__ << "clearLV LV error:lv not exists or lvact not  LVM_ACT_LV_FAST_CLEAR or LVM_ACT_LV_SECURE_CLEAR";
-        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, QString("0:%1").arg(DISK_ERROR::DISK_ERR_DBUS_ARGUMENT));
-    }
-
-    //判断需要创建的文件系统是否符合
-    bool success = (lvAction.m_lvFs == FS_NTFS || lvAction.m_lvFs == FS_FAT16
-                    || lvAction.m_lvFs == FS_FAT32 || lvAction.m_lvFs == FS_EXT2
-                    || lvAction.m_lvFs == FS_EXT3 || lvAction.m_lvFs == FS_EXT4);
-    LVInfo lv = m_lvmInfo.getLVInfo(lvAction.m_vgName, lvAction.m_lvName);
-    if (lv.m_busy || !success) { //被挂载 or 文件系统不支持 退出
-        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, QString("0:%1").arg(DISK_ERROR::DISK_ERR_DBUS_ARGUMENT));
-    }
-
-
-    //关闭加密磁盘
-    if (m_LUKSInfo.luksExists(lv.m_lvPath)) {
-        LUKS_INFO info = m_LUKSInfo.getLUKS(lv.m_lvPath);
-        success = LUKSOperator::removeMapperAndKey(m_LUKSInfo, info);
-    }
-
-    if (!success) {
-        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, QString("0:%1").arg(DISK_ERROR::DISK_ERR_DBUS_ARGUMENT));
-    }
-
-
-    //获取文件系统类型
-    QString type = Utils::getFileSystemSoftWare(lvAction.m_lvFs);
-    switch (lvAction.m_lvAct) {
-    case LVM_ACT_LV_SECURE_CLEAR:
-        //清除算法
-        secuClear(lv.m_lvPath, 0, lv.m_lvLECount - 1, lv.m_LESize, type); //不要加break 如果是安全清除 还是需要创建文件系统的
-    case LVM_ACT_LV_FAST_CLEAR: {
-        QString tmpPath = QString("/dev/%1/%2").arg(lvAction.m_vgName).arg(lvAction.m_lvName);
-        //判断是否加密
-        if (lvAction.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
-            LUKS_INFO info = getNewLUKSInfo(lvAction);
-            //加密失败
-            if (!LUKSOperator::encrypt(m_LUKSInfo, info)) {
-                return sendRefSigAndReturn(false);
-            }
-            //解密失败
-            if (!LUKSOperator::decrypt(m_LUKSInfo, info)) {
-                return sendRefSigAndReturn(false);
-            }
-            tmpPath = info.m_mapper.m_dmPath;
-        }
-
-        //创建文件系统
-        if (!createFileSystem(lvAction.m_lvFs, false, tmpPath)) {
-            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, QString("0:%1").arg(DISK_ERROR::DISK_ERR_CREATE_FS_FAILED));
-        }
-        break;
-    }
-    default:
-        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, QString("0:%1").arg(DISK_ERROR::DISK_ERR_DBUS_ARGUMENT));
-    }
-
-    QString mountPath, devPath;
-    //判断是否加密
-    if (lvAction.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
-        probeDeviceInfo();
-        LUKS_INFO info = m_LUKSInfo.getLUKS(lv.m_lvPath);
-        //自动挂载 获取挂载文件夹名字
-        mountPath = QString("/media/%1/%2").arg(lvAction.m_user).arg(info.m_mapper.m_uuid);
-        devPath = info.m_mapper.m_dmPath;
-    } else {
-        mountPath = QString("/media/%1/%2").arg(lvAction.m_user).arg(lv.m_lvUuid);
-        devPath = lv.m_lvPath;
-    }
-    QPair<bool, QString>pair = tmpMountDevice(mountPath, devPath, lvAction.m_lvFs, lvAction.m_user);
-    qDebug() << __FUNCTION__ << "clearLV LV end";
-    return sendRefSigAndReturn(pair.first, DISK_SIGNAL_TYPE_CLEAR, pair.first, pair.second);
-}
-
-bool PartedCore::deletePVList(QList<PVData> devList)
-{
-    if (m_workerLVMThread == nullptr) {
-        m_workerLVMThread = new QThread();
-        m_workerLVMThread->start();
-        m_lvmThread.moveToThread(m_workerLVMThread);
-    }
-
-    //线程启动信号
-    emit deletePVListStart(m_lvmInfo, devList);
-    return true;
-}
-
-bool PartedCore::delTempMountFile()
-{
-    QDir dir("/media");
-    QDir userPath;
-    if (!dir.exists()) {
-        return false;
-    }
-    QStringList mountPath;
-    for (int i = 2 ; i < dir.count(); i++) {
-        userPath.setPath(QString("/media/%1").arg(dir[i]));
-        for (int j = 2; j < userPath.count(); j++) {
-            mountPath.append(QString("/media/%1/%2").arg(dir[i]).arg(userPath[j]));
-        }
-    }
-    QMap<QString, Device>::iterator it = m_deviceMap.begin();
-    for (; it != m_deviceMap.end() ; it++) {
-        for (int i = 0; i < it->m_partitions.size(); i++) {
-            if (mountPath.contains(it->m_partitions[i]->getMountPoint())) {
-                mountPath.removeOne(it->m_partitions[i]->getMountPoint());
-            }
-        }
-    }
-
-    QDir d;
-    char value[1024] = {0};
-    for (int i = 0; i < mountPath.size(); i++) {
-        getxattr(mountPath[i].toStdString().c_str(), "user.deepin-diskmanager", value, 1024);
-        if (QString(value) == "deepin-diskmanager") {
-            d.rmdir(mountPath[i]);
-        }
-    }
-    return true;
-}
-
-bool PartedCore::format(const QString &fstype, const QString &name)
-{
-    qDebug() << __FUNCTION__ << "Format Partitione start";
-    Partition part = m_curpartition;
-    part.m_fstype = Utils::stringToFileSystemType(fstype);
-    part.setFilesystemLabel(name);
-    bool success = formatPartition(part);
-    qDebug() << __FUNCTION__ << "Format Partitione end";
-    return success;
-}
-
-bool PartedCore::clear(const WipeAction &wipe)
-{
-    qDebug() << __FUNCTION__ << QString("Clear Partitione start, path: %1").arg(wipe.m_path) ;
-    bool success = false;
-    FSType fs = Utils::stringToFileSystemType(wipe.m_fstype);
-    success = (fs == FS_NTFS || fs == FS_FAT16 || fs == FS_FAT32 || fs == FS_EXT2 || fs == FS_EXT3 || fs == FS_EXT4);
-    if (success) {
-        if (wipe.m_path.isEmpty() || wipe.m_user.isEmpty()) {
-            success = false;
-        }
-
-        if (wipe.m_diskType < DISK_TYPE || wipe.m_diskType > PART_TYPE) {
-            success = false;
-        }
-
-        if (wipe.m_clearType < FAST_TYPE || wipe.m_clearType > GUTMANN_TYPE) {
-            success = false;
-        }
-    }
-
-    if (!success) {
-        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, false, QString("0:%1").arg(DISK_ERROR::DISK_ERR_DBUS_ARGUMENT));
-        return false;
-    }
-
-    //关闭加密磁盘
-    if (m_LUKSInfo.luksExists(wipe.m_path)) {
-        LUKS_INFO info = m_LUKSInfo.getLUKS(wipe.m_path);
-        success = LUKSOperator::removeMapperAndKey(m_LUKSInfo, info);
-    }
-
-    if (!success) {
-        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, false, QString("0:%1").arg(DISK_ERROR::DISK_ERR_DBUS_ARGUMENT));
-        return false;
-    }
-
-    m_isClear = true;
-    PartitionInfo pInfo;
-    QString curDiskType;
-    QString curDevicePath;
-    QString cmd;
-    QString output, errstr;
-
-    if (PART_TYPE == wipe.m_diskType) {
-        curDevicePath = m_curpartition.m_devicePath;
-        curDiskType = m_deviceMap.value(curDevicePath).m_diskType;
-
-        if (curDiskType == "unrecognized") {
-            curDiskType = "gpt";
-
-            Device dev = m_deviceMap.value(curDevicePath);
-            success = createPartitionTable(dev.m_path, QString("%1").arg(dev.m_length), QString("%1").arg(dev.m_sectorSize),
-                                           curDiskType);
-            probeDeviceInfo();
-        }
-
-        pInfo.m_fileSystemType = Utils::stringToFileSystemType(wipe.m_fstype);
-        pInfo.m_fileSystemLabel = wipe.m_fileSystemLabel ;
-        pInfo.m_devicePath = m_curpartition.m_devicePath;
-        pInfo.m_sectorSize = m_curpartition.m_sectorSize;
-        pInfo.m_sectorStart = m_curpartition.m_sectorStart;
-        pInfo.m_fileSystemReadOnly = false;
-        if ("unallocated" == wipe.m_path) {
-            pInfo.m_insideExtended = false;
-            pInfo.m_busy = false;
-            pInfo.m_fileSystemReadOnly = false;
-            pInfo.m_alignment = ALIGN_MEBIBYTE;
-            pInfo.m_type = TYPE_PRIMARY;
-            if (0 == pInfo.m_sectorStart) {
-                pInfo.m_sectorStart = UEFI_SECTOR;
-            }
-
-            Device tmpDev = m_deviceMap.value(pInfo.m_devicePath);
-
-            if (curDiskType == "gpt" && tmpDev.m_length == (m_curpartition.m_sectorEnd + 1)) {
-                pInfo.m_sectorEnd = m_curpartition.m_sectorEnd - GPTBACKUP;
-            } else {
-                pInfo.m_sectorEnd = m_curpartition.m_sectorEnd;
-            }
-            PartitionVec pVec;
-            pVec.push_back(pInfo);
-            success = create(pVec);
-            probeDeviceInfo();
-
-            Device dev = m_deviceMap.value(curDevicePath);
-            for (int i = 0 ; i < dev.m_partitions.size(); i++) {
-                Partition *info = dev.m_partitions.at(i);
-                if (info->m_sectorStart == pInfo.m_sectorStart && info->m_sectorEnd == pInfo.m_sectorEnd) {
-                    m_curpartition = *info;
-                    break;
-                }
-            }
-        } else {
-            pInfo.m_alignment = m_curpartition.m_alignment;
-            pInfo.m_type = m_curpartition.m_type;
-            pInfo.m_insideExtended = m_curpartition.m_insideExtended;
-            pInfo.m_busy = m_curpartition.m_busy;
-            pInfo.m_sectorEnd = m_curpartition.m_sectorEnd;
-        }
-    } else if (DISK_TYPE == wipe.m_diskType) {
-        Device dev = m_deviceMap.value(wipe.m_path);
-        curDevicePath = wipe.m_path;
-        qDebug() << __FUNCTION__ << "Clear:  createPartitionTable start : " << dev.m_path;
-        curDiskType = dev.m_diskType;
-        if (curDiskType == "unrecognized") {
-            curDiskType = "gpt";
-        }
-        success = createPartitionTable(dev.m_path, QString("%1").arg(dev.m_length), QString("%1").arg(dev.m_sectorSize), curDiskType);
-        probeDeviceInfo();
-
-        PartitionVec pVec;
-        pInfo.m_fileSystemType = Utils::stringToFileSystemType(wipe.m_fstype);;
-        pInfo.m_fileSystemLabel = wipe.m_fileSystemLabel ;
-        pInfo.m_alignment = ALIGN_MEBIBYTE;
-        pInfo.m_sectorSize = dev.m_sectorSize;
-        pInfo.m_insideExtended = false;
-        pInfo.m_busy = false;
-        pInfo.m_fileSystemReadOnly = false;
-        pInfo.m_devicePath = wipe.m_path;
-        pInfo.m_type = TYPE_PRIMARY;
-        pInfo.m_sectorStart = UEFI_SECTOR;
-
-
-        if (curDiskType == "gpt") {
-            pInfo.m_sectorEnd = dev.m_length - 34;
-        } else {
-            pInfo.m_sectorEnd = dev.m_length - 1;
-        }
-
-        pVec.push_back(pInfo);
-        qDebug() << __FUNCTION__ << "Clear:  createPartition  start : " << pInfo.m_path;
-        success = create(pVec);
-        probeDeviceInfo();
-
-        Device devTmp = m_deviceMap.value(wipe.m_path);
-        if (devTmp.m_partitions.count() >= 1) {
-            m_curpartition = *(devTmp.m_partitions[0]);
-        }
-
-    }
-
-    //清除
-    switch (wipe.m_clearType) {
-    case FAST_TYPE:
-        qDebug() << __FUNCTION__ << "Clear:  format  start";
-        success = format(wipe.m_fstype, wipe.m_fileSystemLabel);
-        if (!success) {
-            qDebug() << __FUNCTION__ << "format error";
-            emit clearMessage(QString("0:%1").arg(DISK_ERROR::DISK_ERR_DELETE_PART_FAILED));
-            m_isClear = false;
-            return success;
-        }
-        break;
-    case SECURE_TYPE:
-        qDebug() << __FUNCTION__ << "Clear:  secuClear  start";
-        success = secuClear(m_curpartition.getPath(), m_curpartition.m_sectorStart, m_curpartition.m_sectorEnd, m_curpartition.m_sectorSize, wipe.m_fstype, wipe.m_fileSystemLabel, 1);
-        break;
-    case DOD_TYPE:
-        qDebug() << __FUNCTION__ << "Clear:  secuClear  start";
-        success = secuClear(m_curpartition.getPath(), m_curpartition.m_sectorStart, m_curpartition.m_sectorEnd, m_curpartition.m_sectorSize, wipe.m_fstype, wipe.m_fileSystemLabel, 7);
-        break;
-    case GUTMANN_TYPE:
-        qDebug() << __FUNCTION__ << "Clear:  secuClear  start";
-        success = secuClear(m_curpartition.getPath(), m_curpartition.m_sectorStart, m_curpartition.m_sectorEnd, m_curpartition.m_sectorSize, wipe.m_fstype, wipe.m_fileSystemLabel, 35);
-        break;
-    default:
-        m_isClear = false;
-        return false;
-    }
-
-
-
-    if (!success) {
-        qDebug() << __FUNCTION__ << "secuClear error";
-        emit clearMessage(QString("0:%1").arg(DISK_ERROR::DISK_ERR_UPDATE_KERNEL_FAILED));
-        m_isClear = false;
-        return success;
-    }
-
-
-
-    // 如果是清理是磁盘时，需要新建分区表，并且新建分区
-    if (DISK_TYPE == wipe.m_diskType) {
-        Device d = m_deviceMap.value(wipe.m_path);
-        qDebug() << __FUNCTION__ << "Clear after:  createPartitionTable  start";
-        success = createPartitionTable(d.m_path, QString("%1").arg(d.m_length), QString("%1").arg(d.m_sectorSize), curDiskType);
-        probeDeviceInfo();
-
-        //新建分区
-        PartitionVec pVec;
-        qDebug() << "pInfo end :   " << pInfo.m_sectorEnd;
-        pVec.push_back(pInfo);
-        qDebug() << __FUNCTION__ << "Clear after:  create Partition  start";
-        create(pVec);
-    }
-
-    //如果清理是分区，并且清除模式不是快速清除时，执行格式化分区
-    if (FAST_TYPE != wipe.m_clearType && PART_TYPE == wipe.m_diskType) {
-        //新建分区
-        success = format(wipe.m_fstype, wipe.m_fileSystemLabel);
-        if (!success) {
-            qDebug() << __FUNCTION__ << "format error";
-            blockSignals(false);
-            emit clearMessage(QString("0:%1").arg(DISK_ERROR::DISK_ERR_DELETE_PART_FAILED));
-            m_isClear = false;
-            return success;
-        }
-    }
-
-    probeDeviceInfo();
-
-    //创建完分区后，将当前创建的分区设置为当前选中分区
-    if (DISK_TYPE  == wipe.m_diskType) {
-        Device d = m_deviceMap.value(wipe.m_path);
-        if (d.m_partitions.count() >= 1) {
-            m_curpartition = *(d.m_partitions[0]);
-        }
-    } else {
-        Device d = m_deviceMap.value(curDevicePath);
-        for (int i = 0 ; i < d.m_partitions.size(); i++) {
-            Partition *info = d.m_partitions.at(i);
-            if (pInfo.m_sectorStart == info->m_sectorStart && pInfo.m_sectorEnd == info->m_sectorEnd) {
-                m_curpartition = *info;
-                break;
-            }
-        }
-    }
-//   m_curpartition.m_fstype = Utils::stringToFileSystemType(fstype);
-
-    //TODO:
-
-    if (wipe.m_luksFlag == LUKSFlag::NOT_CRYPT_LUKS) {
-        //自动挂载
-        QFileInfo f;
-        //获取挂载文件夹名字，若名字不存在，使用uuid作为名字挂载
-        QString mountPath = QString("/media/%1/%2").arg(wipe.m_user).arg(wipe.m_fileSystemLabel);
-        if (wipe.m_fileSystemLabel .trimmed().isEmpty()) {
-            mountPath = QString("/media/%1/%2").arg(wipe.m_user).arg(FsInfo::getUuid(m_curpartition.getPath()));
-        } else {
-            f.setFile(mountPath);
-            if (f.exists()) {
-                mountPath = QString("/media/%1/%2").arg(wipe.m_user).arg(FsInfo::getUuid(m_curpartition.getPath()));
-            }
-        }
-
-        //设置文件属性，删除时，按照文件属性删除
-        if (!createTmpMountDir(mountPath)) {
-            success = false;
-            m_isClear = false;
-            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true,  QString("0:%1").arg(DISK_ERROR::DISK_ERR_UPDATE_KERNEL_FAILED));
-            return success;
-        }
-
-
-        //挂载
-        qDebug() << __FUNCTION__ << "Clear after:  mountTemp  start";
-        success = mountDevice(mountPath, m_curpartition.getPath(), m_curpartition.m_fstype);
-        if (!success) {
-            emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true, QString("0:%1").arg(DISK_ERROR::DISK_ERR_UPDATE_KERNEL_FAILED));
-            m_isClear = false;
-            return success;
-        }
-        qDebug() << __FUNCTION__ << "clear end";
-
-        //更改属主
-
-        changeOwner(wipe.m_user, mountPath);
-        m_isClear = false;
-        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CLEAR, true,  QString("1:0"));
-        return success;
-    } else {
-        Partition p = m_curpartition;
-        p.m_dmName = wipe.m_dmName;
-        p.m_tokenList = wipe.m_tokenList;
-        p.m_decryptStr = wipe.m_decryptStr;
-        p.m_luksFlag = wipe.m_luksFlag;
-        p.m_cryptCipher = wipe.m_crypt;
-
-        LUKS_INFO info = getNewLUKSInfo(p);
-        if (!(LUKSOperator::encrypt(m_LUKSInfo, info)
-                && LUKSOperator::decrypt(m_LUKSInfo, info)
-                && createFileSystem(info.m_mapper.m_luksFs, info.m_mapper.m_busy, info.m_mapper.m_dmPath))) {
-            m_isClear = false;
-            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, QString("0:%1").arg(DISK_ERROR::DISK_ERR_UPDATE_KERNEL_FAILED));
-        }
-
-        probeDeviceInfo();
-
-        //挂载
-        LUKS_INFO info2 = m_LUKSInfo.getLUKS(m_curpartition.getPath());
-        QString mountPath = QString("/media/%1/%2").arg(wipe.m_user).arg(info2.m_mapper.m_uuid);
-        QString devPath = info.m_mapper.m_dmPath;
-        QPair<bool, QString>pair = tmpMountDevice(mountPath, devPath, info2.m_mapper.m_luksFs, wipe.m_user);
-        m_isClear = false;
-        qDebug() << __FUNCTION__ << "clearLV LV end";
-        return sendRefSigAndReturn(pair.first, DISK_SIGNAL_TYPE_CLEAR, pair.first, pair.second);
-    }
-}
-
-bool PartedCore::resize(const PartitionInfo &info)
-{
-    qDebug() << __FUNCTION__ << "Resize Partitione start: " << info.m_devicePath;
-
-//    //对应 Bug 95232, 如果检测到虚拟磁盘扩容的话，重新写一下分区表，就可以修正分区表数据.
-    reWritePartition(info.m_devicePath);
-//    QString cmd = QString("fdisk -l %1 2>&1").arg(info.m_devicePath);
-//    FILE *fd = nullptr;
-//    fd = popen(cmd.toStdString().data(), "r");
-//    char pb[1024];
-//    memset(pb, 0, 1024);
-
-//    if (fd) {
-//        while (fgets(pb, 1024, fd) != nullptr) {
-//            if (strstr(pb, "will be corrected by write")) {
-//                QString cmd_fix = QString("echo w | fdisk %1").arg(info.m_devicePath);
-
-//                FILE *fixfd = popen(cmd_fix.toStdString().data(), "r");
-//                if (fixfd) {
-//                    fclose(fixfd);
-//                }
-//                qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
-//            }
-//        }
-
-//        fclose(fd);
-//    }
-
-    qDebug() << __FUNCTION__ << "Resize Partitione start";
-    Partition newPartition = m_curpartition;
-    newPartition.reset(info);
-    if (newPartition.getByteLength() < m_curpartition.m_fsLimits.min_size) {
-        return sendRefSigAndReturn(false);
-    }
-
-    bool success = resize(newPartition);
-    emit refreshDeviceInfo();
-    qDebug() << __FUNCTION__ << "Resize Partitione end";
-    return success;
-}
-
-QStringList PartedCore::getallsupportfs()
-{
-    if (nullptr == m_supportedFileSystems) {
-        m_supportedFileSystems = new SupportedFileSystems();
-        //Determine file system support capabilities for the first time
-        m_supportedFileSystems->findSupportedFilesystems();
-    }
-    return m_supportedFileSystems->getAllFsName();
-}
-
-HardDiskInfo PartedCore::getDeviceHardInfo(const QString &devicepath)
-{
-    qDebug() << __FUNCTION__ << "Get Device Hard Info Start";
-    HardDiskInfo hdinfo;
-    if (devicepath.isEmpty()) {
-        qDebug() << "disk path is empty";
-        return hdinfo;
-    }
-
-    DeviceStorage device;
-    device.getDiskInfoFromHwinfo(devicepath);
-
-    device.getDiskInfoFromLshw(devicepath);
-
-    device.getDiskInfoFromLsblk(devicepath);
-
-    device.getDiskInfoFromSmartCtl(devicepath);
-
-    hdinfo.m_model = device.m_model;
-    hdinfo.m_vendor = device.m_vendor;
-    hdinfo.m_mediaType = device.m_mediaType;
-    hdinfo.m_size = device.m_size;
-    hdinfo.m_rotationRate = device.m_rotationRate;
-    hdinfo.m_interface = device.m_interface;
-    hdinfo.m_serialNumber = device.m_serialNumber;
-    hdinfo.m_version = device.m_version;
-    hdinfo.m_capabilities = device.m_capabilities;
-    hdinfo.m_description = device.m_description;
-    hdinfo.m_powerOnHours = device.m_powerOnHours;
-    hdinfo.m_powerCycleCount = device.m_powerCycleCount;
-    hdinfo.m_firmwareVersion = device.m_firmwareVersion;
-    hdinfo.m_speed = device.m_speed;
-
-    qDebug() << __FUNCTION__ << "Get Device Hard Info end";
-    return hdinfo;
-}
-
-DeviceInfo PartedCore::getDeviceinfo()
-{
-    DeviceInfo info;
+    LUKS_INFO info;
+    info.m_mapper.m_luksFs = type;
+    info.m_tokenList = token;
+    info.m_crypt = cipher;
+    info.m_decryptStr = decryptStr;
+    info.m_mapper.m_dmName = dmName;
+    info.m_mapper.m_dmPath = "/dev/mapper/" + dmName;
+    info.m_devicePath = devPath;
+    info.m_fileSystemLabel = label;
+    info.m_mapper.m_fileSystemLabel = label;
     return info;
-}
-
-DeviceInfoMap PartedCore::getAllDeviceinfo()
-{
-    return m_inforesult;
-}
-
-LVMInfo PartedCore::getAllLVMinfo()
-{
-    return m_lvmInfo;
-}
-
-LUKSMap PartedCore::getAllLUKSinfo()
-{
-    return m_LUKSInfo;
-}
-
-void PartedCore::setCurSelect(const PartitionInfo &info)
-{
-    auto it = m_deviceMap.find(info.m_devicePath);
-    if (it == m_deviceMap.end()) {
-        return;
-    }
-
-    Device dev = it.value();
-
-    foreach (const Partition *part, dev.m_partitions) {
-        if (infoBelongToPartition(*part, info)) {
-            m_curpartition = *part;
-            return ;
-        }
-        if (part->m_insideExtended) {//扩展分区  查看是否为逻辑分区
-            foreach (const Partition *partlogical, part->m_logicals) {
-                if (infoBelongToPartition(*partlogical, info)) {
-                    m_curpartition = *partlogical;
-                    return;
-                }
-            }
-        }
-    }
-}
-
-QString PartedCore::getDeviceHardStatus(const QString &devicepath)
-{
-    qDebug() << __FUNCTION__ << "Get Device Hard Status Start";
-    QString status;
-    QString devicePath = devicepath;
-    if (devicepath.contains("nvme")) {
-        QStringList list = devicepath.split("nvme");
-        if (list.size() < 2) {
-            return status;
-        }
-        QString str = "";
-        for (int i = 0; i < list.at(1).size(); i++) {
-            if (list.at(1).at(i) >= "0" && list.at(1).at(i) <= "9") {
-                str += list.at(1).at(i);
-            } else {
-                break;
-            }
-        }
-
-        devicePath = list.at(0) + "nvme" + str;
-//        qDebug() << devicePath << "1111111111111111" << endl;
-    }
-
-    QString cmd = QString("smartctl -H %1").arg(devicePath);
-    QProcess proc;
-    proc.start(cmd);
-    proc.waitForFinished(-1);
-    QString output = proc.readAllStandardOutput();
-
-    if (output.indexOf("SMART overall-health self-assessment test result:") != -1) {
-        QStringList list = output.split("\n");
-        for (int i = 0; i < list.size(); i++) {
-            if (list.at(i).indexOf("SMART overall-health self-assessment test result:") != -1) {
-                status = list.at(i).mid(strlen("SMART overall-health self-assessment test result:"));
-                status.remove(QRegExp("^ +\\s*"));
-//                qDebug() << __FUNCTION__ << status;
-                break;
-            }
-        }
-    } else {
-        QString cmd = QString("smartctl -H -d sat %1").arg(devicePath);
-        QProcess proc;
-        proc.start(cmd);
-        proc.waitForFinished(-1);
-        QString output = proc.readAllStandardOutput();
-
-        if (output.indexOf("SMART overall-health self-assessment test result:") != -1) {
-            QStringList list = output.split("\n");
-            for (int i = 0; i < list.size(); i++) {
-                if (list.at(i).indexOf("SMART overall-health self-assessment test result:") != -1) {
-                    status = list.at(i).mid(strlen("SMART overall-health self-assessment test result:"));
-                    status.remove(QRegExp("^ +\\s*"));
-//                    qDebug() << __FUNCTION__ << status;
-                    break;
-                }
-            }
-        }
-    }
-
-    qDebug() << __FUNCTION__ << "Get Device Hard Status End";
-    return status;
-}
-
-HardDiskStatusInfoList PartedCore::getDeviceHardStatusInfo(const QString &devicepath)
-{
-    qDebug() << __FUNCTION__ << "Get Device Hard Status Info Start";
-    HardDiskStatusInfoList hdsilist;
-
-    QString devicePath = devicepath;
-//    QString devicePath = "/dev/nvme12n1";
-    if (devicePath.contains("nvme")) {
-        //重新拼接硬盘字符串
-        QStringList list = devicePath.split("nvme");
-        if (list.size() < 2) {
-            return hdsilist;
-        }
-        QString str = "";
-        for (int i = 0; i < list.at(1).size(); i++) {
-            if (list.at(1).at(i) >= "0" && list.at(1).at(i) <= "9") {
-                str += list.at(1).at(i);
-            } else {
-                break;
-            }
-        }
-
-        devicePath = list.at(0) + "nvme" + str;
-
-        QString cmd = QString("smartctl -A %1").arg(devicePath);
-        QProcess proc;
-        proc.start(cmd);
-        proc.waitForFinished(-1);
-        QString output = proc.readAllStandardOutput();
-//        QString output = "smartctl 6.6 2017-11-05 r4594 [x86_64-linux-4.19.0-6-amd64] (local build)\nCopyright (C) 2002-17, Bruce Allen, Christian Franke, www.smartmontools.org\n\n=== START OF SMART DATA SECTION ===\nSMART/Health Information (NVMe Log 0x02, NSID 0xffffffff)\nCritical Warning:                   0x00\nTemperature:                        25 Celsius\nAvailable Spare:                    100%\nAvailable Spare Threshold:          5%\nPercentage Used:                    1%\nData Units Read:                    3,196,293 [1.63 TB]\nData Units Written:                 3,708,861 [1.89 TB]\nHost Read Commands:                 47,399,157\nHost Write Commands:                65,181,192\nController Busy Time:               418\nPower Cycles:                       97\nPower On Hours:                     1,362\nUnsafe Shutdowns:                   44\nMedia and Data Integrity Errors:    0\nError Information Log Entries:      171\nWarning  Comp. Temperature Time:    0\nCritical Comp. Temperature Time:    0\n\n";
-        list.clear();
-        list = output.split("\n");
-        for (int i = 0; i < list.size(); i++) {
-            HardDiskStatusInfo hdsinfo;
-            if (list.at(i).contains(":")) {
-                QStringList slist = list.at(i).split(":");
-                if (slist.size() != 2) {
-                    break;
-                }
-                hdsinfo.m_attributeName = slist.at(0);
-                hdsinfo.m_rawValue = slist.at(1).trimmed();
-            } else {
-                continue;
-            }
-            hdsilist.append(hdsinfo);
-        }
-    } else {
-
-        QString cmd = QString("smartctl -A %1").arg(devicepath);
-        QProcess proc;
-        proc.start(cmd);
-        proc.waitForFinished(-1);
-        QString output = proc.readAllStandardOutput();
-
-        if (output.contains("ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE")) {
-            QStringList list = output.split("\n");
-            int n = list.indexOf("ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE");
-            for (int i = n + 1; i < list.size(); i++) {
-                HardDiskStatusInfo hdsinfo;
-                QString statusInfo = list.at(i);
-
-
-                QStringList slist = statusInfo.split(' ');
-                slist.removeAll("");
-
-                if (slist.size() == 0) {
-                    break;
-                }
-
-                if (list.size() >= 10) {
-                    hdsinfo.m_id = slist.at(0);
-                    hdsinfo.m_attributeName = slist.at(1);
-                    hdsinfo.m_flag = slist.at(2);
-                    hdsinfo.m_value = slist.at(3);
-                    hdsinfo.m_worst = slist.at(4);
-                    hdsinfo.m_thresh = slist.at(5);
-                    hdsinfo.m_type = slist.at(6);
-                    hdsinfo.m_updated = slist.at(7);
-                    hdsinfo.m_whenFailed = slist.at(8);
-                    for (int k = 9; k < slist.size(); k++) {
-                        hdsinfo.m_rawValue += slist.at(k);
-                    }
-                }
-
-                hdsilist.append(hdsinfo);
-            }
-        } else {
-            QString cmd = QString("smartctl -A -d sat %1").arg(devicepath);
-            QProcess proc;
-            proc.start(cmd);
-            proc.waitForFinished(-1);
-            QString output = proc.readAllStandardOutput();
-            if (output.contains("ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE")) {
-                QStringList list = output.split("\n");
-                int n = list.indexOf("ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE");
-                for (int i = n + 1; i < list.size(); i++) {
-                    HardDiskStatusInfo hdsinfo;
-                    QString statusInfo = list.at(i);
-                    QStringList slist = statusInfo.split(' ');
-                    slist.removeAll("");
-
-                    if (slist.size() == 0) {
-                        break;
-                    }
-
-                    if (list.size() >= 10) {
-                        hdsinfo.m_id = slist.at(0);
-                        hdsinfo.m_attributeName = slist.at(1);
-                        hdsinfo.m_flag = slist.at(2);
-                        hdsinfo.m_value = slist.at(3);
-                        hdsinfo.m_worst = slist.at(4);
-                        hdsinfo.m_thresh = slist.at(5);
-                        hdsinfo.m_type = slist.at(6);
-                        hdsinfo.m_updated = slist.at(7);
-                        hdsinfo.m_whenFailed = slist.at(8);
-                        for (int k = 9; k < slist.size(); k++) {
-                            hdsinfo.m_rawValue += slist.at(k);
-                        }
-                    }
-
-                    hdsilist.append(hdsinfo);
-                }
-            }
-        }
-    }
-    qDebug() << __FUNCTION__ << "Get Device Hard Status Info end";
-    return hdsilist;
-}
-bool PartedCore::deletePartition()
-{
-    qDebug() << __FUNCTION__ << "Delete Partition start";
-    PedPartition *ped = nullptr;
-    PedDevice *lpDevice = nullptr;
-    PedDisk *lpDisk = nullptr;
-
-    QString parttitionPath = m_curpartition.getPath();
-    QString devicePath = m_curpartition.m_devicePath;
-
-    //close luksMapper
-    if (m_LUKSInfo.luksExists(devicePath)) {
-        LUKS_INFO info = m_LUKSInfo.getLUKS(devicePath);
-        if (!LUKSOperator::removeMapperAndKey(m_LUKSInfo, info)) {
-            qDebug() << __FUNCTION__ << "Close luks Mapper failed";
-            return sendRefSigAndReturn(false, m_isClear ? DISK_SIGNAL_TYPE_CLEAR : DISK_SIGNAL_TYPE_DEL,
-                                       true, QString("0:%1").arg(DISK_ERROR::DISK_ERR_PART_INFO));
-        }
-    }
-
-
-    bool success = true;
-    if (m_LUKSInfo.luksExists(parttitionPath)) {
-        LUKS_INFO info = m_LUKSInfo.getLUKS(parttitionPath);
-
-        success = LUKSOperator::removeMapperAndKey(m_LUKSInfo, info);
-    }
-
-    if (!getDeviceAndDisk(devicePath, lpDevice, lpDisk) || !success) {
-        qDebug() << __FUNCTION__ << "Delete Partition get device and disk failed";
-
-        return sendRefSigAndReturn(false, m_isClear ? DISK_SIGNAL_TYPE_CLEAR : DISK_SIGNAL_TYPE_DEL,
-                                   true, QString("0:%1").arg(DISK_ERROR::DISK_ERR_DISK_INFO));
-    }
-
-    QStringList list;
-
-    for (int i = parttitionPath.size() - 1; i != 0; i--) {
-        if (parttitionPath.at(i) >= '0' && parttitionPath.at(i) <= '9') {
-            list.insert(0, parttitionPath.at(i));
-        } else {
-            break;
-        }
-    }
-
-    int num = list.join("").toInt();
-    ped = ped_disk_get_partition(lpDisk, num);
-
-    if (ped == nullptr) {
-        qDebug() << __FUNCTION__ << "Delete Partition Get Partition failed";
-        return sendRefSigAndReturn(false, m_isClear ? DISK_SIGNAL_TYPE_CLEAR : DISK_SIGNAL_TYPE_DEL,
-                                   true, QString("0:%1").arg(DISK_ERROR::DISK_ERR_PART_INFO));
-    }
-
-    int i = ped_disk_delete_partition(lpDisk, ped);
-
-    if (i == 0) {
-        qDebug() << __FUNCTION__ << "Delete Partition failed";
-        return sendRefSigAndReturn(false, m_isClear ? DISK_SIGNAL_TYPE_CLEAR : DISK_SIGNAL_TYPE_DEL,
-                                   true, QString("0:%1").arg(DISK_ERROR::DISK_ERR_DELETE_PART_FAILED));
-    }
-
-    if (!commit(lpDisk)) {
-        qDebug() << __FUNCTION__ << "Delete Partition commit failed";
-        return sendRefSigAndReturn(false, m_isClear ? DISK_SIGNAL_TYPE_CLEAR : DISK_SIGNAL_TYPE_DEL,
-                                   true, QString("0:%1").arg(DISK_ERROR::DISK_ERR_UPDATE_KERNEL_FAILED));
-    }
-
-    destroyDeviceAndDisk(lpDevice, lpDisk);
-    qDebug() << __FUNCTION__ << "Delete Partition end";
-    return sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_DEL, true, "1:0");
-}
-
-bool PartedCore::hidePartition()
-{
-    qDebug() << __FUNCTION__ << "Hide Partition start";
-//ENV{ID_FS_UUID}==\"1ee3b4c6-1c69-46b9-9656-8c534ffd4f43\", ENV{UDISKS_IGNORE}=\"1\"\n
-    getPartitionHiddenFlag();
-    if (m_hiddenPartition.indexOf(m_curpartition.m_uuid) != -1) {
-        emit refreshDeviceInfo();
-        emit hidePartitionInfo("0");
-        return false;
-    }
-    QFile file("/etc/udev/rules.d/80-udisks2.rules");
-
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Append)) { //打开指定文件
-        qDebug() << __FUNCTION__ << "Permanent mount open file error";
-        emit refreshDeviceInfo();
-        emit hidePartitionInfo("0");
-        return false;
-    } else {
-        QTextStream out(&file);
-        out << QString("ENV{ID_FS_UUID}==\"%1\", ENV{UDISKS_IGNORE}=\"1\"").arg(m_curpartition.m_uuid) << endl;
-    }
-
-    qDebug() << __FUNCTION__ << "Hide Partition end";
-    QProcess proc;
-    proc.start("udevadm control --reload");
-    proc.waitForFinished(-1);
-    emit refreshDeviceInfo();
-    emit hidePartitionInfo("1");
-    return true;
-}
-
-bool PartedCore::showPartition()
-{
-    qDebug() << __FUNCTION__ << "Show Partition start";
-    getPartitionHiddenFlag();
-    if (m_hiddenPartition.indexOf(m_curpartition.m_uuid) == -1) {
-        emit refreshDeviceInfo();
-        emit showPartitionInfo("0");
-        return false;
-    }
-
-    QFile file("/etc/udev/rules.d/80-udisks2.rules");
-    QStringList list;
-
-    if (!file.open(QIODevice::ReadOnly)) { //打开指定文件
-        qDebug() << __FUNCTION__ << "Permanent unmount open file error";
-        emit refreshDeviceInfo();
-        emit showPartitionInfo("0");
-        return false;
-    } else {
-        QStringList list;
-        while (!file.atEnd()) {
-            QByteArray line = file.readLine();//获取数据
-            QString str = line;
-
-            if (str.contains(m_curpartition.m_uuid)) {
-                continue;
-            }
-            list << str;
-        }
-        file.close();
-        if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
-            QTextStream out(&file);
-            for (int i = 0; i < list.count(); i++) {
-                out << list.at(i);
-                out.flush();
-            }
-            file.close();
-        }
-    }
-
-    QProcess proc;
-    proc.start("udevadm control --reload");
-    proc.waitForFinished(-1);
-    emit refreshDeviceInfo();
-    emit showPartitionInfo("1");
-
-    qDebug() << __FUNCTION__ << "Show Partition end";
-    return true;
-
-}
-
-int PartedCore::getPartitionHiddenFlag()
-{
-    qDebug() << __FUNCTION__ << "Get Partition Hidden Flag start";
-
-    m_hiddenPartition.clear();
-    QFile file("/etc/udev/rules.d/80-udisks2.rules");
-    QStringList list;
-
-    if (!file.open(QIODevice::ReadOnly)) { //打开指定文件
-        qDebug() << __FUNCTION__ << "Permanent mount open file error";
-        file.close();
-        return -1;
-    } else {
-        m_hiddenPartition = file.readAll();
-//        qDebug() << m_hiddenPartition;
-    }
-    file.close();
-    qDebug() << __FUNCTION__ << "Get Partition Hidden Flag end";
-    return 0;
-}
-
-bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize, int flag)
-{
-    if (m_workerCheckThread == nullptr) {
-        m_workerCheckThread = new QThread();
-        m_workerCheckThread->start();
-        m_checkThread.moveToThread(m_workerCheckThread);
-//      qDebug() << QThread::currentThreadId() << 1111111111111 << endl;
-    }
-
-    m_checkThread.setStopFlag(flag);
-    if (flag == 1 || flag == 3) {
-        m_checkThread.setCountInfo(devicePath, blockStart, blockEnd, checkConut, checkSize);
-        emit checkBadBlocksRunCountStart();
-    }
-
-    return true;
-}
-
-bool PartedCore::checkBadBlocks(const QString &devicePath, int blockStart, int blockEnd, QString checkTime, int checkSize, int flag)
-{
-    if (m_workerCheckThread == nullptr) {
-        m_workerCheckThread = new QThread();
-        m_workerCheckThread->start();
-        m_checkThread.moveToThread(m_workerCheckThread);
-    }
-
-    m_checkThread.setStopFlag(flag);
-    if (flag == 1 || flag == 3) {
-        m_checkThread.setTimeInfo(devicePath, blockStart, blockEnd, checkTime, checkSize);
-        emit checkBadBlocksRunTimeStart();
-    }
-
-    return true;
-}
-
-bool PartedCore::fixBadBlocks(const QString &devicePath, QStringList badBlocksList, int checkSize, int flag)
-{
-    if (m_workerFixThread == nullptr) {
-        m_workerFixThread = new QThread();
-        m_workerFixThread->start();
-        m_fixthread.moveToThread(m_workerFixThread);
-    }
-
-
-    /*flag
-            1 start
-            2 stop
-            3 continue
-    */
-
-    m_fixthread.setStopFlag(flag);
-    if (flag == 1 || flag == 3) {
-        m_fixthread.setFixBadBlocksInfo(devicePath, badBlocksList, checkSize);
-        emit fixBadBlocksStart();
-    }
-
-    return true;
-}
-
-bool PartedCore::detectionPartitionTableError(const QString &devicePath)
-{
-    qDebug() << __FUNCTION__ << "Detection Partition Table Error start";
-
-    struct stat fileStat;
-    stat(devicePath.toStdString().c_str(), &fileStat);
-    if (!S_ISBLK(fileStat.st_mode)) {
-        qDebug() << __FUNCTION__ << QString("%1 is not blk file").arg(devicePath);
-        return false;
-    }
-
-    bool needRewrite = gptIsExpanded(devicePath);
-    if (needRewrite) {
-        QString outPutFix, errorFix;
-        QString cmdFix = QString("echo w | fdisk %1").arg(devicePath);
-        Utils::executWithPipeCmd(cmdFix, outPutFix, errorFix);
-        qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
-        return true;
-    }
-
-    QString outPut, error, outPutError;
-    QStringList argList;
-    argList << "-l" << devicePath << "2>&1";
-    int ret = Utils::executWithErrorCmd("fdisk", argList, outPut, outPutError, error);
-    if (ret != 0) {
-        qDebug() << __FUNCTION__ << "Detection Partition Table Error order error";
-        return false;
-    }
-
-    QStringList outPulList = outPut.split("\n");
-    for (int i = 0; i < outPulList.size(); i++) {
-        if (strstr(outPulList[i].toStdString().c_str(), "Partition table entries are not in disk order") != nullptr) {
-            return true;
-        }
-    }
-    qDebug() << __FUNCTION__ << "Detection Partition Table Error end";
-    return false;
-
-//    QString cmd = QString("fdisk -l %1 2>&1").arg(devicePath);
-//    FILE *fd = nullptr;
-//    fd = popen(cmd.toStdString().data(), "r");
-//    char pb[1024];
-//    memset(pb, 0, 1024);
-
-//    if (fd == nullptr) {
-//        qDebug() << __FUNCTION__ << "Detection Partition Table Error order error";
-//        return false;
-//    }
-
-//    while (fgets(pb, 1024, fd) != nullptr) {
-//        if (strstr(pb, "Partition table entries are not in disk order") != nullptr) {
-//            return true;
-//        }
-//        if (nullptr != strstr(pb, "will be corrected by write")) {
-//            //QString output, errstr;
-//            QString cmd_fix = QString("echo w | fdisk %1").arg(devicePath);
-
-//            FILE *fixfd = popen(cmd_fix.toStdString().data(), "r");
-//            qDebug() << __FUNCTION__ << "Detection Partition Table Rewrite Done";
-//            if (fixfd) {
-//                fclose(fixfd);
-//            }
-
-//            return true;
-//        }
-//    }
-
-//    fclose(fd);
-//    qDebug() << __FUNCTION__ << "Detection Partition Table Error end";
-//    return false;
-}
-
-bool PartedCore::updateUsb()
-{
-    qDebug() << __FUNCTION__ << "USB add update start";
-
-    //sleep(5);
-    emit usbUpdated();
-
-    autoMount();
-
-    qDebug() << __FUNCTION__ << "USB add update end";
-    return true;
-}
-
-bool PartedCore::updateUsbRemove()
-{
-    qDebug() << __FUNCTION__ << "USB add update remove";
-
-    //emit usbUpdated();
-    emit refreshDeviceInfo(DISK_SIGNAL_USBUPDATE);
-
-    autoUmount();
-
-    qDebug() << __FUNCTION__ << "USB add update end";
-    return true;
-}
-
-void PartedCore::refreshFunc()
-{
-    qDebug() << __FUNCTION__ << "refreshFunc start";
-    emit refreshDeviceInfo();
-    qDebug() << __FUNCTION__ << "refreshFunc end";
-}
-
-void PartedCore::autoMount()
-{
-    //因为永久挂载的原因需要先执行mount -a让系统文件挂载生效
-    qDebug() << __FUNCTION__ << "solt automount start";
-    QString output, errstr;
-    QString cmd = QString("mount -a");
-    int exitcode = Utils::executCmd(cmd, output, errstr);
-
-    if (exitcode != 0) {
-//        qDebug() << __FUNCTION__ << output;
-    }
-
-    emit refreshDeviceInfo(DISK_SIGNAL_TYPE_AUTOMNT);
-
-    qDebug() << __FUNCTION__ << "solt automount end";
-}
-
-void PartedCore::autoUmount()
-{
-    qDebug() << __FUNCTION__ << "autoUmount start";
-    QStringList deviceList;
-
-    for (auto it = m_inforesult.begin(); it != m_inforesult.end(); it++) {
-        deviceList << it.key();
-    }
-    QString outPut, error;
-    QString cmd = QString("df");
-    int ret = Utils::executCmd(cmd, outPut, error);
-    if (ret != 0) {
-        qDebug() << __FUNCTION__ << "Detection Partition Table Error order error";
-        return;
-    }
-    QStringList outPutList = outPut.split("\n");
-    for (int i = 0; i < outPutList.size(); i++) {
-        QStringList dfList = outPutList[i].split(" ");
-        if (deviceList.indexOf(dfList.at(0).left(dfList.at(0).size() - 1)) == -1 && dfList.at(0).contains("/dev/")) {
-            QStringList arg;
-            arg << "-v" << dfList.last();
-            QString output, errstr;
-            int exitcode = Utils::executeCmdWithArtList("umount", arg, output, errstr);
-            if (exitcode != 0) {
-                qDebug() << __FUNCTION__ << "卸载挂载点失败";
-            }
-        }
-    }
-    qDebug() << __FUNCTION__ << "autoUmount end";
-
-
-//    QString cmd = QString("df");
-//    FILE *fd = nullptr;
-//    fd = popen(cmd.toStdString().data(), "r");
-//    char pb[1024];
-//    memset(pb, 0, 1024);
-
-//    while (fgets(pb, 1024, fd) != nullptr) {
-//        QString dfBuf = pb;
-//        QStringList dfList = dfBuf.split(" ");
-//        if (deviceList.indexOf(dfList.at(0).left(dfList.at(0).size()-1)) == -1 && dfList.at(0).contains("/dev/")) {
-//            cmd = QString("umount -v %1").arg(dfList.last());
-//            QString output, errstr;
-//            int exitcode = Utils::executCmd(cmd, output, errstr);
-//            if (exitcode != 0) {
-//                qDebug() << __FUNCTION__ << "卸载挂载点失败";
-//            }
-//        }
-//    }
-//    qDebug() << __FUNCTION__ << "autoUmount end";
-}
-
-void PartedCore::syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const DeviceInfoMap inforesult, const LVMInfo lvmInfo, const LUKSMap &luks)
-{
-    qDebug() << "syncDeviceInfo finally!";
-    //m_deviceMap = deviceMap;
-    m_deviceMap = m_probeThread.getDeviceMap();
-    m_inforesult = inforesult;
-    m_lvmInfo = lvmInfo;
-    m_LUKSInfo = luks;
-    emit updateLUKSInfo(m_LUKSInfo);
-    emit updateDeviceInfo(m_inforesult, m_lvmInfo);
-}
-
-bool PartedCore::createPartitionTable(const QString &devicePath, const QString &length, const QString &sectorSize, const QString &diskLabel)
-{
-//    Glib::ustring device_path = device.get_path();
-
-    // FIXME: Should call file system specific removal actions
-    // (to remove LVM2 PVs before deleting the partitions).
-
-//#ifdef ENABLE_LOOP_DELETE_OLD_PTNS_WORKAROUND
-    // When creating a "loop" table with libparted 2.0 to 3.0 inclusive, it doesn't
-    // inform the kernel to delete old partitions so as a consequence blkid's cache
-    // becomes stale and it won't report a file system subsequently created on the
-    // whole disk device.  Create a GPT first to use that code in libparted to delete
-    // any old partitions.  Fixed in parted 3.1 by commit:
-    //     f5c909c0cd50ed52a48dae6d35907dc08b137e88
-    //     libparted: remove has_partitions check to allow loopback partitions
-//    if ( disklabel == "loop" )
-//        newDiskLabel( device_path, "gpt", false );
-//#endif
-
-    // Ensure that any previous whole disk device file system can't be recognised by
-    // libparted in preference to the "loop" partition table signature, or by blkid in
-    // preference to any partition table about to be written.
-//    OperationDetail dummy_od;
-    Sector deviceLength = length.toLongLong();
-    Sector deviceSectorSize = sectorSize.toLong();
-    Partition tempPartition;
-    tempPartition.setUnpartitioned(devicePath,
-                                   "",
-                                   FS_UNALLOCATED,
-                                   deviceLength,
-                                   deviceSectorSize,
-                                   false);
-    eraseFilesystemSignatures(tempPartition);
-
-    bool flag = newDiskLabel(devicePath, diskLabel);
-
-    if (!m_isClear) {
-        emit refreshDeviceInfo(DISK_SIGNAL_TYPE_CREATE_TABLE, flag, "");
-    }
-
-    //emit createTableMessage(flag);
-
-    return flag;
-}
-
-bool PartedCore::newDiskLabel(const QString &devicePath, const QString &diskLabel)
-{
-    bool returnValue = false;
-
-    PedDevice *lpDevice = nullptr;
-    PedDisk *lpDisk = nullptr;
-    if (getDevice(devicePath, lpDevice)) {
-        PedDiskType *type = nullptr;
-        type = ped_disk_type_get(diskLabel.toStdString().c_str());
-
-        if (type) {
-            lpDisk = ped_disk_new_fresh(lpDevice, type);
-            returnValue = commit(lpDisk) ;
-        }
-
-        destroyDeviceAndDisk(lpDevice, lpDisk) ;
-    }
-
-//#ifndef USE_LIBPARTED_DMRAID
-//    //delete and recreate disk entries if dmraid
-//    DMRaid dmraid ;
-//    if ( recreate_dmraid_devs && return_value && dmraid.is_dmraid_device( device_path ) )
-//    {
-//        dmraid .purge_dev_map_entries( device_path ) ;
-//        dmraid .create_dev_map_entries( device_path ) ;
-//    }
-//#endif
-
-    return returnValue;
-}
-
-bool PartedCore::gptIsExpanded(const QString &devicePath)
-{
-    qDebug() << __FUNCTION__ << "gptIsExpanded called";
-
-    /* GPT 与 MBR 分区格式的介绍可以参考下面的链接：
-     * https://www.cnblogs.com/cwcheng/p/11270774.html
-     * 简单来说，如果MBR内容中，偏移量为0x1c2处的字节内容为 0xee,则表示当前磁盘采用GPT分区表。
-    */
-    int offset = 0x1c2;
-    uint8_t phdr[1024] = {0};
-
-    int fd = ::open(devicePath.toLatin1().data(), O_RDONLY);
-    if (fd < 0) {
-        return false;
-    }
-
-    int ret = ::read(fd, phdr, 1024);
-    ::close(fd);
-    if (ret < 0) {
-        return false;
-    }
-
-    if (0xee == phdr[offset]) {
-        gpt_header_t *gpt = (gpt_header_t *)(phdr + 512);
-
-        for (auto it = m_deviceMap.begin(); it != m_deviceMap.end(); it++) {
-            if (it.key() == devicePath) {
-                Device dev = it.value();
-                qDebug() << __FUNCTION__ << " CHEN Enum device : \t " << dev.m_length << " " << dev.m_sectors << " " << dev.m_heads;
-                if (gpt->alternative_lba != (dev.m_length - 1)) {
-                    return true;
-                }
-            }
-        }
-
-    }
-    return false;
-}
-
-bool PartedCore::mountDevice(const QString &mountpath, const QString devPath, const FSType &fsType)
-{
-    qDebug() << __FUNCTION__ << "Mount start";
-    if (mountpath.isEmpty() || devPath.isEmpty() || fsType == FSType::FS_UNKNOWN) {
-        qDebug() << __FUNCTION__ << "Mount argument error";
-        return false;
-    }
-
-    QString output, errstr;
-    QString cmd ;
-    //vfat 1051系统上vfat格式不指定utf8挂载 通过文件管理器右键菜单新建文件夹会乱码  导致创建错误 为了规避该问题加上utf8属性
-    if (fsType == FSType::FS_FAT32 || fsType == FSType::FS_FAT16) {
-        cmd = QString("mount -v %1 %2 -o dmask=000,fmask=111,utf8").arg(devPath).arg(mountpath);
-    } else if (fsType == FSType::FS_HFS) {
-        cmd = QString("mount -v %1 %2 -o dir_umask=000,file_umask=111").arg(devPath).arg(mountpath);
-    } else {
-        cmd = QString("mount -v %1 %2").arg(devPath).arg(mountpath);
-    }
-
-    int exitcode = Utils::executCmd(cmd, output, errstr);
-    if (exitcode != 0) {
-        qDebug() << __FUNCTION__ << "Mount error";
-        return false;
-    }
-    qDebug() << __FUNCTION__ << "Mount end";
-    return true;
-
-}
-
-bool PartedCore::umontDevice(QVector<QString> mountPoints, QString devPath)
-{
-    if (devPath.isEmpty()) {
-        devPath = m_curpartition.getPath();
-    }
-
-    QString output, errstr;
-    for (QString path : mountPoints) {
-        QStringList arg;
-        arg << "-v" << path;
-        int exitcode = Utils::executeCmdWithArtList("umount", arg, output, errstr);
-        if (0 != exitcode) {
-            Utils::executCmd("df", output, errstr);
-            return output.contains(devPath) ? sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_UMNT, true, "0")
-                   : sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_UMNT, true, "1");
-        }
-    }
-    return true;
-}
-
-bool PartedCore::writeFstab(const QString &uuid, const QString &mountpath, const QString &type, bool isMount)
-{
-    //写入fstab 永久挂载
-    qDebug() << __FUNCTION__ << "Write fstab start";
-    if (uuid.isEmpty() || (mountpath.isEmpty() && isMount) || type.isEmpty()) { //非挂载 不需要挂载点 可以传空值
-        qDebug() << __FUNCTION__ << "Write fstabt argument error";
-        return false;
-    }
-
-    QFile file("/etc/fstab");
-    QStringList list;
-
-    // open fstab
-    if (!file.open(QIODevice::ReadOnly)) { //打开指定文件
-        qDebug() << __FUNCTION__ << "Write fstabt: open file error";
-        return false;
-    }
-
-    //此处修改：因为mount读取/etc/fstab配置文件 开机自动挂载  而fat32或fat16 mount不识别，所以要改成vfat
-    QString type2 = (type.contains("fat32") || type.contains("fat16")) ? QString("vfat") : type;
-
-    // read fstab
-    bool findflag = false; //目前默认只改第一个发现的uuid findflag 标志位：是否已经查找到uuid
-    while (!file.atEnd()) {
-        QByteArray line = file.readLine();//获取数据
-        QString str = line;
-        if (isMount) {
-            //vfat 1051系统上vfat格式不指定utf8挂载 通过文件管理器右键菜单新建文件夹会乱码  导致创建错误 为了规避该问题加上utf8属性
-            QString mountStr = (type2 == "vfat") ? QString("UUID=%1 %2 %3 defaults,nofail,utf8,dmask=000,fmask=111 0 0\n").arg(uuid).arg(mountpath).arg(type2)
-                               : QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(uuid).arg(mountpath).arg(type2);
-
-            if (str.contains(uuid) && !findflag) { //首次查找到uuid
-                findflag = true;
-                list << mountStr;
-                continue;
-            } else if (file.atEnd() && !findflag) { //查找到结尾且没有查找到uuid
-                list << str << mountStr;
-                break;
-            }
-            list << str;
-        } else {
-            if (!str.contains(uuid)) {
-                list << str;
-            }
-        }
-    }
-    file.close();
-
-    //write fstab
-    if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
-        qDebug() << __FUNCTION__ << "Write fstabt: open file error";
-        return false;
-    }
-
-    QTextStream out(&file);
-    for (int i = 0; i < list.count(); i++) {
-        out << list.at(i);
-    }
-    out.flush();
-    file.close();
-    qDebug() << __FUNCTION__ << "Write fstabt end";
-    return true;
-}
-
-bool PartedCore::createTmpMountDir(const  QString &mountPath)
-{
-    //自动挂载 获取挂载文件夹名字
-    QDir dir;
-    if (!dir.exists(mountPath)) {
-        if (!dir.mkdir(mountPath)) {
-            return false;
-        }
-    }
-
-    //设置文件属性，删除时，按照文件属性删除
-    const char *v = "deepin-diskmanager";
-    return setxattr(mountPath.toStdString().c_str(), "user.deepin-diskmanager", v, strlen(v), 0) == 0;
-}
-
-bool PartedCore::changeOwner(const QString &user, const QString &path)
-{
-    struct passwd *psInfo;
-    psInfo = getpwnam(user.toStdString().c_str());
-    if (psInfo == nullptr) {
-        return false;
-    }
-    //todo 暂时先不判断返回值 此处在fat ntfs文件系统有问题
-    chown(path.toStdString().c_str(), psInfo->pw_uid, psInfo->pw_gid);
-    return true;
-}
-
-QPair<bool, QString> PartedCore::tmpMountDevice(const QString &mountpath, const QString devPath, const FSType &fsType, const QString &userName)
-{
-    //自动挂载 获取挂载文件夹名字
-    if (!createTmpMountDir(mountpath)) {
-        return QPair<bool, QString>(false, QString("0:%1").arg(DISK_ERROR::DISK_ERR_CREATE_MOUNTDIR_FAILED));
-    }
-
-    //挂载
-    if (!mountDevice(mountpath, devPath, fsType)) {
-        return QPair<bool, QString>(false, QString("0:%1").arg(DISK_ERROR::DISK_ERR_MOUNT_FAILED));
-    }
-
-    //更改属主
-    if (!changeOwner(userName, mountpath)) {
-        return QPair<bool, QString>(false, QString("0:%1").arg(DISK_ERROR::DISK_ERR_CHOWN_FAILED));
-    }
-    return QPair<bool, QString>(true, QString("1:0"));
-}
-
-
-
-int PartedCore::test()
-{
-
-
-    return 1;
 }
 
 } // namespace DiskManager

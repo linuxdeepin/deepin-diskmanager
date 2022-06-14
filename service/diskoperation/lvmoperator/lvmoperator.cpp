@@ -225,7 +225,7 @@ bool LVMOperator::updatePVInfo(LVMInfo &lvmInfo)
             pv.m_lvmDevType = DevType::DEV_META_DEVICES;
         } else if (strout.contains("crypt")) {
             pv.m_lvmDevType = DevType::DEV_META_DEVICES;
-        }else {
+        } else {
             pv.m_lvmDevType = DevType::DEV_UNKNOW_DEVICES;
         }
 
@@ -356,7 +356,12 @@ bool LVMOperator::updateLVInfo(LVMInfo &lvmInfo, VGInfo &vg)
         lv.m_lvSize = Utils::LVMFormatSize(Size); //字符串类型 展示用
         lv.m_lvLECount = Size / lv.m_LESize;
 
-        QString lvPath = QString("/dev/mapper/%1-%2").arg(lv.m_vgName).arg(lv.m_lvName);
+        QString rootFsName;
+        MountInfo::loadCache(rootFsName);
+        QString lvPath = lv.toMapperPath();
+        if (rootFsName == lvPath) {
+            lv.m_dataFlag = true;
+        }
 
         bool labelFound = false;
         QString label = DiskManager::FsInfo::getLabel(lvPath, labelFound);

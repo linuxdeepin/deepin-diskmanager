@@ -47,6 +47,8 @@ typedef struct CUSSTRUCTTEST {
 } stCustest;
 DBUSStructEnd(stCustest)
 
+
+
 //new by li 2020/7/20
 
 /**
@@ -92,6 +94,8 @@ typedef struct HARDDISKSTATUSINFO {
 } HardDiskStatusInfo;
 DBUSStructEnd(HardDiskStatusInfo)
 
+
+
 /**
  * @class DeviceInfo
  * @brief 设备信息类
@@ -112,7 +116,7 @@ public:
     QString m_serialNumber;
     QString m_disktype;
     QString m_mediaType;        //介质类型
-    QString m_interface;                //接口
+    QString m_interface;        //接口
     int m_sectorSize;
     int m_maxPrims;
     int m_highestBusy;
@@ -120,8 +124,8 @@ public:
     int m_maxPartitionNameLength;
     PartitionVec m_partition;
     QVector<VGData>m_vglist;
-    LVMFlag m_vgFlag; //vg标志位
-    LUKSFlag m_luksFlag; //luks 标志位
+    LVMFlag m_vgFlag;           //vg标志位
+    LUKSFlag m_luksFlag;        //luks 标志位
     CRYPT_CIPHER_Support m_crySupport;
 };
 DBUSStructEnd(DeviceInfo)
@@ -131,6 +135,7 @@ Q_DECLARE_METATYPE(DeviceInfoMap)
 
 typedef QList<HardDiskStatusInfo> HardDiskStatusInfoList;
 Q_DECLARE_METATYPE(HardDiskStatusInfoList)
+
 
 
 //new by liuwh 2022/5/17

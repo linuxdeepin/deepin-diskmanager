@@ -85,6 +85,8 @@ enum FSType {
     FS_UNUSED = 39
 };
 
+
+
 enum SIZE_UNIT {
     UNIT_SECTOR = 0,
     UNIT_BYTE = 1,
@@ -95,6 +97,8 @@ enum SIZE_UNIT {
     UNIT_TIB = 5
 };
 
+
+
 enum PartitionType {
     TYPE_PRIMARY = 0, // Primary partition on a partitioned drive
     TYPE_LOGICAL = 1, // Logical partition on a partitioned drive
@@ -103,12 +107,16 @@ enum PartitionType {
     TYPE_UNPARTITIONED = 4 // Unpartitioned whole drive
 };
 
+
+
 enum PartitionStatus {
     STAT_REAL = 0,
     STAT_NEW = 1,
     STAT_COPY = 2,
     STAT_FORMATTED = 3
 };
+
+
 
 enum PartitionAlignment {
     ALIGN_CYLINDER = 0, //Align to nearest cylinder
@@ -117,6 +125,8 @@ enum PartitionAlignment {
                    //  Indicator if start and end sectors must remain unchanged
 };
 
+
+
 enum CUSTOM_TEXT {
     CTEXT_NONE,
     CTEXT_ACTIVATE_FILESYSTEM, // Activate text ('Mount', 'Swapon', VG 'Activate', ...)
@@ -124,6 +134,8 @@ enum CUSTOM_TEXT {
     CTEXT_CHANGE_UUID_WARNING, // Warning to print when changing UUIDs
     CTEXT_RESIZE_DISALLOWED_WARNING // File system resizing currently disallowed reason
 };
+
+
 
 //resize opertation
 enum Action {
@@ -137,6 +149,8 @@ enum Action {
     MOVE_LEFT_GROW = 7,
     MOVE_LEFT_SHRINK = 8
 };
+
+
 
 // Minimum and maximum file system size limits
 struct FS_Limits {
@@ -155,6 +169,8 @@ struct FS_Limits {
     }
 };
 
+
+
 enum ExecFlags {
     EXEC_NONE = 1 << 0,
     EXEC_CHECK_STATUS = 1 << 1, // Set the status of the command in the operation
@@ -168,6 +184,8 @@ enum ExecFlags {
     EXEC_PROGRESS_STDERR = 1 << 4, // Same but for stderr.
     EXEC_PROGRESS_TIMED = 1 << 5 // Run progress tracking callback periodically.
 };
+
+
 
 // Struct to store file system support information
 struct FS {
@@ -216,22 +234,29 @@ struct MountEntry {
 };
 
 
+
 //new by liuwh 2022/3/4
 /**
  * @enum DISK_ERROR
  * @brief 磁盘 错误类型
  */
 enum DISK_ERROR {
-    DISK_ERR_DBUS_ARGUMENT = 0,        //DBus参数错误
-    DISK_ERR_DISK_INFO = 1,            //磁盘信息错误
-    DISK_ERR_PART_INFO = 2,            //分区信息错误
-    DISK_ERR_DELETE_PART_FAILED = 3,   //删除分区失败
+    DISK_ERR_DBUS_ARGUMENT = 0,         //DBus参数错误
+    DISK_ERR_DISK_INFO = 1,             //磁盘信息错误
+    DISK_ERR_PART_INFO = 2,             //分区信息错误
+    DISK_ERR_DELETE_PART_FAILED = 3,    //删除分区失败
     DISK_ERR_UPDATE_KERNEL_FAILED = 4,  //提交内核失败
     DISK_ERR_CREATE_FS_FAILED = 5,      //创建文件系统失败
     DISK_ERR_MOUNT_FAILED = 6,          //挂载失败
     DISK_ERR_CREATE_MOUNTDIR_FAILED = 7,//创建挂载文件夹失败
     DISK_ERR_CHOWN_FAILED = 8,          //修改属主失败
+    DISK_ERR_CREATE_PART_FAILED=9,      //分区创建失败
+    DISK_ERR_CREATE_PARTTAB_FAILED=10,  //分区表创建失败
+
+
+    DISK_ERR_NORMAL = 100               //无错误 正常
 };
+
 
 
 //new by liuwh 2022/1/17
@@ -247,6 +272,4 @@ enum DevType {
     DEV_LOOP,                   //loop设备
     DEV_META_DEVICES            //元数据设备 raid 加密磁盘映射等虚拟设备
 };
-
-
 #endif // COMMONDEF_H

@@ -39,6 +39,7 @@
 #define DISK_SIGNAL_TYPE_VGDELETE 9         //vg删除信号
 #define DISK_SIGNAL_TYPE_LVDELETE 10        //lv删除信号
 #define DISK_SIGNAL_TYPE_DECRYPT 11         //解密
+#define DISK_SIGNAL_TYPE_CREATE_FAILED 12   //新建失败
 
 #define DISK_SIGNAL_TYPE_AUTOMNT 100        //自动挂载
 

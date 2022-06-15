@@ -140,7 +140,9 @@ Q_SIGNALS:
 
     /**
      * @brief 清除信号
-     * @param clearMessage：清除信息
+     * @param clearMessage：清除信息 enum:errcode:devicePath   示例: DISK_ERROR:1:/dev/sda1
+     *                                                             LVMError:1:/dev/vg01/lv01
+     *                                                             CRYPTError:1:/dev/mapper/sda1-aesE
      */
     Q_SCRIPTABLE void clearMessage(const QString &clearMessage);
 
@@ -175,6 +177,14 @@ Q_SIGNALS:
      */
     Q_SCRIPTABLE void deCryptMessage(const LUKS_INFO &luks);
 
+    /**
+     * @brief 创建失败(lv/分区 (加密/未加密))
+     * @param message:失败信息  enum:errcode:devicePath   示例: DISK_ERROR:1:/dev/sda1
+     *                                                        LVMError:1:/dev/vg01/lv01
+     *                                                        CRYPTError:1:/dev/mapper/sda1-aesE
+     *
+     */
+    Q_SCRIPTABLE void createFailedMessage(const QString &message);
 
 public Q_SLOTS:
     /**

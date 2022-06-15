@@ -21,19 +21,18 @@
 #ifndef LVMENUM_H
 #define LVMENUM_H
 
-#include <QDBusArgument>
-
 //new by liuwh 2022/3/11
 /**
  * @enum PVFlag
  * @brief pv 标志
  */
-
 enum LVMFlag {
     LVM_FLAG_NOT_PV = 0, //非pv设备
     LVM_FLAG_JOIN_VG = 1, //加入vg
     LVM_FLAG_NOT_JOIN_VG = 2, //未加入vg
 };
+
+
 
 //new by liuwh 2022/1/17
 /**
@@ -66,6 +65,8 @@ enum LVMAction {
     LVM_ACT_VG_REDUCE               //vg 缩小
 };
 
+
+
 //new by liuwh 2022/3/4
 /**
  * @enum LVMError
@@ -96,7 +97,7 @@ enum LVMError {
     LVM_ERR_LV_EXTEND_FAILED,       //lv 扩展失败
     LVM_ERR_LV_REDUCE_FAILED,       //lv 缩小失败
     LVM_ERR_LV_IN_USED,             //lv 被使用
-    //LVM_ERR_LV_MOUNT,             //lv 已经挂载
+    //LVM_ERR_LV_MOUNT,             //lv 已经挂载 
 
     LVM_ERR_VG = 300,               //vg 错误
     LVM_ERR_VG_CREATE_FAILED,       //vg 创建失败
@@ -108,6 +109,7 @@ enum LVMError {
     LVM_ERR_VG_REDUCE_FAILED,       //vg 缩小失败
     LVM_ERR_VG_IN_USED              //vg 被使用
 };
+
 
 
 //new by liuwh 2022/1/20

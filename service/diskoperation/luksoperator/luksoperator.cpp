@@ -116,6 +116,7 @@ bool LUKSOperator::encrypt(LUKSMap &luks, LUKS_INFO &luksInfo)
     //添加密钥提示
     addToken(luksInfo, luksInfo.m_tokenList);
     bool success = getLUKSInfo(luks, luksInfo.m_devicePath, luksInfo);
+    luksInfo.isDecrypt = false;
     return setLUKSErr(luks, luksInfo, success ? CRYPTError::CRYPT_ERR_NORMAL : CRYPTError::CRYPT_ERR_GET_LUKSINFO_FAILED);
 }
 
@@ -255,6 +256,12 @@ bool LUKSOperator::initMapper(LUKSMap &luks)
                         mapper.m_fsLimits = FS_Limits(0, 0);
                     }
                 }
+            }
+
+            bool labelFound = false;
+            QString label = DiskManager::FsInfo::getLabel(mapper.m_dmPath, labelFound);
+            if (labelFound) {
+                mapper.m_fileSystemLabel = label;
             }
 
             if (m_lvmInfo->pvExists(mapper.m_dmPath)) {

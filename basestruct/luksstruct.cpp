@@ -79,7 +79,8 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LUKS_MapperInfo &data)
              << data.m_mode
              << static_cast<int>(data.m_vgflag)
              << data.m_fsLimits.max_size
-             << data.m_fsLimits.min_size;
+             << data.m_fsLimits.min_size
+             << data.m_fileSystemLabel;
     argument.endStructure();
     return argument;
 }
@@ -103,8 +104,8 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LUKS_MapperInfo &
              >> data.m_mode
              >> vgFlag
              >> data.m_fsLimits.max_size
-             >> data.m_fsLimits.min_size;
-
+             >> data.m_fsLimits.min_size
+             >> data.m_fileSystemLabel;
     data.m_luksFs = static_cast<FSType>(luksFlag);
     data.m_vgflag = static_cast<LVMFlag>(vgFlag);
     data.m_crypt = static_cast<CRYPT_CIPHER>(cipher);
@@ -156,9 +157,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LUKS_INFO &data)
     argument.endStructure();
     return argument;
 }
-
-
-/*********************************** OperatorLUKSMap *********************************************/
+/*********************************** LUKSMap ************************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const LUKSMap &data)
 {
     argument.beginStructure();
@@ -218,7 +217,7 @@ bool LUKSMap::mapperOfDevice(const QString &mapper, const QString &dev) const
     return mapperExists(mapper) ? getMapper(mapper).m_devicePath == dev : false;
 }
 
-bool LUKSMap::isDevice(const QString &dev) const
+bool LUKSMap::deviceExists(const QString &dev) const
 {
     return itemExists(dev, m_luksMap);
 }
@@ -246,7 +245,7 @@ bool LUKSMap::luksExists(const QString &devPath) const
 
 LUKS_INFO LUKSMap::getLUKS(const QString &path) const
 {
-    QString devicePath = isDevice(path) ? path : getDevPath(path);
+    QString devicePath = deviceExists(path) ? path : getDevPath(path);
     return getItem(devicePath, m_luksMap);
 }
 

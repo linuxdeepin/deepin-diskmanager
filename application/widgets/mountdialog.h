@@ -88,7 +88,7 @@ private slots:
 
 private:
     DFileChooserEdit *m_fileChooserEdit;
-    DComboBox *m_ComboBox;
+//    DComboBox *m_ComboBox;
 };
 
 #endif // MOUNTDIALOG_H

@@ -280,6 +280,11 @@ void ResizeDialog::lvResize()
         limits = FS_Limits();
     }
 
+    // 如果当前lv是系统盘，最小值为lv的大小
+    if (DMDbusHandler::instance()->getIsSystemDisk(lvInfo.m_vgName)) {
+        limits.min_size = curSize;
+    }
+
     Sector newSize = 0;
     if (0 == m_comboBox->currentIndex()) {
         newSize = static_cast<Sector>(m_lineEdit->text().toDouble() * MEBIBYTE);
@@ -494,7 +499,7 @@ void ResizeDialog::updateInputRange()
         Sector unUsedSize = static_cast<Sector>(peSize * vgInfo.m_peUnused);
         FS_Limits limits = lvInfo.m_fsLimits;
 
-        if (limits.min_size == -1) {
+        if (limits.min_size == -1 || DMDbusHandler::instance()->getIsSystemDisk(lvInfo.m_vgName)) {
             m_minSize = QString::number(Utils::LVMSizeToUnit(curSize, unit), 'f', 2);
         } else if (limits.min_size == 0) {
             m_minSize = QString::number(Utils::LVMSizeToUnit(peSize, unit), 'f', 2);

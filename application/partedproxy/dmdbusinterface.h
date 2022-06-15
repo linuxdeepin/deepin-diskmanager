@@ -510,6 +510,7 @@ Q_SIGNALS: // SIGNALS
     Q_SCRIPTABLE void vgDeleteMessage(const QString &vgMessage);
     Q_SCRIPTABLE void lvDeleteMessage(const QString &lvMessage);
     Q_SCRIPTABLE void deCryptMessage(const LUKS_INFO &luks);
+    Q_SCRIPTABLE void createFailedMessage(const QString &message);
 };
 
 namespace com {

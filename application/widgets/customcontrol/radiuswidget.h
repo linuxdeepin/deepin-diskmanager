@@ -51,14 +51,15 @@ struct PVInfoData {
     QString m_diskSize;
     QString m_partitionPath;
     QString m_partitionSize;
-    Sector m_sectorStart;
-    Sector m_sectorEnd;
+    Sector m_sectorStart = 0;
+    Sector m_sectorEnd = 0;
     Sector m_sectorSize;
     int m_level;
     QString m_disktype;
     int m_selectStatus;
     int m_lvmDevType;
     int m_luksFlag; //luks 标志位
+    int m_isReadOnly = false;
 };
 Q_DECLARE_METATYPE(PVInfoData)
 

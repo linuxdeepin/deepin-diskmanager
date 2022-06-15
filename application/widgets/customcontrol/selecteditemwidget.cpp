@@ -72,8 +72,13 @@ void SelectedItemWidget::initUi()
     m_sizeInfo->setPalette(paletteSize);
     m_sizeInfo->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 
-    m_buttonLabel = new ButtonLabel(this);
-    m_buttonLabel->setPixmap(DStyle::standardIcon(QApplication::style(), DStyle::SP_DeleteButton).pixmap(QSize(17, 17)));
+//    m_buttonLabel = new ButtonLabel(this);
+//    m_buttonLabel->setPixmap(DStyle::standardIcon(QApplication::style(), DStyle::SP_DeleteButton).pixmap(QSize(17, 17)));
+
+    m_iconButton = new DIconButton(this);
+    m_iconButton->setIcon(DStyle::standardIcon(QApplication::style(), DStyle::SP_DeleteButton));
+    m_iconButton->setIconSize(QSize(17, 17));
+    m_iconButton->setFixedSize(17, 17);
 
     if (m_pvInfoData.m_disktype == "unrecognized") {
         m_nameInfo->setText(m_pvInfoData.m_diskPath);
@@ -88,12 +93,16 @@ void SelectedItemWidget::initUi()
         m_sizeInfo->setText(m_pvInfoData.m_partitionSize);
     }
 
+    if (m_pvInfoData.m_isReadOnly) {
+        m_iconButton->setDisabled(true);
+    }
+
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->addWidget(m_nameInfo);
     mainLayout->addStretch();
     mainLayout->addWidget(m_sizeInfo);
     mainLayout->addSpacing(20);
-    mainLayout->addWidget(m_buttonLabel);
+    mainLayout->addWidget(m_iconButton);
     mainLayout->setSpacing(0);
     mainLayout->setContentsMargins(10, 0, 10, 0);
 
@@ -102,7 +111,7 @@ void SelectedItemWidget::initUi()
 
 void SelectedItemWidget::initConnection()
 {
-    connect(m_buttonLabel, &ButtonLabel::clicked, this, &SelectedItemWidget::onDeleteClicked);
+    connect(m_iconButton, &DIconButton::clicked, this, &SelectedItemWidget::onDeleteClicked);
 }
 
 void SelectedItemWidget::onDeleteClicked()

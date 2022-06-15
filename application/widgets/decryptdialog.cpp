@@ -322,6 +322,7 @@ void DecryptDialog::onDecryptMessage(const LUKS_INFO &luks)
     m_luksInfo = luks;
 
     if (luks.isDecrypt && luks.m_decryptErrCount == 0) {
+        DMDbusHandler::instance()->refreshMainWindowData();
         if (luks.m_cryptErr == CRYPTError::CRYPT_ERR_DECRYPT_FAILED) {
             DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget()->parentWidget()->parentWidget(),
                                                      QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Decryption failed"));

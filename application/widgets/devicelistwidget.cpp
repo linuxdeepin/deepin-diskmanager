@@ -88,6 +88,7 @@ void DeviceListWidget::initConnection()
     connect(DMDbusHandler::instance(), &DMDbusHandler::updateUsb, this, &DeviceListWidget::onUpdateUsb);
     connect(DMDbusHandler::instance(), &DMDbusHandler::vgDeleteMessage, this, &DeviceListWidget::onVGDeleteMessage);
     connect(DMDbusHandler::instance(), &DMDbusHandler::lvDeleteMessage, this, &DeviceListWidget::onLVDeleteMessage);
+    connect(DMDbusHandler::instance(), &DMDbusHandler::createFailedMessage, this, &DeviceListWidget::onCreateFailedMessage);
 }
 
 void DeviceListWidget::treeMenu(const QPoint &pos)
@@ -194,7 +195,7 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
         if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
             if (luksInfo.isDecrypt) {
-                if (!luksInfo.m_mapper.m_mountPoints.isEmpty()) {
+                if (!luksInfo.m_mapper.m_mountPoints.isEmpty() || luksInfo.m_mapper.m_luksFs == FSType::FS_LVM2_PV) {
                     actionDelete->setDisabled(true);
                 }
             }
@@ -266,7 +267,7 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
 
         // 如果VG异常，删除逻辑卷操作禁用
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
-        if (vgInfo.isPartial()) {
+        if (vgInfo.isPartial() || lvInfo.m_lvFsType == FSType::FS_LINUX_SWAP) {
             actionDelete->setDisabled(true);
         }
 
@@ -727,6 +728,22 @@ void DeviceListWidget::onLVDeleteMessage(const QString &lvMessage)
         isDeleteLVSuccess = false;
         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(),
                                                  QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), reason);
+        DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
+    }
+}
+
+void DeviceListWidget::onCreateFailedMessage(const QString &message)
+{
+    QStringList infoList = message.split(":");
+
+    if (infoList.count() <= 2) {
+        return;
+    }
+
+    QString failedReason = DMDbusHandler::instance()->getFailedMessage(infoList.at(0), infoList.at(1).toInt(), infoList.at(2));
+    if (!failedReason.isEmpty()) {
+        DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(),
+                                                 QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), failedReason);
         DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
     }
 }

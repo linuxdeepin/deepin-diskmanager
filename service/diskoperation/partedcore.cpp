@@ -126,7 +126,6 @@ PartedCore::~PartedCore()
     delTempMountFile();
 }
 
-
 /***********************************************public  DBUS****************************************************************/
 DeviceInfo PartedCore::getDeviceinfo()
 {
@@ -1361,9 +1360,9 @@ bool PartedCore::createLV(QString vgName, QList<LVAction> lvList)
         }
         //自动挂载 获取挂载文件夹名字
         QString mountPath = getTmpMountPath(userName, lvInfo.m_fileSystemLabel, lvInfo.m_lvUuid, lvInfo.m_lvPath);
-        if (!tmpMountDevice(mountPath, lvInfo.m_lvPath, lvInfo.m_lvFsType, userName).first) {
-            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CREATE_FAILED, false, QString("%1:%2:%3")
-                                       .arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_MOUNT_FAILED).arg(lvPath));
+        auto pair = tmpMountDevice(mountPath, lvInfo.m_lvPath, lvInfo.m_lvFsType, userName);
+        if (!pair.first) {
+            return sendRefSigAndReturn(pair.first, DISK_SIGNAL_TYPE_CREATE_FAILED, pair.first,pair.second);
         }
     }
 
@@ -3855,7 +3854,7 @@ QPair<bool, QString> PartedCore::tmpMountDevice(const QString &mountpath, const 
         return QPair<bool, QString>(false, str);
     }
     QString str = QString("%1:%2:%3").arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_NORMAL).arg(devPath);
-    return QPair<bool, QString>(false, str);
+    return QPair<bool, QString>(true, str);
 }
 
 QString PartedCore::getTmpMountPath(const QString &user, const QString &lable, const QString &uuid, const QString &devPath)

@@ -28,9 +28,10 @@
 #define SELECTEDITEMWIDGET_H
 
 #include "radiuswidget.h"
-#include "buttonlabel.h"
+//#include "buttonlabel.h"
 
 #include <DLabel>
+#include <DIconButton>
 
 DWIDGET_USE_NAMESPACE
 
@@ -68,8 +69,9 @@ private:
 private:
     DLabel *m_nameInfo;
     DLabel *m_sizeInfo;
-    ButtonLabel *m_buttonLabel;
+//    ButtonLabel *m_buttonLabel;
     PVInfoData m_pvInfoData;
+    DIconButton *m_iconButton;
 };
 
 #endif // SELECTEDITEMWIDGET_H

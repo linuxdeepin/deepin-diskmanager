@@ -135,6 +135,10 @@ void SelectPVItemWidget::initData()
 
         m_sizeLabel->setText(m_pvInfoData.m_partitionSize);
     }
+
+    if (m_pvInfoData.m_isReadOnly) {
+        m_checkBox->setDisabled(true);
+    }
 }
 
 void SelectPVItemWidget::onCheckBoxStateChange(int state)

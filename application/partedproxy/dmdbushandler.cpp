@@ -116,6 +116,7 @@ void DMDbusHandler::initConnection()
     connect(m_dbus, &DMDBusInterface::vgDeleteMessage, this, &DMDbusHandler::vgDeleteMessage);
     connect(m_dbus, &DMDBusInterface::lvDeleteMessage, this, &DMDbusHandler::lvDeleteMessage);
     connect(m_dbus, &DMDBusInterface::deCryptMessage, this, &DMDbusHandler::deCryptMessage);
+    connect(m_dbus, &DMDBusInterface::createFailedMessage, this, &DMDbusHandler::createFailedMessage);
 //    connect(m_dbus, &DMDBusInterface::rootLogin, this, &DMDbusHandler::onRootLogin);
 }
 
@@ -585,18 +586,8 @@ QMap<QString, QString> DMDbusHandler::getIsJoinAllVG()
 bool DMDbusHandler::isExistMountLV(const VGInfo &info)
 {
     for (int i = 0; i < info.m_lvlist.count(); i++) {
-        LVInfo lvInfo = info.m_lvlist.at(i);
-        if (lvInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
-            LUKS_INFO luksInfo = probLUKSInfo().m_luksMap.value(lvInfo.m_lvPath);
-            if (luksInfo.isDecrypt) {
-                if (!luksInfo.m_mapper.m_mountPoints.isEmpty()) {
-                    return true;
-                }
-            }
-        } else {
-            if (!lvInfo.m_mountPoints.isEmpty()) {
-                return true;
-            }
+        if (lvIsMount(info.m_lvlist.at(i))) {
+            return true;
         }
     }
 
@@ -624,18 +615,8 @@ bool DMDbusHandler::lvIsMount(const LVInfo &lvInfo)
 bool DMDbusHandler::isExistMountPartition(const DeviceInfo &info)
 {
     for (int i = 0; i < info.m_partition.size(); i++) {
-        PartitionInfo partitionInfo = info.m_partition.at(i);
-        if (partitionInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
-            LUKS_INFO luksInfo = probLUKSInfo().m_luksMap.value(partitionInfo.m_path);
-            if (luksInfo.isDecrypt) {
-                if (!luksInfo.m_mapper.m_mountPoints.isEmpty()) {
-                    return true;
-                }
-            }
-        } else {
-            if (!partitionInfo.m_mountPoints.isEmpty()) {
-                return true;
-            }
+        if (partitionISMount(info.m_partition.at(i))) {
+            return true;
         }
     }
 
@@ -806,5 +787,83 @@ void DMDbusHandler::cryptUmount(const LUKS_INFO &luks, const QString &devName)
 QMap<QString, QString> DMDbusHandler::getIsAllEncryption()
 {
     return m_isAllEncryption;
+}
+
+void DMDbusHandler::refreshMainWindowData()
+{
+    emit curSelectChanged();
+}
+
+QString DMDbusHandler::getFailedMessage(const QString &key, const int &value, const QString &devPath)
+{
+    QString failedMessage = "";
+    if (key == "CRYPTError") {
+        switch (value) {
+        case CRYPTError::CRYPT_ERR_ENCRYPT_FAILED: {
+            failedMessage = tr("Failed to encrypt %1, please try again!").arg(devPath);
+            break;
+        }
+        case CRYPTError::CRYPT_ERR_DECRYPT_FAILED: {
+            failedMessage = tr("Failed to decrypt %1, please try again!").arg(devPath);
+            break;
+        }
+        case CRYPTError::CRYPT_ERR_CLOSE_FAILED: {
+            failedMessage = tr("%1 failed to close the crypto map").arg(devPath);
+            break;
+        }
+        }
+    } else if (key == "DISK_ERROR") {
+        switch (value) {
+        case DISK_ERROR::DISK_ERR_CREATE_PART_FAILED: {
+            failedMessage = tr("Failed to create partitions, please try again!");
+            break;
+        }
+        case DISK_ERROR::DISK_ERR_CREATE_FS_FAILED: {
+            failedMessage = tr("Failed to create %1 file system, please try again!").arg(devPath);
+            break;
+        }
+        case DISK_ERROR::DISK_ERR_UPDATE_KERNEL_FAILED: {
+            failedMessage = tr("Failed to submit the request to the kernel");
+            break;
+        }
+        case DISK_ERROR::DISK_ERR_DBUS_ARGUMENT: {
+            failedMessage = tr("DBUS parameter error");
+            break;
+        }
+        case DISK_ERROR::DISK_ERR_MOUNT_FAILED: {
+            failedMessage = tr("Failed to mount %1").arg(devPath);
+            break;
+        }
+        case DISK_ERROR::DISK_ERR_CREATE_MOUNTDIR_FAILED: {
+            failedMessage = tr("%1 failed to create mounting folders").arg(devPath);
+            break;
+        }
+        case DISK_ERROR::DISK_ERR_CHOWN_FAILED: {
+            failedMessage = tr("%1 failed to change the owner of mounting folders").arg(devPath);
+            break;
+        }
+        case DISK_ERROR::DISK_ERR_CREATE_PARTTAB_FAILED: {
+            failedMessage = tr("Creating partition table failed");
+            break;
+        }
+        }
+    } else if (key == "LVMError") {
+        switch (value) {
+        case LVMError::LVM_ERR_LV_CREATE_FAILED: {
+            failedMessage = tr("Failed to create a logical volume, please try again!");
+            break;
+        }
+        case LVMError::LVM_ERR_LV_CREATE_FS_FAILED: {
+            failedMessage = tr("Failed to create %1 file system, please try again!").arg(devPath);
+            break;
+        }
+        case LVMError::LVM_ERR_LV_ARGUMENT: {
+            failedMessage = tr("DBUS parameter error");
+            break;
+        }
+        }
+    }
+
+    return failedMessage;
 }
 

@@ -114,11 +114,12 @@ void UnmountDialog::onButtonClicked(int index, const QString &text)
 {
     Q_UNUSED(text);
     if (m_okCode == index) {
-        int flag = 0;
+        int partitionFlag = 0;
         bool isSysPath = false;
+        bool lvFlag = false;
         if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
             PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-            flag = info.m_flag;
+            partitionFlag = info.m_flag;
 
             for (int i = 0; i < info.m_mountPoints.size(); i++) {
                 if (info.m_mountPoints[i] == "/boot/efi" || info.m_mountPoints[i] == "/boot"
@@ -129,6 +130,7 @@ void UnmountDialog::onButtonClicked(int index, const QString &text)
             }
         } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
             LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+            lvFlag = lvInfo.m_dataFlag;
             for (int i = 0; i < lvInfo.m_mountPoints.size(); i++) {
                 if (lvInfo.m_mountPoints[i] == "/boot/efi" || lvInfo.m_mountPoints[i] == "/boot"
                         || lvInfo.m_mountPoints[i] == "/" || lvInfo.m_mountPoints[i] == "/recovery") {
@@ -139,7 +141,7 @@ void UnmountDialog::onButtonClicked(int index, const QString &text)
         }
 
         qDebug() << __FUNCTION__;
-        if (isSysPath || flag == 4) {
+        if (isSysPath || partitionFlag == 4 || lvFlag) {
             UnmountWarningDialog unmountWarningDialog;
             unmountWarningDialog.setObjectName("firstWarning");
             unmountWarningDialog.setAccessibleName("firstWarning");

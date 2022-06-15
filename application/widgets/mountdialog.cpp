@@ -61,28 +61,31 @@ void MountDialog::initUi()
     DFontSizeManager::instance()->bind(tipLabel, DFontSizeManager::T6);
     DLabel *mountLabel = new DLabel(tr("Mount point:"));
     DFontSizeManager::instance()->bind(mountLabel, DFontSizeManager::T6);
-//    m_fileChooserEdit = new DFileChooserEdit(this);
-//    m_fileChooserEdit->setFileMode(QFileDialog::Directory);
-//    m_fileChooserEdit->fileDialog()->setOption(QFileDialog::ShowDirsOnly);
-//    m_fileChooserEdit->fileDialog()->setAcceptMode(QFileDialog::AcceptOpen);
+    m_fileChooserEdit = new DFileChooserEdit(this);
+    m_fileChooserEdit->setDirectoryUrl(QUrl("file:///mnt"));
+    m_fileChooserEdit->setFileMode(QFileDialog::Directory);
+    m_fileChooserEdit->fileDialog()->setOption(QFileDialog::ShowDirsOnly);
+    m_fileChooserEdit->fileDialog()->setAcceptMode(QFileDialog::AcceptOpen);
+    m_fileChooserEdit->setAccessibleName("mountPointComboBox");
+    m_fileChooserEdit->setText("/mnt");
 
-    m_ComboBox = new DComboBox;
-    m_ComboBox->setEditable(true);
-    m_ComboBox->addItem("/mnt");
-    m_ComboBox->addItem("/boot");
-    m_ComboBox->addItem("/");
-    m_ComboBox->addItem("/tmp");
-    m_ComboBox->addItem("/var");
-    m_ComboBox->addItem("/srv");
-    m_ComboBox->addItem("/opt");
-    m_ComboBox->addItem("/usr");
-    m_ComboBox->addItem("/local");
-    m_ComboBox->addItem("/media");
-    m_ComboBox->setAccessibleName("mountPointComboBox");
+//    m_ComboBox = new DComboBox;
+//    m_ComboBox->setEditable(true);
+//    m_ComboBox->addItem("/mnt");
+//    m_ComboBox->addItem("/boot");
+//    m_ComboBox->addItem("/");
+//    m_ComboBox->addItem("/tmp");
+//    m_ComboBox->addItem("/var");
+//    m_ComboBox->addItem("/srv");
+//    m_ComboBox->addItem("/opt");
+//    m_ComboBox->addItem("/usr");
+//    m_ComboBox->addItem("/local");
+//    m_ComboBox->addItem("/media");
+//    m_ComboBox->setAccessibleName("mountPointComboBox");
 
     mainLayout->addWidget(tipLabel);
     mainLayout->addWidget(mountLabel);
-    mainLayout->addWidget(m_ComboBox);
+    mainLayout->addWidget(m_fileChooserEdit);
 
     int index = addButton(tr("Cancel"), true, ButtonNormal);
     m_okCode = addButton(tr("Mount"), false, ButtonRecommend);
@@ -95,7 +98,7 @@ void MountDialog::initUi()
 
 void MountDialog::initConnection()
 {
-    connect(m_ComboBox->lineEdit(), &QLineEdit::textChanged, this, &MountDialog::onEditContentChanged);
+    connect(m_fileChooserEdit->lineEdit(), &QLineEdit::textChanged, this, &MountDialog::onEditContentChanged);
     connect(this, &MountDialog::buttonClicked, this, &MountDialog::onButtonClicked);
 }
 
@@ -117,8 +120,6 @@ void MountDialog::onEditContentChanged(const QString &content)
 
 bool MountDialog::isExistMountPoint(const QString &mountPoint)
 {
-    bool isExist = false;
-
     // 判断是否有分区已经挂载在该路径
     DeviceInfoMap infoMap = DMDbusHandler::instance()->probDeviceInfo();
     for (auto devInfo = infoMap.begin(); devInfo != infoMap.end(); devInfo++) {
@@ -128,14 +129,12 @@ bool MountDialog::isExistMountPoint(const QString &mountPoint)
             for (int i = 0; i < it->m_mountPoints.size(); i++) {
                 mountpoints += it->m_mountPoints[i];
                 if (it->m_mountPoints.size() > 1 && mountPoint == it->m_mountPoints[i]) {
-                    isExist = true;
-                    return isExist;
+                    return true;
                 }
             }
 
             if (mountPoint == mountpoints) {
-                isExist = true;
-                return isExist;
+                return true;
             }
         }
     }
@@ -151,19 +150,17 @@ bool MountDialog::isExistMountPoint(const QString &mountPoint)
             for (int j = 0; j < info.m_mountPoints.size(); j++) {
                 mountpoints += info.m_mountPoints[j];
                 if (info.m_mountPoints.size() > 1 && mountPoint == info.m_mountPoints[j]) {
-                    isExist = true;
-                    return isExist;
+                    return true;
                 }
             }
 
             if (mountPoint == mountpoints) {
-                isExist = true;
-                return isExist;
+                return true;
             }
         }
     }
 
-    return isExist;
+    return false;
 }
 
 bool MountDialog::isSystemDirectory(const QString &directory)
@@ -189,19 +186,19 @@ void MountDialog::mountCurPath()
         if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
             QVector<QString> mountPoints;
-            mountPoints.append(m_ComboBox->currentText());
+            mountPoints.append(m_fileChooserEdit->text());
             luksInfo.m_mapper.m_mountPoints = mountPoints;
 
             DMDbusHandler::instance()->cryptMount(luksInfo, info.m_path);
         } else {
-            DMDbusHandler::instance()->mount(m_ComboBox->currentText());
+            DMDbusHandler::instance()->mount(m_fileChooserEdit->text());
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
         if (lvInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(lvInfo.m_lvPath);
             QVector<QString> mountPoints;
-            mountPoints.append(m_ComboBox->currentText());
+            mountPoints.append(m_fileChooserEdit->text());
             luksInfo.m_mapper.m_mountPoints = mountPoints;
 
             DMDbusHandler::instance()->cryptMount(luksInfo, lvInfo.m_lvName);
@@ -213,7 +210,7 @@ void MountDialog::mountCurPath()
             lvAction.m_lvSize = lvInfo.m_lvSize;
             lvAction.m_lvByteSize = lvInfo.m_lvLECount * lvInfo.m_LESize;
             lvAction.m_lvAct = LVMAction::LVM_ACT_LV_MOUNT;
-            lvAction.m_mountPoint = m_ComboBox->currentText();
+            lvAction.m_mountPoint = m_fileChooserEdit->text();
 
             DMDbusHandler::instance()->onMountLV(lvAction);
         }
@@ -222,7 +219,7 @@ void MountDialog::mountCurPath()
         if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
             QVector<QString> mountPoints;
-            mountPoints.append(m_ComboBox->currentText());
+            mountPoints.append(m_fileChooserEdit->text());
             luksInfo.m_mapper.m_mountPoints = mountPoints;
 
             DMDbusHandler::instance()->cryptMount(luksInfo, info.m_path);
@@ -234,7 +231,7 @@ void MountDialog::onButtonClicked(int index, const QString &text)
 {
     Q_UNUSED(text);
     if (index == m_okCode) {
-        QString mountPath = m_ComboBox->currentText();
+        QString mountPath = m_fileChooserEdit->text();
         if (mountPath.endsWith("/")) {
             mountPath.chop(1);
         }

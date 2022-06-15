@@ -553,7 +553,7 @@ void CreateLVWidget::setAddOrRemResult(const bool &isExceed)
 
 void CreateLVWidget::setRegValidator()
 {
-    QRegExp reg("^[0-9]+(.[0-9]{1,4})?$");
+    QRegExp reg("^[0-9]+(\\.[0-9]{1,4})?$");
     QRegExpValidator *va = new QRegExpValidator(reg, this);
     m_partSizeEdit->lineEdit()->setValidator(va);
 
@@ -818,6 +818,8 @@ void CreateLVWidget::onAddPartition()
             return;
         }
 
+        QColor color = QColor(palette().buttonText().color());
+
         PasswordInputDialog passwordInputDialog(this);
         passwordInputDialog.setDeviceName(m_partNameEdit->text());
         passwordInputDialog.setObjectName("passwordInputDialog");
@@ -844,6 +846,10 @@ void CreateLVWidget::onAddPartition()
                                   tr("OK", "button"), DDialog::ButtonRecommend, "OK");
             warningBox.exec();
         }
+
+        DPalette palette = DApplicationHelper::instance()->palette(m_botFrame);
+        palette.setColor(QPalette::ButtonText, color);
+        DApplicationHelper::instance()->setPalette(this, palette);
 
         formate = formate.trimmed().split(" ").at(0);
     }
@@ -926,7 +932,10 @@ void CreateLVWidget::onApplyButton()
             info.m_luksFlag = LUKSFlag::IS_CRYPT_LUKS;
             info.m_crypt = m_patrinfo.at(i).m_encryption;
             QStringList tokenList;
-            tokenList.append(m_patrinfo.at(i).m_passwordHint);
+            if (!m_patrinfo.at(i).m_passwordHint.isEmpty()) {
+                tokenList.append(m_patrinfo.at(i).m_passwordHint);
+            }
+
             info.m_tokenList = tokenList;
             info.m_decryptStr = m_patrinfo.at(i).m_password;
             info.m_dmName = m_patrinfo.at(i).m_dmName;

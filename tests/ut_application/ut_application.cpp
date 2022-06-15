@@ -323,10 +323,10 @@ TEST_F(ut_application, mountPartition)
     stub2.set(foo, MessageboxExec);
 
     MountDialog *mount = new MountDialog;
-    mount->m_ComboBox->setCurrentText("/");
+    mount->m_fileChooserEdit->setText("/");
     mount->onButtonClicked(1, "");
 
-    mount->m_ComboBox->setCurrentText("/mnt");
+    mount->m_fileChooserEdit->setText("/mnt");
     mount->onButtonClicked(1, "");
 
     mount->onButtonClicked(0, "");

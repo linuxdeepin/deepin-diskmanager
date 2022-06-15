@@ -1,19 +1,143 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ru">
 <context>
+    <name>CreateLVWidget</name>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="55"/>
+        <source>Creating logical volumes on %1</source>
+        <translation>Создание логических томов на %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="57"/>
+        <source>Click ‘+’ to create a logical volume. </source>
+        <translation>Щелкните на «+» чтобы создать логический том. </translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="124"/>
+        <source>VG Information</source>
+        <translation>Сведения о ГТ (VG)</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="138"/>
+        <source>Capacity:</source>
+        <translation>Вместимость:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="148"/>
+        <location filename="../widgets/createlvwidget.cpp" line="312"/>
+        <source>LV name:</source>
+        <translation>Имя ЛТ (LV):</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="157"/>
+        <location filename="../widgets/createlvwidget.cpp" line="161"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1002"/>
+        <source>VG name:</source>
+        <translation>Имя ГТ (VG):</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="169"/>
+        <location filename="../widgets/createlvwidget.cpp" line="333"/>
+        <location filename="../widgets/createlvwidget.cpp" line="377"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1003"/>
+        <source>LV file system:</source>
+        <translation>Файловая система ЛТ (LV):</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="242"/>
+        <source>Confirm</source>
+        <comment>button</comment>
+        <translation>Применить</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="246"/>
+        <source>Cancel</source>
+        <comment>button</comment>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="249"/>
+        <source>Revert</source>
+        <comment>button</comment>
+        <translation>Вернуть</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="279"/>
+        <source>LV Information</source>
+        <translation>Сведения о ЛТ (LV)</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="291"/>
+        <source>Create LV:</source>
+        <translation>Создать ЛТ (LV):</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="302"/>
+        <source>Delete last logical volume</source>
+        <translation>Удалить последний логический том</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="342"/>
+        <source>LV capacity:</source>
+        <translation>Емкость ЛТ (LV):</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="524"/>
+        <location filename="../widgets/createlvwidget.cpp" line="614"/>
+        <source>Unallocated</source>
+        <translation>Нераспределенный</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="547"/>
+        <source>Name</source>
+        <translation>Имя</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="548"/>
+        <source>Size</source>
+        <translation>Размер</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="717"/>
+        <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
+        <translation>Использовать для шифрования диска стандартный алгоритм aes-xts-plain64. Чтобы смонтировать его снова, его понадобится расшифровать.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="723"/>
+        <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
+        <translation>Использовать для шифрования диска китайский государственный алгоритм sm4-xts-plain. Чтобы смонтировать его снова, его понадобится расшифровать. Операционные системы, не поддерживающие китайскую государственную криптографию, не смогут расшифровать этот диск.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="817"/>
+        <source>To encrypt a volume, it should be larger than 100 MiB</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="845"/>
+        <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createlvwidget.cpp" line="846"/>
+        <source>OK</source>
+        <comment>button</comment>
+        <translation>ОК</translation>
+    </message>
+    <message>
+        <source>Disk:</source>
+        <translation type="vanished">Диск:</translation>
+    </message>
+</context>
+<context>
     <name>CreatePartitionTableDialog</name>
     <message>
-        <source>The disk has a partition table already. Create a new one and replace it?</source>
-        <translation type="vanished">На диске уже есть таблица разделов. Создать новый и заменить его?</translation>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="30"/>
+        <source>Cancel</source>
+        <translation>Отмена</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="37"/>
         <source>No partition table in this disk. Create a new one?</source>
         <translation>На этом диске нет таблицы разделов. Создать новый?</translation>
-    </message>
-    <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="30"/>
-        <source>Cancel</source>
-        <translation>Отмена</translation>
     </message>
     <message>
         <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
@@ -29,6 +153,199 @@
         <location filename="../widgets/createpartitiontabledialog.cpp" line="44"/>
         <source>Replace</source>
         <translation>Заменить</translation>
+    </message>
+</context>
+<context>
+    <name>CreateVGWidget</name>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="75"/>
+        <source>Create volume group</source>
+        <translation>Создание группы томов</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="85"/>
+        <source>Resize</source>
+        <translation>Изменить размер</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="109"/>
+        <source>Select disks or partitions to create a volume group and set its capacity</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="114"/>
+        <location filename="../widgets/createvgwidget.cpp" line="402"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1070"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1080"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1637"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1647"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1696"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1757"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1760"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1790"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1906"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1969"/>
+        <source>Capacity selected: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="119"/>
+        <source>The selected disks will be converted to dynamic disks, and you will not be able to start installed operating systems from the disks.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="169"/>
+        <source>No partitions available</source>
+        <translation>Нет доступных разделов</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="240"/>
+        <source>No disks or partitions available</source>
+        <translation>Нет доступных дисков или разделов</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="274"/>
+        <location filename="../widgets/createvgwidget.cpp" line="466"/>
+        <source>Cancel</source>
+        <comment>button</comment>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="277"/>
+        <source>Next</source>
+        <translation>Далее</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="302"/>
+        <source>Selected disks/partitions</source>
+        <translation>Выбранные диски или разделы</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="339"/>
+        <source>Set VG capacity</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="344"/>
+        <source>Auto adjusted to integral multiples of 4 MiB</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="432"/>
+        <source>Choose one disk or partition at least</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="469"/>
+        <source>Previous</source>
+        <translation>Назад</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="472"/>
+        <source>Done</source>
+        <comment>button</comment>
+        <translation>Готово</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="585"/>
+        <source>Resizing space...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="587"/>
+        <source>Creating...</source>
+        <translation>Создание...</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="639"/>
+        <source>Selected disks and partitions:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="682"/>
+        <location filename="../widgets/createvgwidget.cpp" line="684"/>
+        <source>VG capacity: %1</source>
+        <translation>Емкость ГТ (VG): %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="689"/>
+        <source>VG name: %1</source>
+        <translation>Имя ГТ (VG): %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="790"/>
+        <source>No less than the used capacity please</source>
+        <translation>Должно быть не менее используемой емкости</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="795"/>
+        <source>No more than the maximum capacity please</source>
+        <translation>Должно быть не более максимальной емкости</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="813"/>
+        <source>A lot of data exists on %1, </source>
+        <translation>На %1 находится много данных, </translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="814"/>
+        <source>which may take a long time to back it up.</source>
+        <translation>и архивация может занять много времени.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="815"/>
+        <source>Do you want to continue?</source>
+        <translation>Вы хотите продолжить?</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="816"/>
+        <source>Continue</source>
+        <translation>Продолжить</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="817"/>
+        <source>Cancel</source>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1705"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1799"/>
+        <source>Adding the disk/partition to a logical volume group 
+will format it and remove its password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1925"/>
+        <source>Not enough space to back up data on %1, please clear disk space</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1706"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1800"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1926"/>
+        <source>OK</source>
+        <translation>ОК</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="2090"/>
+        <source>Existing volume group, creation failed. Please retry after reboot.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="2094"/>
+        <source>Failed to create a physical volume. Please refresh Disk Utility and try again.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="2098"/>
+        <source>Device input/output error. Please try again after reboot.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="2151"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2158"/>
+        <source>Refreshing the page to reload disks</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -67,103 +384,290 @@
 <context>
     <name>DMDbusHandler</name>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="161"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="211"/>
         <source>Refreshing data...</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="180"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="230"/>
         <source>Initializing data...</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="213"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="263"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="711"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="802"/>
         <source>Mounting %1 ...</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="220"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="270"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="718"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="809"/>
         <source>Unmounting %1 ...</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="259"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="309"/>
         <source>Resizing %1 ...</source>
-        <translation type="unfinished"/>
+        <translation>Изменение раздела %1 ...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="266"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="316"/>
         <source>Creating a new partition...</source>
-        <translation type="unfinished"/>
+        <translation>Создание нового раздела...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="365"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="475"/>
         <source>Deleting %1 ...</source>
-        <translation type="unfinished"/>
+        <translation>Удаление %1 ...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="417"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="527"/>
         <source>Creating a partition table of %1 ...</source>
+        <translation>Создание таблицы разделов на %1 ...</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="529"/>
+        <source>Replacing the partition table of %1 ...</source>
+        <translation>Замена таблицы разделов на %1 ...</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="678"/>
+        <source>Creating...</source>
+        <translation>Создание...</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="685"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="692"/>
+        <source>Deleting...</source>
+        <translation>Удаление...</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="704"/>
+        <source>Resizing space...</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="419"/>
-        <source>Replacing the partition table of %1 ...</source>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="742"/>
+        <source>AES Encryption</source>
+        <translation>Шифрование AES</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="744"/>
+        <source>SM4 Encryption</source>
+        <translation>Шифрование SM4</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="830"/>
+        <source>Failed to encrypt %1, please try again!</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="834"/>
+        <source>Failed to decrypt %1, please try again!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="838"/>
+        <source>%1 failed to close the crypto map</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="880"/>
+        <source>Failed to create a logical volume, please try again!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="845"/>
+        <source>Failed to create partitions, please try again!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="849"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="884"/>
+        <source>Failed to create %1 file system, please try again!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="853"/>
+        <source>Failed to submit the request to the kernel</source>
+        <translation>Не удалось отправить запрос ядру</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="857"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="888"/>
+        <source>DBUS parameter error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="861"/>
+        <source>Failed to mount %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="865"/>
+        <source>%1 failed to create mounting folders</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="869"/>
+        <source>%1 failed to change the owner of mounting folders</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="873"/>
+        <source>Creating partition table failed</source>
+        <translation>Не удалось создать таблицу разделов </translation>
+    </message>
+</context>
+<context>
+    <name>DecryptDialog</name>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="59"/>
+        <source>Enter the password to decrypt the disk</source>
+        <translation>Введите пароль для расшифровки диска</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="71"/>
+        <source>Enter the password to decrypt the volume group</source>
+        <translation>Введите пароль для расшифровки группы томов</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="88"/>
+        <source>Enter a password </source>
+        <translation>Введите пароль</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="92"/>
+        <source>Password hint</source>
+        <translation>Подсказка для пароля</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="140"/>
+        <source>Cancel</source>
+        <comment>button</comment>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="145"/>
+        <source>Decrypt</source>
+        <comment>button</comment>
+        <translation>Расшифровать</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="173"/>
+        <source>Decrypting...</source>
+        <translation>Расшифровка...</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="328"/>
+        <source>Decryption failed</source>
+        <translation>Расшифровка не удалась</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="346"/>
+        <source>Wrong password, %1 chances left</source>
+        <translation>Неверный пароль, осталось попыток: %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="348"/>
+        <source>Wrong password, only one chance left</source>
+        <translation>Неверный пароль, последняя попытка</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="217"/>
+        <source>Please try again %1 minutes later</source>
+        <translation>Попробуйте еще раз через %1 мин</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="291"/>
+        <source>The password cannot be empty</source>
+        <translation>Парольне может быть пустым</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="344"/>
+        <source>Password locked, please try again %1 minutes later</source>
+        <translation>Ввод пароля заблокирован, попробуйте через %1 мин</translation>
     </message>
 </context>
 <context>
     <name>DeviceListWidget</name>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="105"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="110"/>
         <source>Disk info</source>
         <translation>О диске</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="112"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="117"/>
         <source>Health management</source>
         <translation>Управление здоровьем</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="118"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="123"/>
         <source>Check health</source>
         <translation>Проверить работоспособность</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="124"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="129"/>
         <source>Check partition table error</source>
         <translation>Проверить ошибки таблицы разделов</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="130"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="135"/>
         <source>Verify or repair bad sectors</source>
         <translation>Проверить или исправить поврежденные сектора</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="136"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="141"/>
         <source>Create partition table</source>
         <translation>Создать таблицу разделов</translation>
     </message>
     <message>
-        <source>Hide partition</source>
-        <translation type="vanished">Скрыть раздел</translation>
-    </message>
-    <message>
-        <source>Unhide partition</source>
-        <translation type="vanished">Показать раздел</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="162"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="172"/>
         <source>Delete partition</source>
         <translation>Удалить раздел</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="271"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="227"/>
+        <source>Delete volume group</source>
+        <translation>Удаление группы томов</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="233"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="608"/>
+        <source>Create logical volume</source>
+        <translation>Создание логического тома</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="258"/>
+        <source>Delete logical volume</source>
+        <translation>Удаление логического тома</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="301"/>
+        <source>Failed to get hardware information</source>
+        <translation>Не удалось получить информацию об оборудовании</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="301"/>
+        <source>Close</source>
+        <translation>Закрыть</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="338"/>
+        <source>Please unmount all partitions in the disk first</source>
+        <translation>Пожалуйста, сначала отключите все разделы на диске</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="338"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="579"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="632"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="283"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="350"/>
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
@@ -172,167 +676,208 @@
 пожалуйста, отнеситесь к этому внимательно</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="283"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="350"/>
         <source>Proceed</source>
-        <translation type="unfinished"/>
+        <translation>Начать</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="309"/>
-        <source>No errors found in the partition table</source>
-        <translation>В таблице разделов ошибок не обнаружено</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="322"/>
-        <source>Do you want to hide this partition?</source>
-        <translation>Вы хотите скрыть этот раздел?</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="322"/>
-        <source>Hide</source>
-        <translation>Скрыть</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="283"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="322"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="354"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="370"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="350"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="389"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="421"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="437"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="592"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="645"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="212"/>
-        <source>Failed to get hardware information</source>
-        <translation>Не удалось получить информацию об оборудовании</translation>
+        <location filename="../widgets/devicelistwidget.cpp" line="376"/>
+        <source>No errors found in the partition table</source>
+        <translation>В таблице разделов ошибок не обнаружено</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="212"/>
-        <source>Close</source>
-        <translation>Закрыть</translation>
+        <location filename="../widgets/devicelistwidget.cpp" line="389"/>
+        <source>Do you want to hide this partition?</source>
+        <translation>Вы хотите скрыть этот раздел?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="271"/>
-        <source>Please unmount all partitions in the disk first</source>
-        <translation>Пожалуйста, сначала отключите все разделы на диске</translation>
+        <location filename="../widgets/devicelistwidget.cpp" line="389"/>
+        <source>Hide</source>
+        <translation>Скрыть</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="329"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="396"/>
         <source>Failed to hide the partition: unable to lock it</source>
         <translation>Не удалось скрыть раздел: не удалось его заблокировать</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="337"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="404"/>
         <source>You can only hide the unmounted partition</source>
         <translation>Вы можете скрыть только размонтированный раздел</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="354"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="421"/>
         <source>Do you want to unhide this partition?</source>
         <translation>Вы хотите показать этот раздел?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="354"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="421"/>
         <source>Unhide</source>
         <translation>Показать</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="370"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="437"/>
         <source>Are you sure you want to delete this partition?</source>
         <translation>Вы действительно хотите удалить этот раздел?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="370"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="437"/>
         <source>You will lose all data in it</source>
         <translation>Вы потеряете все данные в нем</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="370"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="437"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="592"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="645"/>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="377"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="444"/>
         <source>Failed to delete the partition: unable to lock it</source>
         <translation>Не удалось удалить раздел: не удалось его заблокировать</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="392"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="459"/>
         <source>Hide the partition successfully</source>
         <translation>Раздел успешно скрыт</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="397"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="464"/>
         <source>Failed to hide the partition</source>
         <translation>Не удалось скрыть раздел</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="407"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="474"/>
         <source>Unhide the partition successfully</source>
         <translation>Отображение раздела прошло успешно</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="412"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="479"/>
         <source>Failed to unhide the partition</source>
         <translation>Не удалось отобразить раздел</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="428"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="495"/>
         <source>Delete the partition successfully</source>
         <translation>Раздел успешно удален</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="436"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="503"/>
         <source>Failed to find the disk</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось найти диск</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="440"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="507"/>
         <source>Failed to get the partition info</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось получить сведения о разделе</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="444"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="511"/>
         <source>Failed to delete the partition</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось удалить раздел</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="448"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="515"/>
         <source>Failed to submit the request to the kernel</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось отправить запрос ядру</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="455"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="522"/>
         <source>Failed to delete the partition: %1</source>
         <translation>Не удалось удалить раздел: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="465"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="532"/>
         <source>Unmounting successful</source>
-        <translation type="unfinished"/>
+        <translation>Успешно размонтировано</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="470"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="537"/>
         <source>Unmounting failed</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось размонтировать</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="481"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="548"/>
         <source>Creating partition table successful</source>
         <translation>Таблица разделов успешно создана</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="485"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="552"/>
         <source>Replacing partition table successful</source>
         <translation>Таблица разделов успешно перемещена</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="493"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="560"/>
         <source>Creating partition table failed</source>
         <translation>Не удалось создать таблицу разделов </translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="497"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="564"/>
         <source>Replacing partition table failed</source>
         <translation>Не удалось переместить таблицу разделов</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="579"/>
+        <source>Unmount all logical volumes in %1 first</source>
+        <translation>Сначала размонтируйте все логические тома в %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="632"/>
+        <source>Unmount %1 first</source>
+        <translation>Сначала размонтируйте %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="673"/>
+        <source>The logical volume group is busy and cannot be deleted. Please retry after reboot.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="678"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="715"/>
+        <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
+        <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="608"/>
+        <source>The disks will be formatted if you create a logical volume</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="683"/>
+        <source>Failed to delete the logical volume group</source>
+        <translation>Не удалось удалить группу логических томов</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="720"/>
+        <source>Failed to delete the logical volume</source>
+        <translation>Не удалось удалить логический том</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="830"/>
+        <source>Volume Groups</source>
+        <translation>Группы томов</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="884"/>
+        <source>Disks</source>
+        <translation>Диски</translation>
     </message>
 </context>
 <context>
@@ -345,7 +890,7 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="84"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="136"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1245"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1224"/>
         <source>Verify:</source>
         <translation>Проверить:</translation>
     </message>
@@ -367,14 +912,14 @@
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="132"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="137"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1246"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1225"/>
         <source>Method:</source>
         <translation>Метод:</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="147"/>
-        <source>Verifying times</source>
-        <translation>Время проверки</translation>
+        <source>Rounds</source>
+        <translation>Раунды</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="148"/>
@@ -419,6 +964,16 @@
         <translation>Сброс</translation>
     </message>
     <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="300"/>
+        <source>Repair</source>
+        <translation>Исправить</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="306"/>
+        <source>Start Verify</source>
+        <translation>Начать проверку</translation>
+    </message>
+    <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="311"/>
         <source>Stop</source>
         <comment>button</comment>
@@ -431,47 +986,15 @@
         <translation>Продолжить</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="326"/>
-        <source>Done</source>
-        <comment>button</comment>
-        <translation>Готово</translation>
-    </message>
-    <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
-        <source>Exit</source>
-        <translation>Выход</translation>
-    </message>
-    <message>
-        <source>Reset</source>
-        <translation type="vanished">Сброс</translation>
-    </message>
-    <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="300"/>
-        <source>Repair</source>
-        <translation>Исправить</translation>
-    </message>
-    <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="306"/>
-        <source>Start Verify</source>
-        <translation>Начать проверку</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation type="vanished">Остановить</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation type="vanished">Продолжить</translation>
-    </message>
-    <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="321"/>
         <source>Verify Again</source>
         <translation>Проверить снова</translation>
     </message>
     <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="326"/>
         <source>Done</source>
-        <translation type="vanished">Готово</translation>
+        <comment>button</comment>
+        <translation>Готово</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="357"/>
@@ -479,8 +1002,8 @@
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="760"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="884"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="930"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1034"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1129"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1013"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1108"/>
         <source>Time elapsed:</source>
         <translation>Прошло времени:</translation>
     </message>
@@ -491,10 +1014,10 @@
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="778"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="885"/>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="931"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1035"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1054"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1102"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1135"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1014"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1033"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1081"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1114"/>
         <source>Time left:</source>
         <translation>Осталось времени:</translation>
     </message>
@@ -515,84 +1038,90 @@
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="802"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="994"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="973"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="990"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="969"/>
         <source>The verifying disk contains mounted partitions, so you cannot repair it.</source>
         <translation>Проверяемый диск содержит смонтированные разделы, поэтому вы не можете его исправить.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="992"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="971"/>
         <source>Please unmount partitions and then repair the disk.</source>
         <translation>Размонтируйте разделы, а затем исправьте диск.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="981"/>
         <source>Warning</source>
         <translation>Предупреждение</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1007"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="986"/>
         <source>Bad sector repairing cannot recover files,</source>
         <translation>Исправление плохих секторов не может восстановить файлы,</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1008"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="987"/>
         <source>but destroys data on and near bad sectors instead.</source>
         <translation>но вместо этого уничтожает данные в поврежденных секторах и рядом с ними. </translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1009"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="988"/>
         <source>Please back up all data before repair.</source>
         <translation>Перед исправлением сделайте резервную копию всех данных.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1023"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1182"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1209"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1161"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1188"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1024"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1003"/>
         <source>Start Repair</source>
         <translation>Начать исправление</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1070"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1049"/>
         <source>Repairing cylinder: %1</source>
         <translation>Исправление цилиндра: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1107"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1086"/>
         <source>Repair completed. Cylinder: %1 repaired.</source>
         <translation>Исправление завершено. Цилиндр: %1 исправлен.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1110"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1089"/>
         <source>Disk repair completed. %1 bad blocks repaired.</source>
         <translation>Исправление диска завершено. Исправлено сбойных блоков: %1 .</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1181"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1160"/>
         <source>Verifying for bad sectors, exit now?</source>
         <translation>Проверка на наличие поврежденных секторов, выйти сейчас?</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1181"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1160"/>
         <source>The verified information will not be reserved</source>
         <translation>Проверенная информация не сохранится</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1208"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1161"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1188"/>
+        <source>Exit</source>
+        <translation>Выход</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1187"/>
         <source>Repairing bad sectors, exit now?</source>
         <translation>Исправление поврежденных секторов, выйти сейчас?</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1208"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1187"/>
         <source>The repairing information will not be reserved</source>
         <translation>Исправленная информация не сохранится</translation>
     </message>
@@ -600,131 +1129,127 @@
 <context>
     <name>DiskHealthDetectionDialog</name>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="65"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="66"/>
         <source>Check Health</source>
         <translation>Проверка здоровья</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="97"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="98"/>
         <source>Serial number</source>
         <translation>Серийный номер</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="107"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="108"/>
         <source>Storage</source>
         <translation>Хранилище</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="129"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="130"/>
         <source>Health Status</source>
         <translation>Состояние здоровья</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="144"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="145"/>
         <source>Good</source>
         <translation>Хорошо</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="150"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="151"/>
         <source>Damaged</source>
         <translation>Повреждено</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="156"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="157"/>
         <source>Unknown</source>
         <translation>Неизвестно</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="175"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="176"/>
         <source>Temperature</source>
         <translation>Температура</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="240"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="421"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="241"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="422"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="241"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="421"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="242"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="422"/>
         <source>Status</source>
         <translation>Статус</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="242"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="421"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="243"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="422"/>
         <source>Current</source>
         <translation>Текущий</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="243"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="421"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="244"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="422"/>
         <source>Worst</source>
         <translation>Наихудший</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="244"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="422"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="245"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="423"/>
         <source>Threshold</source>
         <translation>Порог</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="245"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="422"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="246"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="423"/>
         <source>Raw Value</source>
         <translation>Исходное значение</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="246"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="422"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="247"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="423"/>
         <source>Attribute name</source>
         <translation>Название атрибута</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="343"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="344"/>
         <source>Status: (G: Good | W: Warning | D: Damaged | U: Unknown)</source>
         <translation>Статус: (Х: Хорошо | О: Опасность | П: Поврежден | Н: Неизвестно)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="347"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="349"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="453"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="348"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="350"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="454"/>
         <source>Export</source>
         <comment>button</comment>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <source>Export</source>
-        <translation type="vanished">Экспорт</translation>
-    </message>
-    <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="388"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="389"/>
         <source>Save File</source>
         <translation>Сохранить файл</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="388"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="389"/>
         <source>Text files (*.txt)</source>
         <translation>Текстовые файлы (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="402"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="403"/>
         <source>Wrong path</source>
         <translation>Неверный путь</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="410"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="411"/>
         <source>You do not have permission to access this path</source>
         <translation>У вас нет разрешения на доступ к этому пути</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="440"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="441"/>
         <source>Export successful</source>
         <translation>Экспорт успешно завершен</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="443"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="444"/>
         <source>Export failed</source>
         <translation>Не удалось выполнить экспорт</translation>
     </message>
@@ -732,130 +1257,126 @@
 <context>
     <name>DiskInfoDisplayDialog</name>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="55"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="56"/>
         <source>Disk Info</source>
         <translation>О диске</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="66"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
         <source>Model:</source>
         <translation>Модель:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="66"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
         <source>Vendor:</source>
         <translation>Производитель:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="66"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
         <source>Media Type:</source>
         <translation>Тип носителя:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="66"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
         <source>Size:</source>
         <translation>Размер:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Rotation Rate:</source>
         <translation>Скорость вращения:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Interface:</source>
         <translation>Интерфейс:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Serial Number:</source>
         <translation>Серийный номер:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="67"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
         <source>Version:</source>
         <translation>Версия:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Capabilities:</source>
         <translation>Возможности:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Description:</source>
         <translation>Описание:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="68"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
         <source>Power On Hours:</source>
         <translation>Часы работы:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Power Cycle Count:</source>
         <translation>Циклов питания:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Firmware Version:</source>
         <translation>Версия прошивки:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="69"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="70"/>
         <source>Speed:</source>
         <translation>Скорость:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="72"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="73"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="74"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="75"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="76"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="77"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="78"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="79"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="118"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="121"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="210"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="120"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="123"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="212"/>
         <source>Export</source>
         <comment>button</comment>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <source>Export</source>
-        <translation type="vanished">Экспорт</translation>
-    </message>
-    <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="149"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="151"/>
         <source>Save File</source>
         <translation>Сохранить файл</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="149"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="151"/>
         <source>Text files (*.txt)</source>
         <translation>Текстовые файлы (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="164"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="166"/>
         <source>Wrong path</source>
         <translation>Неверный путь</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="172"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="174"/>
         <source>You do not have permission to access this path</source>
         <translation>У вас нет разрешения на доступ к этому пути</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="197"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="199"/>
         <source>Export successful</source>
         <translation>Экспорт успешно завершен</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="200"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="202"/>
         <source>Export failed</source>
         <translation>Не удалось выполнить экспорт</translation>
     </message>
@@ -863,223 +1384,307 @@
 <context>
     <name>FormateDialog</name>
     <message>
-        <source>Format %1</source>
-        <translation type="vanished">Форматирование %1</translation>
-    </message>
-    <message>
-        <source>Formatting will erase all data on the disk, which cannot be undone</source>
-        <translation type="vanished">Форматирование приведет к стиранию всех данных на диске, отменить действие будет невозможно</translation>
-    </message>
-    <message>
-        <location filename="../widgets/formatedialog.cpp" line="66"/>
+        <location filename="../widgets/formatedialog.cpp" line="103"/>
         <source>Wipe %1</source>
-        <translation type="unfinished"/>
+        <translation>Стереть %1</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="67"/>
+        <location filename="../widgets/formatedialog.cpp" line="111"/>
         <source>It will erase all data on this disk, which will not be recovered</source>
-        <translation type="unfinished"/>
+        <translation>Все данные на диске будут стерты без возможности восстановления</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="73"/>
+        <location filename="../widgets/formatedialog.cpp" line="122"/>
         <source>Name:</source>
         <translation>Имя:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="82"/>
+        <location filename="../widgets/formatedialog.cpp" line="133"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="84"/>
+        <location filename="../widgets/formatedialog.cpp" line="135"/>
         <source>File system:</source>
         <translation>Файловая система:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="100"/>
+        <location filename="../widgets/formatedialog.cpp" line="165"/>
+        <source>AES Encryption</source>
+        <translation>Шифрование AES</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="168"/>
+        <source>SM4 Encryption</source>
+        <translation>Шифрование SM4</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="182"/>
         <source>Security:</source>
-        <translation type="unfinished"/>
+        <translation>Безопасность:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="109"/>
-        <location filename="../widgets/formatedialog.cpp" line="113"/>
+        <location filename="../widgets/formatedialog.cpp" line="195"/>
+        <location filename="../widgets/formatedialog.cpp" line="199"/>
         <source>Fast</source>
-        <translation type="unfinished"/>
+        <translation>Быстро</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="109"/>
-        <location filename="../widgets/formatedialog.cpp" line="113"/>
+        <location filename="../widgets/formatedialog.cpp" line="195"/>
+        <location filename="../widgets/formatedialog.cpp" line="199"/>
         <source>Secure</source>
-        <translation type="unfinished"/>
+        <translation>Надежно</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="113"/>
+        <location filename="../widgets/formatedialog.cpp" line="199"/>
         <source>Advanced</source>
-        <translation type="unfinished"/>
+        <translation>Дополнительно</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="127"/>
-        <location filename="../widgets/formatedialog.cpp" line="353"/>
+        <location filename="../widgets/formatedialog.cpp" line="213"/>
+        <location filename="../widgets/formatedialog.cpp" line="505"/>
         <source>It only deletes the partition info without erasing the files on the disk. Disk recovery tools may recover the files at a certain probability.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="130"/>
+        <location filename="../widgets/formatedialog.cpp" line="219"/>
         <source>Wiping method:</source>
-        <translation type="unfinished"/>
+        <translation>Способ стирания:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="144"/>
+        <location filename="../widgets/formatedialog.cpp" line="231"/>
         <source>DoD 5220.22-M, 7 passes</source>
-        <translation type="unfinished"/>
+        <translation>DoD 5220.22-M, 7 проходов</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="144"/>
+        <location filename="../widgets/formatedialog.cpp" line="231"/>
         <source>Gutmann, 35 passes</source>
-        <translation type="unfinished"/>
+        <translation>Гутман, 35 проходов</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="191"/>
+        <location filename="../widgets/formatedialog.cpp" line="292"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="195"/>
+        <location filename="../widgets/formatedialog.cpp" line="296"/>
         <source>Wipe</source>
         <comment>button</comment>
-        <translation type="unfinished"/>
+        <translation>Стереть</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="238"/>
-        <location filename="../widgets/formatedialog.cpp" line="450"/>
+        <location filename="../widgets/formatedialog.cpp" line="343"/>
         <source>Failed to find the disk</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось найти диск</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="362"/>
+        <location filename="../widgets/formatedialog.cpp" line="346"/>
+        <source>The action cannot be undone, please proceed with caution</source>
+        <translation>Будьте осторожны: это действие нельзя отменить</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="348"/>
+        <source>LV name:</source>
+        <translation>Имя ЛТ (LV):</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="352"/>
+        <source>LV name</source>
+        <translation>Имя ЛТ (LV)</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="354"/>
+        <source>LV file system:</source>
+        <translation>Файловая система ЛТ (LV):</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="356"/>
+        <location filename="../widgets/formatedialog.cpp" line="555"/>
+        <source>You may be able to recover files after the wipe.</source>
+        <translation>После стирания файлы могут быть восстановлены</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="359"/>
+        <source>Failed to submit the request to the kernel</source>
+        <translation>Не удалось отправить запрос ядру</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="407"/>
+        <location filename="../widgets/formatedialog.cpp" line="419"/>
+        <location filename="../widgets/formatedialog.cpp" line="440"/>
+        <location filename="../widgets/formatedialog.cpp" line="452"/>
+        <source>The length exceeds the limit</source>
+        <translation>Длина превышает лимит</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="470"/>
+        <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
+        <translation>Использовать для шифрования диска стандартный алгоритм aes-xts-plain64. Чтобы смонтировать его снова, его понадобится расшифровать.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="480"/>
+        <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
+        <translation>Использовать для шифрования диска китайский государственный алгоритм sm4-xts-plain. Чтобы смонтировать его снова, его понадобится расшифровать. Операционные системы, не поддерживающие китайскую государственную криптографию, не смогут расшифровать этот диск.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="520"/>
         <source>It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, and random data to the entire disk once. You will not be able to recover files, and the process will be slow.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="373"/>
+        <location filename="../widgets/formatedialog.cpp" line="535"/>
         <source>It writes 0, 1, and random data to the entire disk several times. You can set the number of times to erase disks and overwrite data, but the process will be very slow.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="416"/>
+        <location filename="../widgets/formatedialog.cpp" line="568"/>
+        <source>You will not be able to recover files after the wipe, and the process will be slow.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="640"/>
+        <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="641"/>
+        <source>OK</source>
+        <comment>button</comment>
+        <translation>ОК</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="716"/>
         <source>Wiping %1</source>
-        <translation type="unfinished"/>
+        <translation>Стирание %1</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="435"/>
+        <location filename="../widgets/formatedialog.cpp" line="744"/>
         <source>&quot;%1&quot; wiped</source>
-        <translation type="unfinished"/>
+        <translation>«%1» был стерт</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="441"/>
+        <location filename="../widgets/formatedialog.cpp" line="751"/>
         <source>Failed to wipe %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось стереть %1</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="454"/>
         <source>Failed to get the partition info</source>
-        <translation type="unfinished"/>
+        <translation type="vanished">Не удалось получить сведения о разделе</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="458"/>
         <source>Failed to delete the partition</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../widgets/formatedialog.cpp" line="462"/>
-        <source>Failed to submit the request to the kernel</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Отмена</translation>
-    </message>
-    <message>
-        <source>Format</source>
-        <translation type="vanished">Форматировать</translation>
-    </message>
-    <message>
-        <location filename="../widgets/formatedialog.cpp" line="290"/>
-        <location filename="../widgets/formatedialog.cpp" line="302"/>
-        <location filename="../widgets/formatedialog.cpp" line="321"/>
-        <location filename="../widgets/formatedialog.cpp" line="333"/>
-        <source>The length exceeds the limit</source>
-        <translation>Длина превышает лимит</translation>
+        <translation type="vanished">Не удалось удалить раздел</translation>
     </message>
 </context>
 <context>
     <name>InfoShowWidget</name>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="130"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="235"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="139"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="244"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="385"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="581"/>
         <source>Mount point:</source>
         <translation>Точка монтирования:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="138"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="147"/>
         <source>Free:</source>
         <translation>Свободно:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="145"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="154"/>
         <source>Used:</source>
         <translation>Использовано:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="152"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="236"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="161"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="245"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="386"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="504"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="582"/>
         <source>Type:</source>
         <translation>Тип:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="158"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="169"/>
         <source>Capacity:</source>
         <translation>Вместимость:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="164"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="237"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="175"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="246"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="387"/>
         <source>Volume label:</source>
         <translation>Метка тома:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="297"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="323"/>
         <source>Path:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="298"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="324"/>
         <source>Disk type:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="299"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="325"/>
         <source>Interface:</source>
         <translation>Интерфейс:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="503"/>
+        <source>LV count:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="505"/>
+        <source>VG name:</source>
+        <translation>Имя ГТ (VG):</translation>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="510"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="513"/>
+        <source>Volume group</source>
+        <translation>Группа томов</translation>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="583"/>
+        <source>Volume name:</source>
+        <translation>Имя тома:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="588"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="591"/>
+        <source>Logical volume</source>
+        <translation>Логический том</translation>
     </message>
 </context>
 <context>
     <name>InfoTopFrame</name>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="64"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="68"/>
         <source>Capacity</source>
         <translation>Вместимость</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="131"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="147"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="167"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="169"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="224"/>
         <source>File system</source>
         <translation>Файловая система</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/infotopframe.cpp" line="149"/>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="181"/>
         <source>%1 partition table</source>
-        <translation type="unfinished"/>
+        <translation>Таблица разделов %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/infotopframe.cpp" line="200"/>
+        <source>Volume group</source>
+        <translation>Группа томов</translation>
     </message>
 </context>
 <context>
@@ -1094,37 +1699,39 @@
     <name>MountDialog</name>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="49"/>
+        <location filename="../widgets/mountdialog.cpp" line="52"/>
+        <location filename="../widgets/mountdialog.cpp" line="55"/>
         <source>Mount %1</source>
         <translation>Монтировать %1</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="52"/>
+        <location filename="../widgets/mountdialog.cpp" line="59"/>
         <source>Choose a mount point please</source>
         <translation>Пожалуйста, выберете точку монтирования</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="55"/>
+        <location filename="../widgets/mountdialog.cpp" line="62"/>
         <source>Mount point:</source>
         <translation>Точка монтирования:</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="80"/>
-        <location filename="../widgets/mountdialog.cpp" line="168"/>
+        <location filename="../widgets/mountdialog.cpp" line="90"/>
+        <location filename="../widgets/mountdialog.cpp" line="244"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="81"/>
+        <location filename="../widgets/mountdialog.cpp" line="91"/>
         <source>Mount</source>
         <translation>Монтировать</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="168"/>
+        <location filename="../widgets/mountdialog.cpp" line="244"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>Данные под этой точкой монтирования будут потеряны, пожалуйста, смонтируйте каталог в другое место</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="168"/>
+        <location filename="../widgets/mountdialog.cpp" line="244"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
@@ -1163,7 +1770,7 @@
 <context>
     <name>PartitionInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/partitioninfowidget.cpp" line="212"/>
+        <location filename="../widgets/customcontrol/partitioninfowidget.cpp" line="256"/>
         <source>Unallocated</source>
         <translation>Нераспределенный</translation>
     </message>
@@ -1171,164 +1778,259 @@
 <context>
     <name>PartitionTableErrorsInfoDialog</name>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="58"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="59"/>
         <source>Errors in Partition Table</source>
         <translation>Ошибки в таблице разделов</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="73"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="74"/>
         <source>The partition table of disk %1 has below errors:</source>
         <translation>Таблица разделов диска %1 содержит следующие ошибки:</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="110"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="111"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="119"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="120"/>
         <source>Partition table entries are not in disk order</source>
         <translation>Записи в таблице разделов не в порядке дисков</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="131"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="132"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>ОК</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="vanished">ОК</translation>
     </message>
 </context>
 <context>
     <name>PartitionWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="55"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="59"/>
         <source>Partitioning %1</source>
         <translation>Разбиение на разделы %1 </translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="57"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="61"/>
         <source>Click ‘+’ to increase the number of partitions. Click on each partition to change its name and file system.</source>
         <translation>Нажмите кнопку &quot;+&quot;, чтобы увеличить количество разделов. Щелкните на каждом разделе, чтобы изменить его имя и файловую систему.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="124"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="128"/>
         <source>Disk Information</source>
         <translation>Информация о диске</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="138"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="142"/>
         <source>Capacity:</source>
         <translation>Вместимость:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="148"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="152"/>
         <source>Partition selected:</source>
         <translation>Выбран раздел:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="157"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="161"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="963"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="165"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1124"/>
         <source>Disk:</source>
         <translation>Диск:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="169"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="327"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="173"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="335"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="379"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1125"/>
         <source>File system:</source>
         <translation>Файловая система:</translation>
     </message>
     <message>
-        <source>Confirm</source>
-        <translation type="vanished">Применить</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Отмена</translation>
-    </message>
-    <message>
-        <source>Revert</source>
-        <translation type="vanished">Вернуть</translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="242"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="246"/>
         <source>Confirm</source>
         <comment>button</comment>
         <translation>Применить</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="246"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="250"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="249"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="253"/>
         <source>Revert</source>
         <comment>button</comment>
         <translation>Вернуть</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="275"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="283"/>
         <source>Partition Information</source>
         <translation>Информация о разделе</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="287"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="295"/>
         <source>Number of partitions:</source>
         <translation>Количество разделов</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="298"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="306"/>
         <source>Delete last partition</source>
         <translation>Удалить последний раздел</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="308"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="316"/>
         <source>Name:</source>
         <translation>Имя:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="336"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="344"/>
         <source>Size:</source>
         <translation>Размер:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="438"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="551"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="481"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="594"/>
         <source>Unallocated</source>
         <translation>Нераспределенный</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="461"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="504"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="462"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="505"/>
         <source>Size</source>
         <translation>Размер</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="654"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="664"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="742"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="752"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="706"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="716"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="818"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="828"/>
         <source>The length exceeds the limit</source>
         <translation>Длина превышает лимит</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="784"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="727"/>
+        <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="733"/>
+        <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="860"/>
         <source>The number of new partitions exceeds the limit</source>
         <translation>Количество новых разделов превышает количество доступных разделов</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="804"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="883"/>
+        <source>To encrypt a partition, it should be larger than 100 MiB</source>
+        <translation>Для шифрования раздела он должен быть больше 100 МиБ</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="915"/>
+        <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="916"/>
+        <source>OK</source>
+        <comment>button</comment>
+        <translation>ОК</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="935"/>
         <source>To create a partition, you need at least 52 MB</source>
         <translation>Для создания раздела необходимо не менее 52 МБ</translation>
+    </message>
+</context>
+<context>
+    <name>PasswordInputDialog</name>
+    <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="73"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="178"/>
+        <source>Set a password to encrypt %1</source>
+        <translation>Задать пароль для шифрования %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="77"/>
+        <source>The password cannot be reset or retrieved online</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="81"/>
+        <source>Password</source>
+        <translation>Пароль</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="86"/>
+        <source>Repeat password</source>
+        <translation>Повтор пароля</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="91"/>
+        <source>Password hint</source>
+        <translation>Подсказка для пароля</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="95"/>
+        <source>(Recommended)</source>
+        <translation>(рекомендуется)</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="105"/>
+        <source>Enter a password </source>
+        <translation>Введите пароль</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="111"/>
+        <source>Enter the password again</source>
+        <translation>Введите пароль еще раз</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="160"/>
+        <source>Cancel</source>
+        <comment>button</comment>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="161"/>
+        <source>Confirm</source>
+        <comment>button</comment>
+        <translation>Применить</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="201"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="215"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="249"/>
+        <source>The password exceeds the maximum length</source>
+        <translation>Длина пароля больше максимальной</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="242"/>
+        <source>The password cannot be empty</source>
+        <translation>Пароль не может быть пустым</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="256"/>
+        <source>Passwords do not match</source>
+        <translation>Пароли не совпадают</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="263"/>
+        <source>The password hint should differ from the password</source>
+        <translation>Подсказка не может совпадать с паролем</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="117"/>
+        <source>Enter a password hint</source>
+        <translation>Введите подсказку для пароля</translation>
     </message>
 </context>
 <context>
@@ -1343,57 +2045,193 @@
         <source>Disk Utility is a disk management tool for creating, reorganizing and formatting partitions.</source>
         <translation>Дисковая Утилита - это инструмент управления дисками для создания, реорганизации и форматирования разделов.</translation>
     </message>
+</context>
+<context>
+    <name>RemovePVWidget</name>
     <message>
-        <source>OK</source>
+        <location filename="../widgets/removepvwidget.cpp" line="73"/>
+        <source>Are you sure you want to delete the physical volume?</source>
+        <translation>Вы действительно хотите удалить физический том?</translation>
+    </message>
+    <message>
+        <location filename="../widgets/removepvwidget.cpp" line="79"/>
+        <source>To prevent data loss, back up data in the physical volume before deleting it</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/removepvwidget.cpp" line="86"/>
+        <source>Cancel</source>
+        <comment>button</comment>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <location filename="../widgets/removepvwidget.cpp" line="93"/>
+        <source>Delete</source>
+        <comment>button</comment>
+        <translation>Удалить</translation>
+    </message>
+    <message>
+        <location filename="../widgets/removepvwidget.cpp" line="124"/>
+        <source>Deleting...</source>
+        <translation>Удаление...</translation>
+    </message>
+    <message>
+        <location filename="../widgets/removepvwidget.cpp" line="231"/>
+        <source>A lot of data exists on %1, </source>
+        <translation>На %1 находится много данных, </translation>
+    </message>
+    <message>
+        <location filename="../widgets/removepvwidget.cpp" line="232"/>
+        <source>which may take a long time to back it up.</source>
+        <translation>и архивация может занять много времени.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/removepvwidget.cpp" line="233"/>
+        <source>Do you want to continue?</source>
+        <translation>Вы хотите продолжить?</translation>
+    </message>
+    <message>
+        <location filename="../widgets/removepvwidget.cpp" line="234"/>
+        <source>Continue</source>
+        <translation>Продолжить</translation>
+    </message>
+    <message>
+        <location filename="../widgets/removepvwidget.cpp" line="235"/>
+        <source>Cancel</source>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <location filename="../widgets/removepvwidget.cpp" line="247"/>
+        <source>Not enough space to back up data on %1, please delete the logical volume first</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/removepvwidget.cpp" line="248"/>
+        <source>OK</source>
+        <translation>ОК</translation>
+    </message>
+    <message>
+        <location filename="../widgets/removepvwidget.cpp" line="275"/>
+        <source>Failed to delete the physical volume</source>
+        <translation>Не удалось удалить физический том</translation>
     </message>
 </context>
 <context>
     <name>ResizeDialog</name>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="48"/>
-        <source>Resize %1</source>
-        <translation>Изменить размер %1</translation>
-    </message>
-    <message>
-        <location filename="../widgets/resizedialog.cpp" line="49"/>
+        <location filename="../widgets/resizedialog.cpp" line="52"/>
         <source>It will resize the partitions on the disk</source>
         <translation>Изменится размер разделов на диске</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="63"/>
-        <source>Reserved size:</source>
-        <translation>Зарезервированный размер:</translation>
+        <location filename="../widgets/resizedialog.cpp" line="72"/>
+        <source>New capacity:</source>
+        <translation>Новый объем:</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="80"/>
+        <location filename="../widgets/resizedialog.cpp" line="95"/>
+        <source>Auto adjusted to integral multiples of 4 MiB</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="108"/>
+        <location filename="../widgets/resizedialog.cpp" line="113"/>
+        <source>Resize %1</source>
+        <translation>Изменить размер %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="115"/>
+        <source>It will resize the logical volume space</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="121"/>
+        <location filename="../widgets/resizedialog.cpp" line="248"/>
+        <location filename="../widgets/resizedialog.cpp" line="344"/>
+        <location filename="../widgets/resizedialog.cpp" line="347"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="81"/>
+        <location filename="../widgets/resizedialog.cpp" line="122"/>
         <source>Confirm</source>
         <translation>Применить</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="142"/>
+        <location filename="../widgets/resizedialog.cpp" line="149"/>
+        <location filename="../widgets/resizedialog.cpp" line="180"/>
+        <location filename="../widgets/resizedialog.cpp" line="211"/>
+        <location filename="../widgets/resizedialog.cpp" line="320"/>
+        <source>No more than the maximum capacity please</source>
+        <translation>Должно быть не более максимальной емкости</translation>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="241"/>
+        <location filename="../widgets/resizedialog.cpp" line="302"/>
+        <source>No less than the used capacity please</source>
+        <translation>Должно быть не менее используемой емкости</translation>
+    </message>
+    <message>
         <source>Space limit exceeded</source>
-        <translation>Превышен лимит допустимого пространства</translation>
+        <translation type="vanished">Превышен лимит допустимого пространства</translation>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="227"/>
+        <source>The file system does not support shrinking space</source>
+        <translation>Файловая система не поддерживает уменьшение размера</translation>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="227"/>
+        <location filename="../widgets/resizedialog.cpp" line="248"/>
+        <location filename="../widgets/resizedialog.cpp" line="344"/>
+        <location filename="../widgets/resizedialog.cpp" line="347"/>
+        <location filename="../widgets/resizedialog.cpp" line="383"/>
+        <source>OK</source>
+        <translation>ОК</translation>
+    </message>
+    <message>
+        <source>Not enough space, please clear data in it</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="248"/>
+        <source>To prevent data loss, back up data before shrinking it</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="334"/>
+        <source>Unmount it before shrinking its space</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="344"/>
+        <source>The current device has been mounted and will be unmounted automatically. Please back up data in it to prevent data loss</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="347"/>
+        <source>To prevent data loss, back up data in the logical volume before shrinking it</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/resizedialog.cpp" line="383"/>
+        <source>The file system does not support space adjustment</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>SizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="163"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="247"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="278"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="362"/>
         <source> Capacity:</source>
         <translation> Вместимость:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="203"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="207"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="287"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="290"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="318"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="322"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="402"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="405"/>
         <source>Used:</source>
         <translation>Использовано:</translation>
     </message>
@@ -1401,81 +2239,194 @@
 <context>
     <name>TitleWidget</name>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="49"/>
+        <location filename="../widgets/titlewidget.cpp" line="54"/>
         <source>Partition</source>
         <translation>Раздел</translation>
     </message>
     <message>
-        <source>Format to</source>
-        <translation type="vanished">Форматировать в</translation>
-    </message>
-    <message>
-        <location filename="../widgets/titlewidget.cpp" line="50"/>
+        <location filename="../widgets/titlewidget.cpp" line="55"/>
         <source>Wipe</source>
-        <translation type="unfinished"/>
+        <translation>Стереть</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="51"/>
+        <location filename="../widgets/titlewidget.cpp" line="56"/>
         <source>Mount</source>
         <translation>Монтировать</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="52"/>
+        <location filename="../widgets/titlewidget.cpp" line="57"/>
         <source>Unmount</source>
         <translation>Размонтировать</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="53"/>
+        <location filename="../widgets/titlewidget.cpp" line="58"/>
+        <location filename="../widgets/titlewidget.cpp" line="79"/>
+        <location filename="../widgets/titlewidget.cpp" line="83"/>
         <source>Resize</source>
         <translation>Изменить размер</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="124"/>
+        <location filename="../widgets/titlewidget.cpp" line="59"/>
+        <location filename="../widgets/titlewidget.cpp" line="462"/>
+        <source>Create volume group</source>
+        <translation>Создание группы томов</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="63"/>
+        <source>Delete volume group</source>
+        <translation>Удаление группы томов</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="67"/>
+        <source>Delete logical volume</source>
+        <translation>Удаление логического тома</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="71"/>
+        <source>Delete physical volume</source>
+        <translation>Удаление физического тома</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="75"/>
+        <location filename="../widgets/titlewidget.cpp" line="359"/>
+        <source>Create logical volume</source>
+        <translation>Создание логического тома</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="193"/>
         <source>Cannot recognize its partition table</source>
         <translation>Не удается распознать таблицу разделов</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="239"/>
+        <source>Unable to mount the device: no file system is found, or the file system is not supported</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="339"/>
+        <location filename="../widgets/titlewidget.cpp" line="433"/>
+        <source>The file system does not support space adjustment</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="240"/>
+        <location filename="../widgets/titlewidget.cpp" line="339"/>
+        <location filename="../widgets/titlewidget.cpp" line="383"/>
+        <location filename="../widgets/titlewidget.cpp" line="417"/>
+        <location filename="../widgets/titlewidget.cpp" line="433"/>
+        <location filename="../widgets/titlewidget.cpp" line="447"/>
+        <location filename="../widgets/titlewidget.cpp" line="483"/>
+        <location filename="../widgets/titlewidget.cpp" line="596"/>
+        <source>OK</source>
+        <translation>ОК</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="359"/>
+        <source>The disks will be formatted if you create a logical volume</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="383"/>
+        <location filename="../widgets/titlewidget.cpp" line="417"/>
+        <location filename="../widgets/titlewidget.cpp" line="596"/>
+        <source>Unmount %1 first</source>
+        <translation>Сначала размонтируйте %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="395"/>
+        <location filename="../widgets/titlewidget.cpp" line="495"/>
+        <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="396"/>
+        <location filename="../widgets/titlewidget.cpp" line="496"/>
+        <source>Delete</source>
+        <translation>Удалить</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="396"/>
+        <location filename="../widgets/titlewidget.cpp" line="496"/>
+        <source>Cancel</source>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="446"/>
+        <source>To ensure the normal use of system backup and restore, 
+rootA and rootB should be resized to the same value</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="462"/>
+        <source>The disks will be formatted if you create a volume group</source>
+        <translation>При создании группы томов диски будут отформатированы</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="483"/>
+        <source>Unmount all logical volumes in %1 first</source>
+        <translation>Сначала размонтируйте все логические тома в %1</translation>
     </message>
 </context>
 <context>
     <name>UnmountDialog</name>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="48"/>
-        <source>Unmount %1</source>
-        <translation>Размонтировать %1</translation>
-    </message>
-    <message>
-        <location filename="../widgets/unmountdialog.cpp" line="51"/>
         <source>Make sure there are no programs running on the disk</source>
         <translation>Убедитесь, что на диске нет запущенных программ</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="58"/>
-        <location filename="../widgets/unmountdialog.cpp" line="90"/>
-        <location filename="../widgets/unmountdialog.cpp" line="97"/>
+        <location filename="../widgets/unmountdialog.cpp" line="57"/>
+        <location filename="../widgets/unmountdialog.cpp" line="60"/>
+        <location filename="../widgets/unmountdialog.cpp" line="65"/>
+        <source>Unmount %1</source>
+        <translation>Размонтировать %1</translation>
+    </message>
+    <message>
+        <location filename="../widgets/unmountdialog.cpp" line="62"/>
+        <source>Make sure there are no programs running on the logical volume</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/unmountdialog.cpp" line="68"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="59"/>
-        <location filename="../widgets/unmountdialog.cpp" line="97"/>
+        <location filename="../widgets/unmountdialog.cpp" line="69"/>
         <source>Unmount</source>
         <translation>Размонтировать</translation>
     </message>
+</context>
+<context>
+    <name>UnmountWarningDialog</name>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="89"/>
-        <source>Unmounting system disk may result in system crash,
- please confirm before proceeding</source>
-        <translation>Отключение системного диска может привести к сбою системы,
-пожалуйста, подтвердите перед продолжением</translation>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="53"/>
+        <source>Unmounting system disk may result in system crash</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="90"/>
-        <source>Continue</source>
-        <translation>Продолжить</translation>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="59"/>
+        <source>I will take the risks that may arise</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="96"/>
-        <source>You will take subsequent risks if you continue to unmount the system disk</source>
-        <translation>Вы рискуете, если продолжите отключение системного диска</translation>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="78"/>
+        <source>Cancel</source>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="79"/>
+        <source>Unmount</source>
+        <translation>Размонтировать</translation>
+    </message>
+</context>
+<context>
+    <name>VGSizeInfoWidget</name>
+    <message>
+        <location filename="../widgets/customcontrol/vgsizeinfowidget.cpp" line="544"/>
+        <location filename="../widgets/customcontrol/vgsizeinfowidget.cpp" line="613"/>
+        <source>Unallocated</source>
+        <translation>Нераспределенный</translation>
     </message>
 </context>
 </TS>

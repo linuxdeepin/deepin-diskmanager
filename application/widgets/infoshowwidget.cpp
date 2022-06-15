@@ -545,7 +545,10 @@ void InfoShowWidget::onCurSelectChanged()
                 unusedSize = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUnused, SIZE_UNIT::UNIT_GIB);
                 usedSize = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUsed, SIZE_UNIT::UNIT_GIB);
             } else {
-
+                unused = "-";
+                used = "-";
+                usedSize = 0.00;
+                unusedSize = Utils::LVMSizeToUnit(lvInfo.m_lvLECount * lvInfo.m_LESize, SIZE_UNIT::UNIT_GIB);
             }
         }
 

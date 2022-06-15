@@ -198,6 +198,12 @@ private slots:
      */
     void onLVDeleteMessage(const QString &lvMessage);
 
+    /**
+     * @brief 创建分区/逻辑卷失败信号响应的槽函数
+     * @param message 失败信息
+     */
+    void onCreateFailedMessage(const QString &message);
+
 private:
     int m_flag = 0;
     int m_num = 0;

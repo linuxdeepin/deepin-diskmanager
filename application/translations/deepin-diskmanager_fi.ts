@@ -30,7 +30,7 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="157"/>
         <location filename="../widgets/createlvwidget.cpp" line="161"/>
-        <location filename="../widgets/createlvwidget.cpp" line="992"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1002"/>
         <source>VG name:</source>
         <translation>VG nimi:</translation>
     </message>
@@ -38,7 +38,7 @@
         <location filename="../widgets/createlvwidget.cpp" line="169"/>
         <location filename="../widgets/createlvwidget.cpp" line="333"/>
         <location filename="../widgets/createlvwidget.cpp" line="377"/>
-        <location filename="../widgets/createlvwidget.cpp" line="993"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1003"/>
         <source>LV file system:</source>
         <translation>LV-tiedostojärjestelmä:</translation>
     </message>
@@ -112,12 +112,12 @@
         <translation>Levyn salaamiseksi sen tulee olla suurempi kuin 100 MiB</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="842"/>
+        <location filename="../widgets/createlvwidget.cpp" line="845"/>
         <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
         <translation>Jotta salasana ei unohdu, varmuuskopioi salasanasi ja säilytä se hyvin!</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="843"/>
+        <location filename="../widgets/createlvwidget.cpp" line="846"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>OK</translation>
@@ -175,16 +175,16 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="114"/>
         <location filename="../widgets/createvgwidget.cpp" line="402"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1047"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1057"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1491"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1501"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1550"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1611"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1614"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1644"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1070"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1080"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1637"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1647"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1696"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1757"/>
         <location filename="../widgets/createvgwidget.cpp" line="1760"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1823"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1790"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1906"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1969"/>
         <source>Capacity selected: %1</source>
         <translation>Valittu kapasiteetti: %1</translation>
     </message>
@@ -308,42 +308,42 @@
         <translation>Peruuta</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1559"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1653"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1705"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1799"/>
         <source>Adding the disk/partition to a logical volume group 
 will format it and remove its password.</source>
-        <translation type="unfinished"/>
+        <translation>Levyn/osion lisääminen loogiseen levyryhmään alustaa ja poistaa sen salasanan.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1779"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1925"/>
         <source>Not enough space to back up data on %1, please clear disk space</source>
         <translation>Tila ei riitä varmuuskopiointiin kohteessa %1, tyhjennä levytilaa</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1560"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1654"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1780"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1706"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1800"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1926"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1944"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2090"/>
         <source>Existing volume group, creation failed. Please retry after reboot.</source>
         <translation>Olemassa olevan levyryhmän luominen epäonnistui. Yritä uudelleen uudelleenkäynnistyksen jälkeen.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1948"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2094"/>
         <source>Failed to create a physical volume. Please refresh Disk Utility and try again.</source>
         <translation>Fyysisen levyn luominen epäonnistui. Virkistä levytyökalu ja yritä uudelleen.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1952"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2098"/>
         <source>Device input/output error. Please try again after reboot.</source>
         <translation>Laitteen syöttö-/ulostulovirhe. Yritä uudelleen uudelleenkäynnistyksen jälkeen.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="2005"/>
-        <location filename="../widgets/createvgwidget.cpp" line="2012"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2151"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2158"/>
         <source>Refreshing the page to reload disks</source>
         <translation>Virkistä sivu ladataksesi levyt uudelleen</translation>
     </message>
@@ -384,79 +384,141 @@ will format it and remove its password.</source>
 <context>
     <name>DMDbusHandler</name>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="210"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="211"/>
         <source>Refreshing data...</source>
         <translation>Päivitetään tietoja...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="229"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="230"/>
         <source>Initializing data...</source>
         <translation>Alustetaan tietoja...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="262"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="703"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="794"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="263"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="711"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="802"/>
         <source>Mounting %1 ...</source>
         <translation>Liitetään %1 ...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="269"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="710"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="801"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="270"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="718"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="809"/>
         <source>Unmounting %1 ...</source>
         <translation>Puretaan %1 ...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="308"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="309"/>
         <source>Resizing %1 ...</source>
         <translation>Koon muutos %1 ...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="315"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="316"/>
         <source>Creating a new partition...</source>
         <translation>Luodaan uutta osiota...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="474"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="475"/>
         <source>Deleting %1 ...</source>
         <translation>Poistetaan %1 ...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="526"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="527"/>
         <source>Creating a partition table of %1 ...</source>
         <translation>Luodaan osiotaulukkoa %1 ...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="528"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="529"/>
         <source>Replacing the partition table of %1 ...</source>
         <translation>Korvataan osiotaulukkoa %1 ...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="670"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="678"/>
         <source>Creating...</source>
         <translation>Luodaan...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="677"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="684"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="685"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="692"/>
         <source>Deleting...</source>
         <translation>Poistetaan...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="696"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="704"/>
         <source>Resizing space...</source>
         <translation>Muutetaan kokoa...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="734"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="742"/>
         <source>AES Encryption</source>
         <translation>AES-salaus</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="736"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="744"/>
         <source>SM4 Encryption</source>
         <translation>SM4-salaus</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="830"/>
+        <source>Failed to encrypt %1, please try again!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="834"/>
+        <source>Failed to decrypt %1, please try again!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="838"/>
+        <source>%1 failed to close the crypto map</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="880"/>
+        <source>Failed to create a logical volume, please try again!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="845"/>
+        <source>Failed to create partitions, please try again!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="849"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="884"/>
+        <source>Failed to create %1 file system, please try again!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="853"/>
+        <source>Failed to submit the request to the kernel</source>
+        <translation>Pyynnön lähettäminen kerneliin epäonnistui</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="857"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="888"/>
+        <source>DBUS parameter error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="861"/>
+        <source>Failed to mount %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="865"/>
+        <source>%1 failed to create mounting folders</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="869"/>
+        <source>%1 failed to change the owner of mounting folders</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="873"/>
+        <source>Creating partition table failed</source>
+        <translation>Osion luominen epäonnistui</translation>
     </message>
 </context>
 <context>
@@ -499,32 +561,32 @@ will format it and remove its password.</source>
         <translation>Puretaan salausta...</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="336"/>
+        <location filename="../widgets/decryptdialog.cpp" line="328"/>
         <source>Decryption failed</source>
-        <translation type="unfinished"/>
+        <translation>Salauksen purku epäonnistui</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="354"/>
+        <location filename="../widgets/decryptdialog.cpp" line="346"/>
         <source>Wrong password, %1 chances left</source>
         <translation>Väärä salasana, %1 yritystä jäljellä</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="356"/>
+        <location filename="../widgets/decryptdialog.cpp" line="348"/>
         <source>Wrong password, only one chance left</source>
         <translation>Väärä salasana, vain yksi yritys jäljellä</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="224"/>
+        <location filename="../widgets/decryptdialog.cpp" line="217"/>
         <source>Please try again %1 minutes later</source>
         <translation>Yritä uudelleen %1 minuuttia myöhemmin</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="298"/>
+        <location filename="../widgets/decryptdialog.cpp" line="291"/>
         <source>The password cannot be empty</source>
         <translation>Salasana ei voi olla tyhjä</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="352"/>
+        <location filename="../widgets/decryptdialog.cpp" line="344"/>
         <source>Password locked, please try again %1 minutes later</source>
         <translation>Salasana lukittu, yritä uudelleen %1 minuuttia myöhemmin</translation>
     </message>
@@ -532,80 +594,80 @@ will format it and remove its password.</source>
 <context>
     <name>DeviceListWidget</name>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="109"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="110"/>
         <source>Disk info</source>
         <translation>Levyn tiedot</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="116"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="117"/>
         <source>Health management</source>
         <translation>Kunnon hallinta</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="122"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="123"/>
         <source>Check health</source>
         <translation>Tarkista kunto</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="128"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="129"/>
         <source>Check partition table error</source>
         <translation>Tarkista osiotaulun virheet</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="134"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="135"/>
         <source>Verify or repair bad sectors</source>
         <translation>Tarkista tai korjaa vialliset sektorit</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="140"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="141"/>
         <source>Create partition table</source>
         <translation>Luo osio</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="171"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="172"/>
         <source>Delete partition</source>
         <translation>Poista osio</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="226"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="227"/>
         <source>Delete volume group</source>
         <translation>Poista asemaryhmä</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="232"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="607"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="233"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="608"/>
         <source>Create logical volume</source>
         <translation>Luo looginen asema</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="257"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="258"/>
         <source>Delete logical volume</source>
         <translation>Poista looginen asema</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="300"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="301"/>
         <source>Failed to get hardware information</source>
         <translation>Laitteiston tietojen saaminen epäonnistui</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="300"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="301"/>
         <source>Close</source>
         <translation>Sulje</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="337"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="338"/>
         <source>Please unmount all partitions in the disk first</source>
         <translation>Pura ensin kaikki osiot käytöstä</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="337"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="578"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="631"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="338"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="579"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="632"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="350"/>
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
@@ -614,206 +676,206 @@ menetetään, jos luot uuden osiotaulukon.
 Ole huolellinen.</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="350"/>
         <source>Proceed</source>
         <translation>Jatka</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="349"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="388"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="420"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="436"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="350"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="389"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="421"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="437"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="592"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="645"/>
         <source>Cancel</source>
         <translation>Peruuta</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="375"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="376"/>
         <source>No errors found in the partition table</source>
         <translation>Osiotaulusta ei löytynyt virheitä</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="388"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="389"/>
         <source>Do you want to hide this partition?</source>
         <translation>Haluatko piilottaa tämän osion?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="388"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="389"/>
         <source>Hide</source>
         <translation>Piilota</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="395"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="396"/>
         <source>Failed to hide the partition: unable to lock it</source>
         <translation>Osion piilottaminen epäonnistui: Sitä ei voi lukita</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="403"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="404"/>
         <source>You can only hide the unmounted partition</source>
         <translation>Voit piilottaa vain irtipuretun osion</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="420"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="421"/>
         <source>Do you want to unhide this partition?</source>
         <translation>Haluatko näyttää tämän osion?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="420"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="421"/>
         <source>Unhide</source>
         <translation>Näytä</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="436"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="437"/>
         <source>Are you sure you want to delete this partition?</source>
         <translation>Haluatko varmasti poistaa tämän osion?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="436"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="437"/>
         <source>You will lose all data in it</source>
         <translation>Menetät kaikki tiedot siinä</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="436"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="437"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="592"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="645"/>
         <source>Delete</source>
         <translation>Poista</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="443"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="444"/>
         <source>Failed to delete the partition: unable to lock it</source>
         <translation>Osion poistaminen epäonnistui: Sitä ei voi lukita</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="458"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="459"/>
         <source>Hide the partition successfully</source>
         <translation>Osion piilotus onnistui</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="463"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="464"/>
         <source>Failed to hide the partition</source>
         <translation>Osion piilottaminen epäonnistui</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="473"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="474"/>
         <source>Unhide the partition successfully</source>
         <translation>Osio näkyviin onnistuneesti</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="478"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="479"/>
         <source>Failed to unhide the partition</source>
         <translation>Osion näyttäminen epäonnistui</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="494"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="495"/>
         <source>Delete the partition successfully</source>
         <translation>Osion poistaminen onnistui</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="502"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="503"/>
         <source>Failed to find the disk</source>
         <translation>Levyä ei löytynyt</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="506"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="507"/>
         <source>Failed to get the partition info</source>
         <translation>Osion tietoja ei saatu</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="510"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="511"/>
         <source>Failed to delete the partition</source>
         <translation>Osiota ei voitu poistaa</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="514"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="515"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>Pyynnön lähettäminen kerneliin epäonnistui</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="521"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="522"/>
         <source>Failed to delete the partition: %1</source>
         <translation>Osion poistaminen epäonnistui: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="531"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="532"/>
         <source>Unmounting successful</source>
         <translation>Purkaminen onnistui</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="536"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="537"/>
         <source>Unmounting failed</source>
         <translation>Purkaminen epäonnistui</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="547"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="548"/>
         <source>Creating partition table successful</source>
         <translation>Osion luominen onnistui</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="551"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="552"/>
         <source>Replacing partition table successful</source>
         <translation>Osion korvaaminen onnistui</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="559"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="560"/>
         <source>Creating partition table failed</source>
         <translation>Osion luominen epäonnistui</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="563"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="564"/>
         <source>Replacing partition table failed</source>
         <translation>Osion korvaaminen epäonnistui</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="578"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="579"/>
         <source>Unmount all logical volumes in %1 first</source>
         <translation>Poista ensin kaikki loogiset asemat kohteesta %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="631"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="632"/>
         <source>Unmount %1 first</source>
         <translation>Poista %1 käytöstä ensin</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="672"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="673"/>
         <source>The logical volume group is busy and cannot be deleted. Please retry after reboot.</source>
         <translation>Looginen asemaryhmä on varattu, eikä sitä voi poistaa. Yritä uudelleen uudelleenkäynnistyksen jälkeen.</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="677"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="714"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="678"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="715"/>
         <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
         <translation>Looginen asema on varattu, eikä sitä voi poistaa. Yritä uudelleen uudelleenkäynnistyksen jälkeen.</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="590"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="643"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
         <translation>Dataa ei voida palauttaa, jos ne on poistettu. Vahvista ennen kuin jatkat</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="607"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="608"/>
         <source>The disks will be formatted if you create a logical volume</source>
         <translation>Levyt alustetaan, jos luot loogisen aseman</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="682"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="683"/>
         <source>Failed to delete the logical volume group</source>
         <translation>Loogisen asemaryhmän poistaminen epäonnistui</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="719"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="720"/>
         <source>Failed to delete the logical volume</source>
         <translation>Loogisen aseman poistaminen epäonnistui</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="813"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="830"/>
         <source>Volume Groups</source>
         <translation>Asemaryhmät</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="867"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="884"/>
         <source>Disks</source>
         <translation>Levyt</translation>
     </message>
@@ -857,7 +919,7 @@ Ole huolellinen.</translation>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="147"/>
         <source>Rounds</source>
-        <translation type="unfinished"/>
+        <translation>Kierros</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="148"/>
@@ -1413,7 +1475,6 @@ Ole huolellinen.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="343"/>
-        <location filename="../widgets/formatedialog.cpp" line="748"/>
         <source>Failed to find the disk</source>
         <translation>Levyä ei löytynyt</translation>
     </message>
@@ -1445,7 +1506,6 @@ Ole huolellinen.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="359"/>
-        <location filename="../widgets/formatedialog.cpp" line="760"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>Pyynnön lähettäminen kerneliin epäonnistui</translation>
     </message>
@@ -1494,29 +1554,27 @@ Ole huolellinen.</translation>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="710"/>
+        <location filename="../widgets/formatedialog.cpp" line="716"/>
         <source>Wiping %1</source>
         <translation>Pyyhitään %1</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="733"/>
+        <location filename="../widgets/formatedialog.cpp" line="744"/>
         <source>&quot;%1&quot; wiped</source>
         <translation>&quot;%1&quot; pyyhitty</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="739"/>
+        <location filename="../widgets/formatedialog.cpp" line="751"/>
         <source>Failed to wipe %1</source>
         <translation>Pyyhkiminen epäonnistui %1</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="752"/>
         <source>Failed to get the partition info</source>
-        <translation>Osion tietoja ei saatu</translation>
+        <translation type="vanished">Osion tietoja ei saatu</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="756"/>
         <source>Failed to delete the partition</source>
-        <translation>Osiota ei voitu poistaa</translation>
+        <translation type="vanished">Osiota ei voitu poistaa</translation>
     </message>
 </context>
 <context>
@@ -1525,7 +1583,7 @@ Ole huolellinen.</translation>
         <location filename="../widgets/infoshowwidget.cpp" line="139"/>
         <location filename="../widgets/infoshowwidget.cpp" line="244"/>
         <location filename="../widgets/infoshowwidget.cpp" line="385"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="578"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="581"/>
         <source>Mount point:</source>
         <translation>Liitospiste:</translation>
     </message>
@@ -1544,7 +1602,7 @@ Ole huolellinen.</translation>
         <location filename="../widgets/infoshowwidget.cpp" line="245"/>
         <location filename="../widgets/infoshowwidget.cpp" line="386"/>
         <location filename="../widgets/infoshowwidget.cpp" line="504"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="579"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="582"/>
         <source>Type:</source>
         <translation>Tyyppi:</translation>
     </message>
@@ -1592,13 +1650,13 @@ Ole huolellinen.</translation>
         <translation>Aseman ryhmä</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="580"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="583"/>
         <source>Volume name:</source>
         <translation>Aseman nimi:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="585"/>
         <location filename="../widgets/infoshowwidget.cpp" line="588"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="591"/>
         <source>Logical volume</source>
         <translation>Looginen asema</translation>
     </message>
@@ -1642,37 +1700,38 @@ Ole huolellinen.</translation>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="49"/>
         <location filename="../widgets/mountdialog.cpp" line="52"/>
+        <location filename="../widgets/mountdialog.cpp" line="55"/>
         <source>Mount %1</source>
         <translation>Liitos %1</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="56"/>
+        <location filename="../widgets/mountdialog.cpp" line="59"/>
         <source>Choose a mount point please</source>
         <translation>Valitse liitospiste</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="59"/>
+        <location filename="../widgets/mountdialog.cpp" line="62"/>
         <source>Mount point:</source>
         <translation>Liitospiste:</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="84"/>
-        <location filename="../widgets/mountdialog.cpp" line="234"/>
+        <location filename="../widgets/mountdialog.cpp" line="90"/>
+        <location filename="../widgets/mountdialog.cpp" line="244"/>
         <source>Cancel</source>
         <translation>Peruuta</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="85"/>
+        <location filename="../widgets/mountdialog.cpp" line="91"/>
         <source>Mount</source>
         <translation>Liitos</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="234"/>
+        <location filename="../widgets/mountdialog.cpp" line="244"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>Tämän liittymispisteen tiedot menetetään, liitä hakemisto toiseen sijaintiin</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="234"/>
+        <location filename="../widgets/mountdialog.cpp" line="244"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -1775,7 +1834,7 @@ Ole huolellinen.</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="161"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="165"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1093"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1124"/>
         <source>Disk:</source>
         <translation>Levy:</translation>
     </message>
@@ -1783,7 +1842,7 @@ Ole huolellinen.</translation>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="173"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="335"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="379"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1094"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1125"/>
         <source>File system:</source>
         <translation>Tiedostojärjestelmä:</translation>
     </message>
@@ -1847,46 +1906,46 @@ Ole huolellinen.</translation>
         <translation>Koko</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="702"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="712"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="814"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="824"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="706"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="716"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="818"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="828"/>
         <source>The length exceeds the limit</source>
         <translation>Pituus ylittää rajan</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="723"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="727"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting.</source>
         <translation>Käytä aes-xts-plain64 standardin algoritmia levyn salaamiseen. Jos se on salattu, sinun tulee purkaa sen salaus ennen asennusta.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="729"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="733"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
         <translation>Käytä sm4-xts-plain state algoritmia levyn salaamiseen. Jos se on salattu, sinun tulee purkaa sen salaus ennen asennusta. Käyttöjärjestelmät, jotka eivät tue salausalgoritmia, eivät pysty purkamaan levyn salausta.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="856"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="860"/>
         <source>The number of new partitions exceeds the limit</source>
         <translation>Uusien osioiden määrä ylittää rajan</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="879"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="883"/>
         <source>To encrypt a partition, it should be larger than 100 MiB</source>
         <translation>Osion salaamiseksi sen tulee olla suurempi kuin 100 MiB</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="903"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="915"/>
         <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
         <translation>Jotta salasana ei unohdu, varmuuskopioi salasanasi ja säilytä se hyvin!</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="904"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="916"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="911"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="935"/>
         <source>To create a partition, you need at least 52 MB</source>
         <translation>Osion luomiseen tarvitaan vähintään 52 Mt</translation>
     </message>
@@ -2088,8 +2147,8 @@ Ole huolellinen.</translation>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="121"/>
         <location filename="../widgets/resizedialog.cpp" line="248"/>
-        <location filename="../widgets/resizedialog.cpp" line="339"/>
-        <location filename="../widgets/resizedialog.cpp" line="342"/>
+        <location filename="../widgets/resizedialog.cpp" line="344"/>
+        <location filename="../widgets/resizedialog.cpp" line="347"/>
         <source>Cancel</source>
         <translation>Peruuta</translation>
     </message>
@@ -2102,13 +2161,13 @@ Ole huolellinen.</translation>
         <location filename="../widgets/resizedialog.cpp" line="149"/>
         <location filename="../widgets/resizedialog.cpp" line="180"/>
         <location filename="../widgets/resizedialog.cpp" line="211"/>
-        <location filename="../widgets/resizedialog.cpp" line="315"/>
+        <location filename="../widgets/resizedialog.cpp" line="320"/>
         <source>No more than the maximum capacity please</source>
         <translation>Enintään maksimikapasiteetti</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="241"/>
-        <location filename="../widgets/resizedialog.cpp" line="297"/>
+        <location filename="../widgets/resizedialog.cpp" line="302"/>
         <source>No less than the used capacity please</source>
         <translation>Vähintään käytetty kapasiteetti</translation>
     </message>
@@ -2124,9 +2183,9 @@ Ole huolellinen.</translation>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="227"/>
         <location filename="../widgets/resizedialog.cpp" line="248"/>
-        <location filename="../widgets/resizedialog.cpp" line="339"/>
-        <location filename="../widgets/resizedialog.cpp" line="342"/>
-        <location filename="../widgets/resizedialog.cpp" line="378"/>
+        <location filename="../widgets/resizedialog.cpp" line="344"/>
+        <location filename="../widgets/resizedialog.cpp" line="347"/>
+        <location filename="../widgets/resizedialog.cpp" line="383"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -2140,22 +2199,22 @@ Ole huolellinen.</translation>
         <translation>Estä tietojen häviäminen varmuuskopioimalla ennen pienentämistä</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="329"/>
+        <location filename="../widgets/resizedialog.cpp" line="334"/>
         <source>Unmount it before shrinking its space</source>
         <translation>Irrota se ennen tilan pienentämistä</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="339"/>
+        <location filename="../widgets/resizedialog.cpp" line="344"/>
         <source>The current device has been mounted and will be unmounted automatically. Please back up data in it to prevent data loss</source>
         <translation>Nykyinen laite on liietty ja se poistetaan automaattisesti käytöstä. Varmuuskopioi siinä olevat tiedot tietojen häviämisen estämiseksi</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="342"/>
+        <location filename="../widgets/resizedialog.cpp" line="347"/>
         <source>To prevent data loss, back up data in the logical volume before shrinking it</source>
         <translation>Estä tietojen häviäminen varmuuskopioimalla tiedot loogisesta asemasta ennen pienentämistä</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="378"/>
+        <location filename="../widgets/resizedialog.cpp" line="383"/>
         <source>The file system does not support space adjustment</source>
         <translation>Tiedostojärjestelmä ei tue tilan säätöä</translation>
     </message>
@@ -2163,16 +2222,16 @@ Ole huolellinen.</translation>
 <context>
     <name>SizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="245"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="329"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="278"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="362"/>
         <source> Capacity:</source>
         <translation>Kapasiteetti:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="285"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="289"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="369"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="372"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="318"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="322"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="402"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="405"/>
         <source>Used:</source>
         <translation>Käytetty:</translation>
     </message>
@@ -2208,7 +2267,7 @@ Ole huolellinen.</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="59"/>
-        <location filename="../widgets/titlewidget.cpp" line="435"/>
+        <location filename="../widgets/titlewidget.cpp" line="462"/>
         <source>Create volume group</source>
         <translation>Luo asemaryhmä</translation>
     </message>
@@ -2229,7 +2288,7 @@ Ole huolellinen.</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="75"/>
-        <location filename="../widgets/titlewidget.cpp" line="342"/>
+        <location filename="../widgets/titlewidget.cpp" line="359"/>
         <source>Create logical volume</source>
         <translation>Luo looginen asema</translation>
     </message>
@@ -2241,62 +2300,69 @@ Ole huolellinen.</translation>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="239"/>
         <source>Unable to mount the device: no file system is found, or the file system is not supported</source>
-        <translation type="unfinished"/>
+        <translation>Laitetta ei voi liittää: tiedostojärjestelmää ei löydy tai sitä ei tueta</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="322"/>
-        <location filename="../widgets/titlewidget.cpp" line="416"/>
+        <location filename="../widgets/titlewidget.cpp" line="339"/>
+        <location filename="../widgets/titlewidget.cpp" line="433"/>
         <source>The file system does not support space adjustment</source>
         <translation>Tiedostojärjestelmä ei tue tilan säätöä</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="240"/>
-        <location filename="../widgets/titlewidget.cpp" line="322"/>
-        <location filename="../widgets/titlewidget.cpp" line="366"/>
-        <location filename="../widgets/titlewidget.cpp" line="400"/>
-        <location filename="../widgets/titlewidget.cpp" line="416"/>
-        <location filename="../widgets/titlewidget.cpp" line="456"/>
-        <location filename="../widgets/titlewidget.cpp" line="569"/>
+        <location filename="../widgets/titlewidget.cpp" line="339"/>
+        <location filename="../widgets/titlewidget.cpp" line="383"/>
+        <location filename="../widgets/titlewidget.cpp" line="417"/>
+        <location filename="../widgets/titlewidget.cpp" line="433"/>
+        <location filename="../widgets/titlewidget.cpp" line="447"/>
+        <location filename="../widgets/titlewidget.cpp" line="483"/>
+        <location filename="../widgets/titlewidget.cpp" line="596"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="342"/>
+        <location filename="../widgets/titlewidget.cpp" line="359"/>
         <source>The disks will be formatted if you create a logical volume</source>
         <translation>Levyt alustetaan, jos luot loogisen aseman</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="366"/>
-        <location filename="../widgets/titlewidget.cpp" line="400"/>
-        <location filename="../widgets/titlewidget.cpp" line="569"/>
+        <location filename="../widgets/titlewidget.cpp" line="383"/>
+        <location filename="../widgets/titlewidget.cpp" line="417"/>
+        <location filename="../widgets/titlewidget.cpp" line="596"/>
         <source>Unmount %1 first</source>
         <translation>Poista %1 käytöstä ensin</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="378"/>
-        <location filename="../widgets/titlewidget.cpp" line="468"/>
+        <location filename="../widgets/titlewidget.cpp" line="395"/>
+        <location filename="../widgets/titlewidget.cpp" line="495"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
         <translation>Dataa ei voida palauttaa, jos ne on poistettu. Vahvista ennen kuin jatkat</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="379"/>
-        <location filename="../widgets/titlewidget.cpp" line="469"/>
+        <location filename="../widgets/titlewidget.cpp" line="396"/>
+        <location filename="../widgets/titlewidget.cpp" line="496"/>
         <source>Delete</source>
         <translation>Poista</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="379"/>
-        <location filename="../widgets/titlewidget.cpp" line="469"/>
+        <location filename="../widgets/titlewidget.cpp" line="396"/>
+        <location filename="../widgets/titlewidget.cpp" line="496"/>
         <source>Cancel</source>
         <translation>Peruuta</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="435"/>
+        <location filename="../widgets/titlewidget.cpp" line="446"/>
+        <source>To ensure the normal use of system backup and restore, 
+rootA and rootB should be resized to the same value</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="462"/>
         <source>The disks will be formatted if you create a volume group</source>
         <translation>Levyt alustetaan, jos luot asemaryhmän</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="456"/>
+        <location filename="../widgets/titlewidget.cpp" line="483"/>
         <source>Unmount all logical volumes in %1 first</source>
         <translation>Poista ensin kaikki loogiset asemat kohteesta %1</translation>
     </message>
@@ -2311,6 +2377,7 @@ Ole huolellinen.</translation>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="57"/>
         <location filename="../widgets/unmountdialog.cpp" line="60"/>
+        <location filename="../widgets/unmountdialog.cpp" line="65"/>
         <source>Unmount %1</source>
         <translation>Pura %1</translation>
     </message>
@@ -2320,12 +2387,12 @@ Ole huolellinen.</translation>
         <translation>Varmista, että loogisella asemalla ei ole käynnissä ohjelmia</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="65"/>
+        <location filename="../widgets/unmountdialog.cpp" line="68"/>
         <source>Cancel</source>
         <translation>Peruuta</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountdialog.cpp" line="66"/>
+        <location filename="../widgets/unmountdialog.cpp" line="69"/>
         <source>Unmount</source>
         <translation>Pura</translation>
     </message>

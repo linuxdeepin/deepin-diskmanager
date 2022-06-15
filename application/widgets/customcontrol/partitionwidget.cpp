@@ -503,14 +503,14 @@ void PartitionWidget::setAddOrRemResult(const bool &isExceed)
     m_slider->setValue(100);
     m_partNameEdit->lineEdit()->setPlaceholderText(tr("Name"));
     m_partSizeEdit->lineEdit()->setPlaceholderText(tr("Size"));
-qDebug() << isExceed;
+
     setEnable(0, isExceed);
     onSliderValueChanged(100);
 }
 
 void PartitionWidget::setRegValidator()
 {
-    QRegExp reg("^[0-9]+(.[0-9]{1,4})?$");
+    QRegExp reg("^[0-9]+(\\.[0-9]{1,4})?$");
     QRegExpValidator *va = new QRegExpValidator(reg, this);
     m_partSizeEdit->lineEdit()->setValidator(va);
 
@@ -645,7 +645,7 @@ void PartitionWidget::setControlEnable(const bool &isTrue)
 }
 
 void PartitionWidget::setLabelColor(const bool &isOk)
-{qDebug() << "11111111111111111";
+{
     if (isOk) {
         DPalette framePalette = DApplicationHelper::instance()->palette(m_botFrame);
         framePalette.setColor(DPalette::Text, QColor(palette().buttonText().color()));
@@ -880,6 +880,8 @@ void PartitionWidget::onAddPartition()
             return;
         }
 
+        QColor color = QColor(palette().buttonText().color());
+
         PasswordInputDialog passwordInputDialog(this);
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         passwordInputDialog.setDeviceName(info.m_path);
@@ -905,6 +907,10 @@ void PartitionWidget::onAddPartition()
                                   tr("OK", "button"), DDialog::ButtonRecommend, "OK");
             warningBox.exec();
         }
+
+        DPalette palette = DApplicationHelper::instance()->palette(m_botFrame);
+        palette.setColor(QPalette::ButtonText, color);
+        DApplicationHelper::instance()->setPalette(this, palette);
 
         formate = formate.trimmed().split(" ").at(0);
     } else {
@@ -1039,7 +1045,10 @@ void PartitionWidget::onApplyButton()
                 newPart.m_luksFlag = LUKSFlag::IS_CRYPT_LUKS;
                 newPart.m_crypt = m_patrinfo.at(i).m_encryption;
                 QStringList tokenList;
-                tokenList.append(m_patrinfo.at(i).m_passwordHint);
+                if (!m_patrinfo.at(i).m_passwordHint.isEmpty()) {
+                    tokenList.append(m_patrinfo.at(i).m_passwordHint);
+                }
+
                 newPart.m_tokenList = tokenList;
                 newPart.m_decryptStr = m_patrinfo.at(i).m_password;
             } else {

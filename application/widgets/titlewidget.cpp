@@ -438,6 +438,16 @@ void TitleWidget::onResizeLVClicked()
         return;
     }
 
+    if (lvInfo.m_fileSystemLabel == "Roota" || lvInfo.m_fileSystemLabel == "Rootb") {
+        MessageBox warningBox(this);
+        warningBox.setObjectName("messageBox");
+        warningBox.setAccessibleName("messageBox");
+        // 为保证正常使用备份还原功能，rootA跟rootB需同步扩容，确保空间一样大  确定  取消
+        warningBox.setWarings(tr("To ensure the normal use of system backup and restore, \n"
+                                 "rootA and rootB should be resized to the same value"), "", tr("OK"), "ok");
+        warningBox.exec();
+    }
+
     ResizeDialog dlg(this);
     dlg.setObjectName("resizeLVDialog");
     dlg.setAccessibleName("resizeLVDialog");
@@ -737,6 +747,8 @@ void TitleWidget::updateBtnStatus()
 
         if (lvInfo.m_lvName.isEmpty() && lvInfo.m_lvUuid.isEmpty()) {
             updateLVBtnStatus(true, false, true, true, true, true);
+        } else if (lvInfo.m_lvFsType == FSType::FS_LINUX_SWAP) {
+            updateLVBtnStatus(true, true, true, true, true, false);
         } else {
             bool noMountPoint = lvInfo.m_mountPoints.isEmpty();
             updateLVBtnStatus(false, true, !noMountPoint, !noMountPoint, noMountPoint, false);

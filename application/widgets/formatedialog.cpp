@@ -658,7 +658,10 @@ void FormateDialog::onWipeButtonClicked()
         if (isEncryption) {
             wipe.m_luksFlag = LUKSFlag::IS_CRYPT_LUKS;
             QStringList tokenList;
-            tokenList.append(passwordHint);
+            if (!passwordHint.isEmpty()) {
+                tokenList.append(passwordHint);
+            }
+
             wipe.m_tokenList = tokenList;
             if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
                 wipe.m_dmName = "";
@@ -694,7 +697,10 @@ void FormateDialog::onWipeButtonClicked()
         if (isEncryption) {
             lvAction.m_luksFlag = LUKSFlag::IS_CRYPT_LUKS;
             QStringList tokenList;
-            tokenList.append(passwordHint);
+            if (!passwordHint.isEmpty()) {
+                tokenList.append(passwordHint);
+            }
+
             lvAction.m_tokenList = tokenList;
             lvAction.m_dmName = QString("%1_%2_%3").arg(lvInfo.m_vgName).arg(lvInfo.m_lvName).arg(encryptName);
         } else {
@@ -722,12 +728,17 @@ void FormateDialog::onWipeResult(const QString &info)
 {
     QStringList infoList = info.split(":");
 
-    if (infoList.count() <= 1) {
+    if (infoList.count() <= 2) {
         return;
     }
 
     m_waterLoadingWidget->stopTimer();
-    if (infoList.at(0) == "1") {
+    bool isSuccess = false;
+    if (infoList.at(0) == "DISK_ERROR" && infoList.at(1).toInt() == DISK_ERROR::DISK_ERR_NORMAL) {
+        isSuccess = true;
+    }
+
+    if (isSuccess) {
         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget()->parentWidget()->parentWidget(),
                                                  QIcon::fromTheme("://icons/deepin/builtin/ok.svg"),
                                                  tr("\"%1\" wiped").arg(m_pathInfo));
@@ -736,6 +747,7 @@ void FormateDialog::onWipeResult(const QString &info)
 
         close();
     } else {
+        QString failedReason = DMDbusHandler::instance()->getFailedMessage(infoList.at(0), infoList.at(1).toInt(), "");
         m_titleLabel->setText(tr("Failed to wipe %1").arg(m_pathInfo));
         m_stackedWidget->setCurrentIndex(2);
 
@@ -743,26 +755,7 @@ void FormateDialog::onWipeResult(const QString &info)
         button->setDisabled(false);
         button->show();
 
-        switch (infoList.at(1).toInt()) {
-        case DISK_ERROR::DISK_ERR_DISK_INFO: {
-            m_failLabel->setText(tr("Failed to find the disk"));
-            break;
-        }
-        case DISK_ERROR::DISK_ERR_PART_INFO: {
-            m_failLabel->setText(tr("Failed to get the partition info"));
-            break;
-        }
-        case DISK_ERROR::DISK_ERR_DELETE_PART_FAILED: {
-            m_failLabel->setText(tr("Failed to delete the partition"));
-            break;
-        }
-        case DISK_ERROR::DISK_ERR_UPDATE_KERNEL_FAILED: {
-            m_failLabel->setText(tr("Failed to submit the request to the kernel"));
-            break;
-        }
-        default:
-            break;
-        }
+        m_failLabel->setText(failedReason);
     }
 }
 

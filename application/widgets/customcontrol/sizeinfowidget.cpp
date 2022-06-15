@@ -75,6 +75,10 @@ void SizeInfoWidget::setData(PartitionInfo info, QVector<QColor> color, QVector<
         m_partitionPath = m_partitionPath.remove(0, 5);
     }
 
+    if (m_totalSize <= 0) {
+        m_totalSize = Utils::sectorToUnit(info.m_sectorEnd - info.m_sectorStart + 1, info.m_sectorSize, SIZE_UNIT::UNIT_GIB);
+    }
+
     if (size.at(0) < 0.00 || size.at(1) < 0.00) {
         m_sizeInfo = QVector<double> {0.00, 0.00};
     }
@@ -99,6 +103,8 @@ void SizeInfoWidget::setData(LVInfo info, QVector<QColor> color, QVector<double>
             m_usedSize = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUsed);
             m_noused = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUnused, SIZE_UNIT::UNIT_GIB);
             m_used = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUsed, SIZE_UNIT::UNIT_GIB);
+        } else {
+            m_usedSize = "-";
         }
     }
 
@@ -168,27 +174,50 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
     QRect paintRect = QRect(0, 60, rect.width() + 1, rect.height() - 170);
     QPainterPath paintpath0;
     int radius = 8;
+    double sumSize = 0.00;
     //根据color和size数据遍历绘制矩形
     for (int i = 0; i < m_sizeInfo.size(); i++) {
         if (i == 0) {
-            path[0].moveTo(paintRect.topLeft() + QPoint(radius, 0));
-            path[0].arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
-            path[0].lineTo(paintRect.bottomLeft() - QPoint(0, radius));
-            path[0].arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, radius * 2)),
-                                QSize(radius * 2, radius * 2)),
-                          180, 90);
-            path[0].lineTo(paintRect.bottomLeft() + QPoint(static_cast<int>((m_sizeInfo[0] / m_totalSize) * paintRect.width() + radius), 0));
-            path[0].lineTo(paintRect.topLeft() + QPoint(static_cast<int>((m_sizeInfo[0] / m_totalSize) * paintRect.width() + radius), 0));
-            path[0].lineTo(paintRect.topLeft() + QPoint(radius, 0));
-            if (m_sizeInfo.at(i) == 0.00) {
-                painter.setBrush(QBrush(m_colorInfo[1]));
-                painter.setPen(QPen(QColor(m_colorInfo[1]), 3));
-                painter.fillPath(path[0], m_colorInfo[1]);
-            } else {
+            if (m_sizeInfo[0] == m_totalSize) {
+                // 处理第一个值就是总大小，矩形首尾都绘制圆角
+                path[0].moveTo(paintRect.bottomRight() - QPoint(0, radius));
+                path[0].lineTo(paintRect.topRight() + QPoint(0, radius));
+                path[0].arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
+                                    QSize(radius * 2, radius * 2)), 0, 90);
+                path[0].lineTo(paintRect.topLeft() + QPoint(radius, 0));
+                path[0].arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
+                path[0].lineTo(paintRect.bottomLeft() - QPoint(0, radius));
+                path[0].arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, radius * 2)),
+                                    QSize(radius * 2, radius * 2)), 180, 90);
+                path[0].lineTo(paintRect.bottomRight() - QPoint(radius, 0));
+                path[0].arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
+                                    QSize(radius * 2, radius * 2)), 270, 90);
+
                 painter.setBrush(QBrush(m_colorInfo[0]));
                 painter.setPen(QPen(QColor(m_colorInfo[0]), 3));
                 painter.fillPath(path[0], m_colorInfo[0]);
+            } else {
+                path[0].moveTo(paintRect.topLeft() + QPoint(radius, 0));
+                path[0].arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
+                path[0].lineTo(paintRect.bottomLeft() - QPoint(0, radius));
+                path[0].arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, radius * 2)),
+                                    QSize(radius * 2, radius * 2)),
+                              180, 90);
+                path[0].lineTo(paintRect.bottomLeft() + QPoint(static_cast<int>((m_sizeInfo[0] / m_totalSize) * paintRect.width() + radius), 0));
+                path[0].lineTo(paintRect.topLeft() + QPoint(static_cast<int>((m_sizeInfo[0] / m_totalSize) * paintRect.width() + radius), 0));
+                path[0].lineTo(paintRect.topLeft() + QPoint(radius, 0));
+                if (m_sizeInfo.at(i) == 0.00) {
+                    painter.setBrush(QBrush(m_colorInfo[1]));
+                    painter.setPen(QPen(QColor(m_colorInfo[1]), 3));
+                    painter.fillPath(path[0], m_colorInfo[1]);
+                } else {
+                    painter.setBrush(QBrush(m_colorInfo[0]));
+                    painter.setPen(QPen(QColor(m_colorInfo[0]), 3));
+                    painter.fillPath(path[0], m_colorInfo[0]);
+                }
             }
+
+            sumSize += m_sizeInfo[0];
         } else if (i > 0 && i < m_sizeInfo.size() - 1) {
             path[i].moveTo(path[i - 1].currentPosition() + QPoint(static_cast<int>((m_sizeInfo[i - 1] / m_totalSize) * paintRect.width()), 0));
             path[i].lineTo(path[i - 1].currentPosition() + QPoint(static_cast<int>((m_sizeInfo[i - 1] / m_totalSize) * paintRect.width() + (m_sizeInfo[i] / m_totalSize) * paintRect.width()), 0));
@@ -198,6 +227,8 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setBrush(QBrush(m_colorInfo[i]));
             painter.setPen(QPen(QColor(m_colorInfo[i]), 3));
             painter.fillPath(path[i], m_colorInfo[i]);
+
+            sumSize += m_sizeInfo[i];
         } else if (i == m_sizeInfo.size() - 1) {
             path[m_sizeInfo.size() - 1].moveTo(paintRect.bottomRight() - QPoint(0, radius));
             path[m_sizeInfo.size() - 1].lineTo(paintRect.topRight() + QPoint(0, radius));
@@ -212,7 +243,9 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
                                             270, 90);
             painter.setBrush(QBrush(m_colorInfo[m_sizeInfo.size() - 1]));
             painter.setPen(QPen(QColor(m_colorInfo[m_sizeInfo.size() - 1]), 3));
-            painter.fillPath(path[m_sizeInfo.size() - 1], m_colorInfo[m_sizeInfo.size() - 1]);
+            if ((m_totalSize - sumSize) > 0.00) {
+                painter.fillPath(path[m_sizeInfo.size() - 1], m_colorInfo[m_sizeInfo.size() - 1]);
+            }
         }
     }
     //绘制首页下方标注

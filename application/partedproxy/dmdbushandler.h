@@ -430,6 +430,19 @@ public:
      */
     QMap<QString, QString> getIsAllEncryption();
 
+    /**
+     * @brief 刷新主界面显示数据
+     */
+    void refreshMainWindowData();
+
+    /**
+     * @brief 获取失败提示信息
+     * @param key 枚举信息
+     * @param value 枚举值
+     * @param devPath 设备路径
+     */
+    QString getFailedMessage(const QString &key, const int &value, const QString &devPath);
+
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
 
@@ -460,6 +473,7 @@ signals:
     void vgDeleteMessage(const QString &vgMessage);
     void lvDeleteMessage(const QString &lvMessage);
     void deCryptMessage(const LUKS_INFO &luks);
+    void createFailedMessage(const QString &message);
 
 public slots:
     /**

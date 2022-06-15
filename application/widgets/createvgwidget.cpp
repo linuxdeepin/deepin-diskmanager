@@ -845,6 +845,13 @@ void CreateVGWidget::onDoneButtonClicked()
             }
         }
 
+        if(infoData.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS){
+            LUKS_INFO luks = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(pvData.m_devicePath);
+            if (luks.isDecrypt) {
+                pvData.m_devicePath = luks.m_mapper.m_dmPath;
+            }
+        }
+
         pvDataList.append(pvData);
     }
 
@@ -942,6 +949,10 @@ void CreateVGWidget::updateData()
                         if (judgeDataEquality(partitionInfo, infoData)) {
                             diskInfoData.m_selectStatus = Qt::CheckState::Checked;
                             partInfoData.m_selectStatus = Qt::CheckState::Checked;
+                            if (infoData.m_isReadOnly) {
+                                diskInfoData.m_isReadOnly = infoData.m_isReadOnly;
+                                partInfoData.m_isReadOnly = infoData.m_isReadOnly;
+                            }
                             break;
                         }
                     }
@@ -956,12 +967,16 @@ void CreateVGWidget::updateData()
 
                         if (judgeDataEquality(partitionInfo, infoData)) {
                             diskInfoData.m_selectStatus = Qt::CheckState::Checked;
+                            if (infoData.m_isReadOnly) {
+                                diskInfoData.m_isReadOnly = infoData.m_isReadOnly;
+                            }
                             break;
                         }
                     }
                 }
             } else {
                 int checkCount = 0;
+                int readOnlyCount = 0;
                 for (int i = 0; i < info.m_partition.size(); ++i) {
                     PartitionInfo partitionInfo = info.m_partition.at(i);
                     QString partitionSize = Utils::formatSize(partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1,
@@ -990,6 +1005,10 @@ void CreateVGWidget::updateData()
                         if (judgeDataEquality(partitionInfo, infoData)) {
                             partInfoData.m_selectStatus = Qt::CheckState::Checked;
                             checkCount++;
+                            if (infoData.m_isReadOnly) {
+                                partInfoData.m_isReadOnly = infoData.m_isReadOnly;
+                                readOnlyCount++;
+                            }
                             break;
                         }
                     }
@@ -1003,6 +1022,10 @@ void CreateVGWidget::updateData()
                     diskInfoData.m_selectStatus = Qt::CheckState::Checked;
                 } else {
                     diskInfoData.m_selectStatus = Qt::CheckState::PartiallyChecked;
+                }
+
+                if (readOnlyCount == lstPVInfoData.count()) {
+                    diskInfoData.m_isReadOnly = true;
                 }
             }
 
@@ -1085,8 +1108,20 @@ QList<DeviceInfo> CreateVGWidget::createAvailableDiskData()
                 // 只有一个分区时，排除已加入VG的分区、被挂载的分区、分区大小小于100MiB的分区
                 double partitionSize = Utils::sectorToUnit(partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1,
                                                            partitionInfo.m_sectorSize, UNIT_MIB);
+                bool findPV = false;
+                if(partitionInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS){
+                    LUKSMap luks = DMDbusHandler::instance()->probLUKSInfo();
+                    if(luks.mapperExists(partitionInfo.m_path)){
+                        LUKS_MapperInfo mapper = luks.getMapper(partitionInfo.m_path);
+                        if(mapper.m_vgflag != LVMFlag::LVM_FLAG_NOT_PV){
+                            findPV = true;
+                        }
+                    }
+                }
+
                 if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV)
-                        && !DMDbusHandler::instance()->partitionISMount(partitionInfo) && (partitionSize > 100)) {
+                        && !DMDbusHandler::instance()->partitionISMount(partitionInfo) && (partitionSize > 100)
+                        && !findPV) {
                     lstNewPartition.append(partitionInfo);
                 } else {
                     isAvailable = false;
@@ -1124,9 +1159,22 @@ QList<DeviceInfo> CreateVGWidget::createAvailableDiskData()
                     if (fileSystemType == "extended") {
                         extendedInfo = partitionInfo;
                     }
+
+                    bool findPV = false;
+                    if(partitionInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS){
+                        LUKSMap luks = DMDbusHandler::instance()->probLUKSInfo();
+                        if(luks.mapperExists(partitionInfo.m_path)){
+                            LUKS_MapperInfo mapper = luks.getMapper(partitionInfo.m_path);
+                            if(mapper.m_vgflag != LVMFlag::LVM_FLAG_NOT_PV){
+                                findPV = true;
+                            }
+                        }
+                    }
+
                     if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) && !DMDbusHandler::instance()->partitionISMount(partitionInfo)
                             && (partitionSize > 100) && (fileSystemType != "extended")
-                            && (partitionInfo.m_type != PartitionType::TYPE_LOGICAL)) {
+                            && (partitionInfo.m_type != PartitionType::TYPE_LOGICAL)
+                            && !findPV) {
                         // 排除不能创建新分区的磁盘空闲空间
                         if (partitionInfo.m_path == "unallocated") {
                             if (partitionCount >= info.m_maxPrims) {
@@ -1164,6 +1212,7 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
     VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
     QMap<QString, PVInfo> mapPvInfo = vgInfo.m_pvInfo;
     QStringList pvList = mapPvInfo.keys();
+    bool isSysDevice = DMDbusHandler::instance()->getIsSystemDisk(vgInfo.m_vgName);
 
     if (m_isResizeInit) {
         LVMInfo lvmInfo = DMDbusHandler::instance()->probLVMInfo();
@@ -1179,6 +1228,13 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
                     pvInfoData.m_diskPath = pvInfo.m_pvPath;
                 } else if (pvInfo.m_lvmDevType == DevType::DEV_PARTITION) {
                     pvInfoData.m_partitionPath = pvInfo.m_pvPath;
+                } else if (pvInfo.m_lvmDevType == DevType::DEV_META_DEVICES) {
+                    QString path = DMDbusHandler::instance()->probLUKSInfo().getDevPath(pvInfo.m_pvPath);
+                    if (DMDbusHandler::instance()->probDeviceInfo().keys().indexOf(path) == -1) {
+                        pvInfoData.m_partitionPath = path;
+                    } else {
+                        pvInfoData.m_diskPath = path;
+                    }
                 }
 
                 m_oldSeclectData.append(pvInfoData);
@@ -1213,6 +1269,11 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
                     pvInfoData.m_sectorSize = info.m_sectorSize;
                     pvInfoData.m_sectorStart = 0;
                     pvInfoData.m_sectorEnd = info.m_length - 1;
+                    pvInfoData.m_luksFlag = info.m_luksFlag;
+                    isSysDevice ? pvInfoData.m_isReadOnly = true : pvInfoData.m_isReadOnly = false;
+                    if (pvInfoData.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+                        pvInfoData.m_isReadOnly = true;
+                    }
 
                     m_oldSeclectData.replace(i, pvInfoData);
                     lstDeviceInfo.append(info);
@@ -1226,8 +1287,15 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
 
             if (info.m_partition.size() == 1) {
                 PartitionInfo partitionInfo = info.m_partition.at(0);
+                QString path = partitionInfo.m_path;
+                if (partitionInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+                    LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(partitionInfo.m_path);
+                    if (luksInfo.isDecrypt) {
+                        path = luksInfo.m_mapper.m_dmPath;
+                    }
+                }
                 //判断分区是否加入当前选择VG
-                if (pvList.indexOf(partitionInfo.m_path) != -1) {
+                if (pvList.indexOf(path) != -1) {
                     for (int i = 0; i < m_oldSeclectData.count(); ++i) {
                         PVInfoData pvInfoData = m_oldSeclectData.at(i);
                         if (pvInfoData.m_partitionPath == partitionInfo.m_path) {
@@ -1242,6 +1310,11 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
                             pvInfoData.m_sectorSize = partitionInfo.m_sectorSize;
                             pvInfoData.m_sectorStart = partitionInfo.m_sectorStart;
                             pvInfoData.m_sectorEnd = partitionInfo.m_sectorEnd;
+                            pvInfoData.m_luksFlag = partitionInfo.m_luksFlag;
+                            isSysDevice ? pvInfoData.m_isReadOnly = true : pvInfoData.m_isReadOnly = false;
+                            if (pvInfoData.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+                                pvInfoData.m_isReadOnly = true;
+                            }
 
                             m_oldSeclectData.replace(i, pvInfoData);
                             lstNewPartition.append(partitionInfo);
@@ -1252,8 +1325,20 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
                     // 只有一个分区时，排除已加入VG的分区、被挂载的分区、分区大小小于100MiB的分区
                     double partitionSize = Utils::sectorToUnit(partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1,
                                                                partitionInfo.m_sectorSize, UNIT_MIB);
+                    bool findPV = false;
+                    if(partitionInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS){
+                        LUKSMap luks = DMDbusHandler::instance()->probLUKSInfo();
+                        if(luks.mapperExists(partitionInfo.m_path)){
+                            LUKS_MapperInfo mapper = luks.getMapper(partitionInfo.m_path);
+                            if(mapper.m_vgflag != LVMFlag::LVM_FLAG_NOT_PV){
+                                findPV = true;
+                            }
+                        }
+                    }
+
                     if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV)
-                            && !DMDbusHandler::instance()->partitionISMount(partitionInfo) && (partitionSize > 100)) {
+                            && !DMDbusHandler::instance()->partitionISMount(partitionInfo) && (partitionSize > 100)
+                            && !findPV) {
                         lstNewPartition.append(partitionInfo);
                     } else {
                         isAvailable = false;
@@ -1270,8 +1355,16 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
                 PartitionInfo extendedInfo;
                 for (int i = 0; i < info.m_partition.size(); ++i) {
                     PartitionInfo partitionInfo = info.m_partition.at(i);
+                    QString path = partitionInfo.m_path;
+                    if (partitionInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+                        LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(partitionInfo.m_path);
+                        if (luksInfo.isDecrypt) {
+                            path = luksInfo.m_mapper.m_dmPath;
+                        }
+                    }
+
                     //判断分区是否加入当前选择VG
-                    if (pvList.indexOf(partitionInfo.m_path) != -1) {
+                    if (pvList.indexOf(path) != -1) {
                         for (int j = 0; j < m_oldSeclectData.count(); ++j) {
                             PVInfoData pvInfoData = m_oldSeclectData.at(j);
                             if (pvInfoData.m_partitionPath == partitionInfo.m_path) {
@@ -1286,6 +1379,11 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
                                 pvInfoData.m_sectorSize = partitionInfo.m_sectorSize;
                                 pvInfoData.m_sectorStart = partitionInfo.m_sectorStart;
                                 pvInfoData.m_sectorEnd = partitionInfo.m_sectorEnd;
+                                pvInfoData.m_luksFlag = partitionInfo.m_luksFlag;
+                                isSysDevice ? pvInfoData.m_isReadOnly = true : pvInfoData.m_isReadOnly = false;
+                                if (pvInfoData.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+                                    pvInfoData.m_isReadOnly = true;
+                                }
 
                                 m_oldSeclectData.replace(j, pvInfoData);
                                 lstNewPartition.append(partitionInfo);
@@ -1305,7 +1403,7 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
                         // 排除系统磁盘
                         if (isSysMountPoint || partitionInfo.m_flag == 4) {
                             isAvailable = false;
-                            break;
+//                            break;
                         }
 
                         // 排除已加入VG的分区、被挂载的分区、分区大小小于100MiB的分区
@@ -1315,10 +1413,22 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
                         if (fileSystemType == "extended") {
                             extendedInfo = partitionInfo;
                         }
+
+                        bool findPV = false;
+                        if(partitionInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS){
+                            LUKSMap luks = DMDbusHandler::instance()->probLUKSInfo();
+                            if(luks.mapperExists(partitionInfo.m_path)){
+                                LUKS_MapperInfo mapper = luks.getMapper(partitionInfo.m_path);
+                                if(mapper.m_vgflag != LVMFlag::LVM_FLAG_NOT_PV){
+                                    findPV = true;
+                                }
+                            }
+                        }
+
                         if ((partitionInfo.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV)
                                 && !DMDbusHandler::instance()->partitionISMount(partitionInfo)
                                 && (partitionSize > 100) && (fileSystemType != "extended")
-                                && (partitionInfo.m_type != PartitionType::TYPE_LOGICAL)) {
+                                && (partitionInfo.m_type != PartitionType::TYPE_LOGICAL) && !findPV) {
                             // 排除不能创建新分区的磁盘空闲空间
                             if (partitionInfo.m_path == "unallocated") {
                                 if (partitionCount >= info.m_maxPrims) {
@@ -1348,6 +1458,20 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
             if (isAvailable) {
                 info.m_partition = lstNewPartition;
                 if (info.m_partition.size()) {  //解决bug 119081
+                    lstDeviceInfo.append(info);
+                }
+            } else {
+                PartitionVec lstNewPartition;
+                for (int i = 0; i < info.m_partition.size(); ++i) {
+                    for (int j = 0; j < m_oldSeclectData.count(); ++j) {
+                        if (judgeDataEquality(info.m_partition.at(i), m_oldSeclectData.at(j))) {
+                            lstNewPartition.append(info.m_partition.at(i));
+                        }
+                    }
+                }
+
+                if (lstNewPartition.count() > 0) {
+                    info.m_partition = lstNewPartition;
                     lstDeviceInfo.append(info);
                 }
             }
@@ -1455,10 +1579,23 @@ void CreateVGWidget::onDiskCheckBoxStateChange(int state)
             } else {
                 SelectPVItemWidget *selectPVItemWidget = qobject_cast<SelectPVItemWidget *>(sender());
                 if (m_curDiskItemWidget == selectPVItemWidget) {
+                    int readOnlyCount = 0;
                     for (int i = 0; i < lstPartitionItem.count(); ++i) {
                         SelectPVItemWidget *selectPVItemWidget = lstPartitionItem.at(i);
+                        if (selectPVItemWidget->getCurInfo().m_isReadOnly) {
+                            readOnlyCount++;
+                            continue;
+                        }
+
                         selectPVItemWidget->setCheckBoxState(Qt::CheckState::Unchecked);
                     }
+
+                    if (readOnlyCount > 0 && readOnlyCount != lstPartitionItem.count()) {
+                        m_curDiskItemWidget->setCheckBoxState(Qt::CheckState::PartiallyChecked);
+                    } else if (readOnlyCount == lstPartitionItem.count()) {
+                        m_curDiskItemWidget->setCheckBoxState(Qt::CheckState::Checked);
+                    }
+
                 } else {
                     onDiskItemClicked();
                 }
@@ -1470,6 +1607,10 @@ void CreateVGWidget::onDiskCheckBoxStateChange(int state)
                 for (int i = 0; i < m_curSeclectData.count(); ++i) {
                     PVInfoData infoData = m_curSeclectData.at(i);
                     if (judgeDataEquality(pvData, infoData)) {
+                        if (infoData.m_isReadOnly) {
+                            continue;
+                        }
+
                         m_curSeclectData.removeAt(i);
                         break;
                     }
@@ -1482,6 +1623,9 @@ void CreateVGWidget::onDiskCheckBoxStateChange(int state)
                     for (int j = 0; j < m_curSeclectData.count(); ++j) {
                         PVInfoData infoData = m_curSeclectData.at(j);
                         if (judgeDataEquality(pvData, infoData)) {
+                            if (infoData.m_isReadOnly) {
+                                continue;
+                            }
                             m_curSeclectData.removeAt(j);
                             break;
                         }
@@ -2030,6 +2174,8 @@ Byte_Value CreateVGWidget::getPVSize(const VGInfo &vg, const PVData &pv, bool fl
         PVInfo pvInfo = lvmInfo.getPV(pv);
         if (pvInfo.joinVG()) { //如果pv已经加入vg 且加入的是别的vg 则返回-1
             return lvmInfo.pvOfVg(vg, pv) ? pvInfo.m_pvByteTotalSize : -1;
+        } else {
+            return pvInfo.m_pvByteTotalSize;
         }
     }
 
@@ -2254,14 +2400,21 @@ Byte_Value CreateVGWidget::getMinSize(const VGInfo &vg, const set<PVData> &pvlis
 
 bool CreateVGWidget::adjudicationPVMove(const VGInfo &vg, const set<PVData> &pvlist, bool &bigDataMove, QStringList &realDelPvList)
 {
+    LUKSMap luks = DMDbusHandler::instance()->probLUKSInfo();
+
     bigDataMove = false;
     auto pvInfoMap = vg.m_pvInfo;
     Byte_Value size = 0;
     //获取所有删除的pv
     foreach (auto it, pvInfoMap) {
         bool isDelete = true;
+        QString luksDev;
+        if (luks.mapperExists(it.m_pvPath)) { //如果是映射设备
+            luksDev = luks.getDevPath(it.m_pvPath);
+        }
+
         foreach (const PVData &pv, pvlist) {
-            if (it.m_pvPath == pv.m_devicePath) {
+            if (it.m_pvPath == pv.m_devicePath || (luksDev ==pv.m_devicePath&&!luksDev.isEmpty())) {
                 isDelete = false;
                 break;
             }

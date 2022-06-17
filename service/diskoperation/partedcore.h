@@ -1024,6 +1024,53 @@ private:
      */
     LUKS_INFO getNewLUKSInfo(const FSType &type, const QStringList &token, const CRYPT_CIPHER &cipher, const QString &decryptStr, const QString &dmName, const QString devPath, const QString &label);
 
+    /**
+     * @brief 关闭加密映射
+     * @param disk:磁盘结构体数据
+     * @param isCLose:是否执行关闭操作
+     * @return true 关闭成功 false 失败
+     */
+    bool closeLUKSMap(const Device& disk,bool &isCLose);
+
+    /**
+     * @brief 关闭加密映射
+     * @param wipe:擦除结构体
+     * @param isCLose:是否执行关闭操作
+     * @return true 关闭成功 false 失败
+     */
+    bool closeLUKSMap(const WipeAction&wipe,bool &isCLose);
+
+    /**
+     * @brief 关闭加密映射
+     * @param pvlist:pvdata 数据集合
+     * @param isCLose:是否执行关闭操作
+     * @return true 关闭成功 false 失败
+     */
+    bool closeLUKSMap(const QList<PVData>& pvlist,bool &isCLose);
+
+    /**
+     * @brief 关闭加密映射
+     * @param vglist:vg名称
+     * @param isCLose:是否执行关闭操作
+     * @return true 关闭成功 false 失败
+     */
+    bool closeLUKSMap(const QStringList& vglist,bool &isCLose,bool);
+
+    /**
+     * @brief 关闭加密映射
+     * @param lvlist:lv路径
+     * @param isCLose:是否执行关闭操作
+     * @return true 关闭成功 false 失败
+     */
+    bool closeLUKSMap(const QStringList& lvlist,bool &isCLose);
+
+    /**
+     * @brief 关闭加密映射
+     * @param devPath:设备路径
+     * @param isCLose:是否执行关闭操作
+     * @return true 关闭成功 false 失败
+     */
+    bool closeLUKSMap(const QString&devPath,bool &isCLose);
 signals:
     //硬件刷新相关信号
     /**

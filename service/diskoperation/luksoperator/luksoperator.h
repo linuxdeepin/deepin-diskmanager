@@ -58,7 +58,7 @@ public:
      * @return true 成功 false 失败
      */
     static bool closeMapper(LUKSMap &luks, LUKS_INFO &luksInfo);
-    
+
     /**
      * @brief 添加keyfile 并修改/etc/crypttab文件
      * @param luks: luks属性集合
@@ -215,7 +215,7 @@ private:
      * @param err: 错误
      * @return true 正常 false 错误
      */
-    static bool setLUKSErr(LUKSMap &luksInfo,LUKS_INFO &info,const CRYPTError &err);
+    static bool setLUKSErr(LUKSMap &luksInfo, LUKS_INFO &info, const CRYPTError &err);
 private:
     static DeviceInfoMap *m_dev;
     static LVMInfo *m_lvmInfo;

@@ -57,8 +57,6 @@ public slots:
      * @brief 返回硬件信息
      */
     QMap<QString, Device> getDeviceMap();
-
-    void setSigType(int flag) {m_sigType = flag;}
 signals:
     /**
      * @brief 更新硬件信息信号
@@ -71,7 +69,6 @@ private:
     DeviceInfoMap m_inforesult;        //全部设备分区信息
     LVMInfo m_lvmInfo;                 //lvm 属性信息
     LUKSMap m_luksInfo;                //luks 属性信息
-    int m_sigType;                     //信号类型
 };
 
 /**

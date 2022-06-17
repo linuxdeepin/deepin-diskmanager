@@ -535,6 +535,7 @@ bool PartedCore::clear(const WipeAction &wipe)
     qDebug() << __FUNCTION__ << QString("Clear Partitione start, path: %1").arg(wipe.m_path) ;
     bool success = false;
     FSType fs = Utils::stringToFileSystemType(wipe.m_fstype);
+    //TODO 此处是否可用  supportedFileSystem(fs);判断？
     success = (fs == FS_NTFS || fs == FS_FAT16 || fs == FS_FAT32 || fs == FS_EXT2 || fs == FS_EXT3 || fs == FS_EXT4);
     if (success) {
         if (wipe.m_path.isEmpty() || wipe.m_user.isEmpty()) {
@@ -1170,12 +1171,8 @@ bool PartedCore::deCrypt(const LUKS_INFO &luks)
 bool PartedCore::updateUsb()
 {
     qDebug() << __FUNCTION__ << "USB add update start";
-
-    //sleep(5);
-    emit usbUpdated();
-
+    sleep(5); //据说 有一个硬盘插入后需要等待5s才能刷新出设备文件
     autoMount();
-
     qDebug() << __FUNCTION__ << "USB add update end";
     return true;
 }
@@ -1183,12 +1180,8 @@ bool PartedCore::updateUsb()
 bool PartedCore::updateUsbRemove()
 {
     qDebug() << __FUNCTION__ << "USB add update remove";
-
-    //emit usbUpdated();
     emit refreshDeviceInfo(DISK_SIGNAL_USBUPDATE);
-
     autoUmount();
-
     qDebug() << __FUNCTION__ << "USB add update end";
     return true;
 }
@@ -1362,7 +1355,7 @@ bool PartedCore::createLV(QString vgName, QList<LVAction> lvList)
         QString mountPath = getTmpMountPath(userName, lvInfo.m_fileSystemLabel, lvInfo.m_lvUuid, lvInfo.m_lvPath);
         auto pair = tmpMountDevice(mountPath, lvInfo.m_lvPath, lvInfo.m_lvFsType, userName);
         if (!pair.first) {
-            return sendRefSigAndReturn(pair.first, DISK_SIGNAL_TYPE_CREATE_FAILED, pair.first,pair.second);
+            return sendRefSigAndReturn(pair.first, DISK_SIGNAL_TYPE_CREATE_FAILED, pair.first, pair.second);
         }
     }
 
@@ -1914,7 +1907,7 @@ void PartedCore::autoMount()
 //        qDebug() << __FUNCTION__ << output;
     }
 
-    emit refreshDeviceInfo(DISK_SIGNAL_TYPE_AUTOMNT);
+    emit refreshDeviceInfo(DISK_SIGNAL_USBUPDATE);
 
     qDebug() << __FUNCTION__ << "solt automount end";
 }
@@ -2069,7 +2062,6 @@ void PartedCore::onRefreshDeviceInfo(int type, bool arg1, QString arg2)
         qDebug() << "onRefresh Create thread: " << QThread::currentThreadId() << " ++++++++" << m_workerThreadProbe << endl;
         qDebug() << "  ----------------------! 0 !--------------------- :" << m_probeThread.thread();
         m_probeThread.moveToThread(m_workerThreadProbe);
-        m_probeThread.setSigType(type);
         m_workerThreadProbe->start();
     }
 
@@ -2092,6 +2084,7 @@ void PartedCore::syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const
     emit updateLUKSInfo(m_LUKSInfo);
     emit updateDeviceInfo(m_inforesult, m_lvmInfo);
 
+    //刷新线程结束，返回前端信息
     switch (m_type) {
     case DISK_SIGNAL_TYPE_UMNT:
         emit unmountPartition(m_arg2);
@@ -2130,6 +2123,8 @@ void PartedCore::syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const
         break;
     }
     m_type = 0;
+    m_arg1 = false;
+    m_arg2 = "";
 }
 
 bool PartedCore::secuClear(const QString &path, const Sector &start, const Sector &end, const Byte_Value &size, const QString &fstype, const QString &name, const int &count)
@@ -4363,7 +4358,7 @@ void PartedCore::resizeVGMessage(bool flag)
     sendRefSigAndReturn(flag, DISK_SIGNAL_TYPE_VGCREATE, flag, QString("%1:%2").arg(flag ? 1 : 0).arg(m_lvmInfo.m_lvmErr));
 }
 
-/***********************************************private lvm*****************************************************************/
+/***********************************************private luks *****************************************************************/
 
 LUKS_INFO PartedCore::getNewLUKSInfo(const Partition &part)
 {

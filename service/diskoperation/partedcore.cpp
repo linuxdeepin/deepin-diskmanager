@@ -404,6 +404,16 @@ bool PartedCore::createPartitionTable(const QString &devicePath, const QString &
     // libparted in preference to the "loop" partition table signature, or by blkid in
     // preference to any partition table about to be written.
 //    OperationDetail dummy_od;
+
+    //close luks map of partition and remove luksKey
+    auto devIt = m_deviceMap.find(devicePath);
+    if (devIt != m_deviceMap.end()) {
+        bool isClose = false;
+        if (!closeLUKSMap(devIt.value(), isClose)) {
+            return false;
+        }
+    }
+
     Sector deviceLength = length.toLongLong();
     Sector deviceSectorSize = sectorSize.toLong();
     Partition tempPartition;
@@ -535,6 +545,7 @@ bool PartedCore::clear(const WipeAction &wipe)
     qDebug() << __FUNCTION__ << QString("Clear Partitione start, path: %1").arg(wipe.m_path) ;
     bool success = false;
     FSType fs = Utils::stringToFileSystemType(wipe.m_fstype);
+    //TODO 此处是否可用  supportedFileSystem(fs);判断？
     success = (fs == FS_NTFS || fs == FS_FAT16 || fs == FS_FAT32 || fs == FS_EXT2 || fs == FS_EXT3 || fs == FS_EXT4);
     if (success) {
         if (wipe.m_path.isEmpty() || wipe.m_user.isEmpty()) {
@@ -556,46 +567,18 @@ bool PartedCore::clear(const WipeAction &wipe)
         return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, str);
     }
 
-    bool isClose = false;
     //close luks
-    auto closeLUKS = [&](const QString & path)->bool{
-        if (!m_LUKSInfo.luksExists(path))
-        {
-            return true;
-        }
-        LUKS_INFO info = m_LUKSInfo.getLUKS(path);
-        if (info.isDecrypt)
-        {
-            isClose = true;
-        }
-        return LUKSOperator::removeMapperAndKey(m_LUKSInfo, info);
-    };
-
-    if (wipe.m_diskType == DISK_TYPE) {
-        Device dev = m_deviceMap.value(wipe.m_path);
-        if (dev.m_diskType == "unrecognized") {
-            success = closeLUKS(wipe.m_path);    //关闭加密磁盘
-        } else {
-            foreach (const Partition *p, dev.m_partitions) {
-                if (!closeLUKS(p->getPath())) {
-                    success = false;
-                    break;
-                }
-            }
-        }
-    }
-    if (wipe.m_diskType == PART_TYPE) {
-        success = closeLUKS(wipe.m_path);
-    }
-
-    if (isClose) {
-        probeDeviceInfo();
-    }
+    bool isClose = false;
+    success = closeLUKSMap(wipe, isClose);
 
     if (!success) {
         QString str = QString("%1:%2:%3").arg("CRYPTError").arg(CRYPTError::CRYPT_ERR_CLOSE_FAILED).arg(wipe.m_path);
         m_isClear = false;
         return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, str);
+    }
+
+    if (isClose) {
+        probeDeviceInfo();
     }
 
 
@@ -889,14 +872,11 @@ bool PartedCore::deletePartition()
     QString devicePath = m_curpartition.m_devicePath;
 
     //close luksMapper
-    if (m_LUKSInfo.luksExists(devicePath)) {
-        LUKS_INFO info = m_LUKSInfo.getLUKS(devicePath);
-        if (!LUKSOperator::removeMapperAndKey(m_LUKSInfo, info)) {
-            qDebug() << __FUNCTION__ << "Close luks Mapper failed";
-            return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_DEL, true, QString("0:%1").arg(DISK_ERROR::DISK_ERR_PART_INFO));
-        }
+    bool isClose = false;
+    if (!closeLUKSMap(devicePath, isClose)) {
+        qDebug() << __FUNCTION__ << "Close luks Mapper failed";
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_DEL, true, QString("0:%1").arg(DISK_ERROR::DISK_ERR_PART_INFO));
     }
-
 
     bool success = true;
     if (m_LUKSInfo.luksExists(parttitionPath)) {
@@ -906,8 +886,7 @@ bool PartedCore::deletePartition()
     }
 
     if (!getDeviceAndDisk(devicePath, lpDevice, lpDisk) || !success) {
-        qDebug() << __FUNCTION__ << "Delete Partition get device and disk failed";
-
+        qDebug() << __FUNCTION__ << "get device and disk failed";
         return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_DEL, true, QString("0:%1").arg(DISK_ERROR::DISK_ERR_DISK_INFO));
     }
 
@@ -925,7 +904,7 @@ bool PartedCore::deletePartition()
     ped = ped_disk_get_partition(lpDisk, num);
 
     if (ped == nullptr) {
-        qDebug() << __FUNCTION__ << "Delete Partition Get Partition failed";
+        qDebug() << __FUNCTION__ << "Get Partition failed";
         return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_DEL, true, QString("0:%1").arg(DISK_ERROR::DISK_ERR_PART_INFO));
     }
 
@@ -1170,12 +1149,8 @@ bool PartedCore::deCrypt(const LUKS_INFO &luks)
 bool PartedCore::updateUsb()
 {
     qDebug() << __FUNCTION__ << "USB add update start";
-
-    //sleep(5);
-    emit usbUpdated();
-
+    sleep(5); //据说 有一个硬盘插入后需要等待5s才能刷新出设备文件
     autoMount();
-
     qDebug() << __FUNCTION__ << "USB add update end";
     return true;
 }
@@ -1183,12 +1158,8 @@ bool PartedCore::updateUsb()
 bool PartedCore::updateUsbRemove()
 {
     qDebug() << __FUNCTION__ << "USB add update remove";
-
-    //emit usbUpdated();
     emit refreshDeviceInfo(DISK_SIGNAL_USBUPDATE);
-
     autoUmount();
-
     qDebug() << __FUNCTION__ << "USB add update end";
     return true;
 }
@@ -1262,6 +1233,14 @@ void PartedCore::refreshFunc()
 bool PartedCore::createVG(QString vgName, QList<PVData> devList, long long size)
 {
     std::set<PVData>tmpDevList;
+
+    //TODO:
+    for (auto it = devList.begin();it!=devList.end();++it) {
+        if(m_LUKSInfo.mapperExists(it->m_devicePath)){
+            it->m_devicePath = m_LUKSInfo.getMapper(it->m_devicePath).m_devicePath;
+        }
+    }
+
     foreach (PVData pv, devList) {
         if (!tmpDevList.insert(pv).second || !checkPVDevice(vgName, pv, true)) { //插入失败说明有重复
             return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
@@ -1271,12 +1250,9 @@ bool PartedCore::createVG(QString vgName, QList<PVData> devList, long long size)
     QList<PVData>list =  getCreatePVList(devList, size);
 
     // find luks Device and Close
-    foreach (const PVData &pv, list) {
-        if (!m_LUKSInfo.luksExists(pv.m_devicePath)) {
-            continue;
-        }
-        LUKS_INFO luks = m_LUKSInfo.getLUKS(pv.m_devicePath);
-        LUKSOperator::removeMapperAndKey(m_LUKSInfo, luks);
+    bool isClose = false;
+    if (!closeLUKSMap(devList, isClose)) {
+        return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
     }
 
     //磁盘
@@ -1303,6 +1279,9 @@ bool PartedCore::createVG(QString vgName, QList<PVData> devList, long long size)
 
 bool PartedCore::deleteVG(QStringList vglist)
 {
+    // find luks Device and Close
+    bool isClose = false;
+    closeLUKSMap(vglist, isClose, bool());
     bool flag = LVMOperator::deleteVG(m_lvmInfo, vglist);
     QString str = flag ? "1:0" : QString("0:%1").arg(m_lvmInfo.m_lvmErr);
     return sendRefSigAndReturn(flag, DISK_SIGNAL_TYPE_VGDELETE, flag, str);
@@ -1362,7 +1341,7 @@ bool PartedCore::createLV(QString vgName, QList<LVAction> lvList)
         QString mountPath = getTmpMountPath(userName, lvInfo.m_fileSystemLabel, lvInfo.m_lvUuid, lvInfo.m_lvPath);
         auto pair = tmpMountDevice(mountPath, lvInfo.m_lvPath, lvInfo.m_lvFsType, userName);
         if (!pair.first) {
-            return sendRefSigAndReturn(pair.first, DISK_SIGNAL_TYPE_CREATE_FAILED, pair.first,pair.second);
+            return sendRefSigAndReturn(pair.first, DISK_SIGNAL_TYPE_CREATE_FAILED, pair.first, pair.second);
         }
     }
 
@@ -1404,14 +1383,8 @@ bool PartedCore::createLV(QString vgName, QList<LVAction> lvList)
 bool PartedCore::deleteLV(QStringList lvlist)
 {
     // find luks Device and Close
-    foreach (const QString &str, lvlist) {
-        if (!m_LUKSInfo.luksExists(str)) {
-            continue;
-        }
-        LUKS_INFO luks = m_LUKSInfo.getLUKS(str);
-        LUKSOperator::removeMapperAndKey(m_LUKSInfo, luks);
-    }
-
+    bool isClose = false;
+    closeLUKSMap(lvlist, isClose);
     bool flag = LVMOperator::lvRemove(m_lvmInfo, lvlist);
     QString str = flag ? "1:0" : QString("0:%1").arg(m_lvmInfo.m_lvmErr);
     return sendRefSigAndReturn(flag, DISK_SIGNAL_TYPE_LVDELETE, flag, str);
@@ -1420,6 +1393,13 @@ bool PartedCore::deleteLV(QStringList lvlist)
 bool PartedCore::resizeVG(QString vgName, QList<PVData> devList, long long size)
 {
     std::set<PVData>tmpDevList;
+
+    //TODO:
+    for (auto it = devList.begin();it!=devList.end();++it) {
+        if(m_LUKSInfo.mapperExists(it->m_devicePath)){
+            it->m_devicePath = m_LUKSInfo.getMapper(it->m_devicePath).m_devicePath;
+        }
+    }
     foreach (PVData pv, devList) {
         if (!tmpDevList.insert(pv).second || !checkPVDevice(vgName, pv, false)) { //插入失败说明有重复
             return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_VGCREATE, true, QString("0:%1").arg(LVM_ERR_VG_ARGUMENT));
@@ -1568,18 +1548,12 @@ bool PartedCore::clearLV(const LVAction &lvAction)
         return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, str);
     }
 
-
     //关闭加密磁盘
-    if (m_LUKSInfo.luksExists(lv.m_lvPath)) {
-        LUKS_INFO info = m_LUKSInfo.getLUKS(lv.m_lvPath);
-        success = LUKSOperator::removeMapperAndKey(m_LUKSInfo, info);
-    }
-
-    if (!success) {
+    bool isClose = false;
+    if (!closeLUKSMap(lv.m_lvPath, isClose)) {
         QString str = QString("%1:%2:%3").arg("CRYPTError").arg(CRYPTError::CRYPT_ERR_CLOSE_FAILED).arg(lv.m_lvPath);
         return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_CLEAR, false, str);
     }
-
 
     //获取文件系统类型
     QString type = Utils::getFileSystemSoftWare(lvAction.m_lvFs);
@@ -1914,7 +1888,7 @@ void PartedCore::autoMount()
 //        qDebug() << __FUNCTION__ << output;
     }
 
-    emit refreshDeviceInfo(DISK_SIGNAL_TYPE_AUTOMNT);
+    emit refreshDeviceInfo(DISK_SIGNAL_USBUPDATE);
 
     qDebug() << __FUNCTION__ << "solt automount end";
 }
@@ -2069,7 +2043,6 @@ void PartedCore::onRefreshDeviceInfo(int type, bool arg1, QString arg2)
         qDebug() << "onRefresh Create thread: " << QThread::currentThreadId() << " ++++++++" << m_workerThreadProbe << endl;
         qDebug() << "  ----------------------! 0 !--------------------- :" << m_probeThread.thread();
         m_probeThread.moveToThread(m_workerThreadProbe);
-        m_probeThread.setSigType(type);
         m_workerThreadProbe->start();
     }
 
@@ -2092,6 +2065,7 @@ void PartedCore::syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const
     emit updateLUKSInfo(m_LUKSInfo);
     emit updateDeviceInfo(m_inforesult, m_lvmInfo);
 
+    //刷新线程结束，返回前端信息
     switch (m_type) {
     case DISK_SIGNAL_TYPE_UMNT:
         emit unmountPartition(m_arg2);
@@ -2130,6 +2104,8 @@ void PartedCore::syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const
         break;
     }
     m_type = 0;
+    m_arg1 = false;
+    m_arg2 = "";
 }
 
 bool PartedCore::secuClear(const QString &path, const Sector &start, const Sector &end, const Byte_Value &size, const QString &fstype, const QString &name, const int &count)
@@ -3849,7 +3825,7 @@ QPair<bool, QString> PartedCore::tmpMountDevice(const QString &mountpath, const 
     }
 
     //更改属主
-    if (!changeOwner(userName, mountpath)) {
+    if (!changeOwner(userName,QString("/media/%1").arg(userName))||!changeOwner(userName, mountpath) ) {
         QString str = QString("%1:%2:%3").arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_CHOWN_FAILED).arg(devPath);
         return QPair<bool, QString>(false, str);
     }
@@ -3881,7 +3857,7 @@ bool PartedCore::createTmpMountDir(const  QString &mountPath)
     //自动挂载 获取挂载文件夹名字
     QDir dir;
     if (!dir.exists(mountPath)) {
-        if (!dir.mkdir(mountPath)) {
+        if (!dir.mkpath(mountPath)) {
             return false;
         }
     }
@@ -4363,7 +4339,7 @@ void PartedCore::resizeVGMessage(bool flag)
     sendRefSigAndReturn(flag, DISK_SIGNAL_TYPE_VGCREATE, flag, QString("%1:%2").arg(flag ? 1 : 0).arg(m_lvmInfo.m_lvmErr));
 }
 
-/***********************************************private lvm*****************************************************************/
+/***********************************************private luks *****************************************************************/
 
 LUKS_INFO PartedCore::getNewLUKSInfo(const Partition &part)
 {
@@ -4411,6 +4387,91 @@ LUKS_INFO PartedCore::getNewLUKSInfo(const FSType &type, const QStringList &toke
     info.m_fileSystemLabel = label;
     info.m_mapper.m_fileSystemLabel = label;
     return info;
+}
+
+bool PartedCore::closeLUKSMap(const Device &disk, bool &isCLose)
+{
+    foreach (const Partition *p, disk.m_partitions) {
+        if (!closeLUKSMap(p->getPath(), isCLose)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool PartedCore::closeLUKSMap(const WipeAction &wipe, bool &isCLose)
+{
+    bool success = false;
+    if (wipe.m_diskType == DISK_TYPE) {
+        Device dev = m_deviceMap.value(wipe.m_path);
+        if (dev.m_diskType == "unrecognized" || dev.m_diskType == "none") {
+            success = closeLUKSMap(wipe.m_path, isCLose); //关闭加密磁盘
+        } else {
+            success = closeLUKSMap(dev, isCLose);
+        }
+    } else if (wipe.m_diskType == PART_TYPE) {
+        success = closeLUKSMap(wipe.m_path, isCLose);
+    }
+
+    return success;
+}
+
+bool PartedCore::closeLUKSMap(const QList<PVData> &pvlist, bool &isCLose)
+{
+    foreach (const PVData &pv, pvlist) {
+        if (!closeLUKSMap(pv.m_devicePath, isCLose)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool PartedCore::closeLUKSMap(const QStringList &vglist, bool &isCLose, bool)
+{
+    foreach (QString vg, vglist) {
+        if (!m_lvmInfo.vgExists(vg)) {
+            continue;
+        }
+
+        VGInfo vgInfo = m_lvmInfo.getVG(vg);
+        foreach (LVInfo lv, vgInfo.m_lvlist) {
+            if (!closeLUKSMap(lv.m_lvPath, isCLose)) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+bool PartedCore::closeLUKSMap(const QStringList &lvlist, bool &isCLose)
+{
+    foreach (const QString &str, lvlist) {
+        if (!closeLUKSMap(str, isCLose)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool PartedCore::closeLUKSMap(const QString &devPath, bool &isCLose)
+{
+    if (!m_LUKSInfo.luksExists(devPath)) {
+        return true;
+    }
+
+    LUKS_INFO info = m_LUKSInfo.getLUKS(devPath);
+    if (info.isDecrypt) {
+        if (LUKSOperator::removeMapperAndKey(m_LUKSInfo, info)) {
+            isCLose = true;
+        } else {
+            return false;
+        }
+    }
+
+    return true;
+
 }
 
 } // namespace DiskManager

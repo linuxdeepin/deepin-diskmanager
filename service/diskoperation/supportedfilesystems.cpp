@@ -111,7 +111,7 @@ FileSystem *SupportedFileSystems::getFsObject(FSType fstype) const
 //    qDebug() << Utils::fileSystemTypeToString(fstype);
     FSObjectsMap::const_iterator iter = m_fsObjects.find(fstype);
     if (iter == m_fsObjects.end()) {
-        return NULL;
+        return nullptr;
     } else {
         return iter.value();
     }

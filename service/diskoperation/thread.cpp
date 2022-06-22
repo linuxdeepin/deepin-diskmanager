@@ -233,14 +233,6 @@ ProbeThread::ProbeThread(QObject *parent)
 void ProbeThread::probeDeviceInfo()
 {
     qDebug() << __FILE__ << ":" << __FUNCTION__ << "Someone call me in thread!";
-
-    if (DISK_SIGNAL_TYPE_AUTOMNT == m_sigType) {
-        //Only usb add need to sleep 5 seconds
-        qDebug() << __FUNCTION__ << "From auto Mount, So i will sleep 5 seconds! type:" << m_sigType;
-        //相传有一块移动硬盘，需要先 sleep 一下才能正确读取。
-        sleep(5);
-    }
-
     QString rootFsName;
     m_inforesult.clear();
     m_deviceMap.clear();

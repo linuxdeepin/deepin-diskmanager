@@ -3825,7 +3825,7 @@ QPair<bool, QString> PartedCore::tmpMountDevice(const QString &mountpath, const 
     }
 
     //更改属主
-    if (!changeOwner(userName, mountpath)) {
+    if (!changeOwner(userName,QString("/media/%1").arg(userName))||!changeOwner(userName, mountpath) ) {
         QString str = QString("%1:%2:%3").arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_CHOWN_FAILED).arg(devPath);
         return QPair<bool, QString>(false, str);
     }
@@ -3857,7 +3857,7 @@ bool PartedCore::createTmpMountDir(const  QString &mountPath)
     //自动挂载 获取挂载文件夹名字
     QDir dir;
     if (!dir.exists(mountPath)) {
-        if (!dir.mkdir(mountPath)) {
+        if (!dir.mkpath(mountPath)) {
             return false;
         }
     }

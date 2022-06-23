@@ -1261,9 +1261,13 @@ private:
     LVMInfo m_lvmInfo;                    //lvm 数据集合
     LUKSMap m_LUKSInfo;                   //luks 数据集合
 
-    int m_type;                          //刷新结束后需要发送的信号类型
-    bool m_arg1;                         //需要发送的信号bool类型参数
-    QString m_arg2;                      //需要发送的信号QString类型参数
+    int m_type{0};                        //刷新结束后需要发送的信号类型
+    bool m_arg1{false};                   //需要发送的信号bool类型参数
+    QString m_arg2;                       //需要发送的信号QString类型参数
+
+    int m_usbSig{0};                      //刷新结束后需要发送的信号类型
+    bool m_usbArg1{false};                //需要发送的信号bool类型参数
+    QString m_usbArg2;                    //需要发送的信号QString类型参数
 };
 
 } // namespace DiskManager

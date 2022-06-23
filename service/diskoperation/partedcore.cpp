@@ -1897,10 +1897,10 @@ void PartedCore::autoUmount()
 {
     qDebug() << __FUNCTION__ << "autoUmount start";
     QStringList deviceList;
-
     for (auto it = m_inforesult.begin(); it != m_inforesult.end(); it++) {
         deviceList << it.key();
     }
+
     QString outPut, error;
     QString cmd = QString("df");
     int ret = Utils::executCmd(cmd, outPut, error);
@@ -1911,7 +1911,11 @@ void PartedCore::autoUmount()
     QStringList outPutList = outPut.split("\n");
     for (int i = 0; i < outPutList.size(); i++) {
         QStringList dfList = outPutList[i].split(" ");
-        if (deviceList.indexOf(dfList.at(0).left(dfList.at(0).size() - 1)) == -1 && dfList.at(0).contains("/dev/")) {
+        QString devPath = dfList.at(0).left(dfList.at(0).size() - 1);
+        if (dfList.at(0).contains("/dev/mapper/")) {
+            devPath = dfList.at(0);
+        }
+        if (deviceList.indexOf(devPath) == -1 && dfList.at(0).contains("/dev/")) {
             QStringList arg;
             arg << "-v" << dfList.last();
             QString output, errstr;
@@ -2046,9 +2050,15 @@ void PartedCore::onRefreshDeviceInfo(int type, bool arg1, QString arg2)
         m_workerThreadProbe->start();
     }
 
-    m_type = type;
-    m_arg1 = arg1;
-    m_arg2 = arg2;
+    if (type == DISK_SIGNAL_USBUPDATE) {
+        m_usbSig = type;
+        m_usbArg1 = arg1;
+        m_usbArg2 = arg2;
+    } else {
+        m_type = type;
+        m_arg1 = arg1;
+        m_arg2 = arg2;
+    }
 
     emit probeAllInfo();
     qDebug() << " called probeThread in thread !";
@@ -2065,6 +2075,13 @@ void PartedCore::syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const
     emit updateLUKSInfo(m_LUKSInfo);
     emit updateDeviceInfo(m_inforesult, m_lvmInfo);
 
+    if (m_usbSig == DISK_SIGNAL_USBUPDATE) {
+        emit usbUpdated();
+        m_usbSig = 0;
+        m_usbArg1 = false;
+        m_usbArg2 = "";
+    }
+
     //刷新线程结束，返回前端信息
     switch (m_type) {
     case DISK_SIGNAL_TYPE_UMNT:
@@ -2079,9 +2096,9 @@ void PartedCore::syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const
     case DISK_SIGNAL_TYPE_CREATE_TABLE:
         emit createTableMessage(m_arg1);
         break;
-    case DISK_SIGNAL_USBUPDATE:
-        emit usbUpdated();
-        break;
+//    case DISK_SIGNAL_USBUPDATE:
+//        emit usbUpdated();
+//        break;
     case DISK_SIGNAL_TYPE_CLEAR:
         emit clearMessage(m_arg2);
         break;
@@ -2103,9 +2120,12 @@ void PartedCore::syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const
     default:
         break;
     }
-    m_type = 0;
-    m_arg1 = false;
-    m_arg2 = "";
+
+    if (m_type != 0) {
+        m_type = 0;
+        m_arg1 = false;
+        m_arg2 = "";
+    }
 }
 
 bool PartedCore::secuClear(const QString &path, const Sector &start, const Sector &end, const Byte_Value &size, const QString &fstype, const QString &name, const int &count)

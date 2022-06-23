@@ -269,7 +269,7 @@ void InfoShowWidget::onCurSelectChanged()
                     mountpoints.append(point + " ");
                 }
 
-                fsTypeName = Utils::fileSystemTypeToString(luksInfo.m_mapper.m_luksFs);
+                fsTypeName = DMDbusHandler::instance()->getEncryptionFsType(luksInfo);
                 m_noused = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUnused, SIZE_UNIT::UNIT_GIB);
                 m_used = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUsed, SIZE_UNIT::UNIT_GIB);
             }
@@ -401,7 +401,8 @@ void InfoShowWidget::onCurSelectChanged()
                 for (QString point : luksInfo.m_mapper.m_mountPoints) {
                     mountpoints.append(point + " ");
                 }
-                diskType = Utils::fileSystemTypeToString(luksInfo.m_mapper.m_luksFs);
+
+                diskType = DMDbusHandler::instance()->getEncryptionFsType(luksInfo);
             } else {
                 usedSector = -1 * info.m_sectorSize;
                 unusedSector = -1 * info.m_sectorSize;

@@ -241,7 +241,8 @@ void MountDialog::onButtonClicked(int index, const QString &text)
             MessageBox messageBox(this);
             messageBox.setObjectName("mountMessageBox");
             messageBox.setAccessibleName("messageBox");
-            messageBox.setWarings(tr("The data under this mount point would be lost, please mount the directory to another location"), "", tr("OK"), "ok", tr("Cancel"), "cancelBtn");
+            messageBox.setWarings(tr("The data under this mount point would be lost, please mount the directory to another location"), "",
+                                  tr("Continue", "button"), "ok", tr("Cancel"), "cancelBtn");
             if (messageBox.exec() == 1) {
                 mountCurPath();
                 close();

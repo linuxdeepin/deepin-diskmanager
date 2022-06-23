@@ -805,7 +805,11 @@ void TitleWidget::updateBtnShowStatus(const bool &isDeleteVGShow, const bool &is
 void TitleWidget::updateEncryptDeviceBtnStatus(const LUKS_INFO &luksInfo)
 {
     if (luksInfo.isDecrypt) {
-        if (luksInfo.m_mapper.m_mountPoints.isEmpty()) {
+        if (luksInfo.m_mapper.m_luksFs == FSType::FS_LVM2_PV) {
+            m_btnFormat->setDisabled(true);
+            m_btnMount->setDisabled(true);
+            m_btnUnmount->setDisabled(true);
+        } else if (luksInfo.m_mapper.m_mountPoints.isEmpty()) {
             m_btnFormat->setDisabled(false);
             m_btnMount->setDisabled(false);
             m_btnUnmount->setDisabled(true);

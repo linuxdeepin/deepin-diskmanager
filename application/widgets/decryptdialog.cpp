@@ -86,6 +86,7 @@ void DecryptDialog::initUi()
     m_passwordEdit->setAccessibleName("passwordInput");
     m_passwordEdit->lineEdit()->setValidator(regExpValidator);
     m_passwordEdit->lineEdit()->setPlaceholderText(tr("Enter a password "));
+    m_passwordEdit->setFixedHeight(37);
 
     m_pushButton = new DPushButton(this);
     m_pushButton->setAccessibleName("passwordHintButton");
@@ -162,7 +163,7 @@ void DecryptDialog::initUi()
 
     QVBoxLayout *firstLayout = new QVBoxLayout;
     firstLayout->addLayout(contentLayout);
-    firstLayout->addSpacing(10);
+    firstLayout->addStretch();
     firstLayout->addLayout(buttonLayout);
     firstLayout->setSpacing(0);
     firstLayout->setContentsMargins(0, 0, 0, 0);
@@ -270,6 +271,13 @@ void DecryptDialog::onPasswordEditTextChanged(const QString &)
 
 void DecryptDialog::onPasswordHintButtonClicked()
 {
+    if (!m_frame->isHidden()) {
+        m_height = 200;
+        setFixedSize(406, m_height);
+        m_frame->hide();
+        return;
+    }
+
     m_passwordHint->setText(m_luksInfo.m_tokenList.join("\n"));
     int heightLabel = Common::getLabelAdjustHeight(width() - 60, m_passwordHint->text(), m_passwordHint->font());
     m_passwordHint->setFixedHeight(heightLabel);

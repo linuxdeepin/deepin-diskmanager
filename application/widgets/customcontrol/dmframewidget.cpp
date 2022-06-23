@@ -72,7 +72,7 @@ void DmFrameWidget::setFrameData()
 
                 unused = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUnused);
                 used = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUsed);
-                fsTypeName = Utils::fileSystemTypeToString(luksInfo.m_mapper.m_luksFs);
+                fsTypeName = DMDbusHandler::instance()->getEncryptionFsType(luksInfo);
             }
         }
 

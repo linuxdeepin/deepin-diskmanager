@@ -867,3 +867,16 @@ QString DMDbusHandler::getFailedMessage(const QString &key, const int &value, co
     return failedMessage;
 }
 
+QString DMDbusHandler::getEncryptionFsType(const LUKS_INFO &luksInfo)
+{
+    if (luksInfo.isDecrypt) {
+        if (luksInfo.m_crypt == CRYPT_CIPHER::AES_XTS_PLAIN64) {
+            return QString("%1 (%2)").arg(Utils::fileSystemTypeToString(luksInfo.m_mapper.m_luksFs)).arg(tr("AES Encryption"));
+        } else if (luksInfo.m_crypt == CRYPT_CIPHER::SM4_XTS_PLAIN64){
+            return QString("%1 (%2)").arg(Utils::fileSystemTypeToString(luksInfo.m_mapper.m_luksFs)).arg(tr("SM4 Encryption"));
+        }
+    }
+
+    return Utils::fileSystemTypeToString(FSType::FS_LUKS);
+}
+

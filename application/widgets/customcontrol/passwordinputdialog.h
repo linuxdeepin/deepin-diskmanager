@@ -53,6 +53,12 @@ public:
     void setDeviceName(const QString &devName);
 
     /**
+     * @brief 设置标题
+     * @param text 标题
+     */
+    void setTitleText(const QString &text);
+
+    /**
      * @brief 获取密码
      * @return 输入密码
      */

@@ -443,6 +443,13 @@ public:
      */
     QString getFailedMessage(const QString &key, const int &value, const QString &devPath);
 
+    /**
+     * @brief 获取加密文件系统类型
+     * @param luksInfo 加密信息
+     * @return 加密文件系统类型
+     */
+    QString getEncryptionFsType(const LUKS_INFO &luksInfo);
+
 private:
     explicit DMDbusHandler(QObject *parent = nullptr);
 

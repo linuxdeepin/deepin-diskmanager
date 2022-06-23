@@ -178,6 +178,11 @@ void PasswordInputDialog::setDeviceName(const QString &devName)
     m_titleLabel->setText(tr("Set a password to encrypt %1").arg(devName));
 }
 
+void PasswordInputDialog::setTitleText(const QString &text)
+{
+    m_titleLabel->setText(text);
+}
+
 QString PasswordInputDialog::getPassword()
 {
     return m_inputPasswordEdit->text();

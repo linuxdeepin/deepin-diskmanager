@@ -30,7 +30,7 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="157"/>
         <location filename="../widgets/createlvwidget.cpp" line="161"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1002"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1004"/>
         <source>VG name:</source>
         <translation>Назва ГТ:</translation>
     </message>
@@ -38,7 +38,7 @@
         <location filename="../widgets/createlvwidget.cpp" line="169"/>
         <location filename="../widgets/createlvwidget.cpp" line="333"/>
         <location filename="../widgets/createlvwidget.cpp" line="377"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1003"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1005"/>
         <source>LV file system:</source>
         <translation>Файлова система ЛТ:</translation>
     </message>
@@ -113,7 +113,7 @@
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="845"/>
-        <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
+        <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>Щоб не втратити доступ, будь ласка, створіть резервну копію вашого пароля і зберігайте її належним чином!</translation>
     </message>
     <message>
@@ -121,10 +121,6 @@
         <source>OK</source>
         <comment>button</comment>
         <translation>Гаразд</translation>
-    </message>
-    <message>
-        <source>Disk:</source>
-        <translation type="vanished">Диск:</translation>
     </message>
 </context>
 <context>
@@ -396,15 +392,15 @@ will format it and remove its password.</source>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="263"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="711"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="802"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="684"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="775"/>
         <source>Mounting %1 ...</source>
         <translation>Монтуємо %1…</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="270"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="718"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="809"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="691"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="782"/>
         <source>Unmounting %1 ...</source>
         <translation>Демонтуємо %1…</translation>
     </message>
@@ -434,90 +430,92 @@ will format it and remove its password.</source>
         <translation>Замінюємо таблицю розділів %1…</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="678"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="651"/>
         <source>Creating...</source>
         <translation>Створення…</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="685"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="692"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="658"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="665"/>
         <source>Deleting...</source>
         <translation>Вилучення…</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="704"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="677"/>
         <source>Resizing space...</source>
         <translation>Змінюємо розмір…</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="742"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="715"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="874"/>
         <source>AES Encryption</source>
         <translation>Шифрування AES</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="744"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="717"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="876"/>
         <source>SM4 Encryption</source>
         <translation>Шифрування SM4</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="830"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="803"/>
         <source>Failed to encrypt %1, please try again!</source>
-        <translation type="unfinished"/>
+        <translation>Не вдалося зашифрувати %1. Будь ласка, повторіть спробу!</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="834"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="807"/>
         <source>Failed to decrypt %1, please try again!</source>
-        <translation type="unfinished"/>
+        <translation>Не вдалося розшифрувати %1. Будь ласка, повторіть спробу!</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="838"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="811"/>
         <source>%1 failed to close the crypto map</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="880"/>
-        <source>Failed to create a logical volume, please try again!</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="845"/>
-        <source>Failed to create partitions, please try again!</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="849"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="884"/>
-        <source>Failed to create %1 file system, please try again!</source>
-        <translation type="unfinished"/>
+        <translation>%1 не вдалося закрити карту шифрування</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="853"/>
+        <source>Failed to create a logical volume, please try again!</source>
+        <translation>Не вдалося створити логічний том. Будь ласка, повторіть спробу!</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="818"/>
+        <source>Failed to create partitions, please try again!</source>
+        <translation>Не вдалося створити розділи. Будь ласка, повторіть спробу!</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="822"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="857"/>
+        <source>Failed to create %1 file system, please try again!</source>
+        <translation>Не вдалося створити файлову систему %1. Будь ласка, повторіть спробу!</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="826"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>Не вдалося надіслати запит до ядра</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="857"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="888"/>
-        <source>DBUS parameter error</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="830"/>
         <location filename="../partedproxy/dmdbushandler.cpp" line="861"/>
+        <source>DBUS parameter error</source>
+        <translation>Помилка у параметрах DBus</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="834"/>
         <source>Failed to mount %1</source>
-        <translation type="unfinished"/>
+        <translation>Не вдалося змонтувати %1</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="865"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="838"/>
         <source>%1 failed to create mounting folders</source>
-        <translation type="unfinished"/>
+        <translation>%1 не вдалося створити теки монтування</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="869"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="842"/>
         <source>%1 failed to change the owner of mounting folders</source>
-        <translation type="unfinished"/>
+        <translation>%1 не вдалося змінити власника тек монтування</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="873"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="846"/>
         <source>Creating partition table failed</source>
         <translation>Не вдалося створити таблицю розділів</translation>
     </message>
@@ -540,54 +538,54 @@ will format it and remove its password.</source>
         <translation>Введіть пароль</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="92"/>
+        <location filename="../widgets/decryptdialog.cpp" line="93"/>
         <source>Password hint</source>
         <translation>ПІдказка щодо пароля</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="140"/>
+        <location filename="../widgets/decryptdialog.cpp" line="141"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Скасувати</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="145"/>
+        <location filename="../widgets/decryptdialog.cpp" line="146"/>
         <source>Decrypt</source>
         <comment>button</comment>
         <translation>Розшифрувати</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="173"/>
+        <location filename="../widgets/decryptdialog.cpp" line="175"/>
         <source>Decrypting...</source>
         <translation>Розшифрування…</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="328"/>
+        <location filename="../widgets/decryptdialog.cpp" line="337"/>
         <source>Decryption failed</source>
         <translation>Помилка під час розшифрування</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="346"/>
+        <location filename="../widgets/decryptdialog.cpp" line="355"/>
         <source>Wrong password, %1 chances left</source>
         <translation>Помилковий пароль. Лишилося %1 спроб</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="348"/>
+        <location filename="../widgets/decryptdialog.cpp" line="357"/>
         <source>Wrong password, only one chance left</source>
         <translation>Помилковий пароль. Лишилася одна спроба</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="217"/>
+        <location filename="../widgets/decryptdialog.cpp" line="219"/>
         <source>Please try again %1 minutes later</source>
         <translation>Будь ласка, повторіть спробу за %1 хвилин</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="291"/>
+        <location filename="../widgets/decryptdialog.cpp" line="300"/>
         <source>The password cannot be empty</source>
         <translation>Пароль не може бути порожнім</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="344"/>
+        <location filename="../widgets/decryptdialog.cpp" line="353"/>
         <source>Password locked, please try again %1 minutes later</source>
         <translation>Пароль заблоковано. Будь ласка, повторіть спробу за %1 хвилин</translation>
     </message>
@@ -1545,7 +1543,7 @@ will format it and remove its password.</source>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="640"/>
-        <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
+        <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>Щоб не втратити доступ, будь ласка, створіть резервну копію вашого пароля і зберігайте її належним чином!</translation>
     </message>
     <message>
@@ -1555,17 +1553,17 @@ will format it and remove its password.</source>
         <translation>Гаразд</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="716"/>
+        <location filename="../widgets/formatedialog.cpp" line="718"/>
         <source>Wiping %1</source>
         <translation>Витираємо %1</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="744"/>
+        <location filename="../widgets/formatedialog.cpp" line="746"/>
         <source>&quot;%1&quot; wiped</source>
         <translation>«%1» витерто</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="751"/>
+        <location filename="../widgets/formatedialog.cpp" line="753"/>
         <source>Failed to wipe %1</source>
         <translation>Не вдалося витерти %1</translation>
     </message>
@@ -1584,7 +1582,7 @@ will format it and remove its password.</source>
         <location filename="../widgets/infoshowwidget.cpp" line="139"/>
         <location filename="../widgets/infoshowwidget.cpp" line="244"/>
         <location filename="../widgets/infoshowwidget.cpp" line="385"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="581"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="582"/>
         <source>Mount point:</source>
         <translation>Точка монтування:</translation>
     </message>
@@ -1602,8 +1600,8 @@ will format it and remove its password.</source>
         <location filename="../widgets/infoshowwidget.cpp" line="161"/>
         <location filename="../widgets/infoshowwidget.cpp" line="245"/>
         <location filename="../widgets/infoshowwidget.cpp" line="386"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="504"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="582"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="505"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="583"/>
         <source>Type:</source>
         <translation>Тип:</translation>
     </message>
@@ -1635,29 +1633,29 @@ will format it and remove its password.</source>
         <translation>Інтерфейс:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="503"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="504"/>
         <source>LV count:</source>
         <translation>Кількість ЛТ:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="505"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="506"/>
         <source>VG name:</source>
         <translation>Назва ГТ:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="510"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="513"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="511"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="514"/>
         <source>Volume group</source>
         <translation>Група томів</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="583"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="584"/>
         <source>Volume name:</source>
         <translation>Назва тому:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="588"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="591"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="589"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="592"/>
         <source>Logical volume</source>
         <translation>Логічний том</translation>
     </message>
@@ -1717,7 +1715,7 @@ will format it and remove its password.</source>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="90"/>
-        <location filename="../widgets/mountdialog.cpp" line="244"/>
+        <location filename="../widgets/mountdialog.cpp" line="245"/>
         <source>Cancel</source>
         <translation>Скасувати</translation>
     </message>
@@ -1732,9 +1730,10 @@ will format it and remove its password.</source>
         <translation>Дані з цією точкою монтування може бути втрачено. Будь ласка, змонтуйте каталог до іншої теки.</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="244"/>
-        <source>OK</source>
-        <translation>Гаразд</translation>
+        <location filename="../widgets/mountdialog.cpp" line="245"/>
+        <source>Continue</source>
+        <comment>button</comment>
+        <translation>Продовжити</translation>
     </message>
 </context>
 <context>
@@ -1835,7 +1834,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="161"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="165"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1124"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1107"/>
         <source>Disk:</source>
         <translation>Диск:</translation>
     </message>
@@ -1843,7 +1842,7 @@ will format it and remove its password.</source>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="173"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="335"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="379"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1125"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1108"/>
         <source>File system:</source>
         <translation>Файлова система:</translation>
     </message>
@@ -1907,46 +1906,51 @@ will format it and remove its password.</source>
         <translation>Розмір</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="706"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="716"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="818"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="828"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="702"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="712"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="814"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="824"/>
         <source>The length exceeds the limit</source>
         <translation>Перевищено обмеження на довжину</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="727"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="723"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting.</source>
         <translation>Скористатися для шифрування диска стандартним алгоритмом aes-xts-plain64. Якщо його зашифровано, вам доведеться розшифрувати його, перш ніж монтувати.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="733"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="729"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
         <translation>Скористатися для шифрування диска державним криптографічним алгоритмом sm4-xts-plain. Якщо його зашифровано, вам доведеться розшифрувати його, перш ніж монтувати. В операційних системах, де не передбачено підтримки державного криптографічного алгоритму, розшифрування диска буде неможливим.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="860"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="856"/>
         <source>The number of new partitions exceeds the limit</source>
         <translation>Кількість нових розділів перевищує максимальну можливу</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="883"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="879"/>
         <source>To encrypt a partition, it should be larger than 100 MiB</source>
         <translation>Для шифрування розділу його розміри мають перевищувати 100 МіБ</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="915"/>
-        <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="887"/>
+        <source>Set a password to encrypt the new partition</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="906"/>
+        <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>Щоб не втратити доступ, будь ласка, створіть резервну копію вашого пароля і зберігайте її належним чином!</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="916"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="907"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>Гаразд</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="935"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="920"/>
         <source>To create a partition, you need at least 52 MB</source>
         <translation>Щоб створити розділ, вам потрібно принаймні 52 МБ</translation>
     </message>
@@ -2007,24 +2011,24 @@ will format it and remove its password.</source>
         <translation>Підтвердити</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="201"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="215"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="249"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="206"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="220"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="254"/>
         <source>The password exceeds the maximum length</source>
         <translation>Пароль надто довгий</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="242"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="247"/>
         <source>The password cannot be empty</source>
         <translation>Пароль не може бути порожнім</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="256"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="261"/>
         <source>Passwords do not match</source>
         <translation>Паролі не збігаються</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="263"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="268"/>
         <source>The password hint should differ from the password</source>
         <translation>Підказка щодо пароля має бути чимось іншим, ніж сам пароль</translation>
     </message>
@@ -2355,7 +2359,8 @@ will format it and remove its password.</source>
         <location filename="../widgets/titlewidget.cpp" line="446"/>
         <source>To ensure the normal use of system backup and restore, 
 rootA and rootB should be resized to the same value</source>
-        <translation type="unfinished"/>
+        <translation>Для забезпечення звичайного користування резервними копіями системи та відновлення системи, 
+розміри коріньA і коріньB має бути приведено до одного значення</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="462"/>

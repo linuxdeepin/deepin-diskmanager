@@ -30,7 +30,7 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="157"/>
         <location filename="../widgets/createlvwidget.cpp" line="161"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1002"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1004"/>
         <source>VG name:</source>
         <translation>Nazwa WL:</translation>
     </message>
@@ -38,7 +38,7 @@
         <location filename="../widgets/createlvwidget.cpp" line="169"/>
         <location filename="../widgets/createlvwidget.cpp" line="333"/>
         <location filename="../widgets/createlvwidget.cpp" line="377"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1003"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1005"/>
         <source>LV file system:</source>
         <translation>System plików WL:</translation>
     </message>
@@ -113,7 +113,7 @@
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="845"/>
-        <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
+        <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>Aby uniknąć utraty hasła, prosimy o zapisanie go w bezpiecznym miejscu!</translation>
     </message>
     <message>
@@ -121,10 +121,6 @@
         <source>OK</source>
         <comment>button</comment>
         <translation>OK</translation>
-    </message>
-    <message>
-        <source>Disk:</source>
-        <translation type="vanished">Dysk:</translation>
     </message>
 </context>
 <context>
@@ -396,15 +392,15 @@ sformatuje ją i usunie jej hasło.</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="263"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="711"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="802"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="684"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="775"/>
         <source>Mounting %1 ...</source>
         <translation>Montowanie %1 ...</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="270"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="718"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="809"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="691"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="782"/>
         <source>Unmounting %1 ...</source>
         <translation>Odmontowanie %1 ...</translation>
     </message>
@@ -434,90 +430,92 @@ sformatuje ją i usunie jej hasło.</translation>
         <translation>Zastępowanie tablicy partycji %1 ...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="678"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="651"/>
         <source>Creating...</source>
         <translation>Tworzenie...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="685"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="692"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="658"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="665"/>
         <source>Deleting...</source>
         <translation>Usuwanie...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="704"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="677"/>
         <source>Resizing space...</source>
         <translation>Zmienianie rozmiaru...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="742"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="715"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="874"/>
         <source>AES Encryption</source>
         <translation>Szyfrowanie AES</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="744"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="717"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="876"/>
         <source>SM4 Encryption</source>
         <translation>Szyfrowanie SM4</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="830"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="803"/>
         <source>Failed to encrypt %1, please try again!</source>
-        <translation type="unfinished"/>
+        <translation>Nie udało się zaszyfrować %1, spróbuj ponownie!</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="834"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="807"/>
         <source>Failed to decrypt %1, please try again!</source>
-        <translation type="unfinished"/>
+        <translation>Nie udało się rozszyfrować %1, spróbuj ponownie!</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="838"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="811"/>
         <source>%1 failed to close the crypto map</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="880"/>
-        <source>Failed to create a logical volume, please try again!</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="845"/>
-        <source>Failed to create partitions, please try again!</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="849"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="884"/>
-        <source>Failed to create %1 file system, please try again!</source>
-        <translation type="unfinished"/>
+        <translation>%1 nie udało się zamknąć krypto-mapy</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="853"/>
+        <source>Failed to create a logical volume, please try again!</source>
+        <translation>Nie udało się utworzyć woluminu logicznego, spróbuj ponownie!</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="818"/>
+        <source>Failed to create partitions, please try again!</source>
+        <translation>Nie udało się utworzyć partycji, spróbuj ponownie!</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="822"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="857"/>
+        <source>Failed to create %1 file system, please try again!</source>
+        <translation>Nie udało się utworzyć systemu plików %1, spróbuj ponownie!</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="826"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>Nie udało się wysłać żądania do jądra systemu</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="857"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="888"/>
-        <source>DBUS parameter error</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="830"/>
         <location filename="../partedproxy/dmdbushandler.cpp" line="861"/>
+        <source>DBUS parameter error</source>
+        <translation>Błąd parametru DBUS</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="834"/>
         <source>Failed to mount %1</source>
-        <translation type="unfinished"/>
+        <translation>Nie udało się zamontować %1</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="865"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="838"/>
         <source>%1 failed to create mounting folders</source>
-        <translation type="unfinished"/>
+        <translation>%1 nie udało się utworzyć montowania folderów</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="869"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="842"/>
         <source>%1 failed to change the owner of mounting folders</source>
-        <translation type="unfinished"/>
+        <translation>%1 nie udało się zmienić właściciela montowanych folderów</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="873"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="846"/>
         <source>Creating partition table failed</source>
         <translation>Tworzenie nowej tablicy partycji zakończone niepowodzeniem</translation>
     </message>
@@ -540,54 +538,54 @@ sformatuje ją i usunie jej hasło.</translation>
         <translation>Wprowadź hasło </translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="92"/>
+        <location filename="../widgets/decryptdialog.cpp" line="93"/>
         <source>Password hint</source>
         <translation>Wskazówka do hasła</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="140"/>
+        <location filename="../widgets/decryptdialog.cpp" line="141"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Anuluj</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="145"/>
+        <location filename="../widgets/decryptdialog.cpp" line="146"/>
         <source>Decrypt</source>
         <comment>button</comment>
         <translation>Rozszyfruj</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="173"/>
+        <location filename="../widgets/decryptdialog.cpp" line="175"/>
         <source>Decrypting...</source>
         <translation>Rozszyfrowywanie...</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="328"/>
+        <location filename="../widgets/decryptdialog.cpp" line="337"/>
         <source>Decryption failed</source>
         <translation>Rozszyfrowywanie nieudane</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="346"/>
+        <location filename="../widgets/decryptdialog.cpp" line="355"/>
         <source>Wrong password, %1 chances left</source>
         <translation>Nieprawidłowe hasło, pozostały %1 próby</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="348"/>
+        <location filename="../widgets/decryptdialog.cpp" line="357"/>
         <source>Wrong password, only one chance left</source>
         <translation>Nieprawidłowe hasło, pozostała tylko %1 próba</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="217"/>
+        <location filename="../widgets/decryptdialog.cpp" line="219"/>
         <source>Please try again %1 minutes later</source>
         <translation>Spróbuj ponownie za %1 minut</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="291"/>
+        <location filename="../widgets/decryptdialog.cpp" line="300"/>
         <source>The password cannot be empty</source>
         <translation>Pole na hasło nie może być puste</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="344"/>
+        <location filename="../widgets/decryptdialog.cpp" line="353"/>
         <source>Password locked, please try again %1 minutes later</source>
         <translation>Hasło zablokowane, spróbuj ponownie za %1 minut</translation>
     </message>
@@ -1543,7 +1541,7 @@ sformatuje ją i usunie jej hasło.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="640"/>
-        <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
+        <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>Aby uniknąć utraty hasła, prosimy o zapisanie go w bezpiecznym miejscu!</translation>
     </message>
     <message>
@@ -1553,17 +1551,17 @@ sformatuje ją i usunie jej hasło.</translation>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="716"/>
+        <location filename="../widgets/formatedialog.cpp" line="718"/>
         <source>Wiping %1</source>
         <translation>Wymazywanie %1</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="744"/>
+        <location filename="../widgets/formatedialog.cpp" line="746"/>
         <source>&quot;%1&quot; wiped</source>
         <translation>&quot;%1&quot; wymazano</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="751"/>
+        <location filename="../widgets/formatedialog.cpp" line="753"/>
         <source>Failed to wipe %1</source>
         <translation>Nie udało się wymazać %1</translation>
     </message>
@@ -1582,7 +1580,7 @@ sformatuje ją i usunie jej hasło.</translation>
         <location filename="../widgets/infoshowwidget.cpp" line="139"/>
         <location filename="../widgets/infoshowwidget.cpp" line="244"/>
         <location filename="../widgets/infoshowwidget.cpp" line="385"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="581"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="582"/>
         <source>Mount point:</source>
         <translation>Punkt montowania:</translation>
     </message>
@@ -1600,8 +1598,8 @@ sformatuje ją i usunie jej hasło.</translation>
         <location filename="../widgets/infoshowwidget.cpp" line="161"/>
         <location filename="../widgets/infoshowwidget.cpp" line="245"/>
         <location filename="../widgets/infoshowwidget.cpp" line="386"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="504"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="582"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="505"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="583"/>
         <source>Type:</source>
         <translation>Typ:</translation>
     </message>
@@ -1633,29 +1631,29 @@ sformatuje ją i usunie jej hasło.</translation>
         <translation>Interfejs:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="503"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="504"/>
         <source>LV count:</source>
         <translation>Liczba WL:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="505"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="506"/>
         <source>VG name:</source>
         <translation>Nazwa GW:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="510"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="513"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="511"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="514"/>
         <source>Volume group</source>
         <translation>Grupa Woluminów</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="583"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="584"/>
         <source>Volume name:</source>
         <translation>Nazwa woluminu:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="588"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="591"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="589"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="592"/>
         <source>Logical volume</source>
         <translation>Wolumin logiczny</translation>
     </message>
@@ -1715,7 +1713,7 @@ sformatuje ją i usunie jej hasło.</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="90"/>
-        <location filename="../widgets/mountdialog.cpp" line="244"/>
+        <location filename="../widgets/mountdialog.cpp" line="245"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
@@ -1730,9 +1728,10 @@ sformatuje ją i usunie jej hasło.</translation>
         <translation>Dane w tym punkcie montowania zostaną utracone, zamontuj katalog w innej lokalizacji</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="244"/>
-        <source>OK</source>
-        <translation>OK</translation>
+        <location filename="../widgets/mountdialog.cpp" line="245"/>
+        <source>Continue</source>
+        <comment>button</comment>
+        <translation>Kontynuuj</translation>
     </message>
 </context>
 <context>
@@ -1833,7 +1832,7 @@ sformatuje ją i usunie jej hasło.</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="161"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="165"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1124"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1107"/>
         <source>Disk:</source>
         <translation>Dysk:</translation>
     </message>
@@ -1841,7 +1840,7 @@ sformatuje ją i usunie jej hasło.</translation>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="173"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="335"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="379"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1125"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1108"/>
         <source>File system:</source>
         <translation>System plików:</translation>
     </message>
@@ -1905,46 +1904,51 @@ sformatuje ją i usunie jej hasło.</translation>
         <translation>Rozmiar</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="706"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="716"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="818"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="828"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="702"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="712"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="814"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="824"/>
         <source>The length exceeds the limit</source>
         <translation>Długość przekracza limit</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="727"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="723"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting.</source>
         <translation>Użyj standardowego algorytmu aes-xts-plain64, aby zaszyfrować dysk. Pamiętaj o rozszyfrowaniu przed montowaniem go ponownie.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="733"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="729"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
         <translation>Użyj kryptograficznego algorytmu sm4-xts-plain, aby zaszyfrować dysk. Pamiętaj o rozszyfrowaniu przed montowaniem go ponownie. Systemy operacyjne, które nie wspierają kryptograficznych algorytmów, nie będą w stanie rozszyfrować dysku.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="860"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="856"/>
         <source>The number of new partitions exceeds the limit</source>
         <translation>Liczba nowych partycji przekracza limit</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="883"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="879"/>
         <source>To encrypt a partition, it should be larger than 100 MiB</source>
         <translation>Wymagane jest 100 MiB, aby zaszyfrować partycję</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="915"/>
-        <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="887"/>
+        <source>Set a password to encrypt the new partition</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="906"/>
+        <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>Aby uniknąć utraty hasła, prosimy o zapisanie go w bezpiecznym miejscu!</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="916"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="907"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="935"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="920"/>
         <source>To create a partition, you need at least 52 MB</source>
         <translation>Aby utworzyć partycję, potrzebujesz co najmniej 52MB</translation>
     </message>
@@ -2005,24 +2009,24 @@ sformatuje ją i usunie jej hasło.</translation>
         <translation>Potwierdź</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="201"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="215"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="249"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="206"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="220"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="254"/>
         <source>The password exceeds the maximum length</source>
         <translation>Hasło przekracza maksymalną długość</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="242"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="247"/>
         <source>The password cannot be empty</source>
         <translation>Pole na hasło nie może być puste</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="256"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="261"/>
         <source>Passwords do not match</source>
         <translation>Hasła nie pasują do siebie</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="263"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="268"/>
         <source>The password hint should differ from the password</source>
         <translation>Wskazówka do hasła powinna się różnić od hasła</translation>
     </message>
@@ -2353,7 +2357,8 @@ sformatuje ją i usunie jej hasło.</translation>
         <location filename="../widgets/titlewidget.cpp" line="446"/>
         <source>To ensure the normal use of system backup and restore, 
 rootA and rootB should be resized to the same value</source>
-        <translation type="unfinished"/>
+        <translation>Aby uniknąć problemów w przyszłości z przywracaniem systemu, 
+rootA i rootB powinny posiadać jednakowy rozmiar</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="462"/>

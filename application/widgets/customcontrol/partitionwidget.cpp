@@ -884,7 +884,7 @@ void PartitionWidget::onAddPartition()
 
         PasswordInputDialog passwordInputDialog(this);
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
-        passwordInputDialog.setDeviceName(info.m_path);
+        passwordInputDialog.setTitleText(tr("Set a password to encrypt the new partition"));
         passwordInputDialog.setObjectName("passwordInputDialog");
         passwordInputDialog.setAccessibleName("passwordInputDialog");
         if (passwordInputDialog.exec() != DDialog::Accepted) {
@@ -903,8 +903,10 @@ void PartitionWidget::onAddPartition()
             warningBox.setObjectName("messageBox");
             warningBox.setAccessibleName("messageBox");
             // 为防止遗忘密码，请您自行备份密码，并妥善保存！  确 定
-            warningBox.setWarings(tr("To avoid forgetting the password, please back up your password and keep it properly!"), "",
+            warningBox.setWarings(tr("To avoid losing the password, please back up your password and keep it properly!"),
                                   tr("OK", "button"), DDialog::ButtonRecommend, "OK");
+            warningBox.setGeometry(pos().x() + (width() - warningBox.width()) / 2, pos().y() + (height() - warningBox.height()) / 2,
+                                   warningBox.width(), warningBox.height());
             warningBox.exec();
         }
 

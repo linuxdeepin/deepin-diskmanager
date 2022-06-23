@@ -30,7 +30,7 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="157"/>
         <location filename="../widgets/createlvwidget.cpp" line="161"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1002"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1004"/>
         <source>VG name:</source>
         <translation>VG nimi:</translation>
     </message>
@@ -38,7 +38,7 @@
         <location filename="../widgets/createlvwidget.cpp" line="169"/>
         <location filename="../widgets/createlvwidget.cpp" line="333"/>
         <location filename="../widgets/createlvwidget.cpp" line="377"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1003"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1005"/>
         <source>LV file system:</source>
         <translation>LV-tiedostojärjestelmä:</translation>
     </message>
@@ -113,18 +113,14 @@
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="845"/>
-        <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
-        <translation>Jotta salasana ei unohdu, varmuuskopioi salasanasi ja säilytä se hyvin!</translation>
+        <source>To avoid losing the password, please back up your password and keep it properly!</source>
+        <translation>Jotta et menetä salasanaa, varmuuskopioi salasanasi ja säilytä se hyvin!</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="846"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>OK</translation>
-    </message>
-    <message>
-        <source>Disk:</source>
-        <translation type="vanished">Levy:</translation>
     </message>
 </context>
 <context>
@@ -395,15 +391,15 @@ will format it and remove its password.</source>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="263"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="711"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="802"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="684"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="775"/>
         <source>Mounting %1 ...</source>
         <translation>Liitetään %1 ...</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="270"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="718"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="809"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="691"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="782"/>
         <source>Unmounting %1 ...</source>
         <translation>Puretaan %1 ...</translation>
     </message>
@@ -433,90 +429,92 @@ will format it and remove its password.</source>
         <translation>Korvataan osiotaulukkoa %1 ...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="678"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="651"/>
         <source>Creating...</source>
         <translation>Luodaan...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="685"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="692"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="658"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="665"/>
         <source>Deleting...</source>
         <translation>Poistetaan...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="704"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="677"/>
         <source>Resizing space...</source>
         <translation>Muutetaan kokoa...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="742"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="715"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="874"/>
         <source>AES Encryption</source>
         <translation>AES-salaus</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="744"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="717"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="876"/>
         <source>SM4 Encryption</source>
         <translation>SM4-salaus</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="830"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="803"/>
         <source>Failed to encrypt %1, please try again!</source>
-        <translation type="unfinished"/>
+        <translation>%1 salaus epäonnistui, yritä uudelleen!</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="834"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="807"/>
         <source>Failed to decrypt %1, please try again!</source>
-        <translation type="unfinished"/>
+        <translation>%1 salauksen purku epäonnistui, yritä uudelleen!</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="838"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="811"/>
         <source>%1 failed to close the crypto map</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="880"/>
-        <source>Failed to create a logical volume, please try again!</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="845"/>
-        <source>Failed to create partitions, please try again!</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="849"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="884"/>
-        <source>Failed to create %1 file system, please try again!</source>
-        <translation type="unfinished"/>
+        <translation>%1 salauskartan sulkeminen epäonnistui</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="853"/>
+        <source>Failed to create a logical volume, please try again!</source>
+        <translation>Loogisen aseman luominen epäonnistui, yritä uudelleen!</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="818"/>
+        <source>Failed to create partitions, please try again!</source>
+        <translation>Osioiden luominen epäonnistui, yritä uudelleen!</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="822"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="857"/>
+        <source>Failed to create %1 file system, please try again!</source>
+        <translation>Tiedostojärjestelmän %1 luominen epäonnistui, yritä uudelleen!</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="826"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>Pyynnön lähettäminen kerneliin epäonnistui</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="857"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="888"/>
-        <source>DBUS parameter error</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="830"/>
         <location filename="../partedproxy/dmdbushandler.cpp" line="861"/>
+        <source>DBUS parameter error</source>
+        <translation>DBUS-parametrivirhe</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="834"/>
         <source>Failed to mount %1</source>
-        <translation type="unfinished"/>
+        <translation>%1 liittäminen epäonnistui</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="865"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="838"/>
         <source>%1 failed to create mounting folders</source>
-        <translation type="unfinished"/>
+        <translation>%1 ei voinut luoda liitettäviä kansioita</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="869"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="842"/>
         <source>%1 failed to change the owner of mounting folders</source>
-        <translation type="unfinished"/>
+        <translation>%1 epäonnistui vaihtamaan liitettävien kansioiden omistajaa</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="873"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="846"/>
         <source>Creating partition table failed</source>
         <translation>Osion luominen epäonnistui</translation>
     </message>
@@ -539,54 +537,54 @@ will format it and remove its password.</source>
         <translation>Anna salasana</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="92"/>
+        <location filename="../widgets/decryptdialog.cpp" line="93"/>
         <source>Password hint</source>
         <translation>Salasanavihje</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="140"/>
+        <location filename="../widgets/decryptdialog.cpp" line="141"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Peruuta</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="145"/>
+        <location filename="../widgets/decryptdialog.cpp" line="146"/>
         <source>Decrypt</source>
         <comment>button</comment>
         <translation>Pura salaus</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="173"/>
+        <location filename="../widgets/decryptdialog.cpp" line="175"/>
         <source>Decrypting...</source>
         <translation>Puretaan salausta...</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="328"/>
+        <location filename="../widgets/decryptdialog.cpp" line="337"/>
         <source>Decryption failed</source>
         <translation>Salauksen purku epäonnistui</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="346"/>
+        <location filename="../widgets/decryptdialog.cpp" line="355"/>
         <source>Wrong password, %1 chances left</source>
         <translation>Väärä salasana, %1 yritystä jäljellä</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="348"/>
+        <location filename="../widgets/decryptdialog.cpp" line="357"/>
         <source>Wrong password, only one chance left</source>
         <translation>Väärä salasana, vain yksi yritys jäljellä</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="217"/>
+        <location filename="../widgets/decryptdialog.cpp" line="219"/>
         <source>Please try again %1 minutes later</source>
         <translation>Yritä uudelleen %1 minuuttia myöhemmin</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="291"/>
+        <location filename="../widgets/decryptdialog.cpp" line="300"/>
         <source>The password cannot be empty</source>
         <translation>Salasana ei voi olla tyhjä</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="344"/>
+        <location filename="../widgets/decryptdialog.cpp" line="353"/>
         <source>Password locked, please try again %1 minutes later</source>
         <translation>Salasana lukittu, yritä uudelleen %1 minuuttia myöhemmin</translation>
     </message>
@@ -1544,8 +1542,8 @@ Ole huolellinen.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="640"/>
-        <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
-        <translation>Jotta salasana ei unohdu, varmuuskopioi salasanasi ja säilytä se hyvin!</translation>
+        <source>To avoid losing the password, please back up your password and keep it properly!</source>
+        <translation>Jotta et menetä salasanaa, varmuuskopioi salasanasi ja säilytä se hyvin!</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="641"/>
@@ -1554,17 +1552,17 @@ Ole huolellinen.</translation>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="716"/>
+        <location filename="../widgets/formatedialog.cpp" line="718"/>
         <source>Wiping %1</source>
         <translation>Pyyhitään %1</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="744"/>
+        <location filename="../widgets/formatedialog.cpp" line="746"/>
         <source>&quot;%1&quot; wiped</source>
         <translation>&quot;%1&quot; pyyhitty</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="751"/>
+        <location filename="../widgets/formatedialog.cpp" line="753"/>
         <source>Failed to wipe %1</source>
         <translation>Pyyhkiminen epäonnistui %1</translation>
     </message>
@@ -1583,7 +1581,7 @@ Ole huolellinen.</translation>
         <location filename="../widgets/infoshowwidget.cpp" line="139"/>
         <location filename="../widgets/infoshowwidget.cpp" line="244"/>
         <location filename="../widgets/infoshowwidget.cpp" line="385"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="581"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="582"/>
         <source>Mount point:</source>
         <translation>Liitospiste:</translation>
     </message>
@@ -1601,8 +1599,8 @@ Ole huolellinen.</translation>
         <location filename="../widgets/infoshowwidget.cpp" line="161"/>
         <location filename="../widgets/infoshowwidget.cpp" line="245"/>
         <location filename="../widgets/infoshowwidget.cpp" line="386"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="504"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="582"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="505"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="583"/>
         <source>Type:</source>
         <translation>Tyyppi:</translation>
     </message>
@@ -1634,29 +1632,29 @@ Ole huolellinen.</translation>
         <translation>Käyttöliittymä:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="503"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="504"/>
         <source>LV count:</source>
         <translation>LV-määrä:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="505"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="506"/>
         <source>VG name:</source>
         <translation>VG nimi:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="510"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="513"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="511"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="514"/>
         <source>Volume group</source>
         <translation>Aseman ryhmä</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="583"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="584"/>
         <source>Volume name:</source>
         <translation>Aseman nimi:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="588"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="591"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="589"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="592"/>
         <source>Logical volume</source>
         <translation>Looginen asema</translation>
     </message>
@@ -1716,7 +1714,7 @@ Ole huolellinen.</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="90"/>
-        <location filename="../widgets/mountdialog.cpp" line="244"/>
+        <location filename="../widgets/mountdialog.cpp" line="245"/>
         <source>Cancel</source>
         <translation>Peruuta</translation>
     </message>
@@ -1731,9 +1729,10 @@ Ole huolellinen.</translation>
         <translation>Tämän liittymispisteen tiedot menetetään, liitä hakemisto toiseen sijaintiin</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="244"/>
-        <source>OK</source>
-        <translation>OK</translation>
+        <location filename="../widgets/mountdialog.cpp" line="245"/>
+        <source>Continue</source>
+        <comment>button</comment>
+        <translation>Jatka</translation>
     </message>
 </context>
 <context>
@@ -1834,7 +1833,7 @@ Ole huolellinen.</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="161"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="165"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1124"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1107"/>
         <source>Disk:</source>
         <translation>Levy:</translation>
     </message>
@@ -1842,7 +1841,7 @@ Ole huolellinen.</translation>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="173"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="335"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="379"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1125"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1108"/>
         <source>File system:</source>
         <translation>Tiedostojärjestelmä:</translation>
     </message>
@@ -1906,46 +1905,51 @@ Ole huolellinen.</translation>
         <translation>Koko</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="706"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="716"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="818"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="828"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="702"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="712"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="814"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="824"/>
         <source>The length exceeds the limit</source>
         <translation>Pituus ylittää rajan</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="727"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="723"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting.</source>
         <translation>Käytä aes-xts-plain64 standardin algoritmia levyn salaamiseen. Jos se on salattu, sinun tulee purkaa sen salaus ennen asennusta.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="733"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="729"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
         <translation>Käytä sm4-xts-plain state algoritmia levyn salaamiseen. Jos se on salattu, sinun tulee purkaa sen salaus ennen asennusta. Käyttöjärjestelmät, jotka eivät tue salausalgoritmia, eivät pysty purkamaan levyn salausta.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="860"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="856"/>
         <source>The number of new partitions exceeds the limit</source>
         <translation>Uusien osioiden määrä ylittää rajan</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="883"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="879"/>
         <source>To encrypt a partition, it should be larger than 100 MiB</source>
         <translation>Osion salaamiseksi sen tulee olla suurempi kuin 100 MiB</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="915"/>
-        <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
-        <translation>Jotta salasana ei unohdu, varmuuskopioi salasanasi ja säilytä se hyvin!</translation>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="887"/>
+        <source>Set a password to encrypt the new partition</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="916"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="906"/>
+        <source>To avoid losing the password, please back up your password and keep it properly!</source>
+        <translation>Jotta et menetä salasanaa, varmuuskopioi salasanasi ja säilytä se hyvin!</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="907"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="935"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="920"/>
         <source>To create a partition, you need at least 52 MB</source>
         <translation>Osion luomiseen tarvitaan vähintään 52 Mt</translation>
     </message>
@@ -2006,24 +2010,24 @@ Ole huolellinen.</translation>
         <translation>Vahvista</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="201"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="215"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="249"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="206"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="220"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="254"/>
         <source>The password exceeds the maximum length</source>
         <translation>Salasana ylittää enimmäispituuden</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="242"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="247"/>
         <source>The password cannot be empty</source>
         <translation>Salasana ei voi olla tyhjä</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="256"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="261"/>
         <source>Passwords do not match</source>
         <translation>Salasanat eivät täsmää</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="263"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="268"/>
         <source>The password hint should differ from the password</source>
         <translation>Salasanavihjeen tulee erota salasanasta</translation>
     </message>
@@ -2354,7 +2358,8 @@ Ole huolellinen.</translation>
         <location filename="../widgets/titlewidget.cpp" line="446"/>
         <source>To ensure the normal use of system backup and restore, 
 rootA and rootB should be resized to the same value</source>
-        <translation type="unfinished"/>
+        <translation>Järjestelmän varmistuksen ja palautuksen normaalin käytön
+varmistamiseksi rootA ja rootB tulee muuttaa samaan arvoon</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="462"/>

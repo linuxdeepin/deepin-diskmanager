@@ -28,6 +28,8 @@
 #include "messagebox.h"
 
 #include <DLabel>
+#include <DFontSizeManager>
+#include <DGuiApplicationHelper>
 
 #include <QAbstractButton>
 #include <QKeyEvent>
@@ -76,6 +78,45 @@ void MessageBox::setWarings(const QString &title, const QString &warningMsg, con
         addLabel(warningMsg);
         addSpacing(10);
     }
+
+    if (!cancalBtnText.isEmpty()) {
+        int index = addButton(cancalBtnText);
+        getButton(index)->setAccessibleName(cancelAccessibleName);
+    }
+
+    int index = addButton(sureBtnText, false, sureBtnType);
+    getButton(index)->setAccessibleName(sureAccessibleName);
+    connect(this, &MessageBox::buttonClicked, this, [=]() {
+        close();
+    });
+}
+
+void MessageBox::setWarings(const QString &title, const QString &sureBtnText, ButtonType sureBtnType, const QString &sureAccessibleName,
+                const QString &cancalBtnText, const QString &cancelAccessibleName)
+{
+    setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
+
+    DLabel *label= new DLabel(this);
+    label->setText(title);
+    label->setObjectName("TitleLabel");
+    label->setWordWrap(true);
+    label->setAlignment(Qt::AlignCenter);
+    DFontSizeManager::instance()->bind(label, DFontSizeManager::T5, QFont::Medium);
+    QPalette palette = label->palette();
+    QColor color = DGuiApplicationHelper::adjustColor(palette.color(QPalette::BrightText), 0, 0, 0, 0, 0, 0, -10);
+    palette.setColor(QPalette::WindowText, color);
+    label->setPalette(palette);
+    QFontMetrics fmDevpath = label->fontMetrics();
+    int fmWidth = fmDevpath.width(label->text());
+    int labelWidth = fmWidth / 3 * 2;
+    if (labelWidth >= (width() - 20)) {
+        labelWidth = width() - 20;
+    }
+    qDebug() << labelWidth << width();
+    label->setFixedWidth(labelWidth);
+    label->adjustSize();
+    addContent(label, Qt::AlignHCenter);
+    addSpacing(10);
 
     if (!cancalBtnText.isEmpty()) {
         int index = addButton(cancalBtnText);

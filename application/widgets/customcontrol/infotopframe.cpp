@@ -141,7 +141,7 @@ void InfoTopFrame::updateDiskInfo()
         if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
             if (luksInfo.isDecrypt) {
-                diskType = Utils::fileSystemTypeToString(luksInfo.m_mapper.m_luksFs);
+                diskType = DMDbusHandler::instance()->getEncryptionFsType(luksInfo);
             }
         }
         m_typeLabel->setText(tr("File system") + ": " + diskType);
@@ -164,7 +164,7 @@ void InfoTopFrame::updateDiskInfo()
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
             m_nameLabel->setText(info.m_path);
             if (luksInfo.isDecrypt) {
-                m_typeLabel->setText(tr("File system") + ": " + Utils::fileSystemTypeToString(luksInfo.m_mapper.m_luksFs));
+                m_typeLabel->setText(tr("File system") + ": " + DMDbusHandler::instance()->getEncryptionFsType(luksInfo));
             } else {
                 m_typeLabel->setText(tr("File system") + ": " + Utils::fileSystemTypeToString(FSType::FS_LUKS));
             }
@@ -213,12 +213,12 @@ void InfoTopFrame::updateDiskInfo()
             lvSize = Utils::LVMFormatSize(lvInfo.m_lvLECount * lvInfo.m_LESize + lvInfo.m_LESize);
         }
         m_allMemoryLabel->setText(lvSize);
-qDebug() << lvInfo.m_lvFsType << Utils::fileSystemTypeToString(static_cast<FSType>(lvInfo.m_lvFsType));
+
         QString fstypeName = Utils::fileSystemTypeToString(static_cast<FSType>(lvInfo.m_lvFsType));
         if (lvInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(lvInfo.m_lvPath);
             if (luksInfo.isDecrypt) {
-                fstypeName = Utils::fileSystemTypeToString(luksInfo.m_mapper.m_luksFs);
+                fstypeName = DMDbusHandler::instance()->getEncryptionFsType(luksInfo);
             }
         }
         m_typeLabel->setText(tr("File system") + ": " + fstypeName);

@@ -30,7 +30,7 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="157"/>
         <location filename="../widgets/createlvwidget.cpp" line="161"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1002"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1004"/>
         <source>VG name:</source>
         <translation>卷組名稱：</translation>
     </message>
@@ -38,7 +38,7 @@
         <location filename="../widgets/createlvwidget.cpp" line="169"/>
         <location filename="../widgets/createlvwidget.cpp" line="333"/>
         <location filename="../widgets/createlvwidget.cpp" line="377"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1003"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1005"/>
         <source>LV file system:</source>
         <translation>邏輯卷格式：</translation>
     </message>
@@ -113,7 +113,7 @@
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="845"/>
-        <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
+        <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>為防止遺忘密碼，請您自行備份密碼，並妥善儲存！</translation>
     </message>
     <message>
@@ -121,10 +121,6 @@
         <source>OK</source>
         <comment>button</comment>
         <translation>確 定</translation>
-    </message>
-    <message>
-        <source>Disk:</source>
-        <translation type="vanished">磁碟：</translation>
     </message>
 </context>
 <context>
@@ -396,15 +392,15 @@ will format it and remove its password.</source>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="263"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="711"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="802"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="684"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="775"/>
         <source>Mounting %1 ...</source>
         <translation>正在對%1進行掛載...</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="270"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="718"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="809"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="691"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="782"/>
         <source>Unmounting %1 ...</source>
         <translation>正在對%1進行移除...</translation>
     </message>
@@ -434,90 +430,92 @@ will format it and remove its password.</source>
         <translation>正在對%1進行分區表取代...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="678"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="651"/>
         <source>Creating...</source>
         <translation>正在建立，請稍候...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="685"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="692"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="658"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="665"/>
         <source>Deleting...</source>
         <translation>正在刪除，請稍候...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="704"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="677"/>
         <source>Resizing space...</source>
         <translation>正在調整空間，請稍候...</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="742"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="715"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="874"/>
         <source>AES Encryption</source>
         <translation>AES加密</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="744"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="717"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="876"/>
         <source>SM4 Encryption</source>
         <translation>SM4加密</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="830"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="803"/>
         <source>Failed to encrypt %1, please try again!</source>
         <translation>%1加密失敗，請重試！</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="834"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="807"/>
         <source>Failed to decrypt %1, please try again!</source>
         <translation>%1解鎖失敗，請重試！</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="838"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="811"/>
         <source>%1 failed to close the crypto map</source>
         <translation>%1關閉加密映射失敗</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="880"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="853"/>
         <source>Failed to create a logical volume, please try again!</source>
         <translation>邏輯卷建立失敗，請重試！</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="845"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="818"/>
         <source>Failed to create partitions, please try again!</source>
         <translation>建立分區失敗，請重試！</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="849"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="884"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="822"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="857"/>
         <source>Failed to create %1 file system, please try again!</source>
         <translation>%1文件系統建立失敗，請重試！</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="853"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="826"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>提交核心失敗</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="857"/>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="888"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="830"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="861"/>
         <source>DBUS parameter error</source>
         <translation>DBUS參數錯誤</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="861"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="834"/>
         <source>Failed to mount %1</source>
         <translation>%1掛載失敗</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="865"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="838"/>
         <source>%1 failed to create mounting folders</source>
         <translation>%1建立掛載資料夾失敗</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="869"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="842"/>
         <source>%1 failed to change the owner of mounting folders</source>
         <translation>%1更改掛載資料夾所有者失敗</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="873"/>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="846"/>
         <source>Creating partition table failed</source>
         <translation>建立分區表失敗</translation>
     </message>
@@ -540,54 +538,54 @@ will format it and remove its password.</source>
         <translation>請輸入密碼</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="92"/>
+        <location filename="../widgets/decryptdialog.cpp" line="93"/>
         <source>Password hint</source>
         <translation>密碼提示</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="140"/>
+        <location filename="../widgets/decryptdialog.cpp" line="141"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>取 消</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="145"/>
+        <location filename="../widgets/decryptdialog.cpp" line="146"/>
         <source>Decrypt</source>
         <comment>button</comment>
         <translation>解 鎖</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="173"/>
+        <location filename="../widgets/decryptdialog.cpp" line="175"/>
         <source>Decrypting...</source>
         <translation>正在解鎖，請稍候...</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="328"/>
+        <location filename="../widgets/decryptdialog.cpp" line="337"/>
         <source>Decryption failed</source>
         <translation>解鎖失敗</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="346"/>
+        <location filename="../widgets/decryptdialog.cpp" line="355"/>
         <source>Wrong password, %1 chances left</source>
         <translation>密碼錯誤，您還可以嘗試%1次</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="348"/>
+        <location filename="../widgets/decryptdialog.cpp" line="357"/>
         <source>Wrong password, only one chance left</source>
         <translation>密碼錯誤，您還可以嘗試1次</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="217"/>
+        <location filename="../widgets/decryptdialog.cpp" line="219"/>
         <source>Please try again %1 minutes later</source>
         <translation>請%1分鐘後再試</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="291"/>
+        <location filename="../widgets/decryptdialog.cpp" line="300"/>
         <source>The password cannot be empty</source>
         <translation>密碼不能為空</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="344"/>
+        <location filename="../widgets/decryptdialog.cpp" line="353"/>
         <source>Password locked, please try again %1 minutes later</source>
         <translation>密碼已鎖定，請%1分鐘後再試</translation>
     </message>
@@ -1544,7 +1542,7 @@ will format it and remove its password.</source>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="640"/>
-        <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
+        <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>為防止遺忘密碼，請您自行備份密碼，並妥善儲存！</translation>
     </message>
     <message>
@@ -1554,17 +1552,17 @@ will format it and remove its password.</source>
         <translation>確 定</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="716"/>
+        <location filename="../widgets/formatedialog.cpp" line="718"/>
         <source>Wiping %1</source>
         <translation>正在對%1進行擦除</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="744"/>
+        <location filename="../widgets/formatedialog.cpp" line="746"/>
         <source>&quot;%1&quot; wiped</source>
         <translation>擦除%1成功</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="751"/>
+        <location filename="../widgets/formatedialog.cpp" line="753"/>
         <source>Failed to wipe %1</source>
         <translation>對%1進行擦除失敗</translation>
     </message>
@@ -1583,7 +1581,7 @@ will format it and remove its password.</source>
         <location filename="../widgets/infoshowwidget.cpp" line="139"/>
         <location filename="../widgets/infoshowwidget.cpp" line="244"/>
         <location filename="../widgets/infoshowwidget.cpp" line="385"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="581"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="582"/>
         <source>Mount point:</source>
         <translation>掛載點：</translation>
     </message>
@@ -1601,8 +1599,8 @@ will format it and remove its password.</source>
         <location filename="../widgets/infoshowwidget.cpp" line="161"/>
         <location filename="../widgets/infoshowwidget.cpp" line="245"/>
         <location filename="../widgets/infoshowwidget.cpp" line="386"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="504"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="582"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="505"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="583"/>
         <source>Type:</source>
         <translation>類型：</translation>
     </message>
@@ -1634,29 +1632,29 @@ will format it and remove its password.</source>
         <translation>介面：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="503"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="504"/>
         <source>LV count:</source>
         <translation>邏輯卷數：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="505"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="506"/>
         <source>VG name:</source>
         <translation>卷組名稱：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="510"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="513"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="511"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="514"/>
         <source>Volume group</source>
         <translation>邏輯卷組</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="583"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="584"/>
         <source>Volume name:</source>
         <translation>卷名稱：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="588"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="591"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="589"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="592"/>
         <source>Logical volume</source>
         <translation>邏輯卷</translation>
     </message>
@@ -1716,7 +1714,7 @@ will format it and remove its password.</source>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="90"/>
-        <location filename="../widgets/mountdialog.cpp" line="244"/>
+        <location filename="../widgets/mountdialog.cpp" line="245"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -1731,9 +1729,10 @@ will format it and remove its password.</source>
         <translation>此掛載點的資料可能會遺失，建議將目錄掛載到其他位置</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="244"/>
-        <source>OK</source>
-        <translation>確定</translation>
+        <location filename="../widgets/mountdialog.cpp" line="245"/>
+        <source>Continue</source>
+        <comment>button</comment>
+        <translation>繼 續</translation>
     </message>
 </context>
 <context>
@@ -1834,7 +1833,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="161"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="165"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1124"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1107"/>
         <source>Disk:</source>
         <translation>磁碟：</translation>
     </message>
@@ -1842,7 +1841,7 @@ will format it and remove its password.</source>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="173"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="335"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="379"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1125"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1108"/>
         <source>File system:</source>
         <translation>分區格式：</translation>
     </message>
@@ -1906,46 +1905,51 @@ will format it and remove its password.</source>
         <translation>分區大小</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="706"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="716"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="818"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="828"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="702"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="712"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="814"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="824"/>
         <source>The length exceeds the limit</source>
         <translation>字元長度超過範圍</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="727"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="723"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting.</source>
         <translation>使用aes-xts-plain64標準演算法加密，加密後需要解鎖才能掛載。</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="733"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="729"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
         <translation>使用sm4-xts-plain國密演算法加密，加密後需要解鎖才能掛載。不支援國密演算法的系統將無法解鎖。</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="860"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="856"/>
         <source>The number of new partitions exceeds the limit</source>
         <translation>新分區數超出限制</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="883"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="879"/>
         <source>To encrypt a partition, it should be larger than 100 MiB</source>
         <translation>加密分區空間需要大於100 MiB</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="915"/>
-        <source>To avoid forgetting the password, please back up your password and keep it properly!</source>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="887"/>
+        <source>Set a password to encrypt the new partition</source>
+        <translation>將對建立分區進行加密</translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="906"/>
+        <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>為防止遺忘密碼，請您自行備份密碼，並妥善儲存！</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="916"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="907"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>確 定</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="935"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="920"/>
         <source>To create a partition, you need at least 52 MB</source>
         <translation>分區空間不得小於52 MB，否則無法建立</translation>
     </message>
@@ -2006,24 +2010,24 @@ will format it and remove its password.</source>
         <translation>確 定</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="201"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="215"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="249"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="206"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="220"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="254"/>
         <source>The password exceeds the maximum length</source>
         <translation>密碼超出最大長度</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="242"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="247"/>
         <source>The password cannot be empty</source>
         <translation>密碼不能為空</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="256"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="261"/>
         <source>Passwords do not match</source>
         <translation>密碼不一致</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="263"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="268"/>
         <source>The password hint should differ from the password</source>
         <translation>提示內容不得與密碼相同</translation>
     </message>

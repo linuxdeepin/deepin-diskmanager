@@ -714,13 +714,13 @@ bool LVMOperator::deletePVList(LVMInfo &lvmInfo, QList<PVData> devList)
                 int res = -1;
                 QString dest;
                 foreach (auto pv, vg.m_pvInfo) {
-                    if (pv.m_pvUsedPE == info.m_pvUsedPE) {
+                    if (pv.m_pvUnusedPE == info.m_pvUsedPE) {
                         res = 0;
                         dest = pv.m_pvPath; //相等 直接移动即可  pvmove /dev/sda1  /dev/sda2  pvmove 源  目的地
                         break;
                     }
 
-                    if (pv.m_pvUsedPE > info.m_pvUsedPE) {
+                    if (pv.m_pvUnusedPE > info.m_pvUsedPE) {
                         res = 1;           //大于 也直接移动  pvmove /dev/sda1  /dev/sda2  pvmove 源  目的地
                         dest = pv.m_pvPath;
                     } else {

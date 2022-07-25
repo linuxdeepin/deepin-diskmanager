@@ -239,6 +239,17 @@ public:
      * @return 算法枚举
      */
     static CRYPT_CIPHER getCipher(QString cipher);
+
+    /**
+    * @brief 判断内核是否支持指定的文件系统
+    * @param fsType:文件系统类型名，如ext4
+    * @return 支持：true，否则false
+    */
+    static bool kernelSupportFS(const QString &fsType);
+
+    static QString mkTempDir(const QString &infix);
+
+    static void  rmTempDir(QString &dirName);
 };
 
 #endif // UTILS_H

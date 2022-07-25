@@ -30,6 +30,7 @@
 #include "filesystems/linuxswap.h"
 #include "filesystems/fat16.h"
 #include "filesystems/ntfs.h"
+#include "filesystems/btrfs.h"
 #include "utils.h"
 
 #include <QDebug>
@@ -40,7 +41,7 @@ SupportedFileSystems::SupportedFileSystems()
 {
     m_fsObjects[FS_UNKNOWN] = NULL;
     m_fsObjects[FS_OTHER] = NULL;
-    //    m_fs_objects[FS_BTRFS]           = new btrfs();
+    m_fsObjects[FS_BTRFS] = new Btrfs;
     //    m_fs_objects[FS_EXFAT]           = new exfat();
     m_fsObjects[FS_EXT2] = new EXT2(FS_EXT2);
     m_fsObjects[FS_EXT3] = new EXT2(FS_EXT3);

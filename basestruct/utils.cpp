@@ -36,6 +36,8 @@
 #include <QDebug>
 #include <algorithm>
 #include <math.h>
+#include <QFile>
+#include <QDir>
 
 Utils::Utils()
 {
@@ -415,7 +417,7 @@ QString Utils::getFileSystemSoftWare(FSType fileSystemType)
 {
     switch (fileSystemType) {
     case FS_BTRFS:
-        return "btrfs-progs / btrfs-tools";
+        return "btrfs.h-progs / btrfs.h-tools";
     case FS_EXT2:
         return "e2fsprogs";
     case FS_EXT3:
@@ -663,6 +665,44 @@ CRYPT_CIPHER Utils::getCipher(QString cipher)
         return  CRYPT_CIPHER::CRYPT_UNkNOW;
     }
 
+}
+
+bool Utils::kernelSupportFS(const QString &fsType)
+{
+    bool supported = false;
+    QFile file("/proc/filesystems");
+    if (file.open(QIODevice::ReadOnly)) {
+        QString info = file.readAll();
+        if (info.contains(fsType)) {
+            supported = true;
+        }
+        file.close();
+    }
+    return supported;
+}
+
+QString Utils::mkTempDir(const QString &infix)
+{
+    // Construct template like "/var/tmp/diskmanager-XXXXXX" or "/var/tmp/diskmanager-INFIX-XXXXXX"
+    QString dirTemplate = "/var/tmp/";
+
+    if (!infix.isEmpty()) {
+        dirTemplate += infix + "-" ;
+    }
+    dirTemplate += "XXXXXX" ;
+    QDir dir(dirTemplate);
+    if (!dir.exists() && dir.mkpath(dirTemplate)) {
+        return dirTemplate;
+    }
+    return dirTemplate;
+}
+
+void Utils::rmTempDir(QString &dirName)
+{
+    QDir dir(dirName);
+    if (dir.exists()) {
+        dir.remove(dirName);
+    }
 }
 
 

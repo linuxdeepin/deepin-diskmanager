@@ -7,7 +7,7 @@ Standards-Version: 4.1.3
 
 Package: deepin-diskmanager
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, smartmontools
+Depends: ${shlibs:Depends}, ${misc:Depends}, smartmontools, exfat-fuse
 Description: Disk Utility is a disk management tool for creating, reorganizing and formatting partitions.
  Disk Utility is a disk management tool for disk.
 

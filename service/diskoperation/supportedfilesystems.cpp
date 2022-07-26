@@ -32,6 +32,7 @@
 #include "filesystems/ntfs.h"
 #include "filesystems/btrfs.h"
 #include "filesystems/exfat.h"
+#include "filesystems/xfs.h"
 #include "utils.h"
 
 #include <QDebug>
@@ -62,7 +63,7 @@ SupportedFileSystems::SupportedFileSystems()
     //    m_fs_objects[FS_REISER4]         = new reiser4();
     //    m_fs_objects[FS_REISERFS]        = new reiserfs();
     //    m_fs_objects[FS_UDF]             = new udf();
-    //    m_fs_objects[FS_XFS]             = new xfs();
+    m_fsObjects[FS_XFS]             = new XFS();
     m_fsObjects[FS_APFS] = NULL;
     m_fsObjects[FS_ATARAID] = NULL;
     m_fsObjects[FS_BITLOCKER] = NULL;

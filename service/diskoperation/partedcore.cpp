@@ -546,7 +546,9 @@ bool PartedCore::clear(const WipeAction &wipe)
     bool success = false;
     FSType fs = Utils::stringToFileSystemType(wipe.m_fstype);
     //TODO 此处是否可用  supportedFileSystem(fs);判断？
-    success = (fs == FS_NTFS || fs == FS_FAT16 || fs == FS_FAT32 || fs == FS_EXT2 || fs == FS_EXT3 || fs == FS_EXT4 || fs == FS_BTRFS || fs == FS_EXFAT);
+    success = (fs == FS_NTFS || fs == FS_FAT16 || fs == FS_FAT32 || fs == FS_EXT2
+            || fs == FS_EXT3 || fs == FS_EXT4 || fs == FS_BTRFS || fs == FS_EXFAT
+            || fs == FS_XFS);
     if (success) {
         if (wipe.m_path.isEmpty() || wipe.m_user.isEmpty()) {
             success = false;

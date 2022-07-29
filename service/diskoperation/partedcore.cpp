@@ -1041,6 +1041,7 @@ bool PartedCore::mountAndWriteFstab(const QString &mountpath)
     bool success = mountDevice(mountpath, m_curpartition.getPath(),  m_curpartition.m_fstype)  //位置不可交换 利用&&运算特性
                    && writeFstab(m_curpartition.m_uuid, mountpath, type, true);
     qDebug() << __FUNCTION__ << "Permanent mount end";
+    DeleteMountPointExclude(m_curpartition.getPath());
     return   sendRefSigAndReturn(success);
 }
 
@@ -1053,6 +1054,7 @@ bool PartedCore::unmount()
     QString type = Utils::fileSystemTypeToString(m_curpartition.m_fstype);//修改/etc/fstab
     writeFstab(m_curpartition.m_uuid,  "", type, false);//非挂载 不需要挂载点
     qDebug() << __FUNCTION__ << "Unmount end";
+    addMountPointExclude(m_curpartition.getPath());
     return sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_UMNT, true, "1");
 }
 
@@ -2069,6 +2071,12 @@ void PartedCore::onRefreshDeviceInfo(int type, bool arg1, QString arg2)
 void PartedCore::syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const DeviceInfoMap inforesult, const LVMInfo lvmInfo, const LUKSMap &luks)
 {
     qDebug() << "syncDeviceInfo finally!";
+
+    foreach (auto dev, m_mountPointExclude) {
+        QString output, error;
+        Utils::executCmd(QString("umount -v %1").arg(dev), output, error);
+    }
+
     //m_deviceMap = deviceMap;
     m_deviceMap = m_probeThread.getDeviceMap();
     m_inforesult = inforesult;
@@ -3863,14 +3871,14 @@ QString PartedCore::getTmpMountPath(const QString &user, const QString &lable, c
         mountPath = QString("/media/%1/%2").arg(user).arg(uuid);
     }
 
-    QDir dir;
-    for (int i = 0; i < 5; ++i) {
-        if (dir.exists(mountPath)) {
-            mountPath = QString("/media/%1/%2").arg(user).arg(FsInfo::getUuid(devPath));
-        } else {
-            break;
-        }
-    }
+//    QDir dir;
+//    for (int i = 0; i < 5; ++i) {
+//        if (dir.exists(mountPath)) {
+//            mountPath = QString("/media/%1/%2").arg(user).arg(FsInfo::getUuid(devPath));
+//        } else {
+//            break;
+//        }
+//    }
     return mountPath;
 }
 
@@ -4494,6 +4502,20 @@ bool PartedCore::closeLUKSMap(const QString &devPath, bool &isCLose)
 
     return true;
 
+}
+
+void PartedCore::addMountPointExclude(const QString &devPath)
+{
+    if (!m_mountPointExclude.contains(devPath)) {
+        m_mountPointExclude.append(devPath);
+    }
+}
+
+void PartedCore::DeleteMountPointExclude(const QString &devPath)
+{
+    if (m_mountPointExclude.contains(devPath)) {
+        m_mountPointExclude.removeOne(devPath);
+    }
 }
 
 } // namespace DiskManager

@@ -517,6 +517,15 @@ bool LVMOperator::resizeVG(LVMInfo &lvmInfo, QString vgName, QList<PVData> devLi
             oldPVlist.push_back(pv);
             continue;
         }
+
+        QString output, error;
+        Utils::executCmd(QString("lsblk %1 --raw --output NAME").arg(pv.m_devicePath), output, error);
+        auto strList = output.split("\n");
+        //安装器全盘加密时已经创建了pv
+        if (strList.size() > 2 && strList.at(1) == "luks_crypt0") {
+            continue;
+        }
+
         if (!lvmInfo.pvExists(pv)) {    //pv不存在
             if (!pvCreate(pv.m_devicePath)) {
                 return setLVMErr(lvmInfo, LVMError::LVM_ERR_PV_CREATE_FAILED);
@@ -825,7 +834,9 @@ bool LVMOperator::checkVG()
 bool LVMOperator::pvCreate(const QString &devPath)
 {
     QString strout, strerror;
-    return  Utils::executCmd(QString("pvcreate %1 -y").arg(devPath), strout, strerror) == 0;
+    auto errCode = Utils::executCmd(QString("pvcreate %1 -y").arg(devPath), strout, strerror);
+    qInfo() << "pvcreate " << devPath << " output:" << strout << " error:" << strerror;
+    return errCode == 0;
 }
 
 bool LVMOperator::pvMove(const QString &pvPath, const QString &dest)

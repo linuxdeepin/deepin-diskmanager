@@ -41,9 +41,9 @@ std::map<BlockSpecial, BTRFS_Device> btrfs_device_cache;
 
 FS Btrfs::getFilesystemSupport()
 {
-    FS fs( FS_BTRFS );
+    FS fs(FS_BTRFS);
 
-    fs.busy = FS::EXTERNAL ;
+    fs.busy = FS::GPARTED ;
 
     if (!Utils::findProgramInPath("mdir").isEmpty())
     {

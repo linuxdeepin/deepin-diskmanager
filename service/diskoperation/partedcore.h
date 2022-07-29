@@ -1071,6 +1071,22 @@ private:
      * @return true 关闭成功 false 失败
      */
     bool closeLUKSMap(const QString&devPath,bool &isCLose);
+
+    /**
+    * @brief 增加挂载过滤项
+    * @param devPath:设备路径
+    * @param
+    * @return
+    */
+    void addMountPointExclude(const QString &devPath);
+
+    /**
+    * @brief 删除挂载过滤项
+    * @param devPath:设备路径
+    * @param
+    * @return
+    */
+    void DeleteMountPointExclude(const QString &devPath);
 signals:
     //硬件刷新相关信号
     /**
@@ -1268,6 +1284,7 @@ private:
     int m_usbSig{0};                      //刷新结束后需要发送的信号类型
     bool m_usbArg1{false};                //需要发送的信号bool类型参数
     QString m_usbArg2;                    //需要发送的信号QString类型参数
+    QStringList m_mountPointExclude;      //被操作卸载的分区列表
 };
 
 } // namespace DiskManager

@@ -1545,7 +1545,9 @@ bool PartedCore::clearLV(const LVAction &lvAction)
     //判断需要创建的文件系统是否符合
     bool success = (lvAction.m_lvFs == FS_NTFS || lvAction.m_lvFs == FS_FAT16
                     || lvAction.m_lvFs == FS_FAT32 || lvAction.m_lvFs == FS_EXT2
-                    || lvAction.m_lvFs == FS_EXT3 || lvAction.m_lvFs == FS_EXT4);
+                    || lvAction.m_lvFs == FS_EXT3 || lvAction.m_lvFs == FS_EXT4
+                    || lvAction.m_lvFs == FS_BTRFS || lvAction.m_lvFs == FS_EXFAT
+                    || lvAction.m_lvFs == FS_XFS);
     LVInfo lv = m_lvmInfo.getLVInfo(lvAction.m_vgName, lvAction.m_lvName);
     if (lv.m_busy || !success) { //被挂载 or 文件系统不支持 退出
         QString str = QString("%1:%2:%3").arg("LVMError").arg(LVMError::LVM_ERR_LV_ARGUMENT).arg(lvAction.m_lvName);

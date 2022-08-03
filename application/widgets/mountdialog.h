@@ -30,6 +30,7 @@
 
 #include <dfilechooseredit.h>
 #include <DComboBox>
+#include <commondef.h>
 
 DWIDGET_USE_NAMESPACE
 
@@ -85,6 +86,13 @@ private slots:
      * @param text 当前点击按钮文本
      */
     void onButtonClicked(int index, const QString &text);
+
+    /**
+    * @brief 检查特定分区格式对挂载点的要求
+    * @param fsType 文件系统类型
+    * @param mountPoint 挂载点
+    */
+    bool onCheckMountPoint(FSType fsType, const QString &mountPoint);
 
 private:
     DFileChooserEdit *m_fileChooserEdit;

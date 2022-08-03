@@ -54,7 +54,7 @@ void CreateLVWidget::initUi()
     VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
     setTitle(tr("Creating logical volumes on %1").arg(vgInfo.m_vgName));
 
-    DLabel *tipLabel = new DLabel(tr("Click ‘+’ to create a logical volume. "), m_mainFrame);
+    DLabel *tipLabel = new DLabel(QString(tr("Click %1 to create a logical volume. ")).arg("+"), m_mainFrame);
     tipLabel->setWordWrap(true);
     tipLabel->setAlignment(Qt::AlignCenter);
 

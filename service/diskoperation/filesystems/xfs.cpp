@@ -63,8 +63,7 @@ FS XFS::getFilesystemSupport()
     if (fs.check)
         fs.move = FS::GPARTED;
     fs.online_read = FS::GPARTED;
-    // Official minsize = 16MB, but the smallest xfs_repair can handle is 32MB.
-    m_fsLimits.min_size = 32 * MEBIBYTE;
+
     return fs;
 }
 
@@ -202,14 +201,13 @@ bool XFS::checkRepair(const QString &devpath)
     int exitcode = Utils::executCmd(QString("xfs_repair -v %1").arg(devpath), output, error);
     return exitcode == 0 || error.compare("Unknown error") == 0;
 }
+
 FS_Limits XFS::getFilesystemLimits(const Partition &partition)
 {
-    return getFilesystemLimits(partition.getPath());
-}
-FS_Limits XFS::getFilesystemLimits(const QString &path)
-{
-    Q_UNUSED(path);
-    m_fsLimits = FS_Limits {-1, 0};
+    // Official minsize = 16MB, but the smallest xfs_repair can handle is 32MB.
+    //m_fsLimits.min_size = 32 * MEBIBYTE;
+    m_fsLimits.min_size = -1;
+    m_fsLimits.max_size = -1;
     return m_fsLimits;
 }
 } // namespace DiskManager

@@ -65,6 +65,8 @@ FS ExFat::getFilesystemSupport()
         if (output.contains("exfatprogs version"))
             fs.check = FS::EXTERNAL;
     }
+    fs.grow = FS::NONE;
+    fs.shrink = FS::NONE;
 
     return fs;
 }
@@ -201,18 +203,15 @@ bool DiskManager::ExFat::checkRepair(const DiskManager::Partition &partition)
 bool DiskManager::ExFat::checkRepair(const QString &devpath)
 {
     QString output, error;
-    auto errCode = Utils::executCmd(QString("fsck.exfat -v %1").arg(devpath), output, error);
+    auto errCode = Utils::executCmd(QString("fsck.exfat %1").arg(devpath), output, error);
     return errCode == 0;
 }
 
 FS_Limits DiskManager::ExFat::getFilesystemLimits(const DiskManager::Partition &partition)
 {
-    return FileSystem::getFilesystemLimits(partition);
-}
-
-FS_Limits DiskManager::ExFat::getFilesystemLimits(const QString &path)
-{
-    return FileSystem::getFilesystemLimits(path);
+    m_fsLimits.min_size = -1;
+    m_fsLimits.max_size = -1;
+    return m_fsLimits;
 }
 
 QString DiskManager::ExFat::serial2BlkidUuid(QString serial)

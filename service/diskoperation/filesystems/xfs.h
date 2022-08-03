@@ -100,13 +100,14 @@ public:
      * @param partition：分区信息
      * @return 文件系统限制信息
      */
-    virtual FS_Limits getFilesystemLimits(const Partition &partition) override;
+
     /**
-     * @brief 获取文件系统限制
-     * @param path：设备路径
-     * @return 文件系统限制信息
-     */
-    virtual FS_Limits getFilesystemLimits(const QString &path) override;
+    * @brief 获取文件系统限制
+    * @param partition：分区信息
+    * @return 文件系统限制信息
+    */
+    FS_Limits getFilesystemLimits(const Partition &partition) override;
+
 };
 } // namespace DiskManager
 #endif /* GPARTED_XFS_H */

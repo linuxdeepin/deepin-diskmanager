@@ -183,8 +183,14 @@ void MountDialog::mountCurPath()
 {
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
+        if (!onCheckMountPoint(static_cast<FSType>(info.m_fileSystemType), m_fileChooserEdit->text())) {
+            return;
+        }
         if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
+            if (!onCheckMountPoint(luksInfo.m_mapper.m_luksFs, m_fileChooserEdit->text())) {
+                return;
+            }
             QVector<QString> mountPoints;
             mountPoints.append(m_fileChooserEdit->text());
             luksInfo.m_mapper.m_mountPoints = mountPoints;
@@ -192,6 +198,7 @@ void MountDialog::mountCurPath()
             DMDbusHandler::instance()->cryptMount(luksInfo, info.m_path);
         } else {
             DMDbusHandler::instance()->mount(m_fileChooserEdit->text());
+
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
@@ -254,4 +261,24 @@ void MountDialog::onButtonClicked(int index, const QString &text)
     } else {
         close();
     }
+}
+
+bool MountDialog::onCheckMountPoint(FSType fsType, const QString &mountPoint)
+{
+    //exfat文件系统的挂载点必须为空目录
+    if (fsType == FS_EXFAT) {
+        QDir dir(m_fileChooserEdit->text());
+        if (!dir.isEmpty()) {
+            MessageBox messageBox(this);
+            messageBox.setObjectName("mountPointMessageBox");
+            messageBox.setAccessibleName("mountPointMessageBox");
+            messageBox.setWarings(tr("Mounting failed"), "The selected mount point is not empty. Please select another one!",
+                                  tr("OK", "button"), ButtonNormal);
+            if (messageBox.exec() == 1) {
+                close();
+            }
+            return false;
+        }
+    }
+    return true;
 }

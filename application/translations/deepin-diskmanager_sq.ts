@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="sq">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.0" language="sq">
 <context>
     <name>CreateLVWidget</name>
     <message>
@@ -8,8 +8,8 @@
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="57"/>
-        <source>Click ‘+’ to create a logical volume. </source>
-        <translation>Klikoni mbi ‘+’ që të krijoni një vëllim logjik. </translation>
+        <source>Click %1 to create a logical volume. </source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="124"/>
@@ -312,16 +312,16 @@ will format it and remove its password.</source>
 do të sjellë formatim të tij dhe heqje të fjalëkalimit për të.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1925"/>
-        <source>Not enough space to back up data on %1, please clear disk space</source>
-        <translation>S’ka hapësirë të mjaftueshme për të kopjeruajtur të dhëna në %1, ju lutemi, spastroni hapësirë disku</translation>
-    </message>
-    <message>
         <location filename="../widgets/createvgwidget.cpp" line="1706"/>
         <location filename="../widgets/createvgwidget.cpp" line="1800"/>
         <location filename="../widgets/createvgwidget.cpp" line="1926"/>
         <source>OK</source>
         <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1925"/>
+        <source>Not enough space to back up data on %1, please clear disk space</source>
+        <translation>S’ka hapësirë të mjaftueshme për të kopjeruajtur të dhëna në %1, ju lutemi, spastroni hapësirë disku</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2090"/>
@@ -473,11 +473,6 @@ do të sjellë formatim të tij dhe heqje të fjalëkalimit për të.</translati
         <translation>%1 s’arriti të mbyllë hartën e fshehtëzimeve</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="853"/>
-        <source>Failed to create a logical volume, please try again!</source>
-        <translation>S’u arrit të krijohet vëllim logjik, ju lutemi, riprovoni!</translation>
-    </message>
-    <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="818"/>
         <source>Failed to create partitions, please try again!</source>
         <translation>S’u arrit të krijohen pjesë, ju lutemi, riprovoni!</translation>
@@ -519,6 +514,11 @@ do të sjellë formatim të tij dhe heqje të fjalëkalimit për të.</translati
         <source>Creating partition table failed</source>
         <translation>Krijimi i tabelës së pjesëve dështoi</translation>
     </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="853"/>
+        <source>Failed to create a logical volume, please try again!</source>
+        <translation>S’u arrit të krijohet vëllim logjik, ju lutemi, riprovoni!</translation>
+    </message>
 </context>
 <context>
     <name>DecryptDialog</name>
@@ -555,39 +555,39 @@ do të sjellë formatim të tij dhe heqje të fjalëkalimit për të.</translati
         <translation>Shfshehtëzoje</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="175"/>
+        <location filename="../widgets/decryptdialog.cpp" line="174"/>
         <source>Decrypting...</source>
         <translation>Po shfshehtëzohet…</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="337"/>
-        <source>Decryption failed</source>
-        <translation>Shfshehtëzimi dështoi</translation>
-    </message>
-    <message>
-        <location filename="../widgets/decryptdialog.cpp" line="355"/>
-        <source>Wrong password, %1 chances left</source>
-        <translation>Fjalëkalim i gabuar, edhe %1 prova</translation>
-    </message>
-    <message>
-        <location filename="../widgets/decryptdialog.cpp" line="357"/>
-        <source>Wrong password, only one chance left</source>
-        <translation>Fjalëkalim i gabuar, edhe një provë e vetme</translation>
-    </message>
-    <message>
-        <location filename="../widgets/decryptdialog.cpp" line="219"/>
+        <location filename="../widgets/decryptdialog.cpp" line="218"/>
         <source>Please try again %1 minutes later</source>
         <translation>Ju lutemi, riprovoni pas %1 minutash</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="300"/>
+        <location filename="../widgets/decryptdialog.cpp" line="299"/>
         <source>The password cannot be empty</source>
         <translation>Fjalëkalimi s’mund të jetë i zbrazët</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="353"/>
+        <location filename="../widgets/decryptdialog.cpp" line="336"/>
+        <source>Decryption failed</source>
+        <translation>Shfshehtëzimi dështoi</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="352"/>
         <source>Password locked, please try again %1 minutes later</source>
         <translation>Fjalëkalimi është kyçur, ju lutemi, riprovoni riprovoni pas %1 minutash</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="354"/>
+        <source>Wrong password, %1 chances left</source>
+        <translation>Fjalëkalim i gabuar, edhe %1 prova</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="356"/>
+        <source>Wrong password, only one chance left</source>
+        <translation>Fjalëkalim i gabuar, edhe një provë e vetme</translation>
     </message>
 </context>
 <context>
@@ -832,6 +832,17 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
         <translation>Çmontoni së pari krejt vëllimet logjike në %1</translation>
     </message>
     <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
+        <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
+        <translation>Të dhënat s’mund të rimerren, nëse fshihen, ju lutemi, ripohojeni, para se të vazhdohet</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="608"/>
+        <source>The disks will be formatted if you create a logical volume</source>
+        <translation>Disqet do të formatohen, nëse krijoni një vëllim logjik</translation>
+    </message>
+    <message>
         <location filename="../widgets/devicelistwidget.cpp" line="632"/>
         <source>Unmount %1 first</source>
         <translation>Çmontoni %1 së pari</translation>
@@ -846,17 +857,6 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
         <location filename="../widgets/devicelistwidget.cpp" line="715"/>
         <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
         <translation>Vëllimi logjik është i zënë dhe s’mund të fshihet. Ju lutemi, riprovoni pas rinisjeje.</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
-        <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation>Të dhënat s’mund të rimerren, nëse fshihen, ju lutemi, ripohojeni, para se të vazhdohet</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="608"/>
-        <source>The disks will be formatted if you create a logical volume</source>
-        <translation>Disqet do të formatohen, nëse krijoni një vëllim logjik</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="683"/>
@@ -1567,14 +1567,6 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
         <source>Failed to wipe %1</source>
         <translation>S’u arrit të fshihet %1</translation>
     </message>
-    <message>
-        <source>Failed to get the partition info</source>
-        <translation type="vanished">S’u arrit të merren hollësi pjese</translation>
-    </message>
-    <message>
-        <source>Failed to delete the partition</source>
-        <translation type="vanished">S’u arrit të fshihet pjesa</translation>
-    </message>
 </context>
 <context>
     <name>InfoShowWidget</name>
@@ -1715,7 +1707,7 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="90"/>
-        <location filename="../widgets/mountdialog.cpp" line="245"/>
+        <location filename="../widgets/mountdialog.cpp" line="252"/>
         <source>Cancel</source>
         <translation>Anuloje</translation>
     </message>
@@ -1725,12 +1717,23 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
         <translation>Montoni</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="244"/>
+        <location filename="../widgets/mountdialog.cpp" line="275"/>
+        <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="276"/>
+        <source>OK</source>
+        <comment>button</comment>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="251"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>Të dhënat nën këtë pikë montimi do të humbnin, ju lutemi, montojeni drejtorinë te një vendndodhje tjetër</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="245"/>
+        <location filename="../widgets/mountdialog.cpp" line="252"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>Vazhdo</translation>
@@ -1813,8 +1816,8 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="61"/>
-        <source>Click ‘+’ to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation>Klikoni mbi ‘+’ që të shtoni numrin e pjesëve. Klikoni mbi secilën pjesë që të ndryshoni emrin e saj dhe sistemin e kartelave për të.</translation>
+        <source>Click â+â to increase the number of partitions. Click on each partition to change its name and file system.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="128"/>
@@ -1936,7 +1939,7 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="887"/>
         <source>Set a password to encrypt the new partition</source>
-        <translation type="unfinished"/>
+        <translation>Caktoni një fjalëkalim për fshehtëzimin e pjesës së re</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="906"/>
@@ -1999,6 +2002,11 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
         <translation>Jepeni fjalëkalimin sërish</translation>
     </message>
     <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="117"/>
+        <source>Enter a password hint</source>
+        <translation>Jepni një ndihmëz fjalëkalimi</translation>
+    </message>
+    <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="160"/>
         <source>Cancel</source>
         <comment>button</comment>
@@ -2031,11 +2039,6 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="268"/>
         <source>The password hint should differ from the password</source>
         <translation>Ndihmëza për fjalëkalimin duhet të jetë tjetër gjë nga fjalëkalimi</translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="117"/>
-        <source>Enter a password hint</source>
-        <translation>Jepni një ndihmëz fjalëkalimi</translation>
     </message>
 </context>
 <context>
@@ -2171,16 +2174,6 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
         <translation>Ju lutemi, jo më tepër se sa kapaciteti maksimum</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="241"/>
-        <location filename="../widgets/resizedialog.cpp" line="302"/>
-        <source>No less than the used capacity please</source>
-        <translation>Ju lutemi, jo më pak se sa kapaciteti i përdorur</translation>
-    </message>
-    <message>
-        <source>Space limit exceeded</source>
-        <translation type="vanished">U tejkalua kufi hapësire</translation>
-    </message>
-    <message>
         <location filename="../widgets/resizedialog.cpp" line="227"/>
         <source>The file system does not support shrinking space</source>
         <translation>Sistemi i kartelave nuk mbulon tkurrjen e hapësirës</translation>
@@ -2195,8 +2188,10 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
         <translation>OK</translation>
     </message>
     <message>
-        <source>Not enough space, please clear data in it</source>
-        <translation type="vanished">S’ka hapësirë të mjaftë, ju lutemi, spastroni të dhëna në të</translation>
+        <location filename="../widgets/resizedialog.cpp" line="241"/>
+        <location filename="../widgets/resizedialog.cpp" line="302"/>
+        <source>No less than the used capacity please</source>
+        <translation>Ju lutemi, jo më pak se sa kapaciteti i përdorur</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="248"/>
@@ -2308,12 +2303,6 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
         <translation>S’arrihet të çmontohet pajisja: s’u gjet sistem kartelash, ose sistemi i kartelave nuk mbulohet</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="339"/>
-        <location filename="../widgets/titlewidget.cpp" line="433"/>
-        <source>The file system does not support space adjustment</source>
-        <translation>Sistemi i kartelave nuk mbulon rregullim hapësire</translation>
-    </message>
-    <message>
         <location filename="../widgets/titlewidget.cpp" line="240"/>
         <location filename="../widgets/titlewidget.cpp" line="339"/>
         <location filename="../widgets/titlewidget.cpp" line="383"/>
@@ -2324,6 +2313,12 @@ do të humbasin, nëse krijohet një tabelë e re pjesësh,
         <location filename="../widgets/titlewidget.cpp" line="596"/>
         <source>OK</source>
         <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="339"/>
+        <location filename="../widgets/titlewidget.cpp" line="433"/>
+        <source>The file system does not support space adjustment</source>
+        <translation>Sistemi i kartelave nuk mbulon rregullim hapësire</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="359"/>

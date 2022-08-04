@@ -272,7 +272,7 @@ bool MountDialog::onCheckMountPoint(FSType fsType, const QString &mountPoint)
             MessageBox messageBox(this);
             messageBox.setObjectName("mountPointMessageBox");
             messageBox.setAccessibleName("mountPointMessageBox");
-            messageBox.setWarings(tr("Mounting failed"), "The selected mount point is not empty. Please select another one!",
+            messageBox.setWarings("", tr("Mounting failed: The selected mount point is not empty. Please select another one!"),
                                   tr("OK", "button"), ButtonNormal);
             if (messageBox.exec() == 1) {
                 close();

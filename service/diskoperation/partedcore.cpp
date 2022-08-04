@@ -819,6 +819,9 @@ bool PartedCore::clear(const WipeAction &wipe)
     QPair<bool, QString>pair = tmpMountDevice(mountPath, devPath, fsType, wipe.m_user);
     m_isClear = false;
     qDebug() << __FUNCTION__ << "clear end";
+    if (pair.first) {
+        deleteMountPointExclude(devPath);
+    }
     return sendRefSigAndReturn(pair.first, DISK_SIGNAL_TYPE_CLEAR, pair.first, pair.second);
 }
 
@@ -1041,7 +1044,7 @@ bool PartedCore::mountAndWriteFstab(const QString &mountpath)
     bool success = mountDevice(mountpath, m_curpartition.getPath(),  m_curpartition.m_fstype)  //位置不可交换 利用&&运算特性
                    && writeFstab(m_curpartition.m_uuid, mountpath, type, true);
     qDebug() << __FUNCTION__ << "Permanent mount end";
-    DeleteMountPointExclude(m_curpartition.getPath());
+    deleteMountPointExclude(m_curpartition.getPath());
     return   sendRefSigAndReturn(success);
 }
 
@@ -3862,6 +3865,7 @@ QPair<bool, QString> PartedCore::tmpMountDevice(const QString &mountpath, const 
         return QPair<bool, QString>(false, str);
     }
     QString str = QString("%1:%2:%3").arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_NORMAL).arg(devPath);
+
     return QPair<bool, QString>(true, str);
 }
 
@@ -4513,7 +4517,7 @@ void PartedCore::addMountPointExclude(const QString &devPath)
     }
 }
 
-void PartedCore::DeleteMountPointExclude(const QString &devPath)
+void PartedCore::deleteMountPointExclude(const QString &devPath)
 {
     if (m_mountPointExclude.contains(devPath)) {
         m_mountPointExclude.removeOne(devPath);

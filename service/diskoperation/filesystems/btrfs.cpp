@@ -85,8 +85,6 @@ FS Btrfs::getFilesystemSupport()
     fs.online_grow = fs.grow ;
     fs.online_shrink = fs.shrink ;
 
-    m_fsLimits.min_size = 256 * MEBIBYTE;
-
     return fs ;
 }
 
@@ -288,17 +286,6 @@ bool Btrfs::checkRepair(const QString &devpath)
 
 }
 
-FS_Limits Btrfs::getFilesystemLimits(const Partition &partition)
-{
-    return FileSystem::getFilesystemLimits(partition.getPath());
-}
-
-FS_Limits Btrfs::getFilesystemLimits(const QString &path)
-{
-    m_fsLimits = FS_Limits{-1, 10000};
-    return m_fsLimits;
-}
-
 const BTRFS_Device &Btrfs::getCacheEntry(const QString &path)
 {
     std::map<BlockSpecial, BTRFS_Device>::const_iterator bd_iter = btrfs_device_cache.find(BlockSpecial(path));
@@ -413,6 +400,14 @@ double Btrfs::btrfsSizeMaxDelta(QString &str)
     }
     double max_delta = btrfsSize2Double(limit_str) ;
     return max_delta ;
+}
+
+FS_Limits Btrfs::getFilesystemLimits(const Partition &partition)
+{
+    //m_fsLimits.min_size = 256 * MEBIBYTE;
+    m_fsLimits.min_size = -1;
+    m_fsLimits.max_size = -1;
+    return m_fsLimits;
 }
 
 }

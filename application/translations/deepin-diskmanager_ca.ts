@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ca">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.0" language="ca">
 <context>
     <name>CreateLVWidget</name>
     <message>
@@ -8,8 +8,8 @@
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="57"/>
-        <source>Click ‘+’ to create a logical volume. </source>
-        <translation>Cliqueu a + per crear un volum lògic.</translation>
+        <source>Click %1 to create a logical volume. </source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="124"/>
@@ -312,16 +312,16 @@ will format it and remove its password.</source>
 el formatarà i n&apos;eliminarà la contrasenya.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1925"/>
-        <source>Not enough space to back up data on %1, please clear disk space</source>
-        <translation>No hi ha prou espai per fer una còpia de seguretat a %1. Si us plau, feu-hi espai.</translation>
-    </message>
-    <message>
         <location filename="../widgets/createvgwidget.cpp" line="1706"/>
         <location filename="../widgets/createvgwidget.cpp" line="1800"/>
         <location filename="../widgets/createvgwidget.cpp" line="1926"/>
         <source>OK</source>
         <translation>D&apos;acord</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1925"/>
+        <source>Not enough space to back up data on %1, please clear disk space</source>
+        <translation>No hi ha prou espai per fer una còpia de seguretat a %1. Si us plau, feu-hi espai.</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2090"/>
@@ -473,11 +473,6 @@ el formatarà i n&apos;eliminarà la contrasenya.</translation>
         <translation>%1 no ha pogut tancar el mapa criptogràfic.</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="853"/>
-        <source>Failed to create a logical volume, please try again!</source>
-        <translation>Ha fallat crear un volum lògic. Torneu-ho a provar!</translation>
-    </message>
-    <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="818"/>
         <source>Failed to create partitions, please try again!</source>
         <translation>Ha fallat crear les particions. Torneu-ho a provar!</translation>
@@ -519,6 +514,11 @@ el formatarà i n&apos;eliminarà la contrasenya.</translation>
         <source>Creating partition table failed</source>
         <translation>Ha fallat crear la taula de particions.</translation>
     </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="853"/>
+        <source>Failed to create a logical volume, please try again!</source>
+        <translation>Ha fallat crear un volum lògic. Torneu-ho a provar!</translation>
+    </message>
 </context>
 <context>
     <name>DecryptDialog</name>
@@ -555,39 +555,39 @@ el formatarà i n&apos;eliminarà la contrasenya.</translation>
         <translation>Desencirpta</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="175"/>
+        <location filename="../widgets/decryptdialog.cpp" line="174"/>
         <source>Decrypting...</source>
         <translation>Es desencripta...</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="337"/>
-        <source>Decryption failed</source>
-        <translation>Ha fallat la desencriptació.</translation>
-    </message>
-    <message>
-        <location filename="../widgets/decryptdialog.cpp" line="355"/>
-        <source>Wrong password, %1 chances left</source>
-        <translation>Contrasenya incorrecta. Resten %1 intents.</translation>
-    </message>
-    <message>
-        <location filename="../widgets/decryptdialog.cpp" line="357"/>
-        <source>Wrong password, only one chance left</source>
-        <translation>Contrasenya incorrecta. Només resta un intent.</translation>
-    </message>
-    <message>
-        <location filename="../widgets/decryptdialog.cpp" line="219"/>
+        <location filename="../widgets/decryptdialog.cpp" line="218"/>
         <source>Please try again %1 minutes later</source>
         <translation>Si us plau, torneu-ho a provar %1 minuts més tard.</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="300"/>
+        <location filename="../widgets/decryptdialog.cpp" line="299"/>
         <source>The password cannot be empty</source>
         <translation>La contrasenya no pot estar buida.</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="353"/>
+        <location filename="../widgets/decryptdialog.cpp" line="336"/>
+        <source>Decryption failed</source>
+        <translation>Ha fallat la desencriptació.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="352"/>
         <source>Password locked, please try again %1 minutes later</source>
         <translation>Contrasenya blocada. Si us plau, torneu-ho a provar % 1 minuts més tard.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="354"/>
+        <source>Wrong password, %1 chances left</source>
+        <translation>Contrasenya incorrecta. Resten %1 intents.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="356"/>
+        <source>Wrong password, only one chance left</source>
+        <translation>Contrasenya incorrecta. Només resta un intent.</translation>
     </message>
 </context>
 <context>
@@ -832,6 +832,17 @@ Aneu amb compte.</translation>
         <translation>Primer desmunteu tots els volums lògics de %1</translation>
     </message>
     <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
+        <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
+        <translation>Les dades no es poden recuperar si s&apos;eliminen. Confirmeu-ho abans de continuar.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="608"/>
+        <source>The disks will be formatted if you create a logical volume</source>
+        <translation>Els discs es formataran si creeu un volum lògic.</translation>
+    </message>
+    <message>
         <location filename="../widgets/devicelistwidget.cpp" line="632"/>
         <source>Unmount %1 first</source>
         <translation>Primer desmunteu %1</translation>
@@ -846,17 +857,6 @@ Aneu amb compte.</translation>
         <location filename="../widgets/devicelistwidget.cpp" line="715"/>
         <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
         <translation>El volum lògic està ocupat i no es pot eliminar. Si us plau, torneu-ho a provar després de reiniciar.</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
-        <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation>Les dades no es poden recuperar si s&apos;eliminen. Confirmeu-ho abans de continuar.</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="608"/>
-        <source>The disks will be formatted if you create a logical volume</source>
-        <translation>Els discs es formataran si creeu un volum lògic.</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="683"/>
@@ -1567,14 +1567,6 @@ Aneu amb compte.</translation>
         <source>Failed to wipe %1</source>
         <translation>Ha fallat netejar %1.</translation>
     </message>
-    <message>
-        <source>Failed to get the partition info</source>
-        <translation type="vanished">Ha fallat obtenir la informació de la partició.</translation>
-    </message>
-    <message>
-        <source>Failed to delete the partition</source>
-        <translation type="vanished">Ha fallat eliminar la partició.</translation>
-    </message>
 </context>
 <context>
     <name>InfoShowWidget</name>
@@ -1715,7 +1707,7 @@ Aneu amb compte.</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="90"/>
-        <location filename="../widgets/mountdialog.cpp" line="245"/>
+        <location filename="../widgets/mountdialog.cpp" line="252"/>
         <source>Cancel</source>
         <translation>Cancel·la</translation>
     </message>
@@ -1725,12 +1717,23 @@ Aneu amb compte.</translation>
         <translation>Munta</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="244"/>
+        <location filename="../widgets/mountdialog.cpp" line="275"/>
+        <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="276"/>
+        <source>OK</source>
+        <comment>button</comment>
+        <translation>D&apos;acord</translation>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="251"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>Es perdrien les dades d&apos;aquest punt de muntatge. Monteu el directori a una altra ubicació</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="245"/>
+        <location filename="../widgets/mountdialog.cpp" line="252"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>Continua</translation>
@@ -1813,8 +1816,8 @@ Aneu amb compte.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="61"/>
-        <source>Click ‘+’ to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation>Cliqueu + per augmentar el nombre de particions. Cliqueu a cada partició per canviar-ne el nom i el sistema de fitxers.</translation>
+        <source>Click â+â to increase the number of partitions. Click on each partition to change its name and file system.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="128"/>
@@ -1936,7 +1939,7 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="887"/>
         <source>Set a password to encrypt the new partition</source>
-        <translation type="unfinished"/>
+        <translation>Establiu una contrasenya per encriptar la partició nova.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="906"/>
@@ -1999,6 +2002,11 @@ Aneu amb compte.</translation>
         <translation>Torneu a introduir la contrasenya.</translation>
     </message>
     <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="117"/>
+        <source>Enter a password hint</source>
+        <translation>Introduïu un suggeriment de contrasenya.</translation>
+    </message>
+    <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="160"/>
         <source>Cancel</source>
         <comment>button</comment>
@@ -2031,11 +2039,6 @@ Aneu amb compte.</translation>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="268"/>
         <source>The password hint should differ from the password</source>
         <translation>El suggeriment de la contrasenya hauria de diferir de la contrasenya.</translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="117"/>
-        <source>Enter a password hint</source>
-        <translation>Introduïu un suggeriment de contrasenya.</translation>
     </message>
 </context>
 <context>
@@ -2171,16 +2174,6 @@ Aneu amb compte.</translation>
         <translation>No més de la capacitat màxima, si us plau.</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="241"/>
-        <location filename="../widgets/resizedialog.cpp" line="302"/>
-        <source>No less than the used capacity please</source>
-        <translation>No menys de la capacitat usada, si us plau.</translation>
-    </message>
-    <message>
-        <source>Space limit exceeded</source>
-        <translation type="vanished">S&apos;ha excedit el límit d&apos;espai.</translation>
-    </message>
-    <message>
         <location filename="../widgets/resizedialog.cpp" line="227"/>
         <source>The file system does not support shrinking space</source>
         <translation>El sistema de fitxers no admet la reducció d&apos;espai.</translation>
@@ -2195,8 +2188,10 @@ Aneu amb compte.</translation>
         <translation>D&apos;acord</translation>
     </message>
     <message>
-        <source>Not enough space, please clear data in it</source>
-        <translation type="vanished">No hi ha prou espai. Si us plau, elimineu-ne dades.</translation>
+        <location filename="../widgets/resizedialog.cpp" line="241"/>
+        <location filename="../widgets/resizedialog.cpp" line="302"/>
+        <source>No less than the used capacity please</source>
+        <translation>No menys de la capacitat usada, si us plau.</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="248"/>
@@ -2308,12 +2303,6 @@ Aneu amb compte.</translation>
         <translation>No es pot muntar el dispositiu: no s&apos;ha trobat cap sistema de fitxers o el sistema de fitxers no és compatible.</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="339"/>
-        <location filename="../widgets/titlewidget.cpp" line="433"/>
-        <source>The file system does not support space adjustment</source>
-        <translation>El sistema de fitxers no admet el canvi de mida.</translation>
-    </message>
-    <message>
         <location filename="../widgets/titlewidget.cpp" line="240"/>
         <location filename="../widgets/titlewidget.cpp" line="339"/>
         <location filename="../widgets/titlewidget.cpp" line="383"/>
@@ -2324,6 +2313,12 @@ Aneu amb compte.</translation>
         <location filename="../widgets/titlewidget.cpp" line="596"/>
         <source>OK</source>
         <translation>D&apos;acord</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="339"/>
+        <location filename="../widgets/titlewidget.cpp" line="433"/>
+        <source>The file system does not support space adjustment</source>
+        <translation>El sistema de fitxers no admet el canvi de mida.</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="359"/>

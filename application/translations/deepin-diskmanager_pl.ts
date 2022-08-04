@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="pl">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.0" language="pl">
 <context>
     <name>CreateLVWidget</name>
     <message>
@@ -8,13 +8,13 @@
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="57"/>
-        <source>Click ‘+’ to create a logical volume. </source>
-        <translation>Kliknij &apos;+&apos;, aby utworzyć wolumin logiczny</translation>
+        <source>Click %1 to create a logical volume. </source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="124"/>
         <source>VG Information</source>
-        <translation>Informacje GW:</translation>
+        <translation>Informacje GW</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="138"/>
@@ -32,7 +32,7 @@
         <location filename="../widgets/createlvwidget.cpp" line="161"/>
         <location filename="../widgets/createlvwidget.cpp" line="1004"/>
         <source>VG name:</source>
-        <translation>Nazwa WL:</translation>
+        <translation>Nazwa GW:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="169"/>
@@ -58,7 +58,7 @@
         <location filename="../widgets/createlvwidget.cpp" line="249"/>
         <source>Revert</source>
         <comment>button</comment>
-        <translation>Odwróć</translation>
+        <translation>Przywróć</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="279"/>
@@ -312,16 +312,16 @@ will format it and remove its password.</source>
 sformatuje ją i usunie jej hasło.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1925"/>
-        <source>Not enough space to back up data on %1, please clear disk space</source>
-        <translation>Niewystarczająca ilość miejsca do utworzenia kopii zapasowej na %1, uprzątnij dysk i spróbuj ponownie</translation>
-    </message>
-    <message>
         <location filename="../widgets/createvgwidget.cpp" line="1706"/>
         <location filename="../widgets/createvgwidget.cpp" line="1800"/>
         <location filename="../widgets/createvgwidget.cpp" line="1926"/>
         <source>OK</source>
         <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1925"/>
+        <source>Not enough space to back up data on %1, please clear disk space</source>
+        <translation>Niewystarczająca ilość miejsca do utworzenia kopii zapasowej na %1, uprzątnij dysk i spróbuj ponownie</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2090"/>
@@ -473,11 +473,6 @@ sformatuje ją i usunie jej hasło.</translation>
         <translation>%1 nie udało się zamknąć krypto-mapy</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="853"/>
-        <source>Failed to create a logical volume, please try again!</source>
-        <translation>Nie udało się utworzyć woluminu logicznego, spróbuj ponownie!</translation>
-    </message>
-    <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="818"/>
         <source>Failed to create partitions, please try again!</source>
         <translation>Nie udało się utworzyć partycji, spróbuj ponownie!</translation>
@@ -519,6 +514,11 @@ sformatuje ją i usunie jej hasło.</translation>
         <source>Creating partition table failed</source>
         <translation>Tworzenie nowej tablicy partycji zakończone niepowodzeniem</translation>
     </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="853"/>
+        <source>Failed to create a logical volume, please try again!</source>
+        <translation>Nie udało się utworzyć woluminu logicznego, spróbuj ponownie!</translation>
+    </message>
 </context>
 <context>
     <name>DecryptDialog</name>
@@ -555,39 +555,39 @@ sformatuje ją i usunie jej hasło.</translation>
         <translation>Rozszyfruj</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="175"/>
+        <location filename="../widgets/decryptdialog.cpp" line="174"/>
         <source>Decrypting...</source>
         <translation>Rozszyfrowywanie...</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="337"/>
-        <source>Decryption failed</source>
-        <translation>Rozszyfrowywanie nieudane</translation>
-    </message>
-    <message>
-        <location filename="../widgets/decryptdialog.cpp" line="355"/>
-        <source>Wrong password, %1 chances left</source>
-        <translation>Nieprawidłowe hasło, pozostały %1 próby</translation>
-    </message>
-    <message>
-        <location filename="../widgets/decryptdialog.cpp" line="357"/>
-        <source>Wrong password, only one chance left</source>
-        <translation>Nieprawidłowe hasło, pozostała tylko %1 próba</translation>
-    </message>
-    <message>
-        <location filename="../widgets/decryptdialog.cpp" line="219"/>
+        <location filename="../widgets/decryptdialog.cpp" line="218"/>
         <source>Please try again %1 minutes later</source>
         <translation>Spróbuj ponownie za %1 minut</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="300"/>
+        <location filename="../widgets/decryptdialog.cpp" line="299"/>
         <source>The password cannot be empty</source>
         <translation>Pole na hasło nie może być puste</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="353"/>
+        <location filename="../widgets/decryptdialog.cpp" line="336"/>
+        <source>Decryption failed</source>
+        <translation>Rozszyfrowywanie nieudane</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="352"/>
         <source>Password locked, please try again %1 minutes later</source>
         <translation>Hasło zablokowane, spróbuj ponownie za %1 minut</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="354"/>
+        <source>Wrong password, %1 chances left</source>
+        <translation>Nieprawidłowe hasło, pozostały %1 próby</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="356"/>
+        <source>Wrong password, only one chance left</source>
+        <translation>Nieprawidłowe hasło, pozostała tylko jedna próba</translation>
     </message>
 </context>
 <context>
@@ -830,6 +830,17 @@ sformatuje ją i usunie jej hasło.</translation>
         <translation>Najpierw odmontuj wszystkie woluminy logiczne w %1</translation>
     </message>
     <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
+        <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
+        <translation>Nie będzie można odzyskać usuniętych danych, potwierdź przed przejściem dalej</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="608"/>
+        <source>The disks will be formatted if you create a logical volume</source>
+        <translation>Utworzenie woluminu logicznego sformatuje wybrane dyski</translation>
+    </message>
+    <message>
         <location filename="../widgets/devicelistwidget.cpp" line="632"/>
         <source>Unmount %1 first</source>
         <translation>Najpierw odmontuj %1</translation>
@@ -844,17 +855,6 @@ sformatuje ją i usunie jej hasło.</translation>
         <location filename="../widgets/devicelistwidget.cpp" line="715"/>
         <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
         <translation>Wolumin logiczny jest zajęty i nie może zostać usunięty. Uruchom ponownie komputer i spróbuj ponownie.</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
-        <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation>Nie będzie można odzyskać usuniętych danych, potwierdź przed przejściem dalej</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="608"/>
-        <source>The disks will be formatted if you create a logical volume</source>
-        <translation>Utworzenie woluminu logicznego sformatuje wybrane dyski</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="683"/>
@@ -1067,7 +1067,7 @@ sformatuje ją i usunie jej hasło.</translation>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="988"/>
         <source>Please back up all data before repair.</source>
-        <translation>Prosimy o utworzenie kopii zapasowej danych przed próbą naprawy.</translation>
+        <translation>Utwórz kopię zapasową danych przed próbą naprawy.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="1002"/>
@@ -1478,7 +1478,7 @@ sformatuje ją i usunie jej hasło.</translation>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="346"/>
         <source>The action cannot be undone, please proceed with caution</source>
-        <translation>Tej akcji nie można cofnąć, prosimy zachować ostrożność przed przejściem dalej</translation>
+        <translation>Tej akcji nie można cofnąć, prosimy zachować ostrożność</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="348"/>
@@ -1564,14 +1564,6 @@ sformatuje ją i usunie jej hasło.</translation>
         <location filename="../widgets/formatedialog.cpp" line="753"/>
         <source>Failed to wipe %1</source>
         <translation>Nie udało się wymazać %1</translation>
-    </message>
-    <message>
-        <source>Failed to get the partition info</source>
-        <translation type="vanished">Nie udało się uzyskać informacji o partycji</translation>
-    </message>
-    <message>
-        <source>Failed to delete the partition</source>
-        <translation type="vanished">Nie udało się usunąć partycji</translation>
     </message>
 </context>
 <context>
@@ -1713,7 +1705,7 @@ sformatuje ją i usunie jej hasło.</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="90"/>
-        <location filename="../widgets/mountdialog.cpp" line="245"/>
+        <location filename="../widgets/mountdialog.cpp" line="252"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
@@ -1723,12 +1715,23 @@ sformatuje ją i usunie jej hasło.</translation>
         <translation>Zamontuj</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="244"/>
+        <location filename="../widgets/mountdialog.cpp" line="275"/>
+        <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="276"/>
+        <source>OK</source>
+        <comment>button</comment>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="251"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>Dane w tym punkcie montowania zostaną utracone, zamontuj katalog w innej lokalizacji</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="245"/>
+        <location filename="../widgets/mountdialog.cpp" line="252"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>Kontynuuj</translation>
@@ -1811,8 +1814,8 @@ sformatuje ją i usunie jej hasło.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="61"/>
-        <source>Click ‘+’ to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation>Kliknij „+”, aby zwiększyć liczbę partycji. Kliknij każdą partycję, aby zmienić jej nazwę i system plików.</translation>
+        <source>Click â+â to increase the number of partitions. Click on each partition to change its name and file system.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="128"/>
@@ -1860,7 +1863,7 @@ sformatuje ją i usunie jej hasło.</translation>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="253"/>
         <source>Revert</source>
         <comment>button</comment>
-        <translation>Odwróć</translation>
+        <translation>Przywróć</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="283"/>
@@ -1934,7 +1937,7 @@ sformatuje ją i usunie jej hasło.</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="887"/>
         <source>Set a password to encrypt the new partition</source>
-        <translation type="unfinished"/>
+        <translation>Ustaw hasło do zaszyfrowania nowej partycji</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="906"/>
@@ -1997,6 +2000,11 @@ sformatuje ją i usunie jej hasło.</translation>
         <translation>Wprowadź ponownie hasło</translation>
     </message>
     <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="117"/>
+        <source>Enter a password hint</source>
+        <translation>Wprowadź wskazówkę do hasła</translation>
+    </message>
+    <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="160"/>
         <source>Cancel</source>
         <comment>button</comment>
@@ -2029,11 +2037,6 @@ sformatuje ją i usunie jej hasło.</translation>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="268"/>
         <source>The password hint should differ from the password</source>
         <translation>Wskazówka do hasła powinna się różnić od hasła</translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="117"/>
-        <source>Enter a password hint</source>
-        <translation>Wprowadź wskazówkę do hasła</translation>
     </message>
 </context>
 <context>
@@ -2124,7 +2127,7 @@ sformatuje ją i usunie jej hasło.</translation>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="52"/>
         <source>It will resize the partitions on the disk</source>
-        <translation>Zmieni rozmiar partycji na dysku</translation>
+        <translation>Rozmiar partycji na dysku zostanie zmieniony</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="72"/>
@@ -2169,16 +2172,6 @@ sformatuje ją i usunie jej hasło.</translation>
         <translation>Wartość nie może być większa od maks. pojemności</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="241"/>
-        <location filename="../widgets/resizedialog.cpp" line="302"/>
-        <source>No less than the used capacity please</source>
-        <translation>Wartość nie może być mniejsza od pojemności już w użyciu</translation>
-    </message>
-    <message>
-        <source>Space limit exceeded</source>
-        <translation type="vanished">Przekroczono limit miejsca</translation>
-    </message>
-    <message>
         <location filename="../widgets/resizedialog.cpp" line="227"/>
         <source>The file system does not support shrinking space</source>
         <translation>System plików nie wspiera zmniejszania przestrzeni dyskowej</translation>
@@ -2193,8 +2186,10 @@ sformatuje ją i usunie jej hasło.</translation>
         <translation>OK</translation>
     </message>
     <message>
-        <source>Not enough space, please clear data in it</source>
-        <translation type="vanished">Brak wystarczającego miejsca, prosimy o uprzątnięcie dysku</translation>
+        <location filename="../widgets/resizedialog.cpp" line="241"/>
+        <location filename="../widgets/resizedialog.cpp" line="302"/>
+        <source>No less than the used capacity please</source>
+        <translation>Wartość nie może być mniejsza od pojemności już w użyciu</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="248"/>
@@ -2306,12 +2301,6 @@ sformatuje ją i usunie jej hasło.</translation>
         <translation>Nie udało się zamontować urządzenia: nie udało się odnaleźć lub uszkodzony system plików</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="339"/>
-        <location filename="../widgets/titlewidget.cpp" line="433"/>
-        <source>The file system does not support space adjustment</source>
-        <translation>System plików nie wspiera regulacji przestrzeni dyskowej</translation>
-    </message>
-    <message>
         <location filename="../widgets/titlewidget.cpp" line="240"/>
         <location filename="../widgets/titlewidget.cpp" line="339"/>
         <location filename="../widgets/titlewidget.cpp" line="383"/>
@@ -2322,6 +2311,12 @@ sformatuje ją i usunie jej hasło.</translation>
         <location filename="../widgets/titlewidget.cpp" line="596"/>
         <source>OK</source>
         <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="339"/>
+        <location filename="../widgets/titlewidget.cpp" line="433"/>
+        <source>The file system does not support space adjustment</source>
+        <translation>System plików nie wspiera regulacji przestrzeni dyskowej</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="359"/>

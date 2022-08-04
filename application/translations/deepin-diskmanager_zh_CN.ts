@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="zh_CN">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.0" language="zh_CN">
 <context>
     <name>CreateLVWidget</name>
     <message>
@@ -8,8 +8,8 @@
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="57"/>
-        <source>Click ‘+’ to create a logical volume. </source>
-        <translation>点击“+”按钮创建逻辑卷</translation>
+        <source>Click %1 to create a logical volume. </source>
+        <translation>点击“%1”按钮创建逻辑卷</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="124"/>
@@ -312,16 +312,16 @@ will format it and remove its password.</source>
 并删除加密磁盘/分区的密码</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1925"/>
-        <source>Not enough space to back up data on %1, please clear disk space</source>
-        <translation>剩余空间不足，移除%1将会造成数据丢失，请先清理空间</translation>
-    </message>
-    <message>
         <location filename="../widgets/createvgwidget.cpp" line="1706"/>
         <location filename="../widgets/createvgwidget.cpp" line="1800"/>
         <location filename="../widgets/createvgwidget.cpp" line="1926"/>
         <source>OK</source>
         <translation>确 定</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1925"/>
+        <source>Not enough space to back up data on %1, please clear disk space</source>
+        <translation>剩余空间不足，移除%1将会造成数据丢失，请先清理空间</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2090"/>
@@ -473,11 +473,6 @@ will format it and remove its password.</source>
         <translation>%1关闭加密映射失败</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="853"/>
-        <source>Failed to create a logical volume, please try again!</source>
-        <translation>逻辑卷创建失败，请重试！</translation>
-    </message>
-    <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="818"/>
         <source>Failed to create partitions, please try again!</source>
         <translation>创建分区失败，请重试！</translation>
@@ -519,6 +514,11 @@ will format it and remove its password.</source>
         <source>Creating partition table failed</source>
         <translation>新建分区表失败</translation>
     </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="853"/>
+        <source>Failed to create a logical volume, please try again!</source>
+        <translation>逻辑卷创建失败，请重试！</translation>
+    </message>
 </context>
 <context>
     <name>DecryptDialog</name>
@@ -555,39 +555,39 @@ will format it and remove its password.</source>
         <translation>解 锁</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="175"/>
+        <location filename="../widgets/decryptdialog.cpp" line="174"/>
         <source>Decrypting...</source>
         <translation>正在解锁，请稍候...</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="337"/>
-        <source>Decryption failed</source>
-        <translation>解锁失败</translation>
-    </message>
-    <message>
-        <location filename="../widgets/decryptdialog.cpp" line="355"/>
-        <source>Wrong password, %1 chances left</source>
-        <translation>密码错误，您还可以尝试%1次</translation>
-    </message>
-    <message>
-        <location filename="../widgets/decryptdialog.cpp" line="357"/>
-        <source>Wrong password, only one chance left</source>
-        <translation>密码错误，您还可以尝试1次</translation>
-    </message>
-    <message>
-        <location filename="../widgets/decryptdialog.cpp" line="219"/>
+        <location filename="../widgets/decryptdialog.cpp" line="218"/>
         <source>Please try again %1 minutes later</source>
         <translation>请%1分钟后再试</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="300"/>
+        <location filename="../widgets/decryptdialog.cpp" line="299"/>
         <source>The password cannot be empty</source>
         <translation>密码不能为空</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="353"/>
+        <location filename="../widgets/decryptdialog.cpp" line="336"/>
+        <source>Decryption failed</source>
+        <translation>解锁失败</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="352"/>
         <source>Password locked, please try again %1 minutes later</source>
         <translation>密码已锁定，请%1分钟后再试</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="354"/>
+        <source>Wrong password, %1 chances left</source>
+        <translation>密码错误，您还可以尝试%1次</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="356"/>
+        <source>Wrong password, only one chance left</source>
+        <translation>密码错误，您还可以尝试1次</translation>
     </message>
 </context>
 <context>
@@ -831,6 +831,17 @@ will format it and remove its password.</source>
         <translation>请先手动卸载%1下所有的逻辑卷</translation>
     </message>
     <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
+        <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
+        <translation>删除后数据将无法恢复，请确认</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="608"/>
+        <source>The disks will be formatted if you create a logical volume</source>
+        <translation>创建逻辑卷将格式化磁盘</translation>
+    </message>
+    <message>
         <location filename="../widgets/devicelistwidget.cpp" line="632"/>
         <source>Unmount %1 first</source>
         <translation>请先手动卸载%1</translation>
@@ -845,17 +856,6 @@ will format it and remove its password.</source>
         <location filename="../widgets/devicelistwidget.cpp" line="715"/>
         <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
         <translation>逻辑卷被占用，无法删除。请重启电脑后重试。</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
-        <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation>删除后数据将无法恢复，请确认</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="608"/>
-        <source>The disks will be formatted if you create a logical volume</source>
-        <translation>创建逻辑卷将格式化磁盘</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="683"/>
@@ -1566,14 +1566,6 @@ will format it and remove its password.</source>
         <source>Failed to wipe %1</source>
         <translation>对%1进行擦除失败</translation>
     </message>
-    <message>
-        <source>Failed to get the partition info</source>
-        <translation type="vanished">获取分区信息失败</translation>
-    </message>
-    <message>
-        <source>Failed to delete the partition</source>
-        <translation type="vanished">删除操作失败</translation>
-    </message>
 </context>
 <context>
     <name>InfoShowWidget</name>
@@ -1714,7 +1706,7 @@ will format it and remove its password.</source>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="90"/>
-        <location filename="../widgets/mountdialog.cpp" line="245"/>
+        <location filename="../widgets/mountdialog.cpp" line="252"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -1724,12 +1716,23 @@ will format it and remove its password.</source>
         <translation>挂载</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="244"/>
+        <location filename="../widgets/mountdialog.cpp" line="275"/>
+        <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
+        <translation>所选挂载点不为空，挂载失败，请更换挂载点！</translation>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="276"/>
+        <source>OK</source>
+        <comment>button</comment>
+        <translation>确 定</translation>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="251"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>此挂载点的数据可能会丢失，建议将目录挂载到其他位置</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="245"/>
+        <location filename="../widgets/mountdialog.cpp" line="252"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>继 续</translation>
@@ -1812,8 +1815,8 @@ will format it and remove its password.</source>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="61"/>
-        <source>Click ‘+’ to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation>点击“+”按钮来增加磁盘上的分区数量，点击每个分区来更改名称样式</translation>
+        <source>Click â+â to increase the number of partitions. Click on each partition to change its name and file system.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="128"/>
@@ -1998,6 +2001,11 @@ will format it and remove its password.</source>
         <translation>请再次输入密码</translation>
     </message>
     <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="117"/>
+        <source>Enter a password hint</source>
+        <translation>请输入提示内容</translation>
+    </message>
+    <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="160"/>
         <source>Cancel</source>
         <comment>button</comment>
@@ -2030,11 +2038,6 @@ will format it and remove its password.</source>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="268"/>
         <source>The password hint should differ from the password</source>
         <translation>提示内容不得与密码相同</translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="117"/>
-        <source>Enter a password hint</source>
-        <translation>请输入提示内容</translation>
     </message>
 </context>
 <context>
@@ -2170,16 +2173,6 @@ will format it and remove its password.</source>
         <translation>超出最大可用空间</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="241"/>
-        <location filename="../widgets/resizedialog.cpp" line="302"/>
-        <source>No less than the used capacity please</source>
-        <translation>不得低于已用空间</translation>
-    </message>
-    <message>
-        <source>Space limit exceeded</source>
-        <translation type="vanished">超出设置范围</translation>
-    </message>
-    <message>
         <location filename="../widgets/resizedialog.cpp" line="227"/>
         <source>The file system does not support shrinking space</source>
         <translation>该文件系统不支持空间缩小</translation>
@@ -2194,8 +2187,10 @@ will format it and remove its password.</source>
         <translation>确 定</translation>
     </message>
     <message>
-        <source>Not enough space, please clear data in it</source>
-        <translation type="vanished">剩余空间不足，请先清理空间</translation>
+        <location filename="../widgets/resizedialog.cpp" line="241"/>
+        <location filename="../widgets/resizedialog.cpp" line="302"/>
+        <source>No less than the used capacity please</source>
+        <translation>不得低于已用空间</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="248"/>
@@ -2307,12 +2302,6 @@ will format it and remove its password.</source>
         <translation>该设备没有文件系统，或文件系统不被支持，无法挂载</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="339"/>
-        <location filename="../widgets/titlewidget.cpp" line="433"/>
-        <source>The file system does not support space adjustment</source>
-        <translation>该文件系统不支持调整空间</translation>
-    </message>
-    <message>
         <location filename="../widgets/titlewidget.cpp" line="240"/>
         <location filename="../widgets/titlewidget.cpp" line="339"/>
         <location filename="../widgets/titlewidget.cpp" line="383"/>
@@ -2323,6 +2312,12 @@ will format it and remove its password.</source>
         <location filename="../widgets/titlewidget.cpp" line="596"/>
         <source>OK</source>
         <translation>确 定</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="339"/>
+        <location filename="../widgets/titlewidget.cpp" line="433"/>
+        <source>The file system does not support space adjustment</source>
+        <translation>该文件系统不支持调整空间</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="359"/>

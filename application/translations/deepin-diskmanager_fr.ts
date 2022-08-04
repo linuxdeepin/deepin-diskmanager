@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="fr">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.0" language="fr">
 <context>
     <name>CreateLVWidget</name>
     <message>
@@ -8,8 +8,8 @@
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="57"/>
-        <source>Click ‘+’ to create a logical volume. </source>
-        <translation>Cliquer sur &apos;+&apos; pour créer un volume logique.</translation>
+        <source>Click %1 to create a logical volume. </source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="124"/>
@@ -114,7 +114,7 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="845"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
-        <translation type="unfinished"/>
+        <translation>Pour éviter de perdre le mot de passe, veuillez sauvegarder votre mot de passe et le conserver correctement !</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="846"/>
@@ -311,16 +311,16 @@ will format it and remove its password.</source>
         <translation>L&apos;ajout du disque/partition à un groupe de volumes logiques ¤¤¤ le formatera et supprimera son mot de passe.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1925"/>
-        <source>Not enough space to back up data on %1, please clear disk space</source>
-        <translation>Espace insuffisant pour sauvegarder les données sur %1, veuillez libérer de l&apos;espace disque</translation>
-    </message>
-    <message>
         <location filename="../widgets/createvgwidget.cpp" line="1706"/>
         <location filename="../widgets/createvgwidget.cpp" line="1800"/>
         <location filename="../widgets/createvgwidget.cpp" line="1926"/>
         <source>OK</source>
         <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1925"/>
+        <source>Not enough space to back up data on %1, please clear disk space</source>
+        <translation>Espace insuffisant pour sauvegarder les données sur %1, veuillez libérer de l&apos;espace disque</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2090"/>
@@ -459,33 +459,28 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="803"/>
         <source>Failed to encrypt %1, please try again!</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de chiffrer %1, veuillez réessayer !</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="807"/>
         <source>Failed to decrypt %1, please try again!</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de déchiffrer %1, veuillez réessayer !</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="811"/>
         <source>%1 failed to close the crypto map</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="853"/>
-        <source>Failed to create a logical volume, please try again!</source>
-        <translation type="unfinished"/>
+        <translation>%1 n&apos;a pas pu fermer la carte de chiffrement</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="818"/>
         <source>Failed to create partitions, please try again!</source>
-        <translation type="unfinished"/>
+        <translation>Échec de la création des partitions, veuillez réessayer !</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="822"/>
         <location filename="../partedproxy/dmdbushandler.cpp" line="857"/>
         <source>Failed to create %1 file system, please try again!</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de créer le système de fichiers %1, veuillez réessayer !</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="826"/>
@@ -496,27 +491,32 @@ will format it and remove its password.</source>
         <location filename="../partedproxy/dmdbushandler.cpp" line="830"/>
         <location filename="../partedproxy/dmdbushandler.cpp" line="861"/>
         <source>DBUS parameter error</source>
-        <translation type="unfinished"/>
+        <translation>Erreur de paramètre DBUS</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="834"/>
         <source>Failed to mount %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de monter %1</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="838"/>
         <source>%1 failed to create mounting folders</source>
-        <translation type="unfinished"/>
+        <translation>%1 n&apos;a pas pu créer les dossiers de montage</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="842"/>
         <source>%1 failed to change the owner of mounting folders</source>
-        <translation type="unfinished"/>
+        <translation>%1 n&apos;a pas pu changer le propriétaire des dossiers de montage</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="846"/>
         <source>Creating partition table failed</source>
         <translation>La création de la table de partition a échoué</translation>
+    </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="853"/>
+        <source>Failed to create a logical volume, please try again!</source>
+        <translation>Échec de la création d&apos;un volume logique, veuillez réessayer !</translation>
     </message>
 </context>
 <context>
@@ -554,39 +554,39 @@ will format it and remove its password.</source>
         <translation>Décrypter</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="175"/>
+        <location filename="../widgets/decryptdialog.cpp" line="174"/>
         <source>Decrypting...</source>
         <translation>Décryptage...</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="337"/>
-        <source>Decryption failed</source>
-        <translation>Le déchiffrement a échoué</translation>
-    </message>
-    <message>
-        <location filename="../widgets/decryptdialog.cpp" line="355"/>
-        <source>Wrong password, %1 chances left</source>
-        <translation>Mauvais mot de passe, %1 chances restantes</translation>
-    </message>
-    <message>
-        <location filename="../widgets/decryptdialog.cpp" line="357"/>
-        <source>Wrong password, only one chance left</source>
-        <translation>Mauvais mot de passe, il ne reste qu&apos;une chance</translation>
-    </message>
-    <message>
-        <location filename="../widgets/decryptdialog.cpp" line="219"/>
+        <location filename="../widgets/decryptdialog.cpp" line="218"/>
         <source>Please try again %1 minutes later</source>
         <translation>Veuillez réessayer %1 minutes plus tard</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="300"/>
+        <location filename="../widgets/decryptdialog.cpp" line="299"/>
         <source>The password cannot be empty</source>
         <translation>Le mot de passe ne peut pas être vide</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="353"/>
+        <location filename="../widgets/decryptdialog.cpp" line="336"/>
+        <source>Decryption failed</source>
+        <translation>Le déchiffrement a échoué</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="352"/>
         <source>Password locked, please try again %1 minutes later</source>
         <translation>Mot de passe verrouillé, veuillez réessayer %1 minutes plus tard</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="354"/>
+        <source>Wrong password, %1 chances left</source>
+        <translation>Mauvais mot de passe, %1 chances restantes</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="356"/>
+        <source>Wrong password, only one chance left</source>
+        <translation>Mauvais mot de passe, il ne reste qu&apos;une chance</translation>
     </message>
 </context>
 <context>
@@ -831,6 +831,17 @@ veillez à prendre toutes les précautions</translation>
         <translation>Démonter d&apos;abord tous les volumes logiques dans %1</translation>
     </message>
     <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
+        <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
+        <translation>Les données ne peuvent pas être récupérées si elles sont supprimées, veuillez confirmer avant de continuer</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="608"/>
+        <source>The disks will be formatted if you create a logical volume</source>
+        <translation>Les disques seront formatés si vous créez un volume logique</translation>
+    </message>
+    <message>
         <location filename="../widgets/devicelistwidget.cpp" line="632"/>
         <source>Unmount %1 first</source>
         <translation>Démonter %1 d&apos;abord</translation>
@@ -845,17 +856,6 @@ veillez à prendre toutes les précautions</translation>
         <location filename="../widgets/devicelistwidget.cpp" line="715"/>
         <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
         <translation>Le volume logique est occupé et ne peut pas être supprimé. Veuillez réessayer après le redémarrage.</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
-        <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation>Les données ne peuvent pas être récupérées si elles sont supprimées, veuillez confirmer avant de continuer</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="608"/>
-        <source>The disks will be formatted if you create a logical volume</source>
-        <translation>Les disques seront formatés si vous créez un volume logique</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="683"/>
@@ -1543,7 +1543,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="640"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
-        <translation type="unfinished"/>
+        <translation>Pour éviter de perdre le mot de passe, veuillez sauvegarder votre mot de passe et le conserver correctement !</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="641"/>
@@ -1565,14 +1565,6 @@ veillez à prendre toutes les précautions</translation>
         <location filename="../widgets/formatedialog.cpp" line="753"/>
         <source>Failed to wipe %1</source>
         <translation>Impossible d&apos;effacer %1</translation>
-    </message>
-    <message>
-        <source>Failed to get the partition info</source>
-        <translation type="vanished">Impossible d&apos;obtenir les informations sur la partition</translation>
-    </message>
-    <message>
-        <source>Failed to delete the partition</source>
-        <translation type="vanished">Impossible de supprimer la partition</translation>
     </message>
 </context>
 <context>
@@ -1714,7 +1706,7 @@ veillez à prendre toutes les précautions</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="90"/>
-        <location filename="../widgets/mountdialog.cpp" line="245"/>
+        <location filename="../widgets/mountdialog.cpp" line="252"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
@@ -1724,12 +1716,23 @@ veillez à prendre toutes les précautions</translation>
         <translation>Monter</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="244"/>
+        <location filename="../widgets/mountdialog.cpp" line="275"/>
+        <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="276"/>
+        <source>OK</source>
+        <comment>button</comment>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="251"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>Les données sous ce point de montage seraient perdues, veuillez monter le répertoire à un autre endroit</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="245"/>
+        <location filename="../widgets/mountdialog.cpp" line="252"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>Continuer</translation>
@@ -1812,8 +1815,8 @@ veillez à prendre toutes les précautions</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="61"/>
-        <source>Click ‘+’ to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation>Cliquer sur &quot;+&quot; pour augmenter le nombre de partitions. Cliquer sur chaque partition pour changer son nom et son système de fichiers.</translation>
+        <source>Click â+â to increase the number of partitions. Click on each partition to change its name and file system.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="128"/>
@@ -1935,12 +1938,12 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="887"/>
         <source>Set a password to encrypt the new partition</source>
-        <translation type="unfinished"/>
+        <translation>Définir un mot de passe pour chiffrer la nouvelle partition</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="906"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
-        <translation type="unfinished"/>
+        <translation>Pour éviter de perdre le mot de passe, veuillez sauvegarder votre mot de passe et le conserver correctement !</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="907"/>
@@ -1998,6 +2001,11 @@ veillez à prendre toutes les précautions</translation>
         <translation>Entrer à nouveau le mot de passe</translation>
     </message>
     <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="117"/>
+        <source>Enter a password hint</source>
+        <translation>Entrer un indice de mot de passe</translation>
+    </message>
+    <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="160"/>
         <source>Cancel</source>
         <comment>button</comment>
@@ -2030,11 +2038,6 @@ veillez à prendre toutes les précautions</translation>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="268"/>
         <source>The password hint should differ from the password</source>
         <translation>L&apos;indice de mot de passe doit être différent du mot de passe</translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="117"/>
-        <source>Enter a password hint</source>
-        <translation>Entrer un indice de mot de passe</translation>
     </message>
 </context>
 <context>
@@ -2170,16 +2173,6 @@ veillez à prendre toutes les précautions</translation>
         <translation>Pas plus que la capacité maximale s&apos;il vous plaît</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="241"/>
-        <location filename="../widgets/resizedialog.cpp" line="302"/>
-        <source>No less than the used capacity please</source>
-        <translation>Pas moins que la capacité utilisée s&apos;il vous plaît</translation>
-    </message>
-    <message>
-        <source>Space limit exceeded</source>
-        <translation type="vanished">Limite d&apos;espace dépassée</translation>
-    </message>
-    <message>
         <location filename="../widgets/resizedialog.cpp" line="227"/>
         <source>The file system does not support shrinking space</source>
         <translation>Le système de fichiers ne prend pas en charge la réduction de l&apos;espace</translation>
@@ -2194,8 +2187,10 @@ veillez à prendre toutes les précautions</translation>
         <translation>OK</translation>
     </message>
     <message>
-        <source>Not enough space, please clear data in it</source>
-        <translation type="vanished">Espace insuffisant, veuillez effacer les données qu&apos;il contient</translation>
+        <location filename="../widgets/resizedialog.cpp" line="241"/>
+        <location filename="../widgets/resizedialog.cpp" line="302"/>
+        <source>No less than the used capacity please</source>
+        <translation>Pas moins que la capacité utilisée s&apos;il vous plaît</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="248"/>
@@ -2307,12 +2302,6 @@ veillez à prendre toutes les précautions</translation>
         <translation>Impossible de monter le périphérique :  aucun système de fichiers n&apos;a été trouvé ou le système de fichiers n&apos;est pas pris en charge</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="339"/>
-        <location filename="../widgets/titlewidget.cpp" line="433"/>
-        <source>The file system does not support space adjustment</source>
-        <translation>Le système de fichiers ne prend pas en charge l&apos;ajustement de l&apos;espace</translation>
-    </message>
-    <message>
         <location filename="../widgets/titlewidget.cpp" line="240"/>
         <location filename="../widgets/titlewidget.cpp" line="339"/>
         <location filename="../widgets/titlewidget.cpp" line="383"/>
@@ -2323,6 +2312,12 @@ veillez à prendre toutes les précautions</translation>
         <location filename="../widgets/titlewidget.cpp" line="596"/>
         <source>OK</source>
         <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="339"/>
+        <location filename="../widgets/titlewidget.cpp" line="433"/>
+        <source>The file system does not support space adjustment</source>
+        <translation>Le système de fichiers ne prend pas en charge l&apos;ajustement de l&apos;espace</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="359"/>
@@ -2358,7 +2353,8 @@ veillez à prendre toutes les précautions</translation>
         <location filename="../widgets/titlewidget.cpp" line="446"/>
         <source>To ensure the normal use of system backup and restore, 
 rootA and rootB should be resized to the same value</source>
-        <translation type="unfinished"/>
+        <translation>Pour garantir l&apos;utilisation normale de la sauvegarde et de la restauration du système,
+rootA et rootB doivent être redimensionnés à la même valeur</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="462"/>

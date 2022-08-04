@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="fi">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.0" language="fi">
 <context>
     <name>CreateLVWidget</name>
     <message>
@@ -8,8 +8,8 @@
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="57"/>
-        <source>Click ‘+’ to create a logical volume. </source>
-        <translation>Luo looginen asema napsauttamalla +.</translation>
+        <source>Click %1 to create a logical volume. </source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="124"/>
@@ -311,16 +311,16 @@ will format it and remove its password.</source>
         <translation>Levyn/osion lisääminen loogiseen levyryhmään alustaa ja poistaa sen salasanan.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1925"/>
-        <source>Not enough space to back up data on %1, please clear disk space</source>
-        <translation>Tila ei riitä varmuuskopiointiin kohteessa %1, tyhjennä levytilaa</translation>
-    </message>
-    <message>
         <location filename="../widgets/createvgwidget.cpp" line="1706"/>
         <location filename="../widgets/createvgwidget.cpp" line="1800"/>
         <location filename="../widgets/createvgwidget.cpp" line="1926"/>
         <source>OK</source>
         <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1925"/>
+        <source>Not enough space to back up data on %1, please clear disk space</source>
+        <translation>Tila ei riitä varmuuskopiointiin kohteessa %1, tyhjennä levytilaa</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2090"/>
@@ -472,11 +472,6 @@ will format it and remove its password.</source>
         <translation>%1 salauskartan sulkeminen epäonnistui</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="853"/>
-        <source>Failed to create a logical volume, please try again!</source>
-        <translation>Loogisen aseman luominen epäonnistui, yritä uudelleen!</translation>
-    </message>
-    <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="818"/>
         <source>Failed to create partitions, please try again!</source>
         <translation>Osioiden luominen epäonnistui, yritä uudelleen!</translation>
@@ -518,6 +513,11 @@ will format it and remove its password.</source>
         <source>Creating partition table failed</source>
         <translation>Osion luominen epäonnistui</translation>
     </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="853"/>
+        <source>Failed to create a logical volume, please try again!</source>
+        <translation>Loogisen aseman luominen epäonnistui, yritä uudelleen!</translation>
+    </message>
 </context>
 <context>
     <name>DecryptDialog</name>
@@ -554,39 +554,39 @@ will format it and remove its password.</source>
         <translation>Pura salaus</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="175"/>
+        <location filename="../widgets/decryptdialog.cpp" line="174"/>
         <source>Decrypting...</source>
         <translation>Puretaan salausta...</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="337"/>
-        <source>Decryption failed</source>
-        <translation>Salauksen purku epäonnistui</translation>
-    </message>
-    <message>
-        <location filename="../widgets/decryptdialog.cpp" line="355"/>
-        <source>Wrong password, %1 chances left</source>
-        <translation>Väärä salasana, %1 yritystä jäljellä</translation>
-    </message>
-    <message>
-        <location filename="../widgets/decryptdialog.cpp" line="357"/>
-        <source>Wrong password, only one chance left</source>
-        <translation>Väärä salasana, vain yksi yritys jäljellä</translation>
-    </message>
-    <message>
-        <location filename="../widgets/decryptdialog.cpp" line="219"/>
+        <location filename="../widgets/decryptdialog.cpp" line="218"/>
         <source>Please try again %1 minutes later</source>
         <translation>Yritä uudelleen %1 minuuttia myöhemmin</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="300"/>
+        <location filename="../widgets/decryptdialog.cpp" line="299"/>
         <source>The password cannot be empty</source>
         <translation>Salasana ei voi olla tyhjä</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="353"/>
+        <location filename="../widgets/decryptdialog.cpp" line="336"/>
+        <source>Decryption failed</source>
+        <translation>Salauksen purku epäonnistui</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="352"/>
         <source>Password locked, please try again %1 minutes later</source>
         <translation>Salasana lukittu, yritä uudelleen %1 minuuttia myöhemmin</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="354"/>
+        <source>Wrong password, %1 chances left</source>
+        <translation>Väärä salasana, %1 yritystä jäljellä</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="356"/>
+        <source>Wrong password, only one chance left</source>
+        <translation>Väärä salasana, vain yksi yritys jäljellä</translation>
     </message>
 </context>
 <context>
@@ -831,6 +831,17 @@ Ole huolellinen.</translation>
         <translation>Poista ensin kaikki loogiset asemat kohteesta %1</translation>
     </message>
     <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
+        <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
+        <translation>Dataa ei voida palauttaa, jos ne on poistettu. Vahvista ennen kuin jatkat</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="608"/>
+        <source>The disks will be formatted if you create a logical volume</source>
+        <translation>Levyt alustetaan, jos luot loogisen aseman</translation>
+    </message>
+    <message>
         <location filename="../widgets/devicelistwidget.cpp" line="632"/>
         <source>Unmount %1 first</source>
         <translation>Poista %1 käytöstä ensin</translation>
@@ -845,17 +856,6 @@ Ole huolellinen.</translation>
         <location filename="../widgets/devicelistwidget.cpp" line="715"/>
         <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
         <translation>Looginen asema on varattu, eikä sitä voi poistaa. Yritä uudelleen uudelleenkäynnistyksen jälkeen.</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
-        <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation>Dataa ei voida palauttaa, jos ne on poistettu. Vahvista ennen kuin jatkat</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="608"/>
-        <source>The disks will be formatted if you create a logical volume</source>
-        <translation>Levyt alustetaan, jos luot loogisen aseman</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="683"/>
@@ -1566,14 +1566,6 @@ Ole huolellinen.</translation>
         <source>Failed to wipe %1</source>
         <translation>Pyyhkiminen epäonnistui %1</translation>
     </message>
-    <message>
-        <source>Failed to get the partition info</source>
-        <translation type="vanished">Osion tietoja ei saatu</translation>
-    </message>
-    <message>
-        <source>Failed to delete the partition</source>
-        <translation type="vanished">Osiota ei voitu poistaa</translation>
-    </message>
 </context>
 <context>
     <name>InfoShowWidget</name>
@@ -1714,7 +1706,7 @@ Ole huolellinen.</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="90"/>
-        <location filename="../widgets/mountdialog.cpp" line="245"/>
+        <location filename="../widgets/mountdialog.cpp" line="252"/>
         <source>Cancel</source>
         <translation>Peruuta</translation>
     </message>
@@ -1724,12 +1716,23 @@ Ole huolellinen.</translation>
         <translation>Liitos</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="244"/>
+        <location filename="../widgets/mountdialog.cpp" line="275"/>
+        <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="276"/>
+        <source>OK</source>
+        <comment>button</comment>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="251"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>Tämän liittymispisteen tiedot menetetään, liitä hakemisto toiseen sijaintiin</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="245"/>
+        <location filename="../widgets/mountdialog.cpp" line="252"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>Jatka</translation>
@@ -1812,8 +1815,8 @@ Ole huolellinen.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="61"/>
-        <source>Click ‘+’ to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation>Lisää osioiden määrää valitsemalla &apos;+&apos;. Napsauta kutakin osiota muuttaaksesi sen nimeä tai tiedostojärjestelmää.</translation>
+        <source>Click â+â to increase the number of partitions. Click on each partition to change its name and file system.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="128"/>
@@ -1935,7 +1938,7 @@ Ole huolellinen.</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="887"/>
         <source>Set a password to encrypt the new partition</source>
-        <translation type="unfinished"/>
+        <translation>Aseta salasana uuden osion salaamiseksi</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="906"/>
@@ -1998,6 +2001,11 @@ Ole huolellinen.</translation>
         <translation>Anna salasana uudestaan</translation>
     </message>
     <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="117"/>
+        <source>Enter a password hint</source>
+        <translation>Kirjoita salasanavihje</translation>
+    </message>
+    <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="160"/>
         <source>Cancel</source>
         <comment>button</comment>
@@ -2030,11 +2038,6 @@ Ole huolellinen.</translation>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="268"/>
         <source>The password hint should differ from the password</source>
         <translation>Salasanavihjeen tulee erota salasanasta</translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="117"/>
-        <source>Enter a password hint</source>
-        <translation>Kirjoita salasanavihje</translation>
     </message>
 </context>
 <context>
@@ -2170,16 +2173,6 @@ Ole huolellinen.</translation>
         <translation>Enintään maksimikapasiteetti</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="241"/>
-        <location filename="../widgets/resizedialog.cpp" line="302"/>
-        <source>No less than the used capacity please</source>
-        <translation>Vähintään käytetty kapasiteetti</translation>
-    </message>
-    <message>
-        <source>Space limit exceeded</source>
-        <translation type="vanished">Tilaraja ylitetty</translation>
-    </message>
-    <message>
         <location filename="../widgets/resizedialog.cpp" line="227"/>
         <source>The file system does not support shrinking space</source>
         <translation>Tiedostojärjestelmä ei tue tilan pienentämistä</translation>
@@ -2194,8 +2187,10 @@ Ole huolellinen.</translation>
         <translation>OK</translation>
     </message>
     <message>
-        <source>Not enough space, please clear data in it</source>
-        <translation type="vanished">Tila ei riitä, tyhjennä siltä dataa</translation>
+        <location filename="../widgets/resizedialog.cpp" line="241"/>
+        <location filename="../widgets/resizedialog.cpp" line="302"/>
+        <source>No less than the used capacity please</source>
+        <translation>Vähintään käytetty kapasiteetti</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="248"/>
@@ -2307,12 +2302,6 @@ Ole huolellinen.</translation>
         <translation>Laitetta ei voi liittää: tiedostojärjestelmää ei löydy tai sitä ei tueta</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="339"/>
-        <location filename="../widgets/titlewidget.cpp" line="433"/>
-        <source>The file system does not support space adjustment</source>
-        <translation>Tiedostojärjestelmä ei tue tilan säätöä</translation>
-    </message>
-    <message>
         <location filename="../widgets/titlewidget.cpp" line="240"/>
         <location filename="../widgets/titlewidget.cpp" line="339"/>
         <location filename="../widgets/titlewidget.cpp" line="383"/>
@@ -2323,6 +2312,12 @@ Ole huolellinen.</translation>
         <location filename="../widgets/titlewidget.cpp" line="596"/>
         <source>OK</source>
         <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="339"/>
+        <location filename="../widgets/titlewidget.cpp" line="433"/>
+        <source>The file system does not support space adjustment</source>
+        <translation>Tiedostojärjestelmä ei tue tilan säätöä</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="359"/>

@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="az">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.0" language="az">
 <context>
     <name>CreateLVWidget</name>
     <message>
@@ -8,8 +8,8 @@
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="57"/>
-        <source>Click ‘+’ to create a logical volume. </source>
-        <translation>Məntiqi tutum yaratmaq üçün &quot;+&quot; vurun.</translation>
+        <source>Click %1 to create a logical volume. </source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="124"/>
@@ -312,16 +312,16 @@ will format it and remove its password.</source>
 onu formatlayacaq və şifrəsini siləcək.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1925"/>
-        <source>Not enough space to back up data on %1, please clear disk space</source>
-        <translation>%1 üzərində verilənlərin saxlanıması üçün kifayət qədər yer yoxdur, lütfən diskdə yer boşaldın</translation>
-    </message>
-    <message>
         <location filename="../widgets/createvgwidget.cpp" line="1706"/>
         <location filename="../widgets/createvgwidget.cpp" line="1800"/>
         <location filename="../widgets/createvgwidget.cpp" line="1926"/>
         <source>OK</source>
         <translation>OLDU</translation>
+    </message>
+    <message>
+        <location filename="../widgets/createvgwidget.cpp" line="1925"/>
+        <source>Not enough space to back up data on %1, please clear disk space</source>
+        <translation>%1 üzərində verilənlərin saxlanıması üçün kifayət qədər yer yoxdur, lütfən diskdə yer boşaldın</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2090"/>
@@ -473,11 +473,6 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
         <translation>%1 kripto xəritəni bağlaya bilmədi</translation>
     </message>
     <message>
-        <location filename="../partedproxy/dmdbushandler.cpp" line="853"/>
-        <source>Failed to create a logical volume, please try again!</source>
-        <translation>Məntiqi tutum yaratmaq mümkün olmadı, lütfən yenidən cəhd edin!</translation>
-    </message>
-    <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="818"/>
         <source>Failed to create partitions, please try again!</source>
         <translation>Bölmələr yaratmaq mümkün olmadı, lütfən yenidən cəhd edin!</translation>
@@ -519,6 +514,11 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
         <source>Creating partition table failed</source>
         <translation>Bölmələr cədvəli yaradıla bilmədi</translation>
     </message>
+    <message>
+        <location filename="../partedproxy/dmdbushandler.cpp" line="853"/>
+        <source>Failed to create a logical volume, please try again!</source>
+        <translation>Məntiqi tutum yaratmaq mümkün olmadı, lütfən yenidən cəhd edin!</translation>
+    </message>
 </context>
 <context>
     <name>DecryptDialog</name>
@@ -555,39 +555,39 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
         <translation>Şifrəni açın</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="175"/>
+        <location filename="../widgets/decryptdialog.cpp" line="174"/>
         <source>Decrypting...</source>
         <translation>Şifrə açılır...</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="337"/>
-        <source>Decryption failed</source>
-        <translation>Şifrəsini açmaq mümkün olmadı</translation>
-    </message>
-    <message>
-        <location filename="../widgets/decryptdialog.cpp" line="355"/>
-        <source>Wrong password, %1 chances left</source>
-        <translation>Şifrə səhvdir, %1 cəhd qaldı</translation>
-    </message>
-    <message>
-        <location filename="../widgets/decryptdialog.cpp" line="357"/>
-        <source>Wrong password, only one chance left</source>
-        <translation>Şifrə səhvdir, yalnız bir cəhd qaldı</translation>
-    </message>
-    <message>
-        <location filename="../widgets/decryptdialog.cpp" line="219"/>
+        <location filename="../widgets/decryptdialog.cpp" line="218"/>
         <source>Please try again %1 minutes later</source>
         <translation>Lütfən %1 dəqiqə sonra yenidən cəhd edin</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="300"/>
+        <location filename="../widgets/decryptdialog.cpp" line="299"/>
         <source>The password cannot be empty</source>
         <translation>Çifrə boş ola bilməz</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="353"/>
+        <location filename="../widgets/decryptdialog.cpp" line="336"/>
+        <source>Decryption failed</source>
+        <translation>Şifrəsini açmaq mümkün olmadı</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="352"/>
         <source>Password locked, please try again %1 minutes later</source>
         <translation>Şifrə kilidləndi, lütfən %1 dəqiqə sonra cəhd edin</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="354"/>
+        <source>Wrong password, %1 chances left</source>
+        <translation>Şifrə səhvdir, %1 cəhd qaldı</translation>
+    </message>
+    <message>
+        <location filename="../widgets/decryptdialog.cpp" line="356"/>
+        <source>Wrong password, only one chance left</source>
+        <translation>Şifrə səhvdir, yalnız bir cəhd qaldı</translation>
     </message>
 </context>
 <context>
@@ -830,6 +830,17 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
         <translation>Öncə %1 daxilindəki bütün məntiqi tutumları ayıtın</translation>
     </message>
     <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
+        <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
+        <translation>Əgər silinərsə məlumatlar bərpa oluna bilməz, lütfən davam etmədən öncə təsdiq edin</translation>
+    </message>
+    <message>
+        <location filename="../widgets/devicelistwidget.cpp" line="608"/>
+        <source>The disks will be formatted if you create a logical volume</source>
+        <translation>Məntiqi tutum yaratsanız disklər formatlanacaqdır</translation>
+    </message>
+    <message>
         <location filename="../widgets/devicelistwidget.cpp" line="632"/>
         <source>Unmount %1 first</source>
         <translation>Öncə %1 ayırın</translation>
@@ -844,17 +855,6 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
         <location filename="../widgets/devicelistwidget.cpp" line="715"/>
         <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
         <translation>Məntiqi tutumlar məşğuldur və silinə bilməz. Yenidən başlatdıqdan sonra bir daha cəhd edin</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="591"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="644"/>
-        <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation>Əgər silinərsə məlumatlar bərpa oluna bilməz, lütfən davam etmədən öncə təsdiq edin</translation>
-    </message>
-    <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="608"/>
-        <source>The disks will be formatted if you create a logical volume</source>
-        <translation>Məntiqi tutum yaratsanız disklər formatlanacaqdır</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="683"/>
@@ -1565,14 +1565,6 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
         <source>Failed to wipe %1</source>
         <translation>%1 silinmədi</translation>
     </message>
-    <message>
-        <source>Failed to get the partition info</source>
-        <translation type="vanished">Bölmə haqqında məlumat alınmadı</translation>
-    </message>
-    <message>
-        <source>Failed to delete the partition</source>
-        <translation type="vanished">Bölmə silinə bilmədi</translation>
-    </message>
 </context>
 <context>
     <name>InfoShowWidget</name>
@@ -1713,7 +1705,7 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="90"/>
-        <location filename="../widgets/mountdialog.cpp" line="245"/>
+        <location filename="../widgets/mountdialog.cpp" line="252"/>
         <source>Cancel</source>
         <translation>İmtina</translation>
     </message>
@@ -1723,12 +1715,23 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
         <translation>Qoşmaq</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="244"/>
+        <location filename="../widgets/mountdialog.cpp" line="275"/>
+        <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="276"/>
+        <source>OK</source>
+        <comment>button</comment>
+        <translation>OLDU</translation>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="251"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>Bu qoşulma nöqtəsi altındakı verilənlər itiriləcəkdir, kataloqu başqa yerə qoşmanız xahiş olunur</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="245"/>
+        <location filename="../widgets/mountdialog.cpp" line="252"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>Davam edin</translation>
@@ -1811,8 +1814,8 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="61"/>
-        <source>Click ‘+’ to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation>&quot;+&quot; ilə bölmənin sayını artırın. Hər bölmənin üzərinə vuraraq onun adını və fayl sistemini dəyişdirin.</translation>
+        <source>Click â+â to increase the number of partitions. Click on each partition to change its name and file system.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="128"/>
@@ -1934,7 +1937,7 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="887"/>
         <source>Set a password to encrypt the new partition</source>
-        <translation type="unfinished"/>
+        <translation>Yeni bölməni şifrələmək üçün şifrə təyin edin</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="906"/>
@@ -1997,6 +2000,11 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
         <translation>Şifrəni yenidən daxil edin</translation>
     </message>
     <message>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="117"/>
+        <source>Enter a password hint</source>
+        <translation>Şifrə ipucunu yazın</translation>
+    </message>
+    <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="160"/>
         <source>Cancel</source>
         <comment>button</comment>
@@ -2029,11 +2037,6 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="268"/>
         <source>The password hint should differ from the password</source>
         <translation>Şifrə ipucu şifrədən fərqli olmalıdır</translation>
-    </message>
-    <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="117"/>
-        <source>Enter a password hint</source>
-        <translation>Şifrə ipucunu yazın</translation>
     </message>
 </context>
 <context>
@@ -2169,16 +2172,6 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
         <translation>Lütfən ən böyük ölçüdən çox olmasın</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="241"/>
-        <location filename="../widgets/resizedialog.cpp" line="302"/>
-        <source>No less than the used capacity please</source>
-        <translation>Lütfən istifadə olunan ölçüdən az olmasın</translation>
-    </message>
-    <message>
-        <source>Space limit exceeded</source>
-        <translation type="vanished">Boş sahə həddi keçdi</translation>
-    </message>
-    <message>
         <location filename="../widgets/resizedialog.cpp" line="227"/>
         <source>The file system does not support shrinking space</source>
         <translation>Fayl sistemi boş yerin sıxalaşdırılmasını dəstəkləmir</translation>
@@ -2193,8 +2186,10 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
         <translation>OLDU</translation>
     </message>
     <message>
-        <source>Not enough space, please clear data in it</source>
-        <translation type="vanished">Kifayət qədət yer yoxdur, lütfən ondakı məlumatları silin</translation>
+        <location filename="../widgets/resizedialog.cpp" line="241"/>
+        <location filename="../widgets/resizedialog.cpp" line="302"/>
+        <source>No less than the used capacity please</source>
+        <translation>Lütfən istifadə olunan ölçüdən az olmasın</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="248"/>
@@ -2306,12 +2301,6 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
         <translation>Cihazı qoşmaq mümkün olmadı: fayl sistemi tapılmadı və ya fayl sistemi dəstəklənmir</translation>
     </message>
     <message>
-        <location filename="../widgets/titlewidget.cpp" line="339"/>
-        <location filename="../widgets/titlewidget.cpp" line="433"/>
-        <source>The file system does not support space adjustment</source>
-        <translation>Bu sistem boş yer yaradılmasını dəstəkləmir</translation>
-    </message>
-    <message>
         <location filename="../widgets/titlewidget.cpp" line="240"/>
         <location filename="../widgets/titlewidget.cpp" line="339"/>
         <location filename="../widgets/titlewidget.cpp" line="383"/>
@@ -2322,6 +2311,12 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
         <location filename="../widgets/titlewidget.cpp" line="596"/>
         <source>OK</source>
         <translation>OLDU</translation>
+    </message>
+    <message>
+        <location filename="../widgets/titlewidget.cpp" line="339"/>
+        <location filename="../widgets/titlewidget.cpp" line="433"/>
+        <source>The file system does not support space adjustment</source>
+        <translation>Bu sistem boş yer yaradılmasını dəstəkləmir</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="359"/>

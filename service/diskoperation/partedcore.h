@@ -1086,7 +1086,7 @@ private:
     * @param
     * @return
     */
-    void DeleteMountPointExclude(const QString &devPath);
+    void deleteMountPointExclude(const QString &devPath);
 signals:
     //硬件刷新相关信号
     /**

@@ -27,6 +27,7 @@
 #include <QJsonObject>
 #include <QProcess>
 #include <QTextStream>
+#include <QDebug>
 
 DeviceInfoMap *LUKSOperator::m_dev = nullptr;
 LVMInfo *LUKSOperator::m_lvmInfo = nullptr;
@@ -109,6 +110,7 @@ bool LUKSOperator::encrypt(LUKSMap &luks, LUKS_INFO &luksInfo)
     }
     //加密
     if (!format(luksInfo)) {
+        qCritical() << Q_FUNC_INFO << "format failed";
         return setLUKSErr(luks, CRYPTError::CRYPT_ERR_ENCRYPT_FAILED);
     }
     //添加错误记录
@@ -494,8 +496,14 @@ bool LUKSOperator::format(const LUKS_INFO &luks)
     proc.start("/bin/bash", options);
     proc.waitForFinished(-1);
     proc.waitForReadyRead();
+    QString outPut = proc.readAllStandardOutput();
+    QString error = proc.errorString();
     proc.close();
-    return proc.exitCode() == 0;
+    bool success = (proc.exitCode() == 0);
+    if (!success) {
+        qCritical() << Q_FUNC_INFO << "output:" << outPut << "\terror:" << error;
+    }
+    return success;
 }
 
 bool LUKSOperator::open(const LUKS_INFO &luks)

@@ -202,8 +202,16 @@ void MountDialog::mountCurPath()
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
+        if (!onCheckMountPoint(lvInfo.m_lvFsType, m_fileChooserEdit->text())) {
+            return;
+        }
+
         if (lvInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(lvInfo.m_lvPath);
+            if (!onCheckMountPoint(luksInfo.m_mapper.m_luksFs, m_fileChooserEdit->text())) {
+                return;
+            }
+
             QVector<QString> mountPoints;
             mountPoints.append(m_fileChooserEdit->text());
             luksInfo.m_mapper.m_mountPoints = mountPoints;

@@ -9,7 +9,7 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="57"/>
         <source>Click %1 to create a logical volume. </source>
-        <translation type="unfinished"/>
+        <translation>Натисніть %1, щоб створити логічний том. </translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="124"/>
@@ -1707,7 +1707,7 @@ will format it and remove its password.</source>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="90"/>
-        <location filename="../widgets/mountdialog.cpp" line="252"/>
+        <location filename="../widgets/mountdialog.cpp" line="260"/>
         <source>Cancel</source>
         <translation>Скасувати</translation>
     </message>
@@ -1717,23 +1717,23 @@ will format it and remove its password.</source>
         <translation>Змонтувати</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="275"/>
+        <location filename="../widgets/mountdialog.cpp" line="283"/>
         <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
-        <translation type="unfinished"/>
+        <translation>Не вдалося змонтувати: вибрана точка монтування не є порожньою. Будь ласка, виберіть якусь іншу!</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="276"/>
+        <location filename="../widgets/mountdialog.cpp" line="284"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>Гаразд</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="251"/>
+        <location filename="../widgets/mountdialog.cpp" line="259"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>Дані з цією точкою монтування може бути втрачено. Будь ласка, змонтуйте каталог до іншої теки.</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="252"/>
+        <location filename="../widgets/mountdialog.cpp" line="260"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>Продовжити</translation>
@@ -1816,7 +1816,7 @@ will format it and remove its password.</source>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="61"/>
-        <source>Click â+â to increase the number of partitions. Click on each partition to change its name and file system.</source>
+        <source>Click %1 to increase the number of partitions. Click on each partition to change its name and file system.</source>
         <translation type="unfinished"/>
     </message>
     <message>

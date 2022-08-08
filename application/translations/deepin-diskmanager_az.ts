@@ -9,7 +9,7 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="57"/>
         <source>Click %1 to create a logical volume. </source>
-        <translation type="unfinished"/>
+        <translation>Məntiqi tutum yaratmaq üçün %1 seçin.</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="124"/>
@@ -1705,7 +1705,7 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="90"/>
-        <location filename="../widgets/mountdialog.cpp" line="252"/>
+        <location filename="../widgets/mountdialog.cpp" line="260"/>
         <source>Cancel</source>
         <translation>İmtina</translation>
     </message>
@@ -1715,23 +1715,23 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
         <translation>Qoşmaq</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="275"/>
+        <location filename="../widgets/mountdialog.cpp" line="283"/>
         <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
-        <translation type="unfinished"/>
+        <translation>Qoşulma mümkün olmadı. Seçilmiş qoşulma nöqtəsi boş deyil. Lütfən başqasını seçin!</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="276"/>
+        <location filename="../widgets/mountdialog.cpp" line="284"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>OLDU</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="251"/>
+        <location filename="../widgets/mountdialog.cpp" line="259"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>Bu qoşulma nöqtəsi altındakı verilənlər itiriləcəkdir, kataloqu başqa yerə qoşmanız xahiş olunur</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="252"/>
+        <location filename="../widgets/mountdialog.cpp" line="260"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>Davam edin</translation>
@@ -1814,7 +1814,7 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="61"/>
-        <source>Click â+â to increase the number of partitions. Click on each partition to change its name and file system.</source>
+        <source>Click %1 to increase the number of partitions. Click on each partition to change its name and file system.</source>
         <translation type="unfinished"/>
     </message>
     <message>

@@ -1588,6 +1588,17 @@ bool PartedCore::clearLV(const LVAction &lvAction)
             tmpPath = info.m_mapper.m_dmPath;
         }
 
+        //原本的分区被加密后文件系统类型为crypto_LUKS, mkfs.exfat格式化该分区
+        //时虽然没有报错但实际上分区格式还是crypto_LUKS，这里先将分区从crypto_LUKS
+        // 格式化为ext4，在将ext4格式化为exfat。 只有mkfs.exfat会有这种问题
+        if (lv.m_luksFlag == IS_CRYPT_LUKS && lvAction.m_lvFs == FS_EXFAT) {
+            QString output, error;
+            auto errCode = Utils::executCmd(QString("mkfs.ext4 -F %1").arg(tmpPath), output, error);
+            if (errCode != 0) {
+                qCritical() << "output:" << output << "\terror:" << error;
+            }
+        }
+
         //创建文件系统
         if (!createFileSystem(lvAction.m_lvFs, false, tmpPath)) {
             QString str = QString("%1:%2:%3").arg("LVMError").arg(LVMError::LVM_ERR_LV_CREATE_FS_FAILED).arg(lv.m_lvPath);

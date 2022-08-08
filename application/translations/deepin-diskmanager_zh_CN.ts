@@ -1706,7 +1706,7 @@ will format it and remove its password.</source>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="90"/>
-        <location filename="../widgets/mountdialog.cpp" line="252"/>
+        <location filename="../widgets/mountdialog.cpp" line="260"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -1716,23 +1716,23 @@ will format it and remove its password.</source>
         <translation>挂载</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="275"/>
+        <location filename="../widgets/mountdialog.cpp" line="283"/>
         <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
         <translation>所选挂载点不为空，挂载失败，请更换挂载点！</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="276"/>
+        <location filename="../widgets/mountdialog.cpp" line="284"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>确 定</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="251"/>
+        <location filename="../widgets/mountdialog.cpp" line="259"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>此挂载点的数据可能会丢失，建议将目录挂载到其他位置</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="252"/>
+        <location filename="../widgets/mountdialog.cpp" line="260"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>继 续</translation>
@@ -1815,8 +1815,8 @@ will format it and remove its password.</source>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="61"/>
-        <source>Click â+â to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation type="unfinished"/>
+        <source>Click %1 to increase the number of partitions. Click on each partition to change its name and file system.</source>
+        <translation>点击“%1”按钮来增加磁盘上的分区数量，点击每个分区来更改名称样式</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="128"/>

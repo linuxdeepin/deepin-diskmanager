@@ -9,7 +9,7 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="57"/>
         <source>Click %1 to create a logical volume. </source>
-        <translation type="unfinished"/>
+        <translation>Klik op ‘%1’ om een logisch volume aan te maken.</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="124"/>
@@ -1707,7 +1707,7 @@ alle gegevens verloren!</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="90"/>
-        <location filename="../widgets/mountdialog.cpp" line="252"/>
+        <location filename="../widgets/mountdialog.cpp" line="260"/>
         <source>Cancel</source>
         <translation>Annuleren</translation>
     </message>
@@ -1717,23 +1717,23 @@ alle gegevens verloren!</translation>
         <translation>Aankoppelen</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="275"/>
+        <location filename="../widgets/mountdialog.cpp" line="283"/>
         <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
-        <translation type="unfinished"/>
+        <translation>Het aankoppelen is mislukt omdat het gekozen aankoppelpunt niet leeg is. Kies een ander punt!</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="276"/>
+        <location filename="../widgets/mountdialog.cpp" line="284"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>Oké</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="251"/>
+        <location filename="../widgets/mountdialog.cpp" line="259"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>De gegevens van dit aankoppelpunt worden permanent verwijderd. Koppel de map aan op een andere locatie.</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="252"/>
+        <location filename="../widgets/mountdialog.cpp" line="260"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>Doorgaan</translation>
@@ -1816,7 +1816,7 @@ alle gegevens verloren!</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="61"/>
-        <source>Click â+â to increase the number of partitions. Click on each partition to change its name and file system.</source>
+        <source>Click %1 to increase the number of partitions. Click on each partition to change its name and file system.</source>
         <translation type="unfinished"/>
     </message>
     <message>

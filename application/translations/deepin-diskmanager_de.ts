@@ -1709,7 +1709,7 @@ bitte beachten Sie dies sorgfältig</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="90"/>
-        <location filename="../widgets/mountdialog.cpp" line="252"/>
+        <location filename="../widgets/mountdialog.cpp" line="260"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
@@ -1719,23 +1719,23 @@ bitte beachten Sie dies sorgfältig</translation>
         <translation>Einhängen</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="275"/>
+        <location filename="../widgets/mountdialog.cpp" line="283"/>
         <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="276"/>
+        <location filename="../widgets/mountdialog.cpp" line="284"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="251"/>
+        <location filename="../widgets/mountdialog.cpp" line="259"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>Die Daten unter diesem Einhängepunkt würden verloren gehen, bitte hängen Sie das Verzeichnis an einem anderen Ort ein</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="252"/>
+        <location filename="../widgets/mountdialog.cpp" line="260"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>Fortsetzen</translation>
@@ -1818,7 +1818,7 @@ bitte beachten Sie dies sorgfältig</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="61"/>
-        <source>Click â+â to increase the number of partitions. Click on each partition to change its name and file system.</source>
+        <source>Click %1 to increase the number of partitions. Click on each partition to change its name and file system.</source>
         <translation type="unfinished"/>
     </message>
     <message>

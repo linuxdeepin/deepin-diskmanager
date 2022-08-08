@@ -790,11 +790,12 @@ void PartitionWidget::onSetSliderValue()
         m_partSizeEdit->hideAlertMessage();
     }
 
+    double value = 0;
     if(m_partSizeEdit->text().trimmed().isEmpty()) {
-        return;
+        value = 0;
     }
 
-    double value = m_partSizeEdit->text().toDouble();
+    value = m_partSizeEdit->text().toDouble();
     if (m_partComboBox->currentText() == "MiB")
         value = value / 1024;
     m_block = 1;

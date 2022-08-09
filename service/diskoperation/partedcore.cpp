@@ -3754,18 +3754,42 @@ bool PartedCore::mountDevice(const QString &mountpath, const QString devPath, co
     QString cmd ;
     //vfat 1051系统上vfat格式不指定utf8挂载 通过文件管理器右键菜单新建文件夹会乱码  导致创建错误 为了规避该问题加上utf8属性
     if (fsType == FSType::FS_FAT32 || fsType == FSType::FS_FAT16) {
-        cmd = QString("mount -v %1 %2 -o dmask=000,fmask=111,utf8").arg(devPath).arg(mountpath);
+        cmd = QString("mount %1 %2 -o dmask=000,fmask=111,utf8").arg(devPath).arg(mountpath);
     } else if (fsType == FSType::FS_HFS) {
-        cmd = QString("mount -v %1 %2 -o dir_umask=000,file_umask=111").arg(devPath).arg(mountpath);
+        cmd = QString("mount %1 %2 -o dir_umask=000,file_umask=111").arg(devPath).arg(mountpath);
     } else {
-        cmd = QString("mount -v %1 %2").arg(devPath).arg(mountpath);
+        cmd = QString("mount %1 %2").arg(devPath).arg(mountpath);
     }
 
-    int exitcode = Utils::executCmd(cmd, output, errstr);
-    if (exitcode != 0) {
-        qDebug() << __FUNCTION__ << "Mount error";
-        return false;
+    //由于probeDeviceInfo会触发udisk自动挂载设备，此时设备有可能已经被挂载上了
+    //检查设备的挂载点是否为本次指定的挂载点，如果是则不用重新挂载。 如果不是则先umount，再mount到指定挂载点
+    bool needMount = true;
+    Utils::executCmd(QString("findmnt %1").arg(devPath), output, errstr);
+    if (!output.isEmpty()) {
+        auto context = output.split("\n", QString::SkipEmptyParts);
+        if (context.size() == 2) {
+            auto mountInfo = context.at(1).split(" ", QString::SkipEmptyParts);
+            //mountInfo eg:/mnt   /dev/sdd1 ext4   rw,relatime
+            if (mountInfo.size() == 4) {
+                //不需要重新挂载
+                if (mountInfo.at(0) == mountpath && mountInfo.at(1) == devPath) {
+                    needMount = false;
+                } else {
+                    //umount
+                    Utils::executCmd(QString("umount %1").arg(devPath), output, errstr);
+                    needMount = true;
+                }
+            }
+        }
     }
+    if (needMount) {
+        int exitcode = Utils::executCmd(cmd, output, errstr);
+        if (exitcode != 0) {
+            qDebug() << __FUNCTION__ << "Mount error, output:" << output << "\terror:" << errstr;
+            return false;
+        }
+    }
+
     //修改权限
     chmod(mountpath.toStdString().c_str(), 0777);
     qDebug() << __FUNCTION__ << "Mount end";
@@ -3869,8 +3893,8 @@ QPair<bool, QString> PartedCore::tmpMountDevice(const QString &mountpath, const 
         QString str = QString("%1:%2:%3").arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_MOUNT_FAILED).arg(devPath);
         return QPair<bool, QString>(false, str);
     }
-
     //更改属主
+
     if (!changeOwner(userName,QString("/media/%1").arg(userName))||!changeOwner(userName, mountpath) ) {
         QString str = QString("%1:%2:%3").arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_CHOWN_FAILED).arg(devPath);
         return QPair<bool, QString>(false, str);

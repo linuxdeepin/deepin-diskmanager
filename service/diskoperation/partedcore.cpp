@@ -3249,15 +3249,16 @@ bool PartedCore::resizeFileSystemImplement(const Partition &partitionOld, const 
 {
     bool fillPartition = false;
     const FS &fsCap = getFileSystem(partitionNew.m_fstype);
+    bool busy = isBusy(partitionOld.m_fstype, partitionOld.getPath());
     FS::Support action = FS::NONE;
     if (partitionNew.getSectorLength() >= partitionOld.getSectorLength()) {
         // grow (always maximises the file system to fill the partition)
         fillPartition = true;
-        action = (partitionOld.m_busy) ? fsCap.online_grow : fsCap.grow;
+        action = busy ? fsCap.online_grow : fsCap.grow;
     } else {
         // shrink
         fillPartition = false;
-        action = (partitionOld.m_busy) ? fsCap.online_shrink : fsCap.shrink;
+        action = busy ? fsCap.online_shrink : fsCap.shrink;
     }
     bool success = false;
     FileSystem *pFilesystem = nullptr;
@@ -3275,7 +3276,7 @@ bool PartedCore::resizeFileSystemImplement(const Partition &partitionOld, const 
     default:
         break;
     }
-
+    deleteMountPointExclude(partitionOld.getPath());
     return success;
 }
 

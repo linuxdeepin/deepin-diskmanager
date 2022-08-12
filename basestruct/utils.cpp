@@ -705,6 +705,17 @@ void Utils::rmTempDir(QString &dirName)
     }
 }
 
+int Utils::executCmd(const QString &strCmd)
+{
+    QProcess proc;
+    proc.setProgram(strCmd);
+    proc.start(QIODevice::ReadWrite);
+    proc.waitForFinished(-1);
+    int exitcode = proc.exitCode();
+    proc.close();
+    return exitcode;
+}
+
 
 
 

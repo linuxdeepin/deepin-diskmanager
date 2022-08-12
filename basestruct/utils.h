@@ -74,6 +74,8 @@ public:
      */
     static int executCmd(const QString &strCmd, QString &outPut, QString &error);
 
+    static int executCmd(const QString &strCmd);
+
     /**
      * @brief 执行外部命令，使用 /bin/bash -c 执行管道命令
      * @param strCmd：命令

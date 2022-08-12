@@ -143,7 +143,7 @@ void FormateDialog::initUi()
     QStringList fslist = DMDbusHandler::instance()->getAllSupportFileSystem();
     fslist.removeOne("linux-swap");
 //    QStringList formateList = fslist;
-    if (size > 100 && !isSystemDevice) {
+    if (size > 100 && !isSystemDevice && DMDbusHandler::instance()->getCurLevel() != DMDbusHandler::LOGICALVOLUME) {
         fslist = DMDbusHandler::instance()->getEncryptionFormate(fslist);
     }
 

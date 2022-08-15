@@ -70,9 +70,7 @@ void PasswordInputDialog::initUi()
     font3.setFamily("Source Han Sans");
     font3.setPixelSize(13);
 
-    m_titleLabel = new DLabel(tr("Set a password to encrypt %1"), this);
-    m_titleLabel->setFont(font1);
-    m_titleLabel->setPalette(palette1);
+    setTitle(tr("Set a password to encrypt %1"));
 
     DLabel *tipLabel = new DLabel(tr("The password cannot be reset or retrieved online"), this);
     tipLabel->setFont(font2);
@@ -148,7 +146,6 @@ void PasswordInputDialog::initUi()
     centerLayout->setContentsMargins(6, 0, 10, 0);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
-    mainLayout->addWidget(m_titleLabel, 0, Qt::AlignCenter);
     mainLayout->addSpacing(3);
     mainLayout->addWidget(tipLabel, 0, Qt::AlignCenter);
     mainLayout->addSpacing(20);
@@ -175,12 +172,12 @@ void PasswordInputDialog::initConnection()
 
 void PasswordInputDialog::setDeviceName(const QString &devName)
 {
-    m_titleLabel->setText(tr("Set a password to encrypt %1").arg(devName));
+    setTitle(tr("Set a password to encrypt %1").arg(devName));
 }
 
 void PasswordInputDialog::setTitleText(const QString &text)
 {
-    m_titleLabel->setText(text);
+
 }
 
 QString PasswordInputDialog::getPassword()

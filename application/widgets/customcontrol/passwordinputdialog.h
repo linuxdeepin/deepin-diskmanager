@@ -110,7 +110,6 @@ private:
     DPasswordEdit *m_inputPasswordEdit;
     DPasswordEdit *m_checkPasswordEdit;
     DTextEdit *m_textEdit;
-    DLabel *m_titleLabel;
 };
 
 #endif // PASSWORDINPUTDIALOG_H

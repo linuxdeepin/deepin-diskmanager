@@ -100,14 +100,7 @@ void FormateDialog::initUi()
     palette4.setColor(DPalette::ToolTipText, color4);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
-    m_titleLabel = new DLabel(tr("Wipe %1").arg(m_pathInfo), this);
-    QFont fontTitle/* = DFontSizeManager::instance()->get(DFontSizeManager::T6)*/;
-    fontTitle.setWeight(QFont::Medium);
-    fontTitle.setFamily("Source Han Sans");
-    fontTitle.setPixelSize(14);
-    m_titleLabel->setFont(fontTitle);
-    m_titleLabel->setPalette(palette4);
-    mainLayout->addWidget(m_titleLabel, 0, Qt::AlignCenter);
+    setTitle(tr("Wipe %1").arg(m_pathInfo));
     DLabel *tipLabel = new DLabel(tr("It will erase all data on this disk, which will not be recovered"), this);
     tipLabel->setWordWrap(true);
     tipLabel->setFixedHeight(50);
@@ -715,7 +708,7 @@ void FormateDialog::onWipeButtonClicked()
     }
 
     // 擦除等待动画
-    m_titleLabel->setText(tr("Wiping %1").arg(m_pathInfo) + "...");
+    setTitle(tr("Wiping %1").arg(m_pathInfo) + "...");
     m_stackedWidget->setCurrentIndex(1);
     DWindowCloseButton *button = findChild<DWindowCloseButton *>("DTitlebarDWindowCloseButton");
     if (button != nullptr) {
@@ -750,7 +743,7 @@ void FormateDialog::onWipeResult(const QString &info)
         close();
     } else {
         QString failedReason = DMDbusHandler::instance()->getFailedMessage(infoList.at(0), infoList.at(1).toInt(), "");
-        m_titleLabel->setText(tr("Failed to wipe %1").arg(m_pathInfo));
+        setTitle(tr("Failed to wipe %1").arg(m_pathInfo));
         m_stackedWidget->setCurrentIndex(2);
 
         DWindowCloseButton *button = findChild<DWindowCloseButton *>("DTitlebarDWindowCloseButton");

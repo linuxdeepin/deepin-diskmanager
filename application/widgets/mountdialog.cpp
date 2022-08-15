@@ -44,6 +44,7 @@ MountDialog::MountDialog(QWidget *parent)
 
 void MountDialog::initUi()
 {
+    setMinimumHeight(320);
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         setTitle(tr("Mount %1").arg(info.m_path));
@@ -87,6 +88,24 @@ void MountDialog::initUi()
     mainLayout->addWidget(mountLabel);
     mainLayout->addWidget(m_fileChooserEdit);
 
+    DLabel *mountPointSuggest = new DLabel;
+    mountPointSuggest->setText(tr("Please select /mnt or /media, or its subdirectories."));
+    mountPointSuggest->setAlignment(Qt::AlignCenter);
+    mountPointSuggest->setWordWrap(true);
+    mainLayout->addWidget(mountPointSuggest);
+    mainLayout->addSpacing(10);
+    DFontSizeManager::instance()->bind(mountPointSuggest, DFontSizeManager::T8);
+    m_warnning = new DLabel;
+    m_warnning->setText(tr("The mount point is illegal. Please select /mnt or /media, or its subdirectories."));
+    m_warnning->setAlignment(Qt::AlignCenter);
+    m_warnning->setVisible(false);
+    m_warnning->setWordWrap(true);
+    DFontSizeManager::instance()->bind(m_warnning, DFontSizeManager::T6);
+    m_warnning->setStyleSheet("color:#FF5736;");
+    mainLayout->addWidget(m_warnning);
+    mainLayout->addStretch();
+
+
     int index = addButton(tr("Cancel"), true, ButtonNormal);
     m_okCode = addButton(tr("Mount"), false, ButtonRecommend);
 //    getButton(okcode)->setDisabled(true);
@@ -109,7 +128,13 @@ void MountDialog::onEditContentChanged(const QString &content)
     } else {
         QDir dir(content);
         if (dir.exists()) {
-            getButton(m_okCode)->setDisabled(false);
+            if (isSystemDirectory(content)) {
+                getButton(m_okCode)->setDisabled(true);
+                m_warnning->setVisible(true);
+            } else {
+                getButton(m_okCode)->setDisabled(false);
+                m_warnning->setVisible(false);
+            }
 //            m_fileChooserEdit->setAlert(false);
         } else {
             getButton(m_okCode)->setDisabled(true);
@@ -165,18 +190,10 @@ bool MountDialog::isExistMountPoint(const QString &mountPoint)
 
 bool MountDialog::isSystemDirectory(const QString &directory)
 {
-    bool isSysDir = false;
-
-    QStringList lst;
-    lst << "/bin" << "/boot" << "/dev" << "/etc" << "/home" << "/root"
-        << "/run" << "/sbin" << "/tmp" << "/usr" << "/var";
-
-    if (-1 != lst.indexOf(directory)) {
-        isSysDir = true;
+    if (directory.startsWith("/mnt") || directory.startsWith("/media")) {
+        return false;
     }
-
-    qDebug() << __FUNCTION__ << directory << " " << lst.indexOf(directory) << " And " << isSysDir;
-    return isSysDir;
+    return true;
 }
 
 void MountDialog::mountCurPath()
@@ -252,7 +269,7 @@ void MountDialog::onButtonClicked(int index, const QString &text)
         }
 
         QDir dir(mountPath);
-        if (!dir.isEmpty() || isSystemDirectory(mountPath) || isExistMountPoint(mountPath)) {
+        if (!dir.isEmpty() || isExistMountPoint(mountPath)) {
             MessageBox messageBox(this);
             messageBox.setObjectName("mountMessageBox");
             messageBox.setAccessibleName("messageBox");

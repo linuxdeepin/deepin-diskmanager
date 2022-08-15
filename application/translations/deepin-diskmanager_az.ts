@@ -23,22 +23,22 @@
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="148"/>
-        <location filename="../widgets/createlvwidget.cpp" line="312"/>
+        <location filename="../widgets/createlvwidget.cpp" line="313"/>
         <source>LV name:</source>
         <translation>LV adı:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="157"/>
         <location filename="../widgets/createlvwidget.cpp" line="161"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1004"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1005"/>
         <source>VG name:</source>
         <translation>VG adı:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="169"/>
-        <location filename="../widgets/createlvwidget.cpp" line="333"/>
-        <location filename="../widgets/createlvwidget.cpp" line="377"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1005"/>
+        <location filename="../widgets/createlvwidget.cpp" line="334"/>
+        <location filename="../widgets/createlvwidget.cpp" line="378"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1006"/>
         <source>LV file system:</source>
         <translation>LV fayl sistemi:</translation>
     </message>
@@ -61,63 +61,63 @@
         <translation>Geri qaytarın</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="279"/>
+        <location filename="../widgets/createlvwidget.cpp" line="280"/>
         <source>LV Information</source>
         <translation>LV məlumatı</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="291"/>
+        <location filename="../widgets/createlvwidget.cpp" line="292"/>
         <source>Create LV:</source>
         <translation>LV yaradın:</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="302"/>
+        <location filename="../widgets/createlvwidget.cpp" line="303"/>
         <source>Delete last logical volume</source>
         <translation>Sonuncu məntiqi tutumu silin</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="342"/>
+        <location filename="../widgets/createlvwidget.cpp" line="343"/>
         <source>LV capacity:</source>
         <translation>LV ölçüsü:</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="524"/>
-        <location filename="../widgets/createlvwidget.cpp" line="614"/>
+        <location filename="../widgets/createlvwidget.cpp" line="525"/>
+        <location filename="../widgets/createlvwidget.cpp" line="615"/>
         <source>Unallocated</source>
         <translation>Ayrılmamış</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="547"/>
+        <location filename="../widgets/createlvwidget.cpp" line="548"/>
         <source>Name</source>
         <translation>Adı</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="548"/>
+        <location filename="../widgets/createlvwidget.cpp" line="549"/>
         <source>Size</source>
         <translation>Ölçüsü:</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="717"/>
+        <location filename="../widgets/createlvwidget.cpp" line="718"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
         <translation>Diski şifrələmək üçün aes-xts-plain64 standart alqoritmindən istifadə edin. Diski yenidən qoşmadan öncə onu şifrələməlisiniz.</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="723"/>
+        <location filename="../widgets/createlvwidget.cpp" line="724"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
         <translation>Diskin şifrəsini açmaq üçün sm4-xts-plain kriptoqrafiya alqoritmindən istifadə edin. Diski yenidən qoşmadan öncə onun şifrəsini açın. Kriptoqrafiya alqoritmi dəstəkləməyən əməliyyat sistemləri diskin şifrəsini aça bilməyəcək.</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="817"/>
+        <location filename="../widgets/createlvwidget.cpp" line="818"/>
         <source>To encrypt a volume, it should be larger than 100 MiB</source>
         <translation>Şifrələnəcək tutum 100 MiB-dan böyük olmalıdır</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="845"/>
+        <location filename="../widgets/createlvwidget.cpp" line="846"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>Şifrənin itirilməsinin qarşısını almaq üçün onun ehtiyyat nüsxəsini etibarlı bir yerdə saxlayın.</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="846"/>
+        <location filename="../widgets/createlvwidget.cpp" line="847"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>OLDU</translation>
@@ -1687,54 +1687,59 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
 <context>
     <name>MountDialog</name>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="49"/>
-        <location filename="../widgets/mountdialog.cpp" line="52"/>
-        <location filename="../widgets/mountdialog.cpp" line="55"/>
+        <location filename="../widgets/mountdialog.cpp" line="50"/>
+        <location filename="../widgets/mountdialog.cpp" line="53"/>
+        <location filename="../widgets/mountdialog.cpp" line="56"/>
         <source>Mount %1</source>
         <translation>%1 qoşun</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="59"/>
+        <location filename="../widgets/mountdialog.cpp" line="60"/>
         <source>Choose a mount point please</source>
         <translation>Qoşulma nöqtəsini seçin</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="62"/>
+        <location filename="../widgets/mountdialog.cpp" line="63"/>
         <source>Mount point:</source>
         <translation>Qoşulma nöqtəsi:</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="90"/>
-        <location filename="../widgets/mountdialog.cpp" line="260"/>
+        <location filename="../widgets/mountdialog.cpp" line="99"/>
+        <source>The mount point is illegal. Please select /mnt or /media, or its subdirectories.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="109"/>
+        <location filename="../widgets/mountdialog.cpp" line="277"/>
         <source>Cancel</source>
         <translation>İmtina</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="91"/>
+        <location filename="../widgets/mountdialog.cpp" line="110"/>
         <source>Mount</source>
         <translation>Qoşmaq</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="283"/>
-        <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
-        <translation>Qoşulma mümkün olmadı. Seçilmiş qoşulma nöqtəsi boş deyil. Lütfən başqasını seçin!</translation>
-    </message>
-    <message>
-        <location filename="../widgets/mountdialog.cpp" line="284"/>
-        <source>OK</source>
-        <comment>button</comment>
-        <translation>OLDU</translation>
-    </message>
-    <message>
-        <location filename="../widgets/mountdialog.cpp" line="259"/>
+        <location filename="../widgets/mountdialog.cpp" line="276"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>Bu qoşulma nöqtəsi altındakı verilənlər itiriləcəkdir, kataloqu başqa yerə qoşmanız xahiş olunur</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="260"/>
+        <location filename="../widgets/mountdialog.cpp" line="277"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>Davam edin</translation>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="300"/>
+        <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
+        <translation>Qoşulma mümkün olmadı. Seçilmiş qoşulma nöqtəsi boş deyil. Lütfən başqasını seçin!</translation>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="301"/>
+        <source>OK</source>
+        <comment>button</comment>
+        <translation>OLDU</translation>
     </message>
 </context>
 <context>
@@ -1815,7 +1820,7 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="61"/>
         <source>Click %1 to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation type="unfinished"/>
+        <translation>%1 ilə bölmələrin sayını artırın. Hər bölmənin üzərinə vuraraq onun adını və fayl sistemini dəyişdirin.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="128"/>
@@ -1835,7 +1840,7 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="161"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="165"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1107"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1108"/>
         <source>Disk:</source>
         <translation>Disk:</translation>
     </message>
@@ -1843,7 +1848,7 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="173"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="335"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="379"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1108"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1109"/>
         <source>File system:</source>
         <translation>Fayl sistemi:</translation>
     </message>
@@ -1909,8 +1914,8 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="702"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="712"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="814"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="824"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="815"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="825"/>
         <source>The length exceeds the limit</source>
         <translation>Uzunluq, həddi keçir</translation>
     </message>
@@ -1925,33 +1930,33 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
         <translation>Diskin şifrəsini açmaq üçün sm4-xts-plain kriptoqrafiya alqoritmindən istifadə edin. Əgər disk şifrələnibsə, qoşmadan öncə onun şifrəsini açmalısınız. Kriptoqrafiya alqoritmi dəstəkləməyən əməliyyat sistemləri diskin şifrəsini aça bilməyəcək.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="856"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="857"/>
         <source>The number of new partitions exceeds the limit</source>
         <translation>Yeni bölmələr sayı, icazə verilən həddi keçir</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="879"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="880"/>
         <source>To encrypt a partition, it should be larger than 100 MiB</source>
         <translation>Şifrələnəcək bölmə 100 MiB-dan böyük olmalıdır</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="887"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="888"/>
         <source>Set a password to encrypt the new partition</source>
         <translation>Yeni bölməni şifrələmək üçün şifrə təyin edin</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="906"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="907"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>Şifrənin itirilməsinin qarşısını almaq üçün onun ehtiyyat nüsxəsini etibarlı bir yerdə saxlayın.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="907"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="908"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>OLDU</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="920"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="921"/>
         <source>To create a partition, you need at least 52 MB</source>
         <translation>Bir bölmə yaratmaq üçün ən az 52 MB lazımdır</translation>
     </message>

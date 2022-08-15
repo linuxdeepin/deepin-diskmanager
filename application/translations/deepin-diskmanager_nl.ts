@@ -23,22 +23,22 @@
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="148"/>
-        <location filename="../widgets/createlvwidget.cpp" line="312"/>
+        <location filename="../widgets/createlvwidget.cpp" line="313"/>
         <source>LV name:</source>
         <translation>LV-naam:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="157"/>
         <location filename="../widgets/createlvwidget.cpp" line="161"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1004"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1005"/>
         <source>VG name:</source>
         <translation>Vg-naam:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="169"/>
-        <location filename="../widgets/createlvwidget.cpp" line="333"/>
-        <location filename="../widgets/createlvwidget.cpp" line="377"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1005"/>
+        <location filename="../widgets/createlvwidget.cpp" line="334"/>
+        <location filename="../widgets/createlvwidget.cpp" line="378"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1006"/>
         <source>LV file system:</source>
         <translation>LV-bestandssysteem:</translation>
     </message>
@@ -61,63 +61,63 @@
         <translation>Terugdraaien</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="279"/>
+        <location filename="../widgets/createlvwidget.cpp" line="280"/>
         <source>LV Information</source>
         <translation>LV-informatie:</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="291"/>
+        <location filename="../widgets/createlvwidget.cpp" line="292"/>
         <source>Create LV:</source>
         <translation>LV aanmaken:</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="302"/>
+        <location filename="../widgets/createlvwidget.cpp" line="303"/>
         <source>Delete last logical volume</source>
         <translation>Laatste logische volume wissen</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="342"/>
+        <location filename="../widgets/createlvwidget.cpp" line="343"/>
         <source>LV capacity:</source>
         <translation>LV-capaciteit:</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="524"/>
-        <location filename="../widgets/createlvwidget.cpp" line="614"/>
+        <location filename="../widgets/createlvwidget.cpp" line="525"/>
+        <location filename="../widgets/createlvwidget.cpp" line="615"/>
         <source>Unallocated</source>
         <translation>Niet-toegewezen</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="547"/>
+        <location filename="../widgets/createlvwidget.cpp" line="548"/>
         <source>Name</source>
         <translation>Naam</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="548"/>
+        <location filename="../widgets/createlvwidget.cpp" line="549"/>
         <source>Size</source>
         <translation>Grootte</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="717"/>
+        <location filename="../widgets/createlvwidget.cpp" line="718"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
         <translation>Gebruik het aes-xts-plain64-algoritme om de schijf te versleutelen. Ontsleutel de schijf alvorens hem aan te koppelen.</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="723"/>
+        <location filename="../widgets/createlvwidget.cpp" line="724"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
         <translation>Gebruik het m4-xts-plain-vercijferingsalgoritme om de schijf te versleutelen. Ontsleutel de schijf alvorens hem aan te koppelen. Let op: de schijf kan niet worden ontsleuteld op besturingssystemen die dit algoritme niet ondersteunen.</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="817"/>
+        <location filename="../widgets/createlvwidget.cpp" line="818"/>
         <source>To encrypt a volume, it should be larger than 100 MiB</source>
         <translation>Volumes dienen groter dan 100 MiB te zijn om versleuteld te kunnen worden</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="845"/>
+        <location filename="../widgets/createlvwidget.cpp" line="846"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>Tip: noteer je wachtwoord ergens en bewaar het op een veilige plaats.</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="846"/>
+        <location filename="../widgets/createlvwidget.cpp" line="847"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>Oké</translation>
@@ -1689,54 +1689,59 @@ alle gegevens verloren!</translation>
 <context>
     <name>MountDialog</name>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="49"/>
-        <location filename="../widgets/mountdialog.cpp" line="52"/>
-        <location filename="../widgets/mountdialog.cpp" line="55"/>
+        <location filename="../widgets/mountdialog.cpp" line="50"/>
+        <location filename="../widgets/mountdialog.cpp" line="53"/>
+        <location filename="../widgets/mountdialog.cpp" line="56"/>
         <source>Mount %1</source>
         <translation>%1 aankoppelen</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="59"/>
+        <location filename="../widgets/mountdialog.cpp" line="60"/>
         <source>Choose a mount point please</source>
         <translation>Kies een aankoppelpunt</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="62"/>
+        <location filename="../widgets/mountdialog.cpp" line="63"/>
         <source>Mount point:</source>
         <translation>Aankoppelpunt:</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="90"/>
-        <location filename="../widgets/mountdialog.cpp" line="260"/>
+        <location filename="../widgets/mountdialog.cpp" line="99"/>
+        <source>The mount point is illegal. Please select /mnt or /media, or its subdirectories.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="109"/>
+        <location filename="../widgets/mountdialog.cpp" line="277"/>
         <source>Cancel</source>
         <translation>Annuleren</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="91"/>
+        <location filename="../widgets/mountdialog.cpp" line="110"/>
         <source>Mount</source>
         <translation>Aankoppelen</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="283"/>
-        <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
-        <translation>Het aankoppelen is mislukt omdat het gekozen aankoppelpunt niet leeg is. Kies een ander punt!</translation>
-    </message>
-    <message>
-        <location filename="../widgets/mountdialog.cpp" line="284"/>
-        <source>OK</source>
-        <comment>button</comment>
-        <translation>Oké</translation>
-    </message>
-    <message>
-        <location filename="../widgets/mountdialog.cpp" line="259"/>
+        <location filename="../widgets/mountdialog.cpp" line="276"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>De gegevens van dit aankoppelpunt worden permanent verwijderd. Koppel de map aan op een andere locatie.</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="260"/>
+        <location filename="../widgets/mountdialog.cpp" line="277"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>Doorgaan</translation>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="300"/>
+        <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
+        <translation>Het aankoppelen is mislukt omdat het gekozen aankoppelpunt niet leeg is. Kies een ander punt!</translation>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="301"/>
+        <source>OK</source>
+        <comment>button</comment>
+        <translation>Oké</translation>
     </message>
 </context>
 <context>
@@ -1817,7 +1822,7 @@ alle gegevens verloren!</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="61"/>
         <source>Click %1 to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation type="unfinished"/>
+        <translation>Klik op ‘%1’ om het aantal partities uit te breiden. Klik op een partitie om de naam en het bestandssysteem aan te passen.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="128"/>
@@ -1837,7 +1842,7 @@ alle gegevens verloren!</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="161"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="165"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1107"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1108"/>
         <source>Disk:</source>
         <translation>Schijf:</translation>
     </message>
@@ -1845,7 +1850,7 @@ alle gegevens verloren!</translation>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="173"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="335"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="379"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1108"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1109"/>
         <source>File system:</source>
         <translation>Bestandssysteem:</translation>
     </message>
@@ -1911,8 +1916,8 @@ alle gegevens verloren!</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="702"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="712"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="814"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="824"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="815"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="825"/>
         <source>The length exceeds the limit</source>
         <translation>De lengte overschrijdt het limiet</translation>
     </message>
@@ -1927,33 +1932,33 @@ alle gegevens verloren!</translation>
         <translation>Gebruik het m4-xts-plain-vercijferingsalgoritme om de schijf te versleutelen. Ontsleutel de schijf alvorens hem aan te koppelen. Let op: de schijf kan niet worden ontsleuteld op besturingssystemen die dit algoritme niet ondersteunen.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="856"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="857"/>
         <source>The number of new partitions exceeds the limit</source>
         <translation>Het aantal nieuwe partities overschrijdt het limiet</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="879"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="880"/>
         <source>To encrypt a partition, it should be larger than 100 MiB</source>
         <translation>Volumes dienen groter dan 100 MiB te zijn om versleuteld te kunnen worden</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="887"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="888"/>
         <source>Set a password to encrypt the new partition</source>
         <translation>Stel een wachtwoord in om de nieuwe partitie te versleutelen</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="906"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="907"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>Tip: noteer je wachtwoord ergens en bewaar het op een veilige plaats.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="907"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="908"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>Oké</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="920"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="921"/>
         <source>To create a partition, you need at least 52 MB</source>
         <translation>Je hebt minimaal 52 MB vrije ruimte nodig om een partitie te maken</translation>
     </message>

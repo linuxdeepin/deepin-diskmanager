@@ -23,22 +23,22 @@
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="148"/>
-        <location filename="../widgets/createlvwidget.cpp" line="312"/>
+        <location filename="../widgets/createlvwidget.cpp" line="313"/>
         <source>LV name:</source>
         <translation>Назва ЛТ:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="157"/>
         <location filename="../widgets/createlvwidget.cpp" line="161"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1004"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1005"/>
         <source>VG name:</source>
         <translation>Назва ГТ:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="169"/>
-        <location filename="../widgets/createlvwidget.cpp" line="333"/>
-        <location filename="../widgets/createlvwidget.cpp" line="377"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1005"/>
+        <location filename="../widgets/createlvwidget.cpp" line="334"/>
+        <location filename="../widgets/createlvwidget.cpp" line="378"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1006"/>
         <source>LV file system:</source>
         <translation>Файлова система ЛТ:</translation>
     </message>
@@ -61,63 +61,63 @@
         <translation>Повернути</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="279"/>
+        <location filename="../widgets/createlvwidget.cpp" line="280"/>
         <source>LV Information</source>
         <translation>Відомості щодо ЛТ</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="291"/>
+        <location filename="../widgets/createlvwidget.cpp" line="292"/>
         <source>Create LV:</source>
         <translation>Створити ЛТ:</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="302"/>
+        <location filename="../widgets/createlvwidget.cpp" line="303"/>
         <source>Delete last logical volume</source>
         <translation>Вилучити останній логічний том</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="342"/>
+        <location filename="../widgets/createlvwidget.cpp" line="343"/>
         <source>LV capacity:</source>
         <translation>Місткість ЛТ:</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="524"/>
-        <location filename="../widgets/createlvwidget.cpp" line="614"/>
+        <location filename="../widgets/createlvwidget.cpp" line="525"/>
+        <location filename="../widgets/createlvwidget.cpp" line="615"/>
         <source>Unallocated</source>
         <translation>Нерозподілено</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="547"/>
+        <location filename="../widgets/createlvwidget.cpp" line="548"/>
         <source>Name</source>
         <translation>Назва</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="548"/>
+        <location filename="../widgets/createlvwidget.cpp" line="549"/>
         <source>Size</source>
         <translation>Розмір</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="717"/>
+        <location filename="../widgets/createlvwidget.cpp" line="718"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
         <translation>Скористатися для шифрування диска стандартним алгоритмом aes-xts-plain64. Вам доведеться розшифрувати його, перш ніж монтувати знову.</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="723"/>
+        <location filename="../widgets/createlvwidget.cpp" line="724"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
         <translation>Скористатися для шифрування диска державним криптографічним алгоритмом sm4-xts-plain. Вам доведеться розшифрувати його, перш ніж монтувати знову. В операційних системах, де не передбачено підтримки державного криптографічного алгоритму, розшифрування диска буде неможливим.</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="817"/>
+        <location filename="../widgets/createlvwidget.cpp" line="818"/>
         <source>To encrypt a volume, it should be larger than 100 MiB</source>
         <translation>Для шифрування тому його розміри мають перевищувати 100 МіБ</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="845"/>
+        <location filename="../widgets/createlvwidget.cpp" line="846"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>Щоб не втратити доступ, будь ласка, створіть резервну копію вашого пароля і зберігайте її належним чином!</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="846"/>
+        <location filename="../widgets/createlvwidget.cpp" line="847"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>Гаразд</translation>
@@ -1689,54 +1689,59 @@ will format it and remove its password.</source>
 <context>
     <name>MountDialog</name>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="49"/>
-        <location filename="../widgets/mountdialog.cpp" line="52"/>
-        <location filename="../widgets/mountdialog.cpp" line="55"/>
+        <location filename="../widgets/mountdialog.cpp" line="50"/>
+        <location filename="../widgets/mountdialog.cpp" line="53"/>
+        <location filename="../widgets/mountdialog.cpp" line="56"/>
         <source>Mount %1</source>
         <translation>Змонтувати %1</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="59"/>
+        <location filename="../widgets/mountdialog.cpp" line="60"/>
         <source>Choose a mount point please</source>
         <translation>Виберіть, будь ласка, точку монтування</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="62"/>
+        <location filename="../widgets/mountdialog.cpp" line="63"/>
         <source>Mount point:</source>
         <translation>Точка монтування:</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="90"/>
-        <location filename="../widgets/mountdialog.cpp" line="260"/>
+        <location filename="../widgets/mountdialog.cpp" line="99"/>
+        <source>The mount point is illegal. Please select /mnt or /media, or its subdirectories.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="109"/>
+        <location filename="../widgets/mountdialog.cpp" line="277"/>
         <source>Cancel</source>
         <translation>Скасувати</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="91"/>
+        <location filename="../widgets/mountdialog.cpp" line="110"/>
         <source>Mount</source>
         <translation>Змонтувати</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="283"/>
-        <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
-        <translation>Не вдалося змонтувати: вибрана точка монтування не є порожньою. Будь ласка, виберіть якусь іншу!</translation>
-    </message>
-    <message>
-        <location filename="../widgets/mountdialog.cpp" line="284"/>
-        <source>OK</source>
-        <comment>button</comment>
-        <translation>Гаразд</translation>
-    </message>
-    <message>
-        <location filename="../widgets/mountdialog.cpp" line="259"/>
+        <location filename="../widgets/mountdialog.cpp" line="276"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>Дані з цією точкою монтування може бути втрачено. Будь ласка, змонтуйте каталог до іншої теки.</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="260"/>
+        <location filename="../widgets/mountdialog.cpp" line="277"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>Продовжити</translation>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="300"/>
+        <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
+        <translation>Не вдалося змонтувати: вибрана точка монтування не є порожньою. Будь ласка, виберіть якусь іншу!</translation>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="301"/>
+        <source>OK</source>
+        <comment>button</comment>
+        <translation>Гаразд</translation>
     </message>
 </context>
 <context>
@@ -1817,7 +1822,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="61"/>
         <source>Click %1 to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation type="unfinished"/>
+        <translation>Натисніть «%1», щоб збільшити кількість розділів. Клацніть на будь-якому розділі, щоб змінити його назву і файлову систему.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="128"/>
@@ -1837,7 +1842,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="161"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="165"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1107"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1108"/>
         <source>Disk:</source>
         <translation>Диск:</translation>
     </message>
@@ -1845,7 +1850,7 @@ will format it and remove its password.</source>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="173"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="335"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="379"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1108"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1109"/>
         <source>File system:</source>
         <translation>Файлова система:</translation>
     </message>
@@ -1911,8 +1916,8 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="702"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="712"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="814"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="824"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="815"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="825"/>
         <source>The length exceeds the limit</source>
         <translation>Перевищено обмеження на довжину</translation>
     </message>
@@ -1927,33 +1932,33 @@ will format it and remove its password.</source>
         <translation>Скористатися для шифрування диска державним криптографічним алгоритмом sm4-xts-plain. Якщо його зашифровано, вам доведеться розшифрувати його, перш ніж монтувати. В операційних системах, де не передбачено підтримки державного криптографічного алгоритму, розшифрування диска буде неможливим.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="856"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="857"/>
         <source>The number of new partitions exceeds the limit</source>
         <translation>Кількість нових розділів перевищує максимальну можливу</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="879"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="880"/>
         <source>To encrypt a partition, it should be larger than 100 MiB</source>
         <translation>Для шифрування розділу його розміри мають перевищувати 100 МіБ</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="887"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="888"/>
         <source>Set a password to encrypt the new partition</source>
         <translation>Встановіть пароль для шифрування нового розділу</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="906"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="907"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>Щоб не втратити доступ, будь ласка, створіть резервну копію вашого пароля і зберігайте її належним чином!</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="907"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="908"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>Гаразд</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="920"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="921"/>
         <source>To create a partition, you need at least 52 MB</source>
         <translation>Щоб створити розділ, вам потрібно принаймні 52 МБ</translation>
     </message>

@@ -23,22 +23,22 @@
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="148"/>
-        <location filename="../widgets/createlvwidget.cpp" line="312"/>
+        <location filename="../widgets/createlvwidget.cpp" line="313"/>
         <source>LV name:</source>
         <translation>Logikai kötet neve:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="157"/>
         <location filename="../widgets/createlvwidget.cpp" line="161"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1004"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1005"/>
         <source>VG name:</source>
         <translation>Kötetcsoport neve:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="169"/>
-        <location filename="../widgets/createlvwidget.cpp" line="333"/>
-        <location filename="../widgets/createlvwidget.cpp" line="377"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1005"/>
+        <location filename="../widgets/createlvwidget.cpp" line="334"/>
+        <location filename="../widgets/createlvwidget.cpp" line="378"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1006"/>
         <source>LV file system:</source>
         <translation>Logikai kötet fájlrendszere:</translation>
     </message>
@@ -61,63 +61,63 @@
         <translation>Visszavonás</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="279"/>
+        <location filename="../widgets/createlvwidget.cpp" line="280"/>
         <source>LV Information</source>
         <translation>Logikai kötet információi</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="291"/>
+        <location filename="../widgets/createlvwidget.cpp" line="292"/>
         <source>Create LV:</source>
         <translation>Logikai kötet létrehozása:</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="302"/>
+        <location filename="../widgets/createlvwidget.cpp" line="303"/>
         <source>Delete last logical volume</source>
         <translation>Az utolsó logikai kötet törlése </translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="342"/>
+        <location filename="../widgets/createlvwidget.cpp" line="343"/>
         <source>LV capacity:</source>
         <translation>Logikai kötet kapacitása:</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="524"/>
-        <location filename="../widgets/createlvwidget.cpp" line="614"/>
+        <location filename="../widgets/createlvwidget.cpp" line="525"/>
+        <location filename="../widgets/createlvwidget.cpp" line="615"/>
         <source>Unallocated</source>
         <translation>Felhasználatlan</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="547"/>
+        <location filename="../widgets/createlvwidget.cpp" line="548"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="548"/>
+        <location filename="../widgets/createlvwidget.cpp" line="549"/>
         <source>Size</source>
         <translation>Méret</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="717"/>
+        <location filename="../widgets/createlvwidget.cpp" line="718"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
         <translation>Használja az aes-xts-plain64 szabványos algoritmust a lemez titkosításához. Mielőtt újra felcsatolná, vissza kell fejtenie azt.</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="723"/>
+        <location filename="../widgets/createlvwidget.cpp" line="724"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
         <translation>Használja az sm4-xts-plain state kriptográfiai algoritmust a lemez titkosításához. Mielőtt újra felcsatolná, vissza kell fejtenie azt. Azok az operációs rendszerek, amelyek nem támogatják az állapotkriptográfiai algoritmust, nem tudják visszafejteni a lemezt.</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="817"/>
+        <location filename="../widgets/createlvwidget.cpp" line="818"/>
         <source>To encrypt a volume, it should be larger than 100 MiB</source>
         <translation>A kötet titkosításához, annak méretének 100 MB-nál nagyobbnak kell lennie</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="845"/>
+        <location filename="../widgets/createlvwidget.cpp" line="846"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>A jelszó elvesztésének elkerülése érdekében kérjük készítsen biztonsági másolatot jelszaváról, és őrizze meg azt megfelelően!</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="846"/>
+        <location filename="../widgets/createlvwidget.cpp" line="847"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>OK</translation>
@@ -1689,54 +1689,59 @@ kérjük legyen óvatos</translation>
 <context>
     <name>MountDialog</name>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="49"/>
-        <location filename="../widgets/mountdialog.cpp" line="52"/>
-        <location filename="../widgets/mountdialog.cpp" line="55"/>
+        <location filename="../widgets/mountdialog.cpp" line="50"/>
+        <location filename="../widgets/mountdialog.cpp" line="53"/>
+        <location filename="../widgets/mountdialog.cpp" line="56"/>
         <source>Mount %1</source>
         <translation>%1 csatolása</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="59"/>
+        <location filename="../widgets/mountdialog.cpp" line="60"/>
         <source>Choose a mount point please</source>
         <translation>Kérjük válasszon csatolási pontot</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="62"/>
+        <location filename="../widgets/mountdialog.cpp" line="63"/>
         <source>Mount point:</source>
         <translation>Csatolási pont:  </translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="90"/>
-        <location filename="../widgets/mountdialog.cpp" line="260"/>
+        <location filename="../widgets/mountdialog.cpp" line="99"/>
+        <source>The mount point is illegal. Please select /mnt or /media, or its subdirectories.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="109"/>
+        <location filename="../widgets/mountdialog.cpp" line="277"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="91"/>
+        <location filename="../widgets/mountdialog.cpp" line="110"/>
         <source>Mount</source>
         <translation>Csatolás</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="283"/>
-        <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
-        <translation>A csatolás sikertelen: A kiválasztott csatolási pont nem üres. Kérjük válasszon másikat!</translation>
-    </message>
-    <message>
-        <location filename="../widgets/mountdialog.cpp" line="284"/>
-        <source>OK</source>
-        <comment>button</comment>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <location filename="../widgets/mountdialog.cpp" line="259"/>
+        <location filename="../widgets/mountdialog.cpp" line="276"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>Az ezen a csatolási ponton lévő adatok elvesznének, kérjük csatolja be a könyvtárat egy másik helyre</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="260"/>
+        <location filename="../widgets/mountdialog.cpp" line="277"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>Folytatás</translation>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="300"/>
+        <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
+        <translation>A csatolás sikertelen: A kiválasztott csatolási pont nem üres. Kérjük válasszon másikat!</translation>
+    </message>
+    <message>
+        <location filename="../widgets/mountdialog.cpp" line="301"/>
+        <source>OK</source>
+        <comment>button</comment>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -1817,7 +1822,7 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="61"/>
         <source>Click %1 to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation type="unfinished"/>
+        <translation>Kattintson a %1-re új partíció hozzáadásához. Kattintson a partícióra annak nevének és fájlrendszerének módosításához.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="128"/>
@@ -1837,7 +1842,7 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="161"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="165"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1107"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1108"/>
         <source>Disk:</source>
         <translation>Lemez:  </translation>
     </message>
@@ -1845,7 +1850,7 @@ kérjük legyen óvatos</translation>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="173"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="335"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="379"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1108"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1109"/>
         <source>File system:</source>
         <translation>Fájlrendszer:  </translation>
     </message>
@@ -1911,8 +1916,8 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="702"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="712"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="814"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="824"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="815"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="825"/>
         <source>The length exceeds the limit</source>
         <translation>A hossz meghaladja a korlátot</translation>
     </message>
@@ -1927,33 +1932,33 @@ kérjük legyen óvatos</translation>
         <translation>Használja az sm4-xts-plain state kriptográfiai algoritmust a lemez titkosításához. Ha titkosítva van, akkor vissza kell fejtenie azt a felcsatolás előtt. Azok az operációs rendszerek, amelyek nem támogatják az állapotkriptográfiai algoritmust, nem tudják visszafejteni a lemezt.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="856"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="857"/>
         <source>The number of new partitions exceeds the limit</source>
         <translation>Az új partíciók száma meghaladja a korlátot</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="879"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="880"/>
         <source>To encrypt a partition, it should be larger than 100 MiB</source>
         <translation>Egy partíció titkosításához, annak méretének 100 MB-nál nagyobbnak kell lennie</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="887"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="888"/>
         <source>Set a password to encrypt the new partition</source>
         <translation>Állítson be jelszót az új partíció titkosításához</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="906"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="907"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>A jelszó elvesztésének elkerülése érdekében kérjük készítsen biztonsági másolatot jelszaváról, és őrizze meg azt megfelelően!</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="907"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="908"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="920"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="921"/>
         <source>To create a partition, you need at least 52 MB</source>
         <translation>A partíció létrehozásához legalább 52 MB-ra van szükség</translation>
     </message>

@@ -30,6 +30,7 @@
 
 #include <dfilechooseredit.h>
 #include <DComboBox>
+#include <DLabel>
 #include <commondef.h>
 
 DWIDGET_USE_NAMESPACE
@@ -96,6 +97,7 @@ private slots:
 
 private:
     DFileChooserEdit *m_fileChooserEdit;
+    DLabel *m_warnning;
 //    DComboBox *m_ComboBox;
 };
 

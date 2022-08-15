@@ -88,7 +88,6 @@ private:
     DWarningButton *m_warningButton;
     DStackedWidget *m_stackedWidget;
     DLabel *m_failLabel;
-    DLabel *m_titleLabel;
     QString m_pathInfo;
     int m_curWipeMethod;
     QString m_curDiskMediaType;

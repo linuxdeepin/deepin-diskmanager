@@ -56,7 +56,7 @@ void DecryptDialog::initUi()
     font1.setFamily("Source Han Sans");
     font1.setPixelSize(14);
 
-    QString titleText = tr("Enter the password to decrypt the disk");
+    m_titleText = tr("Enter the password to decrypt the disk");
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         m_devPath = info.m_path;
@@ -68,15 +68,13 @@ void DecryptDialog::initUi()
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
         m_devPath = lvInfo.m_lvPath;
-        titleText = tr("Enter the password to decrypt the volume group");
+        m_titleText = tr("Enter the password to decrypt the volume group");
         m_devName = QString("%1_%2").arg(lvInfo.m_vgName).arg(lvInfo.m_lvName);
     }
 
     m_luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(m_devPath);
 
-    DLabel *titleLabel = new DLabel(titleText, this);
-    titleLabel->setFont(font1);
-    titleLabel->setPalette(palette1);
+    setTitle(m_titleText);
 
     // 限制中文和中文字符
     QRegExp regExp("^[A-Za-z0-9`~!@#$%^&*()_-+=<>,.\\/ ]+$");
@@ -130,7 +128,7 @@ void DecryptDialog::initUi()
     }
 
     QVBoxLayout *contentLayout = new QVBoxLayout;
-    contentLayout->addWidget(titleLabel, 0, Qt::AlignCenter);
+    //contentLayout->addWidget(titleLabel, 0, Qt::AlignCenter);
     contentLayout->addSpacing(20);
     contentLayout->addLayout(passwordLayout);
     contentLayout->addSpacing(10);
@@ -171,16 +169,11 @@ void DecryptDialog::initUi()
     QWidget *firstWidget = new QWidget(this);
     firstWidget->setLayout(firstLayout);
 
-    DLabel *decryptTitleLabel = new DLabel(tr("Decrypting..."), this);
-    decryptTitleLabel->setAlignment(Qt::AlignCenter);
-    decryptTitleLabel->setFont(font1);
-    decryptTitleLabel->setPalette(palette1);
 
     m_waterLoadingWidget = new WaterLoadingWidget(this);
     m_waterLoadingWidget->setFixedSize(128, 128);
 
     QVBoxLayout *secondLayout = new QVBoxLayout;
-    secondLayout->addWidget(decryptTitleLabel, 0, Qt::AlignCenter);
     secondLayout->addSpacing(4);
     secondLayout->addWidget(m_waterLoadingWidget, 0, Qt::AlignCenter);
     secondLayout->addStretch();
@@ -316,6 +309,7 @@ void DecryptDialog::onButtonClicked()
 
     setFixedSize(406, 226);
     m_stackedWidget->setCurrentIndex(1);
+    setTitle(tr("Decrypting..."));
     DWindowCloseButton *button = findChild<DWindowCloseButton *>("DTitlebarDWindowCloseButton");
     if (button != nullptr) {
         button->setDisabled(true);

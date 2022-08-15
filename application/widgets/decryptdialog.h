@@ -138,6 +138,7 @@ private:
     QString m_devName;
     QString m_devPath;
     QTimer m_timer;
+    QString m_titleText;
 };
 
 #endif // DECRYPTDIALOG_H

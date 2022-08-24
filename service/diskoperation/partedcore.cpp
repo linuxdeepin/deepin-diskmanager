@@ -2088,10 +2088,10 @@ void PartedCore::syncDeviceInfo(/*const QMap<QString, Device> deviceMap, */const
 {
     qDebug() << "syncDeviceInfo finally!";
 
-    foreach (auto dev, m_mountPointExclude) {
-        QString output, error;
-        Utils::executCmd(QString("umount -v %1").arg(dev), output, error);
-    }
+//    foreach (auto dev, m_mountPointExclude) {
+//        QString output, error;
+//        Utils::executCmd(QString("umount -v %1").arg(dev), output, error);
+//    }
 
     //m_deviceMap = deviceMap;
     m_deviceMap = m_probeThread.getDeviceMap();

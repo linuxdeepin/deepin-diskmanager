@@ -32,7 +32,8 @@
 #include <QHBoxLayout>
 #include <QDebug>
 
-PasswordInputDialog::PasswordInputDialog(QWidget *parent) : DDBase(parent)
+PasswordInputDialog::PasswordInputDialog(QWidget *parent)
+    : DDBase(parent)
 {
     initUi();
     initConnection();
@@ -70,7 +71,7 @@ void PasswordInputDialog::initUi()
     font3.setFamily("Source Han Sans");
     font3.setPixelSize(13);
 
-    setTitle(tr("Set a password to encrypt %1"));
+    setTitle(tr("Set a password to encrypt %1").arg(""));
 
     DLabel *tipLabel = new DLabel(tr("The password cannot be reset or retrieved online"), this);
     tipLabel->setFont(font2);
@@ -177,7 +178,6 @@ void PasswordInputDialog::setDeviceName(const QString &devName)
 
 void PasswordInputDialog::setTitleText(const QString &text)
 {
-
 }
 
 QString PasswordInputDialog::getPassword()

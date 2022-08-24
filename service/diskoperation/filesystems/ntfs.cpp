@@ -182,7 +182,7 @@ bool NTFS::resize(const QString &path, const QString &sizeByte, bool fillPartiti
         size = QString(" -s %1k").arg(sizeByte);
     }
 
-    Utils::executCmd(QString("umount %1").arg(path));
+    //Utils::executCmd(QString("umount %1").arg(path));
 
     cmd = "ntfsresize --force --force" + size ;
     // Real resize
@@ -222,7 +222,7 @@ FS_Limits NTFS::getFilesystemLimits(const QString &path)
 {
     m_fsLimits = FS_Limits {-1, -1};
     QString cmd, output, error;
-    Utils::executCmd(QString("umount %1").arg(path), output, error);
+    //Utils::executCmd(QString("umount %1").arg(path), output, error);
     cmd = QString("ntfsresize -m -f %1").arg(path);
     if (Utils::executCmd(cmd, output, error) != 0 && error.compare("Unknown error") != 0) {
         return m_fsLimits;

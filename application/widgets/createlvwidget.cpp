@@ -787,7 +787,7 @@ void CreateLVWidget::onSetSliderValue()
     m_slider->setValue(static_cast<int>((value / (m_total - (sumValue() / 1024))) * 100));
     m_currentEditSize = QString::number(value * 1024, 'f', 2);
 
-    if (0.00 == value) {
+    if (0.00 == value || value > (m_total - sumValue() / 1024)) {
         m_addButton->setDisabled(true);
     } else {
         m_addButton->setDisabled(false);

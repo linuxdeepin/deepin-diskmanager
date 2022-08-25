@@ -66,7 +66,7 @@ QSize DmTreeviewDelegate::sizeHint(const QStyleOptionViewItem &option,
 
 void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    if(!index.isValid()) {
+    if (!index.isValid()) {
         return;
     }
 
@@ -84,7 +84,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     }
 
     rect.setWidth(option.rect.width());
-//    rect.setHeight(option.rect.height()); // 分区节点间有间隔
+    //    rect.setHeight(option.rect.height()); // 分区节点间有间隔
     // 去掉分区节点间隔
     if (data.m_level == DMDbusHandler::DISK || data.m_level == DMDbusHandler::VOLUMEGROUP) {
         rect.setHeight(option.rect.height() - 9);
@@ -103,21 +103,24 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     path.moveTo(paintRect.bottomRight() - QPoint(0, radius));
     path.lineTo(paintRect.topRight() + QPoint(0, radius));
     path.arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
-                     QSize(radius * 2, radius * 2)), 0, 90);
+                     QSize(radius * 2, radius * 2)),
+               0, 90);
     path.lineTo(paintRect.topLeft() + QPoint(radius, 0));
     path.arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
     path.lineTo(paintRect.bottomLeft() - QPoint(0, radius));
     path.arcTo(QRect(QPoint(paintRect.bottomLeft() - QPoint(0, radius * 2)),
-                     QSize(radius * 2, radius * 2)), 180, 90);
+                     QSize(radius * 2, radius * 2)),
+               180, 90);
     path.lineTo(paintRect.bottomLeft() + QPoint(radius, 0));
     path.arcTo(QRect(QPoint(paintRect.bottomRight() - QPoint(radius * 2, radius * 2)),
-                     QSize(radius * 2, radius * 2)), 270, 90);
-//    设置分区背景色
-//            if (data.level == 1) {
-//        QBrush brush = m_parentPb.itemBackground();
-//        painter->setBrush(brush);
-//        painter->fillPath(path, brush);
-//    }
+                     QSize(radius * 2, radius * 2)),
+               270, 90);
+    //    设置分区背景色
+    //            if (data.level == 1) {
+    //        QBrush brush = m_parentPb.itemBackground();
+    //        painter->setBrush(brush);
+    //        painter->fillPath(path, brush);
+    //    }
 
     // 设置分区选中时文本颜色
     if ((option.state & QStyle::State_Selected) && (data.m_level != DMDbusHandler::OTHER)) {
@@ -128,8 +131,8 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     }
 
     DmTreeview *treeView = qobject_cast<DmTreeview *>(m_parentView);
-//    if (treeView == nullptr) {
-//    }
+    //    if (treeView == nullptr) {
+    //    }
 
     QIcon directionIcon;
     int pixmapWidth = 8; // 伸缩按钮宽
@@ -196,7 +199,8 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
 
         painter->setFont(font);
         textRect.setRect(paintRect.left() + 10, paintRect.top(), 130, 100);
-        painter->drawText(textRect, text);
+        QString path = painter->fontMetrics().elidedText(text, Qt::ElideMiddle, 120);
+        painter->drawText(textRect, path);
 
         lefticon1Rect.setRect(paintRect.left() + 160, paintRect.top() + 6, pixmapWidth, pixmapHeight);
         painter->drawPixmap(lefticon1Rect, directionIcon.pixmap(17, 17));
@@ -281,14 +285,14 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         height = 28 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
         QRect mounticonRect = QRect(paintRect.left() + 45, paintRect.top() + height, 10, 10);
 
-//        // 获取分区是否隐藏
-//        int hide = 0;
-//        if (data.mountpoints.isEmpty() || data.mountpoints == "/recovery") {
-//            int result = DMDbusHandler::instance()->getPartitionHiddenFlag(data.diskpath, data.partitonpath);
-//            if (1 == result) {
-//                hide = 1;
-//            }
-//        }
+        //        // 获取分区是否隐藏
+        //        int hide = 0;
+        //        if (data.mountpoints.isEmpty() || data.mountpoints == "/recovery") {
+        //            int result = DMDbusHandler::instance()->getPartitionHiddenFlag(data.diskpath, data.partitonpath);
+        //            if (1 == result) {
+        //                hide = 1;
+        //            }
+        //        }
 
         if (data.m_fstype == "unallocated") {
             painter->drawPixmap(mounticonRect, icon2.pixmap(10, 10));

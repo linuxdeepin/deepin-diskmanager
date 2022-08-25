@@ -44,7 +44,7 @@ MountDialog::MountDialog(QWidget *parent)
 
 void MountDialog::initUi()
 {
-    setMinimumHeight(320);
+    setMinimumSize(QSize(420, 220));
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         setTitle(tr("Mount %1").arg(info.m_path));
@@ -70,45 +70,47 @@ void MountDialog::initUi()
     m_fileChooserEdit->setAccessibleName("mountPointComboBox");
     m_fileChooserEdit->setText("/mnt");
 
-//    m_ComboBox = new DComboBox;
-//    m_ComboBox->setEditable(true);
-//    m_ComboBox->addItem("/mnt");
-//    m_ComboBox->addItem("/boot");
-//    m_ComboBox->addItem("/");
-//    m_ComboBox->addItem("/tmp");
-//    m_ComboBox->addItem("/var");
-//    m_ComboBox->addItem("/srv");
-//    m_ComboBox->addItem("/opt");
-//    m_ComboBox->addItem("/usr");
-//    m_ComboBox->addItem("/local");
-//    m_ComboBox->addItem("/media");
-//    m_ComboBox->setAccessibleName("mountPointComboBox");
+    //    m_ComboBox = new DComboBox;
+    //    m_ComboBox->setEditable(true);
+    //    m_ComboBox->addItem("/mnt");
+    //    m_ComboBox->addItem("/boot");
+    //    m_ComboBox->addItem("/");
+    //    m_ComboBox->addItem("/tmp");
+    //    m_ComboBox->addItem("/var");
+    //    m_ComboBox->addItem("/srv");
+    //    m_ComboBox->addItem("/opt");
+    //    m_ComboBox->addItem("/usr");
+    //    m_ComboBox->addItem("/local");
+    //    m_ComboBox->addItem("/media");
+    //    m_ComboBox->setAccessibleName("mountPointComboBox");
 
     mainLayout->addWidget(tipLabel);
     mainLayout->addWidget(mountLabel);
     mainLayout->addWidget(m_fileChooserEdit);
 
-    DLabel *mountPointSuggest = new DLabel;
-    mountPointSuggest->setText(tr("Please select /mnt or /media, or its subdirectories."));
-    mountPointSuggest->setAlignment(Qt::AlignCenter);
-    mountPointSuggest->setWordWrap(true);
-    mainLayout->addWidget(mountPointSuggest);
-    mainLayout->addSpacing(10);
-    DFontSizeManager::instance()->bind(mountPointSuggest, DFontSizeManager::T8);
+    m_mountPointSuggest = new DLabel;
+    m_mountPointSuggest->setText(tr("Please select /mnt or /media, or its subdirectories."));
+    m_mountPointSuggest->setAlignment(Qt::AlignLeft);
+    m_mountPointSuggest->setWordWrap(false);
+    m_mountPointSuggest->setElideMode(Qt::ElideMiddle);
+    m_mountPointSuggest->setToolTip(tr("Please select /mnt or /media, or its subdirectories."));
+    mainLayout->addWidget(m_mountPointSuggest);
+    DFontSizeManager::instance()->bind(m_mountPointSuggest, DFontSizeManager::T8);
     m_warnning = new DLabel;
     m_warnning->setText(tr("The mount point is illegal. Please select /mnt or /media, or its subdirectories."));
-    m_warnning->setAlignment(Qt::AlignCenter);
+    m_warnning->setToolTip(tr("The mount point is illegal. Please select /mnt or /media, or its subdirectories."));
+    m_warnning->setAlignment(Qt::AlignLeft);
     m_warnning->setVisible(false);
-    m_warnning->setWordWrap(true);
+    m_warnning->setWordWrap(false);
+    m_warnning->setElideMode(Qt::ElideMiddle);
     DFontSizeManager::instance()->bind(m_warnning, DFontSizeManager::T6);
     m_warnning->setStyleSheet("color:#FF5736;");
     mainLayout->addWidget(m_warnning);
     mainLayout->addStretch();
 
-
     int index = addButton(tr("Cancel"), true, ButtonNormal);
     m_okCode = addButton(tr("Mount"), false, ButtonRecommend);
-//    getButton(okcode)->setDisabled(true);
+    //    getButton(okcode)->setDisabled(true);
     setOnButtonClickedClose(false);
 
     getButton(index)->setAccessibleName("cancel");
@@ -131,14 +133,16 @@ void MountDialog::onEditContentChanged(const QString &content)
             if (isSystemDirectory(content)) {
                 getButton(m_okCode)->setDisabled(true);
                 m_warnning->setVisible(true);
+                m_mountPointSuggest->setVisible(false);
             } else {
                 getButton(m_okCode)->setDisabled(false);
                 m_warnning->setVisible(false);
+                m_mountPointSuggest->setVisible(true);
             }
-//            m_fileChooserEdit->setAlert(false);
+            //            m_fileChooserEdit->setAlert(false);
         } else {
             getButton(m_okCode)->setDisabled(true);
-//            m_fileChooserEdit->setAlert(true);
+            //            m_fileChooserEdit->setAlert(true);
         }
     }
 }
@@ -215,7 +219,6 @@ void MountDialog::mountCurPath()
             DMDbusHandler::instance()->cryptMount(luksInfo, info.m_path);
         } else {
             DMDbusHandler::instance()->mount(m_fileChooserEdit->text());
-
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();

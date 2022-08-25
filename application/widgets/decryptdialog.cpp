@@ -34,7 +34,8 @@
 #include <QVBoxLayout>
 #include <QKeyEvent>
 
-DecryptDialog::DecryptDialog(QWidget *parent) : DDBase(parent)
+DecryptDialog::DecryptDialog(QWidget *parent)
+    : DDBase(parent)
 {
     initUi();
     initConnection();
@@ -43,7 +44,7 @@ DecryptDialog::DecryptDialog(QWidget *parent) : DDBase(parent)
 
 void DecryptDialog::initUi()
 {
-    m_height = 200;
+    m_height = 240;
     setFixedSize(406, m_height);
 
     DPalette palette1;
@@ -169,7 +170,6 @@ void DecryptDialog::initUi()
     QWidget *firstWidget = new QWidget(this);
     firstWidget->setLayout(firstLayout);
 
-
     m_waterLoadingWidget = new WaterLoadingWidget(this);
     m_waterLoadingWidget->setFixedSize(128, 128);
 
@@ -191,7 +191,7 @@ void DecryptDialog::initUi()
     QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
     mainLayout->addWidget(m_stackedWidget);
     mainLayout->setSpacing(0);
-    mainLayout->setContentsMargins(0, 0, 0, 0);  
+    mainLayout->setContentsMargins(0, 0, 0, 0);
 }
 
 void DecryptDialog::initConnection()

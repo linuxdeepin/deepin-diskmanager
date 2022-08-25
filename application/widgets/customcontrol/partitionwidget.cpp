@@ -777,6 +777,7 @@ void PartitionWidget::onSliderValueChanged(int value)
     m_currentEditSize = QString::number((static_cast<double>(value) / 100) * (m_totalSize - sumValue()), 'f', 4);
     qDebug() << m_currentEditSize << size << value << m_totalSize - sumValue();
     m_block = 0;
+    //m_addButton->setEnabled(m_currentEditSize <= )
 }
 
 void PartitionWidget::onSetSliderValue()
@@ -797,6 +798,11 @@ void PartitionWidget::onSetSliderValue()
     m_block = 1;
     m_slider->setValue(static_cast<int>((value / (m_total - (sumValue() / 1024))) * 100));
     m_currentEditSize = QString::number(value * 1024, 'f', 4);
+    if (value == 0.00 || value > (m_total - sumValue() / 1024)) {
+        m_addButton->setEnabled(false);
+    } else {
+        m_addButton->setEnabled(true);
+    }
     //    qDebug() << currentEditSize;
     //    qDebug() << value * 1024 << static_cast<int>((value / total) * 100);
 }

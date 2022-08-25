@@ -97,8 +97,9 @@ private slots:
 
 private:
     DFileChooserEdit *m_fileChooserEdit;
+    DLabel *m_mountPointSuggest;
     DLabel *m_warnning;
-//    DComboBox *m_ComboBox;
+    //    DComboBox *m_ComboBox;
 };
 
 #endif // MOUNTDIALOG_H

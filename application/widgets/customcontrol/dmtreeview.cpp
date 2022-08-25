@@ -50,7 +50,7 @@ void DmTreeview::initUI()
     /* setAttribute(Qt::WA_TranslucentBackground)*/; //背景透明
 }
 
-QStandardItem * DmTreeview::addItem(QStandardItem *item, const DiskInfoData &data, int flag)
+QStandardItem *DmTreeview::addItem(QStandardItem *item, const DiskInfoData &data, int flag)
 {
     if (data.m_level == DMDbusHandler::DISK || data.m_level == DMDbusHandler::VOLUMEGROUP) {
         QStandardItem *standardItem = new QStandardItem();
@@ -93,7 +93,7 @@ void DmTreeview::initDelegate()
     setItemDelegate(m_delegate);
 }
 
-QStandardItem *DmTreeview::getCurItem()//获取当前ｉｔｅｍ
+QStandardItem *DmTreeview::getCurItem() //获取当前ｉｔｅｍ
 {
     QModelIndex index = currentIndex();
     if (!index.isValid()) {
@@ -136,14 +136,14 @@ void DmTreeview::mousePressEvent(QMouseEvent *event)
     DTreeView::mousePressEvent(event);
 
     QModelIndex curIndex = indexAt(event->pos());
-    QModelIndex index = curIndex.sibling(curIndex.row(),0);
+    QModelIndex index = curIndex.sibling(curIndex.row(), 0);
 
     if ((event->button() == Qt::LeftButton) && (index.isValid())) {
         setExpanded(currentIndex(), !isExpanded(currentIndex()));
     }
 }
 
-void DmTreeview::addItem(DmDiskinfoBox *infoBox, int flag, QStandardItem *purItem)//增加节点
+void DmTreeview::addItem(DmDiskinfoBox *infoBox, int flag, QStandardItem *purItem) //增加节点
 {
     QStandardItem *item = nullptr;
     DiskInfoData data;
@@ -169,14 +169,14 @@ void DmTreeview::addItem(DmDiskinfoBox *infoBox, int flag, QStandardItem *purIte
         foreach (auto sub, infoBox->m_childs) {
             addSubItem(sub, item, flag);
         }
-    } else if(infoBox->m_level == DMDbusHandler::OTHER) {
+    } else if (infoBox->m_level == DMDbusHandler::OTHER) {
         data.m_level = DMDbusHandler::OTHER;
         item = addTopItem(data);
         m_lstStandardItem << item;
         foreach (auto sub, infoBox->m_childs) {
             addSubItem(sub, item, flag);
         }
-    }else {
+    } else {
         if (purItem == nullptr) {
             purItem = getCurItem();
 
@@ -186,7 +186,6 @@ void DmTreeview::addItem(DmDiskinfoBox *infoBox, int flag, QStandardItem *purIte
         }
 
         if (infoBox->m_level <= 0) {
-
             QVariant var = purItem->index().data(Qt::UserRole + 1);
             DiskInfoData parent_data = var.value<DiskInfoData>();
             data.m_level = DMDbusHandler::DISK;
@@ -239,7 +238,7 @@ void DmTreeview::addSubItem(DmDiskinfoBox *mailBox, QStandardItem *curItem, int 
     addItem(mailBox, flag, curItem);
 }
 
-QModelIndex DmTreeview::setDefaultdmItem()//设置默认选中节点
+QModelIndex DmTreeview::setDefaultdmItem() //设置默认选中节点
 {
     //QModelIndex index = m_pSortViewFilter->index(0, 0, getRootItemIndex());
     setCurrentIndex(model()->index(0, 0).child(0, 0));
@@ -248,7 +247,7 @@ QModelIndex DmTreeview::setDefaultdmItem()//设置默认选中节点
     return model()->index(0, 0);
 }
 
-void DmTreeview::setRefreshItem(int devicenum, int num)//设置刷新后默认选择操作分区
+void DmTreeview::setRefreshItem(int devicenum, int num) //设置刷新后默认选择操作分区
 {
     if (-1 == devicenum) {
         setCurrentIndex(m_model->item(num)->index());
@@ -288,7 +287,7 @@ void DmTreeview::setRefreshItem(int devicenum, int num, int groupNum)
     }
 }
 
-int DmTreeview::getCurrentNum()//返回当前选中分区
+int DmTreeview::getCurrentNum() //返回当前选中分区
 {
     return m_curNum;
 }
@@ -303,7 +302,7 @@ int DmTreeview::getCurrentGroupNum()
     return m_groupNum;
 }
 
-QStandardItem *DmTreeview::getRootItem()//获取根节点
+QStandardItem *DmTreeview::getRootItem() //获取根节点
 {
     return m_model->item(0);
 }

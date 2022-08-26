@@ -44,7 +44,7 @@ MountDialog::MountDialog(QWidget *parent)
 
 void MountDialog::initUi()
 {
-    setMinimumSize(QSize(420, 220));
+    setMinimumSize(QSize(420, 200));
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         setTitle(tr("Mount %1").arg(info.m_path));
@@ -103,7 +103,7 @@ void MountDialog::initUi()
     m_warnning->setVisible(false);
     m_warnning->setWordWrap(false);
     m_warnning->setElideMode(Qt::ElideMiddle);
-    DFontSizeManager::instance()->bind(m_warnning, DFontSizeManager::T6);
+    DFontSizeManager::instance()->bind(m_warnning, DFontSizeManager::T8);
     m_warnning->setStyleSheet("color:#FF5736;");
     mainLayout->addWidget(m_warnning);
     mainLayout->addStretch();

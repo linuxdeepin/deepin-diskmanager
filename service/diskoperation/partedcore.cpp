@@ -1055,7 +1055,7 @@ bool PartedCore::unmount()
         return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_UMNT, true, "0");
     }
     QString type = Utils::fileSystemTypeToString(m_curpartition.m_fstype);//修改/etc/fstab
-    writeFstab(m_curpartition.m_uuid,  "", type, false);//非挂载 不需要挂载点
+    //writeFstab(m_curpartition.m_uuid,  "", type, false);//非挂载 不需要挂载点
     qDebug() << __FUNCTION__ << "Unmount end";
     addMountPointExclude(m_curpartition.getPath());
     return sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_UMNT, true, "1");

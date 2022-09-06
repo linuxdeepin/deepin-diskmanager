@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
 cd ../
 [ -d build-ut ] && rm -fr build-ut 
 mkdir -p build-ut/html

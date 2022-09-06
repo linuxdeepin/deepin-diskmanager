@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+//
+// SPDX-License-Identifier: GPL-3.0-only
+
 #ifndef COMMONDEF_H
 #define COMMONDEF_H
 #include <QObject>

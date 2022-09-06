@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+//
+// SPDX-License-Identifier: GPL-3.0-only
+
 #ifndef DISKHEALTHHEADERVIEW_H
 #define DISKHEALTHHEADERVIEW_H
 

@@ -15,7 +15,7 @@ Copyright: None
 License: CC-BY-4.0
 
 # Project file
-Files: application/CMakeLists.txt * log/CMakeLists.txt service/CMakeLists.txt test/CMakeLists.txt tests/CMakeLists.txt
+Files: application/CMakeLists.txt log/CMakeLists.txt service/CMakeLists.txt test/CMakeLists.txt tests/CMakeLists.txt
 Copyright: None
 License: CC0-1.0
 

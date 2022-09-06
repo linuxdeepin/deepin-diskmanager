@@ -3,11 +3,6 @@ Upstream-Name: deepin-diskmanager
 Upstream-Contact: UnionTech Software Technology Co., Ltd. <>
 Source: https://github.com/linuxdeepin/deepin-diskmanager
 
-# Sample paragraph, commented out:
-#
-# Files: src/*
-# Copyright: $YEAR $NAME <$CONTACT>
-# License: ...
 
 # README
 Files: README.md README.zh_CN.md

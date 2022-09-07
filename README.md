@@ -1,6 +1,5 @@
 # diskManager
-Disk Utility is a useful tool to help you better manage your disks through disk partitioning, disk data administration, and health management. 
-磁盘管理器是一款管理磁盘的工具，可帮助用户进行磁盘分区管理、磁盘数据管理及磁盘健康管理。
+Disk Utility is a useful tool to help you better manage your disks through disk partitioning, disk data administration, and health management.
 
 ## Dependencies
 * smartmontools
@@ -44,14 +43,14 @@ Any usage issues can ask for help via
 * [Gitter](https://gitter.im/orgs/linuxdeepin/rooms)
 * [IRC channel](https://webchat.freenode.net/?channels=deepin)
 * [WiKi](https://wiki.deepin.org)
-* [官方论坛](https://bbs.deepin.org)
-* [开发者中心](https://github.com/linuxdeepin/dde-session-shell)
+* [Forum](https://bbs.deepin.org)
+* [Developer Center](https://github.com/linuxdeepin/dde-session-shell)
 
 ## Getting involved
 
 We encourage you to report issues and contribute changes
 
-* [开发者代码贡献指南](https://github.com/linuxdeepin/developer-center/wiki/Contribution-Guidelines-for-Developers)
+* [**Contribution guide for developers**](https://github.com/linuxdeepin/developer-center/wiki/Contribution-Guidelines-for-Developers-en)
 
 
 ## License

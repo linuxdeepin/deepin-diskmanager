@@ -9,8 +9,13 @@ Files: README.md README.zh_CN.md
 Copyright: None
 License: CC-BY-4.0
 
-# Project file
-Files: application/CMakeLists.txt log/CMakeLists.txt service/CMakeLists.txt test/CMakeLists.txt tests/CMakeLists.txt
+# cmake file
+Files: CMakeLists.txt application/CMakeLists.txt log/CMakeLists.txt service/CMakeLists.txt test/CMakeLists.txt tests/CMakeLists.txt cmake/*
+Copyright: None
+License: CC0-1.0
+
+#qrc
+Files:application/assets/appicons.qrc application/assets/resource.qrc service/diskoperation/filesystems/filesystems.pri
 Copyright: None
 License: CC0-1.0
 
@@ -25,7 +30,7 @@ Copyright: UnionTech Software Technology Co., Ltd.
 License: CC0-1.0
 
 # png svg
-Files: application/assets/icons/deepin/*
+Files: application/assets/icons/deepin/* application/assets/icons application/assets/icons/deepin-diskmanager.svg
 Copyright: UnionTech Software Technology Co., Ltd.
 License: GPL-3.0-only
 
@@ -33,6 +38,11 @@ License: GPL-3.0-only
 Files: service/udev/*.sh service/udev/deepin-diskmanager-authenticateProxy
 Copyright: None
 License: GPL-3.0-only
+
+#config
+Files: service/assets/data/com.deepin.diskmanager.conf service/assets/data/com.deepin.diskmanager.service service/assets/data/com.deepin.diskmanager.conf application/assets/deepin-diskmanager.desktop application/assets/environments.h.in service/policy/com.deepin.diskmanager.policy service/udev/99-diskmanager.rules
+Copyright: UnionTech Software Technology Co., Ltd.
+License: CC0-1.0
 
 # gitignore
 Files: .gitignore

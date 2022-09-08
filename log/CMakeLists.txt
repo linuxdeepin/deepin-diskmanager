@@ -1,3 +1,5 @@
+
+
 #include_directories(${PROJECT_SOURCE_DIR}/log)
 
 #add_library(dlmlog SHARED

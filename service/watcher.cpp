@@ -1,29 +1,7 @@
-/**
- * @copyright 2020-2020 Uniontech Technology Co., Ltd.
- *
- * @file watcher.cpp
- *
- * @brief 检测前端进程是否被用户强制退出，如果前端被杀，则后台进程需要自动退出
- *
- * @date 2021-11-19 11:38
- *
- * Author: liweigang  <liweigang@uniontech.com>
- *
- * Maintainer: liweigang  <liweigang@uniontech.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+//
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "watcher.h"
 #include <sys/types.h>
 #include <signal.h>

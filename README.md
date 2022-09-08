@@ -26,7 +26,7 @@ sudo apt-get install deepin-diskmanager
 $ cd deepin-diskmanager
 $ mkdir Build
 $ cd Build
-$ qmake ..
+$ cmake ..
 $ make
 ```
 
@@ -40,11 +40,9 @@ When install complete, the executable binary file is placed into `/usr/bin/deepi
 ## Getting help
 
 Any usage issues can ask for help via
-* [Gitter](https://gitter.im/orgs/linuxdeepin/rooms)
-* [IRC channel](https://webchat.freenode.net/?channels=deepin)
 * [WiKi](https://wiki.deepin.org)
 * [Forum](https://bbs.deepin.org)
-* [Developer Center](https://github.com/linuxdeepin/dde-session-shell)
+* [Developer Center](https://github.com/linuxdeepin/developer-center)
 
 ## Getting involved
 

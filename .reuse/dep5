@@ -50,7 +50,7 @@ Copyright: None
 License: CC0-1.0
 
 # ci
-Files: .github/*
+Files: .github/* .project.json
 Copyright: None
 License: CC0-1.0
 

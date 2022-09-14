@@ -148,6 +148,13 @@ HardDiskInfo PartedCore::getDeviceHardInfo(const QString &devicepath)
 
     device.getDiskInfoFromSmartCtl(devicepath);
 
+    device.m_mediaType = device.getDiskInfoMediaType(devicepath);
+
+    device.getDiskInfoModel(devicepath, device.m_model);
+
+    device.getDiskInfoInterface(devicepath, device.m_interface, device.m_model);
+
+
     hdinfo.m_model = device.m_model;
     hdinfo.m_vendor = device.m_vendor;
     hdinfo.m_mediaType = device.m_mediaType;
@@ -162,6 +169,9 @@ HardDiskInfo PartedCore::getDeviceHardInfo(const QString &devicepath)
     hdinfo.m_powerCycleCount = device.m_powerCycleCount;
     hdinfo.m_firmwareVersion = device.m_firmwareVersion;
     hdinfo.m_speed = device.m_speed;
+    if (hdinfo.m_mediaType == "SSD") {
+        hdinfo.m_rotationRate = "-";
+    }
 
     qDebug() << __FUNCTION__ << "Get Device Hard Info end";
     return hdinfo;
@@ -433,7 +443,7 @@ bool PartedCore::detectionPartitionTableError(const QString &devicePath)
         QString cmdFix = QString("echo w | fdisk %1").arg(devicePath);
         Utils::executWithPipeCmd(cmdFix, outPutFix, errorFix);
         qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
-        return true;
+        return false;
     }
 
     QString outPut, error, outPutError;

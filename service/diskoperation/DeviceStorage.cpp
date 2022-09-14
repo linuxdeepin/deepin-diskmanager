@@ -4,6 +4,7 @@
 
 #include "DeviceStorage.h"
 #include <QDebug>
+#include <QFile>
 
 namespace DiskManager {
 
@@ -467,7 +468,7 @@ void DeviceStorage::getDiskInfoModel(const QString &devicePath, QString &model)
     }
     QStringList infoList = outPut.split("\n");
     for (int i = 0; i < infoList.size(); i++) {
-        if(infoList[i].contains("Device Model:")){
+        if(infoList[i].contains("Device Model:") || infoList[i].contains("Product:")){
             QStringList tempList = infoList[i].split(":");
             model = tempList[tempList.size()-1].trimmed();
             return;
@@ -530,23 +531,25 @@ QString DeviceStorage::getDiskInfoMediaType(const QString &devicePath)
 
 void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &interface, QString &model)
 {
-    QString cmd = QString("hwinfo --disk --only %1").arg(devicePath);
-    QProcess proc;
-    proc.start(cmd);
-    proc.waitForFinished(-1);
-    QString outPut = proc.readAllStandardOutput().trimmed();
-    QStringList outPutList = outPut.split("(");
-    interface = outPutList[outPutList.size() - 1].split(" ")[0];
-    outPutList = outPut.split("\n");
 
-    if(!model.isNull()){
-        return;
-    }
-    for (int i = 0; i < outPutList.size(); ++i) {
-        if(outPutList[i].contains("Model:")){
-            QStringList tempList = outPutList[i].split(":");
-            model = tempList[tempList.size() -1].trimmed();
+    QString bootDevicePath("/proc/bootdevice/product_name");
+    QFile file(bootDevicePath);
+
+    if (file.open(QIODevice::ReadOnly)) {
+        if (model == file.readLine().simplified()) {
+            interface = "UFS 3.0";
         }
+        file.close();
+    }
+
+    if (interface.isEmpty()) {
+        QString cmd = QString("hwinfo --disk --only %1").arg(devicePath);
+        QProcess proc;
+        proc.start(cmd);
+        proc.waitForFinished(-1);
+        QString outPut = proc.readAllStandardOutput().trimmed();
+        QStringList outPutList = outPut.split("(");
+        interface = outPutList[outPutList.size() - 1].split(" ")[0];
     }
     return;
 }

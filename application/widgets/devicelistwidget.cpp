@@ -277,7 +277,7 @@ void DeviceListWidget::onDiskCheckHealthClicked()
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("warningMessageBox");
         // 获取不到硬件相应信息  关闭
-        warningBox.setWarings(tr("Failed to get hardware information"), "", tr("Close"), "close");
+        warningBox.setWarings(tr("Health checking does not support this type of device."), "", tr("Close"), "close");
         warningBox.exec();
 
         setCurDevicePath("");

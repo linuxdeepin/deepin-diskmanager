@@ -52,4 +52,4 @@ We encourage you to report issues and contribute changes
 
 
 ## License
-This project is licensed under GPLv3.
+This project is licensed under  GPL-3.0-only.

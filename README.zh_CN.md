@@ -46,5 +46,5 @@ $ sudo make install
 
 
 ## 开源许可证
-This project is licensed under GPLv3.
+This project is licensed under  GPL-3.0-only.
 

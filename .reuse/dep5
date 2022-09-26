@@ -35,9 +35,14 @@ Copyright: UnionTech Software Technology Co., Ltd.
 License: GPL-3.0-only
 
 # sh
-Files: service/udev/*.sh service/udev/deepin-diskmanager-authenticateProxy
-Copyright: None
+Files: service/udev/*.sh
+Copyright: UnionTech Software Technology Co., Ltd.
 License: GPL-3.0-only
+
+# proxy
+Files: service/udev/deepin-diskmanager-authenticateProxy
+Copyright: Curtis Gedak
+License: GPL-2.0-or-later
 
 #config
 Files: service/assets/data/com.deepin.diskmanager.conf service/assets/data/com.deepin.diskmanager.service service/assets/data/com.deepin.diskmanager.conf application/assets/deepin-diskmanager.desktop application/assets/environments.h.in service/policy/com.deepin.diskmanager.policy service/udev/99-diskmanager.rules

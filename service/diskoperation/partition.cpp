@@ -222,7 +222,7 @@ Byte_Value Partition::getByteLength() const
 
 Sector Partition::getSectorLength() const
 {
-    if (m_sectorStart >= 0 && m_sectorEnd >= 0) {
+    if (m_sectorStart >= 0 && m_sectorEnd >= 0 && m_sectorEnd < ULLONG_MAX) {
         return m_sectorEnd - m_sectorStart + 1;
     } else {
         return -1;

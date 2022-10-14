@@ -9,7 +9,7 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="36"/>
         <source>Click %1 to create a logical volume. </source>
-        <translation type="unfinished"/>
+        <translation>Logický svazek vytvoříte klepnutím na %1</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="103"/>
@@ -643,10 +643,6 @@ will format it and remove its password.</source>
         <translation>Smazat logický svazek</translation>
     </message>
     <message>
-        <source>Failed to get hardware information</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../widgets/devicelistwidget.cpp" line="280"/>
         <source>Close</source>
         <translation>Zavřít</translation>
@@ -654,7 +650,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="280"/>
         <source>Health checking does not support this type of device.</source>
-        <translation type="unfinished"/>
+        <translation>Kontrola stavu tento typ zařízení nepodporuje.</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="317"/>
@@ -1264,121 +1260,131 @@ will format it and remove its password.</source>
         <translation>Informace o disku</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="46"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="45"/>
+        <source>SSD</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
+        <source>HDD</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="51"/>
         <source>Model:</source>
         <translation>Model:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="46"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="51"/>
         <source>Vendor:</source>
         <translation>Výrobce:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="46"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="51"/>
         <source>Media Type:</source>
         <translation>Typ média:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="46"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="51"/>
         <source>Size:</source>
         <translation>Velikost:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="52"/>
         <source>Rotation Rate:</source>
         <translation>Otáčky ploten:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="52"/>
         <source>Interface:</source>
         <translation>Rozhraní:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="52"/>
         <source>Serial Number:</source>
         <translation>Sériové číslo:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="52"/>
         <source>Version:</source>
         <translation>Verze:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="48"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="53"/>
         <source>Capabilities:</source>
         <translation>Schopnosti:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="48"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="53"/>
         <source>Description:</source>
         <translation>Popis:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="48"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="53"/>
         <source>Power On Hours:</source>
         <translation>Celková doba v chodu:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="49"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="54"/>
         <source>Power Cycle Count:</source>
         <translation>Počet zapnutí:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="49"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="54"/>
         <source>Firmware Version:</source>
         <translation>Verze firmware:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="49"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="54"/>
         <source>Speed:</source>
         <translation>Rychlost:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="52"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="53"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="54"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="55"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="56"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="57"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="58"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="59"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="60"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="61"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="62"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="63"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="99"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="102"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="191"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="104"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="107"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="196"/>
         <source>Export</source>
         <comment>button</comment>
         <translation>Exportovat</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="130"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="135"/>
         <source>Save File</source>
         <translation>Uložit soubor</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="130"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="135"/>
         <source>Text files (*.txt)</source>
         <translation>Textové soubory (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="145"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="150"/>
         <source>Wrong path</source>
         <translation>Nesprávný popis umístění</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="153"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="158"/>
         <source>You do not have permission to access this path</source>
         <translation>Nemáte oprávnění přistupovat do tohoto umístění</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="178"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="183"/>
         <source>Export successful</source>
         <translation>Export úspěšný</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="181"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="186"/>
         <source>Export failed</source>
         <translation>Export se nezdařil</translation>
     </message>
@@ -1576,8 +1582,8 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="118"/>
         <location filename="../widgets/infoshowwidget.cpp" line="223"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="364"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="561"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="369"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="566"/>
         <source>Mount point:</source>
         <translation>Přípojný bod:</translation>
     </message>
@@ -1594,9 +1600,9 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="140"/>
         <location filename="../widgets/infoshowwidget.cpp" line="224"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="365"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="484"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="562"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="370"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="489"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="567"/>
         <source>Type:</source>
         <translation>Typ:</translation>
     </message>
@@ -1608,7 +1614,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="154"/>
         <location filename="../widgets/infoshowwidget.cpp" line="225"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="366"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="371"/>
         <source>Volume label:</source>
         <translation>Jmenovka svazku:</translation>
     </message>
@@ -1628,29 +1634,39 @@ will format it and remove its password.</source>
         <translation>Rozhraní:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="483"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="308"/>
+        <source>SSD</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="310"/>
+        <source>HDD</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="488"/>
         <source>LV count:</source>
         <translation>Počet logic. svazků:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="485"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="490"/>
         <source>VG name:</source>
         <translation>Název skup. svazků</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="490"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="493"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="495"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="498"/>
         <source>Volume group</source>
         <translation>Skupina svazků</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="563"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="568"/>
         <source>Volume name:</source>
         <translation>Název svazku:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="568"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="571"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="573"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="576"/>
         <source>Logical volume</source>
         <translation>Logický svazek</translation>
     </message>
@@ -1712,13 +1728,13 @@ will format it and remove its password.</source>
         <location filename="../widgets/mountdialog.cpp" line="71"/>
         <location filename="../widgets/mountdialog.cpp" line="75"/>
         <source>Please select /mnt or /media, or its subdirectories.</source>
-        <translation type="unfinished"/>
+        <translation>Vyberte /mnt nebo /media nebo jejich podadresáře.</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="79"/>
         <location filename="../widgets/mountdialog.cpp" line="80"/>
         <source>The mount point is illegal. Please select /mnt or /media, or its subdirectories.</source>
-        <translation type="unfinished"/>
+        <translation>Přípojný bod je neplatný. Vyberte /mnt nebo /media nebo jejich podadresáře.</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="90"/>
@@ -1745,7 +1761,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="282"/>
         <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
-        <translation type="unfinished"/>
+        <translation>Připojování se nezdařilo: Vybraný přípojný bod není prázdný. Vyberte, prosím, jiný!</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="283"/>
@@ -1832,7 +1848,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="39"/>
         <source>Click %1 to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation type="unfinished"/>
+        <translation>Pro zvýšení počtu oddílů na disku klikněte na %1 (plus). Pokud chcete změnit název a souborový systém na daném oddílu, klepněte na něj.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="106"/>

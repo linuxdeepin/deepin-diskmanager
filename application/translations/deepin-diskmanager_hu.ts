@@ -644,10 +644,6 @@ formázza azt és eltávolítja a jelszavát.</translation>
         <translation>Logikai kötet törlése</translation>
     </message>
     <message>
-        <source>Failed to get hardware information</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../widgets/devicelistwidget.cpp" line="280"/>
         <source>Close</source>
         <translation>Bezárás</translation>
@@ -655,7 +651,7 @@ formázza azt és eltávolítja a jelszavát.</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="280"/>
         <source>Health checking does not support this type of device.</source>
-        <translation type="unfinished"/>
+        <translation>Az állapotfelmérés nem támogatja az ilyen típusú eszközöket.</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="317"/>
@@ -1265,121 +1261,131 @@ kérjük legyen óvatos</translation>
         <translation>Lemez információ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="46"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="45"/>
+        <source>SSD</source>
+        <translation>SSD</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
+        <source>HDD</source>
+        <translation>HDD</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="51"/>
         <source>Model:</source>
         <translation>Modell:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="46"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="51"/>
         <source>Vendor:</source>
         <translation>Szállító:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="46"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="51"/>
         <source>Media Type:</source>
         <translation>Média típusa:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="46"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="51"/>
         <source>Size:</source>
         <translation>Méret:  </translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="52"/>
         <source>Rotation Rate:</source>
         <translation>Forgási sebesség:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="52"/>
         <source>Interface:</source>
         <translation>Felület:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="52"/>
         <source>Serial Number:</source>
         <translation>Sorozatszám:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="52"/>
         <source>Version:</source>
         <translation>Verzió:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="48"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="53"/>
         <source>Capabilities:</source>
         <translation>Képességek:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="48"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="53"/>
         <source>Description:</source>
         <translation>Leírás:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="48"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="53"/>
         <source>Power On Hours:</source>
         <translation>Bekapcsolt órák száma:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="49"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="54"/>
         <source>Power Cycle Count:</source>
         <translation>Teljesítmény ciklusok száma:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="49"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="54"/>
         <source>Firmware Version:</source>
         <translation>Firmware verzió:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="49"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="54"/>
         <source>Speed:</source>
         <translation>Sebesség:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="52"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="53"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="54"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="55"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="56"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="57"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="58"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="59"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="60"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="61"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="62"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="63"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="99"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="102"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="191"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="104"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="107"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="196"/>
         <source>Export</source>
         <comment>button</comment>
         <translation>Exportálás</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="130"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="135"/>
         <source>Save File</source>
         <translation>Fájl mentése</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="130"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="135"/>
         <source>Text files (*.txt)</source>
         <translation>Szöveges fájl (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="145"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="150"/>
         <source>Wrong path</source>
         <translation>Hibás útvonal</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="153"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="158"/>
         <source>You do not have permission to access this path</source>
         <translation>Nincs engedélye hogy hozzáférjen ehhez az útvonalhoz</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="178"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="183"/>
         <source>Export successful</source>
         <translation>Az exportálás sikeres</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="181"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="186"/>
         <source>Export failed</source>
         <translation>Az exportálás sikertelen</translation>
     </message>
@@ -1577,8 +1583,8 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="118"/>
         <location filename="../widgets/infoshowwidget.cpp" line="223"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="364"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="561"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="369"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="566"/>
         <source>Mount point:</source>
         <translation>Csatolási hely:  </translation>
     </message>
@@ -1595,9 +1601,9 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="140"/>
         <location filename="../widgets/infoshowwidget.cpp" line="224"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="365"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="484"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="562"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="370"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="489"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="567"/>
         <source>Type:</source>
         <translation>Típus:  </translation>
     </message>
@@ -1609,7 +1615,7 @@ kérjük legyen óvatos</translation>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="154"/>
         <location filename="../widgets/infoshowwidget.cpp" line="225"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="366"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="371"/>
         <source>Volume label:</source>
         <translation>Kötetcímke:  </translation>
     </message>
@@ -1629,29 +1635,39 @@ kérjük legyen óvatos</translation>
         <translation>Felület:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="483"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="308"/>
+        <source>SSD</source>
+        <translation>SSD</translation>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="310"/>
+        <source>HDD</source>
+        <translation>HDD</translation>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="488"/>
         <source>LV count:</source>
         <translation>Logikai kötet szám:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="485"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="490"/>
         <source>VG name:</source>
         <translation>Kötetcsoport neve:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="490"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="493"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="495"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="498"/>
         <source>Volume group</source>
         <translation>Kötetcsoportok</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="563"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="568"/>
         <source>Volume name:</source>
         <translation>Kötet neve:  </translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="568"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="571"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="573"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="576"/>
         <source>Logical volume</source>
         <translation>Logikai kötet</translation>
     </message>

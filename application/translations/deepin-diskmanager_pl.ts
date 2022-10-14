@@ -605,7 +605,7 @@ sformatuje ją i usunie jej hasło.</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="102"/>
         <source>Check health</source>
-        <translation>Sprawdź stan</translation>
+        <translation>Sprawdź stan zdrowia</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="108"/>
@@ -644,10 +644,6 @@ sformatuje ją i usunie jej hasło.</translation>
         <translation>Usuń wolumin logiczny</translation>
     </message>
     <message>
-        <source>Failed to get hardware information</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../widgets/devicelistwidget.cpp" line="280"/>
         <source>Close</source>
         <translation>Zamknij</translation>
@@ -655,7 +651,7 @@ sformatuje ją i usunie jej hasło.</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="280"/>
         <source>Health checking does not support this type of device.</source>
-        <translation type="unfinished"/>
+        <translation>Urządzenie nie wspiera funkcji stanu zdrowia.</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="317"/>
@@ -694,7 +690,7 @@ sformatuje ją i usunie jej hasło.</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="355"/>
         <source>No errors found in the partition table</source>
-        <translation>Nie znaleziono błędów w tabeli partycji</translation>
+        <translation>Nie znaleziono błędów w tablicy partycji</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="368"/>
@@ -1132,7 +1128,7 @@ sformatuje ją i usunie jej hasło.</translation>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="45"/>
         <source>Check Health</source>
-        <translation>Sprawdź stan</translation>
+        <translation>Sprawdź stan zdrowia</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="77"/>
@@ -1263,121 +1259,131 @@ sformatuje ją i usunie jej hasło.</translation>
         <translation>Informacje o dysku</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="46"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="45"/>
+        <source>SSD</source>
+        <translation>SSD</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
+        <source>HDD</source>
+        <translation>HDD</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="51"/>
         <source>Model:</source>
         <translation>Model:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="46"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="51"/>
         <source>Vendor:</source>
         <translation>Producent:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="46"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="51"/>
         <source>Media Type:</source>
         <translation>Typ:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="46"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="51"/>
         <source>Size:</source>
         <translation>Rozmiar:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="52"/>
         <source>Rotation Rate:</source>
         <translation>Szybkość rotacji:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="52"/>
         <source>Interface:</source>
         <translation>Interfejs:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="52"/>
         <source>Serial Number:</source>
         <translation>Numer seryjny:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="52"/>
         <source>Version:</source>
         <translation>Wersja:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="48"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="53"/>
         <source>Capabilities:</source>
         <translation>Możliwości:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="48"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="53"/>
         <source>Description:</source>
         <translation>Opis:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="48"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="53"/>
         <source>Power On Hours:</source>
         <translation>Godziny pracy:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="49"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="54"/>
         <source>Power Cycle Count:</source>
         <translation>Cykle uruchomienia:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="49"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="54"/>
         <source>Firmware Version:</source>
         <translation>Wersja oprogramowania:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="49"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="54"/>
         <source>Speed:</source>
         <translation>Szybkość:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="52"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="53"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="54"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="55"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="56"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="57"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="58"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="59"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="60"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="61"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="62"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="63"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="99"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="102"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="191"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="104"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="107"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="196"/>
         <source>Export</source>
         <comment>button</comment>
         <translation>Eksportuj</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="130"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="135"/>
         <source>Save File</source>
         <translation>Zapisz plik</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="130"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="135"/>
         <source>Text files (*.txt)</source>
         <translation>Pliki tekstowe (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="145"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="150"/>
         <source>Wrong path</source>
         <translation>Błędna ścieżka</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="153"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="158"/>
         <source>You do not have permission to access this path</source>
         <translation>Nie posiadasz uprawnień dostępu do tej ścieżki</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="178"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="183"/>
         <source>Export successful</source>
         <translation>Eksport zakończony pomyślnie</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="181"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="186"/>
         <source>Export failed</source>
         <translation>Eksport nie powiódł się</translation>
     </message>
@@ -1575,8 +1581,8 @@ sformatuje ją i usunie jej hasło.</translation>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="118"/>
         <location filename="../widgets/infoshowwidget.cpp" line="223"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="364"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="561"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="369"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="566"/>
         <source>Mount point:</source>
         <translation>Punkt montowania:</translation>
     </message>
@@ -1593,9 +1599,9 @@ sformatuje ją i usunie jej hasło.</translation>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="140"/>
         <location filename="../widgets/infoshowwidget.cpp" line="224"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="365"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="484"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="562"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="370"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="489"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="567"/>
         <source>Type:</source>
         <translation>Typ:</translation>
     </message>
@@ -1607,7 +1613,7 @@ sformatuje ją i usunie jej hasło.</translation>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="154"/>
         <location filename="../widgets/infoshowwidget.cpp" line="225"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="366"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="371"/>
         <source>Volume label:</source>
         <translation>Etykieta woluminu:</translation>
     </message>
@@ -1627,29 +1633,39 @@ sformatuje ją i usunie jej hasło.</translation>
         <translation>Interfejs:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="483"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="308"/>
+        <source>SSD</source>
+        <translation>SSD</translation>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="310"/>
+        <source>HDD</source>
+        <translation>HDD</translation>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="488"/>
         <source>LV count:</source>
         <translation>Liczba WL:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="485"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="490"/>
         <source>VG name:</source>
         <translation>Nazwa GW:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="490"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="493"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="495"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="498"/>
         <source>Volume group</source>
         <translation>Grupa woluminów</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="563"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="568"/>
         <source>Volume name:</source>
         <translation>Nazwa woluminu:</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="568"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="571"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="573"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="576"/>
         <source>Logical volume</source>
         <translation>Wolumin logiczny</translation>
     </message>
@@ -1797,7 +1813,7 @@ sformatuje ją i usunie jej hasło.</translation>
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="38"/>
         <source>Errors in Partition Table</source>
-        <translation>Błędy w tabeli partycji</translation>
+        <translation>Błędy w tablicy partycji</translation>
     </message>
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="53"/>
@@ -1812,7 +1828,7 @@ sformatuje ją i usunie jej hasło.</translation>
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="99"/>
         <source>Partition table entries are not in disk order</source>
-        <translation>Pozycje tabeli partycji nie są uporządkowane na dysku</translation>
+        <translation>Pozycje tablicy partycji nie są uporządkowane jak na dysku</translation>
     </message>
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="111"/>

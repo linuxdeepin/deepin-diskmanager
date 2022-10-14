@@ -41,6 +41,11 @@ void DiskInfoDisplayDialog::initUI()
     infoWidget->setLineWidth(0);
 
     HardDiskInfo hardDiskInfo = DMDbusHandler::instance()->getHardDiskInfo(m_devicePath);
+    if (hardDiskInfo.m_mediaType == "SSD") {
+        hardDiskInfo.m_mediaType = tr("SSD");
+    } else if (hardDiskInfo.m_mediaType == "HDD") {
+        hardDiskInfo.m_mediaType = tr("HDD");
+    }
 
     m_diskInfoNameList.clear();
     m_diskInfoNameList << tr("Model:") << tr("Vendor:") << tr("Media Type:") << tr("Size:")

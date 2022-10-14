@@ -304,6 +304,11 @@ void InfoShowWidget::onCurSelectChanged()
         m_volumeLabel->setText(tr("Interface:"));
 
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
+        if (info.m_mediaType == "SSD") {
+            info.m_mediaType = tr("SSD");
+        } else if (info.m_mediaType == "HDD") {
+            info.m_mediaType = tr("HDD");
+        }
         Sector usedSector = 0;
         Sector unusedSector = 0;
         Sector sumUsed = 0;

@@ -644,10 +644,6 @@ will format it and remove its password.</source>
         <translation>删除逻辑卷</translation>
     </message>
     <message>
-        <source>Failed to get hardware information</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../widgets/devicelistwidget.cpp" line="280"/>
         <source>Close</source>
         <translation>关闭</translation>
@@ -1264,121 +1260,131 @@ will format it and remove its password.</source>
         <translation>磁盘信息</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="46"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="45"/>
+        <source>SSD</source>
+        <translation>固态</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
+        <source>HDD</source>
+        <translation>机械</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="51"/>
         <source>Model:</source>
         <translation>型号：</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="46"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="51"/>
         <source>Vendor:</source>
         <translation>制造商：</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="46"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="51"/>
         <source>Media Type:</source>
         <translation>介质类型：</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="46"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="51"/>
         <source>Size:</source>
         <translation>大小：</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="52"/>
         <source>Rotation Rate:</source>
         <translation>转速：</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="52"/>
         <source>Interface:</source>
         <translation>接口：</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="52"/>
         <source>Serial Number:</source>
         <translation>序列号：</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="52"/>
         <source>Version:</source>
         <translation>版本：</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="48"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="53"/>
         <source>Capabilities:</source>
         <translation>功能：</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="48"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="53"/>
         <source>Description:</source>
         <translation>描述：</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="48"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="53"/>
         <source>Power On Hours:</source>
         <translation>通电时间：</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="49"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="54"/>
         <source>Power Cycle Count:</source>
         <translation>通电次数：</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="49"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="54"/>
         <source>Firmware Version:</source>
         <translation>固件版本：</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="49"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="54"/>
         <source>Speed:</source>
         <translation>速度：</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="52"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="53"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="54"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="55"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="56"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="57"/>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="58"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="59"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="60"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="61"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="62"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="63"/>
         <source>%1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="99"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="102"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="191"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="104"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="107"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="196"/>
         <source>Export</source>
         <comment>button</comment>
         <translation>导 出</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="130"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="135"/>
         <source>Save File</source>
         <translation>保存文件</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="130"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="135"/>
         <source>Text files (*.txt)</source>
         <translation>文本文件 (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="145"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="150"/>
         <source>Wrong path</source>
         <translation>路径错误</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="153"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="158"/>
         <source>You do not have permission to access this path</source>
         <translation>您无权访问该路径</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="178"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="183"/>
         <source>Export successful</source>
         <translation>导出成功</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="181"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="186"/>
         <source>Export failed</source>
         <translation>导出失败</translation>
     </message>
@@ -1576,8 +1582,8 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="118"/>
         <location filename="../widgets/infoshowwidget.cpp" line="223"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="364"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="561"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="369"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="566"/>
         <source>Mount point:</source>
         <translation>挂载点：</translation>
     </message>
@@ -1594,9 +1600,9 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="140"/>
         <location filename="../widgets/infoshowwidget.cpp" line="224"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="365"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="484"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="562"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="370"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="489"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="567"/>
         <source>Type:</source>
         <translation>类型：</translation>
     </message>
@@ -1608,7 +1614,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="154"/>
         <location filename="../widgets/infoshowwidget.cpp" line="225"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="366"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="371"/>
         <source>Volume label:</source>
         <translation>分卷卷标：</translation>
     </message>
@@ -1628,29 +1634,39 @@ will format it and remove its password.</source>
         <translation>接口：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="483"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="308"/>
+        <source>SSD</source>
+        <translation>固态</translation>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="310"/>
+        <source>HDD</source>
+        <translation>机械</translation>
+    </message>
+    <message>
+        <location filename="../widgets/infoshowwidget.cpp" line="488"/>
         <source>LV count:</source>
         <translation>逻辑卷数：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="485"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="490"/>
         <source>VG name:</source>
         <translation>卷组名称：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="490"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="493"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="495"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="498"/>
         <source>Volume group</source>
         <translation>逻辑卷组</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="563"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="568"/>
         <source>Volume name:</source>
         <translation>卷名称：</translation>
     </message>
     <message>
-        <location filename="../widgets/infoshowwidget.cpp" line="568"/>
-        <location filename="../widgets/infoshowwidget.cpp" line="571"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="573"/>
+        <location filename="../widgets/infoshowwidget.cpp" line="576"/>
         <source>Logical volume</source>
         <translation>逻辑卷</translation>
     </message>

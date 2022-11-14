@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.0" language="en_US">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="en_US">
 <context>
     <name>CreateLVWidget</name>
     <message>
@@ -642,10 +644,6 @@ will format it and remove its password.</translation>
         <location filename="../widgets/devicelistwidget.cpp" line="237"/>
         <source>Delete logical volume</source>
         <translation>Delete logical volume</translation>
-    </message>
-    <message>
-        <source>Failed to get hardware information</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="280"/>

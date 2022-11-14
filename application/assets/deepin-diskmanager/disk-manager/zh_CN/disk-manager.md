@@ -159,7 +159,7 @@
 
 3. 单击 **确定** ，可以查看空间调整后的分区。
 
->  ![notes](../common/notes.svg)说明：FAT32文件系统不支持压缩空间。
+>  ![notes](../common/notes.svg)说明：FAT32文件系统不支持压缩空间，XFS、Btrfs、exFAT文件系统不支持空间调整。
 
 #### 擦除磁盘或分区
 

@@ -211,8 +211,23 @@ void DMDbusHandler::getDeviceInfo()
     qDebug() << __FUNCTION__ << "-------";
 }
 
-const DeviceInfoMap &DMDbusHandler::probDeviceInfo() const
+DeviceInfoMap &DMDbusHandler::probDeviceInfo()
 {
+    QFile file("/etc/mtab");
+    QString mounts;
+    if (file.open(QIODevice::ReadOnly)) {
+        mounts = file.readAll();
+        file.close();
+    }
+    if (!mounts.isEmpty()) {
+        for (auto &disk : m_deviceMap) {
+            for (auto &partition : disk.m_partition) {
+                if (!mounts.contains(partition.m_name)) {
+                    partition.m_mountPoints.clear();
+                }
+            }
+        }
+    }
     return m_deviceMap;
 }
 

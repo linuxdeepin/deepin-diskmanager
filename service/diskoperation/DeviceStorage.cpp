@@ -537,7 +537,7 @@ void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &int
 
     if (file.open(QIODevice::ReadOnly)) {
         if (model == file.readLine().simplified()) {
-            interface = "UFS 3.0";
+            interface = "UFS 3.1";
         }
         file.close();
     }

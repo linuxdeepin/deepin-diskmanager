@@ -60,7 +60,7 @@ public:
     /**
      * @brief 获取所有设备信息
      */
-    const DeviceInfoMap &probDeviceInfo() const;
+    DeviceInfoMap &probDeviceInfo();
 
     /**
      * @brief 根据设备路径获取该设备的所有分区信息

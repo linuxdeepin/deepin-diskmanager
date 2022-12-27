@@ -230,6 +230,8 @@ public:
     static QString mkTempDir(const QString &infix);
 
     static void  rmTempDir(QString &dirName);
+
+    static QString readContent(const QString &filename);
 };
 
 #endif // UTILS_H

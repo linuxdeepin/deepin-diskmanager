@@ -683,6 +683,17 @@ void Utils::rmTempDir(QString &dirName)
     }
 }
 
+QString Utils::readContent(const QString &filename)
+{
+    QString ret;
+    QFile file(filename);
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        ret = file.readAll();
+        file.close();
+    }
+    return ret;
+}
+
 int Utils::executCmd(const QString &strCmd)
 {
     QProcess proc;

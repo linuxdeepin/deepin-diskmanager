@@ -5,6 +5,7 @@
 #include "DeviceStorage.h"
 #include <QDebug>
 #include <QFile>
+#include "utils.h"
 
 namespace DiskManager {
 
@@ -537,7 +538,17 @@ void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &int
 
     if (file.open(QIODevice::ReadOnly)) {
         if (model == file.readLine().simplified()) {
-            interface = "UFS 3.1";
+            QString output1,output2, err;
+            Utils::executeCmdWithArtList("cat",
+                                         QStringList() << "/sys/devices/platform/f8200000.ufs/host0/scsi_host/host0/wb_en",
+                                         output1, err);
+            Utils::executeCmdWithArtList("cat", QStringList() << "/sys/block/sdd/device/spec_version",
+                                         output2, err);
+            if (output1 == "true" && output2 == "310") {
+                interface = "UFS 3.1";
+            } else {
+                interface = "UFS 3.0";
+            }
         }
         file.close();
     }

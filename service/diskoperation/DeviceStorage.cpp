@@ -273,6 +273,11 @@ bool DeviceStorage::getDiskInfoFromHwinfo(const QString &devicePath)
 
     setHwinfoInfo(mapInfo);
 
+    //部分华为设备读取到是Serial ID为乱码
+    QString cid = Utils::readContent("/proc/bootdevice/cid");
+    if (!cid.isEmpty()) {
+        m_serialNumber = cid;
+    }
     return true;
 }
 

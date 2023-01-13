@@ -222,7 +222,15 @@ DeviceInfoMap &DMDbusHandler::probDeviceInfo()
     if (!mounts.isEmpty()) {
         for (auto &disk : m_deviceMap) {
             for (auto &partition : disk.m_partition) {
-                if (!mounts.contains(QString("%1%2").arg(partition.m_devicePath).arg(partition.m_partitionNumber))) {
+                QString partitionName = partition.m_name;
+                if (partitionName.isEmpty()) {
+                    if (partitionName.contains("nvme")) {
+                        partitionName = QString("%1p%2").arg(partition.m_devicePath).arg(partition.m_partitionNumber);
+                    } else {
+                        partitionName = QString("%1%2").arg(partition.m_devicePath).arg(partition.m_partitionNumber);
+                    }
+                }
+                if (!mounts.contains(partitionName)) {
                     partition.m_mountPoints.clear();
                 }
             }

@@ -555,6 +555,8 @@ void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &int
                 }
             } else if (output.contains("KLVV")) {
                 interface = "UFS 3.1";
+            } else if (output.contains("L540")) {
+                interface = "UFS 3.1";
             } else if (output.contains("PGUV")) {
                 interface = "UFS 3.0";
             } else {

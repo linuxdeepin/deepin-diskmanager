@@ -222,7 +222,7 @@ DeviceInfoMap &DMDbusHandler::probDeviceInfo()
     if (!mounts.isEmpty()) {
         for (auto &disk : m_deviceMap) {
             for (auto &partition : disk.m_partition) {
-                if (!mounts.contains(QString("%1%2").arg(partition.m_devicePath).arg(partition.m_partitionNumber))) {
+                if (!mounts.contains(partition.m_path)) {
                     partition.m_mountPoints.clear();
                 }
             }

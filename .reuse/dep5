@@ -55,7 +55,7 @@ Copyright: None
 License: CC0-1.0
 
 # ci
-Files: .github/* .project.json
+Files: .github/* .project.json .obs/workflows.yml
 Copyright: None
 License: CC0-1.0
 

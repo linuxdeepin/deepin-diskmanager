@@ -1907,58 +1907,46 @@ void PartedCore::autoMount()
 
 void PartedCore::autoUmount()
 {
-    qDebug() << __FUNCTION__ << "autoUmount start";
     QStringList deviceList;
     for (auto it = m_inforesult.begin(); it != m_inforesult.end(); it++) {
         deviceList << it.key();
     }
 
+    qDebug() << "current deviceList: " << deviceList;
+
     QString outPut, error;
     QString cmd = QString("df");
     int ret = Utils::executCmd(cmd, outPut, error);
     if (ret != 0) {
-        qDebug() << __FUNCTION__ << "Detection Partition Table Error order error";
+        qDebug() << "Detection Partition Table Error order error";
         return;
     }
     QStringList outPutList = outPut.split("\n");
-    for (int i = 0; i < outPutList.size(); i++) {
+    for (int i = 1; i < outPutList.size(); i++) {
         QStringList dfList = outPutList[i].split(" ");
-        QString devPath = dfList.at(0).left(dfList.at(0).size() - 1);
-        if (dfList.at(0).contains("/dev/mapper/")) {
-            devPath = dfList.at(0);
-        }
-        if (deviceList.indexOf(devPath) == -1 && dfList.at(0).contains("/dev/")) {
-            QStringList arg;
-            arg << "-v" << dfList.last();
-            QString output, errstr;
-            int exitcode = Utils::executeCmdWithArtList("umount", arg, output, errstr);
-            if (exitcode != 0) {
-                qDebug() << __FUNCTION__ << "卸载挂载点失败";
+        if (dfList.at(0).startsWith("/dev/")) {
+            QString fsPart = dfList.at(0);
+            QString mountPoint = dfList.last();
+            bool needUpdate = true;
+            for (QString device : deviceList) {
+                if (fsPart.startsWith(device)) {
+                    // 跳过属于设备列表中的分区块
+                    needUpdate = false;
+                    break;
+                }
+            }
+
+            if (needUpdate) {
+                QStringList arg;
+                arg << "-v" << mountPoint;
+                QString output, errstr;
+                int exitcode = Utils::executeCmdWithArtList("umount", arg, output, errstr);
+                if (exitcode != 0) {
+                    qDebug() << "Failed to umount point: " << mountPoint;
+                }
             }
         }
     }
-    qDebug() << __FUNCTION__ << "autoUmount end";
-
-
-//    QString cmd = QString("df");
-//    FILE *fd = nullptr;
-//    fd = popen(cmd.toStdString().data(), "r");
-//    char pb[1024];
-//    memset(pb, 0, 1024);
-
-//    while (fgets(pb, 1024, fd) != nullptr) {
-//        QString dfBuf = pb;
-//        QStringList dfList = dfBuf.split(" ");
-//        if (deviceList.indexOf(dfList.at(0).left(dfList.at(0).size()-1)) == -1 && dfList.at(0).contains("/dev/")) {
-//            cmd = QString("umount -v %1").arg(dfList.last());
-//            QString output, errstr;
-//            int exitcode = Utils::executCmd(cmd, output, errstr);
-//            if (exitcode != 0) {
-//                qDebug() << __FUNCTION__ << "卸载挂载点失败";
-//            }
-//        }
-//    }
-//    qDebug() << __FUNCTION__ << "autoUmount end";
 }
 
 void PartedCore::probeDeviceInfo(const QString &)

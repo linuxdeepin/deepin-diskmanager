@@ -146,11 +146,33 @@ done
 
 #
 #  Use systemctl to prevent automount by masking currently unmasked mount points
+#  Exclude mount points that some system services depend on, otherwish block some services start.
 #
 if test "x$HAVE_SYSTEMCTL" = "xyes"; then
-	MOUNTLIST=`systemctl list-units --full --all -t mount --no-legend \
-	  | grep -v masked | cut -f1 -d' ' \
-	  | egrep -v '^(dev-hugepages|dev-mqueue|proc-sys-fs-binfmt_misc|run-user-.*-gvfs|sys-fs-fuse-connections|sys-kernel-config|sys-kernel-debug)'`
+	MOUNTLIST=`systemctl show --all --property=Where,What,Id,LoadState,RequiredBy '*.mount' | \
+	awk '
+	function clear_properties() {
+		where = ""; what = ""; id = ""; loadstate = ""; requiredby = ""
+	}
+	function process_unit() {
+		if (substr(what,1,5) == "/dev/"     &&
+		    loadstate        != "masked"    &&
+		    what             != "/dev/fuse" &&
+			(requiredby == "" || requiredby == "local-fs.target") &&
+		    ! (substr(what,1,9) == "/dev/loop" && substr(where,1,6) == "/snap/"))
+		{
+			print id
+		}
+		clear_properties()
+	}
+	/^Where=/     { where     = substr($0,7) }
+	/^What=/      { what      = substr($0,6) }
+	/^Id=/        { id        = substr($0,4) }
+	/^LoadState=/ { loadstate = substr($0,11) }
+	/^RequiredBy=/ { requiredby = substr($0,12) }
+	/^$/          { process_unit() }
+	END           { process_unit() }
+	'`
 	systemctl --runtime mask --quiet -- $MOUNTLIST
 fi
 

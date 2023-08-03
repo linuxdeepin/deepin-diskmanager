@@ -120,7 +120,7 @@ void DiskHealthDetectionDelegate::paint(QPainter *painter, const QStyleOptionVie
         painter->setPen(m_color);
     }
 
-    painter->drawText(paintRect.x() + 5, paintRect.y() + 20, text);
+    painter->drawText(paintRect.x() + 15, paintRect.y() + 20, text);
 
     painter->restore();
 }

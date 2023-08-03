@@ -63,9 +63,7 @@ void FormateDialog::initUi()
     }
 
     DPalette palette1;
-    QColor color("#000000");
-    color.setAlphaF(0.7);
-    palette1.setColor(DPalette::ToolTipText, color);
+    palette1.setColor(DPalette::Text, "#666666");
 
     DPalette palette2;
     palette2.setColor(DPalette::Text, QColor("#526a7f"));
@@ -84,10 +82,7 @@ void FormateDialog::initUi()
     tipLabel->setWordWrap(true);
     tipLabel->setFixedHeight(50);
     tipLabel->setAlignment(Qt::AlignCenter);
-    QFont fontTip/* = DFontSizeManager::instance()->get(DFontSizeManager::T8)*/;
-    fontTip.setWeight(QFont::Normal);
-    fontTip.setFamily("Source Han Sans");
-    fontTip.setPixelSize(12);
+    QFont fontTip = DFontSizeManager::instance()->get(DFontSizeManager::T9);
     tipLabel->setFont(fontTip);
     tipLabel->setPalette(palette1);
 
@@ -171,30 +166,23 @@ void FormateDialog::initUi()
         securitylist << tr("Fast") << tr("Secure") << tr("Advanced");
         m_securityComboBox->addItems(securitylist);
     }
-    m_securityComboBox->setFixedHeight(36);
+    m_securityComboBox->setFixedHeight(34);
 
     m_describeInfo = new DLabel(this);
-    QFont font/* = DFontSizeManager::instance()->get(DFontSizeManager::T10)*/;
-    font.setWeight(QFont::Normal);
-    font.setFamily("Source Han Sans");
-    font.setPixelSize(10);
+    QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T10);
     m_describeInfo->setFont(font);
     m_describeInfo->setPalette(palette2);
     m_describeInfo->adjustSize();
     m_describeInfo->setWordWrap(true);
     m_describeInfo->setText(tr("It only deletes the partition info without erasing the files on the disk. "
                                "Disk recovery tools may recover the files at a certain probability."));
-    m_describeInfo->setFixedHeight(30);
+    m_describeInfo->setFixedHeight(36);
     m_describeInfo->setAccessibleName("describeInfo");
-    m_labelTmp->setFixedHeight(29);
+    m_labelTmp->setFixedHeight(35);
 
     DLabel *wipingLabel = new DLabel(tr("Wiping method:"), this);
-    QFont fontWipingMethod/* = DFontSizeManager::instance()->get(DFontSizeManager::T8)*/;
-    fontWipingMethod.setWeight(QFont::Normal);
-    fontWipingMethod.setFamily("Source Han Sans");
-    fontWipingMethod.setPixelSize(12);
-    wipingLabel->setFont(fontWipingMethod);
-    wipingLabel->setPalette(palette1);
+    wipingLabel->setFont(fontTip);
+    wipingLabel->setPalette(palette3);
 
     m_wipingMethodComboBox = new DComboBox(this);
     m_wipingMethodComboBox->setAccessibleName("Wiping method");
@@ -202,7 +190,7 @@ void FormateDialog::initUi()
     QStringList wipingMethodlist;
     wipingMethodlist << tr("DoD 5220.22-M, 7 passes") << tr("Gutmann, 35 passes");
     m_wipingMethodComboBox->addItems(wipingMethodlist);
-    m_wipingMethodComboBox->setFixedHeight(36);
+    m_wipingMethodComboBox->setFixedHeight(34);
 
     QHBoxLayout *wipingLayout = new QHBoxLayout;
     wipingLayout->addWidget(wipingLabel);
@@ -261,7 +249,7 @@ void FormateDialog::initUi()
     layout->addLayout(layoutFormat);
     layout->setContentsMargins(0, 0, 0, 0);
 
-    m_pushButton = new QPushButton(tr("Cancel", "button"), this);
+    m_pushButton = new DPushButton(tr("Cancel", "button"), this);
     m_pushButton->setAccessibleName("cancel");
     m_pushButton->setFixedHeight(36);
     m_warningButton = new DWarningButton(this);
@@ -270,6 +258,7 @@ void FormateDialog::initUi()
     m_warningButton->setFixedHeight(36);
 
     m_buttonLayout = new QHBoxLayout;
+    m_buttonLayout->setSpacing(0);
     m_buttonLayout->addWidget(m_pushButton);
     m_buttonLayout->addSpacing(10);
     m_buttonLayout->addWidget(m_warningButton);

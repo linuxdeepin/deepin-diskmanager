@@ -50,14 +50,10 @@ void DiskHealthDetectionDialog::initUI()
     diskLabel->setPixmap(iconDisk.pixmap(85, 85));
 
     DPalette palette1;
-    QColor color1("#000000");
-    color1.setAlphaF(0.5);
-    palette1.setColor(DPalette::WindowText, color1);
+    palette1.setColor(DPalette::Text, "#666666");
 
     DPalette palette2;
-    QColor color2("#000000");
-    color2.setAlphaF(0.85);
-    palette2.setColor(DPalette::WindowText, color2);
+    palette2.setColor(DPalette::Text, "#000000");
 
     // 状态提示字体颜色
     DPalette palette4;
@@ -108,6 +104,7 @@ void DiskHealthDetectionDialog::initUI()
 
     DLabel *healthStateLabel = new DLabel(tr("Health Status")); // 健康状态
     DFontSizeManager::instance()->bind(healthStateLabel, DFontSizeManager::T6, QFont::Medium);
+    healthStateLabel->setPalette(palette2);
 
     QIcon iconHealth = Common::getIcon("good");
     DLabel *iconHealthLabel = new DLabel;
@@ -193,19 +190,14 @@ void DiskHealthDetectionDialog::initUI()
     m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     m_tableView->setSelectionMode(QAbstractItemView::NoSelection);
     m_tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    m_tableView->setAlternatingRowColors(true);
     m_tableView->setPalette(palette5);
 
     m_diskHealthHeaderView = new DiskHealthHeaderView(Qt::Horizontal, this);
     m_tableView->setHorizontalHeader(m_diskHealthHeaderView);
 
-//    m_tableView->setFont(QFont("SourceHanSansSC", 10, 50));
-//    QFont fontHeader = DFontSizeManager::instance()->get(DFontSizeManager::T6, QFont::Medium);
-//    m_tableView->horizontalHeader()->setFont(fontHeader);
     DFontSizeManager::instance()->bind(m_tableView->horizontalHeader(), DFontSizeManager::T6, QFont::Medium);
     m_tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft | Qt::AlignCenter);
     m_tableView->horizontalHeader()->setPalette(palette6);
-//    m_tableView->horizontalHeader()->setFixedHeight(30);
 
 
     m_diskHealthDetectionDelegate = new DiskHealthDetectionDelegate(this);
@@ -217,7 +209,7 @@ void DiskHealthDetectionDialog::initUI()
     }
 
     m_standardItemModel->setColumnCount(7);
-    m_standardItemModel->setHeaderData(0, Qt::Horizontal, tr("ID"));
+    m_standardItemModel->setHeaderData(0, Qt::Horizontal, QString("   %1").arg(tr("ID"))); // 第一个需要向右对齐内容,15px
     m_standardItemModel->setHeaderData(1, Qt::Horizontal, tr("Status")); // 状态
     m_standardItemModel->setHeaderData(2, Qt::Horizontal, tr("Current")); // 当前值
     m_standardItemModel->setHeaderData(3, Qt::Horizontal, tr("Worst")); // 历史最差值
@@ -313,7 +305,7 @@ void DiskHealthDetectionDialog::initUI()
     }
 
     DFrame *tableWidget = new DFrame;
-    tableWidget->setMinimumSize(706, 430);
+    tableWidget->setMinimumSize(706, 410);
     QHBoxLayout *tableLayout = new QHBoxLayout(tableWidget);
     tableLayout->addWidget(m_tableView);
     tableLayout->setSpacing(0);
@@ -340,7 +332,7 @@ void DiskHealthDetectionDialog::initUI()
     mainLayout->addWidget(infoWidget);
     mainLayout->addSpacing(10);
     mainLayout->addWidget(tableWidget);
-    mainLayout->addSpacing(10);
+    mainLayout->addSpacing(20);
     mainLayout->addLayout(bottomLayout);
     mainLayout->setSpacing(0);
     mainLayout->setContentsMargins(0, 0, 0, 0);

@@ -42,7 +42,7 @@ void InfoShowWidget::initUi()
     //  右侧 上部数据信息
     m_infoTopFrame = new InfoTopFrame(this);
     frameLayout->addWidget(m_infoTopFrame);
-    m_infoTopFrame->setMinimumWidth(450);
+    m_infoTopFrame->setMinimumWidth(500);
     m_infoTopFrame->setLineWidth(0);
 
     // 右侧 中部数据信息
@@ -88,22 +88,22 @@ void InfoShowWidget::midFramSettings()
 
     m_arrowRectangle = new DArrowRectangle(DArrowRectangle::ArrowBottom, this);
     QColor color("#F8F8F8");
-    color.setAlphaF(0.3);
+    color.setAlphaF(0.5);
     m_arrowRectangle->setBackgroundColor(color);
-    m_arrowRectangle->setArrowWidth(20);
-    m_arrowRectangle->setArrowHeight(10);
-    m_arrowRectangle->setRadius(18);
+    m_arrowRectangle->setArrowWidth(30);
+    m_arrowRectangle->setArrowHeight(12);
+    m_arrowRectangle->setRadius(15);
     m_arrowRectangle->setWidth(262);
-    m_arrowRectangle->setHeight(20);
+    m_arrowRectangle->setHeight(30);
 
     m_pathLabel = new DLabel("/dev/sda");
-    DFontSizeManager::instance()->bind(m_pathLabel, DFontSizeManager::T8, QFont::Normal);
+    DFontSizeManager::instance()->bind(m_pathLabel, DFontSizeManager::T6, QFont::Normal);
     m_pathLabel->setAccessibleName("partitionPath");
     DPalette palette;
     palette.setColor(DPalette::WindowText, QColor("#001A2E"));
     m_pathLabel->setPalette(palette);
     m_pathLabel->setAlignment(Qt::AlignCenter);
-    m_pathLabel->setFixedHeight(18);
+    m_pathLabel->setFixedHeight(28);
     m_arrowRectangle->setContent(m_pathLabel);
 
     m_vgInfoShowWidget = new VGInfoShowWidget;

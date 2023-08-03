@@ -41,27 +41,32 @@ MainWindow::MainWindow(QWidget *parent)
     initUi();
     initConnection();
 
-    QSize normal(1000, 650);
+    // 窗口大小，默认适应1080P(1080，608)
+    #define DEFAULT_SCALE 9 / 16
+    const int niceWidth = 1080;
+    const int minWidth = 850;
+    const int minHeight = 608;
 
-    QList<QScreen *> lst = QGuiApplication::screens();
-    if (lst.size() > 0) {
-        QSize rect = lst.at(0)->size();
-        qDebug() << rect;
-        if ( rect.width() * 3 / 5 - 150 < normal.width() && rect.height() * 3 / 5 < normal.height() ) {
-            normal.setWidth(rect.width() * 3 / 5 - 150);
-            normal.setHeight(rect.height() * 3 / 5);
-        }
+    //适应不同分辨率，保持9:16窗口比例, 默认适应1080P(1080，608)
+    QSize normal(niceWidth, minHeight);
+    // 获取主屏幕
+    QScreen *screen = QGuiApplication::primaryScreen();
+    QRect screenGeometry = screen->geometry();
+    int scaleWidth = screenGeometry.width() * DEFAULT_SCALE;
+    int scaleHeight = screenGeometry.height() * DEFAULT_SCALE;
+    if (scaleWidth < normal.width() && scaleHeight < normal.height()) {
+        normal.setWidth(scaleWidth);
+        normal.setHeight(scaleHeight);
     }
 
-    if (normal.width() < 850 && normal.height() < 600) {
-        setMinimumSize(850, 600);
+    if (normal.width() < minWidth || normal.height() < minHeight) {
+        setMinimumSize(minWidth, minHeight);
     } else {
         setMinimumSize(normal.width(), normal.height());
     }
 
     resize(normal);
-//    QRect rect = QApplication::desktop()->screenGeometry(0);
-//    setMinimumSize(rect.width() * 3 / 5 - 150, rect.height() * 3 / 5);
+
 //    m_handler->getDeviceInfo(); //call after initUi
     QTimer::singleShot(200, this, SLOT(getDeviceInfo()));
 }
@@ -95,8 +100,7 @@ void MainWindow::initUi()
     m_btnRefresh = new DPushButton;
     QIcon icon = Common::getIcon("refresh");
     m_btnRefresh->setIcon(icon);
-    m_btnRefresh->setFixedSize(QSize(36, 36));
-    m_btnRefresh->setIconSize(QSize(19, 16));
+    setSizebyMode(m_btnRefresh);
     m_btnRefresh->setToolTip(tr("Refresh"));
     m_btnRefresh->setCheckable(false);
     m_btnRefresh->setObjectName("refresh");
@@ -118,10 +122,26 @@ void MainWindow::initUi()
     titlebar()->menu();
 }
 
+void MainWindow::setSizebyMode(DPushButton *button)
+{
+#ifdef DTKWIDGET_CLASS_DSizeMode
+    button->setFixedSize(QSize(DSizeModeHelper::element(24, 36), DSizeModeHelper::element(24, 36)));
+    button->setIconSize(QSize(DSizeModeHelper::element(12, 18), DSizeModeHelper::element(12, 18)));
+#else
+    button->setFixedSize(QSize(36, 36));
+    button->setIconSize(QSize(18, 18));
+#endif
+}
+
 void MainWindow::initConnection()
 {
     connect(m_handler, &DMDbusHandler::showSpinerWindow, this, &MainWindow::onShowSpinerWindow);
     connect(m_btnRefresh, &DPushButton::clicked, this, &MainWindow::onRefreshButtonClicked);
+#ifdef DTKWIDGET_CLASS_DSizeMode
+    connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::sizeModeChanged, this, [this]() {
+        setSizebyMode(m_btnRefresh);
+    });
+#endif
 }
 
 void MainWindow::onHandleQuitAction()

@@ -50,7 +50,7 @@ void InfoTopFrame::initRightInfo()
 
     m_allMemoryLabel = new DLabel;
     m_allMemoryLabel->setAlignment(Qt::AlignRight);
-    DFontSizeManager::instance()->bind(m_allMemoryLabel, DFontSizeManager::T1);
+    DFontSizeManager::instance()->bind(m_allMemoryLabel, DFontSizeManager::T2);
 
     QVBoxLayout *layout = new QVBoxLayout();
     layout->addStretch();

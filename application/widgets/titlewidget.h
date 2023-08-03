@@ -13,6 +13,9 @@
 
 #include <DWidget>
 #include <DPushButton>
+#ifdef DTKWIDGET_CLASS_DSizeMode
+#include <DSizeMode>
+#endif
 //#include "customcontrol/tippartdialog.h"
 
 DWIDGET_USE_NAMESPACE
@@ -34,6 +37,12 @@ private:
      * @brief 初始化页面
      */
     void initUi();
+
+    /**
+     * @brief 紧凑模式按钮设置
+     */
+    void setSizebyMode(DPushButton *button);
+    void resetButtonsSize();
 
     /**
      * @brief 初始化连接

@@ -31,8 +31,8 @@ DeviceListWidget::DeviceListWidget(QWidget *parent)
     auto plt = this->palette();
     plt.setBrush(QPalette::Background, QBrush(Qt::white));
     setPalette(plt);
-    setMaximumWidth(360);
-    setMinimumWidth(100);
+    setMaximumWidth(400);
+    setMinimumWidth(180);
     initUi();
     initConnection();
 }

@@ -63,18 +63,6 @@ void TitleWidget::initUi()
     m_btnResizeLV->setObjectName("lvResize");
     m_btnResizeLV->setAccessibleName("lvResize");
 
-    m_btnCreateVG->setIconSize(QSize(16, 16));
-    m_btnParted->setIconSize(QSize(16, 16));
-    m_btnFormat->setIconSize(QSize(16, 16));
-    m_btnMount->setIconSize(QSize(14, 17));
-    m_btnUnmount->setIconSize(QSize(14, 15));
-    m_btnResize->setIconSize(QSize(16, 16));
-    m_btnCreateLV->setIconSize(QSize(16, 16));
-    m_btnResizeVG->setIconSize(QSize(16, 16));
-    m_btnResizeLV->setIconSize(QSize(16, 16));
-    m_btnDeletePV->setIconSize(QSize(16, 16));
-    m_btnDeleteVG->setIconSize(QSize(16, 16));
-    m_btnDeleteLV->setIconSize(QSize(16, 16));
 
     m_btnCreateVG->setDisabled(false);
     m_btnParted->setDisabled(true);
@@ -110,6 +98,35 @@ void TitleWidget::initUi()
     m_btnDeleteLV->hide();
     m_btnResizeLV->hide();
     m_btnResizeVG->hide();
+
+    resetButtonsSize();
+}
+
+void TitleWidget::setSizebyMode(DPushButton *button)
+{
+#ifdef DTKWIDGET_CLASS_DSizeMode
+    button->setFixedSize(QSize(DSizeModeHelper::element(24, 36), DSizeModeHelper::element(24, 36)));
+    button->setIconSize(QSize(DSizeModeHelper::element(12, 18), DSizeModeHelper::element(12, 18)));
+#else
+    button->setFixedSize(QSize(36, 36));
+    button->setIconSize(QSize(18, 18));
+#endif
+}
+
+void TitleWidget::resetButtonsSize()
+{
+    setSizebyMode(m_btnCreateVG);
+    setSizebyMode(m_btnParted);
+    setSizebyMode(m_btnFormat);
+    setSizebyMode(m_btnMount);
+    setSizebyMode(m_btnUnmount);
+    setSizebyMode(m_btnResize);
+    setSizebyMode(m_btnCreateLV);
+    setSizebyMode(m_btnResizeVG);
+    setSizebyMode(m_btnResizeLV);
+    setSizebyMode(m_btnDeletePV);
+    setSizebyMode(m_btnDeleteVG);
+    setSizebyMode(m_btnDeleteLV);
 }
 
 void TitleWidget::initConnection()
@@ -128,6 +145,12 @@ void TitleWidget::initConnection()
     connect(m_btnResizeVG, &DPushButton::clicked, this, &TitleWidget::onResizeVGClicked);
     connect(m_btnDeletePV, &DPushButton::clicked, this, &TitleWidget::onDeletePVClicked);
     connect(DMDbusHandler::instance(), &DMDbusHandler::updateUsb, this, &TitleWidget::onUpdateUsb);
+
+#ifdef DTKWIDGET_CLASS_DSizeMode
+    connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::sizeModeChanged, this, [this]() {
+        resetButtonsSize();
+    });
+#endif
 }
 
 DPushButton *TitleWidget::createBtn(const QString &btnName, const QString &objName, bool bCheckable)
@@ -137,8 +160,13 @@ DPushButton *TitleWidget::createBtn(const QString &btnName, const QString &objNa
     QIcon icon = Common::getIcon(objName);
 
     btn->setIcon(icon);
+#ifdef DTKWIDGET_CLASS_DSizeMode
+    btn->setFixedSize(QSize(DSizeModeHelper::element(24, 36), DSizeModeHelper::element(24, 36)));
+    btn->setIconSize(QSize(DSizeModeHelper::element(12, 18), DSizeModeHelper::element(12, 18)));
+#else
     btn->setFixedSize(QSize(36, 36));
     btn->setIconSize(QSize(18, 18));
+#endif
     btn->setToolTip(btnName);
     btn->setCheckable(bCheckable);
     btn->setObjectName(objName);

@@ -66,6 +66,12 @@ private:
     void initUi();
 
     /**
+     * @brief 紧凑模式按钮设置
+     */
+    void setSizebyMode(DPushButton *button);
+    void resetButtonsSize();
+
+    /**
      * @brief 初始化连接
      */
     void initConnection();

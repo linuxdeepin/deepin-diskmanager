@@ -33,7 +33,9 @@ void DiskBadSectorsDialog::initUI()
 {
     setIcon(QIcon::fromTheme(appName));
     setTitle(tr("Verify or repair bad sectors")); // 坏道检测与修复
-    setFixedSize(635, 780);
+    // 最低分辨率1024*768，高度需减去dock
+    setMinimumSize(635, 650);
+    setMaximumSize(635, 780);
 
     m_curType = StatusType::Normal;
 
@@ -217,7 +219,7 @@ void DiskBadSectorsDialog::initUI()
 
 //    DFrame *frame = new DFrame;
     m_cylinderInfoWidget = new CylinderInfoWidget(QString("%1").arg(m_deviceInfo.m_cylinders).toInt());
-    m_cylinderInfoWidget->setMinimumSize(615, 380);
+    m_cylinderInfoWidget->setMinimumSize(615, 250);
     m_cylinderInfoWidget->setObjectName("cylinderInfoWidget");
 
     CylinderWidget *excellentWidget = new CylinderWidget;

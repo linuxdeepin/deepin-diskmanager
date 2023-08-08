@@ -367,10 +367,15 @@ bool LUKSOperator::getLUKSInfo(const LUKSMap &luks, const QString &devPath, LUKS
     }
 
     //解析json 获取luks数据
-    int jsonBegin = strout.indexOf("# {");
-    int jsonEnd = strout.indexOf("}\nLUKS header information"); //截取json字符串
+    int jsonBegin = strout.indexOf("# {") + 2;
+    int jsonEnd = strout.indexOf("}\nLUKS header information") + 1; //截取json字符串
+    // cryptsetup 2.4.1 返回："}LUKS header information"
+    if (jsonEnd <= 1) {
+        jsonEnd = strout.indexOf("}LUKS header information") + 1;
+    }
+    QString jsonStr = strout.mid(jsonBegin, jsonEnd - jsonBegin);
 
-    return jsonToLUKSInfo(strout.mid(jsonBegin + 1, jsonEnd - jsonBegin + 1), info);
+    return jsonToLUKSInfo(jsonStr, info);
 }
 
 bool LUKSOperator::jsonToLUKSInfo(QString jsonStr, LUKS_INFO &info)

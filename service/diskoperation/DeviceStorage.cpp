@@ -459,49 +459,49 @@ bool DeviceStorage::getDiskInfoFromSmartCtl(const QString &devicePath)
 
 void DeviceStorage::getDiskInfoModel(const QString &devicePath, QString &model)
 {
-    QString cmd = QString("smartctl --all %1").arg(devicePath);
     QProcess proc;
+    QString cmd = QString("smartctl --all %1").arg(devicePath);
     proc.start(cmd);
     proc.waitForFinished(-1);
-    QString outPut  = proc.readAllStandardOutput();
+    QString outPut = proc.readAllStandardOutput();
 
     if (outPut.contains("Please specify device type with the -d option")) {
-        QString cmd = QString("smartctl --all -d sat %1").arg(devicePath);
-        QProcess proc;
+        cmd = QString("smartctl --all -d sat %1").arg(devicePath);
         proc.start(cmd);
         proc.waitForFinished(-1);
         outPut = proc.readAllStandardOutput();
     }
+
     QStringList infoList = outPut.split("\n");
     for (int i = 0; i < infoList.size(); i++) {
-        if(infoList[i].contains("Device Model:") || infoList[i].contains("Product:")){
-            QStringList tempList = infoList[i].split(":");
-            model = tempList[tempList.size()-1].trimmed();
+        QString info = infoList[i];
+        if(info.startsWith("Device Model:") || info.startsWith("Product:") || info.startsWith("Model Number:")){
+            model = info.split(":").last().trimmed();
             return;
         }
     }
 
-    proc.start("sudo lshw -C disk");
+    cmd = "lshw -C disk";
+    proc.start(cmd);
     proc.waitForFinished(-1);
-    outPut  = proc.readAllStandardOutput();
+    outPut = proc.readAllStandardOutput();
 
-    QStringList tempList = outPut.split("*-disk\n");
-
-    outPut.clear();
-    for (int i =0;i<tempList.count();i++) {
-        if(tempList.at(i).contains(devicePath)) {
-            outPut = tempList.at(i);
-            QStringList infoList = outPut.split("\n");
-            for (int j = 0; j < infoList.size(); j++) {
-                if(infoList[j].contains("product:")){
-                    QStringList productList = infoList[j].split(":");
-                    model = productList[productList.size()-1].trimmed();
+    infoList = outPut.split("*-disk\n");
+    for (int i =0; i < infoList.size(); i++) {
+        if(infoList[i].contains(devicePath)) {
+            QStringList tempList = infoList[i].split("\n");
+            for (int j = 0; j < tempList.size(); j++) {
+                if(tempList[j].contains("product:")){
+                    model = tempList[j].split(":").last().trimmed();
                     return;
                 }
             }
             break;
         }
     }
+
+    // 若未获取到型号名，返回未知
+    model = "UnKnow";
     return;
 }
 

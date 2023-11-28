@@ -201,8 +201,8 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)//绘制首页信息展示表�
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
     if (themeType == DGuiApplicationHelper::LightType) {
         m_parentPb = DApplicationHelper::instance()->palette(this);
-        QBrush brush = DApplicationHelper::instance()->palette(this).itemBackground();
-        painter.setBrush(brush);
+        QColor color = m_parentPb.color(DPalette::Normal, DPalette::ItemBackground);
+        painter.setBrush(QBrush(color));
         QColor outsideColor(qRgba(0, 0, 0, 1));
         outsideColor.setAlphaF(0.1);
         painter.setPen(outsideColor);
@@ -210,12 +210,14 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)//绘制首页信息展示表�
         curRect.setWidth(curRect.width());
         curRect.setHeight(curRect.height() - 1);
         painter.drawRoundedRect(curRect, 15, 15);
+        
         QRect paintRect = QRect(curRect.topLeft().x() + 1, curRect.topLeft().y() + (curRect.height() / 3), curRect.width() - 2, curRect.height() / 3);
-        m_parentPb = DApplicationHelper::instance()->palette(this);
-        QBrush brush1 = DApplicationHelper::instance()->palette(this).textLively();
-        painter.setBrush(brush1);
-        painter.fillRect(paintRect, brush1);
+        QColor midColor = m_parentPb.color(DPalette::Normal, DPalette::ItemBackground);
+        midColor.setAlphaF(0.1);
+        painter.setBrush(QBrush(midColor));
+        painter.fillRect(paintRect, midColor);
         painter.drawLine(paintRect.width() / 2, curRect.topLeft().y(), paintRect.width() / 2, curRect.bottomLeft().y());
+        
         QRect textRect = QRect(curRect.width() / 2 - 300, curRect.topLeft().y() + 12, 240, 35);
         QColor textColor = this->palette().color(DPalette::Normal, DPalette::Text);
         QTextOption option;
@@ -253,11 +255,13 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)//绘制首页信息展示表�
         curRect.setWidth(curRect.width() - 1);
         curRect.setHeight(curRect.height() - 1);
         painter.drawRoundedRect(curRect, 15, 15);
+        
         QRect paintRect = QRect(curRect.topLeft().x() + 1, curRect.topLeft().y() + (curRect.height() / 3), curRect.width() - 2, curRect.height() / 3);
         QColor midColor = QColor("#252525");
         painter.setBrush(QBrush(midColor));
         painter.fillRect(paintRect, midColor);
         painter.drawLine(paintRect.width() / 2, curRect.topLeft().y(), paintRect.width() / 2, curRect.bottomLeft().y());
+        
         QRect textRect = QRect(curRect.width() / 2 - 400, curRect.topLeft().y() + 10, 240, 35);
         QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
         QColor textColor = palette().color(DPalette::Normal, DPalette::WindowText);

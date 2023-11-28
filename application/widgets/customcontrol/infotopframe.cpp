@@ -71,9 +71,9 @@ void InfoTopFrame::initLeftInfo()
     m_typeLabel = new DLabel;
     DFontSizeManager::instance()->bind(m_typeLabel, DFontSizeManager::T8);
 
-    DPalette palette = DApplicationHelper::instance()->palette(m_typeLabel);
+    /*DPalette palette = DApplicationHelper::instance()->palette(m_typeLabel);
     palette.setBrush(DPalette::Text, palette.textTips());
-    DApplicationHelper::instance()->setPalette(m_typeLabel, palette);
+    DApplicationHelper::instance()->setPalette(m_typeLabel, palette);*/
 
     QVBoxLayout *layout = new QVBoxLayout();
 //    layout->addStretch();

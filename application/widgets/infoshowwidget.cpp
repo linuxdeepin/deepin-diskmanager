@@ -157,13 +157,13 @@ void InfoShowWidget::bottomFramSettings()
     DFontSizeManager::instance()->bind(m_volumeLabel, DFontSizeManager::T6, QFont::Medium);
     m_volumeLabel->setAccessibleName("Volume label");
 
-    connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged,
+    /*connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged,
     this, [ = ] {
         DPalette pa;
         DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
         if (themeType == DGuiApplicationHelper::LightType) {
             pa = palette();
-            pa.setColor(DPalette::Text, QColor("#414d68"));
+            pa.setColor(DPalette::Text, pa.color(DPalette::Text));
 
             m_mountpointLabel->setPalette(pa);
             m_freeLabel->setPalette(pa);
@@ -191,7 +191,7 @@ void InfoShowWidget::bottomFramSettings()
     DApplicationHelper::instance()->setPalette(m_usedLabel, palette);
     DApplicationHelper::instance()->setPalette(m_typeLabel, palette);
     DApplicationHelper::instance()->setPalette(m_capacityLabel, palette);
-    DApplicationHelper::instance()->setPalette(m_volumeLabel, palette);
+    DApplicationHelper::instance()->setPalette(m_volumeLabel, palette);*/
 
     leftInfoLayout->addSpacing(1);
     leftInfoLayout->addWidget(m_mountpointLabel, 0, Qt::AlignLeft);

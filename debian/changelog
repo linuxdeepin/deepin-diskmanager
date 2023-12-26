@@ -1,3 +1,10 @@
+deepin-diskmanager (1.3.31) stable; urgency=medium
+
+  * fix: mount as root
+  * fix: UI error
+
+ -- re2zero <yangwu@uniontech.com>  Tue, 26 Dec 2023 16:36:26 +0800
+
 deepin-diskmanager (1.3.30) stable; urgency=medium
 
   * fix: 修复“ZHITAI PC005”型号名未识别的相关问题

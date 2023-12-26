@@ -3723,7 +3723,7 @@ bool PartedCore::checkRepairFileSystem(const Partition &partition)
 }
 
 /***********************************************private 挂载*****************************************************************/
-bool PartedCore::mountDevice(const QString &mountpath, const QString devPath, const FSType &fsType)
+bool PartedCore::mountDevice(const QString &mountpath, const QString devPath, const FSType &fsType, const QString userName)
 {
     qDebug() << __FUNCTION__ << "Mount start";
     if (mountpath.isEmpty() || devPath.isEmpty() || fsType == FSType::FS_UNKNOWN) {
@@ -3735,7 +3735,9 @@ bool PartedCore::mountDevice(const QString &mountpath, const QString devPath, co
     QString cmd ;
     //vfat 1051系统上vfat格式不指定utf8挂载 通过文件管理器右键菜单新建文件夹会乱码  导致创建错误 为了规避该问题加上utf8属性
     if (fsType == FSType::FS_FAT32 || fsType == FSType::FS_FAT16) {
-        cmd = QString("mount %1 %2 -o dmask=000,fmask=111,utf8").arg(devPath).arg(mountpath);
+        cmd = QString("mount %1 %2 -o dmask=000,fmask=111,utf8,uid=%3,gid=%4").arg(devPath).arg(mountpath).arg(userName).arg(userName);
+    } else if (fsType == FSType::FS_EXFAT || fsType == FSType::FS_NTFS) {
+        cmd = QString("mount %1 %2 -o uid=%3,gid=%4").arg(devPath).arg(mountpath).arg(userName).arg(userName);
     } else if (fsType == FSType::FS_HFS) {
         cmd = QString("mount %1 %2 -o dir_umask=000,file_umask=111").arg(devPath).arg(mountpath);
     } else {
@@ -3870,7 +3872,7 @@ QPair<bool, QString> PartedCore::tmpMountDevice(const QString &mountpath, const 
     }
 
     //挂载
-    if (!mountDevice(mountpath, devPath, fsType)) {
+    if (!mountDevice(mountpath, devPath, fsType, userName)) {
         QString str = QString("%1:%2:%3").arg("DISK_ERROR").arg(DISK_ERROR::DISK_ERR_MOUNT_FAILED).arg(devPath);
         return QPair<bool, QString>(false, str);
     }
@@ -3926,7 +3928,8 @@ bool PartedCore::changeOwner(const QString &user, const QString &path)
     if (psInfo == nullptr) {
         return false;
     }
-    //todo 暂时先不判断返回值 此处在fat ntfs文件系统有问题
+
+    //chown对fat ntfs exfat文件系统无效 -> mount使用uid=xx,gid=xx解决
     chown(path.toStdString().c_str(), psInfo->pw_uid, psInfo->pw_gid);
     return true;
 }

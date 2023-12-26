@@ -839,9 +839,10 @@ private:
      * @param mountpath:挂载点
      * @param devPath:设备路径
      * @param fsType:文件系统类型
+     * @param userName:挂载所属用户
      * @return true 挂载成功 false 挂载失败
      */
-    bool mountDevice(const QString &mountpath, const QString devPath, const FSType &fsType);
+    bool mountDevice(const QString &mountpath, const QString devPath, const FSType &fsType, const QString userName = "");
 
     /**
      * @brief 卸载设备

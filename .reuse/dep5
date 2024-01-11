@@ -45,7 +45,7 @@ Copyright: Curtis Gedak
 License: GPL-2.0-or-later
 
 #config
-Files: service/assets/data/com.deepin.diskmanager.conf service/assets/data/com.deepin.diskmanager.service service/assets/data/com.deepin.diskmanager.conf application/assets/deepin-diskmanager.desktop application/assets/environments.h.in service/policy/com.deepin.diskmanager.policy service/udev/99-diskmanager.rules
+Files: service/assets/data/* application/assets/deepin-diskmanager.desktop application/assets/environments.h.in service/policy/com.deepin.diskmanager.policy service/udev/99-diskmanager.rules
 Copyright: UnionTech Software Technology Co., Ltd.
 License: CC0-1.0
 

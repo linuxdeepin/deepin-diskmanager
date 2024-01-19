@@ -120,11 +120,11 @@ int main(int argc, char *argv[])
 //    }
     if (a.setSingleInstance(appName)) {
         QProcess proc;
-        QString cmd, outPut, error;
+        QString cmd, oldPid, newPid, error;
         //先判断后台服务进程是否存在,如果存在可能是强制退出导致,应先退出后台程序再重新启动磁盘管理器
         cmd = QString("pidof deepin-diskmanager-service");
 
-        if (!executCmd(cmd, outPut, error)) {
+        if (!executCmd(cmd, oldPid, error)) {
             proc.startDetached("/usr/bin/dbus-send --system --type=method_call --dest=com.deepin.diskmanager /com/deepin/diskmanager com.deepin.diskmanager.Quit");
         }
 
@@ -134,7 +134,7 @@ int main(int argc, char *argv[])
         while (1) {
             cmd = QString("pidof deepin-diskmanager-service");
 
-            if (!executCmd(cmd, outPut, error)) {
+            if (!executCmd(cmd, newPid, error) && oldPid != newPid) {
                 break;
             }
             QThread::msleep(300);

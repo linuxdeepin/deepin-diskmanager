@@ -15,4 +15,5 @@ override_dh_auto_configure:
 override_dh_auto_test:
 	# Disable auto tests at build time
 
-
+override_dh_systemd_enable:
+    # Disable diskmanager-daemon.service auto-start

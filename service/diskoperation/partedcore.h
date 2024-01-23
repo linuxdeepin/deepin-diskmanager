@@ -172,9 +172,10 @@ public:
     /**
      * @brief 挂载分区
      * @param mountpath：挂载路径
+     * @param mountUid：挂载用户
      * @return true成功false失败
      */
-    bool mountAndWriteFstab(const QString &mountpath);
+    bool mountAndWriteFstab(const QString &mountpath, const QString &mountUid);
 
     /**
      * @brief 卸载分区

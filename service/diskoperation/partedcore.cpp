@@ -1029,11 +1029,11 @@ void PartedCore::setCurSelect(const PartitionInfo &info)
     }
 }
 
-bool PartedCore::mountAndWriteFstab(const QString &mountpath)
+bool PartedCore::mountAndWriteFstab(const QString &mountpath, const QString &mountUid)
 {
     qDebug() << __FUNCTION__ << "Permanent mount start";
     QString type = Utils::fileSystemTypeToString(m_curpartition.m_fstype);
-    bool success = mountDevice(mountpath, m_curpartition.getPath(),  m_curpartition.m_fstype)  //位置不可交换 利用&&运算特性
+    bool success = mountDevice(mountpath, m_curpartition.getPath(),  m_curpartition.m_fstype, mountUid)  //位置不可交换 利用&&运算特性
                    && writeFstab(m_curpartition.m_uuid, mountpath, type, true);
     qDebug() << __FUNCTION__ << "Permanent mount end";
     deleteMountPointExclude(m_curpartition.getPath());

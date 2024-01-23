@@ -105,7 +105,8 @@ bool DiskManagerService::unmount()
 
 bool DiskManagerService::mount(const QString &mountpath)
 {
-    return m_partedcore->mountAndWriteFstab(mountpath);
+    QString invokerUid = QString::number(connection().interface()->serviceUid(message().service()).value());
+    return m_partedcore->mountAndWriteFstab(mountpath, invokerUid);
 }
 
 bool DiskManagerService::deCrypt(const LUKS_INFO &luks)

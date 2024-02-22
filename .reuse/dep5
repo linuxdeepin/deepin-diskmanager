@@ -64,3 +64,7 @@ Files: debian/* rpm/*
 Copyright: None
 License: CC0-1.0
 
+# third party
+Files: service/diskoperation/blockspecial.* service/diskoperation/supportedfilesystems.* service/diskoperation/filesystems/linuxswap.*
+Copyright: None
+License: CC0-1.0

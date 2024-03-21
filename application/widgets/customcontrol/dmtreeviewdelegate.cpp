@@ -20,6 +20,7 @@ DmTreeviewDelegate::DmTreeviewDelegate(QAbstractItemView *parent)
     m_parentPb = DApplicationHelper::instance()->palette(m_parentView);
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this,
             &DmTreeviewDelegate::onHandleChangeTheme);
+    onHandleChangeTheme();
 }
 
 QSize DmTreeviewDelegate::sizeHint(const QStyleOptionViewItem &option,

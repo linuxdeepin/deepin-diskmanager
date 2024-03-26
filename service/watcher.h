@@ -25,6 +25,12 @@ public:
     void run();
 
     void executCmd(const QString &strCmd, QString &outPut, QString &error);
+
+public Q_SLOTS:
+    void exit();
+
+private:
+    std::atomic_bool stoped { false };
 };
 }
 #endif // WATCHER_H

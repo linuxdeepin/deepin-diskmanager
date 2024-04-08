@@ -5,6 +5,7 @@
 #include "DeviceStorage.h"
 #include <QDebug>
 #include <QFile>
+#include <QRegularExpression>
 #include "utils.h"
 
 namespace DiskManager {
@@ -557,12 +558,18 @@ void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &int
                 interface = "UFS 3.1";
             } else if (output.contains("L540")) {
                 interface = "UFS 3.1";
-            } else if (output.contains("PGUV")
-                       || output.contains("W585")
-                       || output.contains("PGUX-L5651")) {
+            } else if (output.contains("PGUV")|| output.contains("W585")) {
                 interface = "UFS 3.0";
             } else {
                 interface = "";
+
+                Utils::executeCmdWithArtList("dmidecode", QStringList() << "-t" << "11", output, err);
+                QRegularExpression re("String 4: (.+?)\\s");
+                QRegularExpressionMatch match = re.match(output);
+                if (match.hasMatch()) {
+                    if (match.captured(1) == "PGUX")
+                        interface = "UFS 3.0";
+                }
             }
         }
         file.close();

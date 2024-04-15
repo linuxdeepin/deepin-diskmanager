@@ -6,6 +6,11 @@
 #include <QDebug>
 #include <QFile>
 #include <QRegularExpression>
+#include <dtkcore_config.h> /* to involve DTKCORE_XXX macro */
+#ifdef DTKCORE_CLASS_DConfigFile
+#include <DConfig>
+#include <mutex>
+#endif
 #include "utils.h"
 
 namespace DiskManager {
@@ -538,39 +543,25 @@ QString DeviceStorage::getDiskInfoMediaType(const QString &devicePath)
 
 void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &interface, QString &model)
 {
+    static QString dconfig_disk_interface = "";
+#ifdef DTKCORE_CLASS_DConfigFile
+    static std::once_flag flag;
 
-    QString bootDevicePath("/proc/bootdevice/product_name");
-    QFile file(bootDevicePath);
+    std::call_once(flag, []() {
+        Dtk::Core::DConfig *dconfig = Dtk::Core::DConfig::create("org.deepin.diskmanager","org.deepin.diskmanager");
+        if(dconfig && dconfig->isValid() && dconfig->keyList().contains("diskInterface")){
+            dconfig_disk_interface = dconfig->value("diskInterface").toString();
+        }
+        delete dconfig;
+    });
+#endif
 
+    interface = "";
+
+    QFile file("/proc/bootdevice/product_name");
     if (file.open(QIODevice::ReadOnly)) {
         if (model == file.readLine().simplified()) {
-            QString output, err;
-            Utils::executeCmdWithArtList("dmidecode", QStringList() << "-s" << "system-product-name", output, err);
-            if (output.contains("KLVU")) {
-                QString output1 = Utils::readContent("/sys/devices/platform/f8200000.ufs/host0/scsi_host/host0/wb_en").trimmed();
-                QString output2 = Utils::readContent("/sys/block/sdd/device/spec_version").trimmed();
-                if (output1 == "true" && output2 == "310") {
-                    interface = "UFS 3.1";
-                } else {
-                    interface = "UFS 3.0";
-                }
-            } else if (output.contains("KLVV")) {
-                interface = "UFS 3.1";
-            } else if (output.contains("L540")) {
-                interface = "UFS 3.1";
-            } else if (output.contains("PGUV")|| output.contains("W585")) {
-                interface = "UFS 3.0";
-            } else {
-                interface = "";
-
-                Utils::executeCmdWithArtList("dmidecode", QStringList() << "-t" << "11", output, err);
-                QRegularExpression re("String 4: (.+?)\\s");
-                QRegularExpressionMatch match = re.match(output);
-                if (match.hasMatch()) {
-                    if (match.captured(1) == "PGUX")
-                        interface = "UFS 3.0";
-                }
-            }
+            interface = dconfig_disk_interface;
         }
         file.close();
     }

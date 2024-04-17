@@ -953,6 +953,28 @@ void PartitionWidget::onRemovePartition()
     setAddOrRemResult(m_isExceed);
 }
 
+static void snapToMebibyte(DeviceInfo &device, PartitionInfo &newPart)
+{
+    Sector diff = 0;
+    Sector secsPerMib = MEBIBYTE / newPart.m_sectorSize;
+
+    //Align start sector
+    diff = Sector(newPart.m_sectorStart % secsPerMib);
+    if (diff)
+        newPart.m_sectorStart += (secsPerMib - diff);
+
+    //Align end sector
+    diff = (newPart.m_sectorEnd + 1) % secsPerMib;
+    if (diff)
+        newPart.m_sectorEnd -= diff;
+
+    //If this is a GPT partition table and the partition ends less than 34 sectors
+    //  from the end of the device, then reserve at least a mebibyte for the
+    //  backup partition table
+    if ( device.m_disktype == "gpt" && ((device.m_length - newPart.m_sectorEnd) < 34))
+        newPart.m_sectorEnd -= secsPerMib;
+}
+
 void PartitionWidget::onApplyButton()
 {
     bool isCreate = true;
@@ -1044,6 +1066,7 @@ void PartitionWidget::onApplyButton()
                 newPart.m_decryptStr = "";
             }
 
+            snapToMebibyte(device, newPart);
             partVector.push_back(newPart);
         }
     }

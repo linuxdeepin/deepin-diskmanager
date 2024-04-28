@@ -30,6 +30,7 @@ find_package(Qt5 COMPONENTS
     DBus
 REQUIRED)
 find_package(PolkitQt5-1)
+find_package(Dtk COMPONENTS Core REQUIRED)
 
 set(LINK_LIBS
     Qt5::Core
@@ -80,3 +81,13 @@ install(PROGRAMS ${APP_USBREMOVE_FILES} DESTINATION libexec/openconnect/)
 install(FILES ${APP_UDEV_FILES} DESTINATION /lib/udev/rules.d/)
 install(FILES ${APP_POLICY_FILES} DESTINATION share/polkit-1/actions)
 install(PROGRAMS ${APP_DEEPIN_DISKMANAGER_SERVICE_BIN} DESTINATION bin/)
+
+# Install dconfig meta file
+set(APPID org.deepin.diskmanager)
+set(configFile ${CMAKE_SOURCE_DIR}/assets/org.deepin.diskmanager.json)
+if (DEFINED DSG_DATA_DIR)
+    message("-- DConfig is supported by DTK")
+    dconfig_meta_files(APPID ${APPID} FILES ${configFile})
+else()
+    message("-- DConfig is NOT supported by DTK")
+endif()

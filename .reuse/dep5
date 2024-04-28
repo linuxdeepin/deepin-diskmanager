@@ -15,7 +15,7 @@ Copyright: None
 License: CC0-1.0
 
 #qrc
-Files:application/assets/appicons.qrc application/assets/resource.qrc service/diskoperation/filesystems/filesystems.pri
+Files: application/assets/appicons.qrc application/assets/resource.qrc service/diskoperation/filesystems/filesystems.pri
 Copyright: None
 License: CC0-1.0
 
@@ -25,7 +25,7 @@ Copyright: UnionTech Software Technology Co., Ltd.
 License: CC0-1.0
 
 #assets
-Files: application/assets/deepin-diskmanager/*
+Files: application/assets/deepin-diskmanager/* assets/*
 Copyright: UnionTech Software Technology Co., Ltd.
 License: CC0-1.0
 

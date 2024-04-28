@@ -1,0 +1,17 @@
+{
+    "magic": "dsg.config.meta",
+    "version": "1.0",
+    "contents": {
+    "diskInterface": {
+            "value": "",
+            "serial": 0,
+            "flags": ["global"],
+            "name": "Disk Interface",
+            "name[zh_CN]": "磁盘接口",
+            "description": "Disk Interface",
+            "description[zh_CN]":"磁盘接口",
+            "permissions": "readonly",
+            "visibility": "private"
+        }
+    }
+}

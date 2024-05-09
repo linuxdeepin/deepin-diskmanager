@@ -236,7 +236,12 @@ void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
         m_model = mapInfo["Model Number"];
     }
 
-    setAttribute(mapInfo, "Serial Number", m_serialNumber, true);
+    if (mapInfo.find("Serial Number") != mapInfo.end())
+        setAttribute(mapInfo, "Serial Number", m_serialNumber, true);
+    else if (mapInfo.find("Serial number") != mapInfo.end()) {
+        // 某些机型smart命令查询结果为Serial number
+        setAttribute(mapInfo, "Serial number", m_serialNumber, true);
+    }
 }
 
 void DeviceStorage::setAttribute(const QMap<QString, QString> &mapInfo, const QString &key, QString &variable, bool overwrite)

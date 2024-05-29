@@ -34,6 +34,9 @@ public:
     /**@brief:获取当前磁盘接口信息*/
     void getDiskInfoInterface(const QString &devicePath, QString &interface, QString &model);
 
+    /**@brief:获取当前磁盘固件版本信息*/
+    void getDiskInfoFirmwareVersion(const QString &devicePath);
+
 
 private:
     void getMapInfoFromInput(const QString &info, QMap<QString, QString> &mapInfo);

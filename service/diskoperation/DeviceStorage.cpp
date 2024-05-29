@@ -541,9 +541,24 @@ QString DeviceStorage::getDiskInfoMediaType(const QString &devicePath)
     }
 }
 
+static bool isPGUX()
+{
+    static int isPGUX = -1;
+    QString output, err;
+
+    if (isPGUX != -1)
+        return 1 == isPGUX;
+
+    Utils::executeCmdWithArtList("dmidecode", QStringList() << "-t" << "11", output, err);
+    QRegularExpression re("String 4: (.+?)\\s");
+    QRegularExpressionMatch match = re.match(output);
+    isPGUX = (match.hasMatch() && (match.captured(1) == "PGUX")) ? 1 : 0;
+
+    return 1 == isPGUX;
+}
+
 void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &interface, QString &model)
 {
-
     QString bootDevicePath("/proc/bootdevice/product_name");
     QFile file(bootDevicePath);
 
@@ -567,14 +582,8 @@ void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &int
                 interface = "UFS 3.0";
             } else {
                 interface = "";
-
-                Utils::executeCmdWithArtList("dmidecode", QStringList() << "-t" << "11", output, err);
-                QRegularExpression re("String 4: (.+?)\\s");
-                QRegularExpressionMatch match = re.match(output);
-                if (match.hasMatch()) {
-                    if (match.captured(1) == "PGUX")
-                        interface = "UFS 3.0";
-                }
+                if (isPGUX())
+                    interface = "UFS 3.0";
             }
         }
         file.close();
@@ -590,6 +599,24 @@ void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &int
         interface = outPutList[outPutList.size() - 1].split(" ")[0];
     }
     return;
+}
+
+void DeviceStorage::getDiskInfoFirmwareVersion(const QString &devicePath)
+{
+    if (!m_firmwareVersion.isEmpty())
+        return;
+
+    QFile product_name("/proc/bootdevice/product_name");
+    if (!product_name.open(QIODevice::ReadOnly) ||
+        m_model != product_name.readLine().simplified())
+        return;
+
+    if (isPGUX())
+    {
+        QFile rev("/proc/bootdevice/rev");
+        if (rev.open(QIODevice::ReadOnly))
+            m_firmwareVersion = rev.readLine().simplified();
+    }
 }
 
 void DeviceStorage::getMapInfoFromSmartctl(QMap<QString, QString> &mapInfo, const QString &info, const QString &ch)

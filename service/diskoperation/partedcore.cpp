@@ -154,6 +154,7 @@ HardDiskInfo PartedCore::getDeviceHardInfo(const QString &devicepath)
 
     device.getDiskInfoInterface(devicepath, device.m_interface, device.m_model);
 
+    device.getDiskInfoFirmwareVersion(devicepath);
 
     hdinfo.m_model = device.m_model;
     hdinfo.m_vendor = device.m_vendor;

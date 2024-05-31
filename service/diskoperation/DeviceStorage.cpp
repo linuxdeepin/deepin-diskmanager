@@ -583,7 +583,10 @@ void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &int
             } else {
                 interface = "";
                 if (isPGUX())
-                    interface = "UFS 3.0";
+                {
+                    QString spec_version = Utils::readContent("/sys/block/sdd/device/spec_version").trimmed();
+                    interface = (spec_version == "300") ? "UFS 3.0" : "UFS 3.1";
+                }
             }
         }
         file.close();
@@ -606,17 +609,11 @@ void DeviceStorage::getDiskInfoFirmwareVersion(const QString &devicePath)
     if (!m_firmwareVersion.isEmpty())
         return;
 
-    QFile product_name("/proc/bootdevice/product_name");
-    if (!product_name.open(QIODevice::ReadOnly) ||
-        m_model != product_name.readLine().simplified())
+    if (m_model != Utils::readContent("/proc/bootdevice/product_name").trimmed())
         return;
 
     if (isPGUX())
-    {
-        QFile rev("/proc/bootdevice/rev");
-        if (rev.open(QIODevice::ReadOnly))
-            m_firmwareVersion = rev.readLine().simplified();
-    }
+        m_firmwareVersion = Utils::readContent("/proc/bootdevice/rev").trimmed();
 }
 
 void DeviceStorage::getMapInfoFromSmartctl(QMap<QString, QString> &mapInfo, const QString &info, const QString &ch)

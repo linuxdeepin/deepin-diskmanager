@@ -673,6 +673,10 @@ void TitleWidget::updateBtnStatus()
             if (info.m_fileSystemType == FSType::FS_LINUX_SWAP) {
                 updatePartitionBtnStatus(true, true, true, true, true);
             }
+            //CD,DVD disable format
+            if (info.m_devicePath.startsWith("/dev/sr") || info.m_devicePath.startsWith("/dev/cdrom")) {
+                updatePartitionBtnStatus(true, true, true, true, true);
+            }
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
         updateBtnShowStatus(true, true, false, false, true, false, true, true);
@@ -714,7 +718,13 @@ void TitleWidget::updateBtnStatus()
 
             m_btnDeletePV->setDisabled(true);
             m_btnParted->setDisabled(true);
-            m_btnFormat->setDisabled(DMDbusHandler::instance()->isExistMountPartition(DMDbusHandler::instance()->getCurDeviceInfo()));
+            if (info.m_path.startsWith("/dev/sr") || info.m_path.startsWith("/dev/cdrom")) {
+                // CD,DVD disable format
+                m_btnFormat->setDisabled(true);
+            } else {
+                bool existMounted = DMDbusHandler::instance()->isExistMountPartition(info);
+                m_btnFormat->setDisabled(existMounted);
+            }
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::VOLUMEGROUP) {
         updateBtnShowStatus(false, true, true, true, false, true, false, true);

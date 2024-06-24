@@ -60,7 +60,7 @@ endforeach()
 #lupdate end
 
 file (GLOB DTNG_TS_FILES translations/*.ts)
-qt5_create_translation(DTNG_QM_FILES
+qt_add_translation(DTNG_QM_FILES
     ${DTNG_TS_FILES}
      ${DTNG_QM_FILES}
      )

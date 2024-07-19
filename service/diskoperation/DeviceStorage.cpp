@@ -414,8 +414,6 @@ bool DeviceStorage::getDiskInfoFromLsblk(const QString &devicePath)
 
     loadLsblkInfo(outPut, mapInfo);
 
-
-
     if (mapInfo.size() == 1) {
         setMediaType(mapInfo.firstKey(),mapInfo.value(mapInfo.firstKey()));
     } else {
@@ -523,14 +521,24 @@ QString DeviceStorage::getDiskInfoMediaType(const QString &devicePath)
     QString outPut = proc.readAllStandardOutput().trimmed();
     value = outPut;
 
-    if("1" == value){
+    if ("1" == value) {
         cmd = QString("smartctl -i %1").arg(devicePath);
         proc.start(cmd);
         proc.waitForFinished(-1);
         outPut = proc.readAllStandardOutput();
-        if(outPut.contains("Solid State Device")){
+        if (outPut.contains("Solid State Device")) {
             value = "0";
+        } else if (outPut.contains("Please specify device type with the -d option")) {
+            //FIXME: Hard type scsi for USB disk
+            cmd = QString("smartctl -i -d scsi %1").arg(devicePath);
+            proc.start(cmd);
+            proc.waitForFinished(-1);
+            outPut = proc.readAllStandardOutput();
+            if (!outPut.contains("Rotation Rate:")) {
+                value = "0";
+            }
         }
+
     }
     if (QString("0") == value) {
         return  "SSD";

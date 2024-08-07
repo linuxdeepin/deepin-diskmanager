@@ -19,6 +19,8 @@
 
 namespace DiskManager {
 
+#define DEFAULT_BLOCK_SIZE 4096
+
 WorkThread::WorkThread(QObject *parent)
 {
     Q_UNUSED(parent);
@@ -59,7 +61,7 @@ void WorkThread::runCount()
     Sector j = m_blockStart + 1;
     QProcess proc;
     while (j <= m_blockEnd + 1 && m_stopFlag != 2) {
-        QString cmd = QString("badblocks -sv -c %1 -b %2 %3 %4 %5").arg(m_checkConut).arg(m_checkSize).arg(m_devicePath).arg(j).arg(i);
+        QString cmd = QString("badblocks -sv -c %1 -b %2 %3 %4 %5").arg(m_checkConut).arg(DEFAULT_BLOCK_SIZE).arg(m_devicePath).arg(j).arg(i);
 
         QDateTime ctime = QDateTime::currentDateTime();
         proc.start(cmd);
@@ -102,7 +104,7 @@ void WorkThread::runTime()
     Sector j = m_blockStart + 1;
     QProcess proc;
     while (j <= m_blockEnd + 1 && m_stopFlag != 2) {
-        QString cmd = QString("badblocks -sv -b %1 %2 %3 %4").arg(m_checkSize).arg(m_devicePath).arg(j).arg(i);
+        QString cmd = QString("badblocks -sv -b %1 %2 %3 %4").arg(DEFAULT_BLOCK_SIZE).arg(m_devicePath).arg(j).arg(i);
 
         QDateTime ctime = QDateTime::currentDateTime();
         proc.start(cmd);

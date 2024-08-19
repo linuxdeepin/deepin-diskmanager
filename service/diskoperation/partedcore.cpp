@@ -40,23 +40,16 @@ PartedCore::PartedCore(QObject *parent)
     : QObject(parent), m_isClear(false)
 {
     initConnection();
-    qDebug() << __FUNCTION__ << "^^1";
 
     for (PedPartitionFlag flag = ped_partition_flag_next(static_cast<PedPartitionFlag>(NULL));
             flag; flag = ped_partition_flag_next(flag))
         m_flags.push_back(flag);
 
-    qDebug() << __FUNCTION__ << "^^2";
-
     findSupportedCore();
-
-    qDebug() << __FUNCTION__ << "^^3";
 
     //Determine file system support capabilities for the first time
     m_supportedFileSystems = new SupportedFileSystems();
     m_supportedFileSystems->findSupportedFilesystems();
-
-    qDebug() << __FUNCTION__ << "^^4";
 
     m_workerThreadProbe = nullptr;
     m_workerCheckThread = nullptr;
@@ -65,8 +58,6 @@ PartedCore::PartedCore(QObject *parent)
 
     probeDeviceInfo();
     delTempMountFile();
-
-    qDebug() << __FUNCTION__ << "^^5";
 }
 
 PartedCore::~PartedCore()
@@ -132,7 +123,7 @@ QStringList PartedCore::getallsupportfs()
 
 HardDiskInfo PartedCore::getDeviceHardInfo(const QString &devicepath)
 {
-    qDebug() << __FUNCTION__ << "Get Device Hard Info Start";
+    // qDebug() << __FUNCTION__ << "Get Device Hard Info Start";
     HardDiskInfo hdinfo;
     if (devicepath.isEmpty()) {
         qDebug() << "disk path is empty";
@@ -174,13 +165,13 @@ HardDiskInfo PartedCore::getDeviceHardInfo(const QString &devicepath)
         hdinfo.m_rotationRate = "-";
     }
 
-    qDebug() << __FUNCTION__ << "Get Device Hard Info end";
+    // qDebug() << __FUNCTION__ << "Get Device Hard Info end";
     return hdinfo;
 }
 
 QString PartedCore::getDeviceHardStatus(const QString &devicepath)
 {
-    qDebug() << __FUNCTION__ << "Get Device Hard Status Start";
+    // qDebug() << __FUNCTION__ << "Get Device Hard Status Start";
     QString status;
     QString devicePath = devicepath;
     if (devicepath.contains("nvme")) {
@@ -236,13 +227,13 @@ QString PartedCore::getDeviceHardStatus(const QString &devicepath)
         }
     }
 
-    qDebug() << __FUNCTION__ << "Get Device Hard Status End";
+    // qDebug() << __FUNCTION__ << "Get Device Hard Status End";
     return status;
 }
 
 HardDiskStatusInfoList PartedCore::getDeviceHardStatusInfo(const QString &devicepath)
 {
-    qDebug() << __FUNCTION__ << "Get Device Hard Status Info Start";
+    // qDebug() << __FUNCTION__ << "Get Device Hard Status Info Start";
     HardDiskStatusInfoList hdsilist;
 
     QString devicePath = devicepath;
@@ -275,7 +266,7 @@ HardDiskStatusInfoList PartedCore::getDeviceHardStatusInfo(const QString &device
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
-list.clear();
+        list.clear();
         list = output.split("\n");
         for (int i = 0; i < list.size(); i++) {
             HardDiskStatusInfo hdsinfo;
@@ -370,7 +361,7 @@ list.clear();
             }
         }
     }
-    qDebug() << __FUNCTION__ << "Get Device Hard Status Info end";
+    // qDebug() << __FUNCTION__ << "Get Device Hard Status Info end";
     return hdsilist;
 }
 
@@ -429,7 +420,7 @@ bool PartedCore::createPartitionTable(const QString &devicePath, const QString &
 
 bool PartedCore::detectionPartitionTableError(const QString &devicePath)
 {
-    qDebug() << __FUNCTION__ << "Detection Partition Table Error start";
+    // qDebug() << __FUNCTION__ << "Detection Partition Table Error start";
 
     struct stat fileStat;
     stat(devicePath.toStdString().c_str(), &fileStat);
@@ -462,7 +453,7 @@ bool PartedCore::detectionPartitionTableError(const QString &devicePath)
             return true;
         }
     }
-    qDebug() << __FUNCTION__ << "Detection Partition Table Error end";
+    // qDebug() << __FUNCTION__ << "Detection Partition Table Error end";
     return false;
 
 //    QString cmd = QString("fdisk -l %1 2>&1").arg(devicePath);
@@ -501,7 +492,7 @@ bool PartedCore::detectionPartitionTableError(const QString &devicePath)
 
 bool PartedCore::create(const PartitionVec &infovec)
 {
-    qDebug() << __FUNCTION__ << "Create start";
+    // qDebug() << __FUNCTION__ << "Create start";
     bool success = true;
     for (PartitionInfo info : infovec) {
         Partition newPartition;
@@ -517,25 +508,25 @@ bool PartedCore::create(const PartitionVec &infovec)
         emit refreshDeviceInfo(m_type, m_arg1, m_arg2);
     }
 
-    qDebug() << __FUNCTION__ << "Create end";
+    // qDebug() << __FUNCTION__ << "Create end";
     return success;
 }
 
 bool PartedCore::format(const QString &fstype, const QString &name)
 {
-    qDebug() << __FUNCTION__ << "Format Partitione start";
+    // qDebug() << __FUNCTION__ << "Format Partitione start";
     Partition part = m_curpartition;
     part.m_fstype = Utils::stringToFileSystemType(fstype);
     part.setFilesystemLabel(name);
     bool success = formatPartition(part);
-    qDebug() << __FUNCTION__ << "Format Partitione end";
+    // qDebug() << __FUNCTION__ << "Format Partitione end";
     return success;
 }
 
 bool PartedCore::clear(const WipeAction &wipe)
 {
     //arg check
-    qDebug() << __FUNCTION__ << QString("Clear Partitione start, path: %1").arg(wipe.m_path) ;
+    // qDebug() << __FUNCTION__ << QString("Clear Partitione start, path: %1").arg(wipe.m_path) ;
     bool success = false;
     FSType fs = Utils::stringToFileSystemType(wipe.m_fstype);
     //TODO 此处是否可用  supportedFileSystem(fs);判断？
@@ -811,7 +802,7 @@ bool PartedCore::clear(const WipeAction &wipe)
     }
     QPair<bool, QString>pair = tmpMountDevice(mountPath, devPath, fsType, wipe.m_user);
     m_isClear = false;
-    qDebug() << __FUNCTION__ << "clear end";
+    // qDebug() << __FUNCTION__ << "clear end";
     if (pair.first) {
         deleteMountPointExclude(devPath);
     }
@@ -820,7 +811,7 @@ bool PartedCore::clear(const WipeAction &wipe)
 
 bool PartedCore::resize(const PartitionInfo &info)
 {
-    qDebug() << __FUNCTION__ << "Resize Partitione start: " << info.m_devicePath;
+    // qDebug() << __FUNCTION__ << "Resize Partitione start: " << info.m_devicePath;
 
 //    //对应 Bug 95232, 如果检测到虚拟磁盘扩容的话，重新写一下分区表，就可以修正分区表数据.
     reWritePartition(info.m_devicePath);
@@ -846,7 +837,7 @@ bool PartedCore::resize(const PartitionInfo &info)
 //        fclose(fd);
 //    }
 
-    qDebug() << __FUNCTION__ << "Resize Partitione start";
+    // qDebug() << __FUNCTION__ << "Resize Partitione start";
     Partition newPartition = m_curpartition;
     newPartition.reset(info);
     if (newPartition.getByteLength() < m_curpartition.m_fsLimits.min_size) {
@@ -855,13 +846,13 @@ bool PartedCore::resize(const PartitionInfo &info)
 
     bool success = resize(newPartition);
     emit refreshDeviceInfo();
-    qDebug() << __FUNCTION__ << "Resize Partitione end";
+    // qDebug() << __FUNCTION__ << "Resize Partitione end";
     return success;
 }
 
 bool PartedCore::deletePartition()
 {
-    qDebug() << __FUNCTION__ << "Delete Partition start";
+    // qDebug() << __FUNCTION__ << "Delete Partition start";
     PedPartition *ped = nullptr;
     PedDevice *lpDevice = nullptr;
     PedDisk *lpDisk = nullptr;
@@ -919,13 +910,13 @@ bool PartedCore::deletePartition()
     }
 
     destroyDeviceAndDisk(lpDevice, lpDisk);
-    qDebug() << __FUNCTION__ << "Delete Partition end";
+    // qDebug() << __FUNCTION__ << "Delete Partition end";
     return sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_DEL, true, "1:0");
 }
 
 bool PartedCore::showPartition()
 {
-    qDebug() << __FUNCTION__ << "Show Partition start";
+    // qDebug() << __FUNCTION__ << "Show Partition start";
     getPartitionHiddenFlag();
     if (m_hiddenPartition.indexOf(m_curpartition.m_uuid) == -1) {
         emit refreshDeviceInfo();
@@ -969,14 +960,14 @@ bool PartedCore::showPartition()
     emit refreshDeviceInfo();
     emit showPartitionInfo("1");
 
-    qDebug() << __FUNCTION__ << "Show Partition end";
+    // qDebug() << __FUNCTION__ << "Show Partition end";
     return true;
 
 }
 
 bool PartedCore::hidePartition()
 {
-    qDebug() << __FUNCTION__ << "Hide Partition start";
+    // qDebug() << __FUNCTION__ << "Hide Partition start";
 //ENV{ID_FS_UUID}==\"1ee3b4c6-1c69-46b9-9656-8c534ffd4f43\", ENV{UDISKS_IGNORE}=\"1\"\n
     getPartitionHiddenFlag();
     if (m_hiddenPartition.indexOf(m_curpartition.m_uuid) != -1) {
@@ -996,7 +987,7 @@ bool PartedCore::hidePartition()
         out << QString("ENV{ID_FS_UUID}==\"%1\", ENV{UDISKS_IGNORE}=\"1\"").arg(m_curpartition.m_uuid) << endl;
     }
 
-    qDebug() << __FUNCTION__ << "Hide Partition end";
+    // qDebug() << __FUNCTION__ << "Hide Partition end";
     QProcess proc;
     proc.start("udevadm control --reload");
     proc.waitForFinished(-1);
@@ -1032,24 +1023,24 @@ void PartedCore::setCurSelect(const PartitionInfo &info)
 
 bool PartedCore::mountAndWriteFstab(const QString &mountpath, const QString &mountUid)
 {
-    qDebug() << __FUNCTION__ << "Permanent mount start";
+    // qDebug() << __FUNCTION__ << "Permanent mount start";
     QString type = Utils::fileSystemTypeToString(m_curpartition.m_fstype);
     bool success = mountDevice(mountpath, m_curpartition.getPath(),  m_curpartition.m_fstype, mountUid)  //位置不可交换 利用&&运算特性
                    && writeFstab(m_curpartition.m_uuid, mountpath, type, true);
-    qDebug() << __FUNCTION__ << "Permanent mount end";
+    // qDebug() << __FUNCTION__ << "Permanent mount end";
     deleteMountPointExclude(m_curpartition.getPath());
     return   sendRefSigAndReturn(success);
 }
 
 bool PartedCore::unmount()
 {
-    qDebug() << __FUNCTION__ << "Unmount start";
+    // qDebug() << __FUNCTION__ << "Unmount start";
     if (!umontDevice(m_curpartition.getMountPoints(), m_curpartition.getPath())) { //卸载挂载点  内部有信号发送 不要重复发送信号
         return sendRefSigAndReturn(false, DISK_SIGNAL_TYPE_UMNT, true, "0");
     }
     QString type = Utils::fileSystemTypeToString(m_curpartition.m_fstype);//修改/etc/fstab
     //writeFstab(m_curpartition.m_uuid,  "", type, false);//非挂载 不需要挂载点
-    qDebug() << __FUNCTION__ << "Unmount end";
+    // qDebug() << __FUNCTION__ << "Unmount end";
     addMountPointExclude(m_curpartition.getPath());
     return sendRefSigAndReturn(true, DISK_SIGNAL_TYPE_UMNT, true, "1");
 }
@@ -1148,19 +1139,19 @@ bool PartedCore::deCrypt(const LUKS_INFO &luks)
 
 bool PartedCore::updateUsb()
 {
-    qDebug() << __FUNCTION__ << "USB add update start";
+    // qDebug() << __FUNCTION__ << "USB add update start";
     sleep(5); //据说 有一个硬盘插入后需要等待5s才能刷新出设备文件
     autoMount();
-    qDebug() << __FUNCTION__ << "USB add update end";
+    // qDebug() << __FUNCTION__ << "USB add update end";
     return true;
 }
 
 bool PartedCore::updateUsbRemove()
 {
-    qDebug() << __FUNCTION__ << "USB add update remove";
+    // qDebug() << __FUNCTION__ << "USB add update remove";
     emit refreshDeviceInfo(DISK_SIGNAL_USBUPDATE);
     autoUmount();
-    qDebug() << __FUNCTION__ << "USB add update end";
+    // qDebug() << __FUNCTION__ << "USB add update end";
     return true;
 }
 
@@ -1225,9 +1216,9 @@ bool PartedCore::fixBadBlocks(const QString &devicePath, QStringList badBlocksLi
 
 void PartedCore::refreshFunc()
 {
-    qDebug() << __FUNCTION__ << "refreshFunc start";
+    // qDebug() << __FUNCTION__ << "refreshFunc start";
     emit refreshDeviceInfo();
-    qDebug() << __FUNCTION__ << "refreshFunc end";
+    // qDebug() << __FUNCTION__ << "refreshFunc end";
 }
 
 bool PartedCore::createVG(QString vgName, QList<PVData> devList, long long size)

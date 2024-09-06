@@ -128,7 +128,9 @@ int main(int argc, char *argv[])
             proc.startDetached("/usr/bin/dbus-send --system --type=method_call --dest=com.deepin.diskmanager /com/deepin/diskmanager com.deepin.diskmanager.Quit");
         }
 
-        proc.startDetached("/usr/bin/deepin-diskmanager-authenticateProxy");
+        QStringList argList;
+        argList << QString::number(QCoreApplication::applicationPid()) << QDBusConnection::systemBus().baseService();
+        proc.startDetached("/usr/bin/deepin-diskmanager-authenticateProxy", argList);
 
         //正常启动程序后,循环查询后台服务是否已经启动,如果后台服务启动说明鉴权成功,启动前端界面
         while (1) {

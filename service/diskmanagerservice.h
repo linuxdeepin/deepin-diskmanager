@@ -25,7 +25,7 @@ class DiskManagerService : public QObject
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "com.deepin.diskmanager")
 public:
-    explicit DiskManagerService(QObject *parent = nullptr);
+    explicit DiskManagerService(const QString &frontEndDBusName, QObject *parent = nullptr);
 
 Q_SIGNALS:
     /**
@@ -473,6 +473,8 @@ private:
      * @param 无
      */
     void initConnection();
+    bool checkAuthorization(void);
+
 signals:
     void getAllDeviceInfomation();
 
@@ -481,6 +483,7 @@ private slots:
 
 private:
     PartedCore *m_partedcore;  //磁盘操作类对象
+    QString m_frontEndDBusName;
 };
 
 } // namespace DiskManager

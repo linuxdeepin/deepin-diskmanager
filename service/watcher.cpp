@@ -25,10 +25,10 @@ namespace DiskManager {
  */
 void Watcher::executCmd(const QString &strCmd, QString &outPut, QString &error)
 {
-    QProcess proc;
-    proc.start("bash", QStringList() << "-c" << strCmd);
-    proc.waitForFinished(-1);
-    outPut = proc.readAllStandardOutput();
+    // QProcess proc;
+    // proc.start("b-a-s-h", QStringList() << "-c" << strCmd);
+    // proc.waitForFinished(-1);
+    // outPut = proc.readAllStandardOutput();
 }
 
 void Watcher::exit()

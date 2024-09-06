@@ -8,17 +8,18 @@
 
 #include "PolicyKitHelper.h"
 #include <QDebug>
-bool PolicyKitHelper::checkAuthorization(const QString& actionId, qint64 applicationPid)
+
+bool PolicyKitHelper::checkAuthorization(const QString& actionId, const QString& appBusName)
 {
+    if (appBusName.isEmpty())
+        return false;
+
     Authority::Result result;
-    // 第一个参数是需要验证的action，和规则文件写的保持一致
-    result = Authority::instance()->checkAuthorizationSync(actionId, UnixProcessSubject(applicationPid),
+    result = Authority::instance()->checkAuthorizationSync(actionId, SystemBusNameSubject(appBusName),
                                                            Authority::AllowUserInteraction);
     if (result == Authority::Yes) {
-//        qDebug() << 111111111;
         return true;
     }else {
-//        qDebug() << 22222222;
         return false;
     }
 }

@@ -14,7 +14,7 @@ public:
         return &instance;
     }
 
-    bool checkAuthorization(const QString& actionId, qint64 applicationPid);
+    bool checkAuthorization(const QString& actionId, const QString& appBusName);
 
 private:
     PolicyKitHelper();

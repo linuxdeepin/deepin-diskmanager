@@ -1,3 +1,10 @@
+deepin-diskmanager (1.3.38) unstable; urgency=medium
+
+  * add polkit support.
+  * fix command injection.
+
+ -- wangrong <wangrong@uniontech.com>  Tue, 10 Sep 2024 09:17:08 +0800
+
 deepin-diskmanager (1.3.37) unstable; urgency=medium
 
   * new tag v1.3.37

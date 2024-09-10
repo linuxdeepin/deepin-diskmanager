@@ -432,8 +432,9 @@ bool PartedCore::detectionPartitionTableError(const QString &devicePath)
     bool needRewrite = gptIsExpanded(devicePath);
     if (needRewrite) {
         QString outPutFix, errorFix;
-        QString cmdFix = QString("echo w | fdisk %1").arg(devicePath);
-        Utils::executWithPipeCmd(cmdFix, outPutFix, errorFix);
+        QString cmdFix = QString("fdisk %1").arg(devicePath);
+        QString intPut("w");
+        Utils::executWithInputOutputCmd(cmdFix, &intPut, outPutFix, errorFix);
         qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
         return false;
     }
@@ -3335,8 +3336,9 @@ void PartedCore::reWritePartition(const QString &devicePath)
     bool needRewrite = gptIsExpanded(devicePath);
     if (needRewrite) {
         QString outPutFix, errorFix;
-        QString cmdFix = QString("echo w | fdisk %1").arg(devicePath);
-        Utils::executWithPipeCmd(cmdFix, outPutFix, errorFix);
+        QString cmdFix = QString("fdisk %1").arg(devicePath);
+        QString intPut("w");
+        Utils::executWithInputOutputCmd(cmdFix, &intPut, outPutFix, errorFix);
         qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
         return;
     }

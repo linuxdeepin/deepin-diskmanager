@@ -1,3 +1,9 @@
+deepin-diskmanager (1.3.39) unstable; urgency=medium
+
+  * adapt disk interface.
+
+ -- wangrong <wangrong@uniontech.com>  Thu, 17 Oct 2024 19:47:11 +0800
+
 deepin-diskmanager (1.3.38) unstable; urgency=medium
 
   * add polkit support.

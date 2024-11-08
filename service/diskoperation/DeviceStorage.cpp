@@ -586,12 +586,11 @@ void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &int
                 interface = "UFS 3.1";
             } else if (output.contains("L540")) {
                 interface = "UFS 3.1";
-            } else if (output.contains("W585")) {
+            } else if (output.contains("PGUV")|| output.contains("W585")) {
                 interface = "UFS 3.0";
             } else {
                 interface = "";
-                if (output.contains("PGUV") ||
-                    isPGUX())
+                if (isPGUX())
                 {
                     QString spec_version = Utils::readContent("/sys/block/sdd/device/spec_version").trimmed();
                     interface = (spec_version == "300") ? "UFS 3.0" : "UFS 3.1";

@@ -86,26 +86,12 @@ int Utils::executCmd(const QString &strCmd, QString &outPut, QString &error)
     return exitcode;
 }
 
-int Utils::executWithInputOutputCmd(const QString &strCmdArg, const QString *inPut, QString &outPut, QString &error)
+int Utils::executWithPipeCmd(const QString &strCmd, QString &outPut, QString &error)
 {
-    QProcess proc;
-    int exitCode;
+    QStringList argList;
+    argList << "-c" << strCmd;
 
-    proc.start(strCmdArg, QIODevice::ReadWrite);
-
-    if (inPut) {
-        proc.waitForStarted(-1);
-        proc.write(inPut->toLocal8Bit());
-        proc.closeWriteChannel();
-    }
-
-    proc.waitForFinished(-1);
-    outPut = proc.readAllStandardOutput().data();
-    error = proc.errorString();
-    exitCode = proc.exitCode();
-    proc.close();
-
-    return exitCode;
+    return executeCmdWithArtList("/bin/bash", argList, outPut, error);
 }
 
 int Utils::executWithErrorCmd(const QString &strCmd, const QStringList &strArg, QString &outPut, QString &outPutError, QString &error)

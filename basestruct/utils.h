@@ -55,15 +55,13 @@ public:
     static int executCmd(const QString &strCmd);
 
     /**
-     * @brief 执行外部命令，并提供输入输出
+     * @brief 执行外部命令，使用 /bin/bash -c 执行管道命令
      * @param strCmd：命令
-     * @param strArg：参数
-     * @param inPut：命令输入
      * @param outPut：命令输出
      * @param error：错误信息
      * @return 非0失败
      */
-    static int executWithInputOutputCmd(const QString &strCmdArg, const QString *inPut, QString &outPut, QString &error);
+    static int executWithPipeCmd(const QString &strCmd, QString &outPut, QString &error);
 
     /**
      * @brief 执行外部命令

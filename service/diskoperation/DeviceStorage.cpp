@@ -572,30 +572,9 @@ void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &int
 
     if (file.open(QIODevice::ReadOnly)) {
         if (model == file.readLine().simplified()) {
-            QString output, err;
-            Utils::executeCmdWithArtList("dmidecode", QStringList() << "-s" << "system-product-name", output, err);
-            if (output.contains("KLVU")) {
-                QString output1 = Utils::readContent("/sys/devices/platform/f8200000.ufs/host0/scsi_host/host0/wb_en").trimmed();
-                QString output2 = Utils::readContent("/sys/block/sdd/device/spec_version").trimmed();
-                if (output1 == "true" && output2 == "310") {
-                    interface = "UFS 3.1";
-                } else {
-                    interface = "UFS 3.0";
-                }
-            } else if (output.contains("KLVV")) {
-                interface = "UFS 3.1";
-            } else if (output.contains("L540")) {
-                interface = "UFS 3.1";
-            } else if (output.contains("PGUV")|| output.contains("W585")) {
-                interface = "UFS 3.0";
-            } else {
-                interface = "";
-                if (isPGUX())
-                {
-                    QString spec_version = Utils::readContent("/sys/block/sdd/device/spec_version").trimmed();
-                    interface = (spec_version == "300") ? "UFS 3.0" : "UFS 3.1";
-                }
-            }
+            QString spec_version = Utils::readContent("/sys/block/sdd/device/spec_version").trimmed();
+            if (!spec_version.isEmpty())
+                interface = (spec_version == "300") ? "UFS 3.0" : "UFS 3.1";
         }
         file.close();
     }

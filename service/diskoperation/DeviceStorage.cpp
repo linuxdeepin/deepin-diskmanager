@@ -591,16 +591,20 @@ void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &int
     return;
 }
 
-void DeviceStorage::getDiskInfoFirmwareVersion(const QString &devicePath)
+void DeviceStorage::updateForHWDevice(const QString &devicePath)
 {
-    if (!m_firmwareVersion.isEmpty())
-        return;
-
     if (m_model != Utils::readContent("/proc/bootdevice/product_name").trimmed())
         return;
 
-    if (isPGUX())
-        m_firmwareVersion = Utils::readContent("/proc/bootdevice/rev").trimmed();
+    // m_firmwareVersion
+    if (m_firmwareVersion.isEmpty()) {
+        if (isPGUX())
+            m_firmwareVersion = Utils::readContent("/proc/bootdevice/rev").trimmed();
+    }
+
+    // hide model and vendor
+    m_model = "";
+    m_vendor = "";
 }
 
 void DeviceStorage::getMapInfoFromSmartctl(QMap<QString, QString> &mapInfo, const QString &info, const QString &ch)

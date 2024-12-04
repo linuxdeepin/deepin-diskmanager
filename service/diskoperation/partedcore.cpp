@@ -3795,65 +3795,7 @@ bool PartedCore::umontDevice(QVector<QString> mountPoints, QString devPath)
 
 bool PartedCore::writeFstab(const QString &uuid, const QString &mountpath, const QString &type, bool isMount)
 {
-    //写入fstab 永久挂载
-    qDebug() << __FUNCTION__ << "Write fstab start";
-    if (uuid.isEmpty() || (mountpath.isEmpty() && isMount) || type.isEmpty()) { //非挂载 不需要挂载点 可以传空值
-        qDebug() << __FUNCTION__ << "Write fstabt argument error";
-        return false;
-    }
-
-    QFile file("/etc/fstab");
-    QStringList list;
-
-    // open fstab
-    if (!file.open(QIODevice::ReadOnly)) { //打开指定文件
-        qDebug() << __FUNCTION__ << "Write fstabt: open file error";
-        return false;
-    }
-
-    //此处修改：因为mount读取/etc/fstab配置文件 开机自动挂载  而fat32或fat16 mount不识别，所以要改成vfat
-    QString type2 = (type.contains("fat32") || type.contains("fat16")) ? QString("vfat") : type;
-
-    // read fstab
-    bool findflag = false; //目前默认只改第一个发现的uuid findflag 标志位：是否已经查找到uuid
-    while (!file.atEnd()) {
-        QByteArray line = file.readLine();//获取数据
-        QString str = line;
-        if (isMount) {
-            //vfat 1051系统上vfat格式不指定utf8挂载 通过文件管理器右键菜单新建文件夹会乱码  导致创建错误 为了规避该问题加上utf8属性
-            QString mountStr = (type2 == "vfat") ? QString("UUID=%1 %2 %3 defaults,nofail,utf8,dmask=000,fmask=111 0 0\n").arg(uuid).arg(mountpath).arg(type2)
-                               : QString("UUID=%1 %2 %3 defaults,nofail 0 0\n").arg(uuid).arg(mountpath).arg(type2);
-
-            if (str.contains(uuid) && !findflag) { //首次查找到uuid
-                findflag = true;
-                list << mountStr;
-                continue;
-            } else if (file.atEnd() && !findflag) { //查找到结尾且没有查找到uuid
-                list << str << mountStr;
-                break;
-            }
-            list << str;
-        } else {
-            if (!str.contains(uuid)) {
-                list << str;
-            }
-        }
-    }
-    file.close();
-
-    //write fstab
-    if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
-        qDebug() << __FUNCTION__ << "Write fstabt: open file error";
-        return false;
-    }
-
-    QTextStream out(&file);
-    for (int i = 0; i < list.count(); i++) {
-        out << list.at(i);
-    }
-    out.flush();
-    file.close();
-    qDebug() << __FUNCTION__ << "Write fstabt end";
+    /* 禁止修改 fstab 以避免干扰 udisks 运行 */
     return true;
 }
 

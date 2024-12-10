@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2024 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -58,6 +58,11 @@ private slots:
      * @brief 导出按钮点击响应的槽函数
      */
     void onExportButtonClicked();
+
+    /**
+     * @brief 主题变化
+     */
+    void onHandleChangeTheme();
 
 private:
     /**

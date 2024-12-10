@@ -1871,7 +1871,7 @@ will format it and remove its password.</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="139"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="143"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1091"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1114"/>
         <source>Disk:</source>
         <translation>Disk:</translation>
     </message>
@@ -1879,7 +1879,7 @@ will format it and remove its password.</translation>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="151"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="313"/>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="357"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1092"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1115"/>
         <source>File system:</source>
         <translation>File system:</translation>
     </message>

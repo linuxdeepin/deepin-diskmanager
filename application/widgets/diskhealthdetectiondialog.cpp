@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2024 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -10,7 +10,7 @@
 #include "diskhealthheaderview.h"
 
 #include <DFrame>
-#include <DGuiApplicationHelper>
+#include <DApplicationHelper>
 #include <DMessageManager>
 #include <DFontSizeManager>
 
@@ -52,9 +52,6 @@ void DiskHealthDetectionDialog::initUI()
     DPalette palette1;
     palette1.setColor(DPalette::Text, "#666666");
 
-    DPalette palette2;
-    palette2.setColor(DPalette::Text, "#000000");
-
     // 状态提示字体颜色
     DPalette palette4;
     palette4.setColor(DPalette::WindowText, QColor("#526A7F"));
@@ -77,7 +74,6 @@ void DiskHealthDetectionDialog::initUI()
     m_serialNumberValue = new DLabel;
     m_serialNumberValue->setText(hardDiskInfo.m_serialNumber);
     DFontSizeManager::instance()->bind(m_serialNumberValue, DFontSizeManager::T6, QFont::Medium);
-    m_serialNumberValue->setPalette(palette2);
     m_serialNumberValue->setAccessibleName("Serial number");
 
     DLabel *userCapacityNameLabel = new DLabel(tr("Storage")); // 用户容量
@@ -87,7 +83,6 @@ void DiskHealthDetectionDialog::initUI()
     m_userCapacityValue = new DLabel;
     m_userCapacityValue->setText(hardDiskInfo.m_size);
     DFontSizeManager::instance()->bind(m_userCapacityValue, DFontSizeManager::T10, QFont::Normal);
-    m_userCapacityValue->setPalette(palette2);
     m_userCapacityValue->setAccessibleName("Storage");
 
     QVBoxLayout *diskInfoLayout = new QVBoxLayout;
@@ -104,7 +99,7 @@ void DiskHealthDetectionDialog::initUI()
 
     DLabel *healthStateLabel = new DLabel(tr("Health Status")); // 健康状态
     DFontSizeManager::instance()->bind(healthStateLabel, DFontSizeManager::T6, QFont::Medium);
-    healthStateLabel->setPalette(palette2);
+    healthStateLabel->setPalette(palette1);
 
     QIcon iconHealth = Common::getIcon("good");
     DLabel *iconHealthLabel = new DLabel;
@@ -151,11 +146,10 @@ void DiskHealthDetectionDialog::initUI()
     // 温度
     DLabel *temperatureLabel = new DLabel(tr("Temperature")); // 温度
     DFontSizeManager::instance()->bind(temperatureLabel, DFontSizeManager::T6, QFont::Medium);
-    temperatureLabel->setPalette(palette2);
+    temperatureLabel->setPalette(palette1);
 
     m_temperatureValue = new DLabel("-°C");
     DFontSizeManager::instance()->bind(m_temperatureValue, DFontSizeManager::T2, QFont::Medium);
-    m_temperatureValue->setPalette(palette2);
     m_temperatureValue->setAccessibleName("temperature");
 
     QVBoxLayout *temperatureLayout = new QVBoxLayout;
@@ -202,11 +196,6 @@ void DiskHealthDetectionDialog::initUI()
 
     m_diskHealthDetectionDelegate = new DiskHealthDetectionDelegate(this);
     m_tableView->setItemDelegate(m_diskHealthDetectionDelegate);
-    if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) {
-        m_diskHealthDetectionDelegate->setTextColor(QColor("#C0C6D4"));
-    } else if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::LightType) {
-        m_diskHealthDetectionDelegate->setTextColor(QColor("#001A2E"));
-    }
 
     m_standardItemModel->setColumnCount(7);
     m_standardItemModel->setHeaderData(0, Qt::Horizontal, QString("   %1").arg(tr("ID"))); // 第一个需要向右对齐内容,15px
@@ -352,6 +341,8 @@ void DiskHealthDetectionDialog::initUI()
 void DiskHealthDetectionDialog::initConnections()
 {
     connect(m_linkButton, &DCommandLinkButton::clicked, this, &DiskHealthDetectionDialog::onExportButtonClicked);
+    connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &DiskHealthDetectionDialog::onHandleChangeTheme);
+    onHandleChangeTheme();
 }
 
 void DiskHealthDetectionDialog::onExportButtonClicked()
@@ -444,5 +435,27 @@ void DiskHealthDetectionDialog::keyPressEvent(QKeyEvent *event)
     }
 }
 
+void DiskHealthDetectionDialog::onHandleChangeTheme()
+{
+    DPalette palette;
+    QColor valueColor;
+    QColor tableColor;
+    auto themeType = DApplicationHelper::instance()->themeType();
+    if (themeType == DApplicationHelper::LightType) {
+        valueColor = QColor("#000000");
+        tableColor = QColor("#001A2E");
+    } else if (themeType == DApplicationHelper::DarkType) {
+        valueColor = QColor("#FFFFFF");
+        tableColor = QColor("#C0C6D4");
+    }
+    valueColor.setAlphaF(0.7);
+    palette.setColor(DPalette::Text, valueColor);
+
+    m_serialNumberValue->setPalette(palette);
+    m_userCapacityValue->setPalette(palette);
+    m_temperatureValue->setPalette(palette);
+
+    m_diskHealthDetectionDelegate->setTextColor(tableColor);
+}
 
 

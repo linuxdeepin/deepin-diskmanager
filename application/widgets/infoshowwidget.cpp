@@ -65,8 +65,13 @@ void InfoShowWidget::initUi()
 void InfoShowWidget::initConnection()
 {
     connect(DMDbusHandler::instance(), &DMDbusHandler::curSelectChanged, this, &InfoShowWidget::onCurSelectChanged);
+#if QT_VERSION_MAJOR > 5
+    connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, this,
+            &InfoShowWidget::onHandleChangeTheme);
+#else
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this,
             &InfoShowWidget::onHandleChangeTheme);
+#endif
     connect(m_partitionInfoWidget, &PartitionInfoWidget::enterWidget, this, &InfoShowWidget::onEnterWidget);
     connect(m_partitionInfoWidget, &PartitionInfoWidget::leaveWidget, this, &InfoShowWidget::onLeaveWidget);
     connect(m_vgSizeInfoWidget, &VGSizeInfoWidget::enterWidget, this, &InfoShowWidget::onEnterVGInfoWidget);
@@ -626,7 +631,11 @@ void InfoShowWidget::onEnterWidget(QRectF rect, QString path)
 
     m_pathLabel->setText(path);
     QFontMetrics fmLabel = m_pathLabel->fontMetrics();
+#if QT_VERSION_MAJOR > 5
+    int labelWidth = fmLabel.boundingRect(path).width();
+#else
     int labelWidth = fmLabel.width(path);
+#endif
     m_pathLabel->setFixedWidth(labelWidth + 20);
 
     m_arrowRectangle->show(m_partitionInfoWidget->mapToGlobal(m_partitionInfoWidget->pos()).x() + (rect.x() + rect.width() / 2),

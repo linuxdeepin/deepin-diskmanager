@@ -15,7 +15,9 @@
 
 #include <QTimer>
 #include <QApplication>
+#if QT_VERSION_MAJOR <= 5
 #include <QDesktopWidget>
+#endif
 #include <QRect>
 #include <QDebug>
 #include <QScreen>

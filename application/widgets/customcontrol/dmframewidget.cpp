@@ -8,17 +8,28 @@
 #include "partedproxy/dmdbushandler.h"
 
 #include <DFontSizeManager>
+#if QT_VERSION_MAJOR <= 5
 #include <DApplicationHelper>
+#else
+#include <DGuiApplicationHelper>
+#endif
 
 #include <QDebug>
 
+DGUI_USE_NAMESPACE
 DmFrameWidget::DmFrameWidget(DiskInfoData data, QWidget *parent)
     : DFrame(parent)
     , m_infoData(data)
 {
+#if QT_VERSION_MAJOR > 5
+    m_parentPb = DGuiApplicationHelper::instance()->applicationPalette();
+    connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, this,
+            &DmFrameWidget::onHandleChangeTheme);
+#else
     m_parentPb = DApplicationHelper::instance()->palette(this);
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this,
             &DmFrameWidget::onHandleChangeTheme);
+#endif
 }
 
 void DmFrameWidget::setFrameData()
@@ -200,7 +211,11 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)//绘制首页信息展示表�
     painter.setRenderHint(QPainter::Antialiasing); // 反锯齿;
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
     if (themeType == DGuiApplicationHelper::LightType) {
+#if QT_VERSION_MAJOR > 5
+        m_parentPb = DGuiApplicationHelper::instance()->applicationPalette();
+#else
         m_parentPb = DApplicationHelper::instance()->palette(this);
+#endif
         QColor color = m_parentPb.color(DPalette::Normal, DPalette::ItemBackground);
         painter.setBrush(QBrush(color));
         QColor outsideColor(qRgba(0, 0, 0, 1));
@@ -244,7 +259,11 @@ void DmFrameWidget::paintEvent(QPaintEvent *event)//绘制首页信息展示表�
         painter.drawText(textRect, m_infoData.m_sysLabel, option1);
         painter.restore();
     } else if (themeType == DGuiApplicationHelper::DarkType) {
+#if QT_VERSION_MAJOR > 5
+        m_parentPb = DGuiApplicationHelper::instance()->applicationPalette();;
+#else
         m_parentPb = DApplicationHelper::instance()->palette(this);
+#endif
         QColor color = m_parentPb.color(DPalette::Normal, DPalette::TextLively);
         color.setAlphaF(0.05);
         painter.setBrush(QBrush(color));

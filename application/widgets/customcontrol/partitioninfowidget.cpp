@@ -216,8 +216,13 @@ void PartitionInfoWidget::paintEvent(QPaintEvent *event)
     QRect roundRect = QRect(rect.bottomLeft().x() + 2, rect.bottomLeft().y() - height, 15, 15);
     QPainterPath painterPath;
     painterPath.addRoundedRect(roundRect, 3, 3);
+#if QT_VERSION_MAJOR > 5
+    m_parentPb = DGuiApplicationHelper::instance()->applicationPalette();;
+    QBrush brush = m_parentPb.dark();
+#else
     m_parentPb = DApplicationHelper::instance()->palette(this);
     QBrush brush = DApplicationHelper::instance()->palette(this).dark();
+#endif
     QColor colorRect = m_parentPb.color(DPalette::Normal, DPalette::Dark);
     painter.setBrush(brush);
     painter.setPen(colorRect);

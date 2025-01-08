@@ -15,25 +15,24 @@ set(CMAKE_AUTOUIC ON)#开启uic 编译转换*.ui文件生存设计界面对应�
 
 # Find the library
 find_package(PkgConfig REQUIRED)
-find_package(DtkWidget REQUIRED)
-find_package(DtkGui REQUIRED)
-find_package(Qt5LinguistTools REQUIRED)
+find_package(Dtk${DTK_VERSION}Widget REQUIRED)
+find_package(Dtk${DTK_VERSION}Gui REQUIRED)
 #find_package(DtkCMake REQUIRED)
-find_package(Qt5 COMPONENTS
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS
     Core
     Widgets
     DBus
+    LinguistTools
     REQUIRED)
 
 set(LINK_LIBS
-    Qt5::Core
-    Qt5::DBus
-    Qt5::Widgets
-    Qt5::WidgetsPrivate
-
-    ${DtkWidget_LIBRARIES}
-    ${DtkCore_LIBRARIES}
-    ${DtkGUI_LIBRARIES}
+    Qt${QT_VERSION_MAJOR}::Core
+    Qt${QT_VERSION_MAJOR}::DBus
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::WidgetsPrivate
+    Dtk${DTK_VERSION}::Core
+    Dtk${DTK_VERSION}::Gui
+    Dtk${DTK_VERSION}::Widget
 )
 
 #common resource names
@@ -59,14 +58,14 @@ foreach(_ts_file ${TS_FILES})
 endforeach()
 #lupdate end
 
-file (GLOB DTNG_TS_FILES translations/*.ts)
-qt5_create_translation(DTNG_QM_FILES
-    ${DTNG_TS_FILES}
-     ${DTNG_QM_FILES}
-     )
-
 file(GLOB ALL_SOURCES "*.cpp" "./partedproxy/*.cpp" "./widgets/*.cpp" "./widgets/customcontrol/*.cpp" "./widgets/accessible/*.cpp")
 file(GLOB ALL_HEADERS "*.h" "./partedproxy/*.h" "./widgets/*.h" "./widgets/customcontrol/*.h" "./widgets/accessible/*.h")
+file (GLOB DTNG_TS_FILES translations/*.ts)
+qt_create_translation(DTNG_QM_FILES
+    ${CMAKE_SOURCE_DIR}
+    ${DTNG_TS_FILES}
+     )
+
 
 include_directories(../basestruct)
 #link_directories(${PROJECT_BINARY_DIR})

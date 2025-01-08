@@ -75,8 +75,13 @@ void PasswordInputDialog::initUi()
     recommendedLabel->setFont(font3);
 
     // 限制中文和中文字符
+#if QT_VERSION_MAJOR > 5
+    QRegularExpression regExp("^[A-Za-z0-9`~!@#$%^&*()_-+=<>,.\\/ ]+$");
+    QRegularExpressionValidator *regExpValidator = new QRegularExpressionValidator(regExp, this);
+#else
     QRegExp regExp("^[A-Za-z0-9`~!@#$%^&*()_-+=<>,.\\/ ]+$");
     QRegExpValidator *regExpValidator = new QRegExpValidator(regExp, this);
+#endif
 
     m_inputPasswordEdit = new DPasswordEdit(this);
     m_inputPasswordEdit->setAccessibleName("Password");

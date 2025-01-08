@@ -55,7 +55,11 @@ void XFS::setUsedSectors(Partition &partition)
     if (Utils::executWithInputOutputCmd(strcmd, NULL, output, error) == 0) {
         auto strList = output.split("\n");
         foreach (auto &item, strList) {
+#if QT_VERSION_MAJOR > 5
+            auto value = item.split("=", Qt::SkipEmptyParts);
+#else
             auto value = item.split("=", QString::SkipEmptyParts);
+#endif
             if (value.size() != 2) {
                 continue;
             }

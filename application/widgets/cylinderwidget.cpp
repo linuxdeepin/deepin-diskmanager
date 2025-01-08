@@ -23,7 +23,11 @@ QVariant CylinderWidget::getUserData()
     return m_userData;
 }
 
+#if QT_VERSION_MAJOR > 5
+void CylinderWidget::enterEvent(QEnterEvent *event)
+#else
 void CylinderWidget::enterEvent(QEvent *event)
+#endif
 {
     emit enter();
 

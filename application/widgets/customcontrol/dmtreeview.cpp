@@ -220,7 +220,11 @@ void DmTreeview::addSubItem(DmDiskinfoBox *mailBox, QStandardItem *curItem, int 
 QModelIndex DmTreeview::setDefaultdmItem() //设置默认选中节点
 {
     //QModelIndex index = m_pSortViewFilter->index(0, 0, getRootItemIndex());
+#if QT_VERSION_MAJOR > 5
+    setCurrentIndex(model()->index(0, 0, model()->index(0, 0)));
+#else
     setCurrentIndex(model()->index(0, 0).child(0, 0));
+#endif
     setExpanded(model()->index(0, 0), true);
 
     return model()->index(0, 0);
@@ -232,7 +236,11 @@ void DmTreeview::setRefreshItem(int devicenum, int num) //设置刷新后默认�
         setCurrentIndex(m_model->item(num)->index());
         setExpanded(m_model->item(num)->index(), true);
     } else {
+#if QT_VERSION_MAJOR > 5
+        setCurrentIndex(model()->index(devicenum, 0).model()->index(num, 0));
+#else
         setCurrentIndex(model()->index(devicenum, 0).child(num, 0));
+#endif
         setExpanded(model()->index(devicenum, 0), true);
     }
 }

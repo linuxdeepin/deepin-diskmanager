@@ -281,9 +281,15 @@ const BTRFS_Device &Btrfs::getCacheEntry(const QString &path)
     //          Total devices 2 FS bytes used 156.00KB
     //          devid    2 size 2.00GB used 512.00MB path /dev/sdb2
     //          devid    1 size 2.00GB used 240.75MB path /dev/sdb1
+#if QT_VERSION_MAJOR > 5
+    auto lines = output.split("\n", Qt::SkipEmptyParts);
+    foreach (auto line, lines) {
+        auto items = line.split(" ", Qt::SkipEmptyParts);
+#else
     auto lines = output.split("\n", QString::SkipEmptyParts);
     foreach (auto line, lines) {
         auto items = line.split(" ", QString::SkipEmptyParts);
+#endif
         if (line.trimmed().startsWith("devid") && items.size() == 8) {
             devIdList.push_back(items[1].toInt());
             pathList.push_back(items[7]);

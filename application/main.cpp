@@ -11,7 +11,9 @@
 
 #include <DMainWindow>
 #include <DWidgetUtil>
+#if QT_VERSION_MAJOR <= 5
 #include <DApplicationSettings>
+#endif
 #include <DLog>
 #include <DMainWindow>
 
@@ -64,13 +66,17 @@ QAccessibleInterface *accessibleFactory(const QString &classname, QObject *objec
 int executCmd(const QString &strCmd, QString &outPut, QString &error)
 {
     QProcess proc;
+#if QT_VERSION_MAJOR > 5
+    QStringList list = strCmd.split(" ");
+    proc.start(list.at(0), QStringList() << list.at(1));
+#else
     proc.start(strCmd);
+#endif
     proc.waitForFinished(-1);
     outPut = proc.readAllStandardOutput();
     error = proc.readAllStandardError();
     error = proc.errorString();
     int exitcode = proc.exitCode();
-    proc.close();
     return exitcode;
 
 }
@@ -85,10 +91,12 @@ int main(int argc, char *argv[])
     }
 
     auto e = QProcessEnvironment::systemEnvironment();
+#if QT_VERSION_MAJOR <= 5
     QString XDG_SESSION_TYPE = e.value(QStringLiteral("XDG_SESSION_TYPE"));
     if (XDG_SESSION_TYPE == QLatin1String("x11")) {
         CusApplication::loadDXcbPlugin();
     }
+#endif
 
     CusApplication a(argc, argv);
     a.setAttribute(Qt::AA_UseHighDpiPixmaps);
@@ -105,7 +113,9 @@ int main(int argc, char *argv[])
     px.setDevicePixelRatio(qApp->devicePixelRatio());
     a.setProductIcon(QIcon(px));
     a.setApplicationDescription(QObject::tr("Disk Utility is a disk management tool for creating, reorganizing and formatting partitions."));
+#if QT_VERSION_MAJOR <= 5
     DApplicationSettings savetheme;
+#endif
     Dtk::Core::DLogManager::registerConsoleAppender();
     Dtk::Core::DLogManager::registerFileAppender();
 

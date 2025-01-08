@@ -8,7 +8,9 @@
 #include "common.h"
 
 #include <DPalette>
+#if QT_VERSION_MAJOR <= 5
 #include <DApplicationHelper>
+#endif
 #include <DFontSizeManager>
 
 InfoTopFrame::InfoTopFrame(DWidget *parent)
@@ -102,7 +104,11 @@ void InfoTopFrame::updateDiskInfo()
 
         QFontMetrics fmDevpath = m_nameLabel->fontMetrics();
         QString textDevpath = info.m_path;
+#if QT_VERSION_MAJOR > 5
+        int devpathWidth = fmDevpath.boundingRect(textDevpath).width();
+#else
         int devpathWidth = fmDevpath.width(textDevpath);
+#endif
         if (devpathWidth > width() / 2) {
             devpathWidth = width() / 2;
             textDevpath = m_nameLabel->fontMetrics().elidedText(textDevpath, Qt::ElideMiddle, devpathWidth);
@@ -211,7 +217,11 @@ void InfoTopFrame::resizeEvent(QResizeEvent *event)
 
         QFontMetrics fmDevpath = m_nameLabel->fontMetrics();
         QString textDevpath = info.m_path;
+#if QT_VERSION_MAJOR > 5
+        int devpathWidth = fmDevpath.boundingRect(textDevpath).width();
+#else
         int devpathWidth = fmDevpath.width(textDevpath);
+#endif
         if (devpathWidth > width() / 2) {
             devpathWidth = width() / 2;
             textDevpath = m_nameLabel->fontMetrics().elidedText(textDevpath, Qt::ElideMiddle, devpathWidth);

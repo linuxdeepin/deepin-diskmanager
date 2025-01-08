@@ -202,7 +202,11 @@ QString PartedCore::getDeviceHardStatus(const QString &devicepath)
         for (int i = 0; i < list.size(); i++) {
             if (list.at(i).indexOf("SMART overall-health self-assessment test result:") != -1) {
                 status = list.at(i).mid(strlen("SMART overall-health self-assessment test result:"));
+#if QT_VERSION_MAJOR > 5
+                status.remove(QRegularExpression("^ +\\s*"));
+#else
                 status.remove(QRegExp("^ +\\s*"));
+#endif
 //                qDebug() << __FUNCTION__ << status;
                 break;
             }
@@ -219,7 +223,11 @@ QString PartedCore::getDeviceHardStatus(const QString &devicepath)
             for (int i = 0; i < list.size(); i++) {
                 if (list.at(i).indexOf("SMART overall-health self-assessment test result:") != -1) {
                     status = list.at(i).mid(strlen("SMART overall-health self-assessment test result:"));
+#if QT_VERSION_MAJOR > 5
+                    status.remove(QRegularExpression("^ +\\s*"));
+#else
                     status.remove(QRegExp("^ +\\s*"));
+#endif
 //                    qDebug() << __FUNCTION__ << status;
                     break;
                 }
@@ -919,7 +927,11 @@ bool PartedCore::showPartition()
 {
     // qDebug() << __FUNCTION__ << "Show Partition start";
     getPartitionHiddenFlag();
+#if QT_VERSION_MAJOR > 5
+    if (m_hiddenPartition.indexOf(m_curpartition.m_uuid.toUtf8()) == -1) {
+#else
     if (m_hiddenPartition.indexOf(m_curpartition.m_uuid) == -1) {
+#endif
         emit refreshDeviceInfo();
         emit showPartitionInfo("0");
         return false;
@@ -971,7 +983,11 @@ bool PartedCore::hidePartition()
     // qDebug() << __FUNCTION__ << "Hide Partition start";
 //ENV{ID_FS_UUID}==\"1ee3b4c6-1c69-46b9-9656-8c534ffd4f43\", ENV{UDISKS_IGNORE}=\"1\"\n
     getPartitionHiddenFlag();
+#if QT_VERSION_MAJOR > 5
+    if (m_hiddenPartition.indexOf(m_curpartition.m_uuid.toUtf8()) != -1) {
+#else
     if (m_hiddenPartition.indexOf(m_curpartition.m_uuid) != -1) {
+#endif
         emit refreshDeviceInfo();
         emit hidePartitionInfo("0");
         return false;
@@ -985,7 +1001,7 @@ bool PartedCore::hidePartition()
         return false;
     } else {
         QTextStream out(&file);
-        out << QString("ENV{ID_FS_UUID}==\"%1\", ENV{UDISKS_IGNORE}=\"1\"").arg(m_curpartition.m_uuid) << endl;
+        out << QString("ENV{ID_FS_UUID}==\"%1\", ENV{UDISKS_IGNORE}=\"1\"").arg(m_curpartition.m_uuid) << Qt::endl;
     }
 
     // qDebug() << __FUNCTION__ << "Hide Partition end";
@@ -2037,7 +2053,7 @@ void PartedCore::onRefreshDeviceInfo(int type, bool arg1, QString arg2)
     qDebug() << " will call probeThread in thread !";
     if (m_workerThreadProbe == nullptr) {
         m_workerThreadProbe = new QThread();
-        qDebug() << "onRefresh Create thread: " << QThread::currentThreadId() << " ++++++++" << m_workerThreadProbe << endl;
+        qDebug() << "onRefresh Create thread: " << QThread::currentThreadId() << " ++++++++" << m_workerThreadProbe << Qt::endl;
         qDebug() << "  ----------------------! 0 !--------------------- :" << m_probeThread.thread();
         m_probeThread.moveToThread(m_workerThreadProbe);
         m_workerThreadProbe->start();
@@ -3743,9 +3759,15 @@ bool PartedCore::mountDevice(const QString &mountpath, const QString devPath, co
     bool needMount = true;
     Utils::executCmd(QString("findmnt %1").arg(devPath), output, errstr);
     if (!output.isEmpty()) {
+#if QT_VERSION_MAJOR > 5
+        auto context = output.split("\n", Qt::SkipEmptyParts);
+        if (context.size() == 2) {
+            auto mountInfo = context.at(1).split(" ", Qt::SkipEmptyParts);
+#else
         auto context = output.split("\n", QString::SkipEmptyParts);
         if (context.size() == 2) {
             auto mountInfo = context.at(1).split(" ", QString::SkipEmptyParts);
+#endif
             //mountInfo eg:/mnt   /dev/sdd1 ext4   rw,relatime
             if (mountInfo.size() == 4) {
                 //不需要重新挂载

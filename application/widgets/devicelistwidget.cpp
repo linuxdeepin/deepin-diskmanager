@@ -29,7 +29,7 @@ DeviceListWidget::DeviceListWidget(QWidget *parent)
 
     setAutoFillBackground(true);
     auto plt = this->palette();
-    plt.setBrush(QPalette::Background, QBrush(Qt::white));
+    plt.setBrush(QPalette::Window, QBrush(Qt::white));
     setPalette(plt);
     setMaximumWidth(400);
     setMinimumWidth(180);

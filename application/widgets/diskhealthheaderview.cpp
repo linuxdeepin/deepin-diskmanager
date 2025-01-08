@@ -5,7 +5,9 @@
 #include "diskhealthheaderview.h"
 
 #include <DApplication>
+#if QT_VERSION_MAJOR <= 5
 #include <DApplicationHelper>
+#endif
 #include <DPalette>
 #include <DStyleHelper>
 #include <QDebug>
@@ -66,7 +68,11 @@ void DiskHealthHeaderView::paintEvent(QPaintEvent *event)
 //    cg = DPalette::Current;
 #endif
 
+#if QT_VERSION_MAJOR > 5
+    auto palette = DGuiApplicationHelper::instance()->applicationPalette();
+#else
     auto palette = DApplicationHelper::instance()->applicationPalette();
+#endif
 
     auto *style = dynamic_cast<DStyle *>(DApplication::style());
 
@@ -126,9 +132,13 @@ void DiskHealthHeaderView::paintSection(QPainter *painter, const QRect &rect, in
 //        cg = DPalette::Current;
 #endif
     }
-
+#if QT_VERSION_MAJOR > 5
+    DGuiApplicationHelper *dAppHelper = DGuiApplicationHelper::instance();
+    DPalette palette = dAppHelper->applicationPalette();
+#else
     DApplicationHelper *dAppHelper = DApplicationHelper::instance();
     DPalette palette = dAppHelper->applicationPalette();
+#endif
     //    DPalette palette = dAppHelper->palette(this);
 
     DStyle *style = dynamic_cast<DStyle *>(DApplication::style());

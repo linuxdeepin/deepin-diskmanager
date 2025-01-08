@@ -13,9 +13,15 @@
 SizeInfoWidget::SizeInfoWidget(QWidget *parent)
     : QWidget(parent)
 {
+#if QT_VERSION_MAJOR > 5
+    m_parentPb = DGuiApplicationHelper::instance()->applicationPalette();;
+    connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, this,
+            &SizeInfoWidget::onHandleChangeTheme);
+#else
     m_parentPb = DApplicationHelper::instance()->palette(this);
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this,
             &SizeInfoWidget::onHandleChangeTheme);
+#endif
 }
 SizeInfoWidget::SizeInfoWidget(double used, double unused, bool flag, QWidget *parent)
     : QWidget(parent)
@@ -23,9 +29,15 @@ SizeInfoWidget::SizeInfoWidget(double used, double unused, bool flag, QWidget *p
     , m_noused(unused)
     , m_flag(flag)
 {
+#if QT_VERSION_MAJOR > 5
+    m_parentPb = DGuiApplicationHelper::instance()->applicationPalette();;
+    connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, this,
+            &SizeInfoWidget::onHandleChangeTheme);
+#else
     m_parentPb = DApplicationHelper::instance()->palette(this);
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this,
             &SizeInfoWidget::onHandleChangeTheme);
+#endif
 }
 
 void SizeInfoWidget::setData(PartitionInfo info, QVector<QColor> color, QVector<double> size, bool flag)
@@ -237,8 +249,13 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             //            rect.setHeight(rect.height() - 1);
             painter.drawRoundedRect(roundRect, 3, 3);
             //            QRect paintRect = QRect(rect.topLeft().x() + 1, rect.topLeft().y() + (rect.height() / 3), rect.width() - 2, rect.height() / 3);
+#if QT_VERSION_MAJOR > 5
+            m_parentPb = DGuiApplicationHelper::instance()->applicationPalette();;
+            QBrush brush1 = m_parentPb.dark();
+#else
             m_parentPb = DApplicationHelper::instance()->palette(this);
             QBrush brush1 = DApplicationHelper::instance()->palette(this).dark();
+#endif
             QColor iconColor = m_parentPb.color(DPalette::Normal, DPalette::Dark);
             painter.setBrush(brush1);
             painter.setPen(iconColor);
@@ -255,11 +272,19 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
 
             QFontMetrics fmCapacity = painter.fontMetrics();
             QString textCapacity = QString(m_partitionPath + tr(" Capacity:") + " ");
+#if QT_VERSION_MAJOR > 5
+            int capacityWidth = fmCapacity.boundingRect(textCapacity).width();
+#else
             int capacityWidth = fmCapacity.width(textCapacity);
+#endif
             if (capacityWidth > rect.width() / 2) {
                 capacityWidth = rect.width() / 2;
                 textCapacity = painter.fontMetrics().elidedText(textCapacity, Qt::ElideMiddle, capacityWidth);
+#if QT_VERSION_MAJOR > 5
+                capacityWidth = fmCapacity.boundingRect(textCapacity).width();
+#else
                 capacityWidth = fmCapacity.width(textCapacity);
+#endif
             }
             QRect rectText = QRect(paintRect.bottomLeft().x() + 28, paintRect.bottomLeft().y() + 17, capacityWidth, 70);
             painter.drawText(rectText, textCapacity, option);
@@ -272,14 +297,22 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(text1Color);
             QTextOption option1;
             option.setAlignment(Qt::AlignLeft);
+#if QT_VERSION_MAJOR > 5
+            QRect rectSizeNum = QRect(paintRect.bottomLeft().x() + capacityNum, paintRect.bottomLeft().y() + 20, painter.fontMetrics().boundingRect(m_totalSpaceSize).width() + 20, 30);
+#else
             QRect rectSizeNum = QRect(paintRect.bottomLeft().x() + capacityNum, paintRect.bottomLeft().y() + 20, painter.fontMetrics().width(m_totalSpaceSize) + 20, 30);
+#endif
 
             int height2 = 21 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
             int width = roundRect.x() + capacityNum + rectSizeNum.width() + 30;
             roundRect.moveTo(width, paintRect.bottomLeft().y() + height2);
             QPainterPath painterPath;
             painterPath.addRoundedRect(roundRect, 3, 3);
+#if QT_VERSION_MAJOR > 5
+            QBrush brush2 = DGuiApplicationHelper::instance()->applicationPalette().light();
+#else
             QBrush brush2 = DApplicationHelper::instance()->palette(this).lightLively();
+#endif
             QColor icon2Color = m_parentPb.color(DPalette::Normal, DPalette::LightLively);
             painter.setBrush(brush2);
             painter.setPen(icon2Color);
@@ -294,7 +327,11 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             width = roundRect.x() + roundRect.width() + 10;
 
             QFontMetrics fmUsed = painter.fontMetrics();
+#if QT_VERSION_MAJOR > 5
+            int usedWidth = fmCapacity.boundingRect(QString(tr("Used:") + " ")).width();
+#else
             int usedWidth = fmCapacity.width(QString(tr("Used:") + " "));
+#endif
 
 //            rectText.moveTo(width, paintRect.bottomLeft().y() + 17);
             rectText = QRect(width, paintRect.bottomLeft().y() + 17, usedWidth, 70);
@@ -321,8 +358,13 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             //            rect.setHeight(rect.height() - 1);
             painter.drawRoundedRect(roundRect, 3, 3);
             //            QRect paintRect = QRect(rect.topLeft().x() + 1, rect.topLeft().y() + (rect.height() / 3), rect.width() - 2, rect.height() / 3);
+#if QT_VERSION_MAJOR > 5
+            m_parentPb = DGuiApplicationHelper::instance()->applicationPalette();;
+            QBrush brush1 = m_parentPb.dark();
+#else
             m_parentPb = DApplicationHelper::instance()->palette(this);
             QBrush brush1 = DApplicationHelper::instance()->palette(this).dark();
+#endif
             QColor iconColor = m_parentPb.color(DPalette::Normal, DPalette::Dark);
             painter.setBrush(brush1);
             painter.setPen(iconColor);
@@ -339,11 +381,19 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
 
             QFontMetrics fmCapacity = painter.fontMetrics();
             QString textCapacity = QString(m_partitionPath + tr(" Capacity:") + " ");
+#if QT_VERSION_MAJOR > 5
+            int capacityWidth = fmCapacity.boundingRect(textCapacity).width();
+#else
             int capacityWidth = fmCapacity.width(textCapacity);
+#endif
             if (capacityWidth > rect.width() / 2) {
                 capacityWidth = rect.width() / 2;
                 textCapacity = painter.fontMetrics().elidedText(textCapacity, Qt::ElideMiddle, capacityWidth);
+#if QT_VERSION_MAJOR > 5
+                capacityWidth = fmCapacity.boundingRect(textCapacity).width();
+#else
                 capacityWidth = fmCapacity.width(textCapacity);
+#endif
             }
             QRect rectText = QRect(paintRect.bottomLeft().x() + 28, paintRect.bottomLeft().y() + 17, capacityWidth, 70);
             painter.drawText(rectText, textCapacity, option);
@@ -356,14 +406,22 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(text1Color);
             QTextOption option1;
             option.setAlignment(Qt::AlignLeft);
+#if QT_VERSION_MAJOR > 5
+            QRect rectSizeNum = QRect(paintRect.bottomLeft().x() + capacityNum, paintRect.bottomLeft().y() + 20, painter.fontMetrics().boundingRect(m_totalSpaceSize).width() + 20, 30);
+#else
             QRect rectSizeNum = QRect(paintRect.bottomLeft().x() + capacityNum, paintRect.bottomLeft().y() + 20, painter.fontMetrics().width(m_totalSpaceSize) + 20, 30);
+#endif
 
             int height2 = 21 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
             int width = roundRect.x() + capacityNum + rectSizeNum.width() + 30;
             roundRect.moveTo(width, paintRect.bottomLeft().y() + height2);
             QPainterPath painterPath;
             painterPath.addRoundedRect(roundRect, 3, 3);
+#if QT_VERSION_MAJOR > 5
+            QBrush brush2 = DGuiApplicationHelper::instance()->applicationPalette().light();
+#else
             QBrush brush2 = DApplicationHelper::instance()->palette(this).lightLively();
+#endif
             QColor icon2Color = m_parentPb.color(DPalette::Normal, DPalette::LightLively);
             painter.setBrush(brush2);
             painter.setPen(icon2Color);
@@ -378,7 +436,11 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             width = roundRect.x() + roundRect.width() + 10;
 
             QFontMetrics fmUsed = painter.fontMetrics();
+#if QT_VERSION_MAJOR > 5
+            int usedWidth = fmCapacity.boundingRect(QString(tr("Used:") + " ")).width();
+#else
             int usedWidth = fmCapacity.width(QString(tr("Used:") + " "));
+#endif
 //            rectText.moveTo(width, paintRect.bottomLeft().y() + 17);
             rectText = QRect(width, paintRect.bottomLeft().y() + 17, usedWidth, 70);
             painter.drawText(rectText, QString(tr("Used:") + " "), option);

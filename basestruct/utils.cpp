@@ -91,7 +91,11 @@ int Utils::executWithInputOutputCmd(const QString &strCmdArg, const QString *inP
     QProcess proc;
     int exitCode;
 
+#if QT_VERSION_MAJOR > 5
+    proc.start(strCmdArg);
+#else
     proc.start(strCmdArg, QIODevice::ReadWrite);
+#endif
 
     if (inPut) {
         proc.waitForStarted(-1);

@@ -29,9 +29,16 @@ bool DeviceStorage::setHwinfoInfo(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "Vendor", m_vendor);
 
     setAttribute(mapInfo, "Attached to", m_interface);
+#if QT_VERSION_MAJOR > 5
+    QRegularExpression re(".*\\((.*)\\).*");
+    QRegularExpressionMatch match = re.match(m_interface);
+    if (match.hasMatch()) {
+        m_interface = match.captured(1);
+#else
     QRegExp re(".*\\((.*)\\).*");
     if (re.exactMatch(m_interface)) {
         m_interface = re.cap(1);
+#endif
         m_interface.replace("Controller", "");
         m_interface.replace("controller", "");
     }
@@ -40,7 +47,11 @@ bool DeviceStorage::setHwinfoInfo(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "Hardware Class", m_description);
     setAttribute(mapInfo, "Capacity", m_size);
     // hwinfo里面显示的内容是  14 GB (15376000000 bytes) 需要处理
+#if QT_VERSION_MAJOR > 5
+    m_size.replace(QRegularExpression("\\(.*\\)"), "").replace(" ", "");
+#else
     m_size.replace(QRegExp("\\(.*\\)"), "").replace(" ", "");
+#endif
     if (m_size.startsWith("0") || m_size == "") {
         return false;
     }
@@ -64,9 +75,16 @@ bool DeviceStorage::setKLUHwinfoInfo(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "Vendor", m_vendor);
 
     setAttribute(mapInfo, "Attached to", m_interface);
+#if QT_VERSION_MAJOR > 5
+    QRegularExpression re(".*\\((.*)\\).*");
+    QRegularExpressionMatch match = re.match(m_interface);
+    if (match.hasMatch()) {
+        m_interface = match.captured(1);
+#else
     QRegExp re(".*\\((.*)\\).*");
     if (re.exactMatch(m_interface)) {
         m_interface = re.cap(1);
+#endif
         m_interface.replace("Controller", "");
         m_interface.replace("controller", "");
     }
@@ -75,7 +93,11 @@ bool DeviceStorage::setKLUHwinfoInfo(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "Hardware Class", m_description);
     setAttribute(mapInfo, "Capacity", m_size);
     // hwinfo里面显示的内容是  14 GB (15376000000 bytes) 需要处理
+#if QT_VERSION_MAJOR > 5
+    m_size.replace(QRegularExpression("\\(.*\\)"), "").replace(" ", "");
+#else
     m_size.replace(QRegExp("\\(.*\\)"), "").replace(" ", "");
+#endif
     if (m_size.startsWith("0") || m_size == "") {
         return false;
     }
@@ -180,10 +202,18 @@ void DeviceStorage::getInfoFromLshw(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "description", m_description);
     setAttribute(mapInfo, "size", m_size);
     // 223GiB (240GB)
+#if QT_VERSION_MAJOR > 5
+    QRegularExpression re(".*\\((.*)\\)$");
+    QRegularExpressionMatch match = re.match(m_size);
+    if (match.hasMatch()) {
+        m_interface = match.captured(1);
+    }
+#else
     QRegExp re(".*\\((.*)\\)$");
     if (re.exactMatch(m_size)) {
         m_size = re.cap(1);
     }
+#endif
 }
 
 void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
@@ -220,10 +250,18 @@ void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
     }
 
     if (capacity != "") {
+#if QT_VERSION_MAJOR > 5
+        QRegularExpression reg(".*\\[(.*)\\]$");
+        QRegularExpressionMatch match = reg.match(capacity);
+        if (match.hasMatch()) {
+            m_size = match.captured(1);
+        }
+#else
         QRegExp reg(".*\\[(.*)\\]$");
         if (reg.exactMatch(capacity)) {
             m_size = reg.cap(1);
         }
+#endif
     }
 
     // 型号
@@ -298,10 +336,18 @@ void DeviceStorage::getMapInfoFromHwinfo(const QString &info, QMap<QString, QStr
             continue;
         }
 
+#if QT_VERSION_MAJOR > 5
+        QRegularExpression re(".*\"(.*)\".*");
+        QRegularExpressionMatch match = re.match(words[1].trimmed());
+        if (match.hasMatch()) {
+            QString key = words[0].trimmed();
+            QString value = match.captured(1);
+#else
         QRegExp re(".*\"(.*)\".*");
         if (re.exactMatch(words[1].trimmed())) {
             QString key = words[0].trimmed();
             QString value = re.cap(1);
+#endif
 
             //这里是为了防止  "usb-storage", "sr"  -》 usb-storage", "sr
             if (key == "Driver") {
@@ -428,7 +474,11 @@ void DeviceStorage::loadLsblkInfo(const QString &info, QMap<QString, QString> &m
     QStringList lines = info.split("\n");
 
     foreach (QString line, lines) {
+#if QT_VERSION_MAJOR > 5
+        QStringList words = line.replace(QRegularExpression("[\\s]+"), " ").split(" ");
+#else
         QStringList words = line.replace(QRegExp("[\\s]+"), " ").split(" ");
+#endif
         if (words.size() != 2 || words[0] == "NAME") {
             continue;
         }
@@ -612,7 +662,11 @@ void DeviceStorage::getMapInfoFromSmartctl(QMap<QString, QString> &mapInfo, cons
     QString indexName;
     int startIndex = 0;
 
+#if QT_VERSION_MAJOR > 5
+    QRegularExpression reg("^[\\s\\S]*[\\d]:[\\d][\\s\\S]*$");//time 08:00
+#else
     QRegExp reg("^[\\s\\S]*[\\d]:[\\d][\\s\\S]*$");//time 08:00
+#endif
 
     for (int i = 0; i < info.size(); ++i) {
         if (info[i] != '\n' && i != info.size() - 1) {
@@ -624,7 +678,12 @@ void DeviceStorage::getMapInfoFromSmartctl(QMap<QString, QString> &mapInfo, cons
 
 
         int index = line.indexOf(ch);
+#if QT_VERSION_MAJOR > 5
+        QRegularExpressionMatch match = reg.match(line);
+        if (index > 0 && !match.hasMatch() && match.captured(0) == line && false == line.contains("Error") && false == line.contains("hh:mm:SS")) {
+#else
         if (index > 0 && reg.exactMatch(line) == false && false == line.contains("Error") && false == line.contains("hh:mm:SS")) {
+#endif
             if (line.indexOf("(") < index && line.indexOf(")") > index) {
                 continue;
             }
@@ -655,12 +714,20 @@ void DeviceStorage::getMapInfoFromSmartctl(QMap<QString, QString> &mapInfo, cons
         }
 
         indexName = "";
-
+#if QT_VERSION_MAJOR > 5
+        QRegularExpression rx("^[ ]*[0-9]+[ ]+([\\w-_]+)[ ]+0x[0-9a-fA-F-]+[ ]+[0-9]+[ ]+[0-9]+[ ]+[0-9]+[ ]+[\\w-]+[ ]+[\\w-]+[ ]+[\\w-]+[ ]+([0-9\\/w-]+[ ]*[ 0-9\\/w-()]*)$");
+        QRegularExpressionMatch matchR = rx.match(line);
+        if (matchR.hasMatch()) {
+            mapInfo[matchR.captured(1)] = matchR.captured(2);
+            continue;
+        }
+#else
         QRegExp rx("^[ ]*[0-9]+[ ]+([\\w-_]+)[ ]+0x[0-9a-fA-F-]+[ ]+[0-9]+[ ]+[0-9]+[ ]+[0-9]+[ ]+[\\w-]+[ ]+[\\w-]+[ ]+[\\w-]+[ ]+([0-9\\/w-]+[ ]*[ 0-9\\/w-()]*)$");
         if (rx.indexIn(line) > -1) {
             mapInfo[rx.cap(1)] = rx.cap(2);
             continue;
         }
+#endif
 
         QStringList strList;
 

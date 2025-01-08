@@ -9,7 +9,12 @@
 #include "commondef.h"
 
 #include <DPalette>
+#if QT_VERSION_MAJOR < 5
 #include <DApplicationHelper>
+#else
+#include <dtkwidget_global.h>
+#include <DGuiApplicationHelper>
+#endif
 
 #include <QWidget>
 #include <QRect>
@@ -18,6 +23,7 @@
 #include <QPalette>
 #include <QBrush>
 
+DGUI_USE_NAMESPACE
 DWIDGET_USE_NAMESPACE
 
 /**
@@ -74,7 +80,11 @@ protected:
     /**
      * @brief 重写进入事件
      */
+#if QT_VERSION_MAJOR > 5
+    virtual void enterEvent(QEnterEvent *event) override;
+#else
     virtual void enterEvent(QEvent *event) override;
+#endif
 
     /**
      * @brief 重写离开事件

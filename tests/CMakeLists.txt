@@ -41,24 +41,23 @@ file(GLOB ALL_QRCS "../application/assets/appicons.qrc")
 list(REMOVE_ITEM ALL_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../application/main.cpp)
 
 find_package(PkgConfig REQUIRED)
-find_package(DtkWidget REQUIRED)
-find_package(DtkGui REQUIRED)
-find_package(Qt5LinguistTools REQUIRED)
-find_package(Qt5 COMPONENTS
+find_package(Dtk${DTK_VERSION}Widget REQUIRED)
+find_package(Dtk${DTK_VERSION}Gui REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS
     Core
     Widgets
     DBus
     REQUIRED)
 
 set(LINK_LIBS
-    Qt5::Core
-    Qt5::DBus
-    Qt5::Widgets
-    Qt5::WidgetsPrivate
+    Qt${QT_VERSION_MAJOR}::Core
+    Qt${QT_VERSION_MAJOR}::DBus
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::WidgetsPrivate
 
-    ${DtkWidget_LIBRARIES}
-    ${DtkCore_LIBRARIES}
-    ${DtkGUI_LIBRARIES}
+    Dtk${DTK_VERSION}::Core
+    Dtk${DTK_VERSION}::Gui
+    Dtk${DTK_VERSION}::Widget
 )
 
 ##需要生成的moc文件，输出文件名称放在变量 mocfiles中，必须在find QT5 package才能调用
@@ -71,7 +70,20 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
     ${PROJECT_BINARY_DIR}
 )
-target_link_libraries(${PROJECT_NAME_TEST} gmock gmock_main gtest gtest_main pthread Qt5::Core basestruct parted parted-fs-resize Qt5::DBus Qt5::Widgets Qt5::WidgetsPrivate Qt5::Test ${LINK_LIBS})
+target_link_libraries(${PROJECT_NAME_TEST}
+    gmock
+    gmock_main
+    gtest
+    gtest_main
+    pthread
+    Qt${QT_VERSION_MAJOR}::Core
+    basestruct
+    parted
+    parted-fs-resize
+    Qt${QT_VERSION_MAJOR}::DBus
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::WidgetsPrivate
+    Qt${QT_VERSION_MAJOR}::Test ${LINK_LIBS})
 
 # 添加 QTest 测试
 add_test(${PROJECT_NAME_TEST} COMMAND ${PROJECT_NAME_TEST})

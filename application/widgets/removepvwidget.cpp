@@ -5,6 +5,7 @@
 
 #include "removepvwidget.h"
 #include "messagebox.h"
+#include "utils.h"
 
 #include <DWindowCloseButton>
 #include <DMessageManager>

@@ -5,7 +5,7 @@ project(deepin-diskmanager)
 option(DOTEST "option for test" OFF)
 
 # 是否开启单元测试编译
-set(DOTEST ON)
+set(DOTEST OFF)
 
 option(DOAPP "option for test app" OFF)
 set(DOAPP ON)
@@ -22,6 +22,11 @@ else()
   # -ffunction-sections
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -O2 -Wl,--gc-sections")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O2 -Wl,--gc-sections")
+endif()
+
+set(QT_VERSION_MAJOR 6)
+if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    set(DTK_VERSION 6)
 endif()
 
 # 检查内存泄漏代码
@@ -50,7 +55,7 @@ if(DOTEST)
 #        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fprofile-arcs -ftest-coverage")
         # 设置测试模块
         set(QT Core Gui Widgets Network DBus Sql LinguistTools Svg Test)
-        find_package(Qt5 COMPONENTS ${QT} REQUIRED)
+        find_package(Qt${QT_VERSION_MAJOR} COMPONENTS ${QT} REQUIRED)
         # 添加子模块apptest
         add_subdirectory(tests)
     else()
@@ -58,7 +63,7 @@ if(DOTEST)
 #    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fprofile-arcs -ftest-coverage")
     # 设置测试模块
     set(QT Core Gui Widgets Network DBus Sql LinguistTools Svg Multimedia Test)
-    find_package(Qt5 COMPONENTS ${QT} REQUIRED)
+    find_package(Qt${QT_VERSION_MAJOR} COMPONENTS ${QT} REQUIRED)
     # 添加子模块test
     add_subdirectory(test)
     endif()

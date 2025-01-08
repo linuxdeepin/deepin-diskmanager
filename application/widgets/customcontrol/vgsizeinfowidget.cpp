@@ -125,7 +125,11 @@ void VGSizeInfoWidget::setData(const QVector<VGData> &vglist)
             }
         }
 
+#if QT_VERSION_MAJOR > 5
+        std::sort(vgNameList.begin(), vgNameList.end());
+#else
         qSort(vgNameList.begin(), vgNameList.end());
+#endif
 
         if (isUnallocated) {
             vgNameList.append("unallocated");
@@ -184,7 +188,11 @@ void VGSizeInfoWidget::setData(const QVector<VGData> &vglist)
             }
 
             m_totalSize = Utils::LVMSizeToUnit(totalVGSize, SIZE_UNIT::UNIT_GIB);
+#if QT_VERSION_MAJOR > 5
+            std::sort(lvNameList.begin(), lvNameList.end());
+#else
             qSort(lvNameList.begin(), lvNameList.end());
+#endif
 
             if (lvNameList.count() > 0) {
                 Sector lvSizeSum = 0;
@@ -524,12 +532,20 @@ void VGSizeInfoWidget::paintEvent(QPaintEvent *event)
         } else if (textPath.contains("/dev")) {
             textPath.remove(0, 5);
         }
+#if QT_VERSION_MAJOR > 5
+        int width = fmPath.boundingRect(textPath).width();
+#else
         int width = fmPath.width(textPath);
+#endif
 
         painter.setFont(DFontSizeManager::instance()->get(DFontSizeManager::T8, QFont::Normal));
         QFontMetrics fmSize = painter.fontMetrics();
         QString textSize = QString(m_pathSizeInfo.at(i));
+#if QT_VERSION_MAJOR > 5
+        int widthSize = fmSize.boundingRect(textSize).width();
+#else
         int widthSize = fmSize.width(textSize);
+#endif
         int number = 0;
 
         if (width >= widthSize) {
@@ -555,7 +571,11 @@ void VGSizeInfoWidget::paintEvent(QPaintEvent *event)
         painter.setFont(DFontSizeManager::instance()->get(DFontSizeManager::T6, QFont::Medium));
         QFontMetrics fmEllipsis = painter.fontMetrics();
         QString textEllipsis = QString("...");
+#if QT_VERSION_MAJOR > 5
+        int widthEllipsis = fmEllipsis.boundingRect(textEllipsis).width();
+#else
         int widthEllipsis = fmEllipsis.width(textEllipsis);
+#endif
 
         if (sumWidth + widthEllipsis > rect.width()) {
             sumWidth -= lstPathWidth.last();
@@ -572,8 +592,13 @@ void VGSizeInfoWidget::paintEvent(QPaintEvent *event)
             QRect roundRect = QRect(rect.bottomLeft().x() + 2 + lstWidth.at(i) + width * i, rect.bottomLeft().y() - height, 15, 15);
             QPainterPath painterPath;
             painterPath.addRoundedRect(roundRect, 3, 3);
+#if QT_VERSION_MAJOR > 5
+            m_parentPb = DGuiApplicationHelper::instance()->applicationPalette();;
+            QBrush brush = m_parentPb.dark();
+#else
             m_parentPb = DApplicationHelper::instance()->palette(this);
             QBrush brush = DApplicationHelper::instance()->palette(this).dark();
+#endif
             QColor colorRect = m_parentPb.color(DPalette::Normal, DPalette::Dark);
             painter.setBrush(brush);
             painter.setPen(colorRect);
@@ -650,7 +675,11 @@ void VGSizeInfoWidget::paintEvent(QPaintEvent *event)
 
         QFontMetrics fmEllipsis = painter.fontMetrics();
         QString textEllipsis = QString("...");
+#if QT_VERSION_MAJOR > 5
+        int widthEllipsis = fmEllipsis.boundingRect(textEllipsis).width();
+#else
         int widthEllipsis = fmEllipsis.width(textEllipsis);
+#endif
 
         m_rectEllipsis = QRect(paintRect.bottomLeft().x() + (rect.width() - widthEllipsis), paintRect.bottomLeft().y() + 17, widthEllipsis, 25);
         painter.drawText(m_rectEllipsis, "...", option);

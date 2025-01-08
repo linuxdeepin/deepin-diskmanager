@@ -10,8 +10,13 @@
 #include <DFontSizeManager>
 
 #include <QHBoxLayout>
+#if QT_VERSION_MAJOR > 5
+#include <QRegularExpression>
+#include <QRegularExpressionValidator>
+#else
 #include <QRegExpValidator>
 #include <QRegExp>
+#endif
 
 ResizeDialog::ResizeDialog(QWidget *parent)
     : DDBase(parent)
@@ -27,7 +32,11 @@ void ResizeDialog::initUi()
     this->setFixedWidth(380);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
+#if QT_VERSION_MAJOR > 5
+        mainLayout->setContentsMargins(0, 0, 0, 0);
+#else
     mainLayout->setMargin(0);
+#endif
     DLabel *tipLabel = new DLabel(tr("It will resize the partitions on the disk"), this);
     tipLabel->setWordWrap(true);
     tipLabel->setAlignment(Qt::AlignCenter);
@@ -36,8 +45,13 @@ void ResizeDialog::initUi()
     QVBoxLayout *vboxLayout = new QVBoxLayout;
     QHBoxLayout *hLayout = new QHBoxLayout;
     m_lineEdit = new DLineEdit(this);
+#if QT_VERSION_MAJOR > 5
+    QRegularExpression regexp("^[0-9]*\\.[0-9]{1,2}");
+    QRegularExpressionValidator *pvalidaor = new QRegularExpressionValidator(regexp, this);
+#else
     QRegExp regexp("^[0-9]*\\.[0-9]{1,2}");
     QRegExpValidator *pvalidaor = new QRegExpValidator(regexp, this);
+#endif
     m_lineEdit->lineEdit()->setValidator(pvalidaor);
     m_lineEdit->setAccessibleName("resizeSize");
 

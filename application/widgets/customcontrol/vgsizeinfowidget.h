@@ -10,7 +10,12 @@
 #include "deviceinfo.h"
 
 #include <DPalette>
+#if QT_VERSION_MAJOR > 5
+#include <dtkwidget_global.h>
+#include <DGuiApplicationHelper>
+#else
 #include <DApplicationHelper>
+#endif
 
 #include <QWidget>
 #include <QRect>
@@ -23,6 +28,7 @@
 #include <QColor>
 #include <QVector>
 
+DGUI_USE_NAMESPACE
 DWIDGET_USE_NAMESPACE
 
 /**

@@ -74,8 +74,13 @@ void DiskBadSectorsDialog::initUI()
     DFontSizeManager::instance()->bind(m_verifyComboBox, DFontSizeManager::T6, QFont::Medium);
     m_verifyComboBox->setAccessibleName("chooseVerify");
 
+#if QT_VERSION_MAJOR > 5
+    QRegularExpression reg("[0-9]+$"); // 只能输入数字正则表达式
+    QRegularExpressionValidator *validator = new QRegularExpressionValidator(reg, this);
+#else
     QRegExp reg("[0-9]+$"); // 只能输入数字正则表达式
     QRegExpValidator *validator = new QRegExpValidator(reg, this);
+#endif
 
 //    QIntValidator *intValidator = new QIntValidator(0, QString("%1").arg(m_deviceInfo.cylinders).toInt(), this);
 
@@ -114,8 +119,13 @@ void DiskBadSectorsDialog::initUI()
     DFontSizeManager::instance()->bind(m_methodLabel, DFontSizeManager::T6, QFont::Normal);
     m_methodLabel->setPalette(palette1);
 
+#if QT_VERSION_MAJOR > 5
+    int verifyWidth = m_verifyLabel->fontMetrics().boundingRect(QString(tr("Verify:"))).width();
+    int methodWidth = m_methodLabel->fontMetrics().boundingRect(QString(tr("Method:"))).width();
+#else
     int verifyWidth = m_verifyLabel->fontMetrics().width(QString(tr("Verify:")));
     int methodWidth = m_methodLabel->fontMetrics().width(QString(tr("Method:")));
+#endif
     if (verifyWidth >= methodWidth) {
         m_verifyLabel->setFixedWidth(verifyWidth);
         m_methodLabel->setFixedWidth(verifyWidth);
@@ -137,8 +147,13 @@ void DiskBadSectorsDialog::initUI()
     m_slider->setMaximum(100);
     m_slider->setValue(50);
 
+#if QT_VERSION_MAJOR > 5
+    QRegularExpression regCheckTimes("^[1-9][0-6]$"); // 只能输入两位数但首字符不能为0正则表达式
+    QRegularExpressionValidator *validatorCheckTimes = new QRegularExpressionValidator(regCheckTimes, this);
+#else
     QRegExp regCheckTimes("^[1-9][0-6]$"); // 只能输入两位数但首字符不能为0正则表达式
     QRegExpValidator *validatorCheckTimes = new QRegExpValidator(regCheckTimes, this);
+#endif
 
     m_checkTimesEdit = new DLineEdit;
     m_checkTimesEdit->setText("8");
@@ -1202,8 +1217,13 @@ bool DiskBadSectorsDialog::event(QEvent *event)
 {
     // 字体大小改变
     if (QEvent::ApplicationFontChange == event->type()) {
+#if QT_VERSION_MAJOR > 5
+        int verifyWidth = m_verifyLabel->fontMetrics().boundingRect(QString(tr("Verify:"))).width();
+        int methodWidth = m_methodLabel->fontMetrics().boundingRect(QString(tr("Method:"))).width();
+#else
         int verifyWidth = m_verifyLabel->fontMetrics().width(QString(tr("Verify:")));
         int methodWidth = m_methodLabel->fontMetrics().width(QString(tr("Method:")));
+#endif
         if (verifyWidth >= methodWidth) {
             m_verifyLabel->setFixedWidth(verifyWidth);
             m_methodLabel->setFixedWidth(verifyWidth);

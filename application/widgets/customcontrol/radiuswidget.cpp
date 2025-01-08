@@ -119,7 +119,11 @@ void RadiusWidget::paintEvent(QPaintEvent *event)
     QWidget::paintEvent(event);
 }
 
+#if QT_VERSION_MAJOR > 5
+void RadiusWidget::enterEvent(QEnterEvent *event)
+#else
 void RadiusWidget::enterEvent(QEvent *event)
+#endif
 {
     Q_UNUSED(event);
     m_isEnter =true;

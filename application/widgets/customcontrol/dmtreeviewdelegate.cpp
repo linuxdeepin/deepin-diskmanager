@@ -17,9 +17,15 @@ DmTreeviewDelegate::DmTreeviewDelegate(QAbstractItemView *parent)
     : DStyledItemDelegate(parent)
     , m_parentView(parent)
 {
+#if QT_VERSION_MAJOR > 5
+    m_parentPb = m_parentView->palette();
+    connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, this,
+            &DmTreeviewDelegate::onHandleChangeTheme);
+#else
     m_parentPb = DApplicationHelper::instance()->palette(m_parentView);
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this,
             &DmTreeviewDelegate::onHandleChangeTheme);
+#endif
     onHandleChangeTheme();
 }
 

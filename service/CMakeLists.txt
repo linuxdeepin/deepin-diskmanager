@@ -23,21 +23,21 @@ set(APP_POLICY_FILES "${APP_POLICY_DIR}/com.deepin.diskmanager.policy")
 
 # Find the library
 find_package(PkgConfig REQUIRED)
-find_package(DtkGui REQUIRED)
-find_package(Qt5 COMPONENTS
+find_package(Dtk${DTK_VERSION}Gui REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS
     Core
     Widgets
     DBus
 REQUIRED)
-find_package(PolkitQt5-1)
+find_package(PolkitQt${QT_VERSION_MAJOR}-1)
 
 set(LINK_LIBS
-    Qt5::Core
-    Qt5::DBus
-    ${DtkCore_LIBRARIES}
+    Qt${QT_VERSION_MAJOR}::Core
+    Qt${QT_VERSION_MAJOR}::DBus
+    Dtk${DTK_VERSION}::Core
     parted
     parted-fs-resize
-    PolkitQt5-1::Agent
+    PolkitQt${QT_VERSION_MAJOR}-1::Agent
 )
 
 file(GLOB ALL_SOURCES
@@ -60,7 +60,7 @@ link_directories(${PROJECT_BINARY_DIR})
 
 add_executable(${PROJECT_NAME} ${ALL_SOURCES} ${ALL_HEADERS})
 target_include_directories(${PROJECT_NAME} PUBLIC
-    ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
+    ${Qt6Gui_PRIVATE_INCLUDE_DIRS}
     ${PROJECT_BINARY_DIR}
 )
 #link_libraries(../basestruct/basestruct)

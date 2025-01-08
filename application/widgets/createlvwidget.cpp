@@ -56,9 +56,15 @@ void CreateLVWidget::initUi()
     //逻辑卷页最上端的布局等
     topFrameSetting();
     m_topFrame->setFrameRounded(true);
+#if QT_VERSION_MAJOR > 5
+    DPalette palette = m_topFrame->palette();
+    palette.setBrush(DPalette::Base, palette.itemBackground());
+    m_topFrame->setPalette(palette);
+#else
     DPalette palette = DApplicationHelper::instance()->palette(m_topFrame);
     palette.setBrush(DPalette::Base, palette.itemBackground());
     DApplicationHelper::instance()->setPalette(m_topFrame, palette);
+#endif
     m_topFrame->setAutoFillBackground(true);
 //    m_topFrame->setStyleSheet("background:red");
     m_topFrame->setFixedSize(864,110);
@@ -354,7 +360,11 @@ void CreateLVWidget::partInfoShowing()
     font.setPixelSize(12);
 
     m_emptyLabel = new DLabel(m_partWidget);
+#if QT_VERSION_MAJOR > 5
+    m_emptyLabel->setFixedWidth(m_partFormateLabel->fontMetrics().boundingRect(tr("LV file system:")).width());
+#else
     m_emptyLabel->setFixedWidth(m_partFormateLabel->fontMetrics().width(tr("LV file system:")));
+#endif
     m_encryptionInfo = new DLabel(m_partWidget);
     m_encryptionInfo->setFont(font);
     m_encryptionInfo->setPalette(palette);
@@ -533,6 +543,15 @@ void CreateLVWidget::setAddOrRemResult(const bool &isExceed)
 
 void CreateLVWidget::setRegValidator()
 {
+#if QT_VERSION_MAJOR > 5
+    QRegularExpression reg("^[0-9]+(\\.[0-9]{1,4})?$");
+    QRegularExpressionValidator *va = new QRegularExpressionValidator(reg, this);
+    m_partSizeEdit->lineEdit()->setValidator(va);
+
+    QRegularExpression re("^[\u4E00-\u9FA5A-Za-z0-9_]+$");
+    QRegularExpressionValidator *va1 = new QRegularExpressionValidator(re, this);
+    m_partNameEdit->lineEdit()->setValidator(va1);
+#else
     QRegExp reg("^[0-9]+(\\.[0-9]{1,4})?$");
     QRegExpValidator *va = new QRegExpValidator(reg, this);
     m_partSizeEdit->lineEdit()->setValidator(va);
@@ -540,6 +559,7 @@ void CreateLVWidget::setRegValidator()
     QRegExp re("^[\u4E00-\u9FA5A-Za-z0-9_]+$");
     QRegExpValidator *va1 = new QRegExpValidator(re, this);
     m_partNameEdit->lineEdit()->setValidator(va1);
+#endif
 }
 
 void CreateLVWidget::onShowSelectPathInfo(const int &flag, const int &num, const int &posX)
@@ -557,7 +577,11 @@ void CreateLVWidget::onShowSelectPathInfo(const int &flag, const int &num, const
         m_number = -1;
     } else if (m_flag == 2) {
         if (num < 0) {
+#if QT_VERSION_MAJOR > 5
+            DPalette palette = m_partNameLabel->palette();
+#else
             DPalette palette = DApplicationHelper::instance()->palette(m_partNameLabel);
+#endif
             palette.setBrush(DPalette::Text, palette.placeholderText());
             m_partNameLabel->setPalette(palette);
             m_partNameEdit->setEnabled(false);
@@ -598,7 +622,11 @@ void CreateLVWidget::onShowTip(const int &hover, const int &num, const int &posX
 
 void CreateLVWidget::setEnable(const int &flag, const bool &isExceed)
 {
+#if QT_VERSION_MAJOR > 5
+    DPalette palette = m_partNameLabel->palette();
+#else
     DPalette palette = DApplicationHelper::instance()->palette(m_partNameLabel);
+#endif
 
     if (isExceed) {//还有空闲空间剩余
         if (flag == 2) {//选中新建的逻辑卷
@@ -647,20 +675,33 @@ void CreateLVWidget::setControlEnable(const bool &isTrue)
 void CreateLVWidget::setLabelColor(const bool &isOk)
 {
     if (isOk) {
+#if QT_VERSION_MAJOR > 5
+        DPalette framePalette = m_botFrame->palette();
+#else
         DPalette framePalette = DApplicationHelper::instance()->palette(m_botFrame);
+#endif
         framePalette.setColor(DPalette::Text, QColor(palette().buttonText().color()));
         m_botFrame->setPalette(framePalette);
     } else {
+#if QT_VERSION_MAJOR > 5
+        DPalette palette = m_botFrame->palette();
+#else
         DPalette palette = DApplicationHelper::instance()->palette(m_botFrame);
+#endif
         palette.setBrush(DPalette::Text, palette.placeholderText());
         m_botFrame->setPalette(palette);
     }
 
+#if QT_VERSION_MAJOR > 5
+    DPalette palette1 = m_partInfoLabel->palette();
+    DPalette palatte2 = m_partDoLabel->palette();
+#else
     DPalette palette1 = DApplicationHelper::instance()->palette(m_partInfoLabel);
+    DPalette palatte2 = DApplicationHelper::instance()->palette(m_partDoLabel);
+#endif
     palette1.setColor(DPalette::Text, QColor(palette().buttonText().color()));
     m_partInfoLabel->setPalette(palette1);
 
-    DPalette palatte2 = DApplicationHelper::instance()->palette(m_partDoLabel);
     palatte2.setColor(DPalette::Text, QColor(palette().buttonText().color()));
     m_partDoLabel->setPalette(palatte2);
 }
@@ -829,9 +870,15 @@ void CreateLVWidget::onAddPartition()
             warningBox.exec();
         }
 
+#if QT_VERSION_MAJOR > 5
+        DPalette palette = m_botFrame->palette();
+        palette.setColor(QPalette::ButtonText, color);
+        setPalette(palette);
+#else
         DPalette palette = DApplicationHelper::instance()->palette(m_botFrame);
         palette.setColor(QPalette::ButtonText, color);
         DApplicationHelper::instance()->setPalette(this, palette);
+#endif
 
         formate = formate.trimmed().split(" ").at(0);
     }
@@ -982,7 +1029,11 @@ bool CreateLVWidget::event(QEvent *event)
         qDebug() << event->type() << QApplication::font().pointSizeF() / 0.75;
         QFontMetrics fm(m_deviceNameLabel->font());
         m_deviceNameLabel->setFixedWidth(fm.boundingRect(tr("VG name:")).width() + 5);
+#if QT_VERSION_MAJOR > 5
+        m_emptyLabel->setFixedWidth(m_partFormateLabel->fontMetrics().boundingRect(tr("LV file system:")).width());
+#else
         m_emptyLabel->setFixedWidth(m_partFormateLabel->fontMetrics().width(tr("LV file system:")));
+#endif
         m_encryptionInfo->setFixedWidth(m_partFormateCombox->width());
         m_scrollArea->setFixedWidth(m_partFormateCombox->width());
         DWidget::event(event);

@@ -92,8 +92,13 @@ void FormateDialog::initUi()
     fileName->setFixedHeight(36);
     m_fileNameEdit = new DLineEdit(this);
     m_fileNameEdit->setAccessibleName("partName");
+#if QT_VERSION_MAJOR > 5
+    QRegularExpression re("^[\u4E00-\u9FA5A-Za-z0-9_]+$");
+    QRegularExpressionValidator *validator = new QRegularExpressionValidator(re, this);
+#else
     QRegExp re("^[\u4E00-\u9FA5A-Za-z0-9_]+$");
     QRegExpValidator *validator = new QRegExpValidator(re, this);
+#endif
     m_fileNameEdit->lineEdit()->setValidator(validator );
     m_fileNameEdit->setFixedHeight(36);
     if (m_fileNameEdit->text().isEmpty())

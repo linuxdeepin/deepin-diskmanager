@@ -50,7 +50,11 @@ protected:
     /**
      * @brief 重写进入事件
      */
+#if QT_VERSION_MAJOR > 5
+    void enterEvent(QEnterEvent *event);
+#else
     void enterEvent(QEvent *event);
+#endif
 
     /**
      * @brief 重写离开事件

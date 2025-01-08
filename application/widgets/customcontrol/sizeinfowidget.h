@@ -11,7 +11,12 @@
 #include "partedproxy/dmdbushandler.h"
 
 #include <DWidget>
+
+#if QT_VERSION_MAJOR <= 5
 #include <DApplicationHelper>
+#else
+#include <DGuiApplicationHelper>
+#endif
 #include <DPalette>
 
 #include <QWidget>
@@ -25,6 +30,7 @@
 #include <QColor>
 #include <QVector>
 
+DGUI_USE_NAMESPACE
 DWIDGET_USE_NAMESPACE
 
 /**

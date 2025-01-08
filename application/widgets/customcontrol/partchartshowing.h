@@ -8,7 +8,9 @@
 
 #include <DToolTip>
 #include <DWidget>
+#if QT_VERSION_MAJOR <= 5
 #include <DApplicationHelper>
+#endif
 #include <DPalette>
 
 #include <QWidget>

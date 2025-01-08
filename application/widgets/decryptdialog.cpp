@@ -57,8 +57,13 @@ void DecryptDialog::initUi()
     setTitle(m_titleText);
 
     // 限制中文和中文字符
+#if QT_VERSION_MAJOR > 5
+    QRegularExpression regExp("^[A-Za-z0-9`~!@#$%^&*()_-+=<>,.\\/ ]+$");
+    QRegularExpressionValidator *regExpValidator = new QRegularExpressionValidator(regExp, this);
+#else
     QRegExp regExp("^[A-Za-z0-9`~!@#$%^&*()_-+=<>,.\\/ ]+$");
     QRegExpValidator *regExpValidator = new QRegExpValidator(regExp, this);
+#endif
 
     m_passwordEdit = new DPasswordEdit(this);
     m_passwordEdit->setAccessibleName("passwordInput");

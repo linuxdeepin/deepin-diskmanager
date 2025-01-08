@@ -71,8 +71,8 @@ int main(int argc, char *argv[])
     //创建新日志
     CreateNewLog();
     qInstallMessageHandler(customLogMessageHandler);
-//    Dtk::Core::DLogManager::registerConsoleAppender();
-//    Dtk::Core::DLogManager::registerFileAppender();
+   Dtk::Core::DLogManager::registerConsoleAppender();
+   // Dtk::Core::DLogManager::registerFileAppender();
 
 //    qDebug() << "write log to" << Dtk::Core::DLogManager::getlogFilePath();
     QDBusConnection systemBus = QDBusConnection::systemBus();

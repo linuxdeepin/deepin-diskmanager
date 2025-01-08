@@ -46,7 +46,7 @@ void CheckLogTime()
     auto logList = GetLogList();
     for (int i = 0; i < logList.size() - 1; ++i) {
         auto logInfo = logList[i];
-        auto createdTime = logInfo.created();
+        auto createdTime = logInfo.birthTime();
         auto elapseDays = createdTime.daysTo(curTime);
         if (elapseDays > _logDaysRemain) {
             auto logPath = logInfo.absoluteFilePath();
@@ -94,7 +94,7 @@ bool CheckRotateSize()
 bool CheckRotateTimePoint()
 {
     QFileInfo curLogInfo(_logFile);
-    auto curLogCreateDate = curLogInfo.created();
+    auto curLogCreateDate = curLogInfo.birthTime();
     auto curDate = QDateTime::currentDateTime();
     auto dayElapse = curLogCreateDate.daysTo(curDate);
     if (dayElapse >= 1) {
@@ -126,7 +126,7 @@ void WriteVersion()
     QTextStream ts(&outFile);
     auto appName = QCoreApplication::applicationName();
     auto version = QCoreApplication::applicationVersion();
-    ts << appName << " " << version << endl;
+    ts << appName << " " << version << Qt::endl;
     outFile.close();
     s_logMutex.unlock();
 }
@@ -177,7 +177,7 @@ void customLogMessageHandler(QtMsgType type, const QMessageLogContext &ctx, cons
         return;
 
     QTextStream ts(&outFile);
-    ts << message.toUtf8() << endl;
+    ts << message.toUtf8() << Qt::endl;
     outFile.close();
     s_logMutex.unlock();
 }

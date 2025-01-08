@@ -10,14 +10,18 @@
 
 #include <DFrame>
 #include <DPalette>
+#if QT_VERSION_MAJOR <= 5
 #include <DApplicationHelper>
+#endif
 #include <DFontSizeManager>
 #include <dirent.h>
 
 #include <QWidget>
 #include <QPainter>
 #include <QTextOption>
+#if QT_VERSION_MAJOR <= 5
 #include <QTextCodec>
+#endif
 #include <QByteArray>
 #include <QDebug>
 #include <QProcess>

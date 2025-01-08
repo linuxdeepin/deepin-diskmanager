@@ -7,6 +7,9 @@
 
 #include <QDebug>
 #include <QStringList>
+#if QT_VERSION_MAJOR > 5
+#include <QRegularExpression>
+#endif
 
 
 namespace DiskManager {
@@ -84,7 +87,11 @@ void FAT16::setUsedSectors( Partition & partition )
 
 	// Bytes free.  Parse the value from the bottom of the directory listing by mdir.
 	// Example line "                        277 221 376 bytes free".
+#if QT_VERSION_MAJOR > 5
+    QString spacedNumberStr = Utils::regexpLabel(output, "^ *([0-9 ]*) bytes free$").remove(QRegularExpression("\\s")).trimmed();
+#else
     QString spacedNumberStr = Utils::regexpLabel(output, "^ *([0-9 ]*) bytes free$").remove(QRegExp("\\s")).trimmed();
+#endif
 
     if (spacedNumberStr.size() > 0)
         m_numOfFreeOrUsedBlocks = atoll(spacedNumberStr.toStdString().c_str());

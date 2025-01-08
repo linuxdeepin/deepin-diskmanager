@@ -718,7 +718,11 @@ bool LVMOperator::deletePVList(LVMInfo &lvmInfo, QList<PVData> devList)
     }
 
     if (vgList.size()) {
+#if QT_VERSION_MAJOR > 5
+        return deleteVG(lvmInfo, vgList.values());
+#else
         return deleteVG(lvmInfo, vgList.toList());
+#endif
     }
 
     return setLVMErr(lvmInfo, LVMError::LVM_ERR_NORMAL);

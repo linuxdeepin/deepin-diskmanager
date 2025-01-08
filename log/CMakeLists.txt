@@ -31,8 +31,9 @@ project(ddmlog)
 
 # Find the library
 find_package(PkgConfig REQUIRED)
-find_package(Qt5 COMPONENTS
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS
     Core
+    Widgets
     DBus
 REQUIRED)
 
@@ -49,13 +50,13 @@ set(LOG_SRCS
 
 add_library(${PROJECT_NAME} STATIC ${LOG_SRCS})
 target_include_directories(${PROJECT_NAME} PUBLIC
-    ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
+    Qt${QT_VERSION_MAJOR}::Gui_private
     ${PROJECT_BINARY_DIR}
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-    ${Qt5Widgets_LIBRARIES}
-    ${Qt5DBus_LIBRARIES}
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::DBus
 )
 
 set(CMAKE_INSTALL_PREFIX /usr)

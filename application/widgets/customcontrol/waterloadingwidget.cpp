@@ -6,6 +6,9 @@
 #include "waterloadingwidget.h"
 
 #include <QVBoxLayout>
+#if QT_VERSION_MAJOR > 5
+#include <random>
+#endif
 
 WaterLoadingWidget::WaterLoadingWidget(QWidget *parent) : QWidget(parent)
 {
@@ -36,7 +39,15 @@ void WaterLoadingWidget::initConnection()
 
 void WaterLoadingWidget::onStartWaterProgress()
 {
+#if QT_VERSION_MAJOR > 5
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> distrib(0, 9);
+
+    int value = (m_waterProgress->value() + distrib(gen));
+#else
     int value = (m_waterProgress->value() + qrand() % 10);
+#endif
     value > 99 ? value = 99 : value;
     m_waterProgress->setValue(value);
 }

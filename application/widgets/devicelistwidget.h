@@ -9,7 +9,9 @@
 #include "partedproxy/dmdbushandler.h"
 #include <dirent.h>
 #include <DWidget>
+#if QT_VERSION_MAJOR <= 5
 #include <QTextCodec>
+#endif
 #include <QByteArray>
 
 DWIDGET_USE_NAMESPACE

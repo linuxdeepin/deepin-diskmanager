@@ -18,7 +18,9 @@
 #include <DComboBox>
 #include <DFrame>
 #include <DPalette>
+#if QT_VERSION_MAJOR <= 5
 #include <DApplicationHelper>
+#endif
 #include <DPushButton>
 #include <DFontSizeManager>
 #include <DIconButton>
@@ -27,8 +29,10 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QToolTip>
+#if QT_VERSION_MAJOR <= 5
 #include <QRegExp>
 #include <QRegExpValidator>
+#endif
 
 DWIDGET_USE_NAMESPACE
 

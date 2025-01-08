@@ -10,7 +10,9 @@
 #include "diskhealthheaderview.h"
 
 #include <DFrame>
+#if QT_VERSION_MAJOR <= 5
 #include <DApplicationHelper>
+#endif
 #include <DMessageManager>
 #include <DFontSizeManager>
 
@@ -307,7 +309,11 @@ void DiskHealthDetectionDialog::initUI()
 
     m_linkButton = new DCommandLinkButton(tr("Export", "button")); // 导出
     DFontSizeManager::instance()->bind(m_linkButton, DFontSizeManager::T8, QFont::Medium);
+#if QT_VERSION_MAJOR > 5
+    m_linkButton->setFixedWidth(m_linkButton->fontMetrics().boundingRect(QString(tr("Export", "button"))).width());
+#else
     m_linkButton->setFixedWidth(m_linkButton->fontMetrics().width(QString(tr("Export", "button"))));
+#endif
     m_linkButton->setAccessibleName("export");
 
 //    QWidget *bottomWidget = new QWidget;
@@ -341,7 +347,11 @@ void DiskHealthDetectionDialog::initUI()
 void DiskHealthDetectionDialog::initConnections()
 {
     connect(m_linkButton, &DCommandLinkButton::clicked, this, &DiskHealthDetectionDialog::onExportButtonClicked);
+#if QT_VERSION_MAJOR > 5
+    connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, this, &DiskHealthDetectionDialog::onHandleChangeTheme);
+#else
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &DiskHealthDetectionDialog::onHandleChangeTheme);
+#endif
     onHandleChangeTheme();
 }
 
@@ -413,7 +423,11 @@ bool DiskHealthDetectionDialog::event(QEvent *event)
 {
     // 字体大小改变
     if (QEvent::ApplicationFontChange == event->type()) {
+#if QT_VERSION_MAJOR > 5
+        m_linkButton->setFixedWidth(m_linkButton->fontMetrics().boundingRect(QString(tr("Export", "button"))).width());
+#else
         m_linkButton->setFixedWidth(m_linkButton->fontMetrics().width(QString(tr("Export", "button"))));
+#endif
 
         if (QApplication::font().pointSizeF() / 0.75 >= 18 ) {
             setFixedSize(726, 705);
@@ -440,6 +454,16 @@ void DiskHealthDetectionDialog::onHandleChangeTheme()
     DPalette palette;
     QColor valueColor;
     QColor tableColor;
+#if QT_VERSION_MAJOR > 5
+    auto themeType = DGuiApplicationHelper::instance()->themeType();
+    if (themeType == DGuiApplicationHelper::LightType) {
+        valueColor = QColor("#000000");
+        tableColor = QColor("#001A2E");
+    } else if (themeType == DGuiApplicationHelper::DarkType) {
+        valueColor = QColor("#FFFFFF");
+        tableColor = QColor("#C0C6D4");
+    }
+#else
     auto themeType = DApplicationHelper::instance()->themeType();
     if (themeType == DApplicationHelper::LightType) {
         valueColor = QColor("#000000");
@@ -448,6 +472,7 @@ void DiskHealthDetectionDialog::onHandleChangeTheme()
         valueColor = QColor("#FFFFFF");
         tableColor = QColor("#C0C6D4");
     }
+#endif
     valueColor.setAlphaF(0.7);
     palette.setColor(DPalette::Text, valueColor);
 

@@ -7,7 +7,9 @@
 
 #include "commondef.h"
 
+#if QT_VERSION_MAJOR <= 5
 #include <DApplicationHelper>
+#endif
 #include <DStyledItemDelegate>
 #include <DPalette>
 
@@ -41,6 +43,7 @@ struct DiskInfoData {
 Q_DECLARE_METATYPE(DiskInfoData)
 
 DWIDGET_USE_NAMESPACE
+DGUI_USE_NAMESPACE
 
 /**
  * @class DmTreeviewDelegate

@@ -337,8 +337,13 @@ void CreateVGWidget::initUi()
     m_selectSpaceLineEdit->lineEdit()->setPlaceholderText("1-100");
     m_selectSpaceLineEdit->setText("100");
 
+#if QT_VERSION_MAJOR > 5
+    QRegularExpression reg("^[0-9]+(.[0-9]{1,4})?$");
+    QRegularExpressionValidator *validator = new QRegularExpressionValidator(reg, this);
+#else
     QRegExp reg("^[0-9]+(.[0-9]{1,4})?$");
     QRegExpValidator *validator = new QRegExpValidator(reg, this);
+#endif
     m_selectSpaceLineEdit->lineEdit()->setValidator(validator);
 
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();

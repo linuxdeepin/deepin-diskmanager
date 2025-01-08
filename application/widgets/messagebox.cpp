@@ -86,7 +86,11 @@ void MessageBox::setWarings(const QString &title, const QString &sureBtnText, Bu
     palette.setColor(QPalette::WindowText, color);
     label->setPalette(palette);
     QFontMetrics fmDevpath = label->fontMetrics();
+#if QT_VERSION_MAJOR > 5
+    int fmWidth = fmDevpath.boundingRect(label->text()).width();
+#else
     int fmWidth = fmDevpath.width(label->text());
+#endif
     int labelWidth = fmWidth / 3 * 2;
     if (labelWidth >= (width() - 20)) {
         labelWidth = width() - 20;

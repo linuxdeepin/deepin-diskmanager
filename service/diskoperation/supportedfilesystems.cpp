@@ -40,7 +40,7 @@ SupportedFileSystems::SupportedFileSystems()
     m_fsObjects[FS_EXT4] = new EXT2(FS_EXT4);
     //    m_fs_objects[FS_F2FS]            = new f2fs();
     //    m_fs_objects[FS_FAT16]           = new fat16(FS_FAT16);
-    m_fsObjects[FS_FAT32]           = new FAT16(FS_FAT32);
+    //    m_fsObjects[FS_FAT32]            = new FAT16(FS_FAT32);
     //    m_fs_objects[FS_HFS]             = new hfs();
     //    m_fs_objects[FS_HFSPLUS]         = new hfsplus();
     //    m_fs_objects[FS_JFS]             = new jfs();

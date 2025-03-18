@@ -687,17 +687,45 @@ bool LVMOperator::deletePVList(LVMInfo &lvmInfo, QList<PVData> devList)
                 return setLVMErr(lvmInfo, LVMError::LVM_ERR_VG_NO_EXISTS);
             }
             VGInfo vg = lvmInfo.getVG(info.m_vgName);
-            if (vg.isAllPV(allDeletePV)) {
+            if (vg.isAllPV(allDeletePV)) {                                  //判断该VG是否已经被删除了
                 vgList.insert(vg.m_vgName);
                 continue;
             }
 
-            //pv正常删除 //todo 此处可以优化算法  找出节省时间和移动最少的move方式
+            //pv正常删除 //todo 此处可以优化算法  找出节省时间和移动最少的move方式  //todo 目前仅改进 比对如果有可以相等的未删除pv，移动至指定空间内
             if (info.m_pvUsedPE > 0) {                                      //pv存在被使用 移动pv
                 if (m_lvmSupport.LVM_CMD_pvmove == LVM_CMD_Support::NONE) { //命令不支持
                     return setLVMErr(lvmInfo, LVMError::LVM_ERR_NO_CMD_SUPPORT);
                 }
-                if (!pvMove(info.m_pvPath)) {                               //移动失败
+
+                //获取所有没有被删除的pv
+                foreach (QString str, allDeletePV) {
+                    if (vg.m_pvInfo.find(str) != vg.m_pvInfo.end()) {
+                        vg.m_pvInfo.remove(str);
+                    }
+                }
+
+                int res = -1;
+                QString dest;
+                foreach (auto pv, vg.m_pvInfo) {
+                    if (pv.m_pvUnusedPE == info.m_pvUsedPE) {
+                        res = 0;
+                        dest = pv.m_pvPath; //相等 直接移动即可  pvmove /dev/sda1  /dev/sda2  pvmove 源  目的地
+                        break;
+                    }
+
+                    if (pv.m_pvUnusedPE > info.m_pvUsedPE) {
+                        res = 1;           //大于 也直接移动  pvmove /dev/sda1  /dev/sda2  pvmove 源  目的地
+                        dest = pv.m_pvPath;
+                    } else {
+                        if(res !=1){       //没有找到过大于的情况
+                            res = 2;       //自动移动 pvmove /dev/sda1
+                            dest = " ";
+                        }
+                    }
+                }
+
+                if (!pvMove(info.m_pvPath,dest)) {                               //移动失败
                     return setLVMErr(lvmInfo, LVMError::LVM_ERR_PV_MOVE_FAILED);
                 }
             }
@@ -831,7 +859,7 @@ bool LVMOperator::pvCreate(const QString &devPath)
 bool LVMOperator::pvMove(const QString &pvPath, const QString &dest)
 {
     QString strout, strerror;
-    return Utils::executCmd(QString("pvmove %1 %2-y").arg(pvPath).arg(dest), strout, strerror) == 0;
+    return Utils::executCmd(QString("pvmove %1 %2 -y").arg(pvPath).arg(dest), strout, strerror) == 0;
 }
 
 bool LVMOperator::pvRemove(const QString &devPath)

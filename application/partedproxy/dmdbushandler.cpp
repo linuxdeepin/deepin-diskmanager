@@ -203,11 +203,28 @@ QString DMDbusHandler::getRootLoginResult()
     return m_loginMessage;
 }
 
+void DMDbusHandler::getAllDevice()
+{
+    QDBusPendingCall pendingCall = m_dbus->getalldevice();
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(pendingCall);
+
+    // 连接完成信号
+    QObject::connect(watcher, &QDBusPendingCallWatcher::finished,
+        [=](QDBusPendingCallWatcher *watcher) {
+            QDBusPendingReply<> reply = *watcher;
+            if (reply.isError()) {
+                qDebug() << __FUNCTION__ << reply.error().message();
+                QTimer::singleShot(500, this, SLOT(getAllDevice()));
+            }
+            watcher->deleteLater();
+        });
+}
+
 void DMDbusHandler::getDeviceInfo()
 {
     emit showSpinerWindow(true, tr("Initializing data..."));
 
-    m_dbus->getalldevice();
+    getAllDevice();
     qDebug() << __FUNCTION__ << "-------";
 }
 

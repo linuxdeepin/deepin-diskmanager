@@ -94,7 +94,7 @@ public Q_SLOTS: // METHODS
     /**
      * @brief 获取所有设备
      */
-    inline QDBusPendingReply<> getalldevice()
+    inline QDBusPendingCall getalldevice()
     {
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QStringLiteral("getalldevice"), argumentList);

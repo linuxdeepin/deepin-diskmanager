@@ -527,6 +527,11 @@ private slots:
      */
     void onUpdateUsb();
 
+    /**
+     * @brief 触发重新请求设备信息的槽函数
+     */
+    void getAllDevice();
+
 private:
     DMDBusInterface *m_dbus = nullptr;
     static DMDbusHandler *m_staticHandeler;

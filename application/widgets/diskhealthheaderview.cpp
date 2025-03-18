@@ -171,8 +171,8 @@ void DiskHealthHeaderView::paintSection(QPainter *painter, const QRect &rect, in
         painter->fillRect(vSpacingRect, vSpacingBrush);
     }
 
-    QPen forground;
-    forground.setColor(palette.color(cg, DPalette::Text));
+    QPen foreground;
+    foreground.setColor(palette.color(cg, DPalette::Text));
     QRect textRect;
     if (sortIndicatorSection() == logicalIndex) {
         textRect = {contentRect.x() + margin, contentRect.y() + 7,
@@ -185,7 +185,7 @@ void DiskHealthHeaderView::paintSection(QPainter *painter, const QRect &rect, in
     }
     QString title = model()->headerData(logicalIndex, orientation(), Qt::DisplayRole).toString();
     int align = model()->headerData(logicalIndex, orientation(), Qt::TextAlignmentRole).toInt();
-    painter->setPen(forground);
+    painter->setPen(foreground);
     painter->drawText(textRect, int(align), title);
 
     // sort indicator

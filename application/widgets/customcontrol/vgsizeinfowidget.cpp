@@ -13,6 +13,7 @@
 
 VGSizeInfoWidget::VGSizeInfoWidget(QWidget *parent) : QWidget(parent)
 {
+    qDebug() << "VGSizeInfoWidget constructor";
     QColor color("#70BEFF");    //浅蓝色
     QColor color1("#4293FF");   //蓝色
     QColor color2("#6751E4");   //紫色
@@ -30,6 +31,7 @@ VGSizeInfoWidget::VGSizeInfoWidget(QWidget *parent) : QWidget(parent)
 
 void VGSizeInfoWidget::setData(const DeviceInfo &info)
 {
+    qDebug() << "Setting device data, partitions:" << info.m_partition.size();
     m_sizeInfo.clear();
     m_pathInfo.clear();
     m_pathList.clear();
@@ -58,10 +60,12 @@ void VGSizeInfoWidget::setData(const DeviceInfo &info)
     m_totalSize += Utils::sectorToUnit(info.m_length, info.m_sectorSize, SIZE_UNIT::UNIT_GIB);
 
     update();
+    qDebug() << "Device data set, total size:" << m_totalSize << "GiB";
 }
 
 void VGSizeInfoWidget::setData(const VGInfo &info)
 {
+    qDebug() << "Setting VG info, LVs:" << info.m_lvlist.count();
     m_sizeInfo.clear();
     m_pathInfo.clear();
     m_pathList.clear();
@@ -94,13 +98,16 @@ void VGSizeInfoWidget::setData(const VGInfo &info)
     }
 
     update();
+    qDebug() << "VG info set, total size:" << m_totalSize << "GiB";
 }
 
 void VGSizeInfoWidget::setData(const QVector<VGData> &vglist)
 {
     if (vglist.count() == 0 ) {
+        qWarning() << "Empty VG data list provided";
         return;
     }
+    qInfo() << "Setting VG list data, count:" << vglist.count();
 
     m_sizeInfo.clear();
     m_pathInfo.clear();
@@ -284,10 +291,12 @@ void VGSizeInfoWidget::setData(const QVector<VGData> &vglist)
     }
 
     update();
+    qDebug() << "VG list data set, total size:" << m_totalSize << "GiB";
 }
 
 void VGSizeInfoWidget::setData(const VGData &vgData)
 {
+    qDebug() << "Setting single VG data, name:" << vgData.m_vgName;
     m_sizeInfo.clear();
     m_pathInfo.clear();
     m_pathList.clear();
@@ -343,6 +352,7 @@ void VGSizeInfoWidget::setData(const VGData &vgData)
     }
 
     update();
+    qDebug() << "Single VG data set, total size:" << m_totalSize << "GiB";
 }
 
 void VGSizeInfoWidget::paintEvent(QPaintEvent *event)

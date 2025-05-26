@@ -4,38 +4,48 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "luksstruct.h"
+
+#include <QDebug>
+
 /*********************************** CRYPT_CIPHER_Support *********************************************/
 bool CRYPT_CIPHER_Support::supportDecrypt(CRYPT_CIPHER_Support::Support x)
 {
+    qDebug() << "Checking decrypt support for cipher type:" << x;
     return (supportAllcrypt(x) || (((x) & 0xFFFF) == (CRYPT_CIPHER_Support::Support::DECRYPT)));
 }
 
 bool CRYPT_CIPHER_Support::supportEncrypt(CRYPT_CIPHER_Support::Support x)
 {
+    qDebug() << "Checking encrypt support for cipher type:" << x;
     return (supportAllcrypt(x) || (((x) & 0xFFFF) == (CRYPT_CIPHER_Support::Support::ENCRYPT)));
 }
 
 bool CRYPT_CIPHER_Support::notSupportCrypt(CRYPT_CIPHER_Support::Support x)
 {
+    qDebug() << "Checking no support for cipher type:" << x;
     return ((x) & 0xFFFF) == (CRYPT_CIPHER_Support::Support::NOT_SUPPORT);
 }
 
 bool CRYPT_CIPHER_Support::supportAllcrypt(CRYPT_CIPHER_Support::Support x)
 {
+    qDebug() << "Checking all crypt support for cipher type:" << x;
     return ((x) & 0xFFFF) == (CRYPT_CIPHER_Support::Support::CRYPT_ALL);
 }
 
 QDBusArgument &operator<<(QDBusArgument &argument, const CRYPT_CIPHER_Support &data)
 {
+    qDebug() << "Starting CRYPT_CIPHER_Support serialization";
     argument.beginStructure();
     argument << static_cast<int>(data.aes_xts_plain64)
              << static_cast<int>(data.sm4_xts_plain64);
     argument.endStructure();
+    qDebug() << "Completed CRYPT_CIPHER_Support serialization";
     return argument;
 }
 
 const QDBusArgument &operator>>(const QDBusArgument &argument, CRYPT_CIPHER_Support &data)
 {
+    qDebug() << "Starting CRYPT_CIPHER_Support deserialization";
     argument.beginStructure();
     int aes, sm4;
     argument >> aes
@@ -43,11 +53,13 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, CRYPT_CIPHER_Supp
     data.aes_xts_plain64 = static_cast<CRYPT_CIPHER_Support::Support>(aes);
     data.sm4_xts_plain64 = static_cast<CRYPT_CIPHER_Support::Support>(sm4);
     argument.endStructure();
+    qDebug() << "Completed CRYPT_CIPHER_Support deserialization";
     return argument;
 }
 /*********************************** LUKS_MapperInfo *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const LUKS_MapperInfo &data)
 {
+    qDebug() << "Starting LUKS_MapperInfo serialization";
     argument.beginStructure();
     argument << static_cast<int>(data.m_luksFs)
              << data.m_mountPoints
@@ -67,11 +79,13 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LUKS_MapperInfo &data)
              << data.m_fsLimits.min_size
              << data.m_fileSystemLabel;
     argument.endStructure();
+    qDebug() << "Completed LUKS_MapperInfo serialization";
     return argument;
 }
 
 const QDBusArgument &operator>>(const QDBusArgument &argument, LUKS_MapperInfo &data)
 {
+    qDebug() << "Starting LUKS_MapperInfo deserialization";
     argument.beginStructure();
     int luksFlag, vgFlag, cipher;
     argument >> luksFlag
@@ -95,11 +109,13 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LUKS_MapperInfo &
     data.m_vgflag = static_cast<LVMFlag>(vgFlag);
     data.m_crypt = static_cast<CRYPT_CIPHER>(cipher);
     argument.endStructure();
+    qDebug() << "Completed LUKS_MapperInfo deserialization";
     return argument;
 }
 /*********************************** LUKS_INFO *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const LUKS_INFO &data)
 {
+    qDebug() << "Starting LUKS_INFO serialization";
     argument.beginStructure();
     argument << data.m_mapper
              << data.m_devicePath
@@ -116,11 +132,13 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LUKS_INFO &data)
              << data.m_Suspend
              << data.m_fileSystemLabel;
     argument.endStructure();
+    qDebug() << "Completed LUKS_INFO serialization";
     return argument;
 }
 
 const QDBusArgument &operator>>(const QDBusArgument &argument, LUKS_INFO &data)
 {
+    qDebug() << "Starting LUKS_INFO deserialization";
     argument.beginStructure();
     int crypt, cryptErr;
     argument >> data.m_mapper
@@ -140,22 +158,26 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LUKS_INFO &data)
     data.m_crypt = static_cast<CRYPT_CIPHER>(crypt);
     data.m_cryptErr = static_cast<CRYPTError>(cryptErr);
     argument.endStructure();
+    qDebug() << "Completed LUKS_INFO deserialization";
     return argument;
 }
 /*********************************** LUKSMap ************************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const LUKSMap &data)
 {
+    qDebug() << "Starting LUKSMap serialization";
     argument.beginStructure();
     argument << data.m_luksMap
              << data.m_mapper
              << static_cast<int>(data.m_cryErr)
              << data.m_cryptSuuport;
     argument.endStructure();
+    qDebug() << "Completed LUKSMap serialization";
     return argument;
 }
 
 const QDBusArgument &operator>>(const QDBusArgument &argument, LUKSMap &data)
 {
+    qDebug() << "Starting LUKSMap deserialization";
     argument.beginStructure();
     int cryptErr;
     argument >> data.m_luksMap
@@ -164,47 +186,63 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LUKSMap &data)
              >> data.m_cryptSuuport;
     data.m_cryErr = static_cast<CRYPTError>(cryptErr);
     argument.endStructure();
+    qDebug() << "Completed LUKSMap deserialization";
     return argument;
 }
 
 LUKSMap::LUKSMap()
 {
-
+    qDebug() << "LUKSMap object created";
 }
 
 bool LUKSMap::mapperExists(const QString &path) const
 {
+    qDebug() << "Checking mapper existence for path:" << path;
     if (itemExists(path, m_mapper)) {
+        qDebug() << "Mapper exists for path:" << path;
         return true;
     }
-
+    
     foreach (const LUKS_MapperInfo &tmp, m_mapper) {
         if (tmp.m_dmPath == path) {
             return true;
         }
     }
-    return  false;
+    qDebug() << "Mapper does not exist for path:" << path;
+    return false;
 }
 
 
 QString LUKSMap::getMapperPath(const QString &devPath) const
 {
-    return getItem(devPath, m_mapper).m_dmPath;
+    qDebug() << "Getting mapper path for device:" << devPath;
+    QString mapperPath = getItem(devPath, m_mapper).m_dmPath;
+    qDebug() << "Mapper path for device" << devPath << "is:" << mapperPath;
+    return mapperPath;
 }
 
 QString LUKSMap::getDevPath(const QString &mapper) const
 {
-    return getMapper(mapper).m_devicePath;
+    qDebug() << "Getting device path for mapper:" << mapper;
+    QString devPath = getMapper(mapper).m_devicePath;
+    qDebug() << "Device path for mapper" << mapper << "is:" << devPath;
+    return devPath;
 }
 
 bool LUKSMap::mapperOfDevice(const QString &mapper, const QString &dev) const
 {
-    return mapperExists(mapper) ? getMapper(mapper).m_devicePath == dev : false;
+    qDebug() << "Checking if mapper" << mapper << "belongs to device" << dev;
+    bool isMatch = mapperExists(mapper) ? getMapper(mapper).m_devicePath == dev : false;
+    qDebug() << "Mapper" << mapper << (isMatch ? "matches" : "does not match") << "device" << dev;
+    return isMatch;
 }
 
 bool LUKSMap::deviceExists(const QString &dev) const
 {
-    return itemExists(dev, m_luksMap);
+    qDebug() << "Checking device existence:" << dev;
+    bool exists = itemExists(dev, m_luksMap);
+    qDebug() << "Device" << dev << (exists ? "exists" : "does not exist") << "in LUKS map";
+    return exists;
 }
 
 LUKS_MapperInfo LUKSMap::getMapper(const QString &path) const
@@ -214,7 +252,8 @@ LUKS_MapperInfo LUKSMap::getMapper(const QString &path) const
             return tmp;
         }
     }
-    return  LUKS_MapperInfo();
+    qDebug() << "No mapper found for path:" << path;
+    return LUKS_MapperInfo();
 }
 
 LUKS_MapperInfo LUKSMap::getMapper(const LUKS_MapperInfo &mapper) const
@@ -225,7 +264,9 @@ LUKS_MapperInfo LUKSMap::getMapper(const LUKS_MapperInfo &mapper) const
 
 bool LUKSMap::luksExists(const QString &devPath) const
 {
-    return itemExists(devPath, m_luksMap);
+    bool exists = itemExists(devPath, m_luksMap);
+    qDebug() << "LUKS" << (exists ? "exists" : "does not exist") << "for device path:" << devPath;
+    return exists;
 }
 
 LUKS_INFO LUKSMap::getLUKS(const QString &path) const

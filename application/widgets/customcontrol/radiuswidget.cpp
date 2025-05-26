@@ -17,6 +17,10 @@ RadiusWidget::RadiusWidget(QWidget *parent) : QWidget(parent)
 
 void RadiusWidget::setMode(bool leftTop, bool leftBottom, bool rightTop, bool rightBottom)
 {
+    qDebug() << "Setting corner modes - LT:" << leftTop
+                           << " LB:" << leftBottom
+                           << " RT:" << rightTop
+                           << " RB:" << rightBottom;
     m_leftTop = leftTop;
     m_leftBottom = leftBottom;
     m_rightTop = rightTop;
@@ -25,6 +29,7 @@ void RadiusWidget::setMode(bool leftTop, bool leftBottom, bool rightTop, bool ri
 
 void RadiusWidget::setChecked(bool isChecked)
 {
+    qDebug() << "Setting checked state:" << isChecked;
     m_isChecked = isChecked;
     update();
 }

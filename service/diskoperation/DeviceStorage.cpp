@@ -15,14 +15,16 @@ DeviceStorage::DeviceStorage()
     : m_model(""), m_vendor(""), m_mediaType(""), m_size(""), m_rotationRate(""), m_interface("")
     , m_serialNumber(""), m_version(""), m_capabilities(""), m_description(""), m_KeyToLshw(""), m_KeyFromStorage("")
 {
-
+    qDebug() << "DeviceStorage object created";
 }
 
 bool DeviceStorage::setHwinfoInfo(const QMap<QString, QString> &mapInfo)
 {
+    qDebug() << "Setting hwinfo info for storage device";
     // 龙芯机器中 hwinfo --disk会列出所有的分区信息
     // 存储设备不应包含分区，根据SysFS BusID 来确定是否是分区信息
     if (mapInfo.find("SysFS BusID") == mapInfo.end()) {
+        qWarning() << "No SysFS BusID found in hwinfo info";
         return false;
     }
     setAttribute(mapInfo, "Model", m_model);
@@ -61,6 +63,7 @@ bool DeviceStorage::setHwinfoInfo(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "SysFS BusID", m_KeyToLshw);
     setAttribute(mapInfo, "Device File", m_DeviceFile);
 
+    qDebug() << "Hwinfo info set successfully for device:" << m_DeviceFile;
     return true;
 }
 
@@ -120,10 +123,11 @@ bool DeviceStorage::setKLUHwinfoInfo(const QMap<QString, QString> &mapInfo)
 
 bool DeviceStorage::addInfoFromlshw(const QMap<QString, QString> &mapInfo)
 {
-
+    qDebug() << "Adding lshw info for storage device";
     // 先获取需要进行匹配的关键字
     QStringList keys = mapInfo["bus info"].split("@");
     if (keys.size() != 2) {
+        qWarning() << "Invalid bus info format:" << mapInfo["bus info"];
         return false;
     }
     QString key = keys[1].trimmed();
@@ -144,6 +148,7 @@ bool DeviceStorage::addInfoFromlshw(const QMap<QString, QString> &mapInfo)
     // 获取基本信息
     getInfoFromLshw(mapInfo);
 
+    qDebug() << "Lshw info added successfully";
     return true;
 }
 
@@ -218,7 +223,7 @@ void DeviceStorage::getInfoFromLshw(const QMap<QString, QString> &mapInfo)
 
 void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
 {
-//    qDebug() << mapInfo << endl;
+    qDebug() << "Getting smartctl info for storage device";
     // 固件版本
     m_firmwareVersion = mapInfo["Firmware Version"];
 
@@ -285,9 +290,11 @@ void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
 void DeviceStorage::setAttribute(const QMap<QString, QString> &mapInfo, const QString &key, QString &variable, bool overwrite)
 {
     if (mapInfo.find(key) == mapInfo.end()) {
+        qDebug() << "Key not found in map:" << key;
         return;
     }
     if (mapInfo[key] == "") {
+        qDebug() << "Empty value for key:" << key;
         return;
     }
     if (overwrite) {
@@ -305,6 +312,7 @@ void DeviceStorage::setAttribute(const QMap<QString, QString> &mapInfo, const QS
 
 bool DeviceStorage::getDiskInfoFromHwinfo(const QString &devicePath)
 {
+    qDebug() << "Getting disk info from hwinfo for device:" << devicePath;
     QString cmd = QString("hwinfo --disk --only %1").arg(devicePath);
     QProcess proc;
     proc.start(cmd);
@@ -322,6 +330,7 @@ bool DeviceStorage::getDiskInfoFromHwinfo(const QString &devicePath)
     if (!cid.isEmpty()) {
         m_serialNumber = cid;
     }
+    qDebug() << "Successfully got disk info from hwinfo";
     return true;
 }
 

@@ -12,11 +12,13 @@ namespace DiskManager {
 
 Partition::Partition()
 {
+    qDebug() << "Creating new partition";
     reset();
 }
 
 Partition *Partition::clone() const
 {
+    qDebug() << "Cloning partition";
     return new Partition(*this);
 }
 
@@ -103,6 +105,11 @@ void Partition::set(const QString &devicePath, const QString &partition, int par
     m_insideExtended = insideExtended;
     m_busy = busy;
 
+    qDebug() << "Setting partition:" << partition
+                    << "type:" << type
+                    << "fs:" << fstype
+                    << "sectors:" << sectorStart << "-" << sectorEnd;
+
     SupportedFileSystems s;
     FileSystem *fs =  s.getFsObject(m_fstype);
     m_fsLimits = fs ? fs->getFilesystemLimits(*this) : FS_Limits{-1, -1}; //-1 -1 no support fileSystem  0 =>no limits
@@ -135,6 +142,8 @@ void Partition::setUnpartitioned(const QString &devicePath, const QString &parti
 
 void Partition::setUnallocated(const QString &devicePath, Sector sectorStart, Sector sectorEnd, Byte_Value sectorSize, bool insideExtended)
 {
+    qDebug() << "Setting unallocated partition at sectors:"
+                    << sectorStart << "-" << sectorEnd;
     reset();
 
     set(devicePath,
@@ -191,7 +200,7 @@ QString Partition::getMountPoint() const
 void Partition::setSectorUsage(Sector sectorsFsSize, Sector sectorsFsUnused)
 {
     Sector length = getSectorLength();
-    qDebug() << "1111111" << length;
+    qDebug() << "Setting sector usage, partition length:" << length;
     if (0 <= sectorsFsSize && sectorsFsSize <= length
             && 0 <= sectorsFsUnused && sectorsFsUnused <= sectorsFsSize) {
         m_sectorsUsed = sectorsFsSize - sectorsFsUnused;
@@ -264,10 +273,11 @@ PartitionInfo Partition::getPartitionInfo() const
     info.m_fileSystemReadOnly = m_fsReadonly;
     info.m_mountPoints = m_mountpoints;
     info.m_fsLimits = m_fsLimits;
-//        qDebug() << info.devicePath << info.partition_number << info.type << info.status << info.alignment << info.fstype << info.uuid
-//                 << info.name << info.sector_start << info.sector_end << info.sectors_used << info.sectors_unused
-//                 << info.sectors_unallocated << info.significant_threshold << info.free_space_before
-//                 << info.sector_size << info.fs_block_size << info.path << info.filesystem_label;
+    qDebug() << "Getting partition info:"
+                    << "path:" << info.m_path
+                    << "type:" << info.m_type
+                    << "fs:" << info.m_fileSystemType
+                    << "sectors:" << info.m_sectorStart << "-" << info.m_sectorEnd;
     return info;
 }
 

@@ -19,6 +19,7 @@
 
 Utils::Utils()
 {
+    qDebug() << "Utils constructor";
 }
 
 QString Utils::findProgramInPath(const QString &proName)
@@ -327,6 +328,8 @@ const QString Utils::fileSystemTypeToString(FSType type)
 
 FSType Utils::stringToFileSystemType(const QString &fileSystemName)
 {
+    qDebug() << "Utils::stringToFileSystemType - Converting:" << fileSystemName;
+    qDebug() << "Input filesystem name:" << fileSystemName;
     FSType type = FS_UNKNOWN;
     if (fileSystemName == "extended")
         type = FS_EXTENDED;
@@ -389,11 +392,13 @@ FSType Utils::stringToFileSystemType(const QString &fileSystemName)
     else if (fileSystemName == "adaptec_raid_member" || fileSystemName == "ddf_raid_member" || fileSystemName == "hpt45x_raid_member" || fileSystemName == "hpt37x_raid_member" || fileSystemName == "isw_raid_member" || fileSystemName == "jmicron_raid_member" || fileSystemName == "lsi_mega_raid_member" || fileSystemName == "nvidia_raid_member" || fileSystemName == "promise_fasttrack_raid_member" || fileSystemName == "silicon_medley_raid_member" || fileSystemName == "via_raid_member")
         type = FS_ATARAID;
 
+    qDebug() << "Converted filesystem type:" << type;
     return type;
 }
 
 int Utils::getMountedFileSystemUsage(const QString &mountpoint, Byte_Value &fileSystemSize, Byte_Value &fileSystemFree)
 {
+    qDebug() << "Utils::getMountedFileSystemUsage - Checking:" << mountpoint;
     struct statvfs sfs;
     int ret;
     ret = statvfs(mountpoint.toStdString().c_str(), &sfs);
@@ -401,6 +406,7 @@ int Utils::getMountedFileSystemUsage(const QString &mountpoint, Byte_Value &file
         fileSystemSize = static_cast<Byte_Value>(sfs.f_blocks) * sfs.f_frsize;
         fileSystemFree = static_cast<Byte_Value>(sfs.f_bfree) * sfs.f_bsize;
     } else {
+        qWarning() << "Utils::getMountedFileSystemUsage - Failed for:" << mountpoint << "Error:" << errno;
         QString errorMessage("statvfs(\"%1\"):%2 "); // = "statvfs(\"" + mountpoint + "\"): " + Glib::strerror(errno) ;
         errorMessage = errorMessage.arg(mountpoint).arg(errno);
 //        qDebug() << errorMessage;
@@ -461,6 +467,7 @@ QString Utils::getFileSystemSoftWare(FSType fileSystemType)
 
 QString Utils::formatSize(Sector sectors, Byte_Value sectorSize)
 {
+    qDebug() << "Utils::formatSize - Formatting size for sectors:" << sectors << "sectorSize:" << sectorSize;
     QString res;
     if ((sectors * sectorSize) < KIBIBYTE) {
         res = res.setNum(sectorToUnit(sectors, sectorSize, UNIT_BYTE), 'f', 2);
@@ -665,11 +672,13 @@ CRYPT_CIPHER Utils::getCipher(QString cipher)
 
 bool Utils::kernelSupportFS(const QString &fsType)
 {
+    qDebug() << "Utils::kernelSupportFS - Checking support for:" << fsType;
     bool supported = false;
     QFile file("/proc/filesystems");
     if (file.open(QIODevice::ReadOnly)) {
         QString info = file.readAll();
         if (info.contains(fsType)) {
+            qDebug() << "Utils::kernelSupportFS - Supported:" << fsType;
             supported = true;
         }
         file.close();
@@ -679,6 +688,7 @@ bool Utils::kernelSupportFS(const QString &fsType)
 
 QString Utils::mkTempDir(const QString &infix)
 {
+    qDebug() << "Utils::mkTempDir - Creating temp dir with infix:" << infix;
     // Construct template like "/var/tmp/diskmanager-XXXXXX" or "/var/tmp/diskmanager-INFIX-XXXXXX"
     QString dirTemplate = "/var/tmp/";
 
@@ -688,24 +698,32 @@ QString Utils::mkTempDir(const QString &infix)
     dirTemplate += "XXXXXX" ;
     QDir dir(dirTemplate);
     if (!dir.exists() && dir.mkpath(dirTemplate)) {
+        qDebug() << "Utils::mkTempDir - Created temp dir:" << dirTemplate;
         return dirTemplate;
     }
+    qDebug() << "Utils::mkTempDir - Using existing temp dir:" << dirTemplate;
     return dirTemplate;
 }
 
 void Utils::rmTempDir(QString &dirName)
 {
+    qDebug() << "Utils::rmTempDir - Removing temp dir:" << dirName;
     QDir dir(dirName);
     if (dir.exists()) {
         dir.remove(dirName);
+        qDebug() << "Utils::rmTempDir - Removed temp dir:" << dirName;
+    } else {
+        qDebug() << "Utils::rmTempDir - Temp dir does not exist:" << dirName;
     }
 }
 
 QString Utils::readContent(const QString &filename)
 {
+    qDebug() << "Utils::readContent - Reading file:" << filename;
     QString ret;
     QFile file(filename);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Utils::readContent - Successfully read:" << filename;
         ret = file.readAll();
         file.close();
     }
@@ -714,6 +732,7 @@ QString Utils::readContent(const QString &filename)
 
 int Utils::executCmd(const QString &strCmd)
 {
+    qDebug() << "Utils::executCmd - Executing:" << strCmd;
     QProcess proc;
     proc.setProgram(strCmd);
     proc.start(QIODevice::ReadWrite);

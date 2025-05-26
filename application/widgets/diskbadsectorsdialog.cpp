@@ -25,12 +25,15 @@
 
 DiskBadSectorsDialog::DiskBadSectorsDialog(QWidget *parent) : DDialog(parent)
 {
+    qDebug() << "Disk bad sectors dialog initializing";
     initUI();
     initConnections();
+    qDebug() << "Disk bad sectors dialog initialized";
 }
 
 void DiskBadSectorsDialog::initUI()
 {
+    qDebug() << "Initializing UI components";
     setIcon(QIcon::fromTheme(appName));
     setTitle(tr("Verify or repair bad sectors")); // 坏道检测与修复
     // 最低分辨率1024*768，高度需减去dock
@@ -54,7 +57,7 @@ void DiskBadSectorsDialog::initUI()
     palette3.setColor(DPalette::NoType, color3);
 
     m_deviceInfo = DMDbusHandler::instance()->getCurDeviceInfo();
-    qDebug() << __FUNCTION__ << m_deviceInfo.m_path << m_deviceInfo.m_length << m_deviceInfo.m_heads << m_deviceInfo.m_sectors
+    qDebug() << m_deviceInfo.m_path << m_deviceInfo.m_length << m_deviceInfo.m_heads << m_deviceInfo.m_sectors
              << m_deviceInfo.m_cylinders << m_deviceInfo.m_cylsize << m_deviceInfo.m_model << m_deviceInfo.m_serialNumber << m_deviceInfo.m_disktype
              << m_deviceInfo.m_sectorSize << m_deviceInfo.m_maxPrims << m_deviceInfo.m_highestBusy << m_deviceInfo.m_readonly
              << m_deviceInfo.m_maxPartitionNameLength;
@@ -583,7 +586,9 @@ bool DiskBadSectorsDialog::inputValueIsEffective()
 
 void DiskBadSectorsDialog::onStartVerifyButtonClicked()
 {
+    qDebug() << "Start verify button clicked";
     if (!inputValueIsEffective()) {
+        qWarning() << "Input values are invalid";
         return;
     }
 
@@ -769,6 +774,7 @@ void DiskBadSectorsDialog::onCheckTimeOut()
 
 void DiskBadSectorsDialog::onCheckComplete()
 {
+    qDebug() << "Bad sectors check completed";
     m_checkTimer.stop();
     m_progressBar->setValue(100);
     m_unusedTimeLabel->setText(tr("Time left:") + "00:00:00");
@@ -801,6 +807,7 @@ void DiskBadSectorsDialog::onCheckComplete()
 
 void DiskBadSectorsDialog::onStopButtonClicked()
 {
+    qDebug() << "Stop button clicked. Current type:" << static_cast<int>(m_curType);
     switch (m_curType) {
     case StatusType::Check: {
         m_buttonStackedWidget->setCurrentIndex(2);
@@ -836,6 +843,7 @@ void DiskBadSectorsDialog::onStopButtonClicked()
 
 void DiskBadSectorsDialog::onContinueButtonClicked()
 {
+    qDebug() << "Continue button clicked. Current type:" << static_cast<int>(m_curType);
     switch (m_curType) {
     case StatusType::StopCheck: {
         m_buttonStackedWidget->setCurrentIndex(1);
@@ -876,6 +884,7 @@ void DiskBadSectorsDialog::onContinueButtonClicked()
 
 void DiskBadSectorsDialog::onAgainVerifyButtonClicked()
 {
+    qDebug() << "Verify again button clicked";
     m_progressBar->setValue(0);
     m_usedTimeLabel->setText(tr("Time elapsed:") + "00:00:00");
     m_unusedTimeLabel->setText(tr("Time left:") + "00:00:00");
@@ -922,6 +931,7 @@ void DiskBadSectorsDialog::onAgainVerifyButtonClicked()
 
 void DiskBadSectorsDialog::onResetButtonClicked()
 {
+    qDebug() << "Reset button clicked. Resetting all states";
     m_progressBar->setValue(0);
     m_usedTimeLabel->setText(tr("Time elapsed:") + "00:00:00");
     m_unusedTimeLabel->setText(tr("Time left:") + "00:00:00");
@@ -958,7 +968,9 @@ void DiskBadSectorsDialog::onResetButtonClicked()
 
 void DiskBadSectorsDialog::onRepairButtonClicked()
 {
+    qDebug() << "Repair button clicked";
     if (DMDbusHandler::instance()->isExistMountPartition(m_deviceInfo)) {
+        qWarning() << "Cannot repair - disk has mounted partitions";
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("messageBox");
@@ -1072,6 +1084,7 @@ void DiskBadSectorsDialog::onRepairBadBlocksInfo(const QString &cylinderNumber, 
 
 void DiskBadSectorsDialog::onRepairComplete()
 {
+    qDebug() << "Bad sectors repair completed. Repaired:" << m_repairedCount;
     m_timer.stop();
     m_progressBar->setValue(100);
     m_unusedTimeLabel->setText(tr("Time left:") + "00:00:00");
@@ -1147,6 +1160,7 @@ void DiskBadSectorsDialog::stopCheckRepair()
 
 void DiskBadSectorsDialog::closeEvent(QCloseEvent *event)
 {
+    qDebug() << "Close event triggered. Current type:" << static_cast<int>(m_curType);
     switch (m_curType) {
     case StatusType::Check: {
         MessageBox messageBox(this);

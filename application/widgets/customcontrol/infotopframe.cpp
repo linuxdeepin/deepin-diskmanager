@@ -16,6 +16,7 @@
 InfoTopFrame::InfoTopFrame(DWidget *parent)
     : DFrame(parent)
 {
+    qDebug()  << "InfoTopFrame constructor";
     setFixedHeight(110);
     setBackgroundRole(DPalette::ItemBackground);
 
@@ -42,6 +43,7 @@ InfoTopFrame::InfoTopFrame(DWidget *parent)
     m_mainLayout->addStretch();
 
     initRightInfo();
+    qDebug()  << "InfoTopFrame initialized";
 }
 
 void InfoTopFrame::initRightInfo()
@@ -91,6 +93,8 @@ void InfoTopFrame::initLeftInfo()
 
 void InfoTopFrame::updateDiskInfo()
 {
+    qDebug()  << "Updating disk info for level:"
+                         << DMDbusHandler::instance()->getCurLevel();
     if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
         auto info = DMDbusHandler::instance()->getCurPartititonInfo();
 
@@ -205,6 +209,7 @@ void InfoTopFrame::updateDiskInfo()
             if (luksInfo.isDecrypt) {
                 fstypeName = DMDbusHandler::instance()->getEncryptionFsType(luksInfo);
             }
+            qDebug()  << "Disk info updated successfully";
         }
         m_typeLabel->setText(tr("File system") + ": " + fstypeName);
     }

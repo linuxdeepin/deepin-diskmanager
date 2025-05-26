@@ -5,6 +5,7 @@
 
 
 #include "messagebox.h"
+#include <QDebug>
 
 #include <DLabel>
 #include <DFontSizeManager>
@@ -15,11 +16,13 @@
 
 MessageBox::MessageBox(QWidget *parent) : DDialog(parent)
 {
-
+    qDebug() << "MessageBox constructor";
 }
 
 void MessageBox::setWarings(const QString &title, const QString &warningMsg, const QString &sureBtnText, const QString &sureAccessibleName, const QString &cancalBtnText, const QString &cancelAccessibleName)
 {
+    qDebug() << "Setting warning message box with title:" << title
+             << "sureBtnText:" << sureBtnText;
     setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
 
     if (!title.isEmpty()) {
@@ -46,6 +49,8 @@ void MessageBox::setWarings(const QString &title, const QString &warningMsg, con
 
 void MessageBox::setWarings(const QString &title, const QString &warningMsg, const QString &sureBtnText, ButtonType sureBtnType, const QString &sureAccessibleName, const QString &cancalBtnText, const QString &cancelAccessibleName)
 {
+    qDebug() << "Setting warning message box with button type:" << sureBtnType
+             << "title:" << title;
     setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
 
     if (!title.isEmpty()) {
@@ -73,6 +78,8 @@ void MessageBox::setWarings(const QString &title, const QString &warningMsg, con
 void MessageBox::setWarings(const QString &title, const QString &sureBtnText, ButtonType sureBtnType, const QString &sureAccessibleName,
                 const QString &cancalBtnText, const QString &cancelAccessibleName)
 {
+    qDebug() << "Setting warning message box with custom title layout"
+             << "title:" << title;
     setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
 
     DLabel *label= new DLabel(this);
@@ -115,6 +122,7 @@ void MessageBox::setWarings(const QString &title, const QString &sureBtnText, Bu
 
 void MessageBox::setProgressBar(const QString &title, const QString &cancalBtnText)
 {
+    qDebug() << "Setting progress bar message box with title:" << title;
     setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
 
     if (!title.isEmpty()) {
@@ -133,6 +141,7 @@ void MessageBox::setProgressBar(const QString &title, const QString &cancalBtnTe
 
 void MessageBox::addLabel(QString text)
 {
+    qDebug() << "Adding label to message box with text:" << text;
     DLabel *label= new DLabel(this);
     label->setText(text);
     label->adjustSize();
@@ -142,6 +151,7 @@ void MessageBox::addLabel(QString text)
 
 void MessageBox::addProgressBar()
 {
+    qDebug() << "Adding progress bar to message box";
     m_progressBar = new DProgressBar(this);
     m_progressBar->setValue(50);
     m_progressBar->setFixedSize(330, 10);
@@ -150,6 +160,7 @@ void MessageBox::addProgressBar()
 
 void MessageBox::keyPressEvent(QKeyEvent *event)
 {
+    qDebug() << "Key press event in message box, key:" << event->key();
     if (event->key() == Qt::Key::Key_Escape) {
         event->ignore();
     } else {

@@ -6,6 +6,7 @@
 #include "removepvwidget.h"
 #include "messagebox.h"
 #include "utils.h"
+#include <QDebug>
 
 #include <DWindowCloseButton>
 #include <DMessageManager>
@@ -15,6 +16,7 @@
 
 RemovePVWidget::RemovePVWidget(QWidget *parent) : DDBase(parent)
 {
+    qDebug() << "RemovePVWidget initialized";
     initUi();
     initConnection();
 }
@@ -145,6 +147,7 @@ void RemovePVWidget::onCancelButtonClicked()
 
 void RemovePVWidget::onButtonClicked()
 {
+    qInfo() << "Delete PV button clicked";
     bool bigDataMove = false;
     QStringList realDelPvLis;
     set<QString> pvStrList;
@@ -203,6 +206,7 @@ void RemovePVWidget::onButtonClicked()
 
     if (pvStrList.size() > 0 && Utils::adjudicationPVDelete(DMDbusHandler::instance()->probLVMInfo(), pvStrList, bigDataMove, realDelPvLis)) {
         //todo 进入 说明允许删除 补充允许删除逻辑
+        qDebug() << "PV deletion allowed for:" << realDelPvLis.join(',');
         if (bigDataMove) {
             MessageBox warningBox(this);
             warningBox.setObjectName("messageBox");
@@ -214,6 +218,7 @@ void RemovePVWidget::onButtonClicked()
             warningBox.setWarings(text1 + "\n" + text2 + "\n" + text3, "", tr("Continue"), "continue",
                                   tr("Cancel"), "messageBoxCancelButton");
             if (warningBox.exec() == DDialog::Rejected) {
+                qDebug() << "User canceled PV deletion due to large data movement";
                 return;
             }
         }
@@ -227,6 +232,7 @@ void RemovePVWidget::onButtonClicked()
         warningBox.setWarings(tr("Not enough space to back up data on %1, please delete the logical volume first")
                               .arg(realDelPvLis.join(',')), "", tr("OK"), "ok");
         warningBox.exec();
+        qWarning() << "Not enough space to delete PV:" << realDelPvLis.join(',');
         return;
     }
 
@@ -242,6 +248,7 @@ void RemovePVWidget::onButtonClicked()
 
 void RemovePVWidget::onPVDeleteMessage(const QString &pvMessage)
 {
+    qDebug() << "Received PV delete message:" << pvMessage;
     QStringList infoList = pvMessage.split(":");
 
     if (infoList.count() <= 1) {
@@ -249,6 +256,7 @@ void RemovePVWidget::onPVDeleteMessage(const QString &pvMessage)
     }
 
     if (infoList.at(0) == "0") {
+        qWarning() << "Failed to delete PV:" << infoList.mid(1).join(':');
         // 删除物理卷失败
         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget()->parentWidget()->parentWidget(),
                                                  QIcon::fromTheme("://icons/deepin/builtin/warning.svg"),
@@ -257,6 +265,7 @@ void RemovePVWidget::onPVDeleteMessage(const QString &pvMessage)
                                                        QMargins(0, 0, 0, 20));
         close();
     } else {
+        qInfo() << "PV deleted successfully";
         close();
     }
 }

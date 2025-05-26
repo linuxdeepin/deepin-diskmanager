@@ -29,41 +29,52 @@ DmDiskinfoBox::DmDiskinfoBox(int level, QObject *parent, QString diskPath, QStri
 {
     m_childs.clear();
     m_id = 0;
+    qDebug() << "DmDiskinfoBox initialized";
 }
 
 DmDiskinfoBox::DmDiskinfoBox(QObject *parent)
     : QObject(parent)
 {
+    qDebug() << "Creating empty DmDiskinfoBox";
     m_id = 0;
     m_level = 0;
     m_flag = 0;
+    qDebug() << "Empty DmDiskinfoBox initialized";
 }
 
 DmDiskinfoBox::~DmDiskinfoBox()
 {
+    qDebug() << "Destroying DmDiskinfoBox, child count:" << m_childs.count();
     for (int i = 0; i < m_childs.length(); i++) {
         if (m_childs.at(i) != nullptr) {
+            qDebug() << "Deleting child item:" << i;
             delete m_childs.at(i);
         }
     }
     m_childs.clear();
+    qDebug() << "DmDiskinfoBox destroyed";
 }
 
 int DmDiskinfoBox::addChild(DmDiskinfoBox *child)
 {
+    qDebug() << "Adding child, current level:" << m_level
+                       << "child id:" << child->m_id;
     child->m_level = m_level + 1;
     foreach (DmDiskinfoBox *item, m_childs) {
         if (item->m_id == child->m_id) {
+            qDebug() << "Replacing existing child with same id";
             m_childs.removeOne(item);
             delete item;
         }
     }
     m_childs.append(child);
+    qDebug() << "Child added, new child count:" << m_childs.count();
     return 0;
 }
 
 int DmDiskinfoBox::childCount()
 {
+    qDebug() << "Getting child count:" << m_childs.count();
     return m_childs.count();
 }
 

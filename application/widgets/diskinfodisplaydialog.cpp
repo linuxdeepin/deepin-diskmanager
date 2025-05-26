@@ -24,12 +24,14 @@ DiskInfoDisplayDialog::DiskInfoDisplayDialog(const QString &devicePath, QWidget 
     : DDialog(parent)
     , m_devicePath(devicePath)
 {
+    qDebug() << "DiskInfoDisplayDialog constructor for device:" << devicePath;
     initUI();
     initConnections();
 }
 
 void DiskInfoDisplayDialog::initUI()
 {
+    qDebug() << "Initializing DiskInfoDisplayDialog UI";
 //    setWindowTitle("磁盘信息展示");
     setIcon(QIcon::fromTheme(appName));
     setTitle(tr("Disk Info")); // 磁盘信息
@@ -43,8 +45,10 @@ void DiskInfoDisplayDialog::initUI()
     HardDiskInfo hardDiskInfo = DMDbusHandler::instance()->getHardDiskInfo(m_devicePath);
     if (hardDiskInfo.m_mediaType == "SSD") {
         hardDiskInfo.m_mediaType = tr("SSD");
+        qDebug() << "Disk media type: SSD";
     } else if (hardDiskInfo.m_mediaType == "HDD") {
         hardDiskInfo.m_mediaType = tr("HDD");
+        qDebug() << "Disk media type: HDD";
     }
 
     m_diskInfoNameList.clear();
@@ -129,12 +133,13 @@ void DiskInfoDisplayDialog::initUI()
 
 void DiskInfoDisplayDialog::initConnections()
 {
+    qDebug() << "Setting up DiskInfoDisplayDialog signal connections";
     connect(m_linkButton, &DCommandLinkButton::clicked, this, &DiskInfoDisplayDialog::onExportButtonClicked);
 }
 
 void DiskInfoDisplayDialog::onExportButtonClicked()
 {
-    qDebug() << "startExport";
+    qInfo() << "Starting disk info export for device:" << m_devicePath;
     //文件保存路径
     QString fileDirPath = QFileDialog::getSaveFileName(this, tr("Save File"), "DiskInfo.txt", tr("Text files (*.txt)"));// 文件保存   磁盘信息   文件类型
     qDebug() << "fileDirPath:" << fileDirPath;
@@ -151,6 +156,7 @@ void DiskInfoDisplayDialog::onExportButtonClicked()
 
     if (!dir.exists()) {
         // 路径错误
+        qWarning() << "Invalid export path:" << fileDir;
         DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Wrong path"));
         DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
 
@@ -159,6 +165,7 @@ void DiskInfoDisplayDialog::onExportButtonClicked()
 
     if (!fileInfo.isWritable()) {
         // 您无权访问该路径
+        qWarning() << "No write permission for path:" << fileDir;
         DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("You do not have permission to access this path"));
         DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
     } else {
@@ -184,9 +191,11 @@ void DiskInfoDisplayDialog::onExportButtonClicked()
 
             file.close();
 
+            qInfo() << "Disk info exported successfully to:" << fileDirPath;
             DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Export successful")); // 导出成功
             DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
         } else {
+            qWarning() << "Failed to export disk info to:" << fileDirPath;
             DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Export failed")); // 导出失败
             DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
         }

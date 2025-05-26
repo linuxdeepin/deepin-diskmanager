@@ -17,8 +17,10 @@
 CreatePartitionTableDialog::CreatePartitionTableDialog(QWidget *parent)
     : DDBase(parent)
 {
+    qDebug() << "CreatePartitionTableDialog initializing...";
     initUi();
     initConnection();
+    qDebug() << "CreatePartitionTableDialog initialized";
 }
 
 void CreatePartitionTableDialog::initUi()
@@ -35,6 +37,7 @@ void CreatePartitionTableDialog::initUi()
     getButton(index)->setAccessibleName("cancel");
 
     DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
+    qDebug() << "Current device info - path:" << info.m_path << "type:" << info.m_disktype;
     if (info.m_disktype == "unrecognized") {
         m_curType = "create";
         // 当前磁盘无分区表，是否新建分区表?
@@ -60,6 +63,7 @@ void CreatePartitionTableDialog::onButtonClicked(int index, const QString &text)
 {
     Q_UNUSED(text);
     if (index == m_okCode) {
+        qDebug() << "User confirmed partition table operation, type:" << m_curType;
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         DMDbusHandler::instance()->createPartitionTable(info.m_path, QString("%1").arg(info.m_length), QString("%1").arg(info.m_sectorSize), m_ComboBox->currentText(), m_curType);
         close();

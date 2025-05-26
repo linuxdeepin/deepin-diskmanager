@@ -13,10 +13,12 @@ EXT2::EXT2(FSType type)
     : m_forceAuto64bit(false)
     , m_specificType(type)
 {
+    qDebug() << "EXT2/3/4 filesystem handler created for type:" << Utils::fileSystemTypeToString(type);
 }
 
 FS EXT2::getFilesystemSupport()
 {
+    qDebug() << "Checking ext2/3/4 filesystem support for type:" << Utils::fileSystemTypeToString(m_specificType);
     FS fs(m_specificType);
 
     fs.busy = FS::GPARTED;
@@ -115,6 +117,7 @@ FS EXT2::getFilesystemSupport()
 
 void EXT2::setUsedSectors(Partition &partition)
 {
+    qDebug() << "Setting used sectors for ext2/3/4 partition:" << partition.getPath();
     QString output, error, strmatch, strcmd;
     m_blocksSize = m_numOfFreeOrUsedBlocks = m_totalNumOfBlock = -1;
     strcmd = QString("dumpe2fs -h %1").arg(partition.getPath());
@@ -175,6 +178,7 @@ void EXT2::setUsedSectors(Partition &partition)
 
 void EXT2::readLabel(Partition &partition)
 {
+    qDebug() << "Reading label for ext2/3/4 partition:" << partition.getPath();
     QString output, error;
     if (!Utils::executCmd(QString("e2label %1").arg(partition.getPath()), output, error)) {
         partition.setFilesystemLabel(output.trimmed());
@@ -184,6 +188,8 @@ void EXT2::readLabel(Partition &partition)
 
 bool EXT2::writeLabel(const Partition &partition)
 {
+    qDebug() << "Writing label for ext2/3/4 partition:" << partition.getPath()
+            << "new label:" << partition.getFileSystemLabel();
     QString output, error;
     int exitcode = Utils::executCmd(QString("e2label %1 %2").arg(partition.getPath()).arg(partition.getFileSystemLabel()), output, error);
 //    qDebug() << __FUNCTION__ << output << error;
@@ -192,6 +198,7 @@ bool EXT2::writeLabel(const Partition &partition)
 
 void EXT2::readUuid(Partition &partition)
 {
+    qDebug() << "Reading UUID for ext2/3/4 partition:" << partition.getPath();
     QString output, error;
     if (!Utils::executCmd(QString("tune2fs -l %1").arg(partition.getPath()), output, error)) {
         partition.m_uuid = Utils::regexpLabel(output, "(?<=Filesystem UUID:).*(?=\n)").trimmed();
@@ -201,6 +208,7 @@ void EXT2::readUuid(Partition &partition)
 
 bool EXT2::writeUuid(const Partition &partition)
 {
+    qDebug() << "Writing new UUID for ext2/3/4 partition:" << partition.getPath();
     QString output, error;
     int exitcode = Utils::executCmd(QString("tune2fs -U random ").arg(partition.getPath()), output, error);
     return exitcode == 0 || error.compare("Unknown error") == 0;
@@ -208,6 +216,8 @@ bool EXT2::writeUuid(const Partition &partition)
 
 bool EXT2::create(const Partition &new_partition)
 {
+    qDebug() << "Creating ext2/3/4 filesystem on:" << new_partition.getPath()
+            << "with label:" << new_partition.getFileSystemLabel();
     QString features, output, error, cmd;
     if (m_forceAuto64bit) {
         // (#766910) Manually implement mke2fs.conf(5) auto_64-bit_support option
@@ -269,6 +279,7 @@ bool EXT2::checkRepair(const Partition &partition)
 
 bool EXT2::checkRepair(const QString &devpath)
 {
+    qDebug() << "Checking/repairing ext2/3/4 filesystem on:" << devpath;
     QString output, error;
     int exitcode = Utils::executCmd(QString("e2fsck -f -y -v -C 0 %1").arg(devpath), output, error);
 //    qDebug() << QString("EXT2::check_repair---%1----%2").arg(output).arg(error);

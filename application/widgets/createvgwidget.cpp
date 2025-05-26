@@ -19,9 +19,11 @@ CreateVGWidget::CreateVGWidget(int operationType, QWidget *parent)
     : DDBase(parent)
     , m_curOperationType(operationType)
 {
+    qDebug() << "CreateVGWidget initialized with operationType:" << operationType;
     initUi();
     initConnection();
     updateData();
+    qDebug() << "CreateVGWidget initialization completed";
 }
 
 void CreateVGWidget::initUi()
@@ -752,19 +754,26 @@ set<PVData> CreateVGWidget::getCurSelectPVData()
 
 void CreateVGWidget::onNextButtonClicked()
 {
+    qDebug() << "Next button clicked, switching to step 2";
     m_stackedWidget->setCurrentIndex(1);
     updateSelectedData();
+    qDebug() << "Step 2 UI updated with selected data";
 }
 
 void CreateVGWidget::onPreviousButtonClicked()
 {
+    qDebug() << "Previous button clicked, switching back to step 1";
     m_stackedWidget->setCurrentIndex(0);
     updateData();
+    qDebug() << "Step 1 UI refreshed";
 }
 
 void CreateVGWidget::onDoneButtonClicked()
 {
+    qDebug() << "Done button clicked, starting VG operation";
+    
     if (m_selectSpaceStackedWidget->currentIndex() == 0) {
+        qDebug() << "Validating VG size input...";
         double curSize = QString::number(m_selectSpaceLineEdit->text().toDouble(), 'f', 2).toDouble();
         double minSize = QString::number(m_minSize, 'f', 2).toDouble();
         double maxSize = QString::number(m_maxSize, 'f', 2).toDouble();
@@ -846,6 +855,7 @@ void CreateVGWidget::onDoneButtonClicked()
 
         DMDbusHandler::instance()->resizeVG(vgName, pvDataList, m_curSize);
     } else {
+        qInfo() << "Creating new VG:" << vgName << "with" << pvDataList.size() << "PVs";
         DMDbusHandler::instance()->createVG(vgName, pvDataList, m_curSize);
     }
 
@@ -2056,7 +2066,7 @@ void CreateVGWidget::onTextChanged(const QString &text)
 
 void CreateVGWidget::onVGCreateMessage(const QString &vgMessage)
 {
-    qDebug() << vgMessage;
+    qDebug() << "Received VG create message:" << vgMessage;
     if (m_waterLoadingWidget != nullptr) {
         m_waterLoadingWidget->stopTimer();
     }
@@ -2068,6 +2078,7 @@ void CreateVGWidget::onVGCreateMessage(const QString &vgMessage)
     }
 
     if (infoList.at(0) == "0") {
+        qWarning() << "VG operation failed with error code:" << infoList.at(1);
         QString text = "";
         switch (infoList.at(1).toInt()) {
         case LVMError::LVM_ERR_VG_ALREADY_EXISTS: {
@@ -2094,11 +2105,14 @@ void CreateVGWidget::onVGCreateMessage(const QString &vgMessage)
         }
     }
 
+    qDebug() << "Closing CreateVGWidget";
     close();
 }
 
 void CreateVGWidget::onUpdateUsb()
 {
+    qDebug() << "USB device status changed, checking for updates...";
+
     QStringList deviceNameList = DMDbusHandler::instance()->getDeviceNameList();
     if (m_curDeviceNameList == deviceNameList) {
         return;
@@ -2135,6 +2149,7 @@ void CreateVGWidget::onUpdateUsb()
                                                  tr("Refreshing the page to reload disks"));
         DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
 
+        qDebug() << "Refreshing disk selection UI due to USB change";
         updateData();
     } else if (m_stackedWidget->currentIndex() == 1) {
         if (!deleteIndexList.isEmpty()) {
@@ -2142,6 +2157,7 @@ void CreateVGWidget::onUpdateUsb()
                                                      tr("Refreshing the page to reload disks"));
             DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
 
+            qDebug() << "Refreshing selected data UI due to USB change";
             updateSelectedData();
         }
     }

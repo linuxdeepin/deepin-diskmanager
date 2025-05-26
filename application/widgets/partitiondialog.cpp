@@ -17,11 +17,13 @@
 PartitionDialog::PartitionDialog(QWidget *parent)
     : DDBase(parent)
 {
+    qDebug() << "PartitionDialog initialized";
     initUi();
 }
 
 void PartitionDialog::initUi()
 {
+    qInfo() << "Initializing partition dialog UI";
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
 
     setTitle(tr("Partition %1").arg(info.m_path));
@@ -42,6 +44,7 @@ void PartitionDialog::initUi()
 
 void PartitionDialog::setTitleText(const QString &title, const QString &subTitle)
 {
+    qDebug() << "Setting dialog title to:" << title << "and subtitle to:" << subTitle;
     setTitle(title);
     m_tipLabel->setText(subTitle);
 }

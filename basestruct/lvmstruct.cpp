@@ -3,6 +3,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "lvmstruct.h"
+
+#include <QDebug>
+
 /*********************************** PVData *********************************************/
 bool PVData::operator<(const PVData &tmp) const
 {
@@ -343,16 +346,19 @@ const QDBusArgument &operator>>(const QDBusArgument &argument,  VGInfo &data)
 
 LVInfo VGInfo::getLVinfo(const QString &lvName)
 {
+    qDebug() << "VGInfo::getLVinfo - Enter, lvName:" << lvName;
     foreach (const LVInfo &info, m_lvlist) {
         if (info.m_lvName == lvName) {
             return info;
         }
     }
-    return  LVInfo();
+    qDebug() << "VGInfo::getLVinfo - Exit, lvName:" << lvName << "not found";
+    return LVInfo();
 }
 
 bool VGInfo::lvInfoExists(const QString &lvName)
 {
+    qDebug() << "VGInfo::lvInfoExists - Checking lvName:" << lvName;
     foreach (const LVInfo &info, m_lvlist) {
         if (info.m_lvName == lvName) {
             return true;
@@ -397,16 +403,19 @@ const QDBusArgument &operator>>(const QDBusArgument &argument,  LVMInfo &data)
 
 LVInfo LVMInfo::getLVInfo(const QString &lvPath)
 {
+    qDebug() << "LVMInfo::getLVInfo - Enter, lvPath:" << lvPath;
     // /dev/vg01/lv01    Or /dev/mapper/vg01-lv01
     QStringList list = lvPath.split("/");
     list.pop_front();
     if (list.count() < 3) {
+        qWarning() << "LVMInfo::getLVInfo - Invalid lvPath format:" << lvPath;
         return LVInfo();
     }
 
     if (lvPath.contains("/dev/mapper/")) {
         QStringList list2 = list[2].split("-");
         if (!vgExists(list2[0])) {
+            qWarning() << "LVMInfo::getLVInfo - VG not found for lvPath:" << lvPath;
             return LVInfo();
         }
 
@@ -416,6 +425,7 @@ LVInfo LVMInfo::getLVInfo(const QString &lvPath)
                 return lv;
             }
         }
+        qWarning() << "LVMInfo::getLVInfo - LV not found in mapper path:" << lvPath;
         return LVInfo();
     }
     return getLVInfo(list[1], list[2]);
@@ -423,9 +433,11 @@ LVInfo LVMInfo::getLVInfo(const QString &lvPath)
 
 LVInfo LVMInfo::getLVInfo(const QString &vgName, const QString &lvName)
 {
+    qDebug() << "LVMInfo::getLVInfo - Enter, vgName:" << vgName << "lvName:" << lvName;
     //判断lv是否存在
     auto it = m_vgInfo.find(vgName);
     if (m_vgInfo.end() == it) {
+        qWarning() << "LVMInfo::getLVInfo - VG not found:" << vgName;
         return LVInfo();
     }
     return it.value().getLVinfo(lvName);
@@ -433,6 +445,7 @@ LVInfo LVMInfo::getLVInfo(const QString &vgName, const QString &lvName)
 
 VGInfo LVMInfo::getVG(const QString &vgName)
 {
+    qDebug() << "LVMInfo::getVG - Enter, vgName:" << vgName;
     return getItem(vgName, m_vgInfo);
 }
 
@@ -452,6 +465,7 @@ VGInfo LVMInfo::getVG(const PVInfo &pv)
 
 PVInfo LVMInfo::getPV(const QString &pvPath)
 {
+    qDebug() << "LVMInfo::getPV - Enter, pvPath:" << pvPath;
     return getItem(pvPath, m_pvInfo);
 }
 
@@ -505,9 +519,11 @@ QVector<PVInfo> LVMInfo::getVGPVList(const QString &vgName, bool isUsed)
 
 bool LVMInfo::lvInfoExists(const QString &vgName, const QString &lvName)
 {
+    qDebug() << "LVMInfo::lvInfoExists - Enter, vgName:" << vgName << "lvName:" << lvName;
     //判断lv是否存在
     auto it = m_vgInfo.find(vgName);
     if (m_vgInfo.end() == it) {
+        qDebug() << "LVMInfo::lvInfoExists - VG not found:" << vgName;
         return false;
     }
     return it.value().lvInfoExists(lvName);
@@ -515,15 +531,18 @@ bool LVMInfo::lvInfoExists(const QString &vgName, const QString &lvName)
 
 bool LVMInfo::lvInfoExists(const QString &lvPath)
 {
+    qDebug() << "LVMInfo::lvInfoExists - Enter, lvPath:" << lvPath;
     QStringList list = lvPath.split("/");
     list.pop_front();
     if (list.count() < 3) {
+        qWarning() << "LVMInfo::lvInfoExists - Invalid lvPath format:" << lvPath;
         return false;
     }
 
     if (lvPath.contains("/dev/mapper/")) {
         QStringList list2 = list[2].split("-");
         if (!vgExists(list2[0])) {
+            qWarning() << "LVMInfo::lvInfoExists - VG not found in mapper path:" << lvPath;
             return false;
         }
 
@@ -533,6 +552,7 @@ bool LVMInfo::lvInfoExists(const QString &lvPath)
                 return true;
             }
         }
+        qWarning() << "LVMInfo::lvInfoExists - LV not found in mapper path:" << lvPath;
         return false;
     }
     return lvInfoExists(list[1], list[2]);
@@ -540,11 +560,13 @@ bool LVMInfo::lvInfoExists(const QString &lvPath)
 
 bool LVMInfo::vgExists(const QString &vgName)
 {
+    qDebug() << "LVMInfo::vgExists - Checking vgName:" << vgName;
     return itemExists(vgName, m_vgInfo);
 }
 
 bool LVMInfo::pvExists(const QString &pvPath)
 {
+    qDebug() << "LVMInfo::pvExists - Checking pvPath:" << pvPath;
     return itemExists(pvPath, m_pvInfo);
 }
 

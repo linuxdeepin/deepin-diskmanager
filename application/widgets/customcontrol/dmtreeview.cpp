@@ -10,9 +10,11 @@
 DmTreeview::DmTreeview(QWidget *parent)
     : DTreeView(parent)
 {
+    qDebug() << "DmTreeview constructor";
     initUI();
     initModel();
     initDelegate();
+    qDebug() << "DmTreeview initialized";
 }
 
 void DmTreeview::initUI()
@@ -31,6 +33,7 @@ void DmTreeview::initUI()
 
 QStandardItem *DmTreeview::addItem(QStandardItem *item, const DiskInfoData &data, int flag)
 {
+    qDebug() << "Adding item, level:" << data.m_level << "path:" << data.m_diskPath;
     if (data.m_level == DMDbusHandler::DISK || data.m_level == DMDbusHandler::VOLUMEGROUP) {
         QStandardItem *standardItem = new QStandardItem();
         standardItem->setAccessibleDescription(data.m_diskPath);
@@ -52,10 +55,12 @@ QStandardItem *DmTreeview::addItem(QStandardItem *item, const DiskInfoData &data
 
 QStandardItem *DmTreeview::addTopItem(const DiskInfoData &data)
 {
+    qDebug() << "Adding top item, path:" << data.m_diskPath;
     QStandardItem *item = new QStandardItem;
     item->setAccessibleDescription(data.m_diskPath);
     item->setData(QVariant::fromValue(data), Qt::UserRole + 1);
     m_model->appendRow(item);
+    qDebug() << "Top item added successfully";
     return item;
 }
 
@@ -97,6 +102,7 @@ void DmTreeview::currentChanged(const QModelIndex &current, const QModelIndex &p
     qDebug() << data.m_diskPath << data.m_diskSize << data.m_partitionSize << data.m_partitionPath << data.m_level << data.m_used << data.m_unused << data.m_start << data.m_end << data.m_fstype << data.m_mountpoints << data.m_sysLabel;
 
     if (data.m_level == DMDbusHandler::OTHER) {
+        qDebug() << "Ignoring OTHER level item";
         return;
     }
 
@@ -104,10 +110,13 @@ void DmTreeview::currentChanged(const QModelIndex &current, const QModelIndex &p
     m_diskNum = current.parent().row();
     m_groupNum = current.parent().parent().row();
 
+    qDebug() << "Selection position - curNum:" << m_curNum << "diskNum:" << m_diskNum << "groupNum:" << m_groupNum;
+    
     emit selectItem(current);
     emit curSelectChanged(data.m_diskPath, data.m_partitionPath, data.m_start, data.m_end, data.m_level);
 
     m_diskSize = data.m_diskSize;
+    qDebug() << "Current change handled, disk size:" << m_diskSize;
 }
 
 void DmTreeview::mousePressEvent(QMouseEvent *event)

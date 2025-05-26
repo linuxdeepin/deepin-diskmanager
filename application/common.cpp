@@ -4,6 +4,7 @@
 
 
 #include "common.h"
+#include <QDebug>
 
 QIcon Common::getIcon(const QString &iconName)
 {
@@ -12,6 +13,7 @@ QIcon Common::getIcon(const QString &iconName)
 
 int Common::getLabelAdjustHeight(const int &width, const QString &text, const QFont &font)
 {
+    qDebug() << "Calculating label height for text:" << text.left(20) << "...";
     DLabel label;
     label.setFont(font);
     label.setWordWrap(true);
@@ -19,5 +21,7 @@ int Common::getLabelAdjustHeight(const int &width, const QString &text, const QF
     label.setText(text);
     label.adjustSize();
 
-    return label.height();
+    int height = label.height();
+    qDebug() << "Calculated label height:" << height;
+    return height;
 }

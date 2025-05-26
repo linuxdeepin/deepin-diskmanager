@@ -21,11 +21,13 @@
 
 PartitionTableErrorsInfoDelegate::PartitionTableErrorsInfoDelegate(DDialog *dialog)
 {
+    qDebug() << "PartitionTableErrorsInfoDelegate initialized";
     m_dialog = dialog;
 }
 
 void PartitionTableErrorsInfoDelegate::setTextColor(const QColor &color)
 {
+    qDebug() << "Setting text color to:" << color.name();
     m_color = color;
 }
 

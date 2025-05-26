@@ -12,6 +12,7 @@
 
 WaterLoadingWidget::WaterLoadingWidget(QWidget *parent) : QWidget(parent)
 {
+    qDebug() << "WaterLoadingWidget constructor";
     initUi();
     initConnection();
 }
@@ -30,6 +31,7 @@ void WaterLoadingWidget::initUi()
     mainLayout->setContentsMargins(0, 0, 0, 0);
 
     setLayout(mainLayout);
+    qDebug() << "UI initialized";
 }
 
 void WaterLoadingWidget::initConnection()
@@ -54,6 +56,7 @@ void WaterLoadingWidget::onStartWaterProgress()
 
 void WaterLoadingWidget::setStartTime(int msec)
 {
+    qDebug() << "Starting water progress with interval:" << msec << "ms";
     m_waterProgress->start();
     m_waterProgress->setValue(1);
     m_time->start(msec);
@@ -61,6 +64,7 @@ void WaterLoadingWidget::setStartTime(int msec)
 
 void WaterLoadingWidget::stopTimer()
 {
+    qDebug() << "Stopping water progress";
     m_waterProgress->setValue(100);
     m_waterProgress->stop();
     m_time->stop();

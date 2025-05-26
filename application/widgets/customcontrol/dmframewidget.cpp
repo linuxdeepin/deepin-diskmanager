@@ -21,6 +21,7 @@ DmFrameWidget::DmFrameWidget(DiskInfoData data, QWidget *parent)
     : DFrame(parent)
     , m_infoData(data)
 {
+    qDebug()  << "DmFrameWidget constructor";
 #if QT_VERSION_MAJOR > 5
     m_parentPb = DGuiApplicationHelper::instance()->applicationPalette();
     connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, this,
@@ -30,10 +31,12 @@ DmFrameWidget::DmFrameWidget(DiskInfoData data, QWidget *parent)
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this,
             &DmFrameWidget::onHandleChangeTheme);
 #endif
+    qDebug()  << "DmFrameWidget initialized";
 }
 
 void DmFrameWidget::setFrameData()
 {
+    qDebug()  << "Setting frame data, current level:" << DMDbusHandler::instance()->getCurLevel();
     if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
         //获取首页相关硬盘数据
         PartitionInfo data = DMDbusHandler::instance()->getCurPartititonInfo();
@@ -96,11 +99,14 @@ void DmFrameWidget::setFrameData()
         }
     }
     update();
+    qDebug()  << "Frame data updated, mountpoints:" << m_infoData.m_mountpoints
+                        << "size:" << m_infoData.m_partitionSize;
 }
 
 void DmFrameWidget::setDiskFrameData(const QString &path, const QString &diskType, const QString &used,
                       const QString &unused, const QString &capacity, const QString &interface)
 {
+    qDebug()  << "Setting disk frame data, path:" << path << "type:" << diskType;
     m_infoData.m_mountpoints = path;
     m_infoData.m_unused = unused;
     m_infoData.m_used = used;
@@ -109,6 +115,7 @@ void DmFrameWidget::setDiskFrameData(const QString &path, const QString &diskTyp
     m_infoData.m_sysLabel = interface;
 
     update();
+    qDebug()  << "Disk frame data updated";
 }
 
 QString DmFrameWidget::diskVolumn(QString partitionPath)
@@ -317,7 +324,9 @@ void DmFrameWidget::resizeEvent(QResizeEvent *event)
 }
 void DmFrameWidget::onHandleChangeTheme()
 {
+    qDebug()  << "Handling theme change";
     m_parentPb = Dtk::Gui::DGuiApplicationHelper::instance()->applicationPalette();
+    qDebug()  << "Theme palette updated";
 }
 
 //QString DmFrameWidget::diffMountpoints(int width, QString mountpoints)

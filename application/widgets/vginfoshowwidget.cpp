@@ -4,6 +4,7 @@
 
 
 #include "vginfoshowwidget.h"
+#include <QDebug>
 
 #include <DFontSizeManager>
 #include <DLabel>
@@ -20,6 +21,7 @@
 
 VGInfoShowWidget::VGInfoShowWidget(QWidget *parent) : QWidget(parent)
 {
+    qDebug() << "VGInfoShowWidget initialized";
     initUi();
     initConnection();
 }
@@ -37,6 +39,7 @@ void VGInfoShowWidget::initConnection()
 
 void VGInfoShowWidget::setData(const QList< QMap<QString, QVariant> > &lstInfo)
 {
+    qDebug() << "Setting VG info data, items count:" << lstInfo.count();
     QList<QObject *> lstCylinderWidget = children();
     for (int i = 0; i < lstCylinderWidget.count(); i ++) {
         QObject *obj = lstCylinderWidget.at(i);
@@ -57,6 +60,7 @@ void VGInfoShowWidget::setData(const QList< QMap<QString, QVariant> > &lstInfo)
     DPalette paletteText;
     QPalette paletteBackground;
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+    qDebug() << "Current theme type:" << (themeType == DGuiApplicationHelper::LightType ? "Light" : "Dark");
     if (themeType == DGuiApplicationHelper::LightType) {
         QColor color("#F7F7F7");
         color.setAlphaF(0.6);
@@ -120,10 +124,12 @@ void VGInfoShowWidget::setData(const QList< QMap<QString, QVariant> > &lstInfo)
     if (lstInfo.count() % 2 != 0) {
         height += 1;
     }
+    qDebug() << "Calculated layout height:" << height;
 
     DFrame *frame = new DFrame;
     frame->setPalette(paletteBackground);
     if (height > 4) {
+        qDebug() << "Creating scrollable layout for large content";
         setFixedSize(340, 192);
 
         m_gridLayout->setSpacing(8);
@@ -152,6 +158,7 @@ void VGInfoShowWidget::setData(const QList< QMap<QString, QVariant> > &lstInfo)
 
         frame->setLayout(scrollAreaLayout);
     } else {
+        qDebug() << "Creating fixed layout for small content";
         int width = 340;
         if (lstInfo.count() == 1) {
             width = 170;

@@ -176,6 +176,7 @@ QString PasswordInputDialog::getPasswordHint()
 
 void PasswordInputDialog::onInputPasswordEditTextChanged(const QString &)
 {
+    qDebug() << "Password input changed, length:" << m_inputPasswordEdit->text().length();
     if (m_inputPasswordEdit->isAlert() && m_inputPasswordEdit->text().length() <= 256) {
         m_inputPasswordEdit->setAlert(false);
         m_inputPasswordEdit->hideAlertMessage();
@@ -190,6 +191,7 @@ void PasswordInputDialog::onInputPasswordEditTextChanged(const QString &)
 
 void PasswordInputDialog::onCheckPasswordEditTextChanged(const QString &)
 {
+    qDebug() << "Password confirmation changed, length:" << m_checkPasswordEdit->text().length();
     if (m_checkPasswordEdit->isAlert() && m_checkPasswordEdit->text().length() <= 256) {
         m_checkPasswordEdit->setAlert(false);
         m_checkPasswordEdit->hideAlertMessage();
@@ -222,6 +224,7 @@ void PasswordInputDialog::onButtonClicked(int index, const QString &text)
 {
     Q_UNUSED(text);
     if (index == m_okCode) {
+        qDebug() << "Confirm button clicked, validating password";
         // 密码不能为空
         if (m_inputPasswordEdit->text().isEmpty()) {
             m_inputPasswordEdit->setAlert(true);
@@ -237,12 +240,14 @@ void PasswordInputDialog::onButtonClicked(int index, const QString &text)
         }
 
         // 密码不一致
+        qDebug() << "Checking password match";
         if (m_inputPasswordEdit->text() != m_checkPasswordEdit->text()) {
             m_checkPasswordEdit->setAlert(true);
             m_checkPasswordEdit->showAlertMessage(tr("Passwords do not match"));
             return;
         }
 
+        qDebug() << "Checking password hint difference";
         if (m_inputPasswordEdit->text() == m_textEdit->toPlainText()) {
             // 提示内容不得与密码相同
             DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/warning.svg"),
@@ -251,8 +256,10 @@ void PasswordInputDialog::onButtonClicked(int index, const QString &text)
             return;
         }
 
+        qDebug() << "Password validation passed";
         accept();
     } else {
+        qDebug() << "Dialog rejected";
         reject();
     }
 }

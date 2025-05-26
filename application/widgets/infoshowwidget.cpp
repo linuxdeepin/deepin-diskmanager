@@ -11,6 +11,7 @@
 #include "customcontrol/partitioninfowidget.h"
 #include "customcontrol/vgsizeinfowidget.h"
 #include "vginfoshowwidget.h"
+#include <QDebug>
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -21,12 +22,14 @@ DWIDGET_USE_NAMESPACE
 InfoShowWidget::InfoShowWidget(DWidget *parent)
     : DFrame(parent)
 {
+    qDebug() << "InfoShowWidget constructor";
     initUi();
     initConnection();
 }
 
 void InfoShowWidget::initUi()
 {
+    qDebug() << "Initializing InfoShowWidget UI";
     setWindowFlags(Qt::FramelessWindowHint); //无边框
     setAttribute(Qt::WA_TranslucentBackground); //背景透明
 
@@ -64,6 +67,7 @@ void InfoShowWidget::initUi()
 
 void InfoShowWidget::initConnection()
 {
+    qDebug() << "Setting up InfoShowWidget signal connections";
     connect(DMDbusHandler::instance(), &DMDbusHandler::curSelectChanged, this, &InfoShowWidget::onCurSelectChanged);
 #if QT_VERSION_MAJOR > 5
     connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, this,
@@ -79,6 +83,7 @@ void InfoShowWidget::initConnection()
 
 void InfoShowWidget::midFramSettings()
 {
+    qDebug() << "Configuring mid frame settings";
     QVBoxLayout *mainLayout = new QVBoxLayout(m_frameMid);
     m_infoWidget = new SizeInfoWidget;
     m_partitionInfoWidget = new PartitionInfoWidget;
@@ -117,6 +122,7 @@ void InfoShowWidget::midFramSettings()
 
 void InfoShowWidget::bottomFramSettings()
 {
+    qDebug() << "Configuring bottom frame settings";
     QVBoxLayout *leftInfoLayout = new QVBoxLayout();
     QVBoxLayout *rightInfolayout = new QVBoxLayout();
 
@@ -222,7 +228,7 @@ void InfoShowWidget::bottomFramSettings()
 
 void InfoShowWidget::onCurSelectChanged()
 {
-    qDebug() << __FUNCTION__ << "-0--0-";
+    qDebug() << "Current selection changed, level:" << DMDbusHandler::instance()->getCurLevel();
     if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
         m_frameBottom->setFrameData();
         m_mountpointLabel->setText(tr("Mount point:"));
@@ -602,6 +608,7 @@ void InfoShowWidget::onCurSelectChanged()
 
 void InfoShowWidget::onHandleChangeTheme()
 {
+    qDebug() << "Handling theme change";
     DPalette palette;
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
     if (themeType == DGuiApplicationHelper::LightType) {
@@ -625,6 +632,7 @@ void InfoShowWidget::onHandleChangeTheme()
 
 void InfoShowWidget::onEnterWidget(QRectF rect, QString path)
 {
+    qDebug() << "Mouse entered widget, path:" << path;
     if ("unallocated" != path) {
         path = path.remove(0, 5);
     }
@@ -644,11 +652,13 @@ void InfoShowWidget::onEnterWidget(QRectF rect, QString path)
 
 void InfoShowWidget::onLeaveWidget()
 {
+    qDebug() << "Mouse left widget";
     m_arrowRectangle->hide();
 }
 
 void InfoShowWidget::onEnterVGInfoWidget(QRect rect, const QList<QMap<QString, QVariant> > &lstInfo)
 {
+    qDebug() << "Mouse entered VG info widget";
     if (!m_vgInfoShowWidget->isHidden()) {
         return;
     }

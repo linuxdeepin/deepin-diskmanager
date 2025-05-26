@@ -13,6 +13,7 @@
 SizeInfoWidget::SizeInfoWidget(QWidget *parent)
     : QWidget(parent)
 {
+    qDebug() << "SizeInfoWidget constructor";
 #if QT_VERSION_MAJOR > 5
     m_parentPb = DGuiApplicationHelper::instance()->applicationPalette();;
     connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, this,
@@ -29,6 +30,7 @@ SizeInfoWidget::SizeInfoWidget(double used, double unused, bool flag, QWidget *p
     , m_noused(unused)
     , m_flag(flag)
 {
+    qDebug() << "SizeInfoWidget constructor with data, used:" << used << "GiB, unused:" << unused << "GiB";
 #if QT_VERSION_MAJOR > 5
     m_parentPb = DGuiApplicationHelper::instance()->applicationPalette();;
     connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, this,
@@ -42,6 +44,7 @@ SizeInfoWidget::SizeInfoWidget(double used, double unused, bool flag, QWidget *p
 
 void SizeInfoWidget::setData(PartitionInfo info, QVector<QColor> color, QVector<double> size, bool flag)
 {
+    qDebug() << "Setting partition data, path:" << info.m_path << "size:" << size;
     m_sizeInfo = size;
     m_colorInfo = color;
     m_flag = flag;
@@ -75,10 +78,12 @@ void SizeInfoWidget::setData(PartitionInfo info, QVector<QColor> color, QVector<
     }
 
     update();
+    qDebug() << "Partition data set, total:" << m_totalSize << "GiB, used:" << m_used << "GiB";
 }
 
 void SizeInfoWidget::setData(LVInfo info, QVector<QColor> color, QVector<double> size, bool flag)
 {
+    qDebug() << "Setting LV data, name:" << info.m_lvName << "size:" << size;
     m_sizeInfo = size;
     m_colorInfo = color;
     m_flag = flag;
@@ -116,10 +121,12 @@ void SizeInfoWidget::setData(LVInfo info, QVector<QColor> color, QVector<double>
         m_sizeInfo = QVector<double> {0.00, 0.00};
     }
     update();
+    qDebug() << "LV data set, total:" << m_totalSize << "GiB, used:" << m_used << "GiB";
 }
 
 void SizeInfoWidget::setData(DeviceInfo info, QVector<QColor> color, QVector<double> size, bool flag)
 {
+    qDebug() << "Setting device data, path:" << info.m_path << "size:" << size;
     m_sizeInfo = size;
     m_colorInfo = color;
     m_flag = flag;
@@ -147,6 +154,7 @@ void SizeInfoWidget::setData(DeviceInfo info, QVector<QColor> color, QVector<dou
         m_sizeInfo = QVector<double> {0.00, 0.00};
     }
     update();
+    qDebug() << "Device data set, total:" << m_totalSize << "GiB, used:" << m_used << "GiB";
 }
 
 void SizeInfoWidget::paintEvent(QPaintEvent *event)

@@ -15,6 +15,7 @@ SelectPVItemWidget::SelectPVItemWidget(PVInfoData pvInfoData, QWidget *parent)
     : RadiusWidget(parent)
     , m_pvInfoData(pvInfoData)
 {
+    qDebug() << "Creating PV select item for:" << pvInfoData.m_diskPath << pvInfoData.m_partitionPath;
     initUi();
     initConnection();
     initData();
@@ -122,6 +123,7 @@ void SelectPVItemWidget::initData()
 
 void SelectPVItemWidget::onCheckBoxStateChange(int state)
 {
+    qDebug() << "Checkbox state changed to:" << state << "for:" << m_pvInfoData.m_diskPath << m_pvInfoData.m_partitionPath;
     if (m_pvInfoData.m_level == DMDbusHandler::DISK) {
         if (state != Qt::CheckState::PartiallyChecked) {
             if (m_lstPVInfoData.count() != 0) {
@@ -150,6 +152,7 @@ void SelectPVItemWidget::onCheckBoxStateChange(int state)
 
 void SelectPVItemWidget::setCheckBoxState(Qt::CheckState state, bool isPartiallyChecked)
 {
+    qDebug() << "Setting checkbox state:" << state << "isPartially:" << isPartiallyChecked;
     if(isPartiallyChecked){
         m_pvInfoData.m_selectStatus = state;
         m_checkBox->setCheckState(state);

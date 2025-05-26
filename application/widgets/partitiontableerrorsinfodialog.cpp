@@ -7,6 +7,7 @@
 #include "partitiontableerrorsinfodelegate.h"
 #include "common.h"
 #include "diskhealthheaderview.h"
+#include <QDebug>
 
 #include <DFrame>
 #include <DGuiApplicationHelper>
@@ -23,6 +24,7 @@ PartitionTableErrorsInfoDialog::PartitionTableErrorsInfoDialog(const QString &de
     : DDialog(parent)
     , m_deviceInfo(deviceInfo)
 {
+    qDebug() << "Creating partition table errors dialog for device:" << deviceInfo;
     initUI();
     initConnections();
 }
@@ -34,6 +36,7 @@ PartitionTableErrorsInfoDialog::~PartitionTableErrorsInfoDialog()
 
 void PartitionTableErrorsInfoDialog::initUI()
 {
+    qDebug() << "Initializing partition table errors UI";
     setIcon(QIcon::fromTheme(appName));
     setTitle(tr("Errors in Partition Table")); // 分区表错误报告
     setMinimumSize(580, 386);
@@ -135,6 +138,7 @@ void PartitionTableErrorsInfoDialog::initConnections()
 void PartitionTableErrorsInfoDialog::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key::Key_Escape) {
+        qDebug() << "Escape key pressed, ignoring";
         event->ignore();
     } else {
         DDialog::keyPressEvent(event);

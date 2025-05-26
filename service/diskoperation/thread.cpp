@@ -29,6 +29,7 @@ WorkThread::WorkThread(QObject *parent)
     m_blockEnd = 0;
     m_checkConut = 0;
     m_checkSize = 0;
+    qDebug() << "WorkThread created";
 }
 
 void WorkThread::setStopFlag(int flag)
@@ -56,7 +57,7 @@ void WorkThread::setTimeInfo(const QString &devicePath, int blockStart, int bloc
 
 void WorkThread::runCount()
 {
-//    qDebug() << QThread::currentThreadId() << endl;
+    qDebug() << "Check range:" << m_blockStart << "-" << m_blockEnd << "with count:" << m_checkConut;
     Sector i = m_blockStart;
     Sector j = m_blockStart + 1;
     QProcess proc;
@@ -93,7 +94,10 @@ void WorkThread::runCount()
     }
 
     if (m_stopFlag != 2) {
+        qDebug() << "Bad blocks count check completed normally";
         emit checkBadBlocksFinished(); //检测完成正常退出,发送给页面的正常结束信号
+    } else {
+        qDebug() << "Bad blocks count check was stopped by user";
     }
 }
 
@@ -151,6 +155,7 @@ FixThread::FixThread(QObject *parent)
     Q_UNUSED(parent);
     m_stopFlag = 0;
     m_checkSize = 0;
+    qDebug() << "FixThread created";
 }
 
 void FixThread::setStopFlag(int flag)
@@ -160,7 +165,7 @@ void FixThread::setStopFlag(int flag)
 
 void FixThread::runFix()
 {
-//    qDebug() << m_list << endl;
+    qDebug() << "Bad blocks count to fix:" << m_list.size();
     int i = 0;
     QProcess proc;
     while (i < m_list.size() && m_stopFlag != 2) {
@@ -194,7 +199,10 @@ void FixThread::runFix()
     }
 
     if (m_stopFlag != 2) {
+        qDebug() << "Bad blocks fix completed normally";
         emit fixBadBlocksFinished();
+    } else {
+        qDebug() << "Bad blocks fix was stopped by user";
     }
 }
 
@@ -208,11 +216,12 @@ void FixThread::setFixBadBlocksInfo(const QString &devicePath, QStringList list,
 ProbeThread::ProbeThread(QObject *parent)
 {
     Q_UNUSED(parent);
+    qDebug() << "ProbeThread created";
 }
 
 void ProbeThread::probeDeviceInfo()
 {
-    qDebug() << __FILE__ << ":" << __FUNCTION__ << "Someone call me in thread!";
+    qDebug() << "ProbeDeviceInfo started in thread";
     QString rootFsName;
     m_inforesult.clear();
     m_deviceMap.clear();
@@ -226,7 +235,7 @@ void ProbeThread::probeDeviceInfo()
     PedDevice *lpDevice = ped_device_get_next(nullptr);
     while (lpDevice) {
         /* TO TRANSLATORS: looks like   Confirming /dev/sda */
-        qDebug() << QString("Confirming %1").arg(lpDevice->path);
+        qDebug() << "Probing device:" << lpDevice->path;
 
         //only add this device if we can read the first sector (which means it's a real device)
 
@@ -268,7 +277,7 @@ void ProbeThread::probeDeviceInfo()
             //partinfo = pat.getPartitionInfo();
             if (rootFsName == pat.getPath()) {
                 partinfo.m_flag = 4;
-                qDebug() << __FUNCTION__ << "Set systemfs Flags3 !! " << pat.m_devicePath << " " << pat.m_name << " " << pat.m_uuid;
+                qDebug() << "Set systemfs Flags3 for:" << pat.m_devicePath << "name:" << pat.m_name << "uuid:" << pat.m_uuid;
             }
 
             if (pat.m_type == PartitionType::TYPE_EXTENDED) {
@@ -278,9 +287,9 @@ void ProbeThread::probeDeviceInfo()
                     partinfo = plogic.getPartitionInfo();
                     if (rootFsName == plogic.m_name) {
                         partinfo.m_flag = 4;
-                        qDebug() << __FUNCTION__ << "Set systemfs Flags4 !! " << plogic.m_devicePath << " " << plogic.m_name << " " << plogic.m_uuid;
+                        qDebug() << "Set systemfs Flags4 for:" << plogic.m_devicePath << "name:" << plogic.m_name << "uuid:" << plogic.m_uuid;
                     }
-                    qDebug() << __FUNCTION__ << plogic.m_devicePath << " " << plogic.m_name << " " << plogic.m_uuid;
+                    qDebug() << "Logical partition:" << plogic.m_devicePath << "name:" << plogic.m_name << "uuid:" << plogic.m_uuid;
                     devinfo.m_partition.push_back(partinfo);
                 }
             } else {
@@ -298,8 +307,8 @@ void ProbeThread::probeDeviceInfo()
 
     emit updateDeviceInfo(/*m_deviceMap,*/ m_inforesult, m_lvmInfo,m_luksInfo);
 
-    qDebug() << __FILE__ << ":" << __FUNCTION__ << "Someone call me in thread，working done!";
-    qDebug() << __FILE__ << "Now I am working on thread:" << QThread::currentThreadId();
+    qDebug() << "ProbeDeviceInfo completed";
+    qDebug() << "Current thread ID:" << QThread::currentThreadId();
 }
 
 QMap<QString, Device> ProbeThread::getDeviceMap()

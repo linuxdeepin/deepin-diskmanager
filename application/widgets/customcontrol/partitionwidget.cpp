@@ -16,13 +16,16 @@
 PartitionWidget::PartitionWidget(QWidget *parent)
     : DDialog(parent)
 {
+    qDebug() << "PartitionWidget constructor";
     //    setAttribute(Qt::WA_DeleteOnClose, true);
     initUi();
     recPartitionInfo();
     initConnection();
+    qDebug() << "PartitionWidget initialized";
 }
 PartitionWidget::~PartitionWidget()
 {
+    qDebug() << "PartitionWidget destructor";
 }
 void PartitionWidget::initUi()
 {
@@ -867,6 +870,7 @@ void PartitionWidget::onSetPartName()
 
 void PartitionWidget::onAddPartition()
 {
+    qDebug() << "Adding new partition";
     DeviceInfo device = DMDbusHandler::instance()->getCurDeviceInfo();
 
     int partitionCount = 0;
@@ -878,6 +882,7 @@ void PartitionWidget::onAddPartition()
     }
 
     if (m_sizeInfo.size() >= 24 || maxAmountPrimReached() == true || (partitionCount + m_sizeInfo.size()) >= device.m_maxPrims) {
+        qDebug() << "Partition limit exceeded";
         DMessageManager::instance()->sendMessage(this, QIcon(":/icons/deepin/builtin/warning.svg"), tr("The number of new partitions exceeds the limit"));
         return;
     }
@@ -982,6 +987,7 @@ void PartitionWidget::onAddPartition()
 
 void PartitionWidget::onRemovePartition()
 {
+    qDebug() << "Removing partition, current count:" << m_patrinfo.size();
     if (m_patrinfo.size() > 0)
         m_patrinfo.pop_back();
 
@@ -1126,6 +1132,7 @@ void PartitionWidget::onApplyButton()
 
 void PartitionWidget::onRevertButton()
 {
+    qDebug() << "Reverting all changes";
     //复原,即清空
     m_patrinfo.clear();
     m_sizeInfo.clear();
@@ -1146,10 +1153,12 @@ void PartitionWidget::onRevertButton()
     setSelectUnallocatesSpace();
     m_partChartWidget->transFlag(1, 0);
     setEnable(1, true);
+    qDebug() << "All changes reverted";
 }
 
 void PartitionWidget::onCancelButton()
 {
+    qDebug() << "Canceling partition operation";
     close();
 }
 

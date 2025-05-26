@@ -22,16 +22,19 @@
 
 DiskHealthDetectionDelegate::DiskHealthDetectionDelegate(DDialog *dialog)
 {
+    qDebug() << "DiskHealthDetectionDelegate constructor";
     m_dialog = dialog;
 }
 
 void DiskHealthDetectionDelegate::setTextColor(const QColor &color)
 {
+    qDebug() << "Setting text color:" << color;
     m_color = color;
 }
 
 void DiskHealthDetectionDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    qDebug() << "Painting cell at row:" << index.row() << "column:" << index.column();
     painter->save();
 
     QRect paintRect = QRect(option.rect.left(), option.rect.top(), option.rect.width(), option.rect.height());
@@ -109,12 +112,16 @@ void DiskHealthDetectionDelegate::paint(QPainter *painter, const QStyleOptionVie
     QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T8, QFont::Normal);
     painter->setFont(font);
     if (text == "G") {
+        qDebug() << "Drawing GOOD status icon";
         painter->setPen(QColor("#00c800"));
     } else if (text == "W") {
+        qDebug() << "Drawing WARNING status icon";
         painter->setPen(QColor("#FA6400"));
     } else if (text == "D") {
+        qDebug() << "Drawing DAMAGED status icon";
         painter->setPen(QColor("#E02020"));
     } else if (text == "U") {
+        qDebug() << "Drawing UNKNOWN status icon";
         painter->setPen(QColor("#777777"));
     } else {
         painter->setPen(m_color);

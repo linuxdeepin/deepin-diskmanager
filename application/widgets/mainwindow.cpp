@@ -26,6 +26,7 @@ MainWindow *MainWindow::instance()
 {
     static MainWindow *m = nullptr;
     if (m == nullptr) {
+        qDebug() << "Creating MainWindow singleton instance";
         m = new MainWindow;
     }
     return m;
@@ -34,6 +35,7 @@ MainWindow *MainWindow::instance()
 MainWindow::MainWindow(QWidget *parent)
     : DMainWindow(parent)
 {
+    qDebug() << "MainWindow constructor";
 //    if (false == DeviceInfoParser::instance().getRootPassword()) {
 //        exit(-1);
 //    }
@@ -92,6 +94,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::initUi()
 {
+    qDebug() << "Initializing MainWindow UI";
     m_dialog = new AnimationDialog(this);
     m_dialog->setWindowModality(Qt::ApplicationModal);
     m_dialog->hide();
@@ -137,6 +140,7 @@ void MainWindow::setSizebyMode(DPushButton *button)
 
 void MainWindow::initConnection()
 {
+    qDebug() << "Setting up MainWindow signal connections";
     connect(m_handler, &DMDbusHandler::showSpinerWindow, this, &MainWindow::onShowSpinerWindow);
     connect(m_btnRefresh, &DPushButton::clicked, this, &MainWindow::onRefreshButtonClicked);
 #ifdef DTKWIDGET_CLASS_DSizeMode
@@ -163,16 +167,19 @@ QString MainWindow::getRootLoginResult()
 
 void MainWindow::getDeviceInfo()
 {
+    qDebug() << "Requesting device information";
     m_handler->getDeviceInfo(); //call after initUi
 }
 
 void MainWindow::onRefreshButtonClicked()
 {
+    qDebug() << "Refresh button clicked";
     m_handler->refresh();
 }
 
 void MainWindow::onShowSpinerWindow(bool isShow, const QString &title)
 {
+    qDebug() << "Spinner window visibility changed:" << isShow << "title:" << title;
     if (isShow) {
         Dtk::Widget::moveToCenter(m_dialog);
         m_dialog->setShowSpinner(isShow, title);

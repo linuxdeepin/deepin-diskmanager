@@ -17,6 +17,7 @@ DiskManagerService::DiskManagerService(const QString &frontEndDBusName, QObject 
     , m_partedcore(new PartedCore(this))
     , m_frontEndDBusName(frontEndDBusName)
 {
+    qDebug() << "Initializing DiskManagerService with frontEndDBusName:" << frontEndDBusName;
     initConnection();
 }
 
@@ -77,8 +78,10 @@ void DiskManagerService::Start()
 
 DeviceInfo DiskManagerService::getDeviceinfo()
 {
-    if (!checkAuthorization())
+    if (!checkAuthorization()) {
+        qWarning() << "Authorization failed for getDeviceinfo";
         return DeviceInfo();
+    }
 
     QString msg = "DiskManagerService::getDeviceinfo";
     Q_EMIT MessageReport(msg);
@@ -166,9 +169,12 @@ QStringList DiskManagerService::getallsupportfs()
 
 bool DiskManagerService::format(const QString &fstype, const QString &name)
 {
-    if (!checkAuthorization())
+    if (!checkAuthorization()) {
+        qWarning() << "Authorization failed for format operation";
         return false;
+    }
 
+    qDebug() << "Formatting with filesystem:" << fstype << "name:" << name;
     return m_partedcore->format(fstype, name);
 }
 
@@ -387,12 +393,15 @@ int DiskManagerService::test()
 bool DiskManagerService::checkAuthorization(void)
 {
     QString actionId("com.deepin.diskmanager");
+    QString serviceName = message().service();
 
-    if (message().service() == m_frontEndDBusName ||
-        connection().interface()->serviceUid(message().service()).value() == 0 ||
-        PolicyKitHelper::instance()->checkAuthorization(actionId, message().service())) {
+    if (serviceName == m_frontEndDBusName ||
+        connection().interface()->serviceUid(serviceName).value() == 0 ||
+        PolicyKitHelper::instance()->checkAuthorization(actionId, serviceName)) {
+        qDebug() << "Authorization granted for service:" << serviceName;
         return true;
     } else {
+        qWarning() << "Authorization denied for service:" << serviceName;
         sendErrorReply(QDBusError::AccessDenied);
         return false;
     }

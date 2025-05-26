@@ -17,6 +17,7 @@ DmTreeviewDelegate::DmTreeviewDelegate(QAbstractItemView *parent)
     : DStyledItemDelegate(parent)
     , m_parentView(parent)
 {
+    qDebug() << "DmTreeviewDelegate constructor";
 #if QT_VERSION_MAJOR > 5
     m_parentPb = m_parentView->palette();
     connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, this,
@@ -27,6 +28,7 @@ DmTreeviewDelegate::DmTreeviewDelegate(QAbstractItemView *parent)
             &DmTreeviewDelegate::onHandleChangeTheme);
 #endif
     onHandleChangeTheme();
+    qDebug() << "DmTreeviewDelegate initialized";
 }
 
 QSize DmTreeviewDelegate::sizeHint(const QStyleOptionViewItem &option,
@@ -35,18 +37,23 @@ QSize DmTreeviewDelegate::sizeHint(const QStyleOptionViewItem &option,
     Q_UNUSED(option);
 
     DiskInfoData infoData = index.data(Qt::UserRole + 1).value<DiskInfoData>();
+    qDebug() << "Calculating size hint for item level:" << infoData.m_level;
+    
     int height = 55;
     if (infoData.m_level == DMDbusHandler::DISK || infoData.m_level == DMDbusHandler::VOLUMEGROUP) {
         height = 72 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
+        qDebug() << "Disk/VG item size:" << QSize(180, height);
         return QSize(180, height);
     }
 
     if (infoData.m_level == DMDbusHandler::OTHER) {
         height = 30 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
+        qDebug() << "Other item size:" << QSize(180, height);
         return QSize(180, height);
     }
 
     height = 55 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
+    qDebug() << "Default item size:" << QSize(180, height);
     return QSize(180, height);
 }
 
@@ -326,6 +333,8 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
 }
 void DmTreeviewDelegate::onHandleChangeTheme()
 {
+    qDebug() << "Handling theme change";
     m_parentPb = Dtk::Gui::DGuiApplicationHelper::instance()->applicationPalette();
     m_parentView->update(m_parentView->currentIndex());
+    qDebug() << "Theme updated and view refreshed";
 }

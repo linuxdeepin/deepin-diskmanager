@@ -12,6 +12,7 @@
 
 PartitionInfoWidget::PartitionInfoWidget(QWidget *parent) : QWidget(parent)
 {
+    qDebug() << "PartitionInfoWidget constructor";
     QColor color("#70BEFF");    //浅蓝色
     QColor color1("#4293FF");   //蓝色
     QColor color2("#6751E4");   //紫色
@@ -25,10 +26,12 @@ PartitionInfoWidget::PartitionInfoWidget(QWidget *parent) : QWidget(parent)
     m_colorInfo = QVector<QColor> {color, color1, color2, color3, color4, color5, color6, color7, color8, color9};
 
     setMouseTracking(true);
+    qDebug() << "PartitionInfoWidget initialized with colors and mouse tracking";
 }
 
 void PartitionInfoWidget::setData(DeviceInfo info)
 {
+    qDebug() << "Setting partition data, partition count:" << info.m_partition.size();
     m_sizeInfo.clear();
     m_pathInfo.clear();
     m_totalSize = 0.00;
@@ -45,11 +48,13 @@ void PartitionInfoWidget::setData(DeviceInfo info)
 
     m_totalSize += Utils::sectorToUnit(info.m_length, info.m_sectorSize, SIZE_UNIT::UNIT_GIB);
     if (info.m_partition.isEmpty()) {
+        qDebug() << "No partitions found, adding unallocated space";
         m_sizeInfo.append(m_totalSize);
         m_pathInfo.append("unallocated");
     }
 
     update();
+    qDebug() << "Partition data set, total size:" << m_totalSize << "GiB";
 }
 
 void PartitionInfoWidget::paintEvent(QPaintEvent *event)
@@ -269,7 +274,9 @@ void PartitionInfoWidget::mouseMoveEvent(QMouseEvent *event)
 
 void PartitionInfoWidget::onHandleChangeTheme()
 {
+    qDebug() << "Handling theme change";
     m_parentPb = Dtk::Gui::DGuiApplicationHelper::instance()->applicationPalette();
+    qDebug() << "Theme palette updated";
 }
 
 void PartitionInfoWidget::leaveEvent(QEvent *event)

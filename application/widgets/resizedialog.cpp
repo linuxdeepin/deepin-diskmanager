@@ -6,6 +6,7 @@
 #include "resizedialog.h"
 #include "partedproxy/dmdbushandler.h"
 #include "messagebox.h"
+#include <QDebug>
 
 #include <DFontSizeManager>
 
@@ -21,7 +22,7 @@
 ResizeDialog::ResizeDialog(QWidget *parent)
     : DDBase(parent)
 {
-
+    qDebug() << "ResizeDialog initialized";
     initUi();
     initConnection();
     setOnButtonClickedClose(false);
@@ -128,6 +129,7 @@ void ResizeDialog::initConnection()
 
 void ResizeDialog::partitionResize()
 {
+    qInfo() << "Starting partition resize operation";
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
     double newSize = 0;
     if (0 == m_comboBox->currentIndex()) {
@@ -141,6 +143,7 @@ void ResizeDialog::partitionResize()
         m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
         m_lineEdit->showAlertMessage(tr("No more than the maximum capacity please"), m_mainFrame); // 超出最大可用空间
         m_lineEdit->setAlert(true);
+        qWarning() << "New size exceeds maximum capacity for partition:" << info.m_path;
         return;
     }
 
@@ -172,6 +175,7 @@ void ResizeDialog::partitionResize()
             m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
             m_lineEdit->showAlertMessage(tr("No more than the maximum capacity please"), m_mainFrame); // 超出最大可用空间
             m_lineEdit->setAlert(true);
+            qWarning() << "No unallocated space available for expanding partition:" << info.m_path;
             return;
         } else {
             PartitionInfo newInfo = info;
@@ -203,6 +207,7 @@ void ResizeDialog::partitionResize()
                 m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
                 m_lineEdit->showAlertMessage(tr("No more than the maximum capacity please"), m_mainFrame); // 超出最大可用空间
                 m_lineEdit->setAlert(true);
+                qWarning() << "New size exceeds adjacent unallocated space for partition:" << info.m_path;
                 return;
             } else {
                 newInfo.m_alignment = ALIGN_MEBIBYTE; //ALIGN_MEBIBYTE;
@@ -262,6 +267,7 @@ void ResizeDialog::partitionResize()
 
 void ResizeDialog::lvResize()
 {
+    qInfo() << "Starting LV resize operation";
     VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
     int peSize = vgInfo.m_PESize;
 
@@ -294,6 +300,7 @@ void ResizeDialog::lvResize()
         m_lineEdit->setAlertMessageAlignment(Qt::AlignTop);
         m_lineEdit->showAlertMessage(tr("No less than the used capacity please"), m_mainFrame); // 不得低于已用空间
         m_lineEdit->setAlert(true);
+        qWarning() << "New size exceeds maximum capacity for LV:" << vgInfo.m_vgName;
         return;
     }
 
@@ -379,6 +386,7 @@ void ResizeDialog::noSupportFSDailog()
 
 void ResizeDialog::onButtonClicked(int index, const QString &)
 {
+    qDebug() << "Button clicked with index:" << index;
     if (m_okCode == index) {
         if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
             partitionResize();
@@ -392,6 +400,7 @@ void ResizeDialog::onButtonClicked(int index, const QString &)
 
 void ResizeDialog::onComboSelectedChanged(int index)
 {
+    qDebug() << "Unit selection changed to index:" << index;
     if (index == 0) {
         //MiB
         if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
@@ -421,6 +430,7 @@ void ResizeDialog::onComboSelectedChanged(int index)
 
 void ResizeDialog::onEditTextChanged(const QString &)
 {
+    qDebug() << "Size input changed to:" << m_lineEdit->text();
     if (!m_lineEdit->text().isEmpty() && m_lineEdit->text().toDouble() != 0.00) {
         getButton(m_okCode)->setDisabled(false);
         if (m_lineEdit->isAlert()) {

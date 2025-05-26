@@ -23,6 +23,7 @@ static const QSize kDropDownSize {11, 10};
 
 DiskHealthHeaderView::DiskHealthHeaderView(Qt::Orientation orientation, QWidget *parent) : DHeaderView(orientation, parent)
 {
+    qDebug() << "DiskHealthHeaderView constructor";
     installEventFilter(this);
 
     viewport()->setAutoFillBackground(false);

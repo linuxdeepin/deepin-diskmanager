@@ -4,10 +4,13 @@
 
 #include "exfat.h"
 #include <QUuid>
+#include <QDebug>
+
 namespace DiskManager {
 
 FS ExFat::getFilesystemSupport()
 {
+    qDebug() << "Checking exFAT filesystem support";
     FS fs(FS_EXFAT);
 
     fs.busy = FS::GPARTED;
@@ -50,6 +53,7 @@ FS ExFat::getFilesystemSupport()
 
 void ExFat::setUsedSectors(DiskManager::Partition &partition)
 {
+    qDebug() << "Setting used sectors for exFAT partition:" << partition.getPath();
     QString output, error;
     auto errCode = Utils::executCmd("dump.exfat ", output, error);
     // dump.exfat returns non-zero status for both success and failure.  Instead use
@@ -109,6 +113,7 @@ void ExFat::setUsedSectors(DiskManager::Partition &partition)
 
 void ExFat::readLabel(DiskManager::Partition &partition)
 {
+    qDebug() << "Reading label for exFAT partition:" << partition.getPath();
     QString output, error;
     auto errCode = Utils::executCmd(QString("tune.exfat -l %1").arg(partition.getPath()), output, error);
     if (errCode != 0) {
@@ -120,6 +125,8 @@ void ExFat::readLabel(DiskManager::Partition &partition)
 
 bool ExFat::writeLabel(const DiskManager::Partition &partition)
 {
+    qDebug() << "Writing label for exFAT partition:" << partition.getPath()
+            << "new label:" << partition.getFileSystemLabel();
     QString cmd, output, error;
     if (!partition.getFileSystemLabel().isEmpty() && partition.getFileSystemLabel() != " ") {
         cmd = QString("tune.exfat -L %1 %2").arg(partition.getFileSystemLabel()).arg(partition.getPath());
@@ -131,6 +138,7 @@ bool ExFat::writeLabel(const DiskManager::Partition &partition)
 
 void ExFat::readUuid(DiskManager::Partition &partition)
 {
+    qDebug() << "Reading UUID for exFAT partition:" << partition.getPath();
     QString output, error;
     auto errCode = Utils::executCmd(QString("tune.exfat -i %1").arg(partition.getPath()), output, error);
     if (errCode != 0) {
@@ -142,6 +150,7 @@ void ExFat::readUuid(DiskManager::Partition &partition)
 
 bool ExFat::writeUuid(const DiskManager::Partition &partition)
 {
+    qDebug() << "Writing new UUID for exFAT partition:" << partition.getPath();
     QString output, error;
     auto errCode = Utils::executCmd(QString("tune.exfat -I %1 %2")
                                             .arg(randomSerial())
@@ -151,6 +160,8 @@ bool ExFat::writeUuid(const DiskManager::Partition &partition)
 
 bool ExFat::create(const DiskManager::Partition &new_partition)
 {
+    qDebug() << "Creating exFAT filesystem on:" << new_partition.getPath()
+            << "with label:" << new_partition.getFileSystemLabel();
     QString cmd, output, error;
     if (new_partition.getFileSystemLabel().isEmpty() || new_partition.getFileSystemLabel() == " ") {
         cmd = QString("mkfs.exfat %1").arg(new_partition.getPath());
@@ -179,6 +190,7 @@ bool DiskManager::ExFat::checkRepair(const DiskManager::Partition &partition)
 
 bool DiskManager::ExFat::checkRepair(const QString &devpath)
 {
+    qDebug() << "Checking/repairing exFAT filesystem on:" << devpath;
     QString output, error;
     auto errCode = Utils::executCmd(QString("fsck.exfat %1").arg(devpath), output, error);
     return errCode == 0;

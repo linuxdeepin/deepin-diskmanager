@@ -16,6 +16,7 @@ namespace DiskManager {
 
 FS FAT16::getFilesystemSupport()
 {
+    qDebug() << "Checking FAT16/FAT32 filesystem support";
     FS fs(specificType);
 
 	// hack to disable silly mtools warnings
@@ -74,6 +75,7 @@ FS FAT16::getFilesystemSupport()
 
 void FAT16::setUsedSectors( Partition & partition )
 {
+    qDebug() << "Setting used sectors for FAT partition:" << partition.getPath();
     QString output, error, strmatch, strcmd;
 
     Sector logicalSectorSize,clusterSize,smallSize,bigSize;
@@ -174,6 +176,7 @@ void FAT16::setUsedSectors( Partition & partition )
 
 void FAT16::readLabel( Partition & partition )
 {
+    qDebug() << "Reading label for FAT partition:" << partition.getPath();
     QString output, error, filesystemLabel;
     QString partitionPath = partition.getPath().remove("/dev/");
     if (!Utils::executCmd(QString("ls -l /dev/disk/by-label"), output, error)) {
@@ -200,6 +203,8 @@ void FAT16::readLabel( Partition & partition )
 
 bool FAT16::writeLabel(const Partition & partition)
 {
+    qDebug() << "Writing label for FAT partition:" << partition.getPath()
+            << "new label:" << partition.getFileSystemLabel();
     QString output, error, cmd;
     if (partition.getFileSystemLabel().isEmpty() || partition.getFileSystemLabel() == " ")
         cmd = QString("mlabel -c :: -i %1").arg(partition.getPath());
@@ -216,6 +221,7 @@ bool FAT16::writeLabel(const Partition & partition)
 
 void FAT16::readUuid( Partition & partition )
 {
+    qDebug() << "Reading UUID for FAT partition:" << partition.getPath();
     QString output, error;
     QString cmd = QString("mdir -f :: -i %1").arg(partition.getPath());
 
@@ -229,7 +235,7 @@ void FAT16::readUuid( Partition & partition )
 
 bool FAT16::writeUuid(const Partition & partition)
 {
-
+    qDebug() << "Writing new UUID for FAT partition:" << partition.getPath();
     QString output, error;
     int exitcode = Utils::executCmd(QString("mlabel -s -n :: -i ").arg(partition.getPath()), output, error);
     return exitcode == 0 || error.compare("Unknown error") == 0;
@@ -237,6 +243,8 @@ bool FAT16::writeUuid(const Partition & partition)
 
 bool FAT16::create(const Partition & new_partition)
 {
+    qDebug() << "Creating FAT filesystem on:" << new_partition.getPath()
+            << "with label:" << new_partition.getFileSystemLabel();
     QString output, error, cmd;
     QString fat_size = (specificType == FS_FAT16 ? "16" : "32");
     int exitcode = -1;
@@ -256,6 +264,7 @@ bool FAT16::checkRepair(const Partition & partition)
 
 bool FAT16::checkRepair(const QString &devpath)
 {
+    qDebug() << "Checking/repairing FAT filesystem on:" << devpath;
     QString output, error;
     int exitcode = Utils::executCmd(QString("fsck.fat -a -w -v %1").arg(devpath), output, error);
 //    qDebug() << QString("EXT2::check_repair---%1----%2").arg(output).arg(error);

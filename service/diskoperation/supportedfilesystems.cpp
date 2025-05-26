@@ -31,6 +31,7 @@ namespace DiskManager {
 
 SupportedFileSystems::SupportedFileSystems()
 {
+    qDebug() << "Initializing supported filesystems";
     m_fsObjects[FS_UNKNOWN] = NULL;
     m_fsObjects[FS_OTHER] = NULL;
     m_fsObjects[FS_BTRFS] = new Btrfs;
@@ -68,11 +69,13 @@ SupportedFileSystems::SupportedFileSystems()
 
 SupportedFileSystems::~SupportedFileSystems()
 {
+    qDebug() << "Cleaning up filesystem objects";
     FSObjectsMap::iterator iter;
     for (iter = m_fsObjects.begin(); iter != m_fsObjects.end(); iter++) {
         auto pvalue = iter.value();
 
         if (pvalue != NULL) {
+            qDebug() << "Deleting filesystem handler for:" << Utils::fileSystemTypeToString(iter.key());
             delete pvalue;
         }
 
@@ -83,20 +86,25 @@ SupportedFileSystems::~SupportedFileSystems()
 void SupportedFileSystems::findSupportedFilesystems()
 {
     FSObjectsMap::iterator iter;
+    qDebug() << "Finding supported filesystems";
     m_fsSupport.clear();
 
     for (iter = m_fsObjects.begin(); iter != m_fsObjects.end(); iter++) {
         if (iter.value()) {
             FileSystem *psys = iter.value();
-            m_effectivefs.append(Utils::fileSystemTypeToString(iter.key()));
+            QString fsName = Utils::fileSystemTypeToString(iter.key());
+            m_effectivefs.append(fsName);
             m_fsSupport.push_back(psys->getFilesystemSupport());
+            qDebug() << "Found supported filesystem:" << fsName;
         } else {
             FS fsBasicsupp(iter.key());
             fsBasicsupp.move = FS::GPARTED;
             fsBasicsupp.copy = FS::GPARTED;
             m_fsSupport.push_back(fsBasicsupp);
+            qDebug() << "Basic support for filesystem:" << Utils::fileSystemTypeToString(iter.key());
         }
     }
+    qDebug() << "Total supported filesystems:" << m_fsSupport.size();
 }
 
 FileSystem *SupportedFileSystems::getFsObject(FSType fstype) const
@@ -104,8 +112,10 @@ FileSystem *SupportedFileSystems::getFsObject(FSType fstype) const
 //    qDebug() << Utils::fileSystemTypeToString(fstype);
     FSObjectsMap::const_iterator iter = m_fsObjects.find(fstype);
     if (iter == m_fsObjects.end()) {
+        qDebug() << "Filesystem not found, return NULL";
         return nullptr;
     } else {
+        qDebug() << "Found filesystem handler for value";
         return iter.value();
     }
 }

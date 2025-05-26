@@ -9,10 +9,13 @@
 
 #include <QVBoxLayout>
 #include <QKeyEvent>
+#include <QDebug>
 
 AnimationDialog::AnimationDialog(QWidget *parent) : DDialog(parent)
 {
+    qDebug() << "AnimationDialog initializing...";
     initUi();
+    qDebug() << "AnimationDialog initialized";
 }
 
 void AnimationDialog::initUi()
@@ -43,6 +46,8 @@ void AnimationDialog::initUi()
 
 void AnimationDialog::setShowSpinner(bool isShow, const QString &title)
 {
+    qDebug() << "Setting spinner visibility:" << isShow << "with title:" << title;
+
     if (isShow) {
         m_label->setText(title);
         m_spinner->show();
@@ -54,6 +59,7 @@ void AnimationDialog::setShowSpinner(bool isShow, const QString &title)
 void AnimationDialog::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key::Key_Escape) {
+        qDebug() << "Escape key pressed, ignoring event";
         event->ignore();
     } else {
         DDialog::keyPressEvent(event);

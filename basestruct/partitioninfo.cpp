@@ -6,12 +6,14 @@
 #include "partitioninfo.h"
 
 #include <QDBusArgument>
+#include <QDebug>
 
 PartitionInfo::PartitionInfo()
     : m_insideExtended(false)
     , m_busy(false)
     , m_fileSystemReadOnly(false)
 {
+    qDebug() << "PartitionInfo constructor";
     //inside_extended = busy = fs_readonly = false;
     m_devicePath = m_uuid = m_name = m_path = m_fileSystemLabel = "";
     m_partitionNumber = m_type = m_status = m_alignment = m_fileSystemType = 0;
@@ -23,6 +25,7 @@ PartitionInfo::PartitionInfo()
 
 Sector PartitionInfo::getSectorLength() const
 {
+    qDebug() << "PartitionInfo::getSectorLength";
     if (m_sectorStart >= 0 && m_sectorEnd >= 0)
         return m_sectorEnd - m_sectorStart + 1;
     else
@@ -31,6 +34,7 @@ Sector PartitionInfo::getSectorLength() const
 
 Byte_Value PartitionInfo::getByteLength() const
 {
+    qDebug() << "PartitionInfo::getByteLength";
     if (getSectorLength() >= 0)
         return getSectorLength() * m_sectorSize;
     else
@@ -39,12 +43,15 @@ Byte_Value PartitionInfo::getByteLength() const
 
 bool PartitionInfo::operator==(const PartitionInfo &info) const
 {
+    qDebug() << "PartitionInfo::operator==";
     return m_devicePath == info.m_devicePath && m_partitionNumber == info.m_partitionNumber && m_sectorStart == info.m_sectorStart && m_type == info.m_type;
 }
 
 QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info)
 {
+    qDebug() << "Starting PartitionInfo serialization";
     argument.beginStructure();
+    qDebug() << "Serializing PartitionInfo fields";
     argument << info.m_devicePath
              << info.m_partitionNumber
              << info.m_type
@@ -79,13 +86,15 @@ QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info)
              << info.m_decryptStr
              << info.m_dmName;;
     argument.endStructure();
-
+    qDebug() << "Completed PartitionInfo serialization";
     return argument;
 }
 
 const QDBusArgument &operator>>(const QDBusArgument &argument, PartitionInfo &info)
 {
+    qDebug() << "Starting PartitionInfo deserialization";
     argument.beginStructure();
+    qDebug() << "Deserializing PartitionInfo fields";
     int flag = 0;
     int flag2 = 0;
     int crypt = 0;
@@ -126,6 +135,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PartitionInfo &in
     info.m_luksFlag = static_cast<LUKSFlag>(flag2);
     info.m_crypt = static_cast<CRYPT_CIPHER>(crypt);
     argument.endStructure();
-
+    qDebug() << "Completed PartitionInfo deserialization";
     return argument;
 }

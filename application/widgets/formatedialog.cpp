@@ -21,12 +21,14 @@
 FormateDialog::FormateDialog(QWidget *parent)
     : DDBase(parent)
 {
+    qDebug() << "FormateDialog constructor";
     initUi();
     initConnection();
 }
 
 void FormateDialog::initUi()
 {
+    qDebug() << "Initializing FormatDialog UI";
     m_height = 355;
     setFixedSize(450, m_height);
 
@@ -352,6 +354,7 @@ void FormateDialog::initUi()
 
 void FormateDialog::initConnection()
 {
+    qDebug() << "Setting up FormatDialog signal connections";
     connect(m_pushButton, &DPushButton::clicked, this, &FormateDialog::onCancelButtonClicked);
     connect(m_warningButton, &DWarningButton::clicked, this, &FormateDialog::onWipeButtonClicked);
     connect(m_fileNameEdit, &DLineEdit::textChanged, this, &FormateDialog::onTextChanged);
@@ -365,6 +368,7 @@ void FormateDialog::initConnection()
 
 void FormateDialog::onTextChanged(const QString &text)
 {
+    qDebug() << "Format name changed:" << text;
     if (!text.isEmpty()) {
         QByteArray byteArray = text.toUtf8();
         if (m_formatComboBox->currentText().contains("fat32")) {
@@ -397,6 +401,7 @@ void FormateDialog::onTextChanged(const QString &text)
 
 void FormateDialog::onComboxFormatTextChange(const QString &text)
 {
+    qDebug() << "File system type changed:" << text;
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION ||
             DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
         QByteArray byteArray = m_fileNameEdit->text().toUtf8();
@@ -464,6 +469,7 @@ void FormateDialog::updateEncryptionInfo(const QString &text, const int &width)
 
 void FormateDialog::onSecurityCurrentIndexChanged(int index)
 {
+    qDebug() << "Security option changed to index:" << index;
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION ||
             DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
         switch (index) {
@@ -551,6 +557,7 @@ void FormateDialog::onSecurityCurrentIndexChanged(int index)
 
 void FormateDialog::onWipingMethodCurrentIndexChanged(int index)
 {
+    qDebug() << "Wiping method changed to index:" << index;
     switch (index) {
     case 0: {
         m_curWipeMethod = WipeType::DOD;
@@ -572,6 +579,7 @@ void FormateDialog::onCancelButtonClicked()
 
 void FormateDialog::onWipeButtonClicked()
 {
+    qInfo() << "Starting wipe operation for:" << m_pathInfo;
     QString userName = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
     userName.remove(0, 6);
 
@@ -694,6 +702,7 @@ void FormateDialog::onWipeButtonClicked()
 
 void FormateDialog::onWipeResult(const QString &info)
 {
+    qDebug() << "Wipe operation result:" << info;
     QStringList infoList = info.split(":");
 
     if (infoList.count() <= 2) {

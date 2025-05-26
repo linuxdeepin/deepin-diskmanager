@@ -18,6 +18,7 @@
 PartChartShowing::PartChartShowing(QWidget *parent)
     : QWidget(parent)
 {
+    qDebug() << "PartChartShowing constructor";
     QColor color("#70BEFF"); //浅蓝色
     QColor color1("#4293FF"); //深蓝色
     QColor color2("#6751E4"); //紫色
@@ -28,26 +29,34 @@ PartChartShowing::PartChartShowing(QWidget *parent)
     setMouseTracking(true);
     m_showTipTimer = new QTimer(this);
     connect(m_showTipTimer, &QTimer::timeout, this, &PartChartShowing::showTipTimerSlot);
+    qDebug() << "PartChartShowing initialized with colors and mouse tracking";
 }
 
 void PartChartShowing::transInfos(const double &totals, const QVector<double> sizeInfo)
 {
+    qDebug() << "Transferring partition info, total size:" << totals
+                       << "partition count:" << sizeInfo.size();
     m_total = totals;
     m_partSize = sizeInfo;
+    qDebug() << "Partition info updated";
 }
 
 void PartChartShowing::transFlag(int flag, int value)
 {
+    qDebug() << "Transferring flag:" << flag << "value:" << value;
     m_flag = flag;
     m_sumValue = value;
     update();
+    qDebug() << "Flag updated and widget refreshed";
 }
 
 void PartChartShowing::showTipTimerSlot()
 {
-    //    qDebug() << hover;
+    qDebug() << "Showing tooltip for hover state:" << m_hover
+                       << "partition:" << m_number2 << "at position:" << m_posX;
     emit sendMoveFlag(m_hover, m_number2, m_posX);
     m_showTipTimer->stop();
+    qDebug() << "Tooltip shown and timer stopped";
 }
 
 void PartChartShowing::paintEvent(QPaintEvent *event)
@@ -319,6 +328,7 @@ void PartChartShowing::addPaint(QPainter *painter)
 void PartChartShowing::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() != Qt::LeftButton) {
+        qDebug() << "Ignoring non-left mouse button press";
         return;
     }
 

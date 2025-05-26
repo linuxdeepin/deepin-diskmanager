@@ -6,6 +6,7 @@
 #include "mountdialog.h"
 #include "partedproxy/dmdbushandler.h"
 #include "messagebox.h"
+#include <QDebug>
 
 #include <DLabel>
 #include <DFrame>
@@ -17,12 +18,15 @@
 MountDialog::MountDialog(QWidget *parent)
     : DDBase(parent)
 {
+    qDebug() << "MountDialog constructor";
     initUi();
     initConnection();
+    qDebug() << "MountDialog initialized";
 }
 
 void MountDialog::initUi()
 {
+    qDebug() << "Initializing MountDialog UI";
     setMinimumSize(QSize(420, 200));
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
@@ -181,6 +185,7 @@ bool MountDialog::isSystemDirectory(const QString &directory)
 
 void MountDialog::mountCurPath()
 {
+    qInfo() << "Starting mount operation for current path";
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         if (!onCheckMountPoint(static_cast<FSType>(info.m_fileSystemType), m_fileChooserEdit->text())) {
@@ -243,6 +248,7 @@ void MountDialog::mountCurPath()
 
 void MountDialog::onButtonClicked(int index, const QString &text)
 {
+    qDebug() << "Button clicked - index:" << index << "text:" << text;
     Q_UNUSED(text);
     if (index == m_okCode) {
         QString mountPath = m_fileChooserEdit->text();
@@ -258,6 +264,7 @@ void MountDialog::onButtonClicked(int index, const QString &text)
             messageBox.setWarings(tr("The data under this mount point would be lost, please mount the directory to another location"), "",
                                   tr("Continue", "button"), "ok", tr("Cancel"), "cancelBtn");
             if (messageBox.exec() == 1) {
+                qInfo() << "User confirmed mount operation despite warning";
                 mountCurPath();
                 close();
             }
@@ -272,10 +279,13 @@ void MountDialog::onButtonClicked(int index, const QString &text)
 
 bool MountDialog::onCheckMountPoint(FSType fsType, const QString &mountPoint)
 {
+    qDebug() << "Checking mount point validity for FS type:" << fsType << "path:" << mountPoint;
     //exfat文件系统的挂载点必须为空目录
     if (fsType == FS_EXFAT) {
+        qDebug() << "Checking EXFAT mount point requirements";
         QDir dir(m_fileChooserEdit->text());
         if (!dir.isEmpty()) {
+            qWarning() << "Mount point not empty for EXFAT filesystem";
             MessageBox messageBox(this);
             messageBox.setObjectName("mountPointMessageBox");
             messageBox.setAccessibleName("mountPointMessageBox");

@@ -10,6 +10,7 @@ namespace DiskManager {
 
 Device::Device()
 {
+    qDebug() << "Initializing Device object with DBus type registrations";
     qDBusRegisterMetaType<DeviceInfo>();
     qDBusRegisterMetaType<DeviceInfoMap>();
     qDBusRegisterMetaType<PartitionInfo>();
@@ -53,8 +54,10 @@ void Device::enablePartitionNaming(int length)
 {
     if (length > 0) {
         m_maxPartitionNameLength = length;
+        qDebug() << "Enabled partition naming with max length:" << length;
     } else {
         m_maxPartitionNameLength = 0;
+        qDebug() << "Disabled partition naming";
     }
 }
 
@@ -87,10 +90,10 @@ DeviceInfo Device::getDeviceInfo()
     info.m_interface = m_interface;
     info.m_mediaType = m_mediaType;
 
-//        qDebug() << __FUNCTION__ << info.m_path << info.length << info.heads << info.sectors
-//                 << info.cylinders << info.cylsize << info.model << info.serial_number << info.disktype
-//                 << info.sector_size << info.max_prims << info.highest_busy << info.readonly
-//                 << info.max_partition_name_length;
+    qDebug() << "Retrieving device info - Path:" << info.m_path
+             << "Length:" << info.m_length
+             << "SectorSize:" << info.m_sectorSize
+             << "MaxPrims:" << info.m_maxPrims;
     return info;
 }
 

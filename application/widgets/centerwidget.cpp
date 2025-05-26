@@ -17,15 +17,18 @@
 CenterWidget::CenterWidget(DWidget *parent)
     : Dtk::Widget::DWidget(parent)
 {
+    qDebug() << "CenterWidget initializing...";
     initUi();
 }
 
 CenterWidget::~CenterWidget()
 {
+    qDebug() << "CenterWidget destroyed";
 }
 
 void CenterWidget::HandleQuit()
 {
+    qDebug() << "Handling CenterWidget quit";
 }
 
 TitleWidget *CenterWidget::getTitleWidget()
@@ -35,6 +38,8 @@ TitleWidget *CenterWidget::getTitleWidget()
 
 void CenterWidget::initUi()
 {
+    qDebug() << "Initializing CenterWidget UI";
+
     m_titleWidget = new TitleWidget(this);
     QVBoxLayout *mainlayout = new QVBoxLayout;
     mainlayout->setContentsMargins(0, 0, 0, 0);

@@ -32,6 +32,7 @@ DiskHealthDetectionDialog::DiskHealthDetectionDialog(const QString &devicePath, 
     , m_devicePath(devicePath)
     , m_hardDiskStatusInfoList(hardDiskStatusInfoList)
 {
+    qDebug() << "DiskHealthDetectionDialog constructor for device:" << devicePath;
     initUI();
     initConnections();
 }
@@ -43,6 +44,7 @@ DiskHealthDetectionDialog::~DiskHealthDetectionDialog()
 
 void DiskHealthDetectionDialog::initUI()
 {
+    qDebug() << "Initializing DiskHealthDetectionDialog UI";
     setIcon(QIcon::fromTheme(appName));
     setTitle(tr("Check Health")); // 硬盘健康检测
     setFixedSize(726, 700);
@@ -98,6 +100,7 @@ void DiskHealthDetectionDialog::initUI()
 
     // 硬盘健康状态
     QString healthStateValue = DMDbusHandler::instance()->getDeviceHardStatus(m_devicePath);
+    qDebug() << "Device health status:" << healthStateValue;
 
     DLabel *healthStateLabel = new DLabel(tr("Health Status")); // 健康状态
     DFontSizeManager::instance()->bind(healthStateLabel, DFontSizeManager::T6, QFont::Medium);
@@ -236,6 +239,7 @@ void DiskHealthDetectionDialog::initUI()
             }
 
             if (!value.isEmpty()) {
+                qDebug() << "Temperature value:" << value;
                 m_temperatureValue->setText(QString("%1°C").arg(value));
             }
         }
@@ -357,6 +361,7 @@ void DiskHealthDetectionDialog::initConnections()
 
 void DiskHealthDetectionDialog::onExportButtonClicked()
 {
+    qInfo() << "Starting health info export for device:" << m_devicePath;
     //文件保存路径
     QString fileDirPath = QFileDialog::getSaveFileName(this, tr("Save File"), "CheckHealthInfo.txt", tr("Text files (*.txt)"));// 文件保存   硬盘健康检测信息   文件类型
     if (fileDirPath.isEmpty()) {
@@ -372,6 +377,7 @@ void DiskHealthDetectionDialog::onExportButtonClicked()
 
     if (!dir.exists()) {
         // 路径错误
+        qWarning() << "Invalid export path:" << fileDir;
         DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Wrong path"));
         DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
 
@@ -380,6 +386,7 @@ void DiskHealthDetectionDialog::onExportButtonClicked()
 
     if (!fileInfo.isWritable()) {
         // 您无权访问该路径
+        qWarning() << "No write permission for path:" << fileDir;
         DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("You do not have permission to access this path"));
         DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
     } else {
@@ -410,9 +417,11 @@ void DiskHealthDetectionDialog::onExportButtonClicked()
 
             file.close();
 
+            qInfo() << "Health info exported successfully to:" << fileDirPath;
             DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Export successful")); // 导出成功
             DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
         } else {
+            qWarning() << "Failed to export health info to:" << fileDirPath;
             DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Export failed")); // 导出失败
             DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
         }
@@ -451,6 +460,7 @@ void DiskHealthDetectionDialog::keyPressEvent(QKeyEvent *event)
 
 void DiskHealthDetectionDialog::onHandleChangeTheme()
 {
+    qDebug() << "Handling theme change";
     DPalette palette;
     QColor valueColor;
     QColor tableColor;

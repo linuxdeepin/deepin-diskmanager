@@ -16,6 +16,7 @@
 DecryptDialog::DecryptDialog(QWidget *parent)
     : DDBase(parent)
 {
+    qDebug()  << "[DecryptDialog] Constructor initialized";
     initUi();
     initConnection();
     initData();
@@ -23,6 +24,7 @@ DecryptDialog::DecryptDialog(QWidget *parent)
 
 void DecryptDialog::initUi()
 {
+    qDebug() << "[DecryptDialog] Initializing UI components";
     m_height = 240;
     setFixedSize(406, m_height);
 
@@ -180,6 +182,7 @@ void DecryptDialog::initUi()
 
 void DecryptDialog::initConnection()
 {
+    qDebug() << "[DecryptDialog] Setting up signal-slot connections";
     connect(m_passwordEdit, &DPasswordEdit::textChanged, this, &DecryptDialog::onPasswordEditTextChanged);
     connect(m_pushButton, &DPushButton::clicked, this, &DecryptDialog::onPasswordHintButtonClicked);
     connect(m_decryptButton, &DSuggestButton::clicked, this, &DecryptDialog::onButtonClicked);
@@ -270,6 +273,7 @@ void DecryptDialog::onCancelButtonClicked()
 
 void DecryptDialog::onButtonClicked()
 {
+    qDebug()  << "[DecryptDialog] Starting decryption process for device:" << m_devPath;
     // 密码不能为空
     if (m_passwordEdit->text().isEmpty()) {
         m_passwordEdit->setAlert(true);
@@ -316,9 +320,12 @@ void DecryptDialog::onDecryptMessage(const LUKS_INFO &luks)
                                                            QMargins(0, 0, 0, 20));
             reject();
         } else {
+            qDebug()  << "[DecryptDialog] Decrypt successful for device:" << m_devPath;
             accept();
         }
     } else {
+        qWarning() << "[DecryptDialog] Decrypt failed for device:" << m_devPath
+                  << "Error count:" << luks.m_decryptErrCount;
         setFixedSize(406, m_height);
         m_stackedWidget->setCurrentIndex(0);
         DWindowCloseButton *button = findChild<DWindowCloseButton *>("DTitlebarDWindowCloseButton");
@@ -359,6 +366,7 @@ void DecryptDialog::onDecryptMessage(const LUKS_INFO &luks)
 
 void DecryptDialog::onTimeOut()
 {
+    qDebug() << "[DecryptDialog] Timer expired, resetting password input";
     m_timer.stop();
     setPasswordEditStatus(false, false);
     m_decryptButton->setDisabled(false);

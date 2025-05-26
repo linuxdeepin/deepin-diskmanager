@@ -25,17 +25,20 @@ namespace DiskManager {
  */
 void Watcher::executCmd(const QString &strCmd, QString &outPut, QString &error)
 {
+    qDebug() << "Executing command:" << strCmd;
     // QProcess proc;
     // proc.start("b-a-s-h", QStringList() << "-c" << strCmd);
     // proc.waitForFinished(-1);
     // outPut = proc.readAllStandardOutput();
+    qDebug() << "Command execution completed";
 }
 
 void Watcher::exit()
 {
-    qDebug() << "Watcher wait for exit now!";
+    qDebug() << "Watcher received exit request";
     stoped = true;
     this->wait();
+    qDebug() << "Watcher thread stopped";
 }
 
 void Watcher::run()
@@ -44,6 +47,7 @@ void Watcher::run()
     QString cmd, outPut, error;
     //先判断后台服务进程是否存在,如果存在可能是强制退出导致,应先退出后台程序再重新启动磁盘管理器
     cmd = QString("ps -eo pid,cmd |awk '{print $2}' |grep -w deepin-diskmanager$");
+    qDebug() << "Watcher thread started monitoring process";
 
     while (!stoped) {
         QThread::msleep(500);  //0.5 second
@@ -57,7 +61,7 @@ void Watcher::run()
         } else {
             //这里表示，前端启动过，但是现在已经关闭了
             if (isrun) {
-                qDebug() << "Need to quit now";
+                qWarning() << "Main process terminated unexpectedly, exiting watcher";
                 _exit(0);
             }
         }

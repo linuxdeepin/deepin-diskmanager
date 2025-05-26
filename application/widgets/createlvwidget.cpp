@@ -16,9 +16,11 @@
 
 CreateLVWidget::CreateLVWidget(QWidget *parent) : DDialog(parent)
 {
+    qDebug() << "CreateLVWidget initializing...";
     initUi();
     recPartitionInfo();
     initConnection();
+    qDebug() << "CreateLVWidget initialized for VG:" << DMDbusHandler::instance()->getCurVGInfo().m_vgName;
 }
 
 void CreateLVWidget::initUi()
@@ -402,7 +404,7 @@ void CreateLVWidget::partInfoShowing()
 
 void CreateLVWidget::recPartitionInfo()
 {
-    //获取数据
+    qDebug() << "Loading partition info for current VG";
     m_lstLVName.clear();
     if (DMDbusHandler::VOLUMEGROUP == DMDbusHandler::instance()->getCurLevel()) {
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
@@ -920,6 +922,8 @@ void CreateLVWidget::onAddPartition()
 
 void CreateLVWidget::onRemovePartition()
 {
+    qDebug() << "Removing last LV from creation list";
+
     if (m_patrinfo.size() > 0)
         m_patrinfo.pop_back();
 
@@ -942,6 +946,8 @@ void CreateLVWidget::onRemovePartition()
 
 void CreateLVWidget::onApplyButton()
 {
+    qDebug()  << "Applying LV creation for VG:" << DMDbusHandler::instance()->getCurVGInfo().m_vgName;
+
     QList<LVAction> lstLVInfo;
     VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
     QString userName = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
@@ -980,6 +986,7 @@ void CreateLVWidget::onApplyButton()
     }
 
     if (lstLVInfo.size() > 0) {
+        qDebug() << "Creating" << lstLVInfo.size() << "logical volumes on VG:" << vgInfo.m_vgName;
         DMDbusHandler::instance()->createLV(vgInfo.m_vgName, lstLVInfo);
         close();
     }
@@ -987,6 +994,8 @@ void CreateLVWidget::onApplyButton()
 
 void CreateLVWidget::onRevertButton()
 {
+    qDebug() << "Reverting all LV creation changes";
+
     //复原,即清空
     m_patrinfo.clear();
     m_sizeInfo.clear();
@@ -1019,6 +1028,8 @@ void CreateLVWidget::onRevertButton()
 
 void CreateLVWidget::onCancelButton()
 {
+    qDebug() << "Canceling LV creation dialog";
+
     close();
 }
 

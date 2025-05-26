@@ -33,6 +33,7 @@ const QVector<QString> &ProcPartitionsInfo::getDevicePaths()
 void ProcPartitionsInfo::initializeIfRequired()
 {
     if (!procPartitionsInfoCacheInitialized) {
+        qDebug() << "Loading partitions info cache";
         loadProcPartitionsInfoCache();
         procPartitionsInfoCacheInitialized = true;
     }
@@ -41,15 +42,17 @@ void ProcPartitionsInfo::initializeIfRequired()
 void ProcPartitionsInfo::loadProcPartitionsInfoCache()
 {
     devicePathsCache.clear();
+    qDebug() << "Reading /proc/partitions";
     QFile file("/proc/partitions");
 
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Successfully opened /proc/partitions";
         QTextStream in(&file);
         in.skipWhiteSpace();
         QString line = in.readLine();
         QString device;
         while (!in.atEnd() || !line.isEmpty()) {
-            qDebug() << __FUNCTION__ << "-----++++++------";
+            qDebug() << "Processing partition entry";
             QStringList strlist = line.split(" ");
             unsigned long maj = 0;
             unsigned long min = 0;
@@ -64,7 +67,7 @@ void ProcPartitionsInfo::loadProcPartitionsInfoCache()
                     break;
                 }
             }
-//            qDebug() << name;
+            qDebug() << "Found partition:" << name;
 
             BlockSpecial::registerBlockSpecial("/dev/" + name, maj, min);
 
@@ -93,6 +96,9 @@ void ProcPartitionsInfo::loadProcPartitionsInfoCache()
             // E.g., device = /dev/nvme0n1, partition = /dev/nvme0n1p1
             if (device == "") {
                 device = Utils::regexpLabel(name, "^(nvme[0-9]+n[0-9]+)$");
+                qDebug() << "Found total devices:" << devicePathsCache.size();
+            } else {
+                qWarning() << "Failed to open /proc/partitions";
             }
 
             //Device names that end with a #[^p]# are HP Smart Array Devices (disks)
@@ -109,7 +115,7 @@ void ProcPartitionsInfo::loadProcPartitionsInfoCache()
             }
 
             if (device != "") {
-                //add potential device to the list
+                qDebug() << "Adding device to cache:" << device;
                 devicePathsCache.push_back("/dev/" + device);
             }
             line = in.readLine();

@@ -22,11 +22,12 @@ static const QString saveKeyPath = "/root/.deepin-diskmanager-service";     //ke
 
 LUKSOperator::LUKSOperator()
 {
-
+    qDebug() << "LUKSOperator constructor called";
 }
 
 bool LUKSOperator::updateLUKSInfo(DeviceInfoMap &dev, LVMInfo &lvmInfo, LUKSMap &luks)
 {
+    qDebug() << "Updating LUKS information";
     m_dev = &dev;
     m_lvmInfo = &lvmInfo;
     resetLuksMap(luks);
@@ -87,10 +88,12 @@ bool LUKSOperator::updateLUKSInfo(DeviceInfoMap &dev, LVMInfo &lvmInfo, LUKSMap 
 
 bool LUKSOperator::encrypt(LUKSMap &luks, LUKS_INFO &luksInfo)
 {
+    qDebug() << "Starting encryption for device:" << luksInfo.m_devicePath;
     //判断参数是否正确
     if (!(luksInfo.m_crypt == CRYPT_CIPHER::AES_XTS_PLAIN64 || luksInfo.m_crypt == CRYPT_CIPHER::SM4_XTS_PLAIN64)
             || luksInfo.m_devicePath.isEmpty()
             || luksInfo.m_decryptStr.isEmpty()) {
+        qWarning() << "Invalid arguments for encryption";
         return setLUKSErr(luks, CRYPTError::CRYPT_ERR_ENCRYPT_ARGUMENT);
     }
     //加密
@@ -109,10 +112,12 @@ bool LUKSOperator::encrypt(LUKSMap &luks, LUKS_INFO &luksInfo)
 
 bool LUKSOperator::decrypt(LUKSMap &luks, LUKS_INFO &luksInfo)
 {
+    qDebug() << "Starting decryption for device:" << luksInfo.m_devicePath;
     //判断参数是否正确
     if (luksInfo.m_mapper.m_dmName.isEmpty()
             || luksInfo.m_devicePath.isEmpty()
             || luksInfo.m_decryptStr.isEmpty()) {
+        qWarning() << "Invalid arguments for decryption";
         return setLUKSErr(luks, CRYPTError::CRYPT_ERR_ENCRYPT_ARGUMENT);
     }
 
@@ -476,6 +481,7 @@ bool LUKSOperator::isLUKS(QString devPath)
 
 bool LUKSOperator::format(const LUKS_INFO &luks)
 {
+    qInfo() << "Formatting device for LUKS:" << luks.m_devicePath << "with cipher:" << Utils::getCipherStr(luks.m_crypt);
     QString outPut, error;
     QString cmd = QString("cryptsetup --cipher %1 --key-size 256 --hash sha256 luksFormat --label=%2 %3 -q")
                         .arg(Utils::getCipherStr(luks.m_crypt))
@@ -490,6 +496,7 @@ bool LUKSOperator::format(const LUKS_INFO &luks)
 
 bool LUKSOperator::open(const LUKS_INFO &luks)
 {
+    qDebug() << "Opening LUKS device:" << luks.m_devicePath << "with mapper:" << luks.m_mapper.m_dmName;
     QString outPut, error;
     QString cmd = QString("cryptsetup open %1 %2 -q")
                         .arg(luks.m_devicePath)
@@ -508,6 +515,7 @@ bool LUKSOperator::testKey(const LUKS_INFO &luks)
 
 bool LUKSOperator::close(const LUKS_INFO &luks)
 {
+    qDebug() << "Closing LUKS device:" << luks.m_mapper.m_dmPath;
     QString cmd, strout, strerr;
     cmd = QString("cryptsetup close %1").arg(luks.m_mapper.m_dmPath);
     return Utils::executCmd(cmd, strout, strerr) == 0;
@@ -560,6 +568,7 @@ bool LUKSOperator::updateDecryptToken(LUKS_INFO &info, bool isFirst)
 
 bool LUKSOperator::addKeyFile(const LUKS_INFO &luks)
 {
+    qInfo() << "Adding key file for LUKS device:" << luks.m_devicePath;
     //创建文件
     QDir dir;
     if(!dir.exists(saveKeyPath)){
@@ -586,6 +595,7 @@ bool LUKSOperator::addKeyFile(const LUKS_INFO &luks)
 
 bool LUKSOperator::deleteKeyFile(const LUKS_INFO &luks)
 {
+    qInfo() << "Deleting key file for LUKS device:" << luks.m_devicePath;
     QString filePath = QString("%1/%2.key").arg(saveKeyPath).arg(luks.m_dmUUID);
     if (!QFile::exists(filePath)) {
         return true;

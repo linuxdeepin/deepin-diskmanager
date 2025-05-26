@@ -7,6 +7,7 @@
 #include "partedproxy/dmdbushandler.h"
 #include "messagebox.h"
 #include "unmountwarningdialog.h"
+#include <QDebug>
 
 #include <DLabel>
 #include <DFrame>
@@ -17,6 +18,7 @@
 UnmountDialog::UnmountDialog(QWidget *parent)
     : DDBase(parent)
 {
+    qDebug() << "UnmountDialog initialized";
     initUi();
     initConnection();
 }
@@ -34,14 +36,17 @@ void UnmountDialog::initUi()
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         setTitle(tr("Unmount %1").arg(info.m_path));
+        qDebug()  << "Preparing to unmount partition:" << info.m_path;
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
         setTitle(tr("Unmount %1").arg(lvInfo.m_lvName));
+        qDebug()  << "Preparing to unmount logical volume:" << lvInfo.m_lvName;
 
         tipLabel->setText(tr("Make sure there are no programs running on the logical volume"));
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         setTitle(tr("Unmount %1").arg(info.m_path));
+        qDebug()  << "Preparing to unmount disk:" << info.m_path;
     }
 
     int index = addButton(tr("Cancel"), false, ButtonNormal);
@@ -62,15 +67,19 @@ void UnmountDialog::umountCurMountPoints()
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            qDebug()  << "Unmounting encrypted partition:" << info.m_path;
             DMDbusHandler::instance()->cryptUmount(DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path), info.m_path);
         } else {
+            qDebug()  << "Unmounting partition:" << info.m_path;
             DMDbusHandler::instance()->unmount();
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
         if (lvInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            qDebug()  << "Unmounting encrypted logical volume:" << lvInfo.m_lvName;
             DMDbusHandler::instance()->cryptUmount(DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(lvInfo.m_lvPath), lvInfo.m_lvName);
         } else {
+            qDebug()  << "Unmounting logical volume:" << lvInfo.m_lvName;
             LVAction lvAction;
             lvAction.m_vgName = lvInfo.m_vgName;
             lvAction.m_lvName = lvInfo.m_lvName;
@@ -84,6 +93,7 @@ void UnmountDialog::umountCurMountPoints()
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            qDebug()  << "Unmounting encrypted disk:" << info.m_path;
             DMDbusHandler::instance()->cryptUmount(DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path), info.m_path);
         }
     }
@@ -119,13 +129,15 @@ void UnmountDialog::onButtonClicked(int index, const QString &text)
             }
         }
 
-        qDebug() << __FUNCTION__;
+        qDebug() << "Checking system path status";
         if (isSysPath || partitionFlag == 4 || lvFlag) {
+            qWarning() << "Attempting to unmount system path - showing warning dialog";
             UnmountWarningDialog unmountWarningDialog;
             unmountWarningDialog.setObjectName("firstWarning");
             unmountWarningDialog.setAccessibleName("firstWarning");
             if (unmountWarningDialog.exec() == DDialog::Accepted) {
                 umountCurMountPoints();
+                qDebug() << "User canceled unmount operation";
                 close();
             }
         } else {

@@ -23,6 +23,7 @@ LVMError LVMOperator::m_lvmErr = LVM_ERR_NORMAL;
 /******************************** 初始化操作 ******************************/
 LVMOperator::LVMOperator()
 {
+    qDebug() << "LVMOperator constructor called";
     initSuport();
 }
 
@@ -35,6 +36,7 @@ void LVMOperator::resetLVMInfo(LVMInfo &lvmInfo)
 
 bool LVMOperator::initSuport()
 {
+    qDebug() << "Initializing LVM support";
     if (!m_initSupport) {
         m_lvmSupport.LVM_CMD_lvchange = getExecSupport("lvchange");
         m_lvmSupport.LVM_CMD_lvconvert = getExecSupport("lvconvert");
@@ -398,6 +400,7 @@ bool LVMOperator::updateLVInfo(LVMInfo &lvmInfo, VGInfo &vg)
 bool LVMOperator::createVG(LVMInfo &lvmInfo, QString vgName, QList<PVData> devList, long long size)
 {
     if (LVM_CMD_Support::NONE == m_lvmSupport.LVM_CMD_vgcreate  || LVM_CMD_Support::NONE == m_lvmSupport.LVM_CMD_pvcreate) {
+        qWarning() << "Failed to create VG: required commands not supported";
         return setLVMErr(lvmInfo, LVMError::LVM_ERR_NO_CMD_SUPPORT);
     }
 
@@ -407,6 +410,7 @@ bool LVMOperator::createVG(LVMInfo &lvmInfo, QString vgName, QList<PVData> devLi
 
     //判断vg是否已经存在 存在退出
     if (lvmInfo.vgExists(vgName)) {
+        qWarning() << "Failed to create VG: VG already exists -" << vgName;
         return setLVMErr(lvmInfo, LVMError::LVM_ERR_VG_ALREADY_EXISTS);
     }
     //创建pv
@@ -546,11 +550,13 @@ bool LVMOperator::resizeVG(LVMInfo &lvmInfo, QString vgName, QList<PVData> devLi
 bool LVMOperator::createLV(LVMInfo &lvmInfo, QString vgName, QList<LVAction> lvList)
 {
     if (LVM_CMD_Support::NONE == m_lvmSupport.LVM_CMD_lvcreate) {
+        qWarning() << "Failed to create LV: lvcreate command not supported";
         return setLVMErr(lvmInfo, LVMError::LVM_ERR_NO_CMD_SUPPORT);
     }
 
     //判断参数是否正确
     if (vgName.isEmpty()  || lvList.count() == 0) {
+        qWarning() << "Failed to create LV: invalid arguments";
         return setLVMErr(lvmInfo, LVMError::LVM_ERR_LV_ARGUMENT);
     }
 
@@ -590,7 +596,9 @@ bool LVMOperator::createLV(LVMInfo &lvmInfo, QString vgName, QList<LVAction> lvL
     }
 
     //更新lv数据
+    qInfo() << "Creating LV in VG:" << vgName << "with size:" << lvList.first().m_lvByteSize;
     updateLVInfo(lvmInfo, vg);
+    qInfo() << "Successfully created LV in VG:" << vgName;
     return setLVMErr(lvmInfo, LVMError::LVM_ERR_NORMAL);
 }
 

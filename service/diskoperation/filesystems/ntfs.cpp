@@ -12,6 +12,7 @@ namespace DiskManager {
 
 FS NTFS::getFilesystemSupport()
 {
+    qDebug() << "[NTFS]::getFilesystemSupport - Enter";
     FS fs(FS_NTFS);
 
     fs.busy = FS::GPARTED;
@@ -51,11 +52,13 @@ FS NTFS::getFilesystemSupport()
     // For GParted this means 2 MiB because smallest GUI unit is MiB.
     m_fsLimits.min_size = 2 * MEBIBYTE;
 
+    qDebug() << "[NTFS]::getFilesystemSupport - Exit";
     return fs;
 }
 
 void NTFS::setUsedSectors( Partition & partition )
 {
+    qDebug() << "[NTFS]::setUsedSectors - Enter";
     QString output, error, strmatch;
 
     m_blocksSize = m_numOfFreeOrUsedBlocks = m_totalNumOfBlock = -1;
@@ -93,37 +96,46 @@ void NTFS::setUsedSectors( Partition & partition )
         partition.m_fsBlockSize = m_blocksSize;
     }
 
+    qDebug() << "[NTFS]::setUsedSectors - Exit";
 }
 
 void NTFS::readLabel( Partition & partition )
 {
+    qDebug() << "[NTFS]::readLabel - Enter";
     QString output, error;
     if (!Utils::executCmd(QString("ntfslabel --force").arg(partition.getPath()), output, error)) {
         partition.setFilesystemLabel(output.trimmed());
     }
+    qDebug() << "[NTFS]::readLabel - Exit";
 }
 
 bool NTFS::writeLabel( const Partition & partition)
 {
+    qDebug() << "[NTFS]::writeLabel - Enter";
     QString output, error;
     int exitcode = Utils::executCmd(QString("ntfslabel --force %1 %2").arg(partition.getPath()).arg(partition.getFileSystemLabel()), output, error);
 //    qDebug() << __FUNCTION__ << output << error;
     return exitcode == 0;
+    qDebug() << "[NTFS]::writeLabel - Exit";
 }
 
 void NTFS::readUuid(Partition & partition)
 {
+    qDebug() << "[NTFS]::readUuid - Enter/Exit";
 }
 
 bool NTFS::writeUuid( const Partition & partition)
 {
+    qDebug() << "[NTFS]::writeUuid - Enter";
     QString output, error;
     int exitcode = Utils::executCmd(QString("ntfslabel --new-serial ").arg(partition.getPath()), output, error);
     return exitcode == 0 || error.compare("Unknown error") == 0;
+    qDebug() << "[NTFS]::writeUuid - Exit";
 }
 
 bool NTFS::create(const Partition & newPartition)
 {
+    qDebug() << "[NTFS]::create - Enter";
     QString output, error;
     int exitcode = -1;
     if (newPartition.getFileSystemLabel().isEmpty() || newPartition.getFileSystemLabel() == " ") {
@@ -180,11 +192,16 @@ bool NTFS::resize(const QString &path, const QString &sizeByte, bool fillPartiti
 
 bool NTFS::checkRepair(const Partition &partition)
 {
-    return checkRepair(partition.getPath());
+    qDebug() << "[NTFS]::checkRepair - Enter";
+
+    bool result = checkRepair(partition.getPath());
+    qDebug() << "[NTFS]::checkRepair - return " << result;
+    return result;
 }
 
 bool NTFS::checkRepair(const QString &devpath)
 {
+    qDebug() << "[NTFS]::checkRepair(path) - Enter";
     QString output, error;
     int exitcode = Utils::executCmd(QString("ntfsresize -i -f -v %1").arg(devpath), output, error);
 //    qDebug() << QString("NTFS::check_repair---%1----%2").arg(output).arg(error);

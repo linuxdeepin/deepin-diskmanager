@@ -10,6 +10,7 @@
 namespace DiskManager {
 FS XFS::getFilesystemSupport()
 {
+    qDebug() << "[XFS]::getFilesystemSupport - Enter";
     FS fs(FS_XFS);
     fs.busy = FS::GPARTED;
     if (!Utils::findProgramInPath("xfs_db").isEmpty()) {
@@ -41,12 +42,14 @@ FS XFS::getFilesystemSupport()
         fs.move = FS::GPARTED;
     fs.online_read = FS::GPARTED;
 
+    qDebug() << "[XFS]::getFilesystemSupport - Exit";
     return fs;
 }
 
 
 void XFS::setUsedSectors(Partition &partition)
 {
+    qDebug() << "[XFS]::setUsedSectors - Enter";
     QString output, error, strmatch, strcmd;
     m_blocksSize = m_numOfFreeOrUsedBlocks = m_totalNumOfBlock = -1;
     strcmd = QString("xfs_db -r -c \"sb 0\" -c \"print blocksize\" -c \"print dblocks\""
@@ -83,18 +86,22 @@ void XFS::setUsedSectors(Partition &partition)
     } else {
         qDebug() << __FUNCTION__ << "dumpe2fs -h failed :" << output << error;
     }
+    qDebug() << "[XFS]::setUsedSectors - Exit";
 }
 void XFS::readLabel(Partition &partition)
 {
+    qDebug() << "[XFS]::readLabel - Enter";
     QString output, error;
     if (!Utils::executCmd(QString("xfs_db -r -c label %1").arg(partition.getPath()), output, error)) {
         auto items = output.split("=");
         if (items.size() == 2)
             partition.setFilesystemLabel(items[1].replace("\"", "").trimmed());
     }
+    qDebug() << "[XFS]::readLabel - Exit";
 }
 bool XFS::writeLabel(const Partition &partition)
 {
+    qDebug() << "[XFS]::writeLabel - Enter";
     QString cmd = "";
     if (partition.getFileSystemLabel().isEmpty())
         cmd = QString("xfs_admin -L -- %1").arg(partition.getPath());
@@ -103,22 +110,28 @@ bool XFS::writeLabel(const Partition &partition)
     QString output, error;
     int exitcode = Utils::executCmd(cmd, output, error);
     return exitcode == 0;
+    qDebug() << "[XFS]::writeLabel - Exit";
 }
 void XFS::readUuid(Partition &partition)
 {
+    qDebug() << "[XFS]::readUuid - Enter";
     QString output, error;
     if (!Utils::executCmd(QString("xfs_admin -u %1").arg(partition.getPath()), output, error)) {
         partition.m_uuid = Utils::regexpLabel(output, "^UUID[[:blank:]]*=[[:blank:]]*(" RFC4122_NONE_NIL_UUID_REGEXP ")");
     }
+    qDebug() << "[XFS]::readUuid - Exit";
 }
 bool XFS::writeUuid(const Partition &partition)
 {
+    qDebug() << "[XFS]::writeUuid - Enter";
     QString output, error;
     int exitcode = Utils::executCmd(QString("xfs_admin -U generate %1").arg(partition.getPath()), output, error);
     return exitcode == 0 || error.compare("Unknown error") == 0;
+    qDebug() << "[XFS]::writeUuid - Exit";
 }
 bool XFS::create(const Partition &newPartition)
 {
+    qDebug() << "[XFS]::create - Enter";
     QString output, error;
     int exitcode = -1;
     if (newPartition.getFileSystemLabel().isEmpty() || newPartition.getFileSystemLabel().trimmed().isEmpty()) {
@@ -178,6 +191,7 @@ bool XFS::checkRepair(const Partition &partition)
 }
 bool XFS::checkRepair(const QString &devpath)
 {
+    qDebug() << "[XFS]::checkRepair(path) - Enter";
     QString output, error;
     int exitcode = Utils::executCmd(QString("xfs_repair -v %1").arg(devpath), output, error);
     return exitcode == 0 || error.compare("Unknown error") == 0;

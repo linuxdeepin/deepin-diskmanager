@@ -18,6 +18,7 @@
 #include "blockspecial.h"
 
 #include <QMap>
+#include <QDebug>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -45,6 +46,7 @@ BlockSpecial::BlockSpecial()
     , m_major(0UL)
     , m_minor(0UL)
 {
+    qDebug() << "BlockSpecial object created with empty name";
 }
 
 BlockSpecial::BlockSpecial(const QString &name)
@@ -52,6 +54,7 @@ BlockSpecial::BlockSpecial(const QString &name)
     , m_major(0UL)
     , m_minor(0UL)
 {
+    qDebug() << "BlockSpecial object created for device:" << name;
     MMNumberMapping::const_iterator mmNumIter = mmNumberCache.find(name);
     if (mmNumIter != mmNumberCache.end()) {
         // Use already cached major, minor pair
@@ -76,15 +79,18 @@ BlockSpecial::BlockSpecial(const QString &name)
 
 BlockSpecial::~BlockSpecial()
 {
+    qDebug() << "BlockSpecial object destroyed for device:" << m_name;
 }
 
 void BlockSpecial::clearCache()
 {
+    qDebug() << "Clearing block device number cache";
     mmNumberCache.clear();
 }
 
 void BlockSpecial::registerBlockSpecial(const QString &name, unsigned long major, unsigned long minor)
 {
+    qDebug() << "Registering block device:" << name << "with major:" << major << "minor:" << minor;
     MmNumber pair;
     pair.m_major = major;
     pair.m_minor = minor;

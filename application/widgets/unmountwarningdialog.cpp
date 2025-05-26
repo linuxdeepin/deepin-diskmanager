@@ -4,12 +4,14 @@
 
 
 #include "unmountwarningdialog.h"
+#include <QDebug>
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
 UnmountWarningDialog::UnmountWarningDialog(QWidget *parent) : DDBase(parent)
 {
+    qDebug() << "UnmountWarningDialog initialized";
     initUi();
     initConnection();
 }
@@ -57,6 +59,7 @@ void UnmountWarningDialog::initUi()
     int index = addButton(tr("Cancel"), true, ButtonNormal);
     m_okCode = addButton(tr("Unmount"), false, ButtonWarning);
     getButton(m_okCode)->setDisabled(true);
+    qDebug() << "Unmount button initially disabled";
 
     getButton(index)->setAccessibleName("cancelBtn");
     getButton(m_okCode)->setAccessibleName("unmountBtn");
@@ -72,10 +75,12 @@ void UnmountWarningDialog::onCheckBoxStateChange(int state)
     switch (state) {
     case Qt::CheckState::Unchecked: {
         getButton(m_okCode)->setDisabled(true);
+        qDebug() << "Unmount button disabled";
         break;
     }
     case Qt::CheckState::Checked: {
         getButton(m_okCode)->setDisabled(false);
+        qDebug() << "Unmount button enabled";
         break;
     }
     default:

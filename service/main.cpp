@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     //set env otherwise utils excutecmd  excute command failed
     QString PATH = qgetenv("PATH");
 
-    qDebug() << "main start" << PATH;
+    qDebug() << "Application starting with PATH:" << PATH;
     if (PATH.isEmpty()) {
         PATH = "/usr/bin";
     }
@@ -40,9 +40,10 @@ int main(int argc, char *argv[])
 
     uint frontEndPid;
     QString frontEndDBusName;
-    if (argc < 3)
+    if (argc < 3) {
+        qCritical() << "Invalid arguments count:" << argc;
         return 1;
-    else {
+    } else {
         QString frontEndPidString(argv[1]);
         frontEndPid = frontEndPidString.toUInt();
         if (frontEndPid == 0)

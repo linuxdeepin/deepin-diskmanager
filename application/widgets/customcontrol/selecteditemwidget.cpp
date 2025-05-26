@@ -15,6 +15,8 @@ SelectedItemWidget::SelectedItemWidget(PVInfoData pvInfoData, QWidget *parent)
     : RadiusWidget(parent)
     , m_pvInfoData(pvInfoData)
 {
+    qDebug() << "Creating selected item for:"
+                             << (m_pvInfoData.m_disktype == "unrecognized" ? m_pvInfoData.m_diskPath : m_pvInfoData.m_partitionPath);
     initUi();
     initConnection();
 }
@@ -60,12 +62,15 @@ void SelectedItemWidget::initUi()
     m_iconButton->setFixedSize(17, 17);
 
     if (m_pvInfoData.m_disktype == "unrecognized") {
+        qDebug() << "Setting unrecognized disk info:" << m_pvInfoData.m_diskPath << m_pvInfoData.m_diskSize;
         m_nameInfo->setText(m_pvInfoData.m_diskPath);
         m_sizeInfo->setText(m_pvInfoData.m_diskSize);
     } else {
         if (m_pvInfoData.m_partitionPath == "unallocated") {
+            qDebug() << "Setting unallocated partition info:" << m_pvInfoData.m_diskPath;
             m_nameInfo->setText(m_pvInfoData.m_diskPath);
         } else {
+            qDebug() << "Setting partition info:" << m_pvInfoData.m_partitionPath << m_pvInfoData.m_partitionSize;
             m_nameInfo->setText(m_pvInfoData.m_partitionPath);
         }
 
@@ -95,6 +100,8 @@ void SelectedItemWidget::initConnection()
 
 void SelectedItemWidget::onDeleteClicked()
 {
+    qDebug() << "Delete clicked for:"
+                           << (m_pvInfoData.m_disktype == "unrecognized" ? m_pvInfoData.m_diskPath : m_pvInfoData.m_partitionPath);
     emit deleteItem(m_pvInfoData);
 }
 

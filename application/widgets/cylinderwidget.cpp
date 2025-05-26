@@ -10,16 +10,18 @@
 
 CylinderWidget::CylinderWidget(QWidget *parent) : QLabel(parent)
 {
-
+    qDebug()  << "[CylinderWidget] Initializing cylinder widget";
 }
 
 void CylinderWidget::setUserData(const QVariant &userData)
 {
+    qDebug() << "[CylinderWidget] Setting user data";
     m_userData = userData;
 }
 
 QVariant CylinderWidget::getUserData()
 {
+    qDebug() << "[CylinderWidget] Getting user data";
     return m_userData;
 }
 

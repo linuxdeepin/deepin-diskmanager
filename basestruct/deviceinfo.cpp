@@ -8,11 +8,13 @@
 /*********************************** stCustest          *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const stCustest &stcus)
 {
+    qDebug() << "Starting stCustest serialization";
     argument.beginStructure();
     argument << stcus.m_length
              << stcus.m_heads
              << stcus.m_path;
     argument.endStructure();
+    qDebug() << "Completed stCustest serialization";
     return argument;
 }
 
@@ -29,6 +31,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, stCustest &stcus)
 /*********************************** HardDiskInfo       *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const HardDiskInfo &inhdinfo)
 {
+    qDebug() << "Starting HardDiskInfo serialization";
     argument.beginStructure();
     argument << inhdinfo.m_model
              << inhdinfo.m_vendor
@@ -45,6 +48,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const HardDiskInfo &inhdinfo)
              << inhdinfo.m_firmwareVersion
              << inhdinfo.m_speed;
     argument.endStructure();
+    qDebug() << "Completed HardDiskInfo serialization";
     return argument;
 }
 
@@ -71,6 +75,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, HardDiskInfo &inh
 /*********************************** HardDiskStatusInfo *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const HardDiskStatusInfo &inhdinfo)
 {
+    qDebug() << "Starting HardDiskStatusInfo serialization";
     argument.beginStructure();
     argument << inhdinfo.m_id
              << inhdinfo.m_attributeName
@@ -83,10 +88,12 @@ QDBusArgument &operator<<(QDBusArgument &argument, const HardDiskStatusInfo &inh
              << inhdinfo.m_whenFailed
              << inhdinfo.m_rawValue;
     argument.endStructure();
+    qDebug() << "Completed HardDiskStatusInfo serialization";
     return argument;
 }
 const QDBusArgument &operator>>(const QDBusArgument &argument, HardDiskStatusInfo &inhdinfo)
 {
+    qDebug() << "Starting HardDiskStatusInfo deserialization";
     argument.beginStructure();
     argument >> inhdinfo.m_id
              >> inhdinfo.m_attributeName
@@ -99,6 +106,8 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, HardDiskStatusInf
              >> inhdinfo.m_whenFailed
              >> inhdinfo.m_rawValue;
     argument.endStructure();
+
+    qDebug() << "Completed HardDiskStatusInfo deserialization";
     return argument;
 }
 /*********************************** DeviceInfo         *********************************************/
@@ -159,22 +168,26 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, DeviceInfo &info)
     info.m_vgFlag = static_cast<LVMFlag>(flag);
     info.m_luksFlag = static_cast<LUKSFlag>(flag2);
     argument.endStructure();
+    qDebug() << "Completed DeviceInfo deserialization";
     return argument;
 }
 
 DeviceInfo::DeviceInfo()
     : m_readonly(false)
 {
+    qDebug() << "Initializing DeviceInfo with default values";
     m_length = m_heads = m_sectors = m_cylinders = m_cylsize = m_sectorSize = m_maxPrims = m_highestBusy = m_maxPartitionNameLength = 0;
     m_path = m_model = m_serialNumber = m_disktype = m_mediaType = m_interface = QString("");
     m_partition.clear();
     m_vgFlag = LVM_FLAG_NOT_PV;
     m_vglist.clear();
     m_luksFlag = LUKSFlag::NOT_CRYPT_LUKS;
+    qDebug() << "DeviceInfo initialization completed";
 }
 /*********************************** WipeAction         *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const WipeAction &data)
 {
+    qDebug() << "Starting WipeAction serialization";
     argument.beginStructure();
     argument << data.m_fstype
              << data.m_path
@@ -193,6 +206,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const WipeAction &data)
 
 const QDBusArgument &operator>>(const QDBusArgument &argument, WipeAction &data)
 {
+    qDebug() << "Starting WipeAction deserialization";
     argument.beginStructure();
     int flag1, flag2;
     argument >> data.m_fstype

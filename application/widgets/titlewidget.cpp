@@ -14,6 +14,7 @@
 #include "createvgwidget.h"
 #include "removepvwidget.h"
 #include "decryptdialog.h"
+#include <QDebug>
 
 #include <QMouseEvent>
 #include <QHBoxLayout>
@@ -22,6 +23,7 @@
 TitleWidget::TitleWidget(DWidget *parent)
     : DWidget(parent)
 {
+    qDebug() << "TitleWidget initialized";
     initUi();
     initConnection();
 }
@@ -181,6 +183,7 @@ DPushButton *TitleWidget::createBtn(const QString &btnName, const QString &objNa
 
 void TitleWidget::showPartInfoWidget()
 {
+    qDebug() << "Show partition info widget";
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
     PartitionDialog dlg(this);
     dlg.setObjectName("partitionDialog");
@@ -213,6 +216,7 @@ void TitleWidget::showPartInfoWidget()
 
 void TitleWidget::showFormateInfoWidget()
 {
+    qDebug() << "Show format dialog";
     setCurDevicePath(DMDbusHandler::instance()->getCurDevicePath());
 
     FormateDialog dlg(this);
@@ -254,6 +258,7 @@ bool TitleWidget::showNoFileSystemWarningDialog(const LUKS_INFO &luksInfo)
 
 void TitleWidget::showMountInfoWidget()
 {
+    qDebug() << "Show mount dialog";
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         setCurDevicePath(info.m_devicePath);
@@ -315,6 +320,7 @@ void TitleWidget::showMountInfoWidget()
 
 void TitleWidget::showUnmountInfoWidget()
 {
+    qDebug() << "Show unmount dialog";
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
         setCurDevicePath(DMDbusHandler::instance()->getCurPartititonInfo().m_devicePath);
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
@@ -335,6 +341,7 @@ void TitleWidget::showUnmountInfoWidget()
 
 void TitleWidget::showResizeInfoWidget()
 {
+    qDebug() << "Show resize dialog";
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
     setCurDevicePath(info.m_devicePath);
     FS_Limits limits = info.m_fsLimits;
@@ -361,6 +368,7 @@ void TitleWidget::showResizeInfoWidget()
 
 void TitleWidget::onCreateLVClicked()
 {
+    qDebug() << "Create LV button clicked";
     setCurVGName(DMDbusHandler::instance()->getCurLVInfo().m_vgName);
     PartitionDialog dlg(this);
     dlg.setTitleText(tr("Create logical volume"), tr("The disks will be formatted if you create a logical volume"));
@@ -379,6 +387,7 @@ void TitleWidget::onCreateLVClicked()
 
 void TitleWidget::onDeleteLVClicked()
 {
+    qDebug() << "Delete LV button clicked";
     LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
     setCurVGName(lvInfo.m_vgName);
 
@@ -413,6 +422,7 @@ void TitleWidget::onDeleteLVClicked()
 
 void TitleWidget::onResizeLVClicked()
 {
+    qDebug() << "Resize LV button clicked";
     LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
     setCurVGName(lvInfo.m_vgName);
     if(lvInfo.m_lvFsType == FS_NTFS){
@@ -465,6 +475,7 @@ void TitleWidget::onResizeLVClicked()
 
 void TitleWidget::onCreateVGClicked()
 {
+    qDebug() << "Create VG button clicked";
     PartitionDialog dlg(this);
     dlg.setTitleText(tr("Create volume group"), tr("The disks will be formatted if you create a volume group"));
     dlg.setObjectName("createVGDialog");
@@ -480,6 +491,7 @@ void TitleWidget::onCreateVGClicked()
 
 void TitleWidget::onDeleteVGClicked()
 {
+    qDebug() << "Delete VG button clicked";
     VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
     setCurVGName(vgInfo.m_vgName);
     if (DMDbusHandler::instance()->isExistMountLV(vgInfo)) {
@@ -513,6 +525,7 @@ void TitleWidget::onDeleteVGClicked()
 
 void TitleWidget::onResizeVGClicked()
 {
+    qDebug() << "Resize VG button clicked";
     setCurVGName(DMDbusHandler::instance()->getCurVGInfo().m_vgName);
 
     CreateVGWidget createVGWidget(CreateVGWidget::RESIZE, this);
@@ -525,6 +538,7 @@ void TitleWidget::onResizeVGClicked()
 
 void TitleWidget::onDeletePVClicked()
 {
+    qDebug() << "Delete PV button clicked";
     QMap<QString, VGInfo> mapVGInfo = DMDbusHandler::instance()->probLVMInfo().m_vgInfo;
     bool vgIsMount = false;
     QStringList lstVGName;
@@ -845,7 +859,7 @@ void TitleWidget::updateEncryptDeviceBtnStatus(const LUKS_INFO &luksInfo)
 void TitleWidget::onCurSelectChanged()
 {
     updateBtnStatus();
-    qDebug() << __FUNCTION__ << "-1--1-";
+    qDebug() << "Current selection changed";
 }
 
 void TitleWidget::onUpdateUsb()

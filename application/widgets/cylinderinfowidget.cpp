@@ -20,12 +20,14 @@ CylinderInfoWidget::CylinderInfoWidget(int cylNumber, QWidget *parent)
     : DFrame(parent)
     , m_cylNumber(cylNumber)
 {
+    qDebug()  << "[CylinderInfoWidget] Initializing with cylinder count:" << cylNumber;
     initUI();
     initConnections();
 }
 
 void CylinderInfoWidget::initUI()
 {
+    qDebug() << "[CylinderInfoWidget] Initializing UI components";
     m_gridLayout = new QGridLayout;
 
     int initCount = 360;
@@ -145,6 +147,7 @@ void CylinderInfoWidget::initUI()
 
 void CylinderInfoWidget::initConnections()
 {
+    qDebug() << "[CylinderInfoWidget] Setting up signal-slot connections";
     connect(m_scrollBar, &QScrollBar::valueChanged, this, &CylinderInfoWidget::onScrollBarValueChanged);
 }
 
@@ -304,9 +307,13 @@ void CylinderInfoWidget::setCylinderNumber(int cylNumber)
 
 void CylinderInfoWidget::setCurCheckBadBlocksInfo(const QString &LBANumber, const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo)
 {
+    qDebug()  << "[CylinderInfoWidget] Updating cylinder info - LBA:" << LBANumber
+            << "Cylinder:" << cylinderNumber << "Status:" << cylinderStatus << "Time:" << cylinderTimeConsuming << "ms";
     ++m_curCheckCount;
 
     if (cylinderStatus == "bad") {
+        qWarning() << "[CylinderInfoWidget] Bad sector detected - LBA:" << LBANumber
+                  << "Cylinder:" << cylinderNumber;
         ++m_badSectorsCount;
     }
 
@@ -371,9 +378,12 @@ void CylinderInfoWidget::setCurCheckBadBlocksInfo(const QString &LBANumber, cons
 
 void CylinderInfoWidget::updateCylinderInfo(int number, const QString &LBANumber, const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo, const QString &repair)
 {
+    qDebug() << "[CylinderInfoWidget] Updating cylinder widget - Number:" << number
+             << "LBA:" << LBANumber << "Status:" << cylinderStatus << "Repair:" << repair;
     CylinderWidget *cylinderWidget = m_widget->findChild<CylinderWidget *>(QString("%1").arg(number));
 
     if(cylinderWidget == nullptr) {
+        qWarning() << "[CylinderInfoWidget] Cylinder widget not found for number:" << number;
         return;
     }
 
@@ -438,6 +448,7 @@ void CylinderInfoWidget::setCurRepairBadBlocksInfo(const QString &cylinderNumber
 
 void CylinderInfoWidget::enterSlot()
 {
+    qDebug() << "[CylinderInfoWidget] Mouse entered cylinder widget";
     CylinderWidget *label = qobject_cast<CylinderWidget *>(sender());
 
     QMap<QString, QVariant> mapInfo = label->getUserData().toMap();
@@ -474,6 +485,7 @@ void CylinderInfoWidget::enterSlot()
 
 void CylinderInfoWidget::leaveSlot()
 {
+    qDebug() << "[CylinderInfoWidget] Mouse left cylinder widget";
     CylinderWidget *label = qobject_cast<CylinderWidget *>(sender());
     QMap<QString, QVariant> mapInfo = label->getUserData().toMap();
     if (mapInfo.isEmpty()) {

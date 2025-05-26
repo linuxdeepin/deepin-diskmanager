@@ -27,6 +27,7 @@ namespace DiskManager {
 
 FS LinuxSwap::getFilesystemSupport()
 {
+    qDebug() << "Checking Linux swap filesystem support";
     FS fs(FS_LINUX_SWAP);
 
     fs.busy = FS::GPARTED;
@@ -54,6 +55,7 @@ FS LinuxSwap::getFilesystemSupport()
 
 void LinuxSwap::setUsedSectors(Partition &partition)
 {
+    qDebug() << "Setting used sectors for swap partition:" << partition.getPath();
     if (partition.m_busy) {
         m_numOfFreeOrUsedBlocks = -1;
         QFile file("/proc/swaps");
@@ -87,6 +89,7 @@ void LinuxSwap::setUsedSectors(Partition &partition)
 
 void LinuxSwap::readLabel(Partition &partition)
 {
+    qDebug() << "Reading label for swap partition:" << partition.getPath();
     QString output, error, label;
     Utils::executCmd(QString("swaplabel %1").arg(partition.getPath()), output, error);
     label = Utils::regexpLabel(output, "(?<=LABEL:).*(?=\n)");
@@ -97,6 +100,8 @@ void LinuxSwap::readLabel(Partition &partition)
 
 bool LinuxSwap::writeLabel(const Partition &partition)
 {
+    qDebug() << "Writing label for swap partition:" << partition.getPath()
+            << "new label:" << partition.getFileSystemLabel();
     QString output, error;
     int exitcode = Utils::executCmd(QString("swaplabel -L %1 %2").arg(partition.getFileSystemLabel()).arg(partition.getPath()),
                                     output, error);
@@ -105,6 +110,7 @@ bool LinuxSwap::writeLabel(const Partition &partition)
 
 void LinuxSwap::readUuid(Partition &partition)
 {
+    qDebug() << "Reading UUID for swap partition:" << partition.getPath();
     QString output, error;
     Utils::executCmd(QString("swaplabel %1").arg(partition.getPath()), output, error);
     partition.m_uuid = Utils::regexpLabel(output, "(?<=UUID:).*(?=\n)");
@@ -112,6 +118,7 @@ void LinuxSwap::readUuid(Partition &partition)
 
 bool LinuxSwap::writeUuid(const Partition &partition)
 {
+    qDebug() << "Writing new UUID for swap partition:" << partition.getPath();
     QString output, error;
     int exitcode = Utils::executCmd(QString("swaplabel -L %1 %2").arg(Utils::createUuid()).arg(partition.getPath()),
                                     output, error);
@@ -120,6 +127,8 @@ bool LinuxSwap::writeUuid(const Partition &partition)
 
 bool LinuxSwap::create(const Partition &new_partition)
 {
+    qDebug() << "Creating swap partition on:" << new_partition.getPath()
+            << "with label:" << new_partition.getFileSystemLabel();
     QString output, error;
     int exitcode = Utils::executCmd(QString("mkswap -L %1 %2").arg(new_partition.getFileSystemLabel()).arg(new_partition.getPath()),
                                     output, error);
@@ -128,6 +137,8 @@ bool LinuxSwap::create(const Partition &new_partition)
 
 bool LinuxSwap::resize(const Partition &partitionNew, bool fillPartition)
 {
+    qDebug() << "Resizing swap partition:" << partitionNew.getPath()
+            << "fill partition:" << fillPartition;
     QString output, error;
     QString command = QString("mkswap -L %1 ").arg(partitionNew.getFileSystemLabel());
     if (!partitionNew.m_uuid.isEmpty())

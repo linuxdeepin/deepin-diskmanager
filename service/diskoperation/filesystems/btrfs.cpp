@@ -5,6 +5,7 @@
 #include "btrfs.h"
 #include "fsinfo.h"
 #include <QDir>
+#include <QDebug>
 
 namespace DiskManager
 {
@@ -18,6 +19,7 @@ std::map<BlockSpecial, BTRFS_Device> btrfs_device_cache;
 
 FS Btrfs::getFilesystemSupport()
 {
+    qDebug() << "Checking Btrfs filesystem support";
     FS fs(FS_BTRFS);
 
     fs.busy = FS::GPARTED ;
@@ -67,6 +69,7 @@ FS Btrfs::getFilesystemSupport()
 
 void Btrfs::setUsedSectors(Partition &partition)
 {
+    qDebug() << "Setting used sectors for partition:" << partition.getPath();
     QString output, error;
     Utils::executCmd(QString("btrfs filesystem show %1").arg(partition.getPath()), output, error);
 
@@ -121,6 +124,7 @@ void Btrfs::setUsedSectors(Partition &partition)
 
 void Btrfs::readLabel(Partition &partition)
 {
+    qDebug() << "Reading label for partition:" << partition.getPath();
     QString output, error;
     Utils::executCmd(QString("btrfs filesystem show %1").arg(partition.getPath()), output, error);
 
@@ -141,6 +145,8 @@ void Btrfs::readLabel(Partition &partition)
 
 bool Btrfs::writeLabel(const Partition &partition)
 {
+    qDebug() << "Writing label for partition:" << partition.getPath()
+            << "new label:" << partition.getFileSystemLabel();
     QString output, error;
     if (partition.m_busy)
         Utils::executCmd(QString("umount -v %1").arg(partition.getPath()), output, error);
@@ -156,6 +162,7 @@ bool Btrfs::writeLabel(const Partition &partition)
 
 void Btrfs::readUuid(Partition &partition)
 {
+    qDebug() << "Reading UUID for partition:" << partition.getPath();
     QString output, error;
     auto exitCode = Utils::executCmd(QString("btrfs filesystem show %1").arg(partition.getPath()), output, error);
     //In many cases the exit status doesn't reflect valid output or an error condition
@@ -169,6 +176,7 @@ void Btrfs::readUuid(Partition &partition)
 
 bool Btrfs::writeUuid(const Partition &partition)
 {
+    qInfo() << "Writing new UUID for partition:" << partition.getPath();
     QString output, error;
     auto exitCode = Utils::executCmd(QString("btrfstune -f -u ").arg(partition.getPath()), output, error);
     return exitCode == 0;
@@ -176,6 +184,8 @@ bool Btrfs::writeUuid(const Partition &partition)
 
 bool Btrfs::create(const Partition &new_partition)
 {
+    qDebug() << "Creating Btrfs filesystem on:" << new_partition.getPath()
+            << "with label:" << new_partition.getFileSystemLabel();
     QString output, error;
     QString cmd;
     if (new_partition.getFileSystemLabel().isEmpty() || new_partition.getFileSystemLabel() == " ") {
@@ -189,6 +199,8 @@ bool Btrfs::create(const Partition &new_partition)
 
 bool Btrfs::resize(const Partition &partitionNew, bool fillPartition)
 {
+    qDebug() << "Resizing Btrfs filesystem on:" << partitionNew.getPath()
+            << "fill partition:" << fillPartition;
     bool success = true ;
     QString path = partitionNew.getPath();
     const BTRFS_Device& btrfsDev = getCacheEntry(path);
@@ -251,6 +263,7 @@ bool Btrfs::resize(const QString &path, const QString &size, bool fillPartition)
 
 bool Btrfs::checkRepair(const Partition &partition)
 {
+    qDebug() << "Checking/repairing Btrfs filesystem on:" << partition.getPath();
     QString path = partition.getPath();
     return checkRepair(path);
 }

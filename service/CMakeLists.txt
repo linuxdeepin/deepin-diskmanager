@@ -20,7 +20,9 @@ set(APP_USBREMOVE_FILES "${APP_EDEV_DIR}/USBremove.sh")
 set(APP_DEEPIN_DISKMANAGER_SERVICE_BIN "${APP_EDEV_DIR}/deepin-diskmanager-authenticateProxy")
 set(APP_POLICY_DIR "policy")
 set(APP_POLICY_FILES "${APP_POLICY_DIR}/com.deepin.diskmanager.policy")
-
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIE")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIE")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pie")
 # Find the library
 find_package(PkgConfig REQUIRED)
 find_package(Dtk${DTK_VERSION}Gui REQUIRED)

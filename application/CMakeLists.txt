@@ -41,6 +41,10 @@ set(APP_DESKTOP "${APP_RES_DIR}/deepin-diskmanager.desktop")
 set(APP_QRC "${APP_RES_DIR}/appicons.qrc")
 set(APP_ICONPATH "${APP_RES_DIR}/icons/deepin-diskmanager.svg")
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIE")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIE")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pie")
+
 configure_file(${APP_RES_DIR}/environments.h.in environments.h @ONLY)
 #add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/translations")
 #set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM 1 "${CMAKE_CURRENT_SOURCE_DIR}/translations")

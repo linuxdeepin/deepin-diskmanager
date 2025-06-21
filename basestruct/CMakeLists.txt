@@ -33,6 +33,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::DBus
+    Threads::Threads
 )
 
 set(CMAKE_INSTALL_PREFIX /usr)

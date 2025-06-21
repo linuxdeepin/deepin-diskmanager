@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(deepin-diskmanager)
 
+find_package(Threads REQUIRED)
 
 option(DOTEST "option for test" OFF)
 
@@ -20,9 +21,15 @@ else()
   # -Wl, -O2 Enable linker optimizations
   # -Wl, --gc-sections Remove unused code resulting from -fdsta-sections and
   # -ffunction-sections
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -O2 -Wl,--gc-sections")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O2 -Wl,--gc-sections")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -O2")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O2")
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--gc-sections")
 endif()
+
+# 添加位置无关代码和安全编译标志
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstack-protector-all -fPIC")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-protector-all -fPIE")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -z relro -z now -z noexecstack -pie")
 
 set(QT_VERSION_MAJOR 6)
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -40,8 +47,6 @@ endif()
 #set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -g -fsanitize=address -O2")
 #set(CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS_MINSIZEREL} -g -fsanitize=address -O2")
 #set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO}  -g -fsanitize=address -O2")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstack-protector-all -z relro -z now -z noexecstack -pie")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-protector-all -z relro -z now -z noexecstack -pie")
 
 ADD_SUBDIRECTORY(basestruct)
 ADD_SUBDIRECTORY(log)

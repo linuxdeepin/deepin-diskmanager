@@ -44,7 +44,6 @@ On the Disk Utility interface, you can view the disk info, perform health manage
     ![0|disk_main_interface](fig/disk_main_interface.png)
 
 2. Right-click a disk and select **Disk info** to view the information such as model, vendor, media type, size, interface and so on.
-   ![0|diskinfo](fig/diskinfo.jpg)
    
 3. Click **Export** to export the disk info to your designated folder. 
 
@@ -87,11 +86,7 @@ Bad sectors may occur commonly in disks, which need to be verified and repaired 
 
 2. Set the range and method and click **Start Verify** to verify the selected disk.
 
-   ![verify](fig/startverify.png)
-
 3. Click **Stop** to stop the verification at any time and click **Continue** to resume the verification.
-
-   ![stopverify](fig/stopverify.png)
 
 4. You can perform the following operations after the verification is completed.
 
@@ -121,8 +116,6 @@ You can also click **Reset** to clear all the current data detected and enter th
    - The password can't be reset or found back online, please save it properly.
    - The password should be 1~256 characters containing English letters, numbers and symbols.
    - Password hint: it can be at most 50 characters, and not identical to the password.
-
-![0|partition](fig/passwordsetting.png)
 
 5. The newly-created partition will be displayed in segments in the bar chart. You can create several partitions. You can delete a partition by clicking the ![edit_delete](../common/edit_delete.svg) icon.
 
@@ -162,7 +155,7 @@ It is available to wipe unmounted disks and partitions. You can modify the encry
 
 > ![notes](../common/notes.svg) Notes: The DoD 5220.22-M and Gutmann wiping methods are not available for solid state drives (SSD). When it is SSD, there are only Fast and Secure options in the Security dropdown list.
 
-![0|format](fig/wipe.png)
+
 
 3. Click **Wipe**. If you have chosen to encrypt, you need to set up password. The wiped partition will be mounted automatically. 
 

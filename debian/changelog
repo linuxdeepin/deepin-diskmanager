@@ -1,3 +1,9 @@
+deepin-diskmanager (6.0.6) unstable; urgency=medium
+
+  * chore: New version 6.0.6.
+
+ -- xiepengfei <xiepengfei@uniontech.com>  Mon, 23 Jun 2025 12:10:27 +0800
+
 deepin-diskmanager (6.0.5) unstable; urgency=medium
 
   * chore: Update CMake configuration for improved security and threading support (#146)

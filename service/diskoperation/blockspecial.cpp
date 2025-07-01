@@ -79,7 +79,8 @@ BlockSpecial::BlockSpecial(const QString &name)
 
 BlockSpecial::~BlockSpecial()
 {
-    qDebug() << "BlockSpecial object destroyed for device:" << m_name;
+    // Do not log in destructors of global variables, which can cause crashes
+    // qDebug() << "BlockSpecial object destroyed for device:" << m_name;
 }
 
 void BlockSpecial::clearCache()

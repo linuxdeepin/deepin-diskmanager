@@ -2,3 +2,8 @@
 .build
 .qmake.stash
 *.qm
+
+# AI
+.cursor/
+.cursorindexingignore
+.specstory/

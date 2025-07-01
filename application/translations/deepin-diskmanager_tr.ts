@@ -11,7 +11,7 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="38"/>
         <source>Click %1 to create a logical volume. </source>
-        <translation>Lütfen %1 'ı tıklayarak bir mantıksal hacim oluşturun.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="111"/>
@@ -94,22 +94,22 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="740"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
-        <translation>Diski şifrelemek için aes-xts-plain64 standart algoritmasını kullanın. Tekrar bağlamadan önce diskini şifrelemeyi iptal edin.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="746"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation>Diski şifrelemek için sm4-xts-plain durum şifreleme algoritmasını kullanın. Tekrar bağlamadan önce diskini şifrelemeyi iptal edin. Durum şifreleme algoritmasını desteklemeyen işletim sistemleri, diskini şifrelemeyi yapamayacaktır.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="840"/>
         <source>To encrypt a volume, it should be larger than 100 MiB</source>
-        <translation>Bir hacmi şifrelemek için, 100 MiB'dan büyük olmalıdır</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="868"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
-        <translation>Şifrenin kaybolmaması için lütfen şifrenizi yedekleyin ve doğru bir şekilde saklayınız!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="869"/>
@@ -207,7 +207,7 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="325"/>
         <source>Auto adjusted to integral multiples of 4 MiB</source>
-        <translation>Otomatik olarak 4 MiB'lik katları ayarlandı</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="418"/>
@@ -253,22 +253,22 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="783"/>
         <source>No less than the used capacity please</source>
-        <translation>Kullanılan kapasiteye eşit veya daha fazla olmalıdır lütfen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="788"/>
         <source>No more than the maximum capacity please</source>
-        <translation>Maksimum kapasiteye eşit veya daha fazla olmamalıdır lütfen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="806"/>
         <source>A lot of data exists on %1, </source>
-        <translation>%1 üzerinde çok fazla veri bulunuyor, </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="807"/>
         <source>which may take a long time to back it up.</source>
-        <translation>Yedeklemek için uzun bir süre alabilir.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="808"/>
@@ -289,7 +289,7 @@
         <location filename="../widgets/createvgwidget.cpp" line="1699"/>
         <source>Adding the disk/partition to a logical volume group 
 will format it and remove its password.</source>
-        <translation>Diski/partisyonu mantıksal hacim grubuna eklemek, onu biçimlendirir ve şifresini kaldırır.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="1700"/>
@@ -299,27 +299,27 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="1919"/>
         <source>Not enough space to back up data on %1, please clear disk space</source>
-        <translation>%1 üzerinde veri yedeklemek için yeterli alan yok, lütfen disk alanını temizleyin</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2085"/>
         <source>Existing volume group, creation failed. Please retry after reboot.</source>
-        <translation>Mevcut hacim grubu, oluşturma başarısız. Lütfen yeniden başlatıldıktan sonra tekrar deneyin.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2089"/>
         <source>Failed to create a physical volume. Please refresh Disk Utility and try again.</source>
-        <translation>Fiziksel hacim oluşturulamadı. Disk Yardımı'nu yenilemek ve tekrar denemek lütfen.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2093"/>
         <source>Device input/output error. Please try again after reboot.</source>
-        <translation>Cihaz girdi/çıktı hatası. Lütfen yeniden başlatıldıktan sonra tekrar deneyin.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2149"/>
         <source>Refreshing the page to reload disks</source>
-        <translation>Sayfa yenileniyor, diskler yeniden yüklenecek</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -400,7 +400,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="539"/>
         <source>Replacing the partition table of %1 ...</source>
-        <translation>%1'in bölüm tablosu değiştiriliyor...</translation>
+        <translation>%1&apos;in bölüm tablosu değiştiriliyor...</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="661"/>
@@ -430,27 +430,27 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="813"/>
         <source>Failed to encrypt %1, please try again!</source>
-        <translation>%1 şifrelenemedi, lütfen tekrar deneyin!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="817"/>
         <source>Failed to decrypt %1, please try again!</source>
-        <translation>%1 şifresi çözülemedi, lütfen tekrar deneyin!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="821"/>
         <source>%1 failed to close the crypto map</source>
-        <translation>%1 şifre haritasını kapatamadı</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="828"/>
         <source>Failed to create partitions, please try again!</source>
-        <translation>Partisyonlar oluşturulamadı, lütfen tekrar deneyin!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="832"/>
         <source>Failed to create %1 file system, please try again!</source>
-        <translation>%1 dosya sistemi oluşturulamadı, lütfen tekrar deneyin!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="836"/>
@@ -470,12 +470,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="848"/>
         <source>%1 failed to create mounting folders</source>
-        <translation>%1 bağlama klasörlerini oluşturamadı</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="852"/>
         <source>%1 failed to change the owner of mounting folders</source>
-        <translation>%1 bağlama klasörlerinin sahipliğini değiştiremedi</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="856"/>
@@ -485,7 +485,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="863"/>
         <source>Failed to create a logical volume, please try again!</source>
-        <translation>Bir mantıksal hacim oluşturulamadı, lütfen tekrar deneyin!</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -493,12 +493,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="41"/>
         <source>Enter the password to decrypt the disk</source>
-        <translation>Diski şifrelemek için şifreyi girin</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="53"/>
         <source>Enter the password to decrypt the volume group</source>
-        <translation>Hacim grubunu şifrelemek için şifreyi girin</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="73"/>
@@ -530,32 +530,32 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="198"/>
         <source>Please try again %1 minutes later</source>
-        <translation>Lütfen %1 dakika sonra tekrar deneyin</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="280"/>
         <source>The password cannot be empty</source>
-        <translation>Şifre boş olamaz</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="318"/>
         <source>Decryption failed</source>
-        <translation>Şifre çözme başarısız</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="337"/>
         <source>Password locked, please try again %1 minutes later</source>
-        <translation>Şifre kilidi, lütfen %1 dakika sonra tekrar deneyin</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="339"/>
         <source>Wrong password, %1 chances left</source>
-        <translation>Yanlış şifre, %1 şans kalmış</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="341"/>
         <source>Wrong password, only one chance left</source>
-        <translation>Yanlış şifre, sadece bir şans kalmış</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -618,7 +618,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="287"/>
         <source>Health checking does not support this type of device.</source>
-        <translation>Sağlık kontrolü bu cihaz türüne destek vermiyor.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="326"/>
@@ -787,7 +787,7 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="572"/>
         <source>Unmount all logical volumes in %1 first</source>
-        <translation>Bütün %1 içindeki mantıksal birimleri ayırın.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="584"/>
@@ -807,22 +807,22 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="670"/>
         <source>The logical volume group is busy and cannot be deleted. Please retry after reboot.</source>
-        <translation>Mantıksal birim grubu meşgul ve silinemez. Yeniden başlatma sonrası tekrar deneyin.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="675"/>
         <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
-        <translation>Mantıksal birim meşgul ve silinemez. Yeniden başlatma sonrası tekrar deneyin.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="680"/>
         <source>Failed to delete the logical volume group</source>
-        <translation>Mantıksal birim grubu silinemedi</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="718"/>
         <source>Failed to delete the logical volume</source>
-        <translation>Mantıksal birim silinemedi</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="828"/>
@@ -870,7 +870,7 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="141"/>
         <source>Rounds</source>
-        <translation>Tur</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="142"/>
@@ -1187,12 +1187,12 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
         <source>SSD</source>
-        <translation>SSD</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="50"/>
         <source>HDD</source>
-        <translation>HDD</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="55"/>
@@ -1311,7 +1311,7 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="82"/>
         <source>Wipe %1</source>
-        <translation>%1'i sil</translation>
+        <translation>%1&apos;i sil</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="83"/>
@@ -1438,12 +1438,12 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="441"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
-        <translation>Diski şifrelemek için aes-xts-plain64 standart algoritmasını kullanın. Yeniden montaj yapmadan önce şifresini çözmelisiniz.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="451"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation>Diski şifrelemek için sm4-xts-plain durum kriptografik algoritmasını kullanın. Yeniden montaj yapmadan önce şifresini çözmelisiniz. Durum kriptografik algoritmayı desteklemeyen işletim sistemleri bu diskin şifresini çözebilir.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="492"/>
@@ -1463,7 +1463,7 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="614"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
-        <translation>Şifreyi kaybetmemek için lütfen şifrenizi yedeğe alın ve doğru şekilde saklayınız!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="615"/>
@@ -1478,8 +1478,8 @@ lütfen dikkatli olun </translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="721"/>
-        <source>"%1" wiped</source>
-        <translation>"%1" silindi</translation>
+        <source>&quot;%1&quot; wiped</source>
+        <translation>&quot;%1&quot; silindi</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="728"/>
@@ -1537,12 +1537,12 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="319"/>
         <source>SSD</source>
-        <translation>SSD</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="321"/>
         <source>HDD</source>
-        <translation>HDD</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="499"/>
@@ -1621,12 +1621,12 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="75"/>
         <source>Please select /mnt or /media, or its subdirectories.</source>
-        <translation>Lütfen /mnt veya /media veya bunların alt klasörlerinden birini seçin.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="83"/>
         <source>The mount point is illegal. Please select /mnt or /media, or its subdirectories.</source>
-        <translation>Montaj noktası geçerli değil. Lütfen /mnt veya /media veya bunların alt klasörlerinden birini seçin.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="94"/>
@@ -1652,7 +1652,7 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="292"/>
         <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
-        <translation>Montaj başarısız: Seçilen montaj noktası boş değil. Lütfen başka birini seçin!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="293"/>
@@ -1739,7 +1739,7 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="42"/>
         <source>Click %1 to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation>%1'ü tıklayarak bölüm sayısını artırın. Her bölümün adını ve dosya sistemi değiştirmek için tıklayın.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="115"/>
@@ -1832,12 +1832,12 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="744"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting.</source>
-        <translation>Diski şifrelemek için aes-xts-plain64 standart algoritmasını kullanın. Şifreliyse, yeniden montaj yapmadan önce şifresini çözmelisiniz.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="750"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation>Diski şifrelemek için sm4-xts-plain durum kriptografik algoritmasını kullanın. Şifreliyse, yeniden montaj yapmadan önce şifresini çözmelisiniz. Durum kriptografik algoritmayı desteklemeyen işletim sistemleri bu diskin şifresini çözebilir.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="886"/>
@@ -1847,17 +1847,17 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="909"/>
         <source>To encrypt a partition, it should be larger than 100 MiB</source>
-        <translation>Bir bölümü şifrelemek için, boyutu 100 MiB'den büyük olmalıdır</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="918"/>
         <source>Set a password to encrypt the new partition</source>
-        <translation>Yeni bölüm için bir şifre ayarlayın</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="937"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
-        <translation>Şifreyi kaybetmemek için lütfen şifrenizi yedeğe alın ve doğru şekilde saklayınız!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="938"/>
@@ -1868,7 +1868,7 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="957"/>
         <source>To create a partition, you need at least 52 MB</source>
-        <translation>Bir bölüm oluşturmak için en az 52 MB'a ihtiyacınız var</translation>
+        <translation>Bir bölüm oluşturmak için en az 52 MB&apos;a ihtiyacınız var</translation>
     </message>
 </context>
 <context>
@@ -1876,12 +1876,12 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="53"/>
         <source>Set a password to encrypt %1</source>
-        <translation>%1'i şifrelemek için bir şifre ayarlayın</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="55"/>
         <source>The password cannot be reset or retrieved online</source>
-        <translation>Şifre tekrar sıfırlanamaz veya çevrimiçi olarak alınamaz</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="59"/>
@@ -1901,7 +1901,7 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="73"/>
         <source>(Recommended)</source>
-        <translation>(Önerilen)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="88"/>
@@ -1911,12 +1911,12 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="94"/>
         <source>Enter the password again</source>
-        <translation>Şifreyi tekrar girin</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="100"/>
         <source>Enter a password hint</source>
-        <translation>Şifre ipucu girin</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="142"/>
@@ -1933,22 +1933,22 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="188"/>
         <source>The password exceeds the maximum length</source>
-        <translation>Şifre maksimum uzunlukta</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="231"/>
         <source>The password cannot be empty</source>
-        <translation>Şifre boş bırakılamaz</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="246"/>
         <source>Passwords do not match</source>
-        <translation>Şifreler eşleşmiyor</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="254"/>
         <source>The password hint should differ from the password</source>
-        <translation>Şifre ipucu, şifre ile farklı olmalıdır</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1974,7 +1974,7 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="61"/>
         <source>To prevent data loss, back up data in the physical volume before deleting it</source>
-        <translation>Veri kaybını önlemek için, silmeden önce fiziksel birimdeki verileri yedekleyin</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="68"/>
@@ -1996,12 +1996,12 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="215"/>
         <source>A lot of data exists on %1, </source>
-        <translation>%1 üzerinde çok fazla veri bulunmakta, </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="216"/>
         <source>which may take a long time to back it up.</source>
-        <translation>bu verileri yedeklemek uzun sürebilir.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="217"/>
@@ -2021,7 +2021,7 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="232"/>
         <source>Not enough space to back up data on %1, please delete the logical volume first</source>
-        <translation>%1 üzerinde veri yedeklemek için yeterli alan yok, lütfen önce mantıksal birimi silin</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="233"/>
@@ -2049,7 +2049,7 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="89"/>
         <source>Auto adjusted to integral multiples of 4 MiB</source>
-        <translation>Otomatik olarak 4 MiB katları olarak ayarlandı</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="102"/>
@@ -2074,12 +2074,12 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="144"/>
         <source>No more than the maximum capacity please</source>
-        <translation>Lütfen maksimum kapasiteyi aşılmadan</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="225"/>
         <source>The file system does not support shrinking space</source>
-        <translation>Dosya sistemi, alan küçültmeyi desteklemiyor</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="225"/>
@@ -2089,22 +2089,22 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="239"/>
         <source>No less than the used capacity please</source>
-        <translation>Lütfen kullanılan kapasitenin altında olmamak için</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="246"/>
         <source>To prevent data loss, back up data before shrinking it</source>
-        <translation>Veri kaybını önlemek için, küçültmeden önce verileri yedekleyin</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="334"/>
         <source>Unmount it before shrinking its space</source>
-        <translation>Alanı küçültmeden önce onu denetlemeyin</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="344"/>
         <source>The current device has been mounted and will be unmounted automatically. Please back up data in it to prevent data loss</source>
-        <translation>Şu anda birim bağlanmıştır ve otomatik olarak çıkarılacaktır. Veri kaybını önlemek için, içeriğini yedekleyin</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="347"/>
@@ -2114,7 +2114,7 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="383"/>
         <source>The file system does not support space adjustment</source>
-        <translation>Dosya sistemi, alan ayarlamasını desteklemiyor</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2190,7 +2190,7 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="250"/>
         <source>Unable to mount the device: no file system is found, or the file system is not supported</source>
-        <translation>Birim bağlanamıyor: bir dosya sistemi bulunamadı veya desteklenmiyor</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="251"/>
@@ -2200,7 +2200,7 @@ lütfen dikkatli olun </translation>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="353"/>
         <source>The file system does not support space adjustment</source>
-        <translation>Dosya sistemi, alan ayarlamasını desteklemiyor</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="374"/>
@@ -2231,7 +2231,7 @@ lütfen dikkatli olun </translation>
         <location filename="../widgets/titlewidget.cpp" line="463"/>
         <source>To ensure the normal use of system backup and restore, 
 rootA and rootB should be resized to the same value</source>
-        <translation>Sistem yedeklemesinin ve geri yüklemesinin normal çalışması için, rootA ve rootB aynı değere ayarlanmalıdır</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="480"/>
@@ -2241,7 +2241,7 @@ rootA and rootB should be resized to the same value</source>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="502"/>
         <source>Unmount all logical volumes in %1 first</source>
-        <translation>%1 içindeki tüm mantıksal birimleri önce çıkarın</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2277,7 +2277,7 @@ rootA and rootB should be resized to the same value</source>
     <message>
         <location filename="../widgets/unmountwarningdialog.cpp" line="34"/>
         <source>Unmounting system disk may result in system crash</source>
-        <translation>Sistem diskini çıkarmanın sistem çökmesine neden olabileceği</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/unmountwarningdialog.cpp" line="40"/>

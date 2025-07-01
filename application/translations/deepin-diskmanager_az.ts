@@ -619,7 +619,7 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="287"/>
         <source>Health checking does not support this type of device.</source>
-        <translation>Tərəfləndirmə bu cihaz növü üçün dəstək vermir.</translation>
+        <translation>Sağlamlıq yoxlaması bu cür cihaz üçün dəstək vermir.</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="326"/>
@@ -1477,8 +1477,8 @@ onu formatlayacaq və şifrəsini siləcək.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="721"/>
-        <source>"%1" wiped</source>
-        <translation>"%1" silindi</translation>
+        <source>&quot;%1&quot; wiped</source>
+        <translation>&quot;%1&quot; silindi</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="728"/>

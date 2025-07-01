@@ -619,7 +619,7 @@ wordt het volume geformatteerd er het wachtwoord gewist.</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="287"/>
         <source>Health checking does not support this type of device.</source>
-        <translation>Gezondheidstoets ondersteunt dit type apparaat niet.</translation>
+        <translation>Gezondheidscontrole ondersteunt dit type apparaat niet.</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="326"/>
@@ -1479,7 +1479,7 @@ alle gegevens verloren!</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="721"/>
-        <source>"%1" wiped</source>
+        <source>&quot;%1&quot; wiped</source>
         <translation>‘%1’ is gewist</translation>
     </message>
     <message>
@@ -2251,7 +2251,7 @@ dienen rootA en rootB dezelfde omvang te hebben</translation>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="29"/>
         <source>Make sure there are no programs running on the disk</source>
-        <translation>Zorg er voor dat er geen programma's meer draaien op de schijf</translation>
+        <translation>Zorg er voor dat er geen programma&apos;s meer draaien op de schijf</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="38"/>
@@ -2261,7 +2261,7 @@ dienen rootA en rootB dezelfde omvang te hebben</translation>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="45"/>
         <source>Make sure there are no programs running on the logical volume</source>
-        <translation>Zorg er voor dat er geen programma's meer draaien op de schijf</translation>
+        <translation>Zorg er voor dat er geen programma&apos;s meer draaien op de schijf</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="52"/>

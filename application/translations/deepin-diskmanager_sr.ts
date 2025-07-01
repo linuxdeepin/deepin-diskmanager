@@ -6,17 +6,17 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="36"/>
         <source>Creating logical volumes on %1</source>
-        <translation>Креирање логичких волумена на %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="38"/>
         <source>Click %1 to create a logical volume. </source>
-        <translation>Кликните на %1 да креирате логички волумен.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="111"/>
         <source>VG Information</source>
-        <translation>Информације о VG</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="125"/>
@@ -26,17 +26,17 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="135"/>
         <source>LV name:</source>
-        <translation>Име LV:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="144"/>
         <source>VG name:</source>
-        <translation>Име VG:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="156"/>
         <source>LV file system:</source>
-        <translation>Фајл систем LV:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="229"/>
@@ -59,22 +59,22 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="267"/>
         <source>LV Information</source>
-        <translation>Информације о LV</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="279"/>
         <source>Create LV:</source>
-        <translation>Креирај LV:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="290"/>
         <source>Delete last logical volume</source>
-        <translation>Обриши последњи логички волумен</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="330"/>
         <source>LV capacity:</source>
-        <translation>Капацитет LV:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="516"/>
@@ -94,22 +94,22 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="740"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
-        <translation>Користите стандардни алгоритам aes-xts-plain64 за шифровање диска. Морате да дешифрујете дискови пре монтирања.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="746"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation>Користите статусни криптографски алгоритам sm4-xts-plain за шифровање диска. Морате да дешифрујете дискови пре монтирања. Системи који не подржавају статусни криптографски алгоритам не могу да дешифрују дискови.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="840"/>
         <source>To encrypt a volume, it should be larger than 100 MiB</source>
-        <translation>За шифровање волумена, мора бити већи од 100 MiB</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="868"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
-        <translation>Да бисте избегли загубу лозинке, молимо вас да је сачувате и задржите правилно!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="869"/>
@@ -151,7 +151,7 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="56"/>
         <source>Create volume group</source>
-        <translation>Креирај групу волумена</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="66"/>
@@ -161,27 +161,27 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="90"/>
         <source>Select disks or partitions to create a volume group and set its capacity</source>
-        <translation>Изаберите дискове или партиције да бисте креирали групу волумена и поставили њен капацитет</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="95"/>
         <source>Capacity selected: %1</source>
-        <translation>Капацитет изабран: %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="100"/>
         <source>The selected disks will be converted to dynamic disks, and you will not be able to start installed operating systems from the disks.</source>
-        <translation>Изабрани дискови ће бити претворени у динамичке дискове, и нећете бити у могућности да покренете инсталиране оперативне системе са дисковима.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="150"/>
         <source>No partitions available</source>
-        <translation>Нема доступних партиција</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="221"/>
         <source>No disks or partitions available</source>
-        <translation>Нема доступних дискова или партиција</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="255"/>
@@ -192,32 +192,32 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="258"/>
         <source>Next</source>
-        <translation>Претходно</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="283"/>
         <source>Selected disks/partitions</source>
-        <translation>Изабран дискови/партиције</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="320"/>
         <source>Set VG capacity</source>
-        <translation>Постави капацитет VG</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="325"/>
         <source>Auto adjusted to integral multiples of 4 MiB</source>
-        <translation>Аутоматски прилагођен у целим бројевима од 4 MiB</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="418"/>
         <source>Choose one disk or partition at least</source>
-        <translation>Изаберите бар један диск или партицију</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="455"/>
         <source>Previous</source>
-        <translation>Претходно</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="458"/>
@@ -228,52 +228,52 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="571"/>
         <source>Resizing space...</source>
-        <translation>Прилагођавање простора...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="573"/>
         <source>Creating...</source>
-        <translation>Креирање...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="625"/>
         <source>Selected disks and partitions:</source>
-        <translation>Изабран дискови и партиције:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="668"/>
         <source>VG capacity: %1</source>
-        <translation>Капацитет VG: %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="675"/>
         <source>VG name: %1</source>
-        <translation>Ime VG: %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="783"/>
         <source>No less than the used capacity please</source>
-        <translation>Nema manje od korišćene kapaciteta, molim</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="788"/>
         <source>No more than the maximum capacity please</source>
-        <translation>Nema više od maksimalne kapaciteta, molim</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="806"/>
         <source>A lot of data exists on %1, </source>
-        <translation>Veličan broj podataka postoji na %1, </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="807"/>
         <source>which may take a long time to back it up.</source>
-        <translation>što može da zahteva dugo vreme za bekup.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="808"/>
         <source>Do you want to continue?</source>
-        <translation>Želite li da nastavite?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="809"/>
@@ -289,7 +289,7 @@
         <location filename="../widgets/createvgwidget.cpp" line="1699"/>
         <source>Adding the disk/partition to a logical volume group 
 will format it and remove its password.</source>
-        <translation>Dodavanje diska/segmenta u logičku grupu volumena formataće ga i uključiće njegovu lozinku.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="1700"/>
@@ -299,27 +299,27 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="1919"/>
         <source>Not enough space to back up data on %1, please clear disk space</source>
-        <translation>Nema dovoljno prostora za bekup podataka na %1, molim da oslobodite prostor na disku</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2085"/>
         <source>Existing volume group, creation failed. Please retry after reboot.</source>
-        <translation>Postojeća grupa volumena, stvaranje nije uspelo. Molim da pokušate ponovo nakon ponovnog pokretanja.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2089"/>
         <source>Failed to create a physical volume. Please refresh Disk Utility and try again.</source>
-        <translation>Neuspesno stvaranje fizičkog volumena. Molim da osvežite Disk Utility i pokušate ponovo.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2093"/>
         <source>Device input/output error. Please try again after reboot.</source>
-        <translation>Greška sa uređajem ulaz/izlaz. Molim da pokušate ponovo nakon ponovnog pokretanja.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2149"/>
         <source>Refreshing the page to reload disks</source>
-        <translation>Osvežavanje stranice za ponovno učitavanje diskova</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -360,122 +360,122 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="189"/>
         <source>Refreshing data...</source>
-        <translation>Osvežavanje podataka...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="225"/>
         <source>Initializing data...</source>
-        <translation>Inicijalizacija podataka...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="273"/>
         <source>Mounting %1 ...</source>
-        <translation>Montiranje %1 ...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="280"/>
         <source>Unmounting %1 ...</source>
-        <translation>Demontiranje %1 ...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="319"/>
         <source>Resizing %1 ...</source>
-        <translation>Promena veličine %1 ...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="326"/>
         <source>Creating a new partition...</source>
-        <translation>Kreiranje nove particije...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="485"/>
         <source>Deleting %1 ...</source>
-        <translation>Brisanje %1 ...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="537"/>
         <source>Creating a partition table of %1 ...</source>
-        <translation>Kreiranje tabele particija za %1 ...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="539"/>
         <source>Replacing the partition table of %1 ...</source>
-        <translation>Zamenjivanje tabele particija za %1 ...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="661"/>
         <source>Creating...</source>
-        <translation>Kreiranje...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="668"/>
         <source>Deleting...</source>
-        <translation>Brisanje...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="687"/>
         <source>Resizing space...</source>
-        <translation>Promena prostora...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="725"/>
         <source>AES Encryption</source>
-        <translation>AES šifrovanje</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="727"/>
         <source>SM4 Encryption</source>
-        <translation>SM4 šifrovanje</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="813"/>
         <source>Failed to encrypt %1, please try again!</source>
-        <translation>Neuspesno šifrovanje %1, molim pokušajte ponovo!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="817"/>
         <source>Failed to decrypt %1, please try again!</source>
-        <translation>Neuspesno dešifrovanje %1, molim pokušajte ponovo!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="821"/>
         <source>%1 failed to close the crypto map</source>
-        <translation>'%1 nije uspelo da zatvori šifrovani map</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="828"/>
         <source>Failed to create partitions, please try again!</source>
-        <translation>Neuspesno stvaranje particija, molim pokušajte ponovo!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="832"/>
         <source>Failed to create %1 file system, please try again!</source>
-        <translation>Неуспех у креирања %1 фајл система, покушајте поново!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="836"/>
         <source>Failed to submit the request to the kernel</source>
-        <translation>Неуспех у праћењу захтева ка језеру</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="840"/>
         <source>DBUS parameter error</source>
-        <translation>Грешка параметра ДБУС</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="844"/>
         <source>Failed to mount %1</source>
-        <translation>Неуспех у монтаžи %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="848"/>
         <source>%1 failed to create mounting folders</source>
-        <translation>'%1 не успех у креирању фолдера за монтаžу'</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="852"/>
         <source>%1 failed to change the owner of mounting folders</source>
-        <translation>'%1 не успех у промени власника фолдера за монтаžу'</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="856"/>
@@ -485,7 +485,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="863"/>
         <source>Failed to create a logical volume, please try again!</source>
-        <translation>Неуспех у креирању логичког волумена, покушајте поново!</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -493,22 +493,22 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="41"/>
         <source>Enter the password to decrypt the disk</source>
-        <translation>Унесите лозинку да бисте одкључали диск</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="53"/>
         <source>Enter the password to decrypt the volume group</source>
-        <translation>Унесите лозинку да бисте одкључали групу волумена</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="73"/>
         <source>Enter a password </source>
-        <translation>Унесите лозинку </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="78"/>
         <source>Password hint</source>
-        <translation>Савет за лозинку</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="126"/>
@@ -520,42 +520,42 @@ will format it and remove its password.</source>
         <location filename="../widgets/decryptdialog.cpp" line="131"/>
         <source>Decrypt</source>
         <comment>button</comment>
-        <translation>Одкључавање</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="300"/>
         <source>Decrypting...</source>
-        <translation>Одкључавање...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="198"/>
         <source>Please try again %1 minutes later</source>
-        <translation>Покушајте поново %1 минута касније</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="280"/>
         <source>The password cannot be empty</source>
-        <translation>Лозинка не може бити празна</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="318"/>
         <source>Decryption failed</source>
-        <translation>Одкључавање не успело</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="337"/>
         <source>Password locked, please try again %1 minutes later</source>
-        <translation>Лозинка је закључана, покушајте поново %1 минута касније</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="339"/>
         <source>Wrong password, %1 chances left</source>
-        <translation>Погрешна лозинка, %1 могућности остављено</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="341"/>
         <source>Wrong password, only one chance left</source>
-        <translation>Погрешна лозинка, остаје само једна могућност</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -598,17 +598,17 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="211"/>
         <source>Delete volume group</source>
-        <translation>Обришите групу волумена</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="217"/>
         <source>Create logical volume</source>
-        <translation>Креирајте логички волумен</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="242"/>
         <source>Delete logical volume</source>
-        <translation>Обришите логички волумен</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="287"/>
@@ -618,7 +618,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="287"/>
         <source>Health checking does not support this type of device.</source>
-        <translation>Провера здравства не подржава овај тип уређаја.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="326"/>
@@ -732,22 +732,22 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="495"/>
         <source>Failed to find the disk</source>
-        <translation>Неуспех у проналажењу диска</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="499"/>
         <source>Failed to get the partition info</source>
-        <translation>Неуспех у добијању информација о партицији</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="503"/>
         <source>Failed to delete the partition</source>
-        <translation>Неуспех у обриšењу партиције</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="507"/>
         <source>Failed to submit the request to the kernel</source>
-        <translation>Неуспех у праћењу захтева ка језеру</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="514"/>
@@ -787,52 +787,52 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="572"/>
         <source>Unmount all logical volumes in %1 first</source>
-        <translation>Прво обришите све логичке волумене у %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="584"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation>Ако се подаци обришу, не могу се вратити, пожељно потврдите пре него што наставите</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="602"/>
         <source>The disks will be formatted if you create a logical volume</source>
-        <translation>Дискови ће бити форматирани ако креирате логички волумен</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="627"/>
         <source>Unmount %1 first</source>
-        <translation>Прво уклони %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="670"/>
         <source>The logical volume group is busy and cannot be deleted. Please retry after reboot.</source>
-        <translation>Логичка група томова је узима и не може да се обрише. Поновите покушај после уклоњења.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="675"/>
         <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
-        <translation>Логички том је узима и не може да се обрише. Поновите покушај после уклоњења.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="680"/>
         <source>Failed to delete the logical volume group</source>
-        <translation>Не могу да обришем логичку групу томова</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="718"/>
         <source>Failed to delete the logical volume</source>
-        <translation>Не могу да обришем логички том</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="828"/>
         <source>Volume Groups</source>
-        <translation>Групе томова</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="882"/>
         <source>Disks</source>
-        <translation>Дискови</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -870,7 +870,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="141"/>
         <source>Rounds</source>
-        <translation>Обрти</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="142"/>
@@ -1187,12 +1187,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
         <source>SSD</source>
-        <translation>ССД</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="50"/>
         <source>HDD</source>
-        <translation>ХДД</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="55"/>
@@ -1311,12 +1311,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="82"/>
         <source>Wipe %1</source>
-        <translation>Обриши %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="83"/>
         <source>It will erase all data on this disk, which will not be recovered</source>
-        <translation>Ово ће изbrisati сва податка на овом диску, а они ће бити неопорављени</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="91"/>
@@ -1336,52 +1336,52 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="139"/>
         <source>AES Encryption</source>
-        <translation>Шифровање AES</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="142"/>
         <source>SM4 Encryption</source>
-        <translation>Шифровање SM4</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="156"/>
         <source>Security:</source>
-        <translation>Безбедност:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="169"/>
         <source>Fast</source>
-        <translation>Брзо</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="169"/>
         <source>Secure</source>
-        <translation>Безбедно</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="173"/>
         <source>Advanced</source>
-        <translation>Напредно</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="184"/>
         <source>It only deletes the partition info without erasing the files on the disk. Disk recovery tools may recover the files at a certain probability.</source>
-        <translation>Ово само брише информације о партицији без брисања датотека на диску. Алтернативни програми за враћање података могу да враћају датотеке у одређеном процену.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="190"/>
         <source>Wiping method:</source>
-        <translation>Метод брисања:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="198"/>
         <source>DoD 5220.22-M, 7 passes</source>
-        <translation>DoD 5220.22-M, 7 пролаза</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="198"/>
         <source>Gutmann, 35 passes</source>
-        <translation>Гутман, 35 пролаза</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="259"/>
@@ -1393,42 +1393,42 @@ will format it and remove its password.</source>
         <location filename="../widgets/formatedialog.cpp" line="263"/>
         <source>Wipe</source>
         <comment>button</comment>
-        <translation>Обриши</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="311"/>
         <source>Failed to find the disk</source>
-        <translation>Не могу да пронађем дискови</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="314"/>
         <source>The action cannot be undone, please proceed with caution</source>
-        <translation>Ова акција не може да се поништи, молимо вас да будете пажљиви</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="316"/>
         <source>LV name:</source>
-        <translation>Име LV:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="320"/>
         <source>LV name</source>
-        <translation>Име LV</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="322"/>
         <source>LV file system:</source>
-        <translation>Фајл систем LV:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="324"/>
         <source>You may be able to recover files after the wipe.</source>
-        <translation>Можда ћете могли да враћате датотеке након обришања.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="327"/>
         <source>Failed to submit the request to the kernel</source>
-        <translation>Не могу да пошаљем захтев у језеро</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="377"/>
@@ -1438,32 +1438,32 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="441"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
-        <translation>Користите стандардни алгоритам aes-xts-plain64 за шифровање диска. Претходно извршите дешифровање пре него што га поново монтирате.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="451"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation>Користите алгоритам sm4-xts-plain за шифровање диска. Претходно извршите дешифровање пре него што га поново монтирате. Системи који не подржавају алгоритам за стајање криптографије неће бити у могућности да дешифрују диск.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="492"/>
         <source>It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, and random data to the entire disk once. You will not be able to recover files, and the process will be slow.</source>
-        <translation>Ово је једнократно безбедно брисање које се поклапа са NIST 800-88 и пише податке 0, 1 и случајних бројева на цео диск једном. Немогуће ћете вратити датотеке, а процес је спор.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="507"/>
         <source>It writes 0, 1, and random data to the entire disk several times. You can set the number of times to erase disks and overwrite data, but the process will be very slow.</source>
-        <translation>Пише се податак 0, 1 и случајних бројева на цео диск неколико пута. Можете да поставите број пута за брисање диска и поновно уписивање података, али процес је веома спор.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="540"/>
         <source>You will not be able to recover files after the wipe, and the process will be slow.</source>
-        <translation>Немогуће ћете вратити датотеке након брисања, а процес је спор.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="614"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
-        <translation>Да бiste избегли губитак лозинке, молимо вас да је сачувате и да је држите на правом месту!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="615"/>
@@ -1474,17 +1474,17 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="692"/>
         <source>Wiping %1</source>
-        <translation>Брисање %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="721"/>
-        <source>"%1" wiped</source>
-        <translation>"%1" је избрисан</translation>
+        <source>&quot;%1&quot; wiped</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="728"/>
         <source>Failed to wipe %1</source>
-        <translation>Неуспех при брисању %1</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1522,12 +1522,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="313"/>
         <source>Path:</source>
-        <translation>Путанка:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="314"/>
         <source>Disk type:</source>
-        <translation>Врста диска:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="315"/>
@@ -1537,37 +1537,37 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="319"/>
         <source>SSD</source>
-        <translation>SSD</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="321"/>
         <source>HDD</source>
-        <translation>HDD</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="499"/>
         <source>LV count:</source>
-        <translation>Број LV:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="501"/>
         <source>VG name:</source>
-        <translation>Име VG:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="506"/>
         <source>Volume group</source>
-        <translation>Група волумена</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="579"/>
         <source>Volume name:</source>
-        <translation>Име волумена:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="584"/>
         <source>Logical volume</source>
-        <translation>Логички волумен</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1585,12 +1585,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/customcontrol/infotopframe.cpp" line="170"/>
         <source>%1 partition table</source>
-        <translation>Партитионска табела %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/infotopframe.cpp" line="189"/>
         <source>Volume group</source>
-        <translation>Група волумена</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1621,12 +1621,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="75"/>
         <source>Please select /mnt or /media, or its subdirectories.</source>
-        <translation>Молимо вас да одаберите /mnt или /media, или њихове под директоријуме.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="83"/>
         <source>The mount point is illegal. Please select /mnt or /media, or its subdirectories.</source>
-        <translation>Монтирање је неправило. Молимо вас да одаберите /mnt или /media, или њихове под директоријуме.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="94"/>
@@ -1652,7 +1652,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="292"/>
         <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
-        <translation>Монтирање неуспешно: Изабрани монтирање точка је празан. Молимо вас да одаберите други!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="293"/>
@@ -1739,7 +1739,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="42"/>
         <source>Click %1 to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation>Кликните %1 да бисте повећали број партиција. Кликните на сваку партицију да бисте променили јој име и систем датотека.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="115"/>
@@ -1832,12 +1832,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="744"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting.</source>
-        <translation>Користите стандардни алгоритам aes-xts-plain64 за шифровање диска. Ако је шифрован, треба да га дешифрујете пре монтирања.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="750"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation>Користите алгоритам sm4-xts-plain за шифровање диска. Ако је шифрован, треба да га дешифрујете пре монтирања. Системи који не подржавају алгоритам за стајање криптографије неће бити у могућности да дешифрују диск.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="886"/>
@@ -1847,17 +1847,17 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="909"/>
         <source>To encrypt a partition, it should be larger than 100 MiB</source>
-        <translation>За шифровање партиције, она мора бити већа од 100 MiB</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="918"/>
         <source>Set a password to encrypt the new partition</source>
-        <translation>Поставите лозинку за шифровање нове партиције</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="937"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
-        <translation>Да бiste избегли губитак лозинке, молимо вас да је сачувате и да је држите на правом месту!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="938"/>
@@ -1876,47 +1876,47 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="53"/>
         <source>Set a password to encrypt %1</source>
-        <translation>Поставите лозинку за шифровање %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="55"/>
         <source>The password cannot be reset or retrieved online</source>
-        <translation>Парола не може да се поништи или добие онлајн</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="59"/>
         <source>Password</source>
-        <translation>Парола</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="64"/>
         <source>Repeat password</source>
-        <translation>Понови паролу</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="69"/>
         <source>Password hint</source>
-        <translation>Савет за паролу</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="73"/>
         <source>(Recommended)</source>
-        <translation>(Препоручено)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="88"/>
         <source>Enter a password </source>
-        <translation>Унесите паролу</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="94"/>
         <source>Enter the password again</source>
-        <translation>Унесите паролу поново</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="100"/>
         <source>Enter a password hint</source>
-        <translation>Унесите савет за паролу</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="142"/>
@@ -1933,22 +1933,22 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="188"/>
         <source>The password exceeds the maximum length</source>
-        <translation>Парола је дужа од максималне дужине</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="231"/>
         <source>The password cannot be empty</source>
-        <translation>Парола не може да буде празна</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="246"/>
         <source>Passwords do not match</source>
-        <translation>Пароле се не подударају</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="254"/>
         <source>The password hint should differ from the password</source>
-        <translation>Савет за паролу треба да се разликује од пароле</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1969,12 +1969,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="55"/>
         <source>Are you sure you want to delete the physical volume?</source>
-        <translation>Да ли сте сигурни да желите да обришете физички том?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="61"/>
         <source>To prevent data loss, back up data in the physical volume before deleting it</source>
-        <translation>Да бисте избегли губитак података, сахраните податке у физичком тому пре обриšења</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="68"/>
@@ -1991,22 +1991,22 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="106"/>
         <source>Deleting...</source>
-        <translation>Обришавање...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="215"/>
         <source>A lot of data exists on %1, </source>
-        <translation>Већи део података је на %1, </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="216"/>
         <source>which may take a long time to back it up.</source>
-        <translation>што може да заузме много времена за сахранје.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="217"/>
         <source>Do you want to continue?</source>
-        <translation>Желите ли да наставите?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="218"/>
@@ -2021,7 +2021,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="232"/>
         <source>Not enough space to back up data on %1, please delete the logical volume first</source>
-        <translation>Недовољно простора за сахранје података на %1, молимо обришите логички том прво</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="233"/>
@@ -2031,7 +2031,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="263"/>
         <source>Failed to delete the physical volume</source>
-        <translation>Неуспешно обришавање физичког тома</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2044,12 +2044,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="66"/>
         <source>New capacity:</source>
-        <translation>Нова капацитет:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="89"/>
         <source>Auto adjusted to integral multiples of 4 MiB</source>
-        <translation>Аутоматски прилагођен у целим бројевима 4 MiB</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="102"/>
@@ -2059,7 +2059,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="109"/>
         <source>It will resize the logical volume space</source>
-        <translation>Оно ће променити капацитет логичког тома</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="115"/>
@@ -2074,12 +2074,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="144"/>
         <source>No more than the maximum capacity please</source>
-        <translation>Не више од максималног капацитета, молимо</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="225"/>
         <source>The file system does not support shrinking space</source>
-        <translation>Фајл систем не подржава смањивање простора</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="225"/>
@@ -2089,32 +2089,32 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="239"/>
         <source>No less than the used capacity please</source>
-        <translation>Не мање од коришћеног капацитета, молимо</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="246"/>
         <source>To prevent data loss, back up data before shrinking it</source>
-        <translation>Да бисте избегли губитак података, сахраните податке пре смањивања</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="334"/>
         <source>Unmount it before shrinking its space</source>
-        <translation>Одмонтирајте га пре смањивања његовог простора</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="344"/>
         <source>The current device has been mounted and will be unmounted automatically. Please back up data in it to prevent data loss</source>
-        <translation>Тренутни уређај је монтирани и ће бити одмонтирани аутоматски. Молимо сахраните податке у њему да бисте избегли губитак података</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="347"/>
         <source>To prevent data loss, back up data in the logical volume before shrinking it</source>
-        <translation>Да бисте избегли губитак података, сахраните податке у логичком тому пре смањивања</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="383"/>
         <source>The file system does not support space adjustment</source>
-        <translation>Система датотека не подржава промену простора</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2140,7 +2140,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="36"/>
         <source>Wipe</source>
-        <translation>Обриши</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="37"/>
@@ -2160,27 +2160,27 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="40"/>
         <source>Create volume group</source>
-        <translation>Креирај групу волумена</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="44"/>
         <source>Delete volume group</source>
-        <translation>Обриши групу волумена</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="48"/>
         <source>Delete logical volume</source>
-        <translation>Обриши логички волумен</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="52"/>
         <source>Delete physical volume</source>
-        <translation>Обриши физички волумен</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="56"/>
         <source>Create logical volume</source>
-        <translation>Креирај логички волумен</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="203"/>
@@ -2190,7 +2190,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="250"/>
         <source>Unable to mount the device: no file system is found, or the file system is not supported</source>
-        <translation>Не може се монтират уређај: не долази систем датотека, или систем датотека није подржан</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="251"/>
@@ -2200,22 +2200,22 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="353"/>
         <source>The file system does not support space adjustment</source>
-        <translation>Систем датотека не подржава промену простора</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="374"/>
         <source>The disks will be formatted if you create a logical volume</source>
-        <translation>Дискови ће бити форматирани ако креираш логички волумен</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="399"/>
         <source>Unmount %1 first</source>
-        <translation>Обриши %1 прво</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="411"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation>Датотеке не могу бити вратиле ако су обрисане, молим вас потврдите пре него што наставите</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="412"/>
@@ -2231,17 +2231,17 @@ will format it and remove its password.</source>
         <location filename="../widgets/titlewidget.cpp" line="463"/>
         <source>To ensure the normal use of system backup and restore, 
 rootA and rootB should be resized to the same value</source>
-        <translation>За осигурање нормалног коришћења система резервног копирања и враћања, rootA и rootB треба да буду промењени у исту вредност</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="480"/>
         <source>The disks will be formatted if you create a volume group</source>
-        <translation>Дискови ће бити форматирани ако креираш групу волумена</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="502"/>
         <source>Unmount all logical volumes in %1 first</source>
-        <translation>Обриши све логичке волумене у %1 прво</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2259,7 +2259,7 @@ rootA and rootB should be resized to the same value</source>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="45"/>
         <source>Make sure there are no programs running on the logical volume</source>
-        <translation>Проверите да ли нema програма који раде на логичком волумену</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="52"/>
@@ -2277,12 +2277,12 @@ rootA and rootB should be resized to the same value</source>
     <message>
         <location filename="../widgets/unmountwarningdialog.cpp" line="34"/>
         <source>Unmounting system disk may result in system crash</source>
-        <translation>Обришање системског диска може довести до системског сајла</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/unmountwarningdialog.cpp" line="40"/>
         <source>I will take the risks that may arise</source>
-        <translation>Прихватам ризике које могу да дођу</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/unmountwarningdialog.cpp" line="59"/>

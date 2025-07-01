@@ -69,7 +69,7 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="290"/>
         <source>Delete last logical volume</source>
-        <translation>Elimina l'últim volum lògic</translation>
+        <translation>Elimina l&apos;últim volum lògic</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="330"/>
@@ -94,12 +94,12 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="740"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
-        <translation>Useu l'algoritme estàndard aes-xts-plain64 per encriptar el disc. Hauríeu de desencriptar-lo abans de tornar-lo a muntar.</translation>
+        <translation>Useu l&apos;algoritme estàndard aes-xts-plain64 per encriptar el disc. Hauríeu de desencriptar-lo abans de tornar-lo a muntar.</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="746"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation>Useu l'algoritme criptogràfic sm4-xts-plain d'estat per encriptar el disc. Hauríeu de desencriptar-lo abans de tornar-lo a muntar. Els sistemes operatius que no admeten l'algorisme criptogràfic d'estat no podran desencriptar el disc.</translation>
+        <translation>Useu l&apos;algoritme criptogràfic sm4-xts-plain d&apos;estat per encriptar el disc. Hauríeu de desencriptar-lo abans de tornar-lo a muntar. Els sistemes operatius que no admeten l&apos;algorisme criptogràfic d&apos;estat no podran desencriptar el disc.</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="840"/>
@@ -115,7 +115,7 @@
         <location filename="../widgets/createlvwidget.cpp" line="869"/>
         <source>OK</source>
         <comment>button</comment>
-        <translation>D'acord</translation>
+        <translation>D&apos;acord</translation>
     </message>
 </context>
 <context>
@@ -156,7 +156,7 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="66"/>
         <source>Resize</source>
-        <translation>Canvia'n la mida</translation>
+        <translation>Canvia&apos;n la mida</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="90"/>
@@ -228,7 +228,7 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="571"/>
         <source>Resizing space...</source>
-        <translation>Se'n canvia la mida...</translation>
+        <translation>Se&apos;n canvia la mida...</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="573"/>
@@ -290,12 +290,12 @@
         <source>Adding the disk/partition to a logical volume group 
 will format it and remove its password.</source>
         <translation>Afegir el disc / partició a un grup de volums lògics
-el formatarà i n'eliminarà la contrasenya.</translation>
+el formatarà i n&apos;eliminarà la contrasenya.</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="1700"/>
         <source>OK</source>
-        <translation>D'acord</translation>
+        <translation>D&apos;acord</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="1919"/>
@@ -305,17 +305,17 @@ el formatarà i n'eliminarà la contrasenya.</translation>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2085"/>
         <source>Existing volume group, creation failed. Please retry after reboot.</source>
-        <translation>Grup de volums existent! No s'ha pogut crear. Si us plau, torneu-ho a provar després de reiniciar.</translation>
+        <translation>Grup de volums existent! No s&apos;ha pogut crear. Si us plau, torneu-ho a provar després de reiniciar.</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2089"/>
         <source>Failed to create a physical volume. Please refresh Disk Utility and try again.</source>
-        <translation>No s'ha pogut crear un volum físic. Actualitzeu la Utilitat de disc i torneu-ho a provar.</translation>
+        <translation>No s&apos;ha pogut crear un volum físic. Actualitzeu la Utilitat de disc i torneu-ho a provar.</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2093"/>
         <source>Device input/output error. Please try again after reboot.</source>
-        <translation>Error d'entrada / sortida del dispositiu. Si us plau, torneu-ho a provar després de reiniciar.</translation>
+        <translation>Error d&apos;entrada / sortida del dispositiu. Si us plau, torneu-ho a provar després de reiniciar.</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2149"/>
@@ -366,7 +366,7 @@ el formatarà i n'eliminarà la contrasenya.</translation>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="225"/>
         <source>Initializing data...</source>
-        <translation>S'inicialitzen les dades...</translation>
+        <translation>S&apos;inicialitzen les dades...</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="273"/>
@@ -391,7 +391,7 @@ el formatarà i n'eliminarà la contrasenya.</translation>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="485"/>
         <source>Deleting %1 ...</source>
-        <translation>S'elimina %1...</translation>
+        <translation>S&apos;elimina %1...</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="537"/>
@@ -411,22 +411,22 @@ el formatarà i n'eliminarà la contrasenya.</translation>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="668"/>
         <source>Deleting...</source>
-        <translation>S'elimina...</translation>
+        <translation>S&apos;elimina...</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="687"/>
         <source>Resizing space...</source>
-        <translation>Se'n canvia la mida...</translation>
+        <translation>Se&apos;n canvia la mida...</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="725"/>
         <source>AES Encryption</source>
-        <translation>Encriptació d'AES</translation>
+        <translation>Encriptació d&apos;AES</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="727"/>
         <source>SM4 Encryption</source>
-        <translation>Encriptació d'SM4</translation>
+        <translation>Encriptació d&apos;SM4</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="813"/>
@@ -579,7 +579,7 @@ el formatarà i n'eliminarà la contrasenya.</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="113"/>
         <source>Check partition table error</source>
-        <translation>Comproveu l'error de la taula de particions</translation>
+        <translation>Comproveu l&apos;error de la taula de particions</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="119"/>
@@ -619,7 +619,7 @@ el formatarà i n'eliminarà la contrasenya.</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="287"/>
         <source>Health checking does not support this type of device.</source>
-        <translation>La comprovació de salut no admet aquest tipus de dispositiu.</translation>
+        <translation>El control de salut no suporta aquest tipus d&apos;equipament.</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="326"/>
@@ -629,14 +629,14 @@ el formatarà i n'eliminarà la contrasenya.</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="326"/>
         <source>OK</source>
-        <translation>D'acord</translation>
+        <translation>D&apos;acord</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="338"/>
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
-        <translation>Totes les particions d'aquest disc es fusionaran i se'n perdran
+        <translation>Totes les particions d&apos;aquest disc es fusionaran i se&apos;n perdran
 totes les dades si es crea una taula de particions nova.
 Aneu amb compte.</translation>
     </message>
@@ -653,7 +653,7 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="365"/>
         <source>No errors found in the partition table</source>
-        <translation>No s'ha trobat cap error a la taula de particions</translation>
+        <translation>No s&apos;ha trobat cap error a la taula de particions</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="379"/>
@@ -668,7 +668,7 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="386"/>
         <source>Failed to hide the partition: unable to lock it</source>
-        <translation>No s'ha pogut amagar la partició: no s'ha pogut bloquejar</translation>
+        <translation>No s&apos;ha pogut amagar la partició: no s&apos;ha pogut bloquejar</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="394"/>
@@ -703,32 +703,32 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="436"/>
         <source>Failed to delete the partition: unable to lock it</source>
-        <translation>No s'ha pogut suprimir la partició: no es pot bloquejar</translation>
+        <translation>No s&apos;ha pogut suprimir la partició: no es pot bloquejar</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="451"/>
         <source>Hide the partition successfully</source>
-        <translation>La partició s'ha amagat amb èxit</translation>
+        <translation>La partició s&apos;ha amagat amb èxit</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="456"/>
         <source>Failed to hide the partition</source>
-        <translation>No s'ha pogut amagar la partició</translation>
+        <translation>No s&apos;ha pogut amagar la partició</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="466"/>
         <source>Unhide the partition successfully</source>
-        <translation>La partició s'ha mostrat correctament</translation>
+        <translation>La partició s&apos;ha mostrat correctament</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="471"/>
         <source>Failed to unhide the partition</source>
-        <translation>No s'ha pogut mostrar la partició</translation>
+        <translation>No s&apos;ha pogut mostrar la partició</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="487"/>
         <source>Delete the partition successfully</source>
-        <translation>La partició s'ha suprimit amb èxit</translation>
+        <translation>La partició s&apos;ha suprimit amb èxit</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="495"/>
@@ -753,7 +753,7 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="514"/>
         <source>Failed to delete the partition: %1</source>
-        <translation>No s'ha pogut suprimir la partició: %1</translation>
+        <translation>No s&apos;ha pogut suprimir la partició: %1</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="524"/>
@@ -793,7 +793,7 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="584"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation>Les dades no es poden recuperar si s'eliminen. Confirmeu-ho abans de continuar.</translation>
+        <translation>Les dades no es poden recuperar si s&apos;eliminen. Confirmeu-ho abans de continuar.</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="602"/>
@@ -876,7 +876,7 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="142"/>
         <source>Timeout</source>
-        <translation>Temps d'espera</translation>
+        <translation>Temps d&apos;espera</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="189"/>
@@ -971,12 +971,12 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="804"/>
         <source>Disk verify completed. %1 bad blocks found.</source>
-        <translation>Verificació del disc completada. S'han trobat %1 blocs defectuosos.</translation>
+        <translation>Verificació del disc completada. S&apos;han trobat %1 blocs defectuosos.</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="804"/>
         <source>OK</source>
-        <translation>D'acord</translation>
+        <translation>D&apos;acord</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="977"/>
@@ -1134,7 +1134,7 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="212"/>
         <source>Attribute name</source>
-        <translation>Nom de l'atribut</translation>
+        <translation>Nom de l&apos;atribut</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="310"/>
@@ -1170,12 +1170,12 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="421"/>
         <source>Export successful</source>
-        <translation>L'exportació s'ha realitzat amb èxit</translation>
+        <translation>L&apos;exportació s&apos;ha realitzat amb èxit</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="425"/>
         <source>Export failed</source>
-        <translation>L'exportació ha fallat</translation>
+        <translation>L&apos;exportació ha fallat</translation>
     </message>
 </context>
 <context>
@@ -1248,12 +1248,12 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="57"/>
         <source>Power On Hours:</source>
-        <translation>Hores d'activitat:</translation>
+        <translation>Hores d&apos;activitat:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="58"/>
         <source>Power Cycle Count:</source>
-        <translation>Compte del cicle d'activitat:</translation>
+        <translation>Compte del cicle d&apos;activitat:</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="58"/>
@@ -1299,12 +1299,12 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="195"/>
         <source>Export successful</source>
-        <translation>L'exportació s'ha realitzat amb èxit</translation>
+        <translation>L&apos;exportació s&apos;ha realitzat amb èxit</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="199"/>
         <source>Export failed</source>
-        <translation>L'exportació ha fallat</translation>
+        <translation>L&apos;exportació ha fallat</translation>
     </message>
 </context>
 <context>
@@ -1317,7 +1317,7 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="83"/>
         <source>It will erase all data on this disk, which will not be recovered</source>
-        <translation>S'esborraran totes les dades d'aquest disc i no es podran recuperar.</translation>
+        <translation>S&apos;esborraran totes les dades d&apos;aquest disc i no es podran recuperar.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="91"/>
@@ -1337,12 +1337,12 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="139"/>
         <source>AES Encryption</source>
-        <translation>Encriptació d'AES</translation>
+        <translation>Encriptació d&apos;AES</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="142"/>
         <source>SM4 Encryption</source>
-        <translation>Encriptació d'SM4</translation>
+        <translation>Encriptació d&apos;SM4</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="156"/>
@@ -1404,7 +1404,7 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="314"/>
         <source>The action cannot be undone, please proceed with caution</source>
-        <translation>L'acció no es pot desfer, procediu amb precaució.</translation>
+        <translation>L&apos;acció no es pot desfer, procediu amb precaució.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="316"/>
@@ -1439,22 +1439,22 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="441"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
-        <translation>Useu l'algoritme estàndard aes-xts-plain64 per encriptar el disc. Hauríeu de desencriptar-lo abans de tornar-lo a muntar.</translation>
+        <translation>Useu l&apos;algoritme estàndard aes-xts-plain64 per encriptar el disc. Hauríeu de desencriptar-lo abans de tornar-lo a muntar.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="451"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation>Useu l'algoritme criptogràfic sm4-xts-plain d'estat per encriptar el disc. Hauríeu de desencriptar-lo abans de tornar-lo a muntar. Els sistemes operatius que no admeten l'algorisme criptogràfic d'estat no podran desencriptar el disc.</translation>
+        <translation>Useu l&apos;algoritme criptogràfic sm4-xts-plain d&apos;estat per encriptar el disc. Hauríeu de desencriptar-lo abans de tornar-lo a muntar. Els sistemes operatius que no admeten l&apos;algorisme criptogràfic d&apos;estat no podran desencriptar el disc.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="492"/>
         <source>It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, and random data to the entire disk once. You will not be able to recover files, and the process will be slow.</source>
-        <translation>És un esborrament segur d'un sol cop que compleix amb NIST 800-88 i escriu 0, 1 i dades aleatòries a tot el disc una vegada. No podreu recuperar fitxers i el procés serà lent.</translation>
+        <translation>És un esborrament segur d&apos;un sol cop que compleix amb NIST 800-88 i escriu 0, 1 i dades aleatòries a tot el disc una vegada. No podreu recuperar fitxers i el procés serà lent.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="507"/>
         <source>It writes 0, 1, and random data to the entire disk several times. You can set the number of times to erase disks and overwrite data, but the process will be very slow.</source>
-        <translation>Escriu 0, 1 i dades aleatòries a tot el disc diverses vegades. Podeu configurar el nombre de vegades per esborrar els discs i sobreescriure'n les dades, però el procés serà molt lent.</translation>
+        <translation>Escriu 0, 1 i dades aleatòries a tot el disc diverses vegades. Podeu configurar el nombre de vegades per esborrar els discs i sobreescriure&apos;n les dades, però el procés serà molt lent.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="540"/>
@@ -1470,7 +1470,7 @@ Aneu amb compte.</translation>
         <location filename="../widgets/formatedialog.cpp" line="615"/>
         <source>OK</source>
         <comment>button</comment>
-        <translation>D'acord</translation>
+        <translation>D&apos;acord</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="692"/>
@@ -1479,7 +1479,7 @@ Aneu amb compte.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="721"/>
-        <source>"%1" wiped</source>
+        <source>&quot;%1&quot; wiped</source>
         <translation>%1 netejat</translation>
     </message>
     <message>
@@ -1642,7 +1642,7 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="264"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
-        <translation>Es perdrien les dades d'aquest punt de muntatge. Monteu el directori a una altra ubicació</translation>
+        <translation>Es perdrien les dades d&apos;aquest punt de muntatge. Monteu el directori a una altra ubicació</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="265"/>
@@ -1659,7 +1659,7 @@ Aneu amb compte.</translation>
         <location filename="../widgets/mountdialog.cpp" line="293"/>
         <source>OK</source>
         <comment>button</comment>
-        <translation>D'acord</translation>
+        <translation>D&apos;acord</translation>
     </message>
 </context>
 <context>
@@ -1680,7 +1680,7 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/partitiondialog.cpp" line="31"/>
         <source>It will increase the number of partitions on the disk</source>
-        <translation>S'augmentarà el nombre de particions del disc.</translation>
+        <translation>S&apos;augmentarà el nombre de particions del disc.</translation>
     </message>
     <message>
         <location filename="../widgets/partitiondialog.cpp" line="38"/>
@@ -1727,7 +1727,7 @@ Aneu amb compte.</translation>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="114"/>
         <source>OK</source>
         <comment>button</comment>
-        <translation>D'acord</translation>
+        <translation>D&apos;acord</translation>
     </message>
 </context>
 <context>
@@ -1798,7 +1798,7 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="293"/>
         <source>Delete last partition</source>
-        <translation>Elimina l'última partició</translation>
+        <translation>Elimina l&apos;última partició</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="303"/>
@@ -1833,12 +1833,12 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="744"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting.</source>
-        <translation>Useu l'algoritme estàndard aes-xts-plain64 per encriptar el disc. Si està encriptat, hauríeu de desencriptar-lo abans de muntar-lo.</translation>
+        <translation>Useu l&apos;algoritme estàndard aes-xts-plain64 per encriptar el disc. Si està encriptat, hauríeu de desencriptar-lo abans de muntar-lo.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="750"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation>Useu l'algoritme criptogràfic sm4-xts-plain d'estat per encriptar el disc. Si està encriptat, hauríeu de desencriptar-lo abans de muntar-lo. Els sistemes operatius que no admeten l'algorisme criptogràfic d'estat no podran desencriptar el disc.</translation>
+        <translation>Useu l&apos;algoritme criptogràfic sm4-xts-plain d&apos;estat per encriptar el disc. Si està encriptat, hauríeu de desencriptar-lo abans de muntar-lo. Els sistemes operatius que no admeten l&apos;algorisme criptogràfic d&apos;estat no podran desencriptar el disc.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="886"/>
@@ -1864,7 +1864,7 @@ Aneu amb compte.</translation>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="938"/>
         <source>OK</source>
         <comment>button</comment>
-        <translation>D'acord</translation>
+        <translation>D&apos;acord</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="957"/>
@@ -1975,7 +1975,7 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="61"/>
         <source>To prevent data loss, back up data in the physical volume before deleting it</source>
-        <translation>Per evitar la pèrdua de dades, feu-ne una còpia de seguretat al volum físic abans de l'eliminació.</translation>
+        <translation>Per evitar la pèrdua de dades, feu-ne una còpia de seguretat al volum físic abans de l&apos;eliminació.</translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="68"/>
@@ -1992,7 +1992,7 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="106"/>
         <source>Deleting...</source>
-        <translation>S'elimina...</translation>
+        <translation>S&apos;elimina...</translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="215"/>
@@ -2027,7 +2027,7 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="233"/>
         <source>OK</source>
-        <translation>D'acord</translation>
+        <translation>D&apos;acord</translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="263"/>
@@ -2080,12 +2080,12 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="225"/>
         <source>The file system does not support shrinking space</source>
-        <translation>El sistema de fitxers no admet la reducció d'espai.</translation>
+        <translation>El sistema de fitxers no admet la reducció d&apos;espai.</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="225"/>
         <source>OK</source>
-        <translation>D'acord</translation>
+        <translation>D&apos;acord</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="239"/>
@@ -2095,17 +2095,17 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="246"/>
         <source>To prevent data loss, back up data before shrinking it</source>
-        <translation>Per evitar la pèrdua de dades, feu-ne una còpia de seguretat abans de reduir-ne l'espai.</translation>
+        <translation>Per evitar la pèrdua de dades, feu-ne una còpia de seguretat abans de reduir-ne l&apos;espai.</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="334"/>
         <source>Unmount it before shrinking its space</source>
-        <translation>Desmunteu-lo abans de reduir-ne l'espai.</translation>
+        <translation>Desmunteu-lo abans de reduir-ne l&apos;espai.</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="344"/>
         <source>The current device has been mounted and will be unmounted automatically. Please back up data in it to prevent data loss</source>
-        <translation>El dispositiu actual s'ha muntat i es desmuntarà automàticament. Si us plau, feu una còpia de seguretat de les dades per evitar-ne la pèrdua.</translation>
+        <translation>El dispositiu actual s&apos;ha muntat i es desmuntarà automàticament. Si us plau, feu una còpia de seguretat de les dades per evitar-ne la pèrdua.</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="347"/>
@@ -2156,7 +2156,7 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="39"/>
         <source>Resize</source>
-        <translation>Canvia'n la mida</translation>
+        <translation>Canvia&apos;n la mida</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="40"/>
@@ -2186,17 +2186,17 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="203"/>
         <source>Cannot recognize its partition table</source>
-        <translation>No se'n pot reconèixer la taula de particions.</translation>
+        <translation>No se&apos;n pot reconèixer la taula de particions.</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="250"/>
         <source>Unable to mount the device: no file system is found, or the file system is not supported</source>
-        <translation>No es pot muntar el dispositiu: no s'ha trobat cap sistema de fitxers o el sistema de fitxers no és compatible.</translation>
+        <translation>No es pot muntar el dispositiu: no s&apos;ha trobat cap sistema de fitxers o el sistema de fitxers no és compatible.</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="251"/>
         <source>OK</source>
-        <translation>D'acord</translation>
+        <translation>D&apos;acord</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="353"/>
@@ -2216,7 +2216,7 @@ Aneu amb compte.</translation>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="411"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation>Les dades no es poden recuperar si s'eliminen. Confirmeu-ho abans de continuar.</translation>
+        <translation>Les dades no es poden recuperar si s&apos;eliminen. Confirmeu-ho abans de continuar.</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="412"/>
@@ -2232,8 +2232,8 @@ Aneu amb compte.</translation>
         <location filename="../widgets/titlewidget.cpp" line="463"/>
         <source>To ensure the normal use of system backup and restore, 
 rootA and rootB should be resized to the same value</source>
-        <translation>Per garantir l'ús normal de la còpia de seguretat i la restauració del sistema,
-rootA i rootB s'han de redimensionar al mateix valor.</translation>
+        <translation>Per garantir l&apos;ús normal de la còpia de seguretat i la restauració del sistema,
+rootA i rootB s&apos;han de redimensionar al mateix valor.</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="480"/>
@@ -2251,7 +2251,7 @@ rootA i rootB s'han de redimensionar al mateix valor.</translation>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="29"/>
         <source>Make sure there are no programs running on the disk</source>
-        <translation>Assegureu-vos que no hi hagi programes que s'executin al disc.</translation>
+        <translation>Assegureu-vos que no hi hagi programes que s&apos;executin al disc.</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="38"/>

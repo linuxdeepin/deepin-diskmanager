@@ -6,17 +6,17 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="36"/>
         <source>Creating logical volumes on %1</source>
-        <translation>Tworzenie woluminów logicznych na %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="38"/>
         <source>Click %1 to create a logical volume. </source>
-        <translation>Kliknite %1, aby utworzyć wolumin logiczny.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="111"/>
         <source>VG Information</source>
-        <translation>Informacje o VG</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="125"/>
@@ -26,17 +26,17 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="135"/>
         <source>LV name:</source>
-        <translation>Nazwa LV:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="144"/>
         <source>VG name:</source>
-        <translation>Nazwa VG:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="156"/>
         <source>LV file system:</source>
-        <translation>System plików LV:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="229"/>
@@ -59,22 +59,22 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="267"/>
         <source>LV Information</source>
-        <translation>Informacje o LV</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="279"/>
         <source>Create LV:</source>
-        <translation>Utwórz LV:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="290"/>
         <source>Delete last logical volume</source>
-        <translation>Usuń ostatni wolumin logiczny</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="330"/>
         <source>LV capacity:</source>
-        <translation>Pojemność LV:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="516"/>
@@ -94,22 +94,22 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="740"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
-        <translation>Użyj standardowego algorytmu aes-xts-plain64 do szyfrowania dysku. Przed ponownym zainstalowaniem systemu musisz go odszyfrować.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="746"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation>Użyj algorytmu kryptograficznego sm4-xts-plain do szyfrowania dysku. Przed ponownym zainstalowaniem systemu musisz go odszyfrować. Systemy operacyjne, które nie obsługują algorytmu kryptograficznego state, nie będą mogły odszyfrować dysku.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="840"/>
         <source>To encrypt a volume, it should be larger than 100 MiB</source>
-        <translation>Aby zaszyfrować wolumin, musi mieć rozmiar większy niż 100 MiB</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="868"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
-        <translation>Aby uniknąć utraty hasła, proszę zapisać hasło i zachować je odpowiednio!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="869"/>
@@ -151,7 +151,7 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="56"/>
         <source>Create volume group</source>
-        <translation>Utwórz grupę woluminów</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="66"/>
@@ -161,27 +161,27 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="90"/>
         <source>Select disks or partitions to create a volume group and set its capacity</source>
-        <translation>Wybierz dyski lub partycje, aby utworzyć grupę woluminów i ustawić jej pojemność</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="95"/>
         <source>Capacity selected: %1</source>
-        <translation>Wybrana pojemność: %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="100"/>
         <source>The selected disks will be converted to dynamic disks, and you will not be able to start installed operating systems from the disks.</source>
-        <translation>Wybrane dyski zostaną przekształcone w dynamiczne dyski, a następnie nie będzie można uruchamiać zainstalowanych systemów operacyjnych z tych dysków.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="150"/>
         <source>No partitions available</source>
-        <translation>Brak dostępnych partycji</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="221"/>
         <source>No disks or partitions available</source>
-        <translation>Brak dostępnych dysków lub partycji</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="255"/>
@@ -192,32 +192,32 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="258"/>
         <source>Next</source>
-        <translation>Dalej</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="283"/>
         <source>Selected disks/partitions</source>
-        <translation>Wybrane dyski/partycje</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="320"/>
         <source>Set VG capacity</source>
-        <translation>Ustaw pojemność VG</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="325"/>
         <source>Auto adjusted to integral multiples of 4 MiB</source>
-        <translation>Automatycznie dostosowano do całkowitych wielokrotności 4 MiB</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="418"/>
         <source>Choose one disk or partition at least</source>
-        <translation>Wybierz przynajmniej jeden dysk lub partycję</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="455"/>
         <source>Previous</source>
-        <translation>Wstecz</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="458"/>
@@ -228,52 +228,52 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="571"/>
         <source>Resizing space...</source>
-        <translation>Zmiana wielkości przestrzeni...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="573"/>
         <source>Creating...</source>
-        <translation>Tworzenie...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="625"/>
         <source>Selected disks and partitions:</source>
-        <translation>Wybrane dyski i partycje:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="668"/>
         <source>VG capacity: %1</source>
-        <translation>Pojemność VG: %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="675"/>
         <source>VG name: %1</source>
-        <translation>اسم مجموعة الحجم: %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="783"/>
         <source>No less than the used capacity please</source>
-        <translation>الرجاء عدم تقليل السعة المستخدمة</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="788"/>
         <source>No more than the maximum capacity please</source>
-        <translation>الرجاء عدم تجاوز السعة القصوى</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="806"/>
         <source>A lot of data exists on %1, </source>
-        <translation>يوجد الكثير من البيانات على %1، </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="807"/>
         <source>which may take a long time to back it up.</source>
-        <translation>وقد يستغرق نسخها وقتًا طويلاً.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="808"/>
         <source>Do you want to continue?</source>
-        <translation>هل ترغب في الاستمرار؟</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="809"/>
@@ -289,7 +289,7 @@
         <location filename="../widgets/createvgwidget.cpp" line="1699"/>
         <source>Adding the disk/partition to a logical volume group 
 will format it and remove its password.</source>
-        <translation>إضافة القرص/القسم إلى مجموعة الحجم المنطقية ستقوم بتنسيقها وإزالة كلمة المرور الخاصة بها.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="1700"/>
@@ -299,27 +299,27 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="1919"/>
         <source>Not enough space to back up data on %1, please clear disk space</source>
-        <translation>لا يوجد مساحة كافية لنسخ البيانات على %1، الرجاء حذف مساحة القرص</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2085"/>
         <source>Existing volume group, creation failed. Please retry after reboot.</source>
-        <translation>مجموعة حجم موجودة، فشل في الإنشاء. الرجاء المحاولة مرة أخرى بعد إعادة التشغيل.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2089"/>
         <source>Failed to create a physical volume. Please refresh Disk Utility and try again.</source>
-        <translation>فشل في إنشاء حجم حجم فعلي. الرجاء تحديث أداة القرص وحاول مرة أخرى.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2093"/>
         <source>Device input/output error. Please try again after reboot.</source>
-        <translation>خطأ في إدخال/إخراج الجهاز. الرجاء المحاولة مرة أخرى بعد إعادة التشغيل.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2149"/>
         <source>Refreshing the page to reload disks</source>
-        <translation>تحديث الصفحة لإعادة تحميل الأقراص</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -360,122 +360,122 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="189"/>
         <source>Refreshing data...</source>
-        <translation>تحديث البيانات...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="225"/>
         <source>Initializing data...</source>
-        <translation>تهيئة البيانات...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="273"/>
         <source>Mounting %1 ...</source>
-        <translation>تم تثبيت %1 ...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="280"/>
         <source>Unmounting %1 ...</source>
-        <translation>تم إزالة %1 ...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="319"/>
         <source>Resizing %1 ...</source>
-        <translation>تغيير حجم %1 ...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="326"/>
         <source>Creating a new partition...</source>
-        <translation>إنشاء قسم جديد...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="485"/>
         <source>Deleting %1 ...</source>
-        <translation>حذف %1 ...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="537"/>
         <source>Creating a partition table of %1 ...</source>
-        <translation>إنشاء جدول الأقسام لـ %1 ...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="539"/>
         <source>Replacing the partition table of %1 ...</source>
-        <translation>استبدال جدول الأقسام لـ %1 ...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="661"/>
         <source>Creating...</source>
-        <translation>إنشاء...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="668"/>
         <source>Deleting...</source>
-        <translation>حذف...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="687"/>
         <source>Resizing space...</source>
-        <translation>تغيير مساحة التخزين...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="725"/>
         <source>AES Encryption</source>
-        <translation>تشفير AES</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="727"/>
         <source>SM4 Encryption</source>
-        <translation>تشفير SM4</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="813"/>
         <source>Failed to encrypt %1, please try again!</source>
-        <translation>فشل في تشفير %1، الرجاء المحاولة مرة أخرى!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="817"/>
         <source>Failed to decrypt %1, please try again!</source>
-        <translation>فشل في فك تشفير %1، الرجاء المحاولة مرة أخرى!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="821"/>
         <source>%1 failed to close the crypto map</source>
-        <translation>'%1 فشل في إغلاق خريطة التشفير'</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="828"/>
         <source>Failed to create partitions, please try again!</source>
-        <translation>فشل في إنشاء الأقسام، الرجاء المحاولة مرة أخرى!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="832"/>
         <source>Failed to create %1 file system, please try again!</source>
-        <translation>Ni je uspelo ustvariti %1 sistem datoteke, poskusite ponovno!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="836"/>
         <source>Failed to submit the request to the kernel</source>
-        <translation>Zahteva ni bila uspela poslati v kernel</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="840"/>
         <source>DBUS parameter error</source>
-        <translation>Napaka parametra DBUS</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="844"/>
         <source>Failed to mount %1</source>
-        <translation>Ni uspelo montirati %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="848"/>
         <source>%1 failed to create mounting folders</source>
-        <translation>'%1 ni uspelo ustvariti map za montažo'</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="852"/>
         <source>%1 failed to change the owner of mounting folders</source>
-        <translation>'%1 ni uspelo spremeniti lastnika map za montažo'</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="856"/>
@@ -485,7 +485,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="863"/>
         <source>Failed to create a logical volume, please try again!</source>
-        <translation>Ni uspelo ustvariti logičnega volumena, poskusite ponovno!</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -493,22 +493,22 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="41"/>
         <source>Enter the password to decrypt the disk</source>
-        <translation>Vnesite geslo za dešifriranje diska</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="53"/>
         <source>Enter the password to decrypt the volume group</source>
-        <translation>Vnesite geslo za dešifriranje skupine volumenov</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="73"/>
         <source>Enter a password </source>
-        <translation>Vnesite geslo </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="78"/>
         <source>Password hint</source>
-        <translation>Namige za geslo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="126"/>
@@ -520,42 +520,42 @@ will format it and remove its password.</source>
         <location filename="../widgets/decryptdialog.cpp" line="131"/>
         <source>Decrypt</source>
         <comment>button</comment>
-        <translation>Dešifriraj</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="300"/>
         <source>Decrypting...</source>
-        <translation>Dešifriranje...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="198"/>
         <source>Please try again %1 minutes later</source>
-        <translation>Poskusite ponovno %1 minut kasneje</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="280"/>
         <source>The password cannot be empty</source>
-        <translation>Geslo ne more biti prazno</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="318"/>
         <source>Decryption failed</source>
-        <translation>Dešifriranje je spodletelo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="337"/>
         <source>Password locked, please try again %1 minutes later</source>
-        <translation>Geslo je zamaknjeno, poskusite ponovno %1 minut kasneje</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="339"/>
         <source>Wrong password, %1 chances left</source>
-        <translation>Napačno geslo, %1 možnosti ostanejo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="341"/>
         <source>Wrong password, only one chance left</source>
-        <translation>Napačno geslo, ostaja le ena možnost</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -598,17 +598,17 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="211"/>
         <source>Delete volume group</source>
-        <translation>Izbrisi skupino volumenov</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="217"/>
         <source>Create logical volume</source>
-        <translation>Ustvari logični volumen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="242"/>
         <source>Delete logical volume</source>
-        <translation>Izbrisi logični volumen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="287"/>
@@ -618,7 +618,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="287"/>
         <source>Health checking does not support this type of device.</source>
-        <translation>Preverjanje zdravja ne podpira tega tipa naprave.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="326"/>
@@ -732,22 +732,22 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="495"/>
         <source>Failed to find the disk</source>
-        <translation>Ni uspelo najti diska</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="499"/>
         <source>Failed to get the partition info</source>
-        <translation>Ni uspelo pridobiti informacij o particiji</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="503"/>
         <source>Failed to delete the partition</source>
-        <translation>Ni uspelo izbrisati particije</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="507"/>
         <source>Failed to submit the request to the kernel</source>
-        <translation>Zahteva ni bila uspela poslati v kernel</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="514"/>
@@ -787,52 +787,52 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="572"/>
         <source>Unmount all logical volumes in %1 first</source>
-        <translation>Najprej demontažirajte vse logične volumene v %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="584"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation>Podatki ne morejo biti obnovljeni, če so izbrisani, preverite pred nadaljevanjem</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="602"/>
         <source>The disks will be formatted if you create a logical volume</source>
-        <translation>Diski bodo oblikovani, če ustvarite logični volumen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="627"/>
         <source>Unmount %1 first</source>
-        <translation>Odpojite najprej %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="670"/>
         <source>The logical volume group is busy and cannot be deleted. Please retry after reboot.</source>
-        <translation>Logična volumska skupina je zasedena in ne more biti izbrisana. Prosimo, poskusite ponovno po ponovnem zagonu.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="675"/>
         <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
-        <translation>Logični volum je zaseden in ne more biti izbrisana. Prosimo, poskusite ponovno po ponovnem zagonu.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="680"/>
         <source>Failed to delete the logical volume group</source>
-        <translation>Izbriši logično volumsko skupino</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="718"/>
         <source>Failed to delete the logical volume</source>
-        <translation>Izbriši logični volum</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="828"/>
         <source>Volume Groups</source>
-        <translation>Volumske skupine</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="882"/>
         <source>Disks</source>
-        <translation>Diski</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -870,7 +870,7 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="141"/>
         <source>Rounds</source>
-        <translation>Krogi</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="142"/>
@@ -1187,12 +1187,12 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
         <source>SSD</source>
-        <translation>SSD</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="50"/>
         <source>HDD</source>
-        <translation>HDD</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="55"/>
@@ -1311,12 +1311,12 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="82"/>
         <source>Wipe %1</source>
-        <translation>Izbriši %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="83"/>
         <source>It will erase all data on this disk, which will not be recovered</source>
-        <translation>Brisanje bomo izbrisali vse podatke na tem disku, ki se bodo lahko povrnili</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="91"/>
@@ -1336,52 +1336,52 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="139"/>
         <source>AES Encryption</source>
-        <translation>AES šifriranje</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="142"/>
         <source>SM4 Encryption</source>
-        <translation>SM4 šifriranje</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="156"/>
         <source>Security:</source>
-        <translation>Bezbednost:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="169"/>
         <source>Fast</source>
-        <translation>Hitro</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="169"/>
         <source>Secure</source>
-        <translation>Zaščiteno</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="173"/>
         <source>Advanced</source>
-        <translation>Napredno</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="184"/>
         <source>It only deletes the partition info without erasing the files on the disk. Disk recovery tools may recover the files at a certain probability.</source>
-        <translation>Brisanje izbriše le podatke o particiji brez brisanja datotek na disku. Povratne orodje za obnovitev diska lahko obnovi datoteke v določeni verjetnosti.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="190"/>
         <source>Wiping method:</source>
-        <translation>Način brisanja:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="198"/>
         <source>DoD 5220.22-M, 7 passes</source>
-        <translation>DoD 5220.22-M, 7 krogi</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="198"/>
         <source>Gutmann, 35 passes</source>
-        <translation>Gutmann, 35 krogi</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="259"/>
@@ -1393,42 +1393,42 @@ tabele razdelkov. Bodite previdni</translation>
         <location filename="../widgets/formatedialog.cpp" line="263"/>
         <source>Wipe</source>
         <comment>button</comment>
-        <translation>Brisanje</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="311"/>
         <source>Failed to find the disk</source>
-        <translation>Ni bilo mogoče najti diska</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="314"/>
         <source>The action cannot be undone, please proceed with caution</source>
-        <translation>Dejanje se ne more preklicati, prosimo, nadaljujte z opazovalnostjo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="316"/>
         <source>LV name:</source>
-        <translation>Ime LV:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="320"/>
         <source>LV name</source>
-        <translation>Ime LV</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="322"/>
         <source>LV file system:</source>
-        <translation>Sistem datotek LV:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="324"/>
         <source>You may be able to recover files after the wipe.</source>
-        <translation>Po brisanju boste lahko obnovili datoteke.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="327"/>
         <source>Failed to submit the request to the kernel</source>
-        <translation>Ni bilo mogoče predložiti zahtevekaži</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="377"/>
@@ -1438,32 +1438,32 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="441"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
-        <translation>استخدم خوارزمية التشفير المعيارية aes-xts-plain64 لتشفير القرص. يجب عليك فك تشفيره قبل تثبيته مرة أخرى.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="451"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation>استخدم خوارزمية التشفير الحالة sm4-xts-plain لتشفير القرص. يجب عليك فك تشفيره قبل تثبيته مرة أخرى. لن تتمكن أنظمة التشغيل التي لا تدعم خوارزمية التشفير الحالة من فك تشفير القرص.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="492"/>
         <source>It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, and random data to the entire disk once. You will not be able to recover files, and the process will be slow.</source>
-        <translation>إنها عملية مسح آمنة واحدة تتوافق مع NIST 800-88 وتكتب البيانات 0 و1 وعشوائية على كامل القرص مرة واحدة. لن تتمكن من استعادة الملفات، والعملية ستكون بطيئة.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="507"/>
         <source>It writes 0, 1, and random data to the entire disk several times. You can set the number of times to erase disks and overwrite data, but the process will be very slow.</source>
-        <translation>إنها تكتب البيانات 0 و1 وعشوائية على كامل القرص عدة مرات. يمكنك تحديد عدد المرات لمسح الأقراص وإ覆盖 البيانات، ولكن العملية ستكون بطيئة للغاية.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="540"/>
         <source>You will not be able to recover files after the wipe, and the process will be slow.</source>
-        <translation>لن تتمكن من استعادة الملفات بعد المسح، والعملية ستكون بطيئة.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="614"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
-        <translation>للحفاظ على كلمة المرور، من فضلك احفظها واحفظها بشكل صحيح!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="615"/>
@@ -1474,17 +1474,17 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="692"/>
         <source>Wiping %1</source>
-        <translation>مسح %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="721"/>
-        <source>"%1" wiped</source>
-        <translation>"%1" تم مسحه</translation>
+        <source>&quot;%1&quot; wiped</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="728"/>
         <source>Failed to wipe %1</source>
-        <translation>فشل في مسح %1</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1522,12 +1522,12 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="313"/>
         <source>Path:</source>
-        <translation>المسار:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="314"/>
         <source>Disk type:</source>
-        <translation>نوع القرص:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="315"/>
@@ -1537,37 +1537,37 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="319"/>
         <source>SSD</source>
-        <translation>SSD</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="321"/>
         <source>HDD</source>
-        <translation>HDD</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="499"/>
         <source>LV count:</source>
-        <translation>عدد LV:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="501"/>
         <source>VG name:</source>
-        <translation>اسم VG:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="506"/>
         <source>Volume group</source>
-        <translation>مجموعة الأحجام</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="579"/>
         <source>Volume name:</source>
-        <translation>اسم الحجم:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="584"/>
         <source>Logical volume</source>
-        <translation>حجم منطقي</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1585,12 +1585,12 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/customcontrol/infotopframe.cpp" line="170"/>
         <source>%1 partition table</source>
-        <translation>جدول %1 للقطاعات</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/infotopframe.cpp" line="189"/>
         <source>Volume group</source>
-        <translation>مجموعة الأحجام</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1621,12 +1621,12 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="75"/>
         <source>Please select /mnt or /media, or its subdirectories.</source>
-        <translation>يرجى اختيار /mnt أو /media أو دوائرها الفرعية.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="83"/>
         <source>The mount point is illegal. Please select /mnt or /media, or its subdirectories.</source>
-        <translation>نقطة التثبيت غير قانونية. يرجى اختيار /mnt أو /media أو دوائرها الفرعية.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="94"/>
@@ -1652,7 +1652,7 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="292"/>
         <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
-        <translation>فشل التثبيت: نقطة التثبيت المختارة ليست فارغة. يرجى اختيار واحدة أخرى!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="293"/>
@@ -1739,7 +1739,7 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="42"/>
         <source>Click %1 to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation>اضغط على %1 لزيادة عدد القطاعات. اضغط على كل قطعة لتغيير اسمها ونظام الملفات.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="115"/>
@@ -1832,12 +1832,12 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="744"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting.</source>
-        <translation>استخدم خوارزمية التشفير المعيارية aes-xts-plain64 لتشفير القرص. إذا كان مُشفرًا، يجب عليك فك تشفيره قبل التثبيت.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="750"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation>استخدم خوارزمية التشفير الحالة sm4-xts-plain لتشفير القرص. إذا كان مُشفرًا، يجب عليك فك تشفيره قبل التثبيت. لن تتمكن أنظمة التشغيل التي لا تدعم خوارزمية التشفير الحالة من فك تشفير القرص.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="886"/>
@@ -1847,17 +1847,17 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="909"/>
         <source>To encrypt a partition, it should be larger than 100 MiB</source>
-        <translation>لإمكانيّة تشفير قطعة، يجب أن تكون أكبر من 100 ميغابايت.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="918"/>
         <source>Set a password to encrypt the new partition</source>
-        <translation>حدد كلمة مرور لتشفير القسم الجديد.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="937"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
-        <translation>للحفاظ على كلمة المرور، من فضلك احفظها واحفظها بشكل صحيح!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="938"/>
@@ -1876,47 +1876,47 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="53"/>
         <source>Set a password to encrypt %1</source>
-        <translation>حدد كلمة مرور لتشفير %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="55"/>
         <source>The password cannot be reset or retrieved online</source>
-        <translation>Geslovo se ne da ponovno nastaviti ali preuzeti preko interneta</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="59"/>
         <source>Password</source>
-        <translation>Geslovo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="64"/>
         <source>Repeat password</source>
-        <translation>Ponovi geslovo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="69"/>
         <source>Password hint</source>
-        <translation>Svetlovo za geslovo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="73"/>
         <source>(Recommended)</source>
-        <translation>(Priporočeno)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="88"/>
         <source>Enter a password </source>
-        <translation>Vnesite geslovo </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="94"/>
         <source>Enter the password again</source>
-        <translation>Vnesite geslovo ponovno</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="100"/>
         <source>Enter a password hint</source>
-        <translation>Vnesite svetlovo za geslovo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="142"/>
@@ -1933,22 +1933,22 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="188"/>
         <source>The password exceeds the maximum length</source>
-        <translation>Geslovo preseže maksimalno dolžino</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="231"/>
         <source>The password cannot be empty</source>
-        <translation>Geslovo ne sme biti prazno</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="246"/>
         <source>Passwords do not match</source>
-        <translation>Geslovja se ne ujemata</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="254"/>
         <source>The password hint should differ from the password</source>
-        <translation>Svetlovo za geslovo mora biti drugačno od geslovja</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1969,12 +1969,12 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="55"/>
         <source>Are you sure you want to delete the physical volume?</source>
-        <translation>Ali ste prepričani, da želite izbrisati fizično volumen?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="61"/>
         <source>To prevent data loss, back up data in the physical volume before deleting it</source>
-        <translation>Za preprečitev izgube podatkov, pred izbrisom fizičnega volumena shranite podatke v njem</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="68"/>
@@ -1991,22 +1991,22 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="106"/>
         <source>Deleting...</source>
-        <translation>Brisanje...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="215"/>
         <source>A lot of data exists on %1, </source>
-        <translation>Na %1 obstaja veliko podatkov, </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="216"/>
         <source>which may take a long time to back it up.</source>
-        <translation>ki lahko zavzamejo dolgo čas za njihovo shranjevanje.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="217"/>
         <source>Do you want to continue?</source>
-        <translation>Želite nadaljevati?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="218"/>
@@ -2021,7 +2021,7 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="232"/>
         <source>Not enough space to back up data on %1, please delete the logical volume first</source>
-        <translation>Na %1 ni dovolj prostora za shranjevanje podatkov, prosim, najprej izbrišite logični volumen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="233"/>
@@ -2031,7 +2031,7 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="263"/>
         <source>Failed to delete the physical volume</source>
-        <translation>Izbris fizičnega volumena je spodletel</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2044,12 +2044,12 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="66"/>
         <source>New capacity:</source>
-        <translation>Nova kapaciteta:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="89"/>
         <source>Auto adjusted to integral multiples of 4 MiB</source>
-        <translation>Avtomatsko prilagodeno na celo število večkratnikov 4 MiB</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="102"/>
@@ -2059,7 +2059,7 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="109"/>
         <source>It will resize the logical volume space</source>
-        <translation>Zmanjša bo prostor logičnega volumena</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="115"/>
@@ -2074,12 +2074,12 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="144"/>
         <source>No more than the maximum capacity please</source>
-        <translation>Ne več kot maksimalna kapaciteta, prosim</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="225"/>
         <source>The file system does not support shrinking space</source>
-        <translation>Datotečni sistem ne podpira zmanjševanja prostora</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="225"/>
@@ -2089,32 +2089,32 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="239"/>
         <source>No less than the used capacity please</source>
-        <translation>Ne manj kot uporabljeni prostor, prosim</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="246"/>
         <source>To prevent data loss, back up data before shrinking it</source>
-        <translation>Za preprečitev izgube podatkov, pred zmanjševanjem shranite podatke</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="334"/>
         <source>Unmount it before shrinking its space</source>
-        <translation>Demontažirajte ga pred zmanjševanjem prostora</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="344"/>
         <source>The current device has been mounted and will be unmounted automatically. Please back up data in it to prevent data loss</source>
-        <translation>Trenutni naprave je bilo nameščeno in bo avtomatsko demontažirano. Prosimo, shranite podatke v njem za preprečitev izgube podatkov</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="347"/>
         <source>To prevent data loss, back up data in the logical volume before shrinking it</source>
-        <translation>Za preprečitev izgube podatkov, pred zmanjševanjem shranite podatke v logičnem volumenu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="383"/>
         <source>The file system does not support space adjustment</source>
-        <translation>Systém dat ne podporuje prilagoditev prostora</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2140,7 +2140,7 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="36"/>
         <source>Wipe</source>
-        <translation>Zmazati</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="37"/>
@@ -2160,27 +2160,27 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="40"/>
         <source>Create volume group</source>
-        <translation>Ustvari volumsko skupino</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="44"/>
         <source>Delete volume group</source>
-        <translation>Izbrisi volumsko skupino</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="48"/>
         <source>Delete logical volume</source>
-        <translation>Izbrisi logično volumsko enoto</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="52"/>
         <source>Delete physical volume</source>
-        <translation>Izbrisi fizično volumsko enoto</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="56"/>
         <source>Create logical volume</source>
-        <translation>Ustvari logično volumsko enoto</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="203"/>
@@ -2190,7 +2190,7 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="250"/>
         <source>Unable to mount the device: no file system is found, or the file system is not supported</source>
-        <translation>Ni mogoče pripojiti naprave: ni najden sistem datoteke ali sistem datoteke ni podprt</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="251"/>
@@ -2200,22 +2200,22 @@ tabele razdelkov. Bodite previdni</translation>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="353"/>
         <source>The file system does not support space adjustment</source>
-        <translation>Sistem dat ne podporuje prilagoditev prostora</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="374"/>
         <source>The disks will be formatted if you create a logical volume</source>
-        <translation>Diski bodo ob ustvarjanju logične volumske enote oblikovani</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="399"/>
         <source>Unmount %1 first</source>
-        <translation>Odklopite %1 najprej</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="411"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation>Podatki se ne morejo obnoviti, če so izbrisani, prosim potrdite pred nadaljevanjem</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="412"/>
@@ -2231,17 +2231,17 @@ tabele razdelkov. Bodite previdni</translation>
         <location filename="../widgets/titlewidget.cpp" line="463"/>
         <source>To ensure the normal use of system backup and restore, 
 rootA and rootB should be resized to the same value</source>
-        <translation>Za zagotovitev normalnega uporabljanja varnostne kopije sistema in obnovitve morata rootA in rootB biti prilagojena na enak vrednost</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="480"/>
         <source>The disks will be formatted if you create a volume group</source>
-        <translation>Diski bodo oblikovani, če ustvarite volumsko skupino</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="502"/>
         <source>Unmount all logical volumes in %1 first</source>
-        <translation>Odklopite vse logične volumske enote v %1 najprej</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2259,7 +2259,7 @@ rootA and rootB should be resized to the same value</source>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="45"/>
         <source>Make sure there are no programs running on the logical volume</source>
-        <translation>Preverite, da ni programs na logični volumski enoti</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="52"/>
@@ -2277,12 +2277,12 @@ rootA and rootB should be resized to the same value</source>
     <message>
         <location filename="../widgets/unmountwarningdialog.cpp" line="34"/>
         <source>Unmounting system disk may result in system crash</source>
-        <translation>Odklepanje sistemskega diska lahko povzroči sistemsko napako</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/unmountwarningdialog.cpp" line="40"/>
         <source>I will take the risks that may arise</source>
-        <translation>Jaz bom prevzel tiste tveganja, ki lahko nastanejo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/unmountwarningdialog.cpp" line="59"/>

@@ -94,22 +94,22 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="740"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
-        <translation>Použijte standardní algoritmus aes-xts-plain64 k šifrování disku. Musíte jej dešifrovat před opětovným připojením.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="746"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation>Použijte stavový kryptografický algoritmus sm4-xts-plain k šifrování disku. Musíte jej dešifrovat před opětovným připojením. Systémy, které nepodporují stavový kryptografický algoritmus, nebudou schopny disku dešifrovat.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="840"/>
         <source>To encrypt a volume, it should be larger than 100 MiB</source>
-        <translation>Pro šifrování objemu musí být větší než 100 MiB</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="868"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
-        <translation>Aby se zabránilo ztrátě hesla, prosím zálohujte heslo a uchovávejte ho správně!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="869"/>
@@ -253,12 +253,12 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="783"/>
         <source>No less than the used capacity please</source>
-        <translation>Nejméně než použitá kapacita, prosím</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="788"/>
         <source>No more than the maximum capacity please</source>
-        <translation>Ne více než maximální kapacita, prosím</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="806"/>
@@ -289,7 +289,7 @@
         <location filename="../widgets/createvgwidget.cpp" line="1699"/>
         <source>Adding the disk/partition to a logical volume group 
 will format it and remove its password.</source>
-        <translation>Přidání disku/partice do logického objemového skupina zformátuje a odstraní jeho heslo.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="1700"/>
@@ -420,37 +420,37 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="725"/>
         <source>AES Encryption</source>
-        <translation>Šifrování AES</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="727"/>
         <source>SM4 Encryption</source>
-        <translation>Šifrování SM4</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="813"/>
         <source>Failed to encrypt %1, please try again!</source>
-        <translation>Šifrování %1 selhalo, prosím zkus to znovu!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="817"/>
         <source>Failed to decrypt %1, please try again!</source>
-        <translation>Dešifrování %1 selhalo, prosím zkus to znovu!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="821"/>
         <source>%1 failed to close the crypto map</source>
-        <translation>'%1 selhalo při uzavírání kryptografické mapy'</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="828"/>
         <source>Failed to create partitions, please try again!</source>
-        <translation>Vytvoření oddílů selhalo, prosím zkus to znovu!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="832"/>
         <source>Failed to create %1 file system, please try again!</source>
-        <translation>Vytvoření systému %1 selhalo, prosím zkus to znovu!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="836"/>
@@ -460,22 +460,22 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="840"/>
         <source>DBUS parameter error</source>
-        <translation>Chyba parametru DBUS</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="844"/>
         <source>Failed to mount %1</source>
-        <translation>Připojení %1 selhalo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="848"/>
         <source>%1 failed to create mounting folders</source>
-        <translation>'%1 selhalo při vytvoření složek pro připojení'</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="852"/>
         <source>%1 failed to change the owner of mounting folders</source>
-        <translation>'%1 selhalo při změně vlastníka složek pro připojení'</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="856"/>
@@ -485,7 +485,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="863"/>
         <source>Failed to create a logical volume, please try again!</source>
-        <translation>Vytvoření logického objemu selhalo, prosím zkus to znovu!</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -493,22 +493,22 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="41"/>
         <source>Enter the password to decrypt the disk</source>
-        <translation>Zadejte heslo pro dešifrování disku</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="53"/>
         <source>Enter the password to decrypt the volume group</source>
-        <translation>Zadejte heslo pro dešifrování objemové skupiny</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="73"/>
         <source>Enter a password </source>
-        <translation>Zadejte heslo </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="78"/>
         <source>Password hint</source>
-        <translation>Nápověda pro heslo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="126"/>
@@ -520,42 +520,42 @@ will format it and remove its password.</source>
         <location filename="../widgets/decryptdialog.cpp" line="131"/>
         <source>Decrypt</source>
         <comment>button</comment>
-        <translation>Dešifrovat</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="300"/>
         <source>Decrypting...</source>
-        <translation>Dešifrování...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="198"/>
         <source>Please try again %1 minutes later</source>
-        <translation>Prosím zkus to znovu za %1 minut</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="280"/>
         <source>The password cannot be empty</source>
-        <translation>Heslo nemůže být prázdné</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="318"/>
         <source>Decryption failed</source>
-        <translation>Dešifrování selhalo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="337"/>
         <source>Password locked, please try again %1 minutes later</source>
-        <translation>Heslo je uzamčeno, prosím zkus to znovu za %1 minut</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="339"/>
         <source>Wrong password, %1 chances left</source>
-        <translation>Špatné heslo, zbývá %1 možností</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="341"/>
         <source>Wrong password, only one chance left</source>
-        <translation>Nesprávné heslo, zbývá jedna možnost</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -870,7 +870,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="141"/>
         <source>Rounds</source>
-        <translation>Rundy</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="142"/>
@@ -1187,12 +1187,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="47"/>
         <source>SSD</source>
-        <translation>SSD</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="50"/>
         <source>HDD</source>
-        <translation>HDD</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="55"/>
@@ -1336,12 +1336,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="139"/>
         <source>AES Encryption</source>
-        <translation>Šifrování AES</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="142"/>
         <source>SM4 Encryption</source>
-        <translation>Šifrování SM4</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="156"/>
@@ -1438,12 +1438,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="441"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
-        <translation>Použijte standardní algoritmus aes-xts-plain64 k šifrování disku. Musíte jej dešifrovat před připojením.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="451"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation>Použijte stavový kryptografický algoritmus sm4-xts-plain k šifrování disku. Musíte jej dešifrovat před připojením. Operační systémy, které nepodporují stavový kryptografický algoritmus, nebudou schopny disku dešifrovat.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="492"/>
@@ -1463,7 +1463,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="614"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
-        <translation>Abyste se vyhověli ztrátě hesla, prosím, zazipujte heslo a uchovávejte ho správně!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="615"/>
@@ -1478,7 +1478,7 @@ will format it and remove its password.</source>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="721"/>
-        <source>"%1" wiped</source>
+        <source>&quot;%1&quot; wiped</source>
         <translation>„%1“ vymazáno</translation>
     </message>
     <message>
@@ -1537,12 +1537,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="319"/>
         <source>SSD</source>
-        <translation>SSD</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="321"/>
         <source>HDD</source>
-        <translation>HDD</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="499"/>
@@ -1832,12 +1832,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="744"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting.</source>
-        <translation>Použijte standardní algoritmus aes-xts-plain64 k šifrování disku. Pokud je šifrován, musíte jej dešifrovat před připojením.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="750"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation>Použijte stavový kryptografický algoritmus sm4-xts-plain k šifrování disku. Pokud je šifrován, musíte jej dešifrovat před připojením. Operační systémy, které nepodporují stavový kryptografický algoritmus, nebudou schopny disku dešifrovat.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="886"/>
@@ -1847,17 +1847,17 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="909"/>
         <source>To encrypt a partition, it should be larger than 100 MiB</source>
-        <translation>Abyste šifrovali oddíl, musí být větší než 100 MiB</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="918"/>
         <source>Set a password to encrypt the new partition</source>
-        <translation>Nastavte heslo pro šifrování nového oddílu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="937"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
-        <translation>Abyste se vyhověli ztrátě hesla, prosím, zazipujte heslo a uchovávejte ho správně!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="938"/>
@@ -1876,47 +1876,47 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="53"/>
         <source>Set a password to encrypt %1</source>
-        <translation>Nastavte heslo pro šifrování %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="55"/>
         <source>The password cannot be reset or retrieved online</source>
-        <translation>Heslo nelze obnovit nebo získat online</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="59"/>
         <source>Password</source>
-        <translation>Heslo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="64"/>
         <source>Repeat password</source>
-        <translation>Zopakujte heslo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="69"/>
         <source>Password hint</source>
-        <translation>Návod na heslo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="73"/>
         <source>(Recommended)</source>
-        <translation>(Doporučeno)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="88"/>
         <source>Enter a password </source>
-        <translation>Zadejte heslo </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="94"/>
         <source>Enter the password again</source>
-        <translation>Zadejte heslo znovu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="100"/>
         <source>Enter a password hint</source>
-        <translation>Zadejte návod na heslo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="142"/>
@@ -1933,22 +1933,22 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="188"/>
         <source>The password exceeds the maximum length</source>
-        <translation>Heslo překračuje maximální délku</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="231"/>
         <source>The password cannot be empty</source>
-        <translation>Heslo nemůže být prázdné</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="246"/>
         <source>Passwords do not match</source>
-        <translation>Hesla se neshodují</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="254"/>
         <source>The password hint should differ from the password</source>
-        <translation>Návod na heslo by měl být odlišný od hesla</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2074,7 +2074,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="144"/>
         <source>No more than the maximum capacity please</source>
-        <translation>Ne více než maximální kapacita, prosím</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="225"/>
@@ -2089,7 +2089,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="239"/>
         <source>No less than the used capacity please</source>
-        <translation>Ne zmeníte kapacitu méně než použitou kapacitu, prosím</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="246"/>
@@ -2099,7 +2099,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="334"/>
         <source>Unmount it before shrinking its space</source>
-        <translation>Odpojte ji než zmenšíte její prostor</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="344"/>
@@ -2190,7 +2190,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="250"/>
         <source>Unable to mount the device: no file system is found, or the file system is not supported</source>
-        <translation>Nelze připojit zařízení: není nalezeno systémové rozhraní nebo se systémové rozhraní nepodporuje</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="251"/>
@@ -2231,7 +2231,7 @@ will format it and remove its password.</source>
         <location filename="../widgets/titlewidget.cpp" line="463"/>
         <source>To ensure the normal use of system backup and restore, 
 rootA and rootB should be resized to the same value</source>
-        <translation>Pro zajištění normálního provozu systémového zálohování a obnovení by měly být rootA a rootB přeskočeny na stejnou hodnotu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="480"/>

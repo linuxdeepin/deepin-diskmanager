@@ -94,12 +94,12 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="740"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
-        <translation>Utiliser l'algorithme standard aes-xts-plain64 pour chiffrer le disque. Vous devez le déchiffrer avant de le remonter.</translation>
+        <translation>Utiliser l&apos;algorithme standard aes-xts-plain64 pour chiffrer le disque. Vous devez le déchiffrer avant de le remonter.</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="746"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation>Utiliser l'algorithme cryptographique sm4-xts-plain state pour chiffrer le disque. Vous devez le déchiffrer avant de le remonter. Les systèmes d'exploitation qui ne prennent pas en charge l'algorithme cryptographique d'état ne pourront pas déchiffrer le disque.</translation>
+        <translation>Utiliser l&apos;algorithme cryptographique sm4-xts-plain state pour chiffrer le disque. Vous devez le déchiffrer avant de le remonter. Les systèmes d&apos;exploitation qui ne prennent pas en charge l&apos;algorithme cryptographique d&apos;état ne pourront pas déchiffrer le disque.</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="840"/>
@@ -171,7 +171,7 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="100"/>
         <source>The selected disks will be converted to dynamic disks, and you will not be able to start installed operating systems from the disks.</source>
-        <translation>Les disques sélectionnés seront convertis en disques dynamiques et vous ne pourrez pas démarrer les systèmes d'exploitation installés à partir des disques.</translation>
+        <translation>Les disques sélectionnés seront convertis en disques dynamiques et vous ne pourrez pas démarrer les systèmes d&apos;exploitation installés à partir des disques.</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="150"/>
@@ -228,7 +228,7 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="571"/>
         <source>Resizing space...</source>
-        <translation>Redimensionnement de l'espace...</translation>
+        <translation>Redimensionnement de l&apos;espace...</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="573"/>
@@ -253,12 +253,12 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="783"/>
         <source>No less than the used capacity please</source>
-        <translation>Pas moins que la capacité utilisée s'il vous plaît</translation>
+        <translation>Pas moins que la capacité utilisée s&apos;il vous plaît</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="788"/>
         <source>No more than the maximum capacity please</source>
-        <translation>Pas plus que la capacité maximale s'il vous plaît</translation>
+        <translation>Pas plus que la capacité maximale s&apos;il vous plaît</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="806"/>
@@ -289,7 +289,7 @@
         <location filename="../widgets/createvgwidget.cpp" line="1699"/>
         <source>Adding the disk/partition to a logical volume group 
 will format it and remove its password.</source>
-        <translation>L'ajout du disque/partition à un groupe de volumes logiques ¤¤¤ le formatera et supprimera son mot de passe.</translation>
+        <translation>L&apos;ajout du disque/partition à un groupe de volumes logiques ¤¤¤ le formatera et supprimera son mot de passe.</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="1700"/>
@@ -299,7 +299,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="1919"/>
         <source>Not enough space to back up data on %1, please clear disk space</source>
-        <translation>Espace insuffisant pour sauvegarder les données sur %1, veuillez libérer de l'espace disque</translation>
+        <translation>Espace insuffisant pour sauvegarder les données sur %1, veuillez libérer de l&apos;espace disque</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2085"/>
@@ -309,12 +309,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2089"/>
         <source>Failed to create a physical volume. Please refresh Disk Utility and try again.</source>
-        <translation>Impossible de créer un volume physique. Veuillez actualiser l'Utilitaire de disque et réessayer.</translation>
+        <translation>Impossible de créer un volume physique. Veuillez actualiser l&apos;Utilitaire de disque et réessayer.</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2093"/>
         <source>Device input/output error. Please try again after reboot.</source>
-        <translation>Erreur d'entrée/sortie de l'appareil. Veuillez réessayer après le redémarrage.</translation>
+        <translation>Erreur d&apos;entrée/sortie de l&apos;appareil. Veuillez réessayer après le redémarrage.</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2149"/>
@@ -385,7 +385,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="326"/>
         <source>Creating a new partition...</source>
-        <translation>Création d'une nouvelle partition...</translation>
+        <translation>Création d&apos;une nouvelle partition...</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="485"/>
@@ -395,7 +395,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="537"/>
         <source>Creating a partition table of %1 ...</source>
-        <translation>Création d'une table de partition de %1...</translation>
+        <translation>Création d&apos;une table de partition de %1...</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="539"/>
@@ -415,7 +415,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="687"/>
         <source>Resizing space...</source>
-        <translation>Redimensionnement de l'espace...</translation>
+        <translation>Redimensionnement de l&apos;espace...</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="725"/>
@@ -440,7 +440,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="821"/>
         <source>%1 failed to close the crypto map</source>
-        <translation>%1 n'a pas pu fermer la carte de chiffrement</translation>
+        <translation>%1 n&apos;a pas pu fermer la carte de chiffrement</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="828"/>
@@ -470,12 +470,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="848"/>
         <source>%1 failed to create mounting folders</source>
-        <translation>%1 n'a pas pu créer les dossiers de montage</translation>
+        <translation>%1 n&apos;a pas pu créer les dossiers de montage</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="852"/>
         <source>%1 failed to change the owner of mounting folders</source>
-        <translation>%1 n'a pas pu changer le propriétaire des dossiers de montage</translation>
+        <translation>%1 n&apos;a pas pu changer le propriétaire des dossiers de montage</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="856"/>
@@ -485,7 +485,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="863"/>
         <source>Failed to create a logical volume, please try again!</source>
-        <translation>Échec de la création d'un volume logique, veuillez réessayer !</translation>
+        <translation>Échec de la création d&apos;un volume logique, veuillez réessayer !</translation>
     </message>
 </context>
 <context>
@@ -555,7 +555,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/decryptdialog.cpp" line="341"/>
         <source>Wrong password, only one chance left</source>
-        <translation>Mauvais mot de passe, il ne reste qu'une chance</translation>
+        <translation>Mauvais mot de passe, il ne reste qu&apos;une chance</translation>
     </message>
 </context>
 <context>
@@ -618,12 +618,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="287"/>
         <source>Health checking does not support this type of device.</source>
-        <translation>Le test de santé ne prend pas en charge ce type de périphérique.</translation>
+        <translation>Le vérification de santé ne prend pas en charge ce type de périphérique.</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="326"/>
         <source>Please unmount all partitions in the disk first</source>
-        <translation>Veuillez d'abord démonter toutes les partitions du disque</translation>
+        <translation>Veuillez d&apos;abord démonter toutes les partitions du disque</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="326"/>
@@ -692,7 +692,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="429"/>
         <source>You will lose all data in it</source>
-        <translation>Vous perdrez toutes les données qu'elle contient</translation>
+        <translation>Vous perdrez toutes les données qu&apos;elle contient</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="429"/>
@@ -722,7 +722,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="471"/>
         <source>Failed to unhide the partition</source>
-        <translation>Impossible d'afficher la partition</translation>
+        <translation>Impossible d&apos;afficher la partition</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="487"/>
@@ -737,7 +737,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="499"/>
         <source>Failed to get the partition info</source>
-        <translation>Impossible d'obtenir les informations sur la partition</translation>
+        <translation>Impossible d&apos;obtenir les informations sur la partition</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="503"/>
@@ -787,7 +787,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="572"/>
         <source>Unmount all logical volumes in %1 first</source>
-        <translation>Démonter d'abord tous les volumes logiques dans %1</translation>
+        <translation>Démonter d&apos;abord tous les volumes logiques dans %1</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="584"/>
@@ -802,7 +802,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="627"/>
         <source>Unmount %1 first</source>
-        <translation>Démonter %1 d'abord</translation>
+        <translation>Démonter %1 d&apos;abord</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="670"/>
@@ -875,7 +875,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="142"/>
         <source>Timeout</source>
-        <translation>Délai d'expiration</translation>
+        <translation>Délai d&apos;expiration</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="189"/>
@@ -995,7 +995,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="994"/>
         <source>Bad sector repairing cannot recover files,</source>
-        <translation>La réparation d'un secteur défectueux ne peut pas récupérer les fichiers,</translation>
+        <translation>La réparation d&apos;un secteur défectueux ne peut pas récupérer les fichiers,</translation>
     </message>
     <message>
         <location filename="../widgets/diskbadsectorsdialog.cpp" line="995"/>
@@ -1133,7 +1133,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="212"/>
         <source>Attribute name</source>
-        <translation>Nom d'attribut</translation>
+        <translation>Nom d&apos;attribut</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="310"/>
@@ -1164,7 +1164,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="390"/>
         <source>You do not have permission to access this path</source>
-        <translation>Vous n'avez pas l'autorisation d'accéder à ce chemin</translation>
+        <translation>Vous n&apos;avez pas l&apos;autorisation d&apos;accéder à ce chemin</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="421"/>
@@ -1174,7 +1174,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="425"/>
         <source>Export failed</source>
-        <translation>L'exportation a échoué</translation>
+        <translation>L&apos;exportation a échoué</translation>
     </message>
 </context>
 <context>
@@ -1252,7 +1252,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="58"/>
         <source>Power Cycle Count:</source>
-        <translation>Nombre de cycles d'alimentation :</translation>
+        <translation>Nombre de cycles d&apos;alimentation :</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="58"/>
@@ -1293,7 +1293,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="169"/>
         <source>You do not have permission to access this path</source>
-        <translation>Vous n'avez pas l'autorisation d'accéder à ce chemin</translation>
+        <translation>Vous n&apos;avez pas l&apos;autorisation d&apos;accéder à ce chemin</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="195"/>
@@ -1303,7 +1303,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="199"/>
         <source>Export failed</source>
-        <translation>L'exportation a échoué</translation>
+        <translation>L&apos;exportation a échoué</translation>
     </message>
 </context>
 <context>
@@ -1371,7 +1371,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="190"/>
         <source>Wiping method:</source>
-        <translation>Méthode d'essuyage :</translation>
+        <translation>Méthode d&apos;essuyage :</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="198"/>
@@ -1403,7 +1403,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="314"/>
         <source>The action cannot be undone, please proceed with caution</source>
-        <translation>L'action ne peut pas être annulée, veuillez procéder avec prudence</translation>
+        <translation>L&apos;action ne peut pas être annulée, veuillez procéder avec prudence</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="316"/>
@@ -1423,7 +1423,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="324"/>
         <source>You may be able to recover files after the wipe.</source>
-        <translation>Vous pourrez peut-être récupérer des fichiers après l'effacement.</translation>
+        <translation>Vous pourrez peut-être récupérer des fichiers après l&apos;effacement.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="327"/>
@@ -1438,27 +1438,27 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="441"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
-        <translation>Utiliser l'algorithme standard aes-xts-plain64 pour chiffrer le disque. Vous devez le déchiffrer avant de le remonter.</translation>
+        <translation>Utiliser l&apos;algorithme standard aes-xts-plain64 pour chiffrer le disque. Vous devez le déchiffrer avant de le remonter.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="451"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation>Utiliser l'algorithme cryptographique sm4-xts-plain state pour chiffrer le disque. Vous devez le déchiffrer avant de le remonter. Les systèmes d'exploitation qui ne prennent pas en charge l'algorithme cryptographique d'état ne pourront pas déchiffrer le disque.</translation>
+        <translation>Utiliser l&apos;algorithme cryptographique sm4-xts-plain state pour chiffrer le disque. Vous devez le déchiffrer avant de le remonter. Les systèmes d&apos;exploitation qui ne prennent pas en charge l&apos;algorithme cryptographique d&apos;état ne pourront pas déchiffrer le disque.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="492"/>
         <source>It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, and random data to the entire disk once. You will not be able to recover files, and the process will be slow.</source>
-        <translation>Il s'agit d'un effacement sécurisé unique conforme à la norme NIST 800-88 et qui écrit une seule fois les données 0, 1 et aléatoires sur l'ensemble du disque. Vous ne pourrez pas récupérer les fichiers et le processus sera lent.</translation>
+        <translation>Il s&apos;agit d&apos;un effacement sécurisé unique conforme à la norme NIST 800-88 et qui écrit une seule fois les données 0, 1 et aléatoires sur l&apos;ensemble du disque. Vous ne pourrez pas récupérer les fichiers et le processus sera lent.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="507"/>
         <source>It writes 0, 1, and random data to the entire disk several times. You can set the number of times to erase disks and overwrite data, but the process will be very slow.</source>
-        <translation>Il écrit plusieurs fois des données 0, 1 et aléatoires sur l'ensemble du disque. Vous pouvez définir le nombre de fois pour effacer les disques et écraser les données, mais le processus sera très lent.</translation>
+        <translation>Il écrit plusieurs fois des données 0, 1 et aléatoires sur l&apos;ensemble du disque. Vous pouvez définir le nombre de fois pour effacer les disques et écraser les données, mais le processus sera très lent.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="540"/>
         <source>You will not be able to recover files after the wipe, and the process will be slow.</source>
-        <translation>Vous ne pourrez pas récupérer les fichiers après l'effacement et le processus sera lent.</translation>
+        <translation>Vous ne pourrez pas récupérer les fichiers après l&apos;effacement et le processus sera lent.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="614"/>
@@ -1478,13 +1478,13 @@ veillez à prendre toutes les précautions</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="721"/>
-        <source>"%1" wiped</source>
-        <translation>"%1" effacé</translation>
+        <source>&quot;%1&quot; wiped</source>
+        <translation>&quot;%1&quot; effacé</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="728"/>
         <source>Failed to wipe %1</source>
-        <translation>Impossible d'effacer %1</translation>
+        <translation>Impossible d&apos;effacer %1</translation>
     </message>
 </context>
 <context>
@@ -1626,7 +1626,8 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="83"/>
         <source>The mount point is illegal. Please select /mnt or /media, or its subdirectories.</source>
-        <translation>Le point de montage est invalide. Veuillez sélectionner /mnt ou /media, ou ses sous-répertoires.</translation>
+        <translation>&gt;-
+  Le point de montage est invalide. Veuillez sélectionner /mnt ou /media, ou ses sous-répertoires.</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="94"/>
@@ -1652,7 +1653,8 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="292"/>
         <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
-        <translation>Le montage a échoué : le point de montage sélectionné n'est pas vide. Veuillez en sélectionner un autre !</translation>
+        <translation>&gt;-
+  Le montage a échoué : Le point de montage sélectionné n&apos;est pas vide. Veuillez en sélectionner un autre !</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="293"/>
@@ -1720,7 +1722,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="102"/>
         <source>Partition table entries are not in disk order</source>
-        <translation>Les entrées dans la table de partition ne sont pas dans l'ordre des disques</translation>
+        <translation>Les entrées dans la table de partition ne sont pas dans l&apos;ordre des disques</translation>
     </message>
     <message>
         <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="114"/>
@@ -1739,7 +1741,8 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="42"/>
         <source>Click %1 to increase the number of partitions. Click on each partition to change its name and file system.</source>
-        <translation>Cliquez sur %1 pour augmenter le nombre de partitions. Cliquez sur chaque partition pour modifier son nom et son système de fichiers.</translation>
+        <translation>&gt;-
+  Cliquez sur %1 pour augmenter le nombre de partitions. Cliquez sur chaque partition pour modifier son nom et son système de fichiers.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="115"/>
@@ -1832,12 +1835,12 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="744"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting.</source>
-        <translation>Utiliser l'algorithme standard aes-xts-plain64 pour chiffrer le disque. S'il est crypté, vous devez le décrypter avant de le monter.</translation>
+        <translation>Utiliser l&apos;algorithme standard aes-xts-plain64 pour chiffrer le disque. S&apos;il est crypté, vous devez le décrypter avant de le monter.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="750"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation>Utiliser l'algorithme cryptographique sm4-xts-plain state pour chiffrer le disque. S'il est crypté, vous devez le décrypter avant de le monter. Les systèmes d'exploitation qui ne prennent pas en charge l'algorithme cryptographique d'état ne pourront pas déchiffrer le disque.</translation>
+        <translation>Utiliser l&apos;algorithme cryptographique sm4-xts-plain state pour chiffrer le disque. S&apos;il est crypté, vous devez le décrypter avant de le monter. Les systèmes d&apos;exploitation qui ne prennent pas en charge l&apos;algorithme cryptographique d&apos;état ne pourront pas déchiffrer le disque.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="886"/>
@@ -1868,7 +1871,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="957"/>
         <source>To create a partition, you need at least 52 MB</source>
-        <translation>Pour créer une partition, vous avez besoin d'au moins 52 Mo</translation>
+        <translation>Pour créer une partition, vous avez besoin d&apos;au moins 52 Mo</translation>
     </message>
 </context>
 <context>
@@ -1948,7 +1951,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="254"/>
         <source>The password hint should differ from the password</source>
-        <translation>L'indice de mot de passe doit être différent du mot de passe</translation>
+        <translation>L&apos;indice de mot de passe doit être différent du mot de passe</translation>
     </message>
 </context>
 <context>
@@ -1961,7 +1964,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../main.cpp" line="115"/>
         <source>Disk Utility is a disk management tool for creating, reorganizing and formatting partitions.</source>
-        <translation>L'utilitaire de disque est un outil de gestion de disque pour créer, réorganiser et formater des partitions.</translation>
+        <translation>L&apos;utilitaire de disque est un outil de gestion de disque pour créer, réorganiser et formater des partitions.</translation>
     </message>
 </context>
 <context>
@@ -2021,7 +2024,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="232"/>
         <source>Not enough space to back up data on %1, please delete the logical volume first</source>
-        <translation>Espace insuffisant pour sauvegarder les données sur %1, veuillez d'abord supprimer le volume logique</translation>
+        <translation>Espace insuffisant pour sauvegarder les données sur %1, veuillez d&apos;abord supprimer le volume logique</translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="233"/>
@@ -2059,7 +2062,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="109"/>
         <source>It will resize the logical volume space</source>
-        <translation>Il redimensionnera l'espace du volume logique</translation>
+        <translation>Il redimensionnera l&apos;espace du volume logique</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="115"/>
@@ -2074,12 +2077,12 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="144"/>
         <source>No more than the maximum capacity please</source>
-        <translation>Pas plus que la capacité maximale s'il vous plaît</translation>
+        <translation>Pas plus que la capacité maximale s&apos;il vous plaît</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="225"/>
         <source>The file system does not support shrinking space</source>
-        <translation>Le système de fichiers ne prend pas en charge la réduction de l'espace</translation>
+        <translation>Le système de fichiers ne prend pas en charge la réduction de l&apos;espace</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="225"/>
@@ -2089,7 +2092,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="239"/>
         <source>No less than the used capacity please</source>
-        <translation>Pas moins que la capacité utilisée s'il vous plaît</translation>
+        <translation>Pas moins que la capacité utilisée s&apos;il vous plaît</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="246"/>
@@ -2104,7 +2107,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="344"/>
         <source>The current device has been mounted and will be unmounted automatically. Please back up data in it to prevent data loss</source>
-        <translation>L'appareil actuel a été monté et sera démonté automatiquement. Veuillez sauvegarder les données qu'il contient pour éviter toute perte de données</translation>
+        <translation>L&apos;appareil actuel a été monté et sera démonté automatiquement. Veuillez sauvegarder les données qu&apos;il contient pour éviter toute perte de données</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="347"/>
@@ -2114,7 +2117,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="383"/>
         <source>The file system does not support space adjustment</source>
-        <translation>Le système de fichiers ne prend pas en charge l'ajustement de l'espace</translation>
+        <translation>Le système de fichiers ne prend pas en charge l&apos;ajustement de l&apos;espace</translation>
     </message>
 </context>
 <context>
@@ -2190,7 +2193,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="250"/>
         <source>Unable to mount the device: no file system is found, or the file system is not supported</source>
-        <translation>Impossible de monter le périphérique :  aucun système de fichiers n'a été trouvé ou le système de fichiers n'est pas pris en charge</translation>
+        <translation>Impossible de monter le périphérique :  aucun système de fichiers n&apos;a été trouvé ou le système de fichiers n&apos;est pas pris en charge</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="251"/>
@@ -2200,7 +2203,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="353"/>
         <source>The file system does not support space adjustment</source>
-        <translation>Le système de fichiers ne prend pas en charge l'ajustement de l'espace</translation>
+        <translation>Le système de fichiers ne prend pas en charge l&apos;ajustement de l&apos;espace</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="374"/>
@@ -2210,7 +2213,7 @@ veillez à prendre toutes les précautions</translation>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="399"/>
         <source>Unmount %1 first</source>
-        <translation>Démonter %1 d'abord</translation>
+        <translation>Démonter %1 d&apos;abord</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="411"/>
@@ -2231,7 +2234,7 @@ veillez à prendre toutes les précautions</translation>
         <location filename="../widgets/titlewidget.cpp" line="463"/>
         <source>To ensure the normal use of system backup and restore, 
 rootA and rootB should be resized to the same value</source>
-        <translation>Pour garantir l'utilisation normale de la sauvegarde et de la restauration du système,
+        <translation>Pour garantir l&apos;utilisation normale de la sauvegarde et de la restauration du système,
 rootA et rootB doivent être redimensionnés à la même valeur</translation>
     </message>
     <message>
@@ -2242,7 +2245,7 @@ rootA et rootB doivent être redimensionnés à la même valeur</translation>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="502"/>
         <source>Unmount all logical volumes in %1 first</source>
-        <translation>Démonter d'abord tous les volumes logiques dans %1</translation>
+        <translation>Démonter d&apos;abord tous les volumes logiques dans %1</translation>
     </message>
 </context>
 <context>
@@ -2250,7 +2253,7 @@ rootA et rootB doivent être redimensionnés à la même valeur</translation>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="29"/>
         <source>Make sure there are no programs running on the disk</source>
-        <translation>Assurez-vous qu'aucun programme n'est en cours d'exécution sur le disque</translation>
+        <translation>Assurez-vous qu&apos;aucun programme n&apos;est en cours d&apos;exécution sur le disque</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="38"/>
@@ -2260,7 +2263,7 @@ rootA et rootB doivent être redimensionnés à la même valeur</translation>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="45"/>
         <source>Make sure there are no programs running on the logical volume</source>
-        <translation>Assurez-vous qu'aucun programme n'est en cours d'exécution sur le volume logique</translation>
+        <translation>Assurez-vous qu&apos;aucun programme n&apos;est en cours d&apos;exécution sur le volume logique</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="52"/>

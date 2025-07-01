@@ -109,7 +109,7 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="868"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
-        <translation>Чтобы избежать потери пароля, пожалуйста, сделайте резервную копию пароля и сохраните его правильно!</translation>
+        <translation>Чтобы избежать потери пароля, пожалуйста, создайте резервную копию пароля и храните его правильно!</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="869"/>
@@ -161,17 +161,17 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="90"/>
         <source>Select disks or partitions to create a volume group and set its capacity</source>
-        <translation>Выберите диски или разделы для создания группы томов и установки её ёмкости</translation>
+        <translation>Выберите диски или разделы для создания группы томов и установки её емкости</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="95"/>
         <source>Capacity selected: %1</source>
-        <translation>Выбранная ёмкость: %1</translation>
+        <translation>Выбранная емкость: %1</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="100"/>
         <source>The selected disks will be converted to dynamic disks, and you will not be able to start installed operating systems from the disks.</source>
-        <translation>Выбранные диски будут преобразованы в динамические диски, и вы не сможете запускать установленные операционные системы с этих дисков.</translation>
+        <translation>Выбранные диски будут преобразованы в динамические диски, и вы не сможете запустить установленные операционные системы с этих дисков.</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="150"/>
@@ -202,7 +202,7 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="320"/>
         <source>Set VG capacity</source>
-        <translation>Установить ёмкость VG</translation>
+        <translation>Установите емкость VG</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="325"/>
@@ -228,7 +228,7 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="571"/>
         <source>Resizing space...</source>
-        <translation>Изменение объёма...</translation>
+        <translation>Изменение размера пространства...</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="573"/>
@@ -289,7 +289,7 @@
         <location filename="../widgets/createvgwidget.cpp" line="1699"/>
         <source>Adding the disk/partition to a logical volume group 
 will format it and remove its password.</source>
-        <translation>Добавление диска/раздела в группу томов будет форматировать его и удалить пароль.</translation>
+        <translation>Добавление диска/раздела в группу логических томов форматирует его и удаляет пароль.</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="1700"/>
@@ -299,17 +299,17 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="1919"/>
         <source>Not enough space to back up data on %1, please clear disk space</source>
-        <translation>Недостаточно места для резервного копирования данных на %1, пожалуйста, освободите место на диске</translation>
+        <translation>Недостаточно места для резервного копирования данных на %1, пожалуйста, очистите пространство на диске</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2085"/>
         <source>Existing volume group, creation failed. Please retry after reboot.</source>
-        <translation>Группа томов уже существует, создание завершилось неудачно. Пожалуйста, попробуйте снова после перезагрузки.</translation>
+        <translation>Существующая группа томов, создание не удалось. Пожалуйста, повторите попытку после перезагрузки.</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2089"/>
         <source>Failed to create a physical volume. Please refresh Disk Utility and try again.</source>
-        <translation>Не удалось создать физический том. Пожалуйста, обновите Disk Utility и попробуйте снова.</translation>
+        <translation>Не удалось создать физический том. Пожалуйста, обновите утилиту дисков и попробуйте снова.</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="2093"/>
@@ -375,7 +375,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="280"/>
         <source>Unmounting %1 ...</source>
-        <translation>Демонтирование %1 ...</translation>
+        <translation>Размонтирование %1 ...</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="319"/>
@@ -415,7 +415,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="687"/>
         <source>Resizing space...</source>
-        <translation>Не удалось зашифровать %1, пожалуйста, попробуйте снова!</translation>
+        <translation>Изменение размера пространства...</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="725"/>
@@ -430,27 +430,27 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="813"/>
         <source>Failed to encrypt %1, please try again!</source>
-        <translation>Не удалось расшифровать %1, пожалуйста, попробуйте снова!</translation>
+        <translation>Не удалось зашифровать %1, пожалуйста, попробуйте снова!</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="817"/>
         <source>Failed to decrypt %1, please try again!</source>
-        <translation>'%1 не удалось закрыть криптографическую карту'</translation>
+        <translation>Не удалось расшифровать %1, пожалуйста, попробуйте снова!</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="821"/>
         <source>%1 failed to close the crypto map</source>
-        <translation>Не удалось создать разделы, пожалуйста, попробуйте снова!</translation>
+        <translation>&apos;%1 не смог закрыть карту крипто&apos;</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="828"/>
         <source>Failed to create partitions, please try again!</source>
-        <translation>Не удалось создать файловую систему %1, пожалуйста, попробуйте снова!</translation>
+        <translation>Не удалось создать разделы, пожалуйста, попробуйте снова!</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="832"/>
         <source>Failed to create %1 file system, please try again!</source>
-        <translation>Ошибка параметра DBUS</translation>
+        <translation>Не удалось создать файловую систему %1, пожалуйста, попробуйте снова!</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="836"/>
@@ -460,22 +460,22 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="840"/>
         <source>DBUS parameter error</source>
-        <translation>Не удалось смонтировать %1</translation>
+        <translation>Ошибка параметра DBUS</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="844"/>
         <source>Failed to mount %1</source>
-        <translation>'%1 не удалось создать папки монтирования'</translation>
+        <translation>Не удалось смонтировать %1</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="848"/>
         <source>%1 failed to create mounting folders</source>
-        <translation>%1 не удалось создать папки монтирования</translation>
+        <translation>&apos;%1 не смог создать папки для монтирования&apos;</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="852"/>
         <source>%1 failed to change the owner of mounting folders</source>
-        <translation>%1 не удалось изменить владельца папок монтирования</translation>
+        <translation>&apos;%1 не смог изменить владельца каталогов монтирования&apos;</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="856"/>
@@ -485,7 +485,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="863"/>
         <source>Failed to create a logical volume, please try again!</source>
-        <translation>Не удалось создать логический том, попробуйте снова!</translation>
+        <translation>Не удалось создать логический том, попробуйте еще раз!</translation>
     </message>
 </context>
 <context>
@@ -618,7 +618,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="287"/>
         <source>Health checking does not support this type of device.</source>
-        <translation>Проверка состояния не поддерживает этот тип устройства.</translation>
+        <translation>Проверка работоспособности не поддерживает этот тип устройства.</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="326"/>
@@ -792,7 +792,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="584"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation>Данные не могут быть восстановлены при удалении, подтвердите перед продолжением</translation>
+        <translation>Данные не могут быть восстановлены после удаления, подтвердите перед продолжением</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="602"/>
@@ -807,12 +807,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="670"/>
         <source>The logical volume group is busy and cannot be deleted. Please retry after reboot.</source>
-        <translation>Группа логических томов занята и не может быть удалена. Пожалуйста, попробуйте снова после перезагрузки.</translation>
+        <translation>Группа логических томов занята и не может быть удалена. Повторите попытку после перезагрузки.</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="675"/>
         <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
-        <translation>Логический том занят и не может быть удален. Пожалуйста, попробуйте снова после перезагрузки.</translation>
+        <translation>Логический том занят и не может быть удален. Повторите попытку после перезагрузки.</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="680"/>
@@ -1366,7 +1366,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="184"/>
         <source>It only deletes the partition info without erasing the files on the disk. Disk recovery tools may recover the files at a certain probability.</source>
-        <translation>Оно удаляет только информацию о разделе, не стирая файлы на диске. Инструменты восстановления дисков могут восстановить файлы с определенной вероятностью.</translation>
+        <translation>Он удаляет только информацию о разделе без стирания файлов на диске. Инструменты восстановления дисков могут восстановить файлы с определенной вероятностью.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="190"/>
@@ -1448,22 +1448,22 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="492"/>
         <source>It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, and random data to the entire disk once. You will not be able to recover files, and the process will be slow.</source>
-        <translation>Это однократное безопасное стирание, соответствующее стандарту NIST 800-88, и запись данных 0, 1 и случайных на весь диск один раз. Вы не сможете восстановить файлы, и процесс будет медленным.</translation>
+        <translation>Это одноразовая безопасная стирка, соответствующая NIST 800-88, которая записывает 0, 1 и случайные данные на весь диск один раз. Вы не сможете восстановить файлы, и процесс будет медленным.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="507"/>
         <source>It writes 0, 1, and random data to the entire disk several times. You can set the number of times to erase disks and overwrite data, but the process will be very slow.</source>
-        <translation>Оно записывает данные 0, 1 и случайные на весь диск несколько раз. Вы можете установить количество раз для стирания дисков и перезаписи данных, но процесс будет очень медленным.</translation>
+        <translation>Он записывает 0, 1 и случайные данные на весь диск несколько раз. Вы можете установить количество раз для стирания дисков и перезаписи данных, но процесс будет очень медленным.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="540"/>
         <source>You will not be able to recover files after the wipe, and the process will be slow.</source>
-        <translation>После стирания вы не сможете восстановить файлы, и процесс будет медленным.</translation>
+        <translation>Вы не сможете восстановить файлы после стирания, и процесс будет медленным.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="614"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
-        <translation>Чтобы избежать потери пароля, пожалуйста, сохраните его и храните правильно!</translation>
+        <translation>Чтобы избежать потери пароля, пожалуйста, сделайте резервную копию пароля и храните его должным образом!</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="615"/>
@@ -1478,7 +1478,7 @@ will format it and remove its password.</source>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="721"/>
-        <source>"%1" wiped</source>
+        <source>&quot;%1&quot; wiped</source>
         <translation>«%1» был стерт</translation>
     </message>
     <message>
@@ -1522,12 +1522,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="313"/>
         <source>Path:</source>
-        <translation>Путь:</translation>
+        <translation>&apos;Путь:&apos;</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="314"/>
         <source>Disk type:</source>
-        <translation>Тип диска:</translation>
+        <translation>&apos;Тип диска:&apos;</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="315"/>
@@ -1547,7 +1547,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="499"/>
         <source>LV count:</source>
-        <translation>Количество LV:</translation>
+        <translation>&apos;Количество LV:&apos;</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="501"/>
@@ -1621,12 +1621,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="75"/>
         <source>Please select /mnt or /media, or its subdirectories.</source>
-        <translation>Пожалуйста, выберите /mnt или /media, или его подкаталоги.</translation>
+        <translation>Выберите /mnt или /media или их подкаталоги.</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="83"/>
         <source>The mount point is illegal. Please select /mnt or /media, or its subdirectories.</source>
-        <translation>Точка монтирования недопустима. Пожалуйста, выберите /mnt или /media, или его подкаталоги.</translation>
+        <translation>Точка монтирования недействительна. Пожалуйста, выберите /mnt или /media или их подкаталоги.</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="94"/>
@@ -1832,12 +1832,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="744"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting.</source>
-        <translation>Используйте стандартный алгоритм шифрования aes-xts-plain64 для шифрования диска. Если он зашифрован, вы должны расшифровать его перед монтированием.</translation>
+        <translation>Используйте стандартный алгоритм aes-xts-plain64 для шифрования диска. Если диск зашифрован, его нужно расшифровать перед монтированием.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="750"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
-        <translation>Используйте алгоритм шифрования sm4-xts-plain для шифрования диска. Если он зашифрован, вы должны расшифровать его перед монтированием. Операционные системы, которые не поддерживают алгоритм шифрования, не смогут расшифровать диск.</translation>
+        <translation>Используйте государственный криптографический алгоритм sm4-xts-plain для шифрования диска. Если диск зашифрован, его нужно расшифровать перед монтированием. Операционные системы, не поддерживающие государственный криптографический алгоритм, не смогут расшифровать диск.</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="886"/>
@@ -1857,7 +1857,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="937"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
-        <translation>Чтобы избежать потери пароля, пожалуйста, сохраните его и храните правильно!</translation>
+        <translation>Чтобы избежать потери пароля, пожалуйста, сделайте резервную копию пароля и храните его должным образом!</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/partitionwidget.cpp" line="938"/>
@@ -1881,7 +1881,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="55"/>
         <source>The password cannot be reset or retrieved online</source>
-        <translation>Пароль не может быть сброшен или восстановлен онлайн</translation>
+        <translation>Пароль нельзя сбросить или восстановить в режиме онлайн</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="59"/>
@@ -1974,7 +1974,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="61"/>
         <source>To prevent data loss, back up data in the physical volume before deleting it</source>
-        <translation>Чтобы предотвратить потерю данных, выполните резервное копирование данных в физическом объеме перед удалением</translation>
+        <translation>Чтобы предотвратить потерю данных, создайте резервную копию данных в физическом объеме перед его удалением</translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="68"/>
@@ -2021,7 +2021,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="232"/>
         <source>Not enough space to back up data on %1, please delete the logical volume first</source>
-        <translation>Недостаточно места для резервного копирования данных на %1, пожалуйста, удалите логический том сначала</translation>
+        <translation>Недостаточно места для резервного копирования данных на %1, пожалуйста, сначала удалите логический том.</translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="233"/>
@@ -2049,7 +2049,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="89"/>
         <source>Auto adjusted to integral multiples of 4 MiB</source>
-        <translation>Автоматически скорректировано до целых кратных 4 МиБ</translation>
+        <translation>Автоматически подгоняется к целым кратным 4 МиБ</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="102"/>
@@ -2059,7 +2059,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="109"/>
         <source>It will resize the logical volume space</source>
-        <translation>Оно изменит объем пространства логического тома</translation>
+        <translation>Он изменит размер логического тома</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="115"/>
@@ -2094,27 +2094,27 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="246"/>
         <source>To prevent data loss, back up data before shrinking it</source>
-        <translation>Чтобы избежать потери данных, сделайте резервную копию данных перед сжатием</translation>
+        <translation>Чтобы предотвратить потерю данных, сделайте резервную копию данных перед уменьшением</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="334"/>
         <source>Unmount it before shrinking its space</source>
-        <translation>Смонтируйте его перед сжатием его пространства</translation>
+        <translation>Отмонтируйте его перед уменьшением объема</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="344"/>
         <source>The current device has been mounted and will be unmounted automatically. Please back up data in it to prevent data loss</source>
-        <translation>Текущее устройство смонтировано и будет автоматически размонтировано. Пожалуйста, сделайте резервную копию данных на нем, чтобы избежать потери данных</translation>
+        <translation>Текущее устройство смонтировано и будет автоматически отмонтировано. Пожалуйста, создайте резервную копию данных в нем, чтобы предотвратить потерю данных</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="347"/>
         <source>To prevent data loss, back up data in the logical volume before shrinking it</source>
-        <translation>Чтобы избежать потери данных, сделайте резервную копию данных в логическом объеме перед сжатием</translation>
+        <translation>Чтобы предотвратить потерю данных, создайте резервную копию данных в логическом объеме перед уменьшением</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="383"/>
         <source>The file system does not support space adjustment</source>
-        <translation>Файловая система не поддерживает изменение пространства</translation>
+        <translation>Файловая система не поддерживает изменение объема</translation>
     </message>
 </context>
 <context>
@@ -2190,7 +2190,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="250"/>
         <source>Unable to mount the device: no file system is found, or the file system is not supported</source>
-        <translation>Невозможно смонтировать устройство: файловая система не найдена, или она не поддерживается</translation>
+        <translation>Не удалось смонтировать устройство: файловая система не найдена или не поддерживается</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="251"/>
@@ -2200,12 +2200,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="353"/>
         <source>The file system does not support space adjustment</source>
-        <translation>Файловая система не поддерживает изменение пространства</translation>
+        <translation>Файловая система не поддерживает изменение объема</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="374"/>
         <source>The disks will be formatted if you create a logical volume</source>
-        <translation>Диски будут сформатированы, если вы создадите логический том</translation>
+        <translation>Диски будут отформатированы, если вы создадите логический том</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="399"/>
@@ -2215,7 +2215,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="411"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
-        <translation>Данные не могут быть восстановлены при удалении, пожалуйста, подтвердите перед продолжением</translation>
+        <translation>Данные не могут быть восстановлены после удаления, пожалуйста, подтвердите перед продолжением</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="412"/>
@@ -2231,7 +2231,7 @@ will format it and remove its password.</source>
         <location filename="../widgets/titlewidget.cpp" line="463"/>
         <source>To ensure the normal use of system backup and restore, 
 rootA and rootB should be resized to the same value</source>
-        <translation>Чтобы обеспечить нормальное использование системного резервного копирования и восстановления, rootA и rootB должны быть изменены до одинакового значения</translation>
+        <translation>Чтобы обеспечить нормальное использование резервного копирования и восстановления системы, rootA и rootB должны быть изменены до одного и того же значения</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="480"/>
@@ -2259,7 +2259,7 @@ rootA and rootB should be resized to the same value</source>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="45"/>
         <source>Make sure there are no programs running on the logical volume</source>
-        <translation>Убедитесь, что на логическом объеме не запущены программы</translation>
+        <translation>Убедитесь, что на логическом объеме нет запущенных программ</translation>
     </message>
     <message>
         <location filename="../widgets/unmountdialog.cpp" line="52"/>
@@ -2277,12 +2277,12 @@ rootA and rootB should be resized to the same value</source>
     <message>
         <location filename="../widgets/unmountwarningdialog.cpp" line="34"/>
         <source>Unmounting system disk may result in system crash</source>
-        <translation>Размонтирование системного диска может привести к сбоям в системе</translation>
+        <translation>Отмонтирование системного диска может привести к сбоям системы</translation>
     </message>
     <message>
         <location filename="../widgets/unmountwarningdialog.cpp" line="40"/>
         <source>I will take the risks that may arise</source>
-        <translation>Я принимаю риски, которые могут возникнуть</translation>
+        <translation>Я беру на себя возможные риски</translation>
     </message>
     <message>
         <location filename="../widgets/unmountwarningdialog.cpp" line="59"/>

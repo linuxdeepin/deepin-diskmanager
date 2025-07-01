@@ -618,7 +618,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="287"/>
         <source>Health checking does not support this type of device.</source>
-        <translation>Tämä laite ei tue terveysarkkitehtimen käyttöä.</translation>
+        <translation>Lääketieteellinen tarkastus ei tue tätä laitetta.</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="326"/>
@@ -1478,8 +1478,8 @@ Ole huolellinen.</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="721"/>
-        <source>"%1" wiped</source>
-        <translation>"%1" pyyhitty</translation>
+        <source>&quot;%1&quot; wiped</source>
+        <translation>&quot;%1&quot; pyyhitty</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="728"/>
@@ -1621,12 +1621,12 @@ Ole huolellinen.</translation>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="75"/>
         <source>Please select /mnt or /media, or its subdirectories.</source>
-        <translation>Valitse /mnt tai /media tai niiden alikansio.</translation>
+        <translation>Valitse /mnt tai /media, tai niiden alikansioita.</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="83"/>
         <source>The mount point is illegal. Please select /mnt or /media, or its subdirectories.</source>
-        <translation>Montauspiste on virheellinen. Valitse /mnt tai /media tai niiden alikansio.</translation>
+        <translation>Montauspiste on epälaillinen. Valitse /mnt tai /media, tai niiden alikansioita.</translation>
     </message>
     <message>
         <location filename="../widgets/mountdialog.cpp" line="94"/>

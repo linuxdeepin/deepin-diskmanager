@@ -78,9 +78,11 @@ void DiskBadSectorsDialog::initUI()
     m_verifyComboBox->setAccessibleName("chooseVerify");
 
 #if QT_VERSION_MAJOR > 5
+    qDebug() << "Using Qt6 or higher for QRegularExpressionValidator.";
     QRegularExpression reg("[0-9]+$"); // 只能输入数字正则表达式
     QRegularExpressionValidator *validator = new QRegularExpressionValidator(reg, this);
 #else
+    qDebug() << "Using Qt5 for QRegExpValidator.";
     QRegExp reg("[0-9]+$"); // 只能输入数字正则表达式
     QRegExpValidator *validator = new QRegExpValidator(reg, this);
 #endif
@@ -129,10 +131,13 @@ void DiskBadSectorsDialog::initUI()
     int verifyWidth = m_verifyLabel->fontMetrics().width(QString(tr("Verify:")));
     int methodWidth = m_methodLabel->fontMetrics().width(QString(tr("Method:")));
 #endif
+    qDebug() << "Calculated verifyWidth:" << verifyWidth << ", methodWidth:" << methodWidth;
     if (verifyWidth >= methodWidth) {
+        qDebug() << "Setting fixed width for verifyLabel and methodLabel to verifyWidth.";
         m_verifyLabel->setFixedWidth(verifyWidth);
         m_methodLabel->setFixedWidth(verifyWidth);
     } else {
+        qDebug() << "Setting fixed width for verifyLabel and methodLabel to methodWidth.";
         m_verifyLabel->setFixedWidth(methodWidth);
         m_methodLabel->setFixedWidth(methodWidth);
     }
@@ -151,9 +156,11 @@ void DiskBadSectorsDialog::initUI()
     m_slider->setValue(50);
 
 #if QT_VERSION_MAJOR > 5
+    qDebug() << "Using Qt6 or higher for QRegularExpressionValidator (checkTimes).";
     QRegularExpression regCheckTimes("^[1-9][0-6]$"); // 只能输入两位数但首字符不能为0正则表达式
     QRegularExpressionValidator *validatorCheckTimes = new QRegularExpressionValidator(regCheckTimes, this);
 #else
+    qDebug() << "Using Qt5 for QRegExpValidator (checkTimes).";
     QRegExp regCheckTimes("^[1-9][0-6]$"); // 只能输入两位数但首字符不能为0正则表达式
     QRegExpValidator *validatorCheckTimes = new QRegExpValidator(regCheckTimes, this);
 #endif
@@ -240,6 +247,7 @@ void DiskBadSectorsDialog::initUI()
     m_cylinderInfoWidget->setMinimumSize(615, 250);
     m_cylinderInfoWidget->setObjectName("cylinderInfoWidget");
 
+    qDebug() << "Initializing CylinderWidget components for status display.";
     CylinderWidget *excellentWidget = new CylinderWidget;
     excellentWidget->setFixedSize(20, 20);
     excellentWidget->setFrameShape(QFrame::Box);
@@ -405,11 +413,12 @@ void DiskBadSectorsDialog::initUI()
     addContent(bottomWidget);
 
     m_settings = new QSettings("/tmp/CheckData.conf", QSettings::IniFormat, this);
-
+    qDebug() << "[DiskBadSectorsDialog] Initializing dialog with settings file: /tmp/CheckData.conf";
 }
 
 void DiskBadSectorsDialog::initConnections()
 {
+    qDebug() << "Initializing connections for DiskBadSectorsDialog.";
     connect(m_verifyComboBox, static_cast<void (DComboBox:: *)(const int)>(&DComboBox::currentIndexChanged),
             this, &DiskBadSectorsDialog::onVerifyChanged);
     connect(m_methodComboBox, static_cast<void (DComboBox:: *)(const int)>(&DComboBox::currentIndexChanged),
@@ -430,57 +439,68 @@ void DiskBadSectorsDialog::initConnections()
     connect(DMDbusHandler::instance(), &DMDbusHandler::fixBadBlocksFinished,  this, &DiskBadSectorsDialog::onRepairComplete);
     connect(&m_timer, &QTimer::timeout, this, &DiskBadSectorsDialog::onTimeOut);
     connect(&m_checkTimer, &QTimer::timeout, this, &DiskBadSectorsDialog::onCheckTimeOut);
+    qDebug() << "Connections initialized for DiskBadSectorsDialog.";
 }
 
 void DiskBadSectorsDialog::onVerifyChanged(int index)
 {
+    qDebug() << "onVerifyChanged called with index:" << index;
     m_startLineEdit->setText("0");
     m_endLineEdit->setAlert(false);
     m_startLineEdit->setAlert(false);
 
     switch (index) {
     case 0: {
+        qDebug() << "Verify type changed to Cylinders.";
         m_endLineEdit->lineEdit()->setPlaceholderText(QString("%1").arg(m_deviceInfo.m_cylinders));
         m_endLineEdit->setText(QString("%1").arg(m_deviceInfo.m_cylinders));
         break;
     }
     case 1: {
+        qDebug() << "Verify type changed to Sectors.";
         m_endLineEdit->lineEdit()->setPlaceholderText(QString("%1").arg(m_deviceInfo.m_length));
         m_endLineEdit->setText(QString("%1").arg(m_deviceInfo.m_length));
         break;
     }
     case 2: {
+        qDebug() << "Verify type changed to MB.";
         int value = m_deviceInfo.m_length * m_deviceInfo.m_sectorSize / 1024 / 1024;
         m_endLineEdit->lineEdit()->setPlaceholderText(QString("%1").arg(value));
         m_endLineEdit->setText(QString("%1").arg(value));
         break;
     }
     default:
+        qDebug() << "Unknown verify type index:" << index;
         break;
     }
 }
 
 void DiskBadSectorsDialog::onMethodChanged(int index)
 {
+    qDebug() << "onMethodChanged called with index:" << index;
     m_methodStackedWidget->setCurrentIndex(index);
     switch (index) {
     case 0: {
+        qDebug() << "Method changed to Rounds.";
         m_timeoutEdit->setText("3000");
         m_timeoutEdit->setAlert(false);
         break;
     }
     case 1: {
+        qDebug() << "Method changed to Timeout.";
         m_checkTimesEdit->setText("8");
         m_checkTimesEdit->setAlert(false);
         break;
     }
     default:
+        qDebug() << "Unknown method type index:" << index;
         break;
     }
 }
 
 void DiskBadSectorsDialog::onSliderValueChanged(int value)
 {
+    qDebug() << "onSliderValueChanged called with value:" << value;
     int count = QString::number((float)value / 100 * 16, 'f', 0).toInt();
     count <= 0 ? count = 1 : count;
 
@@ -489,7 +509,9 @@ void DiskBadSectorsDialog::onSliderValueChanged(int value)
 
 void DiskBadSectorsDialog::oncheckTimesChanged(const QString &text)
 {
+    qDebug() << "oncheckTimesChanged called with text:" << text;
     if (text.isEmpty()) {
+        qDebug() << "Input text is empty.";
         return;
     }
 
@@ -499,6 +521,7 @@ void DiskBadSectorsDialog::oncheckTimesChanged(const QString &text)
 
 bool DiskBadSectorsDialog::inputValueIsEffective()
 {
+    qDebug() << "Checking input value validity.";
     bool isEffective = true;
 
     long long start = m_startLineEdit->lineEdit()->placeholderText().toLongLong();
@@ -508,12 +531,16 @@ bool DiskBadSectorsDialog::inputValueIsEffective()
 
     // 判断当前输入的检测范围的起始值是否在范围内，若不在就设为警告模式
     if (m_startLineEdit->text().isEmpty()) {
+        qDebug() << "Start value input is empty.";
         m_startLineEdit->setAlert(true);
         isEffective = false;
     } else {
+        qDebug() << "Start value input is:" << startValue;
         if (startValue >= start && startValue <= end) {
+            qDebug() << "Start value is within range.";
             m_startLineEdit->setAlert(false);
         } else {
+            qDebug() << "Start value is out of range.";
             m_startLineEdit->setAlert(true);
             isEffective = false;
         }
@@ -521,12 +548,16 @@ bool DiskBadSectorsDialog::inputValueIsEffective()
 
     // 判断当前输入的检测范围的结束值是否在范围内，若不在就设为警告模式
     if (m_endLineEdit->text().isEmpty()) {
+        qDebug() << "End value input is empty.";
         m_endLineEdit->setAlert(true);
         isEffective = false;
     } else {
+        qDebug() << "End value input is:" << endValue;
         if (endValue >= start && endValue <= end) {
+            qDebug() << "End value is within range.";
             m_endLineEdit->setAlert(false);
         } else {
+            qDebug() << "End value is out of range.";
             m_endLineEdit->setAlert(true);
             isEffective = false;
         }
@@ -534,7 +565,9 @@ bool DiskBadSectorsDialog::inputValueIsEffective()
 
     // 判断检测范围的起始值和结束值是否合理，若不合理就设为警告模式
     if (!m_endLineEdit->text().isEmpty() && !m_startLineEdit->text().isEmpty()) {
+        qDebug() << "Start value is:" << startValue << "End value is:" << endValue;
         if (startValue > endValue) {
+            qDebug() << "Start value is greater than end value.";
             m_endLineEdit->setAlert(true);
             m_startLineEdit->setAlert(true);
             isEffective = false;
@@ -549,14 +582,17 @@ bool DiskBadSectorsDialog::inputValueIsEffective()
     switch (m_methodComboBox->currentIndex()) {
     case 0: { // 判断检测次数是否在范围内
         if (m_checkTimesEdit->text().isEmpty()) {
+            qDebug() << "Check times input is empty.";
             m_checkTimesEdit->setAlert(true);
             isEffective = false;
         } else {
             int checkNumber = m_checkTimesEdit->text().toInt();
             if (checkNumber < 1 || checkNumber > 16) {
+                qDebug() << "Check times is out of range.";
                 m_checkTimesEdit->setAlert(true);
                 isEffective = false;
             } else {
+                qDebug() << "Check times is within range.";
                 m_checkTimesEdit->setAlert(false);
             }
         }
@@ -564,14 +600,18 @@ bool DiskBadSectorsDialog::inputValueIsEffective()
     }
     case 1: { // 判断超时时间是否在范围内
         if (m_timeoutEdit->text().isEmpty()) {
+            qDebug() << "Timeout input is empty.";
             m_timeoutEdit->setAlert(true);
             isEffective = false;
         } else {
+            qDebug() << "Timeout input is:" << m_timeoutEdit->text();
             int checkNumber = m_timeoutEdit->text().toInt();
             if (checkNumber < 100 || checkNumber > 3000) {
+                qDebug() << "Timeout is out of range.";
                 m_timeoutEdit->setAlert(true);
                 isEffective = false;
             } else {
+                qDebug() << "Timeout is within range.";
                 m_timeoutEdit->setAlert(false);
             }
         }
@@ -581,6 +621,7 @@ bool DiskBadSectorsDialog::inputValueIsEffective()
         break;
     }
 
+    qDebug() << "Input value is effective:" << isEffective;
     return isEffective;
 }
 
@@ -605,6 +646,7 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
 
     QFile file("/tmp/CheckData.conf");
     if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
+        qDebug() << "File opened successfully";
         QTextStream out(&file);
         out << "[SettingData]\n";
         out << "[CheckData]\n";
@@ -691,10 +733,12 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
 
     m_checkInfoLabel->show();
     m_checkTimer.start(100);
+    qDebug() << "Start verify button clicked, check number:" << checkNumber;
 }
 
 void DiskBadSectorsDialog::mSecsToTime(qint64 msecs, qint64 &hour, qint64 &minute, qint64 &second)
 {
+    qDebug() << "msecs:" << msecs;
     hour = msecs / (60 * 60 * 1000);
     minute = (msecs % (60 * 60 * 1000)) / (60 * 1000);
     second = ((msecs % (60 * 60 * 1000)) % (60 * 1000)) / 1000;
@@ -702,7 +746,9 @@ void DiskBadSectorsDialog::mSecsToTime(qint64 msecs, qint64 &hour, qint64 &minut
 
 void DiskBadSectorsDialog::onCheckBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderTimeConsuming, const QString &cylinderStatus, const QString &cylinderErrorInfo)
 {
+    qDebug() << "cylinderNumber:" << cylinderNumber;
     if ((m_totalCheckNumber == 0) || (m_curType != StatusType::Check)) {
+        qDebug() << "Check number is 0 or current type is not check";
         m_checkTimer.stop();
         return;
     }
@@ -714,10 +760,13 @@ void DiskBadSectorsDialog::onCheckBadBlocksInfo(const QString &cylinderNumber, c
     m_settings->endGroup();
 
     if (cylinderStatus == "bad") {
+        qDebug() << "cylinderNumber is bad";
         QString value = m_settings->value("BadSectorsData/BadSectors").toString();
         if(value.isEmpty()) {
+            qDebug() << "BadSectors is empty";
             value = cylinderNumber;
         } else {
+            qDebug() << "BadSectors is not empty";
             value = value + "," + cylinderNumber;
         }
 
@@ -727,13 +776,16 @@ void DiskBadSectorsDialog::onCheckBadBlocksInfo(const QString &cylinderNumber, c
 
 void DiskBadSectorsDialog::onCheckTimeOut()
 {
+    qDebug() << "Check time out";
     if (m_blockStart > m_blockEnd) {
+        qDebug() << "Block start is greater than block end";
         onCheckComplete();
         return;
     }
 
     QString value = m_settings->value(QString("CheckData/%1").arg(m_blockStart)).toString();
     if (!value.isEmpty()) {
+        qDebug() << "Value is not empty";
         QStringList lst = value.split(",");
 
         ++m_curCheckNumber;
@@ -769,7 +821,8 @@ void DiskBadSectorsDialog::onCheckTimeOut()
         m_cylinderInfoWidget->setCurCheckBadBlocksInfo(lst.at(0), lst.at(1), lst.at(2), lst.at(3), lst.at(4));
 
         m_blockStart++;
-    }  
+    }
+    qDebug() << "Check time out, cur check number:" << m_curCheckNumber;
 }
 
 void DiskBadSectorsDialog::onCheckComplete()
@@ -787,10 +840,12 @@ void DiskBadSectorsDialog::onCheckComplete()
     int badSectorsCount = 0;
     QString value = m_settings->value("BadSectorsData/BadSectors").toString();
     if (!value.isEmpty()) {
+        qDebug() << "BadSectors is not empty";
         badSectorsCount = value.split(",").count();
     }
 
     if (badSectorsCount > 0) {
+        qDebug() << "Bad sectors count:" << badSectorsCount;
         m_totalRepairNumber = 0;
         m_curRepairNumber = 0;
         m_curRepairTime = 0;
@@ -810,6 +865,7 @@ void DiskBadSectorsDialog::onStopButtonClicked()
     qDebug() << "Stop button clicked. Current type:" << static_cast<int>(m_curType);
     switch (m_curType) {
     case StatusType::Check: {
+        qDebug() << "Stop check";
         m_buttonStackedWidget->setCurrentIndex(2);
         m_resetButton->setDisabled(false);
         m_curType = StatusType::StopCheck;
@@ -825,6 +881,7 @@ void DiskBadSectorsDialog::onStopButtonClicked()
         break;
     }
     case StatusType::Repair:{
+        qDebug() << "Stop repair";
         m_buttonStackedWidget->setCurrentIndex(2);
         m_curType = StatusType::StopRepair;
         int repairSize = static_cast<int>(m_deviceInfo.m_heads * m_deviceInfo.m_sectors * m_deviceInfo.m_sectorSize);
@@ -839,6 +896,7 @@ void DiskBadSectorsDialog::onStopButtonClicked()
     default:
         break;
     }
+    qDebug() << "Stop button clicked. Current type:" << static_cast<int>(m_curType);
 }
 
 void DiskBadSectorsDialog::onContinueButtonClicked()
@@ -846,6 +904,7 @@ void DiskBadSectorsDialog::onContinueButtonClicked()
     qDebug() << "Continue button clicked. Current type:" << static_cast<int>(m_curType);
     switch (m_curType) {
     case StatusType::StopCheck: {
+        qDebug() << "Continue check";
         m_buttonStackedWidget->setCurrentIndex(1);
         m_resetButton->setDisabled(true);
         m_curType = StatusType::Check;
@@ -858,6 +917,7 @@ void DiskBadSectorsDialog::onContinueButtonClicked()
         QString lockStart = m_settings->value("SettingData/CurCylinder").toString();
         int blockStart = 0;
         if (!lockStart.isEmpty()) {
+            qDebug() << "CurCylinder is not empty";
             blockStart = lockStart.toInt() + 1;
         }
 
@@ -866,6 +926,7 @@ void DiskBadSectorsDialog::onContinueButtonClicked()
         break;
     }
     case StatusType::StopRepair:{
+        qDebug() << "Continue repair";
         m_buttonStackedWidget->setCurrentIndex(1);
         m_curType = StatusType::Repair;
         int repairSize = static_cast<int>(m_deviceInfo.m_heads * m_deviceInfo.m_sectors * m_deviceInfo.m_sectorSize);
@@ -880,6 +941,7 @@ void DiskBadSectorsDialog::onContinueButtonClicked()
     default:
         break;
     }
+    qDebug() << "Continue button clicked. Current type:" << static_cast<int>(m_curType);
 }
 
 void DiskBadSectorsDialog::onAgainVerifyButtonClicked()
@@ -904,6 +966,7 @@ void DiskBadSectorsDialog::onAgainVerifyButtonClicked()
 
     QFile file("/tmp/CheckData.conf");
     if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
+        qDebug() << "File open success";
         QTextStream out(&file);
         out << "[SettingData]\n";
         out << "[CheckData]\n";
@@ -927,6 +990,7 @@ void DiskBadSectorsDialog::onAgainVerifyButtonClicked()
 
     DMDbusHandler::instance()->checkBadSectors(m_deviceInfo.m_path, m_blockStart, m_blockEnd, checkNumber, checkSize, 1);
     m_checkTimer.start(100);
+    qDebug() << "Check again button clicked";
 }
 
 void DiskBadSectorsDialog::onResetButtonClicked()
@@ -1013,6 +1077,7 @@ void DiskBadSectorsDialog::onRepairButtonClicked()
     messageBox.getButton(cancelIndex)->setAccessibleName("cancelButton");
     messageBox.getButton(repairIndex)->setAccessibleName("startRepair");
     if (messageBox.exec() == DDialog::Accepted) {
+        qDebug() << "Repair button clicked";
         m_curType = StatusType::Repair;
         m_repairButton->setDisabled(true);
         m_resetButton->setDisabled(true);
@@ -1043,11 +1108,14 @@ void DiskBadSectorsDialog::onRepairButtonClicked()
         DMDbusHandler::instance()->repairBadBlocks(m_deviceInfo.m_path, lstBadSectors, repairSize, 1);
         m_timer.start(200);
     }
+    qDebug() << "Repair button clicked";
 }
 
 void DiskBadSectorsDialog::onRepairBadBlocksInfo(const QString &cylinderNumber, const QString &cylinderStatus, const QString &cylinderTimeConsuming)
 {
+    qDebug() << "Repair bad blocks info received";
     if ((m_totalRepairNumber == 0) || (m_curType != StatusType::Repair)) {
+        qWarning() << "Repair bad blocks info received, but current type is not repair";
         m_timer.stop();
         return;
     }
@@ -1065,12 +1133,15 @@ void DiskBadSectorsDialog::onRepairBadBlocksInfo(const QString &cylinderNumber, 
     QStringList lstBadSectors = badSectors.split(",");
 
     if (lstBadSectors.count() > 0) {
+        qDebug() << "Bad sectors count:" << lstBadSectors.count();
         m_settings->setValue("BadSectorsData/BadSectors", lstBadSectors.join(","));
     } else {
+        qDebug() << "Bad sectors count is 0";
         m_settings->setValue("BadSectorsData/BadSectors", "");
     }
 
     if (cylinderStatus == "good") {
+        qDebug() << "Cylinder status is good";
         ++m_repairedCount;
         QString curCheckData = m_settings->value(QString("CheckData/%1").arg(cylinderNumber)).toString();
         QStringList lstCheckData = curCheckData.split(",");
@@ -1080,6 +1151,7 @@ void DiskBadSectorsDialog::onRepairBadBlocksInfo(const QString &cylinderNumber, 
 
         m_cylinderInfoWidget->setCurRepairBadBlocksInfo(cylinderNumber);
     }
+    qDebug() << "Repair complete info received";
 }
 
 void DiskBadSectorsDialog::onRepairComplete()
@@ -1101,6 +1173,7 @@ void DiskBadSectorsDialog::onRepairComplete()
 
 void DiskBadSectorsDialog::onTimeOut()
 {
+    qDebug() << "Timer timeout";
     m_usedTime += 200;
     m_unusedTime -= 200;
 
@@ -1125,19 +1198,23 @@ void DiskBadSectorsDialog::onTimeOut()
 
 void DiskBadSectorsDialog::onExitButtonClicked()
 {
+    qDebug() << "Exit button clicked";
     close();
 }
 
 void DiskBadSectorsDialog::onDoneButtonClicked()
 {
+    qDebug() << "Done button clicked";
     m_curType = StatusType::Normal;
     close();
 }
 
 void DiskBadSectorsDialog::stopCheckRepair()
 {
+    qDebug() << "Stop check or repair";
     switch (m_curType) {
     case StatusType::Check: {
+        qDebug() << "Stop check";
         m_curType = StatusType::StopCheck;
         disconnect(DMDbusHandler::instance(), &DMDbusHandler::checkBadBlocksCountInfo, this, &DiskBadSectorsDialog::onCheckBadBlocksInfo);
         m_checkTimer.stop();
@@ -1146,6 +1223,7 @@ void DiskBadSectorsDialog::stopCheckRepair()
         break;
     }
     case StatusType::Repair:{
+        qDebug() << "Stop repair";
         m_curType = StatusType::StopRepair;
         disconnect(DMDbusHandler::instance(), &DMDbusHandler::repairBadBlocksInfo, this, &DiskBadSectorsDialog::onRepairBadBlocksInfo);
         m_timer.stop();
@@ -1156,6 +1234,7 @@ void DiskBadSectorsDialog::stopCheckRepair()
     default:
         break;
     }
+    qDebug() << "Stop check or repair done";
 }
 
 void DiskBadSectorsDialog::closeEvent(QCloseEvent *event)

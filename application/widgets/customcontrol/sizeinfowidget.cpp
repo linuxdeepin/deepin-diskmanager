@@ -55,8 +55,10 @@ void SizeInfoWidget::setData(PartitionInfo info, QVector<QColor> color, QVector<
     m_usedSize = Utils::formatSize(info.m_sectorsUsed, info.m_sectorSize);
 
     if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+        qDebug() << "Partition is LUKS encrypted.";
         LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
         if (luksInfo.isDecrypt) {
+            qDebug() << "LUKS partition is decrypted, updating used/unused size.";
             m_usedSize = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUsed);
             m_noused = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUnused, SIZE_UNIT::UNIT_GIB);
             m_used = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUsed, SIZE_UNIT::UNIT_GIB);
@@ -66,14 +68,17 @@ void SizeInfoWidget::setData(PartitionInfo info, QVector<QColor> color, QVector<
     m_totalSize = m_noused + m_used;
     m_partitionPath = info.m_path;
     if ("unallocated" != m_partitionPath) {
+        qDebug() << "Partition path is not unallocated, removing '/dev/'.";
         m_partitionPath = m_partitionPath.remove(0, 5);
     }
 
     if (m_totalSize <= 0) {
+        qDebug() << "Total size is zero or less, recalculating from sector info.";
         m_totalSize = Utils::sectorToUnit(info.m_sectorEnd - info.m_sectorStart + 1, info.m_sectorSize, SIZE_UNIT::UNIT_GIB);
     }
 
     if (size.at(0) < 0.00 || size.at(1) < 0.00) {
+        qDebug() << "Size vector contains negative values, setting to 0.00.";
         m_sizeInfo = QVector<double> {0.00, 0.00};
     }
 
@@ -94,30 +99,37 @@ void SizeInfoWidget::setData(LVInfo info, QVector<QColor> color, QVector<double>
     m_usedSize = Utils::LVMFormatSize(info.m_fsUsed);
 
     if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+        qDebug() << "LV is LUKS encrypted.";
         LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_lvPath);
         if (luksInfo.isDecrypt) {
+            qDebug() << "LUKS LV is decrypted, updating used/unused size.";
             m_usedSize = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUsed);
             m_noused = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUnused, SIZE_UNIT::UNIT_GIB);
             m_used = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUsed, SIZE_UNIT::UNIT_GIB);
         } else {
+            qDebug() << "LUKS LV is not decrypted, setting used size to '-'.";
             m_usedSize = "-";
         }
     }
 
     if (m_totalSpaceSize.contains("1024")) {
+        qDebug() << "Total space size contains '1024', recalculating.";
         m_totalSpaceSize = Utils::LVMFormatSize(info.m_lvLECount * info.m_LESize + info.m_LESize);
     }
 
     if (info.m_lvName.isEmpty() && info.m_lvUuid.isEmpty()) {
+        qDebug() << "LV name and UUID are empty, setting noused based on LECount.";
         m_noused = Utils::LVMSizeToUnit(info.m_lvLECount * info.m_LESize, SIZE_UNIT::UNIT_GIB);
     }
 
     m_totalSize = m_noused + m_used;
     if (m_totalSize <= 0) {
+        qDebug() << "Total size is zero or less, recalculating from LECount.";
         m_totalSize = Utils::LVMSizeToUnit(info.m_lvLECount * info.m_LESize, SIZE_UNIT::UNIT_GIB);
     }
 
     if (size.at(0) < 0.00 || size.at(1) < 0.00) {
+        qDebug() << "Size vector contains negative values, setting to 0.00.";
         m_sizeInfo = QVector<double> {0.00, 0.00};
     }
     update();
@@ -137,8 +149,10 @@ void SizeInfoWidget::setData(DeviceInfo info, QVector<QColor> color, QVector<dou
     m_usedSize = Utils::LVMFormatSize(-1 * info.m_sectorSize);
 
     if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS && info.m_partition.size() == 0) {
+        qDebug() << "Device is LUKS encrypted and has no partitions.";
         LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
         if (luksInfo.isDecrypt) {
+            qDebug() << "LUKS device is decrypted, updating used/unused size.";
             m_usedSize = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUsed);
             m_noused = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUnused, SIZE_UNIT::UNIT_GIB);
             m_used = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUsed, SIZE_UNIT::UNIT_GIB);
@@ -147,10 +161,12 @@ void SizeInfoWidget::setData(DeviceInfo info, QVector<QColor> color, QVector<dou
 
     m_totalSize = m_noused + m_used;
     if (m_totalSize <= 0) {
+        qDebug() << "Total size is zero or less, recalculating from device length.";
         m_totalSize = Utils::LVMSizeToUnit(info.m_length * info.m_sectorSize, SIZE_UNIT::UNIT_GIB);
     }
 
     if (size.at(0) < 0.00 || size.at(1) < 0.00) {
+        qDebug() << "Size vector contains negative values, setting to 0.00.";
         m_sizeInfo = QVector<double> {0.00, 0.00};
     }
     update();
@@ -159,6 +175,7 @@ void SizeInfoWidget::setData(DeviceInfo info, QVector<QColor> color, QVector<dou
 
 void SizeInfoWidget::paintEvent(QPaintEvent *event)
 {
+    // qDebug() << "SizeInfoWidget::paintEvent called.";
     QWidget::paintEvent(event);
     QPainter painter(this);
     painter.save();
@@ -174,9 +191,12 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
     QPainterPath paintpath0;
     int radius = 8;
     double sumSize = 0.00;
+    // qDebug() << "Starting to draw rectangles based on color and size data.";
     //根据color和size数据遍历绘制矩形
     for (int i = 0; i < m_sizeInfo.size(); i++) {
+        // qDebug() << "Processing segment:" << i << ", size:" << m_sizeInfo[i];
         if (i == 0) {
+            // qDebug() << "First segment (i=0).";
             if (m_sizeInfo[0] == m_totalSize) {
                 // 处理第一个值就是总大小，矩形首尾都绘制圆角
                 path[0].moveTo(paintRect.bottomRight() - QPoint(0, radius));
@@ -195,7 +215,9 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
                 painter.setBrush(QBrush(m_colorInfo[0]));
                 painter.setPen(QPen(QColor(m_colorInfo[0]), 3));
                 painter.fillPath(path[0], m_colorInfo[0]);
+                // qDebug() << "Filled path for total size.";
             } else {
+                // qDebug() << "First segment is not total size, drawing rounded rectangle for partial area.";
                 path[0].moveTo(paintRect.topLeft() + QPoint(radius, 0));
                 path[0].arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
                 path[0].lineTo(paintRect.bottomLeft() - QPoint(0, radius));
@@ -206,10 +228,12 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
                 path[0].lineTo(paintRect.topLeft() + QPoint(static_cast<int>((m_sizeInfo[0] / m_totalSize) * paintRect.width() + radius), 0));
                 path[0].lineTo(paintRect.topLeft() + QPoint(radius, 0));
                 if (m_sizeInfo.at(i) == 0.00) {
+                    // qDebug() << "Segment size is 0.00, using colorInfo[1].";
                     painter.setBrush(QBrush(m_colorInfo[1]));
                     painter.setPen(QPen(QColor(m_colorInfo[1]), 3));
                     painter.fillPath(path[0], m_colorInfo[1]);
                 } else {
+                    // qDebug() << "Segment size is greater than 0.00, using colorInfo[0].";
                     painter.setBrush(QBrush(m_colorInfo[0]));
                     painter.setPen(QPen(QColor(m_colorInfo[0]), 3));
                     painter.fillPath(path[0], m_colorInfo[0]);
@@ -217,7 +241,9 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             }
 
             sumSize += m_sizeInfo[0];
+            // qDebug() << "sumSize after first segment:" << sumSize;
         } else if (i > 0 && i < m_sizeInfo.size() - 1) {
+            // qDebug() << "Middle segment (i > 0 && i < size - 1).";
             path[i].moveTo(path[i - 1].currentPosition() + QPoint(static_cast<int>((m_sizeInfo[i - 1] / m_totalSize) * paintRect.width()), 0));
             path[i].lineTo(path[i - 1].currentPosition() + QPoint(static_cast<int>((m_sizeInfo[i - 1] / m_totalSize) * paintRect.width() + (m_sizeInfo[i] / m_totalSize) * paintRect.width()), 0));
             path[i].lineTo(path[i - 1].currentPosition() + QPoint(static_cast<int>((m_sizeInfo[i - 1] / m_totalSize) * paintRect.width() + (m_sizeInfo[i] / m_totalSize) * paintRect.width()), paintRect.height()));
@@ -226,9 +252,12 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setBrush(QBrush(m_colorInfo[i]));
             painter.setPen(QPen(QColor(m_colorInfo[i]), 3));
             painter.fillPath(path[i], m_colorInfo[i]);
+            // qDebug() << "Filled path for middle segment.";
 
             sumSize += m_sizeInfo[i];
+            // qDebug() << "sumSize after middle segment:" << sumSize;
         } else if (i == m_sizeInfo.size() - 1) {
+            // qDebug() << "Last segment (i == size - 1).";
             path[m_sizeInfo.size() - 1].moveTo(paintRect.bottomRight() - QPoint(0, radius));
             path[m_sizeInfo.size() - 1].lineTo(paintRect.topRight() + QPoint(0, radius));
             path[m_sizeInfo.size() - 1].arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
@@ -243,14 +272,20 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setBrush(QBrush(m_colorInfo[m_sizeInfo.size() - 1]));
             painter.setPen(QPen(QColor(m_colorInfo[m_sizeInfo.size() - 1]), 3));
             if ((m_totalSize - sumSize) > 0.00) {
+                // qDebug() << "Remaining total size is positive, filling path for last segment.";
                 painter.fillPath(path[m_sizeInfo.size() - 1], m_colorInfo[m_sizeInfo.size() - 1]);
             }
+            // qDebug() << "Last segment processing complete.";
         }
     }
+    // qDebug() << "Finished drawing rectangles. Starting to draw information labels.";
     //绘制首页下方标注
     if (m_flag) {
+        // qDebug() << "Flag is true, drawing information labels.";
         DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+        // qDebug() << "Theme type for info labels:" << themeType;
         if (themeType == DGuiApplicationHelper::LightType) {
+            // qDebug() << "Theme is LightType for info labels.";
             int height = 90 - static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
             QRect roundRect = QRect(rect.bottomLeft().x() + 2, rect.bottomLeft().y() - height, 15, 15);
             //            rect.setWidth(rect.width() - 1);
@@ -296,6 +331,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             }
             QRect rectText = QRect(paintRect.bottomLeft().x() + 28, paintRect.bottomLeft().y() + 17, capacityWidth, 70);
             painter.drawText(rectText, textCapacity, option);
+            // qDebug() << "Drew capacity text.";
             // 获取总容量字符串显示的宽度
             int capacityNum = rectText.x() + capacityWidth;
 
@@ -326,6 +362,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(icon2Color);
             painter.drawPath(painterPath);
             painter.fillPath(painterPath, brush2);
+            // qDebug() << "Drew and filled painter path.";
 
             font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
             textColor = m_parentPb.color(DPalette::Normal, DPalette::Text);
@@ -344,6 +381,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
 //            rectText.moveTo(width, paintRect.bottomLeft().y() + 17);
             rectText = QRect(width, paintRect.bottomLeft().y() + 17, usedWidth, 70);
             painter.drawText(rectText, QString(tr("Used:") + " "), option);
+            // qDebug() << "Drew Used: text for LightType.";
             // 获取已用空间字符串显示的宽度
             int usedNum = rectText.x() + usedWidth;
 
@@ -353,13 +391,17 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(text1Color);
             option.setAlignment(Qt::AlignLeft);
             painter.drawText(rectSizeNum, m_totalSpaceSize, option1);
+            // qDebug() << "Drew total space size for LightType.";
 
             rectSizeNum.moveTo(paintRect.bottomLeft().x() + usedNum, paintRect.bottomLeft().y() + 20);
             if (m_usedSize.contains("-")) {
+                // qDebug() << "Used size contains '-', setting to '-' for LightType.";
                 m_usedSize = "-";
             }
             painter.drawText(rectSizeNum, m_usedSize, option1);
+            // qDebug() << "Drew used size for LightType.";
         } else if (themeType == DGuiApplicationHelper::DarkType) {
+            // qDebug() << "Theme is DarkType for info labels.";
             int height = 90 - static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
             QRect roundRect = QRect(rect.bottomLeft().x() + 2, rect.bottomLeft().y() - height, 15, 15);
             //            rect.setWidth(rect.width() - 1);
@@ -405,6 +447,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             }
             QRect rectText = QRect(paintRect.bottomLeft().x() + 28, paintRect.bottomLeft().y() + 17, capacityWidth, 70);
             painter.drawText(rectText, textCapacity, option);
+            // qDebug() << "Drew capacity text for DarkType.";
             // 获取总容量字符串显示的宽度
             int capacityNum = rectText.x() + capacityWidth;
 
@@ -435,6 +478,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(icon2Color);
             painter.drawPath(painterPath);
             painter.fillPath(painterPath, brush2);
+            // qDebug() << "Drew and filled painter path for DarkType.";
 
             font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
             textColor = m_parentPb.color(DPalette::Normal, DPalette::Text);
@@ -452,6 +496,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
 //            rectText.moveTo(width, paintRect.bottomLeft().y() + 17);
             rectText = QRect(width, paintRect.bottomLeft().y() + 17, usedWidth, 70);
             painter.drawText(rectText, QString(tr("Used:") + " "), option);
+            // qDebug() << "Drew Used: text for DarkType.";
             // 获取已用空间字符串显示的宽度
             int usedNum = rectText.x() + usedWidth;
 
@@ -461,17 +506,22 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(text1Color);
             option.setAlignment(Qt::AlignLeft);
             painter.drawText(rectSizeNum, m_totalSpaceSize, option1);
+            // qDebug() << "Drew total space size for DarkType.";
 
             rectSizeNum.moveTo(paintRect.bottomLeft().x() + usedNum, paintRect.bottomLeft().y() + 20);
             if (m_usedSize.contains("-")) {
+                // qDebug() << "Used size contains '-', setting to '-' for DarkType.";
                 m_usedSize = "-";
             }
             painter.drawText(rectSizeNum, m_usedSize, option1);
+            // qDebug() << "Drew used size for DarkType.";
         }
     }
     painter.restore();
+    // qDebug() << "Paint event completed.";
 }
 void SizeInfoWidget::onHandleChangeTheme()
 {
+    qDebug() << "SizeInfoWidget::onHandleChangeTheme called, theme type changed.";
     m_parentPb = Dtk::Gui::DGuiApplicationHelper::instance()->applicationPalette();
 }

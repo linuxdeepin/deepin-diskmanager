@@ -23,6 +23,7 @@ SelectedItemWidget::SelectedItemWidget(PVInfoData pvInfoData, QWidget *parent)
 
 void SelectedItemWidget::initUi()
 {
+    qDebug() << "SelectedItemWidget::initUi called.";
     setFixedHeight(36);
 
     DPalette paletteName;
@@ -75,9 +76,11 @@ void SelectedItemWidget::initUi()
         }
 
         m_sizeInfo->setText(m_pvInfoData.m_partitionSize);
+        qDebug() << "Setting partition size:" << m_pvInfoData.m_partitionSize;
     }
 
     if (m_pvInfoData.m_isReadOnly) {
+        qDebug() << "Disk is read-only, disabling icon button.";
         m_iconButton->setDisabled(true);
     }
 
@@ -89,17 +92,21 @@ void SelectedItemWidget::initUi()
     mainLayout->addWidget(m_iconButton);
     mainLayout->setSpacing(0);
     mainLayout->setContentsMargins(10, 0, 10, 0);
+    qDebug() << "Main layout configured.";
 
     setLayout(mainLayout);
+    qDebug() << "Layout set.";
 }
 
 void SelectedItemWidget::initConnection()
 {
+    qDebug() << "SelectedItemWidget::initConnection called.";
     connect(m_iconButton, &DIconButton::clicked, this, &SelectedItemWidget::onDeleteClicked);
 }
 
 void SelectedItemWidget::onDeleteClicked()
 {
+    qDebug() << "SelectedItemWidget::onDeleteClicked called.";
     qDebug() << "Delete clicked for:"
                            << (m_pvInfoData.m_disktype == "unrecognized" ? m_pvInfoData.m_diskPath : m_pvInfoData.m_partitionPath);
     emit deleteItem(m_pvInfoData);

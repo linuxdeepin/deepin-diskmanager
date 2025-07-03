@@ -19,10 +19,12 @@ RemovePVWidget::RemovePVWidget(QWidget *parent) : DDBase(parent)
     qDebug() << "RemovePVWidget initialized";
     initUi();
     initConnection();
+    qDebug() << "RemovePVWidget initialized";
 }
 
 void RemovePVWidget::initUi()
 {
+    qDebug() << "Initializing RemovePVWidget UI.";
     setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
     setFixedSize(380, 190);
 
@@ -131,28 +133,35 @@ void RemovePVWidget::initUi()
     mainLayout->addWidget(m_stackedWidget);
     mainLayout->setSpacing(0);
     mainLayout->setContentsMargins(0, 0, 0, 0);
+    qDebug() << "RemovePVWidget UI initialization completed.";
 }
 
 void RemovePVWidget::initConnection()
 {
+    qDebug() << "Initializing RemovePVWidget connections.";
     connect(m_deleteButton, &DWarningButton::clicked, this, &RemovePVWidget::onButtonClicked);
     connect(m_cancelButton, &DPushButton::clicked, this, &RemovePVWidget::onCancelButtonClicked);
     connect(DMDbusHandler::instance(), &DMDbusHandler::pvDeleteMessage, this, &RemovePVWidget::onPVDeleteMessage);
+    qDebug() << "RemovePVWidget connections initialized.";
 }
 
 void RemovePVWidget::onCancelButtonClicked()
 {
+    qDebug() << "onCancelButtonClicked called, closing widget.";
     close();
+    qDebug() << "onCancelButtonClicked completed.";
 }
 
 void RemovePVWidget::onButtonClicked()
 {
+    qDebug() << "onButtonClicked called.";
     qInfo() << "Delete PV button clicked";
     bool bigDataMove = false;
     QStringList realDelPvLis;
     set<QString> pvStrList;
     QList<PVData> devList;
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
+        qDebug() << "Current level is PARTITION for PV deletion.";
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         //todo pvStrList 填入分区路径
         pvStrList.insert(info.m_path);
@@ -168,9 +177,11 @@ void RemovePVWidget::onButtonClicked()
 
         devList.append(pvData);
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
+        qDebug() << "Current level is DISK for PV deletion.";
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         //todo 此处 判断是磁盘加入还是分区加入 如果是磁盘 pvStrList 填入磁盘路径  如果是分区 依次填入分区路径
         if (info.m_disktype == "none") {
+            qDebug() << "Disk type is 'none', inserting disk path to pvStrList.";
             pvStrList.insert(info.m_path);
 
             PVData pvData;
@@ -184,9 +195,11 @@ void RemovePVWidget::onButtonClicked()
 
             devList.append(pvData);
         } else {
+            qDebug() << "Disk type is not 'none', iterating partitions to find PVs.";
             for (int i = 0; i < info.m_partition.size(); i++) {
                 PartitionInfo partInfo = info.m_partition.at(i);
                 if (partInfo.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV) {
+                    qDebug() << "Partition is a PV, inserting partition path to pvStrList:" << partInfo.m_path;
                     pvStrList.insert(partInfo.m_path);
 
                     PVData pvData;
@@ -205,9 +218,11 @@ void RemovePVWidget::onButtonClicked()
     }
 
     if (pvStrList.size() > 0 && Utils::adjudicationPVDelete(DMDbusHandler::instance()->probLVMInfo(), pvStrList, bigDataMove, realDelPvLis)) {
+        qDebug() << "PV deletion allowed, bigDataMove:" << bigDataMove << ", realDelPvLis:" << realDelPvLis.join(',');
         //todo 进入 说明允许删除 补充允许删除逻辑
         qDebug() << "PV deletion allowed for:" << realDelPvLis.join(',');
         if (bigDataMove) {
+            qDebug() << "Big data move detected, showing warning message box.";
             MessageBox warningBox(this);
             warningBox.setObjectName("messageBox");
             warningBox.setAccessibleName("removeWarningWidget");
@@ -225,6 +240,7 @@ void RemovePVWidget::onButtonClicked()
 
         DMDbusHandler::instance()->onDeletePVList(devList);
     } else {
+        qDebug() << "PV deletion not allowed, showing warning message box due to insufficient space.";
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("NotEnoughSpaceWidget");
@@ -240,10 +256,12 @@ void RemovePVWidget::onButtonClicked()
     m_stackedWidget->setCurrentIndex(1);
     DWindowCloseButton *button = findChild<DWindowCloseButton *>("DTitlebarDWindowCloseButton");
     if (button != nullptr) {
+        qDebug() << "Close button found, disabling and hiding.";
         button->setDisabled(true);
         button->hide();
     }
     m_waterLoadingWidget->setStartTime(1000);
+    qDebug() << "onButtonClicked completed.";
 }
 
 void RemovePVWidget::onPVDeleteMessage(const QString &pvMessage)
@@ -252,6 +270,7 @@ void RemovePVWidget::onPVDeleteMessage(const QString &pvMessage)
     QStringList infoList = pvMessage.split(":");
 
     if (infoList.count() <= 1) {
+        qWarning() << "Invalid PV delete message:" << pvMessage;
         return;
     }
 
@@ -268,5 +287,6 @@ void RemovePVWidget::onPVDeleteMessage(const QString &pvMessage)
         qInfo() << "PV deleted successfully";
         close();
     }
+    qDebug() << "onPVDeleteMessage completed.";
 }
 

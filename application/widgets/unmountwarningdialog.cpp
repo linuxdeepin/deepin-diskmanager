@@ -18,6 +18,7 @@ UnmountWarningDialog::UnmountWarningDialog(QWidget *parent) : DDBase(parent)
 
 void UnmountWarningDialog::initUi()
 {
+    qDebug() << "Initializing UnmountWarningDialog UI.";
     DPalette palette1;
     QColor color("#000000");
     color.setAlphaF(0.9);
@@ -63,29 +64,37 @@ void UnmountWarningDialog::initUi()
 
     getButton(index)->setAccessibleName("cancelBtn");
     getButton(m_okCode)->setAccessibleName("unmountBtn");
+    qDebug() << "UnmountWarningDialog UI initialization completed.";
 }
 
 void UnmountWarningDialog::initConnection()
 {
+    qDebug() << "Initializing UnmountWarningDialog connections.";
     connect(m_checkBox, &DCheckBox::stateChanged, this, &UnmountWarningDialog::onCheckBoxStateChange);
+    qDebug() << "UnmountWarningDialog connections initialized.";
 }
 
 void UnmountWarningDialog::onCheckBoxStateChange(int state)
 {
+    qDebug() << "onCheckBoxStateChange called with state:" << state;
     switch (state) {
     case Qt::CheckState::Unchecked: {
+        qDebug() << "CheckBox state is Unchecked, disabling unmount button.";
         getButton(m_okCode)->setDisabled(true);
         qDebug() << "Unmount button disabled";
         break;
     }
     case Qt::CheckState::Checked: {
+        qDebug() << "CheckBox state is Checked, enabling unmount button.";
         getButton(m_okCode)->setDisabled(false);
         qDebug() << "Unmount button enabled";
         break;
     }
     default:
+        qDebug() << "Unknown CheckBox state.";
         break;
     }
+    qDebug() << "onCheckBoxStateChange completed.";
 }
 
 

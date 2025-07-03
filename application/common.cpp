@@ -8,6 +8,7 @@
 
 QIcon Common::getIcon(const QString &iconName)
 {
+    qDebug() << "Common::getIcon called with iconName:" << iconName;
     return QIcon::fromTheme("dm_" + iconName);
 }
 

@@ -22,10 +22,12 @@ DmTreeviewDelegate::DmTreeviewDelegate(QAbstractItemView *parent)
     m_parentPb = m_parentView->palette();
     connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, this,
             &DmTreeviewDelegate::onHandleChangeTheme);
+    qDebug() << "Connected themeTypeChanged signal for QT_VERSION_MAJOR > 5";
 #else
     m_parentPb = DApplicationHelper::instance()->palette(m_parentView);
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this,
             &DmTreeviewDelegate::onHandleChangeTheme);
+    qDebug() << "Connected themeTypeChanged signal for QT_VERSION_MAJOR <= 5";
 #endif
     onHandleChangeTheme();
     qDebug() << "DmTreeviewDelegate initialized";
@@ -34,6 +36,7 @@ DmTreeviewDelegate::DmTreeviewDelegate(QAbstractItemView *parent)
 QSize DmTreeviewDelegate::sizeHint(const QStyleOptionViewItem &option,
                                    const QModelIndex &index) const
 {
+    // qDebug() << "DmTreeviewDelegate::sizeHint called";
     Q_UNUSED(option);
 
     DiskInfoData infoData = index.data(Qt::UserRole + 1).value<DiskInfoData>();
@@ -59,7 +62,9 @@ QSize DmTreeviewDelegate::sizeHint(const QStyleOptionViewItem &option,
 
 void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    // qDebug() << "DmTreeviewDelegate::paint called";
     if (!index.isValid()) {
+        qDebug() << "Invalid index, returning";
         return;
     }
 
@@ -71,8 +76,10 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     QRect rect;
     rect.setX(option.rect.x() + 10);
     if (data.m_level == DMDbusHandler::DISK || data.m_level == DMDbusHandler::OTHER || data.m_level == DMDbusHandler::VOLUMEGROUP) {
+        // qDebug() << "Level is DISK, OTHER, or VOLUMEGROUP, adjusting Y";
         rect.setY(option.rect.y() + 10);
     } else {
+        // qDebug() << "Level is not DISK, OTHER, or VOLUMEGROUP, setting Y";
         rect.setY(option.rect.y());
     }
 
@@ -80,14 +87,17 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     //    rect.setHeight(option.rect.height()); // 分区节点间有间隔
     // 去掉分区节点间隔
     if (data.m_level == DMDbusHandler::DISK || data.m_level == DMDbusHandler::VOLUMEGROUP) {
+        // qDebug() << "Level is DISK or VOLUMEGROUP, adjusting height";
         rect.setHeight(option.rect.height() - 9);
     } else {
+        // qDebug() << "Level is not DISK or VOLUMEGROUP, adjusting height";
         rect.setHeight(option.rect.height() + 1);
     }
 
     painter->setRenderHints(QPainter::SmoothPixmapTransform);
     QRect paintRect = QRect(rect.left(), rect.top(), rect.width() - 19, rect.height());
     if (data.m_level == DMDbusHandler::OTHER) {
+        // qDebug() << "Level is OTHER, adjusting paintRect width";
         paintRect = QRect(rect.left(), rect.top(), rect.width() - 10, rect.height());
     }
 
@@ -117,6 +127,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
 
     // 设置分区选中时文本颜色
     if ((option.state & QStyle::State_Selected) && (data.m_level != DMDbusHandler::OTHER)) {
+        // qDebug() << "Item is selected and not OTHER level, filling path with highlight color";
         QColor fillColor = m_parentPb.color(DPalette::Normal, DPalette::Highlight);
         painter->setBrush(QBrush(fillColor));
         painter->fillPath(path, painter->brush());
@@ -131,32 +142,42 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     int pixmapWidth = 8; // 伸缩按钮宽
     int pixmapHeight = 8; // 伸缩按钮高
     if (treeView->getItemByIndex(index) && treeView->getItemByIndex(index)->hasChildren()) {
+        // qDebug() << "Treeview item has children";
         if ((option.state & QStyle::State_Selected) && (data.m_level == DMDbusHandler::DISK || data.m_level == DMDbusHandler::VOLUMEGROUP)) {
+            // qDebug() << "Selected DISK or VOLUMEGROUP item";
             if (treeView->isExpanded(index)) {
+                // qDebug() << "Item is expanded, using arrow_check";
                 directionIcon = Common::getIcon("arrow_check");
                 pixmapWidth = 10;
                 pixmapHeight = 11;
             } else {
+                // qDebug() << "Item is not expanded, using arrow_right_check";
                 directionIcon = Common::getIcon("arrow_right_check");
                 pixmapWidth = 12;
                 pixmapHeight = 11;
             }
         } else if (data.m_level == DMDbusHandler::OTHER) {
+            // qDebug() << "OTHER level item";
             if (treeView->isExpanded(index)) {
+                // qDebug() << "Item is expanded, using smallarrow";
                 directionIcon = Common::getIcon("smallarrow");
                 pixmapWidth = 9;
                 pixmapHeight = 10;
             } else {
+                // qDebug() << "Item is not expanded, using smallarrow_right";
                 directionIcon = Common::getIcon("smallarrow_right");
                 pixmapWidth = 8;
                 pixmapHeight = 10;
             }
         } else {
+            // qDebug() << "Other level item";
             if (treeView->isExpanded(index)) {
+                // qDebug() << "Item is expanded, using arrow";
                 directionIcon = Common::getIcon("arrow");
                 pixmapWidth = 10;
                 pixmapHeight = 7;
             } else {
+                // qDebug() << "Item is not expanded, using arrow_right";
                 directionIcon = Common::getIcon("arrow_right");
                 pixmapWidth = 8;
                 pixmapHeight = 11;
@@ -174,17 +195,21 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     QString text3 = data.m_partitionSize;
 
     if (data.m_level == DMDbusHandler::LOGICALVOLUME) {
+        // qDebug() << "Level is LOGICALVOLUME, setting text2 to sysLabel";
         text2 = data.m_sysLabel;
     }
 
     if (data.m_level == DMDbusHandler::OTHER) {
+        // qDebug() << "Painting OTHER level item";
         QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T8, QFont::Medium);
         DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
         if (themeType == DGuiApplicationHelper::LightType) {
+            // qDebug() << "Theme is LightType, setting pen color";
             QColor color("#000000");
             color.setAlphaF(0.5);
             painter->setPen(color);
         } else if (themeType == DGuiApplicationHelper::DarkType) {
+            // qDebug() << "Theme is DarkType, setting pen color";
             QColor color("#ffffff");
             color.setAlphaF(0.5);
             painter->setPen(color);
@@ -199,6 +224,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         painter->drawPixmap(lefticon1Rect, directionIcon.pixmap(17, 17));
 
     } else if (data.m_level == DMDbusHandler::DISK || data.m_level == DMDbusHandler::VOLUMEGROUP) {
+        // qDebug() << "Painting DISK or VOLUMEGROUP level item";
         int height = 24 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
         lefticon1Rect.setRect(paintRect.left() + 8, paintRect.top() + height, pixmapWidth, pixmapHeight);
         painter->drawPixmap(lefticon1Rect, directionIcon.pixmap(17, 17));
@@ -207,15 +233,21 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
 
         QIcon icon = Common::getIcon("treedisk");
         if (data.m_level == DMDbusHandler::DISK) {
+            // qDebug() << "Level is DISK";
             if (DMDbusHandler::instance()->getIsJoinAllVG().value(text) == "true") {
+                // qDebug() << "Disk is joined to all VG, using treevg icon";
                 icon = Common::getIcon("treevg");
             } else if (DMDbusHandler::instance()->getIsAllEncryption().value(text) == "true") {
+                // qDebug() << "Disk is encrypted, using treedisklock icon";
                 icon = Common::getIcon("treedisklock");
             }
         } else if (data.m_level == DMDbusHandler::VOLUMEGROUP) {
+            // qDebug() << "Level is VOLUMEGROUP";
             if (DMDbusHandler::instance()->getIsAllEncryption().value(text) == "true") {
+                // qDebug() << "Volume group is encrypted, using treevglock icon";
                 icon = Common::getIcon("treevglock");
             } else {
+                // qDebug() << "Volume group is not encrypted, using treevg icon";
                 icon = Common::getIcon("treevg");
             }
         }
@@ -223,6 +255,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
 
         QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
         if ((option.state & QStyle::State_Selected) && (data.m_level == DMDbusHandler::DISK || data.m_level == DMDbusHandler::VOLUMEGROUP)) {
+            // qDebug() << "Selected DISK or VOLUMEGROUP, painting highlighted text";
             QColor textcolor = m_parentPb.color(DPalette::Normal, DPalette::HighlightedText);
             painter->setPen(textcolor);
             painter->setFont(font);
@@ -238,6 +271,7 @@ void DmTreeviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             QString textSize = painter->fontMetrics().elidedText(text1, Qt::ElideMiddle, 108);
             painter->drawText(textRect1, textSize);
         } else {
+            // qDebug() << "Not selected DISK or VOLUMEGROUP, painting normal text";
             QColor textcolor = m_parentPb.color(DPalette::Normal, DPalette::Text);
             painter->setPen(textcolor);
             painter->setFont(font);

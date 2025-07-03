@@ -44,15 +44,15 @@ DmDiskinfoBox::DmDiskinfoBox(QObject *parent)
 
 DmDiskinfoBox::~DmDiskinfoBox()
 {
-    qDebug() << "Destroying DmDiskinfoBox, child count:" << m_childs.count();
+    // qDebug() << "Destroying DmDiskinfoBox, child count:" << m_childs.count();
     for (int i = 0; i < m_childs.length(); i++) {
         if (m_childs.at(i) != nullptr) {
-            qDebug() << "Deleting child item:" << i;
+            // qDebug() << "Deleting child item:" << i;
             delete m_childs.at(i);
         }
     }
     m_childs.clear();
-    qDebug() << "DmDiskinfoBox destroyed";
+    // qDebug() << "DmDiskinfoBox destroyed";
 }
 
 int DmDiskinfoBox::addChild(DmDiskinfoBox *child)
@@ -62,7 +62,7 @@ int DmDiskinfoBox::addChild(DmDiskinfoBox *child)
     child->m_level = m_level + 1;
     foreach (DmDiskinfoBox *item, m_childs) {
         if (item->m_id == child->m_id) {
-            qDebug() << "Replacing existing child with same id";
+            // qDebug() << "Replacing existing child with same id";
             m_childs.removeOne(item);
             delete item;
         }

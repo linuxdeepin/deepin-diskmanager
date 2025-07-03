@@ -61,6 +61,7 @@ void PartChartShowing::showTipTimerSlot()
 
 void PartChartShowing::paintEvent(QPaintEvent *event)
 {
+    // qDebug() << "PartChartShowing::paintEvent called";
     //绘制整个分区的空闲空间以及文字颜色
     QPainter painter(this);
     painter.save();
@@ -106,8 +107,10 @@ void PartChartShowing::paintEvent(QPaintEvent *event)
     font.setWeight(QFont::Medium);
     painter.setFont(font);
     if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::LightType) {
+        // qDebug() << "Theme is LightType, setting pen color to #001A2E";
         painter.setPen(QColor("#001A2E"));
     } else if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) {
+        // qDebug() << "Theme is DarkType, setting pen color to #C0C0C0";
         painter.setPen(QColor("#C0C0C0"));
     }
     painter.drawText(textRect, tr("Unallocated"));
@@ -116,10 +119,12 @@ void PartChartShowing::paintEvent(QPaintEvent *event)
 
     addPaint(&painter);
     painter.restore();
+    // qDebug() << "PartChartShowing::paintEvent finished";
 }
 
 void PartChartShowing::addPaint(QPainter *painter)
 {
+    // qDebug() << "PartChartShowing::addPaint called";
     painter->setPen(Qt::NoPen);
     painter->setRenderHint(QPainter::Antialiasing);
     QRect rect;
@@ -132,27 +137,33 @@ void PartChartShowing::addPaint(QPainter *painter)
         QPainterPath painterPath;
         path.append(painterPath);
     }
+    // qDebug() << "Initialized paths for partitions";
 
     QPainterPath paintPath;
     double sum = 0.00;
     //绘制默认选中状态
     if (m_flag == 1) {
+        // qDebug() << "Flag is 1, drawing rounded rectangle with highlight color";
         painter->setPen(QPen(QColor(palette().highlight().color()), 2));
         painter->drawRoundedRect(paintRect, 8, 8);
     }
 
     for (int i = 0; i < m_partSize.size(); i++) {
+        // qDebug() << "Processing partition" << i;
         double widths = (m_partSize.at(i) / m_total) * (paintRect.width() - RADIUS);
         double width1 = 0.00;
         widths = widths - RIGHTSPACE;
         if (m_partSize.at(i) / m_total < 0.01 || widths < RADIUS) {
+            // qDebug() << "Partition size is too small or width is less than radius, setting width to 8";
             widths = 8;
         }
         sum = sum + m_partSize.at(i);
         m_sums = sum;
         //i=0,绘制第一个分区，判断ｎｕｍ绘制选中状态
         if (i == 0) {
+            // qDebug() << "Processing first partition (i=0)";
             if (static_cast<int>(sum) < static_cast<int>(m_total)) {
+                // qDebug() << "Sum is less than total, drawing first part of path";
                 path[0].moveTo(paintRect.topLeft() + QPoint(RADIUS, 0));
                 path[0].arcTo(QRect(QPoint(paintRect.topLeft()), QSize(RADIUS * 2, RADIUS * 2)), 90, 90);
                 path[0].lineTo(paintRect.bottomLeft() - QPoint(0, RADIUS));
@@ -165,6 +176,7 @@ void PartChartShowing::addPaint(QPainter *painter)
             }
             //            qDebug() << path[0].currentPosition().x();
             if (static_cast<int>(sum) >= static_cast<int>(m_total)) {
+                // qDebug() << "Sum is greater than or equal to total, drawing full rounded rectangle path";
                 path[0].moveTo(paintRect.bottomRight() - QPoint(0, RADIUS));
                 path[0].lineTo(paintRect.topRight() + QPoint(0, RADIUS));
                 path[0].arcTo(QRect(QPoint(paintRect.topRight() - QPoint(RADIUS * 2, 0)),
@@ -184,6 +196,7 @@ void PartChartShowing::addPaint(QPainter *painter)
 
             painter->fillPath(path[0], QBrush(m_baseColor.at(0)));
             if (m_number == 0) {
+                // qDebug() << "m_number is 0, handling selection for first partition";
                 if ((static_cast<int>(widths) == 8) && m_partSize.size() == 2) {
                     //                    qDebug() << (static_cast<int>(widths) - static_cast<int>((8 - widths)));
                     QPainterPath seclect1path;
@@ -200,6 +213,7 @@ void PartChartShowing::addPaint(QPainter *painter)
                     painter->setPen(QPen(this->palette().color(DPalette::Normal, DPalette::Highlight), 2));
                     painter->drawPath(seclect1path);
                 } else {
+                    // qDebug() << "Drawing normal selection path for first partition";
                     painter->setBrush(QBrush(m_baseColor.at(0)));
                     painter->setPen(QPen(this->palette().color(DPalette::Normal, DPalette::Highlight), 2));
                     painter->drawPath(path[0]);
@@ -210,14 +224,17 @@ void PartChartShowing::addPaint(QPainter *painter)
             }
 
         } else if (sum + 1 < m_total && i > 0) { //绘制除了第一个分区和最后一个分区以及空闲分区的填充和选中状态
+            // qDebug() << "Processing middle partition (i>0)";
             //            qDebug() << static_cast<int>(sum) << static_cast<int>(total);
             width1 = (m_partSize.at(i - 1) / m_total) * (paintRect.width() - RADIUS);
             width1 = width1 - RIGHTSPACE;
             if (width1 < 8 || m_partSize.at(i - 1) / m_total < 0.01) {
+                // qDebug() << "Previous partition width is too small, setting width1 to 8";
                 width1 = 8;
             }
             //未避免设置最小宽度带来的图形溢出,在所画图形宽度即将到圆角时,不予新增分区
             if (path[i - 1].currentPosition().x() + width1 + widths > paintRect.width() - 2 * RADIUS) {
+                // qDebug() << "Graphical overflow detected, emitting judgeLastPartition signal";
                 emit judgeLastPartition();
             }
             path[i].moveTo(path[i - 1].currentPosition() + QPoint(static_cast<int>(width1), 0));
@@ -227,26 +244,33 @@ void PartChartShowing::addPaint(QPainter *painter)
             path[i].lineTo(path[i - 1].currentPosition() + QPoint((static_cast<int>(width1)), 0));
             QColor fillColor;
             if (i > m_baseColor.size() - 1) {
+                // qDebug() << "Index i is out of baseColor range, using modulo";
                 fillColor = m_baseColor.at(i % (m_baseColor.size() - 1));
             } else {
+                // qDebug() << "Using baseColor at index i";
                 fillColor = m_baseColor.at(i);
             }
             painter->fillPath(path[i], QBrush(fillColor));
             //            if (m_number > 0 && m_number != -1 && m_number == i) {
             if (m_number > 0 && m_number == i) {
+                // qDebug() << "m_number matches current index i, drawing selection rectangle";
                 painter->setBrush(fillColor);
                 painter->setPen(QPen(this->palette().color(DPalette::Normal, DPalette::Highlight), 2));
                 if (width1 < 8) {
+                    // qDebug() << "width1 is less than 8, setting to 8";
                     width1 = 8;
                 }
                 if (i == m_partSize.size() - 1) {
+                    // qDebug() << "Current partition is the last one, drawing rectangle without width adjustment";
                     painter->drawRect(static_cast<int>(path[m_number - 1].currentPosition().x() + width1), static_cast<int>(path[m_number - 1].currentPosition().y()), static_cast<int>(widths), paintRect.height() - 1);
                 } else {
+                    // qDebug() << "Current partition is not the last one, drawing rectangle with width adjustment";
                     painter->drawRect(static_cast<int>(path[m_number - 1].currentPosition().x() + width1), static_cast<int>(path[m_number - 1].currentPosition().y()), static_cast<int>(widths - 1), paintRect.height() - 1);
                 }
                 m_flag = 0;
             }
         } else if (m_sumValue >= 100) { //绘制最后一个分区当超过整个分区容量的时候以及选中状态
+            // qDebug() << "Sum value is 100 or more, handling last partition";
             //            qDebug() << "sumvalue" << sumvalue;
             double width = ((m_partSize.at(m_partSize.size() - 2) / m_total)) * (paintRect.width() - RADIUS) - RIGHTSPACE;
             if (m_partSize.at(m_partSize.size() - 2) / m_total < 0.01) {

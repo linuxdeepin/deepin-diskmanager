@@ -42,6 +42,7 @@ void PartitionInfoWidget::setData(DeviceInfo info)
         m_pathInfo.append(partitionInfo.m_path);
 
         if (FSType::FS_EXTENDED == static_cast<FSType>(partitionInfo.m_fileSystemType)) {
+            qDebug() << "Partition is EXTENDED type, setting total size to partition size";
             m_totalSize = partitionSize;
         }
     }
@@ -59,7 +60,9 @@ void PartitionInfoWidget::setData(DeviceInfo info)
 
 void PartitionInfoWidget::paintEvent(QPaintEvent *event)
 {
+    // qDebug() << "PartitionInfoWidget::paintEvent called";
     if (m_sizeInfo.isEmpty()) {
+        // qDebug() << "Size info is empty, returning";
         return;
     }
 
@@ -73,14 +76,17 @@ void PartitionInfoWidget::paintEvent(QPaintEvent *event)
         QPainterPath painterPath;
         path.append(painterPath);
     }
+    // qDebug() << "Initialized paths for partitions";
 
     DPalette palette;
     QColor color;
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
     if (themeType == DGuiApplicationHelper::LightType) {
+        // qDebug() << "Theme is LightType, setting color alpha to 0.1";
         color = palette.color(DPalette::Normal, DPalette::ToolTipText);
         color.setAlphaF(0.1);
     } else if (themeType == DGuiApplicationHelper::DarkType) {
+        // qDebug() << "Theme is DarkType, setting color alpha to 0.2";
         color = palette.color(DPalette::Normal, DPalette::BrightText);
         color.setAlphaF(0.2);
     }
@@ -97,17 +103,21 @@ void PartitionInfoWidget::paintEvent(QPaintEvent *event)
     int smallCount = 0;
     for (int i = 0; i < m_sizeInfo.size(); i++) {
         if (m_sizeInfo[i] / m_totalSize < 0.01 || (m_sizeInfo[i] / m_totalSize) * (paintRect.width() - 8) < 8) {
+            // qDebug() << "Partition" << i << "is small";
             smallCount++;
             smallSum += (m_sizeInfo[i] / m_totalSize) * (paintRect.width() - 8);
         } else {
+            // qDebug() << "Partition" << i << "is big";
             bigCount++;
         }
     }
     double space = (smallCount * 8 - smallSum) / bigCount;
+    // qDebug() << "Calculated space for small partitions:" << space;
 
     m_reectInfo.clear();
     int radius = 8;
     if (1 == m_sizeInfo.size()) {
+        // qDebug() << "Only one partition, drawing full rounded rectangle";
         path[0].moveTo(paintRect.bottomRight() - QPoint(0, radius));
         path[0].lineTo(paintRect.topRight() + QPoint(0, radius));
         path[0].arcTo(QRect(QPoint(paintRect.topRight() - QPoint(radius * 2, 0)),
@@ -122,10 +132,12 @@ void PartitionInfoWidget::paintEvent(QPaintEvent *event)
                             QSize(radius * 2, radius * 2)), 270, 90);
 
         if (m_pathInfo.at(0) == "unallocated") {
+            // qDebug() << "First partition is unallocated, filling with color";
             painter.setBrush(QBrush(color));
             painter.setPen(QPen(color, 3));
             painter.fillPath(path[0], color);
         } else {
+            // qDebug() << "First partition is allocated, filling with base color";
             painter.setBrush(QBrush(m_colorInfo[0]));
             painter.setPen(QPen(QColor(m_colorInfo[0]), 3));
             painter.fillPath(path[0], m_colorInfo[0]);
@@ -133,15 +145,19 @@ void PartitionInfoWidget::paintEvent(QPaintEvent *event)
 
         m_reectInfo.append(path[0].controlPointRect());
     } else {
+        // qDebug() << "Multiple partitions, iterating to draw rectangles";
         //根据color和size数据遍历绘制矩形
         for (int i = 0; i < m_sizeInfo.size(); i++) {
+            // qDebug() << "Drawing partition" << i;
             double widths = (m_sizeInfo[i] / m_totalSize) * (paintRect.width() - radius);
             double width1 = 0.00;
             widths = widths - space;
             if (m_sizeInfo[i] / m_totalSize < 0.01 || widths < radius) {
+                // qDebug() << "Partition" << i << "width is too small, setting to 8";
                 widths = 8;
             }
             if (i == 0) {
+                // qDebug() << "Drawing first partition of multiple partitions";
                 path[0].moveTo(paintRect.topLeft() + QPoint(radius, 0));
                 path[0].arcTo(QRect(QPoint(paintRect.topLeft()), QSize(radius * 2, radius * 2)), 90, 90);
                 path[0].lineTo(paintRect.bottomLeft() - QPoint(0, radius));
@@ -151,10 +167,12 @@ void PartitionInfoWidget::paintEvent(QPaintEvent *event)
                 path[0].lineTo(paintRect.topLeft() + QPoint(static_cast<int>(widths + radius), 0));
                 path[0].lineTo(paintRect.topLeft() + QPoint(radius, 0));
                 if (m_pathInfo.at(0) == "unallocated") {
+                    // qDebug() << "First partition is unallocated, filling with color";
                     painter.setBrush(QBrush(color));
                     painter.setPen(QPen(color, 3));
                     painter.fillPath(path[0], color);
                 } else {
+                    // qDebug() << "First partition is allocated, filling with base color";
                     painter.setBrush(QBrush(m_colorInfo[0]));
                     painter.setPen(QPen(QColor(m_colorInfo[0]), 3));
                     painter.fillPath(path[0], m_colorInfo[0]);
@@ -162,9 +180,11 @@ void PartitionInfoWidget::paintEvent(QPaintEvent *event)
 
                 m_reectInfo.append(path[0].controlPointRect());
             } else if (i > 0 && i < (m_sizeInfo.size() - 1)) {
+                // qDebug() << "Drawing middle partition" << i;
                 width1 = (m_sizeInfo[i - 1] / m_totalSize) * (paintRect.width() - radius);
                 width1 = width1 - space;
                 if (width1 < 8 || m_sizeInfo[i - 1] / m_totalSize < 0.01) {
+                    // qDebug() << "Previous partition width is too small, setting width1 to 8";
                     width1 = 8;
                 }
 
@@ -175,10 +195,12 @@ void PartitionInfoWidget::paintEvent(QPaintEvent *event)
                 path[i].lineTo(path[i - 1].currentPosition() + QPoint(static_cast<int>(width1), 0));
 
                 if (m_pathInfo.at(i) == "unallocated") {
+                    // qDebug() << "Middle partition is unallocated, filling with color";
                     painter.setBrush(QBrush(color));
                     painter.setPen(QPen(color, 3));
                     painter.fillPath(path[i], color);
                 } else {
+                    // qDebug() << "Middle partition is allocated, filling with base color (modulo)";
                     painter.setBrush(QBrush(m_colorInfo[i % (m_colorInfo.size())]));
                     painter.setPen(QPen(QColor(m_colorInfo[i % (m_colorInfo.size())]), 3));
                     painter.fillPath(path[i], m_colorInfo[i % (m_colorInfo.size())]);
@@ -186,8 +208,10 @@ void PartitionInfoWidget::paintEvent(QPaintEvent *event)
 
                 m_reectInfo.append(path[i].controlPointRect());
             } else if (i == (m_sizeInfo.size() - 1)) {
+                // qDebug() << "Drawing last partition";
                 double width = ((m_sizeInfo[m_sizeInfo.size() - 2] / m_totalSize)) * (paintRect.width() - radius) - space;
                 if (m_sizeInfo[m_sizeInfo.size() - 2] / m_totalSize < 0.01) {
+                    // qDebug() << "Second to last partition width is too small, setting width to 8";
                     width = 8;
                 }
 
@@ -203,10 +227,12 @@ void PartitionInfoWidget::paintEvent(QPaintEvent *event)
                                                         QSize(radius * 2, radius * 2)),
                                                   270, 90);
                 if (m_pathInfo.at(m_sizeInfo.size() - 1) == "unallocated") {
+                    // qDebug() << "Last partition is unallocated, filling with color";
                     painter.setBrush(QBrush(color));
                     painter.setPen(QPen(color, 3));
                     painter.fillPath(path[m_sizeInfo.size() - 1], color);
                 } else {
+                    // qDebug() << "Last partition is allocated, filling with base color (modulo)";
                     painter.setBrush(QBrush(m_colorInfo[(m_sizeInfo.size() - 1) % (m_colorInfo.size())]));
                     painter.setPen(QPen(QColor(m_colorInfo[(m_sizeInfo.size() - 1) % (m_colorInfo.size())]), 3));
                     painter.fillPath(path[m_sizeInfo.size() - 1], m_colorInfo[(m_sizeInfo.size() - 1) % (m_colorInfo.size())]);
@@ -222,9 +248,11 @@ void PartitionInfoWidget::paintEvent(QPaintEvent *event)
     QPainterPath painterPath;
     painterPath.addRoundedRect(roundRect, 3, 3);
 #if QT_VERSION_MAJOR > 5
+    // qDebug() << "QT_VERSION_MAJOR > 5, getting application palette";
     m_parentPb = DGuiApplicationHelper::instance()->applicationPalette();;
     QBrush brush = m_parentPb.dark();
 #else
+    // qDebug() << "QT_VERSION_MAJOR <= 5, getting application palette";
     m_parentPb = DApplicationHelper::instance()->palette(this);
     QBrush brush = DApplicationHelper::instance()->palette(this).dark();
 #endif
@@ -245,6 +273,7 @@ void PartitionInfoWidget::paintEvent(QPaintEvent *event)
     painter.drawText(rectText, QString(tr("Unallocated")), option);
 
     painter.restore();
+    // qDebug() << "PartitionInfoWidget::paintEvent finished";
 }
 
 void PartitionInfoWidget::mouseMoveEvent(QMouseEvent *event)
@@ -282,5 +311,6 @@ void PartitionInfoWidget::onHandleChangeTheme()
 void PartitionInfoWidget::leaveEvent(QEvent *event)
 {
     Q_UNUSED(event);
+    // qDebug() << "PartitionInfoWidget::leaveEvent called";
     emit leaveWidget();
 }

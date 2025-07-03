@@ -38,6 +38,7 @@ void DmFrameWidget::setFrameData()
 {
     qDebug()  << "Setting frame data, current level:" << DMDbusHandler::instance()->getCurLevel();
     if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
+        qDebug()  << "Updating partition information";
         //获取首页相关硬盘数据
         PartitionInfo data = DMDbusHandler::instance()->getCurPartititonInfo();
 
@@ -55,6 +56,7 @@ void DmFrameWidget::setFrameData()
         QString partitionSize = Utils::formatSize(data.m_sectorEnd - data.m_sectorStart + 1, data.m_sectorSize);
 
         if (data.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            qDebug()  << "Partition is encrypted";
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(data.m_path);
             if (luksInfo.isDecrypt) {
                 mountpoints = "";
@@ -69,6 +71,7 @@ void DmFrameWidget::setFrameData()
         }
 
         if (mountpoints.contains("�")) {
+            qDebug()  << "Partition contains gbk encoding";
             mountpoints.remove(mountpoints.mid(mountpoints.indexOf("�")));
             mountpoints.append(m_str);
         }
@@ -76,11 +79,13 @@ void DmFrameWidget::setFrameData()
         m_infoData.m_mountpoints = mountpoints;
         m_infoData.m_unused = unused;
         if (m_infoData.m_unused.contains("-")) {
+            qDebug()  << "Partition unused size is -";
             m_infoData.m_unused = "-";
         }
 
         m_infoData.m_used = used;
         if (m_infoData.m_used.contains("-")) {
+            qDebug()  << "Partition used size is -";
             m_infoData.m_used = "-";
         }
 
@@ -89,10 +94,12 @@ void DmFrameWidget::setFrameData()
 
         QString partitionPath = data.m_path.remove(0, 5); // 从下标0开始，删除5个字符
         if (data.m_fileSystemLabel == "") {
+            qDebug()  << "Partition label is empty";
             m_infoData.m_sysLabel = "";
         } else {
             m_infoData.m_sysLabel = diskVolumn(partitionPath);
             if (m_infoData.m_sysLabel.contains("�")) {
+                qDebug()  << "Partition label contains gbk encoding";
                 QString sysLabel = m_infoData.m_sysLabel.split("�").at(0);
                 m_infoData.m_sysLabel = sysLabel;
             }//==============gbk编码的中文到在应用下无名称格式化文件系统转换时中文乱码
@@ -120,6 +127,7 @@ void DmFrameWidget::setDiskFrameData(const QString &path, const QString &diskTyp
 
 QString DmFrameWidget::diskVolumn(QString partitionPath)
 {
+    qDebug()  << "Getting disk volume, partition path:" << partitionPath;
     DMDbusHandler *handler = DMDbusHandler::instance();
     PartitionInfo curInfo = handler->getCurPartititonInfo();
 //    //将gbkｕ盘ｌａｂｅｌ中文乱码转换为正常中文显示

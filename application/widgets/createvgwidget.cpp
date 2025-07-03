@@ -28,6 +28,7 @@ CreateVGWidget::CreateVGWidget(int operationType, QWidget *parent)
 
 void CreateVGWidget::initUi()
 {
+    qDebug() << "CreateVGWidget::initUi called.";
     setFixedSize(800, 538);
 
     m_curSeclectData.clear();
@@ -63,6 +64,7 @@ void CreateVGWidget::initUi()
     titleLabel->setAlignment(Qt::AlignCenter);
 
     if (m_curOperationType == OperationType::RESIZE) {
+        qDebug() << "CreateVGWidget::initUi - Resize operation type detected";
         titleLabel->setText(tr("Resize"));
     }
 
@@ -493,10 +495,12 @@ void CreateVGWidget::initUi()
     mainLayout->addWidget(m_stackedWidget);
     mainLayout->setSpacing(0);
     mainLayout->setContentsMargins(0, 0, 0, 0);
+    qDebug() << "CreateVGWidget initialization completed";
 }
 
 void CreateVGWidget::initConnection()
 {
+    qDebug() << "CreateVGWidget::initConnection called.";
     connect(m_nextButton, &DSuggestButton::clicked, this, &CreateVGWidget::onNextButtonClicked);
     connect(m_addButton, &DPushButton::clicked, this, &CreateVGWidget::onPreviousButtonClicked);
     connect(m_previousButton, &DPushButton::clicked, this, &CreateVGWidget::onPreviousButtonClicked);
@@ -508,24 +512,30 @@ void CreateVGWidget::initConnection()
     connect(m_selectSpaceLineEdit, &DLineEdit::textChanged, this, &CreateVGWidget::onTextChanged);
     connect(DMDbusHandler::instance(), &DMDbusHandler::vgCreateMessage, this, &CreateVGWidget::onVGCreateMessage);
     connect(DMDbusHandler::instance(), &DMDbusHandler::updateDeviceInfo, this, &CreateVGWidget::onUpdateUsb);
+    qDebug() << "All connections initialized.";
 }
 
 void CreateVGWidget::setScrollAreaAttribute(DScrollArea *scrollArea, bool hScrollBarHidden, bool vScrollBarHidden)
 {
+    qDebug() << "CreateVGWidget::setScrollAreaAttribute called. hScrollBarHidden:" << hScrollBarHidden << ", vScrollBarHidden:" << vScrollBarHidden;
     scrollArea->setFrameShadow(QFrame::Plain);
     scrollArea->setFrameShape(QFrame::NoFrame);
 
     if (hScrollBarHidden) {
+        qDebug() << "Hiding horizontal scroll bar.";
         scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//隐藏横向滚动条
     }
 
     if (vScrollBarHidden) {
+        qDebug() << "Hiding vertical scroll bar.";
         scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);//隐藏竖向滚动条
     }
+    qDebug() << "Scroll area attributes set.";
 }
 
 bool CreateVGWidget::judgeDataEquality(const PVInfoData &data1, const PVInfoData &data2)
 {
+    qDebug() << "CreateVGWidget::judgeDataEquality (PVInfoData) called.";
     return data1.m_partitionPath == data2.m_partitionPath
            && data1.m_sectorStart == data2.m_sectorStart
            && data1.m_sectorEnd == data2.m_sectorEnd
@@ -534,6 +544,7 @@ bool CreateVGWidget::judgeDataEquality(const PVInfoData &data1, const PVInfoData
 
 bool CreateVGWidget::judgeDataEquality(const PartitionInfo &partInfo, const PVInfoData &pvInfo)
 {
+    qDebug() << "CreateVGWidget::judgeDataEquality (PartitionInfo) called.";
     return partInfo.m_path == pvInfo.m_partitionPath
            && partInfo.m_sectorStart == pvInfo.m_sectorStart
            && partInfo.m_sectorEnd == pvInfo.m_sectorEnd
@@ -542,6 +553,7 @@ bool CreateVGWidget::judgeDataEquality(const PartitionInfo &partInfo, const PVIn
 
 void CreateVGWidget::showLoadingWidget(const QString &vgName)
 {
+    qDebug() << "CreateVGWidget::showLoadingWidget called. VG Name:" << vgName;
     m_stackedWidget->setCurrentIndex(2);
     DPalette palette1;
     palette1.setColor(DPalette::TextTitle, QColor("#001A2E"));
@@ -568,8 +580,10 @@ void CreateVGWidget::showLoadingWidget(const QString &vgName)
     waitLable->setPalette(palette1);
 
     if (m_curOperationType == OperationType::RESIZE) {
+        qDebug() << "Operation type is RESIZE, setting wait label text to 'Resizing space...'.";
         waitLable->setText(tr("Resizing space..."));
     } else {
+        qDebug() << "Operation type is not RESIZE, setting wait label text to 'Creating...'.";
         waitLable->setText(tr("Creating..."));
     }
 
@@ -581,6 +595,7 @@ void CreateVGWidget::showLoadingWidget(const QString &vgName)
         label->setPalette(palette2);
 
         if (i == (m_curSeclectData.count() - 1)) {
+            qDebug() << "Displaying single selected partition path:" << m_curSeclectData.at(i).m_partitionPath;
             label->setText(QString("%1").arg(m_curSeclectData.at(i).m_partitionPath));
         } else {
             QString path1;
@@ -589,20 +604,26 @@ void CreateVGWidget::showLoadingWidget(const QString &vgName)
             PVInfoData pvInfoData2 = m_curSeclectData.at(i + 1);
 
             if (pvInfoData1.m_disktype == "unrecognized") {
+                qDebug() << "PVInfoData1 disktype is unrecognized, using diskPath.";
                 path1 = pvInfoData1.m_diskPath;
             } else {
+                qDebug() << "PVInfoData1 disktype is recognized, using partitionPath.";
                 path1 = pvInfoData1.m_partitionPath;
             }
 
             if (pvInfoData2.m_disktype == "unrecognized") {
+                qDebug() << "PVInfoData2 disktype is unrecognized, using diskPath.";
                 path2 = pvInfoData2.m_diskPath;
             } else {
+                qDebug() << "PVInfoData2 disktype is recognized, using partitionPath.";
                 path2 = pvInfoData2.m_partitionPath;
             }
 
             if (i == (m_curSeclectData.count() - 2)) {
+                qDebug() << "Displaying last pair of selected paths:" << path1 << "," << path2;
                 label->setText(QString("%1, %2").arg(path1).arg(path2));
             } else {
+                qDebug() << "Displaying selected paths:" << path1 << "," << path2;
                 label->setText(QString("%1, %2, ").arg(path1).arg(path2));
             }
         }
@@ -630,6 +651,7 @@ void CreateVGWidget::showLoadingWidget(const QString &vgName)
     bool isShowScrollArea = false;
     int count = m_curSeclectData.count() / 2 + m_curSeclectData.count() % 2;
     if (count > 5) {
+        qDebug() << "Count of selected data is greater than 5, showing scroll area.";
         QWidget *widget = new QWidget;
         widget->setLayout(layout);
         widget->setFixedSize(600, count * 23 - 8);
@@ -649,6 +671,7 @@ void CreateVGWidget::showLoadingWidget(const QString &vgName)
         frame->setLayout(scrollAreaLayout);
 
     } else {
+        qDebug() << "Count of selected data is 5 or less, not showing scroll area.";
         layout->insertWidget(0, selectLable, 0, Qt::AlignCenter);
 
         frame->setFixedSize(600, (count + 1) * 23);
@@ -657,6 +680,7 @@ void CreateVGWidget::showLoadingWidget(const QString &vgName)
 
     if (count >= 5) {
         isShowScrollArea = true;
+        qDebug() << "Setting isShowScrollArea to true as count >= 5.";
     }
 
     QLabel *vgSizeLabel = new QLabel(this);
@@ -665,8 +689,10 @@ void CreateVGWidget::showLoadingWidget(const QString &vgName)
     vgSizeLabel->setPalette(palette2);
 
     if (m_selectSpaceStackedWidget->currentIndex() == 1) {
+        qDebug() << "Setting VG capacity label from min size.";
         vgSizeLabel->setText(tr("VG capacity: %1").arg(QString::number(m_minSize, 'f', 2)) + m_selectSpaceComboBox->currentText());
     } else {
+        qDebug() << "Setting VG capacity label from line edit.";
         vgSizeLabel->setText(tr("VG capacity: %1").arg(m_selectSpaceLineEdit->text() + m_selectSpaceComboBox->currentText()));
     }
 
@@ -682,8 +708,10 @@ void CreateVGWidget::showLoadingWidget(const QString &vgName)
     mainLayout->addSpacing(10);
     mainLayout->addWidget(waitLable, 0, Qt::AlignCenter);
     if (isShowScrollArea) {
+        qDebug() << "Adding spacing for scroll area.";
         mainLayout->addSpacing(30);
     } else {
+        qDebug() << "Adding spacing without scroll area.";
         mainLayout->addSpacing(40);
     }
     mainLayout->addWidget(frame, 0, Qt::AlignCenter);
@@ -699,29 +727,35 @@ void CreateVGWidget::showLoadingWidget(const QString &vgName)
 
     DWindowCloseButton *button = findChild<DWindowCloseButton *>("DTitlebarDWindowCloseButton");
     if (button != nullptr) {
+        qDebug() << "Disabling and hiding window close button.";
         button->setDisabled(true);
         button->hide();
     }
 
     m_waterLoadingWidget->setStartTime(1000);
+    qDebug() << "Loading widget shown.";
 }
 
 QString CreateVGWidget::getVGName()
 {
+    qDebug() << "CreateVGWidget::getVGName called.";
     LVMInfo lvmInfo = DMDbusHandler::instance()->probLVMInfo();
     QList<QString> lvmNameList = lvmInfo.m_vgInfo.keys();
     QString name = QString("vg%1").arg(lvmNameList.count() + 1, 2, 10, QLatin1Char('0'));
     for (int i = 0; i <= lvmNameList.count(); ++i) {
         name = QString("vg%1").arg(i + 1, 2, 10, QLatin1Char('0'));
         if (-1 == lvmNameList.indexOf(name)) {
+            qDebug() << "Generated unique VG name:" << name;
             break;
         }
     }
+    qDebug() << "Returning VG name:" << name;
     return name;
 }
 
 set<PVData> CreateVGWidget::getCurSelectPVData()
 {
+    qDebug() << "CreateVGWidget::getCurSelectPVData called.";
     set<PVData> pvDataSet;
     for (int i = 0; i < m_curSeclectData.count(); ++i) {
         PVInfoData infoData = m_curSeclectData.at(i);
@@ -734,21 +768,25 @@ set<PVData> CreateVGWidget::getCurSelectPVData()
         pvData.m_pvAct = LVMAction::LVM_ACT_PV;
 
         if (infoData.m_disktype == "unrecognized") {
+            qDebug() << "PVInfoData disktype is unrecognized for path:" << infoData.m_diskPath;
             pvData.m_devicePath = infoData.m_diskPath;
             pvData.m_type = DevType::DEV_DISK;
         } else {
             if (infoData.m_partitionPath == "unallocated") {
+                qDebug() << "Partition path is unallocated for disk:" << infoData.m_diskPath;
                 pvData.m_devicePath = infoData.m_diskPath;
                 pvData.m_type = DevType::DEV_UNALLOCATED_PARTITION;
             } else {
+                qDebug() << "Partition path is recognized for partition:" << infoData.m_partitionPath;
                 pvData.m_devicePath = infoData.m_partitionPath;
                 pvData.m_type = DevType::DEV_PARTITION;
             }
         }
 
         pvDataSet.insert(pvData);
+        qDebug() << "Inserted PVData for device:" << pvData.m_devicePath;
     }
-
+    qDebug() << "Finished getting current selected PV data. Count:" << pvDataSet.size();
     return pvDataSet;
 }
 
@@ -779,26 +817,32 @@ void CreateVGWidget::onDoneButtonClicked()
         double maxSize = QString::number(m_maxSize, 'f', 2).toDouble();
 
         if (curSize < minSize) {
+            qDebug() << "Current size" << curSize << "is less than minimum size" << minSize;
             m_selectSpaceLineEdit->setAlertMessageAlignment(Qt::AlignTop);
             m_selectSpaceLineEdit->showAlertMessage(tr("No less than the used capacity please"), m_mainFrame); // 不得低于已用空间
             m_selectSpaceLineEdit->setAlert(true);
             return;
         } else if (curSize > maxSize) {
+            qDebug() << "Current size" << curSize << "is greater than maximum size" << maxSize;
             m_selectSpaceLineEdit->setAlertMessageAlignment(Qt::AlignTop);
             m_selectSpaceLineEdit->showAlertMessage(tr("No more than the maximum capacity please"), m_mainFrame); // 超出最大可用空间
             m_selectSpaceLineEdit->setAlert(true);
             return;
         }
+        qDebug() << "VG size input validated successfully.";
     }
 
     if (m_curOperationType == OperationType::RESIZE) {
+        qDebug() << "Operation type is RESIZE.";
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
         set<PVData> pvDataSet = getCurSelectPVData();
         bool bigDataMove;
         QStringList realDelPvList;
         bool ret = adjudicationPVMove(vgInfo, pvDataSet, bigDataMove, realDelPvList);
+        qDebug() << "Adjudication PV move result:" << ret << ", bigDataMove:" << bigDataMove;
         if (ret) {
             if (bigDataMove) {
+                qDebug() << "Big data move detected, showing warning box for devices:" << realDelPvList;
                 MessageBox warningBox(this);
                 warningBox.setObjectName("messageBox");
                 warningBox.setAccessibleName("removeWarningWidget");
@@ -809,8 +853,10 @@ void CreateVGWidget::onDoneButtonClicked()
                 warningBox.setWarings(text1 + "\n" + text2 + "\n" + text3, "", tr("Continue"), "continue",
                                       tr("Cancel"), "messageBoxCancelButton");
                 if (warningBox.exec() == DDialog::Rejected) {
+                    qDebug() << "User rejected big data move, returning.";
                     return;
                 }
+                qDebug() << "User accepted big data move.";
             }
         }
     }
@@ -826,30 +872,37 @@ void CreateVGWidget::onDoneButtonClicked()
         pvData.m_pvAct = LVMAction::LVM_ACT_ADDPV;
 
         if (infoData.m_disktype == "unrecognized") {
+            qDebug() << "PVInfoData disktype is unrecognized for path:" << infoData.m_diskPath << ", setting DEV_DISK.";
             pvData.m_devicePath = infoData.m_diskPath;
             pvData.m_type = DevType::DEV_DISK;
         } else {
             if (infoData.m_partitionPath == "unallocated") {
+                qDebug() << "Partition path is unallocated for disk:" << infoData.m_diskPath << ", setting DEV_UNALLOCATED_PARTITION.";
                 pvData.m_devicePath = infoData.m_diskPath;
                 pvData.m_type = DevType::DEV_UNALLOCATED_PARTITION;
             } else {
+                qDebug() << "Partition path is recognized for partition:" << infoData.m_partitionPath << ", setting DEV_PARTITION.";
                 pvData.m_devicePath = infoData.m_partitionPath;
                 pvData.m_type = DevType::DEV_PARTITION;
             }
         }
 
         if(infoData.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS){
+            qDebug() << "LUKS encrypted partition detected for device:" << pvData.m_devicePath;
             LUKS_INFO luks = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(pvData.m_devicePath);
             if (luks.isDecrypt) {
+                qDebug() << "LUKS device is decrypted, using mapper path:" << luks.m_mapper.m_dmPath;
                 pvData.m_devicePath = luks.m_mapper.m_dmPath;
             }
         }
 
         pvDataList.append(pvData);
+        qDebug() << "Added PVData to list for device:" << pvData.m_devicePath;
     }
 
     QString vgName = getVGName();
     if (m_curOperationType == OperationType::RESIZE) {
+        qDebug() << "Operation type is RESIZE, calling resizeVG for VG:" << vgName;
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
         vgName = vgInfo.m_vgName;
 
@@ -857,31 +910,40 @@ void CreateVGWidget::onDoneButtonClicked()
     } else {
         qInfo() << "Creating new VG:" << vgName << "with" << pvDataList.size() << "PVs";
         DMDbusHandler::instance()->createVG(vgName, pvDataList, m_curSize);
+        qDebug() << "CreateVG called for VG:" << vgName;
     }
 
     showLoadingWidget(vgName);
+    qDebug() << "Done button clicked process finished.";
 }
 
 void CreateVGWidget::onCancelButtonClicked()
 {
+    qDebug() << "CreateVGWidget::onCancelButtonClicked called. Closing dialog.";
     close();
 }
 
 void CreateVGWidget::updateData()
 {
+    qDebug() << "CreateVGWidget::updateData called.";
     QList<DeviceInfo> lstDeviceInfo;
     lstDeviceInfo.clear();
 
     if (m_curOperationType == OperationType::RESIZE) {
+        qDebug() << "Operation type is RESIZE, getting resizeAvailableDiskData.";
         lstDeviceInfo = resizeAvailableDiskData();
     } else {
+        qDebug() << "Operation type is CREATE, getting createAvailableDiskData.";
         lstDeviceInfo = createAvailableDiskData();
     }
+    qDebug() << "Available device info list count:" << lstDeviceInfo.count();
 
     if (lstDeviceInfo.count() == 0) {
+        qDebug() << "No device info available, showing no disk widget and disabling next button.";
         m_firstCenterStackedWidget->setCurrentIndex(1);
         m_nextButton->setDisabled(true);
     } else {
+        qDebug() << "Device info available, updating disk and partition UI.";
         QWidget *diskWidget = m_diskScrollArea->findChild<QWidget *>("diskScrollArea");
         Utils::deletePoint(diskWidget);
 
@@ -1075,10 +1137,12 @@ void CreateVGWidget::updateData()
             m_nextButton->setDisabled(false);
         }
     }
+    qDebug() << "CreateVGWidget::updateData completed";
 }
 
 QList<DeviceInfo> CreateVGWidget::createAvailableDiskData()
 {
+    qDebug() << "CreateVGWidget::createAvailableDiskData called.";
     QList<DeviceInfo> lstDeviceInfo;
     lstDeviceInfo.clear();
 
@@ -1198,11 +1262,13 @@ QList<DeviceInfo> CreateVGWidget::createAvailableDiskData()
         }
     }
 
+    qDebug() << "CreateVGWidget::createAvailableDiskData completed";
     return lstDeviceInfo;
 }
 
 QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
 {
+    qDebug() << "CreateVGWidget::resizeAvailableDiskData called.";
     VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
     QMap<QString, PVInfo> mapPvInfo = vgInfo.m_pvInfo;
     QStringList pvList = mapPvInfo.keys();
@@ -1473,23 +1539,28 @@ QList<DeviceInfo> CreateVGWidget::resizeAvailableDiskData()
     }
 
     if (m_isResizeInit) {
+        qDebug() << "Resize init.";
         m_curSeclectData = m_oldSeclectData;
     }
 
     m_isResizeInit = false;
+    qDebug() << "CreateVGWidget::createAvailableDiskData completed";
     return lstDeviceInfo;
 }
 
 void CreateVGWidget::onDiskItemClicked()
 {
+    qDebug() << "CreateVGWidget::onDiskItemClicked called.";
     // 当前选中行是否为已选中行
     SelectPVItemWidget *selectPVItemWidget = qobject_cast<SelectPVItemWidget *>(sender());
     if (m_curDiskItemWidget == selectPVItemWidget) {
+        qDebug() << "Current disk item is already selected, returning.";
         return;
     }
 
     // 选中其他行时
     if (nullptr != m_curDiskItemWidget) {
+        qDebug() << "Current disk item is not null, unchecking it.";
         m_curDiskItemWidget->setChecked(false);
 
         QWidget *partWidget = m_partitionScrollArea->findChild<QWidget *>("partScrollArea");
@@ -1501,47 +1572,60 @@ void CreateVGWidget::onDiskItemClicked()
     m_curDiskItemWidget = selectPVItemWidget;
 
     updatePartitionData(lstData);
+    qDebug() << "CreateVGWidget::onDiskItemClicked completed.";
 }
 
 void CreateVGWidget::updatePartitionData(const QList<PVInfoData> &lstData)
 {
+    qDebug() << "CreateVGWidget::updatePartitionData called. Data count:" << lstData.count();
     if (lstData.count() == 0) {
+        qDebug() << "No partition data, showing no partition widget.";
         m_partitionStackedWidget->setCurrentIndex(1);
     } else {
+        qDebug() << "Partition data available, updating partition UI.";
         m_partitionStackedWidget->setCurrentIndex(0);
 
         QVBoxLayout *partitionLayout = new QVBoxLayout;
         for (int i = 0; i < lstData.count(); ++i) {
             PVInfoData pvInfoData = lstData.at(i);
+            qDebug() << "Processing partition:" << pvInfoData.m_partitionPath;
 
             SelectPVItemWidget *selectPVItemWidget = new SelectPVItemWidget(pvInfoData);
             if (lstData.count() == 1) {
+                qDebug() << "Single partition in list, setting mode accordingly.";
                 selectPVItemWidget->setMode(true, true, true, true);
             } else {
                 if (i == 0) {
+                    qDebug() << "First partition in multi-partition list, setting mode accordingly.";
                     selectPVItemWidget->setMode(true, false, true, false);
                 } else if (i == lstData.count() - 1) {
+                    qDebug() << "Last partition in multi-partition list, setting mode accordingly.";
                     selectPVItemWidget->setMode(false, true, false, true);
                 } else {
+                    qDebug() << "Middle partition in multi-partition list, setting mode accordingly.";
                     selectPVItemWidget->setMode(false, false, false, false);
                 }
             }
 
             switch (pvInfoData.m_selectStatus) {
             case Qt::CheckState::Unchecked: {
+                qDebug() << "Partition status: Unchecked.";
                 selectPVItemWidget->setCheckBoxState(Qt::CheckState::Unchecked);
                 break;
             }
             case Qt::CheckState::Checked: {
+                qDebug() << "Partition status: Checked.";
                 selectPVItemWidget->setCheckBoxState(Qt::CheckState::Checked);
                 break;
             }
             default:
+                qDebug() << "Partition status: Default (no change).";
                 break;
             }
 
             connect(selectPVItemWidget, &SelectPVItemWidget::selectItem, this, &CreateVGWidget::onDiskItemClicked);
             connect(selectPVItemWidget, &SelectPVItemWidget::checkBoxStateChange, this, &CreateVGWidget::onPartitionCheckBoxStateChange);
+            qDebug() << "Connections made for partition SelectPVItemWidget.";
 
             partitionLayout->addWidget(selectPVItemWidget);
         }
@@ -1555,61 +1639,77 @@ void CreateVGWidget::updatePartitionData(const QList<PVInfoData> &lstData)
         widget->setFixedSize(370, lstData.count() * 37);
         widget->setLayout(partitionLayout);
         m_partitionScrollArea->setWidget(widget);
+        qDebug() << "Partition scroll area widget set.";
     }
+    qDebug() << "Update partition data process finished.";
 }
 
 void CreateVGWidget::onDiskCheckBoxStateChange(int state)
 {
+    qDebug() << "CreateVGWidget::onDiskCheckBoxStateChange called. State:" << state;
     // 若为半选状态置为选中状态
     if (state == Qt::CheckState::PartiallyChecked) {
+        qDebug() << "Disk checkbox state is PartiallyChecked, setting to Checked.";
         SelectPVItemWidget *selectPVItemWidget = qobject_cast<SelectPVItemWidget *>(sender());
         selectPVItemWidget->setCheckBoxState(Qt::CheckState::Checked, true);
     } else {
         if (state == Qt::CheckState::Unchecked) {
+            qDebug() << "Disk checkbox state is Unchecked (disk unselected).";
             // 磁盘取消选中
             QList<SelectPVItemWidget *> lstPartitionItem = m_partitionScrollArea->findChildren<SelectPVItemWidget *>();
             if (lstPartitionItem.count() == 0) {
+                qDebug() << "No partition items, calling onDiskItemClicked.";
                 onDiskItemClicked();
             } else {
                 SelectPVItemWidget *selectPVItemWidget = qobject_cast<SelectPVItemWidget *>(sender());
                 if (m_curDiskItemWidget == selectPVItemWidget) {
+                    qDebug() << "Current disk item widget matches sender.";
                     int readOnlyCount = 0;
                     for (int i = 0; i < lstPartitionItem.count(); ++i) {
                         SelectPVItemWidget *selectPVItemWidget = lstPartitionItem.at(i);
                         if (selectPVItemWidget->getCurInfo().m_isReadOnly) {
                             readOnlyCount++;
+                            qDebug() << "Partition is read-only, skipping uncheck.";
                             continue;
                         }
 
                         selectPVItemWidget->setCheckBoxState(Qt::CheckState::Unchecked);
+                        qDebug() << "Unchecked partition:" << selectPVItemWidget->getCurInfo().m_partitionPath;
                     }
 
                     if (readOnlyCount > 0 && readOnlyCount != lstPartitionItem.count()) {
                         m_curDiskItemWidget->setCheckBoxState(Qt::CheckState::PartiallyChecked);
+                        qDebug() << "Setting current disk item widget to PartiallyChecked due to read-only partitions.";
                     } else if (readOnlyCount == lstPartitionItem.count()) {
                         m_curDiskItemWidget->setCheckBoxState(Qt::CheckState::Checked);
+                        qDebug() << "Setting current disk item widget to Checked (all read-only).";
                     }
 
                 } else {
+                    qDebug() << "Current disk item widget does not match sender, calling onDiskItemClicked.";
                     onDiskItemClicked();
                 }
             }
 
             // 当前取消磁盘是否没有分区表
             if (m_curDiskItemWidget->getCurInfo().m_disktype == "unrecognized") {
+                qDebug() << "Current unselected disk is unrecognized type.";
                 PVInfoData pvData = m_curDiskItemWidget->getCurInfo();
                 for (int i = 0; i < m_curSeclectData.count(); ++i) {
                     PVInfoData infoData = m_curSeclectData.at(i);
                     if (judgeDataEquality(pvData, infoData)) {
                         if (infoData.m_isReadOnly) {
+                            qDebug() << "Read-only unrecognized disk, skipping removal.";
                             continue;
                         }
 
                         m_curSeclectData.removeAt(i);
+                        qDebug() << "Removed unrecognized disk from selected data:" << pvData.m_diskPath;
                         break;
                     }
                 }
             } else {
+                qDebug() << "Current unselected disk is recognized type.";
                 QList<PVInfoData> lstData = m_curDiskItemWidget->getData();
                 for (int i = 0; i < lstData.count(); ++i) {
                     PVInfoData pvData = lstData.at(i);
@@ -1618,9 +1718,11 @@ void CreateVGWidget::onDiskCheckBoxStateChange(int state)
                         PVInfoData infoData = m_curSeclectData.at(j);
                         if (judgeDataEquality(pvData, infoData)) {
                             if (infoData.m_isReadOnly) {
+                                qDebug() << "Read-only partition, skipping removal.";
                                 continue;
                             }
                             m_curSeclectData.removeAt(j);
+                            qDebug() << "Removed partition from selected data:" << pvData.m_partitionPath;
                             break;
                         }
                     }
@@ -1628,6 +1730,7 @@ void CreateVGWidget::onDiskCheckBoxStateChange(int state)
             }
 
             if (m_curSeclectData.count() == 0) {
+                qDebug() << "No current selected data after unchecking, setting capacity to 0GiB and disabling next button.";
                 m_seclectedLabel->setText(tr("Capacity selected: %1").arg("0GiB"));
                 m_nextButton->setDisabled(true);
             } else {
@@ -1637,30 +1740,38 @@ void CreateVGWidget::onDiskCheckBoxStateChange(int state)
                     sumSize += Utils::sectorToUnit(infoData.m_sectorEnd - infoData.m_sectorStart + 1,
                                                    infoData.m_sectorSize, SIZE_UNIT::UNIT_GIB);
                 }
+                qDebug() << "Calculated sum size after unchecking:" << sumSize << "GiB.";
 
                 m_seclectedLabel->setText(tr("Capacity selected: %1").arg(QString::number(sumSize, 'f', 2)) + "GiB");
             }
         } else if (state == Qt::CheckState::Checked) {
+            qDebug() << "Disk checkbox state is Checked (disk selected).";
             // 磁盘选中
             QList<SelectPVItemWidget *> lstPartitionItem = m_partitionScrollArea->findChildren<SelectPVItemWidget *>();
             if (lstPartitionItem.count() == 0) {
+                qDebug() << "No partition items, calling onDiskItemClicked.";
                 onDiskItemClicked();
             } else {
                 SelectPVItemWidget *selectPVItemWidget = qobject_cast<SelectPVItemWidget *>(sender());
                 if (m_curDiskItemWidget == selectPVItemWidget) {
+                    qDebug() << "Current disk item widget matches sender, checking all partitions.";
                     for (int i = 0; i < lstPartitionItem.count(); ++i) {
                         SelectPVItemWidget *selectPVItemWidget = lstPartitionItem.at(i);
                         selectPVItemWidget->setCheckBoxState(Qt::CheckState::Checked);
+                        qDebug() << "Checked partition:" << selectPVItemWidget->getCurInfo().m_partitionPath;
                     }
                 } else {
+                    qDebug() << "Current disk item widget does not match sender, calling onDiskItemClicked.";
                     onDiskItemClicked();
                 }
             }
 
             // 当前选中磁盘是否没有分区表
             if (m_curDiskItemWidget->getCurInfo().m_disktype == "unrecognized") {
+                qDebug() << "Current selected disk is unrecognized type, adding to selected data.";
                 m_curSeclectData << m_curDiskItemWidget->getCurInfo();
             } else {
+                qDebug() << "Current selected disk is recognized type, adding its partitions to selected data.";
                 QList<PVInfoData> lstData = m_curDiskItemWidget->getData();
                 for (int i = 0; i < lstData.count(); ++i) {
                     PVInfoData pvData = lstData.at(i);
@@ -1670,12 +1781,14 @@ void CreateVGWidget::onDiskCheckBoxStateChange(int state)
                         PVInfoData infoData = m_curSeclectData.at(j);
                         if (judgeDataEquality(pvData, infoData)) {
                             isSameData = true;
+                            qDebug() << "Partition already in selected data, skipping:" << pvData.m_partitionPath;
                             break;
                         }
                     }
 
                     if (!isSameData) {
                         m_curSeclectData << pvData;
+                        qDebug() << "Added partition to selected data:" << pvData.m_partitionPath;
                     }
                 }
             }
@@ -1686,11 +1799,14 @@ void CreateVGWidget::onDiskCheckBoxStateChange(int state)
                 sumSize += Utils::sectorToUnit(infoData.m_sectorEnd - infoData.m_sectorStart + 1,
                                                infoData.m_sectorSize, SIZE_UNIT::UNIT_GIB);
             }
+            qDebug() << "Calculated sum size after checking:" << sumSize << "GiB.";
 
             m_seclectedLabel->setText(tr("Capacity selected: %1").arg(QString::number(sumSize, 'f', 2)) + "GiB");
             m_nextButton->setDisabled(false);
+            qDebug() << "Capacity selected label updated and next button enabled.";
 
             if (m_curDiskItemWidget->getCurInfo().m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+                qDebug() << "LUKS encrypted disk selected, showing warning.";
                 MessageBox warningBox(this);
                 warningBox.setFixedWidth(450);
                 warningBox.setObjectName("messageBox");
@@ -1699,36 +1815,44 @@ void CreateVGWidget::onDiskCheckBoxStateChange(int state)
                 warningBox.setWarings(tr("Adding the disk/partition to a logical volume group \n"
                                          "will format it and remove its password."), "", tr("OK"), "ok");
                 warningBox.exec();
+                qDebug() << "LUKS warning shown.";
             }
         }
     }
+    qDebug() << "Disk checkbox state change handled.";
 }
 
 void CreateVGWidget::onPartitionCheckBoxStateChange(int state)
 {
+    qDebug() << "CreateVGWidget::onPartitionCheckBoxStateChange called. State:" << state;
     SelectPVItemWidget *selectPVItemWidget = qobject_cast<SelectPVItemWidget *>(sender());
     PVInfoData pvData = selectPVItemWidget->getCurInfo();
     QList<PVInfoData> lstData = m_curDiskItemWidget->getData();
     bool isPartiallyCheck = false;
 
     if (state == Qt::CheckState::Unchecked) {
+        qDebug() << "Partition checkbox state is Unchecked (partition unselected).";
         // 分区取消选中
         for (int i = 0; i < lstData.count(); ++i) {
             PVInfoData data = lstData.at(i);
             if (pvData.m_sectorStart == data.m_sectorStart && pvData.m_sectorEnd == data.m_sectorEnd) {
                 data.m_selectStatus = state;
                 lstData.replace(i, data);
+                qDebug() << "Updated partition status to Unchecked for:" << data.m_partitionPath;
             }
 
             if (data.m_selectStatus == Qt::CheckState::Checked) {
                 isPartiallyCheck = true;
+                qDebug() << "Found checked partition, setting isPartiallyCheck to true.";
             }
         }
 
         if (isPartiallyCheck) {
             m_curDiskItemWidget->setCheckBoxState(Qt::CheckState::PartiallyChecked);
+            qDebug() << "Setting disk item widget to PartiallyChecked.";
         } else {
             m_curDiskItemWidget->setCheckBoxState(Qt::CheckState::Unchecked);
+            qDebug() << "Setting disk item widget to Unchecked.";
         }
 
         double sumSize = 0;
@@ -1737,6 +1861,7 @@ void CreateVGWidget::onPartitionCheckBoxStateChange(int state)
             PVInfoData infoData = m_curSeclectData.at(i);
             if (judgeDataEquality(pvData, infoData)) {
                 deleteNumber = i;
+                qDebug() << "Found partition to delete from selected data at index:" << i;
             } else {
                 sumSize += Utils::sectorToUnit(infoData.m_sectorEnd - infoData.m_sectorStart + 1,
                                                infoData.m_sectorSize, SIZE_UNIT::UNIT_GIB);
@@ -1745,46 +1870,58 @@ void CreateVGWidget::onPartitionCheckBoxStateChange(int state)
 
         if (deleteNumber >= 0) {
             m_curSeclectData.removeAt(deleteNumber);
+            qDebug() << "Removed partition from selected data:" << pvData.m_partitionPath;
         }
 
         if (m_curSeclectData.count() == 0) {
             m_seclectedLabel->setText(tr("Capacity selected: %1").arg("0GiB"));
             m_nextButton->setDisabled(true);
+            qDebug() << "No selected data, setting capacity to 0GiB and disabling next button.";
         } else {
             m_seclectedLabel->setText(tr("Capacity selected: %1").arg(QString::number(sumSize, 'f', 2)) + "GiB");
+            qDebug() << "Updated selected capacity label:" << sumSize << "GiB.";
         }
     } else {
+        qDebug() << "Partition checkbox state is Checked (partition selected).";
         // 分区选中
         for (int i = 0; i < lstData.count(); ++i) {
             PVInfoData data = lstData.at(i);
             if (pvData.m_sectorStart == data.m_sectorStart && pvData.m_sectorEnd == data.m_sectorEnd) {
                 data.m_selectStatus = state;
                 lstData.replace(i, data);
+                qDebug() << "Updated partition status to Checked for:" << data.m_partitionPath;
             }
 
             if (data.m_selectStatus == Qt::CheckState::Unchecked) {
                 isPartiallyCheck = true;
+                qDebug() << "Found unchecked partition, setting isPartiallyCheck to true.";
             }
         }
 
         if (isPartiallyCheck) {
             m_curDiskItemWidget->setCheckBoxState(Qt::CheckState::PartiallyChecked);
+            qDebug() << "Setting disk item widget to PartiallyChecked.";
         } else {
             m_curDiskItemWidget->setCheckBoxState(Qt::CheckState::Checked);
+            qDebug() << "Setting disk item widget to Checked.";
         }
 
         m_curSeclectData.append(pvData);
+        qDebug() << "Added partition to current selected data:" << pvData.m_partitionPath;
         double sumSize = 0;
         for (int i = 0; i < m_curSeclectData.count(); ++i) {
             PVInfoData infoData = m_curSeclectData.at(i);
             sumSize += Utils::sectorToUnit(infoData.m_sectorEnd - infoData.m_sectorStart + 1,
                                            infoData.m_sectorSize, SIZE_UNIT::UNIT_GIB);
         }
+        qDebug() << "Calculated sum size after checking partition:" << sumSize << "GiB.";
 
         m_seclectedLabel->setText(tr("Capacity selected: %1").arg(QString::number(sumSize, 'f', 2)) + "GiB");
         m_nextButton->setDisabled(false);
+        qDebug() << "Updated selected capacity label and enabled next button.";
 
         if (pvData.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
+            qDebug() << "LUKS encrypted partition selected, showing warning.";
             MessageBox warningBox(this);
 //            warningBox.setFixedWidth(400);
             warningBox.setObjectName("messageBox");
@@ -1793,46 +1930,58 @@ void CreateVGWidget::onPartitionCheckBoxStateChange(int state)
             warningBox.setWarings(tr("Adding the disk/partition to a logical volume group \n"
                                      "will format it and remove its password."), "", tr("OK"), "ok");
             warningBox.exec();
+            qDebug() << "LUKS warning shown.";
         }
     }
 
     m_curDiskItemWidget->setData(lstData);
+    qDebug() << "Partition checkbox state change handled.";
 }
 
 SIZE_UNIT CreateVGWidget::getCurSizeUnit()
 {
+    qDebug() << "CreateVGWidget::getCurSizeUnit called.";
     SIZE_UNIT type = SIZE_UNIT::UNIT_GIB;
     switch (m_selectSpaceComboBox->currentIndex()) {
     case 0: {
         type = SIZE_UNIT::UNIT_MIB;
+        qDebug() << "Selected unit: MiB.";
         break;
     }
     case 1: {
         type = SIZE_UNIT::UNIT_GIB;
+        qDebug() << "Selected unit: GiB.";
         break;
     }
     case 2: {
         type = SIZE_UNIT::UNIT_TIB;
+        qDebug() << "Selected unit: TiB.";
         break;
     }
     default:
+        qDebug() << "Selected unit: Default (GiB).";
         break;
     }
 
+    qDebug() << "Returning size unit:" << static_cast<int>(type);
     return type;
 }
 
 void CreateVGWidget::updateSelectedData()
 {
+    qDebug() << "CreateVGWidget::updateSelectedData called.";
     if (m_curSeclectData.count() == 0) {
+        qDebug() << "No current selected data, showing no info widget and disabling done button.";
         m_selectedStackedWidget->setCurrentIndex(1);
         m_doneButton->setDisabled(true);
     } else {
+        qDebug() << "Current selected data available, updating selected data UI.";
         m_selectedStackedWidget->setCurrentIndex(0);
         m_doneButton->setDisabled(false);
 
         QWidget *selectedWidget = m_selectedScrollArea->findChild<QWidget *>("selectedScrollArea");
         Utils::deletePoint(selectedWidget);
+        qDebug() << "Old selected scroll area widget deleted.";
 
         QVBoxLayout *selectedLayout = new QVBoxLayout;
         bool isUnallocated = false;
@@ -1840,12 +1989,15 @@ void CreateVGWidget::updateSelectedData()
         m_maxSize = 0;
         m_sumSize = 0;
         SIZE_UNIT type = getCurSizeUnit();
+        qDebug() << "Current size unit:" << static_cast<int>(type);
 
         for (int i = 0; i < m_curSeclectData.count(); ++i) {
             PVInfoData pvInfoData = m_curSeclectData.at(i);
+            qDebug() << "Processing selected PVInfoData:" << pvInfoData.m_partitionPath;
 
             if (pvInfoData.m_partitionPath == "unallocated" || pvInfoData.m_disktype == "unrecognized") {
                 isUnallocated = true;
+                qDebug() << "Found unallocated or unrecognized partition.";
             } else {
                 m_minSize += Utils::sectorToUnit(pvInfoData.m_sectorEnd - pvInfoData.m_sectorStart + 1,
                                                  pvInfoData.m_sectorSize, type);
@@ -1855,21 +2007,27 @@ void CreateVGWidget::updateSelectedData()
                                              pvInfoData.m_sectorSize, type);
 
             m_sumSize += (pvInfoData.m_sectorEnd - pvInfoData.m_sectorStart + 1) * pvInfoData.m_sectorSize;
+            qDebug() << "Added to sumSize (bytes):" << (pvInfoData.m_sectorEnd - pvInfoData.m_sectorStart + 1) * pvInfoData.m_sectorSize;
 
             SelectedItemWidget *selectedItemWidget = new SelectedItemWidget(pvInfoData);
             if (m_curSeclectData.count() == 1) {
+                qDebug() << "Single selected item, setting mode accordingly.";
                 selectedItemWidget->setMode(true, true, true, true);
             } else {
                 if (i == 0) {
+                    qDebug() << "First selected item, setting mode accordingly.";
                     selectedItemWidget->setMode(true, false, true, false);
                 } else if (i == m_curSeclectData.count() - 1) {
+                    qDebug() << "Last selected item, setting mode accordingly.";
                     selectedItemWidget->setMode(false, true, false, true);
                 } else {
+                    qDebug() << "Middle selected item, setting mode accordingly.";
                     selectedItemWidget->setMode(false, false, false, false);
                 }
             }
 
             connect(selectedItemWidget, &SelectedItemWidget::deleteItem, this, &CreateVGWidget::onDeleteItemClicked);
+            qDebug() << "Connection made for SelectedItemWidget delete item.";
 
             selectedLayout->addWidget(selectedItemWidget);
         }
@@ -1883,8 +2041,10 @@ void CreateVGWidget::updateSelectedData()
         widget->setFixedSize(760, m_curSeclectData.count() * 37);
         widget->setLayout(selectedLayout);
         m_selectedScrollArea->setWidget(widget);
+        qDebug() << "Selected scroll area widget set.";
 
         if (m_curOperationType == OperationType::RESIZE) {
+            qDebug() << "Operation type is RESIZE, updating resize specific UI.";
             VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
             set<PVData> pvDataSet = getCurSelectPVData();
             Byte_Value maxSize = getMaxSize(vgInfo, pvDataSet);
@@ -1895,20 +2055,24 @@ void CreateVGWidget::updateSelectedData()
             m_sumSize = maxSize;
 
             if (maxSize == minSize || !isUnallocated) {
+                qDebug() << "Max size equals min size or no unallocated space. Setting select space stacked widget to index 1.";
                 m_selectSpaceStackedWidget->setCurrentIndex(1);
                 m_curSize = m_sumSize;
                 m_selectedSpaceLabel->setText(tr("Capacity selected: %1")
                                               .arg(QString::number(m_maxSize, 'f', 2)) + m_selectSpaceComboBox->currentText());
             } else {
+                qDebug() << "Max size not equal to min size and unallocated space exists. Setting select space stacked widget to index 0.";
                 m_selectSpaceStackedWidget->setCurrentIndex(0);
                 m_selectSpaceLineEdit->lineEdit()->setPlaceholderText(QString("%1-%2").arg(QString::number(m_minSize, 'f', 2))
                                                                       .arg(QString::number(m_maxSize, 'f', 2)));
 //                m_selectSpaceLabel->setText(QString("(%1-%2)").arg(QString::number(m_minSize, 'f', 2))
 //                                            .arg(QString::number(m_maxSize, 'f', 2)) + m_selectSpaceComboBox->currentText());
                 m_selectSpaceLineEdit->setText(QString::number(m_maxSize, 'f', 2));
+                qDebug() << "Select space line edit placeholder and text updated.";
             }
 
             if (maxSize < minSize) {
+                qDebug() << "Max size is less than min size, showing warning for not enough space.";
                 bool bigDataMove;
                 QStringList realDelPvList;
                 adjudicationPVMove(vgInfo, pvDataSet, bigDataMove, realDelPvList);
@@ -1921,6 +2085,7 @@ void CreateVGWidget::updateSelectedData()
 
                 m_doneButton->setDisabled(true);
                 warningBox.exec();
+                qDebug() << "Not enough space warning shown, done button disabled.";
                 return;
             } else {
                 // 判断当前选择的PV是否与当前调整VG的PV完全相同，若相同则“完成”按钮禁用
@@ -1933,62 +2098,78 @@ void CreateVGWidget::updateSelectedData()
                             PVInfoData oldPVInfoData = m_oldSeclectData.at(j);
                             if (judgeDataEquality(oldPVInfoData, curPVInfoData)) {
                                 isSame = true;
+                                qDebug() << "Current PV is identical to old PV:" << curPVInfoData.m_partitionPath;
                                 break;
                             }
                         }
                         if (!isSame) {
                             isIdentical = false;
+                            qDebug() << "Found non-identical PV, setting isIdentical to false.";
                             break;
                         }
                     }
                     if (isIdentical) {
                         m_doneButton->setDisabled(true);
+                        qDebug() << "All PVs are identical, done button disabled.";
                         return;
                     }
                 }
 
                 m_doneButton->setDisabled(false);
+                qDebug() << "Done button enabled.";
             }
         } else {
+            qDebug() << "Operation type is CREATE, updating create specific UI.";
             if (isUnallocated) {
+                qDebug() << "Unallocated space found. Setting select space stacked widget to index 0.";
                 m_selectSpaceStackedWidget->setCurrentIndex(0);
                 m_selectSpaceLineEdit->lineEdit()->setPlaceholderText(QString("%1-%2").arg(QString::number(m_minSize, 'f', 2))
                                                                       .arg(QString::number(m_maxSize, 'f', 2)));
 //                m_selectSpaceLabel->setText(QString("(%1-%2)").arg(QString::number(m_minSize, 'f', 2))
 //                                            .arg(QString::number(m_maxSize, 'f', 2)) + m_selectSpaceComboBox->currentText());
                 m_selectSpaceLineEdit->setText(QString::number(m_maxSize, 'f', 2));
+                qDebug() << "Select space line edit placeholder and text updated for unallocated space.";
             } else {
+                qDebug() << "No unallocated space found. Setting select space stacked widget to index 1.";
                 m_selectSpaceStackedWidget->setCurrentIndex(1);
                 m_curSize = m_sumSize;
                 m_selectedSpaceLabel->setText(tr("Capacity selected: %1")
                                               .arg(QString::number(m_minSize, 'f', 2)) + m_selectSpaceComboBox->currentText());
+                qDebug() << "Selected space label updated for no unallocated space.";
             }
         }
     }
+    qDebug() << "Update selected data process finished.";
 }
 
 void CreateVGWidget::onDeleteItemClicked(PVInfoData pvInfoData)
 {
+    qDebug() << "CreateVGWidget::onDeleteItemClicked called. Deleting item for:" << pvInfoData.m_partitionPath;
     for (int i = 0; i < m_curSeclectData.count(); ++i) {
         PVInfoData infoData = m_curSeclectData.at(i);
         if (judgeDataEquality(pvInfoData, infoData)) {
             m_curSeclectData.removeAt(i);
+            qDebug() << "Removed item from current selected data:" << infoData.m_partitionPath;
             break;
         }
     }
 
     updateSelectedData();
+    qDebug() << "Delete item process finished, updating selected data UI.";
 }
 
 void CreateVGWidget::onCurrentIndexChanged(int index)
 {
+    qDebug() << "CreateVGWidget::onCurrentIndexChanged called. Index:" << index;
     SIZE_UNIT type = getCurSizeUnit();
     m_minSize = 0;
     m_maxSize = 0;
     m_sumSize = 0;
+    qDebug() << "Reset minSize, maxSize, sumSize to 0. Current size unit:" << static_cast<int>(type);
 
     for (int i = 0; i < m_curSeclectData.count(); ++i) {
         PVInfoData pvInfoData = m_curSeclectData.at(i);
+        qDebug() << "Processing selected PVInfoData for index change:" << pvInfoData.m_partitionPath;
 
         if (pvInfoData.m_partitionPath != "unallocated" && pvInfoData.m_disktype != "unrecognized") {
             m_minSize += Utils::sectorToUnit(pvInfoData.m_sectorEnd - pvInfoData.m_sectorStart + 1,
@@ -1999,6 +2180,7 @@ void CreateVGWidget::onCurrentIndexChanged(int index)
                                          pvInfoData.m_sectorSize, type);
 
         m_sumSize += (pvInfoData.m_sectorEnd - pvInfoData.m_sectorStart + 1) * pvInfoData.m_sectorSize;
+        qDebug() << "Added to sumSize (bytes):" << (pvInfoData.m_sectorEnd - pvInfoData.m_sectorStart + 1) * pvInfoData.m_sectorSize;
     }
 
 
@@ -2006,38 +2188,48 @@ void CreateVGWidget::onCurrentIndexChanged(int index)
                                                           .arg(QString::number(m_maxSize, 'f', 2)));
 //    m_selectSpaceLabel->setText(QString("(%1-%2)").arg(QString::number(m_minSize, 'f', 2))
 //                                .arg(QString::number(m_maxSize, 'f', 2)) + m_selectSpaceComboBox->currentText());
+    qDebug() << "Select space line edit placeholder updated.";
 
     m_curSize = m_curSize > m_sumSize ? m_sumSize : m_curSize;
 
     if (!m_selectSpaceLineEdit->text().isEmpty()) {
+        qDebug() << "Select space line edit is not empty, updating text based on index.";
         switch (index) {
         case 0: {
             m_selectSpaceLineEdit->setText(QString::number(m_curSize / static_cast<double>(MEBIBYTE), 'f', 2));
+            qDebug() << "Setting text to MiB.";
             break;
         }
         case 1: {
             m_selectSpaceLineEdit->setText(QString::number(m_curSize / static_cast<double>(GIBIBYTE), 'f', 2));
+            qDebug() << "Setting text to GiB.";
             break;
         }
         case 2: {
             m_selectSpaceLineEdit->setText(QString::number(m_curSize / static_cast<double>(TEBIBYTE), 'f', 2));
+            qDebug() << "Setting text to TiB.";
             break;
         }
         default:
+            qDebug() << "Default case for index.";
             break;
         }
     }
+    qDebug() << "Current index change handled.";
 }
 
 void CreateVGWidget::onTextChanged(const QString &text)
 {
+    qDebug() << "CreateVGWidget::onTextChanged called. Text:" << text;
     double curSize = QString::number(text.toDouble(), 'f', 2).toDouble();
     double maxSize = QString::number(m_maxSize, 'f', 2).toDouble();
 
     m_doneButton->setDisabled(text.isEmpty() || curSize == 0.00);
     m_selectSpaceLineEdit->setAlert(false);
+    qDebug() << "Done button disabled state set, alert cleared.";
 
     if (!m_selectSpaceLineEdit->text().isEmpty()) {
+        qDebug() << "Select space line edit is not empty, updating current size.";
         double curSize = QString::number(m_selectSpaceLineEdit->text().toDouble(), 'f', 2).toDouble();
         switch (m_selectSpaceComboBox->currentIndex()) {
         case 0: {
@@ -2053,15 +2245,18 @@ void CreateVGWidget::onTextChanged(const QString &text)
             break;
         }
         default:
+            qDebug() << "Default case for current index.";
             break;
         }
 
         if (curSize >= maxSize) {
             m_curSize = m_sumSize;
+            qDebug() << "Current size is greater than or equal to max size, setting current size to sum size.";
         }
 
         m_curSize = m_curSize > m_sumSize ? m_sumSize : m_curSize;
     }
+    qDebug() << "Text changed handled.";
 }
 
 void CreateVGWidget::onVGCreateMessage(const QString &vgMessage)
@@ -2069,10 +2264,12 @@ void CreateVGWidget::onVGCreateMessage(const QString &vgMessage)
     qDebug() << "Received VG create message:" << vgMessage;
     if (m_waterLoadingWidget != nullptr) {
         m_waterLoadingWidget->stopTimer();
+        qDebug() << "Water loading widget timer stopped.";
     }
 
     QStringList infoList = vgMessage.split(":");
     if (infoList.count() <= 1) {
+        qDebug() << "Info list count <= 1, closing dialog.";
         close();
         return;
     }
@@ -2083,17 +2280,21 @@ void CreateVGWidget::onVGCreateMessage(const QString &vgMessage)
         switch (infoList.at(1).toInt()) {
         case LVMError::LVM_ERR_VG_ALREADY_EXISTS: {
             text = tr("Existing volume group, creation failed. Please retry after reboot."); // 逻辑卷组已存在，创建失败，请重启电脑再试
+            qDebug() << "LVM_ERR_VG_ALREADY_EXISTS:" << text;
             break;
         }
         case LVMError::LVM_ERR_PV_CREATE_FAILED: {
             text = tr("Failed to create a physical volume. Please refresh Disk Utility and try again."); // 物理卷创建失败，请刷新磁盘管理器再试
+            qDebug() << "LVM_ERR_PV_CREATE_FAILED:" << text;
             break;
         }
         case LVMError::LVM_ERR_IO_ERROR: {
             text = tr("Device input/output error. Please try again after reboot."); // 设备输入输出错误，请重启电脑再试
+            qDebug() << "LVM_ERR_IO_ERROR:" << text;
             break;
         }
         default:
+            qDebug() << "Unknown LVM error code.";
             break;
         }
 
@@ -2102,6 +2303,7 @@ void CreateVGWidget::onVGCreateMessage(const QString &vgMessage)
                                                      QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), text);
             DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget()->parentWidget()->parentWidget(),
                                                            QMargins(0, 0, 0, 20));
+            qDebug() << "Warning message sent.";
         }
     }
 
@@ -2115,6 +2317,7 @@ void CreateVGWidget::onUpdateUsb()
 
     QStringList deviceNameList = DMDbusHandler::instance()->getDeviceNameList();
     if (m_curDeviceNameList == deviceNameList) {
+        qDebug() << "Device name list is unchanged, returning.";
         return;
     }
 
@@ -2124,6 +2327,7 @@ void CreateVGWidget::onUpdateUsb()
         QString devPath = m_curDeviceNameList.at(i);
         if (deviceNameList.indexOf(devPath) == -1) {
             deleteDevNameList.append(devPath);
+            qDebug() << "Detected removed device:" << devPath;
         }
     }
 
@@ -2135,6 +2339,7 @@ void CreateVGWidget::onUpdateUsb()
             PVInfoData pvInfoData = m_curSeclectData.at(j);
             if (pvInfoData.m_diskPath == devPath) {
                 deleteIndexList.append(j);
+                qDebug() << "Found removed device in selected data at index:" << j;
             }
         }
     }
@@ -2142,9 +2347,11 @@ void CreateVGWidget::onUpdateUsb()
     // 将拔出磁盘信息从当前选择的列表里剔除
     for (int i = 0; i < deleteIndexList.size(); ++i) {
         m_curSeclectData.removeAt(deleteIndexList.at(i));
+        qDebug() << "Removed device from selected data at index:" << deleteIndexList.at(i);
     }
 
     if (m_stackedWidget->currentIndex() == 0) {
+        qDebug() << "Current index is 0, updating disk data.";
         DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/ok.svg"),
                                                  tr("Refreshing the page to reload disks"));
         DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
@@ -2152,7 +2359,9 @@ void CreateVGWidget::onUpdateUsb()
         qDebug() << "Refreshing disk selection UI due to USB change";
         updateData();
     } else if (m_stackedWidget->currentIndex() == 1) {
+        qDebug() << "Current index is 1, updating selected data.";
         if (!deleteIndexList.isEmpty()) {
+            qDebug() << "USB device removed, updating selected data UI.";
             DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/ok.svg"),
                                                      tr("Refreshing the page to reload disks"));
             DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
@@ -2163,24 +2372,29 @@ void CreateVGWidget::onUpdateUsb()
     }
 
     m_curDeviceNameList = deviceNameList;
+    qDebug() << "USB update handler finished.";
 }
 
 Byte_Value CreateVGWidget::getPVSize(const VGInfo &vg, const PVData &pv, bool flag)
 {
+    qDebug() << "CreateVGWidget::getPVSize called. PV path:" << pv.m_devicePath << ", flag:" << flag;
     LVMInfo lvmInfo =  DMDbusHandler::instance()->probLVMInfo();
 
     //判断
     if (lvmInfo.pvExists(pv)) {
         PVInfo pvInfo = lvmInfo.getPV(pv);
         if (pvInfo.joinVG()) { //如果pv已经加入vg 且加入的是别的vg 则返回-1
+            qDebug() << "PV exists and joined another VG.";
             return lvmInfo.pvOfVg(vg, pv) ? pvInfo.m_pvByteTotalSize : -1;
         } else {
+            qDebug() << "PV exists and not joined any VG, returning total byte size.";
             return pvInfo.m_pvByteTotalSize;
         }
     }
 
     auto it = DMDbusHandler::instance()->probDeviceInfo().find(pv.m_diskPath);
     if (it == DMDbusHandler::instance()->probDeviceInfo().end()) {
+        qDebug() << "Device info not found for disk path:" << pv.m_diskPath;
         return -1;
     }
 
@@ -2191,24 +2405,30 @@ Byte_Value CreateVGWidget::getPVSize(const VGInfo &vg, const PVData &pv, bool fl
 
     if (startSec == 0 && pv.m_type == DEV_UNALLOCATED_PARTITION) {
         startSec = UEFI_SECTOR;
+        qDebug() << "Unallocated partition at start sector 0, adjusting start sector to UEFI_SECTOR.";
     }
 
     if (pv.m_type == DEV_UNALLOCATED_PARTITION && pv.m_endSector == (dev.m_length - 1) && dev.m_disktype.contains("gpt")) {
         endSec -= GPTBACKUP;
+        qDebug() << "Unallocated GPT partition at end of disk, adjusting end sector.";
     }
 
     if (pv.m_type == DEV_DISK && flag) {
         startSec -= UEFI_SECTOR;
         endSec -= GPTBACKUP;
+        qDebug() << "Full disk and flag is true, adjusting start and end sectors.";
     }
     long long allByte = dev.m_sectorSize * (endSec - startSec + 1); //获取总的byte
     long long i = allByte % vg.m_PESize; //获取剩下的size大小
 
     if(i == 0){
+        qDebug() << "Remaining size is 0, returning all bytes.";
         return  allByte;
     }else if(i >= MEBIBYTE){
+        qDebug() << "Remaining size >= MiB, returning all bytes - remaining.";
         return allByte - i;
     }else  {
+        qDebug() << "Remaining size < MiB, returning all bytes - remaining - 4 MiB.";
         return allByte - i - 4 * MEBIBYTE;
     }
    // return i == 0 ? allByte : ((i >= MEBIBYTE) ? allByte - i : allByte - i - 4 * MEBIBYTE); //去除末尾 保证是vg pe的倍数
@@ -2216,18 +2436,21 @@ Byte_Value CreateVGWidget::getPVSize(const VGInfo &vg, const PVData &pv, bool fl
 
 Byte_Value CreateVGWidget::getDevSize(const VGInfo &vg, const PVData &pv, bool flag, long long size)
 {
+    qDebug() << "CreateVGWidget::getDevSize called. PV path:" << pv.m_devicePath << ", flag:" << flag << ", size:" << size;
     LVMInfo lvmInfo =  DMDbusHandler::instance()->probLVMInfo();
 
     //判断
     if (lvmInfo.pvExists(pv)) {
         PVInfo pvInfo = lvmInfo.getPV(pv);
         if (pvInfo.joinVG()) { //如果pv已经加入vg 且加入的是别的vg 则返回-1
+            qDebug() << "PV exists and joined another VG, returning -1 if not of current VG, else total size.";
             return lvmInfo.pvOfVg(vg, pv) ? (pv.m_endSector - pv.m_startSector + 1) * pv.m_sectorSize : -1;
         }
     }
 
     auto it = DMDbusHandler::instance()->probDeviceInfo().find(pv.m_diskPath);
     if (it == DMDbusHandler::instance()->probDeviceInfo().end()) {
+        qDebug() << "Device info not found for disk path:" << pv.m_diskPath << ", returning -1.";
         return -1;
     }
 
@@ -2237,29 +2460,35 @@ Byte_Value CreateVGWidget::getDevSize(const VGInfo &vg, const PVData &pv, bool f
     long long endSec = pv.m_endSector;
     if (startSec == 0 && pv.m_type == DEV_UNALLOCATED_PARTITION) {
         startSec = UEFI_SECTOR;
+        qDebug() << "Unallocated partition at start sector 0, adjusting start sector to UEFI_SECTOR.";
     }
 
     if (pv.m_type == DEV_UNALLOCATED_PARTITION && pv.m_endSector == (dev.m_length - 1) && dev.m_disktype.contains("gpt")) {
         endSec -= GPTBACKUP;
+        qDebug() << "Unallocated GPT partition at end of disk, adjusting end sector.";
     }
 
     if (pv.m_type == DEV_DISK && flag) {
         startSec -= UEFI_SECTOR;
         endSec -= GPTBACKUP;
+        qDebug() << "Full disk and flag is true, adjusting start and end sectors.";
     }
 
     long long allSize = size;
     long long tmpSize = size % vg.m_PESize;
     if (tmpSize > 0) {
+        qDebug() << "Size not divisible by PESize, rounding up.";
         allSize += vg.m_PESize;
     }
     if (allSize == vg.m_PESize) {
+        qDebug() << "Size is equal to PESize, adding PESize to allSize.";
         allSize += vg.m_PESize;
     }
 
     long long allSec = allSize / dev.m_sectorSize + 1;
 
     if ((endSec - startSec + 1) < allSec) {
+        qDebug() << "Not enough space for size, returning -1.";
         return -1;
     }
     endSec = startSec + allSec - 1;
@@ -2268,15 +2497,18 @@ Byte_Value CreateVGWidget::getDevSize(const VGInfo &vg, const PVData &pv, bool f
 
 Byte_Value CreateVGWidget::getMaxSize(const VGInfo &vg, const set<PVData> &pvlist)
 {
+    qDebug() << "CreateVGWidget::getMaxSize called.";
     Byte_Value maxSize = 0;
     foreach (const PVData &pv, pvlist) { //这里计算设备真实大小 跟getpvsize不同
         maxSize += (pv.m_endSector - pv.m_startSector + 1) * pv.m_sectorSize;
     }
+    qDebug() << "Calculated max size";
     return maxSize;
 }
 
 Byte_Value CreateVGWidget::getMinSize(const VGInfo &vg, const set<PVData> &pvlist)
 {
+    qDebug() << "CreateVGWidget::getMinSize called.";
     QList<PVData>diskList;
     QList<PVData>pvDiskList;
     QList<PVData>partList;
@@ -2288,6 +2520,7 @@ Byte_Value CreateVGWidget::getMinSize(const VGInfo &vg, const set<PVData> &pvlis
     Byte_Value minSize = 0 ;
 
     if (vgUsed > getMaxSize(vg, pvlist)) { //vg使用大小超过最大值
+        qDebug() << "VG used size exceeds max size, returning VG used size.";
         return vgUsed;
     }
 
@@ -2342,6 +2575,7 @@ Byte_Value CreateVGWidget::getMinSize(const VGInfo &vg, const set<PVData> &pvlis
     vgUsed -= minSize;
 
     if (vgUsed <= 0) {
+        qDebug() << "VG used size is less than or equal to minimum size, returning minimum size.";
         return minSize;
     }
 
@@ -2392,14 +2626,17 @@ Byte_Value CreateVGWidget::getMinSize(const VGInfo &vg, const set<PVData> &pvlis
     }
 
     if (vgUsed > 0) {
+        qDebug() << "VG used size is greater than minimum size, returning VG used size.";
         return vg.m_peUsed * vg.m_PESize;
     }
 
+    qDebug() << "Minimum size calculation finished, returning minimum size.";
     return minSize;
 }
 
 bool CreateVGWidget::adjudicationPVMove(const VGInfo &vg, const set<PVData> &pvlist, bool &bigDataMove, QStringList &realDelPvList)
 {
+    qDebug() << "CreateVGWidget::adjudicationPVMove called.";
     LUKSMap luks = DMDbusHandler::instance()->probLUKSInfo();
 
     bigDataMove = false;
@@ -2415,6 +2652,7 @@ bool CreateVGWidget::adjudicationPVMove(const VGInfo &vg, const set<PVData> &pvl
 
         foreach (const PVData &pv, pvlist) {
             if (it.m_pvPath == pv.m_devicePath || (luksDev ==pv.m_devicePath&&!luksDev.isEmpty())) {
+                qDebug() << "PV" << it.m_pvPath << "is not deleted. break.";
                 isDelete = false;
                 break;
             }
@@ -2428,12 +2666,15 @@ bool CreateVGWidget::adjudicationPVMove(const VGInfo &vg, const set<PVData> &pvl
     }
 
     if (getMinSize(vg, pvlist) > getMaxSize(vg, pvlist)) {
+        qDebug() << "VG used size exceeds max size, returning false.";
         return false;
     }
 
     if (((size / GIBIBYTE) >= 1)) { //判断是否存在大量数据需要移动
+        qDebug() << "There are large amounts of data to move, returning true.";
         bigDataMove = true;
     }
 
+    qDebug() << "CreateVGWidget::adjudicationPVMove finished.";
     return true;
 }

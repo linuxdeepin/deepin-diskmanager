@@ -44,4 +44,5 @@ void MainSplitter::initui()
 
 void MainSplitter::initConnection()
 {
+    qDebug() << "Initializing MainSplitter connections";
 }

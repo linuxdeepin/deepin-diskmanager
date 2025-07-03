@@ -31,6 +31,7 @@ void CylinderWidget::enterEvent(QEnterEvent *event)
 void CylinderWidget::enterEvent(QEvent *event)
 #endif
 {
+    // qDebug() << "[CylinderWidget] enterEvent triggered.";
     emit enter();
 
     return QLabel::enterEvent(event);
@@ -38,6 +39,7 @@ void CylinderWidget::enterEvent(QEvent *event)
 
 void CylinderWidget::leaveEvent(QEvent *event)
 {
+    // qDebug() << "[CylinderWidget] leaveEvent triggered.";
     emit leave();
 
     return QLabel::leaveEvent(event);

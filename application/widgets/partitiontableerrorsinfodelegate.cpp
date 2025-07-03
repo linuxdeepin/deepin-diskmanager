@@ -33,10 +33,12 @@ void PartitionTableErrorsInfoDelegate::setTextColor(const QColor &color)
 
 void PartitionTableErrorsInfoDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    // qDebug() << "paint called for index:" << index.row() << ", column:" << index.column();
     painter->save();
 
     QRect paintRect = QRect(option.rect.left(), option.rect.top(), option.rect.width(), option.rect.height());
     if (index.row() % 2 == 0) {
+        // qDebug() << "Row is even, adjusting paintRect.";
         paintRect = QRect(option.rect.left() + 10, option.rect.top(), option.rect.width() - 20, option.rect.height());
     }
 
@@ -59,8 +61,10 @@ void PartitionTableErrorsInfoDelegate::paint(QPainter *painter, const QStyleOpti
                270, 90);
 
     if (index.row() % 2 == 1) {
+        // qDebug() << "Row is odd, filling path with base palette.";
         painter->fillPath(path, option.palette.base());
     } else {
+        // qDebug() << "Row is even, filling path with alternateBase palette.";
         painter->fillPath(path, option.palette.alternateBase());
     }
 
@@ -78,6 +82,7 @@ void PartitionTableErrorsInfoDelegate::paint(QPainter *painter, const QStyleOpti
     painter->drawText(option.rect.x() + 36, option.rect.y() + 20, text);
 
     painter->restore();
+    // qDebug() << "paint completed.";
 }
 
 

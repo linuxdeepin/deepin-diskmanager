@@ -59,13 +59,16 @@ MainWindow::MainWindow(QWidget *parent)
     int scaleWidth = screenGeometry.width() * DEFAULT_SCALE;
     int scaleHeight = screenGeometry.height() * DEFAULT_SCALE;
     if (scaleWidth < normal.width() && scaleHeight < normal.height()) {
+        qDebug() << "Screen dimensions are smaller than normal, adjusting window size.";
         normal.setWidth(scaleWidth);
         normal.setHeight(scaleHeight);
     }
 
     if (normal.width() < minWidth || normal.height() < minHeight) {
+        qDebug() << "Adjusting window to minimum size.";
         setMinimumSize(minWidth, minHeight);
     } else {
+        qDebug() << "Setting window to normal size.";
         setMinimumSize(normal.width(), normal.height());
     }
 
@@ -73,10 +76,12 @@ MainWindow::MainWindow(QWidget *parent)
 
 //    m_handler->getDeviceInfo(); //call after initUi
     QTimer::singleShot(200, this, SLOT(getDeviceInfo()));
+    qDebug() << "MainWindow constructor finished.";
 }
 
 MainWindow::~MainWindow()
 {
+    qDebug() << "MainWindow destructor called.";
 //    if (nullptr != m_bufferWin) {
 //        m_bufferWin->deleteLater();
 //    }
@@ -84,12 +89,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+    qDebug() << "MainWindow::closeEvent called.";
     m_central->HandleQuit();
 //    m_handler->Quit();
     QProcess proc;
     proc.startDetached("/usr/bin/dbus-send --system --type=method_call --dest=com.deepin.diskmanager /com/deepin/diskmanager com.deepin.diskmanager.Quit");
 
     DMainWindow::closeEvent(event);
+    qDebug() << "MainWindow::closeEvent completed.";
 }
 
 void MainWindow::initUi()
@@ -106,6 +113,7 @@ void MainWindow::initUi()
     QIcon icon = Common::getIcon("refresh");
     m_btnRefresh->setIcon(icon);
     setSizebyMode(m_btnRefresh);
+    qDebug() << "setSizebyMode called for m_btnRefresh.";
     m_btnRefresh->setToolTip(tr("Refresh"));
     m_btnRefresh->setCheckable(false);
     m_btnRefresh->setObjectName("refresh");
@@ -125,17 +133,22 @@ void MainWindow::initUi()
     titlebar()->addWidget(widget, Qt::AlignLeft);
     titlebar()->addWidget(m_central->getTitleWidget(), Qt::AlignCenter);
     titlebar()->menu();
+    qDebug() << "MainWindow UI initialization complete.";
 }
 
 void MainWindow::setSizebyMode(DPushButton *button)
 {
+    qDebug() << "setSizebyMode called.";
 #ifdef DTKWIDGET_CLASS_DSizeMode
+    qDebug() << "DTKWIDGET_CLASS_DSizeMode is defined, setting size by DSizeModeHelper.";
     button->setFixedSize(QSize(DSizeModeHelper::element(24, 36), DSizeModeHelper::element(24, 36)));
     button->setIconSize(QSize(DSizeModeHelper::element(12, 18), DSizeModeHelper::element(12, 18)));
 #else
+    qDebug() << "DTKWIDGET_CLASS_DSizeMode is not defined, setting fixed size (36x36) and icon size (18x18).";
     button->setFixedSize(QSize(36, 36));
     button->setIconSize(QSize(18, 18));
 #endif
+    qDebug() << "setSizebyMode completed.";
 }
 
 void MainWindow::initConnection()
@@ -144,10 +157,13 @@ void MainWindow::initConnection()
     connect(m_handler, &DMDbusHandler::showSpinerWindow, this, &MainWindow::onShowSpinerWindow);
     connect(m_btnRefresh, &DPushButton::clicked, this, &MainWindow::onRefreshButtonClicked);
 #ifdef DTKWIDGET_CLASS_DSizeMode
+    qDebug() << "Connecting sizeModeChanged signal for DTKWIDGET_CLASS_DSizeMode.";
     connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::sizeModeChanged, this, [this]() {
         setSizebyMode(m_btnRefresh);
+        qDebug() << "Size mode changed, setSizebyMode called for m_btnRefresh.";
     });
 #endif
+    qDebug() << "MainWindow signal connections setup complete.";
 }
 
 void MainWindow::onHandleQuitAction()
@@ -181,10 +197,12 @@ void MainWindow::onShowSpinerWindow(bool isShow, const QString &title)
 {
     qDebug() << "Spinner window visibility changed:" << isShow << "title:" << title;
     if (isShow) {
+        qDebug() << "Show spinner window";
         Dtk::Widget::moveToCenter(m_dialog);
         m_dialog->setShowSpinner(isShow, title);
         m_dialog->show();
     } else {
+        qDebug() << "Hide spinner window";
         m_dialog->setShowSpinner(isShow, title);
         m_dialog->hide();
 

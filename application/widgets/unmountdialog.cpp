@@ -25,6 +25,7 @@ UnmountDialog::UnmountDialog(QWidget *parent)
 
 void UnmountDialog::initUi()
 {
+    qDebug() << "Initializing UnmountDialog UI.";
     QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
     DLabel *tipLabel = new DLabel(tr("Make sure there are no programs running on the disk"), this);
     tipLabel->setWordWrap(true);
@@ -34,16 +35,19 @@ void UnmountDialog::initUi()
     mainLayout->addWidget(tipLabel);
 
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
+        qDebug() << "Current level is PARTITION, setting title for partition unmount.";
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         setTitle(tr("Unmount %1").arg(info.m_path));
         qDebug()  << "Preparing to unmount partition:" << info.m_path;
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
+        qDebug() << "Current level is LOGICALVOLUME, setting title for logical volume unmount.";
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
         setTitle(tr("Unmount %1").arg(lvInfo.m_lvName));
         qDebug()  << "Preparing to unmount logical volume:" << lvInfo.m_lvName;
 
         tipLabel->setText(tr("Make sure there are no programs running on the logical volume"));
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
+        qDebug() << "Current level is DISK, setting title for disk unmount.";
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         setTitle(tr("Unmount %1").arg(info.m_path));
         qDebug()  << "Preparing to unmount disk:" << info.m_path;
@@ -55,16 +59,21 @@ void UnmountDialog::initUi()
     getButton(index)->setAccessibleName("cancel");
     getButton(m_okCode)->setAccessibleName("unmountButton");
     setOnButtonClickedClose(false);
+    qDebug() << "UnmountDialog UI initialization completed.";
 }
 
 void UnmountDialog::initConnection()
 {
+    qDebug() << "Initializing UnmountDialog connections.";
     connect(this, &UnmountDialog::buttonClicked, this, &UnmountDialog::onButtonClicked);
+    qDebug() << "UnmountDialog connections initialized.";
 }
 
 void UnmountDialog::umountCurMountPoints()
 {
+    qDebug() << "umountCurMountPoints called.";
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
+        qDebug() << "Current level is PARTITION for unmount operation.";
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
             qDebug()  << "Unmounting encrypted partition:" << info.m_path;
@@ -74,6 +83,7 @@ void UnmountDialog::umountCurMountPoints()
             DMDbusHandler::instance()->unmount();
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
+        qDebug() << "Current level is LOGICALVOLUME for unmount operation.";
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
         if (lvInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
             qDebug()  << "Unmounting encrypted logical volume:" << lvInfo.m_lvName;
@@ -91,38 +101,46 @@ void UnmountDialog::umountCurMountPoints()
             DMDbusHandler::instance()->onUmountLV(lvAction);
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
+        qDebug() << "Current level is DISK for unmount operation.";
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
             qDebug()  << "Unmounting encrypted disk:" << info.m_path;
             DMDbusHandler::instance()->cryptUmount(DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path), info.m_path);
         }
     }
+    qDebug() << "umountCurMountPoints completed.";
 }
 
 void UnmountDialog::onButtonClicked(int index, const QString &text)
 {
+    qDebug() << "onButtonClicked called with index:" << index << ", text:" << text;
     Q_UNUSED(text);
     if (m_okCode == index) {
+        qDebug() << "OK button clicked.";
         int partitionFlag = 0;
         bool isSysPath = false;
         bool lvFlag = false;
         if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
+            qDebug() << "Current level is PARTITION, checking system path for partition.";
             PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
             partitionFlag = info.m_flag;
 
             for (int i = 0; i < info.m_mountPoints.size(); i++) {
                 if (info.m_mountPoints[i] == "/boot/efi" || info.m_mountPoints[i] == "/boot"
                         || info.m_mountPoints[i] == "/" || info.m_mountPoints[i] == "/recovery") {
+                    qDebug() << "Partition mount point is a system path:" << info.m_mountPoints[i];
                     isSysPath = true;
                     break;
                 }
             }
         } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
+            qDebug() << "Current level is LOGICALVOLUME, checking system path for logical volume.";
             LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
             lvFlag = lvInfo.m_dataFlag;
             for (int i = 0; i < lvInfo.m_mountPoints.size(); i++) {
                 if (lvInfo.m_mountPoints[i] == "/boot/efi" || lvInfo.m_mountPoints[i] == "/boot"
                         || lvInfo.m_mountPoints[i] == "/" || lvInfo.m_mountPoints[i] == "/recovery") {
+                    qDebug() << "Logical volume mount point is a system path:" << lvInfo.m_mountPoints[i];
                     isSysPath = true;
                     break;
                 }
@@ -136,15 +154,21 @@ void UnmountDialog::onButtonClicked(int index, const QString &text)
             unmountWarningDialog.setObjectName("firstWarning");
             unmountWarningDialog.setAccessibleName("firstWarning");
             if (unmountWarningDialog.exec() == DDialog::Accepted) {
+                qDebug() << "User accepted unmount warning, proceeding with unmount.";
                 umountCurMountPoints();
                 qDebug() << "User canceled unmount operation";
                 close();
+            } else {
+                qDebug() << "User rejected unmount warning.";
             }
         } else {
+            qDebug() << "Not a system path, proceeding with unmount.";
             umountCurMountPoints();
             close();
         }
     } else {
+        qDebug() << "Cancel button clicked, closing dialog.";
         close();
     }
+    qDebug() << "onButtonClicked completed.";
 }

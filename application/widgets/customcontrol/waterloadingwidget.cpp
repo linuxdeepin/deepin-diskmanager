@@ -19,6 +19,7 @@ WaterLoadingWidget::WaterLoadingWidget(QWidget *parent) : QWidget(parent)
 
 void WaterLoadingWidget::initUi()
 {
+    qDebug() << "WaterLoadingWidget::initUi called.";
     m_waterProgress = new DWaterProgress(this);
     m_waterProgress->setFixedSize(98, 98);
     m_waterProgress->setValue(0);
@@ -36,22 +37,27 @@ void WaterLoadingWidget::initUi()
 
 void WaterLoadingWidget::initConnection()
 {
+    qDebug() << "WaterLoadingWidget::initConnection called.";
     connect(m_time, &QTimer::timeout,this, &WaterLoadingWidget::onStartWaterProgress);
 }
 
 void WaterLoadingWidget::onStartWaterProgress()
 {
+    qDebug() << "WaterLoadingWidget::onStartWaterProgress called.";
 #if QT_VERSION_MAJOR > 5
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> distrib(0, 9);
 
     int value = (m_waterProgress->value() + distrib(gen));
+    qDebug() << "QT_VERSION_MAJOR > 5, generated value:" << value;
 #else
     int value = (m_waterProgress->value() + qrand() % 10);
+    qDebug() << "QT_VERSION_MAJOR <= 5, generated value:" << value;
 #endif
     value > 99 ? value = 99 : value;
     m_waterProgress->setValue(value);
+    qDebug() << "Water progress value set to:" << value;
 }
 
 void WaterLoadingWidget::setStartTime(int msec)

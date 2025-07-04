@@ -649,6 +649,20 @@ void DeviceStorage::getDiskInfoModel(const QString &devicePath, QString &model)
         }
     }
 
+    cmd = "udevadm info " + devicePath + " | grep ID_MODEL=";
+    proc.start("bash", QStringList() << "-c" << cmd);
+    proc.waitForFinished(-1);
+    outPut = proc.readAllStandardOutput();
+    if (!outPut.isEmpty()) {
+        auto idModel = outPut.split("=", QString::SkipEmptyParts);
+        if (idModel.count() > 1)
+            model = idModel.at(1).trimmed();
+        if (!model.isEmpty())
+            return;
+    }
+
+    qWarning() << "tried a lot but got nothing about model for" << devicePath;
+
     // 若未获取到型号名，返回未知
     qDebug() << "model not found, set to UnKnow";
     model = "UnKnow";

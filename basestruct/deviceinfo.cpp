@@ -8,30 +8,32 @@
 /*********************************** stCustest          *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const stCustest &stcus)
 {
-    qDebug() << "Starting stCustest serialization";
+    // qDebug() << "Starting stCustest serialization";
     argument.beginStructure();
     argument << stcus.m_length
              << stcus.m_heads
              << stcus.m_path;
     argument.endStructure();
-    qDebug() << "Completed stCustest serialization";
+    // qDebug() << "Completed stCustest serialization";
     return argument;
 }
 
 const QDBusArgument &operator>>(const QDBusArgument &argument, stCustest &stcus)
 {
+    // qDebug() << "Starting stCustest deserialization";
     argument.beginStructure();
     argument >> stcus.m_length
              >> stcus.m_heads
              >> stcus.m_path;
 
     argument.endStructure();
+    // qDebug() << "Completed stCustest deserialization";
     return argument;
 }
 /*********************************** HardDiskInfo       *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const HardDiskInfo &inhdinfo)
 {
-    qDebug() << "Starting HardDiskInfo serialization";
+    // qDebug() << "Starting HardDiskInfo serialization";
     argument.beginStructure();
     argument << inhdinfo.m_model
              << inhdinfo.m_vendor
@@ -48,12 +50,13 @@ QDBusArgument &operator<<(QDBusArgument &argument, const HardDiskInfo &inhdinfo)
              << inhdinfo.m_firmwareVersion
              << inhdinfo.m_speed;
     argument.endStructure();
-    qDebug() << "Completed HardDiskInfo serialization";
+    // qDebug() << "Completed HardDiskInfo serialization";
     return argument;
 }
 
 const QDBusArgument &operator>>(const QDBusArgument &argument, HardDiskInfo &inhdinfo)
 {
+    // qDebug() << "Starting HardDiskInfo deserialization";
     argument.beginStructure();
     argument >> inhdinfo.m_model
              >> inhdinfo.m_vendor
@@ -70,12 +73,13 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, HardDiskInfo &inh
              >> inhdinfo.m_firmwareVersion
              >> inhdinfo.m_speed;
     argument.endStructure();
+    // qDebug() << "Completed HardDiskInfo deserialization";
     return argument;
 }
 /*********************************** HardDiskStatusInfo *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const HardDiskStatusInfo &inhdinfo)
 {
-    qDebug() << "Starting HardDiskStatusInfo serialization";
+    // qDebug() << "Starting HardDiskStatusInfo serialization";
     argument.beginStructure();
     argument << inhdinfo.m_id
              << inhdinfo.m_attributeName
@@ -88,12 +92,12 @@ QDBusArgument &operator<<(QDBusArgument &argument, const HardDiskStatusInfo &inh
              << inhdinfo.m_whenFailed
              << inhdinfo.m_rawValue;
     argument.endStructure();
-    qDebug() << "Completed HardDiskStatusInfo serialization";
+    // qDebug() << "Completed HardDiskStatusInfo serialization";
     return argument;
 }
 const QDBusArgument &operator>>(const QDBusArgument &argument, HardDiskStatusInfo &inhdinfo)
 {
-    qDebug() << "Starting HardDiskStatusInfo deserialization";
+    // qDebug() << "Starting HardDiskStatusInfo deserialization";
     argument.beginStructure();
     argument >> inhdinfo.m_id
              >> inhdinfo.m_attributeName
@@ -107,12 +111,13 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, HardDiskStatusInf
              >> inhdinfo.m_rawValue;
     argument.endStructure();
 
-    qDebug() << "Completed HardDiskStatusInfo deserialization";
+    // qDebug() << "Completed HardDiskStatusInfo deserialization";
     return argument;
 }
 /*********************************** DeviceInfo         *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const DeviceInfo &info)
 {
+    // qDebug() << "Starting DeviceInfo serialization";
     argument.beginStructure();
     argument << info.m_length
              << info.m_heads
@@ -136,11 +141,13 @@ QDBusArgument &operator<<(QDBusArgument &argument, const DeviceInfo &info)
              << static_cast<int>(info.m_luksFlag)
              << info.m_crySupport;
     argument.endStructure();
+    // qDebug() << "Completed DeviceInfo serialization";
     return argument;
 }
 
 const QDBusArgument &operator>>(const QDBusArgument &argument, DeviceInfo &info)
 {
+    // qDebug() << "Starting DeviceInfo deserialization";
     argument.beginStructure();
     int flag = 0;
     int flag2 = 0;
@@ -168,7 +175,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, DeviceInfo &info)
     info.m_vgFlag = static_cast<LVMFlag>(flag);
     info.m_luksFlag = static_cast<LUKSFlag>(flag2);
     argument.endStructure();
-    qDebug() << "Completed DeviceInfo deserialization";
+    // qDebug() << "Completed DeviceInfo deserialization";
     return argument;
 }
 
@@ -187,7 +194,7 @@ DeviceInfo::DeviceInfo()
 /*********************************** WipeAction         *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const WipeAction &data)
 {
-    qDebug() << "Starting WipeAction serialization";
+    // qDebug() << "Starting WipeAction serialization";
     argument.beginStructure();
     argument << data.m_fstype
              << data.m_path
@@ -201,12 +208,13 @@ QDBusArgument &operator<<(QDBusArgument &argument, const WipeAction &data)
              << data.m_decryptStr
              << data.m_dmName;
     argument.endStructure();
+    // qDebug() << "Completed WipeAction serialization";
     return argument;
 }
 
 const QDBusArgument &operator>>(const QDBusArgument &argument, WipeAction &data)
 {
-    qDebug() << "Starting WipeAction deserialization";
+    // qDebug() << "Starting WipeAction deserialization";
     argument.beginStructure();
     int flag1, flag2;
     argument >> data.m_fstype
@@ -223,5 +231,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, WipeAction &data)
     data.m_luksFlag = static_cast<LUKSFlag>(flag1);
     data.m_crypt = static_cast<CRYPT_CIPHER>(flag2);
     argument.endStructure();
+    // qDebug() << "Completed WipeAction deserialization";
     return argument;
 }

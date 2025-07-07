@@ -57,23 +57,29 @@ BlockSpecial::BlockSpecial(const QString &name)
     qDebug() << "BlockSpecial object created for device:" << name;
     MMNumberMapping::const_iterator mmNumIter = mmNumberCache.find(name);
     if (mmNumIter != mmNumberCache.end()) {
+        qDebug() << "Found device in cache:" << name;
         // Use already cached major, minor pair
 
         m_major = mmNumIter.value().m_major;
         m_minor = mmNumIter.value().m_minor;
         return;
     }
+    qDebug() << "Device not in cache, calling stat:" << name;
 
     MmNumber pair = {0UL, 0UL};
     // Call stat(name, ...) to get the major, minor pair
     struct stat sb;
     if (stat(name.toStdString().c_str(), &sb) == 0 && S_ISBLK(sb.st_mode)) {
+        qDebug() << "stat successful and is a block device:" << name;
         m_major = major(sb.st_rdev);
         m_minor = minor(sb.st_rdev);
         pair.m_major = m_major;
         pair.m_minor = m_minor;
+    } else {
+        qDebug() << "stat failed or is not a block device:" << name;
     }
     // Add new cache entry for name to major, minor pair
+    qDebug() << "Adding new cache entry for" << name << "with major" << pair.m_major << "minor" << pair.m_minor;
     mmNumberCache[name] = pair;
 }
 
@@ -101,11 +107,14 @@ void BlockSpecial::registerBlockSpecial(const QString &name, unsigned long major
 
 bool operator==(const BlockSpecial &lhs, const BlockSpecial &rhs)
 {
+    // qDebug() << "Entering operator== for BlockSpecial";
     if (lhs.m_major > 0UL || lhs.m_minor > 0UL) {
+        // qDebug() << "Comparing by major/minor number for" << lhs.m_name << "and" << rhs.m_name;
         // Match block special files by major, minor device numbers.
         return lhs.m_major == rhs.m_major && lhs.m_minor == rhs.m_minor;
     }
     else {
+        // qDebug() << "Comparing by name for" << lhs.m_name << "and" << rhs.m_name;
         // For non-block special files fall back to name string compare.
         return lhs.m_name == rhs.m_name;
     }
@@ -113,11 +122,14 @@ bool operator==(const BlockSpecial &lhs, const BlockSpecial &rhs)
 
 bool operator<(const BlockSpecial &lhs, const BlockSpecial &rhs)
 {
+    // qDebug() << "Entering operator< for BlockSpecial";
     if (lhs.m_major == 0 && rhs.m_major == 0 && lhs.m_minor == 0 && rhs.m_minor == 0) {
+        // qDebug() << "Comparing non-block special files by name for" << lhs.m_name << "and" << rhs.m_name;
         // Two non-block special files are ordered by name.
         return lhs.m_name < rhs.m_name;
     }
     else {
+        // qDebug() << "Comparing block special files by major/minor number for" << lhs.m_name << "and" << rhs.m_name;
         // Block special files are ordered by major, minor device numbers.
         return lhs.m_major < rhs.m_major || (lhs.m_major == rhs.m_major && lhs.m_minor < rhs.m_minor);
     }

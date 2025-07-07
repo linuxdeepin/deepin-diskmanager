@@ -34,11 +34,13 @@ WorkThread::WorkThread(QObject *parent)
 
 void WorkThread::setStopFlag(int flag)
 {
+    qDebug() << "Setting stop flag to:" << flag;
     m_stopFlag = flag;
 }
 
 void WorkThread::setCountInfo(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize)
 {
+    qDebug() << "Setting count info for device:" << devicePath << "start:" << blockStart << "end:" << blockEnd << "count:" << checkConut << "size:" << checkSize;
     m_devicePath = devicePath;
     m_blockStart = blockStart;
     m_blockEnd = blockEnd;
@@ -48,6 +50,7 @@ void WorkThread::setCountInfo(const QString &devicePath, int blockStart, int blo
 
 void WorkThread::setTimeInfo(const QString &devicePath, int blockStart, int blockEnd, QString checkTime, int checkSize)
 {
+    qDebug() << "Setting time info for device:" << devicePath << "start:" << blockStart << "end:" << blockEnd << "time:" << checkTime << "size:" << checkSize;
     m_devicePath = devicePath;
     m_blockStart = blockStart;
     m_blockEnd = blockEnd;
@@ -62,6 +65,7 @@ void WorkThread::runCount()
     Sector j = m_blockStart + 1;
     QProcess proc;
     while (j <= m_blockEnd + 1 && m_stopFlag != 2) {
+        // qDebug() << "Checking block:" << i;
         QString cmd = QString("badblocks -sv -c %1 -b %2 %3 %4 %5").arg(m_checkConut).arg(DEFAULT_BLOCK_SIZE).arg(m_devicePath).arg(j).arg(i);
 
         QDateTime ctime = QDateTime::currentDateTime();
@@ -72,7 +76,7 @@ void WorkThread::runCount()
         cmd = proc.readAllStandardError();
 
         if (cmd.indexOf("0/0/0") != -1) {
-
+            // qDebug() << "Block" << i << "is good";
             QString cylinderNumber = QString("%1").arg(i);
             QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
             QString cylinderStatus = "good";
@@ -80,7 +84,7 @@ void WorkThread::runCount()
 
             emit checkBadBlocksInfo(cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
         } else {
-
+            // qDebug() << "Block" << i << "is bad";
             QString cylinderNumber = QString("%1").arg(i);
             QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
             QString cylinderStatus = "bad";
@@ -103,11 +107,12 @@ void WorkThread::runCount()
 
 void WorkThread::runTime()
 {
-
+    qDebug() << "Starting bad blocks check by time. Range:" << m_blockStart << "-" << m_blockEnd << "Time limit:" << m_checkTime;
     Sector i = m_blockStart;
     Sector j = m_blockStart + 1;
     QProcess proc;
     while (j <= m_blockEnd + 1 && m_stopFlag != 2) {
+        // qDebug() << "Checking block:" << i;
         QString cmd = QString("badblocks -sv -b %1 %2 %3 %4").arg(DEFAULT_BLOCK_SIZE).arg(m_devicePath).arg(j).arg(i);
 
         QDateTime ctime = QDateTime::currentDateTime();
@@ -118,6 +123,7 @@ void WorkThread::runTime()
         cmd = proc.readAllStandardError();
 
         if (ctime.msecsTo(ctime1) > m_checkTime.toInt()) {
+            // qDebug() << "Block" << i << "is bad (timeout)";
             QString cylinderNumber = QString("%1").arg(i);
             QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
             QString cylinderStatus = "bad";
@@ -126,6 +132,7 @@ void WorkThread::runTime()
             emit checkBadBlocksInfo(cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
         } else {
             if (cmd.indexOf("0/0/0") != -1) {
+                // qDebug() << "Block" << i << "is good";
                 QString cylinderNumber = QString("%1").arg(i);
                 QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
                 QString cylinderStatus = "good";
@@ -133,6 +140,7 @@ void WorkThread::runTime()
 
                 emit checkBadBlocksInfo(cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
             } else {
+                // qDebug() << "Block" << i << "is bad (read error)";
                 QString cylinderNumber = QString("%1").arg(i);
                 QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
                 QString cylinderStatus = "bad";
@@ -146,7 +154,10 @@ void WorkThread::runTime()
     }
 
     if (m_stopFlag != 2) {
+        qDebug() << "Bad blocks time check finished normally";
         emit checkBadBlocksFinished();
+    } else {
+        qDebug() << "Bad blocks time check was stopped by user";
     }
 }
 
@@ -160,6 +171,7 @@ FixThread::FixThread(QObject *parent)
 
 void FixThread::setStopFlag(int flag)
 {
+    qDebug() << "Setting fix thread stop flag to:" << flag;
     m_stopFlag = flag;
 }
 
@@ -169,6 +181,7 @@ void FixThread::runFix()
     int i = 0;
     QProcess proc;
     while (i < m_list.size() && m_stopFlag != 2) {
+        // qDebug() << "Fixing block:" << m_list.at(i);
         Sector j = m_list.at(i).toInt();
         Sector k = m_list.at(i).toInt() + 1;
         QString cmd = QString("badblocks -sv -b %1 -w %2 %3 %4").arg(m_checkSize).arg(m_devicePath).arg(k).arg(j);
@@ -181,14 +194,14 @@ void FixThread::runFix()
         cmd = proc.readAllStandardError();
 
         if (cmd.indexOf("0/0/0") != -1) {
-
+            // qDebug() << "Fixed block" << j << "successfully";
             QString cylinderNumber = QString("%1").arg(j);
             QString cylinderStatus = "good";
             QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
 
             emit fixBadBlocksInfo(cylinderNumber, cylinderStatus, cylinderTimeConsuming);
         } else {
-
+            // qDebug() << "Failed to fix block" << j;
             QString cylinderNumber = QString("%1").arg(j);
             QString cylinderStatus = "bad";
             QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
@@ -208,6 +221,7 @@ void FixThread::runFix()
 
 void FixThread::setFixBadBlocksInfo(const QString &devicePath, QStringList list, int checkSize)
 {
+    qDebug() << "Setting fix info for device:" << devicePath << "with" << list.count() << "blocks and check size" << checkSize;
     m_devicePath = devicePath;
     m_list = list;
     m_checkSize = checkSize;
@@ -239,8 +253,10 @@ void ProbeThread::probeDeviceInfo()
 
         //only add this device if we can read the first sector (which means it's a real device)
 
-        if (PartedCore::useableDevice(lpDevice))
+        if (PartedCore::useableDevice(lpDevice)) {
+            qDebug() << "Device is usable, adding to paths:" << lpDevice->path;
             devicePaths.push_back(lpDevice->path);
+        }
 //        qDebug() << lpDevice->path;
         lpDevice = ped_device_get_next(lpDevice);
     }
@@ -325,22 +341,28 @@ LVMThread::LVMThread(QObject *parent)
 
 void LVMThread::deletePVList(LVMInfo lvmInfo, QList<PVData> devList)
 {
+    qDebug() << "LVMThread::deletePVList BEGIN";
     static bool flag = true; //同时只允许一个线程进入
     if (flag) {
+        qDebug() << "flag is true";
         flag = false;
         emit deletePVListFinished(LVMOperator::deletePVList(lvmInfo, devList));
     }
     flag = true;
+    qDebug() << "LVMThread::deletePVList END";
 }
 
 void LVMThread::resizeVG(LVMInfo lvmInfo, QString vgName, QList<PVData> devList, long long size)
 {
+    qDebug() << "LVMThread::resizeVG BEGIN";
     static bool flag = true;
     if (flag) {
+        qDebug() << "flag is true";
         flag = false;
         emit resizeVGFinished(LVMOperator::resizeVG(lvmInfo, vgName, devList, size));
     }
     flag = true;
+    qDebug() << "LVMThread::resizeVG END";
 }
 
 }

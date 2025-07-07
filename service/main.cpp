@@ -17,10 +17,12 @@ const QString DiskManagerPath = "/com/deepin/diskmanager";
 
 void checkFrontEndQuit(uint frontEndPid)
 {
+    qDebug() << "checkFrontEndQuit" << frontEndPid;
     QString frontEndExe = QString("/proc/%1/exe").arg(frontEndPid);
     QFileInfo info(frontEndExe);
 
     if (info.symLinkTarget() != "/usr/bin/deepin-diskmanager") {
+        qWarning() << "Front-end process has quit";
         QCoreApplication::exit(0);
     }
 }
@@ -32,6 +34,7 @@ int main(int argc, char *argv[])
 
     qDebug() << "Application starting with PATH:" << PATH;
     if (PATH.isEmpty()) {
+        qWarning() << "PATH environment variable is empty";
         PATH = "/usr/bin";
     }
     PATH += ":/usr/sbin";
@@ -44,10 +47,13 @@ int main(int argc, char *argv[])
         qCritical() << "Invalid arguments count:" << argc;
         return 1;
     } else {
+        qDebug() << "Arguments count:" << argc;
         QString frontEndPidString(argv[1]);
         frontEndPid = frontEndPidString.toUInt();
-        if (frontEndPid == 0)
+        if (frontEndPid == 0) {
+            qCritical() << "Invalid front-end PID:" << frontEndPid;
             return 1;
+        }
         frontEndDBusName = QString(argv[2]);
     }
 
@@ -63,6 +69,7 @@ int main(int argc, char *argv[])
     setLogDir(LogPath);
     if (!dirCheck.exists(LogPath))
     {
+        qDebug() << "Log path does not exist, creating:" << LogPath;
         dirCheck.mkpath(LogPath);
     }
     //检查日志是否过期

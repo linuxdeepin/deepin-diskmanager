@@ -26,12 +26,14 @@ FS Btrfs::getFilesystemSupport()
 
     if (!Utils::findProgramInPath("mdir").isEmpty())
     {
+        qDebug() << "mdir found, enabling create support";
         fs.create = FS::EXTERNAL;
         fs.create_with_label = FS::EXTERNAL;
     }
 
     if (!Utils::findProgramInPath("btrfs").isEmpty())
     {
+        qDebug() << "btrfs found, enabling read, check, and write_label support";
         fs.read = FS::EXTERNAL;
         fs .read_label = FS::EXTERNAL ;
         fs .read_uuid = FS::EXTERNAL ;
@@ -45,17 +47,22 @@ FS Btrfs::getFilesystemSupport()
                 && fs.check
                 && Utils::kernelSupportFS( "btrfs" ))
         {
+            qDebug() << "mount, umount, and kernel support found, enabling resize support";
             fs.grow = FS::EXTERNAL ;
-            if (fs.read) //needed to determine a minimum file system size.
+            if (fs.read) { //needed to determine a minimum file system size.
+                qDebug() << "read support found, enabling shrink support";
                 fs.shrink = FS::EXTERNAL ;
+            }
         }
     }
 
     if (!Utils::findProgramInPath("btrfstune").isEmpty()) {
+        qDebug() << "btrfstune found, enabling write_uuid support";
         fs.write_uuid = FS::EXTERNAL;
     }
 
     if ( fs .check ) {
+        qDebug() << "check support found, enabling copy and move support";
         fs.copy = FS::GPARTED;
         fs.move = FS::GPARTED;
     }
@@ -81,29 +88,37 @@ void Btrfs::setUsedSectors(Partition &partition)
 
     //Btrfs file system wide used bytes (extents and items)
     QString str ;
-    if (!(str = Utils::regexpLabel(output, "FS bytes used ([0-9\\.]+( ?[KMGTPE]?i?B)?)" ) ).isEmpty())
+    if (!(str = Utils::regexpLabel(output, "FS bytes used ([0-9\\.]+( ?[KMGTPE]?i?B)?)" ) ).isEmpty()) {
+        qDebug() << "Found total fs used string:" << str;
         total_fs_used = qRound64( btrfsSize2Double(str)) ;
+    }
     QString::size_type offset = 0 ;
     QString::size_type index ;
     while ((index = output.indexOf("devid ", offset)) != -1)
     {
+        // qDebug() << "Found devid at index:" << index;
         QString devid_path = Utils::regexpLabel(output.mid(index),
                                                         "devid .* path (/dev/[[:graph:]]+)" ) ;
         if (!devid_path.isEmpty())
         {
+            // qDebug() << "Found devid path:" << devid_path;
             //Btrfs per devid used bytes (chunks)
             Byte_Value used = -1 ;
             if (!(str = Utils::regexpLabel( output.mid( index ),
                                                 "devid .* used ([0-9\\.]+( ?[KMGTPE]?i?B)?) path" ) ).isEmpty())
             {
+                // qDebug() << "Found used string for devid:" << str;
                 used = btrfsSize2num(str, ptn_size, false) ;
                 sum_devid_used += used ;
-                if ( devid_path.contains(partition.getPath()))
+                if ( devid_path.contains(partition.getPath())) {
+                    // qDebug() << "devid_path contains partition path, setting devid_used";
                     devid_used = used ;
+                }
             }
 
             if ( devid_path.contains(partition.getPath()))
             {
+                // qDebug() << "devid_path contains partition path, getting device size";
                 //Btrfs per device size bytes (chunks)
                 if (!(str = Utils::regexpLabel( output.mid(index),
                                                     "devid .* size ([0-9\\.]+( ?[KMGTPE]?i?B)?) used " ) ).isEmpty());
@@ -115,6 +130,7 @@ void Btrfs::setUsedSectors(Partition &partition)
 
     if ( total_fs_used > -1 && devid_size > -1 && devid_used > -1 && sum_devid_used > 0 )
     {
+        qDebug() << "Calculating and setting sector usage";
         auto t = qRound64( devid_size / double(partition.m_sectorSize)) ;               //ptn fs size
         double ptn_fs_used = total_fs_used * ( devid_used / double(sum_devid_used) ) ;  //ptn fs used
         auto n = t - qRound64( ptn_fs_used / double(partition.m_sectorSize) ) ;
@@ -129,12 +145,15 @@ void Btrfs::readLabel(Partition &partition)
     Utils::executCmd(QString("btrfs filesystem show %1").arg(partition.getPath()), output, error);
 
     if (output.contains("Label: none  uuid:")) {
+        qDebug() << "Label is none";
         partition.setFilesystemLabel("");
     } else {
+        qDebug() << "Label is not none, extracting label";
         // Try matching a label enclosed in single quotes, then without quotes, to
         // handle reporting of mounted file systems by old btrfs-progs 3.12.
         QString label = Utils::regexpLabel(output, "'(.*)'") ;
         if (!label.isEmpty()) {
+            qDebug() << "Label found with single quotes, removing them";
             label = label.replace("'", "");
         }
         partition.setFilesystemLabel(label);
@@ -148,8 +167,10 @@ bool Btrfs::writeLabel(const Partition &partition)
     qDebug() << "Writing label for partition:" << partition.getPath()
             << "new label:" << partition.getFileSystemLabel();
     QString output, error;
-    if (partition.m_busy)
+    if (partition.m_busy) {
+        qDebug() << "Partition is busy, unmounting it";
         Utils::executCmd(QString("umount -v %1").arg(partition.getPath()), output, error);
+    }
 
 
     auto errCode = Utils::executCmd(QString("btrfs filesystem label %1 %2")
@@ -170,6 +191,7 @@ void Btrfs::readUuid(Partition &partition)
 
     QString uuid = Utils::regexpLabel(output, "[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}");
     if (!uuid.isEmpty()) {
+        qDebug() << "Found UUID:" << uuid;
         partition.m_uuid = uuid;
     }
 }
@@ -189,8 +211,10 @@ bool Btrfs::create(const Partition &new_partition)
     QString output, error;
     QString cmd;
     if (new_partition.getFileSystemLabel().isEmpty() || new_partition.getFileSystemLabel() == " ") {
+        qDebug() << "Label is empty, creating without label";
         cmd = QString("mkfs.btrfs -f %1").arg(new_partition.getPath());
     } else {
+        qDebug() << "Label is not empty, creating with label";
         cmd = QString("mkfs.btrfs -f -L %1 %2").arg(new_partition.getFileSystemLabel()).arg(new_partition.getPath());
     }
     auto exitCode = Utils::executCmd(cmd, output, error);
@@ -206,6 +230,7 @@ bool Btrfs::resize(const Partition &partitionNew, bool fillPartition)
     const BTRFS_Device& btrfsDev = getCacheEntry(path);
 
     if (btrfsDev.devid == -1 ) {
+        qDebug() << "Invalid devid, returning false";
         return false;
     }
     QString devIdStr = QString("%1").arg(btrfsDev.devid);
@@ -213,30 +238,39 @@ bool Btrfs::resize(const Partition &partitionNew, bool fillPartition)
     QString mountPoint;
     QString output, error;
     if (!partitionNew.m_busy) {
+        qDebug() << "Partition is not busy, mounting to temporary directory";
         mountPoint = Utils::mkTempDir("");
         if (mountPoint.isEmpty()) {
+            qDebug() << "Failed to create temporary directory";
             return false ;
         }
         success &= Utils::executCmd(QString("mount -v -t btrfs %1 %2").arg(path).arg(mountPoint), output, error) == 0;
     } else  {
+        qDebug() << "Partition is busy, finding existing mount point";
         auto mountPoints = partitionNew.getMountPoints();
         foreach (auto m , mountPoints) {
+            // qDebug() << "Checking mount point:" << m;
             QDir dir(m);
             if (dir.exists()) {
+                // qDebug() << "Mount point exists, using it:" << m;
                 mountPoint = m;
             }
         }
         if (mountPoint.isEmpty()) {
+            qDebug() << "No existing mount point found";
             return false;
         }
     }
 
     if (success) {
+        qDebug() << "Mount successful, resizing filesystem";
         QString size ;
         if (!fillPartition) {
+            qDebug() << "Not filling partition, calculating size";
             size = QString("%1").arg(qFloor(Utils::sectorToUnit(partitionNew.getSectorLength(), partitionNew.m_sectorSize, UNIT_KIB)));
             size += "K";
         } else {
+            qDebug() << "Filling partition, size is max";
             size = "max";
         }
         QString output, error;
@@ -246,6 +280,7 @@ bool Btrfs::resize(const Partition &partitionNew, bool fillPartition)
                 .arg(mountPoint), output, error) == 0;
 
         if (!partitionNew.m_busy) {
+            qDebug() << "Unmounting temporary directory";
             success &= Utils::executCmd(QString("umount -v %1").arg(mountPoint), output, error) == 0;
         }
     }
@@ -258,6 +293,7 @@ bool Btrfs::resize(const Partition &partitionNew, bool fillPartition)
 
 bool Btrfs::resize(const QString &path, const QString &size, bool fillPartition)
 {
+    qDebug() << "Btrfs::resize is not implemented";
     return false;
 }
 
@@ -278,9 +314,12 @@ bool Btrfs::checkRepair(const QString &devpath)
 
 const BTRFS_Device &Btrfs::getCacheEntry(const QString &path)
 {
+    qDebug() << "Btrfs::getCacheEntry BEGIN";
     std::map<BlockSpecial, BTRFS_Device>::const_iterator bd_iter = btrfs_device_cache.find(BlockSpecial(path));
-    if ( bd_iter != btrfs_device_cache .end() )
+    if ( bd_iter != btrfs_device_cache .end() ) {
+        qDebug() << "found in cache";
         return bd_iter ->second ;
+    }
 
     QString output, error ;
     QVector<int> devIdList ;
@@ -304,17 +343,21 @@ const BTRFS_Device &Btrfs::getCacheEntry(const QString &path)
         auto items = line.split(" ", QString::SkipEmptyParts);
 #endif
         if (line.trimmed().startsWith("devid") && items.size() == 8) {
+            qDebug() << "found devid line";
             devIdList.push_back(items[1].toInt());
             pathList.push_back(items[7]);
         }
     }
     //Add cache entries for all found devices
     std::vector<BlockSpecial> bs_list;
-    for (unsigned int i = 0 ; i < pathList.size() ; i ++ )
+    for (unsigned int i = 0 ; i < pathList.size() ; i ++ ) {
+        // qDebug() << "add path to bs_list";
         bs_list.push_back( BlockSpecial(pathList[i] ) );
+    }
 
     for (unsigned int i = 0 ; i < devIdList .size() ; i ++ )
     {
+        // qDebug() << "add devid to cache";
         BTRFS_Device btrfs_dev ;
         btrfs_dev.devid = devIdList[i] ;
         btrfs_dev.members = bs_list;
@@ -322,23 +365,29 @@ const BTRFS_Device &Btrfs::getCacheEntry(const QString &path)
     }
 
     bd_iter = btrfs_device_cache.find( BlockSpecial( path ) );
-    if ( bd_iter != btrfs_device_cache .end() )
+    if ( bd_iter != btrfs_device_cache .end() ) {
+        qDebug() << "found in cache again";
         return bd_iter ->second ;
+    }
 
     //If for any reason we fail to parse the information return an "unknown" record
+    qDebug() << "fail to parse the information return an unknown record";
     static BTRFS_Device btrfs_dev = { -1, } ;
     return btrfs_dev ;
 }
 
 double Btrfs::btrfsSize2Double(QString &str)
 {
+    qDebug() << "Btrfs::btrfsSize2Double BEGIN";
     //"FS bytes used 51.52GiB"
     QString numStr = Utils::regexpLabel(str, "[1-9]\\d*\\.\\d*|0\\.\\d*[1-9]");
     if (!numStr.isEmpty()) {
+        qDebug() << "numStr is not empty";
         double num = numStr.toDouble();
         int index = str.indexOf(numStr);
         int pos = index + numStr.length();
         if (pos < str.length()) {
+            qDebug() << "pos < str.length()";
             char unit = str.at(pos).toLatin1();
 
         }
@@ -353,13 +402,16 @@ double Btrfs::btrfsSize2Double(QString &str)
             case 'E':	mult = EXBIBYTE ;	break ;
             default:	mult = 1 ;		break ;
         }
+        qDebug() << "Btrfs::btrfsSize2Double END";
         return mult * num;
     }
+    qDebug() << "Btrfs::btrfsSize2Double END";
     return 0;
 }
 
 Byte_Value Btrfs::btrfsSize2num(QString &str, Byte_Value ptn_bytes, bool scale_up)
 {
+    qDebug() << "Btrfs::btrfsSize2num BEGIN";
     Byte_Value size_bytes = qRound64( btrfsSize2Double(str )) ;
     double delta         = btrfsSizeMaxDelta( str) ;
     Byte_Value upper_size = size_bytes + ceil(delta) ;
@@ -367,13 +419,16 @@ Byte_Value Btrfs::btrfsSize2num(QString &str, Byte_Value ptn_bytes, bool scale_u
 
     if ( size_bytes > ptn_bytes && lower_size <= ptn_bytes )
     {
+        qDebug() << "size_bytes > ptn_bytes && lower_size <= ptn_bytes";
         size_bytes = ptn_bytes ;
     }
     else if ( scale_up && size_bytes < ptn_bytes && upper_size > ptn_bytes )
     {
+        qDebug() << "scale_up && size_bytes < ptn_bytes && upper_size > ptn_bytes";
         size_bytes = ptn_bytes ;
     }
 
+    qDebug() << "Btrfs::btrfsSize2num END";
     return size_bytes ;
 }
 
@@ -381,6 +436,7 @@ Byte_Value Btrfs::btrfsSize2num(QString &str, Byte_Value ptn_bytes, bool scale_u
 //  tools to str.  E.g. btrfs_size_max_delta("2.00GB") -> 5368709.12
 double Btrfs::btrfsSizeMaxDelta(QString &str)
 {
+    qDebug() << "Btrfs::btrfsSizeMaxDelta BEGIN";
     QString limit_str ;
     //Create limit_str.  E.g. str = "2.00GB" -> limit_str = "0.005GB"
     for (int i = 0; i < str.length(); ++i) {
@@ -395,14 +451,17 @@ double Btrfs::btrfsSizeMaxDelta(QString &str)
         }
     }
     double max_delta = btrfsSize2Double(limit_str) ;
+    qDebug() << "Btrfs::btrfsSizeMaxDelta END";
     return max_delta ;
 }
 
 FS_Limits Btrfs::getFilesystemLimits(const Partition &partition)
 {
+    qDebug() << "Btrfs::getFilesystemLimits BEGIN";
     //m_fsLimits.min_size = 256 * MEBIBYTE;
     m_fsLimits.min_size = -1;
     m_fsLimits.max_size = -1;
+    qDebug() << "Btrfs::getFilesystemLimits END";
     return m_fsLimits;
 }
 

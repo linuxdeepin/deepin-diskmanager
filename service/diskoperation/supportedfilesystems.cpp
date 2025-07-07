@@ -69,13 +69,13 @@ SupportedFileSystems::SupportedFileSystems()
 
 SupportedFileSystems::~SupportedFileSystems()
 {
-    qDebug() << "Cleaning up filesystem objects";
+    // qDebug() << "Cleaning up filesystem objects";
     FSObjectsMap::iterator iter;
     for (iter = m_fsObjects.begin(); iter != m_fsObjects.end(); iter++) {
         auto pvalue = iter.value();
 
         if (pvalue != NULL) {
-            qDebug() << "Deleting filesystem handler for:" << Utils::fileSystemTypeToString(iter.key());
+            // qDebug() << "Deleting filesystem handler for:" << Utils::fileSystemTypeToString(iter.key());
             delete pvalue;
         }
 
@@ -94,8 +94,9 @@ void SupportedFileSystems::findSupportedFilesystems()
             FileSystem *psys = iter.value();
             QString fsName = Utils::fileSystemTypeToString(iter.key());
             m_effectivefs.append(fsName);
-            m_fsSupport.push_back(psys->getFilesystemSupport());
-            qDebug() << "Found supported filesystem:" << fsName;
+            FS support = psys->getFilesystemSupport();
+            m_fsSupport.push_back(support);
+            qDebug() << "Found supported filesystem:" << fsName << "with create support:" << support.create;
         } else {
             FS fsBasicsupp(iter.key());
             fsBasicsupp.move = FS::GPARTED;
@@ -122,11 +123,14 @@ FileSystem *SupportedFileSystems::getFsObject(FSType fstype) const
 
 const FS &SupportedFileSystems::getFsSupport(FSType fstype) const
 {
+    qDebug() << "Getting FS Support for fstype:" << Utils::fileSystemTypeToString(fstype);
     for (int i = 0; i < m_fsSupport.size(); i++) {
         if (m_fsSupport[i].fstype == fstype) {
+            qDebug() << "Found support info for fstype:" << Utils::fileSystemTypeToString(fstype);
             return m_fsSupport[i];
         }
     }
+    qDebug() << "Could not find support info for fstype, returning unsupported object:" << Utils::fileSystemTypeToString(fstype);
     static FS fsNotsupp(FS_UNSUPPORTED);
     return fsNotsupp;
 }
@@ -143,6 +147,7 @@ const FS &SupportedFileSystems::getFsSupport(FSType fstype) const
 
 const QStringList &SupportedFileSystems::getAllFsName()
 {
+    qDebug() << "Getting all effective filesystem names";
     return m_effectivefs;
 }
 

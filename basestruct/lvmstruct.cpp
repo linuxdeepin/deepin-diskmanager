@@ -9,18 +9,22 @@
 /*********************************** PVData *********************************************/
 bool PVData::operator<(const PVData &tmp) const
 {
+    // qDebug() << "Entering PVData::operator<";
     if (m_type == DevType::DEV_UNALLOCATED_PARTITION) {
+        // qDebug() << "Comparing unallocated partition";
         return m_devicePath     < tmp.m_devicePath
                || m_startSector < tmp.m_startSector
                || m_endSector   < tmp.m_endSector
                || m_diskPath    < tmp.m_diskPath
                || m_sectorSize  < tmp.m_sectorSize;
     }
+    // qDebug() << "Comparing allocated partition";
     return m_devicePath < tmp.m_devicePath || m_diskPath < tmp.m_diskPath;
 }
 
 bool PVData::operator==(const PVData &tmp) const
 {
+    // qDebug() << "Entering PVData::operator==";
     return m_devicePath     == tmp.m_devicePath
            && m_startSector == tmp.m_startSector
            && m_endSector   == tmp.m_endSector
@@ -32,6 +36,7 @@ bool PVData::operator==(const PVData &tmp) const
 
 QDBusArgument &operator<<(QDBusArgument &argument, const PVData &data)
 {
+    // qDebug() << "Entering operator<< for PVData";
     argument.beginStructure();
     argument << data.m_devicePath
              << data.m_startSector
@@ -46,6 +51,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const PVData &data)
 
 const QDBusArgument &operator>>(const QDBusArgument &argument, PVData &data)
 {
+    // qDebug() << "Entering operator>> for PVData";
     argument.beginStructure();
     int pvAct, type;
     argument >> data.m_devicePath
@@ -63,6 +69,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PVData &data)
 /*********************************** CreateLVInfo *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const LVAction &data)
 {
+    // qDebug() << "Entering operator<< for LVAction";
     argument.beginStructure();
     argument << data.m_vgName
              << data.m_lvName
@@ -84,6 +91,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LVAction &data)
 
 const QDBusArgument &operator>>(const QDBusArgument &argument, LVAction &data)
 {
+    // qDebug() << "Entering operator>> for LVAction";
     argument.beginStructure();
     int type, act, luksFlag, crypt;
     argument >> data.m_vgName
@@ -110,6 +118,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LVAction &data)
 /*********************************** LVDATA *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const LVData &data)
 {
+    // qDebug() << "Entering operator<< for LVData";
     argument.beginStructure();
     argument << data.m_lvName
              << data.m_lvPath
@@ -121,6 +130,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LVData &data)
 
 const QDBusArgument &operator>>(const QDBusArgument &argument, LVData &data)
 {
+    // qDebug() << "Entering operator>> for LVData";
     argument.beginStructure();
     argument >> data.m_lvName
              >> data.m_lvPath
@@ -132,6 +142,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LVData &data)
 /*********************************** VGDATA *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const VGData &data)
 {
+    // qDebug() << "Entering operator<< for VGData";
     argument.beginStructure();
     argument << data.m_vgName
              << data.m_vgSize
@@ -144,6 +155,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const VGData &data)
 
 const QDBusArgument &operator>>(const QDBusArgument &argument, VGData &data)
 {
+    // qDebug() << "Entering operator>> for VGData";
     argument.beginStructure();
     argument >> data.m_vgName
              >> data.m_vgSize
@@ -156,6 +168,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, VGData &data)
 /*********************************** PVRANGES *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const PVRanges &data)
 {
+    // qDebug() << "Entering operator<< for PVRanges";
     argument.beginStructure();
     argument << data.m_lvName
              << data.m_devPath
@@ -170,6 +183,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const PVRanges &data)
 
 const QDBusArgument &operator>>(const QDBusArgument &argument, PVRanges &data)
 {
+    // qDebug() << "Entering operator>> for PVRanges";
     argument.beginStructure();
     argument >> data.m_lvName
              >> data.m_devPath
@@ -184,6 +198,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PVRanges &data)
 /*********************************** PVInfo *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const PVInfo &data)
 {
+    // qDebug() << "Entering operator<< for PVInfo";
     argument.beginStructure();
     argument << data.m_pvFmt
              << data.m_vgName
@@ -210,6 +225,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const PVInfo &data)
 
 const QDBusArgument &operator>>(const QDBusArgument &argument,  PVInfo &data)
 {
+    // qDebug() << "Entering operator>> for PVInfo";
     argument.beginStructure();
     int err, devType;
     argument >> data.m_pvFmt
@@ -239,6 +255,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument,  PVInfo &data)
 /*********************************** LVInfo *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const LVInfo &data)
 {
+    // qDebug() << "Entering operator<< for LVInfo";
     argument.beginStructure();
     argument << data.m_vgName
              << data.m_lvPath
@@ -266,6 +283,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LVInfo &data)
 
 const QDBusArgument &operator>>(const QDBusArgument &argument, LVInfo &data)
 {
+    // qDebug() << "Entering operator>> for LVInfo";
     argument.beginStructure();
     int err, type, luksFlag;
     argument >> data.m_vgName
@@ -297,6 +315,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, LVInfo &data)
 /*********************************** VGInfo *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const VGInfo &data)
 {
+    // qDebug() << "Entering operator<< for VGInfo";
     argument.beginStructure();
     argument << data.m_vgName
              << data.m_vgUuid
@@ -320,6 +339,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const VGInfo &data)
 
 const QDBusArgument &operator>>(const QDBusArgument &argument,  VGInfo &data)
 {
+    // qDebug() << "Entering operator>> for VGInfo";
     argument.beginStructure();
     int err, luksFlag;
     argument >> data.m_vgName
@@ -369,8 +389,10 @@ bool VGInfo::lvInfoExists(const QString &lvName)
 
 bool VGInfo::isAllPV(QVector<QString> pvList) const
 {
+    qDebug() << "VGInfo::isAllPV - Checking pvList:" << pvList;
     QVector<QString> list = m_pvInfo.keys().toVector();
     if (pvList.size() < list.size()) {
+        qDebug() << "PV count mismatch";
         return false;
     }
 
@@ -381,6 +403,7 @@ bool VGInfo::isAllPV(QVector<QString> pvList) const
 /*********************************** LVMInfo *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const LVMInfo &data)
 {
+    // qDebug() << "Entering operator<< for LVMInfo";
     argument.beginStructure();
     argument << data.m_pvInfo
              << data.m_vgInfo
@@ -391,6 +414,7 @@ QDBusArgument &operator<<(QDBusArgument &argument, const LVMInfo &data)
 
 const QDBusArgument &operator>>(const QDBusArgument &argument,  LVMInfo &data)
 {
+    // qDebug() << "Entering operator>> for LVMInfo";
     argument.beginStructure();
     int err;
     argument >> data.m_pvInfo
@@ -451,15 +475,19 @@ VGInfo LVMInfo::getVG(const QString &vgName)
 
 VGInfo LVMInfo::getVG(const PVData &pv)
 {
+    qDebug() << "LVMInfo::getVG - Enter";
     if (pvExists(pv)) {
+        qDebug() << "PV exists, getting PV info";
         PVInfo info = getPV(pv);
         return getVG(info.m_vgName);
     }
+    qDebug() << "PV does not exist, returning empty VGInfo";
     return VGInfo();
 }
 
 VGInfo LVMInfo::getVG(const PVInfo &pv)
 {
+    // qDebug() << "LVMInfo::getVG - Enter";
     return getVG(pv.m_vgName);
 }
 
@@ -471,26 +499,31 @@ PVInfo LVMInfo::getPV(const QString &pvPath)
 
 PVInfo LVMInfo::getPV(const PVData &pv)
 {
+    // qDebug() << "LVMInfo::getPV - Enter, pv:" << pv;
     return getPV(pv.m_devicePath);
 }
 
 QVector<PVInfo> LVMInfo::getVGAllPV(const QString &vgName)
 {
+    // qDebug() << "LVMInfo::getVGAllPV - Enter, vgName:" << vgName;
     return vgExists(vgName) ? getVG(vgName).m_pvInfo.values().toVector() : QVector<PVInfo>();
 }
 
 QVector<PVInfo> LVMInfo::getVGAllUsedPV(const QString &vgName)
 {
+    // qDebug() << "LVMInfo::getVGAllUsedPV - Enter, vgName:" << vgName;
     return getVGPVList(vgName, true);
 }
 
 QVector<PVInfo> LVMInfo::getVGAllUnUsedPV(const QString &vgName)
 {
+    // qDebug() << "LVMInfo::getVGAllUnUsedPV - Enter, vgName:" << vgName;
     return getVGPVList(vgName, false);
 }
 
 QList<QString> LVMInfo::getVGOfDisk(const QString &vgName, const QString &disk)
 {
+    qDebug() << "LVMInfo::getVGOfDisk - Enter, vgName:" << vgName << "disk:" << disk;
     QList<QString>list;
     foreach (auto it, m_pvInfo) {
         //todo 要对这里进行优化 目前是比较是否包含磁盘路径字符串
@@ -498,18 +531,23 @@ QList<QString> LVMInfo::getVGOfDisk(const QString &vgName, const QString &disk)
             list.push_back(it.m_pvPath);
         }
     }
+    qDebug() << "LVMInfo::getVGOfDisk - Exiting, list:" << list;
     return list;
 }
 
 QVector<PVInfo> LVMInfo::getVGPVList(const QString &vgName, bool isUsed)
 {
+    qDebug() << "Entering LVMInfo::getVGPVList for VG:" << vgName << "isUsed:" << isUsed;
     QVector<PVInfo> pvList;
     if (vgExists(vgName)) {
+        qDebug() << "VG exists, getting PV list";
         VGInfo vg = getVG(vgName);
         foreach (const PVInfo &pv, vg.m_pvInfo) {
             if (isUsed && pv.m_pvUsedPE > 0) {
+                qDebug() << "Checking if PV is used:" << pv.m_pvPath;
                 pvList.push_back(pv);
             } else if (!isUsed && pv.m_pvUsedPE == 0) {
+                qDebug() << "PV is not checked for usage, adding to list";
                 pvList.push_back(pv);
             }
         }
@@ -540,6 +578,7 @@ bool LVMInfo::lvInfoExists(const QString &lvPath)
     }
 
     if (lvPath.contains("/dev/mapper/")) {
+        qDebug() << "LVMInfo::lvInfoExists - Checking lvPath in mapper path:" << lvPath;
         QStringList list2 = list[2].split("-");
         if (!vgExists(list2[0])) {
             qWarning() << "LVMInfo::lvInfoExists - VG not found in mapper path:" << lvPath;
@@ -549,6 +588,7 @@ bool LVMInfo::lvInfoExists(const QString &lvPath)
         VGInfo vg =  getVG(list2[0]);
         foreach (LVInfo lv, vg.m_lvlist) {
             if ("/dev/mapper/" + vg.m_vgName + "-" + lv.m_lvName == lvPath) {
+                qDebug() << "LVMInfo::lvInfoExists - LV found in mapper path:" << lvPath;
                 return true;
             }
         }
@@ -572,22 +612,27 @@ bool LVMInfo::pvExists(const QString &pvPath)
 
 bool LVMInfo::vgExists(const PVData &pv)
 {
+    // qDebug() << "LVMInfo::vgExists - Checking pv:" << pv;
     return pvExists(pv) ? vgExists(getPV(pv).m_vgName) : false;
 }
 
 bool LVMInfo::vgExists(const PVInfo &pv)
 {
+    // qDebug() << "LVMInfo::vgExists - Checking pv:" << pv;
     return vgExists(pv.m_vgName);
 }
 
 bool LVMInfo::pvExists(const PVData &pv)
 {
+    // qDebug() << "LVMInfo::pvExists - Checking pv:" << pv;
     return pvExists(pv.m_devicePath);
 }
 
 bool LVMInfo::pvOfVg(const QString &vgName, const QString &pvPath)
 {
+    qDebug() << "LVMInfo::pvOfVg - Enter, vgName:" << vgName << "pvPath:" << pvPath;
     if (!vgExists(vgName)) {
+        qDebug() << "LVMInfo::pvOfVg - VG not found:" << vgName;
         return false;
     }
 
@@ -597,37 +642,44 @@ bool LVMInfo::pvOfVg(const QString &vgName, const QString &pvPath)
 
 bool LVMInfo::pvOfVg(const QString &vgName, const PVData &pv)
 {
+    qDebug() << "LVMInfo::pvOfVg - Checking vgName:" << vgName;
     return pvOfVg(vgName, pv.m_devicePath);
 }
 
 bool LVMInfo::pvOfVg(const PVInfo &pv)
 {
+    // qDebug() << "LVMInfo::pvOfVg - Checking pv:" << pv;
     return pvOfVg(pv.m_vgName, pv.m_pvPath);
 }
 
 bool LVMInfo::pvOfVg(const VGInfo &vg, const PVInfo &pv)
 {
+    // qDebug() << "LVMInfo::pvOfVg - Checking pv:" << pv << "vg:" << vg;
     return pvOfVg(vg.m_vgName, pv.m_pvPath);
 }
 
 bool LVMInfo::pvOfVg(const VGInfo &vg, const PVData &pv)
 {
+    // qDebug() << "LVMInfo::pvOfVg - Checking pv:" << pv << "vg:" << vg;
     return pvOfVg(vg.m_vgName, pv.m_devicePath);
 }
 
 bool LVMInfo::pvOfVg(const QString &vgName, const PVInfo &pv)
 {
+    // qDebug() << "LVMInfo::pvOfVg - Checking pv:" << pv << "vgName:" << vgName;
     return pvOfVg(vgName, pv.m_pvPath);
 }
 
 template<class T>
 T LVMInfo:: getItem(const QString &str,  const QMap<QString, T> &containers)
 {
+    // qDebug() << "LVMInfo::getItem - Enter, str:" << str << "containers:" << containers;
     return itemExists(str, containers) ? *containers.find(str) : T();
 }
 
 template<class T>
 bool LVMInfo::itemExists(const QString &str, const QMap<QString, T> &containers)
 {
+    // qDebug() << "LVMInfo::itemExists - Enter, str:" << str << "containers:" << containers;
     return containers.find(str) != containers.end();
 }

@@ -23,6 +23,7 @@ DiskManagerService::DiskManagerService(const QString &frontEndDBusName, QObject 
 
 void DiskManagerService::initConnection()
 {
+    qDebug() << "Entering DiskManagerService::initConnection";
     connect(m_partedcore, &PartedCore::updateDeviceInfo, this, &DiskManagerService::updateDeviceInfo);
     connect(m_partedcore, &PartedCore::updateLUKSInfo, this, &DiskManagerService::updateLUKSInfo);
     connect(m_partedcore, &PartedCore::deletePartitionMessage, this, &DiskManagerService::deletePartition);
@@ -47,8 +48,11 @@ void DiskManagerService::initConnection()
 
 void DiskManagerService::Quit()
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::Quit";
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for Quit";
         return;
+    }
 
     qDebug() << "DiskManagerService::Quit called";
     m_partedcore->delTempMountFile();
@@ -69,8 +73,11 @@ void DiskManagerService::Quit()
 //}
 void DiskManagerService::Start()
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::Start";
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for Start";
         return;
+    }
 
     QString msg = "DiskManagerService::Start called";
     Q_EMIT MessageReport(msg);
@@ -78,6 +85,7 @@ void DiskManagerService::Start()
 
 DeviceInfo DiskManagerService::getDeviceinfo()
 {
+    qDebug() << "Entering DiskManagerService::getDeviceinfo";
     if (!checkAuthorization()) {
         qWarning() << "Authorization failed for getDeviceinfo";
         return DeviceInfo();
@@ -92,8 +100,11 @@ DeviceInfo DiskManagerService::getDeviceinfo()
 //TODO： 这里感觉没有必要发送信号 等之后有时间测试一下 能否去掉多余的代码
 void DiskManagerService::getalldevice()
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::getalldevice";
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for getalldevice";
         return;
+    }
 
 //    qDebug() << "DiskManagerService::getalldevice";
 //    DeviceInfoMap infores = m_partedcore->getAllDeviceinfo();
@@ -103,6 +114,7 @@ void DiskManagerService::getalldevice()
 
 void DiskManagerService::onGetAllDeviceInfomation()
 {
+    qDebug() << "Entering DiskManagerService::onGetAllDeviceInfomation";
     DeviceInfoMap infores = m_partedcore->getAllDeviceinfo();
     LVMInfo lvmInfo = m_partedcore->getAllLVMinfo();
     LUKSMap luksInfo = m_partedcore->getAllLUKSinfo();
@@ -112,24 +124,33 @@ void DiskManagerService::onGetAllDeviceInfomation()
 
 void DiskManagerService::setCurSelect(const PartitionInfo &info)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::setCurSelect";
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for setCurSelect";
         return;
+    }
 
     m_partedcore->setCurSelect(info);
 }
 
 bool DiskManagerService::unmount()
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::unmount";
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for unmount";
         return false;
+    }
 
     return m_partedcore->unmount();
 }
 
 bool DiskManagerService::mount(const QString &mountpath)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::mount with mountpath:" << mountpath;
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for mount";
         return false;
+    }
 
     QString invokerUid = QString::number(connection().interface()->serviceUid(message().service()).value());
     return m_partedcore->mountAndWriteFstab(mountpath, invokerUid);
@@ -137,38 +158,51 @@ bool DiskManagerService::mount(const QString &mountpath)
 
 bool DiskManagerService::deCrypt(const LUKS_INFO &luks)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::deCrypt";
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for deCrypt";
         return false;
+    }
 
     return m_partedcore->deCrypt(luks);
 }
 
 bool DiskManagerService::cryptMount(const LUKS_INFO &luks)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::cryptMount";
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for cryptMount";
         return false;
+    }
 
     return m_partedcore->cryptMount(luks);
 }
 
 bool DiskManagerService::cryptUmount(const LUKS_INFO &luks)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::cryptUmount";
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for cryptUmount";
         return false;
+    }
 
     return m_partedcore->cryptUmount(luks);
 }
 
 QStringList DiskManagerService::getallsupportfs()
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::getallsupportfs";
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for getallsupportfs";
         return QStringList();
+    }
 
     return m_partedcore->getallsupportfs();
 }
 
 bool DiskManagerService::format(const QString &fstype, const QString &name)
 {
+    qDebug() << "Entering DiskManagerService::format with fstype:" << fstype << "and name:" << name;
     if (!checkAuthorization()) {
         qWarning() << "Authorization failed for format operation";
         return false;
@@ -180,76 +214,106 @@ bool DiskManagerService::format(const QString &fstype, const QString &name)
 
 bool DiskManagerService::clear(const WipeAction &wipe)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::clear";
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for clear";
         return false;
+    }
 
     return m_partedcore->clear(wipe);
 }
 
 bool DiskManagerService::resize(const PartitionInfo &info)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::resize";
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for resize";
         return false;
+    }
 
     return m_partedcore->resize(info);
 }
 
 bool DiskManagerService::create(const PartitionVec &infovec)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::create";
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for create";
         return false;
+    }
 
     return m_partedcore->create(infovec);
 }
 
 HardDiskInfo DiskManagerService::onGetDeviceHardInfo(const QString &devicepath)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::onGetDeviceHardInfo for device:" << devicepath;
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for onGetDeviceHardInfo";
         return HardDiskInfo();
+    }
 
     return m_partedcore->getDeviceHardInfo(devicepath);
 }
 
 QString DiskManagerService::onGetDeviceHardStatus(const QString &devicepath)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::onGetDeviceHardStatus for device:" << devicepath;
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for onGetDeviceHardStatus";
         return QString();
+    }
 
     return m_partedcore->getDeviceHardStatus(devicepath);
 }
 
 HardDiskStatusInfoList DiskManagerService::onGetDeviceHardStatusInfo(const QString &devicepath)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::onGetDeviceHardStatusInfo for device:" << devicepath;
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for onGetDeviceHardStatusInfo";
         return HardDiskStatusInfoList();
+    }
 
     return m_partedcore->getDeviceHardStatusInfo(devicepath);
 }
 bool DiskManagerService::onDeletePartition()
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::onDeletePartition";
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for onDeletePartition";
         return false;
+    }
 
     return m_partedcore->deletePartition();
 }
 bool DiskManagerService::onHidePartition()
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::onHidePartition";
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for onHidePartition";
         return false;
+    }
 
     return m_partedcore->hidePartition();
 }
 bool DiskManagerService::onShowPartition()
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::onShowPartition";
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for onShowPartition";
         return false;
+    }
 
     return m_partedcore->showPartition();
 }
 bool DiskManagerService::onDetectionPartitionTableError(const QString &devicePath)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::onDetectionPartitionTableError for device:" << devicePath;
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for onDetectionPartitionTableError";
         return false;
+    }
 
     return m_partedcore->detectionPartitionTableError(devicePath);
 }
@@ -262,102 +326,141 @@ bool DiskManagerService::onCreatePartitionTable(const QString &devicePath, const
 }
 bool DiskManagerService::onCheckBadBlocksCount(const QString &devicePath, int blockStart, int blockEnd, int checkConut, int checkSize, int flag)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::onCheckBadBlocksCount for device:" << devicePath;
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for onCheckBadBlocksCount";
         return false;
+    }
 
     return m_partedcore->checkBadBlocks(devicePath, blockStart, blockEnd, checkConut, checkSize, flag);
 }
 bool DiskManagerService::onCheckBadBlocksTime(const QString &devicePath, int blockStart, int blockEnd, const QString &checkTime, int checkSize, int flag)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::onCheckBadBlocksTime for device:" << devicePath;
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for onCheckBadBlocksTime";
         return false;
+    }
 
     return m_partedcore->checkBadBlocks(devicePath, blockStart, blockEnd, checkTime, checkSize, flag);
 }
 bool DiskManagerService::onFixBadBlocks(const QString &devicePath, QStringList badBlocksList, int checkSize, int flag)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::onFixBadBlocks for device:" << devicePath;
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for onFixBadBlocks";
         return false;
+    }
 
     return m_partedcore->fixBadBlocks(devicePath, badBlocksList, checkSize, flag);
 }
 
 bool DiskManagerService::onCreateVG(QString vgName, QList<PVData> devList, long long size)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::onCreateVG for VG:" << vgName;
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for onCreateVG";
         return false;
+    }
 
     return m_partedcore->createVG(vgName, devList, size);
 }
 
 bool DiskManagerService::onCreateLV(QString vgName, QList<LVAction> lvList)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::onCreateLV for VG:" << vgName;
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for onCreateLV";
         return false;
+    }
 
     return m_partedcore->createLV(vgName, lvList);
 }
 
 bool DiskManagerService::onDeleteVG(QStringList vglist)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::onDeleteVG";
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for onDeleteVG";
         return false;
+    }
 
     return m_partedcore->deleteVG(vglist);
 }
 
 bool DiskManagerService::onDeleteLV(QStringList lvlist)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::onDeleteLV";
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for onDeleteLV";
         return false;
+    }
 
     return m_partedcore->deleteLV(lvlist);
 }
 
 bool DiskManagerService::onResizeVG(QString vgName, QList<PVData> devList, long long size)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::onResizeVG for VG:" << vgName;
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for onResizeVG";
         return false;
+    }
 
     return m_partedcore->resizeVG(vgName, devList, size);
 }
 
 bool DiskManagerService::onResizeLV(LVAction lvAction)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::onResizeLV for LV:" << lvAction.m_lvName;
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for onResizeLV";
         return false;
+    }
 
     return m_partedcore->resizeLV(lvAction);
 }
 
 bool DiskManagerService::onMountLV(LVAction lvAction)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::onMountLV for LV:" << lvAction.m_lvName;
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for onMountLV";
         return false;
+    }
 
     return m_partedcore->mountLV(lvAction);
 }
 
 bool DiskManagerService::onUmountLV(LVAction lvAction)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::onUmountLV for LV:" << lvAction.m_lvName;
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for onUmountLV";
         return false;
+    }
 
     return m_partedcore->umountLV(lvAction);
 }
 
 bool DiskManagerService::onClearLV(LVAction lvAction)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::onClearLV for LV:" << lvAction.m_lvName;
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for onClearLV";
         return false;
+    }
 
     return m_partedcore->clearLV(lvAction);
 }
 
 bool DiskManagerService::onDeletePVList(QList<PVData> devList)
 {
-    if (!checkAuthorization())
+    qDebug() << "Entering DiskManagerService::onDeletePVList";
+    if (!checkAuthorization()) {
+        qDebug() << "Authorization failed for onDeletePVList";
         return false;
+    }
 
     return m_partedcore->deletePVList(devList);
 }

@@ -17,33 +17,42 @@ FS NTFS::getFilesystemSupport()
 
     fs.busy = FS::GPARTED;
 
-    if (!Utils::findProgramInPath("ntfsinfo").isEmpty())
+    if (!Utils::findProgramInPath("ntfsinfo").isEmpty()) {
+        qDebug() << "ntfsinfo found, enabling read support.";
         fs.read = FS::EXTERNAL;
+    }
 
     if (!Utils::findProgramInPath("ntfslabel").isEmpty()) {
+        qDebug() << "ntfslabel found, enabling label and uuid support.";
         fs .read_label = FS::EXTERNAL ;
         fs .write_label = FS::EXTERNAL ;
         fs.write_uuid = FS::EXTERNAL;
     }
 
     if (!Utils::findProgramInPath("mkntfs").isEmpty()) {
+        qDebug() << "mkntfs found, enabling create support.";
         fs.create = FS::EXTERNAL;
         fs.create_with_label = FS::EXTERNAL;
     }
 
     //resizing is a delicate process ...
     if (!Utils::findProgramInPath("ntfsresize").isEmpty()) {
+        qDebug() << "ntfsresize found, enabling check, grow, shrink, move support.";
         fs.check = FS::EXTERNAL;
         fs.grow = FS::EXTERNAL;
 
-        if (fs.read)  //needed to determine a min file system size..
+        if (fs.read)  {//needed to determine a min file system size..
+            qDebug() << "Read support is available, enabling shrink.";
             fs.shrink = FS::EXTERNAL;
+        }
 
         fs.move = FS::GPARTED;
     }
 
-    if (!Utils::findProgramInPath("ntfsclone").isEmpty())
+    if (!Utils::findProgramInPath("ntfsclone").isEmpty()) {
+        qDebug() << "ntfsclone found, enabling copy support.";
         fs.copy = FS::EXTERNAL;
+    }
 
     fs.online_read = FS::GPARTED;
 
@@ -65,33 +74,36 @@ void NTFS::setUsedSectors( Partition & partition )
     QString cmd = QString("ntfsinfo --mft --force %1").arg(partition.getPath());
 
     if (!Utils::executCmd(cmd, output, error)) {
+        qDebug() << "ntfsinfo executed successfully.";
         strmatch = "Cluster Size:";
         int index = output.indexOf(strmatch);
         if (index >= 0 && index < output.length()) {
             m_blocksSize = Utils::regexpLabel(output, QString("(?<=Cluster Size:).*(?=\n)")).trimmed().toLong();
-//             qDebug() << __FUNCTION__ << m_blocksSize << "22222222222" << endl;
+            qDebug() << "Found Cluster Size:" << m_blocksSize;
         }
 
         strmatch = "Volume Size in Clusters:";
         index = output.indexOf(strmatch);
         if (index >= 0 && index < output.length()) {
             m_totalNumOfBlock = Utils::regexpLabel(output, QString("(?<=Volume Size in Clusters:).*(?=\n)")).trimmed().toLong();
-//            qDebug() << __FUNCTION__ << m_totalNumOfBlock << "33333333333333" << endl;
+            qDebug() << "Found Volume Size in Clusters:" << m_totalNumOfBlock;
         }
 
         strmatch = "Free Clusters:";
         index = output.indexOf(strmatch);
         if (index >= 0 && index < output.length()) {
             m_numOfFreeOrUsedBlocks = Utils::regexpLabel(output, QString("(?<=Free Clusters:).*(?=[(])")).trimmed().toLong();
-//            qDebug() << __FUNCTION__ << m_numOfFreeOrUsedBlocks << "4444444444444444" << endl;
+            qDebug() << "Found Free Clusters:" << m_numOfFreeOrUsedBlocks;
         }
+    } else {
+        qDebug() << "ntfsinfo execution failed. Error:" << error;
     }
 
     if (m_blocksSize > -1 && m_totalNumOfBlock > -1 && m_numOfFreeOrUsedBlocks > -1) {
+        qDebug() << "Calculating and setting sector usage.";
         m_totalNumOfBlock = m_totalNumOfBlock * (m_blocksSize / partition.m_sectorSize);
         m_numOfFreeOrUsedBlocks = m_numOfFreeOrUsedBlocks * (m_blocksSize / partition.m_sectorSize);
 
-//        qDebug() << __FUNCTION__ << m_totalNumOfBlock << m_numOfFreeOrUsedBlocks << "1111111111111111111" << endl;
         partition.setSectorUsage(m_totalNumOfBlock, m_numOfFreeOrUsedBlocks);
         partition.m_fsBlockSize = m_blocksSize;
     }
@@ -103,8 +115,11 @@ void NTFS::readLabel( Partition & partition )
 {
     qDebug() << "[NTFS]::readLabel - Enter";
     QString output, error;
-    if (!Utils::executCmd(QString("ntfslabel --force").arg(partition.getPath()), output, error)) {
+    if (!Utils::executCmd(QString("ntfslabel --force %1").arg(partition.getPath()), output, error)) {
+        qDebug() << "Successfully read label:" << output.trimmed();
         partition.setFilesystemLabel(output.trimmed());
+    } else {
+        qDebug() << "Failed to read label. Error:" << error;
     }
     qDebug() << "[NTFS]::readLabel - Exit";
 }
@@ -114,9 +129,9 @@ bool NTFS::writeLabel( const Partition & partition)
     qDebug() << "[NTFS]::writeLabel - Enter";
     QString output, error;
     int exitcode = Utils::executCmd(QString("ntfslabel --force %1 %2").arg(partition.getPath()).arg(partition.getFileSystemLabel()), output, error);
-//    qDebug() << __FUNCTION__ << output << error;
-    return exitcode == 0;
-    qDebug() << "[NTFS]::writeLabel - Exit";
+    bool success = (exitcode == 0);
+    qDebug() << "[NTFS]::writeLabel - Exit with status:" << success;
+    return success;
 }
 
 void NTFS::readUuid(Partition & partition)
@@ -128,9 +143,10 @@ bool NTFS::writeUuid( const Partition & partition)
 {
     qDebug() << "[NTFS]::writeUuid - Enter";
     QString output, error;
-    int exitcode = Utils::executCmd(QString("ntfslabel --new-serial ").arg(partition.getPath()), output, error);
-    return exitcode == 0 || error.compare("Unknown error") == 0;
-    qDebug() << "[NTFS]::writeUuid - Exit";
+    int exitcode = Utils::executCmd(QString("ntfslabel --new-serial %1").arg(partition.getPath()), output, error);
+    bool success = (exitcode == 0 || error.compare("Unknown error") == 0);
+    qDebug() << "[NTFS]::writeUuid - Exit with status:" << success;
+    return success;
 }
 
 bool NTFS::create(const Partition & newPartition)
@@ -139,11 +155,15 @@ bool NTFS::create(const Partition & newPartition)
     QString output, error;
     int exitcode = -1;
     if (newPartition.getFileSystemLabel().isEmpty() || newPartition.getFileSystemLabel() == " ") {
+        qDebug() << "Creating NTFS without label on" << newPartition.getPath();
         exitcode = Utils::executCmd(QString("mkntfs -Q -v -F %1").arg(newPartition.getPath()), output, error);
     } else {
+        qDebug() << "Creating NTFS with label" << newPartition.getFileSystemLabel() << "on" << newPartition.getPath();
         exitcode = Utils::executCmd(QString("mkntfs -Q -v -F %1 -L %2").arg(newPartition.getPath()).arg(newPartition.getFileSystemLabel()),output, error);
     }
-    return exitcode == 0 && error.compare("Unknown error") == 0;
+    bool success = (exitcode == 0 && error.compare("Unknown error") == 0);
+    qDebug() << "[NTFS]::create - Exit with status:" << success;
+    return success;
 }
 
 /*
@@ -159,17 +179,22 @@ NTFSRESIZE使用K=10^3、M=10^6和G=10^9，符合Si、ATA、IEEE标准和磁盘�
 
 bool NTFS::resize(const Partition &partitionNew, bool fillPartition)
 {
+    // qDebug() << "[NTFS]::resize(Partition) - Enter, partition:" << partitionNew.getPath() << "fill:" << fillPartition;
     double d = Utils::sectorToUnit(partitionNew.getSectorLength(), partitionNew.m_sectorSize, UNIT_BYTE);
-    return  resize(partitionNew.getPath(), QString::number(((long long)d / 1000)), fillPartition);
+    bool result = resize(partitionNew.getPath(), QString::number(((long long)d / 1000)), fillPartition);
+    // qDebug() << "[NTFS]::resize(Partition) - Exit with status:" << result;
+    return  result;
 }
 
 bool NTFS::resize(const QString &path, const QString &sizeByte, bool fillPartition)
 {
+    // qDebug() << "[NTFS]::resize(path) - Enter, path:" << path << "size(k):" << sizeByte << "fill:" << fillPartition;
     //  bool success;
     QString output, error;
     QString size, cmd;
     if (!fillPartition) {
         size = QString(" -s %1k").arg(sizeByte);
+        // qDebug() << "Shrinking filesystem, size arg:" << size;
     }
 
     //Utils::executCmd(QString("umount %1").arg(path));
@@ -177,8 +202,11 @@ bool NTFS::resize(const QString &path, const QString &sizeByte, bool fillPartiti
     cmd = "ntfsresize --force --force" + size ;
     // Real resize
     cmd = QString("%1 %2").arg(cmd).arg(path);
+    // qDebug() << "Executing ntfsresize command:" << cmd;
     //    success = !Utils::executCmd(cmd, output, error);
-    return !Utils::executCmd(cmd, output, error);
+    bool success = !Utils::executCmd(cmd, output, error);
+    // qDebug() << "[NTFS]::resize(path) - Exit with status:" << success << "output:" << output << "error:" << error;
+    return success;
 }
 
 //bool ntfs::copy( const Partition & src_part, Partition & dest_part)
@@ -204,28 +232,36 @@ bool NTFS::checkRepair(const QString &devpath)
     qDebug() << "[NTFS]::checkRepair(path) - Enter";
     QString output, error;
     int exitcode = Utils::executCmd(QString("ntfsresize -i -f -v %1").arg(devpath), output, error);
-//    qDebug() << QString("NTFS::check_repair---%1----%2").arg(output).arg(error);
-    return exitcode == 0 || error.compare("Unknown error") == 0;
+    bool success = (exitcode == 0 || error.compare("Unknown error") == 0);
+    qDebug() << "[NTFS]::checkRepair(path) - Exit with status:" << success;
+    return success;
 }
 
 FS_Limits NTFS::getFilesystemLimits(const Partition &partition)
 {
-    return getFilesystemLimits(partition.getPath());
+    // qDebug() << "[NTFS]::getFilesystemLimits(Partition) - Enter, for partition:" << partition.getPath();
+    FS_Limits limits = getFilesystemLimits(partition.getPath());
+    // qDebug() << "[NTFS]::getFilesystemLimits(Partition) - Exit";
+    return limits;
 }
 
 FS_Limits NTFS::getFilesystemLimits(const QString &path)
 {
+    qDebug() << "[NTFS]::getFilesystemLimits(path) - Enter, for path:" << path;
     m_fsLimits = FS_Limits {-1, -1};
     QString cmd, output, error;
     //Utils::executCmd(QString("umount %1").arg(path), output, error);
     cmd = QString("ntfsresize -m -f %1").arg(path);
+    qDebug() << "Executing ntfsresize command:" << cmd;
     if (Utils::executCmd(cmd, output, error) != 0 && error.compare("Unknown error") != 0) {
+        qDebug() << "ntfsresize execution failed. Error:" << error;
         return m_fsLimits;
     }
 
     foreach (QString str, output.split("\n")) {
         // qDebug()<<"getFilesystemLimits ntfs"<<str;
         if (str.contains("Minsize (in MB):")) {
+            // qDebug() << "Found Minsize line:" << str;
             auto list = str.split(":");
             //qDebug()<<"getFilesystemLimits ntfs list"<<list;
             if (list.count() == 2) {
@@ -236,7 +272,7 @@ FS_Limits NTFS::getFilesystemLimits(const QString &path)
             }
         }
     }
-
+    qDebug() << "[NTFS]::getFilesystemLimits(path) - Exit, limits not found.";
     return m_fsLimits;
 }
 

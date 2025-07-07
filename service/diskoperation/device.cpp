@@ -48,6 +48,7 @@ Device::Device()
     m_highestBusy = 0;
     m_readonly = false;
     m_maxPartitionNameLength = 0;
+    qDebug() << "Device object initialized";
 }
 
 void Device::enablePartitionNaming(int length)
@@ -63,6 +64,7 @@ void Device::enablePartitionNaming(int length)
 
 bool Device::partitionNamingSupported() const
 {
+    qDebug() << "Checking if partition naming is supported. Max length:" << m_maxPartitionNameLength;
     return m_maxPartitionNameLength > 0;
 }
 
@@ -73,6 +75,7 @@ bool Device::partitionNamingSupported() const
 
 DeviceInfo Device::getDeviceInfo()
 {
+    qDebug() << "Entering Device::getDeviceInfo";
     DeviceInfo info;
     info.m_length = m_length;
     info.m_heads = m_heads;

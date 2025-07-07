@@ -20,18 +20,21 @@ QVector<QString> ProcPartitionsInfo::devicePathsCache;
 
 void ProcPartitionsInfo::loadCache()
 {
+    qDebug() << "Loading proc partitions info cache explicitly";
     loadProcPartitionsInfoCache();
     procPartitionsInfoCacheInitialized = true;
 }
 
 const QVector<QString> &ProcPartitionsInfo::getDevicePaths()
 {
+    qDebug() << "Getting device paths from cache";
     initializeIfRequired();
     return devicePathsCache;
 }
 
 void ProcPartitionsInfo::initializeIfRequired()
 {
+    qDebug() << "Checking if cache needs initialization";
     if (!procPartitionsInfoCacheInitialized) {
         qDebug() << "Loading partitions info cache";
         loadProcPartitionsInfoCache();
@@ -57,6 +60,7 @@ void ProcPartitionsInfo::loadProcPartitionsInfoCache()
             unsigned long maj = 0;
             unsigned long min = 0;
             if (sscanf(line.toStdString().c_str(), "%lu %lu", &maj, &min) != 2) {
+                qDebug() << "sscanf failed to parse major/minor, skipping line";
                 line = in.readLine();
                 continue;
             }
@@ -64,6 +68,7 @@ void ProcPartitionsInfo::loadProcPartitionsInfoCache()
             foreach (QString str, strlist) {
                 if (!str.isEmpty() && str.indexOf(QRegularExpression("[a-z]+\\d?")) != -1) {
                     name = str;
+                    qDebug() << "Found device name in list:" << name;
                     break;
                 }
             }
@@ -100,6 +105,7 @@ void ProcPartitionsInfo::loadProcPartitionsInfoCache()
             } else {
                 qWarning() << "Failed to open /proc/partitions";
             }
+            qDebug() << "Found total devices:" << devicePathsCache.size();
 
             //Device names that end with a #[^p]# are HP Smart Array Devices (disks)
             //  E.g., device = /dev/cciss/c0d0, partition = /dev/cciss/c0d0p1
@@ -117,9 +123,14 @@ void ProcPartitionsInfo::loadProcPartitionsInfoCache()
             if (device != "") {
                 qDebug() << "Adding device to cache:" << device;
                 devicePathsCache.push_back("/dev/" + device);
+            } else {
+                qDebug() << "Device not recognized as whole disk, not adding to cache:" << name;
             }
             line = in.readLine();
         }
+        file.close();
+    } else {
+        qWarning() << "Failed to open /proc/partitions";
     }
 }
 

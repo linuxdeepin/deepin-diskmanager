@@ -35,6 +35,7 @@ FS LinuxSwap::getFilesystemSupport()
     fs.online_read = FS::EXTERNAL;
 
     if (!Utils::findProgramInPath("mkswap").isEmpty()) {
+        qDebug() << "mkswap found, enabling create, grow, shrink, copy, move support.";
         fs.create = FS::EXTERNAL;
         fs.create_with_label = FS::EXTERNAL;
         fs.grow = FS::EXTERNAL;
@@ -44,6 +45,7 @@ FS LinuxSwap::getFilesystemSupport()
     }
 
     if (!Utils::findProgramInPath("swaplabel").isEmpty()) {
+        qDebug() << "swaplabel found, enabling label and uuid support.";
         fs.read_label = FS::EXTERNAL;
         fs.write_label = FS::EXTERNAL;
         fs.read_uuid = FS::EXTERNAL;
@@ -57,21 +59,28 @@ void LinuxSwap::setUsedSectors(Partition &partition)
 {
     qDebug() << "Setting used sectors for swap partition:" << partition.getPath();
     if (partition.m_busy) {
+        qDebug() << "Partition is busy, checking /proc/swaps.";
         m_numOfFreeOrUsedBlocks = -1;
         QFile file("/proc/swaps");
         if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            qDebug() << "/proc/swaps opened successfully.";
             QString line = file.readLine();
             BlockSpecial bsPath = BlockSpecial(partition.getPath());
             while (!file.atEnd() || !line.isEmpty()) {
                 QString filename = Utils::regexpLabel(line, ".*?(?= )");
                 if (bsPath == BlockSpecial(filename)) {
+                    qDebug() << "Found swap entry for partition" << partition.getPath();
                     sscanf(line.toLatin1(), "%*s %*s %*d %lld", &m_numOfFreeOrUsedBlocks);
                     break;
                 }
                 line = file.readLine();
             }
+            file.close();
+        } else {
+            qDebug() << "Failed to open /proc/swaps.";
         }
         if (m_numOfFreeOrUsedBlocks > -1) {
+            qDebug() << "Calculating and setting sector usage.";
             // Ignore swap space reported size to ignore 1 page format
             // overhead.  Instead use partition size as sectors_fs_size so
             // reported used figure for active swap space starts from 0
@@ -81,6 +90,7 @@ void LinuxSwap::setUsedSectors(Partition &partition)
             partition.setSectorUsage(m_totalNumOfBlock, m_totalNumOfBlock - m_numOfFreeOrUsedBlocks);
         }
     } else {
+        qDebug() << "Partition is not busy, setting as 100% free.";
         //By definition inactive swap space is 100% free
         Sector size = partition.getSectorLength();
         partition.setSectorUsage(size, size);
@@ -141,8 +151,10 @@ bool LinuxSwap::resize(const Partition &partitionNew, bool fillPartition)
             << "fill partition:" << fillPartition;
     QString output, error;
     QString command = QString("mkswap -L %1 ").arg(partitionNew.getFileSystemLabel());
-    if (!partitionNew.m_uuid.isEmpty())
+    if (!partitionNew.m_uuid.isEmpty()) {
+        qDebug() << "Adding UUID to resize command:" << partitionNew.m_uuid;
         command.append(QString(" -U %1 ").arg(partitionNew.m_uuid));
+    }
     command.append(partitionNew.getPath());
     int exitcode = Utils::executCmd(command, output, error);
     return exitcode == 0 && error.compare("Unknown error") == 0;

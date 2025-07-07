@@ -25,8 +25,10 @@ Utils::Utils()
 QString Utils::findProgramInPath(const QString &proName)
 {
     qDebug() << "Utils::findProgramInPath----" << proName;
-    if (proName.isEmpty())
+    if (proName.isEmpty()) {
+        // qDebug() << "Program name is empty";
         return QString();
+    }
     QStringList strArg;
     strArg << proName;
     QString strOut, strerr;
@@ -79,16 +81,19 @@ int Utils::executCmd(const QString &strCmd, QString &outPut, QString &error)
     QStringList argList;
     for (int i = 1; i < cmdList.size(); i++) {
         if (!cmdList[i].isEmpty()) {
+            qDebug() << "Appending argument:" << cmdList[i];
             argList.append(cmdList[i]);
         }
     }
     int exitcode = executeCmdWithArtList(cmdList[0], argList, outPut, error);
 
+    qDebug() << "Utils::executCmd exitcode:  " << exitcode;
     return exitcode;
 }
 
 int Utils::executWithInputOutputCmd(const QString &strCmdArg, const QString *inPut, QString &outPut, QString &error)
 {
+    qDebug() << "Entering Utils::executWithInputOutputCmd with command:" << strCmdArg;
     QProcess proc;
     int exitCode;
 
@@ -99,6 +104,7 @@ int Utils::executWithInputOutputCmd(const QString &strCmdArg, const QString *inP
 #endif
 
     if (inPut) {
+        qDebug() << "Writing input to process:" << *inPut;
         proc.waitForStarted(-1);
         proc.write(inPut->toLocal8Bit());
         proc.closeWriteChannel();
@@ -110,6 +116,7 @@ int Utils::executWithInputOutputCmd(const QString &strCmdArg, const QString *inP
     exitCode = proc.exitCode();
     proc.close();
 
+    qDebug() << "Utils::executWithInputOutputCmd exitCode:  " << exitCode;
     return exitCode;
 }
 
@@ -134,37 +141,46 @@ int Utils::executWithErrorCmd(const QString &strCmd, const QStringList &strArg, 
 
 QString Utils::regexpLabel(const QString &strText, const QString &strPatter)
 {
+    qDebug() << "Utils::regexpLabel strText:  " << strText << "strPatter:  " << strPatter;
     QString strSource = strText;
     QString result;
     QRegularExpression re(strPatter, QRegularExpression::MultilineOption | QRegularExpression::CaseInsensitiveOption);
     QRegularExpressionMatch match = re.match(strSource);
     if (match.isValid() && match.hasMatch()) {
+        qDebug() << "Regexp match found";
         for (int i = 0; i <= match.lastCapturedIndex(); i++) {
             result = match.captured(i);
-//            qDebug() << __FUNCTION__ << "-------****" << result;
+            qDebug() << "Captured result:" << result;
             break;
         }
     }
+    qDebug() << "Utils::regexpLabel result:  " << result;
     return result;
 }
 
 const QString Utils::getPartitionTypeString(PartitionType type)
 {
+    qDebug() << "Entering Utils::getPartitionTypeString for type:" << type;
     QString strType;
     switch (type) {
     case TYPE_PRIMARY:
+        qDebug() << "Partition type is Primary";
         strType = "Primary";
         break;
     case TYPE_LOGICAL:
+        qDebug() << "Partition type is Logical";
         strType = "Logical";
         break;
     case TYPE_EXTENDED:
+        qDebug() << "Partition type is Extended";
         strType = "Extended";
         break;
     case TYPE_UNALLOCATED:
+        qDebug() << "Partition type is Unallocated";
         strType = "Unallocated";
         break;
     case TYPE_UNPARTITIONED:
+        qDebug() << "Partition type is Unpartitioned";
         strType = "Unpartitioned";
         break;
     }
@@ -173,12 +189,15 @@ const QString Utils::getPartitionTypeString(PartitionType type)
 
 const QString Utils::fileSystemTypeToString(FSType type)
 {
+    qDebug() << "Entering Utils::fileSystemTypeToString for type:" << type;
     QString strFileSystemType;
     switch (type) {
     case FS_UNSUPPORTED:
+        qDebug() << "Filesystem type is Unsupported";
         strFileSystemType = "unsupported";
         break;
     case FS_UNALLOCATED:
+        qDebug() << "Filesystem type is Unallocated";
         /* TO TRANSLATORS:  unallocated
          * means that this space on the disk device is
          * outside any partition, so is in other words
@@ -187,6 +206,7 @@ const QString Utils::fileSystemTypeToString(FSType type)
         strFileSystemType = "unallocated";
         break;
     case FS_UNKNOWN:
+        qDebug() << "Filesystem type is Unknown";
         /* TO TRANSLATORS:  unknown
          * means that this space within this partition does
          * not contain a file system known to GParted, and
@@ -195,6 +215,7 @@ const QString Utils::fileSystemTypeToString(FSType type)
         strFileSystemType = "unknown";
         break;
     case FS_UNFORMATTED:
+        qDebug() << "Filesystem type is Unformatted";
         /* TO TRANSLATORS:  unformatted
          * means that when the new partition is created by
          * GParted the space within it will not be formatted
@@ -203,6 +224,7 @@ const QString Utils::fileSystemTypeToString(FSType type)
         strFileSystemType = "unformatted";
         break;
     case FS_OTHER:
+        qDebug() << "Filesystem type is Other";
         /* TO TRANSLATORS:  other
          * name shown in the File System Support dialog to list
          * actions which can be performed on other file systems
@@ -211,6 +233,7 @@ const QString Utils::fileSystemTypeToString(FSType type)
         strFileSystemType = "other";
         break;
     case FS_CLEARED:
+        qDebug() << "Filesystem type is Cleared";
         /* TO TRANSLATORS:  cleared
          * means that all file system signatures in the partition
          * will be cleared by GParted.
@@ -218,111 +241,147 @@ const QString Utils::fileSystemTypeToString(FSType type)
         strFileSystemType = "cleared";
         break;
     case FS_EXTENDED:
+        qDebug() << "Filesystem type is Extended";
         strFileSystemType = "extended";
         break;
     case FS_BTRFS:
+        qDebug() << "Filesystem type is BTRFS";
         strFileSystemType = "btrfs";
         break;
     case FS_EXFAT:
+        qDebug() << "Filesystem type is exFAT";
         strFileSystemType = "exfat";
         break;
     case FS_EXT2:
+        qDebug() << "Filesystem type is ext2";
         strFileSystemType = "ext2";
         break;
     case FS_EXT3:
+        qDebug() << "Filesystem type is ext3";
         strFileSystemType = "ext3";
         break;
     case FS_EXT4:
+        qDebug() << "Filesystem type is ext4";
         strFileSystemType = "ext4";
         break;
     case FS_F2FS:
+        qDebug() << "Filesystem type is f2fs";
         strFileSystemType = "f2fs";
         break;
     case FS_FAT16:
+        qDebug() << "Filesystem type is FAT16";
         strFileSystemType = "fat16";
         break;
     case FS_FAT32:
+        qDebug() << "Filesystem type is FAT32";
         strFileSystemType = "fat32";
         break;
     case FS_HFS:
+        qDebug() << "Filesystem type is HFS";
         strFileSystemType = "hfs";
         break;
     case FS_HFSPLUS:
+        qDebug() << "Filesystem type is HFS+";
         strFileSystemType = "hfs+";
         break;
     case FS_JFS:
+        qDebug() << "Filesystem type is JFS";
         strFileSystemType = "jfs";
         break;
     case FS_LINUX_SWAP:
+        qDebug() << "Filesystem type is Linux Swap";
         strFileSystemType = "linux-swap";
         break;
     case FS_LUKS:
+        qDebug() << "Filesystem type is LUKS";
         strFileSystemType = "luks";
         break;
     case FS_LVM2_PV:
+        qDebug() << "Filesystem type is LVM2 PV";
         strFileSystemType = "lvm2 pv";
         break;
     case FS_MINIX:
+        qDebug() << "Filesystem type is MINIX";
         strFileSystemType = "minix";
         break;
     case FS_NILFS2:
+        qDebug() << "Filesystem type is NILFS2";
         strFileSystemType = "nilfs2";
         break;
     case FS_NTFS:
+        qDebug() << "Filesystem type is NTFS";
         strFileSystemType = "ntfs";
         break;
     case FS_REISER4:
+        qDebug() << "Filesystem type is Reiser4";
         strFileSystemType = "reiser4";
         break;
     case FS_REISERFS:
+        qDebug() << "Filesystem type is ReiserFS";
         strFileSystemType = "reiserfs";
         break;
     case FS_UDF:
+        qDebug() << "Filesystem type is UDF";
         strFileSystemType = "udf";
         break;
     case FS_XFS:
+        qDebug() << "Filesystem type is XFS";
         strFileSystemType = "xfs";
         break;
     case FS_APFS:
+        qDebug() << "Filesystem type is APFS";
         strFileSystemType = "apfs";
         break;
     case FS_ATARAID:
+        qDebug() << "Filesystem type is ATARAID";
         strFileSystemType = "ataraid";
         break;
     case FS_BITLOCKER:
+        qDebug() << "Filesystem type is BITLOCKER";
         strFileSystemType = "bitlocker";
         break;
     case FS_GRUB2_CORE_IMG:
+        qDebug() << "Filesystem type is GRUB2_CORE_IMG";
         strFileSystemType = "grub2 core.img";
         break;
     case FS_ISO9660:
+        qDebug() << "Filesystem type is ISO9660";
         strFileSystemType = "iso9660";
         break;
     case FS_LINUX_SWRAID:
+        qDebug() << "Filesystem type is Linux SWRAID";
         strFileSystemType = "linux-raid";
         break;
     case FS_LINUX_SWSUSPEND:
+        qDebug() << "Filesystem type is Linux SWSUSPEND";
         strFileSystemType = "linux-suspend";
         break;
     case FS_REFS:
+        qDebug() << "Filesystem type is REFS";
         strFileSystemType = "refs";
         break;
     case FS_UFS:
+        qDebug() << "Filesystem type is UFS";
         strFileSystemType = "ufs";
         break;
     case FS_ZFS:
+        qDebug() << "Filesystem type is ZFS";
         strFileSystemType = "zfs";
         break;
     case FS_USED:
+        qDebug() << "Filesystem type is Used";
         strFileSystemType = "used";
         break;
     case FS_UNUSED:
+        qDebug() << "Filesystem type is Unused";
         strFileSystemType = "unused";
         break;
     default:
+        qDebug() << "Filesystem type is Unknown";
         strFileSystemType = "";
     }
 
+    qDebug() << "Converted filesystem type:" << strFileSystemType;
     return strFileSystemType;
 }
 
@@ -417,6 +476,7 @@ int Utils::getMountedFileSystemUsage(const QString &mountpoint, Byte_Value &file
 
 QString Utils::getFileSystemSoftWare(FSType fileSystemType)
 {
+    qDebug() << "Utils::getFileSystemSoftWare - Checking:" << fileSystemType;
     switch (fileSystemType) {
     case FS_BTRFS:
         return "btrfs.h-progs / btrfs.h-tools";
@@ -462,6 +522,7 @@ QString Utils::getFileSystemSoftWare(FSType fileSystemType)
     default:
         return "";
     }
+    qDebug() << "Utils::getFileSystemSoftWare - return empty";
     return "";
 }
 
@@ -485,11 +546,13 @@ QString Utils::formatSize(Sector sectors, Byte_Value sectorSize)
         res = res.setNum(sectorToUnit(sectors, sectorSize, UNIT_TIB), 'f', 2);
         res.append(" TiB");
     }
+    qDebug() << "Utils::formatSize - Formatted size:" << res;
     return res;
 }
 
 double Utils::sectorToUnit(Sector sectors, Byte_Value sectorSize, SIZE_UNIT sizeUnit)
 {
+    qDebug() << "Utils::sectorToUnit - Converting sectors:" << sectors << "sectorSize:" << sectorSize << "sizeUnit:" << sizeUnit;
     double res = 0.0;
     switch (sizeUnit) {
     case UNIT_BYTE:
@@ -510,11 +573,13 @@ double Utils::sectorToUnit(Sector sectors, Byte_Value sectorSize, SIZE_UNIT size
     default:
         res = sectors;
     }
+    qDebug() << "Utils::sectorToUnit - Converted value:" << res;
     return res;
 }
 
 int Utils::getMaxPartitionNameLength(QString &tableType)
 {
+    qDebug() << "Utils::getMaxPartitionNameLength - Checking tableType:" << tableType;
     if (tableType == "amiga")
         return 0; // Disabled
     else if (tableType == "dvh")
@@ -526,21 +591,25 @@ int Utils::getMaxPartitionNameLength(QString &tableType)
     else if (tableType == "pc98")
         return 0; // Disabled
 
+    qDebug() << "Utils::getMaxPartitionNameLength - Returning 0";
     return 0;
 }
 
 Byte_Value Utils::floorSize(Byte_Value value, Byte_Value roundingSize)
 {
+    // qInfo() << "Utils::floorSize - value:" << value << "roundingSize:" << roundingSize;
     return value / roundingSize * roundingSize;
 }
 
 Byte_Value Utils::ceilSize(Byte_Value value, Byte_Value roundingSize)
 {
+    // qInfo() << "Utils::ceilSize - value:" << value << "roundingSize:" << roundingSize;
     return (value + roundingSize - 1LL) / roundingSize * roundingSize;
 }
 
 QString Utils::createUuid()
 {
+    qInfo() << "Utils::createUuid - Creating UUID";
     QUuid uuid;
     return uuid.createUuid().toString(QUuid::WithoutBraces);
 }
@@ -548,6 +617,7 @@ QString Utils::createUuid()
 
 QString Utils::LVMFormatSize(long long lvmSize)
 {
+    qInfo() << "Utils::LVMFormatSize - Formatting size for lvmSize:" << lvmSize;
     QString res;
     if (lvmSize  < KIBIBYTE) {
         res = res.setNum(LVMSizeToUnit(lvmSize, UNIT_BYTE), 'f', 2);
@@ -565,11 +635,13 @@ QString Utils::LVMFormatSize(long long lvmSize)
         res = res.setNum(LVMSizeToUnit(lvmSize, UNIT_TIB), 'f', 2);
         res.append(" TiB");
     }
+    qInfo() << "Utils::LVMFormatSize - Formatted size:" << res;
     return res;
 }
 
 double Utils::LVMSizeToUnit(long long lvmSize, SIZE_UNIT sizeUnit)
 {
+    qInfo() << "Utils::LVMSizeToUnit - Converting lvmSize:" << lvmSize << "sizeUnit:" << sizeUnit;
     double res = 0.0;
     switch (sizeUnit) {
     case UNIT_BYTE:
@@ -590,11 +662,13 @@ double Utils::LVMSizeToUnit(long long lvmSize, SIZE_UNIT sizeUnit)
     default:
         res = lvmSize;
     }
+    qInfo() << "Utils::LVMSizeToUnit - Converted value:" << res;
     return res;
 }
 
 bool Utils::adjudicationPVDelete(LVMInfo lvmInfo, const set<QString> &pvStrList, bool &bigDataMove, QStringList &realMovePvList)
 {
+    qDebug() << "Entering Utils::adjudicationPVDelete";
     bigDataMove = false;
     //获取所有存在于vg中 待删除的pv
     QMap<QString, QVector<QString>>t_map;
@@ -609,6 +683,7 @@ bool Utils::adjudicationPVDelete(LVMInfo lvmInfo, const set<QString> &pvStrList,
         }
 
         if (!lvmInfo.pvOfVg(pv)) {      //vg不存在或pv不在vg中 说明数据有错误
+            qWarning() << "pv not join vg";
             return false;
         }
         t_map[pv.m_vgName].push_back(pv.m_pvPath);
@@ -631,19 +706,23 @@ bool Utils::adjudicationPVDelete(LVMInfo lvmInfo, const set<QString> &pvStrList,
             }
         }
         if (vgInfo.m_peUnused - unusedPE < remvoePE) { //判断是否允许删除
+            qWarning() << "pv used pe more than vg unused pe";
             return false;
         }
 
         if (!bigDataMove) { //判断是否存在大量数据需要移动
+            qInfo() << "Utils::adjudicationPVDelete - Checking if large data move is needed";
             remvoeAllSize += (remvoePE * vgInfo.m_PESize);
             bigDataMove = ((remvoeAllSize / GIBIBYTE) >= 1);
         }
     }
+    qInfo() << "Utils::adjudicationPVDelete return true";
     return true;
 }
 
 QString Utils::getCipherStr(CRYPT_CIPHER cipher)
 {
+    qDebug() << "Entering Utils::getCipherStr for cipher:" << cipher;
     switch (cipher) {
     case CRYPT_CIPHER::NOT_CRYPT:
         return QString("not_crypt");
@@ -658,6 +737,7 @@ QString Utils::getCipherStr(CRYPT_CIPHER cipher)
 
 CRYPT_CIPHER Utils::getCipher(QString cipher)
 {
+    qDebug() << "Entering Utils::getCipher for cipher:" << cipher;
     if (cipher.contains("not_crypt")) {
         return  CRYPT_CIPHER::NOT_CRYPT;
     } else if (cipher.contains("aes-xts-plain64")) {
@@ -741,9 +821,3 @@ int Utils::executCmd(const QString &strCmd)
     proc.close();
     return exitcode;
 }
-
-
-
-
-
-

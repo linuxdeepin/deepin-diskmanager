@@ -380,8 +380,8 @@ int Utils::getMountedFileSystemUsage(const QString &mountpoint, Byte_Value &file
     int ret;
     ret = statvfs(mountpoint.toStdString().c_str(), &sfs);
     if (ret == 0) {
-        fileSystemSize = static_cast<Byte_Value>(sfs.f_blocks) * sfs.f_frsize;
-        fileSystemFree = static_cast<Byte_Value>(sfs.f_bfree) * sfs.f_bsize;
+        fileSystemSize = static_cast<Byte_Value>(sfs.f_blocks) * sfs.f_bsize;
+        fileSystemFree = static_cast<Byte_Value>(sfs.f_bavail) * sfs.f_bsize;
     } else {
         QString errorMessage("statvfs(\"%1\"):%2 "); // = "statvfs(\"" + mountpoint + "\"): " + Glib::strerror(errno) ;
         errorMessage = errorMessage.arg(mountpoint).arg(errno);

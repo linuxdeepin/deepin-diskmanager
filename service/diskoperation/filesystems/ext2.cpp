@@ -137,73 +137,95 @@ FS EXT2::getFilesystemSupport()
 void EXT2::setUsedSectors(Partition &partition)
 {
     qDebug() << "Setting used sectors for ext2/3/4 partition:" << partition.getPath();
-    QString output, error, strmatch, strcmd;
-    m_blocksSize = m_numOfFreeOrUsedBlocks = m_totalNumOfBlock = -1;
+    QString output, error, strcmd;
     strcmd = QString("dumpe2fs -h %1").arg(partition.getPath());
+    
+    qDebug() << "Executing dumpe2fs command to get filesystem information";
     if (!Utils::executCmd(strcmd, output, error)) {
-        strmatch = ("Block count:");
+        long long blockCount = -1;
+        long long blockSize = -1;
+        long long freeBlocks = -1;
+        long long reservedBlocks = 0;
+        
+        // 获取总块数
+        QString strmatch = "Block count:";
         int index = output.indexOf(strmatch);
         if (index >= 0 && index < output.length()) {
-            qDebug() << "Found block count";
-            m_totalNumOfBlock = Utils::regexpLabel(output, QString("(?<=Block count:).*(?=\n)")).trimmed().toLong();
+            qDebug() << "Found block count information";
+            blockCount = Utils::regexpLabel(output, QString("(?<=Block count:).*(?=\n)")).trimmed().toLong();
         }
-//        qDebug() << output;
-//        qDebug() << output.mid(index, strmatch.length()).toLatin1() << m_totalNumOfBlock;
-        strmatch = ("Block size:");
+        
+        // 获取块大小
+        strmatch = "Block size:";
         index = output.indexOf(strmatch);
         if (index >= 0 && index < output.length()) {
-            qDebug() << "Found block size";
-            m_blocksSize = Utils::regexpLabel(output, QString("(?<=Block size:).*(?=\n)")).trimmed().toLong();
+            qDebug() << "Found block size information";
+            blockSize = Utils::regexpLabel(output, QString("(?<=Block size:).*(?=\n)")).trimmed().toLong();
         }
-//        qDebug() << output << output.mid(index, strmatch.length()).toLatin1() << m_blocksSize;
+        
+        // 获取空闲块数
+        strmatch = "Free blocks:";
+        index = output.indexOf(strmatch);
+        if (index >= 0 && index < output.length()) {
+            qDebug() << "Found free blocks information";
+            freeBlocks = Utils::regexpLabel(output, QString("(?<=Free blocks:).*(?=\n)")).trimmed().toLong();
+        }
+        
+        // 获取保留块数
+        strmatch = "Reserved block count:";
+        index = output.indexOf(strmatch);
+        if (index >= 0 && index < output.length()) {
+            qDebug() << "Found reserved blocks information";
+            reservedBlocks = Utils::regexpLabel(output, QString("(?<=Reserved block count:).*(?=\n)")).trimmed().toLong();
+        }
+        
+        // 验证数据有效性并计算扇区使用情况
+        if (blockCount > 0 && blockSize > 0 && freeBlocks >= 0 && reservedBlocks >= 0) {
+            qDebug() << "Filesystem information validation successful, calculating sector usage";
 
-        if (partition.m_busy) {
-            qDebug() << "Partition is busy, getting usage from mounted filesystem";
-            Byte_Value fs_all;
-            Byte_Value fs_free;
-            if (Utils::getMountedFileSystemUsage(partition.getMountPoint(), fs_all, fs_free) == 0) {
-                qDebug() << "Successfully got mounted filesystem usage";
-                partition.setSectorUsage(qRound64(fs_all / double(partition.m_sectorSize)), qRound64(fs_free / double(partition.m_sectorSize)));
-                partition.m_fsBlockSize = m_blocksSize;
+            // 计算用户实际可用的空闲块数：可用 = (freeBlocks - reservedBlocks)
+            long long userAvailableBlocks = (freeBlocks > reservedBlocks) ? (freeBlocks - reservedBlocks) : 0;
+            
+            // 转换为扇区数
+            Sector totalSectors = qRound64(blockCount * (blockSize / double(partition.m_sectorSize)));
+            Sector availableSectors = qRound64(userAvailableBlocks * (blockSize / double(partition.m_sectorSize)));
+            
+            qDebug() << "EXT* usage calculation: blockCount=" << blockCount
+                     << "blockSize=" << blockSize
+                     << "freeBlocks=" << freeBlocks
+                     << "reservedBlocks=" << reservedBlocks
+                     << "userAvailableBlocks=" << userAvailableBlocks
+                     << "totalSectors=" << totalSectors
+                     << "availableSectors=" << availableSectors;
+            
+            // 如果分区已挂载，使用 stat 获取更准确的可用块数
+            if (partition.m_busy && !partition.getMountPoints().empty()) {
+                qDebug() << "Partition is mounted, using stat for more accurate available space calculation";
+                Byte_Value statTotalSize, statAvailableSize;
+                if (Utils::getMountedFileSystemUsage(partition.getMountPoint(), statTotalSize, statAvailableSize) == 0) {
+                    // 使用 stat 获取的可用空间（已经排除了保留空间）
+                    Sector statAvailableSectors = qRound64(statAvailableSize / double(partition.m_sectorSize));
+                    qDebug() << "Using stat data for mounted partition: statAvailableSectors=" << statAvailableSectors;
+                    partition.setSectorUsage(totalSectors, statAvailableSectors);
+                    qDebug() << "Sector usage set successfully using stat data";
+                } else {
+                    qDebug() << "Failed to get mounted filesystem usage, using calculated available sectors";
+                    partition.setSectorUsage(totalSectors, availableSectors);
+                    qDebug() << "Sector usage set successfully using calculated data";
+                }
+            } else {
+                qDebug() << "Partition is not mounted, using calculated available sectors";
+                partition.setSectorUsage(totalSectors, availableSectors);
+                qDebug() << "Sector usage set successfully";
             }
+            partition.m_fsBlockSize = blockSize;
+            qDebug() << "Filesystem block size set to:" << blockSize;
         } else {
-            qDebug() << "Partition is not busy, estimating minimum size";
-            // Resize2fs won't shrink a file system smaller than it's own
-            // estimated minimum size, so use that to derive the free space.
-            m_numOfFreeOrUsedBlocks = -1;
-            if (!Utils::executCmd(QString("resize2fs -P %1").arg(partition.getPath()), output, error)) {
-                qDebug() << "resize2fs -P successful";
-                if (sscanf(output.toLatin1(), "Estimated minimum size of the filesystem: %lld", &m_numOfFreeOrUsedBlocks) == 1
-                        || sscanf(output.toStdString().c_str(), "预计文件系统的最小尺寸：%lld", &m_numOfFreeOrUsedBlocks) == 1) {
-                    qDebug() << "Parsed estimated minimum size";
-                    m_numOfFreeOrUsedBlocks = m_totalNumOfBlock - m_numOfFreeOrUsedBlocks;
-                }
-            }
-            // Resize2fs can fail reporting please run fsck first.  Fall back
-            // to reading dumpe2fs output for free space.
-            if (m_numOfFreeOrUsedBlocks == -1) {
-                qDebug() << "resize2fs -P failed or did not provide minimum size, falling back to dumpe2fs";
-                strmatch = "Free blocks:";
-                index = output.indexOf(strmatch);
-                if (index < output.length()) {
-                    qDebug() << "Found free blocks in dumpe2fs output";
-                    sscanf(output.mid(index, strmatch.length()).toLatin1(), "Free blocks: %lld", &m_numOfFreeOrUsedBlocks);
-                }
-            }
-
-            if (m_totalNumOfBlock > -1 && m_numOfFreeOrUsedBlocks > -1 && m_blocksSize > -1) {
-                qDebug() << "Calculating and setting sector usage from block counts";
-                m_totalNumOfBlock = qRound64(m_totalNumOfBlock * (m_blocksSize / double(partition.m_sectorSize)));
-                m_numOfFreeOrUsedBlocks = qRound64(m_numOfFreeOrUsedBlocks * (m_blocksSize / double(partition.m_sectorSize)));
-                qDebug() << "111111111111111111111111" << m_totalNumOfBlock << m_numOfFreeOrUsedBlocks << m_blocksSize;
-                partition.setSectorUsage(m_totalNumOfBlock, m_numOfFreeOrUsedBlocks);
-                partition.m_fsBlockSize = m_blocksSize;
-            }
+            qDebug() << "Filesystem information validation failed, invalid parameters detected";
         }
-
-
     } else {
-        qDebug() << __FUNCTION__ << "dumpe2fs -h failed :" << output << error;
+        qDebug() << "dumpe2fs command execution failed, error:" << error;
+        qDebug() << "Failed to set used sectors for partition:" << partition.getPath();
     }
 }
 

@@ -1,7 +1,10 @@
 *.user
 .build
+build
 .qmake.stash
 *.qm
+.cache/*
+.claude/*
 .vscode
 
 # AI

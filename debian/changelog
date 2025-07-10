@@ -1,3 +1,9 @@
+deepin-diskmanager (6.0.9) unstable; urgency=medium
+
+  * chore: Update deepin-manual resources (#157)
+
+ -- dengzhongyuan <dengzhongyuan@uniontech.com>  Thu, 10 Jul 2025 18:58:52 +0800
+
 deepin-diskmanager (6.0.8) unstable; urgency=medium
 
   * chore: New version 6.0.8.

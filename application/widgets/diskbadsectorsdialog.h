@@ -239,6 +239,12 @@ private:
     int m_blockStart = 0;
     int m_blockEnd = 0;
     DeviceInfo m_deviceInfo;
+    
+    // 实际时间跟踪
+    qint64 m_realStartTime = 0;     // 检测开始的实际时间戳
+    qint64 m_pauseStartTime = 0;    // 暂停开始时间戳  
+    qint64 m_totalPausedTime = 0;   // 总的暂停时间
+    bool m_isPaused = false;        // 是否处于暂停状态
 };
 
 #endif // DISKBADSECTORSDIALOG_H

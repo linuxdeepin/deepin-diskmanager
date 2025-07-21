@@ -5,3 +5,4 @@ build
 *.qm
 .cache/*
 .claude/*
+.cursor/*

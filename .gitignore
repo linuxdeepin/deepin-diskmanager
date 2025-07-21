@@ -4,13 +4,13 @@ build
 .qmake.stash
 *.qm
 .cache/*
-.claude/*
 .vscode
 
 # AI
 .cursor/
 .cursorindexingignore
 .specstory/
+.claude/*
 
 # debian output
 debian/.debhelper/

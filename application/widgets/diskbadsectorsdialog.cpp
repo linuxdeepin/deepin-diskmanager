@@ -22,6 +22,7 @@
 #include <QStackedWidget>
 #include <QSettings>
 #include <QFile>
+#include <QDateTime>
 
 DiskBadSectorsDialog::DiskBadSectorsDialog(QWidget *parent) : DDialog(parent)
 {
@@ -644,6 +645,11 @@ void DiskBadSectorsDialog::onStartVerifyButtonClicked()
     m_usedTimeLabel->setText(tr("Time elapsed:") + "00:00:00");
     m_unusedTimeLabel->setText(tr("Time left:") + "00:00:00");
 
+    // 初始化实际时间跟踪
+    m_realStartTime = QDateTime::currentMSecsSinceEpoch();
+    m_totalPausedTime = 0;
+    m_isPaused = false;
+
     QFile file("/tmp/CheckData.conf");
     if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
         qDebug() << "File opened successfully";
@@ -798,18 +804,45 @@ void DiskBadSectorsDialog::onCheckTimeOut()
         m_settings->setValue("CurCylinder",lst.at(1));
         m_settings->endGroup();
 
-        qint64 totalTime = m_curCheckTime / m_curCheckNumber * m_totalCheckNumber;
-        int value = QString::number((float)m_curCheckTime / totalTime,'f', 2).toFloat() * 100;
-        value > 99 ? value = 99 : value;
+        // 使用实际经过时间计算已用时间
+        qint64 currentTime = QDateTime::currentMSecsSinceEpoch();
+        qint64 realElapsedTime = currentTime - m_realStartTime - m_totalPausedTime;
+        
+        // 如果当前是暂停状态，不包括当前暂停期间的时间
+        if (m_isPaused && m_pauseStartTime > 0) {
+            qint64 currentPauseDuration = currentTime - m_pauseStartTime;
+            realElapsedTime -= currentPauseDuration;
+        }
+        
+        // 确保已用时间不为负数
+        if (realElapsedTime < 0) realElapsedTime = 0;
 
-        m_progressBar->setValue(value);
-        qint64 remainingTime = totalTime - m_curCheckTime;
-        remainingTime < 1000 ? remainingTime = 1000 : remainingTime;
+        // 基于柱面检测时间估算总时间（用于剩余时间计算）
+        qint64 estimatedTotalTime = m_curCheckTime / m_curCheckNumber * m_totalCheckNumber;
+        
+        // 计算进度百分比（基于检测数量）
+        int progressValue = (m_curCheckNumber * 100) / m_totalCheckNumber;
+        if (progressValue > 99) progressValue = 99;
+        m_progressBar->setValue(progressValue);
+        
+        // 基于实际时间和进度估算剩余时间
+        qint64 remainingTime = 0;
+        if (m_curCheckNumber > 0 && realElapsedTime > 0) {
+            // 使用实际已用时间来估算剩余时间
+            qint64 avgTimePerCylinder = realElapsedTime / m_curCheckNumber;
+            remainingTime = avgTimePerCylinder * (m_totalCheckNumber - m_curCheckNumber);
+        } else {
+            // 回退到基于柱面时间的估算
+            remainingTime = estimatedTotalTime - m_curCheckTime;
+        }
+        
+        if (remainingTime < 1000) remainingTime = 1000;
 
+        // 显示实际已用时间
         qint64 usedHour = 0;
         qint64 usedMinute = 0;
         qint64 usedSecond = 0;
-        mSecsToTime(m_curCheckTime, usedHour, usedMinute, usedSecond);
+        mSecsToTime(realElapsedTime, usedHour, usedMinute, usedSecond);
         m_usedTimeLabel->setText(tr("Time elapsed:") + QString("%1:%2:%3").arg(usedHour, 2, 10, QLatin1Char('0')).arg(usedMinute, 2, 10, QLatin1Char('0')).arg(usedSecond, 2, 10, QLatin1Char('0'))); // 时、分、秒为一位数时，十位自动补0
 
         qint64 remainingHour = 0;
@@ -871,6 +904,10 @@ void DiskBadSectorsDialog::onStopButtonClicked()
         m_curType = StatusType::StopCheck;
         m_cylinderInfoWidget->setChecked(false);
 
+        // 记录暂停开始时间
+        m_pauseStartTime = QDateTime::currentMSecsSinceEpoch();
+        m_isPaused = true;
+
         int checkSize = m_settings->value("SettingData/CheckSize").toInt();
         int blockStart = m_settings->value("SettingData/BlockStart").toInt();
         int blockEnd = m_settings->value("SettingData/BlockEnd").toInt();
@@ -909,6 +946,14 @@ void DiskBadSectorsDialog::onContinueButtonClicked()
         m_resetButton->setDisabled(true);
         m_curType = StatusType::Check;
         m_cylinderInfoWidget->setChecked(true);
+
+        // 累加暂停时间
+        if (m_isPaused && m_pauseStartTime > 0) {
+            qint64 pauseDuration = QDateTime::currentMSecsSinceEpoch() - m_pauseStartTime;
+            m_totalPausedTime += pauseDuration;
+            m_isPaused = false;
+            m_pauseStartTime = 0;
+        }
 
         int checkSize = m_settings->value("SettingData/CheckSize").toInt();
         int blockEnd = m_settings->value("SettingData/BlockEnd").toInt();
@@ -958,6 +1003,12 @@ void DiskBadSectorsDialog::onAgainVerifyButtonClicked()
     m_repairButton->setDisabled(true);
     m_curCheckNumber = 0;
     m_curCheckTime = 0;
+
+    // 重置实际时间跟踪
+    m_realStartTime = QDateTime::currentMSecsSinceEpoch();
+    m_totalPausedTime = 0;
+    m_isPaused = false;
+    m_pauseStartTime = 0;
 
     int checkSize = m_settings->value("SettingData/CheckSize").toInt();
     m_blockStart = m_settings->value("SettingData/BlockStart").toInt();
@@ -1014,6 +1065,12 @@ void DiskBadSectorsDialog::onResetButtonClicked()
     m_curRepairNumber = 0;
     m_curRepairTime = 0;
     m_cylinderInfoWidget->setChecked(false);
+
+    // 重置实际时间跟踪
+    m_realStartTime = 0;
+    m_totalPausedTime = 0;
+    m_isPaused = false;
+    m_pauseStartTime = 0;
 
     m_verifyComboBox->setCurrentIndex(0);
     m_startLineEdit->setText("0");

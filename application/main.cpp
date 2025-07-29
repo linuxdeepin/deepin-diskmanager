@@ -77,14 +77,14 @@ int executCmd(const QString &strCmd, QString &outPut, QString &error)
 {
     qDebug() << "executCmd called with command:" << strCmd;
     QProcess proc;
-#if QT_VERSION_MAJOR > 5
-    qDebug() << "QT_VERSION_MAJOR > 5, using split command start.";
-    QStringList list = strCmd.split(" ");
-    proc.start(list.at(0), QStringList() << list.at(1));
-#else
-    qDebug() << "QT_VERSION_MAJOR <= 5, using direct command start.";
-    proc.start(strCmd);
-#endif
+    QStringList args = strCmd.split(" ");
+    if (args.isEmpty()) {
+        error = "args is empty";
+        return -1;
+    }
+    const QString prog = args.takeFirst();
+    proc.start(prog, args);
+
     proc.waitForFinished(-1);
     outPut = proc.readAllStandardOutput();
     error = proc.readAllStandardError();
@@ -150,7 +150,9 @@ int main(int argc, char *argv[])
 
         if (!executCmd(cmd, oldPid, error)) {
             qDebug() << "deepin-diskmanager-service found, sending Quit signal.";
-            proc.startDetached("/usr/bin/dbus-send --system --type=method_call --dest=com.deepin.diskmanager /com/deepin/diskmanager com.deepin.diskmanager.Quit");
+            QString args = QString("--system --type=method_call --dest=com.deepin.diskmanager /com/deepin/diskmanager com.deepin.diskmanager.Quit");
+            QStringList argList = args.split(" ");
+            proc.startDetached("/usr/bin/dbus-send", argList);
         }
 
         QStringList argList;

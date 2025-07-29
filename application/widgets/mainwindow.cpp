@@ -93,7 +93,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
     m_central->HandleQuit();
 //    m_handler->Quit();
     QProcess proc;
-    proc.startDetached("/usr/bin/dbus-send --system --type=method_call --dest=com.deepin.diskmanager /com/deepin/diskmanager com.deepin.diskmanager.Quit");
+    QString args = QString("--system --type=method_call --dest=com.deepin.diskmanager /com/deepin/diskmanager com.deepin.diskmanager.Quit");
+    QStringList argList = args.split(" ");
+    proc.startDetached("/usr/bin/dbus-send", argList);
 
     DMainWindow::closeEvent(event);
     qDebug() << "MainWindow::closeEvent completed.";
@@ -172,7 +174,9 @@ void MainWindow::onHandleQuitAction()
     qDebug() << __FUNCTION__;
 
     QProcess proc;
-    proc.startDetached("/usr/bin/dbus-send --system --type=method_call --dest=com.deepin.diskmanager /com/deepin/diskmanager com.deepin.diskmanager.Quit");
+    QString args = QString("--system --type=method_call --dest=com.deepin.diskmanager /com/deepin/diskmanager com.deepin.diskmanager.Quit");
+    QStringList argList = args.split(" ");
+    proc.startDetached("/usr/bin/dbus-send", argList);
 
 }
 

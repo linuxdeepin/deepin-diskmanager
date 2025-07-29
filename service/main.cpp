@@ -4,7 +4,6 @@
 
 #include "diskmanagerservice.h"
 #include "log.h"
-#include "watcher.h"
 
 #include <QCoreApplication>
 #include <DLog>
@@ -102,15 +101,6 @@ int main(int argc, char *argv[])
         checkFrontEndQuit(frontEndPid);
     });
     timer.start(1000);
-
-    /*
-     * 启动一个线程监测前端是否运行：
-     *    1 如果前端没有启动过，则后台保持运行
-     *    2 如果前端启动过，又退出了，则后台退出。这可能是因为用户从dock栏强杀了磁盘管理器。
-     */
-    // DiskManager::Watcher m_watcher;
-    // QObject::connect(qApp, &QCoreApplication::aboutToQuit, &m_watcher, &DiskManager::Watcher::exit);
-    // m_watcher.start();
 
     return a.exec();
 }

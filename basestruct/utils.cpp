@@ -22,6 +22,46 @@ Utils::Utils()
     qDebug() << "Utils constructor";
 }
 
+static QStringList parseCombinedArgString(const QString &program)
+{
+    QStringList args;
+    QString tmp;
+    int quoteCount = 0;
+    bool inQuote = false;
+
+    // handle quoting. tokens can be surrounded by double quotes
+    // "hello world". three consecutive double quotes represent
+    // the quote character itself.
+    for (int i = 0; i < program.size(); ++i) {
+        if (program.at(i) == QLatin1Char('"')) {
+            ++quoteCount;
+            if (quoteCount == 3) {
+                // third consecutive quote
+                quoteCount = 0;
+                tmp += program.at(i);
+            }
+            continue;
+        }
+        if (quoteCount) {
+            if (quoteCount == 1)
+                inQuote = !inQuote;
+            quoteCount = 0;
+        }
+        if (!inQuote && program.at(i).isSpace()) {
+            if (!tmp.isEmpty()) {
+                args += tmp;
+                tmp.clear();
+            }
+        } else {
+            tmp += program.at(i);
+        }
+    }
+    if (!tmp.isEmpty())
+        args += tmp;
+
+    return args;
+}
+
 QString Utils::findProgramInPath(const QString &proName)
 {
     qDebug() << "Utils::findProgramInPath----" << proName;
@@ -58,34 +98,15 @@ int Utils::executeCmdWithArtList(const QString &strCmd, const QStringList &strAr
 
 int Utils::executCmd(const QString &strCmd, QString &outPut, QString &error)
 {
-    qDebug() << "Utils::executCmd*******--------" << strCmd;
+    qDebug() << "Utils::executCmd" << strCmd;
 
-//    qDebug() << "Utils::executCmd*******--------" << strCmd;
-//    QProcess proc;
-//    // proc.open(QIODevice::ReadWrite);
-//    proc.start(strCmd);
-//    proc.waitForFinished(-1);
-//    outPut = proc.readAllStandardOutput();
-//    QString stderror = proc.readAllStandardError();
-//    error = proc.errorString();
-//    int exitcode = proc.exitCode();
-//    // qDebug()<<output<<error<<stderror;
-//    //mkfs.ext4 -V have no output,stderror include useful info
-//    if (outPut.isEmpty() && !stderror.isEmpty()) {
-//        outPut = stderror;
-//    }
-//    proc.close();
-
-    QStringList cmdList = strCmd.trimmed().split(" ");
-
-    QStringList argList;
-    for (int i = 1; i < cmdList.size(); i++) {
-        if (!cmdList[i].isEmpty()) {
-            qDebug() << "Appending argument:" << cmdList[i];
-            argList.append(cmdList[i]);
-        }
+    QStringList args = parseCombinedArgString(strCmd);
+    if (args.isEmpty()) {
+        error = "args is empty";
+        return -1;
     }
-    int exitcode = executeCmdWithArtList(cmdList[0], argList, outPut, error);
+    const QString prog = args.takeFirst();
+    int exitcode = executeCmdWithArtList(prog, args, outPut, error);
 
     qDebug() << "Utils::executCmd exitcode:  " << exitcode;
     return exitcode;
@@ -97,11 +118,13 @@ int Utils::executWithInputOutputCmd(const QString &strCmdArg, const QString *inP
     QProcess proc;
     int exitCode;
 
-#if QT_VERSION_MAJOR > 5
-    proc.start(strCmdArg);
-#else
-    proc.start(strCmdArg, QIODevice::ReadWrite);
-#endif
+    QStringList args = parseCombinedArgString(strCmdArg);
+    if (args.isEmpty()) {
+        error = "args is empty";
+        return -1;
+    }
+    const QString prog = args.takeFirst();
+    proc.start(prog, args);
 
     if (inPut) {
         qDebug() << "Writing input to process:" << *inPut;
@@ -812,12 +835,6 @@ QString Utils::readContent(const QString &filename)
 
 int Utils::executCmd(const QString &strCmd)
 {
-    qDebug() << "Utils::executCmd - Executing:" << strCmd;
-    QProcess proc;
-    proc.setProgram(strCmd);
-    proc.start(QIODevice::ReadWrite);
-    proc.waitForFinished(-1);
-    int exitcode = proc.exitCode();
-    proc.close();
-    return exitcode;
+    QString outPut, error;
+    return executCmd(strCmd, outPut, error);
 }

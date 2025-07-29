@@ -171,7 +171,21 @@ HardDiskInfo PartedCore::getDeviceHardInfo(const QString &devicepath)
         hdinfo.m_rotationRate = "-";
     }
 
-    // qDebug() << __FUNCTION__ << "Get Device Hard Info end";
+    qDebug() << "Get device hard info for " << devicepath;
+    qDebug() << "Model: " << hdinfo.m_model;
+    qDebug() << "Vendor: " << hdinfo.m_vendor;
+    qDebug() << "Media type: " << hdinfo.m_mediaType;
+    qDebug() << "Size: " << hdinfo.m_size;
+    qDebug() << "Rotation rate: " << hdinfo.m_rotationRate;
+    qDebug() << "Interface: " << hdinfo.m_interface;
+    qDebug() << "Serial number: " << hdinfo.m_serialNumber;
+    qDebug() << "Version: " << hdinfo.m_version;
+    qDebug() << "Capabilities: " << hdinfo.m_capabilities;
+    qDebug() << "Description: " << hdinfo.m_description;
+    qDebug() << "Power on hours: " << hdinfo.m_powerOnHours;
+    qDebug() << "Power cycle count: " << hdinfo.m_powerCycleCount;
+    qDebug() << "Firmware version: " << hdinfo.m_firmwareVersion;
+    qDebug() << "Speed: " << hdinfo.m_speed;
     return hdinfo;
 }
 
@@ -200,10 +214,12 @@ QString PartedCore::getDeviceHardStatus(const QString &devicepath)
     }
 
     QString cmd = QString("smartctl -H %1").arg(devicePath);
-    QProcess proc;
-    proc.start(cmd);
-    proc.waitForFinished(-1);
-    QString output = proc.readAllStandardOutput();
+    QString output, error;
+    int exitcode = Utils::executCmd(cmd, output, error);
+    if (exitcode != 0) {
+        qDebug() << "Failed to execute smartctl command, error:" << error;
+        return status;
+    }
 
     if (output.indexOf("SMART overall-health self-assessment test result:") != -1) {
         qDebug() << "Found SMART overall-health self-assessment test result";
@@ -223,10 +239,11 @@ QString PartedCore::getDeviceHardStatus(const QString &devicepath)
     } else {
         qDebug() << "SMART overall-health self-assessment test result not found, trying -d sat";
         QString cmd = QString("smartctl -H -d sat %1").arg(devicePath);
-        QProcess proc;
-        proc.start(cmd);
-        proc.waitForFinished(-1);
-        QString output = proc.readAllStandardOutput();
+        exitcode = Utils::executCmd(cmd, output, error);
+        if (exitcode != 0) {
+            qDebug() << "Failed to execute smartctl command, error:" << error;
+            return status;
+        }
 
         if (output.indexOf("SMART overall-health self-assessment test result:") != -1) {
             qDebug() << "Found SMART overall-health self-assessment test result with -d sat";
@@ -279,10 +296,12 @@ HardDiskStatusInfoList PartedCore::getDeviceHardStatusInfo(const QString &device
         devicePath = list.at(0) + "nvme" + str;
 
         QString cmd = QString("smartctl -A %1").arg(devicePath);
-        QProcess proc;
-        proc.start(cmd);
-        proc.waitForFinished(-1);
-        QString output = proc.readAllStandardOutput();
+        QString output, error;
+        int exitcode = Utils::executCmd(cmd, output, error);
+        if (exitcode != 0) {
+            qDebug() << "Failed to execute smartctl command, error:" << error;
+            return hdsilist;
+        }
 
 // Copyright (C) 2002-17, Bruce Allen, Christian Franke, www.smartmontools.org\n\n=== START OF SMART DATA SECTION ===\nSMART/Health Information (NVMe Log 0x02, NSID 0xffffffff)\nCritical Warning:                   0x00\nTemperature:                        25 Celsius\nAvailable Spare:                    100%\nAvailable Spare Threshold:          5%\nPercentage Used:                    1%\nData Units Read:                    3,196,293 [1.63 TB]\nData Units Written:                 3,708,861 [1.89 TB]\nHost Read Commands:                 47,399,157\nHost Write Commands:                65,181,192\nController Busy Time:               418\nPower Cycles:                       97\nPower On Hours:                     1,362\nUnsafe Shutdowns:                   44\nMedia and Data Integrity Errors:    0\nError Information Log Entries:      171\nWarning  Comp. Temperature Time:    0\nCritical Comp. Temperature Time:    0\n\n";
 // SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
@@ -310,10 +329,12 @@ HardDiskStatusInfoList PartedCore::getDeviceHardStatusInfo(const QString &device
     } else {
         qDebug() << "Device path does not contain nvme, using default smartctl";
         QString cmd = QString("smartctl -A %1").arg(devicepath);
-        QProcess proc;
-        proc.start(cmd);
-        proc.waitForFinished(-1);
-        QString output = proc.readAllStandardOutput();
+        QString output, error;
+        int exitcode = Utils::executCmd(cmd, output, error);
+        if (exitcode != 0) {
+            qDebug() << "Failed to execute smartctl command, error:" << error;
+            return hdsilist;
+        }
 
         if (output.contains("ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE")) {
             qDebug() << "Found SMART attributes header";
@@ -353,10 +374,12 @@ HardDiskStatusInfoList PartedCore::getDeviceHardStatusInfo(const QString &device
         } else {
             qDebug() << "SMART attributes header not found, trying -d sat";
             QString cmd = QString("smartctl -A -d sat %1").arg(devicepath);
-            QProcess proc;
-            proc.start(cmd);
-            proc.waitForFinished(-1);
-            QString output = proc.readAllStandardOutput();
+            QString output, error;
+            int exitcode = Utils::executCmd(cmd, output, error);
+            if (exitcode != 0) {
+                qDebug() << "Failed to execute smartctl command, error:" << error;
+                return hdsilist;
+            }
             if (output.contains("ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE")) {
                 qDebug() << "Found SMART attributes header with -d sat";
                 QStringList list = output.split("\n");
@@ -1017,9 +1040,7 @@ bool PartedCore::showPartition()
         }
     }
 
-    QProcess proc;
-    proc.start("udevadm control --reload");
-    proc.waitForFinished(-1);
+    Utils::executCmd("udevadm control --reload");
     emit refreshDeviceInfo();
     emit showPartitionInfo("1");
 
@@ -1059,9 +1080,7 @@ bool PartedCore::hidePartition()
     }
 
     // qDebug() << __FUNCTION__ << "Hide Partition end";
-    QProcess proc;
-    proc.start("udevadm control --reload");
-    proc.waitForFinished(-1);
+    Utils::executCmd("udevadm control --reload");
     emit refreshDeviceInfo();
     emit hidePartitionInfo("1");
     qDebug() << "PartedCore::hidePartition END";

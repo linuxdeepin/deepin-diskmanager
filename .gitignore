@@ -2,8 +2,17 @@
 .build
 .qmake.stash
 *.qm
+.vscode
 
 # AI
 .cursor/
 .cursorindexingignore
 .specstory/
+
+# debian output
+debian/.debhelper/
+debian/debhelper-build-stamp
+debian/deepin-diskmanager.substvars
+debian/deepin-diskmanager/
+debian/files
+obj-x86_64-linux-gnu/

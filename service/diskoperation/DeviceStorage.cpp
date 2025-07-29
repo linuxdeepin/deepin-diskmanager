@@ -353,10 +353,12 @@ bool DeviceStorage::getDiskInfoFromHwinfo(const QString &devicePath)
 {
     qDebug() << "Getting disk info from hwinfo for device:" << devicePath;
     QString cmd = QString("hwinfo --disk --only %1").arg(devicePath);
-    QProcess proc;
-    proc.start(cmd);
-    proc.waitForFinished(-1);
-    QString outPut = proc.readAllStandardOutput();
+    QString outPut;
+    QString error;
+    if (Utils::executCmd(cmd, outPut, error) != 0) {
+        qDebug() << "Failed to execute hwinfo command, error:" << error;
+        return false;
+    }
 
     QMap<QString, QString> mapInfo;
 
@@ -440,10 +442,11 @@ void DeviceStorage::getMapInfoFromInput(const QString &info, QMap<QString, QStri
 bool DeviceStorage::getDiskInfoFromLshw(const QString &devicePath)
 {
     qDebug() << "DeviceStorage::getDiskInfoFromLshw BEGIN";
-    QProcess proc;
-    proc.start("sudo lshw -C disk");
-    proc.waitForFinished(-1);
-    QString outPut  = proc.readAllStandardOutput();
+    QString outPut, error;
+    if (Utils::executCmd("lshw -C disk", outPut, error) != 0) {
+        qDebug() << "Failed to execute lshw command, error:" << error;
+        return false;
+    }
 
     QStringList list = outPut.split("*-disk\n");
 
@@ -523,12 +526,13 @@ bool DeviceStorage::getDiskInfoFromLsblk(const QString &devicePath)
 {
     qDebug() << "DeviceStorage::getDiskInfoFromLsblk BEGIN";
     QString cmd = QString("lsblk -d -o name,rota %1").arg(devicePath);
-    QProcess proc;
-    proc.start(cmd);
-    proc.waitForFinished(-1);
+    QString outPut, error;
+    if (Utils::executCmd(cmd, outPut, error) != 0) {
+        qDebug() << "Failed to execute lsblk command, error:" << error;
+        return false;
+    }
 
     QMap<QString, QString> mapInfo;
-    QString outPut = proc.readAllStandardOutput();
 
     loadLsblkInfo(outPut, mapInfo);
 
@@ -568,18 +572,18 @@ bool DeviceStorage::getDiskInfoFromSmartCtl(const QString &devicePath)
 {
     qDebug() << "DeviceStorage::getDiskInfoFromSmartCtl BEGIN";
     QString cmd = QString("smartctl --all %1").arg(devicePath);
-    QProcess proc;
-    proc.start(cmd);
-    proc.waitForFinished(-1);
-    QString outPut  = proc.readAllStandardOutput();
+    QString outPut, error;
+    int exitcode = Utils::executCmd(cmd, outPut, error);
 
     if (outPut.contains("Please specify device type with the -d option")) {
         qDebug() << "need to specify device type";
-        QString cmd = QString("smartctl --all -d sat %1").arg(devicePath);
-        QProcess proc;
-        proc.start(cmd);
-        proc.waitForFinished(-1);
-        outPut = proc.readAllStandardOutput();
+        cmd = QString("smartctl --all -d sat %1").arg(devicePath);
+        exitcode = Utils::executCmd(cmd, outPut, error);
+    }
+
+    if (exitcode != 0) {
+        qDebug() << "Failed to execute smartctl command, error:" << error;
+        return false;
     }
 
     QMap<QString, QString> mapInfo;
@@ -595,18 +599,19 @@ bool DeviceStorage::getDiskInfoFromSmartCtl(const QString &devicePath)
 void DeviceStorage::getDiskInfoModel(const QString &devicePath, QString &model)
 {
     qDebug() << "DeviceStorage::getDiskInfoModel BEGIN";
-    QProcess proc;
     QString cmd = QString("smartctl --all %1").arg(devicePath);
-    proc.start(cmd);
-    proc.waitForFinished(-1);
-    QString outPut = proc.readAllStandardOutput();
+    QString outPut, error;
+    int exitcode = Utils::executCmd(cmd, outPut, error);
 
     if (outPut.contains("Please specify device type with the -d option")) {
         qDebug() << "need to specify device type";
         cmd = QString("smartctl --all -d sat %1").arg(devicePath);
-        proc.start(cmd);
-        proc.waitForFinished(-1);
-        outPut = proc.readAllStandardOutput();
+        exitcode = Utils::executCmd(cmd, outPut, error);
+    }
+
+    if (exitcode != 0) {
+        qDebug() << "Failed to execute smartctl command, error:" << error;
+        return;
     }
 
     QStringList infoList = outPut.split("\n");
@@ -620,9 +625,11 @@ void DeviceStorage::getDiskInfoModel(const QString &devicePath, QString &model)
     }
 
     cmd = "lshw -C disk";
-    proc.start(cmd);
-    proc.waitForFinished(-1);
-    outPut = proc.readAllStandardOutput();
+    exitcode = Utils::executCmd(cmd, outPut, error);
+    if (exitcode != 0) {
+        qDebug() << "Failed to execute lshw command, error:" << error;
+        return;
+    }
 
     infoList = outPut.split("*-disk\n");
     for (int i =0; i < infoList.size(); i++) {
@@ -650,21 +657,19 @@ QString DeviceStorage::getDiskInfoMediaType(const QString &devicePath)
 {
     qDebug() << "DeviceStorage::getDiskInfoMediaType BEGIN";
     QStringList deviceList = devicePath.split("/");
+    if (deviceList.size() < 2) {
+        qDebug() << "deviceList.size() < 2, return UnKnow";
+        return "UnKnow";
+    }
     QString device = deviceList[deviceList.size()-1];
-    QString value;
-    QString cmd = QString("cat /sys/block/%1/queue/rotational").arg(device);
-    QProcess proc;
-    proc.start(cmd);
-    proc.waitForFinished(-1);
-    QString outPut = proc.readAllStandardOutput().trimmed();
-    value = outPut;
+    QString rotational_file = QString("/sys/block/%1/queue/rotational").arg(device);
+    QString value = Utils::readContent(rotational_file).trimmed();
 
     if ("1" == value) {
         qDebug() << "value is 1";
-        cmd = QString("smartctl -i %1").arg(devicePath);
-        proc.start(cmd);
-        proc.waitForFinished(-1);
-        outPut = proc.readAllStandardOutput();
+        QString cmd = QString("smartctl -i %1").arg(devicePath);
+        QString outPut, error;
+        int exitcode = Utils::executCmd(cmd, outPut, error);
         if (outPut.contains("Solid State Device")) {
             qDebug() << "is Solid State Device";
             value = "0";
@@ -672,15 +677,16 @@ QString DeviceStorage::getDiskInfoMediaType(const QString &devicePath)
             qDebug() << "need to specify device type";
             //FIXME: Hard type scsi for USB disk
             cmd = QString("smartctl -i -d scsi %1").arg(devicePath);
-            proc.start(cmd);
-            proc.waitForFinished(-1);
-            outPut = proc.readAllStandardOutput();
+            exitcode = Utils::executCmd(cmd, outPut, error);
             if (!outPut.contains("Rotation Rate:")) {
                 qDebug() << "not contains Rotation Rate";
                 value = "0";
             }
         }
-
+        if (exitcode != 0) {
+            qDebug() << "Failed to execute smartctl command, error:" << error;
+            return "UnKnow";
+        }
     }
     if (QString("0") == value) {
         qDebug() << "return SSD";
@@ -734,10 +740,13 @@ void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &int
     if (interface.isEmpty()) {
         qDebug() << "interface is empty";
         QString cmd = QString("hwinfo --disk --only %1").arg(devicePath);
-        QProcess proc;
-        proc.start(cmd);
-        proc.waitForFinished(-1);
-        QString outPut = proc.readAllStandardOutput().trimmed();
+        QString outPut, error;
+        int exitcode = Utils::executCmd(cmd, outPut, error);
+        if (exitcode != 0) {
+            interface = "UnKnow";
+            qDebug() << "Failed to execute hwinfo command, error:" << error;
+            return;
+        }
         QStringList outPutList = outPut.split("(");
         interface = outPutList[outPutList.size() - 1].split(" ")[0];
     }

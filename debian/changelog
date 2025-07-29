@@ -1,3 +1,9 @@
+deepin-diskmanager (6.0.10) unstable; urgency=medium
+
+  * fix: Fix fail to get device info
+
+ -- wangrong <wangrong@uniontech.com>  Tue, 29 Jul 2025 19:10:31 +0800
+
 deepin-diskmanager (6.0.9) unstable; urgency=medium
 
   * chore: Update deepin-manual resources (#157)

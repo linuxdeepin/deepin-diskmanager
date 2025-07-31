@@ -801,7 +801,7 @@ void DeviceStorage::getMapInfoFromSmartctl(QMap<QString, QString> &mapInfo, cons
         int index = line.indexOf(ch);
 #if QT_VERSION_MAJOR > 5
         QRegularExpressionMatch match = reg.match(line);
-        if (index > 0 && !match.hasMatch() && match.captured(0) == line && false == line.contains("Error") && false == line.contains("hh:mm:SS")) {
+        if (index > 0 && !match.hasMatch() && false == line.contains("Error") && false == line.contains("hh:mm:SS")) {
 #else
         if (index > 0 && reg.exactMatch(line) == false && false == line.contains("Error") && false == line.contains("hh:mm:SS")) {
 #endif

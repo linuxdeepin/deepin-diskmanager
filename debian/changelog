@@ -1,3 +1,10 @@
+deepin-diskmanager (6.0.11) unstable; urgency=medium
+
+  * fix: Fix incomplete retrieval of disk hardware information
+  * fix: Improve disk info retrieval logic
+
+ -- wangrong <wangrong@uniontech.com>  Thu, 31 Jul 2025 15:02:18 +0800
+
 deepin-diskmanager (6.0.10) unstable; urgency=medium
 
   * fix: Fix fail to get device info

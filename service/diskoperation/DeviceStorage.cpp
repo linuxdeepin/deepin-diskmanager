@@ -142,13 +142,16 @@ bool DeviceStorage::addInfoFromlshw(const QMap<QString, QString> &mapInfo)
         qWarning() << "Invalid bus info format:" << mapInfo["bus info"];
         return false;
     }
-    QString key = keys[1].trimmed();
-    key.replace(".", ":");
-    if (key != m_KeyToLshw) {
-        qDebug() << "lshw key does not match, returning false";
-        return false;
+    if (keys[0].trimmed() == "nvme") {
+        qDebug() << "nvme device found, not check KeyToLshw";
+    } else {
+        QString key = keys[1].trimmed();
+        key.replace(".", ":");
+        if (key != m_KeyToLshw) {
+            qDebug() << "lshw key does not match, returning false" << keys[0].trimmed() << key << m_KeyToLshw;
+            return false;
+        }
     }
-
 
     // 获取唯一key
     QStringList words = mapInfo["bus info"].split(":");
@@ -448,26 +451,25 @@ bool DeviceStorage::getDiskInfoFromLshw(const QString &devicePath)
         return false;
     }
 
-    QStringList list = outPut.split("*-disk\n");
-
-    outPut.clear();
-    for (int i =0;i<list.count();i++) {
-        if(list.at(i).contains(devicePath)) {
-            qDebug() << "devicePath found in lshw output";
-            outPut = list.at(i);
-            break;
+    QString diskInfo;
+    QStringList list = outPut.split("*-disk");
+    foreach (const QString &item, list) {
+        QStringList list2 = item.split("*-namespace");
+        foreach (const QString &item2, list2) {
+            if (item2.contains(devicePath)) {
+                qDebug() << "devicePath found in lshw output";
+                diskInfo = item2;
+                break;
+            }
         }
     }
-
-    if (outPut.isEmpty()) {
+    if (diskInfo.isEmpty()) {
         qDebug() << "devicePath not found in lshw output, return false";
         return false;
     }
 
     QMap<QString, QString> mapInfo;
-
-    getMapInfoFromLshw(outPut, mapInfo);
-
+    getMapInfoFromLshw(diskInfo, mapInfo);
     addInfoFromlshw(mapInfo);
 
     qDebug() << "DeviceStorage::getDiskInfoFromLshw END";

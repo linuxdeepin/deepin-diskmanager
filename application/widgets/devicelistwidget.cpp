@@ -127,6 +127,11 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
             createPartitionTable->setDisabled(true);
         }
 
+        // 如果是SSD设备，禁用坏道检测功能
+        if (info.m_mediaType == "SSD") {
+          actionVerifyRepair->setDisabled(true);
+        }
+
         menu->exec(QCursor::pos()); //显示菜单
         delete menu;
     } else if (m_curDiskInfoData.m_level == DMDbusHandler::PARTITION) {

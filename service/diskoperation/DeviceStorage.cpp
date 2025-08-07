@@ -685,10 +685,6 @@ QString DeviceStorage::getDiskInfoMediaType(const QString &devicePath)
                 value = "0";
             }
         }
-        if (exitcode != 0) {
-            qDebug() << "Failed to execute smartctl command, error:" << error;
-            return "UnKnow";
-        }
     }
     if (QString("0") == value) {
         qDebug() << "return SSD";

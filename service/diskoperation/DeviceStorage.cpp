@@ -245,7 +245,7 @@ void DeviceStorage::getInfoFromLshw(const QMap<QString, QString> &mapInfo)
     QRegularExpressionMatch match = re.match(m_size);
     if (match.hasMatch()) {
         qDebug() << "Size match found in lshw info";
-        m_interface = match.captured(1);
+        m_size = match.captured(1);
     }
 #else
     QRegExp re(".*\\((.*)\\)$");

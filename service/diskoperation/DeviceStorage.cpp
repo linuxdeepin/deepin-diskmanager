@@ -245,7 +245,7 @@ void DeviceStorage::getInfoFromLshw(const QMap<QString, QString> &mapInfo)
     QRegularExpressionMatch match = re.match(m_size);
     if (match.hasMatch()) {
         qDebug() << "Size match found in lshw info";
-        m_interface = match.captured(1);
+        m_size = match.captured(1);
     }
 #else
     QRegExp re(".*\\((.*)\\)$");
@@ -684,10 +684,6 @@ QString DeviceStorage::getDiskInfoMediaType(const QString &devicePath)
                 qDebug() << "not contains Rotation Rate";
                 value = "0";
             }
-        }
-        if (exitcode != 0) {
-            qDebug() << "Failed to execute smartctl command, error:" << error;
-            return "UnKnow";
         }
     }
     if (QString("0") == value) {

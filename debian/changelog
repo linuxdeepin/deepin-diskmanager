@@ -1,3 +1,9 @@
+deepin-diskmanager (6.0.16) unstable; urgency=medium
+
+  * add lo language support
+
+ -- dengzhongyuan <dengzhongyuan@uniontech.com>  Wed, 13 Aug 2025 15:18:38 +0800
+
 deepin-diskmanager (6.0.15) unstable; urgency=medium
 
   * refactor: Update process names in deepin-diskmanager-authenticateProxy script

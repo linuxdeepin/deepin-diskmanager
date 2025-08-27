@@ -69,5 +69,7 @@
 		<message xml:lang="ca">Cal autenticació per llegir la informació del disc</message>
 		<description xml:lang="it">Run Disk Manager Need Authentication</description>
 		<message xml:lang="it">Autenticazione richiesta per la lettura delle info del Disco</message>
+		<description xml:lang="lo">ການເຮັດວຽກກັບຜູ້ຈັດການດິສກ໌ຕ້ອງການການຢືນຢັນ</description>
+		<message xml:lang="lo">ຕ້ອງການການຢືນຢັນເພື່ອອ່ານຂໍ້ມູນດິດ</message>
 	</action>
 </policyconfig>

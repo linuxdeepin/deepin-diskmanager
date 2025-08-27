@@ -6,35 +6,47 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="38"/>
         <source>Creating logical volumes on %1</source>
-        <translation>ກຳລັງສ້າງ logical volume ຢູ່ %1</translation>
+        <translation>ກຳລັງສ້າງປະລິມານຕົວເລກຢູ່ %1</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="41"/>
         <source>Click %1 to create a logical volume. </source>
-        <translation>ກົດ %1 ເພື່ອສ້າງ logical volume</translation>
+        <translation>ກົດ %1 ເພື່ອສ້າງປະລິມານຕົວເລກ</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="126"/>
         <source>VG Information</source>
-        <translation>ຂໍ້ມູນ Volume Group</translation>
+        <translation>ຂໍ້ມູນກ່ຽວກັບກຸ່ມປະລິມານ</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="140"/>
         <source>Capacity:</source>
-        <translation>ຂະໜາດ:</translation>
+        <translation>ຄວາມຈຸ:</translation>
+    </message>
+    <message>
+        <source>ຊື່ LV:</source>
+        <translation type="vanished">ຊື່ປະລິມານຕົວເລກ:</translation>
+    </message>
+    <message>
+        <source>ຊື່ VG:</source>
+        <translation type="vanished">ຊື່ກຸ່ມປະລິມານ:</translation>
+    </message>
+    <message>
+        <source>ລະບົບໄຟລ໌ LV:</source>
+        <translation type="vanished">ລະບົບໄຟລ໌ LV:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="150"/>
         <location filename="../widgets/createlvwidget.cpp" line="325"/>
         <source>LV name:</source>
-        <translation>ຊື່ Logical Volume:</translation>
+        <translation>ຊື່ປະລິມານຕົວເລກ:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="159"/>
         <location filename="../widgets/createlvwidget.cpp" line="163"/>
         <location filename="../widgets/createlvwidget.cpp" line="1188"/>
         <source>VG name:</source>
-        <translation>ຊື່ Volume Group:</translation>
+        <translation>ຊື່ກຸ່ມປະລິມານ:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="171"/>
@@ -44,7 +56,7 @@
         <location filename="../widgets/createlvwidget.cpp" line="1190"/>
         <location filename="../widgets/createlvwidget.cpp" line="1192"/>
         <source>LV file system:</source>
-        <translation>ລະບົບໄຟລ໌ Logical Volume:</translation>
+        <translation>ລະບົບໄຟລ໌ LV:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="248"/>
@@ -67,12 +79,12 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="289"/>
         <source>LV Information</source>
-        <translation>ຂໍ້ມູນ Logical Volume</translation>
+        <translation>ข้อมูลปริมาณเชิงตรรกะ</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="302"/>
         <source>Create LV:</source>
-        <translation>ສ້າງ Logical Volume:</translation>
+        <translation>สร้างปริมาณเชิงตรรกะ:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="313"/>
@@ -82,7 +94,7 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="356"/>
         <source>LV capacity:</source>
-        <translation>ຂະໜາດ Logical Volume:</translation>
+        <translation>ຂະໜາດປະລິມານເຊິງຕຣັກຈິກ:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="568"/>
@@ -113,7 +125,7 @@
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="958"/>
         <source>To encrypt a volume, it should be larger than 100 MiB</source>
-        <translation>ដើម្បីបញ្ចប់ទុកមួយផ្នែក (volume), វាត្រូវមានទៅលើ 100 MiB ឡើង។</translation>
+        <translation>ເພື່ອເຂົ້າລະຫັດປະລິມານ, ມັນຄວນມີຂະໜາດໃຫຍ່ກວ່າ 100 MiB</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="991"/>
@@ -160,7 +172,7 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="57"/>
         <source>Create volume group</source>
-        <translation>ສ້າງກຸ່ມໄດຣ໌ (volume group)</translation>
+        <translation>ສ້າງກຸ່ມປະລິມານ</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="68"/>
@@ -249,17 +261,17 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="584"/>
         <source>Resizing space...</source>
-        <translation>རིམ་པ་ས୍བས་བ୍ད་པ་བ୍ད་པ་ཡོད།</translation>
+        <translation>ກຳລັງປັບຂະໜາດພື້ນທີ່...</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="587"/>
         <source>Creating...</source>
-        <translation>བ୍ད་པ་བ୍ད་པ་ཡོད།</translation>
+        <translation>ກຳລັງສ້າງ...</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="646"/>
         <source>Selected disks and partitions:</source>
-        <translation>ເລືອກ ഊན་ຫ୍ང་དང་བ୍ད་པ།:</translation>
+        <translation>ດິສແລະພາທິຊັນທີ່ເລືອກ:</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="693"/>
@@ -270,7 +282,11 @@
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="701"/>
         <source>VG name: %1</source>
-        <translation>លិចវិទ្យាដេຊ: %1</translation>
+        <translation>ຊື່ VG: %1</translation>
+    </message>
+    <message>
+        <source>ຊື່ VG: %1</source>
+        <translation type="vanished">លិចវិទ្យាដេຊ: %1</translation>
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="822"/>
@@ -363,7 +379,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/cylinderinfowidget.cpp" line="522"/>
         <source>Error: %1</source>
-        <translation>Error: %1</translation>
+        <translation>ຂໍ້ຜິດພາດ: %1</translation>
     </message>
     <message>
         <location filename="../widgets/cylinderinfowidget.cpp" line="523"/>
@@ -425,12 +441,12 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="623"/>
         <source>Creating a partition table of %1 ...</source>
-        <translation>កំពិតតាម bang tablenៃ %1 ...</translation>
+        <translation>ກຳລັງສ້າງຕາຕະລາງພາທິຊັນຂອງ %1 ...</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="626"/>
         <source>Replacing the partition table of %1 ...</source>
-        <translation>กำลังแทนที่ตารางパーティションของ %1 ...</translation>
+        <translation>ກຳລັງແທນທີ່ຕາຕະລາງພາທິຊັນຂອງ %1 ...</translation>
     </message>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="781"/>
@@ -520,7 +536,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../partedproxy/dmdbushandler.cpp" line="1025"/>
         <source>Failed to create a logical volume, please try again!</source>
-        <translation>ການສ້າງ logical volume ລົ້ມເຫລວ, ກະລຸນາລອງອີກຄັ້ງ!</translation>
+        <translation>ສ້າງວໍລຸມຕົວຕົວບໍ່ສຳເລັດ, ກະລຸນາລອງອີກຄັ້ງ!</translation>
     </message>
 </context>
 <context>
@@ -830,7 +846,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="615"/>
         <source>Unmount all logical volumes in %1 first</source>
-        <translation>ຖອດການເຊື່ອມຕໍ່ທຸກ logical volume ໃນ %1 ກ່ອນ</translation>
+        <translation>ຖອດການເຊື່ອມຕໍ່ທຸກປະລິມານຕົວຕົນໃນ %1 ກ່ອນ</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="627"/>
@@ -841,7 +857,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="646"/>
         <source>The disks will be formatted if you create a logical volume</source>
-        <translation>ດິດຈະຖືກຟອຣແມດຖ້າທ່ານສ້າງ logical volume</translation>
+        <translation>ດິສກຈະຖືກຟອຣແມດຖ້າທ່ານສ້າງປະລິມານຕົວຕົນ</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="673"/>
@@ -851,28 +867,28 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="718"/>
         <source>The logical volume group is busy and cannot be deleted. Please retry after reboot.</source>
-        <translation>ກຸ່ມ logical volume ກຳລັງຖືກໃຊ້ງານ ແລະບໍ່ສາມາດລຶບໄດ້. ກະລຸນາລອງໃໝ່ຫຼັງຈາກຣີບູດ.</translation>
+        <translation>ກຸ່ມປະລິມານຕົວຕົນກຳລັງຖືກໃຊ້ງານ ແລະບໍ່ສາມາດລຶບໄດ້. ກະລຸນາລອງໃໝ່ຫຼັງຈາກຣີບູດ.</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="723"/>
         <location filename="../widgets/devicelistwidget.cpp" line="764"/>
         <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
-        <translation>logical volume ກຳລັງຖືກໃຊ້ງານ ແລະບໍ່ສາມາດລຶບໄດ້. ກະລຸນາລອງໃໝ່ຫຼັງຈາກຣີບູດ.</translation>
+        <translation>ປະລິມານຕົວຕົນກຳລັງຖືກໃຊ້ງານ ແລະບໍ່ສາມາດລຶບໄດ້. ກະລຸນາລອງໃໝ່ຫຼັງຈາກຣີບູດ.</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="728"/>
         <source>Failed to delete the logical volume group</source>
-        <translation>ລຶບກຸ່ມ logical volume ບໍ່ສຳເລັດ</translation>
+        <translation>ລຶບກຸ່ມປະລິມານຕົວຕົນບໍ່ສຳເລັດ</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="769"/>
         <source>Failed to delete the logical volume</source>
-        <translation>ລຶບ logical volume ບໍ່ສຳເລັດ</translation>
+        <translation>ລຶບປະລິມານຕົວຕົນບໍ່ສຳເລັດ</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="894"/>
         <source>Volume Groups</source>
-        <translation>ກຸ່ມ Volume</translation>
+        <translation>กลุ่มโวลุ่ม</translation>
     </message>
     <message>
         <location filename="../widgets/devicelistwidget.cpp" line="948"/>
@@ -1182,7 +1198,7 @@ will format it and remove its password.</source>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="210"/>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="435"/>
         <source>Status</source>
-        <translation>상태</translation>
+        <translation>ສະຖານະ</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="211"/>
@@ -1217,7 +1233,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="333"/>
         <source>Status: (G: Good | W: Warning | D: Damaged | U: Unknown)</source>
-        <translation>상태: (G: ดี | W: เตือน | D: ชำรุด | U: ไม่รู้จัก)</translation>
+        <translation>ສະຖານະ: (G: ດີ | W: ເຕືອນ | D: ສຽບຊໍ້າ | U: ບໍ່ຮູ້ຈັກ)</translation>
     </message>
     <message>
         <location filename="../widgets/diskhealthdetectiondialog.cpp" line="337"/>
@@ -1504,7 +1520,16 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="333"/>
         <source>LV name:</source>
-        <translation>ชื่อ LV:</translation>
+        <translation>ຊື່ LV:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/formatedialog.cpp" line="339"/>
+        <source>LV file system:</source>
+        <translation>ລະບົບໄຟລ໌ LV:</translation>
+    </message>
+    <message>
+        <source>ຊື່ LV:</source>
+        <translation type="vanished">ชื่อ LV:</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="337"/>
@@ -1512,9 +1537,8 @@ will format it and remove its password.</source>
         <translation>ชื่อ LV</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="339"/>
-        <source>LV file system:</source>
-        <translation>ระบบไฟล์ LV:</translation>
+        <source>ລະບົບໄຟລ໌ LV:</source>
+        <translation type="vanished">ระบบไฟล์ LV:</translation>
     </message>
     <message>
         <location filename="../widgets/formatedialog.cpp" line="341"/>
@@ -1661,7 +1685,11 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="543"/>
         <source>VG name:</source>
-        <translation>ឈ្មោះ VG:</translation>
+        <translation>ຊື່ VG:</translation>
+    </message>
+    <message>
+        <source>ຊື່ VG:</source>
+        <translation type="vanished">ឈ្មោះ VG:</translation>
     </message>
     <message>
         <location filename="../widgets/infoshowwidget.cpp" line="548"/>
@@ -1803,7 +1831,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/partitiondialog.cpp" line="38"/>
         <source>Cancel</source>
-        <translation>취소</translation>
+        <translation>ຍົກເລີກ</translation>
     </message>
     <message>
         <location filename="../widgets/partitiondialog.cpp" line="39"/>
@@ -2022,7 +2050,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="67"/>
         <source>Repeat password</source>
-        <translation>повторите пароль</translation>
+        <translation>ປ້ອນລະຫັດຜ່ານອີກຄັ້ງ</translation>
     </message>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="72"/>
@@ -2113,7 +2141,7 @@ will format it and remove its password.</source>
         <location filename="../widgets/removepvwidget.cpp" line="70"/>
         <source>Cancel</source>
         <comment>button</comment>
-        <translation>បatal</translation>
+        <translation>ຍົກເລີກ</translation>
     </message>
     <message>
         <location filename="../widgets/removepvwidget.cpp" line="77"/>
@@ -2254,7 +2282,7 @@ will format it and remove its password.</source>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="399"/>
         <source>To prevent data loss, back up data in the logical volume before shrinking it</source>
-        <translation>ເພື່ອປ້ອງກັນການສູນເສຍຂໍ້ມູນ ກະລຸນາສຳຮອງຂໍ້ມູນໃນ logical volume ກ່ອນຫຸ້ມຸ່ງຂະໜາດ</translation>
+        <translation>ເພື່ອປ້ອງກັນການສູນເສຍຂໍ້ມູນ ກະລຸນາສຳຮອງຂໍ້ມູນໃນປະລິມານຕົວຕົນກ່ອນຫຸ້ມຸ່ງຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../widgets/resizedialog.cpp" line="440"/>
@@ -2363,12 +2391,12 @@ will format it and remove its password.</source>
         <location filename="../widgets/titlewidget.cpp" line="397"/>
         <location filename="../widgets/titlewidget.cpp" line="501"/>
         <source>The file system does not support space adjustment</source>
-        <translation>ລາວ བ្រុម དំណើរការ དេຊැນ དេຊැນ དាន དាន ཀំណត់ དាន དាន ཀំណត់ ཀំណត់ དេຊැນ དេຊැນ དាន དាន</translation>
+        <translation>ລະບົບໄຟລ໌ບໍ່ຮອງຮັບການປັບຂະໜາດພື້ນທີ່</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="418"/>
         <source>The disks will be formatted if you create a logical volume</source>
-        <translation>ລາວ བ្រុម དំណើរការ དេຊැນ དេຊැນ དាន དាន ཀំណត់ དាន དាន ཀំណត់ ཀំណត់ དេຊැນ དេຊැນ དាន དាន</translation>
+        <translation>ດິສກຈະຖືກຟອຣແມດຖ້າທ່ານສ້າງປະລິມານໂລຈິກ</translation>
     </message>
     <message>
         <location filename="../widgets/titlewidget.cpp" line="445"/>

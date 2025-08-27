@@ -9,7 +9,7 @@
 	<message>
 		<location filename="com.deepin.pkexec.deepin-diskmanager!description" line="0"/>
 		<source>Run Disk Manager Need Authentication</source>
-		<translation>ການເຮັດວຽກກັບ Disk Manager ຕ້ອງການການຢືນຢັນ</translation>
+		<translation>ການເຮັດວຽກກັບຜູ້ຈັດການດິສກ໌ຕ້ອງການການຢືນຢັນ</translation>
 	</message>
 </context>
 </TS>

@@ -59,7 +59,5 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt${QT_VERSION_MAJOR}::DBus
 )
 
-set(CMAKE_INSTALL_PREFIX /usr)
-# Install the executable
-install(TARGETS ${PROJECT_NAME} DESTINATION lib)
+# not install for internal use
 

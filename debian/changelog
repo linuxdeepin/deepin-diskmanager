@@ -1,3 +1,9 @@
+deepin-diskmanager (6.0.19) unstable; urgency=medium
+
+  * chore: Update version to 6.0.19
+
+ -- wangrong <wangrong@uniontech.com>  Fri, 19 Sep 2025 10:31:29 +0800
+
 deepin-diskmanager (6.0.18) unstable; urgency=medium
 
   * chore: Remove unnecessary static library installation

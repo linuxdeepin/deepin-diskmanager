@@ -55,6 +55,16 @@ public:
     static int executCmd(const QString &strCmd);
 
     /**
+     * @brief 执行外部命令
+     * @param strCmd：命令
+     * @param stdOut：命令标准输出
+     * @param stdErr：命令标准错误输出
+     * @param error：错误信息
+     * @return 非0失败
+     */
+     static int executCmd(const QString &strCmd, QString *stdOut, QString *stdErr, QString &error);
+
+    /**
      * @brief 执行外部命令，并提供输入输出
      * @param strCmd：命令
      * @param strArg：参数

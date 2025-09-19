@@ -68,15 +68,15 @@ void WorkThread::runCount()
         QString cmd = QString("badblocks -sv -c %1 -b %2 %3 %4 %5").arg(m_checkConut).arg(DEFAULT_BLOCK_SIZE).arg(m_devicePath).arg(j).arg(i);
 
         QDateTime ctime = QDateTime::currentDateTime();
-        QString output, error;
-        int exitcode = Utils::executCmd(cmd, output, error);
+        QString stdErr, error;
+        int exitcode = Utils::executCmd(cmd, nullptr, &stdErr, error);
         if (exitcode != 0) {
             qDebug() << "Failed to execute badblocks command, error:" << error;
             return;
         }
         QDateTime ctime1 = QDateTime::currentDateTime();
 
-        if (output.indexOf("0/0/0") != -1) {
+        if (stdErr.indexOf("0/0/0") != -1) {
             // qDebug() << "Block" << i << "is good";
             QString cylinderNumber = QString("%1").arg(i);
             QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
@@ -116,8 +116,8 @@ void WorkThread::runTime()
         QString cmd = QString("badblocks -sv -b %1 %2 %3 %4").arg(DEFAULT_BLOCK_SIZE).arg(m_devicePath).arg(j).arg(i);
 
         QDateTime ctime = QDateTime::currentDateTime();
-        QString output, error;
-        int exitcode = Utils::executCmd(cmd, output, error);
+        QString stdErr, error;
+        int exitcode = Utils::executCmd(cmd, nullptr, &stdErr, error);
         if (exitcode != 0) {
             qDebug() << "Failed to execute badblocks command, error:" << error;
             return;
@@ -133,7 +133,7 @@ void WorkThread::runTime()
 
             emit checkBadBlocksInfo(cylinderNumber, cylinderTimeConsuming, cylinderStatus, cylinderErrorInfo);
         } else {
-            if (output.indexOf("0/0/0") != -1) {
+            if (stdErr.indexOf("0/0/0") != -1) {
                 // qDebug() << "Block" << i << "is good";
                 QString cylinderNumber = QString("%1").arg(i);
                 QString cylinderTimeConsuming = QString("%1").arg(ctime.msecsTo(ctime1));
@@ -188,15 +188,15 @@ void FixThread::runFix()
         QString cmd = QString("badblocks -sv -b %1 -w %2 %3 %4").arg(m_checkSize).arg(m_devicePath).arg(k).arg(j);
 
         QDateTime ctime = QDateTime::currentDateTime();
-        QString output, error;
-        int exitcode = Utils::executCmd(cmd, output, error);
+        QString stdErr, error;
+        int exitcode = Utils::executCmd(cmd, nullptr, &stdErr, error);
         if (exitcode != 0) {
             qDebug() << "Failed to execute badblocks command, error:" << error;
             return;
         }
         QDateTime ctime1 = QDateTime::currentDateTime();
 
-        if (output.indexOf("0/0/0") != -1) {
+        if (stdErr.indexOf("0/0/0") != -1) {
             // qDebug() << "Fixed block" << j << "successfully";
             QString cylinderNumber = QString("%1").arg(j);
             QString cylinderStatus = "good";

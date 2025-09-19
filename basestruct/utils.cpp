@@ -98,6 +98,17 @@ int Utils::executeCmdWithArtList(const QString &strCmd, const QStringList &strAr
 
 int Utils::executCmd(const QString &strCmd, QString &outPut, QString &error)
 {
+    return executCmd(strCmd, &outPut, nullptr, error);
+}
+
+int Utils::executCmd(const QString &strCmd)
+{
+    QString error;
+    return executCmd(strCmd, nullptr, nullptr, error);
+}
+
+int Utils::executCmd(const QString &strCmd, QString *stdOut, QString *stdErr, QString &error)
+{
     qDebug() << "Utils::executCmd" << strCmd;
 
     QStringList args = parseCombinedArgString(strCmd);
@@ -106,10 +117,24 @@ int Utils::executCmd(const QString &strCmd, QString &outPut, QString &error)
         return -1;
     }
     const QString prog = args.takeFirst();
-    int exitcode = executeCmdWithArtList(prog, args, outPut, error);
+
+    QProcess proc;
+    proc.setProgram(prog);
+    proc.setArguments(args);
+    proc.start(QIODevice::ReadWrite);
+
+    proc.waitForFinished(-1);
+    if (stdOut)
+        *stdOut = QString::fromLocal8Bit(proc.readAllStandardOutput());
+    if (stdErr)
+        *stdErr = QString::fromLocal8Bit(proc.readAllStandardError());
+    error = proc.errorString();
+    int exitcode = proc.exitCode();
+    proc.close();
 
     qDebug() << "Utils::executCmd exitcode:  " << exitcode;
     return exitcode;
+
 }
 
 int Utils::executWithInputOutputCmd(const QString &strCmdArg, const QString *inPut, QString &outPut, QString &error)
@@ -833,8 +858,3 @@ QString Utils::readContent(const QString &filename)
     return ret;
 }
 
-int Utils::executCmd(const QString &strCmd)
-{
-    QString outPut, error;
-    return executCmd(strCmd, outPut, error);
-}

@@ -1,3 +1,9 @@
+deepin-diskmanager (6.0.20) unstable; urgency=medium
+
+  * fix: Fix fail to verify bad sectors
+
+ -- wangrong <wangrong@uniontech.com>  Thu, 25 Sep 2025 16:25:20 +0800
+
 deepin-diskmanager (6.0.19) unstable; urgency=medium
 
   * chore: Update version to 6.0.19

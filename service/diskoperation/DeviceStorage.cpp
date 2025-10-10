@@ -588,12 +588,8 @@ void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &int
         if (model == file.readLine().simplified()) {
             QString spec_version = Utils::readContent("/sys/block/sdd/device/spec_version").trimmed();
             if (!spec_version.isEmpty()) {
-                if (spec_version.contains("300")) {
-                    interface = "UFS 3.0";
-                } else if (spec_version.contains("310")) {
-                    interface = "UFS 3.1";
-                } else if (spec_version.contains("400")) {
-                    interface = "UFS 4.0";
+                if (spec_version.contains("300") || spec_version.contains("310") || spec_version.contains("400")) {
+                    interface = "UFS";
                 }
             }
         }

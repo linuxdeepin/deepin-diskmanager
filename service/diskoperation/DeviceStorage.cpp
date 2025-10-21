@@ -774,11 +774,11 @@ void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &int
     return;
 }
 
-void DeviceStorage::updateForHWDevice(const QString &devicePath)
+void DeviceStorage::updateForHWDevice(const QString &/*devicePath*/)
 {
     qDebug() << "DeviceStorage::updateForHWDevice BEGIN";
-    if (m_model != Utils::readContent("/proc/bootdevice/product_name").trimmed()) {
-        qDebug() << "m_model is not boot device, return";
+    if (Utils::readContent("/proc/bootdevice/product_name").trimmed().isEmpty())
+        qDebug() << "Fail to read the product_name file or the file is empty, return";
         return;
     }
 
@@ -794,6 +794,44 @@ void DeviceStorage::updateForHWDevice(const QString &devicePath)
     // hide model and vendor
     m_model = "";
     m_vendor = "";
+
+    // Normalize disk size
+    if (!m_size.isEmpty()) {
+        // Convert size string to bytes
+        qint64 bytes = 0;
+        QString sizeStr = m_size.toLower();
+
+        if (sizeStr.contains("bytes")) {
+            sizeStr = sizeStr.split("bytes").first().trimmed();
+            bytes = sizeStr.toLongLong();
+        } else {
+            // Handle GB/TB directly
+            double value = sizeStr.split(" ").first().toDouble();
+            if (sizeStr.contains("gb")) {
+                bytes = value * 1000 * 1000 * 1000;
+            } else if (sizeStr.contains("tb")) {
+                bytes = value * 1000 * 1000 * 1000 * 1000;
+            }
+        }
+
+        // Convert to standardized format
+        if (bytes > 0) {
+            // Convert to GB and round to standard sizes
+            int gb = qRound(bytes / (1000.0 * 1000 * 1000));
+            if (gb < 200) {
+                return;
+            } else if (gb <= 300) {
+                m_size = "256 GB";
+            } else if (gb <= 600) {
+                m_size = "512 GB";
+            } else if (gb <= 1200){
+                m_size = "1 TB";
+            } else if (gb <= 2200) {
+                m_size = "2 TB";
+            }
+        }
+    }
+
     qDebug() << "DeviceStorage::updateForHWDevice END";
 }
 

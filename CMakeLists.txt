@@ -48,6 +48,11 @@ endif()
 #set(CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS_MINSIZEREL} -g -fsanitize=address -O2")
 #set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO}  -g -fsanitize=address -O2")
 
+# Skip build rpath for reproducible release build
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    set(CMAKE_SKIP_BUILD_RPATH TRUE)
+endif()
+
 ADD_SUBDIRECTORY(basestruct)
 ADD_SUBDIRECTORY(log)
 ADD_SUBDIRECTORY(application)

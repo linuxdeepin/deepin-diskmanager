@@ -495,7 +495,7 @@ int DiskManagerService::test()
 
 bool DiskManagerService::checkAuthorization(void)
 {
-    QString actionId("com.deepin.diskmanager");
+    QString actionId("com.deepin.pkexec.deepin-diskmanager");
     QString serviceName = message().service();
 
     if (serviceName == m_frontEndDBusName ||

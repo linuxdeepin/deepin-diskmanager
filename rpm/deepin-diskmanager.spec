@@ -49,12 +49,10 @@ export PATH=%{_qt5_bindir}:$PATH
 %{_datadir}/applications/%{repo}.desktop
 %{_datadir}/icons/hicolor/scalable/apps/%{repo}.svg
 %{_datadir}/deepin-manual/manual-assets/application/deepin-diskmanager/*
-/usr/lib/libbasestruct.a
-/usr/lib/libddmlog.a
 /usr/lib/deepin-daemon/deepin-diskmanager-service
 /lib/udev/rules.d/99-diskmanager.rules
-%{_libexecdir}/openconnect/USBadd.sh
-%{_libexecdir}/openconnect/USBremove.sh
+%{_libexecdir}/deepin-diskmanager/USBadd.sh
+%{_libexecdir}/deepin-diskmanager/USBremove.sh
 %{_datadir}/dbus-1/system-services/com.deepin.diskmanager.service
 %{_datadir}/dbus-1/system.d/com.deepin.diskmanager.conf
 %{_datadir}/polkit-1/actions/com.deepin.diskmanager.policy

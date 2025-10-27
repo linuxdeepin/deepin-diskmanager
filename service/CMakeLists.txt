@@ -18,11 +18,12 @@ set(APP_UDEV_FILES "${APP_EDEV_DIR}/99-diskmanager.rules")
 set(APP_USBADD_FILES "${APP_EDEV_DIR}/USBadd.sh")
 set(APP_USBREMOVE_FILES "${APP_EDEV_DIR}/USBremove.sh")
 set(APP_DEEPIN_DISKMANAGER_SERVICE_BIN "${APP_EDEV_DIR}/deepin-diskmanager-authenticateProxy")
-set(APP_POLICY_DIR "policy")
-set(APP_POLICY_FILES "${APP_POLICY_DIR}/com.deepin.diskmanager.policy")
+set(APP_POLICY_FILE "com.deepin.pkexec.deepin-diskmanager.policy")
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIE")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIE")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pie")
+
 # Find the library
 find_package(PkgConfig REQUIRED)
 find_package(Dtk${DTK_VERSION}Gui REQUIRED)
@@ -69,16 +70,22 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 target_link_libraries(${PROJECT_NAME} ${LINK_LIBS} basestruct)
 target_link_libraries(${PROJECT_NAME} ${LINK_LIBS} ddmlog)
 
+find_program(POLICY_TS_CONV deepin-policy-ts-convert REQUIRED)
+add_custom_target(APP_POLICY_FILE
+    ALL
+    COMMAND ${POLICY_TS_CONV} ts2policy ${CMAKE_CURRENT_SOURCE_DIR}/policy/${APP_POLICY_FILE} ${CMAKE_SOURCE_DIR}/application/translations/policy/ ${APP_POLICY_FILE}.tmp
+    COMMAND mv ${APP_POLICY_FILE}.tmp ${APP_POLICY_FILE}
+)
 
 set(CMAKE_INSTALL_PREFIX /usr)
 
 # Install files
 install(TARGETS ${PROJECT_NAME} DESTINATION lib/deepin-daemon/)
 install(FILES ${APP_SERVICE} DESTINATION share/dbus-1/system-services/)
-install(FILES ${SYSTEMD_SERVICE} DESTINATION /lib/systemd/system/)
+install(FILES ${SYSTEMD_SERVICE} DESTINATION lib/systemd/system/)
 install(FILES ${APP_CONFIG} DESTINATION share/dbus-1/system.d/)
-install(PROGRAMS ${APP_USBADD_FILES} DESTINATION libexec/openconnect/)
-install(PROGRAMS ${APP_USBREMOVE_FILES} DESTINATION libexec/openconnect/)
-install(FILES ${APP_UDEV_FILES} DESTINATION /lib/udev/rules.d/)
-install(FILES ${APP_POLICY_FILES} DESTINATION share/polkit-1/actions)
+install(PROGRAMS ${APP_USBADD_FILES} DESTINATION libexec/deepin-diskmanager/)
+install(PROGRAMS ${APP_USBREMOVE_FILES} DESTINATION libexec/deepin-diskmanager/)
+install(FILES ${APP_UDEV_FILES} DESTINATION lib/udev/rules.d/)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${APP_POLICY_FILE} DESTINATION share/polkit-1/actions)
 install(PROGRAMS ${APP_DEEPIN_DISKMANAGER_SERVICE_BIN} DESTINATION bin/)

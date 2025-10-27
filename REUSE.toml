@@ -1,0 +1,82 @@
+version = 1
+SPDX-PackageName = "deepin-diskmanager"
+SPDX-PackageSupplier = "UnionTech Software Technology Co., Ltd. <>"
+SPDX-PackageDownloadLocation = "https://github.com/linuxdeepin/deepin-diskmanager"
+
+[[annotations]]
+path = ["README.md", "README.zh_CN.md"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "None"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+[[annotations]]
+path = ["CMakeLists.txt", "application/CMakeLists.txt", "log/CMakeLists.txt", "service/CMakeLists.txt", "test/CMakeLists.txt", "tests/CMakeLists.txt", "cmake/**"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "None"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = ["application/assets/appicons.qrc", "application/assets/resource.qrc", "service/diskoperation/filesystems/filesystems.pri"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "None"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = ["application/translations/**", "application/.tx/**"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "UnionTech Software Technology Co., Ltd."
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = "application/assets/deepin-diskmanager/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "UnionTech Software Technology Co., Ltd."
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = ["application/assets/icons/deepin/**", "application/assets/icons", "application/assets/icons/deepin-diskmanager.svg"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "UnionTech Software Technology Co., Ltd."
+SPDX-License-Identifier = "GPL-3.0-only"
+
+[[annotations]]
+path = "service/udev/**.sh"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "UnionTech Software Technology Co., Ltd."
+SPDX-License-Identifier = "GPL-3.0-only"
+
+[[annotations]]
+path = "service/udev/deepin-diskmanager-authenticateProxy"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Curtis Gedak"
+SPDX-License-Identifier = "GPL-2.0-or-later"
+
+[[annotations]]
+path = ["service/assets/data/**", "application/assets/deepin-diskmanager.desktop", "application/assets/environments.h.in", "service/policy/com.deepin.pkexec.deepin-diskmanager.policy", "service/udev/99-diskmanager.rules"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "UnionTech Software Technology Co., Ltd."
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = ".gitignore"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "None"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = [".github/**", ".project.json", ".obs/workflows.yml"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "None"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = ["debian/**", "rpm/**"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "None"
+SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = ["service/diskoperation/blockspecial.**", "service/diskoperation/supportedfilesystems.**", "service/diskoperation/filesystems/linuxswap.**"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "None"
+SPDX-License-Identifier = "CC0-1.0"

@@ -37,7 +37,7 @@ set(LINK_LIBS
 
 #common resource names
 set(APP_RES_DIR "assets")
-set(APP_DESKTOP "${APP_RES_DIR}/deepin-diskmanager.desktop")
+set(APP_DESKTOP "deepin-diskmanager.desktop")
 set(APP_QRC "${APP_RES_DIR}/appicons.qrc")
 set(APP_ICONPATH "${APP_RES_DIR}/icons/deepin-diskmanager.svg")
 
@@ -88,13 +88,20 @@ target_link_libraries(${PROJECT_NAME} ${LINK_LIBS} basestruct)
 
 set(CMAKE_INSTALL_PREFIX /usr)
 
+find_program(DESKTOP_TS_CONV deepin-desktop-ts-convert REQUIRED)
+add_custom_target(APP_DESKTOP
+    ALL
+    COMMAND ${DESKTOP_TS_CONV} ts2desktop ${CMAKE_CURRENT_SOURCE_DIR}/assets/${APP_DESKTOP} ${CMAKE_CURRENT_SOURCE_DIR}/translations/desktop ${APP_DESKTOP}.tmp
+    COMMAND mv ${APP_DESKTOP}.tmp ${APP_DESKTOP}
+)
+
 # Install files
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 #file(GLOB APP_QM_FILES "translations/*.qm")
 #install(FILES ${APP_QM_FILES} DESTINATION share/${PROJECT_NAME}/translations)
 install(FILES ${DTNG_QM_FILES} DESTINATION share/${PROJECT_NAME}/translations)
 install(FILES ${APP_ICONPATH} DESTINATION share/icons/hicolor/scalable/apps)
-install(FILES ${APP_DESKTOP} DESTINATION share/applications)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${APP_DESKTOP} DESTINATION share/applications)
 install(DIRECTORY ${APP_RES_DIR}/deepin-diskmanager DESTINATION /usr/share/deepin-manual/manual-assets/application)
 
 

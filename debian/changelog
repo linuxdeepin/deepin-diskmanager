@@ -1,3 +1,11 @@
+deepin-diskmanager (6.0.21) unstable; urgency=medium
+
+  * fix: Fix non-reproducible builds
+  * refactor: Service safety rectification
+  * fix: Fix exfat formatting failure
+
+ -- wangrong <wangrong@uniontech.com>  Thu, 30 Oct 2025 20:00:44 +0800
+
 deepin-diskmanager (6.0.20) unstable; urgency=medium
 
   * fix: Fix fail to verify bad sectors

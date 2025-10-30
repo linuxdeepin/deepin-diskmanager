@@ -25,11 +25,8 @@ FS ExFat::getFilesystemSupport()
 
     QString output, error;
     if (!Utils::findProgramInPath("mkfs.exfat").isEmpty()) {
-        qDebug() << "mkfs.exfat found, checking version for create support";
-        if (Utils::executCmd("mkfs.exfat -V", output, error) == 0) {
-            qDebug() << "mkfs.exfat version check successful, enabling create support";
-            fs.create = FS::EXTERNAL;
-        }
+        qDebug() << "mkfs.exfat found, enabling create support";
+        fs.create = FS::EXTERNAL;
     }
 
     if (!Utils::findProgramInPath("tune.exfat").isEmpty()) {

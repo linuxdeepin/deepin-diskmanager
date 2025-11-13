@@ -1140,6 +1140,34 @@ void CreateVGWidget::updateData()
     qDebug() << "CreateVGWidget::updateData completed";
 }
 
+static bool isDeviceRemovable(const QString &devicePath)
+{
+    QFileInfo deviceInfo(devicePath);
+    QString deviceName = deviceInfo.fileName(); // e.g., "sda"
+
+    QString sysfsRemovablePath = QString("/sys/block/%1/removable").arg(deviceName);
+    QFile removableFile(sysfsRemovablePath);
+    bool removable = false;
+    QByteArray content;
+
+    if (!removableFile.exists()) {
+        qWarning() << "Sysfs path does not exist:" << sysfsRemovablePath;
+        goto quit;
+    }
+
+    if (!removableFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Could not open sysfs removable file:" << sysfsRemovablePath;
+        goto quit;
+    }
+
+    content = removableFile.readAll().trimmed(); // trimmed() 移除换行符和空格
+    removable = (content == "1");
+
+quit:
+    qDebug() << "isDeviceRemovable:" << devicePath << removable;
+    return removable;
+}
+
 QList<DeviceInfo> CreateVGWidget::createAvailableDiskData()
 {
     qDebug() << "CreateVGWidget::createAvailableDiskData called.";
@@ -1152,6 +1180,11 @@ QList<DeviceInfo> CreateVGWidget::createAvailableDiskData()
     for (auto devInfo = deviceInfoMap.begin(); devInfo != deviceInfoMap.end(); devInfo++) {
         DeviceInfo info = devInfo.value();
         if (info.m_path.isEmpty() || info.m_path.contains("/dev/mapper")) {
+            continue;
+        }
+
+        // 排除可移动设备
+        if (isDeviceRemovable(info.m_path)) {
             continue;
         }
 

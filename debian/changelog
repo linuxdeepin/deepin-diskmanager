@@ -1,3 +1,9 @@
+deepin-diskmanager (6.0.22) unstable; urgency=medium
+
+  * feat: Exclude removable devices when creating logical volume groups
+
+ -- wangrong <wangrong@uniontech.com>  Thu, 13 Nov 2025 14:34:03 +0800
+
 deepin-diskmanager (6.0.21) unstable; urgency=medium
 
   * fix: Fix non-reproducible builds

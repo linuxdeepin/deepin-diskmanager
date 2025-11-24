@@ -53,27 +53,11 @@ void DiskHealthDetectionDialog::initUI()
     DLabel *diskLabel = new DLabel;
     diskLabel->setPixmap(iconDisk.pixmap(85, 85));
 
-    DPalette palette1;
-    palette1.setColor(DPalette::Text, "#666666");
-
-    // 状态提示字体颜色
-    DPalette palette4;
-    palette4.setColor(DPalette::WindowText, QColor("#526A7F"));
-
-    // 表格内容颜色
-    DPalette palette5;
-    palette5.setColor(DPalette::Text, QColor("#001A2E"));
-
-    // 表头字体颜色
-    DPalette palette6;
-    palette6.setColor(DPalette::Text, QColor("#414D68"));
-
     // 硬盘信息
     HardDiskInfo hardDiskInfo = DMDbusHandler::instance()->getHardDiskInfo(m_devicePath);
 
     DLabel *serialNumberNameLabel = new DLabel(tr("Serial number")); // 序列号
     DFontSizeManager::instance()->bind(serialNumberNameLabel, DFontSizeManager::T8, QFont::Medium);
-    serialNumberNameLabel->setPalette(palette1);
 
     m_serialNumberValue = new DLabel;
     m_serialNumberValue->setText(hardDiskInfo.m_serialNumber);
@@ -82,7 +66,6 @@ void DiskHealthDetectionDialog::initUI()
 
     DLabel *userCapacityNameLabel = new DLabel(tr("Storage")); // 用户容量
     DFontSizeManager::instance()->bind(userCapacityNameLabel, DFontSizeManager::T10, QFont::Medium);
-    userCapacityNameLabel->setPalette(palette1);
 
     m_userCapacityValue = new DLabel;
     m_userCapacityValue->setText(hardDiskInfo.m_size);
@@ -104,7 +87,6 @@ void DiskHealthDetectionDialog::initUI()
 
     DLabel *healthStateLabel = new DLabel(tr("Health Status")); // 健康状态
     DFontSizeManager::instance()->bind(healthStateLabel, DFontSizeManager::T6, QFont::Medium);
-    healthStateLabel->setPalette(palette1);
 
     QIcon iconHealth = Common::getIcon("good");
     DLabel *iconHealthLabel = new DLabel;
@@ -112,7 +94,6 @@ void DiskHealthDetectionDialog::initUI()
     DFontSizeManager::instance()->bind(m_healthStateValue, DFontSizeManager::T2, QFont::Medium);
     m_healthStateValue->setAccessibleName("healthState");
 
-    // 状态颜色
     DPalette paletteStateColor;
 
     if (0 == healthStateValue.compare("PASSED", Qt::CaseInsensitive) || 0 == healthStateValue.compare("OK", Qt::CaseInsensitive)) {
@@ -154,7 +135,6 @@ void DiskHealthDetectionDialog::initUI()
     // 温度
     DLabel *temperatureLabel = new DLabel(tr("Temperature")); // 温度
     DFontSizeManager::instance()->bind(temperatureLabel, DFontSizeManager::T6, QFont::Medium);
-    temperatureLabel->setPalette(palette1);
 
     m_temperatureValue = new DLabel("-°C");
     DFontSizeManager::instance()->bind(m_temperatureValue, DFontSizeManager::T2, QFont::Medium);
@@ -192,14 +172,12 @@ void DiskHealthDetectionDialog::initUI()
     m_tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     m_tableView->setSelectionMode(QAbstractItemView::NoSelection);
     m_tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    m_tableView->setPalette(palette5);
 
     m_diskHealthHeaderView = new DiskHealthHeaderView(Qt::Horizontal, this);
     m_tableView->setHorizontalHeader(m_diskHealthHeaderView);
 
     DFontSizeManager::instance()->bind(m_tableView->horizontalHeader(), DFontSizeManager::T6, QFont::Medium);
     m_tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignLeft | Qt::AlignCenter);
-    m_tableView->horizontalHeader()->setPalette(palette6);
 
 
     m_diskHealthDetectionDelegate = new DiskHealthDetectionDelegate(this);
@@ -332,7 +310,6 @@ void DiskHealthDetectionDialog::initUI()
     DLabel *stateTipsLabel = new DLabel;
     stateTipsLabel->setText(tr("Status: (G: Good | W: Warning | D: Damaged | U: Unknown)")); // 状态:(G: 良好 | W: 警告 | D: 损坏 | U: 未知)
     DFontSizeManager::instance()->bind(stateTipsLabel, DFontSizeManager::T8, QFont::Normal);
-    stateTipsLabel->setPalette(palette4);
 
     m_linkButton = new DCommandLinkButton(tr("Export", "button")); // 导出
     DFontSizeManager::instance()->bind(m_linkButton, DFontSizeManager::T8, QFont::Medium);

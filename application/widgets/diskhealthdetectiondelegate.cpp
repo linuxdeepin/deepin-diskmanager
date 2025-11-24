@@ -117,7 +117,7 @@ void DiskHealthDetectionDelegate::paint(QPainter *painter, const QStyleOptionVie
     } else if (text == "U") {
         painter->setPen(QColor("#777777"));
     } else {
-        painter->setPen(m_color);
+        painter->setPen(option.palette.color(QPalette::Text));
     }
 
     painter->drawText(paintRect.x() + 15, paintRect.y() + 20, text);

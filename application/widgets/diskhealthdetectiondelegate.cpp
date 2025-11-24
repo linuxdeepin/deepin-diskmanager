@@ -134,8 +134,7 @@ void DiskHealthDetectionDelegate::paint(QPainter *painter, const QStyleOptionVie
         // qDebug() << "Drawing UNKNOWN status icon";
         painter->setPen(QColor("#777777"));
     } else {
-        // qDebug() << "Drawing UNKNOWN status icon";
-        painter->setPen(m_color);
+        painter->setPen(option.palette.color(QPalette::Text));
     }
 
     painter->drawText(paintRect.x() + 15, paintRect.y() + 20, text);

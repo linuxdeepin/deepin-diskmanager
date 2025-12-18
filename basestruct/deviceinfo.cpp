@@ -4,6 +4,7 @@
 
 #include "deviceinfo.h"
 #include <QDBusArgument>
+#include <QDebug>
 
 /*********************************** stCustest          *********************************************/
 QDBusArgument &operator<<(QDBusArgument &argument, const stCustest &stcus)

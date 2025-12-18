@@ -65,11 +65,11 @@ endforeach()
 file(GLOB ALL_SOURCES "*.cpp" "./partedproxy/*.cpp" "./widgets/*.cpp" "./widgets/customcontrol/*.cpp" "./widgets/accessible/*.cpp")
 file(GLOB ALL_HEADERS "*.h" "./partedproxy/*.h" "./widgets/*.h" "./widgets/customcontrol/*.h" "./widgets/accessible/*.h")
 file (GLOB DTNG_TS_FILES translations/*.ts)
-qt_create_translation(DTNG_QM_FILES
-    ${CMAKE_SOURCE_DIR}
-    ${DTNG_TS_FILES}
-     )
-
+if(Qt6_FOUND)
+    qt_create_translation(DTNG_QM_FILES ${CMAKE_SOURCE_DIR} ${DTNG_TS_FILES})
+else()
+    qt5_create_translation(DTNG_QM_FILES ${CMAKE_SOURCE_DIR} ${DTNG_TS_FILES})
+endif()
 
 include_directories(../basestruct)
 #link_directories(${PROJECT_BINARY_DIR})

@@ -126,7 +126,7 @@ void WriteVersion()
     QTextStream ts(&outFile);
     auto appName = QCoreApplication::applicationName();
     auto version = QCoreApplication::applicationVersion();
-    ts << appName << " " << version << Qt::endl;
+    ts << appName << " " << version << "\n";
     outFile.close();
     s_logMutex.unlock();
 }
@@ -154,6 +154,9 @@ void customLogMessageHandler(QtMsgType type, const QMessageLogContext &ctx, cons
     case QtDebugMsg:
         logInfo = QString("Debug:");
         break;
+    case QtInfoMsg:
+        logInfo = QString("Info:");
+        break;
     case QtWarningMsg:
         logInfo = QString("Warning:");
         break;
@@ -177,7 +180,7 @@ void customLogMessageHandler(QtMsgType type, const QMessageLogContext &ctx, cons
         return;
 
     QTextStream ts(&outFile);
-    ts << message.toUtf8() << Qt::endl;
+    ts << message.toUtf8() << "\n";
     outFile.close();
     s_logMutex.unlock();
 }

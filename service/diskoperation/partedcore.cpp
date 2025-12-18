@@ -1076,7 +1076,7 @@ bool PartedCore::hidePartition()
     } else {
         qDebug() << "open file for write";
         QTextStream out(&file);
-        out << QString("ENV{ID_FS_UUID}==\"%1\", ENV{UDISKS_IGNORE}=\"1\"").arg(m_curpartition.m_uuid) << Qt::endl;
+        out << QString("ENV{ID_FS_UUID}==\"%1\", ENV{UDISKS_IGNORE}=\"1\"").arg(m_curpartition.m_uuid) << "\n";
     }
 
     // qDebug() << __FUNCTION__ << "Hide Partition end";
@@ -2283,7 +2283,7 @@ void PartedCore::onRefreshDeviceInfo(int type, bool arg1, QString arg2)
     if (m_workerThreadProbe == nullptr) {
         qDebug() << "m_workerThreadProbe is null, creating new thread";
         m_workerThreadProbe = new QThread();
-        qDebug() << "onRefresh Create thread: " << QThread::currentThreadId() << " ++++++++" << m_workerThreadProbe << Qt::endl;
+        qDebug() << "onRefresh Create thread: " << QThread::currentThreadId() << " ++++++++" << m_workerThreadProbe << "\n";
         qDebug() << "  ----------------------! 0 !--------------------- :" << m_probeThread.thread();
         m_probeThread.moveToThread(m_workerThreadProbe);
         m_workerThreadProbe->start();

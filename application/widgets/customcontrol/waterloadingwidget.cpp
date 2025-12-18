@@ -9,6 +9,7 @@
 #if QT_VERSION_MAJOR > 5
 #include <random>
 #endif
+#include <QDebug>
 
 WaterLoadingWidget::WaterLoadingWidget(QWidget *parent) : QWidget(parent)
 {

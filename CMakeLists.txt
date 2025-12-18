@@ -31,9 +31,13 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstack-protector-all -fPIC")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-protector-all -fPIE")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -z relro -z now -z noexecstack -pie")
 
-set(QT_VERSION_MAJOR 6)
-if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+# Qt 版本检测
+find_package(Qt6 QUIET)
+if(Qt6_FOUND)
+    set(QT_VERSION_MAJOR 6)
     set(DTK_VERSION 6)
+else()
+    set(QT_VERSION_MAJOR 5)
 endif()
 
 # 检查内存泄漏代码

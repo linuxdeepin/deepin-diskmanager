@@ -34,10 +34,16 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -z relro -z now -z noexecs
 # Qt 版本检测
 find_package(Qt6 QUIET)
 if(Qt6_FOUND)
+    message("Found Qt6.")
+
     set(QT_VERSION_MAJOR 6)
     set(DTK_VERSION 6)
 else()
+    message("Found Qt5.")
+
     set(QT_VERSION_MAJOR 5)
+    add_compile_definitions(NO_DBUS_CALLER_AUTH_CHECK)
+    message("NO_DBUS_CALLER_AUTH_CHECK is on.")
 endif()
 
 # 检查内存泄漏代码

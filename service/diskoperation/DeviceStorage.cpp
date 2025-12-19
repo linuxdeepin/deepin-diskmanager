@@ -649,14 +649,20 @@ void DeviceStorage::getDiskInfoModel(const QString &devicePath, QString &model)
         }
     }
 
-    cmd = "udevadm info " + devicePath + " | grep ID_MODEL=";
-    proc.start("bash", QStringList() << "-c" << cmd);
-    proc.waitForFinished(-1);
-    outPut = proc.readAllStandardOutput();
-    if (!outPut.isEmpty()) {
-        auto idModel = outPut.split("=", QString::SkipEmptyParts);
-        if (idModel.count() > 1)
-            model = idModel.at(1).trimmed();
+    cmd = "udevadm info " + devicePath;
+    exitcode = Utils::executCmd(cmd, outPut, error);
+    if (exitcode != 0) {
+        qDebug() << "Failed to execute udevadm command, error:" << error;
+        return;
+    }
+    QString key = "ID_MODEL=";
+    int start = outPut.indexOf(key);
+    if (start != -1) {
+        start += key.length(); // 移动到等号后面
+        int end = outPut.indexOf('\n', start); // 找到行尾
+        if (end == -1) end = outPut.length(); // 如果是最后一行
+        
+        model = outPut.mid(start, end - start).trimmed();
         if (!model.isEmpty())
             return;
     }

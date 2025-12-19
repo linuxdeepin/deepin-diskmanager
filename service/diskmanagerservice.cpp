@@ -495,6 +495,10 @@ int DiskManagerService::test()
 
 bool DiskManagerService::checkAuthorization(void)
 {
+#ifdef NO_DBUS_CALLER_AUTH_CHECK
+    qDebug() << "Authorization check was skipped";
+    return true;
+#else
     QString actionId("com.deepin.pkexec.deepin-diskmanager");
     QString serviceName = message().service();
 
@@ -508,6 +512,7 @@ bool DiskManagerService::checkAuthorization(void)
         sendErrorReply(QDBusError::AccessDenied);
         return false;
     }
+#endif
 }
 
 } // namespace DiskManager

@@ -777,7 +777,7 @@ void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &int
 void DeviceStorage::updateForHWDevice(const QString &/*devicePath*/)
 {
     qDebug() << "DeviceStorage::updateForHWDevice BEGIN";
-    if (Utils::readContent("/proc/bootdevice/product_name").trimmed().isEmpty())
+    if (Utils::readContent("/proc/bootdevice/product_name").trimmed().isEmpty()) {
         qDebug() << "Fail to read the product_name file or the file is empty, return";
         return;
     }

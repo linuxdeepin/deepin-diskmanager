@@ -27,7 +27,7 @@ file(GLOB ALL_SOURCES "../service/diskoperation/*.cpp" "../service/diskoperation
 
 add_executable(${PROJECT_NAME_TEST} ${SRC_LIST} ${ALL_HEADERS} ${ALL_SOURCES})
 
-target_link_libraries(${PROJECT_NAME_TEST} gmock gmock_main gtest gtest_main pthread Qt5::Core basestruct parted parted-fs-resize)
+target_link_libraries(${PROJECT_NAME_TEST} gmock gmock_main gtest gtest_main pthread Qt${QT_VERSION_MAJOR}::Core basestruct parted parted-fs-resize)
 
 # 添加 QTest 测试
 add_test(${PROJECT_NAME_TEST} that-test-I-made COMMAND ${PROJECT_NAME_TEST})

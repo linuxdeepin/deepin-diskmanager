@@ -41,8 +41,8 @@ file(GLOB ALL_QRCS "../application/assets/appicons.qrc")
 list(REMOVE_ITEM ALL_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../application/main.cpp)
 
 find_package(PkgConfig REQUIRED)
-find_package(Dtk${DTK_VERSION}Widget REQUIRED)
-find_package(Dtk${DTK_VERSION}Gui REQUIRED)
+find_package(Dtk${DTK_VERSION_MAJOR}Widget REQUIRED)
+find_package(Dtk${DTK_VERSION_MAJOR}Gui REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS
     Core
     Widgets
@@ -53,21 +53,25 @@ set(LINK_LIBS
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::DBus
     Qt${QT_VERSION_MAJOR}::Widgets
-    Qt${QT_VERSION_MAJOR}::WidgetsPrivate
 
-    Dtk${DTK_VERSION}::Core
-    Dtk${DTK_VERSION}::Gui
-    Dtk${DTK_VERSION}::Widget
+    Dtk${DTK_VERSION_MAJOR}::Core
+    Dtk${DTK_VERSION_MAJOR}::Gui
+    Dtk${DTK_VERSION_MAJOR}::Widget
 )
+
+# Qt6 has WidgetsPrivate module, Qt5 does not
+if (QT_VERSION_MAJOR MATCHES 6)
+    list(APPEND LINK_LIBS Qt${QT_VERSION_MAJOR}::WidgetsPrivate)
+endif()
 
 ##需要生成的moc文件，输出文件名称放在变量 mocfiles中，必须在find QT5 package才能调用
 #QT5_WRAP_CPP (UDLC_UI_HEADERS_MOC ${ALL_HEADERS})
 
 add_executable(${PROJECT_NAME_TEST} ${SRC_LIST} ${ALL_HEADERS} ${ALL_SOURCES} ${ALL_QRCS})
 
-target_include_directories(${PROJECT_NAME} PUBLIC
+target_include_directories(${PROJECT_NAME_TEST} PUBLIC
     ${DtkWidget_INCLUDE_DIRS}
-    ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
+    Qt${QT_VERSION_MAJOR}::GuiPrivate
     ${PROJECT_BINARY_DIR}
 )
 target_link_libraries(${PROJECT_NAME_TEST}
@@ -82,7 +86,6 @@ target_link_libraries(${PROJECT_NAME_TEST}
     parted-fs-resize
     Qt${QT_VERSION_MAJOR}::DBus
     Qt${QT_VERSION_MAJOR}::Widgets
-    Qt${QT_VERSION_MAJOR}::WidgetsPrivate
     Qt${QT_VERSION_MAJOR}::Test ${LINK_LIBS})
 
 # 添加 QTest 测试

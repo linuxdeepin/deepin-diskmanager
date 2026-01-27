@@ -1,5 +1,5 @@
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.13)
 project(deepin-diskmanager-service)
 
 
@@ -26,18 +26,18 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pie")
 
 # Find the library
 find_package(PkgConfig REQUIRED)
-find_package(Dtk${DTK_VERSION}Gui REQUIRED)
+find_package(Dtk${DTK_VERSION_MAJOR}Gui REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS
     Core
     Widgets
     DBus
 REQUIRED)
-find_package(PolkitQt${QT_VERSION_MAJOR}-1)
+find_package(PolkitQt${QT_VERSION_MAJOR}-1 REQUIRED)
 
 set(LINK_LIBS
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::DBus
-    Dtk${DTK_VERSION}::Core
+    Dtk${DTK_VERSION_MAJOR}::Core
     parted
     parted-fs-resize
     PolkitQt${QT_VERSION_MAJOR}-1::Agent
@@ -63,7 +63,7 @@ link_directories(${PROJECT_BINARY_DIR})
 
 add_executable(${PROJECT_NAME} ${ALL_SOURCES} ${ALL_HEADERS})
 target_include_directories(${PROJECT_NAME} PUBLIC
-    ${Qt6Gui_PRIVATE_INCLUDE_DIRS}
+    Qt${QT_VERSION_MAJOR}::GuiPrivate
     ${PROJECT_BINARY_DIR}
 )
 #link_libraries(../basestruct/basestruct)

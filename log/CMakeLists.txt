@@ -26,7 +26,7 @@
 
 #install(TARGETS dlmlog DESTINATION lib)
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.13)
 project(ddmlog)
 
 # Find the library
@@ -50,7 +50,7 @@ set(LOG_SRCS
 
 add_library(${PROJECT_NAME} STATIC ${LOG_SRCS})
 target_include_directories(${PROJECT_NAME} PUBLIC
-    Qt${QT_VERSION_MAJOR}::Gui_private
+    Qt${QT_VERSION_MAJOR}::GuiPrivate
     ${PROJECT_BINARY_DIR}
 )
 

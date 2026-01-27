@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.13)
 project(deepin-diskmanager)
 
 if (NOT DEFINED VERSION)
@@ -15,8 +15,8 @@ set(CMAKE_AUTOUIC ON)#开启uic 编译转换*.ui文件生存设计界面对应�
 
 # Find the library
 find_package(PkgConfig REQUIRED)
-find_package(Dtk${DTK_VERSION}Widget REQUIRED)
-find_package(Dtk${DTK_VERSION}Gui REQUIRED)
+find_package(Dtk${DTK_VERSION_MAJOR}Widget REQUIRED)
+find_package(Dtk${DTK_VERSION_MAJOR}Gui REQUIRED)
 #find_package(DtkCMake REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS
     Core
@@ -29,11 +29,15 @@ set(LINK_LIBS
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::DBus
     Qt${QT_VERSION_MAJOR}::Widgets
-    Qt${QT_VERSION_MAJOR}::WidgetsPrivate
-    Dtk${DTK_VERSION}::Core
-    Dtk${DTK_VERSION}::Gui
-    Dtk${DTK_VERSION}::Widget
+    Dtk${DTK_VERSION_MAJOR}::Core
+    Dtk${DTK_VERSION_MAJOR}::Gui
+    Dtk${DTK_VERSION_MAJOR}::Widget
 )
+
+# Qt6 has WidgetsPrivate module, Qt5 does not (use private target differently)
+if (QT_VERSION_MAJOR MATCHES 6)
+    list(APPEND LINK_LIBS Qt${QT_VERSION_MAJOR}::WidgetsPrivate)
+endif()
 
 #common resource names
 set(APP_RES_DIR "assets")
@@ -80,7 +84,7 @@ add_executable(${PROJECT_NAME} ${ALL_SRCS} ${APP_QRC}  ${DTNG_QM_FILES})
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     ${DtkWidget_INCLUDE_DIRS}
-    ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
+    Qt${QT_VERSION_MAJOR}::GuiPrivate
     ${PROJECT_BINARY_DIR}
 )
 

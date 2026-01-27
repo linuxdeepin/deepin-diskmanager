@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.13)
 project(basestruct)
 
 # Find the library
@@ -26,7 +26,7 @@ set(BASESTRUCT_SRCS ${BASESTRUCT_SOURCES} ${BASESTRUCT_HEADERS} )
 
 add_library(${PROJECT_NAME} STATIC ${BASESTRUCT_SRCS})
 target_include_directories(${PROJECT_NAME} PUBLIC
-    ${Qt6Gui_PRIVATE_INCLUDE_DIRS}
+    Qt${QT_VERSION_MAJOR}::GuiPrivate
     ${PROJECT_BINARY_DIR}
 )
 

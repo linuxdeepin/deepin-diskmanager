@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.13)
 project(deepin-diskmanager)
 
 find_package(Threads REQUIRED)
@@ -31,17 +31,20 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fstack-protector-all -fPIC")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-protector-all -fPIE")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -z relro -z now -z noexecstack -pie")
 
-# Qt 版本检测
-find_package(Qt6 QUIET)
-if(Qt6_FOUND)
-    message("Found Qt6.")
+# Auto-detect Qt version (tries Qt6 first, falls back to Qt5)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
+message(STATUS "Found Qt version: ${QT_VERSION_MAJOR}")
 
-    set(QT_VERSION_MAJOR 6)
-    set(DTK_VERSION 6)
+# Map to DTK version (Qt6→DTK6, Qt5→DTK5)
+if (QT_VERSION_MAJOR MATCHES 6)
+    set(DTK_VERSION_MAJOR 6)
 else()
-    message("Found Qt5.")
+    set(DTK_VERSION_MAJOR "")
+endif()
+message(STATUS "Build with DTK: ${DTK_VERSION_MAJOR}")
 
-    set(QT_VERSION_MAJOR 5)
+# For Qt5, add DBUS caller auth check
+if (QT_VERSION_MAJOR MATCHES 5)
     add_compile_definitions(NO_DBUS_CALLER_AUTH_CHECK)
     message("NO_DBUS_CALLER_AUTH_CHECK is on.")
 endif()

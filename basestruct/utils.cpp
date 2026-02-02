@@ -817,6 +817,13 @@ bool Utils::kernelSupportFS(const QString &fsType)
 QString Utils::mkTempDir(const QString &infix)
 {
     qDebug() << "Utils::mkTempDir - Creating temp dir with infix:" << infix;
+
+    // 路径遍历检查：拒绝包含 ".." 的 infix
+    if (infix.contains("..")) {
+        qWarning() << "Utils::mkTempDir - Invalid infix contains path traversal:" << infix;
+        return QString();
+    }
+
     // Construct template like "/var/tmp/diskmanager-XXXXXX" or "/var/tmp/diskmanager-INFIX-XXXXXX"
     QString dirTemplate = "/var/tmp/";
 

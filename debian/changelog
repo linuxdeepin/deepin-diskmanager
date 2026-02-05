@@ -1,3 +1,26 @@
+deepin-diskmanager (6.0.23) unstable; urgency=medium
+
+  * fix: add path traversal check in mkTempDir function
+  * build(cmake): refactor Qt version compatibility
+  * fix: Harden DBus security configuration
+  * feat: enhance security and resource limits
+  * fix: Fix compilation errors
+  * fix: Remove hardcoded colors in disk health detection dialog for theme compatibility
+  * feat: normalize disk size only for specific devices.
+  * feat: hide specific version of UFS
+  * fix: Disable bad sector detection for SSD devices
+  * feat: Enhance time tracking in DiskBadSectorsDialog
+  * refactor: improve udevadm command execution in getDiskInfoModel
+  * fix: [Stroage-interface] The interface show error.
+  * fix: Improve ext* filesystem usage display logic
+  * fix: block model shows 'UnKnow'
+  * fix: Fix fail to format disk to FAT32
+  * chore: Remove exfat-fuse dependency
+  * feat: Disable dbus caller authorization check
+  * feat: Supports building on Qt5 or Qt6
+
+ -- dengzhongyuan <dengzhongyuan@uniontech.com>  Thu, 05 Feb 2026 20:04:17 +0800
+
 deepin-diskmanager (6.0.22) unstable; urgency=medium
 
   * feat: Exclude removable devices when creating logical volume groups

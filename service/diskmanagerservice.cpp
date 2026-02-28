@@ -152,7 +152,12 @@ bool DiskManagerService::mount(const QString &mountpath)
         return false;
     }
 
-    QString invokerUid = QString::number(connection().interface()->serviceUid(message().service()).value());
+    QDBusReply<uint> uidReply = connection().interface()->serviceUid(message().service());
+    if (!uidReply.isValid()) {
+        qWarning() << "Failed to get invoker UID for mount, refusing operation";
+        return false;
+    }
+    QString invokerUid = QString::number(uidReply.value());
     return m_partedcore->mountAndWriteFstab(mountpath, invokerUid);
 }
 
@@ -502,16 +507,25 @@ bool DiskManagerService::checkAuthorization(void)
     QString actionId("com.deepin.pkexec.deepin-diskmanager");
     QString serviceName = message().service();
 
-    if (serviceName == m_frontEndDBusName ||
-        connection().interface()->serviceUid(serviceName).value() == 0 ||
-        PolicyKitHelper::instance()->checkAuthorization(actionId, serviceName)) {
-        qDebug() << "Authorization granted for service:" << serviceName;
+    if (serviceName == m_frontEndDBusName) {
+        qDebug() << "Authorization granted for frontend:" << serviceName;
         return true;
-    } else {
-        qWarning() << "Authorization denied for service:" << serviceName;
-        sendErrorReply(QDBusError::AccessDenied);
-        return false;
     }
+
+    QDBusReply<uint> uidReply = connection().interface()->serviceUid(serviceName);
+    if (uidReply.isValid() && uidReply.value() == 0) {
+        qDebug() << "Authorization granted for root user";
+        return true;
+    }
+
+    if (PolicyKitHelper::instance()->checkAuthorization(actionId, serviceName)) {
+        qDebug() << "Authorization granted via Polkit for service:" << serviceName;
+        return true;
+    }
+
+    qWarning() << "Authorization denied for service:" << serviceName;
+    sendErrorReply(QDBusError::AccessDenied);
+    return false;
 #endif
 }
 

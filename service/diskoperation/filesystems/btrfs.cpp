@@ -386,12 +386,7 @@ double Btrfs::btrfsSize2Double(QString &str)
         double num = numStr.toDouble();
         int index = str.indexOf(numStr);
         int pos = index + numStr.length();
-        if (pos < str.length()) {
-            qDebug() << "pos < str.length()";
-            char unit = str.at(pos).toLatin1();
-
-        }
-        char unit = str.at(pos).toLatin1();
+        char unit = (pos < str.length()) ? str.at(pos).toLatin1() : '\0';
         Byte_Value mult;
         switch (unit) {
             case 'K':	mult = KIBIBYTE ;	break ;

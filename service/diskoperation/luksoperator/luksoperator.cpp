@@ -6,6 +6,7 @@
 #include "luksoperator.h"
 #include "../fsinfo.h"
 #include <QFile>
+#include <QSaveFile>
 #include <QDir>
 #include <QDateTime>
 #include <QJsonDocument>
@@ -668,6 +669,7 @@ bool LUKSOperator::wirteCrypttab(LUKS_INFO &luksInfo, bool isMount)
         qDebug() << "open /etc/crypttab failed, return false";
         return false;
     }
+    QFileDevice::Permissions origPerm = file.permissions();
 
     // read crypttab
     bool findflag = false; //目前默认只改第一个发现的uuid findflag 标志位：是否已经查找到uuid
@@ -698,18 +700,23 @@ bool LUKSOperator::wirteCrypttab(LUKS_INFO &luksInfo, bool isMount)
     }
     file.close();
 
-    //write crypttab
-    if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
+    // 原子写入：先写临时文件，再 rename 到 /etc/crypttab，避免 TOCTOU 竞态
+    QSaveFile saveFile(QStringLiteral("/etc/crypttab"));
+    if (!saveFile.open(QIODevice::WriteOnly)) {
         qDebug() << "open /etc/crypttab for write failed, return false";
         return false;
     }
-
-    QTextStream out(&file);
+    QTextStream out(&saveFile);
     for (int i = 0; i < list.count(); i++) {
         out << list.at(i);
     }
     out.flush();
-    file.close();
+    if (!saveFile.commit()) {
+        qDebug() << "commit /etc/crypttab failed, return false";
+        return false;
+    }
+    // 恢复原文件权限，避免 QSaveFile 使用临时文件导致权限被 umask 改变
+    QFile::setPermissions(QStringLiteral("/etc/crypttab"), origPerm);
     qDebug() << "Successfully created key file:" << filePath;
     qDebug() << "LUKSOperator::wirteCrypttab END";
     return true;

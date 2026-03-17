@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -20,7 +20,7 @@ void checkFrontEndQuit(uint frontEndPid)
     QString frontEndExe = QString("/proc/%1/exe").arg(frontEndPid);
     QFileInfo info(frontEndExe);
 
-    if (info.symLinkTarget() != "/usr/bin/deepin-diskmanager") {
+    if (QFileInfo(info.symLinkTarget()).fileName() != "deepin-diskmanager") {
         qWarning() << "Front-end process has quit";
         QCoreApplication::exit(0);
     }

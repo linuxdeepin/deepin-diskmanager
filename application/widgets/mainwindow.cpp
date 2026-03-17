@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -95,7 +95,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     QProcess proc;
     QString args = QString("--system --type=method_call --dest=com.deepin.diskmanager /com/deepin/diskmanager com.deepin.diskmanager.Quit");
     QStringList argList = args.split(" ");
-    proc.startDetached("/usr/bin/dbus-send", argList);
+    proc.startDetached("dbus-send", argList);
 
     DMainWindow::closeEvent(event);
     qDebug() << "MainWindow::closeEvent completed.";
@@ -176,7 +176,7 @@ void MainWindow::onHandleQuitAction()
     QProcess proc;
     QString args = QString("--system --type=method_call --dest=com.deepin.diskmanager /com/deepin/diskmanager com.deepin.diskmanager.Quit");
     QStringList argList = args.split(" ");
-    proc.startDetached("/usr/bin/dbus-send", argList);
+    proc.startDetached("dbus-send", argList);
 
 }
 

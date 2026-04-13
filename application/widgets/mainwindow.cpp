@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -176,10 +176,14 @@ void MainWindow::onShowSpinerWindow(bool isShow, const QString &title)
         m_dialog->setShowSpinner(isShow, title);
         m_dialog->show();
     } else {
+        bool dialogWasVisible = m_dialog->isVisible();
         m_dialog->setShowSpinner(isShow, title);
         m_dialog->hide();
 
-        raise();
-        activateWindow();
+        qDebug() << __FUNCTION__ << "dialogWasVisible:" << dialogWasVisible;
+        if (dialogWasVisible) {
+            raise();
+            activateWindow();
+        }
     }
 }

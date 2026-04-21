@@ -9,22 +9,11 @@
 #include <DLog>
 #include <QDBusConnection>
 #include <QDBusError>
+#include <QDBusServiceWatcher>
 #include <QThread>
 
 const QString DiskManagerServiceName = "com.deepin.diskmanager";
 const QString DiskManagerPath = "/com/deepin/diskmanager";
-
-void checkFrontEndQuit(uint frontEndPid)
-{
-    qDebug() << "checkFrontEndQuit" << frontEndPid;
-    QString frontEndExe = QString("/proc/%1/exe").arg(frontEndPid);
-    QFileInfo info(frontEndExe);
-
-    if (QFileInfo(info.symLinkTarget()).fileName() != "deepin-diskmanager") {
-        qWarning() << "Front-end process has quit";
-        QCoreApplication::exit(0);
-    }
-}
 
 int main(int argc, char *argv[])
 {
@@ -40,20 +29,17 @@ int main(int argc, char *argv[])
     PATH += ":/sbin";
     qputenv("PATH", PATH.toLatin1());
 
-    uint frontEndPid;
     QString frontEndDBusName;
-    if (argc < 3) {
+    if (argc < 2) {
         qCritical() << "Invalid arguments count:" << argc;
         return 1;
     } else {
         qDebug() << "Arguments count:" << argc;
-        QString frontEndPidString(argv[1]);
-        frontEndPid = frontEndPidString.toUInt();
-        if (frontEndPid == 0) {
-            qCritical() << "Invalid front-end PID:" << frontEndPid;
+        frontEndDBusName = QString(argv[1]);
+        if (frontEndDBusName.isEmpty()) {
+            qCritical() << "Invalid front-end DBus name";
             return 1;
         }
-        frontEndDBusName = QString(argv[2]);
     }
 
     QCoreApplication a(argc, argv);
@@ -96,11 +82,16 @@ int main(int argc, char *argv[])
         exit(0x0002);
     }
 
-    QTimer timer;
-    QObject::connect(&timer, &QTimer::timeout, [frontEndPid] {
-        checkFrontEndQuit(frontEndPid);
+    QDBusServiceWatcher *watcher = new QDBusServiceWatcher(
+        frontEndDBusName,
+        QDBusConnection::systemBus(),
+        QDBusServiceWatcher::WatchForUnregistration,
+        &a
+    );
+    QObject::connect(watcher, &QDBusServiceWatcher::serviceUnregistered, [](const QString &name) {
+        qWarning() << "Front-end service unregistered:" << name;
+        QCoreApplication::exit(0);
     });
-    timer.start(1000);
 
     return a.exec();
 }

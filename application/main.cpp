@@ -156,7 +156,7 @@ int main(int argc, char *argv[])
         }
 
         QStringList argList;
-        argList << QString::number(QCoreApplication::applicationPid()) << QDBusConnection::systemBus().baseService();
+        argList << QDBusConnection::systemBus().baseService();
         qDebug() << "Starting deepin-diskmanager-authenticateProxy with args:" << argList;
         proc.startDetached("deepin-diskmanager-authenticateProxy", argList);
 

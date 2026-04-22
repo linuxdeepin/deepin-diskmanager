@@ -29,6 +29,9 @@ int main(int argc, char *argv[])
     PATH += ":/sbin";
     qputenv("PATH", PATH.toLatin1());
 
+    // 避免在调用 Dtk::Core::DLogManager::registerConsoleAppender() 时 dtkcore 启动会话总线
+    qunsetenv("DISPLAY");
+
     QString frontEndDBusName;
     if (argc < 2) {
         qCritical() << "Invalid arguments count:" << argc;

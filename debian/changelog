@@ -1,3 +1,10 @@
+deepin-diskmanager (6.0.26) unstable; urgency=medium
+
+  * refactor: use QDBusServiceWatcher to detect frontend exit
+  * fix: prevent dtkcore from starting session bus in backend service
+
+ -- wangrong <wangrong@uniontech.com>  Fri, 24 Apr 2026 09:59:40 +0800
+
 deepin-diskmanager (6.0.25) unstable; urgency=medium
 
   * Revert "fix: Fix fail to format disk to FAT32"

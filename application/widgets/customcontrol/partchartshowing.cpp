@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -237,7 +237,7 @@ void PartChartShowing::addPaint(QPainter *painter)
                 }
                 m_flag = 0;
             }
-        } else if (m_sumValue >= 100) { //绘制最后一个分区当超过整个分区容量的时候以及选中状态
+        } else { //绘制最后一个分区当超过整个分区容量的时候以及选中状态
             //            qDebug() << "sumvalue" << sumvalue;
             double width = ((m_partSize.at(m_partSize.size() - 2) / m_total)) * (paintRect.width() - RADIUS) - RIGHTSPACE;
             if (m_partSize.at(m_partSize.size() - 2) / m_total < 0.01) {

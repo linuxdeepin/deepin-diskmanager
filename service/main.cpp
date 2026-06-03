@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -27,6 +27,12 @@ int main(int argc, char *argv[])
     PATH += ":/usr/sbin";
     PATH += ":/sbin";
     qputenv("PATH", PATH.toLatin1());
+
+    QString frontEndDBusName;
+    if (argc >= 2) {
+        frontEndDBusName = QString(argv[1]);
+        qDebug() << "Received frontend DBus name:" << frontEndDBusName;
+    }
 
     QCoreApplication a(argc, argv);
     a.setOrganizationName("deepin");
@@ -58,7 +64,7 @@ int main(int argc, char *argv[])
         qCritical() << "registerService failed:" << systemBus.lastError();
         exit(0x0001);
     }
-    DiskManager::DiskManagerService service;
+    DiskManager::DiskManagerService service(frontEndDBusName);
     qDebug() << "systemBus.registerService success" /*<< Dtk::Core::DLogManager::getlogFilePath()*/;
     if (!systemBus.registerObject(DiskManagerPath,
                                   &service,

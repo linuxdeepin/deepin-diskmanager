@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -14,7 +14,7 @@ public:
         return &instance;
     }
 
-    bool checkAuthorization(const QString& actionId, qint64 applicationPid);
+    bool checkAuthorization(const QString& actionId, const QString& appBusName);
 
 private:
     PolicyKitHelper();

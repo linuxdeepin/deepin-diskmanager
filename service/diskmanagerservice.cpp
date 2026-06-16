@@ -46,7 +46,9 @@ void DiskManagerService::initConnection()
 
 void DiskManagerService::Quit()
 {
-    // 不鉴权, 前端启动时会调用该接口来关闭已有服务
+    if (!checkAuthorization())
+        return;
+
     qDebug() << "DiskManagerService::Quit called";
     m_partedcore->delTempMountFile();
     QCoreApplication::exit(0);

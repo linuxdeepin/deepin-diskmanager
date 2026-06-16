@@ -10,10 +10,57 @@
 #include <DLog>
 #include <QDBusConnection>
 #include <QDBusError>
+#include <QDBusInterface>
+#include <QDBusPendingCall>
 #include <QThread>
+#include <unistd.h>
 
 const QString DiskManagerServiceName = "com.deepin.diskmanager";
 const QString DiskManagerPath = "/com/deepin/diskmanager";
+
+/**
+ * @brief 尝试停止已存在的 D-Bus 服务
+ * @param systemBus D-Bus 连接
+ * @return true 表示成功停止并可重新注册，false 表示失败
+ *
+ * 通过 D-Bus 调用 Quit() 方法优雅退出，未使用 PID kill，
+ * 以避免 TOCTOU 竞态条件和 PID 复用带来的安全风险。
+ * Quit() 调用后轮询等待 D-Bus 服务名称释放，确认服务已退出。
+ */
+static bool stopExistingService(QDBusConnection &systemBus)
+{
+    QDBusInterface existingService(DiskManagerServiceName, DiskManagerPath, "", systemBus);
+    if (!existingService.isValid()) {
+        qWarning() << "Cannot access existing service via D-Bus interface,"
+                   << "service may have already exited, retry registration";
+        return true;
+    }
+
+    qDebug() << "Calling Quit() on existing service...";
+    QDBusPendingCall pendingCall = existingService.asyncCall("Quit");
+    pendingCall.waitForFinished();
+    if (pendingCall.isError()) {
+        qWarning() << "Quit() call failed:" << pendingCall.error().message();
+        return false;
+    }
+
+    // 轮询等待 D-Bus 服务名称释放，最多等待 3 秒
+    qDebug() << "Quit() called successfully, waiting for service to exit...";
+    const int maxWaitMs = 3000;
+    const int pollIntervalMs = 200;
+    for (int elapsed = 0; elapsed < maxWaitMs; elapsed += pollIntervalMs) {
+        usleep(pollIntervalMs * 1000);
+        // 通过尝试注册来判断名称是否已释放（注册后立即释放）
+        if (systemBus.registerService(DiskManagerServiceName)) {
+            systemBus.unregisterService(DiskManagerServiceName);
+            qDebug() << "Service name released after" << (elapsed + pollIntervalMs) << "ms";
+            return true;
+        }
+    }
+
+    qWarning() << "Timed out waiting for existing service to exit";
+    return false;
+}
 
 int main(int argc, char *argv[])
 {
@@ -62,7 +109,18 @@ int main(int argc, char *argv[])
     QDBusConnection systemBus = QDBusConnection::systemBus();
     if (!systemBus.registerService(DiskManagerServiceName)) {
         qCritical() << "registerService failed:" << systemBus.lastError();
-        exit(0x0001);
+        // 服务名注册失败，通常是因为已有实例持有该名称，尝试停止它
+        if (stopExistingService(systemBus)) {
+            qDebug() << "Retrying registerService after stopping existing service...";
+            // 停止旧服务后重试注册
+            if (!systemBus.registerService(DiskManagerServiceName)) {
+                qCritical() << "registerService failed even after stopping existing service";
+                exit(0x0001);
+            }
+        } else {
+            qCritical() << "Failed to stop existing service";
+            exit(0x0001);
+        }
     }
     DiskManager::DiskManagerService service(frontEndDBusName);
     qDebug() << "systemBus.registerService success" /*<< Dtk::Core::DLogManager::getlogFilePath()*/;
@@ -70,7 +128,7 @@ int main(int argc, char *argv[])
                                   &service,
                                   QDBusConnection::ExportAllSlots | QDBusConnection::ExportAllSignals)) {
         qCritical() << "registerObject failed:" << systemBus.lastError();
-        exit(0x0002);
+            exit(0x0002);
     }
 
     /*

@@ -54,27 +54,6 @@ QAccessibleInterface *accessibleFactory(const QString &classname, QObject *objec
     return interface;
 }
 
-/**
- * @brief 执行外部命令
- * @param strCmd:外部命令字符串
- * @param outPut:命令控制台输出
- * @param error:错误信息
- * @return exitcode:退出码
- */
-int executCmd(const QString &strCmd, QString &outPut, QString &error)
-{
-    QProcess proc;
-    proc.start(strCmd);
-    proc.waitForFinished(-1);
-    outPut = proc.readAllStandardOutput();
-    error = proc.readAllStandardError();
-    error = proc.errorString();
-    int exitcode = proc.exitCode();
-    proc.close();
-    return exitcode;
-
-}
-
 int main(int argc, char *argv[])
 {
     // signal(SIGINT, SIG_IGN);
@@ -119,32 +98,31 @@ int main(int argc, char *argv[])
 //        exit(0);
 //    }
     if (a.setSingleInstance(appName)) {
-        QProcess proc;
-        QString cmd, oldPid, newPid, error;
-        //先判断后台服务进程是否存在,如果存在可能是强制退出导致,应先退出后台程序再重新启动磁盘管理器
-        cmd = QString("pidof deepin-diskmanager-service");
+        // 使用 QDBusInterface 调用 org.freedesktop.DBus.GetNameOwner 获取服务 owner
+        QDBusInterface dbusInterface("org.freedesktop.DBus",
+                                     "/org/freedesktop/DBus",
+                                     "org.freedesktop.DBus",
+                                     QDBusConnection::systemBus());
+        const QString serviceName = "com.deepin.diskmanager";
 
-        if (!executCmd(cmd, oldPid, error)) {
-            proc.startDetached("/usr/bin/dbus-send --system --type=method_call --dest=com.deepin.diskmanager /com/deepin/diskmanager com.deepin.diskmanager.Quit");
-        }
+        // 启动服务前,获取后台服务的旧 dbus owner
+        QDBusReply<QString> oldReply = dbusInterface.call("GetNameOwner", serviceName);
+        const QString oldDbusOwner = oldReply.isValid() ? oldReply.value() : QString();
 
-        QStringList argList;
-        argList << QDBusConnection::systemBus().baseService();
-        qDebug() << "Starting deepin-diskmanager-authenticateProxy with args:" << argList;
-        proc.startDetached("deepin-diskmanager-authenticateProxy", argList);
+        QProcess::startDetached("deepin-diskmanager-authenticateProxy", { QDBusConnection::systemBus().baseService() });
 
-        //正常启动程序后,循环查询后台服务是否已经启动,如果后台服务启动说明鉴权成功,启动前端界面
+        // 启动服务后,循环查询后台服务是否已经启动
+        // 当获取新 dbus owner 成功且不等于旧 dbus owner, 则认为新服务启动完成
         while (1) {
-            cmd = QString("pidof deepin-diskmanager-service");
-
-            if (!executCmd(cmd, newPid, error) && oldPid != newPid) {
-                break;
+            QDBusReply<QString> newReply = dbusInterface.call("GetNameOwner", serviceName);
+            if (newReply.isValid()) {
+                const QString newDbusOwner = newReply.value();
+                if (!newDbusOwner.isEmpty() && newDbusOwner != oldDbusOwner) {
+                    break;
+                }
             }
             QThread::msleep(300);
         }
-
-        proc.close();
-
     } else {
         exit(0);
     }

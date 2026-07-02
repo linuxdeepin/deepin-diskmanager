@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -86,12 +86,37 @@ int Utils::executCmd(const QString &strCmd, QString &outPut, QString &error)
     return exitcode;
 }
 
-int Utils::executWithPipeCmd(const QString &strCmd, QString &outPut, QString &error)
+int Utils::executWithInputOutputCmd(const QString &strCmd, const QStringList &strArg, const QString *inPut, QString &outPut, QString &error)
 {
-    QStringList argList;
-    argList << "-c" << strCmd;
+    qDebug() << "Entering Utils::executWithInputOutputCmd with command:" << strCmd << strArg;
+    QProcess proc;
+    int exitCode;
 
-    return executeCmdWithArtList("/bin/bash", argList, outPut, error);
+    proc.start(strCmd, strArg);
+
+    // 统一等待启动完成：无论是否需要写入 stdin，都检测 FailedToStart
+    // （程序不存在等场景），避免后续 readAll 取到空输出且 exitCode 为 0 的"假成功"
+    if (!proc.waitForStarted(-1)) {
+        error = proc.errorString();
+        return -1;
+    }
+
+    if (inPut) {
+        proc.write(inPut->toLocal8Bit());
+        proc.closeWriteChannel();
+    }
+
+    proc.waitForFinished(-1);
+    outPut = proc.readAllStandardOutput().data();
+    // 优先取子进程 stderr（含 cryptsetup/xfs_db 等的真实失败原因）；
+    // 为空时回退到 QProcess 自身错误（如启动失败 execvp: ...）
+    QString stdErr = proc.readAllStandardError();
+    error = stdErr.isEmpty() ? proc.errorString() : stdErr;
+    exitCode = proc.exitCode();
+    proc.close();
+
+    qDebug() << "Utils::executWithInputOutputCmd exitCode:  " << exitCode;
+    return exitCode;
 }
 
 int Utils::executWithErrorCmd(const QString &strCmd, const QStringList &strArg, QString &outPut, QString &outPutError, QString &error)

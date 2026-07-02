@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -432,8 +432,10 @@ bool PartedCore::detectionPartitionTableError(const QString &devicePath)
     bool needRewrite = gptIsExpanded(devicePath);
     if (needRewrite) {
         QString outPutFix, errorFix;
-        QString cmdFix = QString("echo w | fdisk %1").arg(devicePath);
-        Utils::executWithPipeCmd(cmdFix, outPutFix, errorFix);
+        QStringList args;
+        args << devicePath;
+        QString inPut("w\n");
+        Utils::executWithInputOutputCmd("fdisk", args, &inPut, outPutFix, errorFix);
         qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
         return false;
     }
@@ -3335,8 +3337,10 @@ void PartedCore::reWritePartition(const QString &devicePath)
     bool needRewrite = gptIsExpanded(devicePath);
     if (needRewrite) {
         QString outPutFix, errorFix;
-        QString cmdFix = QString("echo w | fdisk %1").arg(devicePath);
-        Utils::executWithPipeCmd(cmdFix, outPutFix, errorFix);
+        QStringList args;
+        args << devicePath;
+        QString inPut("w\n");
+        Utils::executWithInputOutputCmd("fdisk", args, &inPut, outPutFix, errorFix);
         qDebug() << __FUNCTION__ << "createPartition Partition Table Rewrite Done";
         return;
     }

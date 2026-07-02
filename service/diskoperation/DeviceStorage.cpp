@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -504,14 +504,18 @@ void DeviceStorage::getDiskInfoModel(const QString &devicePath, QString &model)
         }
     }
 
-    cmd = "udevadm info " + devicePath + " | grep ID_MODEL=";
-    proc.start("bash", QStringList() << "-c" << cmd);
+    proc.start("udevadm", QStringList() << "info" << devicePath);
     proc.waitForFinished(-1);
     outPut = proc.readAllStandardOutput();
-    if (!outPut.isEmpty()) {
-        auto idModel = outPut.split("=", QString::SkipEmptyParts);
-        if (idModel.count() > 1)
-            model = idModel.at(1).trimmed();
+    QString key = "ID_MODEL=";
+    int start = outPut.indexOf(key);
+    if (start != -1) {
+        start += key.length(); // 移动到等号后面
+        int end = outPut.indexOf('\n', start); // 找到行尾
+        if (end == -1)
+            end = outPut.length(); // 如果是最后一行
+
+        model = outPut.mid(start, end - start).trimmed();
         if (!model.isEmpty())
             return;
     }

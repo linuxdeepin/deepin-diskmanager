@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -11,24 +11,36 @@
 #include <QThread>
 #include <QProcess>
 #include <QString>
+#include <QRegularExpression>
 #include <QCoreApplication>
 
 
 namespace DiskManager {
 
 /**
- * @brief 执行外部命令
- * @param strCmd:外部命令字符串
- * @param outPut:命令控制台输出
- * @param error:错误信息
- * @return exitcode:退出码
+ * @brief 检测前端进程 deepin-diskmanager 是否在运行
+ *
+ * 仅启动 ps 一个子进程并在代码内完成过滤，避免使用 shell 解释器，也不再串联 awk/grep 子进程。
+ * 等价于管道 `ps -eo cmd | grep -w deepin-diskmanager$`。
+ *
  */
-void Watcher::executCmd(const QString &strCmd, QString &outPut, QString &error)
+bool Watcher::isFrontEndRunning(QString &error)
 {
     QProcess proc;
-    proc.start("bash", QStringList() << "-c" << strCmd);
+    proc.start("ps", QStringList() << "-eo" << "cmd");
     proc.waitForFinished(-1);
-    outPut = proc.readAllStandardOutput();
+    error = proc.readAllStandardError();
+
+    static const QRegularExpression rxMatch("(?:^|[^\\w])deepin-diskmanager$");
+    const QStringList lines = QString::fromLocal8Bit(proc.readAllStandardOutput()).split('\n');
+    for (const QString &line : lines) {
+        const QString exe = line.trimmed().section(' ', 0, 0, QString::SectionSkipEmpty);
+        if (rxMatch.match(exe).hasMatch()) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void Watcher::exit()
@@ -41,18 +53,12 @@ void Watcher::exit()
 void Watcher::run()
 {
     bool isrun = false;
-    QString cmd, outPut, error;
-    //先判断后台服务进程是否存在,如果存在可能是强制退出导致,应先退出后台程序再重新启动磁盘管理器
-    cmd = QString("ps -eo pid,cmd |awk '{print $2}' |grep -w deepin-diskmanager$");
+    QString error;
 
     while (!stoped) {
         QThread::msleep(500);  //0.5 second
-        executCmd(cmd, outPut, error);
-        int ret = 0;
-        ret = outPut.length();
-        if (ret) {
+        if (isFrontEndRunning(error)) {
             //这里表示前端在运行当中
-           // qDebug() << "Set to true!!!!!";
             isrun = true;
         } else {
             //这里表示，前端启动过，但是现在已经关闭了
@@ -61,7 +67,6 @@ void Watcher::run()
                 _exit(0);
             }
         }
-    // qDebug() << "Sleep !!!  == " << ret << " " << outPut << " " << outPut.length() << " "<< error;
     }
 }
 

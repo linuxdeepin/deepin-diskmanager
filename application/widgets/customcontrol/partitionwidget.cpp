@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026  UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -778,7 +778,7 @@ void PartitionWidget::onSetSliderValue()
     m_block = 1;
     m_slider->setValue(static_cast<int>((value / (m_total - (sumValue() / 1024))) * 100));
     m_currentEditSize = QString::number(value * 1024, 'f', 4);
-    if (value == 0.00 || value > (m_total - sumValue() / 1024)) {
+    if (value == 0.00 || value > (m_total - sumValue() / 1024) + 0.01) {
         m_addButton->setEnabled(false);
     } else {
         m_addButton->setEnabled(true);

@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -12,6 +12,8 @@
 
 #include <QDebug>
 #include <QApplication>
+
+constexpr double kFloatCompareEpsilon = 0.01;
 
 PartitionWidget::PartitionWidget(QWidget *parent)
     : DDialog(parent)
@@ -930,7 +932,7 @@ void PartitionWidget::onSetSliderValue()
     m_block = 1;
     m_slider->setValue(static_cast<int>((value / (m_total - (sumValue() / 1024))) * 100));
     m_currentEditSize = QString::number(value * 1024, 'f', 4);
-    if (value == 0.00 || value > (m_total - sumValue() / 1024)) {
+    if (value == 0.00 || value > (m_total - sumValue() / 1024) + kFloatCompareEpsilon) {
         qDebug() << "Value is 0 or exceeds remaining space, disabling addButton";
         m_addButton->setEnabled(false);
     } else {

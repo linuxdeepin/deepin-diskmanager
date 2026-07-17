@@ -8,5 +8,6 @@ StartupNotify=true
 TryExec=deepin-diskmanager
 Type=Application
 X-Deepin-Vendor=deepin
+X-Deepin-Singleton=true
 
 # Automatically generate translations

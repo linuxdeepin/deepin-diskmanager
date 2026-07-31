@@ -1,3 +1,13 @@
+deepin-diskmanager (6.0.27) unstable; urgency=medium
+
+  * chore: Update version to 6.0.27
+  * chore(ci): update actions/checkout to v7 and enable unsafe PR checkout
+  * fix: add X-Deepin-Singleton flag to desktop file
+  * fix(partition): add tolerance to add button enable condition
+  * fix(partition): simplify redundant condition in chart drawing
+
+ -- zhanghongyuan <zhanghongyuan@uniontech.com>  Fri, 31 Jul 2026 13:21:18 +0800
+
 deepin-diskmanager (6.0.26) unstable; urgency=medium
 
   * refactor: use QDBusServiceWatcher to detect frontend exit

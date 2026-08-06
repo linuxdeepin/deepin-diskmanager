@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022-2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -6,6 +6,9 @@
 #include <QDebug>
 #include <QFile>
 #include <QRegularExpression>
+#include <QScopedPointer>
+#include <QVariant>
+#include <DConfig>
 #include "utils.h"
 
 namespace DiskManager {
@@ -583,6 +586,21 @@ static bool isPGUX()
     return 1 == isPGUX;
 }
 
+// 从 DConfig 读取需要识别为 UFS 接口的 spec_version 子串列表，新增 UFS 版本时
+// 只需在 com.deepin.diskmanager.storage 配置中追加，无需修改源码。
+static QStringList ufsSpecVersions()
+{
+    const QStringList fallback{"300", "310", "400", "410"};
+    QScopedPointer<Dtk::Core::DConfig> cfg(
+        Dtk::Core::DConfig::create("com.deepin.diskmanager", "com.deepin.diskmanager.storage"));
+    if (cfg && cfg->isValid()) {
+        QStringList versions = cfg->value("ufsSpecVersions", QVariant::fromValue(fallback)).toStringList();
+        if (!versions.isEmpty())
+            return versions;
+    }
+    return fallback;
+}
+
 void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &interface, QString &model)
 {
     QString bootDevicePath("/proc/bootdevice/product_name");
@@ -592,8 +610,11 @@ void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &int
         if (model == file.readLine().simplified()) {
             QString spec_version = Utils::readContent("/sys/block/sdd/device/spec_version").trimmed();
             if (!spec_version.isEmpty()) {
-                if (spec_version.contains("300") || spec_version.contains("310") || spec_version.contains("400")) {
-                    interface = "UFS";
+                foreach (const QString &version, ufsSpecVersions()) {
+                    if (spec_version.contains(version)) {
+                        interface = "UFS";
+                        break;
+                    }
                 }
             }
         }
@@ -606,7 +627,9 @@ void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &int
         proc.start(cmd);
         proc.waitForFinished(-1);
         QString outPut = proc.readAllStandardOutput().trimmed();
-        QStringList outPutList = outPut.split("(");
+        QMap<QString, QString> mapInfo;
+        getMapInfoFromInput(outPut, mapInfo);
+        QStringList outPutList = mapInfo.value("Attached to").split("(");
         interface = outPutList[outPutList.size() - 1].split(" ")[0];
     }
     return;

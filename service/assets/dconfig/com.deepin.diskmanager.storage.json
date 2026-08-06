@@ -1,0 +1,17 @@
+{
+    "magic": "dsg.config.meta",
+    "version": "1.0",
+    "contents": {
+        "ufsSpecVersions": {
+            "value": ["300", "310", "400", "410"],
+            "serial": 0,
+            "flags": ["global"],
+            "name": "UFS Spec Versions",
+            "name[zh_CN]": "UFS规范版本",
+            "description": "Substrings of the UFS spec version read from /sys/block/<dev>/device/spec_version that should be recognized as the UFS interface. Append new version strings here instead of modifying source code.",
+            "description[zh_CN]": "从 /sys/block/<dev>/device/spec_version 读取的UFS规范版本子串列表，匹配任一项即识别为UFS接口。新增UFS版本时只需在此配置中追加，无需修改源码。",
+            "permissions": "readonly",
+            "visibility": "private"
+        }
+    }
+}

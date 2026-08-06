@@ -20,9 +20,12 @@ set(APP_USBREMOVE_FILES "${APP_EDEV_DIR}/USBremove.sh")
 set(APP_DEEPIN_DISKMANAGER_SERVICE_BIN "${APP_EDEV_DIR}/deepin-diskmanager-authenticateProxy")
 set(APP_POLICY_DIR "policy")
 set(APP_POLICY_FILES "${APP_POLICY_DIR}/com.deepin.diskmanager.policy")
+set(APP_DCONFIG_DIR "${APP_RES_DIR}/dconfig")
+set(APP_DCONFIG_SCHEMA "${APP_DCONFIG_DIR}/com.deepin.diskmanager.storage.json")
 
 # Find the library
 find_package(PkgConfig REQUIRED)
+find_package(DtkCore REQUIRED)
 find_package(DtkGui REQUIRED)
 find_package(Qt5 COMPONENTS
     Core
@@ -79,4 +82,5 @@ install(PROGRAMS ${APP_USBADD_FILES} DESTINATION libexec/openconnect/)
 install(PROGRAMS ${APP_USBREMOVE_FILES} DESTINATION libexec/openconnect/)
 install(FILES ${APP_UDEV_FILES} DESTINATION /lib/udev/rules.d/)
 install(FILES ${APP_POLICY_FILES} DESTINATION share/polkit-1/actions)
+install(FILES ${APP_DCONFIG_SCHEMA} DESTINATION share/dsg/configs/com.deepin.diskmanager/)
 install(PROGRAMS ${APP_DEEPIN_DISKMANAGER_SERVICE_BIN} DESTINATION bin/)

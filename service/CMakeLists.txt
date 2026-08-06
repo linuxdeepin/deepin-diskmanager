@@ -19,6 +19,8 @@ set(APP_USBADD_FILES "${APP_EDEV_DIR}/USBadd.sh")
 set(APP_USBREMOVE_FILES "${APP_EDEV_DIR}/USBremove.sh")
 set(APP_DEEPIN_DISKMANAGER_SERVICE_BIN "${APP_EDEV_DIR}/deepin-diskmanager-authenticateProxy")
 set(APP_POLICY_FILE "com.deepin.pkexec.deepin-diskmanager.policy")
+set(APP_DCONFIG_DIR "${APP_RES_DIR}/dconfig")
+set(APP_DCONFIG_SCHEMA "${APP_DCONFIG_DIR}/com.deepin.diskmanager.storage.json")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIE")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIE")
@@ -26,6 +28,7 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pie")
 
 # Find the library
 find_package(PkgConfig REQUIRED)
+find_package(Dtk${DTK_VERSION_MAJOR}Core REQUIRED)
 find_package(Dtk${DTK_VERSION_MAJOR}Gui REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS
     Core
@@ -88,4 +91,5 @@ install(PROGRAMS ${APP_USBADD_FILES} DESTINATION libexec/deepin-diskmanager/)
 install(PROGRAMS ${APP_USBREMOVE_FILES} DESTINATION libexec/deepin-diskmanager/)
 install(FILES ${APP_UDEV_FILES} DESTINATION lib/udev/rules.d/)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${APP_POLICY_FILE} DESTINATION share/polkit-1/actions)
+install(FILES ${APP_DCONFIG_SCHEMA} DESTINATION share/dsg/configs/com.deepin.diskmanager/)
 install(PROGRAMS ${APP_DEEPIN_DISKMANAGER_SERVICE_BIN} DESTINATION bin/)

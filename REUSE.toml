@@ -52,7 +52,7 @@ SPDX-FileCopyrightText = "Curtis Gedak"
 SPDX-License-Identifier = "GPL-2.0-or-later"
 
 [[annotations]]
-path = ["service/assets/data/**", "application/assets/deepin-diskmanager.desktop", "application/assets/environments.h.in", "service/policy/com.deepin.pkexec.deepin-diskmanager.policy", "service/udev/99-diskmanager.rules"]
+path = ["service/assets/data/**", "service/assets/dconfig/**", "application/assets/configs/**", "application/assets/deepin-diskmanager.desktop", "application/assets/environments.h.in", "service/policy/com.deepin.pkexec.deepin-diskmanager.policy", "service/udev/99-diskmanager.rules"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "UnionTech Software Technology Co., Ltd."
 SPDX-License-Identifier = "CC0-1.0"

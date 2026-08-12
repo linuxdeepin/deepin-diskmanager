@@ -27,7 +27,11 @@ file(GLOB ALL_SOURCES "../service/diskoperation/*.cpp" "../service/diskoperation
 
 find_package(DtkCore)
 if(DtkCore_FOUND)
-    add_definitions(-DHAVE_DCONFIG)
+    get_target_property(DTKCORE_INCLUDE_DIRS Dtk::Core INTERFACE_INCLUDE_DIRECTORIES)
+    find_path(DCONFIG_HEADER_PATH NAMES DConfig PATHS ${DTKCORE_INCLUDE_DIRS})
+    if(DCONFIG_HEADER_PATH)
+        add_definitions(-DHAVE_DCONFIG)
+    endif()
 endif()
 
 add_executable(${PROJECT_NAME_TEST} ${SRC_LIST} ${ALL_HEADERS} ${ALL_SOURCES})

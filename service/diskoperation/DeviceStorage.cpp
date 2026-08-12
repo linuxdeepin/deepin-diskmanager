@@ -8,7 +8,9 @@
 #include <QRegularExpression>
 #include <QScopedPointer>
 #include <QVariant>
+#ifdef HAVE_DCONFIG
 #include <DConfig>
+#endif
 #include "utils.h"
 
 namespace DiskManager {
@@ -588,9 +590,11 @@ static bool isPGUX()
 
 // 从 DConfig 读取需要识别为 UFS 接口的 spec_version 子串列表，新增 UFS 版本时
 // 只需在 com.deepin.diskmanager.storage 配置中追加，无需修改源码。
+// 当构建环境不支持 DConfig（如 102X 等低版本）时，回退到硬编码列表。
 static QStringList ufsSpecVersions()
 {
     const QStringList fallback{"300", "310", "400", "410"};
+#ifdef HAVE_DCONFIG
     QScopedPointer<Dtk::Core::DConfig> cfg(
         Dtk::Core::DConfig::create("com.deepin.diskmanager", "com.deepin.diskmanager.storage"));
     if (cfg && cfg->isValid()) {
@@ -598,6 +602,7 @@ static QStringList ufsSpecVersions()
         if (!versions.isEmpty())
             return versions;
     }
+#endif
     return fallback;
 }
 

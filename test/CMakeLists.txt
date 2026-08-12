@@ -25,7 +25,10 @@ LIST(APPEND SRC_LIST ${UT_DISKOPERATION})
 file(GLOB ALL_HEADERS "../service/diskoperation/*.h" "../service/diskoperation/filesystems/*.h")
 file(GLOB ALL_SOURCES "../service/diskoperation/*.cpp" "../service/diskoperation/filesystems/*.cpp")
 
-find_package(DtkCore REQUIRED)
+find_package(DtkCore)
+if(DtkCore_FOUND)
+    add_definitions(-DHAVE_DCONFIG)
+endif()
 
 add_executable(${PROJECT_NAME_TEST} ${SRC_LIST} ${ALL_HEADERS} ${ALL_SOURCES})
 

@@ -25,7 +25,10 @@ set(APP_DCONFIG_SCHEMA "${APP_DCONFIG_DIR}/com.deepin.diskmanager.storage.json")
 
 # Find the library
 find_package(PkgConfig REQUIRED)
-find_package(DtkCore REQUIRED)
+find_package(DtkCore)
+if(DtkCore_FOUND)
+    add_definitions(-DHAVE_DCONFIG)
+endif()
 find_package(DtkGui REQUIRED)
 find_package(Qt5 COMPONENTS
     Core

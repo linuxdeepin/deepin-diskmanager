@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -76,6 +76,7 @@ void DecryptDialog::initUi()
 #endif
 
     m_passwordEdit = new DPasswordEdit(this);
+    m_passwordEdit->setObjectName("DecryptDialogPasswordEdit");
     m_passwordEdit->setAccessibleName("passwordInput");
     m_passwordEdit->lineEdit()->setValidator(regExpValidator);
     m_passwordEdit->lineEdit()->setPlaceholderText(tr("Enter a password "));
@@ -83,6 +84,7 @@ void DecryptDialog::initUi()
     qDebug() << "[DecryptDialog] Password edit created.";
 
     m_pushButton = new DPushButton(this);
+    m_pushButton->setObjectName("DecryptDialogPushButton");
     m_pushButton->setAccessibleName("passwordHintButton");
     m_pushButton->setToolTip(tr("Password hint"));
     m_pushButton->setFixedSize(QSize(36, 36));
@@ -136,11 +138,13 @@ void DecryptDialog::initUi()
     contentLayout->setContentsMargins(10, 0, 10, 0);
 
     m_cancelButton = new DPushButton(tr("Cancel", "button"), this);
+    m_cancelButton->setObjectName("DecryptDialogCancelButton");
     m_cancelButton->setAccessibleName("cancel");
     m_cancelButton->setFont(font1);
     m_cancelButton->setFixedSize(183, 36);
 
     m_decryptButton = new DSuggestButton(tr("Decrypt", "button"), this);
+    m_decryptButton->setObjectName("DecryptDialogDecryptButton");
     m_decryptButton->setAccessibleName("decrypt");
     m_decryptButton->setFont(font1);
     m_decryptButton->setFixedSize(183, 36);

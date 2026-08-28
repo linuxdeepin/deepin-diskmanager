@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 - 2024 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -164,6 +164,8 @@ void DiskHealthDetectionDialog::initUI()
 
     // 属性列表
     m_tableView = new DTableView(this);
+    m_tableView->setObjectName("DiskHealthDetectionDialogTableView");
+    m_tableView->setAccessibleName("DiskHealthDetectionDialogTableView");
     m_standardItemModel = new QStandardItemModel(this);
 
     m_tableView->setShowGrid(false);
@@ -312,6 +314,7 @@ void DiskHealthDetectionDialog::initUI()
     DFontSizeManager::instance()->bind(stateTipsLabel, DFontSizeManager::T8, QFont::Normal);
 
     m_linkButton = new DCommandLinkButton(tr("Export", "button")); // 导出
+    m_linkButton->setObjectName("DiskHealthDetectionDialogLinkButton");
     DFontSizeManager::instance()->bind(m_linkButton, DFontSizeManager::T8, QFont::Medium);
 #if QT_VERSION_MAJOR > 5
     m_linkButton->setFixedWidth(m_linkButton->fontMetrics().boundingRect(QString(tr("Export", "button"))).width());

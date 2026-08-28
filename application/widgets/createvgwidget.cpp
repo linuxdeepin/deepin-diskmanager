@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -254,9 +254,11 @@ void CreateVGWidget::initUi()
     m_firstCenterStackedWidget->setCurrentIndex(0);
 
     m_firstCancelButton = new DPushButton(this);
+    m_firstCancelButton->setObjectName("CreateVGWidgetFirstCancelButton");
     m_firstCancelButton->setText(tr("Cancel", "button"));
     m_firstCancelButton->setAccessibleName("firstCancel");
     m_nextButton = new DSuggestButton(this);
+    m_nextButton->setObjectName("CreateVGWidgetNextButton");
     m_nextButton->setText(tr("Next"));
     m_nextButton->setAccessibleName("next");
     m_nextButton->setDisabled(true);
@@ -336,6 +338,7 @@ void CreateVGWidget::initUi()
 //    m_selectSpaceLabel->setAlignment(Qt::AlignCenter);
 
     m_selectSpaceLineEdit = new DLineEdit(this);
+    m_selectSpaceLineEdit->setObjectName("CreateVGWidgetSelectSpaceLineEdit");
     m_selectSpaceLineEdit->setFixedSize(182, 36);
     m_selectSpaceLineEdit->setAccessibleName("vgSize");
     m_selectSpaceLineEdit->lineEdit()->setPlaceholderText("1-100");
@@ -358,6 +361,7 @@ void CreateVGWidget::initUi()
     }
 
     m_selectSpaceComboBox = new DComboBox(this);
+    m_selectSpaceComboBox->setObjectName("CreateVGWidgetSelectSpaceComboBox");
     m_selectSpaceComboBox->setFixedSize(100, 36);
     m_selectSpaceComboBox->addItem("MiB");
     m_selectSpaceComboBox->addItem("GiB");
@@ -451,9 +455,11 @@ void CreateVGWidget::initUi()
     m_selectedStackedWidget->setCurrentIndex(1);
 
     m_secondCancelButton = new DPushButton(this);
+    m_secondCancelButton->setObjectName("CreateVGWidgetSecondCancelButton");
     m_secondCancelButton->setText(tr("Cancel", "button"));
     m_secondCancelButton->setAccessibleName("secondCancel");
     m_previousButton = new DPushButton(this);
+    m_previousButton->setObjectName("CreateVGWidgetPreviousButton");
     m_previousButton->setText(tr("Previous"));
     m_previousButton->setAccessibleName("previous");
     m_doneButton = new DSuggestButton(this);

@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -71,6 +71,7 @@ void DiskBadSectorsDialog::initUI()
     m_verifyLabel->setPalette(palette1);
 //    m_verifyLabel->setStyleSheet("background:yellow");
     m_verifyComboBox = new DComboBox;
+    m_verifyComboBox->setObjectName("DiskBadSectorsDialogVerifyComboBox");
     m_verifyComboBox->addItem(tr("Cylinders")); // 柱面范围
     m_verifyComboBox->addItem(tr("Sectors")); // 扇区范围
     m_verifyComboBox->addItem(tr("MB")); // 容量范围
@@ -91,6 +92,7 @@ void DiskBadSectorsDialog::initUI()
 //    QIntValidator *intValidator = new QIntValidator(0, QString("%1").arg(m_deviceInfo.cylinders).toInt(), this);
 
     m_startLineEdit = new DLineEdit;
+    m_startLineEdit->setObjectName("DiskBadSectorsDialogStartLineEdit");
     m_startLineEdit->setFixedHeight(36);
     m_startLineEdit->setText("0");
     m_startLineEdit->lineEdit()->setPlaceholderText("0");
@@ -100,6 +102,7 @@ void DiskBadSectorsDialog::initUI()
 //    m_startLineEdit->lineEdit()->setValidator(intValidator);
 
     m_endLineEdit = new DLineEdit;
+    m_endLineEdit->setObjectName("DiskBadSectorsDialogEndLineEdit");
     m_endLineEdit->setFixedHeight(36);
     m_endLineEdit->setText(QString("%1").arg(m_deviceInfo.m_cylinders));
     m_endLineEdit->lineEdit()->setPlaceholderText(QString("%1").arg(m_deviceInfo.m_cylinders));
@@ -144,6 +147,7 @@ void DiskBadSectorsDialog::initUI()
     }
 
     m_methodComboBox = new DComboBox;
+    m_methodComboBox->setObjectName("DiskBadSectorsDialogMethodComboBox");
     m_methodComboBox->addItem(tr("Rounds")); // 检测次数
     m_methodComboBox->addItem(tr("Timeout")); // 超时时间
     m_methodComboBox->setFixedSize(155, 36);
@@ -151,6 +155,8 @@ void DiskBadSectorsDialog::initUI()
     m_methodComboBox->setAccessibleName("chooseMethod");
 
     m_slider = new DSlider(Qt::Horizontal);
+    m_slider->setObjectName("DiskBadSectorsDialogSlider");
+    m_slider->setAccessibleName("DiskBadSectorsDialogSlider");
     m_slider->setFixedWidth(90);
     m_slider->setMinimum(1);
     m_slider->setMaximum(100);
@@ -167,6 +173,7 @@ void DiskBadSectorsDialog::initUI()
 #endif
 
     m_checkTimesEdit = new DLineEdit;
+    m_checkTimesEdit->setObjectName("DiskBadSectorsDialogCheckTimesEdit");
     m_checkTimesEdit->setText("8");
     m_checkTimesEdit->setFixedSize(100, 36);
     m_checkTimesEdit->lineEdit()->setValidator(validatorCheckTimes);
@@ -190,6 +197,7 @@ void DiskBadSectorsDialog::initUI()
     checkTimesWidget->setLayout(checkTimesLayout);
 
     m_timeoutEdit = new DLineEdit;
+    m_timeoutEdit->setObjectName("DiskBadSectorsDialogTimeoutEdit");
     m_timeoutEdit->setText("3000");
     m_timeoutEdit->lineEdit()->setValidator(new QIntValidator(100, 3000, this));
     m_timeoutEdit->setFixedSize(144, 36);

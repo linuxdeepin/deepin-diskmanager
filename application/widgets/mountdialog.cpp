@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -49,6 +49,7 @@ void MountDialog::initUi()
     DLabel *mountLabel = new DLabel(tr("Mount point:"));
     DFontSizeManager::instance()->bind(mountLabel, DFontSizeManager::T6);
     m_fileChooserEdit = new DFileChooserEdit(this);
+    m_fileChooserEdit->setObjectName("MountDialogFileChooserEdit");
     m_fileChooserEdit->setDirectoryUrl(QUrl("file:///mnt"));
     m_fileChooserEdit->setFileMode(QFileDialog::Directory);
     m_fileChooserEdit->fileDialog()->setOption(QFileDialog::ShowDirsOnly);

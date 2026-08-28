@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -131,6 +131,8 @@ void CylinderInfoWidget::initUI()
     }
 
     m_scrollBar = new DScrollBar(this);
+    m_scrollBar->setObjectName("CylinderInfoWidgetScrollBar");
+    m_scrollBar->setAccessibleName("CylinderInfoWidgetScrollBar");
     m_scrollBar->setRange(0, rowCount - 15);
     m_scrollBar->setPageStep(30);
     m_scrollBar->setSingleStep(5);

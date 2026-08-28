@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -68,12 +68,14 @@ void RemovePVWidget::initUi()
     subTitleLabel->setWordWrap(true);
 
     m_cancelButton = new DPushButton(tr("Cancel", "button"), this);
+    m_cancelButton->setObjectName("RemovePVWidgetCancelButton");
     m_cancelButton->setAccessibleName("cancel");
     m_cancelButton->setFont(fontTitle);
 //    m_cancelButton->setPalette(palette3);
     m_cancelButton->setFixedSize(170, 36);
 
     m_deleteButton = new DWarningButton(this);
+    m_deleteButton->setObjectName("RemovePVWidgetDeleteButton");
     m_deleteButton->setText(tr("Delete", "button"));
     m_deleteButton->setAccessibleName("delete");
     m_deleteButton->setFont(fontTitle);

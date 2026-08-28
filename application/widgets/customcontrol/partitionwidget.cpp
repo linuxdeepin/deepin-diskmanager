@@ -248,6 +248,7 @@ void PartitionWidget::botFrameSetting()
     m_applyBtn->setAccessibleName("confirm");
     //取消
     m_cancleBtn = new DPushButton(tr("Cancel", "button"), m_botFrame);
+    m_cancleBtn->setObjectName("PartitionWidgetCancleBtn");
     m_cancleBtn->setAccessibleName("cancel");
     //复原
     m_reveBtn = new DPushButton(tr("Revert", "button"), m_botFrame);
@@ -342,6 +343,7 @@ void PartitionWidget::partInfoShowing()
     m_partFormateLabel->setPalette(infoPalette);
 
     m_partFormateCombox = new DComboBox(m_partWidget);
+    m_partFormateCombox->setObjectName("PartitionWidgetPartFormateCombox");
     m_partFormateCombox->addItems(formateList);
     m_partFormateCombox->setCurrentText("ext4");
     m_partFormateCombox->setAccessibleName("File system");
@@ -351,6 +353,7 @@ void PartitionWidget::partInfoShowing()
     partSizeLabel->setPalette(infoPalette);
 
     m_slider = new DSlider(Qt::Horizontal);
+    m_slider->setObjectName("PartitionWidgetSlider");
     m_slider->setMaximum(100);
     m_slider->setValue(100);
     m_slider->setAccessibleName("slider");
@@ -358,6 +361,7 @@ void PartitionWidget::partInfoShowing()
     m_partSizeEdit->setObjectName("partSize");
     m_partSizeEdit->setAccessibleName("partSize");
     m_partComboBox = new DComboBox(m_partWidget);
+    m_partComboBox->setObjectName("PartitionWidgetPartComboBox");
     m_partComboBox->addItem("GiB");
     m_partComboBox->addItem("MiB");
     m_partComboBox->setCurrentText("GiB");

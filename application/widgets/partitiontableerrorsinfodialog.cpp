@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -63,6 +63,8 @@ void PartitionTableErrorsInfoDialog::initUI()
     m_Label->setPalette(palette1);
 
     m_tableView = new DTableView(this);
+    m_tableView->setObjectName("PartitionTableErrorsInfoDialogTableView");
+    m_tableView->setAccessibleName("PartitionTableErrorsInfoDialogTableView");
     m_standardItemModel = new QStandardItemModel(this);
 
     m_tableView->setShowGrid(false);
@@ -118,6 +120,7 @@ void PartitionTableErrorsInfoDialog::initUI()
     tableLayout->setContentsMargins(0, 0, 0, 10);
 
     pushButton = new DPushButton;
+    pushButton->setObjectName("PartitionTableErrorsInfoDialogPushButton");
     pushButton->setText(tr("OK", "button")); // 确定
     pushButton->setFixedSize(220, 36);
     pushButton->setAccessibleName("ok");

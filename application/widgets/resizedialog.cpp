@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -50,6 +50,7 @@ void ResizeDialog::initUi()
     QVBoxLayout *vboxLayout = new QVBoxLayout;
     QHBoxLayout *hLayout = new QHBoxLayout;
     m_lineEdit = new DLineEdit(this);
+    m_lineEdit->setObjectName("ResizeDialogLineEdit");
 #if QT_VERSION_MAJOR > 5
     qDebug() << "Using QRegularExpressionValidator for Qt6 or higher.";
     QRegularExpression regexp("^[0-9]*\\.[0-9]{1,2}");
@@ -68,6 +69,7 @@ void ResizeDialog::initUi()
     font.setPixelSize(12);
 
     m_comboBox = new DComboBox(this);
+    m_comboBox->setObjectName("ResizeDialogComboBox");
     m_label = new DLabel(this);
     m_label->setText(tr("New capacity:"));
     m_label->setAlignment(Qt::AlignLeft);

@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -27,6 +27,7 @@ void CreatePartitionTableDialog::initUi()
 {
     qDebug() << "CreatePartitionTableDialog::initUi called.";
     m_ComboBox = new DComboBox;
+    m_ComboBox->setObjectName("CreatePartitionTableDialogComboBox");
     m_ComboBox->addItem("GPT");
     m_ComboBox->addItem("MSDOS");
     m_ComboBox->setAccessibleName("choosePartitionTable");

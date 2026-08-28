@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -89,18 +89,21 @@ void PasswordInputDialog::initUi()
 #endif
 
     m_inputPasswordEdit = new DPasswordEdit(this);
+    m_inputPasswordEdit->setObjectName("PasswordInputDialogInputPasswordEdit");
     m_inputPasswordEdit->setAccessibleName("Password");
     m_inputPasswordEdit->lineEdit()->setPlaceholderText(tr("Enter a password "));
     m_inputPasswordEdit->setFixedHeight(36);
     m_inputPasswordEdit->lineEdit()->setValidator(regExpValidator);
 
     m_checkPasswordEdit = new DPasswordEdit(this);
+    m_checkPasswordEdit->setObjectName("PasswordInputDialogCheckPasswordEdit");
     m_checkPasswordEdit->setAccessibleName("Repeat password");
     m_checkPasswordEdit->lineEdit()->setPlaceholderText(tr("Enter the password again"));
     m_checkPasswordEdit->setFixedHeight(36);
     m_checkPasswordEdit->lineEdit()->setValidator(regExpValidator);
 
     m_textEdit = new DTextEdit(this);
+    m_textEdit->setObjectName("PasswordInputDialogTextEdit");
     m_textEdit->setAccessibleName("Password hint");
     m_textEdit->setPlaceholderText(tr("Enter a password hint") + " (0/50)");
     m_textEdit->setFixedHeight(84);

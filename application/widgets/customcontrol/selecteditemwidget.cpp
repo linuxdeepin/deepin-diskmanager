@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -58,6 +58,8 @@ void SelectedItemWidget::initUi()
 //    m_buttonLabel->setPixmap(DStyle::standardIcon(QApplication::style(), DStyle::SP_DeleteButton).pixmap(QSize(17, 17)));
 
     m_iconButton = new DIconButton(this);
+    m_iconButton->setObjectName("SelectedItemWidgetIconButton");
+    m_iconButton->setAccessibleName("SelectedItemWidgetIconButton");
     m_iconButton->setIcon(DStyle::standardIcon(QApplication::style(), DStyle::SP_DeleteButton));
     m_iconButton->setIconSize(QSize(17, 17));
     m_iconButton->setFixedSize(17, 17);

@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -109,6 +109,7 @@ void DiskInfoDisplayDialog::initUI()
     }
 
     m_linkButton = new DCommandLinkButton(tr("Export", "button")); // 导出
+    m_linkButton->setObjectName("DiskInfoDisplayDialogLinkButton");
     DFontSizeManager::instance()->bind(m_linkButton, DFontSizeManager::T8, QFont::Medium);
     QFontMetrics fmCapacity = m_linkButton->fontMetrics();
 #if QT_VERSION_MAJOR > 5

@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -38,6 +38,8 @@ void UnmountWarningDialog::initUi()
     titleLabel->setAlignment(Qt::AlignCenter);
 
     m_checkBox = new DCheckBox(this);
+    m_checkBox->setObjectName("UnmountWarningDialogCheckBox");
+    m_checkBox->setAccessibleName("UnmountWarningDialogCheckBox");
     DLabel *label = new DLabel(tr("I will take the risks that may arise"), this);
     label->setFont(font);
     label->setPalette(palette2);

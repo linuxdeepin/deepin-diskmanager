@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -44,6 +44,8 @@ void SelectPVItemWidget::initUi()
     fontSize.setPixelSize(12);
 
     m_checkBox = new DCheckBox(this);
+    m_checkBox->setObjectName("SelectPVItemWidgetCheckBox");
+    m_checkBox->setAccessibleName("SelectPVItemWidgetCheckBox");
 
     m_pathLabel = new DLabel(this);
     m_pathLabel->setText("/dev/sda");

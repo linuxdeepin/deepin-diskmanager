@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -96,6 +96,7 @@ void FormateDialog::initUi()
     fileName->setPalette(palette3);
     fileName->setFixedHeight(36);
     m_fileNameEdit = new DLineEdit(this);
+    m_fileNameEdit->setObjectName("FormateDialogFileNameEdit");
     m_fileNameEdit->setAccessibleName("partName");
 #if QT_VERSION_MAJOR > 5
     QRegularExpression re("^[\u4E00-\u9FA5A-Za-z0-9_]+$");
@@ -116,6 +117,7 @@ void FormateDialog::initUi()
     formatName->setPalette(palette3);
     formatName->setFixedHeight(36);
     m_formatComboBox = new DComboBox(this);
+    m_formatComboBox->setObjectName("FormateDialogFormatComboBox");
     m_formatComboBox->setAccessibleName("File system");
     m_formatComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
@@ -175,6 +177,7 @@ void FormateDialog::initUi()
     m_label = new DLabel(this);
     m_label->setFixedHeight(36);
     m_securityComboBox = new DComboBox(this);
+    m_securityComboBox->setObjectName("FormateDialogSecurityComboBox");
     m_securityComboBox->setAccessibleName("Security");
     m_securityComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
@@ -208,6 +211,7 @@ void FormateDialog::initUi()
     wipingLabel->setPalette(palette3);
 
     m_wipingMethodComboBox = new DComboBox(this);
+    m_wipingMethodComboBox->setObjectName("FormateDialogWipingMethodComboBox");
     m_wipingMethodComboBox->setAccessibleName("Wiping method");
     m_wipingMethodComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     QStringList wipingMethodlist;
@@ -273,9 +277,11 @@ void FormateDialog::initUi()
     layout->setContentsMargins(0, 0, 0, 0);
 
     m_pushButton = new DPushButton(tr("Cancel", "button"), this);
+    m_pushButton->setObjectName("FormateDialogPushButton");
     m_pushButton->setAccessibleName("cancel");
     m_pushButton->setFixedHeight(36);
     m_warningButton = new DWarningButton(this);
+    m_warningButton->setObjectName("FormateDialogWarningButton");
     m_warningButton->setText(tr("Wipe", "button"));
     m_warningButton->setAccessibleName("wipeButton");
     m_warningButton->setFixedHeight(36);

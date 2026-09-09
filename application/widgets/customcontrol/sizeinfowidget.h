@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -99,6 +99,7 @@ private:
     DPalette m_parentPb;
     QString m_totalSpaceSize;
     QString m_usedSize;
+    QString m_availableSize;
     QString m_partitionPath;
 };
 

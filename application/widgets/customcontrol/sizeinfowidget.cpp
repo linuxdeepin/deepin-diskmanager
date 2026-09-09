@@ -237,6 +237,8 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
     //绘制首页下方标注
     if (m_flag) {
         DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+        if (m_availableSize.contains("-"))
+            m_availableSize = "-";
         if (themeType == DGuiApplicationHelper::LightType) {
             int height = 90 - static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
             QRect roundRect = QRect(rect.bottomLeft().x() + 2, rect.bottomLeft().y() - height, 15, 15);

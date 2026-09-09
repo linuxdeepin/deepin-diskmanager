@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -53,6 +53,7 @@ void SizeInfoWidget::setData(PartitionInfo info, QVector<QColor> color, QVector<
     m_used = Utils::sectorToUnit(info.m_sectorsUsed, info.m_sectorSize, SIZE_UNIT::UNIT_GIB);
     m_totalSpaceSize = Utils::formatSize(info.m_sectorEnd - info.m_sectorStart + 1, info.m_sectorSize);
     m_usedSize = Utils::formatSize(info.m_sectorsUsed, info.m_sectorSize);
+    m_availableSize = Utils::formatSize(info.m_sectorsUnused, info.m_sectorSize);
 
     if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
         qDebug() << "Partition is LUKS encrypted.";
@@ -60,6 +61,7 @@ void SizeInfoWidget::setData(PartitionInfo info, QVector<QColor> color, QVector<
         if (luksInfo.isDecrypt) {
             qDebug() << "LUKS partition is decrypted, updating used/unused size.";
             m_usedSize = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUsed);
+            m_availableSize = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUnused);
             m_noused = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUnused, SIZE_UNIT::UNIT_GIB);
             m_used = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUsed, SIZE_UNIT::UNIT_GIB);
         }
@@ -97,6 +99,7 @@ void SizeInfoWidget::setData(LVInfo info, QVector<QColor> color, QVector<double>
     m_used = Utils::LVMSizeToUnit(info.m_fsUsed, SIZE_UNIT::UNIT_GIB);
     m_noused = Utils::LVMSizeToUnit(info.m_fsUnused, SIZE_UNIT::UNIT_GIB);
     m_usedSize = Utils::LVMFormatSize(info.m_fsUsed);
+    m_availableSize = Utils::LVMFormatSize(info.m_fsUnused);
 
     if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
         qDebug() << "LV is LUKS encrypted.";
@@ -105,10 +108,12 @@ void SizeInfoWidget::setData(LVInfo info, QVector<QColor> color, QVector<double>
             qDebug() << "LUKS LV is decrypted, updating used/unused size.";
             m_usedSize = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUsed);
             m_noused = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUnused, SIZE_UNIT::UNIT_GIB);
+            m_availableSize = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUnused);
             m_used = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUsed, SIZE_UNIT::UNIT_GIB);
         } else {
             qDebug() << "LUKS LV is not decrypted, setting used size to '-'.";
             m_usedSize = "-";
+            m_availableSize = "-";
         }
     }
 
@@ -147,6 +152,7 @@ void SizeInfoWidget::setData(DeviceInfo info, QVector<QColor> color, QVector<dou
     m_used = 0.00;
     m_noused = Utils::LVMSizeToUnit(info.m_length * info.m_sectorSize, SIZE_UNIT::UNIT_GIB);
     m_usedSize = Utils::LVMFormatSize(-1 * info.m_sectorSize);
+    m_availableSize = Utils::LVMFormatSize(-1 * info.m_sectorSize);
 
     if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS && info.m_partition.size() == 0) {
         qDebug() << "Device is LUKS encrypted and has no partitions.";
@@ -154,6 +160,7 @@ void SizeInfoWidget::setData(DeviceInfo info, QVector<QColor> color, QVector<dou
         if (luksInfo.isDecrypt) {
             qDebug() << "LUKS device is decrypted, updating used/unused size.";
             m_usedSize = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUsed);
+            m_availableSize = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUnused);
             m_noused = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUnused, SIZE_UNIT::UNIT_GIB);
             m_used = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUsed, SIZE_UNIT::UNIT_GIB);
         }
@@ -284,6 +291,8 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
         // qDebug() << "Flag is true, drawing information labels.";
         DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
         // qDebug() << "Theme type for info labels:" << themeType;
+        if (m_availableSize.contains("-"))
+            m_availableSize = "-";
         if (themeType == DGuiApplicationHelper::LightType) {
             // qDebug() << "Theme is LightType for info labels.";
             int height = 90 - static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
@@ -314,7 +323,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             option.setAlignment(Qt::AlignTop);
 
             QFontMetrics fmCapacity = painter.fontMetrics();
-            QString textCapacity = QString(m_partitionPath + tr(" Capacity:") + " ");
+            QString textCapacity = tr(" Available: ");
 #if QT_VERSION_MAJOR > 5
             int capacityWidth = fmCapacity.boundingRect(textCapacity).width();
 #else
@@ -332,7 +341,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             QRect rectText = QRect(paintRect.bottomLeft().x() + 28, paintRect.bottomLeft().y() + 17, capacityWidth, 70);
             painter.drawText(rectText, textCapacity, option);
             // qDebug() << "Drew capacity text.";
-            // 获取总容量字符串显示的宽度
+            // 获取可用空间字符串显示的宽度
             int capacityNum = rectText.x() + capacityWidth;
 
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
@@ -342,9 +351,9 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             QTextOption option1;
             option.setAlignment(Qt::AlignLeft);
 #if QT_VERSION_MAJOR > 5
-            QRect rectSizeNum = QRect(paintRect.bottomLeft().x() + capacityNum, paintRect.bottomLeft().y() + 20, painter.fontMetrics().boundingRect(m_totalSpaceSize).width() + 20, 30);
+            QRect rectSizeNum = QRect(paintRect.bottomLeft().x() + capacityNum, paintRect.bottomLeft().y() + 20, painter.fontMetrics().boundingRect(m_availableSize).width() + 20, 30);
 #else
-            QRect rectSizeNum = QRect(paintRect.bottomLeft().x() + capacityNum, paintRect.bottomLeft().y() + 20, painter.fontMetrics().width(m_totalSpaceSize) + 20, 30);
+            QRect rectSizeNum = QRect(paintRect.bottomLeft().x() + capacityNum, paintRect.bottomLeft().y() + 20, painter.fontMetrics().width(m_availableSize) + 20, 30);
 #endif
 
             int height2 = 21 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
@@ -390,7 +399,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setFont(font);
             painter.setPen(text1Color);
             option.setAlignment(Qt::AlignLeft);
-            painter.drawText(rectSizeNum, m_totalSpaceSize, option1);
+            painter.drawText(rectSizeNum, m_availableSize, option1);
             // qDebug() << "Drew total space size for LightType.";
 
             rectSizeNum.moveTo(paintRect.bottomLeft().x() + usedNum, paintRect.bottomLeft().y() + 20);
@@ -430,7 +439,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             option.setAlignment(Qt::AlignTop);
 
             QFontMetrics fmCapacity = painter.fontMetrics();
-            QString textCapacity = QString(m_partitionPath + tr(" Capacity:") + " ");
+            QString textCapacity = tr(" Available: ");
 #if QT_VERSION_MAJOR > 5
             int capacityWidth = fmCapacity.boundingRect(textCapacity).width();
 #else
@@ -448,7 +457,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             QRect rectText = QRect(paintRect.bottomLeft().x() + 28, paintRect.bottomLeft().y() + 17, capacityWidth, 70);
             painter.drawText(rectText, textCapacity, option);
             // qDebug() << "Drew capacity text for DarkType.";
-            // 获取总容量字符串显示的宽度
+            // 获取可用空间字符串显示的宽度
             int capacityNum = rectText.x() + capacityWidth;
 
             font = DFontSizeManager::instance()->get(DFontSizeManager::T8);
@@ -458,9 +467,9 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             QTextOption option1;
             option.setAlignment(Qt::AlignLeft);
 #if QT_VERSION_MAJOR > 5
-            QRect rectSizeNum = QRect(paintRect.bottomLeft().x() + capacityNum, paintRect.bottomLeft().y() + 20, painter.fontMetrics().boundingRect(m_totalSpaceSize).width() + 20, 30);
+            QRect rectSizeNum = QRect(paintRect.bottomLeft().x() + capacityNum, paintRect.bottomLeft().y() + 20, painter.fontMetrics().boundingRect(m_availableSize).width() + 20, 30);
 #else
-            QRect rectSizeNum = QRect(paintRect.bottomLeft().x() + capacityNum, paintRect.bottomLeft().y() + 20, painter.fontMetrics().width(m_totalSpaceSize) + 20, 30);
+            QRect rectSizeNum = QRect(paintRect.bottomLeft().x() + capacityNum, paintRect.bottomLeft().y() + 20, painter.fontMetrics().width(m_availableSize) + 20, 30);
 #endif
 
             int height2 = 21 + static_cast<int>((QApplication::font().pointSizeF() / 0.75 - 14) * 1);
@@ -505,7 +514,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setFont(font);
             painter.setPen(text1Color);
             option.setAlignment(Qt::AlignLeft);
-            painter.drawText(rectSizeNum, m_totalSpaceSize, option1);
+            painter.drawText(rectSizeNum, m_availableSize, option1);
             // qDebug() << "Drew total space size for DarkType.";
 
             rectSizeNum.moveTo(paintRect.bottomLeft().x() + usedNum, paintRect.bottomLeft().y() + 20);

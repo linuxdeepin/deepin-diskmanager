@@ -93,6 +93,7 @@ private:
     DPalette m_parentPb;
     QString m_totalSpaceSize;
     QString m_usedSize;
+    QString m_availableSize;
     QString m_partitionPath;
 };
 

@@ -47,23 +47,15 @@ configure_file(${APP_RES_DIR}/environments.h.in environments.h @ONLY)
 #set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM 1 "${CMAKE_CURRENT_SOURCE_DIR}/translations")
 #set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/translations PROPERTY CLEAN_NO_CUSTOM  1)
 set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM 1 )
-#lupdate start
-set(TS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/translations")
-set(TS_FILES
-    "${TS_DIR}/${PROJECT_NAME}_en_US.ts"    
-)
-find_program(LUPDATE_EXECUTABLE lupdate)
-foreach(_ts_file ${TS_FILES})
-    execute_process(
-        COMMAND ${LUPDATE_EXECUTABLE} -recursive ${CMAKE_SOURCE_DIR} -ts ${_ts_file})
-endforeach()
-#lupdate end
 
-file (GLOB DTNG_TS_FILES translations/*.ts)
-qt5_create_translation(DTNG_QM_FILES
-    ${DTNG_TS_FILES}
-     ${DTNG_QM_FILES}
-     )
+# 国际化
+if (NOT (${CMAKE_BUILD_TYPE} MATCHES "Debug"))
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
+
+    #generate qm
+    execute_process(COMMAND bash "translate_generation.sh"
+                    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+endif()
 
 file(GLOB ALL_SOURCES "*.cpp" "./partedproxy/*.cpp" "./widgets/*.cpp" "./widgets/customcontrol/*.cpp" "./widgets/accessible/*.cpp")
 file(GLOB ALL_HEADERS "*.h" "./partedproxy/*.h" "./widgets/*.h" "./widgets/customcontrol/*.h" "./widgets/accessible/*.h")
@@ -73,7 +65,7 @@ include_directories(../basestruct)
 set(ALL_SRCS   ${ALL_SOURCES} ${ALL_HEADERS})
 
 # 生成执行文件
-add_executable(${PROJECT_NAME} ${ALL_SRCS} ${APP_QRC}  ${DTNG_QM_FILES})
+add_executable(${PROJECT_NAME} ${ALL_SRCS} ${APP_QRC})
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     ${DtkWidget_INCLUDE_DIRS}
@@ -87,9 +79,11 @@ set(CMAKE_INSTALL_PREFIX /usr)
 
 # Install files
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
-#file(GLOB APP_QM_FILES "translations/*.qm")
-#install(FILES ${APP_QM_FILES} DESTINATION share/${PROJECT_NAME}/translations)
-install(FILES ${DTNG_QM_FILES} DESTINATION share/${PROJECT_NAME}/translations)
+
+# install qm files
+file(GLOB APP_QM_FILES "${CMAKE_CURRENT_SOURCE_DIR}/translations/*.qm")
+install(FILES ${APP_QM_FILES} DESTINATION share/${PROJECT_NAME}/translations)
+
 install(FILES ${APP_ICONPATH} DESTINATION share/icons/hicolor/scalable/apps)
 install(FILES ${APP_DESKTOP} DESTINATION share/applications)
 install(DIRECTORY ${APP_RES_DIR}/deepin-diskmanager DESTINATION /usr/share/deepin-manual/manual-assets/application)

@@ -25,24 +25,24 @@
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="150"/>
-        <location filename="../widgets/createlvwidget.cpp" line="325"/>
+        <location filename="../widgets/createlvwidget.cpp" line="326"/>
         <source>LV name:</source>
         <translation>ឈ្មោះវ៊ីធីឌី:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="159"/>
         <location filename="../widgets/createlvwidget.cpp" line="163"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1188"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1192"/>
         <source>VG name:</source>
         <translation>ឈ្មោះវ៊ីធីឌី:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="171"/>
-        <location filename="../widgets/createlvwidget.cpp" line="347"/>
-        <location filename="../widgets/createlvwidget.cpp" line="394"/>
-        <location filename="../widgets/createlvwidget.cpp" line="397"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1190"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1192"/>
+        <location filename="../widgets/createlvwidget.cpp" line="348"/>
+        <location filename="../widgets/createlvwidget.cpp" line="398"/>
+        <location filename="../widgets/createlvwidget.cpp" line="401"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1194"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1196"/>
         <source>LV file system:</source>
         <translation>ប្រព័ន្ធគ្រប់គ្រងឯកសារវ៊ីធីឌី:</translation>
     </message>
@@ -59,69 +59,69 @@
         <translation>បោះបង់</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="255"/>
+        <location filename="../widgets/createlvwidget.cpp" line="256"/>
         <source>Revert</source>
         <comment>button</comment>
         <translation>ត្រលប់ក្រៅ</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="289"/>
+        <location filename="../widgets/createlvwidget.cpp" line="290"/>
         <source>LV Information</source>
         <translation>ព័ត៌មានវ៊ីធីឌី</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="302"/>
+        <location filename="../widgets/createlvwidget.cpp" line="303"/>
         <source>Create LV:</source>
         <translation>បង្កើតវ៊ីធីឌី:</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="313"/>
+        <location filename="../widgets/createlvwidget.cpp" line="314"/>
         <source>Delete last logical volume</source>
         <translation>លុបវ៊ីធីឌីទំនើបចុងក្រោយ</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="356"/>
+        <location filename="../widgets/createlvwidget.cpp" line="358"/>
         <source>LV capacity:</source>
         <translation>ការបម្លែងចំនួនវ៊ីធីឌី:</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="568"/>
-        <location filename="../widgets/createlvwidget.cpp" line="693"/>
+        <location filename="../widgets/createlvwidget.cpp" line="572"/>
+        <location filename="../widgets/createlvwidget.cpp" line="697"/>
         <source>Unallocated</source>
         <translation>មិនបានកំណត់</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="597"/>
+        <location filename="../widgets/createlvwidget.cpp" line="601"/>
         <source>Name</source>
         <translation>ឈ្មោះ</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="598"/>
+        <location filename="../widgets/createlvwidget.cpp" line="602"/>
         <source>Size</source>
         <translation>ទំហំ</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="835"/>
+        <location filename="../widgets/createlvwidget.cpp" line="839"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
         <translation>ប្រើអាលក្រាមស្តង់ដារ aes-xts-plain64 ដើម្បីបំពង់កូដឌីក្រូម។ អ្នកត្រូវបំពង់វា​មុននៅពេល​ផ្ទះ​វា​ម្តងទៀត។</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="842"/>
+        <location filename="../widgets/createlvwidget.cpp" line="846"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
         <translation>ប្រើអាលក្រាមសំខាន់សម្តី sm4-xts-plain ដើម្បីបំពង់កូដឌីក្រូម។ អ្នកត្រូវបំពង់វា​មុននៅពេល​ផ្ទះ​វា​ម្តងទៀត។ ប្រព័ន្ធគ្រប់គ្រងដែលមិនគាំទ្រអាលក្រាមសម្តីនឹងមិនអាចបំពង់កូដឌីក្រូមបាន។</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="958"/>
+        <location filename="../widgets/createlvwidget.cpp" line="962"/>
         <source>To encrypt a volume, it should be larger than 100 MiB</source>
         <translation>ដើម្បីបំពង់កូដឌីក្រូមមួយ​វ៊ីធីឌី​ត្រូវ​មាន​ទំហំ​ខ្ពស់​ជាង​100 MiB</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="991"/>
+        <location filename="../widgets/createlvwidget.cpp" line="995"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>ដើម្បីប្រឈមនឹងការបាត់បង់ពាក្យសម្ងាត់ សូមធ្វើការស្នើសុំ​ពាក្យសម្ងាត់​របស់​អ្នក​និង​រក្សា​វា​ត្រឹមត្រូវ!</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="992"/>
+        <location filename="../widgets/createlvwidget.cpp" line="996"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>បញ្ជាក់</translation>
@@ -130,27 +130,27 @@
 <context>
     <name>CreatePartitionTableDialog</name>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
         <source>Cancel</source>
         <translation>បោះបង់</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="48"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="49"/>
         <source>No partition table in this disk. Create a new one?</source>
         <translation>គ្មានបញ្ញើសំណើចនៅលើឌីស។ បង្កើតបញ្ញើសំណើចថ្មីមួយ?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="49"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="50"/>
         <source>Create</source>
         <translation>បង្កើត</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="56"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="57"/>
         <source>The disk has a partition table already. Replace it?</source>
         <translation>ឌីសមានបញ្ញើសំណើចរួចហើយ។ ត្រូវបំពាក់វារួច?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="57"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="58"/>
         <source>Replace</source>
         <translation>ត្រូវបំពាក់វា</translation>
     </message>
@@ -174,17 +174,17 @@
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="97"/>
-        <location filename="../widgets/createvgwidget.cpp" line="390"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1126"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1136"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1734"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1745"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1804"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1877"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1881"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1919"/>
-        <location filename="../widgets/createvgwidget.cpp" line="2061"/>
-        <location filename="../widgets/createvgwidget.cpp" line="2136"/>
+        <location filename="../widgets/createvgwidget.cpp" line="394"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1132"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1142"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1773"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1784"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1843"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1916"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1920"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1958"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2100"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2175"/>
         <source>Capacity selected: %1</source>
         <translation>ការប្រើប្រាស់ប្រវែង: %1</translation>
     </message>
@@ -204,146 +204,146 @@
         <translation>គ្មានឌីសឬប្រភេទបំបែកទេ</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="257"/>
-        <location filename="../widgets/createvgwidget.cpp" line="454"/>
+        <location filename="../widgets/createvgwidget.cpp" line="258"/>
+        <location filename="../widgets/createvgwidget.cpp" line="459"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>បោះបង់</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="260"/>
+        <location filename="../widgets/createvgwidget.cpp" line="262"/>
         <source>Next</source>
         <translation>បន្ទាប់</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="285"/>
+        <location filename="../widgets/createvgwidget.cpp" line="287"/>
         <source>Selected disks/partitions</source>
         <translation>ឌីសឬប្រភេទបំបែកដែលបានជ្រើសរើស</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="322"/>
+        <location filename="../widgets/createvgwidget.cpp" line="324"/>
         <source>Set VG capacity</source>
         <translation>កំណត់ប្រវែង VG</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="327"/>
+        <location filename="../widgets/createvgwidget.cpp" line="329"/>
         <source>Auto adjusted to integral multiples of 4 MiB</source>
         <translation>បានប្រើប្រាស់ដោយអាវីតុល ដែលជាប្រវែងដែលបានប្រើប្រាស់នៃ 4 MiB</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="420"/>
+        <location filename="../widgets/createvgwidget.cpp" line="424"/>
         <source>Choose one disk or partition at least</source>
         <translation>ជ្រើសរើសឌីសឬប្រភេទបំបែកយ៉ាងហោចណាស់មួយ</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="457"/>
+        <location filename="../widgets/createvgwidget.cpp" line="463"/>
         <source>Previous</source>
         <translation>មុន</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="460"/>
+        <location filename="../widgets/createvgwidget.cpp" line="466"/>
         <source>Done</source>
         <comment>button</comment>
         <translation>បញ្ចប់</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="584"/>
+        <location filename="../widgets/createvgwidget.cpp" line="590"/>
         <source>Resizing space...</source>
         <translation>កំពុងកំណត់ប្រវែង...</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="587"/>
+        <location filename="../widgets/createvgwidget.cpp" line="593"/>
         <source>Creating...</source>
         <translation>កំពុងបង្កើត...</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="646"/>
+        <location filename="../widgets/createvgwidget.cpp" line="652"/>
         <source>Selected disks and partitions:</source>
         <translation>ឌីសឬប្រភេទបំបែកដែលបានជ្រើសរើស:</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="693"/>
-        <location filename="../widgets/createvgwidget.cpp" line="696"/>
+        <location filename="../widgets/createvgwidget.cpp" line="699"/>
+        <location filename="../widgets/createvgwidget.cpp" line="702"/>
         <source>VG capacity: %1</source>
         <translation>ប្រវែង VG: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="701"/>
+        <location filename="../widgets/createvgwidget.cpp" line="707"/>
         <source>VG name: %1</source>
         <translation>ឈ្មោះ VG: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="822"/>
+        <location filename="../widgets/createvgwidget.cpp" line="828"/>
         <source>No less than the used capacity please</source>
         <translation>សូមមិនបានតែងតំរូវអោយតិចជាងប្រវែងដែលបានប្រើ</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="828"/>
+        <location filename="../widgets/createvgwidget.cpp" line="834"/>
         <source>No more than the maximum capacity please</source>
         <translation>សូមមិនបានតែងតំរូវអោយច្រើនជាងប្រវែងអតិបរម៉ា</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="850"/>
+        <location filename="../widgets/createvgwidget.cpp" line="856"/>
         <source>A lot of data exists on %1, </source>
         <translation>មានទិន្នន័យច្រើននៅលើ %1, </translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="851"/>
+        <location filename="../widgets/createvgwidget.cpp" line="857"/>
         <source>which may take a long time to back it up.</source>
         <translation>ដែលអាចត្រូវការពេលវេលាច្រើនដើម្បីការសន្និដ្ឋានទិន្នន័យ។</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="852"/>
+        <location filename="../widgets/createvgwidget.cpp" line="858"/>
         <source>Do you want to continue?</source>
         <translation>អ្នកចង់បន្តទៀតទេ?</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="853"/>
+        <location filename="../widgets/createvgwidget.cpp" line="859"/>
         <source>Continue</source>
         <translation>បន្ត</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="854"/>
+        <location filename="../widgets/createvgwidget.cpp" line="860"/>
         <source>Cancel</source>
         <translation>បោះបង់</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1815"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1930"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1854"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1969"/>
         <source>Adding the disk/partition to a logical volume group 
 will format it and remove its password.</source>
         <translation>ការបន្ថែមឌីសឬប្រភេទបំបែកទៅក្នុងប្រភេទបំបែកសម្ព័ន្ធមួយនឹងធ្វើឱ្យវាបានប្រើប្រាស់និងបំបែកពាក់កណ្តាលសម្ព័ន្ធមួយ។</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1816"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1931"/>
-        <location filename="../widgets/createvgwidget.cpp" line="2084"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1855"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1970"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2123"/>
         <source>OK</source>
         <translation>បាទ/បង</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="2083"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2122"/>
         <source>Not enough space to back up data on %1, please clear disk space</source>
         <translation>មិនមានប្រវែងគ្រប់គ្រាន់ដើម្បីការសន្និដ្ឋានទិន្នន័យនៅលើ %1 សូមស្ទួចប្រវែងឌីស</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="2282"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2321"/>
         <source>Existing volume group, creation failed. Please retry after reboot.</source>
         <translation>ប្រភេទបំបែកសម្ព័ន្ធមួយដែលមានอยู่ ការបង្កើតបានបរាជ័យ។ សូមព្យាយាមម្តងទៀតបន្ទាប់ពីការបើកដំណើរការឡើងវិញ។</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="2287"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2326"/>
         <source>Failed to create a physical volume. Please refresh Disk Utility and try again.</source>
         <translation>បានបរាជ័យក្នុងការបង្កើតប្រភេទបំបែកសម្ព័ន្ធមួយ។ សូមធ្វើឱ្យប្រសើរឡើងវិញ Disk Utility ហើយព្យាយាមម្តងទៀត។</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="2292"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2331"/>
         <source>Device input/output error. Please try again after reboot.</source>
         <translation>អោយបានបញ្ចប់ការបញ្ចូល/ចែកចាយ។ សូមព្យាយាមម្តងទៀតបន្ទាប់ពីការបើកដំណើរការឡើងវិញ។</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="2356"/>
-        <location filename="../widgets/createvgwidget.cpp" line="2366"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2395"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2405"/>
         <source>Refreshing the page to reload disks</source>
         <translation>កំពុងធ្វើការផ្ដល់ថ្មីដល់ទេព្រីនដើម្បីផ្ដល់ថ្មីដល់ឌីស</translation>
     </message>
@@ -351,32 +351,32 @@ will format it and remove its password.</source>
 <context>
     <name>CylinderInfoWidget</name>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="520"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="522"/>
         <source>LBA: %1</source>
         <translation>LBA: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="521"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="523"/>
         <source>Cyl.: %1</source>
         <translation>Cyl.: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="522"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="524"/>
         <source>Error: %1</source>
         <translation>កំហុស: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="523"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="525"/>
         <source>Cyl. elapsed time: %1</source>
         <translation>ពេលវេលាក្រោល់ Cyl.: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="523"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="525"/>
         <source>ms</source>
         <translation>ម៉ិតស៊ែរ</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="524"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="526"/>
         <source>Status: Repaired</source>
         <translation>ស្ថានភាព: បានជីក</translation>
     </message>
@@ -536,59 +536,59 @@ will format it and remove its password.</source>
         <translation>បញ្ចូល​ពាក្យ​សម្ងាត់​ដើម្បី​ដោះស្រាយ​ប្រអប់​បែប​វិញ​បញ្ញា​ប៉ុន្មាន</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="81"/>
+        <location filename="../widgets/decryptdialog.cpp" line="82"/>
         <source>Enter a password </source>
         <translation>បញ្ចូល​ពាក្យ​សម្ងាត់ </translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="87"/>
+        <location filename="../widgets/decryptdialog.cpp" line="89"/>
         <source>Password hint</source>
         <translation>ការ​បញ្ជាក់​ពាក្យ​សម្ងាត់</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="138"/>
+        <location filename="../widgets/decryptdialog.cpp" line="140"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>បោះបង់</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="143"/>
+        <location filename="../widgets/decryptdialog.cpp" line="146"/>
         <source>Decrypt</source>
         <comment>button</comment>
         <translation>ដោះស្រាយ</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="341"/>
+        <location filename="../widgets/decryptdialog.cpp" line="345"/>
         <source>Decrypting...</source>
         <translation>កំពុង​ដោះស្រាយ...</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="215"/>
+        <location filename="../widgets/decryptdialog.cpp" line="219"/>
         <source>Please try again %1 minutes later</source>
         <translation>សូម​ព្យាយាម​ម្តងទៀត​%1 នាទី​បន្ទាប់</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="316"/>
+        <location filename="../widgets/decryptdialog.cpp" line="320"/>
         <source>The password cannot be empty</source>
         <translation>ពាក្យ​សម្ងាត់​មិន​អាច​ទទេ​បាន</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="365"/>
+        <location filename="../widgets/decryptdialog.cpp" line="369"/>
         <source>Decryption failed</source>
         <translation>ការ​ដោះស្រាយ​បាន​បរាជ័យ</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="385"/>
+        <location filename="../widgets/decryptdialog.cpp" line="389"/>
         <source>Password locked, please try again %1 minutes later</source>
         <translation>ពាក្យ​សម្ងាត់​ត្រូវ​បាន​ចុះបញ្ញា​សម្ងាត់​សូម​ព្យាយាម​ម្តងទៀត​%1 នាទី​បន្ទាប់</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="388"/>
+        <location filename="../widgets/decryptdialog.cpp" line="392"/>
         <source>Wrong password, %1 chances left</source>
         <translation>ពាក្យ​សម្ងាត់​មិន​ត្រឹមត្រូវ​ទេ​មាន​%1 ការ​ព្យាយាម​ទៀត</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="391"/>
+        <location filename="../widgets/decryptdialog.cpp" line="395"/>
         <source>Wrong password, only one chance left</source>
         <translation>ពាក្យ​សម្ងាត់​មិន​ត្រឹមត្រូវ​ទេ​មាន​ការ​ព្យាយាម​ទៀត​តែ​ម្តង​ប៉ុណ្ណោះ</translation>
     </message>
@@ -626,256 +626,256 @@ will format it and remove its password.</source>
         <translation>បង្កើត​បញ្ញា​បែប​ផ្នែក</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="159"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="164"/>
         <source>Delete partition</source>
         <translation>លុប​បញ្ញា​បែប​ផ្នែក</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="221"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="226"/>
         <source>Delete volume group</source>
         <translation>លុប​ប្រអប់​បែប​វិញ​បញ្ញា</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="227"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="646"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="232"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="651"/>
         <source>Create logical volume</source>
         <translation>បង្កើត​ចំណាំ​បែប​វិញ​បញ្ញា</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="255"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="260"/>
         <source>Delete logical volume</source>
         <translation>លុប​ចំណាំ​បែប​វិញ​បញ្ញា</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="303"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="308"/>
         <source>Close</source>
         <translation>បិទ</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="303"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="308"/>
         <source>Health checking does not support this type of device.</source>
         <translation>ការ​ពិនិត្យ​សុខភាព​មិន​គាំទ្រ​ប្រភេទ​ឧបករណ៍​នេះ​ទេ។</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="343"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="348"/>
         <source>Please unmount all partitions in the disk first</source>
         <translation>សូម​បិទ​ប្រអប់​អេក្រង់​ទាំងអស់​ដែល​នៅ​លើ​អេក្រង់​មុន​ដោយ​សិន</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="343"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="615"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="673"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="348"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="620"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="678"/>
         <source>OK</source>
         <translation>បាទ/បាន</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="355"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="360"/>
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
         <translation>នៅពេលបង្កើតតាមតំបន់ថ្មី តំបន់ទាំងអស់នៅក្នុងឌីសខាងក្រោមនឹងត្រូវបានបញ្ចូល និងទិន្នន័យទាំងអស់នឹងបាត់ សូមពិនិត្យមើលបានដោយគ្មានការបំពាក់</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="355"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="360"/>
         <source>Proceed</source>
         <translation>បន្ត</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="355"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="399"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="435"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="452"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="628"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="686"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="360"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="404"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="440"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="457"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="633"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="691"/>
         <source>Cancel</source>
         <translation>បិទ</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="385"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="390"/>
         <source>No errors found in the partition table</source>
         <translation>គ្មានបញ្ហាប្រហែលណាមួយនៅក្នុងតាមតំបន់</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="399"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="404"/>
         <source>Do you want to hide this partition?</source>
         <translation>អ្នកចង់បន្ថយតំបន់នេះទេ?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="399"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="404"/>
         <source>Hide</source>
         <translation>បន្ថយ</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="408"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="413"/>
         <source>Failed to hide the partition: unable to lock it</source>
         <translation>បាត់បន្តយោងតំបន់: មិនអាចដំណើរការបិទវាបាន</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="417"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="422"/>
         <source>You can only hide the unmounted partition</source>
         <translation>អ្នកអាចបន្ថយតំបន់នៅពេលដែលវាមិនត្រូវបានផ្តាច់</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="435"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="440"/>
         <source>Do you want to unhide this partition?</source>
         <translation>អ្នកចង់បើកតំបន់នេះទេ?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="435"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="440"/>
         <source>Unhide</source>
         <translation>បើក</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="452"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="457"/>
         <source>Are you sure you want to delete this partition?</source>
         <translation>អ្នកបានប្រាកដថាចង់លុបតំបន់នេះទេ?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="452"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="457"/>
         <source>You will lose all data in it</source>
         <translation>អ្នកនឹងបាត់ទិន្នន័យទាំងអស់នៅក្នុងវា</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="452"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="628"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="686"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="457"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="633"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="691"/>
         <source>Delete</source>
         <translation>លុប</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="459"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="464"/>
         <source>Failed to delete the partition: unable to lock it</source>
         <translation>បាត់បន្តលុបតំបន់: មិនអាចដំណើរការបិទវាបាន</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="476"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="481"/>
         <source>Hide the partition successfully</source>
         <translation>បន្ថយតំបន់បានជោគជ័យ</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="482"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="487"/>
         <source>Failed to hide the partition</source>
         <translation>បាត់បន្តបន្ថយតំបន់</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="494"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="499"/>
         <source>Unhide the partition successfully</source>
         <translation>បើកតំបន់បានជោគជ័យ</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="500"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="505"/>
         <source>Failed to unhide the partition</source>
         <translation>បាត់បន្តបើកតំបន់</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="518"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="523"/>
         <source>Delete the partition successfully</source>
         <translation>លុបតំបន់បានជោគជ័យ</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="527"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="532"/>
         <source>Failed to find the disk</source>
         <translation>បាត់បន្តរកឌីស</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="531"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="536"/>
         <source>Failed to get the partition info</source>
         <translation>បាត់បន្តទាញយកព័ត៌មានតំបន់</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="535"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="540"/>
         <source>Failed to delete the partition</source>
         <translation>បាត់បន្តលុបតំបន់</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="539"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="544"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>បាត់បន្តផ្ញើសំណួរទៅកាន់កូរ៉េ</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="546"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="551"/>
         <source>Failed to delete the partition: %1</source>
         <translation>បាត់បន្តលុបតំបន់: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="558"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="563"/>
         <source>Unmounting successful</source>
         <translation>បានផ្តាច់ដោយជោគជ័យ</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="564"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="569"/>
         <source>Unmounting failed</source>
         <translation>បានផ្តាច់បានបំពាក់</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="578"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="583"/>
         <source>Creating partition table successful</source>
         <translation>បានបង្កើតតាមតំបន់ដោយជោគជ័យ</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="583"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="588"/>
         <source>Replacing partition table successful</source>
         <translation>បានប្រើប្រាស់តាមតំបន់ដោយជោគជ័យ</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="593"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="598"/>
         <source>Creating partition table failed</source>
         <translation>បានបង្កើតតាមតំបន់បានបំពាក់</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="598"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="603"/>
         <source>Replacing partition table failed</source>
         <translation>បានប្រើប្រាស់តាមតំបន់បានបំពាក់</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="615"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="620"/>
         <source>Unmount all logical volumes in %1 first</source>
         <translation>បំពាក់ការផ្ទះទាំងអស់នៅ %1 ដំបូង</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="627"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="685"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="632"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="690"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
         <translation>ទិន្នន័យមិនអាចស្តារបានប្រសិនបើបានលុប សូមបញ្ជាក់មុននឹងបន្ត</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="646"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="651"/>
         <source>The disks will be formatted if you create a logical volume</source>
         <translation>ដៃស៊ីឌីនឹងត្រូវបានបង្កើតឡើងវិញប្រសិនបើអ្នកបង្កើតលីគីកោលោកស៊ីឌី</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="673"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="678"/>
         <source>Unmount %1 first</source>
         <translation>បំពាក់ការផ្ទះ %1 ដំបូង</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="718"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="723"/>
         <source>The logical volume group is busy and cannot be deleted. Please retry after reboot.</source>
         <translation>ក្រុមអ៊ីគីវូលីមែកនៅក្នុងការផ្ទះមិនអាចលុបបានទេ សូមព្យាយាមវិញបន្ទាប់ពីការបិទប្រព័ន្ធម្តងទៀត</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="723"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="764"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="728"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="769"/>
         <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
         <translation>អ៊ីគីវូលីមែកនៅក្នុងការផ្ទះមិនអាចលុបបានទេ សូមព្យាយាមវិញបន្ទាប់ពីការបិទប្រព័ន្ធម្តងទៀត</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="728"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="733"/>
         <source>Failed to delete the logical volume group</source>
         <translation>បានលុបក្រុមអ៊ីគីវូលីមែកដោយបាត់បង់</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="769"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="774"/>
         <source>Failed to delete the logical volume</source>
         <translation>បានលុបអ៊ីគីវូលីមែកដោយបាត់បង់</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="894"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="899"/>
         <source>Volume Groups</source>
         <translation>ក្រុមអ៊ីគីវូលីមែក</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="948"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="953"/>
         <source>Disks</source>
         <translation>ដៃស៊ីឌី</translation>
     </message>
@@ -883,249 +883,249 @@ will format it and remove its password.</source>
 <context>
     <name>DiskBadSectorsDialog</name>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="38"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="39"/>
         <source>Verify or repair bad sectors</source>
         <translation>ពិនិត្យិតិឬជួយកែសំរួលតំបន់ខុសៗ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="68"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="128"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="131"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1314"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1317"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="69"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="132"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="135"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1379"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1382"/>
         <source>Verify:</source>
         <translation>ពិនិត្យិតិ៖</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="73"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="75"/>
         <source>Cylinders</source>
         <translation>ស៊ីលីនដែរ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="74"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="76"/>
         <source>Sectors</source>
         <translation>តំបន់</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="75"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="77"/>
         <source>MB</source>
         <translation>មែត្រីប៊ី</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="123"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="129"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="132"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1315"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1318"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="127"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="133"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="136"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1380"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1383"/>
         <source>Method:</source>
         <translation>វិធី៖</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="146"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="151"/>
         <source>Rounds</source>
         <translation>ការប្រកួតប្រជែង</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="147"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="152"/>
         <source>Timeout</source>
         <translation>ពេលវេលាកំណត់</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="196"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="205"/>
         <source>ms</source>
         <translation>មែលស៊ី</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="229"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="238"/>
         <source>Result:</source>
         <translation>លទ្ធផល៖</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="254"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="263"/>
         <source>Excellent</source>
         <translation>ល្អប្រណីត</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="261"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="270"/>
         <source>Damaged</source>
         <translation>ខុសធម្មតា</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="268"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="277"/>
         <source>Unknown</source>
         <translation>មិនស្គាល់</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="296"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="305"/>
         <source>Exit</source>
         <comment>button</comment>
         <translation>ចាកចេញ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="301"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="310"/>
         <source>Reset</source>
         <comment>button</comment>
         <translation>បញ្ឈប់</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="307"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="316"/>
         <source>Repair</source>
         <translation>ជួយកែសំរួល</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="313"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="322"/>
         <source>Start Verify</source>
         <translation>ចាប់ផ្ដើមពិនិត្យិតិ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="318"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="327"/>
         <source>Stop</source>
         <comment>button</comment>
         <translation>បញ្ឈប់</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="323"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="332"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>បន្ត</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="328"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="337"/>
         <source>Verify Again</source>
         <translation>ពិនិត្យិតិម្តងទៀត</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="333"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="342"/>
         <source>Done</source>
         <comment>button</comment>
         <translation>បញ្ចប់</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="364"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="644"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="813"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="951"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1000"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1086"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1190"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="373"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="653"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="854"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1004"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1059"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1151"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1255"/>
         <source>Time elapsed:</source>
         <translation>ពេលវេលាដែលបានផ្លាស់ប្ដូរ:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="369"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="645"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="819"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="833"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="952"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1001"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1087"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1106"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1162"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1196"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="378"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="654"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="860"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="874"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1005"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1060"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1152"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1171"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1227"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1261"/>
         <source>Time left:</source>
         <translation>ពេលវេលាកាន់តែស្រាល:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="795"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="809"/>
         <source>Verifying cylinder: %1</source>
         <translation>កំពុងពិនិត្យមើលសំណុំពីរ: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="835"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="876"/>
         <source>Verify completed</source>
         <translation>ការពិនិត្យឃើញបានបញ្ចប់</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="859"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="900"/>
         <source>Disk verify completed. %1 bad blocks found.</source>
         <translation>ការពិនិត្យឃើញបានបញ្ចប់។ បានរកឃើញ %1 ប្លុកមិនប្រក្រតី។</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="859"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1045"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="900"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1110"/>
         <source>OK</source>
         <translation>បាទ/បង</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1041"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1106"/>
         <source>The verifying disk contains mounted partitions, so you cannot repair it.</source>
         <translation>ដំណើរការត្រួតពីរនៃឌីសនេះមានផ្នែកបែបបទដែលតភ្ជាប់ទៅនឹងប្រព័ន្ធផ្សេងទៀត ដូចនេះអ្នកមិនអាចជួសជុះវា។</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1043"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1108"/>
         <source>Please unmount partitions and then repair the disk.</source>
         <translation>សូមដែលបានបញ្ចប់ប្រព័ន្ធផ្សេងទៀត ហើយបន្ទាប់មកជួសជុះឌីស។</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1053"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1118"/>
         <source>Warning</source>
         <translation>កម្រិតប្រាកដ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1058"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1123"/>
         <source>Bad sector repairing cannot recover files,</source>
         <translation>ការជួសជុះប្លុកមិនប្រក្រតីនៅទីតាំងនេះមិនអាចស្តារឯកសារបានទេ,</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1059"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1124"/>
         <source>but destroys data on and near bad sectors instead.</source>
         <translation>ប៉ុន្តែវាមិនបានបញ្ចូលទិន្នន័យនៅលើនិងជិតនឹងប្លុកមិនប្រក្រតី។</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1060"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1125"/>
         <source>Please back up all data before repair.</source>
         <translation>សូមបញ្ចូលទិន្នន័យទាំងអស់មុនពេលជួសជុះ។</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1074"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1250"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1277"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1139"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1315"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1342"/>
         <source>Cancel</source>
         <translation>បិទ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1075"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1140"/>
         <source>Start Repair</source>
         <translation>ចាប់ផ្ដើមជួសជុះ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1125"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1190"/>
         <source>Repairing cylinder: %1</source>
         <translation>កំពុងជួសជុះសំណុំពីរ: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1167"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1232"/>
         <source>Repair completed. Cylinder: %1 repaired.</source>
         <translation>ការជួសជុះបានបញ្ចប់។ សំណុំពីរ: %1 បានជួសជុះ។</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1170"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1235"/>
         <source>Disk repair completed. %1 bad blocks repaired.</source>
         <translation>ការជួសជុះឌីសបានបញ្ចប់។ បានជួសជុះប្លុកមិនប្រក្រតី %1 ។</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1249"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1314"/>
         <source>Verifying for bad sectors, exit now?</source>
         <translation>កំពុងពិនិត្យឃើញប្លុកមិនប្រក្រតី តែងតាំងចេញឥឡូវនេះ?</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1249"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1314"/>
         <source>The verified information will not be reserved</source>
         <translation>ព័ត៌មានដែលបានពិនិត្យឃើញនឹងមិនត្រូវបានរក្សាទុក</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1250"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1277"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1315"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1342"/>
         <source>Exit</source>
         <translation>ចេញ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1276"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1341"/>
         <source>Repairing bad sectors, exit now?</source>
         <translation>កំពុងជួសជុះប្លុកមិនប្រក្រតី តែងតាំងចេញឥឡូវនេះ?</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1276"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1341"/>
         <source>The repairing information will not be reserved</source>
         <translation>ព័ត៌មានដែលបានជួសជុះនឹងមិនត្រូវបានរក្សាទុក</translation>
     </message>
@@ -1138,124 +1138,124 @@ will format it and remove its password.</source>
         <translation>ពិនិត្យមើលសុខភាព</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="74"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="59"/>
         <source>Serial number</source>
         <translation>លេខសម្គាល់សម្ភារៈ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="83"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="67"/>
         <source>Storage</source>
         <translation>ការកាត់ត្រូវ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="105"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="88"/>
         <source>Health Status</source>
         <translation>ស្ថានភាពសុខភាព</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="122"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="103"/>
         <source>Good</source>
         <translation>ល្អ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="129"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="110"/>
         <source>Damaged</source>
         <translation>បាក់ប្រែប្រួល</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="136"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="117"/>
         <source>Unknown</source>
         <translation>មិនស្គាល់</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="155"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="136"/>
         <source>Temperature</source>
         <translation>កម្រិតអាកាស</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="209"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="435"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="189"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>ID</source>
         <translation>លេខកូដ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="210"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="435"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="190"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>Status</source>
         <translation>ស្ថានភាព</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="211"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="435"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="191"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>Current</source>
         <translation>បច្ចុប្បន្ន</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="212"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="435"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="192"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>Worst</source>
         <translation>អាក្រក់បំផុត</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="213"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="436"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="193"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="416"/>
         <source>Threshold</source>
         <translation>កម្រិតអាកាស</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="214"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="436"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="194"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="416"/>
         <source>Raw Value</source>
         <translation>តម្លៃសាកល្បង</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="215"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="436"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="195"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="416"/>
         <source>Attribute name</source>
         <translation>ឈ្មោះសម្ភារៈ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="333"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="313"/>
         <source>Status: (G: Good | W: Warning | D: Damaged | U: Unknown)</source>
         <translation>ស្ថានភាព: (G: ល្អ | W: ការប្រាកដ | D: ខូច | U: មិនស្គាល់)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="337"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="340"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="342"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="476"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="479"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="316"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="320"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="322"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="456"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="459"/>
         <source>Export</source>
         <comment>button</comment>
         <translation>កែប្រែ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="377"/>
         <source>Save File</source>
         <translation>រក្សាទុកឯកសារ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="377"/>
         <source>Text files (*.txt)</source>
         <translation>ឯកសារអត្ថបទ (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="413"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="393"/>
         <source>Wrong path</source>
         <translation>ផ្លូវមិនត្រឹមត្រូវ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="422"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="402"/>
         <source>You do not have permission to access this path</source>
         <translation>អ្នកមិនមានសិទ្ធិដើម្បីចូលដំណើរការផ្លូវនេះ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="457"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="437"/>
         <source>Export successful</source>
         <translation>ការកែប្រែបានជោគជ័យ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="461"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="441"/>
         <source>Export failed</source>
         <translation>ការកែប្រែបានបរាយរាល់</translation>
     </message>
@@ -1360,41 +1360,41 @@ will format it and remove its password.</source>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="111"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="116"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="119"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="228"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="231"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="117"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="120"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="229"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="232"/>
         <source>Export</source>
         <comment>button</comment>
         <translation>កោះ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="151"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="152"/>
         <source>Save File</source>
         <translation>រក្សាទុកឯកសារ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="151"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="152"/>
         <source>Text files (*.txt)</source>
         <translation>ឯកសារអត្ថបទ (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="168"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="169"/>
         <source>Wrong path</source>
         <translation>ផ្លូវខុស</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="177"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="178"/>
         <source>You do not have permission to access this path</source>
         <translation>អ្នកមិនមានសិទ្ធិដើម្បីប្រើប្រាស់ផ្លូវនេះ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="209"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="210"/>
         <source>Export successful</source>
         <translation>កោះជោគជ័យ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="213"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="214"/>
         <source>Export failed</source>
         <translation>កោះបរាយ</translation>
     </message>
@@ -1417,180 +1417,180 @@ will format it and remove its password.</source>
         <translation>ឈ្មោះ:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="111"/>
+        <location filename="../widgets/formatedialog.cpp" line="112"/>
         <source>Name</source>
         <translation>ឈ្មោះ</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="114"/>
+        <location filename="../widgets/formatedialog.cpp" line="115"/>
         <source>File system:</source>
         <translation>ប្រព័ន្ធទំនិញ:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="149"/>
+        <location filename="../widgets/formatedialog.cpp" line="151"/>
         <source>AES Encryption</source>
         <translation>ការបំពាក់ AES</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="153"/>
+        <location filename="../widgets/formatedialog.cpp" line="155"/>
         <source>SM4 Encryption</source>
         <translation>ការបំពាក់ SM4</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="170"/>
+        <location filename="../widgets/formatedialog.cpp" line="172"/>
         <source>Security:</source>
         <translation>សុវត្តិភាព:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="184"/>
-        <location filename="../widgets/formatedialog.cpp" line="189"/>
+        <location filename="../widgets/formatedialog.cpp" line="187"/>
+        <location filename="../widgets/formatedialog.cpp" line="192"/>
         <source>Fast</source>
         <translation>លឿន</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="184"/>
-        <location filename="../widgets/formatedialog.cpp" line="189"/>
+        <location filename="../widgets/formatedialog.cpp" line="187"/>
+        <location filename="../widgets/formatedialog.cpp" line="192"/>
         <source>Secure</source>
         <translation>សុវត្តិ</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="189"/>
+        <location filename="../widgets/formatedialog.cpp" line="192"/>
         <source>Advanced</source>
         <translation>លំដាប់ខ្ពស់</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="200"/>
-        <location filename="../widgets/formatedialog.cpp" line="503"/>
+        <location filename="../widgets/formatedialog.cpp" line="203"/>
+        <location filename="../widgets/formatedialog.cpp" line="509"/>
         <source>It only deletes the partition info without erasing the files on the disk. Disk recovery tools may recover the files at a certain probability.</source>
         <translation>វានឹងលុបតែព័ត៌មានតារាង ដោយមិនលុបឯកសារនៅលើតារាង។ ឧបករណ៍នៃការត្រលប់មកវិញតារាងអាចនឹងត្រលប់មកវិញឯកសារនៅក្នុងការប្រើបានបាន</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="206"/>
+        <location filename="../widgets/formatedialog.cpp" line="209"/>
         <source>Wiping method:</source>
         <translation>វិធីលុប:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="214"/>
+        <location filename="../widgets/formatedialog.cpp" line="218"/>
         <source>DoD 5220.22-M, 7 passes</source>
         <translation>DoD 5220.22-M, 7 ដង</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="214"/>
+        <location filename="../widgets/formatedialog.cpp" line="218"/>
         <source>Gutmann, 35 passes</source>
         <translation>Gutmann, 35 ដង</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="275"/>
+        <location filename="../widgets/formatedialog.cpp" line="279"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>បិទ</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="279"/>
+        <location filename="../widgets/formatedialog.cpp" line="285"/>
         <source>Wipe</source>
         <comment>button</comment>
         <translation>លុប</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="327"/>
+        <location filename="../widgets/formatedialog.cpp" line="333"/>
         <source>Failed to find the disk</source>
         <translation>មិនអាចស្គាល់តារាងបាន</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="331"/>
+        <location filename="../widgets/formatedialog.cpp" line="337"/>
         <source>The action cannot be undone, please proceed with caution</source>
         <translation>ការបើកបរិមាត្រនេះមិនអាចត្រលប់មកវិញបាន សូមធ្វើដំណើរដោយប្រឹងប្រែង</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="333"/>
+        <location filename="../widgets/formatedialog.cpp" line="339"/>
         <source>LV name:</source>
         <translation>ឈ្មោះ LV:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="337"/>
+        <location filename="../widgets/formatedialog.cpp" line="343"/>
         <source>LV name</source>
         <translation>ឈ្មោះ LV</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="339"/>
+        <location filename="../widgets/formatedialog.cpp" line="345"/>
         <source>LV file system:</source>
         <translation>ប្រព័ន្ធមូលដ្ឋានឯកសារ LV:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="341"/>
-        <location filename="../widgets/formatedialog.cpp" line="553"/>
+        <location filename="../widgets/formatedialog.cpp" line="347"/>
+        <location filename="../widgets/formatedialog.cpp" line="559"/>
         <source>You may be able to recover files after the wipe.</source>
         <translation>អ្នកអាចនឹងអាចបង្កើតឡើងវិញនូវឯកសារបន្ទាប់ពីការលុបចោល។</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="344"/>
+        <location filename="../widgets/formatedialog.cpp" line="350"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>បានបញ្ចូលស្វ័យប្រវត្តិការស្នើសុំទៅកាន់កូរ៉េដោយមិនបានបញ្ចូល។</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="398"/>
-        <location filename="../widgets/formatedialog.cpp" line="413"/>
-        <location filename="../widgets/formatedialog.cpp" line="437"/>
-        <location filename="../widgets/formatedialog.cpp" line="449"/>
+        <location filename="../widgets/formatedialog.cpp" line="404"/>
+        <location filename="../widgets/formatedialog.cpp" line="419"/>
+        <location filename="../widgets/formatedialog.cpp" line="443"/>
+        <location filename="../widgets/formatedialog.cpp" line="455"/>
         <source>The length exceeds the limit</source>
         <translation>ប្រវែងនៃតម្លៃបានលើសកំណត់ហេតុបណ្តាល។</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="467"/>
+        <location filename="../widgets/formatedialog.cpp" line="473"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
         <translation>&gt;-
  ស្វ័យប្រវត្តិការបំពាក់កូដសំរាប់អាលុយមីនៃ aes-xts-plain64 ដើម្បីបំពាក់ប្រព័ន្ធមូលដ្ឋានឯកសារ។ អ្នកគួរតែ
  ដោះស្រាយវាទៅកាន់កូដសំរាប់ប្រព័ន្ធមូលដ្ឋានឯកសារមុនពេលដំណើរការប្រព័ន្ធមូលដ្ឋានឯកសារម្ដងទៀត។</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="477"/>
+        <location filename="../widgets/formatedialog.cpp" line="483"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
         <translation>&gt;-
  ស្វ័យប្រវត្តិការបំពាក់កូដសំរាប់អាលុយមីនៃ sm4-xts-plain ដែលមាន​ស្ថានភាព​កូដសំរាប់បំពាក់ប្រព័ន្ធមូលដ្ឋានឯកសារ។ អ្នកគួរតែដោះស្រាយវាទៅកាន់កូដសំរាប់ប្រព័ន្ធមូលដ្ឋានឯកសារម្ដងទៀត។ ប្រព័ន្ធមូលដ្ឋានឯកសារដែលមិនបានគាំទ្រកូដសំរាប់បំពាក់ប្រព័ន្ធមូលដ្ឋានឯកសារនៃស្ថានភាពនឹងមិនអាចដោះស្រាយប្រព័ន្ធមូលដ្ឋានឯកសារបាន។</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="518"/>
+        <location filename="../widgets/formatedialog.cpp" line="524"/>
         <source>It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, and random data to the entire disk once. You will not be able to recover files, and the process will be slow.</source>
         <translation>&gt;-
  វាជាការលុបចោលសំរាប់សុវត្តិភាពម្តងទៀតដែលត្រូវបានប្រើប្រាស់នៅក្នុង NIST 800-88 និងសរសេរតម្លៃ 0,
  1 និងតម្លៃចំរុះទៅកាន់ប្រព័ន្ធមូលដ្ឋានឯកសារម្តង។ អ្នកនឹងមិនអាចបង្កើតឡើងវិញនូវឯកសារបាន និងដំណើរការនេះនឹងមានល្បឿនកំពុង។</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="533"/>
+        <location filename="../widgets/formatedialog.cpp" line="539"/>
         <source>It writes 0, 1, and random data to the entire disk several times. You can set the number of times to erase disks and overwrite data, but the process will be very slow.</source>
         <translation>&gt;-
  វាមានការសរសេរតម្លៃ 0, 1 និងតម្លៃចំរុះទៅកាន់ប្រព័ន្ធមូលដ្ឋានឯកសារចំនួនច្រើន។ អ្នកអាចកំណត់ចំនួនការសរសេរបាន ប៉ុន្តែដំណើរការនេះនឹងមានល្បឿនយ៉ាងហៅទុក។</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="566"/>
+        <location filename="../widgets/formatedialog.cpp" line="572"/>
         <source>You will not be able to recover files after the wipe, and the process will be slow.</source>
         <translation>&gt;-
  អ្នកនឹងមិនអាចបង្កើតឡើងវិញនូវឯកសារបានបន្ទាប់ពីការលុបចោល និងដំណើរការនេះនឹងមានល្បឿនកំពុង។</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="648"/>
+        <location filename="../widgets/formatedialog.cpp" line="654"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>&gt;-
  ដើម្បីប្រឈមនឹងការបាត់បង់ពាក្យសម្ងាត់ សូមធ្វើការសន្តិសុខនៃពាក្យសម្ងាត់របស់អ្នក និងរក្សាវាទៅកាន់កន្លែងសម្ងាត់។</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="649"/>
+        <location filename="../widgets/formatedialog.cpp" line="655"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>បញ្ចប់</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="738"/>
+        <location filename="../widgets/formatedialog.cpp" line="744"/>
         <source>Wiping %1</source>
         <translation>កំពុងលុបចោល %1</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="772"/>
+        <location filename="../widgets/formatedialog.cpp" line="778"/>
         <source>&quot;%1&quot; wiped</source>
         <translation>&quot;%1&quot; បានលុបចោល</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="780"/>
+        <location filename="../widgets/formatedialog.cpp" line="786"/>
         <source>Failed to wipe %1</source>
         <translation>បានបញ្ចូលស្វ័យប្រវត្តិការលុបចោល %1 ដោយមិនបានបញ្ចូល។</translation>
     </message>
@@ -1743,46 +1743,46 @@ will format it and remove its password.</source>
         <translation>ចំណុច​ដាក់​ប្រើ៖</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="78"/>
-        <location filename="../widgets/mountdialog.cpp" line="82"/>
+        <location filename="../widgets/mountdialog.cpp" line="79"/>
+        <location filename="../widgets/mountdialog.cpp" line="83"/>
         <source>Please select /mnt or /media, or its subdirectories.</source>
         <translation>សូមជ្រើសរើស /mnt ឬ /media ឬ​ផ្នែក​ក្នុង​សំណុំ​នោះ</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="86"/>
         <location filename="../widgets/mountdialog.cpp" line="87"/>
+        <location filename="../widgets/mountdialog.cpp" line="88"/>
         <source>The mount point is illegal. Please select /mnt or /media, or its subdirectories.</source>
         <translation>ចំណុចដាក់ប្រើមិនត្រឹមត្រូវ។ សូមជ្រើសរើស /mnt ឬ /media ឬផ្នែកក្នុងសំណុំនោះ។</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="97"/>
-        <location filename="../widgets/mountdialog.cpp" line="304"/>
+        <location filename="../widgets/mountdialog.cpp" line="98"/>
+        <location filename="../widgets/mountdialog.cpp" line="305"/>
         <source>Cancel</source>
         <translation>បិទ</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="98"/>
+        <location filename="../widgets/mountdialog.cpp" line="99"/>
         <source>Mount</source>
         <translation>ដាក់​ប្រើ</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="303"/>
+        <location filename="../widgets/mountdialog.cpp" line="304"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>ទិន្នន័យនៅ​ចំណុច​ដាក់​ប្រើ​នេះ​នឹង​បាត់​ទៅ​។ សូម​ដាក់​ប្រើ​ថែប​ថត​ទៅ​ទី​ផ្សេង​ទៀត</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="304"/>
+        <location filename="../widgets/mountdialog.cpp" line="305"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>បន្ត</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="333"/>
+        <location filename="../widgets/mountdialog.cpp" line="334"/>
         <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
         <translation>ការ​ដាក់​ប្រើ​បាន​បរាជ័យ៖ ចំណុច​ដាក់​ប្រើ​ដែល​បាន​ជ្រើសរើស​មិន​ទទេ​។ សូម​ជ្រើសរើស​មួយ​ទៀត​។</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="334"/>
+        <location filename="../widgets/mountdialog.cpp" line="335"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>បាទ/បង​ប្រើ</translation>
@@ -1840,17 +1840,17 @@ will format it and remove its password.</source>
         <translation>មាន​បញ្ហា​នៅ​បញ្ជី​ថត់​ទំនិញ</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="100"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="102"/>
         <source>Error</source>
         <translation>ຜິດພາດ</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="109"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="111"/>
         <source>Partition table entries are not in disk order</source>
         <translation>បញ្ហា</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="121"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="124"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>ຕົກລົງ</translation>
@@ -1859,152 +1859,152 @@ will format it and remove its password.</source>
 <context>
     <name>PartitionWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="41"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="43"/>
         <source>Partitioning %1</source>
         <translation>បាទ/បង​ប្រើ</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="43"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="45"/>
         <source>Click %1 to increase the number of partitions. Click on each partition to change its name and file system.</source>
         <translation>ចុច %1 ដើម្បីកើនឡើងចំនួនផ្នែកចែក និងចុចលើផ្នែកចែកแต่ละគ្នា ដើម្បីផ្លាស់ប្ដូរឈ្មោះ និងប្រព័ន្ធទម្រង់ឈ្មោះ។</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="122"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="124"/>
         <source>Disk Information</source>
         <translation>ព័ត៌មានអេក្រង់</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="136"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="138"/>
         <source>Capacity:</source>
         <translation>កំលังភាព៖</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="146"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="148"/>
         <source>Partition selected:</source>
         <translation>ផ្នែកចែកដែលបានជ្រើសរើស៖</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="155"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="159"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1350"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="157"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="161"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1356"/>
         <source>Disk:</source>
         <translation>អេក្រង់៖</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="167"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="338"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="384"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="387"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1352"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1354"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="169"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="341"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="390"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="393"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1358"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1360"/>
         <source>File system:</source>
         <translation>ប្រព័ន្ធទម្រង់ឈ្មោះ៖</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="244"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="246"/>
         <source>Confirm</source>
         <comment>button</comment>
         <translation>បញ្ជាក់</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="248"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="250"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>បិទ</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="251"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="254"/>
         <source>Revert</source>
         <comment>button</comment>
         <translation>ត្រលប់ក្រៅ</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="284"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="287"/>
         <source>Partition Information</source>
         <translation>ព័ត៌មានផ្នែកចែក</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="296"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="299"/>
         <source>Number of partitions:</source>
         <translation>ចំនួនផ្នែកចែក៖</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="307"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="310"/>
         <source>Delete last partition</source>
         <translation>លុបផ្នែកចែកចុងក្រោយ</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="319"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="322"/>
         <source>Name:</source>
         <translation>ឈ្មោះ៖</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="347"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="351"/>
         <source>Size:</source>
         <translation>ទំហំ៖</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="498"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="653"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="504"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="659"/>
         <source>Unallocated</source>
         <translation>មិនបានចែករំលំ</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="527"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="533"/>
         <source>Name</source>
         <translation>ឈ្មោះ</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="528"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="534"/>
         <source>Size</source>
         <translation>ទំហំ</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="804"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="817"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="956"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="969"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="810"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="823"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="962"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="975"/>
         <source>The length exceeds the limit</source>
         <translation>ប្រវែងបានលើសកំណត់</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="830"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="836"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting.</source>
         <translation>ប្រើអាល់ហ្សោរម៉ូឌែល aes-xts-plain64 ដើម្បីបំពាក់សំបុត្រអេក្រង់។ ប្រសិនបើវាបានបំពាក់សំបុត្រអេក្រង់ អ្នកត្រូវបំពាក់សំបុត្រអេក្រង់មុនពេលបំពាក់សំបុត្រអេក្រង់។</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="837"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="843"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
         <translation>ប្រើអាល់ហ្សោរម៉ូឌែល sm4-xts-plain ដើម្បីបំពាក់សំបុត្រអេក្រង់។ ប្រសិនបើវាបានបំពាក់សំបុត្រអេក្រង់ អ្នកត្រូវបំពាក់សំបុត្រអេក្រង់មុនពេលបំពាក់សំបុត្រអេក្រង់។ ប្រព័ន្ធបរិក្ខារដែលមិនគាំទ្រអាល់ហ្សោរម៉ូឌែលសំបុត្រអេក្រង់មិនអាចបំពាក់សំបុត្រអេក្រង់បាន។</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1009"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1015"/>
         <source>The number of new partitions exceeds the limit</source>
         <translation>ចំនួនផ្នែកចែកថ្មីបានលើសកំណត់</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1036"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1042"/>
         <source>To encrypt a partition, it should be larger than 100 MiB</source>
         <translation>ដើម្បីបំពាក់សំបុត្រអេក្រង់ វាជួយបានធំជាង 100 MiB</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1045"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1051"/>
         <source>Set a password to encrypt the new partition</source>
         <translation>កំណត់ពាក្យសម្ងាត់ដើម្បីបំពាក់សំបុត្រអេក្រង់ថ្មី</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1068"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1074"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>ដើម្បីបើកប្រើពាក្យសម្ងាត់ សូមរក្សាពាក្យសម្ងាត់របស់អ្នក និងរក្សាទុកវារបស់អ្នកយ៉ាងត្រឹមត្រូវ!</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1069"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1075"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>បាទ</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1093"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1099"/>
         <source>To create a partition, you need at least 52 MB</source>
         <translation>ដើម្បីបង្កើតផ្នែកចែក អ្នកត្រូវមានប្រវែងអត់អីម៉ាស៊ីនប៉ីតយ៉ាងហោចណាស់ 52 MB</translation>
     </message>
@@ -2013,7 +2013,7 @@ will format it and remove its password.</source>
     <name>PasswordInputDialog</name>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="56"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="169"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="172"/>
         <source>Set a password to encrypt %1</source>
         <translation>កំណត់ពាក្យសម្ងាត់ដើម្បីបំពាក់សំបុត្រអេក្រង់ %1</translation>
     </message>
@@ -2043,51 +2043,51 @@ will format it and remove its password.</source>
         <translation>(បានណែនាំ)</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="93"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="94"/>
         <source>Enter a password </source>
         <translation>បញ្ចូលលេខ​សម្ងាត់</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="99"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="101"/>
         <source>Enter the password again</source>
         <translation>បញ្ចូលលេខ​សម្ងាត់ម្តងទៀត</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="105"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="108"/>
         <source>Enter a password hint</source>
         <translation>បញ្ចូលការណែនាំពីលេឃសម្ងាត់</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="147"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="150"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>បិទ</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="148"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="151"/>
         <source>Confirm</source>
         <comment>button</comment>
         <translation>បញ្ជាក់</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="204"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="223"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="265"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="207"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="226"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="268"/>
         <source>The password exceeds the maximum length</source>
         <translation>លេខសម្ងាត់មានប្រវែងខ្លីពីរបីបន្តិត</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="257"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="260"/>
         <source>The password cannot be empty</source>
         <translation>លេខសម្ងាត់មិានអាចទទេបាន</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="274"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="277"/>
         <source>Passwords do not match</source>
         <translation>លេខសម្ងាត់ទាំងពីរមិនស្រមះគ្នា</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="282"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="285"/>
         <source>The password hint should differ from the password</source>
         <translation>ការណែនាំពីលេខ​សម្ងាត់ត្រូវបានផ្លាស់ប្ដូរពីលេខ​សម្ងាត់</translation>
     </message>
@@ -2124,53 +2124,53 @@ will format it and remove its password.</source>
         <translation>បិទ</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="77"/>
+        <location filename="../widgets/removepvwidget.cpp" line="79"/>
         <source>Delete</source>
         <comment>button</comment>
         <translation>លុប</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="108"/>
+        <location filename="../widgets/removepvwidget.cpp" line="110"/>
         <source>Deleting...</source>
         <translation>កំពុងលុប...</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="230"/>
+        <location filename="../widgets/removepvwidget.cpp" line="232"/>
         <source>A lot of data exists on %1, </source>
         <translation>មានទិន្នន័យច្រើននៅលើ %1, </translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="231"/>
+        <location filename="../widgets/removepvwidget.cpp" line="233"/>
         <source>which may take a long time to back it up.</source>
         <translation>ដែលអាចកំពុងនៅលើការរក្សាទិន្នន័យយកពេលវេលាច្រើន។</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="232"/>
+        <location filename="../widgets/removepvwidget.cpp" line="234"/>
         <source>Do you want to continue?</source>
         <translation>តើអ្នកចង់បន្តទៀត?</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="233"/>
+        <location filename="../widgets/removepvwidget.cpp" line="235"/>
         <source>Continue</source>
         <translation>បន្ត</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="234"/>
+        <location filename="../widgets/removepvwidget.cpp" line="236"/>
         <source>Cancel</source>
         <translation>បិទ</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="248"/>
+        <location filename="../widgets/removepvwidget.cpp" line="250"/>
         <source>Not enough space to back up data on %1, please delete the logical volume first</source>
         <translation>មិនមានកន្លែងគ្រប់គ្រាន់នៅលើ %1 ដើម្បីរក្សាទិន្នន័យ សូមលុបឌីសផ្នែកទៀតដោយស្វ័យប្រវត្តិដោយស្វ័យប្រវត្តិសិន</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="249"/>
+        <location filename="../widgets/removepvwidget.cpp" line="251"/>
         <source>OK</source>
         <translation>បាទ/អាយ</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="282"/>
+        <location filename="../widgets/removepvwidget.cpp" line="284"/>
         <source>Failed to delete the physical volume</source>
         <translation>បានបដិសេធើបើកំពុងលុបឌីសផ្នែក</translation>
     </message>
@@ -2183,89 +2183,89 @@ will format it and remove its password.</source>
         <translation>វានឹងកែប្រែតំបន់ឌីសនៅលើឌីស</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="72"/>
+        <location filename="../widgets/resizedialog.cpp" line="74"/>
         <source>New capacity:</source>
         <translation>កំណត់​ទំហំ​ថ្មី៖</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="96"/>
+        <location filename="../widgets/resizedialog.cpp" line="98"/>
         <source>Auto adjusted to integral multiples of 4 MiB</source>
         <translation>បានកែប្រែដោយស្វ័យប្រវត្តិដោយស្វ័យប្រវត្តិទំហំ​ជាមួយ​លេខ​ចំនួន​ដែល​បើក​បរិមាណ​នៃ​4 MiB</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="110"/>
-        <location filename="../widgets/resizedialog.cpp" line="116"/>
+        <location filename="../widgets/resizedialog.cpp" line="112"/>
+        <location filename="../widgets/resizedialog.cpp" line="118"/>
         <source>Resize %1</source>
         <translation>កែប្រែទំហំ %1</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="118"/>
+        <location filename="../widgets/resizedialog.cpp" line="120"/>
         <source>It will resize the logical volume space</source>
         <translation>វានឹងធ្វើឱ្យកើតឡើងនូវការកាត់ត្រឹមត្រូវនៃស្ថានភាពទំហំទំនើប</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="124"/>
-        <location filename="../widgets/resizedialog.cpp" line="282"/>
-        <location filename="../widgets/resizedialog.cpp" line="395"/>
-        <location filename="../widgets/resizedialog.cpp" line="399"/>
+        <location filename="../widgets/resizedialog.cpp" line="126"/>
+        <location filename="../widgets/resizedialog.cpp" line="284"/>
+        <location filename="../widgets/resizedialog.cpp" line="397"/>
+        <location filename="../widgets/resizedialog.cpp" line="401"/>
         <source>Cancel</source>
         <translation>បោះបង់</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="125"/>
+        <location filename="../widgets/resizedialog.cpp" line="127"/>
         <source>Confirm</source>
         <translation>បញ្ជាក់</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="160"/>
-        <location filename="../widgets/resizedialog.cpp" line="197"/>
-        <location filename="../widgets/resizedialog.cpp" line="238"/>
-        <location filename="../widgets/resizedialog.cpp" line="367"/>
+        <location filename="../widgets/resizedialog.cpp" line="162"/>
+        <location filename="../widgets/resizedialog.cpp" line="199"/>
+        <location filename="../widgets/resizedialog.cpp" line="240"/>
+        <location filename="../widgets/resizedialog.cpp" line="369"/>
         <source>No more than the maximum capacity please</source>
         <translation>សូមមិនបញ្ចូលច្រើនជាងកំណត់ហេតុផលអតិបរមា</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="258"/>
+        <location filename="../widgets/resizedialog.cpp" line="260"/>
         <source>The file system does not support shrinking space</source>
         <translation>ប្រព័ន្ធស្ថាប័និកមិនគាំទ្រការកាត់ត្រឹមត្រូវនៃស្ថានភាពទំហំ</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="258"/>
-        <location filename="../widgets/resizedialog.cpp" line="282"/>
-        <location filename="../widgets/resizedialog.cpp" line="395"/>
-        <location filename="../widgets/resizedialog.cpp" line="399"/>
-        <location filename="../widgets/resizedialog.cpp" line="440"/>
+        <location filename="../widgets/resizedialog.cpp" line="260"/>
+        <location filename="../widgets/resizedialog.cpp" line="284"/>
+        <location filename="../widgets/resizedialog.cpp" line="397"/>
+        <location filename="../widgets/resizedialog.cpp" line="401"/>
+        <location filename="../widgets/resizedialog.cpp" line="442"/>
         <source>OK</source>
         <translation>បញ្ជាក់</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="274"/>
-        <location filename="../widgets/resizedialog.cpp" line="345"/>
+        <location filename="../widgets/resizedialog.cpp" line="276"/>
+        <location filename="../widgets/resizedialog.cpp" line="347"/>
         <source>No less than the used capacity please</source>
         <translation>សូមមិនបញ្ចូលតិចជាងទំហំដែលបានប្រើ</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="282"/>
+        <location filename="../widgets/resizedialog.cpp" line="284"/>
         <source>To prevent data loss, back up data before shrinking it</source>
         <translation>ដើម្បីប្រឈមនឹងការបាត់បង់ទិន្នន័យ សូមរក្សាទុកទិន្នន័យមុននឹងកាត់ត្រឹមត្រូវវា</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="384"/>
+        <location filename="../widgets/resizedialog.cpp" line="386"/>
         <source>Unmount it before shrinking its space</source>
         <translation>សូមដោះដំណើរការវាមុននឹងកាត់ត្រឹមត្រូវស្ថានភាពទំហំវា</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="395"/>
+        <location filename="../widgets/resizedialog.cpp" line="397"/>
         <source>The current device has been mounted and will be unmounted automatically. Please back up data in it to prevent data loss</source>
         <translation>ឧបករណ៍បច្ចុប្បន្ននេះត្រូវបានដោះដំណើរការ និងនឹងត្រូវបានដោះដំណើរការដោយស្វ័យប្រវត្តិ សូមរក្សាទុកទិន្នន័យនៅក្នុងវា ដើម្បីប្រឈមនឹងការបាត់បង់ទិន្នន័យ</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="399"/>
+        <location filename="../widgets/resizedialog.cpp" line="401"/>
         <source>To prevent data loss, back up data in the logical volume before shrinking it</source>
         <translation>ដើម្បីប្រឈមនឹងការបាត់បង់ទិន្នន័យ សូមរក្សាទុកទិន្នន័យនៅក្នុងស្ថានភាពទំហំទំនើប មុននឹងកាត់ត្រឹមត្រូវវា</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="440"/>
+        <location filename="../widgets/resizedialog.cpp" line="442"/>
         <source>The file system does not support space adjustment</source>
         <translation>ប្រព័
 </translation>
@@ -2274,18 +2274,22 @@ will format it and remove its password.</source>
 <context>
     <name>SizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="317"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="433"/>
         <source> Capacity:</source>
-        <translation>ការប្រើប្រាស់:</translation>
+        <translation type="vanished">ការប្រើប្រាស់:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="376"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="378"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="383"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="492"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="494"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="498"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="326"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="442"/>
+        <source>Available:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="385"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="387"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="392"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="501"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="503"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="507"/>
         <source>Used:</source>
         <translation>ប្រើប្រាស់:</translation>
     </message>
@@ -2459,17 +2463,17 @@ rootA and rootB should be resized to the same value</source>
         <translation>ການຍົກເອົາດິສລະບົບອາດຈະສາມາດເຮັດໃຫ້ລະບົບກຳລັງເກີດຂໍ້ຜິດພາດ</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountwarningdialog.cpp" line="41"/>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="43"/>
         <source>I will take the risks that may arise</source>
         <translation>ຂ້ອຍຈະຮັບຜິດພາດທີ່ອາດຈະເກີດຂຶ້ນ</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountwarningdialog.cpp" line="60"/>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="62"/>
         <source>Cancel</source>
         <translation>ຍົກເລີກ</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountwarningdialog.cpp" line="61"/>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="63"/>
         <source>Unmount</source>
         <translation>ຍົກເອົາ</translation>
     </message>

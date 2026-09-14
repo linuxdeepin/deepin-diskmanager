@@ -25,24 +25,24 @@
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="150"/>
-        <location filename="../widgets/createlvwidget.cpp" line="325"/>
+        <location filename="../widgets/createlvwidget.cpp" line="326"/>
         <source>LV name:</source>
         <translation>Ime LV:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="159"/>
         <location filename="../widgets/createlvwidget.cpp" line="163"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1188"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1192"/>
         <source>VG name:</source>
         <translation>Ime VG:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="171"/>
-        <location filename="../widgets/createlvwidget.cpp" line="347"/>
-        <location filename="../widgets/createlvwidget.cpp" line="394"/>
-        <location filename="../widgets/createlvwidget.cpp" line="397"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1190"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1192"/>
+        <location filename="../widgets/createlvwidget.cpp" line="348"/>
+        <location filename="../widgets/createlvwidget.cpp" line="398"/>
+        <location filename="../widgets/createlvwidget.cpp" line="401"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1194"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1196"/>
         <source>LV file system:</source>
         <translation>Datotečni sustav LV:</translation>
     </message>
@@ -59,69 +59,69 @@
         <translation>Odustani</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="255"/>
+        <location filename="../widgets/createlvwidget.cpp" line="256"/>
         <source>Revert</source>
         <comment>button</comment>
         <translation>Povuči</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="289"/>
+        <location filename="../widgets/createlvwidget.cpp" line="290"/>
         <source>LV Information</source>
         <translation>Informacije o LV</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="302"/>
+        <location filename="../widgets/createlvwidget.cpp" line="303"/>
         <source>Create LV:</source>
         <translation>Stvori LV:</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="313"/>
+        <location filename="../widgets/createlvwidget.cpp" line="314"/>
         <source>Delete last logical volume</source>
         <translation>Izbrisi zadnji logički volumen</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="356"/>
+        <location filename="../widgets/createlvwidget.cpp" line="358"/>
         <source>LV capacity:</source>
         <translation>Kapacitet LV:</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="568"/>
-        <location filename="../widgets/createlvwidget.cpp" line="693"/>
+        <location filename="../widgets/createlvwidget.cpp" line="572"/>
+        <location filename="../widgets/createlvwidget.cpp" line="697"/>
         <source>Unallocated</source>
         <translation>Neprostor</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="597"/>
+        <location filename="../widgets/createlvwidget.cpp" line="601"/>
         <source>Name</source>
         <translation>Ime</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="598"/>
+        <location filename="../widgets/createlvwidget.cpp" line="602"/>
         <source>Size</source>
         <translation>Veličina</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="835"/>
+        <location filename="../widgets/createlvwidget.cpp" line="839"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
         <translation>Koristite aes-xts-plain64 standardni algoritam za šifriranje diska. Trebali biste ga dešifrirati prije ponovnog montiranja.</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="842"/>
+        <location filename="../widgets/createlvwidget.cpp" line="846"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
         <translation>Koristite sm4-xts-plain stanje kriptografski algoritam za šifriranje diska. Trebali biste ga dešifrirati prije ponovnog montiranja. Operacijski sustavi koji ne podržavaju stanje kriptografski algoritam ne mogu dešifrirati disk.</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="958"/>
+        <location filename="../widgets/createlvwidget.cpp" line="962"/>
         <source>To encrypt a volume, it should be larger than 100 MiB</source>
         <translation>Da biste šifrirali volumen, treba biti veći od 100 MiB</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="991"/>
+        <location filename="../widgets/createlvwidget.cpp" line="995"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>Da biste izbjegli izgubljenje lozinke, molimo vas da je sačuvate i zadržite u pravilu!</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="992"/>
+        <location filename="../widgets/createlvwidget.cpp" line="996"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>OK</translation>
@@ -130,27 +130,27 @@
 <context>
     <name>CreatePartitionTableDialog</name>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
         <source>Cancel</source>
         <translation>Odustani</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="48"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="49"/>
         <source>No partition table in this disk. Create a new one?</source>
         <translation>Nema tablice particija na ovom disku. Stvoriti novu?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="49"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="50"/>
         <source>Create</source>
         <translation>Stvori</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="56"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="57"/>
         <source>The disk has a partition table already. Replace it?</source>
         <translation>Disk već ima tablicu particija. Zamijeniti je?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="57"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="58"/>
         <source>Replace</source>
         <translation>Zamijeni</translation>
     </message>
@@ -174,17 +174,17 @@
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="97"/>
-        <location filename="../widgets/createvgwidget.cpp" line="390"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1126"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1136"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1734"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1745"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1804"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1877"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1881"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1919"/>
-        <location filename="../widgets/createvgwidget.cpp" line="2061"/>
-        <location filename="../widgets/createvgwidget.cpp" line="2136"/>
+        <location filename="../widgets/createvgwidget.cpp" line="394"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1132"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1142"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1773"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1784"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1843"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1916"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1920"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1958"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2100"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2175"/>
         <source>Capacity selected: %1</source>
         <translation>Kapacitet izabran: %1</translation>
     </message>
@@ -204,146 +204,146 @@
         <translation>Nema dostupnih diskova ili particija</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="257"/>
-        <location filename="../widgets/createvgwidget.cpp" line="454"/>
+        <location filename="../widgets/createvgwidget.cpp" line="258"/>
+        <location filename="../widgets/createvgwidget.cpp" line="459"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Odustani</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="260"/>
+        <location filename="../widgets/createvgwidget.cpp" line="262"/>
         <source>Next</source>
         <translation>Sljedeće</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="285"/>
+        <location filename="../widgets/createvgwidget.cpp" line="287"/>
         <source>Selected disks/partitions</source>
         <translation>Odabrana diskova/particije</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="322"/>
+        <location filename="../widgets/createvgwidget.cpp" line="324"/>
         <source>Set VG capacity</source>
         <translation>Postavite kapacitet VG</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="327"/>
+        <location filename="../widgets/createvgwidget.cpp" line="329"/>
         <source>Auto adjusted to integral multiples of 4 MiB</source>
         <translation>Automatski prilagođen integralnim višestrukostima od 4 MiB</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="420"/>
+        <location filename="../widgets/createvgwidget.cpp" line="424"/>
         <source>Choose one disk or partition at least</source>
         <translation>Odaberite najmanje jedan disk ili particiju</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="457"/>
+        <location filename="../widgets/createvgwidget.cpp" line="463"/>
         <source>Previous</source>
         <translation>Prethodno</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="460"/>
+        <location filename="../widgets/createvgwidget.cpp" line="466"/>
         <source>Done</source>
         <comment>button</comment>
         <translation>Gotovo</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="584"/>
+        <location filename="../widgets/createvgwidget.cpp" line="590"/>
         <source>Resizing space...</source>
         <translation>Promjena veličine prostora...</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="587"/>
+        <location filename="../widgets/createvgwidget.cpp" line="593"/>
         <source>Creating...</source>
         <translation>Kreiranje...</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="646"/>
+        <location filename="../widgets/createvgwidget.cpp" line="652"/>
         <source>Selected disks and partitions:</source>
         <translation>Odabrana diskova i particije:</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="693"/>
-        <location filename="../widgets/createvgwidget.cpp" line="696"/>
+        <location filename="../widgets/createvgwidget.cpp" line="699"/>
+        <location filename="../widgets/createvgwidget.cpp" line="702"/>
         <source>VG capacity: %1</source>
         <translation>Kapacitet VG: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="701"/>
+        <location filename="../widgets/createvgwidget.cpp" line="707"/>
         <source>VG name: %1</source>
         <translation>Ime VG: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="822"/>
+        <location filename="../widgets/createvgwidget.cpp" line="828"/>
         <source>No less than the used capacity please</source>
         <translation>Nema manje od korишćene kapaciteta, molim</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="828"/>
+        <location filename="../widgets/createvgwidget.cpp" line="834"/>
         <source>No more than the maximum capacity please</source>
         <translation>Nema više od maksimalne kapaciteta, molim</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="850"/>
+        <location filename="../widgets/createvgwidget.cpp" line="856"/>
         <source>A lot of data exists on %1, </source>
         <translation>Na %1 postoji puno podataka, </translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="851"/>
+        <location filename="../widgets/createvgwidget.cpp" line="857"/>
         <source>which may take a long time to back it up.</source>
         <translation>što može trajati dugo za sigurnosnu kopiju.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="852"/>
+        <location filename="../widgets/createvgwidget.cpp" line="858"/>
         <source>Do you want to continue?</source>
         <translation>Želite li nastaviti?</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="853"/>
+        <location filename="../widgets/createvgwidget.cpp" line="859"/>
         <source>Continue</source>
         <translation>Nastavi</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="854"/>
+        <location filename="../widgets/createvgwidget.cpp" line="860"/>
         <source>Cancel</source>
         <translation>Odustani</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1815"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1930"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1854"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1969"/>
         <source>Adding the disk/partition to a logical volume group 
 will format it and remove its password.</source>
         <translation>Dodavanje diska/particije u logičku grupu volumena formatira ga i uklanja njegovu lozinku.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1816"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1931"/>
-        <location filename="../widgets/createvgwidget.cpp" line="2084"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1855"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1970"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2123"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="2083"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2122"/>
         <source>Not enough space to back up data on %1, please clear disk space</source>
         <translation>Nema dovoljno prostora za sigurnosnu kopiju podataka na %1, molim uklonite podatke s diska</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="2282"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2321"/>
         <source>Existing volume group, creation failed. Please retry after reboot.</source>
         <translation>Postojeća grupa volumena, kreiranje nije uspješno. Molim pokušajte ponovno nakon ponovnog pokretanja.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="2287"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2326"/>
         <source>Failed to create a physical volume. Please refresh Disk Utility and try again.</source>
         <translation>Nije uspješno kreirana fizička grupa volumena. Molim osvježite Disk Utility i pokušajte ponovno.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="2292"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2331"/>
         <source>Device input/output error. Please try again after reboot.</source>
         <translation>Greška u ulazu/izlazu uređaja. Molim pokušajte ponovno nakon ponovnog pokretanja.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="2356"/>
-        <location filename="../widgets/createvgwidget.cpp" line="2366"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2395"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2405"/>
         <source>Refreshing the page to reload disks</source>
         <translation>Обновљавање странице да би се учитали дискови</translation>
     </message>
@@ -351,32 +351,32 @@ will format it and remove its password.</source>
 <context>
     <name>CylinderInfoWidget</name>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="520"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="522"/>
         <source>LBA: %1</source>
         <translation>LBA: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="521"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="523"/>
         <source>Cyl.: %1</source>
         <translation>Cyl.: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="522"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="524"/>
         <source>Error: %1</source>
         <translation>Грешка: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="523"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="525"/>
         <source>Cyl. elapsed time: %1</source>
         <translation>Cyl. trajanje vremena: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="523"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="525"/>
         <source>ms</source>
         <translation>мс</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="524"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="526"/>
         <source>Status: Repaired</source>
         <translation>Status: Reparirano</translation>
     </message>
@@ -536,59 +536,59 @@ will format it and remove its password.</source>
         <translation>Unesite lozinku za dešifriranje volumenske grupe</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="81"/>
+        <location filename="../widgets/decryptdialog.cpp" line="82"/>
         <source>Enter a password </source>
         <translation>Unesite lozinku </translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="87"/>
+        <location filename="../widgets/decryptdialog.cpp" line="89"/>
         <source>Password hint</source>
         <translation>Savjet za lozinku</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="138"/>
+        <location filename="../widgets/decryptdialog.cpp" line="140"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Odustani</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="143"/>
+        <location filename="../widgets/decryptdialog.cpp" line="146"/>
         <source>Decrypt</source>
         <comment>button</comment>
         <translation>Dešifriraj</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="341"/>
+        <location filename="../widgets/decryptdialog.cpp" line="345"/>
         <source>Decrypting...</source>
         <translation>Dešifriranje...</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="215"/>
+        <location filename="../widgets/decryptdialog.cpp" line="219"/>
         <source>Please try again %1 minutes later</source>
         <translation>Pokušajte ponovno %1 minuta kasnije</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="316"/>
+        <location filename="../widgets/decryptdialog.cpp" line="320"/>
         <source>The password cannot be empty</source>
         <translation>Lozinka ne može biti prazna</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="365"/>
+        <location filename="../widgets/decryptdialog.cpp" line="369"/>
         <source>Decryption failed</source>
         <translation>Dešifriranje nije uspješno</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="385"/>
+        <location filename="../widgets/decryptdialog.cpp" line="389"/>
         <source>Password locked, please try again %1 minutes later</source>
         <translation>Lozinka je zaključana, pokušajte ponovno %1 minuta kasnije</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="388"/>
+        <location filename="../widgets/decryptdialog.cpp" line="392"/>
         <source>Wrong password, %1 chances left</source>
         <translation>Pogrešna lozinka, ostaje %1 pokušaja</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="391"/>
+        <location filename="../widgets/decryptdialog.cpp" line="395"/>
         <source>Wrong password, only one chance left</source>
         <translation>Pogrešna lozinka, ostaje samo jedan pokušaj</translation>
     </message>
@@ -626,256 +626,256 @@ will format it and remove its password.</source>
         <translation>Stvorite particijsku tablicu</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="159"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="164"/>
         <source>Delete partition</source>
         <translation>Izbrisi particiju</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="221"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="226"/>
         <source>Delete volume group</source>
         <translation>Izbrisi volumensku grupu</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="227"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="646"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="232"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="651"/>
         <source>Create logical volume</source>
         <translation>Stvorite logički volumen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="255"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="260"/>
         <source>Delete logical volume</source>
         <translation>Izbrisi logički volumen</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="303"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="308"/>
         <source>Close</source>
         <translation>Zatvori</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="303"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="308"/>
         <source>Health checking does not support this type of device.</source>
         <translation>Provjera zdravlja ne podržava ovaj tip uređaja.</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="343"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="348"/>
         <source>Please unmount all partitions in the disk first</source>
         <translation>Molimo, prvo otključajte sve particije na disku</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="343"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="615"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="673"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="348"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="620"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="678"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="355"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="360"/>
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
         <translation>Sve particije na ovom disketu će se spojiti, a svi podaci će se izgubiti ako se napravi nova particijska tablica, molim vas da pažljivo pristupite</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="355"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="360"/>
         <source>Proceed</source>
         <translation>Nastavi</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="355"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="399"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="435"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="452"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="628"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="686"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="360"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="404"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="440"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="457"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="633"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="691"/>
         <source>Cancel</source>
         <translation>Odustani</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="385"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="390"/>
         <source>No errors found in the partition table</source>
         <translation>Nema pogrešaka u particijskoj tablici</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="399"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="404"/>
         <source>Do you want to hide this partition?</source>
         <translation>Želite li skriti ovu particiju?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="399"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="404"/>
         <source>Hide</source>
         <translation>Sakrij</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="408"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="413"/>
         <source>Failed to hide the partition: unable to lock it</source>
         <translation>Neuspješno skrivanje particije: nije moguće zaključati je</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="417"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="422"/>
         <source>You can only hide the unmounted partition</source>
         <translation>Možete skriti samo particiju koja nije montirana</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="435"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="440"/>
         <source>Do you want to unhide this partition?</source>
         <translation>Želite li otkriti ovu particiju?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="435"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="440"/>
         <source>Unhide</source>
         <translation>Otkaži skrivanje</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="452"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="457"/>
         <source>Are you sure you want to delete this partition?</source>
         <translation>Zaista želite izbrisati ovu particiju?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="452"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="457"/>
         <source>You will lose all data in it</source>
         <translation>Izgubiti ćete sve podatke u njoj</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="452"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="628"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="686"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="457"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="633"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="691"/>
         <source>Delete</source>
         <translation>Izbriši</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="459"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="464"/>
         <source>Failed to delete the partition: unable to lock it</source>
         <translation>Neuspješno brisanje particije: nije moguće zaključati je</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="476"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="481"/>
         <source>Hide the partition successfully</source>
         <translation>Particija je uspješno skrivena</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="482"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="487"/>
         <source>Failed to hide the partition</source>
         <translation>Neuspješno skrivanje particije</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="494"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="499"/>
         <source>Unhide the partition successfully</source>
         <translation>Particija je uspješno otvorena</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="500"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="505"/>
         <source>Failed to unhide the partition</source>
         <translation>Neuspješno otkrivanje particije</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="518"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="523"/>
         <source>Delete the partition successfully</source>
         <translation>Particija je uspješno izbrisana</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="527"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="532"/>
         <source>Failed to find the disk</source>
         <translation>Neuspješno pronađenje diska</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="531"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="536"/>
         <source>Failed to get the partition info</source>
         <translation>Neuspješno dohvaćanje informacija o particiji</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="535"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="540"/>
         <source>Failed to delete the partition</source>
         <translation>Neuspješno brisanje particije</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="539"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="544"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>Neuspješno dostavljanje zahtjeva jezgru</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="546"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="551"/>
         <source>Failed to delete the partition: %1</source>
         <translation>Neuspješno brisanje particije: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="558"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="563"/>
         <source>Unmounting successful</source>
         <translation>Demontiranje uspješno</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="564"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="569"/>
         <source>Unmounting failed</source>
         <translation>Demontiranje neuspješno</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="578"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="583"/>
         <source>Creating partition table successful</source>
         <translation>Stvaranje particijske tablice uspješno</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="583"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="588"/>
         <source>Replacing partition table successful</source>
         <translation>Zamjena particijske tablice uspješno</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="593"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="598"/>
         <source>Creating partition table failed</source>
         <translation>Stvaranje particijske tablice neuspješno</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="598"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="603"/>
         <source>Replacing partition table failed</source>
         <translation>Zamjena particijske tablice neuspješno</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="615"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="620"/>
         <source>Unmount all logical volumes in %1 first</source>
         <translation>Uključite sve logičke volume u %1 prvo</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="627"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="685"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="632"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="690"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
         <translation>Podaci ne mogu biti vraćeni ako se obrisati, molimo potvrdite prije nastavka</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="646"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="651"/>
         <source>The disks will be formatted if you create a logical volume</source>
         <translation>Diskovi će biti formatirani ako stvorite logički volume</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="673"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="678"/>
         <source>Unmount %1 first</source>
         <translation>Uključite %1 prvo</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="718"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="723"/>
         <source>The logical volume group is busy and cannot be deleted. Please retry after reboot.</source>
         <translation>Lokalna grupa logičkih volumena je zauzeta i ne može biti obrisana. Molimo pokušajte ponovno nakon ponovnog pokretanja.</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="723"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="764"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="728"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="769"/>
         <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
         <translation>Lokalni volume je zauzet i ne može biti obrisana. Molimo pokušajte ponovno nakon ponovnog pokretanja.</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="728"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="733"/>
         <source>Failed to delete the logical volume group</source>
         <translation>Nije uspelo brisanje lokalne grupe logičkih volumena</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="769"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="774"/>
         <source>Failed to delete the logical volume</source>
         <translation>Nije uspelo brisanje lokalnog volumena</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="894"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="899"/>
         <source>Volume Groups</source>
         <translation>Grupa volumena</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="948"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="953"/>
         <source>Disks</source>
         <translation>Diskovi</translation>
     </message>
@@ -883,249 +883,249 @@ will format it and remove its password.</source>
 <context>
     <name>DiskBadSectorsDialog</name>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="38"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="39"/>
         <source>Verify or repair bad sectors</source>
         <translation>Provjerite ili popravite loše sektore</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="68"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="128"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="131"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1314"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1317"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="69"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="132"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="135"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1379"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1382"/>
         <source>Verify:</source>
         <translation>Provjerite:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="73"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="75"/>
         <source>Cylinders</source>
         <translation>Cilindri</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="74"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="76"/>
         <source>Sectors</source>
         <translation>Sektori</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="75"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="77"/>
         <source>MB</source>
         <translation>MB</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="123"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="129"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="132"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1315"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1318"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="127"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="133"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="136"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1380"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1383"/>
         <source>Method:</source>
         <translation>Način:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="146"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="151"/>
         <source>Rounds</source>
         <translation>Runde</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="147"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="152"/>
         <source>Timeout</source>
         <translation>Vrijeme čekanja</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="196"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="205"/>
         <source>ms</source>
         <translation>ms</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="229"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="238"/>
         <source>Result:</source>
         <translation>Rezultat:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="254"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="263"/>
         <source>Excellent</source>
         <translation>Odlično</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="261"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="270"/>
         <source>Damaged</source>
         <translation>Oštećen</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="268"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="277"/>
         <source>Unknown</source>
         <translation>Nepoznato</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="296"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="305"/>
         <source>Exit</source>
         <comment>button</comment>
         <translation>Izlaz</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="301"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="310"/>
         <source>Reset</source>
         <comment>button</comment>
         <translation>Resetiraj</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="307"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="316"/>
         <source>Repair</source>
         <translation>Popravite</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="313"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="322"/>
         <source>Start Verify</source>
         <translation>Počnite provjeru</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="318"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="327"/>
         <source>Stop</source>
         <comment>button</comment>
         <translation>Zaustavi</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="323"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="332"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>Nastavi</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="328"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="337"/>
         <source>Verify Again</source>
         <translation>Provjerite ponovno</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="333"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="342"/>
         <source>Done</source>
         <comment>button</comment>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="364"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="644"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="813"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="951"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1000"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1086"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1190"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="373"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="653"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="854"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1004"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1059"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1151"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1255"/>
         <source>Time elapsed:</source>
         <translation>Prošlo vremena:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="369"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="645"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="819"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="833"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="952"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1001"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1087"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1106"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1162"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1196"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="378"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="654"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="860"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="874"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1005"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1060"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1152"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1171"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1227"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1261"/>
         <source>Time left:</source>
         <translation>Vremena ostaje:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="795"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="809"/>
         <source>Verifying cylinder: %1</source>
         <translation>Provjerava se cilindar: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="835"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="876"/>
         <source>Verify completed</source>
         <translation>Provjera je završena</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="859"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="900"/>
         <source>Disk verify completed. %1 bad blocks found.</source>
         <translation>Provjera diska je završena. %1 loših blokova pronađeno.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="859"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1045"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="900"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1110"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1041"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1106"/>
         <source>The verifying disk contains mounted partitions, so you cannot repair it.</source>
         <translation>Disk koji se provjerava sadrži montirane particije, pa ga ne možete popraviti.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1043"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1108"/>
         <source>Please unmount partitions and then repair the disk.</source>
         <translation>Otpojite particije i onda popravite disk.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1053"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1118"/>
         <source>Warning</source>
         <translation>Upozorenje</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1058"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1123"/>
         <source>Bad sector repairing cannot recover files,</source>
         <translation>Popravak loših sektora ne može vratiti datoteke,</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1059"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1124"/>
         <source>but destroys data on and near bad sectors instead.</source>
         <translation>ali oštećuje podatke na i blizu loših sektora.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1060"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1125"/>
         <source>Please back up all data before repair.</source>
         <translation>Napravite sigurnu kopiju svih podataka prije popravka.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1074"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1250"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1277"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1139"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1315"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1342"/>
         <source>Cancel</source>
         <translation>Odustani</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1075"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1140"/>
         <source>Start Repair</source>
         <translation>Počni popravak</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1125"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1190"/>
         <source>Repairing cylinder: %1</source>
         <translation>Popravak cilindra: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1167"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1232"/>
         <source>Repair completed. Cylinder: %1 repaired.</source>
         <translation>Popravak završen. Cilindar: %1 popravljen.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1170"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1235"/>
         <source>Disk repair completed. %1 bad blocks repaired.</source>
         <translation>Popravak diska završen. %1 loših blokova popravljenih.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1249"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1314"/>
         <source>Verifying for bad sectors, exit now?</source>
         <translation>Provjerava se loši sektori, izlazite sada?</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1249"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1314"/>
         <source>The verified information will not be reserved</source>
         <translation>Pristigli podaci neće biti sačuvani</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1250"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1277"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1315"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1342"/>
         <source>Exit</source>
         <translation>Izlaz</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1276"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1341"/>
         <source>Repairing bad sectors, exit now?</source>
         <translation>Popravak loših sektora, izlazite sada?</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1276"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1341"/>
         <source>The repairing information will not be reserved</source>
         <translation>Popravljena podaci neće biti sačuvana</translation>
     </message>
@@ -1138,124 +1138,124 @@ will format it and remove its password.</source>
         <translation>Provjerite zdravlje</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="74"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="59"/>
         <source>Serial number</source>
         <translation>Serijalni broj</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="83"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="67"/>
         <source>Storage</source>
         <translation>Pohrana</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="105"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="88"/>
         <source>Health Status</source>
         <translation>Status zdravlja</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="122"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="103"/>
         <source>Good</source>
         <translation>Dobro</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="129"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="110"/>
         <source>Damaged</source>
         <translation>Oštećeno</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="136"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="117"/>
         <source>Unknown</source>
         <translation>Nepoznato</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="155"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="136"/>
         <source>Temperature</source>
         <translation>درجة الحرارة</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="209"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="435"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="189"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>ID</source>
         <translation>الهوية</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="210"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="435"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="190"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>Status</source>
         <translation>الحالة</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="211"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="435"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="191"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>Current</source>
         <translation>الحالية</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="212"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="435"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="192"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>Worst</source>
         <translation>الأسوأ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="213"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="436"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="193"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="416"/>
         <source>Threshold</source>
         <translation>الحد</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="214"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="436"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="194"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="416"/>
         <source>Raw Value</source>
         <translation>القيمة الخام</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="215"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="436"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="195"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="416"/>
         <source>Attribute name</source>
         <translation>اسم السمة</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="333"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="313"/>
         <source>Status: (G: Good | W: Warning | D: Damaged | U: Unknown)</source>
         <translation>الحالة: (G: جيد | W: تحذير | D: تالف | U: غير معروف)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="337"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="340"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="342"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="476"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="479"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="316"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="320"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="322"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="456"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="459"/>
         <source>Export</source>
         <comment>button</comment>
         <translation>تصدير</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="377"/>
         <source>Save File</source>
         <translation>حفظ الملف</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="377"/>
         <source>Text files (*.txt)</source>
         <translation>ملفات النص (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="413"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="393"/>
         <source>Wrong path</source>
         <translation>مسار غير صحيح</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="422"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="402"/>
         <source>You do not have permission to access this path</source>
         <translation>ليس لديك إذن للوصول إلى هذا المسار</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="457"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="437"/>
         <source>Export successful</source>
         <translation>تم التصدير بنجاح</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="461"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="441"/>
         <source>Export failed</source>
         <translation>فشل التصدير</translation>
     </message>
@@ -1360,41 +1360,41 @@ will format it and remove its password.</source>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="111"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="116"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="119"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="228"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="231"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="117"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="120"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="229"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="232"/>
         <source>Export</source>
         <comment>button</comment>
         <translation>Izvoz</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="151"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="152"/>
         <source>Save File</source>
         <translation>Spremi datoteku</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="151"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="152"/>
         <source>Text files (*.txt)</source>
         <translation>Tekstualne datoteke (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="168"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="169"/>
         <source>Wrong path</source>
         <translation>Pogrešna putanja</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="177"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="178"/>
         <source>You do not have permission to access this path</source>
         <translation>Nemate pristup dozvolu za pristup ovoj putanji</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="209"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="210"/>
         <source>Export successful</source>
         <translation>Izvoz uspješan</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="213"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="214"/>
         <source>Export failed</source>
         <translation>Izvoz neuspješan</translation>
     </message>
@@ -1417,133 +1417,133 @@ will format it and remove its password.</source>
         <translation>Ime:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="111"/>
+        <location filename="../widgets/formatedialog.cpp" line="112"/>
         <source>Name</source>
         <translation>Ime</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="114"/>
+        <location filename="../widgets/formatedialog.cpp" line="115"/>
         <source>File system:</source>
         <translation>Datotečni sustav:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="149"/>
+        <location filename="../widgets/formatedialog.cpp" line="151"/>
         <source>AES Encryption</source>
         <translation>AES šifriranje</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="153"/>
+        <location filename="../widgets/formatedialog.cpp" line="155"/>
         <source>SM4 Encryption</source>
         <translation>SM4 šifriranje</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="170"/>
+        <location filename="../widgets/formatedialog.cpp" line="172"/>
         <source>Security:</source>
         <translation>Sigurnost:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="184"/>
-        <location filename="../widgets/formatedialog.cpp" line="189"/>
+        <location filename="../widgets/formatedialog.cpp" line="187"/>
+        <location filename="../widgets/formatedialog.cpp" line="192"/>
         <source>Fast</source>
         <translation>Brzo</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="184"/>
-        <location filename="../widgets/formatedialog.cpp" line="189"/>
+        <location filename="../widgets/formatedialog.cpp" line="187"/>
+        <location filename="../widgets/formatedialog.cpp" line="192"/>
         <source>Secure</source>
         <translation>Sigurno</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="189"/>
+        <location filename="../widgets/formatedialog.cpp" line="192"/>
         <source>Advanced</source>
         <translation>Napredno</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="200"/>
-        <location filename="../widgets/formatedialog.cpp" line="503"/>
+        <location filename="../widgets/formatedialog.cpp" line="203"/>
+        <location filename="../widgets/formatedialog.cpp" line="509"/>
         <source>It only deletes the partition info without erasing the files on the disk. Disk recovery tools may recover the files at a certain probability.</source>
         <translation>Ovo samo briše informacije o particiji bez brisanja datoteka na disku. Alati za oporavak diska mogu vratiti datoteke s određenom verovatnoćom.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="206"/>
+        <location filename="../widgets/formatedialog.cpp" line="209"/>
         <source>Wiping method:</source>
         <translation>Način brisanja:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="214"/>
+        <location filename="../widgets/formatedialog.cpp" line="218"/>
         <source>DoD 5220.22-M, 7 passes</source>
         <translation>DoD 5220.22-M, 7 prolaza</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="214"/>
+        <location filename="../widgets/formatedialog.cpp" line="218"/>
         <source>Gutmann, 35 passes</source>
         <translation>Gutmann, 35 prolaza</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="275"/>
+        <location filename="../widgets/formatedialog.cpp" line="279"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Odustani</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="279"/>
+        <location filename="../widgets/formatedialog.cpp" line="285"/>
         <source>Wipe</source>
         <comment>button</comment>
         <translation>Obriši</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="327"/>
+        <location filename="../widgets/formatedialog.cpp" line="333"/>
         <source>Failed to find the disk</source>
         <translation>Nije pronađen disk</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="331"/>
+        <location filename="../widgets/formatedialog.cpp" line="337"/>
         <source>The action cannot be undone, please proceed with caution</source>
         <translation>Ova akcija ne može biti poništena, molimo vas da nastavite s oprezom</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="333"/>
+        <location filename="../widgets/formatedialog.cpp" line="339"/>
         <source>LV name:</source>
         <translation>IME LV:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="337"/>
+        <location filename="../widgets/formatedialog.cpp" line="343"/>
         <source>LV name</source>
         <translation>IME LV</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="339"/>
+        <location filename="../widgets/formatedialog.cpp" line="345"/>
         <source>LV file system:</source>
         <translation>Sustav datoteka LV:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="341"/>
-        <location filename="../widgets/formatedialog.cpp" line="553"/>
+        <location filename="../widgets/formatedialog.cpp" line="347"/>
+        <location filename="../widgets/formatedialog.cpp" line="559"/>
         <source>You may be able to recover files after the wipe.</source>
         <translation>Možda ćete moći vratiti datoteke nakon brisanja.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="344"/>
+        <location filename="../widgets/formatedialog.cpp" line="350"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>Nije uspelo slanje zahtjeva jezgru</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="398"/>
-        <location filename="../widgets/formatedialog.cpp" line="413"/>
-        <location filename="../widgets/formatedialog.cpp" line="437"/>
-        <location filename="../widgets/formatedialog.cpp" line="449"/>
+        <location filename="../widgets/formatedialog.cpp" line="404"/>
+        <location filename="../widgets/formatedialog.cpp" line="419"/>
+        <location filename="../widgets/formatedialog.cpp" line="443"/>
+        <location filename="../widgets/formatedialog.cpp" line="455"/>
         <source>The length exceeds the limit</source>
         <translation>Duljina premašuje ograničenje</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="467"/>
+        <location filename="../widgets/formatedialog.cpp" line="473"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
         <translation>&gt;-
 Koristite standardni algoritam aes-xts-plain64 za šifriranje diska. Trebalo bi
 dešifrirati ga prije ponovnog montiranja.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="477"/>
+        <location filename="../widgets/formatedialog.cpp" line="483"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
         <translation>&gt;-
 Koristite algoritam sm4-xts-plain stanja kriptografije za šifriranje diska.
@@ -1551,7 +1551,7 @@ Trebalo bi ga dešifrirati prije ponovnog montiranja. Sustavi koji ne podržavaj
 algoritam kriptografije stanja ne mogu dešifrirati disk.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="518"/>
+        <location filename="../widgets/formatedialog.cpp" line="524"/>
         <source>It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, and random data to the entire disk once. You will not be able to recover files, and the process will be slow.</source>
         <translation>&gt;-
 To je jednokratno sigurno brisanje koje se podudara s NIST 800-88 i pise 0,
@@ -1559,7 +1559,7 @@ To je jednokratno sigurno brisanje koje se podudara s NIST 800-88 i pise 0,
 a i proces će biti spor.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="533"/>
+        <location filename="../widgets/formatedialog.cpp" line="539"/>
         <source>It writes 0, 1, and random data to the entire disk several times. You can set the number of times to erase disks and overwrite data, but the process will be very slow.</source>
         <translation>&gt;-
 Piše 0, 1, i slučajne podatke na cijeli disk nekoliko puta. Možete
@@ -1567,36 +1567,36 @@ postaviti broj puta za brisanje diskova i prepisivanje podataka, ali proces
 će biti vrlo spor.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="566"/>
+        <location filename="../widgets/formatedialog.cpp" line="572"/>
         <source>You will not be able to recover files after the wipe, and the process will be slow.</source>
         <translation>&gt;-
 Nije ćete moći vratiti datoteke nakon brisanja, a proces će biti spor.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="648"/>
+        <location filename="../widgets/formatedialog.cpp" line="654"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>&gt;-
 Da biste izbjegli izgubljenje lozinke, molim vas sredite lozinku i zadržite je
 dobro!</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="649"/>
+        <location filename="../widgets/formatedialog.cpp" line="655"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="738"/>
+        <location filename="../widgets/formatedialog.cpp" line="744"/>
         <source>Wiping %1</source>
         <translation>Brisanje %1</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="772"/>
+        <location filename="../widgets/formatedialog.cpp" line="778"/>
         <source>&quot;%1&quot; wiped</source>
         <translation>&quot;%1&quot; je obrisano</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="780"/>
+        <location filename="../widgets/formatedialog.cpp" line="786"/>
         <source>Failed to wipe %1</source>
         <translation>Nije uspelo brisanje %1</translation>
     </message>
@@ -1749,46 +1749,46 @@ dobro!</translation>
         <translation>Točka za montažu:</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="78"/>
-        <location filename="../widgets/mountdialog.cpp" line="82"/>
+        <location filename="../widgets/mountdialog.cpp" line="79"/>
+        <location filename="../widgets/mountdialog.cpp" line="83"/>
         <source>Please select /mnt or /media, or its subdirectories.</source>
         <translation>Odaberite /mnt ili /media ili njihove poddirektorije.</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="86"/>
         <location filename="../widgets/mountdialog.cpp" line="87"/>
+        <location filename="../widgets/mountdialog.cpp" line="88"/>
         <source>The mount point is illegal. Please select /mnt or /media, or its subdirectories.</source>
         <translation>Točka za montažu je nevaljana. Odaberite /mnt ili /media ili njihove poddirektorije.</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="97"/>
-        <location filename="../widgets/mountdialog.cpp" line="304"/>
+        <location filename="../widgets/mountdialog.cpp" line="98"/>
+        <location filename="../widgets/mountdialog.cpp" line="305"/>
         <source>Cancel</source>
         <translation>Odustani</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="98"/>
+        <location filename="../widgets/mountdialog.cpp" line="99"/>
         <source>Mount</source>
         <translation>Montaža</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="303"/>
+        <location filename="../widgets/mountdialog.cpp" line="304"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>Podaci na ovoj točki za montažu će se izgubiti, molim vas montirajte direktorij na drugu lokaciju</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="304"/>
+        <location filename="../widgets/mountdialog.cpp" line="305"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>Nastavi</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="333"/>
+        <location filename="../widgets/mountdialog.cpp" line="334"/>
         <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
         <translation>Montaža nije uspješna: Odabrana točka za montažu nije prazna. Molim vas odaberite drugu!</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="334"/>
+        <location filename="../widgets/mountdialog.cpp" line="335"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>U redu</translation>
@@ -1846,17 +1846,17 @@ dobro!</translation>
         <translation>Tablica particija diska %1 ima sljedeće greške:</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="100"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="102"/>
         <source>Error</source>
         <translation>Greška</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="109"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="111"/>
         <source>Partition table entries are not in disk order</source>
         <translation>Ulazi u tablici particija nisu u redoslijedu diska</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="121"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="124"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>U redu</translation>
@@ -1865,152 +1865,152 @@ dobro!</translation>
 <context>
     <name>PartitionWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="41"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="43"/>
         <source>Partitioning %1</source>
         <translation>Particioniranje %1</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="43"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="45"/>
         <source>Click %1 to increase the number of partitions. Click on each partition to change its name and file system.</source>
         <translation>Kliknite %1 da biste povećali broj particija. Kliknite na svaku particiju da biste promenili njeno ime i sistem datoteke.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="122"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="124"/>
         <source>Disk Information</source>
         <translation>Informacije o disku</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="136"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="138"/>
         <source>Capacity:</source>
         <translation>Kapacitet:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="146"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="148"/>
         <source>Partition selected:</source>
         <translation>Odabrana particija:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="155"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="159"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1350"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="157"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="161"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1356"/>
         <source>Disk:</source>
         <translation>Disk:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="167"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="338"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="384"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="387"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1352"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1354"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="169"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="341"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="390"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="393"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1358"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1360"/>
         <source>File system:</source>
         <translation>Sistem datoteke:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="244"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="246"/>
         <source>Confirm</source>
         <comment>button</comment>
         <translation>Potvrdi</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="248"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="250"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Odustani</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="251"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="254"/>
         <source>Revert</source>
         <comment>button</comment>
         <translation>Povuči</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="284"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="287"/>
         <source>Partition Information</source>
         <translation>Informacije o particiji</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="296"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="299"/>
         <source>Number of partitions:</source>
         <translation>Broj particija:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="307"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="310"/>
         <source>Delete last partition</source>
         <translation>Izbrisi zadnju particiju</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="319"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="322"/>
         <source>Name:</source>
         <translation>Ime:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="347"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="351"/>
         <source>Size:</source>
         <translation>Veličina:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="498"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="653"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="504"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="659"/>
         <source>Unallocated</source>
         <translation>Neprostorni</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="527"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="533"/>
         <source>Name</source>
         <translation>Ime</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="528"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="534"/>
         <source>Size</source>
         <translation>Veličina</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="804"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="817"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="956"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="969"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="810"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="823"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="962"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="975"/>
         <source>The length exceeds the limit</source>
         <translation>Dužina premašuje ograničenje</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="830"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="836"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting.</source>
         <translation>Koristite aes-xts-plain64 standardni algoritam za šifriranje diska. Ako je šifriran, morate ga dešifrirati pre montaže.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="837"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="843"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
         <translation>Koristite sm4-xts-plain stanje kriptografski algoritam za šifriranje diska. Ako je šifriran, morate ga dešifrirati pre montaže. Sustavi operacije koji ne podržavaju stanje kriptografski algoritam ne mogu dešifrirati disk.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1009"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1015"/>
         <source>The number of new partitions exceeds the limit</source>
         <translation>Broj novih particija premašuje ograničenje</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1036"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1042"/>
         <source>To encrypt a partition, it should be larger than 100 MiB</source>
         <translation>Da biste šifrirali particiju, treba da bude veća od 100 MiB</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1045"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1051"/>
         <source>Set a password to encrypt the new partition</source>
         <translation>Postavite lozinku za šifriranje nove particije</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1068"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1074"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>Da biste izbegli izgubljenje lozinkе, molimo vas da ga sačuvate i zadržite na sigurnom!</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1069"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1075"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>U redu</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1093"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1099"/>
         <source>To create a partition, you need at least 52 MB</source>
         <translation>Da biste stvorili particiju, treba vam najmanje 52 MB</translation>
     </message>
@@ -2019,7 +2019,7 @@ dobro!</translation>
     <name>PasswordInputDialog</name>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="56"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="169"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="172"/>
         <source>Set a password to encrypt %1</source>
         <translation>Postavite lozinku za šifriranje %1</translation>
     </message>
@@ -2049,51 +2049,51 @@ dobro!</translation>
         <translation>(Preporučeno)</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="93"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="94"/>
         <source>Enter a password </source>
         <translation>Unesite lozinku </translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="99"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="101"/>
         <source>Enter the password again</source>
         <translation>Unesite lozinku ponovno</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="105"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="108"/>
         <source>Enter a password hint</source>
         <translation>Unesite savjet za lozinku</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="147"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="150"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Odustani</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="148"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="151"/>
         <source>Confirm</source>
         <comment>button</comment>
         <translation>Potvrdi</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="204"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="223"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="265"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="207"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="226"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="268"/>
         <source>The password exceeds the maximum length</source>
         <translation>Lozinka premašuje maksimalnu duljina</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="257"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="260"/>
         <source>The password cannot be empty</source>
         <translation>Lozinka ne može biti prazna</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="274"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="277"/>
         <source>Passwords do not match</source>
         <translation>Lozinke se ne podudaraju</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="282"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="285"/>
         <source>The password hint should differ from the password</source>
         <translation>Savjet za lozinku treba biti različit od lozinke</translation>
     </message>
@@ -2130,53 +2130,53 @@ dobro!</translation>
         <translation>Odustani</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="77"/>
+        <location filename="../widgets/removepvwidget.cpp" line="79"/>
         <source>Delete</source>
         <comment>button</comment>
         <translation>Izbriši</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="108"/>
+        <location filename="../widgets/removepvwidget.cpp" line="110"/>
         <source>Deleting...</source>
         <translation>Brisanje...</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="230"/>
+        <location filename="../widgets/removepvwidget.cpp" line="232"/>
         <source>A lot of data exists on %1, </source>
         <translation>Na %1 postoji puno podataka, </translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="231"/>
+        <location filename="../widgets/removepvwidget.cpp" line="233"/>
         <source>which may take a long time to back it up.</source>
         <translation>što može trajati dugo za kopiranje.</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="232"/>
+        <location filename="../widgets/removepvwidget.cpp" line="234"/>
         <source>Do you want to continue?</source>
         <translation>Želite li nastaviti?</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="233"/>
+        <location filename="../widgets/removepvwidget.cpp" line="235"/>
         <source>Continue</source>
         <translation>Nastavi</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="234"/>
+        <location filename="../widgets/removepvwidget.cpp" line="236"/>
         <source>Cancel</source>
         <translation>Odustani</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="248"/>
+        <location filename="../widgets/removepvwidget.cpp" line="250"/>
         <source>Not enough space to back up data on %1, please delete the logical volume first</source>
         <translation>Nedostaje prostora za kopiranje podataka na %1, molim vas prvo izbrišite logički volumen</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="249"/>
+        <location filename="../widgets/removepvwidget.cpp" line="251"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="282"/>
+        <location filename="../widgets/removepvwidget.cpp" line="284"/>
         <source>Failed to delete the physical volume</source>
         <translation>Izbrisati fizički volumen nije uspelo</translation>
     </message>
@@ -2189,89 +2189,89 @@ dobro!</translation>
         <translation>To će promijeniti veličinu particija na disku</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="72"/>
+        <location filename="../widgets/resizedialog.cpp" line="74"/>
         <source>New capacity:</source>
         <translation>Nova kapacitet:</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="96"/>
+        <location filename="../widgets/resizedialog.cpp" line="98"/>
         <source>Auto adjusted to integral multiples of 4 MiB</source>
         <translation>Automatski prilagođen integralnim višestručnicama od 4 MiB</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="110"/>
-        <location filename="../widgets/resizedialog.cpp" line="116"/>
+        <location filename="../widgets/resizedialog.cpp" line="112"/>
+        <location filename="../widgets/resizedialog.cpp" line="118"/>
         <source>Resize %1</source>
         <translation>Promijeni %1</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="118"/>
+        <location filename="../widgets/resizedialog.cpp" line="120"/>
         <source>It will resize the logical volume space</source>
         <translation>To će promijeniti prostor logičkog volumena</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="124"/>
-        <location filename="../widgets/resizedialog.cpp" line="282"/>
-        <location filename="../widgets/resizedialog.cpp" line="395"/>
-        <location filename="../widgets/resizedialog.cpp" line="399"/>
+        <location filename="../widgets/resizedialog.cpp" line="126"/>
+        <location filename="../widgets/resizedialog.cpp" line="284"/>
+        <location filename="../widgets/resizedialog.cpp" line="397"/>
+        <location filename="../widgets/resizedialog.cpp" line="401"/>
         <source>Cancel</source>
         <translation>Odustani</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="125"/>
+        <location filename="../widgets/resizedialog.cpp" line="127"/>
         <source>Confirm</source>
         <translation>Potvrdi</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="160"/>
-        <location filename="../widgets/resizedialog.cpp" line="197"/>
-        <location filename="../widgets/resizedialog.cpp" line="238"/>
-        <location filename="../widgets/resizedialog.cpp" line="367"/>
+        <location filename="../widgets/resizedialog.cpp" line="162"/>
+        <location filename="../widgets/resizedialog.cpp" line="199"/>
+        <location filename="../widgets/resizedialog.cpp" line="240"/>
+        <location filename="../widgets/resizedialog.cpp" line="369"/>
         <source>No more than the maximum capacity please</source>
         <translation>Nemojte premašiti maksimalnu kapacitet, molim</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="258"/>
+        <location filename="../widgets/resizedialog.cpp" line="260"/>
         <source>The file system does not support shrinking space</source>
         <translation>Sustav datoteke ne podržava smanjenje prostora</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="258"/>
-        <location filename="../widgets/resizedialog.cpp" line="282"/>
-        <location filename="../widgets/resizedialog.cpp" line="395"/>
-        <location filename="../widgets/resizedialog.cpp" line="399"/>
-        <location filename="../widgets/resizedialog.cpp" line="440"/>
+        <location filename="../widgets/resizedialog.cpp" line="260"/>
+        <location filename="../widgets/resizedialog.cpp" line="284"/>
+        <location filename="../widgets/resizedialog.cpp" line="397"/>
+        <location filename="../widgets/resizedialog.cpp" line="401"/>
+        <location filename="../widgets/resizedialog.cpp" line="442"/>
         <source>OK</source>
         <translation>U redu</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="274"/>
-        <location filename="../widgets/resizedialog.cpp" line="345"/>
+        <location filename="../widgets/resizedialog.cpp" line="276"/>
+        <location filename="../widgets/resizedialog.cpp" line="347"/>
         <source>No less than the used capacity please</source>
         <translation>Nemojte smanjiti kapacitet ispod korишćenog, molim</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="282"/>
+        <location filename="../widgets/resizedialog.cpp" line="284"/>
         <source>To prevent data loss, back up data before shrinking it</source>
         <translation>Da bi se spriječila gubitak podataka, izvršite sigurnosnu kopiju prije smanjenja</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="384"/>
+        <location filename="../widgets/resizedialog.cpp" line="386"/>
         <source>Unmount it before shrinking its space</source>
         <translation>Odmontirajte ga prije smanjenja prostora</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="395"/>
+        <location filename="../widgets/resizedialog.cpp" line="397"/>
         <source>The current device has been mounted and will be unmounted automatically. Please back up data in it to prevent data loss</source>
         <translation>Trenutni uređaj je montiran i automatski će se demontirati. Molim vas, izvršite sigurnosnu kopiju podataka u njemu kako biste spriječili gubitak podataka</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="399"/>
+        <location filename="../widgets/resizedialog.cpp" line="401"/>
         <source>To prevent data loss, back up data in the logical volume before shrinking it</source>
         <translation>Da bi se spriječila gubitak podataka, izvršite sigurnosnu kopiju podataka u logičkom volumenu prije smanjenja</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="440"/>
+        <location filename="../widgets/resizedialog.cpp" line="442"/>
         <source>The file system does not support space adjustment</source>
         <translation>Sustav datoteke ne podržava prilagodbu prostora</translation>
     </message>
@@ -2279,18 +2279,22 @@ dobro!</translation>
 <context>
     <name>SizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="317"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="433"/>
         <source> Capacity:</source>
-        <translation> Kapacitet:</translation>
+        <translation type="vanished"> Kapacitet:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="376"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="378"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="383"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="492"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="494"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="498"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="326"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="442"/>
+        <source>Available:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="385"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="387"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="392"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="501"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="503"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="507"/>
         <source>Used:</source>
         <translation>Koristi se:</translation>
     </message>
@@ -2464,17 +2468,17 @@ rootA and rootB should be resized to the same value</source>
         <translation>Odmontiranje sustavnog diska može dovesti do sustavne greške</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountwarningdialog.cpp" line="41"/>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="43"/>
         <source>I will take the risks that may arise</source>
         <translation>Prihvaćam rizike koji mogu nastati</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountwarningdialog.cpp" line="60"/>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="62"/>
         <source>Cancel</source>
         <translation>Odustani</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountwarningdialog.cpp" line="61"/>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="63"/>
         <source>Unmount</source>
         <translation>Odmontiraj</translation>
     </message>

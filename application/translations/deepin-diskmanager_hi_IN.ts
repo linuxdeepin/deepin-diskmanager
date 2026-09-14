@@ -25,24 +25,24 @@
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="150"/>
-        <location filename="../widgets/createlvwidget.cpp" line="325"/>
+        <location filename="../widgets/createlvwidget.cpp" line="326"/>
         <source>LV name:</source>
         <translation>LV नाम:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="159"/>
         <location filename="../widgets/createlvwidget.cpp" line="163"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1188"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1192"/>
         <source>VG name:</source>
         <translation>VG नाम:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="171"/>
-        <location filename="../widgets/createlvwidget.cpp" line="347"/>
-        <location filename="../widgets/createlvwidget.cpp" line="394"/>
-        <location filename="../widgets/createlvwidget.cpp" line="397"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1190"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1192"/>
+        <location filename="../widgets/createlvwidget.cpp" line="348"/>
+        <location filename="../widgets/createlvwidget.cpp" line="398"/>
+        <location filename="../widgets/createlvwidget.cpp" line="401"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1194"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1196"/>
         <source>LV file system:</source>
         <translation>LV फ़ाइल सिस्टम:</translation>
     </message>
@@ -59,69 +59,69 @@
         <translation>रद्द करें</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="255"/>
+        <location filename="../widgets/createlvwidget.cpp" line="256"/>
         <source>Revert</source>
         <comment>button</comment>
         <translation>पूर्ववत करें</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="289"/>
+        <location filename="../widgets/createlvwidget.cpp" line="290"/>
         <source>LV Information</source>
         <translation>LV जानकारी</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="302"/>
+        <location filename="../widgets/createlvwidget.cpp" line="303"/>
         <source>Create LV:</source>
         <translation>LV बनाएँ:</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="313"/>
+        <location filename="../widgets/createlvwidget.cpp" line="314"/>
         <source>Delete last logical volume</source>
         <translation>अंतिम तार्किक आयोजन हटाएँ</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="356"/>
+        <location filename="../widgets/createlvwidget.cpp" line="358"/>
         <source>LV capacity:</source>
         <translation>LV क्षमता:</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="568"/>
-        <location filename="../widgets/createlvwidget.cpp" line="693"/>
+        <location filename="../widgets/createlvwidget.cpp" line="572"/>
+        <location filename="../widgets/createlvwidget.cpp" line="697"/>
         <source>Unallocated</source>
         <translation>आवंटित नहीं है</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="597"/>
+        <location filename="../widgets/createlvwidget.cpp" line="601"/>
         <source>Name</source>
         <translation>नाम</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="598"/>
+        <location filename="../widgets/createlvwidget.cpp" line="602"/>
         <source>Size</source>
         <translation>आकार</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="835"/>
+        <location filename="../widgets/createlvwidget.cpp" line="839"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
         <translation>डिस्क को एन्क्रिप्ट करने के लिए aes-xts-plain64 मानक एल्गोरिथ्म का उपयोग करें। आप फिर से माउंट करने से पहले इसे डिक्रिप्ट करना चाहिए।</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="842"/>
+        <location filename="../widgets/createlvwidget.cpp" line="846"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
         <translation>डिस्क को एन्क्रिप्ट करने के लिए sm4-xts-plain राज्य क्रिप्टोग्राफिक एल्गोरिथम का उपयोग करें। आप फिर से माउंट करने से पहले इसे डिक्रिप्ट करना चाहिए। राज्य क्रिप्टोग्राफिक एल्गोरिथम को समर्थन न करने वाले ऑपरेटिंग सिस्टम डिस्क को डिक्रिप्ट नहीं कर सकते।</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="958"/>
+        <location filename="../widgets/createlvwidget.cpp" line="962"/>
         <source>To encrypt a volume, it should be larger than 100 MiB</source>
         <translation>एक आयोजन को एन्क्रिप्ट करने के लिए, इसका आकार 100 MiB से अधिक होना चाहिए</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="991"/>
+        <location filename="../widgets/createlvwidget.cpp" line="995"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>पासवर्ड को खो न जाए, कृपयश पासवर्ड की बैकअप लें और इसे ठीक तरीके से रखें!</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="992"/>
+        <location filename="../widgets/createlvwidget.cpp" line="996"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>ठीक</translation>
@@ -130,27 +130,27 @@
 <context>
     <name>CreatePartitionTableDialog</name>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
         <source>Cancel</source>
         <translation>रद्द करें</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="48"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="49"/>
         <source>No partition table in this disk. Create a new one?</source>
         <translation>इस डिस्क में कोई पार्टिशन टेबल नहीं है। एक नया बनाएं?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="49"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="50"/>
         <source>Create</source>
         <translation>बनाएँ</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="56"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="57"/>
         <source>The disk has a partition table already. Replace it?</source>
         <translation>डिस्क में पहले से एक पार्टिशन टेबल है। इसे बदलें?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="57"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="58"/>
         <source>Replace</source>
         <translation>बदलें</translation>
     </message>
@@ -174,17 +174,17 @@
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="97"/>
-        <location filename="../widgets/createvgwidget.cpp" line="390"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1126"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1136"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1734"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1745"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1804"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1877"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1881"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1919"/>
-        <location filename="../widgets/createvgwidget.cpp" line="2061"/>
-        <location filename="../widgets/createvgwidget.cpp" line="2136"/>
+        <location filename="../widgets/createvgwidget.cpp" line="394"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1132"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1142"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1773"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1784"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1843"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1916"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1920"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1958"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2100"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2175"/>
         <source>Capacity selected: %1</source>
         <translation>चयनित क्षमता: %1</translation>
     </message>
@@ -204,146 +204,146 @@
         <translation>कोई डिस्क या पार्टिशन उपलब्ध नहीं है</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="257"/>
-        <location filename="../widgets/createvgwidget.cpp" line="454"/>
+        <location filename="../widgets/createvgwidget.cpp" line="258"/>
+        <location filename="../widgets/createvgwidget.cpp" line="459"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>रद्द करें</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="260"/>
+        <location filename="../widgets/createvgwidget.cpp" line="262"/>
         <source>Next</source>
         <translation>अगला</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="285"/>
+        <location filename="../widgets/createvgwidget.cpp" line="287"/>
         <source>Selected disks/partitions</source>
         <translation>चयनित डिस्क/पार्टिशन</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="322"/>
+        <location filename="../widgets/createvgwidget.cpp" line="324"/>
         <source>Set VG capacity</source>
         <translation>VG क्षमता सेट करें</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="327"/>
+        <location filename="../widgets/createvgwidget.cpp" line="329"/>
         <source>Auto adjusted to integral multiples of 4 MiB</source>
         <translation>4 MiB के पूर्ण गुणज में ऑटो एडजस्ट किया गया</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="420"/>
+        <location filename="../widgets/createvgwidget.cpp" line="424"/>
         <source>Choose one disk or partition at least</source>
         <translation>कम से कम एक डिस्क या पार्टिशन का चयन करें</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="457"/>
+        <location filename="../widgets/createvgwidget.cpp" line="463"/>
         <source>Previous</source>
         <translation>पिछला</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="460"/>
+        <location filename="../widgets/createvgwidget.cpp" line="466"/>
         <source>Done</source>
         <comment>button</comment>
         <translation>कार्य समाप्त</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="584"/>
+        <location filename="../widgets/createvgwidget.cpp" line="590"/>
         <source>Resizing space...</source>
         <translation>अंतर क्षेत्र बढ़ा रहे हैं...</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="587"/>
+        <location filename="../widgets/createvgwidget.cpp" line="593"/>
         <source>Creating...</source>
         <translation>बना रहे हैं...</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="646"/>
+        <location filename="../widgets/createvgwidget.cpp" line="652"/>
         <source>Selected disks and partitions:</source>
         <translation>चयनित डिस्क और पैर्टिशन:</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="693"/>
-        <location filename="../widgets/createvgwidget.cpp" line="696"/>
+        <location filename="../widgets/createvgwidget.cpp" line="699"/>
+        <location filename="../widgets/createvgwidget.cpp" line="702"/>
         <source>VG capacity: %1</source>
         <translation>VG क्षमता: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="701"/>
+        <location filename="../widgets/createvgwidget.cpp" line="707"/>
         <source>VG name: %1</source>
         <translation>VG नाम: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="822"/>
+        <location filename="../widgets/createvgwidget.cpp" line="828"/>
         <source>No less than the used capacity please</source>
         <translation>कृपया उपयोग की गई क्षमता से कम नहीं होने दें</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="828"/>
+        <location filename="../widgets/createvgwidget.cpp" line="834"/>
         <source>No more than the maximum capacity please</source>
         <translation>कृपया अधिकतम क्षमता से अधिक नहीं होने दें</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="850"/>
+        <location filename="../widgets/createvgwidget.cpp" line="856"/>
         <source>A lot of data exists on %1, </source>
         <translation>%1 पर काफी डेटा है, </translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="851"/>
+        <location filename="../widgets/createvgwidget.cpp" line="857"/>
         <source>which may take a long time to back it up.</source>
         <translation>जिसकी डेटा के बैकअप के लिए लंबा समय लग सकता है।</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="852"/>
+        <location filename="../widgets/createvgwidget.cpp" line="858"/>
         <source>Do you want to continue?</source>
         <translation>आप जारी रखना चाहते हैं?</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="853"/>
+        <location filename="../widgets/createvgwidget.cpp" line="859"/>
         <source>Continue</source>
         <translation>जारी रखें</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="854"/>
+        <location filename="../widgets/createvgwidget.cpp" line="860"/>
         <source>Cancel</source>
         <translation>रद्द करें</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1815"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1930"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1854"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1969"/>
         <source>Adding the disk/partition to a logical volume group 
 will format it and remove its password.</source>
         <translation>एक तार्किक वॉल्यूम समूह में डिस्क/पैर्टिशन जोड़ने से इसे फॉर्मेट किया जाएगा और इसकी पासवर्ड हटा दी जाएगी।</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1816"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1931"/>
-        <location filename="../widgets/createvgwidget.cpp" line="2084"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1855"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1970"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2123"/>
         <source>OK</source>
         <translation>ठीक है</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="2083"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2122"/>
         <source>Not enough space to back up data on %1, please clear disk space</source>
         <translation>%1 पर डेटा के बैकअप के लिए पर्याप्त स्थान नहीं है, कृपया डिस्क स्थान साफ करें</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="2282"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2321"/>
         <source>Existing volume group, creation failed. Please retry after reboot.</source>
         <translation>मौजूदा वॉल्यूम समूह, बनाने में विफल। कृपया रीबूट के बाद फिर से प्रयास करें।</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="2287"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2326"/>
         <source>Failed to create a physical volume. Please refresh Disk Utility and try again.</source>
         <translation>एक भौतिक वॉल्यूम बनाने में विफल। कृपया डिस्क उपयोग को अपडेट करें और फिर से प्रयास करें।</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="2292"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2331"/>
         <source>Device input/output error. Please try again after reboot.</source>
         <translation>उपकरण इनपुट/आउटपुट त्रुटि। कृपया रीबूट के बाद फिर से प्रयास करें।</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="2356"/>
-        <location filename="../widgets/createvgwidget.cpp" line="2366"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2395"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2405"/>
         <source>Refreshing the page to reload disks</source>
         <translation>पृष्ठ को अपडेट करके डिस्क को पुनर्लेखित कर रहे हैं</translation>
     </message>
@@ -351,32 +351,32 @@ will format it and remove its password.</source>
 <context>
     <name>CylinderInfoWidget</name>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="520"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="522"/>
         <source>LBA: %1</source>
         <translation>एलबीए: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="521"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="523"/>
         <source>Cyl.: %1</source>
         <translation>सिलिंडर: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="522"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="524"/>
         <source>Error: %1</source>
         <translation>त्रुटि: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="523"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="525"/>
         <source>Cyl. elapsed time: %1</source>
         <translation>सिलिंडर लेप्ट टाइम: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="523"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="525"/>
         <source>ms</source>
         <translation>मिलीसेकंड</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="524"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="526"/>
         <source>Status: Repaired</source>
         <translation>स्थिति: मरम्मत की गई</translation>
     </message>
@@ -536,59 +536,59 @@ will format it and remove its password.</source>
         <translation>वॉल्यूम ग्रुप को डिक्रिप्शन करने के लिए पासवर्ड दर्ज करें</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="81"/>
+        <location filename="../widgets/decryptdialog.cpp" line="82"/>
         <source>Enter a password </source>
         <translation>&apos;पासवर्ड दर्ज करें &apos;</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="87"/>
+        <location filename="../widgets/decryptdialog.cpp" line="89"/>
         <source>Password hint</source>
         <translation>पासवर्ड के संकेत</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="138"/>
+        <location filename="../widgets/decryptdialog.cpp" line="140"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>रद्द करें</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="143"/>
+        <location filename="../widgets/decryptdialog.cpp" line="146"/>
         <source>Decrypt</source>
         <comment>button</comment>
         <translation>डिक्रिप्शन</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="341"/>
+        <location filename="../widgets/decryptdialog.cpp" line="345"/>
         <source>Decrypting...</source>
         <translation>डिक्रिप्शन कर रहे हैं...</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="215"/>
+        <location filename="../widgets/decryptdialog.cpp" line="219"/>
         <source>Please try again %1 minutes later</source>
         <translation>कृपया %1 मिनट बाद फिर से प्रयास करें</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="316"/>
+        <location filename="../widgets/decryptdialog.cpp" line="320"/>
         <source>The password cannot be empty</source>
         <translation>पासवर्ड खाली नहीं हो सकता</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="365"/>
+        <location filename="../widgets/decryptdialog.cpp" line="369"/>
         <source>Decryption failed</source>
         <translation>अनक्लॉज असफल</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="385"/>
+        <location filename="../widgets/decryptdialog.cpp" line="389"/>
         <source>Password locked, please try again %1 minutes later</source>
         <translation>पासवर्ड लॉक है, कृपया %1 मिनट के बाद फिर से प्रयास करें</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="388"/>
+        <location filename="../widgets/decryptdialog.cpp" line="392"/>
         <source>Wrong password, %1 chances left</source>
         <translation>गलत पासवर्ड, %1 अवसर बचे हैं</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="391"/>
+        <location filename="../widgets/decryptdialog.cpp" line="395"/>
         <source>Wrong password, only one chance left</source>
         <translation>गलत पासवर्ड, केवल एक अवसर बचा है</translation>
     </message>
@@ -626,50 +626,50 @@ will format it and remove its password.</source>
         <translation>पार्शन टेबल बनाएं</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="159"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="164"/>
         <source>Delete partition</source>
         <translation>पार्शन हटाएं</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="221"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="226"/>
         <source>Delete volume group</source>
         <translation>वॉल्यूम ग्रुप हटाएं</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="227"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="646"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="232"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="651"/>
         <source>Create logical volume</source>
         <translation>लॉजिकल वॉल्यूम बनाएं</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="255"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="260"/>
         <source>Delete logical volume</source>
         <translation>लॉजिकल वॉल्यूम हटाएं</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="303"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="308"/>
         <source>Close</source>
         <translation>बंद करें</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="303"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="308"/>
         <source>Health checking does not support this type of device.</source>
         <translation>स्वास्थ्य जांच इस प्रकार के उपकरण के लिए समर्थन नहीं प्रदान करती है।</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="343"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="348"/>
         <source>Please unmount all partitions in the disk first</source>
         <translation>कृपया पहले डिस्क में सभी पार्शन अनमाउंट करें</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="343"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="615"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="673"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="348"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="620"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="678"/>
         <source>OK</source>
         <translation>अच्छा</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="355"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="360"/>
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
@@ -678,206 +678,206 @@ will format it and remove its password.</source>
 कृपया ध्यान से करें</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="355"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="360"/>
         <source>Proceed</source>
         <translation>आगे बढ़ें</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="355"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="399"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="435"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="452"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="628"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="686"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="360"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="404"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="440"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="457"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="633"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="691"/>
         <source>Cancel</source>
         <translation>रद्द करें</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="385"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="390"/>
         <source>No errors found in the partition table</source>
         <translation>पार्शन टेबल में कोई त्रुटि नहीं मिली</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="399"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="404"/>
         <source>Do you want to hide this partition?</source>
         <translation>क्या आप इस पार्शन को छुपाना चाहते हैं?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="399"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="404"/>
         <source>Hide</source>
         <translation>छुपाएं</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="408"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="413"/>
         <source>Failed to hide the partition: unable to lock it</source>
         <translation>पार्शन को छुपाने में कामयाब नहीं रहा: इसे लॉक करने में असमर्थ हैं</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="417"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="422"/>
         <source>You can only hide the unmounted partition</source>
         <translation>आप केवल अनमाउंट किए गए पार्शन को ही छुपा सकते हैं</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="435"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="440"/>
         <source>Do you want to unhide this partition?</source>
         <translation>क्या आप इस पार्शन को अपने अवस्था में लाना चाहते हैं?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="435"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="440"/>
         <source>Unhide</source>
         <translation>अपने अवस्था में लाएं</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="452"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="457"/>
         <source>Are you sure you want to delete this partition?</source>
         <translation>क्या हां, क्या आप इस पार्शन को हटाना चाहते हैं?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="452"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="457"/>
         <source>You will lose all data in it</source>
         <translation>आप इसमें सभी डेटा खो बैठेंगे</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="452"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="628"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="686"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="457"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="633"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="691"/>
         <source>Delete</source>
         <translation>हटाएं</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="459"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="464"/>
         <source>Failed to delete the partition: unable to lock it</source>
         <translation>पार्शन को हटाने में कामयाब नहीं रहा: इसे लॉक करने में असमर्थ हैं</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="476"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="481"/>
         <source>Hide the partition successfully</source>
         <translation>पार्शन छिपाने के लिए सफल</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="482"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="487"/>
         <source>Failed to hide the partition</source>
         <translation>पार्शन छिपाने में असफल</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="494"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="499"/>
         <source>Unhide the partition successfully</source>
         <translation>पार्शन दिखाने के लिए सफल</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="500"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="505"/>
         <source>Failed to unhide the partition</source>
         <translation>पार्शन दिखाने में असफल</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="518"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="523"/>
         <source>Delete the partition successfully</source>
         <translation>पार्शन हटाने के लिए सफल</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="527"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="532"/>
         <source>Failed to find the disk</source>
         <translation>डिस्क नहीं मिल सकी</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="531"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="536"/>
         <source>Failed to get the partition info</source>
         <translation>पार्शन जानकारी प्राप्त नहीं की गई</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="535"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="540"/>
         <source>Failed to delete the partition</source>
         <translation>पार्शन हटाने में असफल</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="539"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="544"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>कर्नल में अनुरोध जमा करने में असफल</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="546"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="551"/>
         <source>Failed to delete the partition: %1</source>
         <translation>पार्शन हटाने में असफल: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="558"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="563"/>
         <source>Unmounting successful</source>
         <translation>अस्थायी रूप से अलग करने के लिए सफल</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="564"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="569"/>
         <source>Unmounting failed</source>
         <translation>अस्थायी रूप से अलग करने में असफल</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="578"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="583"/>
         <source>Creating partition table successful</source>
         <translation>पार्शन टेबल बनाने के लिए सफल</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="583"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="588"/>
         <source>Replacing partition table successful</source>
         <translation>पार्शन टेबल बदलने के लिए सफल</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="593"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="598"/>
         <source>Creating partition table failed</source>
         <translation>पार्शन टेबल बनाने में असफल</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="598"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="603"/>
         <source>Replacing partition table failed</source>
         <translation>पार्शन टेबल बदलने में असफल</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="615"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="620"/>
         <source>Unmount all logical volumes in %1 first</source>
         <translation>%1 में सभी लॉजिकल वॉल्यूम को पहले अलग कर दें</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="627"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="685"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="632"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="690"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
         <translation>यदि हटाया जाता है तो डेटा नहीं बरकरार रह सकता, आगे बढ़ने से पहले पुष्टि करें</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="646"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="651"/>
         <source>The disks will be formatted if you create a logical volume</source>
         <translation>आप एक लॉजिकल वॉल्यूम बनाते हैं तो डिस्क फॉर्मेट कर दी जाएगी</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="673"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="678"/>
         <source>Unmount %1 first</source>
         <translation>%1 को पहले अस्थायी रूप से अलग करें</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="718"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="723"/>
         <source>The logical volume group is busy and cannot be deleted. Please retry after reboot.</source>
         <translation>लॉजिकल वॉल्यूम ग्रुप व्यस्त है और हटाया नहीं जा सकता। रีबूट के बाद फिर से आज़माएं।</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="723"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="764"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="728"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="769"/>
         <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
         <translation>लॉजिकल वॉल्यूम व्यस्त है और हटाया नहीं जा सकता। रीबूट के बाद फिर से आज़माएं।</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="728"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="733"/>
         <source>Failed to delete the logical volume group</source>
         <translation>लॉजिकल वॉल्यूम ग्रुप हटाने में असफल</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="769"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="774"/>
         <source>Failed to delete the logical volume</source>
         <translation>लॉजिकल वॉल्यूम हटाने में असफल</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="894"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="899"/>
         <source>Volume Groups</source>
         <translation>वॉल्यूम ग्रुप</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="948"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="953"/>
         <source>Disks</source>
         <translation>डिस्क</translation>
     </message>
@@ -885,249 +885,249 @@ will format it and remove its password.</source>
 <context>
     <name>DiskBadSectorsDialog</name>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="38"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="39"/>
         <source>Verify or repair bad sectors</source>
         <translation>खराब सेक्टर की जांच करें या मरम्मत करें</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="68"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="128"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="131"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1314"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1317"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="69"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="132"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="135"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1379"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1382"/>
         <source>Verify:</source>
         <translation>जांच करें:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="73"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="75"/>
         <source>Cylinders</source>
         <translation>सिलिंडर</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="74"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="76"/>
         <source>Sectors</source>
         <translation>सेक्टर</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="75"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="77"/>
         <source>MB</source>
         <translation>एमबी</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="123"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="129"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="132"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1315"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1318"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="127"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="133"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="136"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1380"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1383"/>
         <source>Method:</source>
         <translation>विधि:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="146"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="151"/>
         <source>Rounds</source>
         <translation>राउंड्स</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="147"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="152"/>
         <source>Timeout</source>
         <translation>टाइमआउट</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="196"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="205"/>
         <source>ms</source>
         <translation>मिलीसेकंड</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="229"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="238"/>
         <source>Result:</source>
         <translation>परिणाम:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="254"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="263"/>
         <source>Excellent</source>
         <translation>अद्भुत</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="261"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="270"/>
         <source>Damaged</source>
         <translation>विक्षिप्त</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="268"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="277"/>
         <source>Unknown</source>
         <translation>अज्ञात</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="296"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="305"/>
         <source>Exit</source>
         <comment>button</comment>
         <translation>बाहर जाएं</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="301"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="310"/>
         <source>Reset</source>
         <comment>button</comment>
         <translation>रीसेट</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="307"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="316"/>
         <source>Repair</source>
         <translation>रिपेयर</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="313"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="322"/>
         <source>Start Verify</source>
         <translation>सत्यापन शुरू करें</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="318"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="327"/>
         <source>Stop</source>
         <comment>button</comment>
         <translation>रोकें</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="323"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="332"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>जारी रखें</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="328"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="337"/>
         <source>Verify Again</source>
         <translation>फिर सत्यাপन करें</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="333"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="342"/>
         <source>Done</source>
         <comment>button</comment>
         <translation>कार्य समाप्त</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="364"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="644"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="813"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="951"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1000"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1086"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1190"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="373"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="653"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="854"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1004"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1059"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1151"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1255"/>
         <source>Time elapsed:</source>
         <translation>समय लगा हुआ:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="369"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="645"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="819"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="833"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="952"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1001"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1087"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1106"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1162"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1196"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="378"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="654"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="860"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="874"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1005"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1060"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1152"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1171"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1227"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1261"/>
         <source>Time left:</source>
         <translation>शेष समय:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="795"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="809"/>
         <source>Verifying cylinder: %1</source>
         <translation>सिलिंडर सत्यापन कर रहे हैं: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="835"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="876"/>
         <source>Verify completed</source>
         <translation>सत्यापन पूरा हो गया</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="859"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="900"/>
         <source>Disk verify completed. %1 bad blocks found.</source>
         <translation>डिस्क सत्यापन पूरा हो गया। %1 खराब ब्लॉक खोजे गए।</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="859"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1045"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="900"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1110"/>
         <source>OK</source>
         <translation>ठीक है</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1041"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1106"/>
         <source>The verifying disk contains mounted partitions, so you cannot repair it.</source>
         <translation>सत्यापन कर रहे डिस्क में माउंट करे गए पैर्टिशन हैं, इसलिए आप इसे रिपेयर नहीं कर सकते।</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1043"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1108"/>
         <source>Please unmount partitions and then repair the disk.</source>
         <translation>कृपया पैर्टिशन अनमाउंट करें और फिर डिस्क को रिपेयर करें।</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1053"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1118"/>
         <source>Warning</source>
         <translation>चेतावनी</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1058"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1123"/>
         <source>Bad sector repairing cannot recover files,</source>
         <translation>खराब सेक्टर रिपेयर करने से फ़ाइल बरकरार नहीं रहती,</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1059"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1124"/>
         <source>but destroys data on and near bad sectors instead.</source>
         <translation>लेकिन खराब सेक्टर के आसपास के डेटा को नष्ट कर देता है।</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1060"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1125"/>
         <source>Please back up all data before repair.</source>
         <translation>कृपया रिपेयर से पहले सभी डेटा के बैकअप लें।</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1074"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1250"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1277"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1139"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1315"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1342"/>
         <source>Cancel</source>
         <translation>रद्द करें</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1075"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1140"/>
         <source>Start Repair</source>
         <translation>रिपेयर शुरू करें</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1125"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1190"/>
         <source>Repairing cylinder: %1</source>
         <translation>सिलेंडर की मरम्मत कर रहे हैं: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1167"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1232"/>
         <source>Repair completed. Cylinder: %1 repaired.</source>
         <translation>मरम्मत पूरी हो गई। सिलेंडर: %1 मरम्मत कर लिया गया।</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1170"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1235"/>
         <source>Disk repair completed. %1 bad blocks repaired.</source>
         <translation>डिस्क मरम्मत पूरी हो गई। %1 खराब ब्लॉक मरम्मत कर लिया गया।</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1249"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1314"/>
         <source>Verifying for bad sectors, exit now?</source>
         <translation>खराब सेक्टर के लिए जांच कर रहे हैं, अब बाहर निकलें?</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1249"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1314"/>
         <source>The verified information will not be reserved</source>
         <translation>जांच की गई जानकारी को संग्रहीत नहीं किया जाएगा</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1250"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1277"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1315"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1342"/>
         <source>Exit</source>
         <translation>बाहर निकलें</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1276"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1341"/>
         <source>Repairing bad sectors, exit now?</source>
         <translation>खराब सेक्टर की मरम्मत कर रहे हैं, अब बाहर निकलें?</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1276"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1341"/>
         <source>The repairing information will not be reserved</source>
         <translation>मरम्मत की गई जानकारी को संग्रहीत नहीं किया जाएगा</translation>
     </message>
@@ -1140,124 +1140,124 @@ will format it and remove its password.</source>
         <translation>स्वास्थ्य जांच करें</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="74"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="59"/>
         <source>Serial number</source>
         <translation>सिरियल नंबर</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="83"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="67"/>
         <source>Storage</source>
         <translation>संग्रहण</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="105"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="88"/>
         <source>Health Status</source>
         <translation>स्वास्थ्य स्थिति</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="122"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="103"/>
         <source>Good</source>
         <translation>अच्छा</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="129"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="110"/>
         <source>Damaged</source>
         <translation>नुकसान</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="136"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="117"/>
         <source>Unknown</source>
         <translation>अज्ञात</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="155"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="136"/>
         <source>Temperature</source>
         <translation>तापमान</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="209"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="435"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="189"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>ID</source>
         <translation>आईडी</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="210"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="435"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="190"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>Status</source>
         <translation>स्थिति</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="211"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="435"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="191"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>Current</source>
         <translation>वर्तमान</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="212"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="435"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="192"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>Worst</source>
         <translation>सबसे खराब</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="213"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="436"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="193"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="416"/>
         <source>Threshold</source>
         <translation>शीर्ष सीमा</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="214"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="436"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="194"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="416"/>
         <source>Raw Value</source>
         <translation>अप्रचलित मूल्य</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="215"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="436"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="195"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="416"/>
         <source>Attribute name</source>
         <translation>गुण का नाम</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="333"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="313"/>
         <source>Status: (G: Good | W: Warning | D: Damaged | U: Unknown)</source>
         <translation>स्थिति: (G: अच्छा | W: चेतावनी | D: नुकसान | U: अज्ञात)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="337"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="340"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="342"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="476"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="479"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="316"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="320"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="322"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="456"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="459"/>
         <source>Export</source>
         <comment>button</comment>
         <translation>निर्यात करें</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="377"/>
         <source>Save File</source>
         <translation>फ़ाइल सेव करें</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="377"/>
         <source>Text files (*.txt)</source>
         <translation>पाठ फ़ाइलें (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="413"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="393"/>
         <source>Wrong path</source>
         <translation>गलत पथ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="422"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="402"/>
         <source>You do not have permission to access this path</source>
         <translation>आपको इस पथ तक पहुंच के लिए अनुमति नहीं है</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="457"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="437"/>
         <source>Export successful</source>
         <translation>निर्यात सफल</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="461"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="441"/>
         <source>Export failed</source>
         <translation>निर्यात विफल</translation>
     </message>
@@ -1362,41 +1362,41 @@ will format it and remove its password.</source>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="111"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="116"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="119"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="228"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="231"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="117"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="120"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="229"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="232"/>
         <source>Export</source>
         <comment>button</comment>
         <translation>निर्यात</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="151"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="152"/>
         <source>Save File</source>
         <translation>फ़ाइल सेव करें</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="151"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="152"/>
         <source>Text files (*.txt)</source>
         <translation>टेक्स्ट फ़ाइलें (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="168"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="169"/>
         <source>Wrong path</source>
         <translation>गलत पथ</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="177"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="178"/>
         <source>You do not have permission to access this path</source>
         <translation>आपको इस पथ पर पहुंचने की अनुमति नहीं है</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="209"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="210"/>
         <source>Export successful</source>
         <translation>निर्यात सफल</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="213"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="214"/>
         <source>Export failed</source>
         <translation>निर्यात विफल</translation>
     </message>
@@ -1419,172 +1419,172 @@ will format it and remove its password.</source>
         <translation>नाम :</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="111"/>
+        <location filename="../widgets/formatedialog.cpp" line="112"/>
         <source>Name</source>
         <translation>नाम</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="114"/>
+        <location filename="../widgets/formatedialog.cpp" line="115"/>
         <source>File system:</source>
         <translation>फ़ाइल सिस्टम :</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="149"/>
+        <location filename="../widgets/formatedialog.cpp" line="151"/>
         <source>AES Encryption</source>
         <translation>एसईएस एन्क्रिप्शन</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="153"/>
+        <location filename="../widgets/formatedialog.cpp" line="155"/>
         <source>SM4 Encryption</source>
         <translation>एसएम4 एन्क्रिप्शन</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="170"/>
+        <location filename="../widgets/formatedialog.cpp" line="172"/>
         <source>Security:</source>
         <translation>सुरक्षा:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="184"/>
-        <location filename="../widgets/formatedialog.cpp" line="189"/>
+        <location filename="../widgets/formatedialog.cpp" line="187"/>
+        <location filename="../widgets/formatedialog.cpp" line="192"/>
         <source>Fast</source>
         <translation>तेज</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="184"/>
-        <location filename="../widgets/formatedialog.cpp" line="189"/>
+        <location filename="../widgets/formatedialog.cpp" line="187"/>
+        <location filename="../widgets/formatedialog.cpp" line="192"/>
         <source>Secure</source>
         <translation>सुरक्षित</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="189"/>
+        <location filename="../widgets/formatedialog.cpp" line="192"/>
         <source>Advanced</source>
         <translation>उन्नत</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="200"/>
-        <location filename="../widgets/formatedialog.cpp" line="503"/>
+        <location filename="../widgets/formatedialog.cpp" line="203"/>
+        <location filename="../widgets/formatedialog.cpp" line="509"/>
         <source>It only deletes the partition info without erasing the files on the disk. Disk recovery tools may recover the files at a certain probability.</source>
         <translation>यह केवल पार्शन जानकारी हटाता है बिना डिस्क पर फ़ाइलों को मिटाए। डिस्क डेटा बहाली टूल्स फ़ाइलों को कुछ संभावना के साथ बहाल कर सकते हैं।</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="206"/>
+        <location filename="../widgets/formatedialog.cpp" line="209"/>
         <source>Wiping method:</source>
         <translation>मिटाने की विधि:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="214"/>
+        <location filename="../widgets/formatedialog.cpp" line="218"/>
         <source>DoD 5220.22-M, 7 passes</source>
         <translation>डोड 5220.22-एम, 7 पास</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="214"/>
+        <location filename="../widgets/formatedialog.cpp" line="218"/>
         <source>Gutmann, 35 passes</source>
         <translation>गुटमैन, 35 पास</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="275"/>
+        <location filename="../widgets/formatedialog.cpp" line="279"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>रद्द करें</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="279"/>
+        <location filename="../widgets/formatedialog.cpp" line="285"/>
         <source>Wipe</source>
         <comment>button</comment>
         <translation>मिटाएं</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="327"/>
+        <location filename="../widgets/formatedialog.cpp" line="333"/>
         <source>Failed to find the disk</source>
         <translation>डिस्क नहीं मिला</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="331"/>
+        <location filename="../widgets/formatedialog.cpp" line="337"/>
         <source>The action cannot be undone, please proceed with caution</source>
         <translation>यह कार्रवाई अनुत्पादित नहीं की जा सकती, कृपया सावधानी से आगे बढ़ें</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="333"/>
+        <location filename="../widgets/formatedialog.cpp" line="339"/>
         <source>LV name:</source>
         <translation>LV नाम:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="337"/>
+        <location filename="../widgets/formatedialog.cpp" line="343"/>
         <source>LV name</source>
         <translation>LV नाम</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="339"/>
+        <location filename="../widgets/formatedialog.cpp" line="345"/>
         <source>LV file system:</source>
         <translation>LV फ़ाइल सिस्टम:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="341"/>
-        <location filename="../widgets/formatedialog.cpp" line="553"/>
+        <location filename="../widgets/formatedialog.cpp" line="347"/>
+        <location filename="../widgets/formatedialog.cpp" line="559"/>
         <source>You may be able to recover files after the wipe.</source>
         <translation>मिटाने के बाद आप फ़ाइल बहाल कर सकते हैं।</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="344"/>
+        <location filename="../widgets/formatedialog.cpp" line="350"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>कर्नेल में अनुरोध जमा नहीं किया जा सका</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="398"/>
-        <location filename="../widgets/formatedialog.cpp" line="413"/>
-        <location filename="../widgets/formatedialog.cpp" line="437"/>
-        <location filename="../widgets/formatedialog.cpp" line="449"/>
+        <location filename="../widgets/formatedialog.cpp" line="404"/>
+        <location filename="../widgets/formatedialog.cpp" line="419"/>
+        <location filename="../widgets/formatedialog.cpp" line="443"/>
+        <location filename="../widgets/formatedialog.cpp" line="455"/>
         <source>The length exceeds the limit</source>
         <translation>लंबाई सीमा से अधिक है</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="467"/>
+        <location filename="../widgets/formatedialog.cpp" line="473"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
         <translation>डिस्क के लिए aes-xts-plain64 स्टैंडर्ड एल्गोरिथ्म का उपयोग करें। आप फिर से माउंट करने से पहले इसे डिक्रिप्ट करना चाहिए।</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="477"/>
+        <location filename="../widgets/formatedialog.cpp" line="483"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
         <translation>डिस्क के लिए sm4-xts-plain राज्य क्रिप्टोग्राफिक एल्गोरिथ्म का उपयोग करें। आप फिर से माउंट करने से पहले इसे डिक्रिप्ट करना चाहिए। राज्य क्रिप्टोग्राफिक एल्गोरिथ्म को समर्थन न करने वाले ऑपरेटिंग सिस्टम डिस्क को डिक्रिप्ट नहीं कर सकते।</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="518"/>
+        <location filename="../widgets/formatedialog.cpp" line="524"/>
         <source>It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, and random data to the entire disk once. You will not be able to recover files, and the process will be slow.</source>
         <translation>यह एक बार के सुरक्षित मिटाने की विधि है जो NIST 800-88 के अनुसार है और डिस्क के अंतिम भाग में 0, 1 और यादृच्छिक डेटा लिखता है। आप फ़ाइल बहाल नहीं कर सकते, और प्रक्रिया धीमी होगी।</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="533"/>
+        <location filename="../widgets/formatedialog.cpp" line="539"/>
         <source>It writes 0, 1, and random data to the entire disk several times. You can set the number of times to erase disks and overwrite data, but the process will be very slow.</source>
         <translation>यह पूरी डिस्क पर 0, 1 और यादृच्छिक डेटा कई बार लिखता है। आप डिस्क को मिटाने और डेटा के ऊपर लिखने के बारे में बार की संख्या सेट कर सकते हैं, लेकिन प्रक्रिया बहुत धीमी होगी।</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="566"/>
+        <location filename="../widgets/formatedialog.cpp" line="572"/>
         <source>You will not be able to recover files after the wipe, and the process will be slow.</source>
         <translation>मिटाने बाद आप फ़ाइल बहाल नहीं कर सकते, और प्रक्रिया धीमी होगे।</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="648"/>
+        <location filename="../widgets/formatedialog.cpp" line="654"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>पासवर्ड खो न जाए, कृपया अपना पासवर्ड बैकअप करें और इसे ठीक तरह से रखें!</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="649"/>
+        <location filename="../widgets/formatedialog.cpp" line="655"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>ठीक</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="738"/>
+        <location filename="../widgets/formatedialog.cpp" line="744"/>
         <source>Wiping %1</source>
         <translation>%1 के मिटाने में</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="772"/>
+        <location filename="../widgets/formatedialog.cpp" line="778"/>
         <source>&quot;%1&quot; wiped</source>
         <translation>&quot;%1&quot; मिटा दिया गया</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="780"/>
+        <location filename="../widgets/formatedialog.cpp" line="786"/>
         <source>Failed to wipe %1</source>
         <translation>%1 के मिटाने में विफल</translation>
     </message>
@@ -1737,46 +1737,46 @@ will format it and remove its password.</source>
         <translation>माउंट पॉइंट :</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="78"/>
-        <location filename="../widgets/mountdialog.cpp" line="82"/>
+        <location filename="../widgets/mountdialog.cpp" line="79"/>
+        <location filename="../widgets/mountdialog.cpp" line="83"/>
         <source>Please select /mnt or /media, or its subdirectories.</source>
         <translation>कृपया /mnt या /media का चयन करें, या इसके उप-कर्मचारी दिशाओं का चयन करें।</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="86"/>
         <location filename="../widgets/mountdialog.cpp" line="87"/>
+        <location filename="../widgets/mountdialog.cpp" line="88"/>
         <source>The mount point is illegal. Please select /mnt or /media, or its subdirectories.</source>
         <translation>माउंट पॉइंट अवैध है। कृपया /mnt या /media का चयन करें, या इसके उप-कर्मचारी दिशाओं का चयन करें।</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="97"/>
-        <location filename="../widgets/mountdialog.cpp" line="304"/>
+        <location filename="../widgets/mountdialog.cpp" line="98"/>
+        <location filename="../widgets/mountdialog.cpp" line="305"/>
         <source>Cancel</source>
         <translation>रद्द करें</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="98"/>
+        <location filename="../widgets/mountdialog.cpp" line="99"/>
         <source>Mount</source>
         <translation>माउंट करें</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="303"/>
+        <location filename="../widgets/mountdialog.cpp" line="304"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>इस माउंट पॉइंट के तहत डेटा खो जाएगा, कृपया डायरेक्टरी को अन्य स्थान पर माउंट करें</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="304"/>
+        <location filename="../widgets/mountdialog.cpp" line="305"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>जारी रखें</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="333"/>
+        <location filename="../widgets/mountdialog.cpp" line="334"/>
         <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
         <translation>माउंटिंग असफल हो गई: चयनित माउंट पॉइंट खाली नहीं है। कृपया एक अन्य चयन करें!</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="334"/>
+        <location filename="../widgets/mountdialog.cpp" line="335"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>ठीक</translation>
@@ -1834,17 +1834,17 @@ will format it and remove its password.</source>
         <translation>डिस्क %1 के पार्टीशन टेबल में नीचे त्रुटियाँ हैं:</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="100"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="102"/>
         <source>Error</source>
         <translation>त्रुटि</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="109"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="111"/>
         <source>Partition table entries are not in disk order</source>
         <translation>पार्टीशन टेबल प्रविष्टियाँ डिस्क क्रम में नहीं हैं</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="121"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="124"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>ठीक</translation>
@@ -1853,152 +1853,152 @@ will format it and remove its password.</source>
 <context>
     <name>PartitionWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="41"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="43"/>
         <source>Partitioning %1</source>
         <translation>%1 पर विभाजन बनाया जा रहा है</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="43"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="45"/>
         <source>Click %1 to increase the number of partitions. Click on each partition to change its name and file system.</source>
         <translation>%1 पर क्लिक करें ताकि पार्टीशन की संख्या बढ़ जाए। प्रत्येक पार्टीशन पर क्लिक करें ताकि इसका नाम और फ़ाइल सिस्टम बदल जाए।</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="122"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="124"/>
         <source>Disk Information</source>
         <translation>डिस्क संबंधी जानकारी</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="136"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="138"/>
         <source>Capacity:</source>
         <translation>क्षमता :</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="146"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="148"/>
         <source>Partition selected:</source>
         <translation>चयनित विभाजन :</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="155"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="159"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1350"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="157"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="161"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1356"/>
         <source>Disk:</source>
         <translation>डिस्क :</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="167"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="338"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="384"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="387"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1352"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1354"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="169"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="341"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="390"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="393"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1358"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1360"/>
         <source>File system:</source>
         <translation>फ़ाइल सिस्टम :</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="244"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="246"/>
         <source>Confirm</source>
         <comment>button</comment>
         <translation>पुष्टि करें</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="248"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="250"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>रद्द करें</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="251"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="254"/>
         <source>Revert</source>
         <comment>button</comment>
         <translation>पूर्ववत करें</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="284"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="287"/>
         <source>Partition Information</source>
         <translation>विभाजन संबंधी जानकारी</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="296"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="299"/>
         <source>Number of partitions:</source>
         <translation>विभाजनों की संख्या :</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="307"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="310"/>
         <source>Delete last partition</source>
         <translation>अंतिम विभाजन को हटाएँ</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="319"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="322"/>
         <source>Name:</source>
         <translation>नाम :</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="347"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="351"/>
         <source>Size:</source>
         <translation>आकार :</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="498"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="653"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="504"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="659"/>
         <source>Unallocated</source>
         <translation>आवंटित नहीं है</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="527"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="533"/>
         <source>Name</source>
         <translation>नाम</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="528"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="534"/>
         <source>Size</source>
         <translation>आकार</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="804"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="817"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="956"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="969"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="810"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="823"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="962"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="975"/>
         <source>The length exceeds the limit</source>
         <translation>लंबाई सीमा के अतिरिक्त है</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="830"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="836"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting.</source>
         <translation>डिस्क को एन्क्रिप्ट करने के लिए aes-xts-plain64 मानक एल्गोरिथम का उपयोग करें। यदि एन्क्रिप्ट किया गया है, तो माउंट करने से पहले इसे डिक्रिप्ट करना आवश्यक है।</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="837"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="843"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
         <translation>डिस्क को एन्क्रिप्ट करने के लिए sm4-xts-plain अवस्था क्रिप्टोग्राफिक एल्गोरिथम का उपयोग करें। यदि एन्क्रिप्ट किया गया है, तो माउंट करने से पहले इसे डिक्रिप्ट करना आवश्यक है। अवस्था क्रिप्टोग्राफिक एल्गोरिथम को समर्थन न करने वाले ऑपरेटिंग सिस्टम डिस्क को डिक्रिप्ट नहीं कर सकते।</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1009"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1015"/>
         <source>The number of new partitions exceeds the limit</source>
         <translation>नए पार्टीशन की संख्या सीमा के अतिरिक्त है</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1036"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1042"/>
         <source>To encrypt a partition, it should be larger than 100 MiB</source>
         <translation>एक पार्टीशन को एन्क्रिप्ट करने के लिए, यह 100 मेगाबाइट से अधिक होना चाहिए</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1045"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1051"/>
         <source>Set a password to encrypt the new partition</source>
         <translation>नए पार्टीशन को एन्क्रिप्ट करने के लिए एक पासवर्ड सेट करें</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1068"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1074"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>पासवर्ड खो न जाए, कृपया अपना पासवर्ड बैकअप करें और इसे ठीक तरीके से रखें!</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1069"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1075"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>ठीक</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1093"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1099"/>
         <source>To create a partition, you need at least 52 MB</source>
         <translation>एक पार्टीशन बनाने के लिए आपको कम से कम 52 मेगाबाइट की आवश्यकता होती है</translation>
     </message>
@@ -2007,7 +2007,7 @@ will format it and remove its password.</source>
     <name>PasswordInputDialog</name>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="56"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="169"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="172"/>
         <source>Set a password to encrypt %1</source>
         <translation>पासवर्ड सेट करें ताकि %1 को एन्क्रिप्ट किया जा सके</translation>
     </message>
@@ -2037,51 +2037,51 @@ will format it and remove its password.</source>
         <translation>(अनुशंसित)</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="93"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="94"/>
         <source>Enter a password </source>
         <translation>एक पासवर्ड दर्ज करें </translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="99"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="101"/>
         <source>Enter the password again</source>
         <translation>पासवर्ड फिर से दर्ज करें</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="105"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="108"/>
         <source>Enter a password hint</source>
         <translation>एक पासवर्ड सुझाव दर्ज करें</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="147"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="150"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>रद्द करें</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="148"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="151"/>
         <source>Confirm</source>
         <comment>button</comment>
         <translation>पुष्टि करें</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="204"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="223"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="265"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="207"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="226"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="268"/>
         <source>The password exceeds the maximum length</source>
         <translation>पासवर्ड अधिकतम लंबाई के बाहर है</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="257"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="260"/>
         <source>The password cannot be empty</source>
         <translation>पासवर्ड खाली नहीं हो सकता</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="274"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="277"/>
         <source>Passwords do not match</source>
         <translation>पासवर्ड में मेल नहीं खाता</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="282"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="285"/>
         <source>The password hint should differ from the password</source>
         <translation>पासवर्ड के सुझाव को पासवर्ड से अलग करना चाहिए</translation>
     </message>
@@ -2118,53 +2118,53 @@ will format it and remove its password.</source>
         <translation>रद्द करें</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="77"/>
+        <location filename="../widgets/removepvwidget.cpp" line="79"/>
         <source>Delete</source>
         <comment>button</comment>
         <translation>हटाएं</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="108"/>
+        <location filename="../widgets/removepvwidget.cpp" line="110"/>
         <source>Deleting...</source>
         <translation>हटाया जा रहा है...</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="230"/>
+        <location filename="../widgets/removepvwidget.cpp" line="232"/>
         <source>A lot of data exists on %1, </source>
         <translation>%1 पर काफी डेटा है, </translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="231"/>
+        <location filename="../widgets/removepvwidget.cpp" line="233"/>
         <source>which may take a long time to back it up.</source>
         <translation>जिसकी बैकअप लंबा समय ले सकता है।</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="232"/>
+        <location filename="../widgets/removepvwidget.cpp" line="234"/>
         <source>Do you want to continue?</source>
         <translation>आप जारी रखना चाहते हैं?</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="233"/>
+        <location filename="../widgets/removepvwidget.cpp" line="235"/>
         <source>Continue</source>
         <translation>जारी रखें</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="234"/>
+        <location filename="../widgets/removepvwidget.cpp" line="236"/>
         <source>Cancel</source>
         <translation>रद्द करें</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="248"/>
+        <location filename="../widgets/removepvwidget.cpp" line="250"/>
         <source>Not enough space to back up data on %1, please delete the logical volume first</source>
         <translation>%1 पर डेटा के बैकअप के लिए पर्याप्त स्थान नहीं है, कृपया लॉजिकल वॉल्यूम को पहले हटाएं</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="249"/>
+        <location filename="../widgets/removepvwidget.cpp" line="251"/>
         <source>OK</source>
         <translation>ठीक</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="282"/>
+        <location filename="../widgets/removepvwidget.cpp" line="284"/>
         <source>Failed to delete the physical volume</source>
         <translation>फिजिकल वॉल्यूम को हटाने में विफलता</translation>
     </message>
@@ -2177,92 +2177,92 @@ will format it and remove its password.</source>
         <translation>इससे डिस्क विभाजनों का आकार बदला जाएगा</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="72"/>
+        <location filename="../widgets/resizedialog.cpp" line="74"/>
         <source>New capacity:</source>
         <translation>नई क्षमता:</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="96"/>
+        <location filename="../widgets/resizedialog.cpp" line="98"/>
         <source>Auto adjusted to integral multiples of 4 MiB</source>
         <translation>4 MiB के पूर्ण गुणकों के अनुसार स्वचालित रूप से समायोजित किया गया है</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="110"/>
-        <location filename="../widgets/resizedialog.cpp" line="116"/>
+        <location filename="../widgets/resizedialog.cpp" line="112"/>
+        <location filename="../widgets/resizedialog.cpp" line="118"/>
         <source>Resize %1</source>
         <translation>%1 का आकार बदलें</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="118"/>
+        <location filename="../widgets/resizedialog.cpp" line="120"/>
         <source>It will resize the logical volume space</source>
         <translation>यह लॉजिकल वॉल्यूम के स्थान को बढ़ाएगा</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="124"/>
-        <location filename="../widgets/resizedialog.cpp" line="282"/>
-        <location filename="../widgets/resizedialog.cpp" line="395"/>
-        <location filename="../widgets/resizedialog.cpp" line="399"/>
+        <location filename="../widgets/resizedialog.cpp" line="126"/>
+        <location filename="../widgets/resizedialog.cpp" line="284"/>
+        <location filename="../widgets/resizedialog.cpp" line="397"/>
+        <location filename="../widgets/resizedialog.cpp" line="401"/>
         <source>Cancel</source>
         <translation>रद्द करें</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="125"/>
+        <location filename="../widgets/resizedialog.cpp" line="127"/>
         <source>Confirm</source>
         <translation>पुष्टि करें</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="160"/>
-        <location filename="../widgets/resizedialog.cpp" line="197"/>
-        <location filename="../widgets/resizedialog.cpp" line="238"/>
-        <location filename="../widgets/resizedialog.cpp" line="367"/>
+        <location filename="../widgets/resizedialog.cpp" line="162"/>
+        <location filename="../widgets/resizedialog.cpp" line="199"/>
+        <location filename="../widgets/resizedialog.cpp" line="240"/>
+        <location filename="../widgets/resizedialog.cpp" line="369"/>
         <source>No more than the maximum capacity please</source>
         <translation>कृपया अधिकतम क्षमता से अधिक नहीं</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="258"/>
+        <location filename="../widgets/resizedialog.cpp" line="260"/>
         <source>The file system does not support shrinking space</source>
         <translation>फाइल सिस्टम छोटा करने के लिए स्थान को समर्थन नहीं कرتा है</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="258"/>
-        <location filename="../widgets/resizedialog.cpp" line="282"/>
-        <location filename="../widgets/resizedialog.cpp" line="395"/>
-        <location filename="../widgets/resizedialog.cpp" line="399"/>
-        <location filename="../widgets/resizedialog.cpp" line="440"/>
+        <location filename="../widgets/resizedialog.cpp" line="260"/>
+        <location filename="../widgets/resizedialog.cpp" line="284"/>
+        <location filename="../widgets/resizedialog.cpp" line="397"/>
+        <location filename="../widgets/resizedialog.cpp" line="401"/>
+        <location filename="../widgets/resizedialog.cpp" line="442"/>
         <source>OK</source>
         <translation>ओके</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="274"/>
-        <location filename="../widgets/resizedialog.cpp" line="345"/>
+        <location filename="../widgets/resizedialog.cpp" line="276"/>
+        <location filename="../widgets/resizedialog.cpp" line="347"/>
         <source>No less than the used capacity please</source>
         <translation>कृपया उपयोग की धारिता से कम न करें</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="282"/>
+        <location filename="../widgets/resizedialog.cpp" line="284"/>
         <source>To prevent data loss, back up data before shrinking it</source>
         <translation>डेटा हानि से बचाव के लिए, इसे सhrink करने से पहले डेटा के बैकअप लें</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="384"/>
+        <location filename="../widgets/resizedialog.cpp" line="386"/>
         <source>Unmount it before shrinking its space</source>
         <translation>इसे सhrink करने से पहले इसे unmount करें</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="395"/>
+        <location filename="../widgets/resizedialog.cpp" line="397"/>
         <source>The current device has been mounted and will be unmounted automatically. Please back up data in it to prevent data loss</source>
         <translation>&gt;-
  वर्तमान डिवाइस माउंट कर दिया गया है और स्वचालित रूप से अनमाउंट कर दिया जाएगा।
  कृपया डेटा हानि से बचाव के लिए इसमें डेटा के बैकअप लें</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="399"/>
+        <location filename="../widgets/resizedialog.cpp" line="401"/>
         <source>To prevent data loss, back up data in the logical volume before shrinking it</source>
         <translation>&gt;-
  डेटा हानि से बचाव के लिए, इसे सhrink करने से पहले लॉजिकल वॉल्यूम में डेटा के बैकअप लें</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="440"/>
+        <location filename="../widgets/resizedialog.cpp" line="442"/>
         <source>The file system does not support space adjustment</source>
         <translation>फ़ाइल सिस्टम स्पेस एडजस्टमेंट का समर्थन नहीं करता</translation>
     </message>
@@ -2270,18 +2270,22 @@ will format it and remove its password.</source>
 <context>
     <name>SizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="317"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="433"/>
         <source> Capacity:</source>
-        <translation>क्षमता :</translation>
+        <translation type="vanished">क्षमता :</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="376"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="378"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="383"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="492"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="494"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="498"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="326"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="442"/>
+        <source>Available:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="385"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="387"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="392"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="501"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="503"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="507"/>
         <source>Used:</source>
         <translation>प्रयुक्त स्पेस :</translation>
     </message>
@@ -2458,17 +2462,17 @@ rootA and rootB should be resized to the same value</source>
         <translation>सिस्टम डिस्क unmount करने से सिस्टम क्रैश हो सकता है</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountwarningdialog.cpp" line="41"/>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="43"/>
         <source>I will take the risks that may arise</source>
         <translation>मैं उन जोखिमों को स्वीकार कर लूंगा जो उत्पन्न हो सकते हैं</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountwarningdialog.cpp" line="60"/>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="62"/>
         <source>Cancel</source>
         <translation>रद्द करें</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountwarningdialog.cpp" line="61"/>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="63"/>
         <source>Unmount</source>
         <translation>माउंट से हटाएँ</translation>
     </message>

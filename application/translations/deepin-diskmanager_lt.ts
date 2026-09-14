@@ -25,24 +25,24 @@
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="150"/>
-        <location filename="../widgets/createlvwidget.cpp" line="325"/>
+        <location filename="../widgets/createlvwidget.cpp" line="326"/>
         <source>LV name:</source>
         <translation>LV pavadinimas:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="159"/>
         <location filename="../widgets/createlvwidget.cpp" line="163"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1188"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1192"/>
         <source>VG name:</source>
         <translation>VG pavadinimas:</translation>
     </message>
     <message>
         <location filename="../widgets/createlvwidget.cpp" line="171"/>
-        <location filename="../widgets/createlvwidget.cpp" line="347"/>
-        <location filename="../widgets/createlvwidget.cpp" line="394"/>
-        <location filename="../widgets/createlvwidget.cpp" line="397"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1190"/>
-        <location filename="../widgets/createlvwidget.cpp" line="1192"/>
+        <location filename="../widgets/createlvwidget.cpp" line="348"/>
+        <location filename="../widgets/createlvwidget.cpp" line="398"/>
+        <location filename="../widgets/createlvwidget.cpp" line="401"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1194"/>
+        <location filename="../widgets/createlvwidget.cpp" line="1196"/>
         <source>LV file system:</source>
         <translation>LV failų sistema:</translation>
     </message>
@@ -59,69 +59,69 @@
         <translation>Atsisakyti</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="255"/>
+        <location filename="../widgets/createlvwidget.cpp" line="256"/>
         <source>Revert</source>
         <comment>button</comment>
         <translation>Atstatyti</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="289"/>
+        <location filename="../widgets/createlvwidget.cpp" line="290"/>
         <source>LV Information</source>
         <translation>LV informacija</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="302"/>
+        <location filename="../widgets/createlvwidget.cpp" line="303"/>
         <source>Create LV:</source>
         <translation>Sukurti LV:</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="313"/>
+        <location filename="../widgets/createlvwidget.cpp" line="314"/>
         <source>Delete last logical volume</source>
         <translation>Pašalinti paskutinį loginių skyrių</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="356"/>
+        <location filename="../widgets/createlvwidget.cpp" line="358"/>
         <source>LV capacity:</source>
         <translation>LV apimtis:</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="568"/>
-        <location filename="../widgets/createlvwidget.cpp" line="693"/>
+        <location filename="../widgets/createlvwidget.cpp" line="572"/>
+        <location filename="../widgets/createlvwidget.cpp" line="697"/>
         <source>Unallocated</source>
         <translation>Nepaskirtas</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="597"/>
+        <location filename="../widgets/createlvwidget.cpp" line="601"/>
         <source>Name</source>
         <translation>Pavadinimas</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="598"/>
+        <location filename="../widgets/createlvwidget.cpp" line="602"/>
         <source>Size</source>
         <translation>Dydis</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="835"/>
+        <location filename="../widgets/createlvwidget.cpp" line="839"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
         <translation>Naudokite aes-xts-plain64 standartinį algoritmus diską šifravimui. Prieš įterpimą jį reikia dešifravti.</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="842"/>
+        <location filename="../widgets/createlvwidget.cpp" line="846"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
         <translation>Naudokite sm4-xts-plain būsenos kriptografinį algoritmą diską šifravimui. Prieš įterpimą jį reikia dešifravti. Operacinės sistemos, kurios nepalaiko būsenos kriptografinio algoritmo, negalės dešifravti disko.</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="958"/>
+        <location filename="../widgets/createlvwidget.cpp" line="962"/>
         <source>To encrypt a volume, it should be larger than 100 MiB</source>
         <translation>Norint šifruoti skyrių, jis turi būti didesnis nei 100 MiB</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="991"/>
+        <location filename="../widgets/createlvwidget.cpp" line="995"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>Norint vengti slaptažodžių praradimo, atsisiųskite slaptažodį ir laikykite jį saugiai!</translation>
     </message>
     <message>
-        <location filename="../widgets/createlvwidget.cpp" line="992"/>
+        <location filename="../widgets/createlvwidget.cpp" line="996"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>GERAI</translation>
@@ -130,27 +130,27 @@
 <context>
     <name>CreatePartitionTableDialog</name>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="38"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="39"/>
         <source>Cancel</source>
         <translation>Atsisakyti</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="48"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="49"/>
         <source>No partition table in this disk. Create a new one?</source>
         <translation>Šiame diske nėra skilties lentelės. Sukurti naują?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="49"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="50"/>
         <source>Create</source>
         <translation>Sukurti</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="56"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="57"/>
         <source>The disk has a partition table already. Replace it?</source>
         <translation>Diske jau yra skilties lentelė. Pakeisti?</translation>
     </message>
     <message>
-        <location filename="../widgets/createpartitiontabledialog.cpp" line="57"/>
+        <location filename="../widgets/createpartitiontabledialog.cpp" line="58"/>
         <source>Replace</source>
         <translation>Pakeisti</translation>
     </message>
@@ -174,17 +174,17 @@
     </message>
     <message>
         <location filename="../widgets/createvgwidget.cpp" line="97"/>
-        <location filename="../widgets/createvgwidget.cpp" line="390"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1126"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1136"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1734"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1745"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1804"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1877"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1881"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1919"/>
-        <location filename="../widgets/createvgwidget.cpp" line="2061"/>
-        <location filename="../widgets/createvgwidget.cpp" line="2136"/>
+        <location filename="../widgets/createvgwidget.cpp" line="394"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1132"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1142"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1773"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1784"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1843"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1916"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1920"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1958"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2100"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2175"/>
         <source>Capacity selected: %1</source>
         <translation>Pasirinkta kapacitetas: %1</translation>
     </message>
@@ -204,146 +204,146 @@
         <translation>Nėra prieinamų diskų ar skyrių</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="257"/>
-        <location filename="../widgets/createvgwidget.cpp" line="454"/>
+        <location filename="../widgets/createvgwidget.cpp" line="258"/>
+        <location filename="../widgets/createvgwidget.cpp" line="459"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Atsisakyti</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="260"/>
+        <location filename="../widgets/createvgwidget.cpp" line="262"/>
         <source>Next</source>
         <translation>Tęsti</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="285"/>
+        <location filename="../widgets/createvgwidget.cpp" line="287"/>
         <source>Selected disks/partitions</source>
         <translation>Pasirinkti diskai/skyriai</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="322"/>
+        <location filename="../widgets/createvgwidget.cpp" line="324"/>
         <source>Set VG capacity</source>
         <translation>Nustatyti VG kapacitetą</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="327"/>
+        <location filename="../widgets/createvgwidget.cpp" line="329"/>
         <source>Auto adjusted to integral multiples of 4 MiB</source>
         <translation>Automatiškai pataisytas į sveikus daugybes 4 MiB</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="420"/>
+        <location filename="../widgets/createvgwidget.cpp" line="424"/>
         <source>Choose one disk or partition at least</source>
         <translation>Pasirinkite bent vieną diską ar skyrių</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="457"/>
+        <location filename="../widgets/createvgwidget.cpp" line="463"/>
         <source>Previous</source>
         <translation>Ankstyvesnis</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="460"/>
+        <location filename="../widgets/createvgwidget.cpp" line="466"/>
         <source>Done</source>
         <comment>button</comment>
         <translation>Baigta</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="584"/>
+        <location filename="../widgets/createvgwidget.cpp" line="590"/>
         <source>Resizing space...</source>
         <translation>Keičiama erdvė...</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="587"/>
+        <location filename="../widgets/createvgwidget.cpp" line="593"/>
         <source>Creating...</source>
         <translation>Kuriamas...</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="646"/>
+        <location filename="../widgets/createvgwidget.cpp" line="652"/>
         <source>Selected disks and partitions:</source>
         <translation>Pasirinkti diskai ir skyriai:</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="693"/>
-        <location filename="../widgets/createvgwidget.cpp" line="696"/>
+        <location filename="../widgets/createvgwidget.cpp" line="699"/>
+        <location filename="../widgets/createvgwidget.cpp" line="702"/>
         <source>VG capacity: %1</source>
         <translation>VG kapacitetas: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="701"/>
+        <location filename="../widgets/createvgwidget.cpp" line="707"/>
         <source>VG name: %1</source>
         <translation>VG vardas: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="822"/>
+        <location filename="../widgets/createvgwidget.cpp" line="828"/>
         <source>No less than the used capacity please</source>
         <translation>Nepakanka naudojamos kapaciteto, prašome</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="828"/>
+        <location filename="../widgets/createvgwidget.cpp" line="834"/>
         <source>No more than the maximum capacity please</source>
         <translation>Nepakanka maksimalios kapaciteto, prašome</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="850"/>
+        <location filename="../widgets/createvgwidget.cpp" line="856"/>
         <source>A lot of data exists on %1, </source>
         <translation>Ant %1 yra daug duomenų, </translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="851"/>
+        <location filename="../widgets/createvgwidget.cpp" line="857"/>
         <source>which may take a long time to back it up.</source>
         <translation>kad tai gali užimti daug laiko atsisiųsti atsarginę kopiją.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="852"/>
+        <location filename="../widgets/createvgwidget.cpp" line="858"/>
         <source>Do you want to continue?</source>
         <translation>Ar norite tęsti?</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="853"/>
+        <location filename="../widgets/createvgwidget.cpp" line="859"/>
         <source>Continue</source>
         <translation>Tęsti</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="854"/>
+        <location filename="../widgets/createvgwidget.cpp" line="860"/>
         <source>Cancel</source>
         <translation>Atsisakyti</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1815"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1930"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1854"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1969"/>
         <source>Adding the disk/partition to a logical volume group 
 will format it and remove its password.</source>
         <translation>Pridėjus diską/skyrių prie logiškojo skyrių grupės, jis bus formuojamas ir bus pašalinta jo slaptažodis.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="1816"/>
-        <location filename="../widgets/createvgwidget.cpp" line="1931"/>
-        <location filename="../widgets/createvgwidget.cpp" line="2084"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1855"/>
+        <location filename="../widgets/createvgwidget.cpp" line="1970"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2123"/>
         <source>OK</source>
         <translation>Gerai</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="2083"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2122"/>
         <source>Not enough space to back up data on %1, please clear disk space</source>
         <translation>Nepakankamas erdvė atsisiųsti duomenų atsarginę kopiją %1, prašome išvalyti diską</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="2282"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2321"/>
         <source>Existing volume group, creation failed. Please retry after reboot.</source>
         <translation>Esamas skyrių grupė, sukūrimas neįvyko. Prašome bandyti iš naujo po paleidimo.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="2287"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2326"/>
         <source>Failed to create a physical volume. Please refresh Disk Utility and try again.</source>
         <translation>Nepavyko sukurti fizikinio skyriaus. Prašome atnaujinti Disko įrankį ir bandykite dar kartą.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="2292"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2331"/>
         <source>Device input/output error. Please try again after reboot.</source>
         <translation>Įrenginio įvesties/išvesties klaida. Prašome bandyti dar kartą po paleidimo.</translation>
     </message>
     <message>
-        <location filename="../widgets/createvgwidget.cpp" line="2356"/>
-        <location filename="../widgets/createvgwidget.cpp" line="2366"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2395"/>
+        <location filename="../widgets/createvgwidget.cpp" line="2405"/>
         <source>Refreshing the page to reload disks</source>
         <translation>Atnaujina puslapiį, kad atkurtų diskus</translation>
     </message>
@@ -351,32 +351,32 @@ will format it and remove its password.</source>
 <context>
     <name>CylinderInfoWidget</name>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="520"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="522"/>
         <source>LBA: %1</source>
         <translation>LBA: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="521"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="523"/>
         <source>Cyl.: %1</source>
         <translation>Cyl.: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="522"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="524"/>
         <source>Error: %1</source>
         <translation>Klaida: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="523"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="525"/>
         <source>Cyl. elapsed time: %1</source>
         <translation>Cyl. praeito laiko: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="523"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="525"/>
         <source>ms</source>
         <translation>ms</translation>
     </message>
     <message>
-        <location filename="../widgets/cylinderinfowidget.cpp" line="524"/>
+        <location filename="../widgets/cylinderinfowidget.cpp" line="526"/>
         <source>Status: Repaired</source>
         <translation>Statusas: Reparavimas</translation>
     </message>
@@ -536,59 +536,59 @@ will format it and remove its password.</source>
         <translation>Įveskite slaptažodį, kad iškurtų skyrių grupę</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="81"/>
+        <location filename="../widgets/decryptdialog.cpp" line="82"/>
         <source>Enter a password </source>
         <translation>Įveskite slaptažodį </translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="87"/>
+        <location filename="../widgets/decryptdialog.cpp" line="89"/>
         <source>Password hint</source>
         <translation>Slaptažodžio patarimas</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="138"/>
+        <location filename="../widgets/decryptdialog.cpp" line="140"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Atsisakyti</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="143"/>
+        <location filename="../widgets/decryptdialog.cpp" line="146"/>
         <source>Decrypt</source>
         <comment>button</comment>
         <translation>Iškurti</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="341"/>
+        <location filename="../widgets/decryptdialog.cpp" line="345"/>
         <source>Decrypting...</source>
         <translation>Iškūrimas...</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="215"/>
+        <location filename="../widgets/decryptdialog.cpp" line="219"/>
         <source>Please try again %1 minutes later</source>
         <translation>Prašome bandykite dar kartą %1 minutės vėliau</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="316"/>
+        <location filename="../widgets/decryptdialog.cpp" line="320"/>
         <source>The password cannot be empty</source>
         <translation>Slaptažodis negali būti tuščias</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="365"/>
+        <location filename="../widgets/decryptdialog.cpp" line="369"/>
         <source>Decryption failed</source>
         <translation>Iškūrimas nepavyko</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="385"/>
+        <location filename="../widgets/decryptdialog.cpp" line="389"/>
         <source>Password locked, please try again %1 minutes later</source>
         <translation>Slaptažodis užblokuotas, prašome bandykite dar kartą %1 minutės vėliau</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="388"/>
+        <location filename="../widgets/decryptdialog.cpp" line="392"/>
         <source>Wrong password, %1 chances left</source>
         <translation>Neteisingas slaptažodis, liko %1 galimybių</translation>
     </message>
     <message>
-        <location filename="../widgets/decryptdialog.cpp" line="391"/>
+        <location filename="../widgets/decryptdialog.cpp" line="395"/>
         <source>Wrong password, only one chance left</source>
         <translation>Neteisingas slaptažodis, liko viena galimybė</translation>
     </message>
@@ -626,50 +626,50 @@ will format it and remove its password.</source>
         <translation>Sukurti particijų lentelę</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="159"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="164"/>
         <source>Delete partition</source>
         <translation>Pašalinti particiją</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="221"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="226"/>
         <source>Delete volume group</source>
         <translation>Pašalinti skyrių grupę</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="227"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="646"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="232"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="651"/>
         <source>Create logical volume</source>
         <translation>Sukurti logiškąjį skyrių</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="255"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="260"/>
         <source>Delete logical volume</source>
         <translation>Pašalinti logiškąjį skyrių</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="303"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="308"/>
         <source>Close</source>
         <translation>Užverti</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="303"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="308"/>
         <source>Health checking does not support this type of device.</source>
         <translation>Sveikatos patikrinimas nepalaiko šio tipo įrengimo.</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="343"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="348"/>
         <source>Please unmount all partitions in the disk first</source>
         <translation>Prašome pirmiausia atsijungti visus diskų partitijas</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="343"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="615"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="673"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="348"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="620"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="678"/>
         <source>OK</source>
         <translation>Gerai</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="355"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="360"/>
         <source>All partitions in this disk will be merged and all data
  will be lost if creating a new partition table,
  please take it carefully</source>
@@ -678,206 +678,206 @@ bus prarandami, jei bus sukurtas naujas particijų lentelė,
 atsargiai atsakykite</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="355"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="360"/>
         <source>Proceed</source>
         <translation>Tęsti</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="355"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="399"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="435"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="452"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="628"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="686"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="360"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="404"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="440"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="457"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="633"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="691"/>
         <source>Cancel</source>
         <translation>Atsisakyti</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="385"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="390"/>
         <source>No errors found in the partition table</source>
         <translation>Particijų lentelėje nerasta klaidų</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="399"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="404"/>
         <source>Do you want to hide this partition?</source>
         <translation>Ar norite paslėpti šią particiją?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="399"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="404"/>
         <source>Hide</source>
         <translation>Paslėpti</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="408"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="413"/>
         <source>Failed to hide the partition: unable to lock it</source>
         <translation>Nepavyko paslėpti particijos: negalima ją užkirsti kelio</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="417"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="422"/>
         <source>You can only hide the unmounted partition</source>
         <translation>Galite paslėpti tik neprisijungtą particiją</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="435"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="440"/>
         <source>Do you want to unhide this partition?</source>
         <translation>Ar norite atsiversti šią particiją?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="435"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="440"/>
         <source>Unhide</source>
         <translation>Atsiversti</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="452"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="457"/>
         <source>Are you sure you want to delete this partition?</source>
         <translation>Ar tikrai norite ištrinti šią particiją?</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="452"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="457"/>
         <source>You will lose all data in it</source>
         <translation>Prarandate visus šios particijos duomenis</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="452"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="628"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="686"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="457"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="633"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="691"/>
         <source>Delete</source>
         <translation>Ištrinti</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="459"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="464"/>
         <source>Failed to delete the partition: unable to lock it</source>
         <translation>Nepavyko ištrinti particijos: negalima ją užkirsti kelio</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="476"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="481"/>
         <source>Hide the partition successfully</source>
         <translation>Particiją sėkmingai paslėpti</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="482"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="487"/>
         <source>Failed to hide the partition</source>
         <translation>Nepavyko paslėpti particijos</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="494"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="499"/>
         <source>Unhide the partition successfully</source>
         <translation>Particiją sėkmingai atsiversti</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="500"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="505"/>
         <source>Failed to unhide the partition</source>
         <translation>Nepavyko atsiversti particijos</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="518"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="523"/>
         <source>Delete the partition successfully</source>
         <translation>Particiją sėkmingai ištrinti</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="527"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="532"/>
         <source>Failed to find the disk</source>
         <translation>Nepavyko rasti disko</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="531"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="536"/>
         <source>Failed to get the partition info</source>
         <translation>Nepavyko gauti particijos informacijos</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="535"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="540"/>
         <source>Failed to delete the partition</source>
         <translation>Nepavyko ištrinti particijos</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="539"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="544"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>Nepavyko pateikti prašymo į kernel</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="546"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="551"/>
         <source>Failed to delete the partition: %1</source>
         <translation>Nepavyko ištrinti particijos: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="558"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="563"/>
         <source>Unmounting successful</source>
         <translation>Atsijungimas sėkmingas</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="564"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="569"/>
         <source>Unmounting failed</source>
         <translation>Atsijungimas nepavyko</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="578"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="583"/>
         <source>Creating partition table successful</source>
         <translation>Particijų lentelė sėkmingai sukurtas</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="583"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="588"/>
         <source>Replacing partition table successful</source>
         <translation>Particijų lentelė sėkmingai pakeista</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="593"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="598"/>
         <source>Creating partition table failed</source>
         <translation>Particijų lentelės kūrimas nepavyko</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="598"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="603"/>
         <source>Replacing partition table failed</source>
         <translation>Particijų lentelės pakeitimas nepavyko</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="615"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="620"/>
         <source>Unmount all logical volumes in %1 first</source>
         <translation>Pirmiausia atsitraukite visus loginius volume %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="627"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="685"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="632"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="690"/>
         <source>Data cannot be recovered if deleted, please confirm before proceeding</source>
         <translation>Jei duomenys ištrinti, jie negalės būti atkurti, prašome patvirtinti prieš tęsiant</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="646"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="651"/>
         <source>The disks will be formatted if you create a logical volume</source>
         <translation>Diskai bus formuojami, jei sukursite loginių volume</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="673"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="678"/>
         <source>Unmount %1 first</source>
         <translation>Pirmiausia atsitraukite %1</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="718"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="723"/>
         <source>The logical volume group is busy and cannot be deleted. Please retry after reboot.</source>
         <translation>Loginis volume grupė užimta ir negalima pašalinti. Prašome bandyti po paleidimo.</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="723"/>
-        <location filename="../widgets/devicelistwidget.cpp" line="764"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="728"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="769"/>
         <source>The logical volume is busy and cannot be deleted. Please retry after reboot.</source>
         <translation>Loginis volume užimtas ir negalimas pašalinti. Prašome bandyti po paleidimo.</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="728"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="733"/>
         <source>Failed to delete the logical volume group</source>
         <translation>Nepavyko pašalinti loginių volume grupės</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="769"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="774"/>
         <source>Failed to delete the logical volume</source>
         <translation>Nepavyko pašalinti loginių volume</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="894"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="899"/>
         <source>Volume Groups</source>
         <translation>Loginių volume grupės</translation>
     </message>
     <message>
-        <location filename="../widgets/devicelistwidget.cpp" line="948"/>
+        <location filename="../widgets/devicelistwidget.cpp" line="953"/>
         <source>Disks</source>
         <translation>Diskai</translation>
     </message>
@@ -885,249 +885,249 @@ atsargiai atsakykite</translation>
 <context>
     <name>DiskBadSectorsDialog</name>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="38"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="39"/>
         <source>Verify or repair bad sectors</source>
         <translation>Patikrinti arba pažymėti sunaikintus sektorius</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="68"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="128"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="131"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1314"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1317"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="69"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="132"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="135"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1379"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1382"/>
         <source>Verify:</source>
         <translation>Patikrinti:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="73"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="75"/>
         <source>Cylinders</source>
         <translation>Kilimai</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="74"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="76"/>
         <source>Sectors</source>
         <translation>Sektoriai</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="75"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="77"/>
         <source>MB</source>
         <translation>MB</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="123"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="129"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="132"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1315"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1318"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="127"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="133"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="136"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1380"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1383"/>
         <source>Method:</source>
         <translation>Metodas:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="146"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="151"/>
         <source>Rounds</source>
         <translation>Raudonos</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="147"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="152"/>
         <source>Timeout</source>
         <translation>Laiko apribojimas</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="196"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="205"/>
         <source>ms</source>
         <translation>ms</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="229"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="238"/>
         <source>Result:</source>
         <translation>Rezultatas:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="254"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="263"/>
         <source>Excellent</source>
         <translation>Puikus</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="261"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="270"/>
         <source>Damaged</source>
         <translation>Sunykęs</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="268"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="277"/>
         <source>Unknown</source>
         <translation>Nežinomas</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="296"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="305"/>
         <source>Exit</source>
         <comment>button</comment>
         <translation>Išeiti</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="301"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="310"/>
         <source>Reset</source>
         <comment>button</comment>
         <translation>Atstatyti</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="307"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="316"/>
         <source>Repair</source>
         <translation>Reparuoti</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="313"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="322"/>
         <source>Start Verify</source>
         <translation>Pradėti patikrinimą</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="318"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="327"/>
         <source>Stop</source>
         <comment>button</comment>
         <translation>Stabdymas</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="323"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="332"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>Tęsti</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="328"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="337"/>
         <source>Verify Again</source>
         <translation>Patikrinti dar kartą</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="333"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="342"/>
         <source>Done</source>
         <comment>button</comment>
         <translation>Baigta</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="364"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="644"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="813"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="951"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1000"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1086"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1190"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="373"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="653"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="854"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1004"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1059"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1151"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1255"/>
         <source>Time elapsed:</source>
         <translation>Laikas praejo:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="369"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="645"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="819"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="833"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="952"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1001"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1087"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1106"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1162"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1196"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="378"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="654"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="860"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="874"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1005"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1060"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1152"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1171"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1227"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1261"/>
         <source>Time left:</source>
         <translation>Laikas liko:</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="795"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="809"/>
         <source>Verifying cylinder: %1</source>
         <translation>Patikrinamas cilindras: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="835"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="876"/>
         <source>Verify completed</source>
         <translation>Patikrinimas baigtas</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="859"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="900"/>
         <source>Disk verify completed. %1 bad blocks found.</source>
         <translation>Disko patikrinimas baigtas. %1 blogų blokų rasta.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="859"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1045"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="900"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1110"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1041"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1106"/>
         <source>The verifying disk contains mounted partitions, so you cannot repair it.</source>
         <translation>Patikrinamas diskas turi pririštas dalis, todėl jo negalima atkurti.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1043"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1108"/>
         <source>Please unmount partitions and then repair the disk.</source>
         <translation>Prašom atsitraukti dalis ir tada atkurti diską.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1053"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1118"/>
         <source>Warning</source>
         <translation>Įspėjimas</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1058"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1123"/>
         <source>Bad sector repairing cannot recover files,</source>
         <translation>Blogų sektorių atkūrimas negalės atkurti failų,</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1059"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1124"/>
         <source>but destroys data on and near bad sectors instead.</source>
         <translation>tačiau sunaikina duomenis šalia ir tiesioginiame blogų sektorių vietose.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1060"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1125"/>
         <source>Please back up all data before repair.</source>
         <translation>Prašom atsisiųsti visus duomenis prieš atkūrimą.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1074"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1250"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1277"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1139"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1315"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1342"/>
         <source>Cancel</source>
         <translation>Atsisakyti</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1075"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1140"/>
         <source>Start Repair</source>
         <translation>Pradėti atkūrimą</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1125"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1190"/>
         <source>Repairing cylinder: %1</source>
         <translation>Atkuriama cilindras: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1167"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1232"/>
         <source>Repair completed. Cylinder: %1 repaired.</source>
         <translation>Atkūrimas baigtas. Cilindras: %1 atkurtas.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1170"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1235"/>
         <source>Disk repair completed. %1 bad blocks repaired.</source>
         <translation>Disko atkūrimas baigtas. %1 blogų blokų atkurti.</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1249"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1314"/>
         <source>Verifying for bad sectors, exit now?</source>
         <translation>Patikrinama blogų sektorių, ar norite išeiti?</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1249"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1314"/>
         <source>The verified information will not be reserved</source>
         <translation>Patikrinta informacija nebus išlaikyta</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1250"/>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1277"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1315"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1342"/>
         <source>Exit</source>
         <translation>Išeiti</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1276"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1341"/>
         <source>Repairing bad sectors, exit now?</source>
         <translation>Atkuriamas blogų sektorių, ar norite išeiti?</translation>
     </message>
     <message>
-        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1276"/>
+        <location filename="../widgets/diskbadsectorsdialog.cpp" line="1341"/>
         <source>The repairing information will not be reserved</source>
         <translation>Atkuriamas informacija nebus išlaikyta</translation>
     </message>
@@ -1140,124 +1140,124 @@ atsargiai atsakykite</translation>
         <translation>Patikrinti sveikatą</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="74"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="59"/>
         <source>Serial number</source>
         <translation>Seriujos numeris</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="83"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="67"/>
         <source>Storage</source>
         <translation>Saugojimas</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="105"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="88"/>
         <source>Health Status</source>
         <translation>Sveikatos būklė</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="122"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="103"/>
         <source>Good</source>
         <translation>Geras</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="129"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="110"/>
         <source>Damaged</source>
         <translation>Pažeistas</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="136"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="117"/>
         <source>Unknown</source>
         <translation>Nežinomas</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="155"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="136"/>
         <source>Temperature</source>
         <translation>Šilumos</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="209"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="435"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="189"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="210"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="435"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="190"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>Status</source>
         <translation>Būsena</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="211"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="435"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="191"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>Current</source>
         <translation>Šiuo metu</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="212"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="435"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="192"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="415"/>
         <source>Worst</source>
         <translation>Blogiausia</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="213"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="436"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="193"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="416"/>
         <source>Threshold</source>
         <translation>Prieštaravimas</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="214"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="436"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="194"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="416"/>
         <source>Raw Value</source>
         <translation>Pagrindinis reikšmė</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="215"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="436"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="195"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="416"/>
         <source>Attribute name</source>
         <translation>Papildomosios reikšmės pavadinimas</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="333"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="313"/>
         <source>Status: (G: Good | W: Warning | D: Damaged | U: Unknown)</source>
         <translation>Būsena: (G: Gerai | W: Įspėjimas | D: Sunaikinta | U: Nežinoma)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="337"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="340"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="342"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="476"/>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="479"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="316"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="320"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="322"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="456"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="459"/>
         <source>Export</source>
         <comment>button</comment>
         <translation>Eksportuoti</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="377"/>
         <source>Save File</source>
         <translation>Išsaugoti failą</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="397"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="377"/>
         <source>Text files (*.txt)</source>
         <translation>Tekstiniai failai (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="413"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="393"/>
         <source>Wrong path</source>
         <translation>Blogas kelių</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="422"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="402"/>
         <source>You do not have permission to access this path</source>
         <translation>Jūs neturite teisių prieš tai pasiekti šį kelią</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="457"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="437"/>
         <source>Export successful</source>
         <translation>Eksportavimas sėkmingas</translation>
     </message>
     <message>
-        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="461"/>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="441"/>
         <source>Export failed</source>
         <translation>Eksportavimas nepavyko</translation>
     </message>
@@ -1362,41 +1362,41 @@ atsargiai atsakykite</translation>
     </message>
     <message>
         <location filename="../widgets/diskinfodisplaydialog.cpp" line="111"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="116"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="119"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="228"/>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="231"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="117"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="120"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="229"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="232"/>
         <source>Export</source>
         <comment>button</comment>
         <translation>Eksportuoti</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="151"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="152"/>
         <source>Save File</source>
         <translation>Išsaugoti failą</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="151"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="152"/>
         <source>Text files (*.txt)</source>
         <translation>Tekstiniai failai (*.txt)</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="168"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="169"/>
         <source>Wrong path</source>
         <translation>Klaidingas kelias</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="177"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="178"/>
         <source>You do not have permission to access this path</source>
         <translation>Jūs neturite teisės prieiti prie šio kelio</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="209"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="210"/>
         <source>Export successful</source>
         <translation>Eksportavimas sėkmingas</translation>
     </message>
     <message>
-        <location filename="../widgets/diskinfodisplaydialog.cpp" line="213"/>
+        <location filename="../widgets/diskinfodisplaydialog.cpp" line="214"/>
         <source>Export failed</source>
         <translation>Eksportavimas nepavyko</translation>
     </message>
@@ -1419,172 +1419,172 @@ atsargiai atsakykite</translation>
         <translation>Vardas:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="111"/>
+        <location filename="../widgets/formatedialog.cpp" line="112"/>
         <source>Name</source>
         <translation>Vardas</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="114"/>
+        <location filename="../widgets/formatedialog.cpp" line="115"/>
         <source>File system:</source>
         <translation>Failų sistema:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="149"/>
+        <location filename="../widgets/formatedialog.cpp" line="151"/>
         <source>AES Encryption</source>
         <translation>AES šifruotis</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="153"/>
+        <location filename="../widgets/formatedialog.cpp" line="155"/>
         <source>SM4 Encryption</source>
         <translation>SM4 šifruotis</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="170"/>
+        <location filename="../widgets/formatedialog.cpp" line="172"/>
         <source>Security:</source>
         <translation>Apsauga:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="184"/>
-        <location filename="../widgets/formatedialog.cpp" line="189"/>
+        <location filename="../widgets/formatedialog.cpp" line="187"/>
+        <location filename="../widgets/formatedialog.cpp" line="192"/>
         <source>Fast</source>
         <translation>Greitas</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="184"/>
-        <location filename="../widgets/formatedialog.cpp" line="189"/>
+        <location filename="../widgets/formatedialog.cpp" line="187"/>
+        <location filename="../widgets/formatedialog.cpp" line="192"/>
         <source>Secure</source>
         <translation>Apsaugotas</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="189"/>
+        <location filename="../widgets/formatedialog.cpp" line="192"/>
         <source>Advanced</source>
         <translation>Paįvairintas</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="200"/>
-        <location filename="../widgets/formatedialog.cpp" line="503"/>
+        <location filename="../widgets/formatedialog.cpp" line="203"/>
+        <location filename="../widgets/formatedialog.cpp" line="509"/>
         <source>It only deletes the partition info without erasing the files on the disk. Disk recovery tools may recover the files at a certain probability.</source>
         <translation>Šis veiksmas tik pašalina skydelio informaciją, ne pašalinant duomenis iš diskalo. Disko atkūrimo įrankiai gali atkurti duomenis tam tikra tikimybe.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="206"/>
+        <location filename="../widgets/formatedialog.cpp" line="209"/>
         <source>Wiping method:</source>
         <translation>Ištrinimo metodas:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="214"/>
+        <location filename="../widgets/formatedialog.cpp" line="218"/>
         <source>DoD 5220.22-M, 7 passes</source>
         <translation>DoD 5220.22-M, 7 kartus</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="214"/>
+        <location filename="../widgets/formatedialog.cpp" line="218"/>
         <source>Gutmann, 35 passes</source>
         <translation>Gutmann, 35 kartus</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="275"/>
+        <location filename="../widgets/formatedialog.cpp" line="279"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Atsisakyti</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="279"/>
+        <location filename="../widgets/formatedialog.cpp" line="285"/>
         <source>Wipe</source>
         <comment>button</comment>
         <translation>Ištrinti</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="327"/>
+        <location filename="../widgets/formatedialog.cpp" line="333"/>
         <source>Failed to find the disk</source>
         <translation>Nepavyko rasti diskalo</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="331"/>
+        <location filename="../widgets/formatedialog.cpp" line="337"/>
         <source>The action cannot be undone, please proceed with caution</source>
         <translation>Šis veiksmas negali būti atšauktas, prašom atlikti atsargiai</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="333"/>
+        <location filename="../widgets/formatedialog.cpp" line="339"/>
         <source>LV name:</source>
         <translation>LV pavadinimas:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="337"/>
+        <location filename="../widgets/formatedialog.cpp" line="343"/>
         <source>LV name</source>
         <translation>LV pavadinimas</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="339"/>
+        <location filename="../widgets/formatedialog.cpp" line="345"/>
         <source>LV file system:</source>
         <translation>LV failų sistema:</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="341"/>
-        <location filename="../widgets/formatedialog.cpp" line="553"/>
+        <location filename="../widgets/formatedialog.cpp" line="347"/>
+        <location filename="../widgets/formatedialog.cpp" line="559"/>
         <source>You may be able to recover files after the wipe.</source>
         <translation>Po šalinimo galbūt galite atkurti failus.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="344"/>
+        <location filename="../widgets/formatedialog.cpp" line="350"/>
         <source>Failed to submit the request to the kernel</source>
         <translation>Nepavyko pateikti prašymo į kernel</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="398"/>
-        <location filename="../widgets/formatedialog.cpp" line="413"/>
-        <location filename="../widgets/formatedialog.cpp" line="437"/>
-        <location filename="../widgets/formatedialog.cpp" line="449"/>
+        <location filename="../widgets/formatedialog.cpp" line="404"/>
+        <location filename="../widgets/formatedialog.cpp" line="419"/>
+        <location filename="../widgets/formatedialog.cpp" line="443"/>
+        <location filename="../widgets/formatedialog.cpp" line="455"/>
         <source>The length exceeds the limit</source>
         <translation>Ilgis viršija ribą</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="467"/>
+        <location filename="../widgets/formatedialog.cpp" line="473"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. You should decrypt it before mounting it again.</source>
         <translation>Naudokite aes-xts-plain64 standartinį algoritmą diską šifravimui. Jį reikia dešifravti prieš vėl pritvirtinant.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="477"/>
+        <location filename="../widgets/formatedialog.cpp" line="483"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. You should decrypt it before mounting it again. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
         <translation>Naudokite sm4-xts-plain būsenos kriptografinį algoritmą diską šifravimui. Jį reikia dešifravti prieš vėl pritvirtinant. Operacinės sistemos, kurios nepalaiko būsenos kriptografinio algoritmo, negalės dešifravti disko.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="518"/>
+        <location filename="../widgets/formatedialog.cpp" line="524"/>
         <source>It is a one-time secure wipe that complies with NIST 800-88 and writes 0, 1, and random data to the entire disk once. You will not be able to recover files, and the process will be slow.</source>
         <translation>Tai vieną kartą atliekamas saugus šalinimas, kuris atitinka NIST 800-88, ir rašo 0, 1 ir atsitiktinį duomenis visam diskinui vienąkart. Negalėsite atkurti failų, ir procesas bus lėtas.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="533"/>
+        <location filename="../widgets/formatedialog.cpp" line="539"/>
         <source>It writes 0, 1, and random data to the entire disk several times. You can set the number of times to erase disks and overwrite data, but the process will be very slow.</source>
         <translation>Jis rašo 0, 1 ir atsitiktinį duomenis visam diskinui kelis kartus. Galite nustatyti kiek kartų šalinti diskus ir perrašyti duomenis, tačiau procesas bus labai lėtas.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="566"/>
+        <location filename="../widgets/formatedialog.cpp" line="572"/>
         <source>You will not be able to recover files after the wipe, and the process will be slow.</source>
         <translation>Po šalinimo negalėsite atkurti failų, ir procesas bus lėtas.</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="648"/>
+        <location filename="../widgets/formatedialog.cpp" line="654"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>Norint išvengti slaptažodžio praradimo, atsisiųskite slaptažodį ir laikykite jį tinkamai!</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="649"/>
+        <location filename="../widgets/formatedialog.cpp" line="655"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>GERAI</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="738"/>
+        <location filename="../widgets/formatedialog.cpp" line="744"/>
         <source>Wiping %1</source>
         <translation>Šalinamas %1</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="772"/>
+        <location filename="../widgets/formatedialog.cpp" line="778"/>
         <source>&quot;%1&quot; wiped</source>
         <translation>&quot;%1&quot; šalinamas</translation>
     </message>
     <message>
-        <location filename="../widgets/formatedialog.cpp" line="780"/>
+        <location filename="../widgets/formatedialog.cpp" line="786"/>
         <source>Failed to wipe %1</source>
         <translation>Nepavyko šalinti %1</translation>
     </message>
@@ -1737,46 +1737,46 @@ atsargiai atsakykite</translation>
         <translation>Pakabimo vieta:</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="78"/>
-        <location filename="../widgets/mountdialog.cpp" line="82"/>
+        <location filename="../widgets/mountdialog.cpp" line="79"/>
+        <location filename="../widgets/mountdialog.cpp" line="83"/>
         <source>Please select /mnt or /media, or its subdirectories.</source>
         <translation>Prašom pasirinkti /mnt arba /media, arba jos subapibrėžtis.</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="86"/>
         <location filename="../widgets/mountdialog.cpp" line="87"/>
+        <location filename="../widgets/mountdialog.cpp" line="88"/>
         <source>The mount point is illegal. Please select /mnt or /media, or its subdirectories.</source>
         <translation>Pakabimo vieta yra neteisiška. Prašom pasirinkti /mnt arba /media, arba jos subapibrėžtis.</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="97"/>
-        <location filename="../widgets/mountdialog.cpp" line="304"/>
+        <location filename="../widgets/mountdialog.cpp" line="98"/>
+        <location filename="../widgets/mountdialog.cpp" line="305"/>
         <source>Cancel</source>
         <translation>Atsisakyti</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="98"/>
+        <location filename="../widgets/mountdialog.cpp" line="99"/>
         <source>Mount</source>
         <translation>Pakabinti</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="303"/>
+        <location filename="../widgets/mountdialog.cpp" line="304"/>
         <source>The data under this mount point would be lost, please mount the directory to another location</source>
         <translation>Šios pakabimo vietos duomenys bus prarasti, prašom pakabinti aplanką kitame vietoje</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="304"/>
+        <location filename="../widgets/mountdialog.cpp" line="305"/>
         <source>Continue</source>
         <comment>button</comment>
         <translation>Tęsti</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="333"/>
+        <location filename="../widgets/mountdialog.cpp" line="334"/>
         <source>Mounting failed: The selected mount point is not empty. Please select another one!</source>
         <translation>Pakabinti nepavyko: Pasirinkta pakabimo vieta nėra tuščia. Prašom pasirinkti kitą!</translation>
     </message>
     <message>
-        <location filename="../widgets/mountdialog.cpp" line="334"/>
+        <location filename="../widgets/mountdialog.cpp" line="335"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>Gerai</translation>
@@ -1834,17 +1834,17 @@ atsargiai atsakykite</translation>
         <translation>Klaida</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="100"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="102"/>
         <source>Error</source>
         <translation>Skirstymo lentelės įrašai nėra diskų tvarka</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="109"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="111"/>
         <source>Partition table entries are not in disk order</source>
         <translation>Gerai</translation>
     </message>
     <message>
-        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="121"/>
+        <location filename="../widgets/partitiontableerrorsinfodialog.cpp" line="124"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>Skirstymas %1</translation>
@@ -1853,152 +1853,152 @@ atsargiai atsakykite</translation>
 <context>
     <name>PartitionWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="41"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="43"/>
         <source>Partitioning %1</source>
         <translation>Skirstymas %1</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="43"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="45"/>
         <source>Click %1 to increase the number of partitions. Click on each partition to change its name and file system.</source>
         <translation>Spustykite %1, kad padidėtų skyrių skaičių. Spustykite kiekvieną skyryną, kad pakeistumėte jos pavadinimą ir failų sistemą.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="122"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="124"/>
         <source>Disk Information</source>
         <translation>Disko informacija</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="136"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="138"/>
         <source>Capacity:</source>
         <translation>Apimtis:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="146"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="148"/>
         <source>Partition selected:</source>
         <translation>Pasirinkta skyrių:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="155"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="159"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1350"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="157"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="161"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1356"/>
         <source>Disk:</source>
         <translation>Diskas:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="167"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="338"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="384"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="387"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1352"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1354"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="169"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="341"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="390"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="393"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1358"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1360"/>
         <source>File system:</source>
         <translation>Failų sistema:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="244"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="246"/>
         <source>Confirm</source>
         <comment>button</comment>
         <translation>Patvirtinti</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="248"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="250"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Atsisakyti</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="251"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="254"/>
         <source>Revert</source>
         <comment>button</comment>
         <translation>Atstatyti</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="284"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="287"/>
         <source>Partition Information</source>
         <translation>Skyrių informacija</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="296"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="299"/>
         <source>Number of partitions:</source>
         <translation>Skyrių skaičius:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="307"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="310"/>
         <source>Delete last partition</source>
         <translation>Pašalinti paskutinį skyryną</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="319"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="322"/>
         <source>Name:</source>
         <translation>Pavadinimas:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="347"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="351"/>
         <source>Size:</source>
         <translation>Dydis:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="498"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="653"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="504"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="659"/>
         <source>Unallocated</source>
         <translation>Nepaskirstyta</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="527"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="533"/>
         <source>Name</source>
         <translation>Pavadinimas</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="528"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="534"/>
         <source>Size</source>
         <translation>Dydis</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="804"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="817"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="956"/>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="969"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="810"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="823"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="962"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="975"/>
         <source>The length exceeds the limit</source>
         <translation>Išmetama ilgis viršija ribą</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="830"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="836"/>
         <source>Use the aes-xts-plain64 standard algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting.</source>
         <translation>Naudokite aes-xts-plain64 standartinį šifravimo algoritmą, kad šifravusite diską. Jei jis šifruotas, prieš montavimą turite jį dešifruoti.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="837"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="843"/>
         <source>Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. If it is encrypted, you should decrypt it before mounting. Operating Systems that do not support the state cryptographic algorithm will not be able to decrypt the disk.</source>
         <translation>Naudokite sm4-xts-plain būsenos kriptografijos algoritmą, kad šifravusite diską. Jei jis šifruotas, prieš montavimą turite jį dešifruoti. Veikiančios sistemos, kurios nepalaiko būsenos kriptografijos algoritmo, negalės dešifruoti disko.</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1009"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1015"/>
         <source>The number of new partitions exceeds the limit</source>
         <translation>Naujų skyrių skaičius viršija ribą</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1036"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1042"/>
         <source>To encrypt a partition, it should be larger than 100 MiB</source>
         <translation>Norint šifruoti skyryną, ji turi būti didesnė nei 100 MiB</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1045"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1051"/>
         <source>Set a password to encrypt the new partition</source>
         <translation>Nustatykite slaptažodį, kad šifravusite naują skyryną</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1068"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1074"/>
         <source>To avoid losing the password, please back up your password and keep it properly!</source>
         <translation>Kad išvengtumėte slaptažodžio praradimo, prašome jį atsisiųsti ir tinkamai išlaikyti!</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1069"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1075"/>
         <source>OK</source>
         <comment>button</comment>
         <translation>GERAI</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1093"/>
+        <location filename="../widgets/customcontrol/partitionwidget.cpp" line="1099"/>
         <source>To create a partition, you need at least 52 MB</source>
         <translation>Kad sukurtumėte skyryną, reikia bent 52 MB</translation>
     </message>
@@ -2007,7 +2007,7 @@ atsargiai atsakykite</translation>
     <name>PasswordInputDialog</name>
     <message>
         <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="56"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="169"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="172"/>
         <source>Set a password to encrypt %1</source>
         <translation>Nustatykite slaptažodį, kad šifravusite %1</translation>
     </message>
@@ -2037,51 +2037,51 @@ atsargiai atsakykite</translation>
         <translation>(Rekomenduojama)</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="93"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="94"/>
         <source>Enter a password </source>
         <translation>Įveskite slaptažodį </translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="99"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="101"/>
         <source>Enter the password again</source>
         <translation>Įveskite slaptažodį dar kartą</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="105"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="108"/>
         <source>Enter a password hint</source>
         <translation>Įveskite slaptažodžio paaiškinimą</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="147"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="150"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Atsisakyti</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="148"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="151"/>
         <source>Confirm</source>
         <comment>button</comment>
         <translation>Patvirtinti</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="204"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="223"/>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="265"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="207"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="226"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="268"/>
         <source>The password exceeds the maximum length</source>
         <translation>Slaptažodis viršija maksimalų ilgį</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="257"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="260"/>
         <source>The password cannot be empty</source>
         <translation>Slaptažodis negali būti tuščias</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="274"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="277"/>
         <source>Passwords do not match</source>
         <translation>Slaptažodžiai nesutampa</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="282"/>
+        <location filename="../widgets/customcontrol/passwordinputdialog.cpp" line="285"/>
         <source>The password hint should differ from the password</source>
         <translation>Slaptažodžio paaiškinimas turi skirtis nuo slaptažodžio</translation>
     </message>
@@ -2118,53 +2118,53 @@ atsargiai atsakykite</translation>
         <translation>Atsisakyti</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="77"/>
+        <location filename="../widgets/removepvwidget.cpp" line="79"/>
         <source>Delete</source>
         <comment>button</comment>
         <translation>Pašalinti</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="108"/>
+        <location filename="../widgets/removepvwidget.cpp" line="110"/>
         <source>Deleting...</source>
         <translation>Pašalinant...</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="230"/>
+        <location filename="../widgets/removepvwidget.cpp" line="232"/>
         <source>A lot of data exists on %1, </source>
         <translation>Ant %1 yra daug duomenų, </translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="231"/>
+        <location filename="../widgets/removepvwidget.cpp" line="233"/>
         <source>which may take a long time to back it up.</source>
         <translation>kad galėtų ilgai trukti atsisiųsti duomenis.</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="232"/>
+        <location filename="../widgets/removepvwidget.cpp" line="234"/>
         <source>Do you want to continue?</source>
         <translation>Ar norite tęsti?</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="233"/>
+        <location filename="../widgets/removepvwidget.cpp" line="235"/>
         <source>Continue</source>
         <translation>Tęsti</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="234"/>
+        <location filename="../widgets/removepvwidget.cpp" line="236"/>
         <source>Cancel</source>
         <translation>Atsisakyti</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="248"/>
+        <location filename="../widgets/removepvwidget.cpp" line="250"/>
         <source>Not enough space to back up data on %1, please delete the logical volume first</source>
         <translation>Nepakanka vietos atsisiųsti duomenų ant %1, pirmiausia pašalinkite loginių skyrių</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="249"/>
+        <location filename="../widgets/removepvwidget.cpp" line="251"/>
         <source>OK</source>
         <translation>Gerai</translation>
     </message>
     <message>
-        <location filename="../widgets/removepvwidget.cpp" line="282"/>
+        <location filename="../widgets/removepvwidget.cpp" line="284"/>
         <source>Failed to delete the physical volume</source>
         <translation>Nepavyko pašalinti fizinių skyrių</translation>
     </message>
@@ -2177,89 +2177,89 @@ atsargiai atsakykite</translation>
         <translation>Jis pakeis diskų skilties dydį</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="72"/>
+        <location filename="../widgets/resizedialog.cpp" line="74"/>
         <source>New capacity:</source>
         <translation>Naujas kapacitetas:</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="96"/>
+        <location filename="../widgets/resizedialog.cpp" line="98"/>
         <source>Auto adjusted to integral multiples of 4 MiB</source>
         <translation>Automatiškai nustatyta kaip 4 MiB kartotinis</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="110"/>
-        <location filename="../widgets/resizedialog.cpp" line="116"/>
+        <location filename="../widgets/resizedialog.cpp" line="112"/>
+        <location filename="../widgets/resizedialog.cpp" line="118"/>
         <source>Resize %1</source>
         <translation>Pakeisti %1</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="118"/>
+        <location filename="../widgets/resizedialog.cpp" line="120"/>
         <source>It will resize the logical volume space</source>
         <translation>Jis atsakys logical volume erdė</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="124"/>
-        <location filename="../widgets/resizedialog.cpp" line="282"/>
-        <location filename="../widgets/resizedialog.cpp" line="395"/>
-        <location filename="../widgets/resizedialog.cpp" line="399"/>
+        <location filename="../widgets/resizedialog.cpp" line="126"/>
+        <location filename="../widgets/resizedialog.cpp" line="284"/>
+        <location filename="../widgets/resizedialog.cpp" line="397"/>
+        <location filename="../widgets/resizedialog.cpp" line="401"/>
         <source>Cancel</source>
         <translation>Atsisakyti</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="125"/>
+        <location filename="../widgets/resizedialog.cpp" line="127"/>
         <source>Confirm</source>
         <translation>Patvirtinti</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="160"/>
-        <location filename="../widgets/resizedialog.cpp" line="197"/>
-        <location filename="../widgets/resizedialog.cpp" line="238"/>
-        <location filename="../widgets/resizedialog.cpp" line="367"/>
+        <location filename="../widgets/resizedialog.cpp" line="162"/>
+        <location filename="../widgets/resizedialog.cpp" line="199"/>
+        <location filename="../widgets/resizedialog.cpp" line="240"/>
+        <location filename="../widgets/resizedialog.cpp" line="369"/>
         <source>No more than the maximum capacity please</source>
         <translation>Nepakartokite daugiau nei maksimalią kapacitetą</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="258"/>
+        <location filename="../widgets/resizedialog.cpp" line="260"/>
         <source>The file system does not support shrinking space</source>
         <translation>Failų sistemos neleidžia sumažinti erdės</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="258"/>
-        <location filename="../widgets/resizedialog.cpp" line="282"/>
-        <location filename="../widgets/resizedialog.cpp" line="395"/>
-        <location filename="../widgets/resizedialog.cpp" line="399"/>
-        <location filename="../widgets/resizedialog.cpp" line="440"/>
+        <location filename="../widgets/resizedialog.cpp" line="260"/>
+        <location filename="../widgets/resizedialog.cpp" line="284"/>
+        <location filename="../widgets/resizedialog.cpp" line="397"/>
+        <location filename="../widgets/resizedialog.cpp" line="401"/>
+        <location filename="../widgets/resizedialog.cpp" line="442"/>
         <source>OK</source>
         <translation>Gerai</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="274"/>
-        <location filename="../widgets/resizedialog.cpp" line="345"/>
+        <location filename="../widgets/resizedialog.cpp" line="276"/>
+        <location filename="../widgets/resizedialog.cpp" line="347"/>
         <source>No less than the used capacity please</source>
         <translation>Nepakartokite mažiau nei naudotą erdė</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="282"/>
+        <location filename="../widgets/resizedialog.cpp" line="284"/>
         <source>To prevent data loss, back up data before shrinking it</source>
         <translation>Norint išvengti duomenų praradimo, atsisiųskite duomenis prieš jų sumažinimą</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="384"/>
+        <location filename="../widgets/resizedialog.cpp" line="386"/>
         <source>Unmount it before shrinking its space</source>
         <translation>Atsijunkite prieš jų erdės sumažinimą</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="395"/>
+        <location filename="../widgets/resizedialog.cpp" line="397"/>
         <source>The current device has been mounted and will be unmounted automatically. Please back up data in it to prevent data loss</source>
         <translation>Šiuo metu įrenginys yra įjungtas ir bus atjungtas automatiškai. Prašome atsisiųskite duomenis į jį, kad išvengtumėte duomenų praradimo</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="399"/>
+        <location filename="../widgets/resizedialog.cpp" line="401"/>
         <source>To prevent data loss, back up data in the logical volume before shrinking it</source>
         <translation>Norint išvengti duomenų praradimo, atsisiųskite duomenis logical volume prieš jų sumažinimą</translation>
     </message>
     <message>
-        <location filename="../widgets/resizedialog.cpp" line="440"/>
+        <location filename="../widgets/resizedialog.cpp" line="442"/>
         <source>The file system does not support space adjustment</source>
         <translation>Failų sistema neleidžia keisti erdės</translation>
     </message>
@@ -2267,18 +2267,22 @@ atsargiai atsakykite</translation>
 <context>
     <name>SizeInfoWidget</name>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="317"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="433"/>
         <source> Capacity:</source>
-        <translation> Erdė:</translation>
+        <translation type="vanished"> Erdė:</translation>
     </message>
     <message>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="376"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="378"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="383"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="492"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="494"/>
-        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="498"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="326"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="442"/>
+        <source>Available:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="385"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="387"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="392"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="501"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="503"/>
+        <location filename="../widgets/customcontrol/sizeinfowidget.cpp" line="507"/>
         <source>Used:</source>
         <translation>Naudota:</translation>
     </message>
@@ -2452,17 +2456,17 @@ rootA and rootB should be resized to the same value</source>
         <translation>Išmontuojant sistemos diską gali kilti sistemos krismo rizika</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountwarningdialog.cpp" line="41"/>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="43"/>
         <source>I will take the risks that may arise</source>
         <translation>Aš priimu galimas rizikas</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountwarningdialog.cpp" line="60"/>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="62"/>
         <source>Cancel</source>
         <translation>Atsisakyti</translation>
     </message>
     <message>
-        <location filename="../widgets/unmountwarningdialog.cpp" line="61"/>
+        <location filename="../widgets/unmountwarningdialog.cpp" line="63"/>
         <source>Unmount</source>
         <translation>Išmontuoti</translation>
     </message>

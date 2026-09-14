@@ -323,7 +323,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             option.setAlignment(Qt::AlignTop);
 
             QFontMetrics fmCapacity = painter.fontMetrics();
-            QString textCapacity = tr(" Available: ");
+            QString textCapacity = tr("Available:");
 #if QT_VERSION_MAJOR > 5
             int capacityWidth = fmCapacity.boundingRect(textCapacity).width();
 #else
@@ -439,7 +439,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             option.setAlignment(Qt::AlignTop);
 
             QFontMetrics fmCapacity = painter.fontMetrics();
-            QString textCapacity = tr(" Available: ");
+            QString textCapacity = tr("Available:");
 #if QT_VERSION_MAJOR > 5
             int capacityWidth = fmCapacity.boundingRect(textCapacity).width();
 #else

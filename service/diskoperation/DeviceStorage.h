@@ -40,6 +40,13 @@ public:
 
 private:
     void getMapInfoFromInput(const QString &info, QMap<QString, QString> &mapInfo);
+    QString m_cachedSmartctlOutput;
+    QString m_cachedHwinfoOutput;
+    QString m_cachedLshwOutput;
+    bool m_smartctlOutputCached = false;
+    bool m_hwinfoOutputCached = false;
+    bool m_lshwOutputCached = false;
+
 
     void getMapInfoFromHwinfo(const QString &info, QMap<QString, QString> &mapInfo, const QString &ch = QString(": "));
 

@@ -20,6 +20,32 @@
 #include <QDebug>
 #include <QKeyEvent>
 
+QString cleanCapabilitiesForDisplay(const QString &caps)
+{
+    if (caps.isEmpty())
+        return caps;
+
+    QStringList tokens = caps.split(" ", Qt::SkipEmptyParts);
+    bool hasPartitionedScheme = false;
+    foreach (const QString &token, tokens) {
+        if (token.startsWith("partitioned:")) {
+            hasPartitionedScheme = true;
+            break;
+        }
+    }
+
+    if (!hasPartitionedScheme)
+        return caps;
+
+    QStringList result;
+    foreach (const QString &token, tokens) {
+        if (token == "partitioned")
+            continue;
+        result.append(token);
+    }
+    return result.join(" ");
+}
+
 DiskInfoDisplayDialog::DiskInfoDisplayDialog(const QString &devicePath, QWidget *parent)
     : DDialog(parent)
     , m_devicePath(devicePath)
@@ -58,7 +84,7 @@ void DiskInfoDisplayDialog::initUI()
                         << tr("%1").arg(hardDiskInfo.m_mediaType) << tr("%1").arg(hardDiskInfo.m_size)
                         << tr("%1").arg(hardDiskInfo.m_rotationRate) << tr("%1").arg(hardDiskInfo.m_interface)
                         << tr("%1").arg(hardDiskInfo.m_serialNumber) << tr("%1").arg(hardDiskInfo.m_version)
-                        << tr("%1").arg(hardDiskInfo.m_capabilities) << tr("%1").arg(hardDiskInfo.m_description)
+                        << tr("%1").arg(cleanCapabilitiesForDisplay(hardDiskInfo.m_capabilities)) << tr("%1").arg(hardDiskInfo.m_description)
                         << tr("%1").arg(hardDiskInfo.m_powerOnHours) << tr("%1").arg(hardDiskInfo.m_powerCycleCount)
                         << tr("%1").arg(hardDiskInfo.m_firmwareVersion) << tr("%1").arg(hardDiskInfo.m_speed);
 

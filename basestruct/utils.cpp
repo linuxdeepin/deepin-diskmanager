@@ -17,6 +17,10 @@
 #include <QFile>
 #include <QDir>
 
+#include <cstdlib>
+#include <cstring>
+#include <errno.h>
+
 Utils::Utils()
 {
 }
@@ -694,18 +698,22 @@ QString Utils::mkTempDir(const QString &infix)
         return QString();
     }
 
-    // Construct template like "/var/tmp/diskmanager-XXXXXX" or "/var/tmp/diskmanager-INFIX-XXXXXX"
+    // 使用 mkdtemp(3) 原子创建随机命名临时目录，消除可预测路径（CWE-377）、
+    // TOCTOU 竞态（CWE-367）和符号链接跟随（CWE-59）
     QString dirTemplate = "/var/tmp/";
-
     if (!infix.isEmpty()) {
-        dirTemplate += infix + "-" ;
+        dirTemplate += infix + "-";
     }
-    dirTemplate += "XXXXXX" ;
-    QDir dir(dirTemplate);
-    if (!dir.exists() && dir.mkpath(dirTemplate)) {
-        return dirTemplate;
+    dirTemplate += "XXXXXX";
+
+    QByteArray templateBytes = dirTemplate.toLocal8Bit();
+    char *result = mkdtemp(templateBytes.data());
+    if (result == nullptr) {
+        qWarning() << "Utils::mkTempDir - mkdtemp failed:" << strerror(errno);
+        return QString();
     }
-    return dirTemplate;
+
+    return QString::fromLocal8Bit(result);
 }
 
 void Utils::rmTempDir(QString &dirName)

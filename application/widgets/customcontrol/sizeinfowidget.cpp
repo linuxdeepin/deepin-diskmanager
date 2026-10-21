@@ -321,6 +321,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(textColor);
             QTextOption option;
             option.setAlignment(Qt::AlignTop);
+            option.setWrapMode(QTextOption::NoWrap);
 
             QFontMetrics fmCapacity = painter.fontMetrics();
             QString textCapacity = tr("Available:");
@@ -350,6 +351,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(text1Color);
             QTextOption option1;
             option.setAlignment(Qt::AlignLeft);
+            option1.setWrapMode(QTextOption::NoWrap);
 #if QT_VERSION_MAJOR > 5
             QRect rectSizeNum = QRect(paintRect.bottomLeft().x() + capacityNum, paintRect.bottomLeft().y() + 20, painter.fontMetrics().boundingRect(m_availableSize).width() + 20, 30);
 #else
@@ -437,6 +439,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(textColor);
             QTextOption option;
             option.setAlignment(Qt::AlignTop);
+            option.setWrapMode(QTextOption::NoWrap);
 
             QFontMetrics fmCapacity = painter.fontMetrics();
             QString textCapacity = tr("Available:");
@@ -466,6 +469,7 @@ void SizeInfoWidget::paintEvent(QPaintEvent *event)
             painter.setPen(text1Color);
             QTextOption option1;
             option.setAlignment(Qt::AlignLeft);
+            option1.setWrapMode(QTextOption::NoWrap);
 #if QT_VERSION_MAJOR > 5
             QRect rectSizeNum = QRect(paintRect.bottomLeft().x() + capacityNum, paintRect.bottomLeft().y() + 20, painter.fontMetrics().boundingRect(m_availableSize).width() + 20, 30);
 #else

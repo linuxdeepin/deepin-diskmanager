@@ -136,19 +136,37 @@ HardDiskInfo PartedCore::getDeviceHardInfo(const QString &devicepath)
     }
 
     DeviceStorage device;
-    device.getDiskInfoFromHwinfo(devicepath);
 
-    device.getDiskInfoFromLshw(devicepath);
+    // Pre-execute and cache command outputs to eliminate redundant calls
+    QString smartctlOutput;
+    int smartctlExitCode = DeviceStorage::runSmartctlAll(devicepath, smartctlOutput);
+
+    QString hwinfoOutput;
+    {
+        QString cmd = QString("hwinfo --disk --only %1").arg(devicepath);
+        QString error;
+        Utils::executCmd(cmd, hwinfoOutput, error);
+    }
+
+    QString lshwOutput;
+    {
+        QString error;
+        Utils::executCmd("lshw -C disk", lshwOutput, error);
+    }
+
+    device.getDiskInfoFromHwinfo(devicepath, hwinfoOutput);
+
+    device.getDiskInfoFromLshw(devicepath, lshwOutput);
 
     device.getDiskInfoFromLsblk(devicepath);
 
-    device.getDiskInfoFromSmartCtl(devicepath);
+    device.getDiskInfoFromSmartCtl(devicepath, smartctlOutput, smartctlExitCode);
 
     device.m_mediaType = device.getDiskInfoMediaType(devicepath);
 
-    device.getDiskInfoModel(devicepath, device.m_model);
+    device.getDiskInfoModel(devicepath, device.m_model, smartctlOutput, lshwOutput);
 
-    device.getDiskInfoInterface(devicepath, device.m_interface, device.m_model);
+    device.getDiskInfoInterface(devicepath, device.m_interface, device.m_model, hwinfoOutput);
 
     device.updateForHWDevice(devicepath);
 

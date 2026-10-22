@@ -131,19 +131,51 @@ HardDiskInfo PartedCore::getDeviceHardInfo(const QString &devicepath)
     }
 
     DeviceStorage device;
-    device.getDiskInfoFromHwinfo(devicepath);
 
-    device.getDiskInfoFromLshw(devicepath);
+    // Pre-execute commands that are redundantly called by multiple sub-functions,
+    // pass cached output via optional parameters to avoid duplicate execution.
+    QString smartctlAll;
+    {
+        QProcess proc;
+        proc.start(QString("smartctl --all %1").arg(devicepath));
+        proc.waitForFinished(-1);
+        smartctlAll = proc.readAllStandardOutput();
+        if (smartctlAll.contains("Please specify device type with the -d option")) {
+            proc.start(QString("smartctl --all -d sat %1").arg(devicepath));
+            proc.waitForFinished(-1);
+            smartctlAll = proc.readAllStandardOutput();
+        }
+    }
+
+    QString hwinfoOutput;
+    {
+        QProcess proc;
+        proc.start(QString("hwinfo --disk --only %1").arg(devicepath));
+        proc.waitForFinished(-1);
+        hwinfoOutput = proc.readAllStandardOutput();
+    }
+
+    QString lshwOutput;
+    {
+        QProcess proc;
+        proc.start("sudo lshw -C disk");
+        proc.waitForFinished(-1);
+        lshwOutput = proc.readAllStandardOutput();
+    }
+
+    device.getDiskInfoFromHwinfo(devicepath, hwinfoOutput);
+
+    device.getDiskInfoFromLshw(devicepath, lshwOutput);
 
     device.getDiskInfoFromLsblk(devicepath);
 
-    device.getDiskInfoFromSmartCtl(devicepath);
+    device.getDiskInfoFromSmartCtl(devicepath, smartctlAll);
 
     device.m_mediaType = device.getDiskInfoMediaType(devicepath);
 
-    device.getDiskInfoModel(devicepath, device.m_model);
+    device.getDiskInfoModel(devicepath, device.m_model, smartctlAll, lshwOutput);
 
-    device.getDiskInfoInterface(devicepath, device.m_interface, device.m_model);
+    device.getDiskInfoInterface(devicepath, device.m_interface, device.m_model, hwinfoOutput);
 
     device.updateForHWDevice(devicepath);
 

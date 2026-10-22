@@ -271,13 +271,16 @@ void DeviceStorage::setAttribute(const QMap<QString, QString> &mapInfo, const QS
     }
 }
 
-bool DeviceStorage::getDiskInfoFromHwinfo(const QString &devicePath)
+bool DeviceStorage::getDiskInfoFromHwinfo(const QString &devicePath, const QString &cachedHwinfo)
 {
-    QString cmd = QString("hwinfo --disk --only %1").arg(devicePath);
-    QProcess proc;
-    proc.start(cmd);
-    proc.waitForFinished(-1);
-    QString outPut = proc.readAllStandardOutput();
+    QString outPut = cachedHwinfo;
+    if (outPut.isEmpty()) {
+        QString cmd = QString("hwinfo --disk --only %1").arg(devicePath);
+        QProcess proc;
+        proc.start(cmd);
+        proc.waitForFinished(-1);
+        outPut = proc.readAllStandardOutput();
+    }
 
     QMap<QString, QString> mapInfo;
 
@@ -338,12 +341,15 @@ void DeviceStorage::getMapInfoFromInput(const QString &info, QMap<QString, QStri
      }
 }
 
-bool DeviceStorage::getDiskInfoFromLshw(const QString &devicePath)
+bool DeviceStorage::getDiskInfoFromLshw(const QString &devicePath, const QString &cachedLshw)
 {
-    QProcess proc;
-    proc.start("sudo lshw -C disk");
-    proc.waitForFinished(-1);
-    QString outPut  = proc.readAllStandardOutput();
+    QString outPut = cachedLshw;
+    if (outPut.isEmpty()) {
+        QProcess proc;
+        proc.start("sudo lshw -C disk");
+        proc.waitForFinished(-1);
+        outPut = proc.readAllStandardOutput();
+    }
 
     QStringList list = outPut.split("*-disk\n");
 
@@ -442,20 +448,23 @@ void DeviceStorage::loadLsblkInfo(const QString &info, QMap<QString, QString> &m
     }
 }
 
-bool DeviceStorage::getDiskInfoFromSmartCtl(const QString &devicePath)
+bool DeviceStorage::getDiskInfoFromSmartCtl(const QString &devicePath, const QString &cachedSmartctlAll)
 {
-    QString cmd = QString("smartctl --all %1").arg(devicePath);
-    QProcess proc;
-    proc.start(cmd);
-    proc.waitForFinished(-1);
-    QString outPut  = proc.readAllStandardOutput();
-
-    if (outPut.contains("Please specify device type with the -d option")) {
-        QString cmd = QString("smartctl --all -d sat %1").arg(devicePath);
+    QString outPut = cachedSmartctlAll;
+    if (outPut.isEmpty()) {
+        QString cmd = QString("smartctl --all %1").arg(devicePath);
         QProcess proc;
         proc.start(cmd);
         proc.waitForFinished(-1);
         outPut = proc.readAllStandardOutput();
+
+        if (outPut.contains("Please specify device type with the -d option")) {
+            QString cmd = QString("smartctl --all -d sat %1").arg(devicePath);
+            QProcess proc;
+            proc.start(cmd);
+            proc.waitForFinished(-1);
+            outPut = proc.readAllStandardOutput();
+        }
     }
 
     QMap<QString, QString> mapInfo;
@@ -467,19 +476,23 @@ bool DeviceStorage::getDiskInfoFromSmartCtl(const QString &devicePath)
     return true;
 }
 
-void DeviceStorage::getDiskInfoModel(const QString &devicePath, QString &model)
+void DeviceStorage::getDiskInfoModel(const QString &devicePath, QString &model, const QString &cachedSmartctlAll, const QString &cachedLshw)
 {
     QProcess proc;
-    QString cmd = QString("smartctl --all %1").arg(devicePath);
-    proc.start(cmd);
-    proc.waitForFinished(-1);
-    QString outPut = proc.readAllStandardOutput();
-
-    if (outPut.contains("Please specify device type with the -d option")) {
-        cmd = QString("smartctl --all -d sat %1").arg(devicePath);
+    QString cmd;
+    QString outPut = cachedSmartctlAll;
+    if (outPut.isEmpty()) {
+        cmd = QString("smartctl --all %1").arg(devicePath);
         proc.start(cmd);
         proc.waitForFinished(-1);
         outPut = proc.readAllStandardOutput();
+
+        if (outPut.contains("Please specify device type with the -d option")) {
+            cmd = QString("smartctl --all -d sat %1").arg(devicePath);
+            proc.start(cmd);
+            proc.waitForFinished(-1);
+            outPut = proc.readAllStandardOutput();
+        }
     }
 
     QStringList infoList = outPut.split("\n");
@@ -491,10 +504,13 @@ void DeviceStorage::getDiskInfoModel(const QString &devicePath, QString &model)
         }
     }
 
-    cmd = "lshw -C disk";
-    proc.start(cmd);
-    proc.waitForFinished(-1);
-    outPut = proc.readAllStandardOutput();
+    outPut = cachedLshw;
+    if (outPut.isEmpty()) {
+        cmd = "sudo lshw -C disk";
+        proc.start(cmd);
+        proc.waitForFinished(-1);
+        outPut = proc.readAllStandardOutput();
+    }
 
     infoList = outPut.split("*-disk\n");
     for (int i =0; i < infoList.size(); i++) {
@@ -607,7 +623,7 @@ static QStringList ufsSpecVersions()
     return fallback;
 }
 
-void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &interface, QString &model)
+void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &interface, QString &model, const QString &cachedHwinfo)
 {
     QString bootDevicePath("/proc/bootdevice/product_name");
     QFile file(bootDevicePath);
@@ -628,11 +644,14 @@ void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &int
     }
 
     if (interface.isEmpty()) {
-        QString cmd = QString("hwinfo --disk --only %1").arg(devicePath);
-        QProcess proc;
-        proc.start(cmd);
-        proc.waitForFinished(-1);
-        QString outPut = proc.readAllStandardOutput().trimmed();
+        QString outPut = cachedHwinfo.trimmed();
+        if (outPut.isEmpty()) {
+            QString cmd = QString("hwinfo --disk --only %1").arg(devicePath);
+            QProcess proc;
+            proc.start(cmd);
+            proc.waitForFinished(-1);
+            outPut = proc.readAllStandardOutput().trimmed();
+        }
         QMap<QString, QString> mapInfo;
         getMapInfoFromInput(outPut, mapInfo);
         QStringList outPutList = mapInfo.value("Attached to").split("(");

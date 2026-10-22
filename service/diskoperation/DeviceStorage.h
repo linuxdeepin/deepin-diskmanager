@@ -14,25 +14,25 @@ public:
     DeviceStorage();
 
     /**@brief:添加从hwinfo中获取的信息*/
-    bool getDiskInfoFromHwinfo(const QString &devicePath);
+    bool getDiskInfoFromHwinfo(const QString &devicePath, const QString &cachedHwinfo = QString());
 
     /**@brief:添加从lshw中获取的信息*/
-    bool getDiskInfoFromLshw(const QString &devicePath);
+    bool getDiskInfoFromLshw(const QString &devicePath, const QString &cachedLshw = QString());
 
     /**@brief:添加lsblk获取到的介质信息*/
     bool getDiskInfoFromLsblk(const QString &devicePath);
 
     /**@brief:添加smartctl中获取到的信息*/
-    bool getDiskInfoFromSmartCtl(const QString &devicePath);
+    bool getDiskInfoFromSmartCtl(const QString &devicePath, const QString &cachedSmartctlAll = QString());
 
     /**@brief:获取当前磁盘model信息*/
-    void getDiskInfoModel(const QString &devicePath, QString &model);
+    void getDiskInfoModel(const QString &devicePath, QString &model, const QString &cachedSmartctlAll = QString(), const QString &cachedLshw = QString());
 
     /**@brief:获取当前磁盘介质信息*/
     QString getDiskInfoMediaType(const QString &devicePath);
 
     /**@brief:获取当前磁盘接口信息*/
-    void getDiskInfoInterface(const QString &devicePath, QString &interface, QString &model);
+    void getDiskInfoInterface(const QString &devicePath, QString &interface, QString &model, const QString &cachedHwinfo = QString());
 
     /**@brief:为HW设备更新信息*/
     void updateForHWDevice(const QString &devicePath);

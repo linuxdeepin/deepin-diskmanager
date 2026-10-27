@@ -355,17 +355,19 @@ void DeviceStorage::setAttribute(const QMap<QString, QString> &mapInfo, const QS
 bool DeviceStorage::getDiskInfoFromHwinfo(const QString &devicePath)
 {
     qDebug() << "Getting disk info from hwinfo for device:" << devicePath;
-    QString cmd = QString("hwinfo --disk --only %1").arg(devicePath);
-    QString outPut;
-    QString error;
-    if (Utils::executCmd(cmd, outPut, error) != 0) {
-        qDebug() << "Failed to execute hwinfo command, error:" << error;
-        return false;
+    if (!m_hwinfoOutputCached) {
+        QString cmd = QString("hwinfo --disk --only %1").arg(devicePath);
+        QString error;
+        if (Utils::executCmd(cmd, m_cachedHwinfoOutput, error) != 0) {
+            qDebug() << "Failed to execute hwinfo command, error:" << error;
+            return false;
+        }
+        m_hwinfoOutputCached = true;
     }
 
     QMap<QString, QString> mapInfo;
 
-    getMapInfoFromInput(outPut, mapInfo);
+    getMapInfoFromInput(m_cachedHwinfoOutput, mapInfo);
 
     setHwinfoInfo(mapInfo);
 
@@ -445,14 +447,17 @@ void DeviceStorage::getMapInfoFromInput(const QString &info, QMap<QString, QStri
 bool DeviceStorage::getDiskInfoFromLshw(const QString &devicePath)
 {
     qDebug() << "DeviceStorage::getDiskInfoFromLshw BEGIN";
-    QString outPut, error;
-    if (Utils::executCmd("lshw -C disk", outPut, error) != 0) {
-        qDebug() << "Failed to execute lshw command, error:" << error;
-        return false;
+    if (!m_lshwOutputCached) {
+        QString error;
+        if (Utils::executCmd("lshw -C disk", m_cachedLshwOutput, error) != 0) {
+            qDebug() << "Failed to execute lshw command, error:" << error;
+            return false;
+        }
+        m_lshwOutputCached = true;
     }
 
     QString diskInfo;
-    QStringList list = outPut.split("*-disk");
+    QStringList list = m_cachedLshwOutput.split("*-disk");
     foreach (const QString &item, list) {
         QStringList list2 = item.split("*-namespace");
         foreach (const QString &item2, list2) {
@@ -573,24 +578,27 @@ void DeviceStorage::loadLsblkInfo(const QString &info, QMap<QString, QString> &m
 bool DeviceStorage::getDiskInfoFromSmartCtl(const QString &devicePath)
 {
     qDebug() << "DeviceStorage::getDiskInfoFromSmartCtl BEGIN";
-    QString cmd = QString("smartctl --all %1").arg(devicePath);
-    QString outPut, error;
-    int exitcode = Utils::executCmd(cmd, outPut, error);
+    if (!m_smartctlOutputCached) {
+        QString cmd = QString("smartctl --all %1").arg(devicePath);
+        QString error;
+        int exitcode = Utils::executCmd(cmd, m_cachedSmartctlOutput, error);
 
-    if (outPut.contains("Please specify device type with the -d option")) {
-        qDebug() << "need to specify device type";
-        cmd = QString("smartctl --all -d sat %1").arg(devicePath);
-        exitcode = Utils::executCmd(cmd, outPut, error);
-    }
+        if (m_cachedSmartctlOutput.contains("Please specify device type with the -d option")) {
+            qDebug() << "need to specify device type";
+            cmd = QString("smartctl --all -d sat %1").arg(devicePath);
+            exitcode = Utils::executCmd(cmd, m_cachedSmartctlOutput, error);
+        }
 
-    if (exitcode != 0) {
-        qDebug() << "Failed to execute smartctl command, error:" << error;
-        return false;
+        if (exitcode != 0) {
+            qDebug() << "Failed to execute smartctl command, error:" << error;
+            return false;
+        }
+        m_smartctlOutputCached = true;
     }
 
     QMap<QString, QString> mapInfo;
 
-    getMapInfoFromSmartctl(mapInfo, outPut);
+    getMapInfoFromSmartctl(mapInfo, m_cachedSmartctlOutput);
 
     addInfoFromSmartctl(mapInfo);
 
@@ -601,22 +609,25 @@ bool DeviceStorage::getDiskInfoFromSmartCtl(const QString &devicePath)
 void DeviceStorage::getDiskInfoModel(const QString &devicePath, QString &model)
 {
     qDebug() << "DeviceStorage::getDiskInfoModel BEGIN";
-    QString cmd = QString("smartctl --all %1").arg(devicePath);
-    QString outPut, error;
-    int exitcode = Utils::executCmd(cmd, outPut, error);
+    if (!m_smartctlOutputCached) {
+        QString cmd = QString("smartctl --all %1").arg(devicePath);
+        QString error;
+        int exitcode = Utils::executCmd(cmd, m_cachedSmartctlOutput, error);
 
-    if (outPut.contains("Please specify device type with the -d option")) {
-        qDebug() << "need to specify device type";
-        cmd = QString("smartctl --all -d sat %1").arg(devicePath);
-        exitcode = Utils::executCmd(cmd, outPut, error);
+        if (m_cachedSmartctlOutput.contains("Please specify device type with the -d option")) {
+            qDebug() << "need to specify device type";
+            cmd = QString("smartctl --all -d sat %1").arg(devicePath);
+            exitcode = Utils::executCmd(cmd, m_cachedSmartctlOutput, error);
+        }
+
+        if (exitcode != 0) {
+            qDebug() << "Failed to execute smartctl command, error:" << error;
+            return;
+        }
+        m_smartctlOutputCached = true;
     }
 
-    if (exitcode != 0) {
-        qDebug() << "Failed to execute smartctl command, error:" << error;
-        return;
-    }
-
-    QStringList infoList = outPut.split("\n");
+    QStringList infoList = m_cachedSmartctlOutput.split("\n");
     for (int i = 0; i < infoList.size(); i++) {
         QString info = infoList[i];
         if(info.startsWith("Device Model:") || info.startsWith("Product:") || info.startsWith("Model Number:")){
@@ -626,14 +637,16 @@ void DeviceStorage::getDiskInfoModel(const QString &devicePath, QString &model)
         }
     }
 
-    cmd = "lshw -C disk";
-    exitcode = Utils::executCmd(cmd, outPut, error);
-    if (exitcode != 0) {
-        qDebug() << "Failed to execute lshw command, error:" << error;
-        return;
+    if (!m_lshwOutputCached) {
+        QString error;
+        if (Utils::executCmd("lshw -C disk", m_cachedLshwOutput, error) != 0) {
+            qDebug() << "Failed to execute lshw command, error:" << error;
+            return;
+        }
+        m_lshwOutputCached = true;
     }
 
-    infoList = outPut.split("*-disk\n");
+    infoList = m_cachedLshwOutput.split("*-disk\n");
     for (int i =0; i < infoList.size(); i++) {
         if(infoList[i].contains(devicePath)) {
             qDebug() << "found devicePath in lshw output";
@@ -759,15 +772,18 @@ void DeviceStorage::getDiskInfoInterface(const QString &devicePath, QString &int
 
     if (interface.isEmpty()) {
         qDebug() << "interface is empty";
-        QString cmd = QString("hwinfo --disk --only %1").arg(devicePath);
-        QString outPut, error;
-        int exitcode = Utils::executCmd(cmd, outPut, error);
-        if (exitcode != 0) {
-            interface = "UnKnow";
-            qDebug() << "Failed to execute hwinfo command, error:" << error;
-            return;
+        if (!m_hwinfoOutputCached) {
+            QString cmd = QString("hwinfo --disk --only %1").arg(devicePath);
+            QString error;
+            int exitcode = Utils::executCmd(cmd, m_cachedHwinfoOutput, error);
+            if (exitcode != 0) {
+                interface = "UnKnow";
+                qDebug() << "Failed to execute hwinfo command, error:" << error;
+                return;
+            }
+            m_hwinfoOutputCached = true;
         }
-        QStringList outPutList = outPut.split("(");
+        QStringList outPutList = m_cachedHwinfoOutput.split("(");
         interface = outPutList[outPutList.size() - 1].split(" ")[0];
     }
     qDebug() << "DeviceStorage::getDiskInfoInterface END";

@@ -1000,6 +1000,10 @@ void DiskBadSectorsDialog::onContinueButtonClicked()
 void DiskBadSectorsDialog::onAgainVerifyButtonClicked()
 {
     qDebug() << "Verify again button clicked";
+    if (!inputValueIsEffective()) {
+        qWarning() << "Input values are invalid";
+        return;
+    }
     m_progressBar->setValue(0);
     m_usedTimeLabel->setText(tr("Time elapsed:") + "00:00:00");
     m_unusedTimeLabel->setText(tr("Time left:") + "00:00:00");
@@ -1021,7 +1025,19 @@ void DiskBadSectorsDialog::onAgainVerifyButtonClicked()
     int checkSize = m_settings->value("SettingData/CheckSize").toInt();
     m_blockStart = m_settings->value("SettingData/BlockStart").toInt();
     m_blockEnd = m_settings->value("SettingData/BlockEnd").toInt();
-    int checkNumber = m_settings->value("SettingData/CheckNumber").toInt();
+    int checkNumber = 8;
+    switch (m_methodComboBox->currentIndex()) {
+    case 0: {
+        checkNumber = m_checkTimesEdit->text().toInt();
+        break;
+    }
+    case 1: {
+        checkNumber = m_timeoutEdit->text().toInt();
+        break;
+    }
+    default:
+        break;
+    }
 
     QFile file("/tmp/CheckData.conf");
     if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {

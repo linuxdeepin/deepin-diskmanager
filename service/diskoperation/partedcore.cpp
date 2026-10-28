@@ -131,19 +131,52 @@ HardDiskInfo PartedCore::getDeviceHardInfo(const QString &devicepath)
     }
 
     DeviceStorage device;
-    device.getDiskInfoFromHwinfo(devicepath);
 
-    device.getDiskInfoFromLshw(devicepath);
+    // Pre-execute shared commands once and pass results to child functions
+    // to eliminate duplicate external command executions.
+    QString hwinfoCache;
+    {
+        QString cmd = QString("hwinfo --disk --only %1").arg(devicepath);
+        QProcess proc;
+        proc.start(cmd);
+        proc.waitForFinished(-1);
+        hwinfoCache = proc.readAllStandardOutput();
+    }
+    device.getDiskInfoFromHwinfo(devicepath, hwinfoCache);
+
+    QString lshwCache;
+    {
+        QProcess proc;
+        proc.start("sudo lshw -C disk");
+        proc.waitForFinished(-1);
+        lshwCache = proc.readAllStandardOutput();
+    }
+    device.getDiskInfoFromLshw(devicepath, lshwCache);
 
     device.getDiskInfoFromLsblk(devicepath);
 
-    device.getDiskInfoFromSmartCtl(devicepath);
+    QString smartctlCache;
+    {
+        QString cmd = QString("smartctl --all %1").arg(devicepath);
+        QProcess proc;
+        proc.start(cmd);
+        proc.waitForFinished(-1);
+        smartctlCache = proc.readAllStandardOutput();
+
+        if (smartctlCache.contains("Please specify device type with the -d option")) {
+            cmd = QString("smartctl --all -d sat %1").arg(devicepath);
+            proc.start(cmd);
+            proc.waitForFinished(-1);
+            smartctlCache = proc.readAllStandardOutput();
+        }
+    }
+    device.getDiskInfoFromSmartCtl(devicepath, smartctlCache);
 
     device.m_mediaType = device.getDiskInfoMediaType(devicepath);
 
-    device.getDiskInfoModel(devicepath, device.m_model);
+    device.getDiskInfoModel(devicepath, device.m_model, smartctlCache, lshwCache);
 
-    device.getDiskInfoInterface(devicepath, device.m_interface, device.m_model);
+    device.getDiskInfoInterface(devicepath, device.m_interface, device.m_model, hwinfoCache);
 
     device.updateForHWDevice(devicepath);
 

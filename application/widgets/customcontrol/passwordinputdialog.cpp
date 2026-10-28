@@ -80,7 +80,7 @@ void PasswordInputDialog::initUi()
     // 限制中文和中文字符
 #if QT_VERSION_MAJOR > 5
     qDebug() << "QT_VERSION_MAJOR > 5, setting regular expression validator";
-    QRegularExpression regExp("^[A-Za-z0-9`~!@#$%^&*()_-+=<>,.\\/ ]+$");
+    QRegularExpression regExp("^[A-Za-z0-9`~!@#$%^&*()_+=<>,.\\/ -]+$");
     QRegularExpressionValidator *regExpValidator = new QRegularExpressionValidator(regExp, this);
 #else
     qDebug() << "QT_VERSION_MAJOR <= 5, setting regular expression validator";

@@ -284,7 +284,21 @@ bool FAT16::create(const Partition & new_partition)
         cmd = QString("mkfs.fat -F %1 -v -I %2").arg(fat_size).arg(new_partition.getPath());
     } else {
         qDebug() << "Label is not empty, creating with label";
-        cmd = QString("mkfs.fat -F %1 -v -I -n %2 %3").arg(fat_size).arg(new_partition.getFileSystemLabel()).arg(new_partition.getPath());
+        QString label = new_partition.getFileSystemLabel();
+        bool hasNonAscii = false;
+        for (const QChar &ch : label) {
+            if (ch.unicode() > 127) {
+                hasNonAscii = true;
+                break;
+            }
+        }
+        if (hasNonAscii) {
+            cmd = QString("mkfs.fat -F %1 -v -I --codepage=936 -n %2 %3")
+                    .arg(fat_size).arg(label).arg(new_partition.getPath());
+        } else {
+            cmd = QString("mkfs.fat -F %1 -v -I -n %2 %3")
+                    .arg(fat_size).arg(label).arg(new_partition.getPath());
+        }
     }
 
     qDebug() << "FAT16::create***** " << cmd;

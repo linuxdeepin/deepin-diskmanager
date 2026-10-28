@@ -12,7 +12,10 @@
 #include <DGuiApplicationHelper>
 
 #include <QAbstractButton>
+#include <QGuiApplication>
 #include <QKeyEvent>
+#include <QScreen>
+#include <QShowEvent>
 
 MessageBox::MessageBox(QWidget *parent) : DDialog(parent)
 {
@@ -190,6 +193,21 @@ void MessageBox::keyPressEvent(QKeyEvent *event)
         DDialog::keyPressEvent(event);
     }
     // qDebug() << "MessageBox::keyPressEvent completed.";
+}
+
+void MessageBox::showEvent(QShowEvent *event)
+{
+    DDialog::showEvent(event);
+
+    QScreen *screen = QGuiApplication::screenAt(QCursor::pos());
+    if (!screen && parentWidget())
+        screen = QGuiApplication::screenAt(parentWidget()->window()->geometry().center());
+    if (!screen)
+        screen = QGuiApplication::primaryScreen();
+    if (screen) {
+        QRect screenGeo = screen->geometry();
+        move(screenGeo.center() - rect().center());
+    }
 }
 
 

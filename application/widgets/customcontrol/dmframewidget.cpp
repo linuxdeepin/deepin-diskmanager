@@ -1,7 +1,8 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
+#include "ddlog.h"
 #include "dmframewidget.h"
 #include "utils.h"
 #include "partitioninfo.h"
@@ -21,7 +22,7 @@ DmFrameWidget::DmFrameWidget(DiskInfoData data, QWidget *parent)
     : DFrame(parent)
     , m_infoData(data)
 {
-    qDebug()  << "DmFrameWidget constructor";
+    qCDebug(appLog)  << "DmFrameWidget constructor";
 #if QT_VERSION_MAJOR > 5
     m_parentPb = DGuiApplicationHelper::instance()->applicationPalette();
     connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, this,
@@ -31,14 +32,14 @@ DmFrameWidget::DmFrameWidget(DiskInfoData data, QWidget *parent)
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this,
             &DmFrameWidget::onHandleChangeTheme);
 #endif
-    qDebug()  << "DmFrameWidget initialized";
+    qCDebug(appLog)  << "DmFrameWidget initialized";
 }
 
 void DmFrameWidget::setFrameData()
 {
-    qDebug()  << "Setting frame data, current level:" << DMDbusHandler::instance()->getCurLevel();
+    qCDebug(appLog)  << "Setting frame data, current level:" << DMDbusHandler::instance()->getCurLevel();
     if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
-        qDebug()  << "Updating partition information";
+        qCDebug(appLog)  << "Updating partition information";
         //获取首页相关硬盘数据
         PartitionInfo data = DMDbusHandler::instance()->getCurPartititonInfo();
 
@@ -56,7 +57,7 @@ void DmFrameWidget::setFrameData()
         QString partitionSize = Utils::formatSize(data.m_sectorEnd - data.m_sectorStart + 1, data.m_sectorSize);
 
         if (data.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
-            qDebug()  << "Partition is encrypted";
+            qCDebug(appLog)  << "Partition is encrypted";
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(data.m_path);
             if (luksInfo.isDecrypt) {
                 mountpoints = "";
@@ -71,7 +72,7 @@ void DmFrameWidget::setFrameData()
         }
 
         if (mountpoints.contains("�")) {
-            qDebug()  << "Partition contains gbk encoding";
+            qCDebug(appLog)  << "Partition contains gbk encoding";
             mountpoints.remove(mountpoints.mid(mountpoints.indexOf("�")));
             mountpoints.append(m_str);
         }
@@ -79,13 +80,13 @@ void DmFrameWidget::setFrameData()
         m_infoData.m_mountpoints = mountpoints;
         m_infoData.m_unused = unused;
         if (m_infoData.m_unused.contains("-")) {
-            qDebug()  << "Partition unused size is -";
+            qCDebug(appLog)  << "Partition unused size is -";
             m_infoData.m_unused = "-";
         }
 
         m_infoData.m_used = used;
         if (m_infoData.m_used.contains("-")) {
-            qDebug()  << "Partition used size is -";
+            qCDebug(appLog)  << "Partition used size is -";
             m_infoData.m_used = "-";
         }
 
@@ -94,26 +95,26 @@ void DmFrameWidget::setFrameData()
 
         QString partitionPath = data.m_path.remove(0, 5); // 从下标0开始，删除5个字符
         if (data.m_fileSystemLabel == "") {
-            qDebug()  << "Partition label is empty";
+            qCDebug(appLog)  << "Partition label is empty";
             m_infoData.m_sysLabel = "";
         } else {
             m_infoData.m_sysLabel = diskVolumn(partitionPath);
             if (m_infoData.m_sysLabel.contains("�")) {
-                qDebug()  << "Partition label contains gbk encoding";
+                qCDebug(appLog)  << "Partition label contains gbk encoding";
                 QString sysLabel = m_infoData.m_sysLabel.split("�").at(0);
                 m_infoData.m_sysLabel = sysLabel;
             }//==============gbk编码的中文到在应用下无名称格式化文件系统转换时中文乱码
         }
     }
     update();
-    qDebug()  << "Frame data updated, mountpoints:" << m_infoData.m_mountpoints
+    qCDebug(appLog)  << "Frame data updated, mountpoints:" << m_infoData.m_mountpoints
                         << "size:" << m_infoData.m_partitionSize;
 }
 
 void DmFrameWidget::setDiskFrameData(const QString &path, const QString &diskType, const QString &used,
                       const QString &unused, const QString &capacity, const QString &interface)
 {
-    qDebug()  << "Setting disk frame data, path:" << path << "type:" << diskType;
+    qCDebug(appLog)  << "Setting disk frame data, path:" << path << "type:" << diskType;
     m_infoData.m_mountpoints = path;
     m_infoData.m_unused = unused;
     m_infoData.m_used = used;
@@ -122,31 +123,31 @@ void DmFrameWidget::setDiskFrameData(const QString &path, const QString &diskTyp
     m_infoData.m_sysLabel = interface;
 
     update();
-    qDebug()  << "Disk frame data updated";
+    qCDebug(appLog)  << "Disk frame data updated";
 }
 
 QString DmFrameWidget::diskVolumn(QString partitionPath)
 {
-    qDebug()  << "Getting disk volume, partition path:" << partitionPath;
+    qCDebug(appLog)  << "Getting disk volume, partition path:" << partitionPath;
     DMDbusHandler *handler = DMDbusHandler::instance();
     PartitionInfo curInfo = handler->getCurPartititonInfo();
 //    //将gbkｕ盘ｌａｂｅｌ中文乱码转换为正常中文显示
 //    QProcess process;
 //    process.start("ls", QStringList() << "-al" << "/dev/disk/by-label/");
 //    if (!process.waitForStarted()) {
-//        qWarning() << "Cmd Exec Failed:" << process.errorString();
+//        qCWarning(appLog) << "Cmd Exec Failed:" << process.errorString();
 //    }
 //    if (!process.waitForFinished(-1)) {
-//        qWarning() << "waitForFinished Failed:" << process.errorString();
+//        qCWarning(appLog) << "waitForFinished Failed:" << process.errorString();
 //    }
 //    QString standardError = process.readAllStandardOutput();
 //    QStringList mountsList = standardError.split("\n").filter(partitionPath);
 //    QString sr = mountsList.last();
 //    QString st = sr.mid(40).remove(" -> ../../" + partitionPath);
-//    qDebug() << __FUNCTION__ << st;
+//    qCDebug(appLog) << __FUNCTION__ << st;
 //    if (st.at(1) != "x") {
 //        QString strstr1 = st.mid(st.indexOf("\\"));
-//        qDebug() << __FUNCTION__ << strstr1 << st.at(1);
+//        qCDebug(appLog) << __FUNCTION__ << strstr1 << st.at(1);
 //        if (strstr1.at(1) != "x") {
 //            QString stres = strstr1;
 //        } else {
@@ -332,9 +333,9 @@ void DmFrameWidget::resizeEvent(QResizeEvent *event)
 }
 void DmFrameWidget::onHandleChangeTheme()
 {
-    qDebug()  << "Handling theme change";
+    qCDebug(appLog)  << "Handling theme change";
     m_parentPb = Dtk::Gui::DGuiApplicationHelper::instance()->applicationPalette();
-    qDebug()  << "Theme palette updated";
+    qCDebug(appLog)  << "Theme palette updated";
 }
 
 //QString DmFrameWidget::diffMountpoints(int width, QString mountpoints)

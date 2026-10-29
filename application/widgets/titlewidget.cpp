@@ -1,8 +1,9 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
 
+#include "ddlog.h"
 #include "titlewidget.h"
 #include "mountdialog.h"
 #include "unmountdialog.h"
@@ -23,14 +24,14 @@
 TitleWidget::TitleWidget(DWidget *parent)
     : DWidget(parent)
 {
-    qDebug() << "TitleWidget initialized";
+    qCDebug(appLog) << "TitleWidget initialized";
     initUi();
     initConnection();
 }
 
 void TitleWidget::initUi()
 {
-    qDebug() << "Initializing TitleWidget UI.";
+    qCDebug(appLog) << "Initializing TitleWidget UI.";
     QHBoxLayout *layout = new QHBoxLayout(this);
 
     m_btnParted = createBtn(tr("Partition"), "partition");
@@ -103,27 +104,27 @@ void TitleWidget::initUi()
     m_btnResizeVG->hide();
 
     resetButtonsSize();
-    qDebug() << "TitleWidget UI initialization completed.";
+    qCDebug(appLog) << "TitleWidget UI initialization completed.";
 }
 
 void TitleWidget::setSizebyMode(DPushButton *button)
 {
-    qDebug() << "setSizebyMode called";
+    qCDebug(appLog) << "setSizebyMode called";
 #ifdef DTKWIDGET_CLASS_DSizeMode
-    qDebug() << "DTKWIDGET_CLASS_DSizeMode is defined, setting size by DSizeModeHelper.";
+    qCDebug(appLog) << "DTKWIDGET_CLASS_DSizeMode is defined, setting size by DSizeModeHelper.";
     button->setFixedSize(QSize(DSizeModeHelper::element(24, 36), DSizeModeHelper::element(24, 36)));
     button->setIconSize(QSize(DSizeModeHelper::element(12, 18), DSizeModeHelper::element(12, 18)));
 #else
-    qDebug() << "DTKWIDGET_CLASS_DSizeMode is not defined, setting fixed size (36x36) and icon size (18x18).";
+    qCDebug(appLog) << "DTKWIDGET_CLASS_DSizeMode is not defined, setting fixed size (36x36) and icon size (18x18).";
     button->setFixedSize(QSize(36, 36));
     button->setIconSize(QSize(18, 18));
 #endif
-    qDebug() << "setSizebyMode completed.";
+    qCDebug(appLog) << "setSizebyMode completed.";
 }
 
 void TitleWidget::resetButtonsSize()
 {
-    qDebug() << "resetButtonsSize called.";
+    qCDebug(appLog) << "resetButtonsSize called.";
     setSizebyMode(m_btnCreateVG);
     setSizebyMode(m_btnParted);
     setSizebyMode(m_btnFormat);
@@ -136,12 +137,12 @@ void TitleWidget::resetButtonsSize()
     setSizebyMode(m_btnDeletePV);
     setSizebyMode(m_btnDeleteVG);
     setSizebyMode(m_btnDeleteLV);
-    qDebug() << "resetButtonsSize completed.";
+    qCDebug(appLog) << "resetButtonsSize completed.";
 }
 
 void TitleWidget::initConnection()
 {
-    qDebug() << "Initializing TitleWidget connections.";
+    qCDebug(appLog) << "Initializing TitleWidget connections.";
     connect(DMDbusHandler::instance(), &DMDbusHandler::curSelectChanged, this, &TitleWidget::onCurSelectChanged);
     connect(m_btnParted, &DPushButton::clicked, this, &TitleWidget::showPartInfoWidget);
     connect(m_btnFormat, &DPushButton::clicked, this, &TitleWidget::showFormateInfoWidget);
@@ -158,29 +159,29 @@ void TitleWidget::initConnection()
     connect(DMDbusHandler::instance(), &DMDbusHandler::updateUsb, this, &TitleWidget::onUpdateUsb);
 
 #ifdef DTKWIDGET_CLASS_DSizeMode
-    qDebug() << "Connecting sizeModeChanged signal for DTKWIDGET_CLASS_DSizeMode.";
+    qCDebug(appLog) << "Connecting sizeModeChanged signal for DTKWIDGET_CLASS_DSizeMode.";
     connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::sizeModeChanged, this, [this]() {
         resetButtonsSize();
-        qDebug() << "Size mode changed, resetButtonsSize called.";
+        qCDebug(appLog) << "Size mode changed, resetButtonsSize called.";
     });
 #endif
-    qDebug() << "TitleWidget connections initialized.";
+    qCDebug(appLog) << "TitleWidget connections initialized.";
 }
 
 DPushButton *TitleWidget::createBtn(const QString &btnName, const QString &objName, bool bCheckable)
 {
-    qDebug() << "createBtn called for btnName:" << btnName << ", objName:" << objName << ", bCheckable:" << bCheckable;
+    qCDebug(appLog) << "createBtn called for btnName:" << btnName << ", objName:" << objName << ", bCheckable:" << bCheckable;
     auto btn = new DPushButton(this);
     //  wzx 设置图标icon    2020-05-19
     QIcon icon = Common::getIcon(objName);
 
     btn->setIcon(icon);
 #ifdef DTKWIDGET_CLASS_DSizeMode
-    qDebug() << "DTKWIDGET_CLASS_DSizeMode is defined, setting size by DSizeModeHelper.";
+    qCDebug(appLog) << "DTKWIDGET_CLASS_DSizeMode is defined, setting size by DSizeModeHelper.";
     btn->setFixedSize(QSize(DSizeModeHelper::element(24, 36), DSizeModeHelper::element(24, 36)));
     btn->setIconSize(QSize(DSizeModeHelper::element(12, 18), DSizeModeHelper::element(12, 18)));
 #else
-    qDebug() << "DTKWIDGET_CLASS_DSizeMode is not defined, setting fixed size (36x36) and icon size (18x18).";
+    qCDebug(appLog) << "DTKWIDGET_CLASS_DSizeMode is not defined, setting fixed size (36x36) and icon size (18x18).";
     btn->setFixedSize(QSize(36, 36));
     btn->setIconSize(QSize(18, 18));
 #endif
@@ -190,17 +191,17 @@ DPushButton *TitleWidget::createBtn(const QString &btnName, const QString &objNa
     btn->setAccessibleName(objName);
 
     if (bCheckable) {
-        qDebug() << "Button is checkable, setting checked to false.";
+        qCDebug(appLog) << "Button is checkable, setting checked to false.";
         btn->setChecked(false);
     }
 
-    qDebug() << "createBtn completed, returning button:" << btn->objectName();
+    qCDebug(appLog) << "createBtn completed, returning button:" << btn->objectName();
     return btn;
 }
 
 void TitleWidget::showPartInfoWidget()
 {
-    qDebug() << "Show partition info widget";
+    qCDebug(appLog) << "Show partition info widget";
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
     PartitionDialog dlg(this);
     dlg.setObjectName("partitionDialog");
@@ -209,12 +210,12 @@ void TitleWidget::showPartInfoWidget()
     setCurDevicePath(info.m_devicePath);
 
     if (dlg.exec() == 1) {
-        qDebug() << "PartitionDialog accepted.";
+        qCDebug(appLog) << "PartitionDialog accepted.";
         if (TYPE_UNPARTITIONED == info.m_type && FS_UNALLOCATED == info.m_fileSystemType) {
-            qDebug() << "Device is unpartitioned and unallocated, showing warning.";
+            qCDebug(appLog) << "Device is unpartitioned and unallocated, showing warning.";
             setCurDevicePath("");
-            qDebug() << QString("No partition table found on device %1").arg(info.m_devicePath);
-            qDebug() << "A partition table is required before partitions can be added";
+            qCDebug(appLog) << QString("No partition table found on device %1").arg(info.m_devicePath);
+            qCDebug(appLog) << "A partition table is required before partitions can be added";
             //ToDo:empty device create partition table
             // 无法识别当前设备分区表
             DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget()->parentWidget(),
@@ -231,14 +232,14 @@ void TitleWidget::showPartInfoWidget()
 
         setCurDevicePath("");
     } else {
-        qDebug() << "PartitionDialog rejected.";
+        qCDebug(appLog) << "PartitionDialog rejected.";
     }
-    qDebug() << "showPartInfoWidget completed.";
+    qCDebug(appLog) << "showPartInfoWidget completed.";
 }
 
 void TitleWidget::showFormateInfoWidget()
 {
-    qDebug() << "Show format dialog";
+    qCDebug(appLog) << "Show format dialog";
     setCurDevicePath(DMDbusHandler::instance()->getCurDevicePath());
 
     FormateDialog dlg(this);
@@ -251,25 +252,25 @@ void TitleWidget::showFormateInfoWidget()
 
 bool TitleWidget::showDecryptDialog()
 {
-    qDebug() << "Show decrypt dialog";
+    qCDebug(appLog) << "Show decrypt dialog";
     DecryptDialog decryptDialog(this);
     decryptDialog.setObjectName("decryptDialog");
     decryptDialog.setAccessibleName("decryptDialog");
     if (decryptDialog.exec() != DDialog::Accepted) {
-        qDebug() << "Decrypt dialog not accepted.";
+        qCDebug(appLog) << "Decrypt dialog not accepted.";
         return false;
     }
 
-    qDebug() << "Decrypt dialog accepted.";
+    qCDebug(appLog) << "Decrypt dialog accepted.";
     return true;
 }
 
 bool TitleWidget::showNoFileSystemWarningDialog(const LUKS_INFO &luksInfo)
 {
-    qDebug() << "Show no file system warning dialog";
+    qCDebug(appLog) << "Show no file system warning dialog";
     if (luksInfo.m_mapper.m_luksFs == FSType::FS_UNKNOWN || luksInfo.m_mapper.m_luksFs == FSType::FS_UNALLOCATED
             || luksInfo.m_mapper.m_luksFs == FSType::FS_UNSUPPORTED || luksInfo.m_mapper.m_luksFs == FSType::FS_UNFORMATTED) {
-        qDebug() << "No file system found, showing warning.";
+        qCDebug(appLog) << "No file system found, showing warning.";
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("partNoSupportFSWidget");
@@ -280,64 +281,64 @@ bool TitleWidget::showNoFileSystemWarningDialog(const LUKS_INFO &luksInfo)
         return true;
     }
 
-    qDebug() << "No file system warning dialog not shown.";
+    qCDebug(appLog) << "No file system warning dialog not shown.";
     return false;
 }
 
 void TitleWidget::showMountInfoWidget()
 {
-    qDebug() << "Show mount dialog";
+    qCDebug(appLog) << "Show mount dialog";
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
-        qDebug() << "Current level is partition.";
+        qCDebug(appLog) << "Current level is partition.";
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         setCurDevicePath(info.m_devicePath);
         if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
             if (!showDecryptDialog()) {
                 setCurDevicePath("");
-                qDebug() << "Decrypt dialog not accepted, returning.";
+                qCDebug(appLog) << "Decrypt dialog not accepted, returning.";
                 return;
             }
 
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
             if (showNoFileSystemWarningDialog(luksInfo)) {
                 setCurDevicePath("");
-                qDebug() << "No file system warning dialog shown, returning.";
+                qCDebug(appLog) << "No file system warning dialog shown, returning.";
                 return;
             }
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
-        qDebug() << "Current level is logical volume.";
+        qCDebug(appLog) << "Current level is logical volume.";
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
         setCurVGName(lvInfo.m_vgName);
         if (lvInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
             if (!showDecryptDialog()) {
                 setCurVGName("");
-                qDebug() << "Decrypt dialog not accepted, returning.";
+                qCDebug(appLog) << "Decrypt dialog not accepted, returning.";
                 return;
             }
 
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(lvInfo.m_lvPath);
             if (showNoFileSystemWarningDialog(luksInfo)) {
                 setCurVGName("");
-                qDebug() << "No file system warning dialog shown, returning.";
+                qCDebug(appLog) << "No file system warning dialog shown, returning.";
                 return;
             }
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
-        qDebug() << "Current level is disk.";
+        qCDebug(appLog) << "Current level is disk.";
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         setCurDevicePath(info.m_path);
         if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
             if (!showDecryptDialog()) {
                 setCurDevicePath("");
-                qDebug() << "Decrypt dialog not accepted, returning.";
+                qCDebug(appLog) << "Decrypt dialog not accepted, returning.";
                 return;
             }
 
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
             if (showNoFileSystemWarningDialog(luksInfo)) {
                 setCurDevicePath("");
-                qDebug() << "No file system warning dialog shown, returning.";
+                qCDebug(appLog) << "No file system warning dialog shown, returning.";
                 return;
             }
         }
@@ -349,22 +350,22 @@ void TitleWidget::showMountInfoWidget()
     dlg.exec();
 
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
-        qDebug() << "Current level is partition.";
+        qCDebug(appLog) << "Current level is partition.";
         setCurDevicePath("");
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
-        qDebug() << "Current level is logical volume.";
+        qCDebug(appLog) << "Current level is logical volume.";
         setCurVGName("");
     }
 }
 
 void TitleWidget::showUnmountInfoWidget()
 {
-    qDebug() << "Show unmount dialog";
+    qCDebug(appLog) << "Show unmount dialog";
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
-        qDebug() << "Current level is partition.";
+        qCDebug(appLog) << "Current level is partition.";
         setCurDevicePath(DMDbusHandler::instance()->getCurPartititonInfo().m_devicePath);
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
-        qDebug() << "Current level is logical volume.";
+        qCDebug(appLog) << "Current level is logical volume.";
         setCurVGName(DMDbusHandler::instance()->getCurLVInfo().m_vgName);
     }
 
@@ -374,22 +375,22 @@ void TitleWidget::showUnmountInfoWidget()
     dlg.exec();
 
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
-        qDebug() << "Current level is partition.";
+        qCDebug(appLog) << "Current level is partition.";
         setCurDevicePath("");
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
-        qDebug() << "Current level is logical volume.";
+        qCDebug(appLog) << "Current level is logical volume.";
         setCurVGName("");
     }
 }
 
 void TitleWidget::showResizeInfoWidget()
 {
-    qDebug() << "Show resize dialog";
+    qCDebug(appLog) << "Show resize dialog";
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
     setCurDevicePath(info.m_devicePath);
     FS_Limits limits = info.m_fsLimits;
     if (limits.min_size == -1 && limits.max_size == -1) {
-        qDebug() << "Partition does not support resizing.";
+        qCDebug(appLog) << "Partition does not support resizing.";
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("partNoSupportFSWidget");
@@ -412,7 +413,7 @@ void TitleWidget::showResizeInfoWidget()
 
 void TitleWidget::onCreateLVClicked()
 {
-    qDebug() << "Create LV button clicked";
+    qCDebug(appLog) << "Create LV button clicked";
     setCurVGName(DMDbusHandler::instance()->getCurLVInfo().m_vgName);
     PartitionDialog dlg(this);
     dlg.setTitleText(tr("Create logical volume"), tr("The disks will be formatted if you create a logical volume"));
@@ -420,7 +421,7 @@ void TitleWidget::onCreateLVClicked()
     dlg.setAccessibleName("createLVDialog");
 
     if (dlg.exec() == 1) {
-        qDebug() << "Create LV dialog accepted.";
+        qCDebug(appLog) << "Create LV dialog accepted.";
         CreateLVWidget createLVWidget(this);
         createLVWidget.setObjectName("createLVWidget");
         createLVWidget.setAccessibleName("createLVWidget");
@@ -432,12 +433,12 @@ void TitleWidget::onCreateLVClicked()
 
 void TitleWidget::onDeleteLVClicked()
 {
-    qDebug() << "Delete LV button clicked";
+    qCDebug(appLog) << "Delete LV button clicked";
     LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
     setCurVGName(lvInfo.m_vgName);
 
     if (DMDbusHandler::instance()->lvIsMount(lvInfo)) {
-        qDebug() << "LV is mounted.";
+        qCDebug(appLog) << "LV is mounted.";
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("messageBox");
@@ -457,7 +458,7 @@ void TitleWidget::onDeleteLVClicked()
     messageBox.setWarings(tr("Data cannot be recovered if deleted, please confirm before proceeding"), "",
                           tr("Delete"), DDialog::ButtonWarning, "delete", tr("Cancel"), "cancel");
     if (messageBox.exec() == DDialog::Accepted) {
-        qDebug() << "Delete LV dialog accepted.";
+        qCDebug(appLog) << "Delete LV dialog accepted.";
         QStringList lvNameList;
         lvNameList << lvInfo.m_lvPath;
 
@@ -465,18 +466,18 @@ void TitleWidget::onDeleteLVClicked()
     }
 
     setCurVGName("");
-    qDebug() << "Delete LV dialog closed.";
+    qCDebug(appLog) << "Delete LV dialog closed.";
 }
 
 void TitleWidget::onResizeLVClicked()
 {
-    qDebug() << "Resize LV button clicked";
+    qCDebug(appLog) << "Resize LV button clicked";
     LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
     setCurVGName(lvInfo.m_vgName);
     if(lvInfo.m_lvFsType == FS_NTFS){
-        qDebug() << "LV is NTFS.";
+        qCDebug(appLog) << "LV is NTFS.";
         if (DMDbusHandler::instance()->lvIsMount(lvInfo)){
-            qDebug() << "LV is mounted.";
+            qCDebug(appLog) << "LV is mounted.";
             MessageBox warningBox(this);
             warningBox.setObjectName("messageBox");
             warningBox.setAccessibleName("messageBox");
@@ -493,7 +494,7 @@ void TitleWidget::onResizeLVClicked()
     FS_Limits limits = lvInfo.m_fsLimits;
     if ((limits.min_size == -1 && limits.max_size == -1)
             || lvInfo.m_lvFsType == FS_FAT16 || lvInfo.m_lvFsType == FS_FAT32) { //fat32 or fat16 lvm情况下不支持调整
-        qDebug() << "LV does not support resizing.";
+        qCDebug(appLog) << "LV does not support resizing.";
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("LVNoSupportFSWidget");
@@ -507,7 +508,7 @@ void TitleWidget::onResizeLVClicked()
     }
 
     if (lvInfo.m_fileSystemLabel == "Roota" || lvInfo.m_fileSystemLabel == "Rootb") {
-        qDebug() << "LV is Roota or Rootb.";
+        qCDebug(appLog) << "LV is Roota or Rootb.";
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("messageBox");
@@ -523,19 +524,19 @@ void TitleWidget::onResizeLVClicked()
     dlg.exec();
 
     setCurVGName("");
-    qDebug() << "Resize LV dialog closed.";
+    qCDebug(appLog) << "Resize LV dialog closed.";
 }
 
 void TitleWidget::onCreateVGClicked()
 {
-    qDebug() << "Create VG button clicked";
+    qCDebug(appLog) << "Create VG button clicked";
     PartitionDialog dlg(this);
     dlg.setTitleText(tr("Create volume group"), tr("The disks will be formatted if you create a volume group"));
     dlg.setObjectName("createVGDialog");
     dlg.setAccessibleName("createVGDialog");
 
     if (dlg.exec() == 1) {
-        qDebug() << "Create VG dialog accepted.";
+        qCDebug(appLog) << "Create VG dialog accepted.";
         CreateVGWidget createVGWidget(CreateVGWidget::CREATE, this);
         createVGWidget.setObjectName("createVGWidget");
         createVGWidget.setAccessibleName("createVGWidget");
@@ -545,11 +546,11 @@ void TitleWidget::onCreateVGClicked()
 
 void TitleWidget::onDeleteVGClicked()
 {
-    qDebug() << "Delete VG button clicked";
+    qCDebug(appLog) << "Delete VG button clicked";
     VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
     setCurVGName(vgInfo.m_vgName);
     if (DMDbusHandler::instance()->isExistMountLV(vgInfo)) {
-        qDebug() << "VG has mounted LV.";
+        qCDebug(appLog) << "VG has mounted LV.";
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("messageBox");
@@ -569,7 +570,7 @@ void TitleWidget::onDeleteVGClicked()
     messageBox.setWarings(tr("Data cannot be recovered if deleted, please confirm before proceeding"), "",
                           tr("Delete"), DDialog::ButtonWarning, "delete", tr("Cancel"), "cancel");
     if (messageBox.exec() == DDialog::Accepted) {
-        qDebug() << "Delete VG dialog accepted.";
+        qCDebug(appLog) << "Delete VG dialog accepted.";
         QStringList vgNameList;
         vgNameList << vgInfo.m_vgName;
 
@@ -577,12 +578,12 @@ void TitleWidget::onDeleteVGClicked()
     }
 
     setCurVGName("");
-    qDebug() << "Delete VG dialog closed.";
+    qCDebug(appLog) << "Delete VG dialog closed.";
 }
 
 void TitleWidget::onResizeVGClicked()
 {
-    qDebug() << "Resize VG button clicked";
+    qCDebug(appLog) << "Resize VG button clicked";
     setCurVGName(DMDbusHandler::instance()->getCurVGInfo().m_vgName);
 
     CreateVGWidget createVGWidget(CreateVGWidget::RESIZE, this);
@@ -591,17 +592,17 @@ void TitleWidget::onResizeVGClicked()
     createVGWidget.exec();
 
     setCurVGName("");
-    qDebug() << "Resize VG dialog closed.";
+    qCDebug(appLog) << "Resize VG dialog closed.";
 }
 
 void TitleWidget::onDeletePVClicked()
 {
-    qDebug() << "Delete PV button clicked";
+    qCDebug(appLog) << "Delete PV button clicked";
     QMap<QString, VGInfo> mapVGInfo = DMDbusHandler::instance()->probLVMInfo().m_vgInfo;
     bool vgIsMount = false;
     QStringList lstVGName;
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
-        qDebug() << "Current level is partition.";
+        qCDebug(appLog) << "Current level is partition.";
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         setCurDevicePath(info.m_devicePath);
         VGData vgData = info.m_vgData;
@@ -619,7 +620,7 @@ void TitleWidget::onDeletePVClicked()
             }
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
-        qDebug() << "Current level is disk.";
+        qCDebug(appLog) << "Current level is disk.";
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         setCurDevicePath(info.m_path);
         QStringList pvStrList;
@@ -665,13 +666,13 @@ void TitleWidget::onDeletePVClicked()
         }
 
         if (!lstVGName.isEmpty()) {
-            qDebug() << "VG has mounted LV.";
+            qCDebug(appLog) << "VG has mounted LV.";
             vgIsMount = true;
         }
     }
 
     if (vgIsMount) {
-        qDebug() << "PV has mounted LV.";
+        qCDebug(appLog) << "PV has mounted LV.";
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("deletePVMessageBox");
@@ -690,18 +691,18 @@ void TitleWidget::onDeletePVClicked()
     removePVWidget.exec();
 
     setCurDevicePath("");
-    qDebug() << "Delete PV dialog closed.";
+    qCDebug(appLog) << "Delete PV dialog closed.";
 }
 
 void TitleWidget::updateBtnStatus()
 {
-    qDebug() << "Update button status.";
+    qCDebug(appLog) << "Update button status.";
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
-        qDebug() << "Current level is partition.";
+        qCDebug(appLog) << "Current level is partition.";
         updateBtnShowStatus(true, true, false, false, true, false, true, true);
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         if (info.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV) {
-            qDebug() << "Partition is in PV.";
+            qCDebug(appLog) << "Partition is in PV.";
             m_btnParted->hide();
             m_btnCreateLV->show();
 
@@ -711,7 +712,7 @@ void TitleWidget::updateBtnStatus()
             m_btnCreateLV->setDisabled(true);
             updatePartitionBtnStatus(true, true, true, true, true);
         } else if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
-            qDebug() << "Partition is in LUKS.";
+            qCDebug(appLog) << "Partition is in LUKS.";
             m_btnResize->setDisabled(true);
             m_btnDeletePV->setDisabled(true);
             m_btnParted->setDisabled(true);
@@ -719,23 +720,23 @@ void TitleWidget::updateBtnStatus()
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
             updateEncryptDeviceBtnStatus(luksInfo);
         } else {
-            qDebug() << "Partition is not in PV or LUKS.";
+            qCDebug(appLog) << "Partition is not in PV or LUKS.";
             m_btnDeletePV->setDisabled(true);
             m_btnParted->show();
             m_btnCreateLV->hide();
 
             //已挂载
             if (info.m_mountPoints.size() > 0 && info.m_busy) {
-                qDebug() << "Partition is mounted.";
+                qCDebug(appLog) << "Partition is mounted.";
                 updatePartitionBtnStatus(true, true, true, false, true);
 
                 if (1 == info.m_flag) {
                     m_btnUnmount->setDisabled(true);
                 }
             } else {
-                qDebug() << "Partition is not mounted.";
+                qCDebug(appLog) << "Partition is not mounted.";
                 if (1 == info.m_flag) {
-                    qDebug() << "Partition is not mounted.";
+                    qCDebug(appLog) << "Partition is not mounted.";
                     updatePartitionBtnStatus(true, true, true, true, true);
                 } else {
                     //需判断扩展分区上是否无分区，否则认为不可操作，此处省略操作
@@ -754,25 +755,25 @@ void TitleWidget::updateBtnStatus()
                 }
             }
 
-            qDebug() << info.m_type << info.m_fileSystemType;
+            qCDebug(appLog) << info.m_type << info.m_fileSystemType;
             if (info.m_fileSystemType == FSType::FS_LINUX_SWAP) {
-                qDebug() << "Partition is swap.";
+                qCDebug(appLog) << "Partition is swap.";
                 updatePartitionBtnStatus(true, true, true, true, true);
             }
             //CD,DVD disable format
             if (info.m_devicePath.startsWith("/dev/sr") || info.m_devicePath.startsWith("/dev/cdrom")) {
-                qDebug() << "Partition is CD or DVD.";
+                qCDebug(appLog) << "Partition is CD or DVD.";
                 updatePartitionBtnStatus(true, true, true, true, true);
             }
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
-        qDebug() << "Current level is disk.";
+        qCDebug(appLog) << "Current level is disk.";
         updateBtnShowStatus(true, true, false, false, true, false, true, true);
         updatePartitionBtnStatus(true, true, true, true, true);
 
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         if (info.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV) { //有分区创建为pv
-            qDebug() << "Disk is in PV.";
+            qCDebug(appLog) << "Disk is in PV.";
             m_btnParted->hide();
             m_btnCreateLV->show();
 
@@ -790,7 +791,7 @@ void TitleWidget::updateBtnStatus()
             m_btnCreateLV->setDisabled(true);
             m_btnFormat->setDisabled(true);
         } else if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS && info.m_partition.size() == 0) {
-            qDebug() << "Disk is in LUKS.";
+            qCDebug(appLog) << "Disk is in LUKS.";
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
             m_btnDeletePV->setDisabled(true);
             if (luksInfo.isDecrypt) {
@@ -803,7 +804,7 @@ void TitleWidget::updateBtnStatus()
                 updatePartitionBtnStatus(true, false, false, true, true);
             }
         } else {
-            qDebug() << "Disk is not in PV or LUKS.";
+            qCDebug(appLog) << "Disk is not in PV or LUKS.";
             m_btnParted->show();
             m_btnCreateLV->hide();
 
@@ -818,7 +819,7 @@ void TitleWidget::updateBtnStatus()
             }
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::VOLUMEGROUP) {
-        qDebug() << "Current level is VG.";
+        qCDebug(appLog) << "Current level is VG.";
         updateBtnShowStatus(false, true, true, true, false, true, false, true);
 
         // 如果VG异常，所有相关操作禁用
@@ -835,20 +836,20 @@ void TitleWidget::updateBtnStatus()
             m_btnCreateLV->setDisabled(true);
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
-        qDebug() << "Current level is LV.";
+        qCDebug(appLog) << "Current level is LV.";
         updateBtnShowStatus(true, false, true, true, false, true, true, false);
 
         // 如果VG异常，所有相关操作禁用
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
         if (vgInfo.isPartial()) {
-            qDebug() << "VG is partial.";
+            qCDebug(appLog) << "VG is partial.";
             updateLVBtnStatus(true, true, true, true, true, true);
             return;
         }
 
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
         if (lvInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
-            qDebug() << "LV is in LUKS.";
+            qCDebug(appLog) << "LV is in LUKS.";
             m_btnResizeLV->setDisabled(true);
             m_btnCreateLV->setDisabled(true);
 
@@ -858,24 +859,24 @@ void TitleWidget::updateBtnStatus()
         }
 
         if (lvInfo.m_lvName.isEmpty() && lvInfo.m_lvUuid.isEmpty()) {
-            qDebug() << "LV is not exist.";
+            qCDebug(appLog) << "LV is not exist.";
             updateLVBtnStatus(true, false, true, true, true, true);
         } else if (lvInfo.m_lvFsType == FSType::FS_LINUX_SWAP) {
-            qDebug() << "LV is swap.";
+            qCDebug(appLog) << "LV is swap.";
             updateLVBtnStatus(true, true, true, true, true, false);
         } else {
-            qDebug() << "LV is not swap.";
+            qCDebug(appLog) << "LV is not swap.";
             bool noMountPoint = lvInfo.m_mountPoints.isEmpty();
             updateLVBtnStatus(false, true, !noMountPoint, !noMountPoint, noMountPoint, false);
         }
     }
-    qDebug() << "TitleWidget::updateLVBtnStatus completed.";
+    qCDebug(appLog) << "TitleWidget::updateLVBtnStatus completed.";
 }
 
 void TitleWidget::updatePartitionBtnStatus(const bool &isCreate, const bool &isWipe, const bool &isMount,
                                            const bool &isUnmount, const bool &isResize)
 {
-    qDebug() << "Update partition button status.";
+    qCDebug(appLog) << "Update partition button status.";
     m_btnParted->setDisabled(isCreate);
     m_btnFormat->setDisabled(isWipe);
     m_btnMount->setDisabled(isMount);
@@ -886,7 +887,7 @@ void TitleWidget::updatePartitionBtnStatus(const bool &isCreate, const bool &isW
 void TitleWidget::updateVGBtnStatus(const bool &isDeleteVG, const bool &isCreateLV, const bool &isWipe,
                                     const bool &isMount, const bool &isUnmount, const bool &isResize)
 {
-    qDebug() << "Update VG button status.";
+    qCDebug(appLog) << "Update VG button status.";
     m_btnDeleteVG->setDisabled(isDeleteVG);
     m_btnCreateLV->setDisabled(isCreateLV);
     m_btnFormat->setDisabled(isWipe);
@@ -898,7 +899,7 @@ void TitleWidget::updateVGBtnStatus(const bool &isDeleteVG, const bool &isCreate
 void TitleWidget::updateLVBtnStatus(const bool &isDeleteLV, const bool &isCreateLV, const bool &isWipe,
                        const bool &isMount, const bool &isUnmount, const bool &isResize)
 {
-    qDebug() << "Update LV button status.";
+    qCDebug(appLog) << "Update LV button status.";
     m_btnDeleteLV->setDisabled(isDeleteLV);
     m_btnCreateLV->setDisabled(isCreateLV);
     m_btnFormat->setDisabled(isWipe);
@@ -911,7 +912,7 @@ void TitleWidget::updateBtnShowStatus(const bool &isDeleteVGShow, const bool &is
                                       const bool &isPartedShow, const bool &isCreateLVShow, const bool &isResizShow,
                                       const bool &isResizeVGShow, const bool &isResizeLVShow)
 {
-    qDebug() << "Update button show status.";
+    qCDebug(appLog) << "Update button show status.";
     m_btnDeleteVG->setHidden(isDeleteVGShow);
     m_btnDeleteLV->setHidden(isDeleteLVShow);
     m_btnDeletePV->setHidden(isDeletePVShow);
@@ -924,27 +925,27 @@ void TitleWidget::updateBtnShowStatus(const bool &isDeleteVGShow, const bool &is
 
 void TitleWidget::updateEncryptDeviceBtnStatus(const LUKS_INFO &luksInfo)
 {
-    qDebug() << "Update encrypt device button status.";
+    qCDebug(appLog) << "Update encrypt device button status.";
     if (luksInfo.isDecrypt) {
-        qDebug() << "Device is decrypt.";
+        qCDebug(appLog) << "Device is decrypt.";
         if (luksInfo.m_mapper.m_luksFs == FSType::FS_LVM2_PV) {
-            qDebug() << "Device is PV.";
+            qCDebug(appLog) << "Device is PV.";
             m_btnFormat->setDisabled(true);
             m_btnMount->setDisabled(true);
             m_btnUnmount->setDisabled(true);
         } else if (luksInfo.m_mapper.m_mountPoints.isEmpty()) {
-            qDebug() << "Device is not mount.";
+            qCDebug(appLog) << "Device is not mount.";
             m_btnFormat->setDisabled(false);
             m_btnMount->setDisabled(false);
             m_btnUnmount->setDisabled(true);
         } else {
-            qDebug() << "Device is mount.";
+            qCDebug(appLog) << "Device is mount.";
             m_btnFormat->setDisabled(true);
             m_btnMount->setDisabled(true);
             m_btnUnmount->setDisabled(false);
         }
     } else {
-        qDebug() << "Device is not decrypt.";
+        qCDebug(appLog) << "Device is not decrypt.";
         m_btnFormat->setDisabled(false);
         m_btnMount->setDisabled(false);
         m_btnUnmount->setDisabled(true);
@@ -953,24 +954,24 @@ void TitleWidget::updateEncryptDeviceBtnStatus(const LUKS_INFO &luksInfo)
 
 void TitleWidget::onCurSelectChanged()
 {
-    qDebug() << "TitleWidget::onCurSelectChanged";
+    qCDebug(appLog) << "TitleWidget::onCurSelectChanged";
     updateBtnStatus();
-    qDebug() << "Current selection changed";
+    qCDebug(appLog) << "Current selection changed";
 }
 
 void TitleWidget::onUpdateUsb()
 {
-    qDebug() << "TitleWidget::onUpdateUsb";
+    qCDebug(appLog) << "TitleWidget::onUpdateUsb";
     if (m_curChooseDevicePath.isEmpty() && m_curChooseVGName.isEmpty()) {
-        qDebug() << "No device or VG selected.";
+        qCDebug(appLog) << "No device or VG selected.";
         return;
     }
 
     if (!m_curChooseDevicePath.isEmpty()) {
-        qDebug() << "Update device: " << m_curChooseDevicePath;
+        qCDebug(appLog) << "Update device: " << m_curChooseDevicePath;
         QStringList deviceNameList = DMDbusHandler::instance()->getDeviceNameList();
         if (deviceNameList.indexOf(m_curChooseDevicePath) != -1) {
-            qDebug() << "Device is already in list.";
+            qCDebug(appLog) << "Device is already in list.";
             return;
         }
 
@@ -993,10 +994,10 @@ void TitleWidget::onUpdateUsb()
 
         setCurDevicePath("");
     } else if (!m_curChooseVGName.isEmpty()) {
-        qDebug() << "Update VG: " << m_curChooseVGName;
+        qCDebug(appLog) << "Update VG: " << m_curChooseVGName;
         QStringList vgNameList = DMDbusHandler::instance()->getVGNameList();
         if (vgNameList.indexOf(m_curChooseVGName) != -1) {
-            qDebug() << "VG is already in list.";
+            qCDebug(appLog) << "VG is already in list.";
             return;
         }
 
@@ -1013,25 +1014,25 @@ void TitleWidget::onUpdateUsb()
 
         setCurVGName("");
     }
-    qDebug() << "Update VG completed.";
+    qCDebug(appLog) << "Update VG completed.";
 }
 
 void TitleWidget::setCurDevicePath(const QString &devPath)
 {
-    qDebug() << "TitleWidget::setCurDevicePath";
+    qCDebug(appLog) << "TitleWidget::setCurDevicePath";
     m_curChooseDevicePath = devPath;
 }
 
 void TitleWidget::setCurVGName(const QString &vgName)
 {
-    qDebug() << "TitleWidget::setCurVGName";
+    qCDebug(appLog) << "TitleWidget::setCurVGName";
     m_curChooseVGName = vgName;
 }
 
 void TitleWidget::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::RightButton) {
-        qDebug() << "TitleWidget::mousePressEvent";
+        qCDebug(appLog) << "TitleWidget::mousePressEvent";
         return;
     }
 

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 
+#include "ddlog.h"
 #include "diskhealthdetectiondialog.h"
 #include "common.h"
 #include "diskhealthdetectiondelegate.h"
@@ -32,7 +33,7 @@ DiskHealthDetectionDialog::DiskHealthDetectionDialog(const QString &devicePath, 
     , m_devicePath(devicePath)
     , m_hardDiskStatusInfoList(hardDiskStatusInfoList)
 {
-    qDebug() << "DiskHealthDetectionDialog constructor for device:" << devicePath;
+    qCDebug(appLog) << "DiskHealthDetectionDialog constructor for device:" << devicePath;
     initUI();
     initConnections();
 }
@@ -44,7 +45,7 @@ DiskHealthDetectionDialog::~DiskHealthDetectionDialog()
 
 void DiskHealthDetectionDialog::initUI()
 {
-    qDebug() << "Initializing DiskHealthDetectionDialog UI";
+    qCDebug(appLog) << "Initializing DiskHealthDetectionDialog UI";
     setIcon(QIcon::fromTheme(appName));
     setTitle(tr("Check Health")); // 硬盘健康检测
     setFixedSize(726, 700);
@@ -83,7 +84,7 @@ void DiskHealthDetectionDialog::initUI()
 
     // 硬盘健康状态
     QString healthStateValue = DMDbusHandler::instance()->getDeviceHardStatus(m_devicePath);
-    qDebug() << "Device health status:" << healthStateValue;
+    qCDebug(appLog) << "Device health status:" << healthStateValue;
 
     DLabel *healthStateLabel = new DLabel(tr("Health Status")); // 健康状态
     DFontSizeManager::instance()->bind(healthStateLabel, DFontSizeManager::T6, QFont::Medium);
@@ -97,21 +98,21 @@ void DiskHealthDetectionDialog::initUI()
     DPalette paletteStateColor;
 
     if (0 == healthStateValue.compare("PASSED", Qt::CaseInsensitive) || 0 == healthStateValue.compare("OK", Qt::CaseInsensitive)) {
-        qDebug() << "Health status is PASSED or OK.";
+        qCDebug(appLog) << "Health status is PASSED or OK.";
         iconHealth = Common::getIcon("good");
         iconHealthLabel->setPixmap(iconHealth.pixmap(30, 30));
         m_healthStateValue->setText(tr("Good")); // 良好    【警告】Warning
         paletteStateColor.setColor(DPalette::Text, QColor("#00c800"));
         m_healthStateValue->setPalette(paletteStateColor);
     } else if (0 == healthStateValue.compare("Failure", Qt::CaseInsensitive)) {
-        qDebug() << "Health status is Failure.";
+        qCDebug(appLog) << "Health status is Failure.";
         iconHealth = Common::getIcon("damage");
         iconHealthLabel->setPixmap(iconHealth.pixmap(30, 30));
         m_healthStateValue->setText(tr("Damaged")); // 损坏
         paletteStateColor.setColor(DPalette::Text, QColor("#E02020"));
         m_healthStateValue->setPalette(paletteStateColor);
     } else {
-        qDebug() << "Health status is Unknown.";
+        qCDebug(appLog) << "Health status is Unknown.";
         iconHealth = Common::getIcon("unknown");
         iconHealthLabel->setPixmap(iconHealth.pixmap(30, 30));
         m_healthStateValue->setText(tr("Unknown")); // 未知
@@ -209,23 +210,23 @@ void DiskHealthDetectionDialog::initUI()
 //    m_tableView->setColumnWidth(6, 186);
 
     for (int i = 0; i < m_hardDiskStatusInfoList.count(); i++) {
-        // qDebug() << "Processing hard disk status info at index:" << i;
+        // qCDebug(appLog) << "Processing hard disk status info at index:" << i;
         HardDiskStatusInfo hardDiskStatusInfo = m_hardDiskStatusInfoList.at(i);
 
         if (hardDiskStatusInfo.m_id == "194" || hardDiskStatusInfo.m_attributeName == "Temperature") {
-            // qDebug() << "Found temperature related attribute (ID 194 or Name Temperature).";
+            // qCDebug(appLog) << "Found temperature related attribute (ID 194 or Name Temperature).";
             QString value;
             for (int i = 0; i < hardDiskStatusInfo.m_rawValue.size(); i++) {
                 if (hardDiskStatusInfo.m_rawValue.at(i) >= "0" && hardDiskStatusInfo.m_rawValue.at(i) <= "9") {
                     value += hardDiskStatusInfo.m_rawValue.at(i);
                 } else {
-                    qDebug() << "Non-digit character encountered in raw temperature value, breaking loop.";
+                    qCDebug(appLog) << "Non-digit character encountered in raw temperature value, breaking loop.";
                     break;
                 }
             }
 
             if (!value.isEmpty()) {
-                qDebug() << "Temperature value:" << value;
+                qCDebug(appLog) << "Temperature value:" << value;
                 m_temperatureValue->setText(QString("%1°C").arg(value));
             }
         }
@@ -233,73 +234,73 @@ void DiskHealthDetectionDialog::initUI()
         QList<QStandardItem*> itemList;
 
         if (!hardDiskStatusInfo.m_id.isEmpty()) {
-            // qDebug() << "Hard disk status ID is not empty, adding ID:" << hardDiskStatusInfo.m_id << "to item list.";
+            // qCDebug(appLog) << "Hard disk status ID is not empty, adding ID:" << hardDiskStatusInfo.m_id << "to item list.";
             itemList << new QStandardItem(hardDiskStatusInfo.m_id);
         } else {
-            // qDebug() << "Hard disk status ID is empty, adding empty ID item.";
+            // qCDebug(appLog) << "Hard disk status ID is empty, adding empty ID item.";
             itemList << new QStandardItem("-");
         }
 
         if (!hardDiskStatusInfo.m_whenFailed.isEmpty()) {
             if (hardDiskStatusInfo.m_whenFailed == "-") {
-                // qDebug() << "Hard disk status whenFailed is '-', setting status to 'G'.";
+                // qCDebug(appLog) << "Hard disk status whenFailed is '-', setting status to 'G'.";
                 itemList << new QStandardItem("G");
             } else if(0 == hardDiskStatusInfo.m_whenFailed.compare("In_the_past", Qt::CaseInsensitive)) {
-                // qDebug() << "Hard disk status whenFailed is 'In_the_past', setting status to 'W'.";
+                // qCDebug(appLog) << "Hard disk status whenFailed is 'In_the_past', setting status to 'W'.";
                 itemList << new QStandardItem("W");
             } else if(0 == hardDiskStatusInfo.m_whenFailed.compare("FAILING_NOW", Qt::CaseInsensitive)) {
-                // qDebug() << "Hard disk status whenFailed is 'FAILING_NOW', setting status to 'D'.";
+                // qCDebug(appLog) << "Hard disk status whenFailed is 'FAILING_NOW', setting status to 'D'.";
                 itemList << new QStandardItem("D");
             } else {
-                // qDebug() << "Hard disk status whenFailed is unknown, setting status to 'U'.";
+                // qCDebug(appLog) << "Hard disk status whenFailed is unknown, setting status to 'U'.";
                 itemList << new QStandardItem("U");
             }
         } else {
-            // qDebug() << "Hard disk status whenFailed is empty, adding empty status item.";
+            // qCDebug(appLog) << "Hard disk status whenFailed is empty, adding empty status item.";
             itemList << new QStandardItem("-");
         }
 
         if (!hardDiskStatusInfo.m_value.isEmpty()) {
-            // qDebug() << "Hard disk status value:" << hardDiskStatusInfo.m_value << "is not empty, adding value to item list.";
+            // qCDebug(appLog) << "Hard disk status value:" << hardDiskStatusInfo.m_value << "is not empty, adding value to item list.";
             itemList << new QStandardItem(hardDiskStatusInfo.m_value);
         } else {
-            // qDebug() << "Hard disk status value is empty, adding empty value item.";
+            // qCDebug(appLog) << "Hard disk status value is empty, adding empty value item.";
             itemList << new QStandardItem("-");
         }
 
         if (!hardDiskStatusInfo.m_worst.isEmpty()) {
-            // qDebug() << "Hard disk status worst:" << hardDiskStatusInfo.m_worst << "is not empty, adding worst to item list.";
+            // qCDebug(appLog) << "Hard disk status worst:" << hardDiskStatusInfo.m_worst << "is not empty, adding worst to item list.";
             itemList << new QStandardItem(hardDiskStatusInfo.m_worst);
         } else {
-            // qDebug() << "Hard disk status worst is empty, adding empty worst item.";
+            // qCDebug(appLog) << "Hard disk status worst is empty, adding empty worst item.";
             itemList << new QStandardItem("-");
         }
 
         if (!hardDiskStatusInfo.m_thresh.isEmpty()) {
-            // qDebug() << "Hard disk status thresh:" << hardDiskStatusInfo.m_thresh << "is not empty, adding thresh to item list.";
+            // qCDebug(appLog) << "Hard disk status thresh:" << hardDiskStatusInfo.m_thresh << "is not empty, adding thresh to item list.";
             itemList << new QStandardItem(hardDiskStatusInfo.m_thresh);
         } else {
-            // qDebug() << "Hard disk status thresh is empty, adding empty thresh item.";
+            // qCDebug(appLog) << "Hard disk status thresh is empty, adding empty thresh item.";
             itemList << new QStandardItem("-");
         }
 
         if (!hardDiskStatusInfo.m_rawValue.isEmpty()) {
-            // qDebug() << "Hard disk status rawValue:" << hardDiskStatusInfo.m_rawValue << "is not empty, adding rawValue to item list.";
+            // qCDebug(appLog) << "Hard disk status rawValue:" << hardDiskStatusInfo.m_rawValue << "is not empty, adding rawValue to item list.";
             itemList << new QStandardItem(hardDiskStatusInfo.m_rawValue);
         } else {
-            // qDebug() << "Hard disk status rawValue is empty, adding empty rawValue item.";
+            // qCDebug(appLog) << "Hard disk status rawValue is empty, adding empty rawValue item.";
             itemList << new QStandardItem("-");
         }
 
         if (!hardDiskStatusInfo.m_attributeName.isEmpty()) {
             itemList << new QStandardItem(hardDiskStatusInfo.m_attributeName);
         } else {
-            // qDebug() << "Hard disk status attributeName is empty, adding empty attributeName item.";
+            // qCDebug(appLog) << "Hard disk status attributeName is empty, adding empty attributeName item.";
             itemList << new QStandardItem("-");
         }
 
         m_standardItemModel->appendRow(itemList);
-        // qDebug() << "Appended row to standard item model.";
+        // qCDebug(appLog) << "Appended row to standard item model.";
     }
 
     DFrame *tableWidget = new DFrame;
@@ -350,33 +351,33 @@ void DiskHealthDetectionDialog::initUI()
 //    addSpacing(10);
 //    addContent(bottomWidget);
 
-    qDebug() << "DiskHealthDetectionDialog UI initialization complete.";
+    qCDebug(appLog) << "DiskHealthDetectionDialog UI initialization complete.";
 }
 
 void DiskHealthDetectionDialog::initConnections()
 {
-    qDebug() << "Initializing connections for DiskHealthDetectionDialog.";
+    qCDebug(appLog) << "Initializing connections for DiskHealthDetectionDialog.";
     connect(m_linkButton, &DCommandLinkButton::clicked, this, &DiskHealthDetectionDialog::onExportButtonClicked);
 #if QT_VERSION_MAJOR > 5
-    qDebug() << "Connecting themeTypeChanged signal for Qt6 or higher.";
+    qCDebug(appLog) << "Connecting themeTypeChanged signal for Qt6 or higher.";
     connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, this, &DiskHealthDetectionDialog::onHandleChangeTheme);
 #else
-    qDebug() << "Connecting themeTypeChanged signal for Qt5.";
+    qCDebug(appLog) << "Connecting themeTypeChanged signal for Qt5.";
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &DiskHealthDetectionDialog::onHandleChangeTheme);
 #endif
-    qDebug() << "Calling onHandleChangeTheme.";
+    qCDebug(appLog) << "Calling onHandleChangeTheme.";
     onHandleChangeTheme();
-    qDebug() << "Connections initialized for DiskHealthDetectionDialog.";
+    qCDebug(appLog) << "Connections initialized for DiskHealthDetectionDialog.";
 }
 
 void DiskHealthDetectionDialog::onExportButtonClicked()
 {
-    qDebug() << "onExportButtonClicked called.";
-    qInfo() << "Starting health info export for device:" << m_devicePath;
+    qCDebug(appLog) << "onExportButtonClicked called.";
+    qCInfo(appLog) << "Starting health info export for device:" << m_devicePath;
     //文件保存路径
     QString fileDirPath = QFileDialog::getSaveFileName(this, tr("Save File"), "CheckHealthInfo.txt", tr("Text files (*.txt)"));// 文件保存   硬盘健康检测信息   文件类型
     if (fileDirPath.isEmpty()) {
-        qDebug() << "File save path is empty, returning.";
+        qCDebug(appLog) << "File save path is empty, returning.";
         return;
     }
 
@@ -389,7 +390,7 @@ void DiskHealthDetectionDialog::onExportButtonClicked()
 
     if (!dir.exists()) {
         // 路径错误
-        qWarning() << "Invalid export path:" << fileDir;
+        qCWarning(appLog) << "Invalid export path:" << fileDir;
         DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Wrong path"));
         DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
 
@@ -398,27 +399,27 @@ void DiskHealthDetectionDialog::onExportButtonClicked()
 
     if (!fileInfo.isWritable()) {
         // 您无权访问该路径
-        qWarning() << "No write permission for path:" << fileDir;
+        qCWarning(appLog) << "No write permission for path:" << fileDir;
         DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("You do not have permission to access this path"));
         DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
     } else {
         if (!fileDirPath.contains(".txt")) {
-            qDebug() << "Adding .txt extension to file path.";
+            qCDebug(appLog) << "Adding .txt extension to file path.";
             fileDirPath = fileDirPath + ".txt";
         }
 
         QFile file(fileDirPath);
         if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
-            qDebug() << "Successfully opened file for writing.";
+            qCDebug(appLog) << "Successfully opened file for writing.";
             QTextStream out(&file);
 
             QString headers = tr("ID") + "," + tr("Status") + "," + tr("Current") + "," + tr("Worst")
                     + "," + tr("Threshold") + "," + tr("Raw Value") + "," + tr("Attribute name") + "\n";
             out << headers;
-            qDebug() << "Wrote headers to file.";
+            qCDebug(appLog) << "Wrote headers to file.";
 
             for (int i = 0; i < m_standardItemModel->rowCount(); i++) {
-                // qDebug() << "Writing row:" << i << "to file.";
+                // qCDebug(appLog) << "Writing row:" << i << "to file.";
                 QString strInfo = m_standardItemModel->item(i, 0)->text() + ","
                         + m_standardItemModel->item(i, 1)->text() + ","
                         + m_standardItemModel->item(i, 2)->text() + ","
@@ -433,84 +434,84 @@ void DiskHealthDetectionDialog::onExportButtonClicked()
 
             file.close();
 
-            qInfo() << "Health info exported successfully to:" << fileDirPath;
+            qCInfo(appLog) << "Health info exported successfully to:" << fileDirPath;
             DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Export successful")); // 导出成功
             DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
         } else {
-            qWarning() << "Failed to export health info to:" << fileDirPath;
+            qCWarning(appLog) << "Failed to export health info to:" << fileDirPath;
             DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Export failed")); // 导出失败
             DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
         }
     }
-    qDebug() << "onExportButtonClicked completed.";
+    qCDebug(appLog) << "onExportButtonClicked completed.";
 }
 
 bool DiskHealthDetectionDialog::event(QEvent *event)
 {
-    // qDebug() << "event called in DiskHealthDetectionDialog for event type:" << event->type();
+    // qCDebug(appLog) << "event called in DiskHealthDetectionDialog for event type:" << event->type();
     // 字体大小改变
     if (QEvent::ApplicationFontChange == event->type()) {
-        // qDebug() << "Application font change event detected.";
+        // qCDebug(appLog) << "Application font change event detected.";
 #if QT_VERSION_MAJOR > 5
-        // qDebug() << "Adjusting link button width for Qt6 or higher.";
+        // qCDebug(appLog) << "Adjusting link button width for Qt6 or higher.";
         m_linkButton->setFixedWidth(m_linkButton->fontMetrics().boundingRect(QString(tr("Export", "button"))).width());
 #else
-        // qDebug() << "Adjusting link button width for Qt5.";
+        // qCDebug(appLog) << "Adjusting link button width for Qt5.";
         m_linkButton->setFixedWidth(m_linkButton->fontMetrics().width(QString(tr("Export", "button"))));
 #endif
 
         if (QApplication::font().pointSizeF() / 0.75 >= 18 ) {
-            qDebug() << "Font size is large, setting fixed size to 726x705.";
+            qCDebug(appLog) << "Font size is large, setting fixed size to 726x705.";
             setFixedSize(726, 705);
         } else {
-            qDebug() << "Font size is normal, setting fixed size to 726x700.";
+            qCDebug(appLog) << "Font size is normal, setting fixed size to 726x700.";
             setFixedSize(726, 700);
         }
         DDialog::event(event);
     }
 
-    // qDebug() << "Event handling completed, returning DDialog::event result.";
+    // qCDebug(appLog) << "Event handling completed, returning DDialog::event result.";
     return DDialog::event(event);
 }
 
 void DiskHealthDetectionDialog::keyPressEvent(QKeyEvent *event)
 {
-    // qDebug() << "keyPressEvent called in DiskHealthDetectionDialog for key:" << event->key();
+    // qCDebug(appLog) << "keyPressEvent called in DiskHealthDetectionDialog for key:" << event->key();
     if (event->key() == Qt::Key::Key_Escape) {
-        // qDebug() << "Escape key pressed, ignoring event.";
+        // qCDebug(appLog) << "Escape key pressed, ignoring event.";
         event->ignore();
     } else {
-        // qDebug() << "Other key pressed, calling DDialog::keyPressEvent.";
+        // qCDebug(appLog) << "Other key pressed, calling DDialog::keyPressEvent.";
         DDialog::keyPressEvent(event);
     }
-    // qDebug() << "keyPressEvent completed.";
+    // qCDebug(appLog) << "keyPressEvent completed.";
 }
 
 void DiskHealthDetectionDialog::onHandleChangeTheme()
 {
-    qDebug() << "Handling theme change";
+    qCDebug(appLog) << "Handling theme change";
     DPalette palette;
     QColor valueColor;
     QColor tableColor;
 #if QT_VERSION_MAJOR > 5
     auto themeType = DGuiApplicationHelper::instance()->themeType();
     if (themeType == DGuiApplicationHelper::LightType) {
-        qDebug() << "Light theme detected.";
+        qCDebug(appLog) << "Light theme detected.";
         valueColor = QColor("#000000");
         tableColor = QColor("#001A2E");
     } else if (themeType == DGuiApplicationHelper::DarkType) {
-        qDebug() << "Dark theme detected.";
+        qCDebug(appLog) << "Dark theme detected.";
         valueColor = QColor("#FFFFFF");
         tableColor = QColor("#C0C6D4");
     }
 #else
     auto themeType = DApplicationHelper::instance()->themeType();
     if (themeType == DApplicationHelper::LightType) {
-        qDebug() << "Light theme detected.";
+        qCDebug(appLog) << "Light theme detected.";
         valueColor = QColor("#000000");
         tableColor = QColor("#001A2E");
     } else if (themeType == DApplicationHelper::DarkType) {
-        qDebug() << "Dark theme detected.";
+        qCDebug(appLog) << "Dark theme detected.";
         valueColor = QColor("#FFFFFF");
         tableColor = QColor("#C0C6D4");
     }

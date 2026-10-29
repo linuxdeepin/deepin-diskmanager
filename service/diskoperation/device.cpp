@@ -1,7 +1,8 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
+#include "ddlog.h"
 #include "device.h"
 
 #include <QDebug>
@@ -10,7 +11,7 @@ namespace DiskManager {
 
 Device::Device()
 {
-    qDebug() << "Initializing Device object with DBus type registrations";
+    qCDebug(serviceLog) << "Initializing Device object with DBus type registrations";
     qDBusRegisterMetaType<DeviceInfo>();
     qDBusRegisterMetaType<DeviceInfoMap>();
     qDBusRegisterMetaType<PartitionInfo>();
@@ -48,23 +49,23 @@ Device::Device()
     m_highestBusy = 0;
     m_readonly = false;
     m_maxPartitionNameLength = 0;
-    qDebug() << "Device object initialized";
+    qCDebug(serviceLog) << "Device object initialized";
 }
 
 void Device::enablePartitionNaming(int length)
 {
     if (length > 0) {
         m_maxPartitionNameLength = length;
-        qDebug() << "Enabled partition naming with max length:" << length;
+        qCDebug(serviceLog) << "Enabled partition naming with max length:" << length;
     } else {
         m_maxPartitionNameLength = 0;
-        qDebug() << "Disabled partition naming";
+        qCDebug(serviceLog) << "Disabled partition naming";
     }
 }
 
 bool Device::partitionNamingSupported() const
 {
-    qDebug() << "Checking if partition naming is supported. Max length:" << m_maxPartitionNameLength;
+    qCDebug(serviceLog) << "Checking if partition naming is supported. Max length:" << m_maxPartitionNameLength;
     return m_maxPartitionNameLength > 0;
 }
 
@@ -75,7 +76,7 @@ bool Device::partitionNamingSupported() const
 
 DeviceInfo Device::getDeviceInfo()
 {
-    qDebug() << "Entering Device::getDeviceInfo";
+    qCDebug(serviceLog) << "Entering Device::getDeviceInfo";
     DeviceInfo info;
     info.m_length = m_length;
     info.m_heads = m_heads;
@@ -93,7 +94,7 @@ DeviceInfo Device::getDeviceInfo()
     info.m_interface = m_interface;
     info.m_mediaType = m_mediaType;
 
-    qDebug() << "Retrieving device info - Path:" << info.m_path
+    qCDebug(serviceLog) << "Retrieving device info - Path:" << info.m_path
              << "Length:" << info.m_length
              << "SectorSize:" << info.m_sectorSize
              << "MaxPrims:" << info.m_maxPrims;

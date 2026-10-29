@@ -1,8 +1,9 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
 
+#include "ddlog.h"
 #include "infoshowwidget.h"
 #include "customcontrol/sizeinfowidget.h"
 #include "partedproxy/dmdbushandler.h"
@@ -22,15 +23,15 @@ DWIDGET_USE_NAMESPACE
 InfoShowWidget::InfoShowWidget(DWidget *parent)
     : DFrame(parent)
 {
-    qDebug() << "InfoShowWidget constructor";
+    qCDebug(appLog) << "InfoShowWidget constructor";
     initUi();
     initConnection();
-    qDebug() << "InfoShowWidget constructor finished.";
+    qCDebug(appLog) << "InfoShowWidget constructor finished.";
 }
 
 void InfoShowWidget::initUi()
 {
-    qDebug() << "Initializing InfoShowWidget UI";
+    qCDebug(appLog) << "Initializing InfoShowWidget UI";
     setWindowFlags(Qt::FramelessWindowHint); //无边框
     setAttribute(Qt::WA_TranslucentBackground); //背景透明
 
@@ -56,7 +57,7 @@ void InfoShowWidget::initUi()
     m_frameMid->setFrameShape(QFrame::NoFrame);
     frameLayout->addWidget(m_frameMid);
     midFramSettings();
-    qDebug() << "midFramSettings called in initUi.";
+    qCDebug(appLog) << "midFramSettings called in initUi.";
 
     // 右侧 底部数据信息
     m_frameBottom = new DmFrameWidget(m_diskInfoData);
@@ -65,31 +66,31 @@ void InfoShowWidget::initUi()
     frameLayout->addWidget(m_frameBottom);
     frameLayout->addStretch();
     bottomFramSettings();
-    qDebug() << "InfoShowWidget UI initialization complete.";
+    qCDebug(appLog) << "InfoShowWidget UI initialization complete.";
 }
 
 void InfoShowWidget::initConnection()
 {
-    qDebug() << "Setting up InfoShowWidget signal connections";
+    qCDebug(appLog) << "Setting up InfoShowWidget signal connections";
     connect(DMDbusHandler::instance(), &DMDbusHandler::curSelectChanged, this, &InfoShowWidget::onCurSelectChanged);
 #if QT_VERSION_MAJOR > 5
-    qDebug() << "Connecting themeTypeChanged signal for Qt6 or higher.";
+    qCDebug(appLog) << "Connecting themeTypeChanged signal for Qt6 or higher.";
     connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, this,
             &InfoShowWidget::onHandleChangeTheme);
 #else
-    qDebug() << "Connecting themeTypeChanged signal for Qt5.";
+    qCDebug(appLog) << "Connecting themeTypeChanged signal for Qt5.";
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this,
             &InfoShowWidget::onHandleChangeTheme);
 #endif
     connect(m_partitionInfoWidget, &PartitionInfoWidget::enterWidget, this, &InfoShowWidget::onEnterWidget);
     connect(m_partitionInfoWidget, &PartitionInfoWidget::leaveWidget, this, &InfoShowWidget::onLeaveWidget);
     connect(m_vgSizeInfoWidget, &VGSizeInfoWidget::enterWidget, this, &InfoShowWidget::onEnterVGInfoWidget);
-    qDebug() << "InfoShowWidget signal connections setup complete.";
+    qCDebug(appLog) << "InfoShowWidget signal connections setup complete.";
 }
 
 void InfoShowWidget::midFramSettings()
 {
-    qDebug() << "Configuring mid frame settings";
+    qCDebug(appLog) << "Configuring mid frame settings";
     QVBoxLayout *mainLayout = new QVBoxLayout(m_frameMid);
     m_infoWidget = new SizeInfoWidget;
     m_partitionInfoWidget = new PartitionInfoWidget;
@@ -124,12 +125,12 @@ void InfoShowWidget::midFramSettings()
 
     m_vgInfoShowWidget = new VGInfoShowWidget;
     m_vgInfoShowWidget->setObjectName("vgInfoShowWidget");
-    qDebug() << "Mid frame settings configuration complete.";
+    qCDebug(appLog) << "Mid frame settings configuration complete.";
 }
 
 void InfoShowWidget::bottomFramSettings()
 {
-    qDebug() << "Configuring bottom frame settings";
+    qCDebug(appLog) << "Configuring bottom frame settings";
     QVBoxLayout *leftInfoLayout = new QVBoxLayout();
     QVBoxLayout *rightInfolayout = new QVBoxLayout();
 
@@ -231,14 +232,14 @@ void InfoShowWidget::bottomFramSettings()
     mainlayout->addLayout(leftInfoLayout);
     mainlayout->addSpacing(10);
     mainlayout->addLayout(rightInfolayout);
-    qDebug() << "Bottom frame settings configuration complete.";
+    qCDebug(appLog) << "Bottom frame settings configuration complete.";
 }
 
 void InfoShowWidget::onCurSelectChanged()
 {
-    qDebug() << "Current selection changed, level:" << DMDbusHandler::instance()->getCurLevel();
+    qCDebug(appLog) << "Current selection changed, level:" << DMDbusHandler::instance()->getCurLevel();
     if (DMDbusHandler::PARTITION == DMDbusHandler::instance()->getCurLevel()) {
-        qDebug() << "Current selection is PARTITION.";
+        qCDebug(appLog) << "Current selection is PARTITION.";
         m_frameBottom->setFrameData();
         m_mountpointLabel->setText(tr("Mount point:"));
         m_typeLabel->setText(tr("Type:"));
@@ -259,7 +260,7 @@ void InfoShowWidget::onCurSelectChanged()
         QString capacity = Utils::formatSize(info.m_sectorEnd - info.m_sectorStart + 1, info.m_sectorSize);
 
         if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
-            qDebug() << "LUKS partition detected.";
+            qCDebug(appLog) << "LUKS partition detected.";
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
             if (luksInfo.isDecrypt) {
                 free = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUnused);
@@ -276,12 +277,12 @@ void InfoShowWidget::onCurSelectChanged()
         }
 
         if (free.contains("-")){
-            qDebug() << "LUKS partition free size is not available.";
+            qCDebug(appLog) << "LUKS partition free size is not available.";
             free = "-";
         }
 
         if (used.contains("-")){
-            qDebug() << "LUKS partition used size is not available.";
+            qCDebug(appLog) << "LUKS partition used size is not available.";
             used = "-";
         }
 
@@ -294,7 +295,7 @@ void InfoShowWidget::onCurSelectChanged()
         m_infoTopFrame->updateDiskInfo();
 
         if (info.m_vgFlag == LVMFlag::LVM_FLAG_NOT_PV) {
-            qDebug() << "LUKS partition is not PV.";
+            qCDebug(appLog) << "LUKS partition is not PV.";
             m_partitionInfoWidget->hide();
             m_vgSizeInfoWidget->hide();
             m_infoWidget->show();
@@ -316,7 +317,7 @@ void InfoShowWidget::onCurSelectChanged()
             QVector<double> size {m_used, m_noused};
             m_infoWidget->setData(info, color, size, 1);
         } else {
-            qDebug() << "LUKS partition is PV.";
+            qCDebug(appLog) << "LUKS partition is PV.";
             m_partitionInfoWidget->hide();
             m_vgSizeInfoWidget->show();
             m_infoWidget->hide();
@@ -324,17 +325,17 @@ void InfoShowWidget::onCurSelectChanged()
             m_vgSizeInfoWidget->setData(info.m_vgData);
         }
     } else if (DMDbusHandler::DISK == DMDbusHandler::instance()->getCurLevel()) {
-        qDebug() << "Current selection is DISK.";
+        qCDebug(appLog) << "Current selection is DISK.";
         m_mountpointLabel->setText(tr("Path:"));
         m_typeLabel->setText(tr("Disk type:"));
         m_volumeLabel->setText(tr("Interface:"));
 
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         if (info.m_mediaType == "SSD") {
-            qDebug() << "SSD disk detected.";
+            qCDebug(appLog) << "SSD disk detected.";
             info.m_mediaType = tr("SSD");
         } else if (info.m_mediaType == "HDD") {
-            qDebug() << "HDD disk detected.";
+            qCDebug(appLog) << "HDD disk detected.";
             info.m_mediaType = tr("HDD");
         }
         Sector usedSector = 0;
@@ -344,24 +345,24 @@ void InfoShowWidget::onCurSelectChanged()
         for (int i = 0; i < info.m_partition.size(); i++) {
             PartitionInfo partitionInfo = info.m_partition.at(i);
             if (partitionInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
-                qDebug() << "LUKS partition detected.";
+                qCDebug(appLog) << "LUKS partition detected.";
                 LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(partitionInfo.m_path);
                 if (luksInfo.isDecrypt) {
-                    qDebug() << "LUKS partition is decrypted.";
+                    qCDebug(appLog) << "LUKS partition is decrypted.";
                     if (luksInfo.m_mapper.m_fsUsed > 0) {
-                        qDebug() << "LUKS partition used size:" << luksInfo.m_mapper.m_fsUsed;
+                        qCDebug(appLog) << "LUKS partition used size:" << luksInfo.m_mapper.m_fsUsed;
                         usedSector += luksInfo.m_mapper.m_fsUsed;
                     }
 
                     if (luksInfo.m_mapper.m_fsUnused > 0) {
-                        qDebug() << "LUKS partition unused size:" << luksInfo.m_mapper.m_fsUnused;
+                        qCDebug(appLog) << "LUKS partition unused size:" << luksInfo.m_mapper.m_fsUnused;
                         unusedSector += luksInfo.m_mapper.m_fsUnused;
                     }
 
                     sumUsed += luksInfo.m_mapper.m_fsUsed;
                     sumUnused += luksInfo.m_mapper.m_fsUnused;
                 } else {
-                    qDebug() << "LUKS partition is not decrypted.";
+                    qCDebug(appLog) << "LUKS partition is not decrypted.";
                     usedSector += (partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1) * partitionInfo.m_sectorSize;
                     sumUsed += (partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1) * partitionInfo.m_sectorSize;
                     sumUnused += luksInfo.m_mapper.m_fsUnused;
@@ -371,26 +372,26 @@ void InfoShowWidget::onCurSelectChanged()
             }
 
             if (partitionInfo.m_path != "unallocated") {
-                qDebug() << "Partition detected.";
+                qCDebug(appLog) << "Partition detected.";
                 if (partitionInfo.m_sectorsUsed > 0) {
-                    qDebug() << "Partition used size:" << partitionInfo.m_sectorsUsed;
+                    qCDebug(appLog) << "Partition used size:" << partitionInfo.m_sectorsUsed;
                     usedSector += partitionInfo.m_sectorsUsed * partitionInfo.m_sectorSize;
                 }
 
                 if (partitionInfo.m_sectorsUnused > 0) {
-                    qDebug() << "Partition unused size:" << partitionInfo.m_sectorsUnused;
+                    qCDebug(appLog) << "Partition unused size:" << partitionInfo.m_sectorsUnused;
                     unusedSector += partitionInfo.m_sectorsUnused * partitionInfo.m_sectorSize;
                 }
 
                 if (partitionInfo.m_sectorsUsed < 0 && partitionInfo.m_sectorsUnused < 0) {
-                    qDebug() << "Partition size is not available.";
+                    qCDebug(appLog) << "Partition size is not available.";
                     usedSector += (partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1) * partitionInfo.m_sectorSize;
                 }
 
                 sumUsed += partitionInfo.m_sectorsUsed * partitionInfo.m_sectorSize;
                 sumUnused += partitionInfo.m_sectorsUnused * partitionInfo.m_sectorSize;
             } else {
-                qDebug() << "Partition is unallocated.";
+                qCDebug(appLog) << "Partition is unallocated.";
                 unusedSector += (partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1) * partitionInfo.m_sectorSize;
                 sumUsed += partitionInfo.m_sectorsUsed * partitionInfo.m_sectorSize;
                 sumUnused += (partitionInfo.m_sectorEnd - partitionInfo.m_sectorStart + 1) * partitionInfo.m_sectorSize;
@@ -403,20 +404,20 @@ void InfoShowWidget::onCurSelectChanged()
 
         // 当前选择为磁盘时，是否是整盘加密的磁盘
         if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS && info.m_partition.size() == 0) {
-            qDebug() << "Disk is LUKS encrypted and has no partitions.";
+            qCDebug(appLog) << "Disk is LUKS encrypted and has no partitions.";
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
             m_mountpointLabel->setText(tr("Mount point:"));
             m_typeLabel->setText(tr("Type:"));
             m_volumeLabel->setText(tr("Volume label:"));
             if (luksInfo.isDecrypt) {
-                qDebug() << "LUKS disk is decrypted.";
+                qCDebug(appLog) << "LUKS disk is decrypted.";
                 if (luksInfo.m_mapper.m_fsUsed > 0) {
-                    qDebug() << "LUKS disk used size:" << luksInfo.m_mapper.m_fsUsed;
+                    qCDebug(appLog) << "LUKS disk used size:" << luksInfo.m_mapper.m_fsUsed;
                     usedSector += luksInfo.m_mapper.m_fsUsed;
                 }
 
                 if (luksInfo.m_mapper.m_fsUnused > 0) {
-                    qDebug() << "LUKS disk unused size:" << luksInfo.m_mapper.m_fsUnused;
+                    qCDebug(appLog) << "LUKS disk unused size:" << luksInfo.m_mapper.m_fsUnused;
                     unusedSector += luksInfo.m_mapper.m_fsUnused;
                 }
 
@@ -430,7 +431,7 @@ void InfoShowWidget::onCurSelectChanged()
 
                 diskType = DMDbusHandler::instance()->getEncryptionFsType(luksInfo);
             } else {
-                qDebug() << "LUKS disk is not decrypted.";
+                qCDebug(appLog) << "LUKS disk is not decrypted.";
                 usedSector = -1 * info.m_sectorSize;
                 unusedSector = -1 * info.m_sectorSize;
                 sumUsed = -1 * info.m_sectorSize;
@@ -450,12 +451,12 @@ void InfoShowWidget::onCurSelectChanged()
         QString sumUnusedSiz = Utils::LVMFormatSize(sumUnused);
 
         if (sumUsedSize.contains("-")) {
-            qDebug() << "LUKS disk used size is not available.";
+            qCDebug(appLog) << "LUKS disk used size is not available.";
             used = "-";
         }
 
         if (sumUnusedSiz.contains("-")) {
-            qDebug() << "LUKS disk unused size is not available.";
+            qCDebug(appLog) << "LUKS disk unused size is not available.";
             unused = "-";
         }
 
@@ -476,7 +477,7 @@ void InfoShowWidget::onCurSelectChanged()
 //        m_vgSizeInfoWidget->setData(info);
 
         if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS && info.m_partition.size() == 0) {
-            qDebug() << "Disk is LUKS encrypted and has no partitions.";
+            qCDebug(appLog) << "Disk is LUKS encrypted and has no partitions.";
             // 当前磁盘是整盘加密时的逻辑处理
             m_partitionInfoWidget->hide();
             m_vgSizeInfoWidget->hide();
@@ -488,12 +489,12 @@ void InfoShowWidget::onCurSelectChanged()
             DPalette palette;
             DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
             if (themeType == DGuiApplicationHelper::LightType) {
-                qDebug() << "Light theme is used.";
+                qCDebug(appLog) << "Light theme is used.";
                 fillcolor = QColor("#0091ff");
                 fillcolor1 = palette.color(DPalette::Normal, DPalette::ToolTipText);
                 fillcolor1.setAlphaF(0.1);
             } else if (themeType == DGuiApplicationHelper::DarkType) {
-                qDebug() << "Dark theme is used.";
+                qCDebug(appLog) << "Dark theme is used.";
                 fillcolor = QColor("#0059D2");
                 fillcolor1 = palette.color(DPalette::Normal, DPalette::BrightText);
                 fillcolor1.setAlphaF(0.2);
@@ -503,7 +504,7 @@ void InfoShowWidget::onCurSelectChanged()
             QVector<double> size {m_used, m_noused};
             m_infoWidget->setData(info, color, size, 1);
         } else if (DMDbusHandler::instance()->getIsJoinAllVG().value(info.m_path) == "false") {
-            qDebug() << "Disk is not joined to any VG.";
+            qCDebug(appLog) << "Disk is not joined to any VG.";
             // 判断当前磁盘是否全部加入VG，是则显示磁盘下VG的分布情况，否则依然显示磁盘分区的分布情况
             m_partitionInfoWidget->show();
             m_vgSizeInfoWidget->hide();
@@ -511,7 +512,7 @@ void InfoShowWidget::onCurSelectChanged()
 
             m_partitionInfoWidget->setData(info);
         } else {
-            qDebug() << "Disk is joined to VG.";
+            qCDebug(appLog) << "Disk is joined to VG.";
             m_partitionInfoWidget->hide();
             m_infoWidget->hide();
             m_vgSizeInfoWidget->show();
@@ -520,7 +521,7 @@ void InfoShowWidget::onCurSelectChanged()
             m_vgSizeInfoWidget->setData(vglist);
         }
     } else if (DMDbusHandler::VOLUMEGROUP == DMDbusHandler::instance()->getCurLevel()) {
-        qDebug() << "Current level is VOLUMEGROUP.";
+        qCDebug(appLog) << "Current level is VOLUMEGROUP.";
         m_partitionInfoWidget->hide();
         m_infoWidget->hide();
         m_vgSizeInfoWidget->show();
@@ -528,13 +529,13 @@ void InfoShowWidget::onCurSelectChanged()
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
         QString vgSize = vgInfo.m_vgSize;
         if (vgSize.contains("1024")) {
-            qDebug() << "VG size is in 1024 units.";
+            qCDebug(appLog) << "VG size is in 1024 units.";
             vgSize = Utils::LVMFormatSize(vgInfo.m_peCount * vgInfo.m_PESize + vgInfo.m_PESize);
         }
 
         QString unused = vgInfo.m_vgUnused;
         if (unused.contains("1024")) {
-            qDebug() << "VG unused size is in 1024 units.";
+            qCDebug(appLog) << "VG unused size is in 1024 units.";
             unused = Utils::LVMFormatSize(vgInfo.m_peCount * vgInfo.m_PESize + vgInfo.m_PESize);
         }
 
@@ -553,7 +554,7 @@ void InfoShowWidget::onCurSelectChanged()
         m_infoTopFrame->updateDiskInfo();
         m_vgSizeInfoWidget->setData(vgInfo);
     } else if (DMDbusHandler::LOGICALVOLUME == DMDbusHandler::instance()->getCurLevel()) {
-        qDebug() << "Current level is LOGICALVOLUME.";
+        qCDebug(appLog) << "Current level is LOGICALVOLUME.";
         m_partitionInfoWidget->hide();
         m_infoWidget->show();
         m_vgSizeInfoWidget->hide();
@@ -572,10 +573,10 @@ void InfoShowWidget::onCurSelectChanged()
         QString lvSize = lvInfo.m_lvSize;
 
         if (lvInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
-            qDebug() << "LV is LUKS encrypted.";
+            qCDebug(appLog) << "LV is LUKS encrypted.";
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(lvInfo.m_lvPath);
             if (luksInfo.isDecrypt) {
-                qDebug() << "LV is LUKS encrypted and decrypted.";
+                qCDebug(appLog) << "LV is LUKS encrypted and decrypted.";
                 unused = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUnused);
                 used = Utils::LVMFormatSize(luksInfo.m_mapper.m_fsUsed);
                 mountPoint = "";
@@ -586,7 +587,7 @@ void InfoShowWidget::onCurSelectChanged()
                 unusedSize = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUnused, SIZE_UNIT::UNIT_GIB);
                 usedSize = Utils::LVMSizeToUnit(luksInfo.m_mapper.m_fsUsed, SIZE_UNIT::UNIT_GIB);
             } else {
-                qDebug() << "LV is LUKS encrypted but not decrypted.";
+                qCDebug(appLog) << "LV is LUKS encrypted but not decrypted.";
                 unused = "-";
                 used = "-";
                 usedSize = 0.00;
@@ -595,34 +596,34 @@ void InfoShowWidget::onCurSelectChanged()
         }
 
         if (lvInfo.m_lvName.isEmpty() && lvInfo.m_lvUuid.isEmpty()) {
-            qDebug() << "LV is unallocated.";
+            qCDebug(appLog) << "LV is unallocated.";
             unused = Utils::LVMFormatSize(lvInfo.m_lvLECount * lvInfo.m_LESize);
             unusedSize = Utils::LVMSizeToUnit(lvInfo.m_lvLECount * lvInfo.m_LESize, SIZE_UNIT::UNIT_GIB);
             lvName = "unallocated";
         }
 
         if (usedSize == 0.00 && unusedSize == 0.00) {
-            qDebug() << "LV size is not available.";
+            qCDebug(appLog) << "LV size is not available.";
             unused = Utils::LVMFormatSize(lvInfo.m_lvLECount * lvInfo.m_LESize);
         }
 
         if (used.contains("-")) {
-            qDebug() << "LV used size is not available.";
+            qCDebug(appLog) << "LV used size is not available.";
             used = "-";
         }
 
         if (unused.contains("-")) {
-            qDebug() << "LV unused size is not available.";
+            qCDebug(appLog) << "LV unused size is not available.";
             unused = "-";
         }
 
         if (lvSize.contains("1024")) {
-            qDebug() << "LV size is in 1024 units.";
+            qCDebug(appLog) << "LV size is in 1024 units.";
             lvSize = Utils::LVMFormatSize(lvInfo.m_lvLECount * lvInfo.m_LESize + lvInfo.m_LESize);
         }
 
         if (unused.contains("1024")) {
-            qDebug() << "LV unused size is in 1024 units.";
+            qCDebug(appLog) << "LV unused size is in 1024 units.";
             unused = Utils::LVMFormatSize(lvInfo.m_lvLECount * lvInfo.m_LESize + lvInfo.m_LESize);
         }
 
@@ -643,12 +644,12 @@ void InfoShowWidget::onCurSelectChanged()
     //    typeLabel->setText(typeLabel->objectName());
         DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
         if (themeType == DGuiApplicationHelper::LightType) {
-            qDebug() << "Light theme is used.";
+            qCDebug(appLog) << "Light theme is used.";
             fillcolor = QColor("#0091ff");
             fillcolor1 = palette.color(DPalette::Normal, DPalette::ToolTipText);
             fillcolor1.setAlphaF(0.1);
         } else if (themeType == DGuiApplicationHelper::DarkType) {
-            qDebug() << "Dark theme is used.";
+            qCDebug(appLog) << "Dark theme is used.";
             fillcolor = QColor("#0059D2");
             fillcolor1 = palette.color(DPalette::Normal, DPalette::BrightText);
             fillcolor1.setAlphaF(0.2);
@@ -662,17 +663,17 @@ void InfoShowWidget::onCurSelectChanged()
 
 void InfoShowWidget::onHandleChangeTheme()
 {
-    qDebug() << "Handling theme change";
+    qCDebug(appLog) << "Handling theme change";
     DPalette palette;
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
     if (themeType == DGuiApplicationHelper::LightType) {
-        qDebug() << "Light theme is used.";
+        qCDebug(appLog) << "Light theme is used.";
         fillcolor = QColor("#0091ff");
         fillcolor1 = palette.color(DPalette::Normal, DPalette::ToolTipText);
         fillcolor1.setAlphaF(0.1);
 
     } else if (themeType == DGuiApplicationHelper::DarkType) {
-        qDebug() << "Dark theme is used.";
+        qCDebug(appLog) << "Dark theme is used.";
         fillcolor = QColor("#0059D2");
         fillcolor1 = palette.color(DPalette::Normal, DPalette::BrightText);
         fillcolor1.setAlphaF(0.2);
@@ -688,9 +689,9 @@ void InfoShowWidget::onHandleChangeTheme()
 
 void InfoShowWidget::onEnterWidget(QRectF rect, QString path)
 {
-    qDebug() << "Mouse entered widget, path:" << path;
+    qCDebug(appLog) << "Mouse entered widget, path:" << path;
     if ("unallocated" != path) {
-        qDebug() << "Path is not 'unallocated'.";
+        qCDebug(appLog) << "Path is not 'unallocated'.";
         path = path.remove(0, 5);
     }
 
@@ -709,15 +710,15 @@ void InfoShowWidget::onEnterWidget(QRectF rect, QString path)
 
 void InfoShowWidget::onLeaveWidget()
 {
-    // qDebug() << "Mouse left widget";
+    // qCDebug(appLog) << "Mouse left widget";
     m_arrowRectangle->hide();
 }
 
 void InfoShowWidget::onEnterVGInfoWidget(QRect rect, const QList<QMap<QString, QVariant> > &lstInfo)
 {
-    // qDebug() << "Mouse entered VG info widget";
+    // qCDebug(appLog) << "Mouse entered VG info widget";
     if (!m_vgInfoShowWidget->isHidden()) {
-        qDebug() << "VG info widget is already visible.";
+        qCDebug(appLog) << "VG info widget is already visible.";
         return;
     }
 

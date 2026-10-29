@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 
+#include "ddlog.h"
 #include "selectpvitemwidget.h"
 #include "common.h"
 #include "partedproxy/dmdbushandler.h"
@@ -15,8 +16,8 @@ SelectPVItemWidget::SelectPVItemWidget(PVInfoData pvInfoData, QWidget *parent)
     : RadiusWidget(parent)
     , m_pvInfoData(pvInfoData)
 {
-    qDebug() << "SelectPVItemWidget constructor called.";
-    qDebug() << "Creating PV select item for:" << pvInfoData.m_diskPath << pvInfoData.m_partitionPath;
+    qCDebug(appLog) << "SelectPVItemWidget constructor called.";
+    qCDebug(appLog) << "Creating PV select item for:" << pvInfoData.m_diskPath << pvInfoData.m_partitionPath;
     initUi();
     initConnection();
     initData();
@@ -24,7 +25,7 @@ SelectPVItemWidget::SelectPVItemWidget(PVInfoData pvInfoData, QWidget *parent)
 
 void SelectPVItemWidget::initUi()
 {
-    qDebug() << "SelectPVItemWidget::initUi called.";
+    qCDebug(appLog) << "SelectPVItemWidget::initUi called.";
     setFixedHeight(36);
 
     DPalette paletteName;
@@ -66,10 +67,10 @@ void SelectPVItemWidget::initUi()
     mainLayout->addStretch();
     mainLayout->addWidget(m_sizeLabel);
     mainLayout->setSpacing(0);
-    qDebug() << "Main layout widgets added and spacing set.";
+    qCDebug(appLog) << "Main layout widgets added and spacing set.";
 
     if ((m_pvInfoData.m_level == DMDbusHandler::DISK) && (m_pvInfoData.m_disktype != "unrecognized")) {
-        qDebug() << "PV info data is DISK level and recognized, adding icon label.";
+        qCDebug(appLog) << "PV info data is DISK level and recognized, adding icon label.";
         m_iconLabel = new DLabel(this);
         QIcon icon = Common::getIcon("arrow_right");
         m_iconLabel->setPixmap(icon.pixmap(QSize(8, 11)));
@@ -78,77 +79,77 @@ void SelectPVItemWidget::initUi()
         mainLayout->addWidget(m_iconLabel);
         mainLayout->setContentsMargins(10, 0, 12, 0);
     } else {
-        qDebug() << "PV info data is not DISK level or unrecognized, setting content margins without icon.";
+        qCDebug(appLog) << "PV info data is not DISK level or unrecognized, setting content margins without icon.";
         mainLayout->setContentsMargins(10, 0, 20, 0);
     }
 
     setLayout(mainLayout);
-    qDebug() << "Layout set.";
+    qCDebug(appLog) << "Layout set.";
 }
 
 void SelectPVItemWidget::initConnection()
 {
-    qDebug() << "SelectPVItemWidget::initConnection called.";
+    qCDebug(appLog) << "SelectPVItemWidget::initConnection called.";
     connect(m_checkBox, &DCheckBox::stateChanged, this, &SelectPVItemWidget::onCheckBoxStateChange);
 }
 
 void SelectPVItemWidget::initData()
 {
-    qDebug() << "SelectPVItemWidget::initData called.";
+    qCDebug(appLog) << "SelectPVItemWidget::initData called.";
     switch (m_pvInfoData.m_selectStatus) {
     case Qt::CheckState::Unchecked: {
-        qDebug() << "Setting check state to Unchecked.";
+        qCDebug(appLog) << "Setting check state to Unchecked.";
         setCheckBoxState(Qt::CheckState::Unchecked);
         break;
     }
     case Qt::CheckState::PartiallyChecked: {
-        qDebug() << "Setting check state to PartiallyChecked.";
+        qCDebug(appLog) << "Setting check state to PartiallyChecked.";
         setCheckBoxState(Qt::CheckState::PartiallyChecked);
         break;
     }
     case Qt::CheckState::Checked: {
-        qDebug() << "Setting check state to Checked.";
+        qCDebug(appLog) << "Setting check state to Checked.";
         setCheckBoxState(Qt::CheckState::Checked);
         break;
     }
     default:
-        qDebug() << "Unknown check state.";
+        qCDebug(appLog) << "Unknown check state.";
         break;
     }
 
     if (m_pvInfoData.m_level == DMDbusHandler::DISK) {
-        qDebug() << "PV info data level is DISK, setting disk path and size.";
+        qCDebug(appLog) << "PV info data level is DISK, setting disk path and size.";
         m_pathLabel->setText(m_pvInfoData.m_diskPath);
         m_sizeLabel->setText(m_pvInfoData.m_diskSize);
     } else {
         QString partitionPath = m_pvInfoData.m_partitionPath;
         if (partitionPath == "unallocated") {
-            qDebug() << "Partition path is unallocated, setting path label to unallocated.";
+            qCDebug(appLog) << "Partition path is unallocated, setting path label to unallocated.";
             m_pathLabel->setText(partitionPath);
         } else {
-            qDebug() << "Partition path is recognized, setting path label to modified partition path.";
+            qCDebug(appLog) << "Partition path is recognized, setting path label to modified partition path.";
             m_pathLabel->setText(partitionPath.remove(0, 5));
         }
 
         m_sizeLabel->setText(m_pvInfoData.m_partitionSize);
-        qDebug() << "Setting partition size:" << m_pvInfoData.m_partitionSize;
+        qCDebug(appLog) << "Setting partition size:" << m_pvInfoData.m_partitionSize;
     }
 
     if (m_pvInfoData.m_isReadOnly) {
-        qDebug() << "PV is read-only, disabling checkbox.";
+        qCDebug(appLog) << "PV is read-only, disabling checkbox.";
         m_checkBox->setDisabled(true);
     }
 }
 
 void SelectPVItemWidget::onCheckBoxStateChange(int state)
 {
-    qDebug() << "SelectPVItemWidget::onCheckBoxStateChange called with state:" << state;
+    qCDebug(appLog) << "SelectPVItemWidget::onCheckBoxStateChange called with state:" << state;
     if (m_pvInfoData.m_level == DMDbusHandler::DISK) {
-        qDebug() << "PV info data level is DISK.";
+        qCDebug(appLog) << "PV info data level is DISK.";
         if (state != Qt::CheckState::PartiallyChecked) {
-            qDebug() << "State is not PartiallyChecked.";
+            qCDebug(appLog) << "State is not PartiallyChecked.";
             if (m_lstPVInfoData.count() != 0) {
-                qDebug() << "List of PV info data is not empty, updating select status.";
+                qCDebug(appLog) << "List of PV info data is not empty, updating select status.";
                 QList<PVInfoData> lstData;
                 lstData.clear();
                 for (int i = 0; i < m_lstPVInfoData.count(); i++) {
@@ -156,66 +157,66 @@ void SelectPVItemWidget::onCheckBoxStateChange(int state)
                     pvData.m_selectStatus = state;
 
                     lstData.append(pvData);
-                    qDebug() << "Updated PV data for item:" << pvData.m_diskPath << ", new state:" << pvData.m_selectStatus;
+                    qCDebug(appLog) << "Updated PV data for item:" << pvData.m_diskPath << ", new state:" << pvData.m_selectStatus;
                 }
 
                 m_lstPVInfoData.clear();
                 m_lstPVInfoData = lstData;
-                qDebug() << "m_lstPVInfoData updated.";
+                qCDebug(appLog) << "m_lstPVInfoData updated.";
             }
         }
 
         m_pvInfoData.m_selectStatus = state;
-        qDebug() << "PV info data select status updated to:" << m_pvInfoData.m_selectStatus;
+        qCDebug(appLog) << "PV info data select status updated to:" << m_pvInfoData.m_selectStatus;
         emit checkBoxStateChange(state);
     } else {
-        qDebug() << "PV info data level is not DISK.";
+        qCDebug(appLog) << "PV info data level is not DISK.";
         m_pvInfoData.m_selectStatus = state;
-        qDebug() << "PV info data select status updated to:" << m_pvInfoData.m_selectStatus;
+        qCDebug(appLog) << "PV info data select status updated to:" << m_pvInfoData.m_selectStatus;
         emit checkBoxStateChange(state);
     }
 }
 
 void SelectPVItemWidget::setCheckBoxState(Qt::CheckState state, bool isPartiallyChecked)
 {
-    qDebug() << "Setting checkbox state:" << state << "isPartially:" << isPartiallyChecked;
+    qCDebug(appLog) << "Setting checkbox state:" << state << "isPartially:" << isPartiallyChecked;
     if(isPartiallyChecked){
-        qDebug() << "isPartiallyChecked is true.";
+        qCDebug(appLog) << "isPartiallyChecked is true.";
         m_pvInfoData.m_selectStatus = state;
         m_checkBox->setCheckState(state);
     } else {
-        qDebug() << "isPartiallyChecked is false, blocking signals.";
+        qCDebug(appLog) << "isPartiallyChecked is false, blocking signals.";
         blockSignals(true);
         m_pvInfoData.m_selectStatus = state;
         m_checkBox->setCheckState(state);
         blockSignals(false);
-        qDebug() << "Signals unblocked.";
+        qCDebug(appLog) << "Signals unblocked.";
     }
 }
 
 void SelectPVItemWidget::setData(const QList<PVInfoData> &lstData)
 {
-    qDebug() << "SelectPVItemWidget::setData called, setting data with count:" << lstData.count();
+    qCDebug(appLog) << "SelectPVItemWidget::setData called, setting data with count:" << lstData.count();
     m_lstPVInfoData = lstData;
 }
 
 QList<PVInfoData> SelectPVItemWidget::getData()
 {
-    qDebug() << "SelectPVItemWidget::getData called.";
+    qCDebug(appLog) << "SelectPVItemWidget::getData called.";
     return m_lstPVInfoData;
 }
 
 PVInfoData SelectPVItemWidget::getCurInfo()
 {
-    qDebug() << "SelectPVItemWidget::getCurInfo called.";
+    qCDebug(appLog) << "SelectPVItemWidget::getCurInfo called.";
     return m_pvInfoData;
 }
 
 void SelectPVItemWidget::mousePressEvent(QMouseEvent *event)
 {
-    // qDebug() << "SelectPVItemWidget::mousePressEvent called.";
+    // qCDebug(appLog) << "SelectPVItemWidget::mousePressEvent called.";
     if (m_pvInfoData.m_level == DMDbusHandler::DISK) {
-        qDebug() << "PV info data level is DISK, emitting selectItem.";
+        qCDebug(appLog) << "PV info data level is DISK, emitting selectItem.";
         emit selectItem();
     }
 

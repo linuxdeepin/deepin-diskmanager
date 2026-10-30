@@ -1,21 +1,22 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
+#include "ddlog.h"
 #include "buttonlabel.h"
 #include <QDebug>
 
 
 ButtonLabel::ButtonLabel(QWidget *parent) : QLabel(parent)
 {
-    qDebug() << "ButtonLabel created";
+    qCDebug(appLog) << "ButtonLabel created";
 }
 
 void ButtonLabel::mousePressEvent(QMouseEvent *event)
 {
-    qDebug()  << "ButtonLabel clicked";
+    qCDebug(appLog)  << "ButtonLabel clicked";
     Q_UNUSED(event);
 
     emit clicked();
-    qDebug()  << "ButtonLabel click signal emitted";
+    qCDebug(appLog)  << "ButtonLabel click signal emitted";
 }

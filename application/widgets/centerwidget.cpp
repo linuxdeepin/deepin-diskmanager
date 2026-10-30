@@ -1,8 +1,9 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
 
+#include "ddlog.h"
 #include "centerwidget.h"
 #include "titlewidget.h"
 #include "mainsplitter.h"
@@ -17,18 +18,18 @@
 CenterWidget::CenterWidget(DWidget *parent)
     : Dtk::Widget::DWidget(parent)
 {
-    qDebug() << "CenterWidget initializing...";
+    qCDebug(appLog) << "CenterWidget initializing...";
     initUi();
 }
 
 CenterWidget::~CenterWidget()
 {
-    qDebug() << "CenterWidget destroyed";
+    qCDebug(appLog) << "CenterWidget destroyed";
 }
 
 void CenterWidget::HandleQuit()
 {
-    qDebug() << "Handling CenterWidget quit";
+    qCDebug(appLog) << "Handling CenterWidget quit";
 }
 
 TitleWidget *CenterWidget::getTitleWidget()
@@ -38,7 +39,7 @@ TitleWidget *CenterWidget::getTitleWidget()
 
 void CenterWidget::initUi()
 {
-    qDebug() << "Initializing CenterWidget UI";
+    qCDebug(appLog) << "Initializing CenterWidget UI";
 
     m_titleWidget = new TitleWidget(this);
     QVBoxLayout *mainlayout = new QVBoxLayout;

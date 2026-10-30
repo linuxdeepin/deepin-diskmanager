@@ -1,7 +1,8 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
+#include "ddlog.h"
 #include "ddbase.h"
 #include "common.h"
 
@@ -10,7 +11,7 @@
 DDBase::DDBase(QWidget *parent)
     : DDialog(parent)
 {
-    qDebug() << "Creating base dialog";
+    qCDebug(appLog) << "Creating base dialog";
     setModal(true);
     setIcon(QIcon::fromTheme(appName));
 
@@ -19,17 +20,17 @@ DDBase::DDBase(QWidget *parent)
     m_mainFrame->setFrameStyle(DFrame::NoFrame);
 
     addContent(m_mainFrame);
-    qDebug() << "Base dialog initialized with main frame";
+    qCDebug(appLog) << "Base dialog initialized with main frame";
     // updateGeometry();
 }
 
 void DDBase::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key::Key_Escape) {
-        qDebug() << "Ignoring Escape key press";
+        qCDebug(appLog) << "Ignoring Escape key press";
         event->ignore();
     } else {
-        qDebug() << "Forwarding key press to base class";
+        qCDebug(appLog) << "Forwarding key press to base class";
         DDialog::keyPressEvent(event);
     }
 }

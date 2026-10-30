@@ -106,6 +106,10 @@ install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 install(FILES ${DTNG_QM_FILES} DESTINATION share/${PROJECT_NAME}/translations)
 install(FILES ${APP_ICONPATH} DESTINATION share/icons/hicolor/scalable/apps)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${APP_DESKTOP} DESTINATION share/applications)
+
+# 安装 DConfig meta（调试模式动态日志规则）
+install(FILES assets/configs/org.deepin.dde.diskmanager.json
+        DESTINATION share/dsg/configs/org.deepin.dde.diskmanager)
 install(DIRECTORY ${APP_RES_DIR}/deepin-diskmanager DESTINATION /usr/share/deepin-manual/manual-assets/application)
 
 

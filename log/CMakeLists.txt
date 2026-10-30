@@ -1,6 +1,8 @@
 
 
 #include_directories(${PROJECT_SOURCE_DIR}/log)
+# ddlog.h（日志分类声明）在 basestruct 中，log 库转换分类化后需要该头文件路径
+include_directories(${PROJECT_SOURCE_DIR}/basestruct)
 
 #add_library(dlmlog SHARED
 #    log.cpp

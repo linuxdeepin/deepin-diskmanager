@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 
+#include "ddlog.h"
 #include "partitiontableerrorsinfodialog.h"
 #include "partitiontableerrorsinfodelegate.h"
 #include "common.h"
@@ -24,34 +25,34 @@ PartitionTableErrorsInfoDialog::PartitionTableErrorsInfoDialog(const QString &de
     : DDialog(parent)
     , m_deviceInfo(deviceInfo)
 {
-    qDebug() << "Creating partition table errors dialog for device:" << deviceInfo;
+    qCDebug(appLog) << "Creating partition table errors dialog for device:" << deviceInfo;
     initUI();
     initConnections();
-    qDebug() << "PartitionTableErrorsInfoDialog constructor completed.";
+    qCDebug(appLog) << "PartitionTableErrorsInfoDialog constructor completed.";
 }
 
 PartitionTableErrorsInfoDialog::~PartitionTableErrorsInfoDialog()
 {
-    qDebug() << "PartitionTableErrorsInfoDialog destructor called.";
+    qCDebug(appLog) << "PartitionTableErrorsInfoDialog destructor called.";
     delete m_partitionTableErrorsInfoDelegatee;
-    qDebug() << "PartitionTableErrorsInfoDialog destructor completed.";
+    qCDebug(appLog) << "PartitionTableErrorsInfoDialog destructor completed.";
 }
 
 void PartitionTableErrorsInfoDialog::initUI()
 {
-    qDebug() << "Initializing partition table errors UI";
+    qCDebug(appLog) << "Initializing partition table errors UI";
     setIcon(QIcon::fromTheme(appName));
     setTitle(tr("Errors in Partition Table")); // 分区表错误报告
     setMinimumSize(580, 386);
 
     DPalette palette1;
     if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) {
-        qDebug() << "Theme is DarkType, setting palette color for dark theme.";
+        qCDebug(appLog) << "Theme is DarkType, setting palette color for dark theme.";
         QColor color("#FFFFFF");
         color.setAlphaF(0.7);
         palette1.setColor(DPalette::WindowText, color);
     } else if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::LightType) {
-        qDebug() << "Theme is LightType, setting palette color for light theme.";
+        qCDebug(appLog) << "Theme is LightType, setting palette color for light theme.";
         QColor color("#000000");
         color.setAlphaF(0.7);
         palette1.setColor(DPalette::WindowText, color);
@@ -91,10 +92,10 @@ void PartitionTableErrorsInfoDialog::initUI()
     m_partitionTableErrorsInfoDelegatee = new PartitionTableErrorsInfoDelegate(this);
     m_tableView->setItemDelegate(m_partitionTableErrorsInfoDelegatee);
     if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) {
-        qDebug() << "Theme is DarkType, setting delegate text color for dark theme.";
+        qCDebug(appLog) << "Theme is DarkType, setting delegate text color for dark theme.";
         m_partitionTableErrorsInfoDelegatee->setTextColor(QColor("#C0C6D4"));
     } else if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::LightType) {
-        qDebug() << "Theme is LightType, setting delegate text color for light theme.";
+        qCDebug(appLog) << "Theme is LightType, setting delegate text color for light theme.";
         m_partitionTableErrorsInfoDelegatee->setTextColor(QColor("#001A2E"));
     }
 
@@ -138,27 +139,27 @@ void PartitionTableErrorsInfoDialog::initUI()
     addContent(tableWidget);
     addSpacing(17);
     addContent(buttonWidget);
-    qDebug() << "Partition table errors UI initialization completed.";
+    qCDebug(appLog) << "Partition table errors UI initialization completed.";
 }
 
 void PartitionTableErrorsInfoDialog::initConnections()
 {
-    qDebug() << "Initializing PartitionTableErrorsInfoDialog connections.";
+    qCDebug(appLog) << "Initializing PartitionTableErrorsInfoDialog connections.";
     connect(pushButton, &DPushButton::clicked, this, &PartitionTableErrorsInfoDialog::close);
-    qDebug() << "PartitionTableErrorsInfoDialog connections initialized.";
+    qCDebug(appLog) << "PartitionTableErrorsInfoDialog connections initialized.";
 }
 
 void PartitionTableErrorsInfoDialog::keyPressEvent(QKeyEvent *event)
 {
-    // qDebug() << "Key press event in PartitionTableErrorsInfoDialog, key:" << event->key();
+    // qCDebug(appLog) << "Key press event in PartitionTableErrorsInfoDialog, key:" << event->key();
     if (event->key() == Qt::Key::Key_Escape) {
-        qDebug() << "Escape key pressed, ignoring";
+        qCDebug(appLog) << "Escape key pressed, ignoring";
         event->ignore();
     } else {
-        // qDebug() << "Other key pressed, calling DDialog::keyPressEvent.";
+        // qCDebug(appLog) << "Other key pressed, calling DDialog::keyPressEvent.";
         DDialog::keyPressEvent(event);
     }
-    // qDebug() << "PartitionTableErrorsInfoDialog::keyPressEvent completed.";
+    // qCDebug(appLog) << "PartitionTableErrorsInfoDialog::keyPressEvent completed.";
 }
 
 

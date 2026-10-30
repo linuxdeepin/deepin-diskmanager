@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 
+#include "ddlog.h"
 #include "unmountwarningdialog.h"
 #include <QDebug>
 
@@ -11,14 +12,14 @@
 
 UnmountWarningDialog::UnmountWarningDialog(QWidget *parent) : DDBase(parent)
 {
-    qDebug() << "UnmountWarningDialog initialized";
+    qCDebug(appLog) << "UnmountWarningDialog initialized";
     initUi();
     initConnection();
 }
 
 void UnmountWarningDialog::initUi()
 {
-    qDebug() << "Initializing UnmountWarningDialog UI.";
+    qCDebug(appLog) << "Initializing UnmountWarningDialog UI.";
     DPalette palette1;
     QColor color("#000000");
     color.setAlphaF(0.9);
@@ -62,41 +63,41 @@ void UnmountWarningDialog::initUi()
     int index = addButton(tr("Cancel"), true, ButtonNormal);
     m_okCode = addButton(tr("Unmount"), false, ButtonWarning);
     getButton(m_okCode)->setDisabled(true);
-    qDebug() << "Unmount button initially disabled";
+    qCDebug(appLog) << "Unmount button initially disabled";
 
     getButton(index)->setAccessibleName("cancelBtn");
     getButton(m_okCode)->setAccessibleName("unmountBtn");
-    qDebug() << "UnmountWarningDialog UI initialization completed.";
+    qCDebug(appLog) << "UnmountWarningDialog UI initialization completed.";
 }
 
 void UnmountWarningDialog::initConnection()
 {
-    qDebug() << "Initializing UnmountWarningDialog connections.";
+    qCDebug(appLog) << "Initializing UnmountWarningDialog connections.";
     connect(m_checkBox, &DCheckBox::stateChanged, this, &UnmountWarningDialog::onCheckBoxStateChange);
-    qDebug() << "UnmountWarningDialog connections initialized.";
+    qCDebug(appLog) << "UnmountWarningDialog connections initialized.";
 }
 
 void UnmountWarningDialog::onCheckBoxStateChange(int state)
 {
-    qDebug() << "onCheckBoxStateChange called with state:" << state;
+    qCDebug(appLog) << "onCheckBoxStateChange called with state:" << state;
     switch (state) {
     case Qt::CheckState::Unchecked: {
-        qDebug() << "CheckBox state is Unchecked, disabling unmount button.";
+        qCDebug(appLog) << "CheckBox state is Unchecked, disabling unmount button.";
         getButton(m_okCode)->setDisabled(true);
-        qDebug() << "Unmount button disabled";
+        qCDebug(appLog) << "Unmount button disabled";
         break;
     }
     case Qt::CheckState::Checked: {
-        qDebug() << "CheckBox state is Checked, enabling unmount button.";
+        qCDebug(appLog) << "CheckBox state is Checked, enabling unmount button.";
         getButton(m_okCode)->setDisabled(false);
-        qDebug() << "Unmount button enabled";
+        qCDebug(appLog) << "Unmount button enabled";
         break;
     }
     default:
-        qDebug() << "Unknown CheckBox state.";
+        qCDebug(appLog) << "Unknown CheckBox state.";
         break;
     }
-    qDebug() << "onCheckBoxStateChange completed.";
+    qCDebug(appLog) << "onCheckBoxStateChange completed.";
 }
 
 

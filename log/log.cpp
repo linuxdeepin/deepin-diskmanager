@@ -1,8 +1,9 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
 
+#include "ddlog.h"
 #include "log.h"
 
 static int s_logLevel = QtDebugMsg;
@@ -61,12 +62,12 @@ quint64 GetDiskFreeSpace()
     storage.refresh(); //获得最新磁盘信息
 
     if (storage.isReadOnly())
-        qDebug() << "isReadOnly:" << storage.isReadOnly();
+        qCDebug(serviceLog) << "isReadOnly:" << storage.isReadOnly();
     else {
-        qDebug() << "name:" << storage.name();
-        qDebug() << "fileSystemType:" << storage.fileSystemType();
-        qDebug() << "size:" << storage.bytesTotal() / 1000 / 1000 << "MB";
-        qDebug() << "availableSize:" << storage.bytesAvailable() / 1000 / 1000 << "MB";
+        qCDebug(serviceLog) << "name:" << storage.name();
+        qCDebug(serviceLog) << "fileSystemType:" << storage.fileSystemType();
+        qCDebug(serviceLog) << "size:" << storage.bytesTotal() / 1000 / 1000 << "MB";
+        qCDebug(serviceLog) << "availableSize:" << storage.bytesAvailable() / 1000 / 1000 << "MB";
     }
     return (quint64)storage.bytesAvailable();
 }

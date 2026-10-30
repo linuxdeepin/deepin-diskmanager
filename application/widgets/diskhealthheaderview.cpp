@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
+#include "ddlog.h"
 #include "diskhealthheaderview.h"
 
 #include <DApplication>
@@ -23,22 +24,22 @@ static const QSize kDropDownSize {11, 10};
 
 DiskHealthHeaderView::DiskHealthHeaderView(Qt::Orientation orientation, QWidget *parent) : DHeaderView(orientation, parent)
 {
-    qDebug() << "DiskHealthHeaderView constructor";
+    qCDebug(appLog) << "DiskHealthHeaderView constructor";
     installEventFilter(this);
 
     viewport()->setAutoFillBackground(false);
-    qDebug() << "DiskHealthHeaderView constructor finished.";
+    qCDebug(appLog) << "DiskHealthHeaderView constructor finished.";
 }
 
 QSize DiskHealthHeaderView::sizeHint() const
 {
-    qDebug() << "DiskHealthHeaderView::sizeHint called.";
+    qCDebug(appLog) << "DiskHealthHeaderView::sizeHint called.";
     return QSize(width(), 36 + m_spacing);
 }
 
 int DiskHealthHeaderView::sectionSizeHint(int logicalIndex) const
 {
-    qDebug() << "DiskHealthHeaderView::sectionSizeHint called for logicalIndex:" << logicalIndex;
+    qCDebug(appLog) << "DiskHealthHeaderView::sectionSizeHint called for logicalIndex:" << logicalIndex;
 //    QStyleOptionHeader option;
 //    initStyleOption(&option);
 //    auto *style = dynamic_cast<DStyle *>(DApplication::style());
@@ -56,32 +57,32 @@ int DiskHealthHeaderView::sectionSizeHint(int logicalIndex) const
 
 void DiskHealthHeaderView::paintEvent(QPaintEvent *event)
 {
-    // qDebug() << "DiskHealthHeaderView::paintEvent called.";
+    // qCDebug(appLog) << "DiskHealthHeaderView::paintEvent called.";
     QPainter painter(viewport());
     painter.save();
 
     DPalette::ColorGroup cg;
 #ifdef ENABLE_INACTIVE_DISPLAY
-    // qDebug() << "ENABLE_INACTIVE_DISPLAY is defined.";
+    // qCDebug(appLog) << "ENABLE_INACTIVE_DISPLAY is defined.";
     QWidget *wnd = DApplication::activeWindow();
     if (!wnd) {
-        // qDebug() << "No active window, setting ColorGroup to Inactive.";
+        // qCDebug(appLog) << "No active window, setting ColorGroup to Inactive.";
         cg = DPalette::Inactive;
     } else {
-        // qDebug() << "Active window found, setting ColorGroup to Active.";
+        // qCDebug(appLog) << "Active window found, setting ColorGroup to Active.";
         cg = DPalette::Active;
     }
 #else
-    // qDebug() << "ENABLE_INACTIVE_DISPLAY is not defined, setting ColorGroup to Active.";
+    // qCDebug(appLog) << "ENABLE_INACTIVE_DISPLAY is not defined, setting ColorGroup to Active.";
     cg = DPalette::Active;
 //    cg = DPalette::Current;
 #endif
 
 #if QT_VERSION_MAJOR > 5
-    // qDebug() << "Using Qt6 or higher for application palette.";
+    // qCDebug(appLog) << "Using Qt6 or higher for application palette.";
     auto palette = DGuiApplicationHelper::instance()->applicationPalette();
 #else
-    // qDebug() << "Using Qt5 for application palette.";
+    // qCDebug(appLog) << "Using Qt5 for application palette.";
     auto palette = DApplicationHelper::instance()->applicationPalette();
 #endif
 
@@ -108,19 +109,19 @@ void DiskHealthHeaderView::paintEvent(QPaintEvent *event)
 
     // draw focus
     if (hasFocus()) {
-        // qDebug() << "Header view has focus, drawing focus rect.";
+        // qCDebug(appLog) << "Header view has focus, drawing focus rect.";
         QStyleOptionFocusRect o;
         o.QStyleOption::operator=(option);
         QRect focusRect {rect.x() - offset(), rect.y(), length() - sectionPosition(0), rect.height()};
         o.rect = style->visualRect(layoutDirection(), rect, focusRect);
         style->drawPrimitive(DStyle::PE_FrameFocusRect, &o, &painter);
     }
-    // qDebug() << "DiskHealthHeaderView::paintEvent completed.";
+    // qCDebug(appLog) << "DiskHealthHeaderView::paintEvent completed.";
 }
 
 void DiskHealthHeaderView::paintSection(QPainter *painter, const QRect &rect, int logicalIndex) const
 {
-    // qDebug() << "DiskHealthHeaderView::paintSection called for logicalIndex:" << logicalIndex << ", rect:" << rect;
+    // qCDebug(appLog) << "DiskHealthHeaderView::paintSection called for logicalIndex:" << logicalIndex << ", rect:" << rect;
     painter->save();
     painter->setRenderHint(QPainter::Antialiasing);
     painter->setOpacity(1);
@@ -129,35 +130,35 @@ void DiskHealthHeaderView::paintSection(QPainter *painter, const QRect &rect, in
     QStyleOption opt;
     opt.initFrom(this);
     if (!(opt.state & DStyle::State_Enabled)) {
-        // qDebug() << "Style option state is not enabled, setting ColorGroup to Disabled.";
+        // qCDebug(appLog) << "Style option state is not enabled, setting ColorGroup to Disabled.";
         cg = DPalette::Disabled;
     } else {
 #ifdef ENABLE_INACTIVE_DISPLAY
-        // qDebug() << "ENABLE_INACTIVE_DISPLAY is defined in paintSection.";
+        // qCDebug(appLog) << "ENABLE_INACTIVE_DISPLAY is defined in paintSection.";
         if (!wnd) {
-            // qDebug() << "No active window, setting ColorGroup to Inactive in paintSection.";
+            // qCDebug(appLog) << "No active window, setting ColorGroup to Inactive in paintSection.";
             cg = DPalette::Inactive;
         } else {
             if (wnd->isModal()) {
-                // qDebug() << "Window is modal, setting ColorGroup to Inactive in paintSection.";
+                // qCDebug(appLog) << "Window is modal, setting ColorGroup to Inactive in paintSection.";
                 cg = DPalette::Inactive;
             } else {
-                // qDebug() << "Window is active and not modal, setting ColorGroup to Active in paintSection.";
+                // qCDebug(appLog) << "Window is active and not modal, setting ColorGroup to Active in paintSection.";
                 cg = DPalette::Active;
             }
         }
 #else
-        // qDebug() << "ENABLE_INACTIVE_DISPLAY is not defined in paintSection, setting ColorGroup to Active.";
+        // qCDebug(appLog) << "ENABLE_INACTIVE_DISPLAY is not defined in paintSection, setting ColorGroup to Active.";
         cg = DPalette::Active;
 //        cg = DPalette::Current;
 #endif
     }
 #if QT_VERSION_MAJOR > 5
-    // qDebug() << "Using Qt6 or higher for application palette in paintSection.";
+    // qCDebug(appLog) << "Using Qt6 or higher for application palette in paintSection.";
     DGuiApplicationHelper *dAppHelper = DGuiApplicationHelper::instance();
     DPalette palette = dAppHelper->applicationPalette();
 #else
-    // qDebug() << "Using Qt5 for application palette in paintSection.";
+    // qCDebug(appLog) << "Using Qt5 for application palette in paintSection.";
     DApplicationHelper *dAppHelper = DApplicationHelper::instance();
     DPalette palette = dAppHelper->applicationPalette();
 #endif
@@ -189,7 +190,7 @@ void DiskHealthHeaderView::paintSection(QPainter *painter, const QRect &rect, in
     painter->fillRect(hSpacingRect, hSpacingBrush);
 
     if (visualIndex(logicalIndex) > 0) {
-        // qDebug() << "Visual index is greater than 0, filling vertical spacing rects.";
+        // qCDebug(appLog) << "Visual index is greater than 0, filling vertical spacing rects.";
         painter->fillRect(vSpacingRect, clearBrush);
         painter->fillRect(vSpacingRect, vSpacingBrush);
     }
@@ -198,12 +199,12 @@ void DiskHealthHeaderView::paintSection(QPainter *painter, const QRect &rect, in
     foreground.setColor(palette.color(cg, DPalette::Text));
     QRect textRect;
     if (sortIndicatorSection() == logicalIndex) {
-        // qDebug() << "Logical index matches sort indicator section, adjusting textRect for sort indicator.";
+        // qCDebug(appLog) << "Logical index matches sort indicator section, adjusting textRect for sort indicator.";
         textRect = {contentRect.x() + margin, contentRect.y() + 7,
                     contentRect.width() - margin * 3 - kDropDownSize.width(), contentRect.height()
                    };
     } else {
-        // qDebug() << "Logical index does not match sort indicator section, setting normal textRect.";
+        // qCDebug(appLog) << "Logical index does not match sort indicator section, setting normal textRect.";
         textRect = {contentRect.x() + margin, contentRect.y() + 7, contentRect.width() - margin,
                     contentRect.height()
                    };
@@ -215,37 +216,37 @@ void DiskHealthHeaderView::paintSection(QPainter *painter, const QRect &rect, in
 
     // sort indicator
     if (isSortIndicatorShown() && logicalIndex == sortIndicatorSection()) {
-        // qDebug() << "Sort indicator is shown and logical index matches sort indicator section, drawing sort indicator.";
+        // qCDebug(appLog) << "Sort indicator is shown and logical index matches sort indicator section, drawing sort indicator.";
         QRect sortIndicator(textRect.x() + textRect.width() + margin,
                             textRect.y() + qCeil((textRect.height() - kDropDownSize.height()) / 2.),
                             kDropDownSize.width(), kDropDownSize.height());
         option.rect = sortIndicator;
         if (sortIndicatorOrder() == Qt::DescendingOrder) {
-            // qDebug() << "Drawing descending sort indicator.";
+            // qCDebug(appLog) << "Drawing descending sort indicator.";
             style->drawPrimitive(DStyle::PE_IndicatorArrowDown, &option, painter, this);
         } else if (sortIndicatorOrder() == Qt::AscendingOrder) {
-            // qDebug() << "Drawing ascending sort indicator.";
+            // qCDebug(appLog) << "Drawing ascending sort indicator.";
             style->drawPrimitive(DStyle::PE_IndicatorArrowUp, &option, painter, this);
         }
     }
 
     painter->restore();
-    // qDebug() << "DiskHealthHeaderView::paintSection completed.";
+    // qCDebug(appLog) << "DiskHealthHeaderView::paintSection completed.";
 }
 
 bool DiskHealthHeaderView::eventFilter(QObject *obj, QEvent *ev)
 {
-    // qDebug() << "DiskHealthHeaderView::eventFilter called for object:" << obj << ", event type:" << ev->type();
+    // qCDebug(appLog) << "DiskHealthHeaderView::eventFilter called for object:" << obj << ", event type:" << ev->type();
     if (ev->type() == QEvent::KeyPress) {
-        qDebug() << "Event type is KeyPress.";
+        qCDebug(appLog) << "Event type is KeyPress.";
         QKeyEvent *kev = dynamic_cast<QKeyEvent *>(ev);
         if (kev->key() == Qt::Key_Space ||
                 kev->key() == Qt::Key_Up ||
                 kev->key() == Qt::Key_Down) {
-            qDebug() << "Key is Space, Up, or Down. Filtering event.";
+            qCDebug(appLog) << "Key is Space, Up, or Down. Filtering event.";
             return true;
         }
     }
-    // qDebug() << "Calling base eventFilter. Event type:" << ev->type();
+    // qCDebug(appLog) << "Calling base eventFilter. Event type:" << ev->type();
     return DHeaderView::eventFilter(obj, ev);
 }

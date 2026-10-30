@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 
+#include "ddlog.h"
 #include "mountdialog.h"
 #include "partedproxy/dmdbushandler.h"
 #include "messagebox.h"
@@ -18,26 +19,26 @@
 MountDialog::MountDialog(QWidget *parent)
     : DDBase(parent)
 {
-    qDebug() << "MountDialog constructor";
+    qCDebug(appLog) << "MountDialog constructor";
     initUi();
     initConnection();
-    qDebug() << "MountDialog initialized";
+    qCDebug(appLog) << "MountDialog initialized";
 }
 
 void MountDialog::initUi()
 {
-    qDebug() << "Initializing MountDialog UI";
+    qCDebug(appLog) << "Initializing MountDialog UI";
     setMinimumSize(QSize(420, 200));
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
-        qDebug() << "Current level is PARTITION, setting title for partition mount.";
+        qCDebug(appLog) << "Current level is PARTITION, setting title for partition mount.";
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         setTitle(tr("Mount %1").arg(info.m_path));
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
-        qDebug() << "Current level is LOGICALVOLUME, setting title for logical volume mount.";
+        qCDebug(appLog) << "Current level is LOGICALVOLUME, setting title for logical volume mount.";
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
         setTitle(tr("Mount %1").arg(lvInfo.m_lvPath));
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
-        qDebug() << "Current level is DISK, setting title for disk mount.";
+        qCDebug(appLog) << "Current level is DISK, setting title for disk mount.";
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         setTitle(tr("Mount %1").arg(info.m_path));
     }
@@ -102,51 +103,51 @@ void MountDialog::initUi()
 
     getButton(index)->setAccessibleName("cancel");
     getButton(m_okCode)->setAccessibleName("mountButton");
-    qDebug() << "MountDialog UI initialization complete.";
+    qCDebug(appLog) << "MountDialog UI initialization complete.";
 }
 
 void MountDialog::initConnection()
 {
-    qDebug() << "Initializing MountDialog connections.";
+    qCDebug(appLog) << "Initializing MountDialog connections.";
     connect(m_fileChooserEdit->lineEdit(), &QLineEdit::textChanged, this, &MountDialog::onEditContentChanged);
     connect(this, &MountDialog::buttonClicked, this, &MountDialog::onButtonClicked);
-    qDebug() << "MountDialog connections initialized.";
+    qCDebug(appLog) << "MountDialog connections initialized.";
 }
 
 void MountDialog::onEditContentChanged(const QString &content)
 {
-    qDebug() << "onEditContentChanged called with content:" << content;
+    qCDebug(appLog) << "onEditContentChanged called with content:" << content;
     if (content.isEmpty()) {
-        qDebug() << "Content is empty, disabling mount button.";
+        qCDebug(appLog) << "Content is empty, disabling mount button.";
         getButton(m_okCode)->setDisabled(true);
     } else {
         QDir dir(content);
         if (dir.exists()) {
-            qDebug() << "Directory exists:" << content;
+            qCDebug(appLog) << "Directory exists:" << content;
             if (isSystemDirectory(content)) {
-                qDebug() << "Directory is a system directory, disabling mount button and showing warning.";
+                qCDebug(appLog) << "Directory is a system directory, disabling mount button and showing warning.";
                 getButton(m_okCode)->setDisabled(true);
                 m_warnning->setVisible(true);
                 m_mountPointSuggest->setVisible(false);
             } else {
-                qDebug() << "Directory is not a system directory, enabling mount button and hiding warning.";
+                qCDebug(appLog) << "Directory is not a system directory, enabling mount button and hiding warning.";
                 getButton(m_okCode)->setDisabled(false);
                 m_warnning->setVisible(false);
                 m_mountPointSuggest->setVisible(true);
             }
             //            m_fileChooserEdit->setAlert(false);
         } else {
-            qDebug() << "Directory does not exist, disabling mount button.";
+            qCDebug(appLog) << "Directory does not exist, disabling mount button.";
             getButton(m_okCode)->setDisabled(true);
             //            m_fileChooserEdit->setAlert(true);
         }
     }
-    qDebug() << "onEditContentChanged completed.";
+    qCDebug(appLog) << "onEditContentChanged completed.";
 }
 
 bool MountDialog::isExistMountPoint(const QString &mountPoint)
 {
-    qDebug() << "isExistMountPoint called for mountPoint:" << mountPoint;
+    qCDebug(appLog) << "isExistMountPoint called for mountPoint:" << mountPoint;
     // 判断是否有分区已经挂载在该路径
     DeviceInfoMap infoMap = DMDbusHandler::instance()->probDeviceInfo();
     for (auto devInfo = infoMap.begin(); devInfo != infoMap.end(); devInfo++) {
@@ -156,13 +157,13 @@ bool MountDialog::isExistMountPoint(const QString &mountPoint)
             for (int i = 0; i < it->m_mountPoints.size(); i++) {
                 mountpoints += it->m_mountPoints[i];
                 if (it->m_mountPoints.size() > 1 && mountPoint == it->m_mountPoints[i]) {
-                    qDebug() << "Mount point exists for partition:" << mountPoint;
+                    qCDebug(appLog) << "Mount point exists for partition:" << mountPoint;
                     return true;
                 }
             }
 
             if (mountPoint == mountpoints) {
-                qDebug() << "Mount point matches partition mountpoints:" << mountPoint;
+                qCDebug(appLog) << "Mount point matches partition mountpoints:" << mountPoint;
                 return true;
             }
         }
@@ -179,49 +180,49 @@ bool MountDialog::isExistMountPoint(const QString &mountPoint)
             for (int j = 0; j < info.m_mountPoints.size(); j++) {
                 mountpoints += info.m_mountPoints[j];
                 if (info.m_mountPoints.size() > 1 && mountPoint == info.m_mountPoints[j]) {
-                    qDebug() << "Mount point exists for logical volume:" << mountPoint;
+                    qCDebug(appLog) << "Mount point exists for logical volume:" << mountPoint;
                     return true;
                 }
             }
 
             if (mountPoint == mountpoints) {
-                qDebug() << "Mount point matches logical volume mountpoints:" << mountPoint;
+                qCDebug(appLog) << "Mount point matches logical volume mountpoints:" << mountPoint;
                 return true;
             }
         }
     }
 
-    qDebug() << "Mount point does not exist:" << mountPoint;
+    qCDebug(appLog) << "Mount point does not exist:" << mountPoint;
     return false;
 }
 
 bool MountDialog::isSystemDirectory(const QString &directory)
 {
-    qDebug() << "isSystemDirectory called for directory:" << directory;
+    qCDebug(appLog) << "isSystemDirectory called for directory:" << directory;
     if (directory.startsWith("/mnt") || directory.startsWith("/media")) {
-        qDebug() << "Directory starts with /mnt or /media, not a system directory.";
+        qCDebug(appLog) << "Directory starts with /mnt or /media, not a system directory.";
         return false;
     }
-    qDebug() << "Directory is a system directory.";
+    qCDebug(appLog) << "Directory is a system directory.";
     return true;
 }
 
 void MountDialog::mountCurPath()
 {
-    qDebug() << "mountCurPath called.";
-    qInfo() << "Starting mount operation for current path";
+    qCDebug(appLog) << "mountCurPath called.";
+    qCInfo(appLog) << "Starting mount operation for current path";
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
-        qDebug() << "Current level is PARTITION for mount operation.";
+        qCDebug(appLog) << "Current level is PARTITION for mount operation.";
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         if (!onCheckMountPoint(static_cast<FSType>(info.m_fileSystemType), m_fileChooserEdit->text())) {
-            qDebug() << "Mount point check failed for partition, returning.";
+            qCDebug(appLog) << "Mount point check failed for partition, returning.";
             return;
         }
         if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
-            qDebug() << "Partition is LUKS encrypted, attempting crypt mount.";
+            qCDebug(appLog) << "Partition is LUKS encrypted, attempting crypt mount.";
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
             if (!onCheckMountPoint(luksInfo.m_mapper.m_luksFs, m_fileChooserEdit->text())) {
-                qDebug() << "Mount point check failed for LUKS partition, returning.";
+                qCDebug(appLog) << "Mount point check failed for LUKS partition, returning.";
                 return;
             }
             QVector<QString> mountPoints;
@@ -230,22 +231,22 @@ void MountDialog::mountCurPath()
 
             DMDbusHandler::instance()->cryptMount(luksInfo, info.m_path);
         } else {
-            qDebug() << "Partition is not LUKS encrypted, attempting standard mount.";
+            qCDebug(appLog) << "Partition is not LUKS encrypted, attempting standard mount.";
             DMDbusHandler::instance()->mount(m_fileChooserEdit->text());
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
-        qDebug() << "Current level is LOGICALVOLUME for mount operation.";
+        qCDebug(appLog) << "Current level is LOGICALVOLUME for mount operation.";
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
         if (!onCheckMountPoint(lvInfo.m_lvFsType, m_fileChooserEdit->text())) {
-            qDebug() << "Mount point check failed for logical volume, returning.";
+            qCDebug(appLog) << "Mount point check failed for logical volume, returning.";
             return;
         }
 
         if (lvInfo.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
-            qDebug() << "Logical volume is LUKS encrypted, attempting crypt mount.";
+            qCDebug(appLog) << "Logical volume is LUKS encrypted, attempting crypt mount.";
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(lvInfo.m_lvPath);
             if (!onCheckMountPoint(luksInfo.m_mapper.m_luksFs, m_fileChooserEdit->text())) {
-                qDebug() << "Mount point check failed for LUKS logical volume, returning.";
+                qCDebug(appLog) << "Mount point check failed for LUKS logical volume, returning.";
                 return;
             }
 
@@ -255,7 +256,7 @@ void MountDialog::mountCurPath()
 
             DMDbusHandler::instance()->cryptMount(luksInfo, lvInfo.m_lvName);
         } else {
-            qDebug() << "Logical volume is not LUKS encrypted, attempting standard mount.";
+            qCDebug(appLog) << "Logical volume is not LUKS encrypted, attempting standard mount.";
             LVAction lvAction;
             lvAction.m_vgName = lvInfo.m_vgName;
             lvAction.m_lvName = lvInfo.m_lvName;
@@ -268,10 +269,10 @@ void MountDialog::mountCurPath()
             DMDbusHandler::instance()->onMountLV(lvAction);
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
-        qDebug() << "Current level is DISK for mount operation.";
+        qCDebug(appLog) << "Current level is DISK for mount operation.";
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
-            qDebug() << "Disk is LUKS encrypted, attempting crypt mount.";
+            qCDebug(appLog) << "Disk is LUKS encrypted, attempting crypt mount.";
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
             QVector<QString> mountPoints;
             mountPoints.append(m_fileChooserEdit->text());
@@ -280,66 +281,66 @@ void MountDialog::mountCurPath()
             DMDbusHandler::instance()->cryptMount(luksInfo, info.m_path);
         }
     }
-    qDebug() << "mountCurPath completed.";
+    qCDebug(appLog) << "mountCurPath completed.";
 }
 
 void MountDialog::onButtonClicked(int index, const QString &text)
 {
-    qDebug() << "Button clicked - index:" << index << "text:" << text;
+    qCDebug(appLog) << "Button clicked - index:" << index << "text:" << text;
     Q_UNUSED(text);
     if (index == m_okCode) {
-        qDebug() << "OK button clicked, checking mount point.";
+        qCDebug(appLog) << "OK button clicked, checking mount point.";
         QString mountPath = m_fileChooserEdit->text();
         if (mountPath.endsWith("/")) {
-            qDebug() << "Mount path ends with '/', removing trailing slash.";
+            qCDebug(appLog) << "Mount path ends with '/', removing trailing slash.";
             mountPath.chop(1);
         }
 
         QDir dir(mountPath);
         if (!dir.isEmpty() || isExistMountPoint(mountPath)) {
-            qDebug() << "Checking mount point:" << mountPath;
+            qCDebug(appLog) << "Checking mount point:" << mountPath;
             MessageBox messageBox(this);
             messageBox.setObjectName("mountMessageBox");
             messageBox.setAccessibleName("messageBox");
             messageBox.setWarings(tr("The data under this mount point would be lost, please mount the directory to another location"), "",
                                   tr("Continue", "button"), "ok", tr("Cancel"), "cancelBtn");
             if (messageBox.exec() == 1) {
-                qInfo() << "User confirmed mount operation despite warning";
+                qCInfo(appLog) << "User confirmed mount operation despite warning";
                 mountCurPath();
                 close();
             }
         } else {
-            qDebug() << "Cancel button clicked, closing dialog.";
+            qCDebug(appLog) << "Cancel button clicked, closing dialog.";
             mountCurPath();
             close();
         }
     } else {
-        qDebug() << "Cancel button clicked, closing dialog.";
+        qCDebug(appLog) << "Cancel button clicked, closing dialog.";
         close();
     }
 }
 
 bool MountDialog::onCheckMountPoint(FSType fsType, const QString &mountPoint)
 {
-    qDebug() << "Checking mount point validity for FS type:" << fsType << "path:" << mountPoint;
+    qCDebug(appLog) << "Checking mount point validity for FS type:" << fsType << "path:" << mountPoint;
     //exfat文件系统的挂载点必须为空目录
     if (fsType == FS_EXFAT) {
-        qDebug() << "Checking EXFAT mount point requirements";
+        qCDebug(appLog) << "Checking EXFAT mount point requirements";
         QDir dir(m_fileChooserEdit->text());
         if (!dir.isEmpty()) {
-            qWarning() << "Mount point not empty for EXFAT filesystem";
+            qCWarning(appLog) << "Mount point not empty for EXFAT filesystem";
             MessageBox messageBox(this);
             messageBox.setObjectName("mountPointMessageBox");
             messageBox.setAccessibleName("mountPointMessageBox");
             messageBox.setWarings("", tr("Mounting failed: The selected mount point is not empty. Please select another one!"),
                                   tr("OK", "button"), ButtonNormal);
             if (messageBox.exec() == 1) {
-                qDebug() << "User confirmed mount point change, closing dialog.";
+                qCDebug(appLog) << "User confirmed mount point change, closing dialog.";
                 close();
             }
             return false;
         }
     }
-    qDebug() << "Mount point check passed for FS type:" << fsType << "path:" << mountPoint;
+    qCDebug(appLog) << "Mount point check passed for FS type:" << fsType << "path:" << mountPoint;
     return true;
 }

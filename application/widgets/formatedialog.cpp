@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 
+#include "ddlog.h"
 #include "formatedialog.h"
 #include "partedproxy/dmdbushandler.h"
 #include "common.h"
@@ -21,14 +22,14 @@
 FormateDialog::FormateDialog(QWidget *parent)
     : DDBase(parent)
 {
-    qDebug() << "FormateDialog constructor";
+    qCDebug(appLog) << "FormateDialog constructor";
     initUi();
     initConnection();
 }
 
 void FormateDialog::initUi()
 {
-    qDebug() << "Initializing FormatDialog UI";
+    qCDebug(appLog) << "Initializing FormatDialog UI";
     m_height = 355;
     setFixedSize(450, m_height);
 
@@ -38,7 +39,7 @@ void FormateDialog::initUi()
     LUKSFlag luksFlag = LUKSFlag::NOT_CRYPT_LUKS;
     bool isSystemDevice = false;
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION) {
-        qDebug() << "Current level is PARTITION.";
+        qCDebug(appLog) << "Current level is PARTITION.";
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         m_pathInfo = info.m_path;
         fileSystemType = info.m_fileSystemType;
@@ -48,7 +49,7 @@ void FormateDialog::initUi()
         luksFlag = info.m_luksFlag;
         isSystemDevice = DMDbusHandler::instance()->getIsSystemDisk(info.m_devicePath);
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
-        qDebug() << "Current level is DISK.";
+        qCDebug(appLog) << "Current level is DISK.";
         DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
         m_pathInfo = info.m_path;
         m_curDiskMediaType = info.m_mediaType;
@@ -56,7 +57,7 @@ void FormateDialog::initUi()
         luksFlag = info.m_luksFlag;
         isSystemDevice = DMDbusHandler::instance()->getIsSystemDisk(info.m_path);
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
-        qDebug() << "Current level is LOGICALVOLUME.";
+        qCDebug(appLog) << "Current level is LOGICALVOLUME.";
         m_height = 315;
         setFixedSize(450, m_height);
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
@@ -108,7 +109,7 @@ void FormateDialog::initUi()
     m_fileNameEdit->lineEdit()->setValidator(validator );
     m_fileNameEdit->setFixedHeight(36);
     if (m_fileNameEdit->text().isEmpty()) {
-        qDebug() << "File name edit is empty, setting placeholder text.";
+        qCDebug(appLog) << "File name edit is empty, setting placeholder text.";
         m_fileNameEdit->lineEdit()->setPlaceholderText(tr("Name"));
     }
 
@@ -125,7 +126,7 @@ void FormateDialog::initUi()
     fslist.removeOne("linux-swap");
 //    QStringList formateList = fslist;
     if (size > 100 && !isSystemDevice && DMDbusHandler::instance()->getCurLevel() != DMDbusHandler::LOGICALVOLUME) {
-        qDebug() << "Size is greater than 100, not system device, and not logical volume. Getting encryption formats.";
+        qCDebug(appLog) << "Size is greater than 100, not system device, and not logical volume. Getting encryption formats.";
         fslist = DMDbusHandler::instance()->getEncryptionFormate(fslist);
     }
 
@@ -135,37 +136,37 @@ void FormateDialog::initUi()
     QString fsTypeName = Utils::fileSystemTypeToString(static_cast<FSType>(fileSystemType));
     // 判断当前设备是否加密
     if (luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
-        qDebug() << "LUKS flag is IS_CRYPT_LUKS, checking LUKS info.";
+        qCDebug(appLog) << "LUKS flag is IS_CRYPT_LUKS, checking LUKS info.";
         LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(m_pathInfo);
         // 加密设备是否打开，打开格式设为加密格式，未打开默认设为ext4
         if (luksInfo.isDecrypt) {
-            qDebug() << "LUKS device is decrypted.";
+            qCDebug(appLog) << "LUKS device is decrypted.";
             fileSystemType = luksInfo.m_mapper.m_luksFs;
             if (-1 == fslist.indexOf(Utils::fileSystemTypeToString(static_cast<FSType>(fileSystemType)))) {
-                qDebug() << "Decrypted file system type not in list, setting to EXT4.";
+                qCDebug(appLog) << "Decrypted file system type not in list, setting to EXT4.";
                 fsTypeName = Utils::fileSystemTypeToString(FSType::FS_EXT4);
             } else {
                 if (luksInfo.m_crypt == CRYPT_CIPHER::AES_XTS_PLAIN64) {
-                    qDebug() << "LUKS encryption is AES_XTS_PLAIN64.";
+                    qCDebug(appLog) << "LUKS encryption is AES_XTS_PLAIN64.";
                     fsTypeName = QString("%1 (%2)").arg(Utils::fileSystemTypeToString(static_cast<FSType>(fileSystemType)))
                             .arg(tr("AES Encryption"));
                 } else if (luksInfo.m_crypt == CRYPT_CIPHER::SM4_XTS_PLAIN64){
-                    qDebug() << "LUKS encryption is SM4_XTS_PLAIN64.";
+                    qCDebug(appLog) << "LUKS encryption is SM4_XTS_PLAIN64.";
                     fsTypeName = QString("%1 (%2)").arg(Utils::fileSystemTypeToString(static_cast<FSType>(fileSystemType)))
                             .arg(tr("SM4 Encryption"));
                 }
             }
         } else {
-            qDebug() << "LUKS device is not decrypted, setting to EXT4.";
+            qCDebug(appLog) << "LUKS device is not decrypted, setting to EXT4.";
             fsTypeName = Utils::fileSystemTypeToString(FSType::FS_EXT4);
         }
     }
 
     if (-1 == fslist.indexOf(fsTypeName)) {
-        qDebug() << "File system type not in list, setting current text to ext4.";
+        qCDebug(appLog) << "File system type not in list, setting current text to ext4.";
         m_formatComboBox->setCurrentText("ext4");
     } else {
-        qDebug() << "File system type found in list, setting current text to:" << fsTypeName;
+        qCDebug(appLog) << "File system type found in list, setting current text to:" << fsTypeName;
         m_formatComboBox->setCurrentText(fsTypeName);
     }
 
@@ -182,12 +183,12 @@ void FormateDialog::initUi()
     m_securityComboBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
     if ("SSD" == m_curDiskMediaType || DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
-        qDebug() << "Disk media type is SSD or current level is LOGICALVOLUME, adding Fast and Secure options.";
+        qCDebug(appLog) << "Disk media type is SSD or current level is LOGICALVOLUME, adding Fast and Secure options.";
         QStringList securitylist;
         securitylist << tr("Fast") << tr("Secure");
         m_securityComboBox->addItems(securitylist);
     } else {
-        qDebug() << "Disk media type is not SSD and not logical volume, adding Fast, Secure, and Advanced options.";
+        qCDebug(appLog) << "Disk media type is not SSD and not logical volume, adding Fast, Secure, and Advanced options.";
         QStringList securitylist;
         securitylist << tr("Fast") << tr("Secure") << tr("Advanced");
         m_securityComboBox->addItems(securitylist);
@@ -333,7 +334,7 @@ void FormateDialog::initUi()
     m_failLabel->setText(tr("Failed to find the disk"));
 
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
-        qDebug() << "Current level is logical volume.";
+        qCDebug(appLog) << "Current level is logical volume.";
         tipLabel->setText(tr("The action cannot be undone, please proceed with caution"));
         tipLabel->setFixedHeight(30);
         fileName->setText(tr("LV name:"));
@@ -373,12 +374,12 @@ void FormateDialog::initUi()
         QFontMetrics fm(formatName->font());
         updateEncryptionInfo(m_formatComboBox->currentText(), width() - fm.boundingRect(formatName->text()).width() - 40);
     }
-    qDebug() << "FormateDialog initialized.";
+    qCDebug(appLog) << "FormateDialog initialized.";
 }
 
 void FormateDialog::initConnection()
 {
-    qDebug() << "Setting up FormatDialog signal connections";
+    qCDebug(appLog) << "Setting up FormatDialog signal connections";
     connect(m_pushButton, &DPushButton::clicked, this, &FormateDialog::onCancelButtonClicked);
     connect(m_warningButton, &DWarningButton::clicked, this, &FormateDialog::onWipeButtonClicked);
     connect(m_fileNameEdit, &DLineEdit::textChanged, this, &FormateDialog::onTextChanged);
@@ -392,35 +393,35 @@ void FormateDialog::initConnection()
 
 void FormateDialog::onTextChanged(const QString &text)
 {
-    qDebug() << "Format name changed:" << text;
+    qCDebug(appLog) << "Format name changed:" << text;
     if (!text.isEmpty()) {
-        qDebug() << "Format name is not empty.";
+        qCDebug(appLog) << "Format name is not empty.";
         QByteArray byteArray = text.toUtf8();
         if (m_formatComboBox->currentText().contains("fat32")) {
-            qDebug() << "File system type is fat32.";
+            qCDebug(appLog) << "File system type is fat32.";
             if (byteArray.size() > 11) {
-                qDebug() << "File system type is fat32, length exceeds the limit.";
+                qCDebug(appLog) << "File system type is fat32, length exceeds the limit.";
                 m_fileNameEdit->setAlert(true);
                 m_fileNameEdit->showAlertMessage(tr("The length exceeds the limit"), -1);
 
                 m_warningButton->setEnabled(false);
             } else {
-                qDebug() << "File system type is fat32, length is within the limit.";
+                qCDebug(appLog) << "File system type is fat32, length is within the limit.";
                 m_fileNameEdit->setAlert(false);
                 m_fileNameEdit->hideAlertMessage();
 
                 m_warningButton->setEnabled(true);
             }
         } else {
-            qDebug() << "File system type is not fat32.";
+            qCDebug(appLog) << "File system type is not fat32.";
             if (byteArray.size() > 16) {
-                qDebug() << "File system type is not fat32, length exceeds the limit.";
+                qCDebug(appLog) << "File system type is not fat32, length exceeds the limit.";
                 m_fileNameEdit->setAlert(true);
                 m_fileNameEdit->showAlertMessage(tr("The length exceeds the limit"), -1);
 
                 m_warningButton->setEnabled(false);
             } else {
-                qDebug() << "File system type is not fat32, length is within the limit.";
+                qCDebug(appLog) << "File system type is not fat32, length is within the limit.";
                 m_fileNameEdit->setAlert(false);
                 m_fileNameEdit->hideAlertMessage();
 
@@ -428,12 +429,12 @@ void FormateDialog::onTextChanged(const QString &text)
             }
         }
     }
-    qDebug() << "Format name changed end.";
+    qCDebug(appLog) << "Format name changed end.";
 }
 
 void FormateDialog::onComboxFormatTextChange(const QString &text)
 {
-    qDebug() << "File system type changed:" << text;
+    qCDebug(appLog) << "File system type changed:" << text;
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION ||
             DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
         QByteArray byteArray = m_fileNameEdit->text().toUtf8();
@@ -501,7 +502,7 @@ void FormateDialog::updateEncryptionInfo(const QString &text, const int &width)
 
 void FormateDialog::onSecurityCurrentIndexChanged(int index)
 {
-    qDebug() << "Security option changed to index:" << index;
+    qCDebug(appLog) << "Security option changed to index:" << index;
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION ||
             DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
         switch (index) {
@@ -585,12 +586,12 @@ void FormateDialog::onSecurityCurrentIndexChanged(int index)
             break;
         }
     }
-    qDebug() << "onSecurityCurrentIndexChanged completed.";
+    qCDebug(appLog) << "onSecurityCurrentIndexChanged completed.";
 }
 
 void FormateDialog::onWipingMethodCurrentIndexChanged(int index)
 {
-    qDebug() << "Wiping method changed to index:" << index;
+    qCDebug(appLog) << "Wiping method changed to index:" << index;
     switch (index) {
     case 0: {
         m_curWipeMethod = WipeType::DOD;
@@ -601,20 +602,20 @@ void FormateDialog::onWipingMethodCurrentIndexChanged(int index)
         break;
     }
     default:
-        qDebug() << "Unknown wiping method index:" << index;
+        qCDebug(appLog) << "Unknown wiping method index:" << index;
         break;
     }
 }
 
 void FormateDialog::onCancelButtonClicked()
 {
-    qDebug() << "Cancel button clicked.";
+    qCDebug(appLog) << "Cancel button clicked.";
     close();
 }
 
 void FormateDialog::onWipeButtonClicked()
 {
-    qInfo() << "Starting wipe operation for:" << m_pathInfo;
+    qCInfo(appLog) << "Starting wipe operation for:" << m_pathInfo;
     QString userName = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
     userName.remove(0, 6);
 
@@ -625,23 +626,23 @@ void FormateDialog::onWipeButtonClicked()
     CRYPT_CIPHER encryption = CRYPT_CIPHER::NOT_CRYPT;
     bool isEncryption = false;
     if (formate.contains("AES") || formate.contains("SM4")) {
-        qDebug() << "AES or SM4 encryption selected.";
+        qCDebug(appLog) << "AES or SM4 encryption selected.";
         PasswordInputDialog passwordInputDialog(this);
         passwordInputDialog.setDeviceName(m_pathInfo);
         passwordInputDialog.setAccessibleName("passwordInputDialog");
         if (passwordInputDialog.exec() != DDialog::Accepted) {
-            qDebug() << "Password input dialog cancelled.";
+            qCDebug(appLog) << "Password input dialog cancelled.";
             return;
         } else {
-            qDebug() << "Password input dialog accepted.";
+            qCDebug(appLog) << "Password input dialog accepted.";
             password = passwordInputDialog.getPassword();
             passwordHint = passwordInputDialog.getPasswordHint();
             if (formate.contains("AES")) {
-                qDebug() << "AES encryption selected.";
+                qCDebug(appLog) << "AES encryption selected.";
                 encryption = CRYPT_CIPHER::AES_XTS_PLAIN64;
                 encryptName = "aesE";
             } else if (formate.contains("SM4")) {
-                qDebug() << "SM4 encryption selected.";
+                qCDebug(appLog) << "SM4 encryption selected.";
                 encryption = CRYPT_CIPHER::SM4_XTS_PLAIN64;
                 encryptName = "sm4E";
             }
@@ -663,7 +664,7 @@ void FormateDialog::onWipeButtonClicked()
 
     if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::PARTITION ||
             DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
-        qDebug() << "Partition or disk wipe operation.";
+        qCDebug(appLog) << "Partition or disk wipe operation.";
         WipeAction wipe;
         wipe.m_fstype = formate;
         wipe.m_path = m_pathInfo;
@@ -673,40 +674,40 @@ void FormateDialog::onWipeButtonClicked()
         wipe.m_crypt = encryption;
         wipe.m_decryptStr = password;
         if (isEncryption) {
-            qDebug() << "Encryption enabled.";
+            qCDebug(appLog) << "Encryption enabled.";
             wipe.m_luksFlag = LUKSFlag::IS_CRYPT_LUKS;
             QStringList tokenList;
             if (!passwordHint.isEmpty()) {
-                qDebug() << "Password hint added.";
+                qCDebug(appLog) << "Password hint added.";
                 tokenList.append(passwordHint);
             }
 
             wipe.m_tokenList = tokenList;
             if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::DISK) {
-                qDebug() << "Disk encryption selected.";
+                qCDebug(appLog) << "Disk encryption selected.";
                 wipe.m_dmName = "";
             } else {
-                qDebug() << "Partition encryption selected.";
+                qCDebug(appLog) << "Partition encryption selected.";
                 m_pathInfo == "unallocated" ? wipe.m_dmName = "" : wipe.m_dmName = QString("%1_%2").arg(m_pathInfo.remove("/dev/")).arg(encryptName);
             }
         } else {
-            qDebug() << "Encryption disabled.";
+            qCDebug(appLog) << "Encryption disabled.";
             wipe.m_luksFlag = LUKSFlag::NOT_CRYPT_LUKS;
             wipe.m_tokenList = QStringList();
             wipe.m_dmName = "";
         }
 
         if (m_fileNameEdit->text().isEmpty()) {
-            qDebug() << "File system label not set.";
+            qCDebug(appLog) << "File system label not set.";
             wipe.m_fileSystemLabel  = " ";
             DMDbusHandler::instance()->clear(wipe);
         } else {
-            qDebug() << "File system label set.";
+            qCDebug(appLog) << "File system label set.";
             wipe.m_fileSystemLabel  = m_fileNameEdit->text();
             DMDbusHandler::instance()->clear(wipe);
         }
     } else if (DMDbusHandler::instance()->getCurLevel() == DMDbusHandler::LOGICALVOLUME) {
-        qDebug() << "Logical volume wipe operation.";
+        qCDebug(appLog) << "Logical volume wipe operation.";
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
 
         LVAction lvAction;
@@ -720,18 +721,18 @@ void FormateDialog::onWipeButtonClicked()
         lvAction.m_crypt = encryption;
         lvAction.m_decryptStr = password;
         if (isEncryption) {
-            qDebug() << "Encryption enabled.";
+            qCDebug(appLog) << "Encryption enabled.";
             lvAction.m_luksFlag = LUKSFlag::IS_CRYPT_LUKS;
             QStringList tokenList;
             if (!passwordHint.isEmpty()) {
-                qDebug() << "Password hint added.";
+                qCDebug(appLog) << "Password hint added.";
                 tokenList.append(passwordHint);
             }
 
             lvAction.m_tokenList = tokenList;
             lvAction.m_dmName = QString("%1_%2_%3").arg(lvInfo.m_vgName).arg(lvInfo.m_lvName).arg(encryptName);
         } else {
-            qDebug() << "Encryption disabled.";
+            qCDebug(appLog) << "Encryption disabled.";
             lvAction.m_luksFlag = LUKSFlag::NOT_CRYPT_LUKS;
             lvAction.m_tokenList = QStringList();
             lvAction.m_dmName = "";
@@ -745,34 +746,34 @@ void FormateDialog::onWipeButtonClicked()
     m_stackedWidget->setCurrentIndex(1);
     DWindowCloseButton *button = findChild<DWindowCloseButton *>("DTitlebarDWindowCloseButton");
     if (button != nullptr) {
-        qDebug() << "DWindowCloseButton found.";
+        qCDebug(appLog) << "DWindowCloseButton found.";
         button->setDisabled(true);
         button->hide();
     }
 
     m_waterLoadingWidget->setStartTime(1000);
-    qDebug() << "Wiping operation started.";
+    qCDebug(appLog) << "Wiping operation started.";
 }
 
 void FormateDialog::onWipeResult(const QString &info)
 {
-    qDebug() << "Wipe operation result:" << info;
+    qCDebug(appLog) << "Wipe operation result:" << info;
     QStringList infoList = info.split(":");
 
     if (infoList.count() <= 2) {
-        qDebug() << "infoList count less than 2.";
+        qCDebug(appLog) << "infoList count less than 2.";
         return;
     }
 
     m_waterLoadingWidget->stopTimer();
     bool isSuccess = false;
     if (infoList.at(0) == "DISK_ERROR" && infoList.at(1).toInt() == DISK_ERROR::DISK_ERR_NORMAL) {
-        qDebug() << "Wipe operation succeeded.";
+        qCDebug(appLog) << "Wipe operation succeeded.";
         isSuccess = true;
     }
 
     if (isSuccess) {
-        qDebug() << "Wipe operation succeeded.";
+        qCDebug(appLog) << "Wipe operation succeeded.";
         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget()->parentWidget()->parentWidget(),
                                                  QIcon::fromTheme("://icons/deepin/builtin/ok.svg"),
                                                  tr("\"%1\" wiped").arg(m_pathInfo));
@@ -781,7 +782,7 @@ void FormateDialog::onWipeResult(const QString &info)
 
         close();
     } else {
-        qDebug() << "Wipe operation failed.";
+        qCDebug(appLog) << "Wipe operation failed.";
         QString failedReason = DMDbusHandler::instance()->getFailedMessage(infoList.at(0), infoList.at(1).toInt(), "");
         setTitle(tr("Failed to wipe %1").arg(m_pathInfo));
         m_stackedWidget->setCurrentIndex(2);
@@ -792,6 +793,6 @@ void FormateDialog::onWipeResult(const QString &info)
 
         m_failLabel->setText(failedReason);
     }
-    qDebug() << "Wipe operation completed.";
+    qCDebug(appLog) << "Wipe operation completed.";
 }
 

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 
+#include "ddlog.h"
 #include "selecteditemwidget.h"
 #include "partedproxy/dmdbushandler.h"
 
@@ -15,7 +16,7 @@ SelectedItemWidget::SelectedItemWidget(PVInfoData pvInfoData, QWidget *parent)
     : RadiusWidget(parent)
     , m_pvInfoData(pvInfoData)
 {
-    qDebug() << "Creating selected item for:"
+    qCDebug(appLog) << "Creating selected item for:"
                              << (m_pvInfoData.m_disktype == "unrecognized" ? m_pvInfoData.m_diskPath : m_pvInfoData.m_partitionPath);
     initUi();
     initConnection();
@@ -23,7 +24,7 @@ SelectedItemWidget::SelectedItemWidget(PVInfoData pvInfoData, QWidget *parent)
 
 void SelectedItemWidget::initUi()
 {
-    qDebug() << "SelectedItemWidget::initUi called.";
+    qCDebug(appLog) << "SelectedItemWidget::initUi called.";
     setFixedHeight(36);
 
     DPalette paletteName;
@@ -65,24 +66,24 @@ void SelectedItemWidget::initUi()
     m_iconButton->setFixedSize(17, 17);
 
     if (m_pvInfoData.m_disktype == "unrecognized") {
-        qDebug() << "Setting unrecognized disk info:" << m_pvInfoData.m_diskPath << m_pvInfoData.m_diskSize;
+        qCDebug(appLog) << "Setting unrecognized disk info:" << m_pvInfoData.m_diskPath << m_pvInfoData.m_diskSize;
         m_nameInfo->setText(m_pvInfoData.m_diskPath);
         m_sizeInfo->setText(m_pvInfoData.m_diskSize);
     } else {
         if (m_pvInfoData.m_partitionPath == "unallocated") {
-            qDebug() << "Setting unallocated partition info:" << m_pvInfoData.m_diskPath;
+            qCDebug(appLog) << "Setting unallocated partition info:" << m_pvInfoData.m_diskPath;
             m_nameInfo->setText(m_pvInfoData.m_diskPath);
         } else {
-            qDebug() << "Setting partition info:" << m_pvInfoData.m_partitionPath << m_pvInfoData.m_partitionSize;
+            qCDebug(appLog) << "Setting partition info:" << m_pvInfoData.m_partitionPath << m_pvInfoData.m_partitionSize;
             m_nameInfo->setText(m_pvInfoData.m_partitionPath);
         }
 
         m_sizeInfo->setText(m_pvInfoData.m_partitionSize);
-        qDebug() << "Setting partition size:" << m_pvInfoData.m_partitionSize;
+        qCDebug(appLog) << "Setting partition size:" << m_pvInfoData.m_partitionSize;
     }
 
     if (m_pvInfoData.m_isReadOnly) {
-        qDebug() << "Disk is read-only, disabling icon button.";
+        qCDebug(appLog) << "Disk is read-only, disabling icon button.";
         m_iconButton->setDisabled(true);
     }
 
@@ -94,22 +95,22 @@ void SelectedItemWidget::initUi()
     mainLayout->addWidget(m_iconButton);
     mainLayout->setSpacing(0);
     mainLayout->setContentsMargins(10, 0, 10, 0);
-    qDebug() << "Main layout configured.";
+    qCDebug(appLog) << "Main layout configured.";
 
     setLayout(mainLayout);
-    qDebug() << "Layout set.";
+    qCDebug(appLog) << "Layout set.";
 }
 
 void SelectedItemWidget::initConnection()
 {
-    qDebug() << "SelectedItemWidget::initConnection called.";
+    qCDebug(appLog) << "SelectedItemWidget::initConnection called.";
     connect(m_iconButton, &DIconButton::clicked, this, &SelectedItemWidget::onDeleteClicked);
 }
 
 void SelectedItemWidget::onDeleteClicked()
 {
-    qDebug() << "SelectedItemWidget::onDeleteClicked called.";
-    qDebug() << "Delete clicked for:"
+    qCDebug(appLog) << "SelectedItemWidget::onDeleteClicked called.";
+    qCDebug(appLog) << "Delete clicked for:"
                            << (m_pvInfoData.m_disktype == "unrecognized" ? m_pvInfoData.m_diskPath : m_pvInfoData.m_partitionPath);
     emit deleteItem(m_pvInfoData);
 }

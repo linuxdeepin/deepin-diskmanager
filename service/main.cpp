@@ -2,8 +2,10 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
+#include "ddlog.h"
 #include "diskmanagerservice.h"
 #include "log.h"
+#include "logger.h"
 
 #include <QCoreApplication>
 #include <DLog>
@@ -17,12 +19,15 @@ const QString DiskManagerPath = "/com/deepin/diskmanager";
 
 int main(int argc, char *argv[])
 {
+    // 动态日志规则监听必须放在最前：qunsetenv("QT_LOGGING_RULES") 要求在任何日志打印之前
+    MLogger logger;
+
     //set env otherwise utils excutecmd  excute command failed
     QString PATH = qgetenv("PATH");
 
-    qDebug() << "Application starting with PATH:" << PATH;
+    qCDebug(serviceLog) << "Application starting with PATH:" << PATH;
     if (PATH.isEmpty()) {
-        qWarning() << "PATH environment variable is empty";
+        qCWarning(serviceLog) << "PATH environment variable is empty";
         PATH = "/usr/bin";
     }
     PATH += ":/usr/sbin";
@@ -34,13 +39,13 @@ int main(int argc, char *argv[])
 
     QString frontEndDBusName;
     if (argc < 2) {
-        qCritical() << "Invalid arguments count:" << argc;
+        qCCritical(serviceLog) << "Invalid arguments count:" << argc;
         return 1;
     } else {
-        qDebug() << "Arguments count:" << argc;
+        qCDebug(serviceLog) << "Arguments count:" << argc;
         frontEndDBusName = QString(argv[1]);
         if (frontEndDBusName.isEmpty()) {
-            qCritical() << "Invalid front-end DBus name";
+            qCCritical(serviceLog) << "Invalid front-end DBus name";
             return 1;
         }
     }
@@ -57,7 +62,7 @@ int main(int argc, char *argv[])
     setLogDir(LogPath);
     if (!dirCheck.exists(LogPath))
     {
-        qDebug() << "Log path does not exist, creating:" << LogPath;
+        qCDebug(serviceLog) << "Log path does not exist, creating:" << LogPath;
         dirCheck.mkpath(LogPath);
     }
     //检查日志是否过期
@@ -70,18 +75,18 @@ int main(int argc, char *argv[])
    Dtk::Core::DLogManager::registerConsoleAppender();
    // Dtk::Core::DLogManager::registerFileAppender();
 
-//    qDebug() << "write log to" << Dtk::Core::DLogManager::getlogFilePath();
+//    qCDebug(serviceLog) << "write log to" << Dtk::Core::DLogManager::getlogFilePath();
     QDBusConnection systemBus = QDBusConnection::systemBus();
     if (!systemBus.registerService(DiskManagerServiceName)) {
-        qCritical() << "registerService failed:" << systemBus.lastError();
+        qCCritical(serviceLog) << "registerService failed:" << systemBus.lastError();
         exit(0x0001);
     }
     DiskManager::DiskManagerService service(frontEndDBusName);
-    qDebug() << "systemBus.registerService success" /*<< Dtk::Core::DLogManager::getlogFilePath()*/;
+    qCDebug(serviceLog) << "systemBus.registerService success" /*<< Dtk::Core::DLogManager::getlogFilePath()*/;
     if (!systemBus.registerObject(DiskManagerPath,
                                   &service,
                                   QDBusConnection::ExportAllSlots | QDBusConnection::ExportAllSignals)) {
-        qCritical() << "registerObject failed:" << systemBus.lastError();
+        qCCritical(serviceLog) << "registerObject failed:" << systemBus.lastError();
         exit(0x0002);
     }
 
@@ -92,7 +97,7 @@ int main(int argc, char *argv[])
         &a
     );
     QObject::connect(watcher, &QDBusServiceWatcher::serviceUnregistered, [](const QString &name) {
-        qWarning() << "Front-end service unregistered:" << name;
+        qCWarning(serviceLog) << "Front-end service unregistered:" << name;
         QCoreApplication::exit(0);
     });
 

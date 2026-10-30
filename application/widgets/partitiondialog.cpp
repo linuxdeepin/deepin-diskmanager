@@ -1,8 +1,9 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
 
+#include "ddlog.h"
 #include "partitiondialog.h"
 #include "partedproxy/dmdbushandler.h"
 #include "partitioninfo.h"
@@ -17,13 +18,13 @@
 PartitionDialog::PartitionDialog(QWidget *parent)
     : DDBase(parent)
 {
-    qDebug() << "PartitionDialog initialized";
+    qCDebug(appLog) << "PartitionDialog initialized";
     initUi();
 }
 
 void PartitionDialog::initUi()
 {
-    qInfo() << "Initializing partition dialog UI";
+    qCInfo(appLog) << "Initializing partition dialog UI";
     PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
 
     setTitle(tr("Partition %1").arg(info.m_path));
@@ -44,7 +45,7 @@ void PartitionDialog::initUi()
 
 void PartitionDialog::setTitleText(const QString &title, const QString &subTitle)
 {
-    qDebug() << "Setting dialog title to:" << title << "and subtitle to:" << subTitle;
+    qCDebug(appLog) << "Setting dialog title to:" << title << "and subtitle to:" << subTitle;
     setTitle(title);
     m_tipLabel->setText(subTitle);
 }

@@ -1,9 +1,10 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
 
 
+#include "ddlog.h"
 #include "messagebox.h"
 #include <QDebug>
 
@@ -16,29 +17,29 @@
 
 MessageBox::MessageBox(QWidget *parent) : DDialog(parent)
 {
-    qDebug() << "MessageBox constructor";
+    qCDebug(appLog) << "MessageBox constructor";
 }
 
 void MessageBox::setWarings(const QString &title, const QString &warningMsg, const QString &sureBtnText, const QString &sureAccessibleName, const QString &cancalBtnText, const QString &cancelAccessibleName)
 {
-    qDebug() << "Setting warning message box with title:" << title
+    qCDebug(appLog) << "Setting warning message box with title:" << title
              << "sureBtnText:" << sureBtnText;
     setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
 
     if (!title.isEmpty()) {
-        qDebug() << "Title is not empty, setting title.";
+        qCDebug(appLog) << "Title is not empty, setting title.";
         setTitle(title);
         addSpacing(10);
     }
 
     if (!warningMsg.isEmpty()) {
-        qDebug() << "Warning message is not empty, adding label.";
+        qCDebug(appLog) << "Warning message is not empty, adding label.";
         addLabel(warningMsg);
         addSpacing(10);
     }
 
     if (!cancalBtnText.isEmpty()) {
-        qDebug() << "Cancel button text is not empty, adding button.";
+        qCDebug(appLog) << "Cancel button text is not empty, adding button.";
         int index = addButton(cancalBtnText);
         getButton(index)->setAccessibleName(cancelAccessibleName);
     }
@@ -46,32 +47,32 @@ void MessageBox::setWarings(const QString &title, const QString &warningMsg, con
     int index = addButton(sureBtnText);
     getButton(index)->setAccessibleName(sureAccessibleName);
     connect(this, &MessageBox::buttonClicked, this, [=]() {
-        qDebug() << "Sure button clicked, closing message box.";
+        qCDebug(appLog) << "Sure button clicked, closing message box.";
         close();
     });
-    qDebug() << "MessageBox::setWarings (first overload) completed.";
+    qCDebug(appLog) << "MessageBox::setWarings (first overload) completed.";
 }
 
 void MessageBox::setWarings(const QString &title, const QString &warningMsg, const QString &sureBtnText, ButtonType sureBtnType, const QString &sureAccessibleName, const QString &cancalBtnText, const QString &cancelAccessibleName)
 {
-    qDebug() << "Setting warning message box with button type:" << sureBtnType
+    qCDebug(appLog) << "Setting warning message box with button type:" << sureBtnType
              << "title:" << title;
     setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
 
     if (!title.isEmpty()) {
-        qDebug() << "Title is not empty, setting title.";
+        qCDebug(appLog) << "Title is not empty, setting title.";
         setTitle(title);
         addSpacing(10);
     }
 
     if (!warningMsg.isEmpty()) {
-        qDebug() << "Warning message is not empty, adding label.";
+        qCDebug(appLog) << "Warning message is not empty, adding label.";
         addLabel(warningMsg);
         addSpacing(10);
     }
 
     if (!cancalBtnText.isEmpty()) {
-        qDebug() << "Cancel button text is not empty, adding button.";
+        qCDebug(appLog) << "Cancel button text is not empty, adding button.";
         int index = addButton(cancalBtnText);
         getButton(index)->setAccessibleName(cancelAccessibleName);
     }
@@ -79,16 +80,16 @@ void MessageBox::setWarings(const QString &title, const QString &warningMsg, con
     int index = addButton(sureBtnText, false, sureBtnType);
     getButton(index)->setAccessibleName(sureAccessibleName);
     connect(this, &MessageBox::buttonClicked, this, [=]() {
-        qDebug() << "Button clicked, closing message box.";
+        qCDebug(appLog) << "Button clicked, closing message box.";
         close();
     });
-    qDebug() << "MessageBox::setWarings (second overload) completed.";
+    qCDebug(appLog) << "MessageBox::setWarings (second overload) completed.";
 }
 
 void MessageBox::setWarings(const QString &title, const QString &sureBtnText, ButtonType sureBtnType, const QString &sureAccessibleName,
                 const QString &cancalBtnText, const QString &cancelAccessibleName)
 {
-    qDebug() << "Setting warning message box with custom title layout"
+    qCDebug(appLog) << "Setting warning message box with custom title layout"
              << "title:" << title;
     setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
 
@@ -104,25 +105,25 @@ void MessageBox::setWarings(const QString &title, const QString &sureBtnText, Bu
     label->setPalette(palette);
     QFontMetrics fmDevpath = label->fontMetrics();
 #if QT_VERSION_MAJOR > 5
-    qDebug() << "Calculating font metrics for Qt6 or higher.";
+    qCDebug(appLog) << "Calculating font metrics for Qt6 or higher.";
     int fmWidth = fmDevpath.boundingRect(label->text()).width();
 #else
-    qDebug() << "Calculating font metrics for Qt5.";
+    qCDebug(appLog) << "Calculating font metrics for Qt5.";
     int fmWidth = fmDevpath.width(label->text());
 #endif
     int labelWidth = fmWidth / 3 * 2;
     if (labelWidth >= (width() - 20)) {
-        qDebug() << "Label width adjusted to fit within dialog.";
+        qCDebug(appLog) << "Label width adjusted to fit within dialog.";
         labelWidth = width() - 20;
     }
-    qDebug() << "Calculated labelWidth:" << labelWidth << "dialog width:" << width();
+    qCDebug(appLog) << "Calculated labelWidth:" << labelWidth << "dialog width:" << width();
     label->setFixedWidth(labelWidth);
     label->adjustSize();
     addContent(label, Qt::AlignHCenter);
     addSpacing(10);
 
     if (!cancalBtnText.isEmpty()) {
-        qDebug() << "Cancel button text is not empty, adding button.";
+        qCDebug(appLog) << "Cancel button text is not empty, adding button.";
         int index = addButton(cancalBtnText);
         getButton(index)->setAccessibleName(cancelAccessibleName);
     }
@@ -130,19 +131,19 @@ void MessageBox::setWarings(const QString &title, const QString &sureBtnText, Bu
     int index = addButton(sureBtnText, false, sureBtnType);
     getButton(index)->setAccessibleName(sureAccessibleName);
     connect(this, &MessageBox::buttonClicked, this, [=]() {
-        qDebug() << "Button clicked, closing message box.";
+        qCDebug(appLog) << "Button clicked, closing message box.";
         close();
     });
-    qDebug() << "MessageBox::setWarings (third overload) completed.";
+    qCDebug(appLog) << "MessageBox::setWarings (third overload) completed.";
 }
 
 void MessageBox::setProgressBar(const QString &title, const QString &cancalBtnText)
 {
-    qDebug() << "Setting progress bar message box with title:" << title;
+    qCDebug(appLog) << "Setting progress bar message box with title:" << title;
     setIcon(QIcon::fromTheme("://icons/deepin/builtin/exception-logo.svg"));
 
     if (!title.isEmpty()) {
-        qDebug() << "Title is not empty, setting title.";
+        qCDebug(appLog) << "Title is not empty, setting title.";
         setTitle(title);
         addSpacing(10);
     }
@@ -152,44 +153,44 @@ void MessageBox::setProgressBar(const QString &title, const QString &cancalBtnTe
 
     addButton(cancalBtnText);
     connect(this, &MessageBox::buttonClicked, this, [=]() {
-        qDebug() << "Button clicked, closing message box.";
+        qCDebug(appLog) << "Button clicked, closing message box.";
         close();
     });
-    qDebug() << "MessageBox::setProgressBar completed.";
+    qCDebug(appLog) << "MessageBox::setProgressBar completed.";
 }
 
 void MessageBox::addLabel(QString text)
 {
-    qDebug() << "Adding label to message box with text:" << text;
+    qCDebug(appLog) << "Adding label to message box with text:" << text;
     DLabel *label= new DLabel(this);
     label->setText(text);
     label->adjustSize();
     label->setWordWrap(true);
     addContent(label, Qt::AlignHCenter);
-    qDebug() << "MessageBox::addLabel completed.";
+    qCDebug(appLog) << "MessageBox::addLabel completed.";
 }
 
 void MessageBox::addProgressBar()
 {
-    qDebug() << "Adding progress bar to message box";
+    qCDebug(appLog) << "Adding progress bar to message box";
     m_progressBar = new DProgressBar(this);
     m_progressBar->setValue(50);
     m_progressBar->setFixedSize(330, 10);
     addContent(m_progressBar, Qt::AlignHCenter);
-    qDebug() << "MessageBox::addProgressBar completed.";
+    qCDebug(appLog) << "MessageBox::addProgressBar completed.";
 }
 
 void MessageBox::keyPressEvent(QKeyEvent *event)
 {
-    // qDebug() << "Key press event in message box, key:" << event->key();
+    // qCDebug(appLog) << "Key press event in message box, key:" << event->key();
     if (event->key() == Qt::Key::Key_Escape) {
-        qDebug() << "Escape key pressed, ignoring event.";
+        qCDebug(appLog) << "Escape key pressed, ignoring event.";
         event->ignore();
     } else {
-        // qDebug() << "Other key pressed, calling DDialog::keyPressEvent.";
+        // qCDebug(appLog) << "Other key pressed, calling DDialog::keyPressEvent.";
         DDialog::keyPressEvent(event);
     }
-    // qDebug() << "MessageBox::keyPressEvent completed.";
+    // qCDebug(appLog) << "MessageBox::keyPressEvent completed.";
 }
 
 

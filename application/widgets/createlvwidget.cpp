@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 
+#include "ddlog.h"
 #include "createlvwidget.h"
 #include "common.h"
 #include "customcontrol/passwordinputdialog.h"
@@ -16,48 +17,48 @@
 
 CreateLVWidget::CreateLVWidget(QWidget *parent) : DDialog(parent)
 {
-    qDebug() << "CreateLVWidget initializing...";
+    qCDebug(appLog) << "CreateLVWidget initializing...";
     initUi();
     recPartitionInfo();
     initConnection();
-    qDebug() << "CreateLVWidget initialized for VG:" << DMDbusHandler::instance()->getCurVGInfo().m_vgName;
+    qCDebug(appLog) << "CreateLVWidget initialized for VG:" << DMDbusHandler::instance()->getCurVGInfo().m_vgName;
 }
 
 void CreateLVWidget::initUi()
 {
-    qDebug() << "CreateLVWidget::initUi called.";
+    qCDebug(appLog) << "CreateLVWidget::initUi called.";
     setModal(true);
     setFixedSize(900, 600);
     m_mainFrame = new QWidget(this);
-    qDebug() << "Main frame created and dialog properties set.";
+    qCDebug(appLog) << "Main frame created and dialog properties set.";
 
     QVBoxLayout *mainLayout = new QVBoxLayout(m_mainFrame);
     mainLayout->setSpacing(5);
 
     VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
     setTitle(tr("Creating logical volumes on %1").arg(vgInfo.m_vgName));
-    qDebug() << "Dialog title set to: Creating logical volumes on" << vgInfo.m_vgName;
+    qCDebug(appLog) << "Dialog title set to: Creating logical volumes on" << vgInfo.m_vgName;
 
     DLabel *tipLabel = new DLabel(QString(tr("Click %1 to create a logical volume. ")).arg("+"), m_mainFrame);
     tipLabel->setWordWrap(true);
     tipLabel->setAlignment(Qt::AlignCenter);
 
     if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::LightType) {
-        qDebug() << "Applying LightType theme palette to tipLabel.";
+        qCDebug(appLog) << "Applying LightType theme palette to tipLabel.";
         DPalette tipPalette;
         QColor tipColor("#000000");
         tipColor.setAlphaF(0.7);
         tipPalette.setColor(DPalette::WindowText, tipColor);
         tipLabel->setPalette(tipPalette);
     }  else if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) {
-        qDebug() << "Applying DarkType theme palette to tipLabel.";
+        qCDebug(appLog) << "Applying DarkType theme palette to tipLabel.";
         DPalette tipPalette;
         QColor tipColor("#FFFFFF");
         tipColor.setAlphaF(0.7);
         tipPalette.setColor(DPalette::WindowText, tipColor);
         tipLabel->setPalette(tipPalette);
     }
-    qDebug() << "Tip label initialized.";
+    qCDebug(appLog) << "Tip label initialized.";
 
     m_topFrame = new DFrame(m_mainFrame);
     m_topFrame->setLineWidth(0);
@@ -65,12 +66,12 @@ void CreateLVWidget::initUi()
     topFrameSetting();
     m_topFrame->setFrameRounded(true);
 #if QT_VERSION_MAJOR > 5
-    qDebug() << "QT_VERSION_MAJOR > 5, setting topFrame palette.";
+    qCDebug(appLog) << "QT_VERSION_MAJOR > 5, setting topFrame palette.";
     DPalette palette = m_topFrame->palette();
     palette.setBrush(DPalette::Base, palette.itemBackground());
     m_topFrame->setPalette(palette);
 #else
-    qDebug() << "QT_VERSION_MAJOR <= 5, setting topFrame palette.";
+    qCDebug(appLog) << "QT_VERSION_MAJOR <= 5, setting topFrame palette.";
     DPalette palette = DApplicationHelper::instance()->palette(m_topFrame);
     palette.setBrush(DPalette::Base, palette.itemBackground());
     DApplicationHelper::instance()->setPalette(m_topFrame, palette);
@@ -78,7 +79,7 @@ void CreateLVWidget::initUi()
     m_topFrame->setAutoFillBackground(true);
 //    m_topFrame->setStyleSheet("background:red");
     m_topFrame->setFixedSize(864,110);
-    qDebug() << "Top frame initialized.";
+    qCDebug(appLog) << "Top frame initialized.";
 
     m_midFrame = new DFrame(m_mainFrame);
     //逻辑卷页中间部分的图形绘制
@@ -86,7 +87,7 @@ void CreateLVWidget::initUi()
     m_midFrame->setFrameStyle(DFrame::NoFrame);
 //    m_midFrame->setStyleSheet("background:blue");
     m_midFrame->setFixedSize(864, 85);
-    qDebug() << "Mid frame initialized.";
+    qCDebug(appLog) << "Mid frame initialized.";
 
     m_botFrame = new DFrame(m_mainFrame);
 //    m_botFrame->setStyleSheet("background:green");
@@ -94,7 +95,7 @@ void CreateLVWidget::initUi()
     //逻辑卷页最下端的布局等
     botFrameSetting();
     m_botFrame->setFrameStyle(DFrame::NoFrame);
-    qDebug() << "Bottom frame initialized.";
+    qCDebug(appLog) << "Bottom frame initialized.";
 
     mainLayout->addWidget(tipLabel, 1);
     mainLayout->addSpacing(10);
@@ -103,16 +104,16 @@ void CreateLVWidget::initUi()
     mainLayout->addWidget(m_midFrame, 3);
     mainLayout->addWidget(m_botFrame, 10);
     mainLayout->setSpacing(0);
-    qDebug() << "Main layout configured.";
+    qCDebug(appLog) << "Main layout configured.";
 
     setIcon(QIcon::fromTheme(appName));
     addContent(m_mainFrame);
-    qDebug() << "Application icon and main content set.";
+    qCDebug(appLog) << "Application icon and main content set.";
 }
 
 void CreateLVWidget::topFrameSetting()
 {
-    qDebug() << "CreateLVWidget::topFrameSetting called.";
+    qCDebug(appLog) << "CreateLVWidget::topFrameSetting called.";
     //整体水平布局
     QHBoxLayout *hLayout = new QHBoxLayout(m_topFrame);
     hLayout->setSpacing(5);
@@ -221,24 +222,24 @@ void CreateLVWidget::topFrameSetting()
     hLayout->addWidget(picLabel);
     hLayout->addLayout(vLayout, 10);
     hLayout->setContentsMargins(20, 0, 0, 0);
-    qDebug() << "Top frame UI elements and layouts configured.";
+    qCDebug(appLog) << "Top frame UI elements and layouts configured.";
 }
 
 void CreateLVWidget::midFrameSetting()
 {
-    qDebug() << "CreateLVWidget::midFrameSetting called.";
+    qCDebug(appLog) << "CreateLVWidget::midFrameSetting called.";
     //调用绘制的图形
     m_midFrame->setMinimumHeight(85);
     QVBoxLayout *mainLayout = new QVBoxLayout(m_midFrame);
     m_partChartWidget = new PartChartShowing(m_midFrame);
     mainLayout->addWidget(m_partChartWidget);
     mainLayout->setContentsMargins(0, 0, 0, 0);
-    qDebug() << "Middle frame UI elements and layouts configured.";
+    qCDebug(appLog) << "Middle frame UI elements and layouts configured.";
 }
 
 void CreateLVWidget::botFrameSetting()
 {
-    qDebug() << "CreateLVWidget::botFrameSetting called.";
+    qCDebug(appLog) << "CreateLVWidget::botFrameSetting called.";
     QVBoxLayout *vLayout = new QVBoxLayout(m_botFrame);
     m_partWidget = new QWidget(m_botFrame);
     //逻辑卷详细页
@@ -270,15 +271,15 @@ void CreateLVWidget::botFrameSetting()
 
     vLayout->addLayout(btnLayout, 1);
     vLayout->setContentsMargins(0, 0, 0, 0);
-    qDebug() << "Bottom frame UI elements and layouts configured.";
+    qCDebug(appLog) << "Bottom frame UI elements and layouts configured.";
 }
 
 void CreateLVWidget::partInfoShowing()
 {
-    qDebug() << "CreateLVWidget::partInfoShowing called.";
+    qCDebug(appLog) << "CreateLVWidget::partInfoShowing called.";
     auto formateList = DMDbusHandler::instance()->getAllSupportFileSystem();
     formateList.removeOne("linux-swap");
-    qDebug() << "Supported file systems retrieved. Removed linux-swap. Remaining count:" << formateList.count();
+    qCDebug(appLog) << "Supported file systems retrieved. Removed linux-swap. Remaining count:" << formateList.count();
     //lvm暂时不支持加密
 //    if (!DMDbusHandler::instance()->getIsSystemDisk(DMDbusHandler::instance()->getCurVGInfo().m_vgName)) {
 //        formateList = DMDbusHandler::instance()->getEncryptionFormate(formateList);
@@ -292,7 +293,7 @@ void CreateLVWidget::partInfoShowing()
     QPalette partPalette;
     partPalette.setColor(QPalette::WindowText, QColor("#414D68"));
     m_partInfoLabel->setPalette(partPalette);
-    qDebug() << "LV Information label initialized.";
+    qCDebug(appLog) << "LV Information label initialized.";
 
     //第二行
     QPalette infoPalette;
@@ -316,10 +317,10 @@ void CreateLVWidget::partInfoShowing()
 
     //按钮初始状态
     if (m_sizeInfo.size() == 0) {
-        qDebug() << "No size info, disabling remove button.";
+        qCDebug(appLog) << "No size info, disabling remove button.";
         m_remButton->setEnabled(false);
     } else {
-        qDebug() << "Size info present, enabling remove button.";
+        qCDebug(appLog) << "Size info present, enabling remove button.";
         m_remButton->setEnabled(true);
     }
 
@@ -342,7 +343,7 @@ void CreateLVWidget::partInfoShowing()
     line2Layout->addWidget(space, 1);
     line2Layout->addWidget(m_partNameLabel, 1);
     line2Layout->addWidget(m_partNameEdit, 7);
-    qDebug() << "Second row layout elements configured.";
+    qCDebug(appLog) << "Second row layout elements configured.";
     //第三行
     QHBoxLayout *line3Layout = new QHBoxLayout();
     m_partFormateLabel = new DLabel(tr("LV file system:"), m_partWidget);
@@ -381,7 +382,7 @@ void CreateLVWidget::partInfoShowing()
     line3Layout->addWidget(m_slider, 2);
     line3Layout->addWidget(m_partSizeEdit, 3);
     line3Layout->addWidget(m_partComboBox, 2);
-    qDebug() << "Third row layout elements configured.";
+    qCDebug(appLog) << "Third row layout elements configured.";
 
     // 第四行
     DPalette palette;
@@ -394,10 +395,10 @@ void CreateLVWidget::partInfoShowing()
 
     m_emptyLabel = new DLabel(m_partWidget);
 #if QT_VERSION_MAJOR > 5
-    qDebug() << "QT_VERSION_MAJOR > 5, setting emptyLabel width.";
+    qCDebug(appLog) << "QT_VERSION_MAJOR > 5, setting emptyLabel width.";
     m_emptyLabel->setFixedWidth(m_partFormateLabel->fontMetrics().boundingRect(tr("LV file system:")).width());
 #else
-    qDebug() << "QT_VERSION_MAJOR <= 5, setting emptyLabel width.";
+    qCDebug(appLog) << "QT_VERSION_MAJOR <= 5, setting emptyLabel width.";
     m_emptyLabel->setFixedWidth(m_partFormateLabel->fontMetrics().width(tr("LV file system:")));
 #endif
     m_encryptionInfo = new DLabel(m_partWidget);
@@ -423,7 +424,7 @@ void CreateLVWidget::partInfoShowing()
     line4Layout->addWidget(m_emptyLabel, 1);
     line4Layout->addWidget(m_scrollArea, 7);
     line4Layout->addStretch();
-    qDebug() << "Fourth row layout elements configured.";
+    qCDebug(appLog) << "Fourth row layout elements configured.";
 
     vLayout->addWidget(m_partInfoLabel);
     vLayout->addLayout(line2Layout);
@@ -434,37 +435,37 @@ void CreateLVWidget::partInfoShowing()
     vLayout->setContentsMargins(0, 0, 0, 0);
     //输入框正则表达
     setRegValidator();
-    qDebug() << "Part info showing UI setup complete.";
+    qCDebug(appLog) << "Part info showing UI setup complete.";
 }
 
 void CreateLVWidget::recPartitionInfo()
 {
-    qDebug() << "Loading partition info for current VG";
+    qCDebug(appLog) << "Loading partition info for current VG";
     m_lstLVName.clear();
     if (DMDbusHandler::VOLUMEGROUP == DMDbusHandler::instance()->getCurLevel()) {
-        qDebug() << "Current level is VOLUMEGROUP.";
+        qCDebug(appLog) << "Current level is VOLUMEGROUP.";
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
 
         m_deviceName->setText(vgInfo.m_vgName);
         QString vgSize = vgInfo.m_vgSize;
         if (vgSize.contains("1024")) {
-            qDebug() << "VG size contains 1024, reformatting.";
+            qCDebug(appLog) << "VG size contains 1024, reformatting.";
             vgSize = Utils::LVMFormatSize(vgInfo.m_peCount * vgInfo.m_PESize + vgInfo.m_PESize);
         }
         m_allMemory->setText(vgSize);
         m_selectedPartition->setText("unallocated");
         m_deviceFormate->setText("unallocated");
-        qDebug() << "VG information set in UI.";
+        qCDebug(appLog) << "VG information set in UI.";
 
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
         for (int i = 0; i < vgInfo.m_lvlist.count(); i++) {
             LVInfo info = vgInfo.m_lvlist.at(i);
             if (info.m_lvName.isEmpty() && info.m_lvUuid.isEmpty()) {
                 lvInfo = info;
-                qDebug() << "Found unallocated LV info.";
+                qCDebug(appLog) << "Found unallocated LV info.";
             } else {
                 m_lstLVName.append(info.m_lvName);
-                qDebug() << "Added existing LV name to list:" << info.m_lvName;
+                qCDebug(appLog) << "Added existing LV name to list:" << info.m_lvName;
             }
         }
 
@@ -475,23 +476,23 @@ void CreateLVWidget::recPartitionInfo()
         m_currentEditSize = QString::number(m_totalSize, 'f', 2);
         m_partComboBox->setEnabled(true);
         setSelectUnallocatesSpace();
-        qDebug() << "LV size details calculated and UI updated.";
+        qCDebug(appLog) << "LV size details calculated and UI updated.";
     } else if (DMDbusHandler::LOGICALVOLUME == DMDbusHandler::instance()->getCurLevel()) {
-        qDebug() << "Current level is LOGICALVOLUME.";
+        qCDebug(appLog) << "Current level is LOGICALVOLUME.";
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
 
         m_deviceName->setText(lvInfo.m_vgName);
         QString vgSize = vgInfo.m_vgSize;
         if (vgSize.contains("1024")) {
-            qDebug() << "VG size contains 1024, reformatting.";
+            qCDebug(appLog) << "VG size contains 1024, reformatting.";
             vgSize = Utils::LVMFormatSize(vgInfo.m_peCount * vgInfo.m_PESize + vgInfo.m_PESize);
         }
         m_allMemory->setText(vgSize);
         m_selectedPartition->setText("unallocated");
         QString partFstype = Utils::fileSystemTypeToString(static_cast<FSType>(lvInfo.m_lvFsType));
         m_deviceFormate->setText(partFstype);
-        qDebug() << "LV information set in UI for existing LV.";
+        qCDebug(appLog) << "LV information set in UI for existing LV.";
 
         Sector lvByteSize = static_cast<Sector>(lvInfo.m_lvLECount * lvInfo.m_LESize);
         m_total = Utils::LVMSizeToUnit(lvByteSize, SIZE_UNIT::UNIT_GIB);
@@ -500,24 +501,24 @@ void CreateLVWidget::recPartitionInfo()
         m_currentEditSize = QString::number(m_totalSize, 'f', 2);
         m_partComboBox->setEnabled(true);
         setSelectUnallocatesSpace();
-        qDebug() << "LV size details calculated and UI updated for existing LV.";
+        qCDebug(appLog) << "LV size details calculated and UI updated for existing LV.";
 
         for (int i = 0; i < vgInfo.m_lvlist.count(); i++) {
             LVInfo info = vgInfo.m_lvlist.at(i);
             if (lvInfo.m_lvName.isEmpty() && lvInfo.m_lvUuid.isEmpty()) {
                 m_lstLVName.append(info.m_lvName);
-                qDebug() << "Added existing LV name to list (empty name/uuid):" << info.m_lvName;
+                qCDebug(appLog) << "Added existing LV name to list (empty name/uuid):" << info.m_lvName;
             }
         }
     }
 
     m_partNameEdit->setText(lvName());
-    qDebug() << "LV name edit field set.";
+    qCDebug(appLog) << "LV name edit field set.";
 }
 
 void CreateLVWidget::initConnection()
 {
-    qDebug() << "CreateLVWidget::initConnection called. Connecting signals and slots.";
+    qCDebug(appLog) << "CreateLVWidget::initConnection called. Connecting signals and slots.";
     connect(m_slider, &DSlider::valueChanged, this, &CreateLVWidget::onSliderValueChanged);
     connect(m_partSizeEdit, &DLineEdit::textChanged, this, &CreateLVWidget::onSetSliderValue);
     connect(m_addButton, &DIconButton::clicked, this, &CreateLVWidget::onAddPartition);
@@ -531,17 +532,17 @@ void CreateLVWidget::initConnection()
     connect(m_partChartWidget, &PartChartShowing::sendMoveFlag, this, &CreateLVWidget::onShowTip);
     connect(m_partChartWidget, &PartChartShowing::sendFlag, this, &CreateLVWidget::onShowSelectPathInfo);
     connect(m_partChartWidget, &PartChartShowing::judgeLastPartition, this, &CreateLVWidget::onJudgeLastPartition);
-    qDebug() << "Signals and slots connected.";
+    qCDebug(appLog) << "Signals and slots connected.";
 }
 
 QString CreateLVWidget::lvName()
 {
-    qDebug() << "CreateLVWidget::lvName called to generate LV name.";
+    qCDebug(appLog) << "CreateLVWidget::lvName called to generate LV name.";
     QString name = QString("lv%1").arg(m_lstLVName.count() + 1, 2, 10, QLatin1Char('0'));
     for (int i = 0; i <= m_lstLVName.count(); i++) {
         name = QString("lv%1").arg(i + 1, 2, 10, QLatin1Char('0'));
         if (-1 == m_lstLVName.indexOf(name)) {
-            qDebug() << "Generated unique LV name:" << name;
+            qCDebug(appLog) << "Generated unique LV name:" << name;
             break;
         }
     }
@@ -551,48 +552,48 @@ QString CreateLVWidget::lvName()
 
 double CreateLVWidget::sumValue()
 {
-    qDebug() << "CreateLVWidget::sumValue called.";
+    qCDebug(appLog) << "CreateLVWidget::sumValue called.";
     double sum = 0.00;
 
     for (int i = 0; i < m_sizeInfo.count(); i++) {
         sum = sum + m_sizeInfo.at(i);
         if (sum >= m_totalSize - 0.01) {
-            qDebug() << "Sum value reached total size, breaking loop.";
+            qCDebug(appLog) << "Sum value reached total size, breaking loop.";
             break;
         }
     }
 
-    qDebug() << "Calculated sum value:" << sum;
+    qCDebug(appLog) << "Calculated sum value:" << sum;
     return sum;
 }
 
 void CreateLVWidget::setSelectUnallocatesSpace()
 {
-    qDebug() << "CreateLVWidget::setSelectUnallocatesSpace called.";
+    qCDebug(appLog) << "CreateLVWidget::setSelectUnallocatesSpace called.";
     m_partNameEdit->lineEdit()->setPlaceholderText(tr("Unallocated"));
     m_partSizeEdit->setText("");
 
     if (m_partComboBox->currentText() == "GiB") {
-        qDebug() << "Setting unallocated space in GiB.";
+        qCDebug(appLog) << "Setting unallocated space in GiB.";
         m_partSizeEdit->setText(QString::number(m_total - (sumValue() / 1024), 'f', 2));
     } else {
-        qDebug() << "Setting unallocated space in MiB.";
+        qCDebug(appLog) << "Setting unallocated space in MiB.";
         m_partSizeEdit->setText(QString::number(m_totalSize - sumValue(), 'f', 2));
     }
-    qDebug() << "Unallocated space set.";
+    qCDebug(appLog) << "Unallocated space set.";
 }
 
 void CreateLVWidget::setAddOrRemResult(const bool &isExceed)
 {
-    qDebug() << "CreateLVWidget::setAddOrRemResult called. isExceed:" << isExceed;
+    qCDebug(appLog) << "CreateLVWidget::setAddOrRemResult called. isExceed:" << isExceed;
     m_partNameEdit->setText(lvName());
     m_partSizeEdit->setText("");
 
     if (m_sizeInfo.size() == 0) {
-        qDebug() << "No size info, setting flag to 1.";
+        qCDebug(appLog) << "No size info, setting flag to 1.";
         m_flag = 1;
     } else {
-        qDebug() << "Size info present, setting flag to 0.";
+        qCDebug(appLog) << "Size info present, setting flag to 0.";
         m_flag = 0;
     }
 
@@ -603,14 +604,14 @@ void CreateLVWidget::setAddOrRemResult(const bool &isExceed)
 
     setEnable(0, isExceed);
     onSliderValueChanged(100);
-    qDebug() << "Add/remove result handled.";
+    qCDebug(appLog) << "Add/remove result handled.";
 }
 
 void CreateLVWidget::setRegValidator()
 {
-    qDebug() << "CreateLVWidget::setRegValidator called.";
+    qCDebug(appLog) << "CreateLVWidget::setRegValidator called.";
 #if QT_VERSION_MAJOR > 5
-    qDebug() << "Setting QRegularExpressionValidator for QT_VERSION_MAJOR > 5.";
+    qCDebug(appLog) << "Setting QRegularExpressionValidator for QT_VERSION_MAJOR > 5.";
     QRegularExpression reg("^[0-9]+(\\.[0-9]{1,4})?$");
     QRegularExpressionValidator *va = new QRegularExpressionValidator(reg, this);
     m_partSizeEdit->lineEdit()->setValidator(va);
@@ -619,7 +620,7 @@ void CreateLVWidget::setRegValidator()
     QRegularExpressionValidator *va1 = new QRegularExpressionValidator(re, this);
     m_partNameEdit->lineEdit()->setValidator(va1);
 #else
-    qDebug() << "Setting QRegExpValidator for QT_VERSION_MAJOR <= 5.";
+    qCDebug(appLog) << "Setting QRegExpValidator for QT_VERSION_MAJOR <= 5.";
     QRegExp reg("^[0-9]+(\\.[0-9]{1,4})?$");
     QRegExpValidator *va = new QRegExpValidator(reg, this);
     m_partSizeEdit->lineEdit()->setValidator(va);
@@ -628,29 +629,29 @@ void CreateLVWidget::setRegValidator()
     QRegExpValidator *va1 = new QRegExpValidator(re, this);
     m_partNameEdit->lineEdit()->setValidator(va1);
 #endif
-    qDebug() << "Validators set.";
+    qCDebug(appLog) << "Validators set.";
 }
 
 void CreateLVWidget::onShowSelectPathInfo(const int &flag, const int &num, const int &posX)
 {
-    qDebug() << "CreateLVWidget::onShowSelectPathInfo called. Flag:" << flag << ", Num:" << num;
+    qCDebug(appLog) << "CreateLVWidget::onShowSelectPathInfo called. Flag:" << flag << ", Num:" << num;
     m_flag = flag;
     m_number = num;
 
     if (m_flag == 0) {
-        qDebug() << "Flag is 0, returning.";
+        qCDebug(appLog) << "Flag is 0, returning.";
         return;
     }
 
     if (m_flag == 1 || m_flag == 3) {
-        qDebug() << "Flag is 1 or 3, setting unallocated space.";
+        qCDebug(appLog) << "Flag is 1 or 3, setting unallocated space.";
         setSelectUnallocatesSpace();
         m_slider->setValue(100);
         m_number = -1;
     } else if (m_flag == 2) {
-        qDebug() << "Flag is 2.";
+        qCDebug(appLog) << "Flag is 2.";
         if (num < 0) {
-            qDebug() << "Num is less than 0, disabling part name edit.";
+            qCDebug(appLog) << "Num is less than 0, disabling part name edit.";
 #if QT_VERSION_MAJOR > 5
             DPalette palette = m_partNameLabel->palette();
 #else
@@ -670,7 +671,7 @@ void CreateLVWidget::onShowSelectPathInfo(const int &flag, const int &num, const
         double clicked = m_sizeInfo.at(num);
 
         if (m_partComboBox->currentText() == "GiB") {
-            qDebug() << "Converting clicked size to GiB.";
+            qCDebug(appLog) << "Converting clicked size to GiB.";
             clicked = clicked / 1024;
         }
         m_partSizeEdit->setText(QString::number(clicked, 'f', 2));
@@ -678,31 +679,31 @@ void CreateLVWidget::onShowSelectPathInfo(const int &flag, const int &num, const
 
     setEnable(m_flag, m_isExceed);
     onShowTip(flag, num, posX);
-    qDebug() << "Show select path info handled.";
+    qCDebug(appLog) << "Show select path info handled.";
 }
 
 void CreateLVWidget::onShowTip(const int &hover, const int &num, const int &posX)
 {
-    qDebug() << "CreateLVWidget::onShowTip called. Hover:" << hover << ", Num:" << num;
+    qCDebug(appLog) << "CreateLVWidget::onShowTip called. Hover:" << hover << ", Num:" << num;
     int x = frameGeometry().x();
     int y = frameGeometry().y();
 
     if (hover == 2) {
         if (m_partName.at(num) != " ") {
-            qDebug() << "Showing tip for selected partition:" << m_partName.at(num);
+            qCDebug(appLog) << "Showing tip for selected partition:" << m_partName.at(num);
             QToolTip::showText(QPoint(x + posX + 5, y + 215), m_partName.at(num), this, QRect(QPoint(x + posX, y + 215), QSize(80, 20)), 1000);
         }
     } else if (hover == 3 || hover == 1) {
-        qDebug() << "Showing tip for unallocated space.";
+        qCDebug(appLog) << "Showing tip for unallocated space.";
         QToolTip::showText(QPoint(x + posX + 5, y + 215), tr("Unallocated"), this, QRect(QPoint(x + posX, y + 215), QSize(80, 20)), 1000);
     }
-    qDebug() << "Tooltip shown.";
+    qCDebug(appLog) << "Tooltip shown.";
 }
 
 
 void CreateLVWidget::setEnable(const int &flag, const bool &isExceed)
 {
-    qDebug() << "CreateLVWidget::setEnable called. Flag:" << flag << ", isExceed:" << isExceed;
+    qCDebug(appLog) << "CreateLVWidget::setEnable called. Flag:" << flag << ", isExceed:" << isExceed;
 #if QT_VERSION_MAJOR > 5
     DPalette palette = m_partNameLabel->palette();
 #else
@@ -710,18 +711,18 @@ void CreateLVWidget::setEnable(const int &flag, const bool &isExceed)
 #endif
 
     if (isExceed) {//还有空闲空间剩余
-        qDebug() << "There is free space remaining.";
+        qCDebug(appLog) << "There is free space remaining.";
         if (flag == 2) {//选中新建的逻辑卷
-            qDebug() << "Selected new logical volume, disabling controls.";
+            qCDebug(appLog) << "Selected new logical volume, disabling controls.";
             setControlEnable(false);
             m_partNameEdit->setEnabled(false);
         } else {
-            qDebug() << "Enabling controls.";
+            qCDebug(appLog) << "Enabling controls.";
             setControlEnable(true);
         }
 //        palette.setColor(DPalette::Text, QColor(this->palette().buttonText().color()));
     } else {//无空闲空间剩余
-        qDebug() << "No free space remaining, disabling controls.";
+        qCDebug(appLog) << "No free space remaining, disabling controls.";
         setControlEnable(false);
 //        if (flag != 2) {
 //            palette.setBrush(DPalette::Text, palette.placeholderText());
@@ -733,25 +734,25 @@ void CreateLVWidget::setEnable(const int &flag, const bool &isExceed)
     }
 
     if (m_partNameEdit->text().toUtf8().size() <= 16) {
-        qDebug() << "LV name length is acceptable.";
+        qCDebug(appLog) << "LV name length is acceptable.";
         m_partNameEdit->setAlert(false);
         m_partNameEdit->hideAlertMessage();
     } else {
-        qDebug() << "LV name too long, disabling add button.";
+        qCDebug(appLog) << "LV name too long, disabling add button.";
         m_addButton->setEnabled(false);
     }
 
     m_partNameLabel->setPalette(palette);//各情况下,逻辑卷名称label的样式
-    qDebug() << "Part name label palette set.";
+    qCDebug(appLog) << "Part name label palette set.";
 
     m_remButton->setEnabled(m_sizeInfo.size());
     m_applyBtn->setEnabled(m_sizeInfo.size());
-    qDebug() << "Remove and apply button enabled state set.";
+    qCDebug(appLog) << "Remove and apply button enabled state set.";
 }
 
 void CreateLVWidget::setControlEnable(const bool &isTrue)
 {
-    qDebug() << "CreateLVWidget::setControlEnable called. isTrue:" << isTrue;
+    qCDebug(appLog) << "CreateLVWidget::setControlEnable called. isTrue:" << isTrue;
     m_addButton->setEnabled(isTrue);
     m_partSizeEdit->setEnabled(isTrue);
     m_slider->setEnabled(isTrue);
@@ -760,14 +761,14 @@ void CreateLVWidget::setControlEnable(const bool &isTrue)
 
     m_partNameEdit->setEnabled(true);
     setLabelColor(isTrue);
-    qDebug() << "Controls enabled/disabled.";
+    qCDebug(appLog) << "Controls enabled/disabled.";
 }
 
 void CreateLVWidget::setLabelColor(const bool &isOk)
 {
-    qDebug() << "CreateLVWidget::setLabelColor called. isOk:" << isOk;
+    qCDebug(appLog) << "CreateLVWidget::setLabelColor called. isOk:" << isOk;
     if (isOk) {
-        qDebug() << "Setting label color to normal.";
+        qCDebug(appLog) << "Setting label color to normal.";
 #if QT_VERSION_MAJOR > 5
         DPalette framePalette = m_botFrame->palette();
 #else
@@ -776,7 +777,7 @@ void CreateLVWidget::setLabelColor(const bool &isOk)
         framePalette.setColor(DPalette::Text, QColor(palette().buttonText().color()));
         m_botFrame->setPalette(framePalette);
     } else {
-        qDebug() << "Setting label color to placeholder.";
+        qCDebug(appLog) << "Setting label color to placeholder.";
 #if QT_VERSION_MAJOR > 5
         DPalette palette = m_botFrame->palette();
 #else
@@ -798,51 +799,51 @@ void CreateLVWidget::setLabelColor(const bool &isOk)
 
     palatte2.setColor(DPalette::Text, QColor(palette().buttonText().color()));
     m_partDoLabel->setPalette(palatte2);
-    qDebug() << "Label colors set.";
+    qCDebug(appLog) << "Label colors set.";
 }
 
 void CreateLVWidget::onComboxCurTextChange(int index)
 {
-    qDebug() << "CreateLVWidget::onComboxCurTextChange called. Index:" << index;
+    qCDebug(appLog) << "CreateLVWidget::onComboxCurTextChange called. Index:" << index;
     if (!m_partSizeEdit->text().isEmpty()) {
         double m = m_currentEditSize.toDouble();
 
         if (index == 1) {
-            qDebug() << "Index is 1 (MiB), setting size in MiB.";
+            qCDebug(appLog) << "Index is 1 (MiB), setting size in MiB.";
             if (m_sizeInfo.size() == 0 && m_slider->value() == 100)
                 m_partSizeEdit->setText(QString::number(m_totalSize, 'f', 2));
             else
                 m_partSizeEdit->setText(QString::number(m, 'f', 2));
         } else if (index == 0) {
-            qDebug() << "Index is 0 (GiB), setting size in GiB.";
+            qCDebug(appLog) << "Index is 0 (GiB), setting size in GiB.";
             if (m_sizeInfo.size() == 0 && m_slider->value() == 100)
                 m_partSizeEdit->setText(QString::number(m_total, 'f', 2));
             else
                 m_partSizeEdit->setText(QString::number(m / 1024, 'f', 2));
         }
     }
-    qDebug() << "Combobox current text change handled.";
+    qCDebug(appLog) << "Combobox current text change handled.";
 }
 
 void CreateLVWidget::onComboxFormatTextChange(const QString &text)
 {
-    qDebug() << "CreateLVWidget::onComboxFormatTextChange called. Text:" << text;
+    qCDebug(appLog) << "CreateLVWidget::onComboxFormatTextChange called. Text:" << text;
     if (m_partSizeEdit->isAlert()) {
         m_partSizeEdit->setAlert(false);
         m_partSizeEdit->hideAlertMessage();
-        qDebug() << "Alert message hidden.";
+        qCDebug(appLog) << "Alert message hidden.";
     }
 
     m_scrollArea->setFixedWidth(m_partFormateCombox->width());
     if (text.contains("AES")) {
-        qDebug() << "Format text contains AES.";
+        qCDebug(appLog) << "Format text contains AES.";
         QString text = tr("Use the aes-xts-plain64 standard algorithm to encrypt the disk. "
                           "You should decrypt it before mounting it again.");
         m_encryptionInfo->setFixedSize(m_partFormateCombox->width(),
                                        Common::getLabelAdjustHeight(m_partFormateCombox->width(), text, m_encryptionInfo->font()));
         m_encryptionInfo->setText(text);
     } else if (text.contains("SM4")) {
-        qDebug() << "Format text contains SM4.";
+        qCDebug(appLog) << "Format text contains SM4.";
         QString text = tr("Use the sm4-xts-plain state cryptographic algorithm to encrypt the disk. "
                           "You should decrypt it before mounting it again. "
                           "Operating Systems that do not support the state cryptographic "
@@ -851,30 +852,30 @@ void CreateLVWidget::onComboxFormatTextChange(const QString &text)
                                        Common::getLabelAdjustHeight(m_partFormateCombox->width(), text, m_encryptionInfo->font()) - 1);
         m_encryptionInfo->setText(text);
     } else {
-        qDebug() << "Format text is neither AES nor SM4, clearing encryption info.";
+        qCDebug(appLog) << "Format text is neither AES nor SM4, clearing encryption info.";
         m_encryptionInfo->setText("");
     }
-    qDebug() << "Combobox format text change handled.";
+    qCDebug(appLog) << "Combobox format text change handled.";
 }
 
 void CreateLVWidget::onJudgeLastPartition()
 {
-    qDebug() << "CreateLVWidget::onJudgeLastPartition called. Disabling slider and size edit.";
+    qCDebug(appLog) << "CreateLVWidget::onJudgeLastPartition called. Disabling slider and size edit.";
     m_slider->setEnabled(false);
     m_partSizeEdit->setEnabled(false);
 }
 
 void CreateLVWidget::onSliderValueChanged(int value)
 {
-    qDebug() << "CreateLVWidget::onSliderValueChanged called. Value:" << value;
+    qCDebug(appLog) << "CreateLVWidget::onSliderValueChanged called. Value:" << value;
     m_value = value;
     QString size;
 
     if (m_block == 0) {
-        qDebug() << "Block is 0.";
+        qCDebug(appLog) << "Block is 0.";
         //选中逻辑卷大小与整个空闲空间的占比
         if (m_flag == 2) {
-            qDebug() << "Flag is 2 (selected logical volume). Calculating size based on totalSize.";
+            qCDebug(appLog) << "Flag is 2 (selected logical volume). Calculating size based on totalSize.";
             if (m_partComboBox->currentText() == "MiB") {
                 size = QString::number((static_cast<double>(value) / 100) * m_totalSize, 'f', 2);
             } else {
@@ -883,7 +884,7 @@ void CreateLVWidget::onSliderValueChanged(int value)
 
             m_partSizeEdit->setText(size);
         } else {//剩余空间为总大小,占比情况
-            qDebug() << "Flag is not 2 (remaining space). Calculating size based on remaining totalSize.";
+            qCDebug(appLog) << "Flag is not 2 (remaining space). Calculating size based on remaining totalSize.";
             if (m_partComboBox->currentText() == "MiB") {
                 size = QString::number((static_cast<double>(value) / 100) * (m_totalSize - sumValue()), 'f', 2);
             } else {
@@ -895,27 +896,27 @@ void CreateLVWidget::onSliderValueChanged(int value)
 
     m_currentEditSize = QString::number((static_cast<double>(value) / 100) * (m_totalSize - sumValue()),  'f', 2);
     m_block = 0;
-    qDebug() << "Slider value change handled. Current edit size:" << m_currentEditSize;
+    qCDebug(appLog) << "Slider value change handled. Current edit size:" << m_currentEditSize;
 }
 
 void CreateLVWidget::onSetSliderValue()
 {
-    qDebug() << "CreateLVWidget::onSetSliderValue called.";
+    qCDebug(appLog) << "CreateLVWidget::onSetSliderValue called.";
     if (m_partSizeEdit->isAlert()) {
         m_partSizeEdit->setAlert(false);
         m_partSizeEdit->hideAlertMessage();
-        qDebug() << "Alert message hidden.";
+        qCDebug(appLog) << "Alert message hidden.";
     }
 
     if(m_partSizeEdit->text().trimmed().isEmpty()) {
-        qDebug() << "Part size edit text is empty, disabling add button.";
+        qCDebug(appLog) << "Part size edit text is empty, disabling add button.";
         m_addButton->setDisabled(true);
         return;
     }
 
     double value = m_partSizeEdit->text().toDouble();
     if (m_partComboBox->currentText() == "MiB") {
-        qDebug() << "Converting value from MiB to GiB.";
+        qCDebug(appLog) << "Converting value from MiB to GiB.";
         value = value / 1024;
     }
     m_block = 1;
@@ -923,26 +924,26 @@ void CreateLVWidget::onSetSliderValue()
     m_currentEditSize = QString::number(value * 1024, 'f', 2);
 
     if (0.00 == value || value > (m_total - sumValue() / 1024)) {
-        qDebug() << "Value is 0 or exceeds available space, disabling add button.";
+        qCDebug(appLog) << "Value is 0 or exceeds available space, disabling add button.";
         m_addButton->setDisabled(true);
     } else {
-        qDebug() << "Value is acceptable, enabling add button.";
+        qCDebug(appLog) << "Value is acceptable, enabling add button.";
         m_addButton->setDisabled(false);
     }
-    qDebug() << "Slider value set from text edit.";
+    qCDebug(appLog) << "Slider value set from text edit.";
 }
 
 void CreateLVWidget::onAddPartition()
 {
-    qDebug() << "CreateLVWidget::onAddPartition called.";
+    qCDebug(appLog) << "CreateLVWidget::onAddPartition called.";
     double currentSize = 0.00;
     stLV part;
     m_partName.append(m_partNameEdit->text());
-    qDebug() << "LV name appended:" << m_partNameEdit->text();
+    qCDebug(appLog) << "LV name appended:" << m_partNameEdit->text();
     //输入框内的值超过剩余空闲空间,以剩余空间新建
     currentSize = m_currentEditSize.toDouble();
     if (currentSize >= (m_totalSize - sumValue())) {
-        qDebug() << "Current size exceeds available space, adjusting to remaining space.";
+        qCDebug(appLog) << "Current size exceeds available space, adjusting to remaining space.";
         currentSize = m_totalSize - sumValue();
         part.m_blast = true;
     }
@@ -950,14 +951,14 @@ void CreateLVWidget::onAddPartition()
     int peCount = static_cast<int>(currentSize / m_peSize);
     if ((peCount * m_peSize) < currentSize) {
         peCount += 1;
-        qDebug() << "Adjusted PE count to:" << peCount;
+        qCDebug(appLog) << "Adjusted PE count to:" << peCount;
     }
     currentSize = peCount * m_peSize;
     QString formate = m_partFormateCombox->currentText();
     if (formate.contains("AES") || formate.contains("SM4")) {
-        qDebug() << "Encryption format detected:" << formate;
+        qCDebug(appLog) << "Encryption format detected:" << formate;
         if (currentSize <= 100) {
-            qDebug() << "Encryption volume too small, showing alert.";
+            qCDebug(appLog) << "Encryption volume too small, showing alert.";
             m_partSizeEdit->setAlert(true);
             m_partSizeEdit->showAlertMessage(tr("To encrypt a volume, it should be larger than 100 MiB"));
             return;
@@ -970,23 +971,23 @@ void CreateLVWidget::onAddPartition()
         passwordInputDialog.setObjectName("passwordInputDialog");
         passwordInputDialog.setAccessibleName("passwordInputDialog");
         if (passwordInputDialog.exec() != DDialog::Accepted) {
-            qDebug() << "Password dialog not accepted, returning.";
+            qCDebug(appLog) << "Password dialog not accepted, returning.";
             return;
         } else {
-            qDebug() << "Password dialog accepted.";
+            qCDebug(appLog) << "Password dialog accepted.";
             part.m_password = passwordInputDialog.getPassword();
             part.m_passwordHint = passwordInputDialog.getPasswordHint();
             if (formate.contains("AES")) {
                 part.m_encryption = CRYPT_CIPHER::AES_XTS_PLAIN64;
                 part.m_dmName = QString("%1_%2_aesE").arg(m_deviceName->text()).arg(m_partNameEdit->text());
-                qDebug() << "Set encryption to AES.";
+                qCDebug(appLog) << "Set encryption to AES.";
             } else if (formate.contains("SM4")) {
                 part.m_encryption = CRYPT_CIPHER::SM4_XTS_PLAIN64;
                 part.m_dmName = QString("%1_%2_sm4E").arg(m_deviceName->text()).arg(m_partNameEdit->text());
-                qDebug() << "Set encryption to SM4.";
+                qCDebug(appLog) << "Set encryption to SM4.";
             }
             part.m_isEncryption = true;
-            qDebug() << "Encryption details set.";
+            qCDebug(appLog) << "Encryption details set.";
 
             MessageBox warningBox(this);
             warningBox.setObjectName("messageBox");
@@ -997,23 +998,23 @@ void CreateLVWidget::onAddPartition()
             warningBox.setGeometry(pos().x() + (width() - warningBox.width()) / 2, pos().y() + (height() - warningBox.height()) / 2,
                                    warningBox.width(), warningBox.height());
             warningBox.exec();
-            qDebug() << "Password backup warning shown.";
+            qCDebug(appLog) << "Password backup warning shown.";
         }
 
 #if QT_VERSION_MAJOR > 5
         DPalette palette = m_botFrame->palette();
         palette.setColor(QPalette::ButtonText, color);
         setPalette(palette);
-        qDebug() << "Palette set for QT_VERSION_MAJOR > 5.";
+        qCDebug(appLog) << "Palette set for QT_VERSION_MAJOR > 5.";
 #else
         DPalette palette = DApplicationHelper::instance()->palette(m_botFrame);
         palette.setColor(QPalette::ButtonText, color);
         DApplicationHelper::instance()->setPalette(this, palette);
-        qDebug() << "Palette set for QT_VERSION_MAJOR <= 5.";
+        qCDebug(appLog) << "Palette set for QT_VERSION_MAJOR <= 5.";
 #endif
 
         formate = formate.trimmed().split(" ").at(0);
-        qDebug() << "Formatted encryption type:" << formate;
+        qCDebug(appLog) << "Formatted encryption type:" << formate;
     }
 
     m_sizeInfo.append(currentSize);
@@ -1024,47 +1025,47 @@ void CreateLVWidget::onAddPartition()
     part.m_lvByteSize = static_cast<long long>(currentSize * 1024 * 1024);
 
     if (m_partComboBox->currentText() == "GiB") {
-        qDebug() << "Setting LV size in GiB.";
+        qCDebug(appLog) << "Setting LV size in GiB.";
         part.m_lvSize = QString::number(currentSize / 1024, 'f', 2) + m_partComboBox->currentText();
     } else {
-        qDebug() << "Setting LV size in MiB.";
+        qCDebug(appLog) << "Setting LV size in MiB.";
         part.m_lvSize = QString::number(currentSize) + m_partComboBox->currentText();
     }
 
     m_patrinfo.push_back(part);
     m_partChartWidget->update();
-    qDebug() << "LV information added and chart updated.";
+    qCDebug(appLog) << "LV information added and chart updated.";
 
     //新增逻辑卷后样式变化
     if (sumValue() >= m_totalSize - 0.01)
         m_isExceed = false;
     else
         m_isExceed = true;
-    qDebug() << "Updated isExceed flag:" << m_isExceed;
+    qCDebug(appLog) << "Updated isExceed flag:" << m_isExceed;
 
     m_lstLVName.append(m_partNameEdit->text());
     setAddOrRemResult(m_isExceed);
 
     m_applyBtn->setEnabled(true);
-    qDebug() << "Apply button enabled.";
+    qCDebug(appLog) << "Apply button enabled.";
 
     if (!m_partNameEdit->text().isEmpty()) {
         QByteArray byteArray = m_partNameEdit->text().toUtf8();
         if (byteArray.size() >= 128) {
-            qDebug() << "LV name byte size >= 128, disabling add button.";
+            qCDebug(appLog) << "LV name byte size >= 128, disabling add button.";
             m_addButton->setDisabled(true);
         }
     }
-    qDebug() << "Add partition process finished.";
+    qCDebug(appLog) << "Add partition process finished.";
 }
 
 void CreateLVWidget::onRemovePartition()
 {
-    qDebug() << "Removing last LV from creation list";
+    qCDebug(appLog) << "Removing last LV from creation list";
 
     if (m_patrinfo.size() > 0) {
         m_patrinfo.pop_back();
-        qDebug() << "Last partition info removed.";
+        qCDebug(appLog) << "Last partition info removed.";
     }
 
     m_addButton->setEnabled(true);
@@ -1072,31 +1073,31 @@ void CreateLVWidget::onRemovePartition()
     if (m_sizeInfo.size() > 0) {
         m_sizeInfo.removeAt(m_sizeInfo.size() - 1);
         m_partName.removeAt(m_partName.size() - 1);
-        qDebug() << "Last size info and part name removed.";
+        qCDebug(appLog) << "Last size info and part name removed.";
     }
 
     //绘制删除逻辑卷图形
     m_partChartWidget->transInfos(m_totalSize, m_sizeInfo);
     m_partChartWidget->update();
-    qDebug() << "Chart updated after removal.";
+    qCDebug(appLog) << "Chart updated after removal.";
     //删除逻辑卷后样式变化
     m_isExceed = true;
-    qDebug() << "Updated isExceed flag after removal:" << m_isExceed;
+    qCDebug(appLog) << "Updated isExceed flag after removal:" << m_isExceed;
 
     m_lstLVName.removeLast();
     setAddOrRemResult(m_isExceed);
-    qDebug() << "Remove partition process finished.";
+    qCDebug(appLog) << "Remove partition process finished.";
 }
 
 void CreateLVWidget::onApplyButton()
 {
-    qDebug()  << "Applying LV creation for VG:" << DMDbusHandler::instance()->getCurVGInfo().m_vgName;
+    qCDebug(appLog)  << "Applying LV creation for VG:" << DMDbusHandler::instance()->getCurVGInfo().m_vgName;
 
     QList<LVAction> lstLVInfo;
     VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
     QString userName = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
     userName.remove(0, 6);
-    qDebug() << "User name extracted:" << userName;
+    qCDebug(appLog) << "User name extracted:" << userName;
 
     for (int i = 0; i < m_patrinfo.size(); i++) {
         LVAction info;
@@ -1109,20 +1110,20 @@ void CreateLVWidget::onApplyButton()
         info.m_lvAct = LVMAction::LVM_ACT_LV_CREATE;
 
         if (m_patrinfo.at(i).m_isEncryption) {
-            qDebug() << "Partition is encrypted.";
+            qCDebug(appLog) << "Partition is encrypted.";
             info.m_luksFlag = LUKSFlag::IS_CRYPT_LUKS;
             info.m_crypt = m_patrinfo.at(i).m_encryption;
             QStringList tokenList;
             if (!m_patrinfo.at(i).m_passwordHint.isEmpty()) {
                 tokenList.append(m_patrinfo.at(i).m_passwordHint);
-                qDebug() << "Password hint added to token list.";
+                qCDebug(appLog) << "Password hint added to token list.";
             }
 
             info.m_tokenList = tokenList;
             info.m_decryptStr = m_patrinfo.at(i).m_password;
             info.m_dmName = m_patrinfo.at(i).m_dmName;
         } else {
-            qDebug() << "Partition is not encrypted.";
+            qCDebug(appLog) << "Partition is not encrypted.";
             info.m_luksFlag = LUKSFlag::NOT_CRYPT_LUKS;
             info.m_crypt = CRYPT_CIPHER::NOT_CRYPT;
             info.m_tokenList = QStringList();
@@ -1131,11 +1132,11 @@ void CreateLVWidget::onApplyButton()
         }
 
         lstLVInfo.append(info);
-        qDebug() << "LVAction info appended for LV:" << info.m_lvName;
+        qCDebug(appLog) << "LVAction info appended for LV:" << info.m_lvName;
     }
 
     if (lstLVInfo.size() > 0) {
-        qDebug() << "Creating" << lstLVInfo.size() << "logical volumes on VG:" << vgInfo.m_vgName;
+        qCDebug(appLog) << "Creating" << lstLVInfo.size() << "logical volumes on VG:" << vgInfo.m_vgName;
         DMDbusHandler::instance()->createLV(vgInfo.m_vgName, lstLVInfo);
         close();
     }
@@ -1143,7 +1144,7 @@ void CreateLVWidget::onApplyButton()
 
 void CreateLVWidget::onRevertButton()
 {
-    qDebug() << "Reverting all LV creation changes";
+    qCDebug(appLog) << "Reverting all LV creation changes";
 
     //复原,即清空
     m_patrinfo.clear();
@@ -1164,7 +1165,7 @@ void CreateLVWidget::onRevertButton()
     m_isExceed = true;
 
     if (m_sizeInfo.size() == 0) {
-        qDebug() << "No LV info to create, apply button disabled.";
+        qCDebug(appLog) << "No LV info to create, apply button disabled.";
         m_applyBtn->setEnabled(false);
     }
 
@@ -1178,7 +1179,7 @@ void CreateLVWidget::onRevertButton()
 
 void CreateLVWidget::onCancelButton()
 {
-    qDebug() << "Canceling LV creation dialog";
+    qCDebug(appLog) << "Canceling LV creation dialog";
 
     close();
 }
@@ -1187,7 +1188,7 @@ bool CreateLVWidget::event(QEvent *event)
 {
     // 字体大小改变
     if (QEvent::ApplicationFontChange == event->type()) {
-        qDebug() << event->type() << QApplication::font().pointSizeF() / 0.75;
+        qCDebug(appLog) << event->type() << QApplication::font().pointSizeF() / 0.75;
         QFontMetrics fm(m_deviceNameLabel->font());
         m_deviceNameLabel->setFixedWidth(fm.boundingRect(tr("VG name:")).width() + 5);
 #if QT_VERSION_MAJOR > 5

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 
+#include "ddlog.h"
 #include "diskinfodisplaydialog.h"
 #include "partedproxy/dmdbushandler.h"
 #include "messagebox.h"
@@ -24,14 +25,14 @@ DiskInfoDisplayDialog::DiskInfoDisplayDialog(const QString &devicePath, QWidget 
     : DDialog(parent)
     , m_devicePath(devicePath)
 {
-    qDebug() << "DiskInfoDisplayDialog constructor for device:" << devicePath;
+    qCDebug(appLog) << "DiskInfoDisplayDialog constructor for device:" << devicePath;
     initUI();
     initConnections();
 }
 
 void DiskInfoDisplayDialog::initUI()
 {
-    qDebug() << "Initializing DiskInfoDisplayDialog UI";
+    qCDebug(appLog) << "Initializing DiskInfoDisplayDialog UI";
 //    setWindowTitle("磁盘信息展示");
     setIcon(QIcon::fromTheme(appName));
     setTitle(tr("Disk Info")); // 磁盘信息
@@ -45,10 +46,10 @@ void DiskInfoDisplayDialog::initUI()
     HardDiskInfo hardDiskInfo = DMDbusHandler::instance()->getHardDiskInfo(m_devicePath);
     if (hardDiskInfo.m_mediaType == "SSD") {
         hardDiskInfo.m_mediaType = tr("SSD");
-        qDebug() << "Disk media type: SSD";
+        qCDebug(appLog) << "Disk media type: SSD";
     } else if (hardDiskInfo.m_mediaType == "HDD") {
         hardDiskInfo.m_mediaType = tr("HDD");
-        qDebug() << "Disk media type: HDD";
+        qCDebug(appLog) << "Disk media type: HDD";
     }
 
     m_diskInfoNameList.clear();
@@ -79,7 +80,7 @@ void DiskInfoDisplayDialog::initUI()
     palette2.setColor(DPalette::WindowText, color2);
 
     for (int i = 0; i < m_diskInfoNameList.count(); i++) {
-        // qDebug() << "Processing disk info item:" << i << ", Name:" << m_diskInfoNameList.at(i);
+        // qCDebug(appLog) << "Processing disk info item:" << i << ", Name:" << m_diskInfoNameList.at(i);
         DLabel *nameLabel = new DLabel;
         nameLabel->setText(m_diskInfoNameList.at(i));
         DFontSizeManager::instance()->bind(nameLabel, DFontSizeManager::T7, QFont::Medium);
@@ -88,10 +89,10 @@ void DiskInfoDisplayDialog::initUI()
 
         DLabel *valueLabel = new DLabel;
         if (!m_diskInfoValueList.at(i).isEmpty()) {
-            qDebug() << "Value is not empty, setting text:" << m_diskInfoValueList.at(i);
+            qCDebug(appLog) << "Value is not empty, setting text:" << m_diskInfoValueList.at(i);
             valueLabel->setText(m_diskInfoValueList.at(i));
         } else {
-            qDebug() << "Value is empty, setting text to '-'.";
+            qCDebug(appLog) << "Value is empty, setting text to '-'.";
             valueLabel->setText("-");
         }
 
@@ -113,10 +114,10 @@ void DiskInfoDisplayDialog::initUI()
     DFontSizeManager::instance()->bind(m_linkButton, DFontSizeManager::T8, QFont::Medium);
     QFontMetrics fmCapacity = m_linkButton->fontMetrics();
 #if QT_VERSION_MAJOR > 5
-        qDebug() << "Calculating link button width for Qt6 or higher.";
+        qCDebug(appLog) << "Calculating link button width for Qt6 or higher.";
         int width = fmCapacity.boundingRect(QString(tr("Export", "button"))).width();
 #else
-    qDebug() << "Calculating link button width for Qt5.";
+    qCDebug(appLog) << "Calculating link button width for Qt5.";
     int width = fmCapacity.width(QString(tr("Export", "button")));
 #endif
     m_linkButton->setFixedWidth(width);
@@ -135,24 +136,24 @@ void DiskInfoDisplayDialog::initUI()
 
     addSpacing(10);
     addContent(infoWidget);
-    qDebug() << "DiskInfoDisplayDialog UI initialization complete.";
+    qCDebug(appLog) << "DiskInfoDisplayDialog UI initialization complete.";
 }
 
 void DiskInfoDisplayDialog::initConnections()
 {
-    qDebug() << "Setting up DiskInfoDisplayDialog signal connections";
+    qCDebug(appLog) << "Setting up DiskInfoDisplayDialog signal connections";
     connect(m_linkButton, &DCommandLinkButton::clicked, this, &DiskInfoDisplayDialog::onExportButtonClicked);
 }
 
 void DiskInfoDisplayDialog::onExportButtonClicked()
 {
-    qDebug() << "onExportButtonClicked called.";
-    qInfo() << "Starting disk info export for device:" << m_devicePath;
+    qCDebug(appLog) << "onExportButtonClicked called.";
+    qCInfo(appLog) << "Starting disk info export for device:" << m_devicePath;
     //文件保存路径
     QString fileDirPath = QFileDialog::getSaveFileName(this, tr("Save File"), "DiskInfo.txt", tr("Text files (*.txt)"));// 文件保存   磁盘信息   文件类型
-    qDebug() << "fileDirPath:" << fileDirPath;
+    qCDebug(appLog) << "fileDirPath:" << fileDirPath;
     if (fileDirPath.isEmpty()) {
-        qDebug() << "File save path is empty, returning.";
+        qCDebug(appLog) << "File save path is empty, returning.";
         return;
     }
 
@@ -165,7 +166,7 @@ void DiskInfoDisplayDialog::onExportButtonClicked()
 
     if (!dir.exists()) {
         // 路径错误
-        qWarning() << "Invalid export path:" << fileDir;
+        qCWarning(appLog) << "Invalid export path:" << fileDir;
         DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Wrong path"));
         DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
 
@@ -174,29 +175,29 @@ void DiskInfoDisplayDialog::onExportButtonClicked()
 
     if (!fileInfo.isWritable()) {
         // 您无权访问该路径
-        qWarning() << "No write permission for path:" << fileDir;
+        qCWarning(appLog) << "No write permission for path:" << fileDir;
         DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("You do not have permission to access this path"));
         DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
     } else {
-        qDebug() << "Path is writable.";
+        qCDebug(appLog) << "Path is writable.";
         if (!fileDirPath.contains(".txt")) {
-            qDebug() << "Adding .txt extension to file path.";
+            qCDebug(appLog) << "Adding .txt extension to file path.";
             fileDirPath = fileDirPath + ".txt";
         }
 
         QFile file(fileDirPath);
         if (file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
-            qDebug() << "Successfully opened file for writing.";
+            qCDebug(appLog) << "Successfully opened file for writing.";
             QTextStream out(&file);
             for (int i = 0; i < m_diskInfoNameList.count(); i++) {
-                qDebug() << "Processing item" << i << ":" << m_diskInfoNameList.at(i);
+                qCDebug(appLog) << "Processing item" << i << ":" << m_diskInfoNameList.at(i);
                 QString strInfo = "";
 
                 if (!m_diskInfoValueList.at(i).isEmpty()) {
-                    qDebug() << "Value is not empty, formatting info.";
+                    qCDebug(appLog) << "Value is not empty, formatting info.";
                     strInfo = m_diskInfoNameList.at(i) + m_diskInfoValueList.at(i) + "\n";
                 } else {
-                    qDebug() << "Value is empty, formatting info with '-'.";
+                    qCDebug(appLog) << "Value is empty, formatting info with '-'.";
                     strInfo = m_diskInfoNameList.at(i) + "-" + "\n";
                 }
 
@@ -206,49 +207,49 @@ void DiskInfoDisplayDialog::onExportButtonClicked()
 
             file.close();
 
-            qInfo() << "Disk info exported successfully to:" << fileDirPath;
+            qCInfo(appLog) << "Disk info exported successfully to:" << fileDirPath;
             DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Export successful")); // 导出成功
             DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
         } else {
-            qWarning() << "Failed to export disk info to:" << fileDirPath;
+            qCWarning(appLog) << "Failed to export disk info to:" << fileDirPath;
             DMessageManager::instance()->sendMessage(this, QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Export failed")); // 导出失败
             DMessageManager::instance()->setContentMargens(this, QMargins(0, 0, 0, 20));
         }
     }
-    qDebug() << "onExportButtonClicked completed.";
+    qCDebug(appLog) << "onExportButtonClicked completed.";
 }
 
 bool DiskInfoDisplayDialog::event(QEvent *event)
 {
-    // qDebug() << "DiskInfoDisplayDialog::event called for event type:" << event->type();
+    // qCDebug(appLog) << "DiskInfoDisplayDialog::event called for event type:" << event->type();
     // 字体大小改变
     if (QEvent::ApplicationFontChange == event->type()) {
-        // qDebug() << "Application font change event detected.";
+        // qCDebug(appLog) << "Application font change event detected.";
 #if QT_VERSION_MAJOR > 5
-        // qDebug() << "Adjusting link button width for Qt6 or higher.";
+        // qCDebug(appLog) << "Adjusting link button width for Qt6 or higher.";
         m_linkButton->setFixedWidth(m_linkButton->fontMetrics().boundingRect(QString(tr("Export", "button"))).width());
 #else
-        // qDebug() << "Adjusting link button width for Qt5.";
+        // qCDebug(appLog) << "Adjusting link button width for Qt5.";
         m_linkButton->setFixedWidth(m_linkButton->fontMetrics().width(QString(tr("Export", "button"))));
 #endif
         DDialog::event(event);
     }
 
-    // qDebug() << "Event handling completed, returning DDialog::event result.";
+    // qCDebug(appLog) << "Event handling completed, returning DDialog::event result.";
     return DDialog::event(event);
 }
 
 void DiskInfoDisplayDialog::keyPressEvent(QKeyEvent *event)
 {
-    // qDebug() << "DiskInfoDisplayDialog::keyPressEvent called for key:" << event->key();
+    // qCDebug(appLog) << "DiskInfoDisplayDialog::keyPressEvent called for key:" << event->key();
     if (event->key() == Qt::Key::Key_Escape) {
-        // qDebug() << "Escape key pressed, ignoring event.";
+        // qCDebug(appLog) << "Escape key pressed, ignoring event.";
         event->ignore();
     } else {
-        // qDebug() << "Other key pressed, calling DDialog::keyPressEvent.";
+        // qCDebug(appLog) << "Other key pressed, calling DDialog::keyPressEvent.";
         DDialog::keyPressEvent(event);
     }
-    // qDebug() << "DiskInfoDisplayDialog::keyPressEvent completed.";
+    // qCDebug(appLog) << "DiskInfoDisplayDialog::keyPressEvent completed.";
 }
 
 

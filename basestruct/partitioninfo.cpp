@@ -1,8 +1,9 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
 
+#include "ddlog.h"
 #include "partitioninfo.h"
 
 #include <QDBusArgument>
@@ -13,7 +14,7 @@ PartitionInfo::PartitionInfo()
     , m_busy(false)
     , m_fileSystemReadOnly(false)
 {
-    qDebug() << "PartitionInfo constructor";
+    qCDebug(baseLog) << "PartitionInfo constructor";
     //inside_extended = busy = fs_readonly = false;
     m_devicePath = m_uuid = m_name = m_path = m_fileSystemLabel = "";
     m_partitionNumber = m_type = m_status = m_alignment = m_fileSystemType = 0;
@@ -25,39 +26,39 @@ PartitionInfo::PartitionInfo()
 
 Sector PartitionInfo::getSectorLength() const
 {
-    qDebug() << "PartitionInfo::getSectorLength";
+    qCDebug(baseLog) << "PartitionInfo::getSectorLength";
     if (m_sectorStart >= 0 && m_sectorEnd >= 0) {
-        qDebug() << "PartitionInfo::getSectorLength - Valid sector range";
+        qCDebug(baseLog) << "PartitionInfo::getSectorLength - Valid sector range";
         return m_sectorEnd - m_sectorStart + 1;
     } else {
-        qWarning() << "PartitionInfo::getSectorLength - Invalid sector range";
+        qCWarning(baseLog) << "PartitionInfo::getSectorLength - Invalid sector range";
         return -1;
     }
 }
 
 Byte_Value PartitionInfo::getByteLength() const
 {
-    qDebug() << "PartitionInfo::getByteLength";
+    qCDebug(baseLog) << "PartitionInfo::getByteLength";
     if (getSectorLength() >= 0) {
-        qDebug() << "PartitionInfo::getByteLength - Valid sector range";
+        qCDebug(baseLog) << "PartitionInfo::getByteLength - Valid sector range";
         return getSectorLength() * m_sectorSize;
     } else {
-        qWarning() << "PartitionInfo::getByteLength - Invalid sector range";
+        qCWarning(baseLog) << "PartitionInfo::getByteLength - Invalid sector range";
         return -1;
     }
 }
 
 bool PartitionInfo::operator==(const PartitionInfo &info) const
 {
-    // qDebug() << "PartitionInfo::operator==";
+    // qCDebug(baseLog) << "PartitionInfo::operator==";
     return m_devicePath == info.m_devicePath && m_partitionNumber == info.m_partitionNumber && m_sectorStart == info.m_sectorStart && m_type == info.m_type;
 }
 
 QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info)
 {
-    // qDebug() << "Starting PartitionInfo serialization";
+    // qCDebug(baseLog) << "Starting PartitionInfo serialization";
     argument.beginStructure();
-    // qDebug() << "Serializing PartitionInfo fields";
+    // qCDebug(baseLog) << "Serializing PartitionInfo fields";
     argument << info.m_devicePath
              << info.m_partitionNumber
              << info.m_type
@@ -92,15 +93,15 @@ QDBusArgument &operator<<(QDBusArgument &argument, const PartitionInfo &info)
              << info.m_decryptStr
              << info.m_dmName;;
     argument.endStructure();
-    // qDebug() << "Completed PartitionInfo serialization";
+    // qCDebug(baseLog) << "Completed PartitionInfo serialization";
     return argument;
 }
 
 const QDBusArgument &operator>>(const QDBusArgument &argument, PartitionInfo &info)
 {
-    // qDebug() << "Starting PartitionInfo deserialization";
+    // qCDebug(baseLog) << "Starting PartitionInfo deserialization";
     argument.beginStructure();
-    // qDebug() << "Deserializing PartitionInfo fields";
+    // qCDebug(baseLog) << "Deserializing PartitionInfo fields";
     int flag = 0;
     int flag2 = 0;
     int crypt = 0;
@@ -141,6 +142,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, PartitionInfo &in
     info.m_luksFlag = static_cast<LUKSFlag>(flag2);
     info.m_crypt = static_cast<CRYPT_CIPHER>(crypt);
     argument.endStructure();
-    // qDebug() << "Completed PartitionInfo deserialization";
+    // qCDebug(baseLog) << "Completed PartitionInfo deserialization";
     return argument;
 }

@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+# SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
@@ -12,6 +12,8 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS
     Widgets
     DBus
 REQUIRED)
+# DConfig（动态日志规则）需要 DTK Core
+find_package(Dtk${DTK_VERSION_MAJOR}Core REQUIRED)
 
 
 set(CMAKE_CXX_STANDARD 14)
@@ -26,6 +28,7 @@ set(BASESTRUCT_SRCS ${BASESTRUCT_SOURCES} ${BASESTRUCT_HEADERS} )
 
 add_library(${PROJECT_NAME} STATIC ${BASESTRUCT_SRCS})
 target_include_directories(${PROJECT_NAME} PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}
     Qt${QT_VERSION_MAJOR}::GuiPrivate
     ${PROJECT_BINARY_DIR}
 )
@@ -33,6 +36,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::DBus
+    Dtk${DTK_VERSION_MAJOR}::Core
     Threads::Threads
 )
 

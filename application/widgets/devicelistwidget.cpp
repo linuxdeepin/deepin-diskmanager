@@ -1,8 +1,9 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
 
+#include "ddlog.h"
 #include "devicelistwidget.h"
 #include "customcontrol/dmdiskinfobox.h"
 #include "diskinfodisplaydialog.h"
@@ -25,7 +26,7 @@
 DeviceListWidget::DeviceListWidget(QWidget *parent)
     : DWidget(parent)
 {
-    qDebug()  << "[DeviceListWidget] Constructor called";
+    qCDebug(appLog)  << "[DeviceListWidget] Constructor called";
     m_curChooseDevicePath = "";
 
     setAutoFillBackground(true);
@@ -39,7 +40,7 @@ DeviceListWidget::DeviceListWidget(QWidget *parent)
 }
 DeviceListWidget::~DeviceListWidget()
 {
-    qDebug()  << "[DeviceListWidget] Destructor called";
+    qCDebug(appLog)  << "[DeviceListWidget] Destructor called";
     //    delete m_box;
     //    delete m_childbox;
 }
@@ -47,7 +48,7 @@ DeviceListWidget::~DeviceListWidget()
 
 void DeviceListWidget::initUi()
 {
-    qDebug()  << "[DeviceListWidget] Initializing UI components";
+    qCDebug(appLog)  << "[DeviceListWidget] Initializing UI components";
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
@@ -59,7 +60,7 @@ void DeviceListWidget::initUi()
 
 void DeviceListWidget::initConnection()
 {
-    qDebug()  << "[DeviceListWidget] Initializing signal-slot connections";
+    qCDebug(appLog)  << "[DeviceListWidget] Initializing signal-slot connections";
     connect(DMDbusHandler::instance(), &DMDbusHandler::updateDeviceInfo, this, &DeviceListWidget::onUpdateDeviceInfo);
     connect(m_treeView, &DmTreeview::curSelectChanged, DMDbusHandler::instance(), &DMDbusHandler::onSetCurSelect);
     connect(m_treeView, &QTreeView::customContextMenuRequested, this, &DeviceListWidget::treeMenu);
@@ -76,18 +77,18 @@ void DeviceListWidget::initConnection()
 
 void DeviceListWidget::treeMenu(const QPoint &pos)
 {
-    qDebug() << "[DeviceListWidget] Showing context menu at position:" << pos;
+    qCDebug(appLog) << "[DeviceListWidget] Showing context menu at position:" << pos;
     QModelIndex curIndex = m_treeView->indexAt(pos); //当前点击的元素的index
     QModelIndex index = curIndex.sibling(curIndex.row(), 0); //该行的第1列元素的index
 
     if (!index.isValid()) {
-        qDebug() << "[DeviceListWidget] Invalid index, context menu not shown";
+        qCDebug(appLog) << "[DeviceListWidget] Invalid index, context menu not shown";
         return;
     }
 
     m_curDiskInfoData = m_treeView->getCurItem()->data().value<DiskInfoData>();
     if (m_curDiskInfoData.m_level == DMDbusHandler::DISK) {
-        qDebug() << "[DeviceListWidget] Current disk selected";
+        qCDebug(appLog) << "[DeviceListWidget] Current disk selected";
         QMenu *menu = new QMenu(this);
         menu->setObjectName("treeMenu");
         menu->setAccessibleName("menu");
@@ -142,7 +143,7 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
         menu->exec(QCursor::pos()); //显示菜单
         delete menu;
     } else if (m_curDiskInfoData.m_level == DMDbusHandler::PARTITION) {
-        qDebug() << "[DeviceListWidget] Current partition selected";
+        qCDebug(appLog) << "[DeviceListWidget] Current partition selected";
         QMenu *menu = new QMenu(this);
         menu->setObjectName("treeMenu");
         menu->setAccessibleName("menu");
@@ -168,7 +169,7 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
 
         bool isJoinVg = false;
         if (m_curDiskInfoData.m_fstype == "extended") {
-            qDebug() << "[DeviceListWidget] Current partition is extended type";
+            qCDebug(appLog) << "[DeviceListWidget] Current partition is extended type";
             DeviceInfo info = DMDbusHandler::instance()->getCurDeviceInfo();
             for (int i = 0; i < info.m_partition.size(); i++) {
                 if (info.m_partition.at(i).m_type == PartitionType::TYPE_LOGICAL) {
@@ -181,18 +182,18 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
         }
 
         if (!m_curDiskInfoData.m_mountpoints.isEmpty() || isJoinVg) {
-            qDebug() << "[DeviceListWidget] Current partition is not empty or joined to VG";
+            qCDebug(appLog) << "[DeviceListWidget] Current partition is not empty or joined to VG";
             actionDelete->setDisabled(true);
         }
 
         PartitionInfo info = DMDbusHandler::instance()->getCurPartititonInfo();
         if (info.m_luksFlag == LUKSFlag::IS_CRYPT_LUKS) {
-            qDebug() << "[DeviceListWidget] Current partition is LUKS encrypted";
+            qCDebug(appLog) << "[DeviceListWidget] Current partition is LUKS encrypted";
             LUKS_INFO luksInfo = DMDbusHandler::instance()->probLUKSInfo().m_luksMap.value(info.m_path);
             if (luksInfo.isDecrypt) {
-                qDebug() << "[DeviceListWidget] LUKS partition is decrypted";
+                qCDebug(appLog) << "[DeviceListWidget] LUKS partition is decrypted";
                 if (!luksInfo.m_mapper.m_mountPoints.isEmpty() || luksInfo.m_mapper.m_luksFs == FSType::FS_LVM2_PV) {
-                    qDebug() << "[DeviceListWidget] LUKS partition is mounted or joined to VG";
+                    qCDebug(appLog) << "[DeviceListWidget] LUKS partition is mounted or joined to VG";
                     actionDelete->setDisabled(true);
                 }
             }
@@ -200,7 +201,7 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
 
         if (m_curDiskInfoData.m_fstype == "unallocated" || m_curDiskInfoData.m_fstype == "linux-swap"
             || info.m_vgFlag != LVMFlag::LVM_FLAG_NOT_PV) {
-            qDebug() << "[DeviceListWidget] Current partition is unallocated or swap or joined to VG";
+            qCDebug(appLog) << "[DeviceListWidget] Current partition is unallocated or swap or joined to VG";
             //            actionHidePartition->setDisabled(true);
             //            actionShowPartition->setDisabled(true);
             actionDelete->setDisabled(true);
@@ -217,7 +218,7 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
         menu->exec(QCursor::pos()); //显示菜单
         delete menu;
     } else if (m_curDiskInfoData.m_level == DMDbusHandler::VOLUMEGROUP) {
-        qDebug() << "[DeviceListWidget] Current volume group selected";
+        qCDebug(appLog) << "[DeviceListWidget] Current volume group selected";
         QMenu *menu = new QMenu(this);
         menu->setObjectName("treeMenu");
         menu->setAccessibleName("menu");
@@ -236,14 +237,14 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
 
         QMap<QString, QString> isExistUnallocated = DMDbusHandler::instance()->getIsExistUnallocated();
         if (isExistUnallocated.value(m_curDiskInfoData.m_diskPath) == "false") {
-            qDebug() << "[DeviceListWidget] Current volume group is not unallocated";
+            qCDebug(appLog) << "[DeviceListWidget] Current volume group is not unallocated";
             actionCreate->setDisabled(true);
         }
 
         // 如果VG异常，所有相关操作禁用
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
         if (vgInfo.isPartial()) {
-            qDebug() << "[DeviceListWidget] Current volume group is partial";
+            qCDebug(appLog) << "[DeviceListWidget] Current volume group is partial";
             actionDelete->setDisabled(true);
             actionCreate->setDisabled(true);
         }
@@ -251,7 +252,7 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
         menu->exec(QCursor::pos()); //显示菜单
         delete menu;
     } else if (m_curDiskInfoData.m_level == DMDbusHandler::LOGICALVOLUME) {
-        qDebug() << "[DeviceListWidget] Current logical volume selected";
+        qCDebug(appLog) << "[DeviceListWidget] Current logical volume selected";
         QMenu *menu = new QMenu(this);
         menu->setObjectName("treeMenu");
         menu->setAccessibleName("menu");
@@ -264,14 +265,14 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
 
         LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
         if (lvInfo.m_lvName.isEmpty() && lvInfo.m_lvUuid.isEmpty()) {
-            qDebug() << "[DeviceListWidget] Current logical volume is empty";
+            qCDebug(appLog) << "[DeviceListWidget] Current logical volume is empty";
             actionDelete->setDisabled(true);
         }
 
         // 如果VG异常，删除逻辑卷操作禁用
         VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
         if (vgInfo.isPartial() || lvInfo.m_lvFsType == FSType::FS_LINUX_SWAP) {
-            qDebug() << "[DeviceListWidget] Current logical volume is partial or swap";
+            qCDebug(appLog) << "[DeviceListWidget] Current logical volume is partial or swap";
             actionDelete->setDisabled(true);
         }
 
@@ -282,7 +283,7 @@ void DeviceListWidget::treeMenu(const QPoint &pos)
 
 void DeviceListWidget::onDiskInfoClicked()
 {
-    qDebug()  << "[DeviceListWidget] Showing disk info dialog for:" << m_curDiskInfoData.m_diskPath;
+    qCDebug(appLog)  << "[DeviceListWidget] Showing disk info dialog for:" << m_curDiskInfoData.m_diskPath;
     setCurDevicePath(m_curDiskInfoData.m_diskPath);
 
     DiskInfoDisplayDialog diskInfoDisplayDialog(m_curDiskInfoData.m_diskPath, this);
@@ -295,12 +296,12 @@ void DeviceListWidget::onDiskInfoClicked()
 
 void DeviceListWidget::onDiskCheckHealthClicked()
 {
-    qDebug() << "[DeviceListWidget] Disk health check clicked for:" << m_curDiskInfoData.m_diskPath;
+    qCDebug(appLog) << "[DeviceListWidget] Disk health check clicked for:" << m_curDiskInfoData.m_diskPath;
     setCurDevicePath(m_curDiskInfoData.m_diskPath);
 
     HardDiskStatusInfoList hardDiskStatusInfoList = DMDbusHandler::instance()->getDeviceHardStatusInfo(m_curDiskInfoData.m_diskPath);
     if (hardDiskStatusInfoList.count() < 1) {
-        qDebug() << "[DeviceListWidget] No hard disk status info";
+        qCDebug(appLog) << "[DeviceListWidget] No hard disk status info";
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("warningMessageBox");
@@ -323,7 +324,7 @@ void DeviceListWidget::onDiskCheckHealthClicked()
 
 void DeviceListWidget::onDiskBadSectorsClicked()
 {
-    qDebug() << "[DeviceListWidget] Disk bad sectors check clicked for:" << m_curDiskInfoData.m_diskPath;
+    qCDebug(appLog) << "[DeviceListWidget] Disk bad sectors check clicked for:" << m_curDiskInfoData.m_diskPath;
     setCurDevicePath(m_curDiskInfoData.m_diskPath);
 
     DiskBadSectorsDialog diskBadSectorsDialog(this);
@@ -336,11 +337,11 @@ void DeviceListWidget::onDiskBadSectorsClicked()
 
 void DeviceListWidget::onCreatePartitionTableClicked()
 {
-    qDebug()  << "[DeviceListWidget] Create partition table requested for:" << m_curDiskInfoData.m_diskPath;
+    qCDebug(appLog)  << "[DeviceListWidget] Create partition table requested for:" << m_curDiskInfoData.m_diskPath;
     setCurDevicePath(m_curDiskInfoData.m_diskPath);
 
     if (DMDbusHandler::instance()->isExistMountPartition(DMDbusHandler::instance()->getCurDeviceInfo())) {
-        qDebug() << "[DeviceListWidget] Current disk has mounted partition";
+        qCDebug(appLog) << "[DeviceListWidget] Current disk has mounted partition";
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("messageBox");
@@ -359,7 +360,7 @@ void DeviceListWidget::onCreatePartitionTableClicked()
     // 新建分区表之后将会合并当前磁盘所有分区，丢失所有数据，请谨慎使用  继续  取消
     messageBox.setWarings(tr("All partitions in this disk will be merged and all data\n will be lost if creating a new partition table,\n please take it carefully"), "", tr("Proceed"), "Proceed", tr("Cancel"), "cancelBtn");
     if (messageBox.exec() == DDialog::Accepted) {
-        qDebug() << "[DeviceListWidget] Creating partition table";
+        qCDebug(appLog) << "[DeviceListWidget] Creating partition table";
         CreatePartitionTableDialog createPartitionTableDialog(this);
         createPartitionTableDialog.setObjectName("createPartitionTable");
         createPartitionTableDialog.setAccessibleName("createPartitionTableDialog");
@@ -371,10 +372,10 @@ void DeviceListWidget::onCreatePartitionTableClicked()
 
 void DeviceListWidget::onPartitionErrorCheckClicked()
 {
-    qDebug() << "[DeviceListWidget] Partition table error check started for:" << m_curDiskInfoData.m_diskPath;
+    qCDebug(appLog) << "[DeviceListWidget] Partition table error check started for:" << m_curDiskInfoData.m_diskPath;
     bool result = DMDbusHandler::instance()->detectionPartitionTableError(m_curDiskInfoData.m_diskPath);
     if (result) {
-        qDebug() << "[DeviceListWidget] Partition table error check finished";
+        qCDebug(appLog) << "[DeviceListWidget] Partition table error check finished";
         QString deviceInfo = QString("%1(%2)").arg(m_curDiskInfoData.m_diskPath).arg(m_curDiskInfoData.m_diskSize);
         setCurDevicePath(m_curDiskInfoData.m_diskPath);
 
@@ -385,7 +386,7 @@ void DeviceListWidget::onPartitionErrorCheckClicked()
 
         setCurDevicePath("");
     } else {
-        qDebug() << "[DeviceListWidget] Partition table error check failed";
+        qCDebug(appLog) << "[DeviceListWidget] Partition table error check failed";
         // 分区表检测正常
         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("No errors found in the partition table"));
         DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
@@ -394,7 +395,7 @@ void DeviceListWidget::onPartitionErrorCheckClicked()
 
 void DeviceListWidget::onHidePartitionClicked()
 {
-    qDebug() << "[DeviceListWidget] Hide partition clicked for:" << m_curDiskInfoData.m_diskPath;
+    qCDebug(appLog) << "[DeviceListWidget] Hide partition clicked for:" << m_curDiskInfoData.m_diskPath;
     setCurDevicePath(m_curDiskInfoData.m_diskPath);
 
     MessageBox messageBox(this);
@@ -403,17 +404,17 @@ void DeviceListWidget::onHidePartitionClicked()
     // 您是否要隐藏该分区？ 隐藏  取消
     messageBox.setWarings(tr("Do you want to hide this partition?"), "", tr("Hide"), "hide", tr("Cancel"), "cancel");
     if (messageBox.exec() == DDialog::Accepted) {
-        qDebug() << "Accepted to hide partition";
+        qCDebug(appLog) << "Accepted to hide partition";
         if (m_curDiskInfoData.m_mountpoints == "/boot/efi" || m_curDiskInfoData.m_mountpoints == "/boot"
             || m_curDiskInfoData.m_mountpoints == "/" || m_curDiskInfoData.m_mountpoints == "/data/home/opt/root/var"
             || m_curDiskInfoData.m_mountpoints == "/deepin/userdata/home/opt/root/var") {
-            qDebug() << "[DeviceListWidget] Partition is boot or root or swap or joined to VG";
+            qCDebug(appLog) << "[DeviceListWidget] Partition is boot or root or swap or joined to VG";
             isHideSuccess = false;
             // 隐藏分区失败！无法锁定该分区
             DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Failed to hide the partition: unable to lock it"));
             DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
         } else {
-            qDebug() << "Hiding partition";
+            qCDebug(appLog) << "Hiding partition";
             if (m_curDiskInfoData.m_mountpoints.isEmpty()) {
                 DMDbusHandler::instance()->hidePartition();
             } else {
@@ -430,7 +431,7 @@ void DeviceListWidget::onHidePartitionClicked()
 
 void DeviceListWidget::onShowPartitionClicked()
 {
-    qDebug() << "[DeviceListWidget] Show partition clicked for:" << m_curDiskInfoData.m_diskPath;
+    qCDebug(appLog) << "[DeviceListWidget] Show partition clicked for:" << m_curDiskInfoData.m_diskPath;
     setCurDevicePath(m_curDiskInfoData.m_diskPath);
 
     MessageBox messageBox(this);
@@ -447,7 +448,7 @@ void DeviceListWidget::onShowPartitionClicked()
 
 void DeviceListWidget::onDeletePartitionClicked()
 {
-    qDebug()  << "[DeviceListWidget] Delete partition requested for:" << m_curDiskInfoData.m_diskPath;
+    qCDebug(appLog)  << "[DeviceListWidget] Delete partition requested for:" << m_curDiskInfoData.m_diskPath;
     setCurDevicePath(m_curDiskInfoData.m_diskPath);
 
     MessageBox messageBox(this);
@@ -473,15 +474,15 @@ void DeviceListWidget::onDeletePartitionClicked()
 
 void DeviceListWidget::onHidePartition(const QString &hideMessage)
 {
-    qDebug() << "[DeviceListWidget] Hide partition result:" << hideMessage;
+    qCDebug(appLog) << "[DeviceListWidget] Hide partition result:" << hideMessage;
     if ("1" == hideMessage) {
-        qDebug() << "[DeviceListWidget] Hide partition success";
+        qCDebug(appLog) << "[DeviceListWidget] Hide partition success";
         // 隐藏分区成功
         isHideSuccess = true;
         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Hide the partition successfully"));
         DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
     } else {
-        qDebug() << "[DeviceListWidget] Hide partition failed";
+        qCDebug(appLog) << "[DeviceListWidget] Hide partition failed";
         isHideSuccess = false;
         // 隐藏分区失败
         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Failed to hide the partition"));
@@ -491,15 +492,15 @@ void DeviceListWidget::onHidePartition(const QString &hideMessage)
 
 void DeviceListWidget::onShowPartition(const QString &showMessage)
 {
-    qDebug() << "[DeviceListWidget] Show partition result:" << showMessage;
+    qCDebug(appLog) << "[DeviceListWidget] Show partition result:" << showMessage;
     if ("1" == showMessage) {
-        qDebug() << "[DeviceListWidget] Show partition success";
+        qCDebug(appLog) << "[DeviceListWidget] Show partition success";
         // 显示分区成功
         isShowSuccess = true;
         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Unhide the partition successfully"));
         DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
     } else {
-        qDebug() << "[DeviceListWidget] Show partition failed";
+        qCDebug(appLog) << "[DeviceListWidget] Show partition failed";
         isShowSuccess = false;
         // 显示分区失败
         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Failed to unhide the partition"));
@@ -509,7 +510,7 @@ void DeviceListWidget::onShowPartition(const QString &showMessage)
 
 void DeviceListWidget::onDeletePartition(const QString &deleteMessage)
 {
-    qDebug() << "[DeviceListWidget] Delete partition result:" << deleteMessage;
+    qCDebug(appLog) << "[DeviceListWidget] Delete partition result:" << deleteMessage;
     QStringList infoList = deleteMessage.split(":");
 
     if (infoList.count() <= 1) {
@@ -517,13 +518,13 @@ void DeviceListWidget::onDeletePartition(const QString &deleteMessage)
     }
 
     if ("1" == infoList.at(0)) {
-        qDebug() << "[DeviceListWidget] Delete partition success";
+        qCDebug(appLog) << "[DeviceListWidget] Delete partition success";
         // 删除分区成功
         isDeleteSuccess = true;
         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Delete the partition successfully"));
         DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
     } else {
-        qDebug() << "[DeviceListWidget] Delete partition failed";
+        qCDebug(appLog) << "[DeviceListWidget] Delete partition failed";
         isDeleteSuccess = false;
 
         QString reason;
@@ -555,15 +556,15 @@ void DeviceListWidget::onDeletePartition(const QString &deleteMessage)
 
 void DeviceListWidget::onUnmountPartition(const QString &unmountMessage)
 {
-    qDebug() << "[DeviceListWidget] Unmount partition result:" << unmountMessage;
+    qCDebug(appLog) << "[DeviceListWidget] Unmount partition result:" << unmountMessage;
     if ("1" == unmountMessage) {
-        qDebug() << "[DeviceListWidget] Unmount partition success";
+        qCDebug(appLog) << "[DeviceListWidget] Unmount partition success";
         isUnmountSuccess = true;
         // 卸载成功
         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Unmounting successful"));
         DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
     } else {
-        qDebug() << "[DeviceListWidget] Unmount partition failed";
+        qCDebug(appLog) << "[DeviceListWidget] Unmount partition failed";
         isUnmountSuccess = false;
         // 卸载失败
         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Unmounting failed"));
@@ -573,32 +574,32 @@ void DeviceListWidget::onUnmountPartition(const QString &unmountMessage)
 
 void DeviceListWidget::onCreatePartitionTableMessage(const bool &flag)
 {
-    qDebug() << "[DeviceListWidget] Create partition table result:" << flag;
+    qCDebug(appLog) << "[DeviceListWidget] Create partition table result:" << flag;
     if (flag) {
-        qDebug() << "[DeviceListWidget] Create partition table success";
+        qCDebug(appLog) << "[DeviceListWidget] Create partition table success";
         isCreateTableSuccess = true;
         if (DMDbusHandler::instance()->getCurCreatePartitionTableType() == "create") {
-            qDebug() << "[DeviceListWidget] Create partition table success";
+            qCDebug(appLog) << "[DeviceListWidget] Create partition table success";
             // 新建分区表成功
             DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Creating partition table successful"));
             DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
         } else {
-            qDebug() << "[DeviceListWidget] Replace partition table success";
+            qCDebug(appLog) << "[DeviceListWidget] Replace partition table success";
             // 替换分区表成功
             DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/ok.svg"), tr("Replacing partition table successful"));
             DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
         }
 
     } else {
-        qDebug() << "[DeviceListWidget] Create partition table failed";
+        qCDebug(appLog) << "[DeviceListWidget] Create partition table failed";
         isCreateTableSuccess = false;
         if (DMDbusHandler::instance()->getCurCreatePartitionTableType() == "create") {
-            qDebug() << "[DeviceListWidget] Create partition table failed";
+            qCDebug(appLog) << "[DeviceListWidget] Create partition table failed";
             // 新建分区表失败
             DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Creating partition table failed"));
             DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
         } else {
-            qDebug() << "[DeviceListWidget] Replace partition table failed";
+            qCDebug(appLog) << "[DeviceListWidget] Replace partition table failed";
             // 替换分区表失败
             DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(), QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), tr("Replacing partition table failed"));
             DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
@@ -608,11 +609,11 @@ void DeviceListWidget::onCreatePartitionTableMessage(const bool &flag)
 
 void DeviceListWidget::onDeleteVGClicked()
 {
-    qDebug()  << "[DeviceListWidget] Delete VG requested for:" << DMDbusHandler::instance()->getCurVGInfo().m_vgName;
+    qCDebug(appLog)  << "[DeviceListWidget] Delete VG requested for:" << DMDbusHandler::instance()->getCurVGInfo().m_vgName;
     VGInfo vgInfo = DMDbusHandler::instance()->getCurVGInfo();
     setCurVGName(vgInfo.m_vgName);
     if (DMDbusHandler::instance()->isExistMountLV(vgInfo)) {
-        qDebug() << "[DeviceListWidget] Delete VG failed, because there is a mounted LV in this VG";
+        qCDebug(appLog) << "[DeviceListWidget] Delete VG failed, because there is a mounted LV in this VG";
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("messageBox");
@@ -632,7 +633,7 @@ void DeviceListWidget::onDeleteVGClicked()
     messageBox.setWarings(tr("Data cannot be recovered if deleted, please confirm before proceeding"), "",
                           tr("Delete"), DDialog::ButtonWarning, "delete", tr("Cancel"), "cancel");
     if (messageBox.exec() == DDialog::Accepted) {
-        qDebug() << "[DeviceListWidget] Delete VG confirmed";
+        qCDebug(appLog) << "[DeviceListWidget] Delete VG confirmed";
         QStringList vgNameList;
         vgNameList << vgInfo.m_vgName;
 
@@ -644,7 +645,7 @@ void DeviceListWidget::onDeleteVGClicked()
 
 void DeviceListWidget::onCreateLVClicked()
 {
-    qDebug() << "[DeviceListWidget] Create LV clicked for VG:" << DMDbusHandler::instance()->getCurVGInfo().m_vgName;
+    qCDebug(appLog) << "[DeviceListWidget] Create LV clicked for VG:" << DMDbusHandler::instance()->getCurVGInfo().m_vgName;
     setCurVGName(DMDbusHandler::instance()->getCurVGInfo().m_vgName);
 
     PartitionDialog dlg(this);
@@ -653,7 +654,7 @@ void DeviceListWidget::onCreateLVClicked()
     dlg.setAccessibleName("createLVDialog");
 
     if (dlg.exec() == 1) {
-        qDebug() << "[DeviceListWidget] Create LV confirmed";
+        qCDebug(appLog) << "[DeviceListWidget] Create LV confirmed";
         CreateLVWidget createLVWidget(this);
         createLVWidget.setObjectName("createLVWidget");
         createLVWidget.setAccessibleName("createLVWidget");
@@ -665,12 +666,12 @@ void DeviceListWidget::onCreateLVClicked()
 
 void DeviceListWidget::onDeleteLVClicked()
 {
-    qDebug()  << "[DeviceListWidget] Delete LV requested for:" << DMDbusHandler::instance()->getCurLVInfo().m_lvName;
+    qCDebug(appLog)  << "[DeviceListWidget] Delete LV requested for:" << DMDbusHandler::instance()->getCurLVInfo().m_lvName;
     LVInfo lvInfo = DMDbusHandler::instance()->getCurLVInfo();
     setCurVGName(lvInfo.m_vgName);
 
     if (DMDbusHandler::instance()->lvIsMount(lvInfo)) {
-        qDebug() << "[DeviceListWidget] Delete LV failed, because LV is mounted";
+        qCDebug(appLog) << "[DeviceListWidget] Delete LV failed, because LV is mounted";
         MessageBox warningBox(this);
         warningBox.setObjectName("messageBox");
         warningBox.setAccessibleName("messageBox");
@@ -690,7 +691,7 @@ void DeviceListWidget::onDeleteLVClicked()
     messageBox.setWarings(tr("Data cannot be recovered if deleted, please confirm before proceeding"), "",
                           tr("Delete"), DDialog::ButtonWarning, "delete", tr("Cancel"), "cancel");
     if (messageBox.exec() == DDialog::Accepted) {
-        qDebug() << "[DeviceListWidget] Delete LV confirmed";
+        qCDebug(appLog) << "[DeviceListWidget] Delete LV confirmed";
         QStringList lvNameList;
         lvNameList << lvInfo.m_lvPath;
 
@@ -702,17 +703,17 @@ void DeviceListWidget::onDeleteLVClicked()
 
 void DeviceListWidget::onVGDeleteMessage(const QString &vgMessage)
 {
-    qDebug() << "[DeviceListWidget] Delete VG result:" << vgMessage;
+    qCDebug(appLog) << "[DeviceListWidget] Delete VG result:" << vgMessage;
     QStringList infoList = vgMessage.split(":");
 
     if (infoList.count() <= 1) {
-        qDebug() << "[DeviceListWidget] Delete VG failed, because of unknown reason";
+        qCDebug(appLog) << "[DeviceListWidget] Delete VG failed, because of unknown reason";
         return;
     }
 
     if ("1" == infoList.at(0)) {
         isDeleteVGSuccess = true;
-        qDebug()  << "[DeviceListWidget] Delete VG succeeded";
+        qCDebug(appLog)  << "[DeviceListWidget] Delete VG succeeded";
         return;
     }
 
@@ -738,7 +739,7 @@ void DeviceListWidget::onVGDeleteMessage(const QString &vgMessage)
     }
 
     if (!reason.isEmpty()) {
-        qDebug() << "[DeviceListWidget] Delete VG failed, reason:" << reason;
+        qCDebug(appLog) << "[DeviceListWidget] Delete VG failed, reason:" << reason;
         isDeleteVGSuccess = false;
         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(),
                                                  QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), reason);
@@ -748,16 +749,16 @@ void DeviceListWidget::onVGDeleteMessage(const QString &vgMessage)
 
 void DeviceListWidget::onLVDeleteMessage(const QString &lvMessage)
 {
-    qDebug() << "[DeviceListWidget] Delete LV result:" << lvMessage;
+    qCDebug(appLog) << "[DeviceListWidget] Delete LV result:" << lvMessage;
     QStringList infoList = lvMessage.split(":");
 
     if (infoList.count() <= 1) {
-        qDebug() << "[DeviceListWidget] Delete LV failed, because of unknown reason";
+        qCDebug(appLog) << "[DeviceListWidget] Delete LV failed, because of unknown reason";
         return;
     }
 
     if ("1" == infoList.at(0)) {
-        qDebug() << "[DeviceListWidget] Delete LV succeeded";
+        qCDebug(appLog) << "[DeviceListWidget] Delete LV succeeded";
         isDeleteLVSuccess = true;
         return;
     }
@@ -779,7 +780,7 @@ void DeviceListWidget::onLVDeleteMessage(const QString &lvMessage)
     }
 
     if (!reason.isEmpty()) {
-        qDebug() << "[DeviceListWidget] Delete LV failed, reason:" << reason;
+        qCDebug(appLog) << "[DeviceListWidget] Delete LV failed, reason:" << reason;
         isDeleteLVSuccess = false;
         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(),
                                                  QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), reason);
@@ -789,17 +790,17 @@ void DeviceListWidget::onLVDeleteMessage(const QString &lvMessage)
 
 void DeviceListWidget::onCreateFailedMessage(const QString &message)
 {
-    qDebug() << "[DeviceListWidget] Create partition failed, message:" << message;
+    qCDebug(appLog) << "[DeviceListWidget] Create partition failed, message:" << message;
     QStringList infoList = message.split(":");
 
     if (infoList.count() <= 2) {
-        qDebug() << "[DeviceListWidget] Create partition failed, because of unknown reason";
+        qCDebug(appLog) << "[DeviceListWidget] Create partition failed, because of unknown reason";
         return;
     }
 
     QString failedReason = DMDbusHandler::instance()->getFailedMessage(infoList.at(0), infoList.at(1).toInt(), infoList.at(2));
     if (!failedReason.isEmpty()) {
-        qDebug() << "[DeviceListWidget] Create partition failed, reason:" << failedReason;
+        qCDebug(appLog) << "[DeviceListWidget] Create partition failed, reason:" << failedReason;
         DMessageManager::instance()->sendMessage(this->parentWidget()->parentWidget(),
                                                  QIcon::fromTheme("://icons/deepin/builtin/warning.svg"), failedReason);
         DMessageManager::instance()->setContentMargens(this->parentWidget()->parentWidget(), QMargins(0, 0, 0, 20));
@@ -808,17 +809,17 @@ void DeviceListWidget::onCreateFailedMessage(const QString &message)
 
 void DeviceListWidget::onUpdateUsb()
 {
-    qDebug() << "[DeviceListWidget] Updating USB devices";
+    qCDebug(appLog) << "[DeviceListWidget] Updating USB devices";
     if (m_curChooseDevicePath.isEmpty() && m_curChooseVGName.isEmpty()) {
-        qDebug() << "[DeviceListWidget] No device or VG selected, skip updating USB devices";
+        qCDebug(appLog) << "[DeviceListWidget] No device or VG selected, skip updating USB devices";
         return;
     }
 
     if (!m_curChooseDevicePath.isEmpty()) {
-        qDebug() << "[DeviceListWidget] Updating USB device:" << m_curChooseDevicePath;
+        qCDebug(appLog) << "[DeviceListWidget] Updating USB device:" << m_curChooseDevicePath;
         QStringList deviceNameList = DMDbusHandler::instance()->getDeviceNameList();
         if (deviceNameList.indexOf(m_curChooseDevicePath) != -1) {
-            qDebug() << "[DeviceListWidget] USB device already exists, skip updating";
+            qCDebug(appLog) << "[DeviceListWidget] USB device already exists, skip updating";
             return;
         }
 
@@ -841,10 +842,10 @@ void DeviceListWidget::onUpdateUsb()
 
         setCurDevicePath("");
     } else if (!m_curChooseVGName.isEmpty()) {
-        qDebug() << "[DeviceListWidget] Updating USB VG:" << m_curChooseVGName;
+        qCDebug(appLog) << "[DeviceListWidget] Updating USB VG:" << m_curChooseVGName;
         QStringList vgNameList = DMDbusHandler::instance()->getVGNameList();
         if (vgNameList.indexOf(m_curChooseVGName) != -1) {
-            qDebug() << "[DeviceListWidget] USB VG already exists, skip updating";
+            qCDebug(appLog) << "[DeviceListWidget] USB VG already exists, skip updating";
             return;
         }
 
@@ -858,24 +859,24 @@ void DeviceListWidget::onUpdateUsb()
 
         setCurVGName("");
     }
-    qDebug() << "[DeviceListWidget] USB devices updated";
+    qCDebug(appLog) << "[DeviceListWidget] USB devices updated";
 }
 
 void DeviceListWidget::setCurDevicePath(const QString &devPath)
 {
-    qDebug() << "[DeviceListWidget] Updating current device path from" << m_curChooseDevicePath << "to:" << devPath;
+    qCDebug(appLog) << "[DeviceListWidget] Updating current device path from" << m_curChooseDevicePath << "to:" << devPath;
     m_curChooseDevicePath = devPath;
 }
 
 void DeviceListWidget::setCurVGName(const QString &vgName)
 {
-    qDebug() << "[DeviceListWidget] Updating current VG name from" << m_curChooseVGName << "to:" << vgName;
+    qCDebug(appLog) << "[DeviceListWidget] Updating current VG name from" << m_curChooseVGName << "to:" << vgName;
     m_curChooseVGName = vgName;
 }
 
 void DeviceListWidget::onUpdateDeviceInfo()
 {
-    qDebug() << "[DeviceListWidget] Updating device information";
+    qCDebug(appLog) << "[DeviceListWidget] Updating device information";
     //更新DmTreeview  lx
     //设置当前选项
 
@@ -895,7 +896,7 @@ void DeviceListWidget::onUpdateDeviceInfo()
     int vgCount = 0;
 
     if (0 != mapVGInfo.count()) {
-        qDebug() << "[DeviceListWidget] Updating LVM VG information";
+        qCDebug(appLog) << "[DeviceListWidget] Updating LVM VG information";
         auto lvmInfoBox = new DmDiskinfoBox(DMDbusHandler::OTHER, this, tr("Volume Groups"), "");
         for (auto vgInfo = mapVGInfo.begin(); vgInfo != mapVGInfo.end(); vgInfo++) {
             VGInfo vgInformation = vgInfo.value();
@@ -903,7 +904,7 @@ void DeviceListWidget::onUpdateDeviceInfo()
             if (vgInformation.m_vgName.isEmpty()) {
                 continue;
             }
-            qDebug() << vgInformation.m_vgName << Utils::LVMFormatSize(vgInformation.m_peCount * vgInformation.m_PESize)
+            qCDebug(appLog) << vgInformation.m_vgName << Utils::LVMFormatSize(vgInformation.m_peCount * vgInformation.m_PESize)
                      << vgInformation.m_peCount << vgInformation.m_PESize
                      << Utils::LVMFormatSize(vgInformation.m_peCount * vgInformation.m_PESize + vgInformation.m_PESize) << vgInformation.m_vgSize;
             QString vgSize = vgInformation.m_vgSize;
@@ -929,7 +930,7 @@ void DeviceListWidget::onUpdateDeviceInfo()
                 for (int i = 0; i < lvInfo->m_mountPoints.size(); i++) {
                     mountPoints += lvInfo->m_mountPoints[i];
                 }
-                qDebug() << lvInfo->m_lvName << Utils::LVMFormatSize(lvInfo->m_lvLECount * lvInfo->m_LESize)
+                qCDebug(appLog) << lvInfo->m_lvName << Utils::LVMFormatSize(lvInfo->m_lvLECount * lvInfo->m_LESize)
                          << Utils::LVMFormatSize(lvInfo->m_lvLECount * lvInfo->m_LESize + lvInfo->m_LESize)
                          << lvInfo->m_lvLECount << lvInfo->m_LESize << lvInfo->m_lvSize;
                 QString lvSize = lvInfo->m_lvSize;
@@ -1073,7 +1074,7 @@ void DeviceListWidget::onUpdateDeviceInfo()
 
         m_flag += 1;
     } else {
-        qDebug() << "[DeviceListWidget] Updating LVM information";
+        qCDebug(appLog) << "[DeviceListWidget] Updating LVM information";
         for (auto devInfo = infoMap.begin(); devInfo != infoMap.end(); devInfo++) {
             DeviceInfo info = devInfo.value();
 
@@ -1175,5 +1176,5 @@ void DeviceListWidget::onUpdateDeviceInfo()
 
         m_flag += 1;
     }
-    qDebug() << "[DeviceListWidget] LVM information updated";
+    qCDebug(appLog) << "[DeviceListWidget] LVM information updated";
 }

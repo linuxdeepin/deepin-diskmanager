@@ -1,7 +1,8 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
+#include "ddlog.h"
 #include "partition.h"
 #include "utils.h"
 #include "supportedfilesystems.h"
@@ -12,37 +13,37 @@ namespace DiskManager {
 
 Partition::Partition()
 {
-    qDebug() << "Creating new partition";
+    qCDebug(serviceLog) << "Creating new partition";
     reset();
 }
 
 Partition *Partition::clone() const
 {
-    qDebug() << "Cloning partition";
+    qCDebug(serviceLog) << "Cloning partition";
     return new Partition(*this);
 }
 
 bool Partition::sectorUsageKnown() const
 {
-    qDebug() << "Checking if sector usage is known";
+    qCDebug(serviceLog) << "Checking if sector usage is known";
     return m_sectorsUsed >= 0 && m_sectorsUnused >= 0;
 }
 
 Sector Partition::getSectorsUnallocated() const
 {
-    qDebug() << "Getting unallocated sectors";
+    qCDebug(serviceLog) << "Getting unallocated sectors";
     if (m_sectorsUnallocated < m_significantThreshold) {
-        qDebug() << "Unallocated sectors less than threshold, returning 0";
+        qCDebug(serviceLog) << "Unallocated sectors less than threshold, returning 0";
         return 0;
     } else {
-        qDebug() << "Returning unallocated sectors:" << m_sectorsUnallocated;
+        qCDebug(serviceLog) << "Returning unallocated sectors:" << m_sectorsUnallocated;
         return m_sectorsUnallocated;
     }
 }
 
 void Partition::reset()
 {
-    qDebug() << "Resetting partition data";
+    qCDebug(serviceLog) << "Resetting partition data";
     m_path.clear();
     m_status = STAT_REAL;
     m_type = TYPE_UNALLOCATED;
@@ -72,7 +73,7 @@ void Partition::reset()
 
 void Partition::reset(const PartitionInfo &info)
 {
-    qDebug() << "Resetting partition with PartitionInfo";
+    qCDebug(serviceLog) << "Resetting partition with PartitionInfo";
     m_status = static_cast<PartitionStatus>(info.m_status);
     m_type = static_cast<PartitionType>(info.m_type);
     m_alignment = static_cast<PartitionAlignment>(info.m_alignment);
@@ -100,7 +101,7 @@ void Partition::reset(const PartitionInfo &info)
 
 void Partition::set(const QString &devicePath, const QString &partition, int partitionNumber, PartitionType type, FSType fstype, Sector sectorStart, Sector sectorEnd, Byte_Value sectorSize, bool insideExtended, bool busy)
 {
-    qDebug() << "set partition entry";
+    qCDebug(serviceLog) << "set partition entry";
     m_devicePath = devicePath;
     m_path = partition;
     m_partitionNumber = partitionNumber;
@@ -112,7 +113,7 @@ void Partition::set(const QString &devicePath, const QString &partition, int par
     m_insideExtended = insideExtended;
     m_busy = busy;
 
-    qDebug() << "Setting partition:" << partition
+    qCDebug(serviceLog) << "Setting partition:" << partition
                     << "type:" << type
                     << "fs:" << fstype
                     << "sectors:" << sectorStart << "-" << sectorEnd;
@@ -120,17 +121,17 @@ void Partition::set(const QString &devicePath, const QString &partition, int par
     SupportedFileSystems s;
     FileSystem *fs =  s.getFsObject(m_fstype);
     if (fs) {
-        qDebug() << "FileSystem object found, getting limits";
+        qCDebug(serviceLog) << "FileSystem object found, getting limits";
         m_fsLimits = fs->getFilesystemLimits(*this);
     } else {
-        qDebug() << "FileSystem object not found, setting default limits";
+        qCDebug(serviceLog) << "FileSystem object not found, setting default limits";
         m_fsLimits = FS_Limits{-1, -1};
     }
 }
 
 void Partition::setUnpartitioned(const QString &devicePath, const QString &partitionPath, FSType fstype, Sector length, Byte_Value sectorSize, bool busy)
 {
-    qDebug() << "setUnpartitioned entry";
+    qCDebug(serviceLog) << "setUnpartitioned entry";
     reset();
     // The path from the parent Device object and this child Partition object
     // spanning the whole device would appear to be the same.  However the former
@@ -156,7 +157,7 @@ void Partition::setUnpartitioned(const QString &devicePath, const QString &parti
 
 void Partition::setUnallocated(const QString &devicePath, Sector sectorStart, Sector sectorEnd, Byte_Value sectorSize, bool insideExtended)
 {
-    qDebug() << "Setting unallocated partition at sectors:"
+    qCDebug(serviceLog) << "Setting unallocated partition at sectors:"
                     << sectorStart << "-" << sectorEnd;
     reset();
 
@@ -176,15 +177,15 @@ void Partition::setUnallocated(const QString &devicePath, Sector sectorStart, Se
 
 bool Partition::filesystemLabelKnown() const
 {
-    qDebug() << "Checking if filesystem label is known";
+    qCDebug(serviceLog) << "Checking if filesystem label is known";
     return m_haveFileSystemLabel;
 }
 
 void Partition::setFilesystemLabel(const QString &filesystemLabel)
 {
-    qDebug() << "Setting filesystem label:" << filesystemLabel;
+    qCDebug(serviceLog) << "Setting filesystem label:" << filesystemLabel;
     if (!filesystemLabel.isEmpty()) {
-        qDebug() << "Filesystem label is not empty, setting it";
+        qCDebug(serviceLog) << "Filesystem label is not empty, setting it";
         m_filesystemLabel = filesystemLabel;
         m_haveFileSystemLabel = true;
     }
@@ -197,48 +198,48 @@ void Partition::setFilesystemLabel(const QString &filesystemLabel)
 
 void Partition::addMountPoints(const QVector<QString> &mountpoints)
 {
-    qDebug() << "Adding mount points";
+    qCDebug(serviceLog) << "Adding mount points";
     m_mountpoints = mountpoints;
 }
 
 QVector<QString> Partition::getMountPoints() const
 {
-    qDebug() << "Getting mount points";
+    qCDebug(serviceLog) << "Getting mount points";
     return m_mountpoints;
 }
 
 QString Partition::getMountPoint() const
 {
-    qDebug() << "Getting single mount point";
+    qCDebug(serviceLog) << "Getting single mount point";
     if (m_mountpoints.size() > 0) {
-        qDebug() << "Mount points exist, returning the first one";
+        qCDebug(serviceLog) << "Mount points exist, returning the first one";
         return m_mountpoints.front();
     }
 
-    qDebug() << "No mount points, returning empty string";
+    qCDebug(serviceLog) << "No mount points, returning empty string";
     return "";
 }
 
 void Partition::setSectorUsage(Sector sectorsFsSize, Sector sectorsFsUnused)
 {
-    qDebug() << "setSectorUsage entry";
+    qCDebug(serviceLog) << "setSectorUsage entry";
     Sector length = getSectorLength();
-    qDebug() << "Setting sector usage, partition length:" << length;
+    qCDebug(serviceLog) << "Setting sector usage, partition length:" << length;
     if (0 <= sectorsFsSize && sectorsFsSize <= length
             && 0 <= sectorsFsUnused && sectorsFsUnused <= sectorsFsSize) {
-        qDebug() << "Valid sector usage data provided";
+        qCDebug(serviceLog) << "Valid sector usage data provided";
         m_sectorsUsed = sectorsFsSize - sectorsFsUnused;
         m_sectorsUnused = sectorsFsUnused;
         m_sectorsUnallocated = length - sectorsFsSize;
         m_significantThreshold = calcSignificantUnallocatedSectors();
     } else if (sectorsFsSize == -1) {
-        qDebug() << "sectorsFsSize is -1, calculating usage differently";
+        qCDebug(serviceLog) << "sectorsFsSize is -1, calculating usage differently";
         if (0 <= sectorsFsUnused && sectorsFsUnused <= length) {
-            qDebug() << "Valid sectorsFsUnused";
+            qCDebug(serviceLog) << "Valid sectorsFsUnused";
             m_sectorsUsed = length - sectorsFsUnused;
             m_sectorsUnused = sectorsFsUnused;
         } else {
-            qDebug() << "Invalid sectorsFsUnused";
+            qCDebug(serviceLog) << "Invalid sectorsFsUnused";
             m_sectorsUsed = -1;
             m_sectorsUnused = -1;
         }
@@ -249,42 +250,42 @@ void Partition::setSectorUsage(Sector sectorsFsSize, Sector sectorsFsUnused)
 
 Byte_Value Partition::getByteLength() const
 {
-    qDebug() << "Getting byte length";
+    qCDebug(serviceLog) << "Getting byte length";
     if (getSectorLength() >= 0) {
-        qDebug() << "Sector length is valid, calculating byte length";
+        qCDebug(serviceLog) << "Sector length is valid, calculating byte length";
         return getSectorLength() * m_sectorSize;
     } else {
-        qDebug() << "Sector length is invalid, returning -1";
+        qCDebug(serviceLog) << "Sector length is invalid, returning -1";
         return -1;
     }
 }
 
 Sector Partition::getSectorLength() const
 {
-    qDebug() << "Getting sector length";
+    qCDebug(serviceLog) << "Getting sector length";
     if (m_sectorStart >= 0 && m_sectorEnd >= 0 && m_sectorEnd < LLONG_MAX) {
-        qDebug() << "Start and end sectors are valid";
+        qCDebug(serviceLog) << "Start and end sectors are valid";
         return m_sectorEnd - m_sectorStart + 1;
     } else {
-        qDebug() << "Start or end sectors are invalid, returning -1";
+        qCDebug(serviceLog) << "Start or end sectors are invalid, returning -1";
         return -1;
     }
 }
 
 QString Partition::getFileSystemLabel() const
 {
-    qDebug() << "Getting filesystem label";
+    qCDebug(serviceLog) << "Getting filesystem label";
     if (m_haveFileSystemLabel) {
-        qDebug() << "Filesystem label is known, returning it";
+        qCDebug(serviceLog) << "Filesystem label is known, returning it";
         return m_filesystemLabel;
     }
-    qDebug() << "Filesystem label is not known, returning empty string";
+    qCDebug(serviceLog) << "Filesystem label is not known, returning empty string";
     return "";
 }
 
 PartitionInfo Partition::getPartitionInfo() const
 {
-    qDebug() << "Getting partition info";
+    qCDebug(serviceLog) << "Getting partition info";
     PartitionInfo info;
     info.m_devicePath = m_devicePath;
     info.m_partitionNumber = m_partitionNumber;
@@ -310,7 +311,7 @@ PartitionInfo Partition::getPartitionInfo() const
     info.m_fileSystemReadOnly = m_fsReadonly;
     info.m_mountPoints = m_mountpoints;
     info.m_fsLimits = m_fsLimits;
-    qDebug() << "Getting partition info:"
+    qCDebug(serviceLog) << "Getting partition info:"
                     << "path:" << info.m_path
                     << "type:" << info.m_type
                     << "fs:" << info.m_fileSystemType
@@ -320,7 +321,7 @@ PartitionInfo Partition::getPartitionInfo() const
 
 Sector Partition::calcSignificantUnallocatedSectors() const
 {
-    qDebug() << "Calculating significant unallocated sectors";
+    qCDebug(serviceLog) << "Calculating significant unallocated sectors";
     const double HIGHERUNALLOCATEDFRACTION = 0.05;
     const double LOWERUNALLOCATEDFRACTION = 0.02;
     Sector length = getSectorLength();
@@ -328,28 +329,28 @@ Sector Partition::calcSignificantUnallocatedSectors() const
     Sector significant;
 
     if (byteLen <= 0) {
-        qDebug() << "byteLen <= 0, setting significant to 1";
+        qCDebug(serviceLog) << "byteLen <= 0, setting significant to 1";
         significant = 1;
     } else if (byteLen <= 100 * MEBIBYTE) {
-        qDebug() << "byteLen <= 100MiB, using higher fraction";
+        qCDebug(serviceLog) << "byteLen <= 100MiB, using higher fraction";
         significant = qRound(length * HIGHERUNALLOCATEDFRACTION);
     } else if (byteLen <= 1 * GIBIBYTE) {
-        qDebug() << "byteLen <= 1GiB, calculating fraction";
+        qCDebug(serviceLog) << "byteLen <= 1GiB, calculating fraction";
         double fraction = (HIGHERUNALLOCATEDFRACTION - LOWERUNALLOCATEDFRACTION) - (byteLen - 100 * MEBIBYTE) * (HIGHERUNALLOCATEDFRACTION - LOWERUNALLOCATEDFRACTION) / (1 * GIBIBYTE - 100 * MEBIBYTE) + LOWERUNALLOCATEDFRACTION;
         significant = qRound(length * fraction);
     } else {
-        qDebug() << "byteLen > 1GiB, using lower fraction";
+        qCDebug(serviceLog) << "byteLen > 1GiB, using lower fraction";
         significant = qRound(length * LOWERUNALLOCATEDFRACTION);
     }
 
-    qDebug() << "Calculated significant sectors (before check):" << significant;
+    qCDebug(serviceLog) << "Calculated significant sectors (before check):" << significant;
 
     if (significant <= 1) {
-        qDebug() << "Significant sectors <= 1, setting to 1";
+        qCDebug(serviceLog) << "Significant sectors <= 1, setting to 1";
         significant = 1;
     }
 
-    qDebug() << "Final significant sectors:" << significant;
+    qCDebug(serviceLog) << "Final significant sectors:" << significant;
     return significant;
 }
 

@@ -15,6 +15,7 @@
  *  along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ddlog.h"
 #include "supportedfilesystems.h"
 #include "filesystems/ext2.h"
 #include "filesystems/linuxswap.h"
@@ -31,7 +32,7 @@ namespace DiskManager {
 
 SupportedFileSystems::SupportedFileSystems()
 {
-    qDebug() << "Initializing supported filesystems";
+    qCDebug(serviceLog) << "Initializing supported filesystems";
     m_fsObjects[FS_UNKNOWN] = NULL;
     m_fsObjects[FS_OTHER] = NULL;
     m_fsObjects[FS_BTRFS] = new Btrfs;
@@ -69,13 +70,13 @@ SupportedFileSystems::SupportedFileSystems()
 
 SupportedFileSystems::~SupportedFileSystems()
 {
-    // qDebug() << "Cleaning up filesystem objects";
+    // qCDebug(serviceLog) << "Cleaning up filesystem objects";
     FSObjectsMap::iterator iter;
     for (iter = m_fsObjects.begin(); iter != m_fsObjects.end(); iter++) {
         auto pvalue = iter.value();
 
         if (pvalue != NULL) {
-            // qDebug() << "Deleting filesystem handler for:" << Utils::fileSystemTypeToString(iter.key());
+            // qCDebug(serviceLog) << "Deleting filesystem handler for:" << Utils::fileSystemTypeToString(iter.key());
             delete pvalue;
         }
 
@@ -86,7 +87,7 @@ SupportedFileSystems::~SupportedFileSystems()
 void SupportedFileSystems::findSupportedFilesystems()
 {
     FSObjectsMap::iterator iter;
-    qDebug() << "Finding supported filesystems";
+    qCDebug(serviceLog) << "Finding supported filesystems";
     m_fsSupport.clear();
 
     for (iter = m_fsObjects.begin(); iter != m_fsObjects.end(); iter++) {
@@ -96,41 +97,41 @@ void SupportedFileSystems::findSupportedFilesystems()
             m_effectivefs.append(fsName);
             FS support = psys->getFilesystemSupport();
             m_fsSupport.push_back(support);
-            qDebug() << "Found supported filesystem:" << fsName << "with create support:" << support.create;
+            qCDebug(serviceLog) << "Found supported filesystem:" << fsName << "with create support:" << support.create;
         } else {
             FS fsBasicsupp(iter.key());
             fsBasicsupp.move = FS::GPARTED;
             fsBasicsupp.copy = FS::GPARTED;
             m_fsSupport.push_back(fsBasicsupp);
-            qDebug() << "Basic support for filesystem:" << Utils::fileSystemTypeToString(iter.key());
+            qCDebug(serviceLog) << "Basic support for filesystem:" << Utils::fileSystemTypeToString(iter.key());
         }
     }
-    qDebug() << "Total supported filesystems:" << m_fsSupport.size();
+    qCDebug(serviceLog) << "Total supported filesystems:" << m_fsSupport.size();
 }
 
 FileSystem *SupportedFileSystems::getFsObject(FSType fstype) const
 {
-//    qDebug() << Utils::fileSystemTypeToString(fstype);
+//    qCDebug(serviceLog) << Utils::fileSystemTypeToString(fstype);
     FSObjectsMap::const_iterator iter = m_fsObjects.find(fstype);
     if (iter == m_fsObjects.end()) {
-        qDebug() << "Filesystem not found, return NULL";
+        qCDebug(serviceLog) << "Filesystem not found, return NULL";
         return nullptr;
     } else {
-        qDebug() << "Found filesystem handler for value";
+        qCDebug(serviceLog) << "Found filesystem handler for value";
         return iter.value();
     }
 }
 
 const FS &SupportedFileSystems::getFsSupport(FSType fstype) const
 {
-    qDebug() << "Getting FS Support for fstype:" << Utils::fileSystemTypeToString(fstype);
+    qCDebug(serviceLog) << "Getting FS Support for fstype:" << Utils::fileSystemTypeToString(fstype);
     for (int i = 0; i < m_fsSupport.size(); i++) {
         if (m_fsSupport[i].fstype == fstype) {
-            qDebug() << "Found support info for fstype:" << Utils::fileSystemTypeToString(fstype);
+            qCDebug(serviceLog) << "Found support info for fstype:" << Utils::fileSystemTypeToString(fstype);
             return m_fsSupport[i];
         }
     }
-    qDebug() << "Could not find support info for fstype, returning unsupported object:" << Utils::fileSystemTypeToString(fstype);
+    qCDebug(serviceLog) << "Could not find support info for fstype, returning unsupported object:" << Utils::fileSystemTypeToString(fstype);
     static FS fsNotsupp(FS_UNSUPPORTED);
     return fsNotsupp;
 }
@@ -147,7 +148,7 @@ const FS &SupportedFileSystems::getFsSupport(FSType fstype) const
 
 const QStringList &SupportedFileSystems::getAllFsName()
 {
-    qDebug() << "Getting all effective filesystem names";
+    qCDebug(serviceLog) << "Getting all effective filesystem names";
     return m_effectivefs;
 }
 

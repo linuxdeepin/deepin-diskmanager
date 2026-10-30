@@ -1,8 +1,9 @@
 // Copyright (C) 2022 ~ 2022 Deepin Technology Co., Ltd.
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
+#include "ddlog.h"
 #include "luksoperator.h"
 #include "../fsinfo.h"
 #include <QFile>
@@ -23,18 +24,18 @@ static const QString saveKeyPath = "/root/.deepin-diskmanager-service";     //ke
 
 LUKSOperator::LUKSOperator()
 {
-    qDebug() << "LUKSOperator constructor called";
+    qCDebug(serviceLog) << "LUKSOperator constructor called";
 }
 
 bool LUKSOperator::updateLUKSInfo(DeviceInfoMap &dev, LVMInfo &lvmInfo, LUKSMap &luks)
 {
-    qDebug() << "Updating LUKS information";
+    qCDebug(serviceLog) << "Updating LUKS information";
     m_dev = &dev;
     m_lvmInfo = &lvmInfo;
     resetLuksMap(luks);
     //初始化映射 算法
     if (!initMapper(luks) || !getCIPHERSupport(luks.m_cryptSuuport)) {
-        qDebug() << "Failed to initialize mapper or get CIPHER support.";
+        qCDebug(serviceLog) << "Failed to initialize mapper or get CIPHER support.";
         return setLUKSErr(luks, CRYPTError::CRYPT_ERR_INIT_FAILED);
     }
 
@@ -42,11 +43,11 @@ bool LUKSOperator::updateLUKSInfo(DeviceInfoMap &dev, LVMInfo &lvmInfo, LUKSMap 
     for (DeviceInfoMap::iterator devIt = dev.begin(); devIt != dev.end(); ++devIt) {
         devIt.value().m_crySupport = luks.m_cryptSuuport;
         if (!lvmInfo.lvInfoExists(devIt.key()) && isLUKS(devIt.key())) { //判断是否为lv加密的映射盘
-            // qDebug() << "Device" << devIt.key() << "is a LUKS device (not LVM).";
+            // qCDebug(serviceLog) << "Device" << devIt.key() << "is a LUKS device (not LVM).";
             devIt->m_luksFlag = LUKSFlag::IS_CRYPT_LUKS;
             LUKS_INFO info;
             if (!getLUKSInfo(luks, devIt.key(), info)) {
-                qDebug() << "Failed to get LUKS info for device:" << devIt.key();
+                qCDebug(serviceLog) << "Failed to get LUKS info for device:" << devIt.key();
                 return setLUKSErr(luks, CRYPTError::CRYPT_ERR_GET_LUKSINFO_FAILED);
             }
             luks.m_luksMap.insert(info.m_devicePath, info);
@@ -57,12 +58,12 @@ bool LUKSOperator::updateLUKSInfo(DeviceInfoMap &dev, LVMInfo &lvmInfo, LUKSMap 
             if (partIt->m_fileSystemType != FSType::FS_LUKS) { //分区通过文件系统判断是否为luks
                 continue;
             }
-            // qDebug() << "Partition" << partIt->m_path << "is a LUKS partition.";
+            // qCDebug(serviceLog) << "Partition" << partIt->m_path << "is a LUKS partition.";
             partIt->m_luksFlag = LUKSFlag::IS_CRYPT_LUKS;//获取分区数据
             devIt->m_luksFlag = LUKSFlag::IS_CRYPT_LUKS;
             LUKS_INFO info;
             if (!getLUKSInfo(luks, partIt->m_path, info)) {
-                qDebug() << "Failed to get LUKS info for partition:" << partIt->m_path;
+                qCDebug(serviceLog) << "Failed to get LUKS info for partition:" << partIt->m_path;
                 return setLUKSErr(luks, CRYPTError::CRYPT_ERR_GET_LUKSINFO_FAILED);
             }
             luks.m_luksMap.insert(info.m_devicePath, info);
@@ -74,14 +75,14 @@ bool LUKSOperator::updateLUKSInfo(DeviceInfoMap &dev, LVMInfo &lvmInfo, LUKSMap 
             if (!isLUKS(lvIt->m_lvPath)) {
                 continue;
             }
-            // qDebug() << "LV" << lvIt->m_lvPath << "is a LUKS LV.";
+            // qCDebug(serviceLog) << "LV" << lvIt->m_lvPath << "is a LUKS LV.";
             lvIt->m_luksFlag = LUKSFlag::IS_CRYPT_LUKS;
             lvIt->m_lvFsType = FSType::FS_LUKS;
             lvIt->m_fsUsed = lvIt->m_LESize * lvIt->m_lvLECount;
             vgIt.value().m_luksFlag = LUKSFlag::IS_CRYPT_LUKS;
             LUKS_INFO info;
             if (!getLUKSInfo(luks, lvIt->toMapperPath(), info)) {
-                qDebug() << "Failed to get LUKS info for LV:" << lvIt->toMapperPath();
+                qCDebug(serviceLog) << "Failed to get LUKS info for LV:" << lvIt->toMapperPath();
                 return setLUKSErr(luks, CRYPTError::CRYPT_ERR_GET_LUKSINFO_FAILED);
             }
 
@@ -96,17 +97,17 @@ bool LUKSOperator::updateLUKSInfo(DeviceInfoMap &dev, LVMInfo &lvmInfo, LUKSMap 
 
 bool LUKSOperator::encrypt(LUKSMap &luks, LUKS_INFO &luksInfo)
 {
-    qDebug() << "Starting encryption for device:" << luksInfo.m_devicePath;
+    qCDebug(serviceLog) << "Starting encryption for device:" << luksInfo.m_devicePath;
     //判断参数是否正确
     if (!(luksInfo.m_crypt == CRYPT_CIPHER::AES_XTS_PLAIN64 || luksInfo.m_crypt == CRYPT_CIPHER::SM4_XTS_PLAIN64)
             || luksInfo.m_devicePath.isEmpty()
             || luksInfo.m_decryptStr.isEmpty()) {
-        qWarning() << "Invalid arguments for encryption";
+        qCWarning(serviceLog) << "Invalid arguments for encryption";
         return setLUKSErr(luks, CRYPTError::CRYPT_ERR_ENCRYPT_ARGUMENT);
     }
     //加密
     if (!format(luksInfo)) {
-        qCritical() << Q_FUNC_INFO << "format failed";
+        qCCritical(serviceLog) << Q_FUNC_INFO << "format failed";
         return setLUKSErr(luks, CRYPTError::CRYPT_ERR_ENCRYPT_FAILED);
     }
     //添加错误记录
@@ -115,26 +116,26 @@ bool LUKSOperator::encrypt(LUKSMap &luks, LUKS_INFO &luksInfo)
     addToken(luksInfo, luksInfo.m_tokenList);
     bool success = getLUKSInfo(luks, luksInfo.m_devicePath, luksInfo);
     luksInfo.isDecrypt = false;
-    qDebug() << "Encryption finished for device:" << luksInfo.m_devicePath << "Success:" << success;
+    qCDebug(serviceLog) << "Encryption finished for device:" << luksInfo.m_devicePath << "Success:" << success;
     return setLUKSErr(luks, luksInfo, success ? CRYPTError::CRYPT_ERR_NORMAL : CRYPTError::CRYPT_ERR_GET_LUKSINFO_FAILED);
 }
 
 bool LUKSOperator::decrypt(LUKSMap &luks, LUKS_INFO &luksInfo)
 {
-    qDebug() << "Starting decryption for device:" << luksInfo.m_devicePath;
+    qCDebug(serviceLog) << "Starting decryption for device:" << luksInfo.m_devicePath;
     //判断参数是否正确
     if (luksInfo.m_mapper.m_dmName.isEmpty()
             || luksInfo.m_devicePath.isEmpty()
             || luksInfo.m_decryptStr.isEmpty()) {
-        qWarning() << "Invalid arguments for decryption";
+        qCWarning(serviceLog) << "Invalid arguments for decryption";
         return setLUKSErr(luks, CRYPTError::CRYPT_ERR_ENCRYPT_ARGUMENT);
     }
 
     if (!luksInfo.isDecrypt) {
-        qDebug() << "Device not decrypted, attempting to open.";
+        qCDebug(serviceLog) << "Device not decrypted, attempting to open.";
         luksInfo.m_decryptErrCount = open(luksInfo) ? 0 : luksInfo.m_decryptErrCount + 1;
     } else {
-        qDebug() << "Device already decrypted, testing key.";
+        qCDebug(serviceLog) << "Device already decrypted, testing key.";
         luksInfo.m_decryptErrCount = testKey(luksInfo) ? 0 : luksInfo.m_decryptErrCount + 1;
     }
 
@@ -142,65 +143,65 @@ bool LUKSOperator::decrypt(LUKSMap &luks, LUKS_INFO &luksInfo)
     updateDecryptToken(luksInfo, false);
     getLUKSInfo(luks, luksInfo.m_devicePath, luksInfo);
     luksInfo.isDecrypt = (0 == luksInfo.m_decryptErrCount);
-    qDebug() << "Decryption finished for device:" << luksInfo.m_devicePath << "Success:" << luksInfo.isDecrypt;
+    qCDebug(serviceLog) << "Decryption finished for device:" << luksInfo.m_devicePath << "Success:" << luksInfo.isDecrypt;
     return setLUKSErr(luks, luksInfo, luksInfo.isDecrypt ? CRYPTError::CRYPT_ERR_NORMAL : CRYPTError::CRYPT_ERR_DECRYPT_FAILED);
 }
 
 bool LUKSOperator::closeMapper(LUKSMap &luks, LUKS_INFO &luksInfo)
 {
-    qDebug() << "LUKSOperator::closeMapper called for device:" << luksInfo.m_devicePath;
+    qCDebug(serviceLog) << "LUKSOperator::closeMapper called for device:" << luksInfo.m_devicePath;
     //如果没有打开 返回正确
     if (!luksInfo.isDecrypt) {
-        qDebug() << "Device not decrypted, no need to close mapper.";
+        qCDebug(serviceLog) << "Device not decrypted, no need to close mapper.";
         return setLUKSErr(luks, luksInfo, CRYPTError::CRYPT_ERR_NORMAL);
     }
     //判断参数是否正确
     if (luksInfo.m_mapper.m_dmPath.isEmpty()) {
-        qWarning() << "Invalid arguments for closeMapper: dmPath is empty.";
+        qCWarning(serviceLog) << "Invalid arguments for closeMapper: dmPath is empty.";
         return setLUKSErr(luks, luksInfo, CRYPTError::CRYPT_ERR_ENCRYPT_ARGUMENT);
     }
     bool success = close(luksInfo);
-    qDebug() << "Closed mapper for device:" << luksInfo.m_devicePath << "Success:" << success;
+    qCDebug(serviceLog) << "Closed mapper for device:" << luksInfo.m_devicePath << "Success:" << success;
     return setLUKSErr(luks, luksInfo, success ? CRYPTError::CRYPT_ERR_NORMAL : CRYPTError::CRYPT_ERR_DECRYPT_FAILED);
 }
 
 bool LUKSOperator::addKeyAndCrypttab(LUKSMap &luks, LUKS_INFO &luksInfo)
 {
-    qDebug() << "LUKSOperator::addKeyAndCrypttab called for device:" << luksInfo.m_devicePath;
+    qCDebug(serviceLog) << "LUKSOperator::addKeyAndCrypttab called for device:" << luksInfo.m_devicePath;
     if (!addKeyFile(luksInfo)) {
-        qDebug() << "addKeyFile failed for device:" << luksInfo.m_devicePath;
+        qCDebug(serviceLog) << "addKeyFile failed for device:" << luksInfo.m_devicePath;
         return setLUKSErr(luks, luksInfo, CRYPTError::CRYPT_ERR_ADD_KEY_FAILED);
     }
 
     bool success = wirteCrypttab(luksInfo, true);
-    qDebug() << "addKeyAndCrypttab finished for device:" << luksInfo.m_devicePath << "Success:" << success;
+    qCDebug(serviceLog) << "addKeyAndCrypttab finished for device:" << luksInfo.m_devicePath << "Success:" << success;
     return setLUKSErr(luks, luksInfo, success ? CRYPTError::CRYPT_ERR_NORMAL : CRYPTError::CRYPT_ERR_CRYPTTAB_FAILED);
 }
 
 bool LUKSOperator::deleteKeyAndCrypttab(LUKSMap &luks, LUKS_INFO &luksInfo)
 {
-    qDebug() << "LUKSOperator::deleteKeyAndCrypttab called for device:" << luksInfo.m_devicePath;
+    qCDebug(serviceLog) << "LUKSOperator::deleteKeyAndCrypttab called for device:" << luksInfo.m_devicePath;
     if (!deleteKeyFile(luksInfo)) {
-        qDebug() << "deleteKeyFile failed for device:" << luksInfo.m_devicePath;
+        qCDebug(serviceLog) << "deleteKeyFile failed for device:" << luksInfo.m_devicePath;
         return setLUKSErr(luks, luksInfo, CRYPTError::CRYPT_ERR_DEL_KEY_FAILED);
     }
 
     bool success = wirteCrypttab(luksInfo, false);
-    qDebug() << "deleteKeyAndCrypttab finished for device:" << luksInfo.m_devicePath << "Success:" << success;
+    qCDebug(serviceLog) << "deleteKeyAndCrypttab finished for device:" << luksInfo.m_devicePath << "Success:" << success;
     return setLUKSErr(luks, luksInfo, success ? CRYPTError::CRYPT_ERR_NORMAL : CRYPTError::CRYPT_ERR_CRYPTTAB_FAILED);
 }
 
 bool LUKSOperator::removeMapperAndKey(LUKSMap &luks, LUKS_INFO &luksInfo)
 {
-    qDebug() << "LUKSOperator::removeMapperAndKey called for device:" << luksInfo.m_devicePath;
+    qCDebug(serviceLog) << "LUKSOperator::removeMapperAndKey called for device:" << luksInfo.m_devicePath;
     bool success = deleteKeyAndCrypttab(luks, luksInfo) && closeMapper(luks, luksInfo);
-    qDebug() << "removeMapperAndKey finished for device:" << luksInfo.m_devicePath << "Success:" << success;
+    qCDebug(serviceLog) << "removeMapperAndKey finished for device:" << luksInfo.m_devicePath << "Success:" << success;
     return success;
 }
 
 void LUKSOperator::resetLuksMap(LUKSMap &luks)
 {
-    qDebug() << "LUKSOperator::resetLuksMap called.";
+    qCDebug(serviceLog) << "LUKSOperator::resetLuksMap called.";
     luks.m_mapper.clear();
     luks.m_luksMap.clear();
     luks.m_cryErr = CRYPTError::CRYPT_ERR_NORMAL;
@@ -214,19 +215,19 @@ void LUKSOperator::resetLuksMap(LUKSMap &luks)
 
 bool LUKSOperator::initMapper(LUKSMap &luks)
 {
-    qDebug() << "LUKSOperator::initMapper called.";
+    qCDebug(serviceLog) << "LUKSOperator::initMapper called.";
     luks.m_mapper.clear();
     QString cmd, strout, strerr;
     cmd = QString("dmsetup ls --target crypt"); //获取所有解密的设备
     if (Utils::executCmd(cmd, strout, strerr) != 0) {
-        qDebug() << "Failed to execute 'dmsetup ls'.";
+        qCDebug(serviceLog) << "Failed to execute 'dmsetup ls'.";
         return false;
     }
 
     foreach (QString str, strout.split("\n")) {
         QStringList list = str.split("\t");
         if (list.count() == 2) {
-            qDebug() << "Processing decrypted device:" << list[0];
+            qCDebug(serviceLog) << "Processing decrypted device:" << list[0];
             LUKS_MapperInfo mapper;
             mapper.m_dmName = list[0];
             mapper.m_dmPath = "/dev/mapper/" + mapper.m_dmName;
@@ -234,7 +235,7 @@ bool LUKSOperator::initMapper(LUKSMap &luks)
             QString cmd2, strout2, strerr2;
             cmd2 = QString(" cryptsetup status %1").arg(mapper.m_dmPath);
             if (Utils::executCmd(cmd2, strout2, strerr2) != 0) {
-                qDebug() << "Failed to execute 'cryptsetup status' for" << mapper.m_dmPath;
+                qCDebug(serviceLog) << "Failed to execute 'cryptsetup status' for" << mapper.m_dmPath;
                 return false;
             }
 
@@ -261,10 +262,10 @@ bool LUKSOperator::initMapper(LUKSMap &luks)
 
             auto it = m_dev->find(mapper.m_dmPath);
             if (it != m_dev->end()) {
-                qDebug() << "Found device info for mapper path:" << mapper.m_dmPath;
+                qCDebug(serviceLog) << "Found device info for mapper path:" << mapper.m_dmPath;
                 auto partIt =  it.value().m_partition.begin();
                 if (partIt != it.value().m_partition.end()) {
-                    qDebug() << "Found partition info for mapper path.";
+                    qCDebug(serviceLog) << "Found partition info for mapper path.";
                     PartitionInfo part = *partIt;
                     mapper.m_busy = part.m_busy;
                     mapper.m_mountPoints = part.m_mountPoints;
@@ -275,10 +276,10 @@ bool LUKSOperator::initMapper(LUKSMap &luks)
                     mapper.m_uuid = part.m_uuid;
                     mapper.m_fsLimits = part.m_fsLimits;
                     if (FS_FAT32 == mapper.m_luksFs || FS_FAT16 == mapper.m_luksFs) {
-                        qDebug() << "FAT filesystem, no resize limits.";
+                        qCDebug(serviceLog) << "FAT filesystem, no resize limits.";
                         mapper.m_fsLimits = FS_Limits(-1, -1); //fat格式不支持逻辑卷的扩展缩小
                     } else if (FS_UNALLOCATED ==   mapper.m_luksFs) { //empty fs , no limits
-                        qDebug() << "Unallocated space, no resize limits.";
+                        qCDebug(serviceLog) << "Unallocated space, no resize limits.";
                         mapper.m_fsLimits = FS_Limits(0, 0);
                     }
                 }
@@ -298,7 +299,7 @@ bool LUKSOperator::initMapper(LUKSMap &luks)
             luks.m_mapper.insert(mapper.m_devicePath, mapper);
         }
     }
-    qDebug() << "initMapper finished.";
+    qCDebug(serviceLog) << "initMapper finished.";
     return true;
 }
 
@@ -309,7 +310,7 @@ bool LUKSOperator::getCIPHERSupport(CRYPT_CIPHER_Support &support)
 
     cmd = QString("modprobe -c");
     if (Utils::executCmd(cmd, strout, strerr) != 0) {
-        qDebug() << "Failed to execute 'cryptsetup --help'.";
+        qCDebug(serviceLog) << "Failed to execute 'cryptsetup --help'.";
         return false;
     }
 
@@ -380,7 +381,7 @@ bool LUKSOperator::getLUKSInfo(const LUKSMap &luks, const QString &devPath, LUKS
     QString cmd, strout, strerr;
     cmd = QString("cryptsetup luksDump %1 --debug-json").arg(devPath);
     if (Utils::executCmd(cmd, strout, strerr) != 0) {
-        qDebug() << "Failed to execute 'cryptsetup luksDump' for" << devPath;
+        qCDebug(serviceLog) << "Failed to execute 'cryptsetup luksDump' for" << devPath;
         return false;
     }
     info.m_tokenList.clear();
@@ -421,7 +422,7 @@ bool LUKSOperator::getLUKSInfo(const LUKSMap &luks, const QString &devPath, LUKS
 
 bool LUKSOperator::jsonToLUKSInfo(QString jsonStr, LUKS_INFO &info)
 {
-    qDebug() << "LUKSOperator::jsonToLUKSInfo called.";
+    qCDebug(serviceLog) << "LUKSOperator::jsonToLUKSInfo called.";
     //获取对象填入value中  同时判断该value是否为object
     auto getObjectValue = [ = ](QJsonObject obj, QString key, QJsonValue & value)->bool{
         if (!obj.contains(key))
@@ -511,17 +512,17 @@ bool LUKSOperator::jsonToLUKSInfo(QString jsonStr, LUKS_INFO &info)
 
 bool LUKSOperator::isLUKS(QString devPath)
 {
-    qDebug() << "LUKSOperator::isLUKS called for device:" << devPath;
+    qCDebug(serviceLog) << "LUKSOperator::isLUKS called for device:" << devPath;
     QString cmd, strout, strerr;
     cmd = QString("cryptsetup isLuks %1").arg(devPath);
     bool result = (0 == Utils::executCmd(cmd, strout, strerr));
-    qDebug() << "Device" << devPath << "is LUKS:" << result;
+    qCDebug(serviceLog) << "Device" << devPath << "is LUKS:" << result;
     return result;
 }
 
 bool LUKSOperator::format(const LUKS_INFO &luks)
 {
-    qInfo() << "Formatting device for LUKS:" << luks.m_devicePath << "with cipher:" << Utils::getCipherStr(luks.m_crypt);
+    qCInfo(serviceLog) << "Formatting device for LUKS:" << luks.m_devicePath << "with cipher:" << Utils::getCipherStr(luks.m_crypt);
     QString outPut, error;
     QString cmd = QString("cryptsetup --cipher %1 --key-size 256 --hash sha256 luksFormat --label=%2 %3 -q")
                         .arg(Utils::getCipherStr(luks.m_crypt))
@@ -529,14 +530,14 @@ bool LUKSOperator::format(const LUKS_INFO &luks)
                         .arg(luks.m_devicePath);
     bool success = (Utils::executWithInputOutputCmd(cmd, &luks.m_decryptStr, outPut, error) == 0);
     if (!success) {
-        qCritical() << Q_FUNC_INFO << "output:" << outPut << "\terror:" << error;
+        qCCritical(serviceLog) << Q_FUNC_INFO << "output:" << outPut << "\terror:" << error;
     }
     return success;
 }
 
 bool LUKSOperator::open(const LUKS_INFO &luks)
 {
-    qDebug() << "Opening LUKS device:" << luks.m_devicePath << "with mapper:" << luks.m_mapper.m_dmName;
+    qCDebug(serviceLog) << "Opening LUKS device:" << luks.m_devicePath << "with mapper:" << luks.m_mapper.m_dmName;
     QString outPut, error;
     QString cmd = QString("cryptsetup open %1 %2 -q")
                         .arg(luks.m_devicePath)
@@ -555,27 +556,27 @@ bool LUKSOperator::testKey(const LUKS_INFO &luks)
 
 bool LUKSOperator::close(const LUKS_INFO &luks)
 {
-    qDebug() << "Closing LUKS device:" << luks.m_mapper.m_dmPath;
+    qCDebug(serviceLog) << "Closing LUKS device:" << luks.m_mapper.m_dmPath;
     QString cmd, strout, strerr;
     cmd = QString("cryptsetup close %1").arg(luks.m_mapper.m_dmPath);
     bool result = (0 == Utils::executCmd(cmd, strout, strerr));
-    qDebug() << "Closing device" << luks.m_mapper.m_dmPath << "result:" << result;
+    qCDebug(serviceLog) << "Closing device" << luks.m_mapper.m_dmPath << "result:" << result;
     return result;
 }
 
 bool LUKSOperator::addToken(const LUKS_INFO &luks, QStringList list, int number)
 {
-    qDebug() << "LUKSOperator::addToken BEGIN";
+    qCDebug(serviceLog) << "LUKSOperator::addToken BEGIN";
     QString cmd, strout, strerr;
     foreach (QString str, list) {
         if (number == -1) {
-            // qDebug() << "number is -1";
+            // qCDebug(serviceLog) << "number is -1";
             str = str.replace(" ", "$####$");
             cmd = QString("cryptsetup token add --key-description='%1' %2 ")
                   .arg(str)
                   .arg(luks.m_devicePath);
         } else {
-            // qDebug() << "number is not -1";
+            // qCDebug(serviceLog) << "number is not -1";
             cmd = QString("cryptsetup token add --key-description='%1' --token-id=%2 %3")
                   .arg(str)
                   .arg(number)
@@ -584,17 +585,17 @@ bool LUKSOperator::addToken(const LUKS_INFO &luks, QStringList list, int number)
         }
 
         if (Utils::executCmd(cmd, strout, strerr) != 0) {
-            qDebug() << "executCmd failed, return false";
+            qCDebug(serviceLog) << "executCmd failed, return false";
             return false;
         }
     }
-    qDebug() << "LUKSOperator::addToken END";
+    qCDebug(serviceLog) << "LUKSOperator::addToken END";
     return true;
 }
 
 bool LUKSOperator::removeToken(const LUKS_INFO &luks, int number)
 {
-    qDebug() << "LUKSOperator::removeToken called for device:" << luks.m_devicePath << "token id:" << number;
+    qCDebug(serviceLog) << "LUKSOperator::removeToken called for device:" << luks.m_devicePath << "token id:" << number;
     QString cmd, strout, strerr;
     cmd = QString("cryptsetup token remove --token-id %1 %2 ")
           .arg(number)
@@ -604,23 +605,23 @@ bool LUKSOperator::removeToken(const LUKS_INFO &luks, int number)
 
 bool LUKSOperator::updateDecryptToken(LUKS_INFO &info, bool isFirst)
 {
-    qDebug() << "LUKSOperator::updateDecryptToken BEGIN";
+    qCDebug(serviceLog) << "LUKSOperator::updateDecryptToken BEGIN";
     if (!isFirst) {
-        qDebug() << "isFirst is false";
+        qCDebug(serviceLog) << "isFirst is false";
         if (!removeToken(info, 0)) {
-            qDebug() << "removeToken failed, return false";
+            qCDebug(serviceLog) << "removeToken failed, return false";
             return false;
         }
     }
     info.m_decryptErrorLastTime = QDateTime::currentDateTime().toString("yyyy-MM-dd$$hh:mm:ss");
-    qDebug() << "LUKSOperator::updateDecryptToken END";
+    qCDebug(serviceLog) << "LUKSOperator::updateDecryptToken END";
     return addToken(info, QStringList() << QString("decryptCount:%1####decryptErrTimer:%2").arg(info.m_decryptErrCount).arg(info.m_decryptErrorLastTime), 0);
 
 }
 
 bool LUKSOperator::addKeyFile(const LUKS_INFO &luks)
 {
-    qInfo() << "Adding key file for LUKS device:" << luks.m_devicePath;
+    qCInfo(serviceLog) << "Adding key file for LUKS device:" << luks.m_devicePath;
     //创建文件
     QDir dir;
     if(!dir.exists(saveKeyPath)){
@@ -647,7 +648,7 @@ bool LUKSOperator::addKeyFile(const LUKS_INFO &luks)
 
 bool LUKSOperator::deleteKeyFile(const LUKS_INFO &luks)
 {
-    qInfo() << "Deleting key file for LUKS device:" << luks.m_devicePath;
+    qCInfo(serviceLog) << "Deleting key file for LUKS device:" << luks.m_devicePath;
     QString filePath = QString("%1/%2.key").arg(saveKeyPath).arg(luks.m_dmUUID);
     if (!QFile::exists(filePath)) {
         return true;
@@ -660,13 +661,13 @@ bool LUKSOperator::deleteKeyFile(const LUKS_INFO &luks)
 
 bool LUKSOperator::wirteCrypttab(LUKS_INFO &luksInfo, bool isMount)
 {
-    qDebug() << "LUKSOperator::wirteCrypttab BEGIN";
+    qCDebug(serviceLog) << "LUKSOperator::wirteCrypttab BEGIN";
     QString filePath = QString("%1/%2.key").arg(saveKeyPath).arg(luksInfo.m_dmUUID);
     // open crypttab
     QFile file("/etc/crypttab");
     QStringList list;
     if (!file.open(QIODevice::ReadOnly)) { //打开指定文件
-        qDebug() << "open /etc/crypttab failed, return false";
+        qCDebug(serviceLog) << "open /etc/crypttab failed, return false";
         return false;
     }
     QFileDevice::Permissions origPerm = file.permissions();
@@ -677,23 +678,23 @@ bool LUKSOperator::wirteCrypttab(LUKS_INFO &luksInfo, bool isMount)
         QByteArray line = file.readLine();//获取数据
         QString str = line;
         if (isMount) {
-            // qDebug() << "isMount is true";
+            // qCDebug(serviceLog) << "isMount is true";
             QString mountStr = QString("%1 UUID=\"%2\" %3\n").arg(luksInfo.m_mapper.m_dmName).arg(luksInfo.m_dmUUID).arg(filePath);
             if (str.contains(luksInfo.m_dmUUID) && !findflag) { //首次查找到uuid
-                // qDebug() << "found uuid and not findflag";
+                // qCDebug(serviceLog) << "found uuid and not findflag";
                 findflag = true;
                 list << mountStr;
                 continue;
             } else if (file.atEnd() && !findflag) { //查找到结尾且没有查找到uuid
-                qDebug() << "atEnd and not findflag";
+                qCDebug(serviceLog) << "atEnd and not findflag";
                 list << str << mountStr;
                 break;
             }
             list << str;
         } else {
-            // qDebug() << "isMount is false";
+            // qCDebug(serviceLog) << "isMount is false";
             if (!str.contains(luksInfo.m_dmUUID)) {
-                // qDebug() << "not contains uuid";
+                // qCDebug(serviceLog) << "not contains uuid";
                 list << str;
             }
         }
@@ -703,7 +704,7 @@ bool LUKSOperator::wirteCrypttab(LUKS_INFO &luksInfo, bool isMount)
     // 原子写入：先写临时文件，再 rename 到 /etc/crypttab，避免 TOCTOU 竞态
     QSaveFile saveFile(QStringLiteral("/etc/crypttab"));
     if (!saveFile.open(QIODevice::WriteOnly)) {
-        qDebug() << "open /etc/crypttab for write failed, return false";
+        qCDebug(serviceLog) << "open /etc/crypttab for write failed, return false";
         return false;
     }
     QTextStream out(&saveFile);
@@ -712,19 +713,19 @@ bool LUKSOperator::wirteCrypttab(LUKS_INFO &luksInfo, bool isMount)
     }
     out.flush();
     if (!saveFile.commit()) {
-        qDebug() << "commit /etc/crypttab failed, return false";
+        qCDebug(serviceLog) << "commit /etc/crypttab failed, return false";
         return false;
     }
     // 恢复原文件权限，避免 QSaveFile 使用临时文件导致权限被 umask 改变
     QFile::setPermissions(QStringLiteral("/etc/crypttab"), origPerm);
-    qDebug() << "Successfully created key file:" << filePath;
-    qDebug() << "LUKSOperator::wirteCrypttab END";
+    qCDebug(serviceLog) << "Successfully created key file:" << filePath;
+    qCDebug(serviceLog) << "LUKSOperator::wirteCrypttab END";
     return true;
 }
 
 bool LUKSOperator::setLUKSErr(LUKSMap &luksInfo, const CRYPTError &err)
 {
-    qDebug() << "LUKSOperator::setLUKSErr(luksInfo, err) called";
+    qCDebug(serviceLog) << "LUKSOperator::setLUKSErr(luksInfo, err) called";
     m_cryErr = err;
     luksInfo.m_cryErr = err;
     return luksInfo.m_cryErr == CRYPTError::CRYPT_ERR_NORMAL;
@@ -732,7 +733,7 @@ bool LUKSOperator::setLUKSErr(LUKSMap &luksInfo, const CRYPTError &err)
 
 bool LUKSOperator::setLUKSErr(LUKSMap &luksInfo, LUKS_INFO &info, const CRYPTError &err)
 {
-    qDebug() << "LUKSOperator::setLUKSErr(luksInfo, info, err) called";
+    qCDebug(serviceLog) << "LUKSOperator::setLUKSErr(luksInfo, info, err) called";
     info.m_cryptErr = err;
     return setLUKSErr(luksInfo, err);
 }

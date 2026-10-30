@@ -5,7 +5,10 @@
 #include "ddbase.h"
 #include "common.h"
 
+#include <QGuiApplication>
 #include <QKeyEvent>
+#include <QScreen>
+#include <QShowEvent>
 
 DDBase::DDBase(QWidget *parent)
     : DDialog(parent)
@@ -31,5 +34,20 @@ void DDBase::keyPressEvent(QKeyEvent *event)
     } else {
         qDebug() << "Forwarding key press to base class";
         DDialog::keyPressEvent(event);
+    }
+}
+
+void DDBase::showEvent(QShowEvent *event)
+{
+    DDialog::showEvent(event);
+
+    QScreen *screen = QGuiApplication::screenAt(QCursor::pos());
+    if (!screen && parentWidget())
+        screen = QGuiApplication::screenAt(parentWidget()->window()->geometry().center());
+    if (!screen)
+        screen = QGuiApplication::primaryScreen();
+    if (screen) {
+        QRect screenGeo = screen->geometry();
+        move(screenGeo.center() - rect().center());
     }
 }

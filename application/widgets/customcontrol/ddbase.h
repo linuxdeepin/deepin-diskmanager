@@ -34,6 +34,11 @@ protected:
      * @param event事件
      */
     void keyPressEvent(QKeyEvent *event) override;
+    /**
+     * @brief 显示事件，Wayland下手动居中到当前屏幕
+     * @param event事件
+     */
+    void showEvent(QShowEvent *event) override;
 };
 
 #endif // DDBASE_H

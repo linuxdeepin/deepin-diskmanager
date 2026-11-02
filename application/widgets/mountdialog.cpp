@@ -14,6 +14,8 @@
 #include <DFontSizeManager>
 
 #include <QDir>
+#include <QList>
+#include <QUrl>
 #include <QVBoxLayout>
 
 MountDialog::MountDialog(QWidget *parent)
@@ -55,6 +57,10 @@ void MountDialog::initUi()
     m_fileChooserEdit->setFileMode(QFileDialog::Directory);
     m_fileChooserEdit->fileDialog()->setOption(QFileDialog::ShowDirsOnly);
     m_fileChooserEdit->fileDialog()->setAcceptMode(QFileDialog::AcceptOpen);
+    m_fileChooserEdit->fileDialog()->setOption(QFileDialog::DontUseNativeDialog);
+    QList<QUrl> sidebarUrls;
+    sidebarUrls << QUrl("file:///media") << QUrl("file:///mnt");
+    m_fileChooserEdit->fileDialog()->setSidebarUrls(sidebarUrls);
     m_fileChooserEdit->setAccessibleName("mountPointComboBox");
     m_fileChooserEdit->setText("/mnt");
 

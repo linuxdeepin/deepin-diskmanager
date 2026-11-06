@@ -472,16 +472,10 @@ bool DiskManagerService::onDeletePVList(QList<PVData> devList)
 }
 void DiskManagerService::updateUsb()
 {
-    if (!checkAuthorization())
-        return;
-
     m_partedcore->updateUsb();
 }
 void DiskManagerService::updateUsbRemove()
 {
-    if (!checkAuthorization())
-        return;
-
     m_partedcore->updateUsbRemove();
 }
 void DiskManagerService::refreshFunc()

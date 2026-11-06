@@ -43,6 +43,83 @@ DiskHealthDetectionDialog::~DiskHealthDetectionDialog()
     delete m_diskHealthDetectionDelegate;
 }
 
+static QString translateAttributeName(const QString &attributeName)
+{
+    // NVMe SMART attributes
+    if (attributeName == "Critical Warning")
+        return DiskHealthDetectionDialog::tr("Critical Warning");
+    if (attributeName == "Temperature")
+        return DiskHealthDetectionDialog::tr("Temperature");
+    if (attributeName == "Available Spare")
+        return DiskHealthDetectionDialog::tr("Available Spare");
+    if (attributeName == "Available Spare Threshold")
+        return DiskHealthDetectionDialog::tr("Available Spare Threshold");
+    if (attributeName == "Percentage Used")
+        return DiskHealthDetectionDialog::tr("Percentage Used");
+    if (attributeName == "Data Units Read")
+        return DiskHealthDetectionDialog::tr("Data Units Read");
+    if (attributeName == "Data Units Written")
+        return DiskHealthDetectionDialog::tr("Data Units Written");
+    if (attributeName == "Host Read Commands")
+        return DiskHealthDetectionDialog::tr("Host Read Commands");
+    if (attributeName == "Host Write Commands")
+        return DiskHealthDetectionDialog::tr("Host Write Commands");
+    if (attributeName == "Controller Busy Time")
+        return DiskHealthDetectionDialog::tr("Controller Busy Time");
+    if (attributeName == "Power Cycles")
+        return DiskHealthDetectionDialog::tr("Power Cycles");
+    if (attributeName == "Power On Hours")
+        return DiskHealthDetectionDialog::tr("Power On Hours");
+    if (attributeName == "Unsafe Shutdowns")
+        return DiskHealthDetectionDialog::tr("Unsafe Shutdowns");
+    if (attributeName == "Media and Data Integrity Errors")
+        return DiskHealthDetectionDialog::tr("Media and Data Integrity Errors");
+    if (attributeName == "Error Information Log Entries")
+        return DiskHealthDetectionDialog::tr("Error Information Log Entries");
+    if (attributeName == "Warning Comp. Temperature Time")
+        return DiskHealthDetectionDialog::tr("Warning Comp. Temperature Time");
+    if (attributeName == "Critical Comp. Temperature Time")
+        return DiskHealthDetectionDialog::tr("Critical Comp. Temperature Time");
+    // Common SATA SMART attributes
+    if (attributeName == "Raw_Read_Error_Rate")
+        return DiskHealthDetectionDialog::tr("Raw_Read_Error_Rate");
+    if (attributeName == "Spin_Up_Time")
+        return DiskHealthDetectionDialog::tr("Spin_Up_Time");
+    if (attributeName == "Start_Stop_Count")
+        return DiskHealthDetectionDialog::tr("Start_Stop_Count");
+    if (attributeName == "Reallocated_Sector_Ct")
+        return DiskHealthDetectionDialog::tr("Reallocated_Sector_Ct");
+    if (attributeName == "Seek_Error_Rate")
+        return DiskHealthDetectionDialog::tr("Seek_Error_Rate");
+    if (attributeName == "Spin_Retry_Count")
+        return DiskHealthDetectionDialog::tr("Spin_Retry_Count");
+    if (attributeName == "Power_Cycle_Count")
+        return DiskHealthDetectionDialog::tr("Power_Cycle_Count");
+    if (attributeName == "Temperature_Celsius")
+        return DiskHealthDetectionDialog::tr("Temperature_Celsius");
+    if (attributeName == "Airflow_Temperature_Cel")
+        return DiskHealthDetectionDialog::tr("Airflow_Temperature_Cel");
+    if (attributeName == "Reallocated_Event_Count")
+        return DiskHealthDetectionDialog::tr("Reallocated_Event_Count");
+    if (attributeName == "Offline_Uncorrectable")
+        return DiskHealthDetectionDialog::tr("Offline_Uncorrectable");
+    if (attributeName == "UDMA_CRC_Error_Count")
+        return DiskHealthDetectionDialog::tr("UDMA_CRC_Error_Count");
+    if (attributeName == "Reported_Uncorrect")
+        return DiskHealthDetectionDialog::tr("Reported_Uncorrect");
+    if (attributeName == "Hardware_ECC_Recovered")
+        return DiskHealthDetectionDialog::tr("Hardware_ECC_Recovered");
+    if (attributeName == "G-Sense_Error_Rate")
+        return DiskHealthDetectionDialog::tr("G-Sense_Error_Rate");
+    if (attributeName == "Power-Off_Retract_Count")
+        return DiskHealthDetectionDialog::tr("Power-Off_Retract_Count");
+    if (attributeName == "End-to-End_Error")
+        return DiskHealthDetectionDialog::tr("End-to-End_Error");
+    if (attributeName == "Unknown_Attribute")
+        return DiskHealthDetectionDialog::tr("Unknown_Attribute");
+    return attributeName;
+}
+
 void DiskHealthDetectionDialog::initUI()
 {
     qCDebug(appLog) << "Initializing DiskHealthDetectionDialog UI";
@@ -293,7 +370,7 @@ void DiskHealthDetectionDialog::initUI()
         }
 
         if (!hardDiskStatusInfo.m_attributeName.isEmpty()) {
-            itemList << new QStandardItem(hardDiskStatusInfo.m_attributeName);
+            itemList << new QStandardItem(translateAttributeName(hardDiskStatusInfo.m_attributeName));
         } else {
             // qCDebug(appLog) << "Hard disk status attributeName is empty, adding empty attributeName item.";
             itemList << new QStandardItem("-");

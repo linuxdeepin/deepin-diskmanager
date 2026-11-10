@@ -25,6 +25,12 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS
     LinguistTools
     REQUIRED)
 
+# Qt 6.10 起，私有模块目标(如 Qt6::WidgetsPrivate/GuiPrivate)拆分为独立 CMake 包，
+# 不再随主模块查找自动创建，需显式查找；更早版本由各 Targets.cmake 自动创建
+if (QT_VERSION_MAJOR MATCHES 6 AND Qt6_VERSION VERSION_GREATER_EQUAL 6.10)
+    find_package(Qt6 REQUIRED COMPONENTS WidgetsPrivate GuiPrivate)
+endif()
+
 set(LINK_LIBS
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::DBus

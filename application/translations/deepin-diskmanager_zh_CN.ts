@@ -1261,6 +1261,176 @@ will format it and remove its password.</source>
         <source>Export failed</source>
         <translation>导出失败</translation>
     </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Critical Warning</source>
+        <translation>严重警告</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Available Spare</source>
+        <translation>可用余量</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Available Spare Threshold</source>
+        <translation>可用余量阈值</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Percentage Used</source>
+        <translation>已用百分比</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Data Units Read</source>
+        <translation>读取数据量</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Data Units Written</source>
+        <translation>写入数据量</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Host Read Commands</source>
+        <translation>主机读取命令数</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Host Write Commands</source>
+        <translation>主机写入命令数</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Controller Busy Time</source>
+        <translation>控制器繁忙时间</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Power Cycles</source>
+        <translation>电源循环次数</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Power On Hours</source>
+        <translation>通电时间</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Unsafe Shutdowns</source>
+        <translation>不安全关机次数</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Media and Data Integrity Errors</source>
+        <translation>介质与数据完整性错误</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Error Information Log Entries</source>
+        <translation>错误信息日志条目数</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Warning Comp. Temperature Time</source>
+        <translation>警告组件温度时间</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Critical Comp. Temperature Time</source>
+        <translation>临界组件温度时间</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Raw_Read_Error_Rate</source>
+        <translation>底层读取错误率</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Spin_Up_Time</source>
+        <translation>主轴起转时间</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Start_Stop_Count</source>
+        <translation>启停次数</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Reallocated_Sector_Ct</source>
+        <translation>重映射扇区计数</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Seek_Error_Rate</source>
+        <translation>寻道错误率</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Spin_Retry_Count</source>
+        <translation>主轴重试次数</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Power_Cycle_Count</source>
+        <translation>电源循环次数</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Temperature_Celsius</source>
+        <translation>温度</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Airflow_Temperature_Cel</source>
+        <translation>气流温度</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Reallocated_Event_Count</source>
+        <translation>重映射事件计数</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Offline_Uncorrectable</source>
+        <translation>离线不可纠正</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>UDMA_CRC_Error_Count</source>
+        <translation>UDMA CRC错误计数</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Reported_Uncorrect</source>
+        <translation>报告的不可纠正错误</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Hardware_ECC_Recovered</source>
+        <translation>硬件ECC恢复</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>G-Sense_Error_Rate</source>
+        <translation>重力感应错误率</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Power-Off_Retract_Count</source>
+        <translation>断电磁头缩回次数</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>End-to-End_Error</source>
+        <translation>端到端错误</translation>
+    </message>
+    <message>
+        <location filename="../widgets/diskhealthdetectiondialog.cpp" line="46"/>
+        <source>Unknown_Attribute</source>
+        <translation>未知属性</translation>
+    </message>
 </context>
 <context>
     <name>DiskInfoDisplayDialog</name>

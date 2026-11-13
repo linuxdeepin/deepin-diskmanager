@@ -58,7 +58,7 @@ void ResizeDialog::initUi()
              << "GiB";
     m_comboBox->addItems(stritems);
     m_comboBox->setCurrentIndex(1);
-    m_comboBox->setFixedWidth(70);
+    m_comboBox->setFixedWidth(80);
     m_comboBox->setAccessibleName("unit");
 
     hLayout->addWidget(m_lineEdit);

@@ -1,3 +1,12 @@
+deepin-diskmanager (6.0.29) unstable; urgency=medium
+
+  * feat: add unified logging categories and MLogger in basestruct
+  * feat: add dconfig log_rules meta and apply MLogger in application
+  * feat: convert logging calls to categorized macros
+  * fix: explicitly find Qt6 private components on Qt >= 6.10
+
+ -- wangrong <wangrong@uniontech.com>  Wed, 18 Nov 2026 10:50:44 +0800
+
 deepin-diskmanager (6.0.28) unstable; urgency=medium
 
   * docs(disk-manager): add Portuguese help manual

@@ -7,6 +7,7 @@
 #include "common.h"
 
 #include <QKeyEvent>
+#include <QShowEvent>
 
 DDBase::DDBase(QWidget *parent)
     : DDialog(parent)
@@ -33,4 +34,16 @@ void DDBase::keyPressEvent(QKeyEvent *event)
         qCDebug(appLog) << "Forwarding key press to base class";
         DDialog::keyPressEvent(event);
     }
+}
+
+void DDBase::showEvent(QShowEvent *event)
+{
+    if (parentWidget() && parentWidget()->screen()) {
+        QRect screenGeom = parentWidget()->screen()->geometry();
+        QRect dialogGeom = geometry();
+        int x = screenGeom.x() + (screenGeom.width() - dialogGeom.width()) / 2;
+        int y = screenGeom.y() + (screenGeom.height() - dialogGeom.height()) / 2;
+        move(x, y);
+    }
+    DDialog::showEvent(event);
 }

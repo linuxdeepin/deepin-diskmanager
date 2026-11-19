@@ -18,6 +18,7 @@
 #include <QDir>
 
 #include <cstdlib>
+#include <climits>
 #include <cstring>
 #include <errno.h>
 
@@ -473,16 +474,20 @@ QString Utils::getFileSystemSoftWare(FSType fileSystemType)
 QString Utils::formatSize(Sector sectors, Byte_Value sectorSize)
 {
     QString res;
-    if ((sectors * sectorSize) < KIBIBYTE) {
+    Byte_Value totalBytes;
+    if (__builtin_mul_overflow(sectors, sectorSize, &totalBytes)) {
+        totalBytes = LLONG_MAX;
+    }
+    if (totalBytes < KIBIBYTE) {
         res = res.setNum(sectorToUnit(sectors, sectorSize, UNIT_BYTE), 'f', 2);
         res.append(" B");
-    } else if ((sectors * sectorSize) < MEBIBYTE) {
+    } else if (totalBytes < MEBIBYTE) {
         res = res.setNum(sectorToUnit(sectors, sectorSize, UNIT_KIB), 'f', 2);
         res.append(" KiB");
-    } else if ((sectors * sectorSize) < GIBIBYTE) {
+    } else if (totalBytes < GIBIBYTE) {
         res = res.setNum(sectorToUnit(sectors, sectorSize, UNIT_MIB), 'f', 2);
         res.append(" MiB");
-    } else if ((sectors * sectorSize) < TEBIBYTE) {
+    } else if (totalBytes < TEBIBYTE) {
         res = res.setNum(sectorToUnit(sectors, sectorSize, UNIT_GIB), 'f', 2);
         res.append(" GiB");
     } else {
@@ -535,12 +540,20 @@ int Utils::getMaxPartitionNameLength(QString &tableType)
 
 Byte_Value Utils::floorSize(Byte_Value value, Byte_Value roundingSize)
 {
+    if (roundingSize <= 0)
+        return value;
     return value / roundingSize * roundingSize;
 }
 
 Byte_Value Utils::ceilSize(Byte_Value value, Byte_Value roundingSize)
 {
-    return (value + roundingSize - 1LL) / roundingSize * roundingSize;
+    if (roundingSize <= 0)
+        return value;
+    Byte_Value numerator;
+    if (__builtin_add_overflow(value, roundingSize - 1LL, &numerator)) {
+        numerator = LLONG_MAX;
+    }
+    return numerator / roundingSize * roundingSize;
 }
 
 QString Utils::createUuid()

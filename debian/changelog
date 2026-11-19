@@ -1,3 +1,11 @@
+deepin-diskmanager (6.0.30) unstable; urgency=medium
+
+  * chore: Update version to 6.0.30
+  * docs(disk-manager): update pt_BR help manual screenshots
+  * fix(storage): read UFS spec versions from DConfig instead of hardcoding
+
+ -- zhanghongyuan <zhanghongyuan@uniontech.com>  Thu, 19 Nov 2026 16:21:32 +0800
+
 deepin-diskmanager (6.0.29) unstable; urgency=medium
 
   * feat: add unified logging categories and MLogger in basestruct

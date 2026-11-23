@@ -34,6 +34,12 @@ protected:
      * @param event事件
      */
     void keyPressEvent(QKeyEvent *event) override;
+
+    /**
+     * @brief 显示事件，覆盖 DTK6 默认居中逻辑
+     * @param event 显示事件
+     */
+    void showEvent(QShowEvent *event) override;
 };
 
 #endif // DDBASE_H

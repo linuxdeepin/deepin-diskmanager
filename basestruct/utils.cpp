@@ -14,6 +14,7 @@
 #include <QUuid>
 #include <QDebug>
 #include <algorithm>
+#include <climits>
 #include <math.h>
 #include <QFile>
 #include <QDir>
@@ -579,16 +580,20 @@ QString Utils::formatSize(Sector sectors, Byte_Value sectorSize)
 {
     qCDebug(baseLog) << "Utils::formatSize - Formatting size for sectors:" << sectors << "sectorSize:" << sectorSize;
     QString res;
-    if ((sectors * sectorSize) < KIBIBYTE) {
+    Byte_Value totalBytes;
+    if (__builtin_mul_overflow(sectors, sectorSize, &totalBytes)) {
+        totalBytes = LLONG_MAX;
+    }
+    if (totalBytes < KIBIBYTE) {
         res = res.setNum(sectorToUnit(sectors, sectorSize, UNIT_BYTE), 'f', 2);
         res.append(" B");
-    } else if ((sectors * sectorSize) < MEBIBYTE) {
+    } else if (totalBytes < MEBIBYTE) {
         res = res.setNum(sectorToUnit(sectors, sectorSize, UNIT_KIB), 'f', 2);
         res.append(" KiB");
-    } else if ((sectors * sectorSize) < GIBIBYTE) {
+    } else if (totalBytes < GIBIBYTE) {
         res = res.setNum(sectorToUnit(sectors, sectorSize, UNIT_MIB), 'f', 2);
         res.append(" MiB");
-    } else if ((sectors * sectorSize) < TEBIBYTE) {
+    } else if (totalBytes < TEBIBYTE) {
         res = res.setNum(sectorToUnit(sectors, sectorSize, UNIT_GIB), 'f', 2);
         res.append(" GiB");
     } else {
@@ -647,13 +652,28 @@ int Utils::getMaxPartitionNameLength(QString &tableType)
 Byte_Value Utils::floorSize(Byte_Value value, Byte_Value roundingSize)
 {
     // qCInfo(baseLog) << "Utils::floorSize - value:" << value << "roundingSize:" << roundingSize;
+    if (roundingSize <= 0)
+        return value;
     return value / roundingSize * roundingSize;
 }
 
-Byte_Value Utils::ceilSize(Byte_Value value, Byte_Value roundingSize)
+Byte_Value Utils::ceilSize(Byte_Value value, Byte_Value roundingSize, bool *overflow)
 {
     // qCInfo(baseLog) << "Utils::ceilSize - value:" << value << "roundingSize:" << roundingSize;
-    return (value + roundingSize - 1LL) / roundingSize * roundingSize;
+    if (overflow)
+        *overflow = false;
+    if (roundingSize <= 0)
+        return value;
+    Byte_Value numerator;
+    if (__builtin_add_overflow(value, roundingSize - 1LL, &numerator)) {
+        // 加法溢出说明向上取整结果无法用 Byte_Value 表示，不能
+        // 静默回退到一个更小的倍数(会让擦除范围末尾遗漏尾随字节)。
+        // 置位 overflow 并返回饱和值，由调用方报告失败。
+        if (overflow)
+            *overflow = true;
+        return LLONG_MAX;
+    }
+    return numerator / roundingSize * roundingSize;
 }
 
 QString Utils::createUuid()

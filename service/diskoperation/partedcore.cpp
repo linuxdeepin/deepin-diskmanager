@@ -3288,16 +3288,24 @@ bool PartedCore::eraseFilesystemSignatures(const Partition &partition)
     for (unsigned int i = 0; overallSuccess && i < sizeof(ranges) / sizeof(ranges[0]); i++) {
         //Rounding is performed in multiples of the sector size because writes are in whole sectors.
 
-        Byte_Value roundingSize = Utils::ceilSize(ranges[i].rounding, lpDevice->sector_size);
+        bool roundingOverflow = false;
+        Byte_Value roundingSize = Utils::ceilSize(ranges[i].rounding, lpDevice->sector_size, &roundingOverflow);
         Byte_Value byteOffset;
         Byte_Value byteLen;
         if (ranges[i].offset >= 0LL) {
             byteOffset = Utils::floorSize(ranges[i].offset, roundingSize);
-            byteLen = Utils::ceilSize(ranges[i].offset + ranges[i].length, lpDevice->sector_size) - byteOffset;
+            byteLen = Utils::ceilSize(ranges[i].offset + ranges[i].length, lpDevice->sector_size, &roundingOverflow) - byteOffset;
         } else { //Negative offsets
             Byte_Value notionalOffset = Utils::floorSize(partition.getByteLength() + ranges[i].offset, ranges[i].rounding);
             byteOffset = Utils::floorSize(notionalOffset, roundingSize);
-            byteLen = Utils::ceilSize(notionalOffset + ranges[i].length, lpDevice->sector_size) - byteOffset;
+            byteLen = Utils::ceilSize(notionalOffset + ranges[i].length, lpDevice->sector_size, &roundingOverflow) - byteOffset;
+        }
+        if (roundingOverflow) {
+            // 向上取整结果无法用 Byte_Value 表示，不能使用截断后的
+            // 范围继续擦除，否则会遗漏尾随字节。报告失败。
+            qCWarning(serviceLog) << __FUNCTION__ << "ceiling overflow computing erase range" << i << "for" << partition.getPath();
+            overallSuccess = false;
+            break;
         }
         //Limit range to partition size.
         if (byteOffset + byteLen <= 0LL) {

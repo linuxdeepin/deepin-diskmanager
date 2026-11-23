@@ -167,9 +167,10 @@ public:
      * @brief 计算上偏移量
      * @param value:大小
      * @param roundingSize:舍入值
-     * @return 上偏移量
+     * @param overflow:输出参数，加法溢出(结果无法用 Byte_Value 表示)时置 true
+     * @return 上偏移量；溢出时返回 LLONG_MAX，调用方应通过 overflow 判定失败
      */
-    static Byte_Value ceilSize(Byte_Value value, Byte_Value roundingSize);
+    static Byte_Value ceilSize(Byte_Value value, Byte_Value roundingSize, bool *overflow = nullptr);
 
     /**
      * @brief 创建UUID

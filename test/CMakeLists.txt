@@ -8,6 +8,9 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+# 可访问 private 成员（与 tests/CMakeLists.txt 保持一致，用于测试内部工具函数）
+ADD_COMPILE_OPTIONS(-fno-access-control)
+
 
 #include(../cmake/googletest.cmake)
 #fetch_googletest(
